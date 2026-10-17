@@ -1,0 +1,263 @@
+{
+  "accepted_boundaries": {
+    "actual_formal_acceptance": false,
+    "actual_pair_acceptance": false,
+    "compiler_workflow_execution": false,
+    "current_0_2": false,
+    "full_ticket28": false,
+    "hardware_evaluation": false,
+    "native_caller_execution": false,
+    "runtime_admission": false,
+    "source_body_proof": false,
+    "source_review": true
+  },
+  "author_pure_test_logs": {
+    "green": "16 tests pass after nested-suite repair",
+    "pins": [
+      {
+        "bytes": 791,
+        "path": "/private/tmp/probata-resume-20261016-t28-census-nested-red.log",
+        "sha256": "fbb88f529e50c844a945d892e0be0b45452348b460615a100a4b98625d771532"
+      },
+      {
+        "bytes": 115,
+        "path": "/private/tmp/probata-resume-20261016-t28-census-green-v2.log",
+        "sha256": "40e7e701b0fb7520dec152943e03896c5835fbb8b2ebe4c5ca0e04b62aeaeb2b"
+      }
+    ],
+    "red": "16 tests; sole nested-suite regression fails before repair",
+    "reviewer_executed_tests": false,
+    "reviewer_read_only": true
+  },
+  "checks": {
+    "all_historical_metadata_refs_match": true,
+    "all_selected_source_pins_match": true,
+    "child_env_closed_and_cli_inherits_cache_policy": true,
+    "declared_old_new_test_pins_match_original97": true,
+    "entry_and_test_ast_parse": true,
+    "entry_policy_digest_matches": true,
+    "fresh_cache_prefix_absence_checked_before_after_including_symlink": true,
+    "historical_metadata_ref_count": 12,
+    "junit_rejects_nested_suites": true,
+    "junit_requires_one_suite_one_direct_selected_case": true,
+    "junit_requires_zero_failure_error_skip_counters_and_nodes": true,
+    "junit_result_required_for_entry_success": true,
+    "only_selected_change_from_original97": "tests/test_dx100_initialized_register.py",
+    "original_V1_retained_as_failed": true,
+    "selected_public_test_requires_named_standin_marker_and_not_proven_tool_crash": true,
+    "selected_source_count": 13
+  },
+  "context_source_pins": [
+    {
+      "bytes": 12399,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/conftest.py",
+      "sha256": "f70dea4668fc1c2a2234b3bed4d8630734e8eec4f756fbb9be0e8d79a66b6a7a"
+    },
+    {
+      "bytes": 7619,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/testkit/dx100_trust.py",
+      "sha256": "a5da4f079d300d2da9a4928c51c2d9713c03810706b8189ba213d8308a041d67"
+    },
+    {
+      "bytes": 25477,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/acsl_subset.py",
+      "sha256": "59c1cb99afc9f5d10349e9ec53875da5962379c39365b2c38252388858b6efe8"
+    }
+  ],
+  "date": "2026-10-16 ET",
+  "historical_metadata_references": [
+    {
+      "bytes": 71042,
+      "path": "/private/tmp/probata-t28-initialized-u32-route-evidence-v2-97a033a4-20261016.json",
+      "policy_matches": true,
+      "sha256": "59f21010f1f61bc0f231578e9af19859dbb22b9286906599043eaf9a163679e3"
+    },
+    {
+      "bytes": 1381,
+      "path": "/private/tmp/probata-t25-copy-prefix-ten-case-independent-source-review-v2-e0e8a435-20261016.md",
+      "policy_matches": true,
+      "sha256": "6bc01554f9988bd64e835b96da6cac57860fe65a956f0bde1543b9c0e0492dd1"
+    },
+    {
+      "bytes": 4693,
+      "path": "/private/tmp/probata-root-initialized-public-execution-v1-20261016.json",
+      "policy_matches": true,
+      "sha256": "2d8adc7dd839233329c94fafac326b7c574ac69a37c519f45e7e176ba6bdf139"
+    },
+    {
+      "bytes": 3177,
+      "path": "/private/tmp/probata-t28-initialized-frame-control-v1-20261016.py",
+      "policy_matches": true,
+      "sha256": "e6fa6d44941911c85fd28a91b71a1606fe8da1395d9274640a4b641293e7fadf"
+    },
+    {
+      "bytes": 552,
+      "path": "/private/tmp/probata-t28-initialized-frame-control-red-v1-20261016.log",
+      "policy_matches": true,
+      "sha256": "7258cb6d4508bd21c0baf92c7d7ce561f4c29bc1fba58a8de9746bfb56c4fa2a"
+    },
+    {
+      "bytes": 1888,
+      "path": "/private/tmp/probata-t28-initialized-frame-control-red-v1-20261016.log.summary.json",
+      "policy_matches": true,
+      "sha256": "6fc3c3ad62e8585f86f8df135718d6c9bac24a42decd66af65118f93d2b61d55"
+    },
+    {
+      "bytes": 272,
+      "path": "/private/tmp/probata-t28-initialized-frame-control-red-v1-20261016.log.wait.json",
+      "policy_matches": true,
+      "sha256": "6a35014a266deffb9a008f012d9940ac79d9d4dcfd5b70717c52d02f7e1867fc"
+    },
+    {
+      "bytes": 441,
+      "path": "/private/tmp/probata-t28-initialized-frame-control-green-v1-20261016.log",
+      "policy_matches": true,
+      "sha256": "d15bad3fd304070702749f61cc89ce8c0c782f903dab6831fbef3a54cb5f44c2"
+    },
+    {
+      "bytes": 1891,
+      "path": "/private/tmp/probata-t28-initialized-frame-control-green-v1-20261016.log.summary.json",
+      "policy_matches": true,
+      "sha256": "3a713923fe008751ff73163affd5820d3c6dcac9a696dfa5c95a948a2ba5bd0a"
+    },
+    {
+      "bytes": 273,
+      "path": "/private/tmp/probata-t28-initialized-frame-control-green-v1-20261016.log.wait.json",
+      "policy_matches": true,
+      "sha256": "559a5eaf689de29f9fead670865b9d33188b71244ab58f283037fa532fca5741"
+    },
+    {
+      "bytes": 1708,
+      "path": "/private/tmp/probata-t28-initialized-u32-frame-test-independent-source-review-v1-ece76ebc-20261016.md",
+      "policy_matches": true,
+      "sha256": "078cb4cb3194e3d9708bb120552b7deeab09c152099f364d3bdacfa4ec120c24"
+    },
+    {
+      "bytes": 5050,
+      "path": "/private/tmp/probata-t28-initialized-u32-frame-test-independent-source-review-v1-ece76ebc-20261016.json",
+      "policy_matches": true,
+      "sha256": "4258514287dc62a73ed0d08b6588b01b25b5d17b639987f8fe8a98005f00c61e"
+    }
+  ],
+  "reviewer": "independent public_review subagent",
+  "reviewer_operations": "Standard-library metadata, AST and hash reads plus writing only review.md/review.json; no compiler, entry main, project import, tests, ctypes, SSH or child process launched from the inspection scripts.",
+  "root_admission_still_required": [
+    "Fresh exact clean published source HEAD and complete source/consumer/configuration closure, including conftest, explicit pytest plugins, fixture inputs and imports outside the 13 selected paths.",
+    "Physical runtime/package/library/configuration membership and loader/compiler/header TCB admission; V4 only pins selected source metadata.",
+    "Fresh raw namespace, runtime policy digest, verifier slot and independent whole-request guard with resource/time/storage limits and post-run settlement.",
+    "Preserve original failure and all new raw, inspection, timeout, failure and manifest receipts; do not substitute actual formal tools."
+  ],
+  "scope": "Initialized-u32 public V3 source, selected 13-path policy V4, cache/env propagation, strict one-test JUnit census and preserved failure metadata only.",
+  "selected_source_paths": [
+    {
+      "bytes": 170578,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/c_lowering.py",
+      "policy_matches": true,
+      "relative": "swdb/c_lowering.py",
+      "sha256": "37201a198250021e3d9912a7fbaafa2b8dd9377db8d87027e51045897a246243"
+    },
+    {
+      "bytes": 68963,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/cbmc_adapter.py",
+      "policy_matches": true,
+      "relative": "swdb/cbmc_adapter.py",
+      "sha256": "a685bf063ce991372f68d115b7921da3b0afccea908e907bbf892f9094d191c0"
+    },
+    {
+      "bytes": 2351,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/dx100_initialized_register_model.py",
+      "policy_matches": true,
+      "relative": "swdb/dx100_initialized_register_model.py",
+      "sha256": "a568c08f6e8d928ecb46212b7120b29740d719c65ae7ae818b540bcf6790961f"
+    },
+    {
+      "bytes": 47822,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/dx100_initialized_register_source.py",
+      "policy_matches": true,
+      "relative": "swdb/dx100_initialized_register_source.py",
+      "sha256": "c023a4a6298fab7a34f4213f888b6c0fb4fe5c405e5a53741942e3e2accb81cb"
+    },
+    {
+      "bytes": 26237,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/formal_frame.py",
+      "policy_matches": true,
+      "relative": "swdb/formal_frame.py",
+      "sha256": "394fca77dba50ba42f1d043efd2e940a152b330a8a2e87d178f121052f53e9cf"
+    },
+    {
+      "bytes": 51108,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/proof.py",
+      "policy_matches": true,
+      "relative": "swdb/proof.py",
+      "sha256": "d03f89ab3dac0987d011552aeb1edcc212a8589a401ba5bface7102301c48fa2"
+    },
+    {
+      "bytes": 34602,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/proof_semantics.py",
+      "policy_matches": true,
+      "relative": "swdb/proof_semantics.py",
+      "sha256": "9c3fd649fecd2162a7d8f0b416ea1e5543991bf40cc8f8a0eb115a0e24b66436"
+    },
+    {
+      "bytes": 48874,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/proof_setup.py",
+      "policy_matches": true,
+      "relative": "swdb/proof_setup.py",
+      "sha256": "069dbc55b6ca8b12ea8b524027e2ca2b0922eb9e7be449c6f5725dbddbfe733f"
+    },
+    {
+      "bytes": 95281,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/wp_adapter.py",
+      "policy_matches": true,
+      "relative": "swdb/wp_adapter.py",
+      "sha256": "dbf887bf8515e6ce59086fdc99ec0b58558d742425311b8e404b5d4437b29ebf"
+    },
+    {
+      "bytes": 1977,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_dx100_initialized_register.py",
+      "policy_matches": true,
+      "relative": "tests/test_dx100_initialized_register.py",
+      "sha256": "1c8bb3fb666d8645f8bfc5449a0b760f9ef8fbff9c527eba059805e3e58b5703"
+    },
+    {
+      "bytes": 9085,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_dx100_initialized_register_policy.py",
+      "policy_matches": true,
+      "relative": "tests/test_dx100_initialized_register_policy.py",
+      "sha256": "b0593589432b1059b9ce9335def96b05682e820b6365c3fde70ffcabaf89bc74"
+    },
+    {
+      "bytes": 10783,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_dx100_initialized_register_routing.py",
+      "policy_matches": true,
+      "relative": "tests/test_dx100_initialized_register_routing.py",
+      "sha256": "5678eda09e50d3362b4f0147ac05e05f3dd86045ebf84381d9fdb0e1826ff1e7"
+    },
+    {
+      "bytes": 5022,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/testkit/dx100_initialized_register.py",
+      "policy_matches": true,
+      "relative": "tests/testkit/dx100_initialized_register.py",
+      "sha256": "0d4035feec5a239c09cd7a11e8a4a99e81df15d92fe311e212655038498cf49c"
+    }
+  ],
+  "targets": [
+    {
+      "bytes": 10021,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/public_entry_v3.py",
+      "sha256": "5001ea91d78d92ddc3f336fc70be253845992bb05d2a447a12fce9579d3a7099"
+    },
+    {
+      "bytes": 7394,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/public_source_policy_v4.json",
+      "sha256": "a3885a3bcc673150ca601373cba6e989348456e664fd19b136aa40731e305ecf"
+    },
+    {
+      "bytes": 3951,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/test_public_result.py",
+      "sha256": "b42c7779ddbd9ebd1ce9803a6bab9aae51c38b576f37dded71421a1197403258"
+    }
+  ],
+  "unresolved_source_findings": [],
+  "verdict": "PASS_SOURCE_REVIEW"
+}

@@ -1,0 +1,61 @@
+{
+  "all_selected20_input_pre_post_equal": true,
+  "argv": [
+    "ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=10",
+    "mbit10",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "90s",
+    "/usr/bin/env",
+    "-i",
+    "HOME=/nonexistent",
+    "PATH=/usr/bin:/bin",
+    "LANG=C",
+    "LC_ALL=C",
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-"
+  ],
+  "elapsed_seconds": 0.972167833,
+  "entry_sha256": "6e87a4a2569bb03206c02335a9de215396270e4c1b2c97db590447160d7b64d2",
+  "exit_code": 2,
+  "postflight": {
+    "bytes": 2544,
+    "exact_OS_PAM_current_SSH_transport_TCB": true,
+    "path": ".scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-encoding-v1-postflight-v3-20261016.json",
+    "scoped_pass": true,
+    "sha256": "d5a535627b24017ec71f7ebf9271b29f0104bf9c3773a720d76a1e0f542a919d"
+  },
+  "preflight": {
+    "bytes": 2544,
+    "exact_OS_PAM_current_SSH_transport_TCB": true,
+    "path": ".scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-encoding-v1-preflight-v3-20261016.json",
+    "scoped_pass": true,
+    "sha256": "bcfc648c699c1d434adb56f89a082d4d7e05a1b5988f2b0d72120a15e42bd837"
+  },
+  "refusals_preserved": [
+    "preflight-v1 unreadablePAM/currentSSH",
+    "preflight-v2 currentSSH under earlier narrower exception"
+  ],
+  "scientific_or_source_or_caller_adoption": false,
+  "semantic_acceptance": false,
+  "started_utc": "2026-10-16T23:03:25.751847+00:00",
+  "status": "ACTUAL_SETTLED_METADATA_PENDING_INTERPRETATION_WITH_POSTFLIGHT",
+  "stderr": {
+    "bytes": 0,
+    "path": ".scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-encoding-v1-actual-stderr-20261016.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 188079,
+    "path": ".scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-encoding-v1-actual-stdout-20261016.json",
+    "sha256": "65cff41c22f33c3196942ad4451b85e899d44473ef3926ee6b7b9902cbb70ed9"
+  }
+}

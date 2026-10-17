@@ -1,0 +1,20 @@
+{
+  "evidence_kind": "selected-configuration-and-owned-numeric-policies",
+  "numeric_flags": {
+    "alu_minmax_unordered_first": {
+      "policy": "pinned ALU unordered comparison selects the first operand",
+      "value": null
+    },
+    "ieee_binary_rn": {
+      "policy": "binary32/binary64 round-to-nearest, no fast-math, and the backend floating environment guards",
+      "value": null
+    },
+    "signed_shift_cpp17_arithmetic": {
+      "policy": "C++17 signed-left-shift and arithmetic negative-right-shift implementation profile",
+      "value": null
+    }
+  },
+  "owner": null,
+  "physical_inputs_sha256": null,
+  "schema": "whole-interface-runtime-selection-1"
+}

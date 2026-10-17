@@ -1,0 +1,103 @@
+{
+  "actual_before_original": {
+    "bytes": 3148,
+    "path": "/private/tmp/lanl17-p4-before-capture-20261008-a5/custody.json",
+    "sha256": "800e081afd48d92affac16859166b3923e0f519c89bb369f7068a62bfe5c82f4"
+  },
+  "actual_derivation_original": {
+    "bytes": 6415,
+    "path": "/private/tmp/lanl17-p4-release-source-derivation-20261008-a5.json",
+    "sha256": "233607c03d7225809691fa6064fc0eec5a892a6f6672d27dbebc7b0eb937dee5"
+  },
+  "actual_dispatch_original": {
+    "bytes": 44098,
+    "path": "/private/tmp/lanl17-p4-dispatch-original-collect-capture-20261008-a5/dispatch-preregistration.json",
+    "sha256": "863576b41eec3475b3ebe4defff678222307768dd171f7eda1d90c8a77f2075e"
+  },
+  "actual_generation": 514,
+  "actual_lane_original": {
+    "bytes": 1066,
+    "path": "/private/tmp/lanl17-p4-acquired-generation-originals-capture-r1-20261008-a5/decoded-originals/lane.json",
+    "sha256": "baf99cc0145f3b9e910f727e575c613d35e42642c4fcd763bf603e409af9855d"
+  },
+  "all_non_dynamic_draft_fields_exact": true,
+  "campaign": "extensa-gem5-bfs-20261006-p4",
+  "config_derivation_diff": {
+    "bytes": 66462,
+    "path": "/private/tmp/lanl17-p4-native-terminal-after-configs-derivation-20261008-a5.diff",
+    "sha256": "314a12ba1957b18ba250bfdb76fce12cfe608be3363d45e529b9eb7fb6806ab0"
+  },
+  "configs": [
+    {
+      "bytes": 20682,
+      "path": "/private/tmp/lanl17-p4-native-release-query-stage-config-r2-20261008-a5.json",
+      "sha256": "978f9d0577f99e46b1974718b1de2af8cfde8614e3a8de768293de20438a7d46"
+    },
+    {
+      "bytes": 358,
+      "path": "/private/tmp/lanl17-p4-native-release-query-action-config-r2-20261008-a5.json",
+      "sha256": "64c67b8264831df064f9c399cc4f1f40544877bcb258878f84c0659da4cc5824"
+    },
+    {
+      "bytes": 8934,
+      "path": "/private/tmp/lanl17-p4-terminal-metadata-reader-action-draft-20261008-a5.json",
+      "sha256": "2745815b9d74670d098e2ad7bd62acf23dfb86614d6f3245e6aad81be89a01ab"
+    },
+    {
+      "bytes": 2914,
+      "path": "/private/tmp/lanl17-p4-after-action-config-draft-20261008-a5.json",
+      "sha256": "6feaa27081bb7266d63a3a3ae22ddb049a0edaaa7b6082baa818ed39c009958c"
+    }
+  ],
+  "format": "swdb.lanl17-p4-release-sources-configs-parent-source-review.v1",
+  "future_parent_obligations": [
+    "actual normal trajectory and reviewed summary/ledger",
+    "fresh R2 release_ready AND normal_exit_set_only true",
+    "exact native generation514/node0/FD9/kernel lock absence before32 and before/afterB08",
+    "no native node0 reuse through custody completion",
+    "no native chmod; writable native metadata accepted by exact reviewed reader; wrapper excluded from generic private source pins",
+    "fresh bounded native wrapper source/physical metadata query immediately before32",
+    "actual terminal originals metadata pins agree fresh R2 fullstat/SHA snapshots"
+  ],
+  "global_p1_M2_policy_unchanged": true,
+  "initial_lane_exit": -1,
+  "legacy_supersedes_actual_p1_predecessor_verified": true,
+  "native_generation_not_guessed": true,
+  "native_permission_mutation": false,
+  "original_H28_native10510_producer32_B08_source_schema_caps_budgets_unchanged": true,
+  "scientific_admission": false,
+  "scope_inverse_exact_against_p3": true,
+  "selected_derived_sources": [
+    {
+      "bytes": 15125,
+      "path": "/private/tmp/lanl17_read_p4_native_release_observation_20261008_a5_r2.py",
+      "sha256": "1b7a344611a69d60cc8bfe0201e09822eab6124ed12f35f6342486488db30d20"
+    },
+    {
+      "bytes": 7926,
+      "path": "/private/tmp/lanl17_read_p4_normal_terminal_originals_20261008_a5_r2.py",
+      "sha256": "5b8076e4351d893e2cadf76e75d893119771d3ca892688f8cfa99968c8a1bb94"
+    },
+    {
+      "bytes": 18684,
+      "path": "/private/tmp/lanl17_finalize_p4_normal_release_request_20261008_a5_r4.py",
+      "sha256": "adcd53fc2b54fe295c34ab30dd1e0ad0db30e173b805490abf6c94840c140e5c"
+    },
+    {
+      "bytes": 12469,
+      "path": "/private/tmp/lanl17-p4-release-request-draft-r1-20261008-a5.json",
+      "sha256": "642f69d4c4c7b12a72e1ffa7141ef634f2974ba57d7e24f6bf75543592c569fb"
+    }
+  ],
+  "six_reader_AST_functions_exact": [
+    "need",
+    "tick",
+    "stamp",
+    "canonical",
+    "metadata",
+    "strict"
+  ],
+  "source_only_not_run": true,
+  "stop_release_after_normal_terminal_inputs_future": true,
+  "verdict": "PASS_SOURCE_ONLY"
+}

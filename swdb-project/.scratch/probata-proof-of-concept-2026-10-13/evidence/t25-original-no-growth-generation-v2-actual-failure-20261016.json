@@ -1,0 +1,37 @@
+{
+  "caller_acceptance": false,
+  "elapsed_seconds": 6.262623080983758,
+  "error": "[Errno 2] No such file or directory: '/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/Ctypes.ml'",
+  "error_type": "FileNotFoundError",
+  "generation_complete": false,
+  "linux_launch": {
+    "Mac_counted_token_required": false,
+    "command_sha256": "3e0cc0c088a3d893f4f1a55b185f2fa8b9e766088a34b0c7aae2062d3d7082ef",
+    "launch": {
+      "bytes": 75637,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-original-no-growth-gen-v2/launch.json",
+      "sha256": "eab2f03019dbdbcbadc750f28292e78bd7d269de6e0e6e4b4b85956c999cec71"
+    },
+    "lock_path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-original-no-growth-gen-v2/verifier.lock",
+    "marker_path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-original-no-growth-gen-v2",
+    "rss_cap_bytes": 8589934592,
+    "scope": "Linux root socket-lane + reviewed watch/execute ownership, not a Mac c6 token or lock claim",
+    "source_commit": "c978393b119a3614229a37f0f2c8ca2a097c750b",
+    "whole_seconds": 420
+  },
+  "model_acceptance": false,
+  "public_proof_record_created": false,
+  "scope": "ORIGINAL no-growth root task generation only; unproved model summaries may appear as hypotheses. No proof, body/caller admission or source-runtime correspondence theorem.",
+  "solver_proof_requested": false,
+  "source_commit": "c978393b119a3614229a37f0f2c8ca2a097c750b",
+  "source_receipts": [
+    {
+      "bytes": 637337,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-original-no-growth-gen-v2/original-no-growth-generation-v2-profile/source-consumers-0.json",
+      "sha256": "2e0f0f8dd927d59f87c25a1c3b2340cba6934f16426ca61061e152e5d683363a"
+    }
+  ],
+  "source_runtime_correspondence_proved": false,
+  "ticket_closure": false,
+  "within_profile_budget": true
+}

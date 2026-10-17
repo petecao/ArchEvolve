@@ -1,0 +1,61 @@
+{
+  "actual_successor_launched": false,
+  "date": "2026-10-16 ET",
+  "files": [
+    {
+      "bytes": 35681,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/linux_trace_entry_v4.py",
+      "sha256": "5f17d3f730253265393575aa9557b7bfcc567ee83bdf231b2b828e8412e1c986"
+    },
+    {
+      "bytes": 542212,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/linux_trace_policy_04af74c1_v4.json",
+      "sha256": "d61807f5595e77aabdbd054b6f00caff636775f07ab697f368af8f87864241de"
+    },
+    {
+      "bytes": 11289,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/linux_trace_command_04af74c1_v4.json",
+      "sha256": "b3a732885442af69634d9a2c1d5e8ef45506cc499c99374470de8a1ba5c3bed0"
+    },
+    {
+      "bytes": 3229,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/prepare_trace_04af_namespace_v4.py",
+      "sha256": "bb7c047e4f6903a2796c39b4a2babe2fe0d31286c5646e865397c0dbaecf4f27"
+    },
+    {
+      "bytes": 5396,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_trace_namespace_v4.py",
+      "sha256": "6b70b560eb0997efa4e31f434c08166bd3609b93d994c13164347bdb469091bc"
+    }
+  ],
+  "preserved_actual_V3_refusal": {
+    "OOM": false,
+    "evidence_origin": "Root direct actual report; raw receipt/log pins remain root-retained",
+    "generation": 634,
+    "node": 1,
+    "outer_exit_code": 1,
+    "peak_rss_bytes": 82837504,
+    "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v3",
+    "reason": "fresh V2 memory-trace raw namespace differs",
+    "root_receipt": {
+      "bytes": 4859,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-trace-v3-root-namespace-refusal-20261016.json",
+      "sha256": "07ff517c4abf14fedac595324e0a02410f2e9147079570912ff7fa2d1b150c73"
+    },
+    "root_reported_UTC": "2026-10-16 19:43:07\u201319:43:09Z",
+    "scientific_tool_or_test_phase_reached": false,
+    "timeout": false,
+    "wall_s": 2.128
+  },
+  "pure_controls": {
+    "actual_validate_policy_function_executed_against_final_policy": true,
+    "all_other_entry_bytes_inverse_equal": true,
+    "elapsed_s": 0.05,
+    "old_actual_refusal_reproduced": true,
+    "passed": 5,
+    "wrong_suffix_prefix_guard_junit_refused": true
+  },
+  "runtime_and_all25_criteria_changed": false,
+  "source_commit": "04af74c121a733589fbe1a2087ad602deaef598b",
+  "status": "NAMESPACE_ONLY_SUCCESSOR_PENDING_INDEPENDENT_REVIEW"
+}

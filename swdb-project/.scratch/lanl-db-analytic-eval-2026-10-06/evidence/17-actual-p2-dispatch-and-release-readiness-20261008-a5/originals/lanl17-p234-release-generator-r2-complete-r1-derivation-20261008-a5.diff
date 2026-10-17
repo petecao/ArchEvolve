@@ -1,0 +1,13 @@
+--- /private/tmp/lanl17_derive_later_campaign_release_sources_20261008_a5_r1.py
++++ /private/tmp/lanl17_derive_later_campaign_release_sources_20261008_a5_r2.py
+@@ -81,7 +81,9 @@
+   if isinstance(v,list):return [routes(x) for x in v]
+   if isinstance(v,str):return v.replace(CID1+'/attempt-1',a.campaign+'/attempt-1').replace('lanl17-p1-',f'lanl17-{tag}-').replace('generation511',f'generation{generation}').replace('match511',f'match{generation}')
+   return v
+- draft=routes(draft);spec=draft['request_template'];need(spec['context']['policy']==m['policy'],'global_policy_retained')
++ legacy_predecessor=copy.deepcopy(draft['supersedes_source_only_draft'])
++ legacy_predecessor['reference_scope']='original_p1_draft_predecessor_provenance_only'
++ draft=routes(draft);draft['supersedes_source_only_draft']=legacy_predecessor;spec=draft['request_template'];need(spec['context']['policy']==m['policy'],'global_policy_retained')
+  spec['observations']['lease_generation']['required_value']=generation
+  spec['inputs']['dispatch'].update(path=RAW+'/attempts/'+a.campaign+'/attempt-1/dispatch-preregistration.json',bytes=len(db),sha256=sha(db),identity_sha256=d['identity_sha256'])
+  draft_bytes=(json.dumps(draft,indent=2,ensure_ascii=True,allow_nan=False)+'\n').encode()

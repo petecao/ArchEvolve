@@ -1,0 +1,71 @@
+{
+  "format": "swdb.cpu-band-report-hashlib-a4-portable-readiness.v1",
+  "preparation_identity_sha256": "dd160dce6b42271ed5fc524444673eb5a75288c8cdcdcd4a95567dbf6e0423f9",
+  "controls": {
+    "dispatcher": {
+      "path": "/private/tmp/lanl-dispatch-cpu-band-report-a4-metadata2400-cleanup60-hashlib.py",
+      "sha256": "543b79ea40a54537ee23b37ec1f44afbc8b135cad3fff25fb82d35db7b5130c7"
+    },
+    "exporter": {
+      "path": "/private/tmp/lanl-export-cpu-band-report-a4.py",
+      "sha256": "1d1251baeba12c65c40a7a616060e5ff236197ce73f77335534d4a4d83fe32a6"
+    },
+    "dispatch_guard": {
+      "path": "/private/tmp/lanl-admit-cpu-future-phase-cleanup60-report-a4-20261007.py",
+      "sha256": "bfc76a462c551c1358f935038ad4f41374af9ec9fb19ba2488b207bbf4e06ae2"
+    },
+    "export_guard": {
+      "path": "/private/tmp/lanl-export-completed-cpu-phase-guard-report-a4-20261007.py",
+      "sha256": "26f6b83acced22cf94797dc8066f335f393cfbd63502580b461186bc92485eaf"
+    }
+  },
+  "snapshots": {
+    "lanl-prepare-cpu-band-report-hashlib-a4-20261007.py": {
+      "bytes": 7808,
+      "sha256": "cf068d883aa98850c63b692b494b51125d1b06101bb6db94fa6141ef31b381eb"
+    },
+    "lanl-test-cpu-band-report-a4-hashlib-startup.py": {
+      "bytes": 4786,
+      "sha256": "84e093eb1169667934cd66aaf2acd7adfb4a552250ca73d03afbfc885bcc9f38"
+    },
+    "lanl-cpu-band-report-a4-hashlib-preparation.json": {
+      "bytes": 5976,
+      "sha256": "dc123979fecddae9c142284f582288b3410fa96e8e800ae21e9ac738ba4fbcd3"
+    },
+    "lanl-cpu-band-report-a4-hashlib-red.json": {
+      "bytes": 702,
+      "sha256": "48ef457116daf12543866bcc647e4d6f7bd9f1ef031dd2b51f1dd7d3d0695a79"
+    },
+    "lanl-cpu-band-report-a4-hashlib-green.json": {
+      "bytes": 1363,
+      "sha256": "a28c1be75373ebb0455e04d3a06fa77a8d501d81a744cfc6fba01075ec8c08c6"
+    },
+    "lanl-cpu-band-report-a4-hashlib-exact-diff.txt": {
+      "bytes": 5763,
+      "sha256": "fb6673568798a81248aa9e14115e5a4b9f6ba8d76578cd535e26a0ba73cc8db9"
+    },
+    "lanl-cpu-band-report-a4-metadata2400-cleanup60-hashlib-runner.py": {
+      "bytes": 13941,
+      "sha256": "0e84c1b2be4bcd8f2aabd107172fac4c1daa49527d389138ebd1338d00fa9c2f"
+    },
+    "lanl-cpu-band-report-a4-hashlib-review-20261007.md": {
+      "bytes": 4718,
+      "sha256": "bc1ee6a37578f44e35350315bde8b2d76b9d6f759b826ec06f0358f55faa572a"
+    }
+  },
+  "regression": {
+    "RED_exit": 1,
+    "GREEN_exit": 0,
+    "checks": 4,
+    "actual_import_AST_and_two_hash_assert_AST_in_fresh_isolated_child": true,
+    "original_missing_import_and_two_hash_tampers_refused": true
+  },
+  "exact_allowed_byte_reversals": true,
+  "decoded_runner_AST_only_hashlib_import_added": true,
+  "original_controls_byte_exact": true,
+  "report_attempt_mapping": "a4 actual raw/lane; a3 unchanged logical study/export/canonical IDs",
+  "Store_scientific_native_provider_or_lease_cleanup_execution": false,
+  "remote_staging_retry_export": "NOT RUN",
+  "tracked_integration_changes": false,
+  "identity_sha256": "48d2c1800c9986b782b92ef26e1e4ee4b444d7939f71edbc6bdcef425a5b4e97"
+}

@@ -1,0 +1,129 @@
+{
+  "format": "swdb.cpu-report-admission-closeout-archive.v1",
+  "updated": "2026-10-07 09:56 ET",
+  "base_integration_commit": "c24adc656a3c514eb9aa250f79c54e932f057e1b",
+  "source_commit": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "actual_report_export_commit": "8969d567599cb9f0d071f77936ab283fcb97c137",
+  "actual_compact_receipt_identity": "f11ba2b40361b489169f48e6160a4dc9b927b1802f987264acab6354285f8db1",
+  "actual_local_admission_identity": "ab5c80d246fe8c7419a48b82eafb395c37e850c11c10fbd509de545fa62ae578",
+  "canonical_ensure_ascii": true,
+  "entries": [
+    {
+      "path": "lanl-cpu-band-report-a4-local-admission-20261007.json",
+      "source_path": "/private/tmp/lanl-cpu-band-report-a4-local-admission-20261007.json",
+      "bytes": 12030,
+      "sha256": "6e1a9bc81196b286f82e2403d350e5cf16c125bb7c15f22f6a89f5ce9e3fd5b3",
+      "custody": "exact_bytes",
+      "evidence_scope": "actual_local_selected_record_admission",
+      "identity_sha256": "ab5c80d246fe8c7419a48b82eafb395c37e850c11c10fbd509de545fa62ae578",
+      "canonical_ensure_ascii": true
+    },
+    {
+      "path": "lanl-readonly-cpu-future-phase-admission-20261007.py",
+      "source_path": "/private/tmp/lanl-readonly-cpu-future-phase-admission-20261007.py",
+      "bytes": 24241,
+      "sha256": "8b85e34287a4dc67e5ff0c9a535aefd46a6c2ecf6051a934607f853074f90016",
+      "custody": "exact_bytes",
+      "evidence_scope": "exact_executed_local_reader_source"
+    },
+    {
+      "path": "lanl-cpu-band-report-export-a4-actual-20261007.json",
+      "source_path": "/private/tmp/lanl-cpu-band-report-export-a4-actual-20261007.json",
+      "bytes": 1524,
+      "sha256": "a7c8c3289bc3f4d6dd76c5e5729b4696653991a134493881277442bd25d2e3ba",
+      "custody": "exact_bytes",
+      "evidence_scope": "original_unsealed_actual_parent_export_metadata",
+      "original_seal": "absent",
+      "canonical_document_sha256": "3b1ff30124a650e783bf1714c58f79b78b8c9fb42f3909877652cfe1e40ea2ca",
+      "canonical_ensure_ascii": true
+    },
+    {
+      "path": "lanl-remove-consumed-cpu-export-a3-20261007.py",
+      "source_path": "/private/tmp/lanl-remove-consumed-cpu-export-a3-20261007.py",
+      "bytes": 4549,
+      "sha256": "534834a42ab56d7005fd39a2a691a6972c9262ff59bb102a455f3c8f18263508",
+      "custody": "exact_bytes",
+      "evidence_scope": "exact_parent_executed_cleanup_source"
+    },
+    {
+      "path": "lanl-cpu-band-report-a4-export-cleanup-preflight-20261007.json",
+      "source_path": "/private/tmp/lanl-cpu-band-report-a4-export-cleanup-preflight-20261007.json",
+      "bytes": 508,
+      "sha256": "d23e4b7583e6752875f787bee9548dc183d4eba1187fc84682863c664fe41ec3",
+      "custody": "exact_bytes",
+      "evidence_scope": "original_unsealed_actual_parent_cleanup_preflight",
+      "original_seal": "absent",
+      "canonical_document_sha256": "5be4fb2b0218db8c43554e617839741ff82115877813839024d86157d7792705",
+      "canonical_ensure_ascii": true
+    },
+    {
+      "path": "lanl-cpu-band-report-a4-export-cleanup-actual-20261007.json",
+      "source_path": "/private/tmp/lanl-cpu-band-report-a4-export-cleanup-actual-20261007.json",
+      "bytes": 515,
+      "sha256": "80e82f7c3cb5aa8caabe8775f6aa58c60473486d3758be8d2875e346232e1f40",
+      "custody": "exact_bytes",
+      "evidence_scope": "original_unsealed_actual_parent_cleanup_removal",
+      "original_seal": "absent",
+      "canonical_document_sha256": "88bc65b328d9c64fa0ce3e95da3f1da004970de1c813bac987db0b53a5a8c63a",
+      "canonical_ensure_ascii": true
+    },
+    {
+      "path": "lanl-cpu-future-phase-reader-preparation-20261007.json",
+      "source_path": "/private/tmp/lanl-cpu-future-phase-reader-preparation-20261007.json",
+      "bytes": 1690,
+      "sha256": "44c6ea1680fb9c1198adb8bc2a452798c1bf5e99f9954bcf98e59a6369ea07ce",
+      "custody": "exact_bytes",
+      "evidence_scope": "historical_unexecuted_preparation_at_creation",
+      "identity_sha256": "52507715d35c812472b9879c32f6ff781d4c6c378a09cecd9a8765dfd89f1ee5",
+      "canonical_ensure_ascii": true
+    },
+    {
+      "path": "README.md",
+      "bytes": 5431,
+      "sha256": "74af0f56addd1a6d7715b42b1064e5c922eaeb2642f01bb3fe5564362f2bf836",
+      "custody": "dated_context"
+    }
+  ],
+  "protected_prior_subtree_ids": {
+    "swdb-project/swdb": "a8e0c96076e1167c2b6ed10b612ecf1fc64bf5b6",
+    "swdb-project/schemas": "56b62ce78c53160e9a4bf1019c01c18961f21651",
+    "swdb-project/vocab": "fe4b5a82e94243733b06072702f53a001506eb68",
+    "swdb-project/records": "b698226310bdf054f8af16a59fd25db1060f6d3a",
+    "swdb-project/library": "efd78f19dd19389f18a3cae36eb3c86d06459b55",
+    "swdb-project/apps": "09fb65f4b5c4ab842f49d8f15fa532f3df50f23a",
+    "swdb-project/tools": "c7643f80330662aae8be7247c22cc8da01a6e497",
+    "swdb-project/scripts": "0ed42bc8e74c87d997e7d7dfd5280505fa9a3e72"
+  },
+  "canonical_records_preserved": 686,
+  "full_validation_repeated": false,
+  "outcomes": {
+    "bfs": {
+      "predicted_seconds": 0.14771765534735024,
+      "native_median_seconds": 0.00274,
+      "width_log": 4.015855135911417,
+      "state": "validated",
+      "validated": true,
+      "missing": [],
+      "public_verdict": "within_error",
+      "seconds_unchanged": true,
+      "regions_unchanged": true
+    },
+    "bc": {
+      "predicted_seconds": 1.154672610067664,
+      "native_median_seconds": 0.0294,
+      "width_log": 3.5172348723064677,
+      "state": "failed",
+      "validated": false,
+      "missing": [
+        "empirical_holdout_outside_frozen_width"
+      ],
+      "public_verdict": "within_error",
+      "seconds_unchanged": true,
+      "regions_unchanged": true
+    }
+  },
+  "evidence_scope": "Faithful completed report admission: broad BFS validated; observed BC failure retained; no retuning, accuracy, CI or protected-ROI transfer claim.",
+  "manifest_identity_semantics": "Canonical JSON digest excluding identity_sha256; original unsealed snapshots stay unsealed; manifest does not recursively hash itself.",
+  "identity_sha256": "776f70208700be734a693338485e69b3eac712687120a63f47b4c476a6ff6756"
+}

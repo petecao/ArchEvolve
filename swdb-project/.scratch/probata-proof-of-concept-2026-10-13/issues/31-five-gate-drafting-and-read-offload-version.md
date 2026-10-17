@@ -1,0 +1,46 @@
+# 31 — Five-gate drafting and the new bfs_read_offload version
+
+Created: 2026-10-13 22:17 ET
+Updated: 2026-10-13 23:15 ET (review fixes)
+**Type:** slice
+**Status:** ready-for-agent
+**Blocked by:** 01, 23, 30
+**Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Formal-half language and the C++ subset" (five gates; `bfs_read_offload` placements), "Modules" (new library versions), "Concurrency" (shared-action kinds; the redundant store), "Proven once vs per candidate" (drafting rule), "Providers and machines", S1, S5, O2, O8); decisions: [09](../../formal-verification-2026-10-09/issues/09-what-proven-asserts.md), [10](../../formal-verification-2026-10-09/issues/10-proven-rewrite-contract.md), [15](../../formal-verification-2026-10-09/issues/15-concurrency-proofs.md), [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md), [24](../../formal-verification-2026-10-09/issues/24-alignment-hint-kind.md)
+**Time estimate:** about 1 week
+
+**What to build:** Missing formal halves stop costing Yan-Ru drafting time: an agent (Codex) drafts them, and five gates decide. First use: a new `bfs_read_offload` version in which every clause has a formal half or a placement in the assumption set, ready for the contract proof (ticket 32). `bc_read_offload` stays untouched before the freeze (O8). End to end: Codex drafts a formal half; Frama-C parses and type-checks it; the reference instance proves it; every formal-visible negative control is refuted with it; its check-mode form passes every certify run of the reference instance; and the promotion review lists all of that for Yan-Ru's approval.
+
+## Acceptance
+
+- [ ] **Five gates, in order** (map 16 item 5). Each draft must pass: (1) Frama-C parses and type-checks it against the C lowering of the baseline proof unit's signature; (2) the reference instance proves it (proof record); (3) each formal-visible negative control is refuted with it (proof records); (4) its runtime-check form, from the C-stub generator in check mode, passes every certify run of the reference instance (certification records); (5) Yan-Ru approves the statement at promotion (review record). A draft that fails a gate stops there, and the rejection is recorded by gate.
+- [ ] **Each gate has a negative control.** A draft that does not parse stops at gate 1. A draft too strong for the reference instance (for example, one that requires the next frontier sorted by vertex ID) stops at gate 2. A draft too weak (for example, `once_enqueue` without its exactly-once count, so `forged_frontier`, a doubled push, proves) stops at gate 3. A draft whose check-mode form fails a certify run stops at gate 4.
+- [ ] **New `bfs_read_offload` version.** ACSL formal halves for L1, L2, L3, L4 and `once_enqueue`. The unit postcondition (map 09 item 1: after one `TDStep` call, the same newly visited vertices, the same next-frontier set, every new parent a valid frontier neighbor, every other vertex unchanged). Per interface array, the shared-action kinds it allows and whether its reads are history reads (map 16 item 4).
+- [ ] **Proof placements.** L1, L2, L3, L4, `once_enqueue` and every other clause (the knob clauses included) are `per_candidate`. L5 is `assumed`, kind proof semantics. Negative control: with one placement removed, `swdb validate` refuses the version.
+- [ ] **No redundant store.** L4 no longer requires the labeled redundant `parent` store (map 15 item 11). That text lives only in the old version.
+- [ ] **Old version kept.** The previous `bfs_read_offload` version still validates with an unchanged content hash, and its certification records still count.
+- [ ] **BC untouched** (O8). No new `bc_read_offload` version is written; its content hash is the same before and after. A query of the built tables shows no proof record with a BC subject.
+- [ ] **Guarded workspace.** Through the provider workspace and guard seam, the drafting workspace holds none of the authors' DX100 functions the guard names.
+- [ ] **Ready for review.** A promotion review for the new `bfs_read_offload` version lists every drafted formal half with its gate 1-4 results and record IDs, and asks Yan-Ru for gate 5.
+
+## Notes
+
+- **Not in this ticket:** 30 — Reference definitions, per-call summaries and new intrinsic versions (the summaries the drafts use). 32 — BFS contract proof (the contract-proof records). 33 — Minimum-bounds script and A2 exit. 23 — C-stub translator, fallbacks and check mode (gate 4's check mode). 44 — Shared-action kinds and commutativity lemmas. 45 — Per-thread lowering (sharing classes per barrier interval are per candidate artifact, proposed by the C lowering). 49 — Peter's race repaired; A4 exit (repairs Peter's code; the S5 re-proof). 52 — Split the bundled read offload. evaluation 02 — BC held-out contract and contract proof (drafts the new blind BC contract and decides whether the old `bc_read_offload` contract is retired).
+- **Why 01 blocks this ticket:** the guarded-workspace check needs the guard's full name list from 01 — Guard blocks the authors' held-out functions (`BrandesMaa` included, by O2's default).
+- First drafts are small (map 16 item 5). L2: the claim kind's write-once rule (a sharing declaration on `parent`). L4: claim plus queue reserve plus one predicate (for each k, `(frontier[k], vertices[k])` is an edge from this chunk and `hints[k]` is a history read of `parent[vertices[k]]`). `once_enqueue`: queue reserve plus "push v exactly when the claim on v succeeds". L1 is about the candidate artifact's continuation loop (control `dropped_continuation`). L3 follows from the L5 rule plus "`parent` is initialized before `TDStep`", a proof-unit precondition the lifting lemma discharges (ticket 32). Runtime guards are proof-unit preconditions, not clauses.
+- Every contract states a unit postcondition; a relational template would need a recorded reason (map 24 item 2). BFS needs none.
+- Provider: Codex with the map spec's pin. Formal-half gate rejections are a secondary result of the evaluation, so every rejection is kept.
+- Assumption (not decided in the map): gates 2 and 3 run at threads = 1. Peter's code as written races at N > 1 (map 15 item 11), so per S5 they are re-run on the repaired code in ticket 49. A gate-2 record at proven within bounds (threads = 1) passes the gate. Where a gate record is also a contract-proof part, ticket 32 reuses it.
+- Assumption (not decided in the map): the drafting workspace shows the clause's natural-language text, the C lowering of the baseline proof unit's signature, the logic library and the summaries. It hides the negative controls, as the `proof_hinting` workspace does (map 13 item 6), so gate 3 tests a draft instead of shaping it. Yan-Ru may change this.
+- Assumption (not decided in the map): the map sets no drafting budget. This ticket records rounds per clause and sets no cap.
+- Assumption (not decided in the map): each of the contract's negative controls gets its label here (single-thread, concurrency phase or runtime only; map 10 item 2), because gate 3 needs to know which controls are formal-visible.
+- Assumption (not decided in the map): the contract's bound-dimension list (map 09 item 11 as changed by map 19: threads, vertices, edges, tile lanes, knob values, frontier size; no unroll depth) goes into the new version, because ticket 33's script grows these dimensions.
+- Gate 5 happens at promotion, Yan-Ru's step (map 16 item 5). Assumption (not decided in the map): tickets 32 and 33 may start on the new version before it. If his review changes a statement, the affected records stop counting through their content hashes.
+- **BC (O8, default until Yan-Ru rules):** `bc_read_offload` stays untouched before the freeze. No new BC version, no BC formal half, no BC lowering: held-out kernels are not touched before the freeze (map 27 item 1). Evaluation 02 decides whether the old contract is retired.
+
+## Later changes
+
+- 2026-10-14 04:00 ET (main session, from ticket 13): rewriting workspaces now refuse any shown file that names
+  an authors' accelerated function (`swdb/provider_workspace.py`, `_refuse_authors_code`). The `dx100-bfs-scalar`
+  snapshot's `apps/dx100/benchmarks/gapbs/src/bfs.cc` defines `TDStepMAA` and `DOBFSMAA` (lines 66, 366), so every
+  DX100 BFS rewrite on it is refused before the provider call. This ticket's drafting workspace needs a
+  scalar-only BFS snapshot (the authors' functions removed, ticket 01's hand-off) before its first rewrite.

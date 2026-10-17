@@ -1,0 +1,86 @@
+{
+  "format": "swdb.lanl17-interim-spec-axis-checkpoint-review.v1",
+  "created_ET_date": "2026-10-08",
+  "axis": "Spec",
+  "interim_not_final_review": true,
+  "fixed_base": "2e81bec43c2389f49e1a46da1637876c53a6aa15",
+  "fixed_checkpoint": "5d07313e2fdd9bf5bcdf84e51f028c381a97f0e6",
+  "diff_command": "git diff 2e81bec43c2389f49e1a46da1637876c53a6aa15 5d07313e2fdd9bf5bcdf84e51f028c381a97f0e6 -- swdb-project",
+  "diff_pin": {
+    "path": "git-diff-scoped",
+    "bytes": 675067,
+    "sha256": "ed5a3a1edceed9a80cf567427ce0e58bb70d467857d3d224679e3f9c9ef24c7c"
+  },
+  "commits": [
+    "5d07313e Preserve FINALIZE progress and correct custody writer policy"
+  ],
+  "spec": {
+    "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/spec.md",
+    "bytes": 35648,
+    "sha256": "23f377528d53079675caf03bf9b66a060480c38a1727f0fd396afa4affeb09a4"
+  },
+  "ticket17": {
+    "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/issues/17-agreement-report.md",
+    "bytes": 52961,
+    "sha256": "262c98bf188f75f1a57ea403079618cd893a48719046ccb688f0bf94d39db657"
+  },
+  "report": {
+    "path": "/private/tmp/lanl17-interim-spec-axis-checkpoint-review-r1-20261008-5d07313e.md",
+    "bytes": 2121,
+    "sha256": "c029aac569325c74c86f8cd99d803bcea73af27a5b498ecc24b67c3ac5a44889"
+  },
+  "report_word_count": 279,
+  "known_findings": [
+    {
+      "priority": "P2",
+      "file": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-terminal-review-parent-checklist-20261008-a5-r2.md",
+      "line": 31,
+      "issue": "all-CID export presence prose differs from unchanged per-CID completion reader",
+      "already_reported_by_parent": true,
+      "correction_pending_R3_prose_only": true,
+      "spec_quote": "As Yan-Ru, I want an agreement report (rank agreement between estimate and timing, and whether gem5's best candidate survives a top-3 cut by estimate)",
+      "spec_line": 174,
+      "ticket_quote": "Blindness verified for every pair (D26).",
+      "consumer_reference": "/private/tmp/lanl17_read_finalize_completion_originals_20261008_a5_r2.py:141",
+      "no_control_or_original_mutation_required": true
+    }
+  ],
+  "additional_actionable_findings": [],
+  "scope_creep_found": false,
+  "inventories": [
+    {
+      "name": "original-inventory.json",
+      "count": 67,
+      "bytes": 535380
+    },
+    {
+      "name": "supplemental-review-inventory.json",
+      "count": 2,
+      "bytes": 20601
+    }
+  ],
+  "original_count": 69,
+  "original_total_bytes": 555981,
+  "all_pinned_blobs_and_retained_local_originals_equal": true,
+  "material_claim_checks": {
+    "report_index_strictaudit_final_review_pending_correct": true,
+    "ticket17_claimed_allacceptance_unchecked": true,
+    "assigned14of15consistent_map": true,
+    "dated_R3_unknown_plus_three_validated_tree_rows_preserved": true,
+    "six_stat_refusals_do_not_prove_actualUID_or_cause": true,
+    "P1_validation0_export_live_sourceRclean_native3clear_only_dated": true,
+    "B08True_default_source_not_ASCII_digestmatch": true,
+    "False_interpretation_withdrawn_additively_originals_exact": true,
+    "future_request_author_INPUTS_FUTURE_AND_NOTRUN": true,
+    "source_caps_native_modes_privacy_frozen_controls_unchanged": true,
+    "raw_record_provider_auth_diagnostic_bodies_not_added": true,
+    "allfour_normal_custody_not_numerical_D30_admission": true
+  },
+  "scientific_admission": false,
+  "SSH_tests_control_import_or_target_execution": false,
+  "historical_predecessor_preserved": {
+    "path": "/private/tmp/lanl17-interim-spec-axis-checkpoint-review-20261008-5d07313e.md",
+    "bytes": 2112,
+    "sha256": "5a125f57cb9d765cde2ec832523ad3b49bf72e438604ba7b8c60efc4d10dae54"
+  }
+}

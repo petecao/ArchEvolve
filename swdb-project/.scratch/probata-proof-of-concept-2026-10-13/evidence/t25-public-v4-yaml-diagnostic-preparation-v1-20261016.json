@@ -1,0 +1,72 @@
+{
+  "controls": {
+    "SSH_used": false,
+    "child_attempts": [],
+    "diagnostic_main_executed": false,
+    "failed": 0,
+    "passed": 7
+  },
+  "date": "2026-10-16 ET",
+  "frozen_reader_unchanged": true,
+  "full_observer_or_compiler_or_scientific_rerun": false,
+  "inputs": [
+    {
+      "bytes": 19493,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/yaml-diagnostic-v1/diagnostic-v1.py",
+      "sha256": "7911583b3e7ab87a76f20a5fc6ab7bed5edd8c37dc419e89f1446d67266f5ec4"
+    },
+    {
+      "bytes": 1001,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/yaml-diagnostic-v1/command.json",
+      "sha256": "9aae3cd6b94517cea712588fd9b33cd960e338794941388add0201cf43693aba"
+    },
+    {
+      "bytes": 3226,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/yaml-diagnostic-v1/pure_controls.py",
+      "sha256": "a06a02e24e75d91f0c1764cba8a921c7ece291f1de039bd287b399c14412c4ae"
+    },
+    {
+      "bytes": 926,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/yaml-diagnostic-v1/pure-controls.log",
+      "sha256": "d5966ded85a49d07a68ec4c2e0fd8109cb949ac56f4881d67797dd157dd78715"
+    },
+    {
+      "bytes": 8928,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/record_yaml_subset.py",
+      "sha256": "467cef5049fc30f730f0176f7db336952f6ce006ec11a9b2872abec9ca53daf9"
+    },
+    {
+      "bytes": 1088800,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/observer-v2.py",
+      "sha256": "55bfa4564acfcc387f28f8bb0dde57eeb4ea0ca6853e1b7071032111365d12d7"
+    },
+    {
+      "bytes": 1502,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-cold-v2-actual-execution-20261016.json",
+      "sha256": "de27ad93e20d71982c7f286fa235ed8f10af1b977f603be72d00a09964b2a524"
+    },
+    {
+      "bytes": 2471,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-cold-postflight-v1-20261016.json",
+      "sha256": "f0968a5f7247789887b999ff31e574dda119aadd9d797f47c958305c53fa59ff"
+    },
+    {
+      "bytes": 2336,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/yamlio.py",
+      "sha256": "8c92d644f5abca0f7031ce52e1577892cf1b7c79bc730484112eedb3e39439c0"
+    }
+  ],
+  "kind": "prospective structural metadata diagnostic; root admission required before remote inspection",
+  "limits": {
+    "CPU_seconds": 40,
+    "address_space_bytes": 268435456,
+    "alarm_seconds": 45,
+    "file_census": 20,
+    "input_maximum_bytes": 8388608,
+    "outer_seconds": 55,
+    "output_maximum_bytes": 32768,
+    "yaml_census": 15
+  },
+  "observation": "Exact five cases; each retained JSON only derives one validated proof filename. Parse proof/method/contract with unchanged strict reader. Emit pins, parser category, line counters and nearby structural flags only; no values or YAML/raw C text. Repeat physical content/nine-stat checks for all20 inputs.",
+  "source_or_caller_or_ticket_admission": false
+}

@@ -1,0 +1,86 @@
+{
+  "blocking_findings": [],
+  "boundaries": {
+    "actual_observer_execution": false,
+    "actual_retained_ABI_eligibility_observed": false,
+    "prepared_predeclared": false,
+    "source_body_receiver_context_native_public_or_ticket_acceptance": false
+  },
+  "command": {
+    "bytes": 17739,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v4/command-v4.json",
+    "sha256": "568d94b8f99583e5de75f5be66b288ab02a99a0963317820e320f3c91cacd660"
+  },
+  "date": "2026-10-16T21:17:17.975258-04:00",
+  "decision": "PASS",
+  "entry": {
+    "bytes": 24760,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v4/linux_observation_envelope_v4.py",
+    "sha256": "4cc547facb4bf5609c63991392ee5f6bcfbadf1f9b0c7749a54c44b4630c09fa"
+  },
+  "fixed_inventory": {
+    "bytes": 6625,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v4/observer/fixed-modules-v2.json",
+    "sha256": "c82d490d84b6ccb22b9824ee088c2e89339ab690c0cdddcc439acd43aad19a2f"
+  },
+  "nonblocking_metadata_qualification": {
+    "actual_basis": "The selected normalized_unit_observation_v1 module byte string is verified exact against its frozen normalized-unit-observation-v1 predecessor; actual file/bytes/hash and source/basis packet pins establish the reviewed lineage.",
+    "field": "observer/fixed-modules-v2.json modules[].origin for normalized_unit_observation_v1",
+    "finding": "An inherited informational origin label names normalized_capture_ingress_v2.py. It is not consumed by controls/install_fixed and is not accepted here as source lineage."
+  },
+  "observer_entry": {
+    "bytes": 11463,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v4/observer/observe_entry_v2.py",
+    "sha256": "0d12e2ac33e5417abaac8c071a0d2d36492c6dc52651f23d0229dc94527e4fab"
+  },
+  "policy": {
+    "bytes": 8920,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v4/envelope-policy-v4.json",
+    "sha256": "ee353dc80666280ca68a7d0299045a4619dd0cbd988d9876c0d9ba3382d7924c"
+  },
+  "required_before_dispatch": [
+    "Successful independently admitted retained ABI replay for the exact first original artifact, with source/runtime/raw/control/settlement closure; synthetic tests are insufficient.",
+    "Complementary root source review and once-admission of this exact successor and fresh ancillary command/source-review payload.",
+    "Fresh node0/source2baf/current wrappers/leases/process/resource checks and exact V11 root environment before interpreter startup."
+  ],
+  "schema": "ticket28-normalized-unit-envelope-v4-independent-spec-review-1",
+  "scope": "First-source V4 observer source/envelope successor only; no actual observation or ABI/source admission",
+  "source_checks": [
+    "All four complete source inverses reconstruct the frozen V3/private-observer predecessor exactly. Scientific/runtime/finalization function bodies remain unchanged.",
+    "Fixed inventory grows from11 to13 modules with ABI helper ea2e7e26 and exact token parser b866e14f. Nine old module byte strings remain exact; changed normalized adapter is precisely reviewed8acf2665.",
+    "The ingress change is only the selected physical normalized adapter hash. Its functions and all other constants are unchanged; a real physical inlet gate demonstrates V3 refusal/V4 admission of the selected bytes.",
+    "Private observer changes only fixed manifest identity, dependency order and manifest basename. Fixed compatibility role normalized_compiler_adapter_v1 selects the physically pinned normalized_compiler_adapter_v2 file; no arbitrary alias loading is allowed.",
+    "Unchanged legacy775ab2ec consumes exact derived strict ABI bytes. Its actual raw_probe_sha256 remains the derivative identity; original_raw_probe_sha256 and complete token/inverse transport separately identify the original.",
+    "Stable semantic ABI receipt named roles do not replace the actual fixed staged module physical pins; all13 real module files and both helper dependencies are independently checked.",
+    "Exact first-source normalized full TU,192MiB effective bound, full original source coordinates/dependencies, selected declarations, public preparation equality and private unknown-preparation boundary remain unchanged.",
+    "Fresh V4 raw name, paired pre-interpreter loader unsets, actual strict startup/role/source/runtime before+after,4GiB RSS,1200s whole/1180s entry,256MiB retention,4MiB output and settled-zero-exit finalization remain unchanged."
+  ],
+  "source_packet": {
+    "bytes": 19341,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v4/source-packet-v4.json",
+    "sha256": "b74571794e41588c2110c9d0ccc9150c825c08a4ca83b78288db7fab21e06667"
+  },
+  "validation": {
+    "command": "python3 /Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v4-independent-review/review_controls_v4.py",
+    "errors": 0,
+    "failures": 0,
+    "fixed_modules": 13,
+    "log": {
+      "bytes": 4305,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v4-independent-review/independent-controls-v4.log",
+      "sha256": "52bc64e7167fa15f8a45fcbee870eae42190292d496512e91889c121f2b7100a"
+    },
+    "no_child_native_network_project_execution": true,
+    "observer_controls": 15,
+    "packet_pin_occurrences": 44,
+    "script": {
+      "bytes": 3692,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v4-independent-review/review_controls_v4.py",
+      "sha256": "e582304dc77710b15eb958215ec0e8d1e6ed02bf50466ebb91e1d41a2f91b005"
+    },
+    "skips": 0,
+    "staged_bytes_including_policy": 453830,
+    "staged_controls": 29,
+    "tests": 23
+  }
+}

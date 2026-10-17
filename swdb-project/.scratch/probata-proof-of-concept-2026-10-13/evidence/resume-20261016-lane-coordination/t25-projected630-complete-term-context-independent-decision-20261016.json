@@ -1,0 +1,1511 @@
+{
+  "accepted_scope": "Complete attributed conditional projected-C proof observations and source/context interpretation only. No unexplained desired-result axiom or prior/sibling proof import was found. This audit does not discharge the explicitly unadmitted constructor/source/Typed/lifetime/observer composition.",
+  "all_goal_ledger": [
+    {
+      "function": "vector_realloc_v3_no_growth",
+      "goal": "typed_real_vector_realloc_v3_no_growth_wp_smoke_default_requires",
+      "line": 125,
+      "passed": true,
+      "proof_credit": false,
+      "property": "vector_realloc_v3_no_growth_wp_smoke_default_requires",
+      "results": [
+        "timeout",
+        "unknown",
+        "timeout"
+      ],
+      "semantic_class": "operational smoke nonproof",
+      "semantic_interpretation": "Native passed=true uses the smoke-health convention: raw attempts are timeout/unknown/timeout for default_requires and all timeout for the other3. It neither proves the desired theorem nor certifies satisfiability/consistency.",
+      "smoke": true
+    },
+    {
+      "function": "vector_realloc_v3_no_growth",
+      "goal": "typed_real_vector_realloc_v3_no_growth_wp_smoke_dead_code_s55",
+      "line": 142,
+      "passed": true,
+      "proof_credit": false,
+      "property": "vector_realloc_v3_no_growth_wp_smoke_dead_code_s55",
+      "results": [
+        "timeout",
+        "timeout",
+        "timeout"
+      ],
+      "semantic_class": "operational smoke nonproof",
+      "semantic_interpretation": "Native passed=true uses the smoke-health convention: raw attempts are timeout/unknown/timeout for default_requires and all timeout for the other3. It neither proves the desired theorem nor certifies satisfiability/consistency.",
+      "smoke": true
+    },
+    {
+      "function": "vector_realloc_v3_no_growth",
+      "goal": "typed_real_vector_realloc_v3_no_growth_wp_smoke_dead_code_s56",
+      "line": 142,
+      "passed": true,
+      "proof_credit": false,
+      "property": "vector_realloc_v3_no_growth_wp_smoke_dead_code_s56",
+      "results": [
+        "timeout",
+        "timeout",
+        "timeout"
+      ],
+      "semantic_class": "operational smoke nonproof",
+      "semantic_interpretation": "Native passed=true uses the smoke-health convention: raw attempts are timeout/unknown/timeout for default_requires and all timeout for the other3. It neither proves the desired theorem nor certifies satisfiability/consistency.",
+      "smoke": true
+    },
+    {
+      "function": "std_vector_int_ctor_count_value",
+      "goal": "typed_real_std_vector_int_ctor_count_value_wp_smoke_dead_call_s47",
+      "line": 129,
+      "passed": true,
+      "proof_credit": false,
+      "property": "std_vector_int_ctor_count_value_wp_smoke_dead_call_s47",
+      "results": [
+        "timeout",
+        "timeout",
+        "timeout"
+      ],
+      "semantic_class": "operational smoke nonproof",
+      "semantic_interpretation": "Native passed=true uses the smoke-health convention: raw attempts are timeout/unknown/timeout for default_requires and all timeout for the other3. It neither proves the desired theorem nor certifies satisfiability/consistency.",
+      "smoke": true
+    },
+    {
+      "function": "vector_realloc_v3_no_growth",
+      "goal": "typed_real_vector_realloc_v3_no_growth_terminates",
+      "line": 125,
+      "materialized_SMT_query": false,
+      "passed": true,
+      "proof_credit": "conditional internal-tool observation only",
+      "property": "vector_realloc_v3_no_growth_terminates",
+      "results": [
+        "valid"
+      ],
+      "semantic_class": "internal Qed inventory and printed simplified true only",
+      "semantic_interpretation": "Generated termination/exit condition is internally simplified to Prove:true. This is not a termination/body proof for the called constructor or original C++ execution.",
+      "smoke": false
+    },
+    {
+      "conditional_on_unadmitted_constructor_summary": true,
+      "function": "vector_realloc_v3_no_growth",
+      "goal": "typed_real_vector_realloc_v3_no_growth_ensures",
+      "line": 124,
+      "materialized_copies": 2,
+      "passed": true,
+      "proof_credit": "native conditional observation only",
+      "property": "vector_realloc_v3_no_growth_ensures",
+      "query_canonical_AST_sha256": "02ad4af045d3c489db188e5fd1d4753d4c9999efbe4589134c15a98f2ddf7b64",
+      "results": [
+        "valid"
+      ],
+      "semantic_class": "retained ordinary negated query",
+      "semantic_interpretation": "On the positive branch, the selected first payload value equals7. The zero branch of the ternary is simplified internally. The positive theorem uses constructor size=n and quantified n filled values, plus established representation/readable/init/read-valid facts; it does not prove those constructor summaries.",
+      "smoke": false
+    },
+    {
+      "function": "vector_realloc_v3_no_growth",
+      "goal": "typed_real_vector_realloc_v3_no_growth_exits",
+      "line": 125,
+      "materialized_SMT_query": false,
+      "passed": true,
+      "proof_credit": "conditional internal-tool observation only",
+      "property": "vector_realloc_v3_no_growth_exits",
+      "results": [
+        "valid"
+      ],
+      "semantic_class": "internal Qed inventory and printed simplified true only",
+      "semantic_interpretation": "Generated termination/exit condition is internally simplified to Prove:true. This is not a termination/body proof for the called constructor or original C++ execution.",
+      "smoke": false
+    },
+    {
+      "conditional_on_unadmitted_constructor_summary": true,
+      "function": "vector_realloc_v3_no_growth",
+      "goal": "typed_real_vector_realloc_v3_no_growth_assert_swdb_closed_data",
+      "line": 132,
+      "materialized_copies": 2,
+      "passed": true,
+      "proof_credit": "native conditional observation only",
+      "property": "vector_realloc_v3_no_growth_assert_swdb_closed_data_requires",
+      "query_canonical_AST_sha256": "150ba136a6bfac92db41453153afbd0335ff1b4dc1297701e6265233758d3ed5",
+      "results": [
+        "valid"
+      ],
+      "semantic_class": "retained ordinary negated query",
+      "semantic_interpretation": "std_vector_int_readable(receiver) follows from the constructor std_vector_int_valid(receiver) summary and the source definitions: readable weakens valid receiver access and omits the max-size conjunct while preserving initialized fields, size/capacity and buffer/init constraints.",
+      "smoke": false
+    },
+    {
+      "conditional_on_unadmitted_constructor_summary": true,
+      "function": "vector_realloc_v3_no_growth",
+      "goal": "typed_real_vector_realloc_v3_no_growth_assert_rte_initialization",
+      "line": 133,
+      "materialized_copies": 2,
+      "passed": true,
+      "proof_credit": "native conditional observation only",
+      "property": "vector_realloc_v3_no_growth_assert_rte_initialization",
+      "query_canonical_AST_sha256": "3b6c639e28d16ebbc7db5d8b5e8afa04685798913620f383c4eb453c60460602",
+      "results": [
+        "valid"
+      ],
+      "semantic_class": "retained ordinary negated query",
+      "semantic_interpretation": "The saved data pointer field is initialized. The constructor representation/readable summary and generated all-fields IsInit receiver definition provide the relevant init bit.",
+      "smoke": false
+    },
+    {
+      "function": "vector_realloc_v3_no_growth",
+      "goal": "typed_real_vector_realloc_v3_no_growth_assert_swdb_closed_reserve",
+      "line": 136,
+      "materialized_SMT_query": false,
+      "passed": true,
+      "proof_credit": "conditional internal-tool observation only",
+      "property": "vector_realloc_v3_no_growth_assert_swdb_closed_reserve_requires",
+      "results": [
+        "valid"
+      ],
+      "semantic_class": "internal Qed inventory and printed simplified true only",
+      "semantic_interpretation": "The repeated vector-valid/size bound assertion is internally simplified to Prove:true using retained constructor and earlier ordinary facts.",
+      "smoke": false
+    },
+    {
+      "conditional_on_unadmitted_constructor_summary": true,
+      "function": "vector_realloc_v3_no_growth",
+      "goal": "typed_real_vector_realloc_v3_no_growth_assert_swdb_reserve_no_growth",
+      "line": 137,
+      "materialized_copies": 2,
+      "passed": true,
+      "proof_credit": "native conditional observation only",
+      "property": "vector_realloc_v3_no_growth_assert_swdb_reserve_no_growth",
+      "query_canonical_AST_sha256": "93ad4e9b50f4d2f7f6d43193eecaad84d8a291a3b2cb40cd66754daffd15ffda",
+      "results": [
+        "valid"
+      ],
+      "semantic_class": "retained ordinary negated query",
+      "semantic_interpretation": "Requested n is <= capacity. Constructor size=uint64(n), signed n>=0, bounded C conversion and vector size<=capacity yield this ordinary assertion; the source view then removes only the false growth branch.",
+      "smoke": false
+    },
+    {
+      "function": "vector_realloc_v3_no_growth",
+      "goal": "typed_real_vector_realloc_v3_no_growth_assert_rte_initialization_2",
+      "line": 142,
+      "materialized_SMT_query": false,
+      "passed": true,
+      "proof_credit": "conditional internal-tool observation only",
+      "property": "vector_realloc_v3_no_growth_assert_rte_initialization_2",
+      "results": [
+        "valid"
+      ],
+      "semantic_class": "internal Qed inventory and printed simplified true only",
+      "semantic_interpretation": "Definite initialization of source scalar/return temporaries is internally simplified to Prove:true on the selected control flow.",
+      "smoke": false
+    },
+    {
+      "conditional_on_unadmitted_constructor_summary": true,
+      "function": "vector_realloc_v3_no_growth",
+      "goal": "typed_real_vector_realloc_v3_no_growth_assert_rte_initialization_3",
+      "line": 142,
+      "materialized_copies": 2,
+      "passed": true,
+      "proof_credit": "native conditional observation only",
+      "property": "vector_realloc_v3_no_growth_assert_rte_initialization_3",
+      "query_canonical_AST_sha256": "fe51495955bf7f4a6a74d1d09f252c739eee4e03378bf0616cda44ba436b3611",
+      "results": [
+        "valid"
+      ],
+      "semantic_class": "retained ordinary negated query",
+      "semantic_interpretation": "Under n>0, the first payload cell is initialized. This relies on constructor vector-valid/initialized range, prior readable/data-field initialized and no-growth facts plus generated typed frame/initialization maps.",
+      "smoke": false
+    },
+    {
+      "conditional_on_unadmitted_constructor_summary": true,
+      "function": "vector_realloc_v3_no_growth",
+      "goal": "typed_real_vector_realloc_v3_no_growth_assert_rte_mem_access",
+      "line": 142,
+      "materialized_copies": 2,
+      "passed": true,
+      "proof_credit": "native conditional observation only",
+      "property": "vector_realloc_v3_no_growth_assert_rte_mem_access",
+      "query_canonical_AST_sha256": "f3112c6570f317add397343c1466a78db0ddd5d52bfaed3630f69363c6b1f987",
+      "results": [
+        "valid"
+      ],
+      "semantic_class": "retained ordinary negated query",
+      "semantic_interpretation": "Under n>0, one cell at the saved data pointer is readable. Size=n and size<=capacity with source vector validity imply the first-cell bound; scalar read precedes projected terminal cleanup.",
+      "smoke": false
+    },
+    {
+      "function": "vector_realloc_v3_no_growth",
+      "goal": "typed_real_vector_realloc_v3_no_growth_assert_swdb_closed_dtor_repr",
+      "line": 143,
+      "materialized_SMT_query": false,
+      "passed": true,
+      "proof_credit": "conditional internal-tool observation only",
+      "property": "vector_realloc_v3_no_growth_assert_swdb_closed_dtor_repr_requires",
+      "results": [
+        "valid"
+      ],
+      "semantic_class": "internal Qed inventory and printed simplified true only",
+      "semantic_interpretation": "The repeated destructor representation requirement is internally simplified to Prove:true. Freeability, release effects, automatic scope end and original destructor call are outside this projected C observer.",
+      "smoke": false
+    },
+    {
+      "function": "vector_realloc_v3_no_growth",
+      "goal": "typed_real_vector_realloc_v3_no_growth_assert_rte_initialization_4",
+      "line": 145,
+      "materialized_SMT_query": false,
+      "passed": true,
+      "proof_credit": "conditional internal-tool observation only",
+      "property": "vector_realloc_v3_no_growth_assert_rte_initialization_4",
+      "results": [
+        "valid"
+      ],
+      "semantic_class": "internal Qed inventory and printed simplified true only",
+      "semantic_interpretation": "Definite initialization of source scalar/return temporaries is internally simplified to Prove:true on the selected control flow.",
+      "smoke": false
+    },
+    {
+      "function": "vector_realloc_v3_no_growth",
+      "goal": "typed_real_vector_realloc_v3_no_growth_assigns_normal_part1",
+      "line": 125,
+      "materialized_SMT_query": false,
+      "passed": true,
+      "proof_credit": "conditional internal-tool observation only",
+      "property": "vector_realloc_v3_no_growth_assigns",
+      "results": [
+        "valid"
+      ],
+      "semantic_class": "internal Qed inventory and printed simplified true only",
+      "semantic_interpretation": "Internal Qed Prove:true for this projected caller assigns partition; constructor frame/assigns *this remains a modular unadmitted dependency, and the source allocator/private-write frame bridge is not established.",
+      "smoke": false
+    },
+    {
+      "function": "vector_realloc_v3_no_growth",
+      "goal": "typed_real_vector_realloc_v3_no_growth_assigns_normal_part2",
+      "line": 125,
+      "materialized_SMT_query": false,
+      "passed": true,
+      "proof_credit": "conditional internal-tool observation only",
+      "property": "vector_realloc_v3_no_growth_assigns",
+      "results": [
+        "valid"
+      ],
+      "semantic_class": "internal Qed inventory and printed simplified true only",
+      "semantic_interpretation": "Internal Qed Prove:true for this projected caller assigns partition; constructor frame/assigns *this remains a modular unadmitted dependency, and the source allocator/private-write frame bridge is not established.",
+      "smoke": false
+    },
+    {
+      "function": "vector_realloc_v3_no_growth",
+      "goal": "typed_real_vector_realloc_v3_no_growth_assigns_normal_part3",
+      "line": 125,
+      "materialized_SMT_query": false,
+      "passed": true,
+      "proof_credit": "conditional internal-tool observation only",
+      "property": "vector_realloc_v3_no_growth_assigns",
+      "results": [
+        "valid"
+      ],
+      "semantic_class": "internal Qed inventory and printed simplified true only",
+      "semantic_interpretation": "Internal Qed Prove:true for this projected caller assigns partition; constructor frame/assigns *this remains a modular unadmitted dependency, and the source allocator/private-write frame bridge is not established.",
+      "smoke": false
+    },
+    {
+      "function": "vector_realloc_v3_no_growth",
+      "goal": "typed_real_vector_realloc_v3_no_growth_assigns_exit",
+      "line": 125,
+      "materialized_SMT_query": false,
+      "passed": true,
+      "proof_credit": "conditional internal-tool observation only",
+      "property": "vector_realloc_v3_no_growth_assigns",
+      "results": [
+        "valid"
+      ],
+      "semantic_class": "internal Qed inventory and printed simplified true only",
+      "semantic_interpretation": "Internal Qed Prove:true for this projected caller assigns partition; constructor frame/assigns *this remains a modular unadmitted dependency, and the source allocator/private-write frame bridge is not established.",
+      "smoke": false
+    },
+    {
+      "conditional_on_unadmitted_constructor_summary": false,
+      "function": "vector_realloc_v3_no_growth",
+      "goal": "typed_real_vector_realloc_v3_no_growth_call_std_vector_int_ctor_count_value_requires",
+      "line": 129,
+      "materialized_copies": 2,
+      "passed": true,
+      "proof_credit": "native conditional observation only",
+      "property": "std_vector_int_ctor_count_value_requires_2",
+      "query_canonical_AST_sha256": "7a0c4313b2a98c62fa24692cbf1d3f145a316e36b90283ff9470460bef39f96c",
+      "results": [
+        "valid"
+      ],
+      "semantic_class": "retained ordinary negated query",
+      "semantic_interpretation": "The source constructor size argument uint64(n) is <=4611686018427387903. This follows from n>=0 and signed32 input domain, without importing constructor postconditions.",
+      "smoke": false
+    }
+  ],
+  "allocator_and_lifetime_TCB": {
+    "actual_Extern_assumption_count": 5,
+    "actual_Extern_assumptions": [
+      {
+        "kind": "assumed_clause",
+        "reference": {
+          "id": "swdb_free",
+          "sha256": "e301a232920b9439f2db75cccc278276c1e74ba760cbd9ca2ae7958210b401d4"
+        },
+        "sentence": "WP treats contract property swdb_free_assigns of swdb_free as Extern: assigns \\nothing;."
+      },
+      {
+        "kind": "assumed_clause",
+        "reference": {
+          "id": "swdb_alloc_int",
+          "sha256": "eb1f5833017762a8d83cc477b6d35e604be6906ebe70b7c0ba56abf032fa03b0"
+        },
+        "sentence": "WP treats contract property swdb_alloc_int_assigns of swdb_alloc_int as Extern: assigns \\nothing;."
+      },
+      {
+        "kind": "assumed_clause",
+        "reference": {
+          "id": "swdb_free",
+          "sha256": "e301a232920b9439f2db75cccc278276c1e74ba760cbd9ca2ae7958210b401d4"
+        },
+        "sentence": "WP treats contract property swdb_free_allocates of swdb_free as Extern: frees p;."
+      },
+      {
+        "kind": "assumed_clause",
+        "reference": {
+          "id": "swdb_alloc_int",
+          "sha256": "eb1f5833017762a8d83cc477b6d35e604be6906ebe70b7c0ba56abf032fa03b0"
+        },
+        "sentence": "WP treats contract property swdb_alloc_int_allocates of swdb_alloc_int as Extern: allocates \\result;."
+      },
+      {
+        "kind": "assumed_clause",
+        "reference": {
+          "id": "swdb_alloc_int",
+          "sha256": "eb1f5833017762a8d83cc477b6d35e604be6906ebe70b7c0ba56abf032fa03b0"
+        },
+        "sentence": "WP treats contract property swdb_alloc_int_ensures of swdb_alloc_int as Extern: ensures\n\\fresh{Old, Here}(\\result,\\old(n) * sizeof(int)) \u2227\n\\valid(\\result + (0 .. \\old(n) - 1))."
+      }
+    ],
+    "actual_goal_fact": "No retained materialized ordinary query or support context encodes native fresh/freeable/allocable/dangling lifetime predicates. The projected C has no source destructor/freeability/release/automatic-end observer. Unsupported lifetime annotations retained in model contracts and Extern metadata are not promoted into proved current native lifetime facts.",
+    "constructor_Extern_whitelist_added": false,
+    "interpretation": "The five primitive allocator/free clauses are retained assumption entries. Allocation success/fresh valid output, no writes to incoming observer memory, fresh-buffer initialization, freeability/release/frame and source/library correspondence remain explicitly trusted or pending; constructor correctness is not absorbed into this allocator whitelist. Default allocator spelling/full-TU provenance does not rule out external replacements/interposition.",
+    "primary_source_fact": "Pinned LogicSemantics.ml SHA7612c77530d4fe9bb89ec0b28460685f801b10e9b32fc9bfa479548d1b6e9e03 line882 groups Pallocable/Pfreeable/Pfresh/Pdangling and calls Warning.error: Allocation, initialization and danglingness not yet implemented. This branch does not prove those predicates.",
+    "primary_unsupported_predicate_source": {
+      "bytes": 993,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t25-projected630-lifetime-primary-v2-20261016.json",
+      "sha256": "2adb476ff0da740669589f97cfe72e0048b69f9d150ad811057cedba8b1d9603"
+    },
+    "warnings_retained": "Actual native log additionally retains skipped unaligned-pointer and valid-function RTE guard warnings. This source uses no indirect function call; source/full-TU/ABI/alignment obligations remain external to any universal claim."
+  },
+  "body_acceptance": false,
+  "caller_acceptance": false,
+  "complete_observation": {
+    "actual_native_statuses_not_relabelled": true,
+    "all_materialized_SMT_files": 38,
+    "healthy_operational_nonproof_smokes": 4,
+    "native_goals": 21,
+    "native_properties": 72,
+    "ordinary_internal_Qed_true_inventory_only": 10,
+    "ordinary_materialized_distinct_query_owners": 7,
+    "ordinary_materialized_files": 14,
+    "ordinary_materialized_nongGoal_assertion_instances": 1822,
+    "ordinary_native_Valid": 17,
+    "printed_common_exports": 19,
+    "repeated_smoke_exports_preserved": true,
+    "submitted_byte_identity_attested": false,
+    "submitted_task_count": null,
+    "unique_export_owners": 11
+  },
+  "created": "2026-10-16 ET",
+  "current_constructor_body_record_admitted": false,
+  "decision": "PASS_COMPLETE_CONDITIONAL_PROJECTED_C_TERM_CONTEXT_AUDIT; ORIGINAL_NOT_PROVEN_AND_ALL_ADMISSION_REFUSALS_RETAINED",
+  "full_import_closure": {
+    "attribution": "Recursive selected .mlw use/clone source closure is resolved without source shadow ambiguity, with full physical and module-body hashes and every declared axiom/lemma/goal listed. Mathematical/support axioms/lemmas are explicit standard-tool TCB, not independently reproven here. Why3 intrinsic core and SMT encoding/type bridges remain trusted encoder infrastructure.",
+    "generated_stack_axioms": "L_v_1168 denotes the one automatic receiver, generated base1169, region2 and linked lifetime metadata. IsInit framed/Chunk domain definitions are generated generic WP Typed/Var rules. Their exact body hashes are closed; they establish no actual malloc/free/lifetime refinement.",
+    "local_generated_theories": [
+      "Compound",
+      "Globals",
+      "Chunk",
+      "Axiomatic14"
+    ],
+    "module_metadata": {
+      "algebra.Assoc": {
+        "classification": "selected trusted standard arithmetic/map/Qed foundation",
+        "dependencies": [],
+        "module_body_sha256": "fe0261f6de3799d89a8f658fde7778c565f4c5abc3ce0020169278074ec46764",
+        "proposition_declarations": [
+          {
+            "kind": "axiom",
+            "name": "Assoc"
+          }
+        ],
+        "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4",
+        "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/algebra.mlw"
+      },
+      "algebra.Comm": {
+        "classification": "selected trusted standard arithmetic/map/Qed foundation",
+        "dependencies": [],
+        "module_body_sha256": "344c8403c2dd3774ad2c93ba95811de9391d4bf52678e6ebec3346558d589d40",
+        "proposition_declarations": [
+          {
+            "kind": "axiom",
+            "name": "Comm"
+          }
+        ],
+        "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4",
+        "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/algebra.mlw"
+      },
+      "algebra.CommutativeGroup": {
+        "classification": "selected trusted standard arithmetic/map/Qed foundation",
+        "dependencies": [
+          {
+            "kind": "clone",
+            "target": "algebra.Group"
+          },
+          {
+            "kind": "clone",
+            "target": "algebra.Comm"
+          }
+        ],
+        "module_body_sha256": "14957823070b0a53be14101070be03b372bd91cec7ecb0eabaadc5d45c2f8c33",
+        "proposition_declarations": [],
+        "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4",
+        "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/algebra.mlw"
+      },
+      "algebra.CommutativeRing": {
+        "classification": "selected trusted standard arithmetic/map/Qed foundation",
+        "dependencies": [
+          {
+            "kind": "clone",
+            "target": "algebra.Ring"
+          },
+          {
+            "kind": "clone",
+            "target": "algebra.Comm"
+          }
+        ],
+        "module_body_sha256": "47c21eec758d4a9c947bf95ceb7c007775c779a832c8e976207493f920359308",
+        "proposition_declarations": [],
+        "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4",
+        "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/algebra.mlw"
+      },
+      "algebra.Field": {
+        "classification": "selected trusted standard arithmetic/map/Qed foundation",
+        "dependencies": [
+          {
+            "kind": "clone",
+            "target": "algebra.UnitaryCommutativeRing"
+          }
+        ],
+        "module_body_sha256": "6104160ec6b16a840d97ce215086604b6f6ba58543c8bcd9b42e422d55686f28",
+        "proposition_declarations": [
+          {
+            "kind": "axiom",
+            "name": "Inverse"
+          },
+          {
+            "kind": "lemma",
+            "name": "add_div"
+          },
+          {
+            "kind": "lemma",
+            "name": "sub_div"
+          },
+          {
+            "kind": "lemma",
+            "name": "neg_div"
+          },
+          {
+            "kind": "lemma",
+            "name": "assoc_mul_div"
+          },
+          {
+            "kind": "lemma",
+            "name": "assoc_div_mul"
+          },
+          {
+            "kind": "lemma",
+            "name": "assoc_div_div"
+          }
+        ],
+        "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4",
+        "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/algebra.mlw"
+      },
+      "algebra.Group": {
+        "classification": "selected trusted standard arithmetic/map/Qed foundation",
+        "dependencies": [
+          {
+            "kind": "clone",
+            "target": "algebra.Monoid"
+          }
+        ],
+        "module_body_sha256": "e45058bac0e5158fe568dec5a179a2508a84a7b0893e09d1beb4ccf0e9b396e3",
+        "proposition_declarations": [
+          {
+            "kind": "axiom",
+            "name": "Inv_def_l"
+          },
+          {
+            "kind": "axiom",
+            "name": "Inv_def_r"
+          }
+        ],
+        "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4",
+        "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/algebra.mlw"
+      },
+      "algebra.Monoid": {
+        "classification": "selected trusted standard arithmetic/map/Qed foundation",
+        "dependencies": [
+          {
+            "kind": "clone",
+            "target": "algebra.Assoc"
+          }
+        ],
+        "module_body_sha256": "b138fd92c3bb4f428723781487a0af1b4601a3601e37b43642d5572c9acb068c",
+        "proposition_declarations": [
+          {
+            "kind": "axiom",
+            "name": "Unit_def_l"
+          },
+          {
+            "kind": "axiom",
+            "name": "Unit_def_r"
+          }
+        ],
+        "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4",
+        "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/algebra.mlw"
+      },
+      "algebra.OrderedField": {
+        "classification": "selected trusted standard arithmetic/map/Qed foundation",
+        "dependencies": [
+          {
+            "kind": "clone",
+            "target": "algebra.Field"
+          },
+          {
+            "kind": "clone",
+            "target": "relations.TotalOrder"
+          }
+        ],
+        "module_body_sha256": "586145b4ec01f6a20034a2aeccaa1d8011162ec7ec9b09c1ec0f177988a89573",
+        "proposition_declarations": [
+          {
+            "kind": "axiom",
+            "name": "ZeroLessOne"
+          },
+          {
+            "kind": "axiom",
+            "name": "CompatOrderAdd"
+          },
+          {
+            "kind": "axiom",
+            "name": "CompatOrderMult"
+          }
+        ],
+        "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4",
+        "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/algebra.mlw"
+      },
+      "algebra.OrderedUnitaryCommutativeRing": {
+        "classification": "selected trusted standard arithmetic/map/Qed foundation",
+        "dependencies": [
+          {
+            "kind": "clone",
+            "target": "algebra.UnitaryCommutativeRing"
+          },
+          {
+            "kind": "clone",
+            "target": "relations.TotalOrder"
+          }
+        ],
+        "module_body_sha256": "1ad212bfc311a0a23fd7a12500121b8fad805b696a928c0cb4fa76d147659e3f",
+        "proposition_declarations": [
+          {
+            "kind": "axiom",
+            "name": "ZeroLessOne"
+          },
+          {
+            "kind": "axiom",
+            "name": "CompatOrderAdd"
+          },
+          {
+            "kind": "axiom",
+            "name": "CompatOrderMult"
+          }
+        ],
+        "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4",
+        "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/algebra.mlw"
+      },
+      "algebra.Ring": {
+        "classification": "selected trusted standard arithmetic/map/Qed foundation",
+        "dependencies": [
+          {
+            "kind": "clone",
+            "target": "algebra.CommutativeGroup"
+          },
+          {
+            "kind": "clone",
+            "target": "algebra.Assoc"
+          }
+        ],
+        "module_body_sha256": "e0dc3b40110eb982b6a89ff7f5156f2884ae990c38e9c151df719c8f45205b1a",
+        "proposition_declarations": [
+          {
+            "kind": "axiom",
+            "name": "Mul_distr_l"
+          },
+          {
+            "kind": "axiom",
+            "name": "Mul_distr_r"
+          }
+        ],
+        "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4",
+        "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/algebra.mlw"
+      },
+      "algebra.UnitaryCommutativeRing": {
+        "classification": "selected trusted standard arithmetic/map/Qed foundation",
+        "dependencies": [
+          {
+            "kind": "clone",
+            "target": "algebra.CommutativeRing"
+          }
+        ],
+        "module_body_sha256": "94efda8e37fea365e0ad89224f83d838dddeae2fd5457e781b8df175cb4e8bca",
+        "proposition_declarations": [
+          {
+            "kind": "axiom",
+            "name": "Unitary"
+          },
+          {
+            "kind": "axiom",
+            "name": "NonTrivialRing"
+          }
+        ],
+        "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4",
+        "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/algebra.mlw"
+      },
+      "bool.Bool": {
+        "classification": "selected trusted standard arithmetic/map/Qed foundation",
+        "dependencies": [],
+        "module_body_sha256": "1007b492364252fed302f8d44d59c1de83cd9efe22e051d7c4b2a0c737017af7",
+        "proposition_declarations": [],
+        "sha256": "b7072fdd8dd5004d0627b82a66b054518ee54eb4dd66f0883988e363bed251fa",
+        "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/bool.mlw"
+      },
+      "frama_c_wp.cint.Cint": {
+        "classification": "selected trusted standard arithmetic/map/Qed foundation",
+        "dependencies": [
+          {
+            "kind": "use",
+            "target": "int.Int"
+          },
+          {
+            "kind": "use",
+            "target": "bool.Bool"
+          }
+        ],
+        "module_body_sha256": "eefe089c244339df812c54f4d2c89c8dfdf3795120cb6c87aec381cb8689eebf",
+        "proposition_declarations": [
+          {
+            "kind": "lemma",
+            "name": "is_bool0"
+          },
+          {
+            "kind": "lemma",
+            "name": "is_bool1"
+          },
+          {
+            "kind": "lemma",
+            "name": "is_to_uint8"
+          },
+          {
+            "kind": "lemma",
+            "name": "is_to_sint8"
+          },
+          {
+            "kind": "lemma",
+            "name": "is_to_uint16"
+          },
+          {
+            "kind": "lemma",
+            "name": "is_to_sint16"
+          },
+          {
+            "kind": "lemma",
+            "name": "is_to_uint32"
+          },
+          {
+            "kind": "lemma",
+            "name": "is_to_sint32"
+          },
+          {
+            "kind": "lemma",
+            "name": "is_to_uint64"
+          },
+          {
+            "kind": "lemma",
+            "name": "is_to_sint64"
+          },
+          {
+            "kind": "lemma",
+            "name": "is_to_uint128"
+          },
+          {
+            "kind": "lemma",
+            "name": "is_to_sint128"
+          },
+          {
+            "kind": "lemma",
+            "name": "id_uint8"
+          },
+          {
+            "kind": "lemma",
+            "name": "id_sint8"
+          },
+          {
+            "kind": "lemma",
+            "name": "id_uint16"
+          },
+          {
+            "kind": "lemma",
+            "name": "id_sint16"
+          },
+          {
+            "kind": "lemma",
+            "name": "id_uint32"
+          },
+          {
+            "kind": "lemma",
+            "name": "id_sint32"
+          },
+          {
+            "kind": "lemma",
+            "name": "id_uint64"
+          },
+          {
+            "kind": "lemma",
+            "name": "id_sint64"
+          },
+          {
+            "kind": "lemma",
+            "name": "id_uint128"
+          },
+          {
+            "kind": "lemma",
+            "name": "id_sint128"
+          },
+          {
+            "kind": "lemma",
+            "name": "id_uint8_inl"
+          },
+          {
+            "kind": "lemma",
+            "name": "id_sint8_inl"
+          },
+          {
+            "kind": "lemma",
+            "name": "id_uint16_inl"
+          },
+          {
+            "kind": "lemma",
+            "name": "id_sint16_inl"
+          },
+          {
+            "kind": "lemma",
+            "name": "id_uint32_inl"
+          },
+          {
+            "kind": "lemma",
+            "name": "id_sint32_inl"
+          },
+          {
+            "kind": "lemma",
+            "name": "id_uint64_inl"
+          },
+          {
+            "kind": "lemma",
+            "name": "id_sint64_inl"
+          },
+          {
+            "kind": "lemma",
+            "name": "id_uint128_inl"
+          },
+          {
+            "kind": "lemma",
+            "name": "id_sint128_inl"
+          },
+          {
+            "kind": "lemma",
+            "name": "proj_int8"
+          },
+          {
+            "kind": "lemma",
+            "name": "proj_int16"
+          },
+          {
+            "kind": "lemma",
+            "name": "proj_int32"
+          },
+          {
+            "kind": "lemma",
+            "name": "proj_int64"
+          },
+          {
+            "kind": "lemma",
+            "name": "proj_int128"
+          }
+        ],
+        "sha256": "34165df36963929dc7fc2d06e7609434fddc43924af5a9979e78d89b9c5b989e",
+        "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/cint.mlw"
+      },
+      "frama_c_wp.memaddr.MemAddr": {
+        "classification": "selected trusted standard arithmetic/map/Qed foundation",
+        "dependencies": [
+          {
+            "kind": "use",
+            "target": "bool.Bool"
+          },
+          {
+            "kind": "use",
+            "target": "int.Int"
+          },
+          {
+            "kind": "use",
+            "target": "map.Map"
+          }
+        ],
+        "module_body_sha256": "632c336bd2bbdfc51fa3cf449be2a08d8ceb2732c22099b7f62adb9fdf7a7a62",
+        "proposition_declarations": [
+          {
+            "kind": "axiom",
+            "name": "addr_le_def"
+          },
+          {
+            "kind": "axiom",
+            "name": "addr_lt_def"
+          },
+          {
+            "kind": "axiom",
+            "name": "addr_le_bool_def"
+          },
+          {
+            "kind": "axiom",
+            "name": "addr_lt_bool_def"
+          },
+          {
+            "kind": "lemma",
+            "name": "valid_rw_rd"
+          },
+          {
+            "kind": "lemma",
+            "name": "valid_string"
+          },
+          {
+            "kind": "lemma",
+            "name": "separated_1"
+          },
+          {
+            "kind": "lemma",
+            "name": "separated_included"
+          },
+          {
+            "kind": "lemma",
+            "name": "included_trans"
+          },
+          {
+            "kind": "lemma",
+            "name": "separated_trans"
+          },
+          {
+            "kind": "lemma",
+            "name": "separated_sym"
+          },
+          {
+            "kind": "lemma",
+            "name": "valid_pointers_are_statically_allocated"
+          },
+          {
+            "kind": "axiom",
+            "name": "addr_of_null"
+          },
+          {
+            "kind": "axiom",
+            "name": "addr_of_int_bijection"
+          },
+          {
+            "kind": "axiom",
+            "name": "table_to_offset_zero"
+          },
+          {
+            "kind": "axiom",
+            "name": "table_to_offset_monotonic"
+          }
+        ],
+        "sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f",
+        "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw"
+      },
+      "frama_c_wp.memory.Memory": {
+        "classification": "selected trusted standard arithmetic/map/Qed foundation",
+        "dependencies": [
+          {
+            "kind": "use",
+            "target": "bool.Bool"
+          },
+          {
+            "kind": "use",
+            "target": "int.Int"
+          },
+          {
+            "kind": "use",
+            "target": "map.Map"
+          },
+          {
+            "kind": "use",
+            "target": "frama_c_wp.memaddr.MemAddr"
+          }
+        ],
+        "module_body_sha256": "ce4913628fb99d57d8a14a89cea8442f71fbec7d3f6188a9661864f139f1923e",
+        "proposition_declarations": [
+          {
+            "kind": "lemma",
+            "name": "eqmem_single"
+          },
+          {
+            "kind": "lemma",
+            "name": "eqmem_included"
+          },
+          {
+            "kind": "lemma",
+            "name": "eqmem_sym"
+          },
+          {
+            "kind": "lemma",
+            "name": "eqmem_update"
+          },
+          {
+            "kind": "lemma",
+            "name": "eqmem_memcpy"
+          }
+        ],
+        "sha256": "89befdbbe079934c8145bf3af8fbfa886a438af9063788eaaab496e6f13c69a9",
+        "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memory.mlw"
+      },
+      "frama_c_wp.qed.Qed": {
+        "classification": "selected trusted standard arithmetic/map/Qed foundation",
+        "dependencies": [
+          {
+            "kind": "use",
+            "target": "bool.Bool"
+          },
+          {
+            "kind": "use",
+            "target": "int.Int"
+          },
+          {
+            "kind": "use",
+            "target": "real.RealInfix"
+          },
+          {
+            "kind": "use",
+            "target": "real.FromInt"
+          },
+          {
+            "kind": "use",
+            "target": "int.ComputerDivision"
+          }
+        ],
+        "module_body_sha256": "dbaba71a3bf13a6c66b5f9811a077fd4199a3d8c9c63cfc39fe4a208605a15bf",
+        "proposition_declarations": [
+          {
+            "kind": "lemma",
+            "name": "c_euclidian"
+          },
+          {
+            "kind": "lemma",
+            "name": "cmod_remainder"
+          },
+          {
+            "kind": "lemma",
+            "name": "cdiv_neutral"
+          },
+          {
+            "kind": "lemma",
+            "name": "cdiv_inv"
+          },
+          {
+            "kind": "lemma",
+            "name": "cdiv_closed_remainder"
+          }
+        ],
+        "sha256": "54d50c3e40ea87b2bb0fd7195341c6c8bfc5ebcf300cb7b18752fae28e622efe",
+        "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/qed.mlw"
+      },
+      "int.Abs": {
+        "classification": "selected trusted standard arithmetic/map/Qed foundation",
+        "dependencies": [
+          {
+            "kind": "use",
+            "target": "int.Int"
+          }
+        ],
+        "module_body_sha256": "bda441ad81c04085300a4a1d799b8f76a3c27deed84fb1dfcd8d35aebc2ac69d",
+        "proposition_declarations": [
+          {
+            "kind": "lemma",
+            "name": "Abs_le"
+          },
+          {
+            "kind": "lemma",
+            "name": "Abs_pos"
+          }
+        ],
+        "sha256": "eb5bc9d4a46e1b6a298d24fd36dcf9dfb8f35cbc75b2f44007cfe1a24550ce8d",
+        "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/int.mlw"
+      },
+      "int.ComputerDivision": {
+        "classification": "selected trusted standard arithmetic/map/Qed foundation",
+        "dependencies": [
+          {
+            "kind": "use",
+            "target": "int.Int"
+          },
+          {
+            "kind": "use",
+            "target": "int.Abs"
+          }
+        ],
+        "module_body_sha256": "50d728174084ca4dc4be1f5c72a90fc767a8a37af35e01ae2593fb8521d246b0",
+        "proposition_declarations": [
+          {
+            "kind": "axiom",
+            "name": "Div_mod"
+          },
+          {
+            "kind": "axiom",
+            "name": "Div_bound"
+          },
+          {
+            "kind": "axiom",
+            "name": "Mod_bound"
+          },
+          {
+            "kind": "axiom",
+            "name": "Div_sign_pos"
+          },
+          {
+            "kind": "axiom",
+            "name": "Div_sign_neg"
+          },
+          {
+            "kind": "axiom",
+            "name": "Mod_sign_pos"
+          },
+          {
+            "kind": "axiom",
+            "name": "Mod_sign_neg"
+          },
+          {
+            "kind": "lemma",
+            "name": "Rounds_toward_zero"
+          },
+          {
+            "kind": "lemma",
+            "name": "Div_1"
+          },
+          {
+            "kind": "lemma",
+            "name": "Mod_1"
+          },
+          {
+            "kind": "lemma",
+            "name": "Div_inf"
+          },
+          {
+            "kind": "lemma",
+            "name": "Mod_inf"
+          },
+          {
+            "kind": "lemma",
+            "name": "Div_mult"
+          },
+          {
+            "kind": "lemma",
+            "name": "Mod_mult"
+          }
+        ],
+        "sha256": "eb5bc9d4a46e1b6a298d24fd36dcf9dfb8f35cbc75b2f44007cfe1a24550ce8d",
+        "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/int.mlw"
+      },
+      "int.Int": {
+        "classification": "selected trusted standard arithmetic/map/Qed foundation",
+        "dependencies": [
+          {
+            "kind": "clone",
+            "target": "algebra.OrderedUnitaryCommutativeRing"
+          }
+        ],
+        "module_body_sha256": "17f5df4f7418293a197b29c00396a30247e5641e77c14ee918a89c0eb6b4f8d3",
+        "proposition_declarations": [],
+        "sha256": "eb5bc9d4a46e1b6a298d24fd36dcf9dfb8f35cbc75b2f44007cfe1a24550ce8d",
+        "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/int.mlw"
+      },
+      "map.Map": {
+        "classification": "selected trusted standard arithmetic/map/Qed foundation",
+        "dependencies": [],
+        "module_body_sha256": "751c249205f3b47b8b76bdf2fa4f535c4cbe741b00f34f38288f4540c715c484",
+        "proposition_declarations": [],
+        "sha256": "c4cd7b90e39f8407fd714d0e46ce4c6496a98afd32bd69c71237b35a4b7c08a0",
+        "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/map.mlw"
+      },
+      "real.FromInt": {
+        "classification": "selected trusted standard arithmetic/map/Qed foundation",
+        "dependencies": [
+          {
+            "kind": "use",
+            "target": "int.Int"
+          },
+          {
+            "kind": "use",
+            "target": "real.Real"
+          }
+        ],
+        "module_body_sha256": "487272dac107cb2cf9f65aeb412586e55a44c838d0a865d47dbd631bf7cb0ddd",
+        "proposition_declarations": [
+          {
+            "kind": "axiom",
+            "name": "Zero"
+          },
+          {
+            "kind": "axiom",
+            "name": "One"
+          },
+          {
+            "kind": "axiom",
+            "name": "Add"
+          },
+          {
+            "kind": "axiom",
+            "name": "Sub"
+          },
+          {
+            "kind": "axiom",
+            "name": "Mul"
+          },
+          {
+            "kind": "axiom",
+            "name": "Neg"
+          },
+          {
+            "kind": "lemma",
+            "name": "Injective"
+          },
+          {
+            "kind": "axiom",
+            "name": "Monotonic"
+          }
+        ],
+        "sha256": "50940038bba54f6bd57501e5af6439af8c4f081274eb79a19d888a4cd419b8a2",
+        "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/real.mlw"
+      },
+      "real.Real": {
+        "classification": "selected trusted standard arithmetic/map/Qed foundation",
+        "dependencies": [
+          {
+            "kind": "clone",
+            "target": "algebra.OrderedField"
+          }
+        ],
+        "module_body_sha256": "eb0f117bf93e11a35cfe9862de420871b27af3adc6f36f53af9a32fbc8d67dc5",
+        "proposition_declarations": [],
+        "sha256": "50940038bba54f6bd57501e5af6439af8c4f081274eb79a19d888a4cd419b8a2",
+        "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/real.mlw"
+      },
+      "real.RealInfix": {
+        "classification": "selected trusted standard arithmetic/map/Qed foundation",
+        "dependencies": [
+          {
+            "kind": "use",
+            "target": "real.Real"
+          }
+        ],
+        "module_body_sha256": "f6ad1c1e07280a59c22ec098accb8309e62bd31450c5a8bd99dbf9b9af16b789",
+        "proposition_declarations": [],
+        "sha256": "50940038bba54f6bd57501e5af6439af8c4f081274eb79a19d888a4cd419b8a2",
+        "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/real.mlw"
+      },
+      "relations.Antisymmetric": {
+        "classification": "selected trusted standard arithmetic/map/Qed foundation",
+        "dependencies": [
+          {
+            "kind": "clone",
+            "target": "relations.EndoRelation"
+          }
+        ],
+        "module_body_sha256": "6ced6a8b2df42773a13c53404fee40af0382dff8b7ff99a3da1fd11e9b7f6a2a",
+        "proposition_declarations": [
+          {
+            "kind": "axiom",
+            "name": "Antisymm"
+          }
+        ],
+        "sha256": "0a367aecd2cd627de87d5f4011ddbf930bf49283e0b94b792a338faf921b2cae",
+        "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/relations.mlw"
+      },
+      "relations.EndoRelation": {
+        "classification": "selected trusted standard arithmetic/map/Qed foundation",
+        "dependencies": [],
+        "module_body_sha256": "c8d39d1686a694b30ffe7174ace1da2522ab917a95893bdbf09542972b8a1eb9",
+        "proposition_declarations": [],
+        "sha256": "0a367aecd2cd627de87d5f4011ddbf930bf49283e0b94b792a338faf921b2cae",
+        "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/relations.mlw"
+      },
+      "relations.PartialOrder": {
+        "classification": "selected trusted standard arithmetic/map/Qed foundation",
+        "dependencies": [
+          {
+            "kind": "clone",
+            "target": "relations.PreOrder"
+          },
+          {
+            "kind": "clone",
+            "target": "relations.Antisymmetric"
+          }
+        ],
+        "module_body_sha256": "43e73a2cc6c8fe864b074eccb4e794b6df0ba305b5bd2ff7843a9fbc42cfd917",
+        "proposition_declarations": [],
+        "sha256": "0a367aecd2cd627de87d5f4011ddbf930bf49283e0b94b792a338faf921b2cae",
+        "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/relations.mlw"
+      },
+      "relations.PreOrder": {
+        "classification": "selected trusted standard arithmetic/map/Qed foundation",
+        "dependencies": [
+          {
+            "kind": "clone",
+            "target": "relations.Reflexive"
+          },
+          {
+            "kind": "clone",
+            "target": "relations.Transitive"
+          }
+        ],
+        "module_body_sha256": "4ddaf37e022f0c6b1843762edf7fe49d40538c82188288ab6f73c7bc2361db94",
+        "proposition_declarations": [],
+        "sha256": "0a367aecd2cd627de87d5f4011ddbf930bf49283e0b94b792a338faf921b2cae",
+        "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/relations.mlw"
+      },
+      "relations.Reflexive": {
+        "classification": "selected trusted standard arithmetic/map/Qed foundation",
+        "dependencies": [
+          {
+            "kind": "clone",
+            "target": "relations.EndoRelation"
+          }
+        ],
+        "module_body_sha256": "6b1bff952f7f76de9a920528ee87cc8db082b37a5cdae59eead3230b2d5b7a98",
+        "proposition_declarations": [
+          {
+            "kind": "axiom",
+            "name": "Refl"
+          }
+        ],
+        "sha256": "0a367aecd2cd627de87d5f4011ddbf930bf49283e0b94b792a338faf921b2cae",
+        "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/relations.mlw"
+      },
+      "relations.Total": {
+        "classification": "selected trusted standard arithmetic/map/Qed foundation",
+        "dependencies": [
+          {
+            "kind": "clone",
+            "target": "relations.EndoRelation"
+          }
+        ],
+        "module_body_sha256": "78d3d7e1a1dc79a1e76cd3c134dc3a29064bf145a3e87dd8800d7ae42b9b3df9",
+        "proposition_declarations": [
+          {
+            "kind": "axiom",
+            "name": "Total"
+          }
+        ],
+        "sha256": "0a367aecd2cd627de87d5f4011ddbf930bf49283e0b94b792a338faf921b2cae",
+        "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/relations.mlw"
+      },
+      "relations.TotalOrder": {
+        "classification": "selected trusted standard arithmetic/map/Qed foundation",
+        "dependencies": [
+          {
+            "kind": "clone",
+            "target": "relations.PartialOrder"
+          },
+          {
+            "kind": "clone",
+            "target": "relations.Total"
+          }
+        ],
+        "module_body_sha256": "ca18dc624ffe29cb4ef62e4cff1cfe8bbd96cd94c0e8b98f7d2205844f5319d1",
+        "proposition_declarations": [],
+        "sha256": "0a367aecd2cd627de87d5f4011ddbf930bf49283e0b94b792a338faf921b2cae",
+        "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/relations.mlw"
+      },
+      "relations.Transitive": {
+        "classification": "selected trusted standard arithmetic/map/Qed foundation",
+        "dependencies": [
+          {
+            "kind": "clone",
+            "target": "relations.EndoRelation"
+          }
+        ],
+        "module_body_sha256": "eee1977ac18b194f7763dbef201f185d05023dbe665ddae96bade630073ada3a",
+        "proposition_declarations": [
+          {
+            "kind": "axiom",
+            "name": "Trans"
+          }
+        ],
+        "sha256": "0a367aecd2cd627de87d5f4011ddbf930bf49283e0b94b792a338faf921b2cae",
+        "source": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/relations.mlw"
+      },
+      "why3.BuiltIn.BuiltIn": {
+        "classification": "selected Why3 intrinsic core trust"
+      }
+    },
+    "modules": 32,
+    "project_heap_import_present": false,
+    "roots": [
+      "Axiomatic14",
+      "Chunk",
+      "Compound",
+      "Globals",
+      "bool.Bool",
+      "frama_c_wp.cint.Cint",
+      "frama_c_wp.memaddr.MemAddr",
+      "frama_c_wp.memory.Memory",
+      "frama_c_wp.qed.Qed",
+      "int.ComputerDivision",
+      "int.Int",
+      "map.Map",
+      "real.RealInfix",
+      "why3.BuiltIn.BuiltIn"
+    ],
+    "scientific_source_generated_definitions": "Actual C std_vector_int_valid/readable predicates become uniform definitions over initialized receiver fields, size/capacity, valid/range-initialized payload and the explicit4611686018427387903 bound. They are definitions rather than supplied constructor/body proofs. Typed record field offsets are logical0/1/2 and receiver extent3; source ABI is still24bytes with offsets0/8/16. No logical-cell-to-byte/source bridge is inferred."
+  },
+  "material_source_premises": {
+    "constructor_requires": "valid receiver + n<=modeled max; its source-call obligation is one of the seven retained ordinary terms.",
+    "original_requires": "0<=n, with signed32 C parameter type and ordinary source contract unchanged.",
+    "source_assertion_dependencies": "Data readable, receiver data-field initialized, reserve requires/no-growth, payload valid/init and destructor representation facts appear in source order and feed downstream goals as ordinary assertion dependencies. These are not hidden global axioms, but their constructor premises remain open.",
+    "source_view_projection": "Data is inlined preserving its requires assertion; reserve false growth branch is justified by retained ordinary no-growth assertion; scalar is captured before pending terminal cleanup; native projected C omits actual heap release and automatic scope end. The inverse/CFG certificate preserves this as an unadmitted source view, not native destructor/cleanup execution.",
+    "unadmitted_constructor_ensures": [
+      "std_vector_int_valid(this) and this->size==n",
+      "forall0<=k<n: this->data[k]==value; instantiated value7"
+    ],
+    "unadmitted_constructor_frame": "assigns *this, with allocates this->data, is used modularly through per-memory-map receiver framing. Its original property is not Valid/admitted. The native caller goal calculations do not prove the constructor body, initializer loop, allocator-created private writes or frame correspondence."
+  },
+  "next_required_source_work": "Compose current constructor/private-frame/lifetime dependencies and source-created receiver/buffer identity/Typed field/value/init/release/automatic-end correspondence under explicit allocator/library TCB; preserve normal admission refusal until that complete bridge and original observer proof are admitted.",
+  "nonglobal_and_support_context": {
+    "all_retained_assertion_body_hashes_attributed": true,
+    "checked_query_boundary": "Every file has one check-sat and a final negated query; every earlier assert has a closed body hash classification. Only allowlisted normal declare/define/assert/check metadata command forms occur. All14 ordinary primary/zilch query AST hashes pair exactly; copies are not counted as14 independent proofs.",
+    "family_instances": {
+      "pinned standard WP address null definition": 12,
+      "pinned standard WP pointer/memory/initialization or Cint definition/axiom/lemma": 1248,
+      "trusted Why3 polymorphic/Boolean encoding": 192,
+      "trusted selected standard C integer conversion/Boolean support": 2226,
+      "trusted standard arithmetic": 1092,
+      "uniform source-generated record/stack/type/predicate context": 164
+    },
+    "new_support_policy": "107 additional exact bodies are attributed to pinned MemAddr/Memory/Cint definitions and named generic lemmas, generated record/stack/type/vector predicate context, null address and explicit Why3 polymorphic/Boolean bridges. Per-body source paths/lines/hashes, symbols/operators and family are retained in the linked policy/capture.",
+    "nongGoal_instances_all_materialized_files": 4934,
+    "nonglobal_scientific_result_axiom_imported": false,
+    "opaque_bodies": [],
+    "previous_support_policy_boundary": "114 actually used bodies match the retained primary-attributed arithmetic/Cint/encoding body policy at identical selected source hashes; no previous proof outcome is a premise.",
+    "sibling_or_prior_heap_theorem_imported": false,
+    "unique_used_nongGoal_bodies": 221
+  },
+  "original_outcomes_preserved": {
+    "constructor_whitelisted": false,
+    "entry_producer_complete": false,
+    "entry_refusal": "Original constructor-smoke observer ValueError remains unchanged.",
+    "entry_result_pin": "b25c1f791c7273f3f79e50b96e4e905cf4bedf6fda5b94e6e2683bcd18d89f30",
+    "failure_class": "unclassified_wp_outcome",
+    "normal_reader_not_replaced": true,
+    "operational_native_exit0": "Native WP exit0/28.236060176976025seconds/285749248B peak remains an observation; entry/root exits1 and not_proven remain. No native status or raw file is rewritten.",
+    "ordinary_reader_pin": "f4ae4943b219c3a5a20007fad80ffe1a01a3a683d87343951c777003fd1c31f1",
+    "ordinary_reader_verdict": "not_proven",
+    "public_proof_record_created": false,
+    "why": "not-Valid property has no classified failing goal: assigns *this;"
+  },
+  "prior_independent_metadata_decision": {
+    "bytes": 2760,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-closed-no-growth-passive630-independent-decision-20261016.json",
+    "sha256": "ce4b3646b404628a282aed580c46f35b1c6546bf4bcb5e0bd0dc4f086eba354c"
+  },
+  "proof_acceptance": false,
+  "raw": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-615ddf50-t25-closed-no-growth-public-v1",
+  "retention": {
+    "all_before_rows_equal_prior_independent_314_file_manifest": true,
+    "boundaries": "Current physical equality is not a dynamic-loader trace, actual-submitted-byte attestation, general runtime attestation or a reexecution of the proof. The source consumer record is the original single source-consumers-0 receipt; no successful final entry source receipt is fabricated.",
+    "compiler_headers_freshly_hashed": 1983,
+    "compiler_parser_sha256": "8b03ee2c60f0699651869fea5135cb5a144777a10c6e4b9b7835283ac9ca3f7d",
+    "complete_consumer_physical_membership_equal": true,
+    "consumer_bytes_freshly_hashed": 1338043021,
+    "consumer_files_freshly_hashed": 1623,
+    "raw_bytes": 23681513,
+    "raw_files": 314,
+    "raw_pre_post_unchanged": true,
+    "selected_tool_WP_config_import_physical_hashes_rechecked": true,
+    "source_helper_pins_freshly_hashed": 333
+  },
+  "review_capture_pins": [
+    {
+      "bytes": 161319,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t25-projected630-final-passive-semantic-audit-v1-20261016.py",
+      "sha256": "82641baa54c3e12623eff46576d782c47bebcdcbbbfa13cc65b0bac26a08c640"
+    },
+    {
+      "bytes": 126668,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t25-projected630-final-passive-semantic-audit-v1-20261016.json",
+      "sha256": "9bf81439f36d50b82f91834dd9e39d2afc799d73c13f0facf0e5ae420f7f4b3d"
+    },
+    {
+      "bytes": 41782,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t25-projected630-term-discovery-v2-20261016.py",
+      "sha256": "2eee60509bcae2a23cec06e215650d40403a27f170baeb8408d1536e5c95dc18"
+    },
+    {
+      "bytes": 171625,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t25-projected630-term-discovery-v2-20261016.json",
+      "sha256": "81360d02ed623288d84211e1d0ae7188b759391fa33cb47e576b39b41e7f05a2"
+    },
+    {
+      "bytes": 42364,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t25-projected630-semantic-projection-v1-20261016.py",
+      "sha256": "bd5528edbc1da8dbc220ff71da27d226c4e70e566594c5c087f8c6f29cde0f93"
+    },
+    {
+      "bytes": 36940,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t25-projected630-semantic-projection-v1-20261016.json",
+      "sha256": "e438a6c904e8036535e158bc8abef089af177607e07c8b2cc0eb906d2a646677"
+    },
+    {
+      "bytes": 42017,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t25-projected630-import-discovery-v1-20261016.py",
+      "sha256": "d5b0e8be1fec92eb76382e27c2de1eb146ebb83588bc91a123b3e40fa1410241"
+    },
+    {
+      "bytes": 358188,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t25-projected630-import-discovery-v1-20261016.json",
+      "sha256": "e488c8d2123d22e21699908e82401be03d769c004a33b4c4f3ae88da10134463"
+    },
+    {
+      "bytes": 60615,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t25-projected630-extra-support-primary-policy-20261016.json",
+      "sha256": "c428be8f743ac36a064b00f7348ccb9dbdb1def826c65117331f524bd47830eb"
+    },
+    {
+      "bytes": 680,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t25-projected630-lifetime-primary-v2-20261016.py",
+      "sha256": "951a9d9a6ee02dd64d80925fd4a543f7b1a3d1e3e0b2d80e50f1ad04a0c4e9bf"
+    },
+    {
+      "bytes": 993,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t25-projected630-lifetime-primary-v2-20261016.json",
+      "sha256": "2adb476ff0da740669589f97cfe72e0048b69f9d150ad811057cedba8b1d9603"
+    }
+  ],
+  "reviewer": "/root/lane_coordination",
+  "scope": "Independent cold interpretation of every retained ordinary materialized query, internal-Qed true source site, source-generated record/predicate context, complete imported standard/WP module closure and all retained nonglobal SMT assertions. Passive standard-library parsing/hashing and Git metadata only. No project/helper import, compiler, native helper, verifier, solver, proof rerun, lease change or remote write. Raw C/AST/SMT stayed on mbit10; only compact attribution/hash/semantic projection metadata returned.",
+  "source_commit": "615ddf504fed61b9f6c6e4663760d006ecaf255b",
+  "source_typed_bridge_established": false,
+  "ticket_closure": false,
+  "universal_proof_setup_attested": false
+}

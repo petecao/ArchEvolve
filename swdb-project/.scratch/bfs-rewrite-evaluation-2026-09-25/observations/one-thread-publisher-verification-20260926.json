@@ -1,0 +1,201 @@
+{
+  "created": "2026-09-26 ET",
+  "role": "local_publisher_qualification_reader_review_not_empirical_freeze",
+  "collector_commit": "319645eab0a25c815fa03fe1c372d32b4ba45d10",
+  "files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_freeze_pilot.py",
+      "bytes": 54032,
+      "sha256": "6607a22eaae8d10e8f31c7dd53b80aa3fe4944935c3a1edc4f72514e015be5c6"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_one_thread_calibration.py",
+      "bytes": 20896,
+      "sha256": "89a7cb836d964308b50cd1b23b3c1f160d3c0cbffe5cd43987635a6fa766affc"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_one_thread_freeze.py",
+      "bytes": 25016,
+      "sha256": "23f105254e6847191695d8942605baad8a04c638a3c3073c66e2f3d02686095b"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-one-thread-freeze-20260926.md",
+      "bytes": 8300,
+      "sha256": "f07b568966c5de9c0a058bbc56b384f63ba89bebc464e9b86653bae902d05fb1"
+    }
+  ],
+  "initial_preparation": {
+    "created": "2026-09-26 ET",
+    "kind": "local_publisher_preparation_only",
+    "collector_commit": "319645eab0a25c815fa03fe1c372d32b4ba45d10",
+    "sources": [
+      {
+        "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_freeze_pilot.py",
+        "sha256": "6607a22eaae8d10e8f31c7dd53b80aa3fe4944935c3a1edc4f72514e015be5c6",
+        "bytes": 54032
+      },
+      {
+        "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_one_thread_calibration.py",
+        "sha256": "51d48f0cf83968875afaa7f963892f5be982ca61fa4fbe2cd8f3f584ae51d778",
+        "bytes": 18946
+      },
+      {
+        "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_one_thread_freeze.py",
+        "sha256": "78933853af0404773ee60f5f04714e9f3e7955e77e1efa9d5c49d61b0f1858b5",
+        "bytes": 22474
+      },
+      {
+        "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-one-thread-freeze-20260926.md",
+        "sha256": "eb08a93ebf94437696baa5190d0ce0f020688282790cb01e871ea2f0b78505bf",
+        "bytes": 7913
+      }
+    ],
+    "logs": [
+      {
+        "path": "/private/tmp/bfs-one-thread-publisher-initial-20260926.log",
+        "sha256": "e8e2a94d13521a01d06317b8fed62814d101f4a4ea4aedc6b44871d5bf49bf29",
+        "bytes": 99
+      },
+      {
+        "path": "/private/tmp/bfs-one-thread-publisher-expanded-20260926.log",
+        "sha256": "b8b8f8f65612a14cefe8083758486682bb4238c7615d03f1ebe04ca51c18f14f",
+        "bytes": 99
+      },
+      {
+        "path": "/private/tmp/bfs-one-thread-publisher-focused-20260926.log",
+        "sha256": "80ffc4bfb596796ff292d48303b1249ec9feed170f5412af2cad8cb93376d1f9",
+        "bytes": 261
+      },
+      {
+        "path": "/private/tmp/bfs-one-thread-publisher-compatibility-20260926.log",
+        "sha256": "95424ebc2251b72b5d42ae12dfdeab2006bf718c869b6e63008f99119147a397",
+        "bytes": 181
+      }
+    ],
+    "command": "python3 -m pytest tests/test_bfs_one_thread_freeze.py tests/test_bfs_paired_freeze.py tests/test_bfs_freeze_pilot.py -q",
+    "py_compile": "passed",
+    "git_diff_check": "passed",
+    "empirical_qualification": false,
+    "remote_execution": false,
+    "commit_or_export": false
+  },
+  "independent_root": {
+    "result_before_cleanup_fix": "45 passed in6.08s",
+    "log": {
+      "path": "/private/tmp/bfs-one-thread-publisher-independent-20260926.log",
+      "bytes": 99,
+      "sha256": "9d253d679a62378d2755ac5644ab7b29f1bce2878afb46473f353dd900b6b11e"
+    },
+    "source_readback": "Reviewed complete publisher integration and repaired reader lifecycle; original work and cumulative cleanup deadlines retained."
+  },
+  "cleanup_fix": {
+    "date": "2026-09-26 ET",
+    "scope": "narrow publisher reader cleanup repair",
+    "result": "50 passed in 6.54s",
+    "command": "python3 -m pytest tests/test_bfs_one_thread_freeze.py /private/tmp/test_one_thread_publisher_spec_probe_20260926.py -q",
+    "sources": [
+      {
+        "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_one_thread_calibration.py",
+        "sha256": "89a7cb836d964308b50cd1b23b3c1f160d3c0cbffe5cd43987635a6fa766affc",
+        "bytes": 20896
+      },
+      {
+        "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_one_thread_freeze.py",
+        "sha256": "23f105254e6847191695d8942605baad8a04c638a3c3073c66e2f3d02686095b",
+        "bytes": 25016
+      },
+      {
+        "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-one-thread-freeze-20260926.md",
+        "sha256": "f07b568966c5de9c0a058bbc56b384f63ba89bebc464e9b86653bae902d05fb1",
+        "bytes": 8300
+      }
+    ],
+    "passed_log": {
+      "path": "/private/tmp/bfs-one-thread-publisher-reap-fixed-20260926.log",
+      "sha256": "427b8644e875eaed9e5a9c90c1ac3fc89c678f2c8f1c632cdf8d5408f106d137",
+      "bytes": 99
+    },
+    "original_review_probe": {
+      "path": "/private/tmp/test_one_thread_publisher_spec_probe_20260926.py",
+      "sha256": "576e6b0694902284aea9ea04476fce41ec23876546cfbbcfe1c9e702948b5c02",
+      "bytes": 1162
+    },
+    "original_failure_log": {
+      "path": "/private/tmp/bfs-one-thread-publisher-spec-probe-20260926.log",
+      "sha256": "f277f42e152e8473724e70c849f2db71d0ca3695bda4223b8e5f9f7f4b6fb7dc",
+      "bytes": 2090
+    },
+    "py_compile": "passed",
+    "diff_check": "passed",
+    "empirical_execution": false,
+    "commit_or_export": false
+  },
+  "spec_review": {
+    "date": "2026-09-26",
+    "status": "clean_after_confirmed_P2_repair",
+    "scope": [
+      "scripts/bfs_freeze_pilot.py",
+      "scripts/bfs_one_thread_calibration.py",
+      "tests/test_bfs_one_thread_freeze.py",
+      "docs/bfs-one-thread-freeze-20260926.md"
+    ],
+    "initial_preparation": {
+      "path": "/private/tmp/bfs-one-thread-publisher-preparation-20260926.json",
+      "sha256": "db6ebfae0a1966a25c2bc77821de614979bee91f8fed74e3d7de5f5bdc499569",
+      "bytes": 2087
+    },
+    "targeted_log": {
+      "path": "/private/tmp/bfs-one-thread-publisher-spec-targeted-20260926.log",
+      "sha256": "f54ca7968b912a477b1b45013d9929909aee788910347490711630e4f57ba11b",
+      "bytes": 114
+    },
+    "result": "28 passed,17 deselected in5.74s",
+    "finding": {
+      "priority": "P2",
+      "file": "scripts/bfs_one_thread_calibration.py",
+      "function": "pinned_readback",
+      "summary": "Signaling failure skips direct-child bounded reap and masks original readback timeout",
+      "probe": {
+        "path": "/private/tmp/test_one_thread_publisher_spec_probe_20260926.py",
+        "sha256": "576e6b0694902284aea9ea04476fce41ec23876546cfbbcfe1c9e702948b5c02",
+        "bytes": 1162
+      },
+      "failure_log": {
+        "path": "/private/tmp/bfs-one-thread-publisher-spec-probe-20260926.log",
+        "sha256": "f277f42e152e8473724e70c849f2db71d0ca3695bda4223b8e5f9f7f4b6fb7dc",
+        "bytes": 2090
+      },
+      "resolution": "Bounded local reader shutdown is separate from unconditional direct wait; original timeout is preserved; already-reaped leaders are not signaled; final hashes remain in shared deadline."
+    },
+    "remaining_review": "No additional finding in inspected full-grid, explicit runtime, historical failure preservation, fresh package and shared accelerator gate paths",
+    "limits": [
+      "Local code and synthetic/temporary-record probes only",
+      "No actual native terminal admission, remote readback, freeze, provider or dispatch",
+      "No full suite rerun"
+    ],
+    "completed_at": "2026-09-26T19:36:01.075332+00:00",
+    "initial_review": {
+      "path": "/private/tmp/bfs-one-thread-publisher-spec-review-20260926.json",
+      "bytes": 1737,
+      "sha256": "1304963a3848e8d8dd1c14e8c4e5332ef892b3bac19058d3b42eaf5a80a3798b"
+    },
+    "recheck": {
+      "path": "/private/tmp/bfs-one-thread-publisher-spec-recheck-20260926/verification.json",
+      "bytes": 1323,
+      "sha256": "809adba1ce7fd5506d9a5032744e3aaf9fd4218c7249fe9a3dad867286fdfa76"
+    },
+    "recheck_log": {
+      "path": "/private/tmp/bfs-one-thread-publisher-spec-recheck-20260926/pytest.log",
+      "bytes": 113,
+      "sha256": "535b2321c5ec0dc6a770851f2d3cd59e76c78741edf7c56ce8954d9a8caf783d"
+    },
+    "recheck_result": "6 passed,44 deselected in0.83s",
+    "additional_findings": []
+  },
+  "review_state": "no_remaining_actionable_finding_in_scoped_review",
+  "limitations": [
+    "Contract tests and source review only; no actual terminal readback, freeze, candidate evaluation or gain.",
+    "Full four-cell primary qualification, all four fresh diagnostics, historical failures and unchanged shared accelerator gates remain required.",
+    "Historical publisher routes retain their defaults."
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "created": "2026-09-26",
+  "observed_at_et": "2026-09-26 13:33:21 ET",
+  "source_receipt": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-paired-pilot-20260926-a1.dispatch/health-20260926-1333.json",
+    "bytes": 18825,
+    "sha256": "e65e9e70e76996d8df05ad8a23a72f689d6e5d4053f5e46a222739112d64ffe1"
+  },
+  "tickets": {
+    "resolved": 12,
+    "claimed": 9,
+    "final_cells_accepted": 0,
+    "final_cells_required": 8,
+    "qualified_gain": false,
+    "empirical_freeze": false
+  },
+  "leases": {
+    "socket0": {
+      "state": "released",
+      "generation": 318
+    },
+    "socket1": {
+      "state": "released",
+      "generation": 401
+    },
+    "legacy": {
+      "state": "released",
+      "generation": 77
+    }
+  },
+  "host": {
+    "load": [
+      0.38,
+      0.58,
+      0.75
+    ],
+    "data1_free_gib": 16.44,
+    "data_free_gib": 182.57,
+    "estimated_node_available_gib": [
+      57.287,
+      58.545
+    ],
+    "global_available_gib": 117.731
+  },
+  "native": {
+    "observations": 240,
+    "required": 240,
+    "state": "collection_complete_calibration_failed",
+    "owned_driver_helper_timeout_pane": "absent"
+  },
+  "readback": {
+    "state": "timed_out",
+    "exit_code": 124,
+    "elapsed_seconds": 175.028874,
+    "review_produced": false,
+    "retry": false
+  },
+  "history": "Historical and measured checkout pins, helper and small evidence hashes unchanged at observation.",
+  "workers": "Host active; Standards responsive and completing runtime-policy verification; Spec finished timed-out readback with cleanup. No dead or stranded worker.",
+  "kernel_check": {
+    "observed_at_et": "2026-09-26 13:34 ET",
+    "scope": "Later a3 prelaunch; not included in 13:33 metadata observation",
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/witness-a3-dispatch1/dispatch-command.json",
+    "sha256": "c98d434336cda4085bb0012cee4022a9a557d00b299fa3849d836f351353f611",
+    "all_three_released_and_unheld": true
+  },
+  "next_full_health_due_et": "2026-09-26 14:03 ET"
+}

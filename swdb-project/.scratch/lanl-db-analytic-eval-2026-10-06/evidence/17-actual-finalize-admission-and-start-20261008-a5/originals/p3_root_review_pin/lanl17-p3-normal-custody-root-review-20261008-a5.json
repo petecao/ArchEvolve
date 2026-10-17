@@ -1,0 +1,83 @@
+{
+  "candidate_rows": 8,
+  "checked_utc": "2026-10-08T23:41:08.805676+00:00",
+  "checks": [
+    "release canonical seal",
+    "after canonical seal",
+    "request canonical seal",
+    "before canonical seal",
+    "dispatch canonical seal",
+    "request binding",
+    "context documented pin subset",
+    "original input equality",
+    "observation binding",
+    "embedded release equality",
+    "original links",
+    "clean frozen source",
+    "lease exits",
+    "normal substantive state",
+    "5 completed counted calls",
+    "call bridge",
+    "iteration bridge",
+    "provider existence bridge",
+    "privacy and no resume",
+    "native_before32 noholder",
+    "native_preexec32 noholder",
+    "native_before-after noholder",
+    "native_after-after noholder",
+    "release before AFTER"
+  ],
+  "completed_counted_calls": 5,
+  "format": "swdb.lanl17-p3-original-normal-custody-root-review.v1",
+  "generation": 513,
+  "iterations": 4,
+  "originals": {
+    "after": {
+      "bytes": 28810,
+      "path": "/private/tmp/lanl17-p3-after-capture-20261008-a5/custody.json",
+      "sha256": "7ad57fbdfd2324fe5feee1ebb1e51321659c128a6127797540273326cb39958d"
+    },
+    "before": {
+      "bytes": 3148,
+      "path": "/private/tmp/lanl17-p3-before-capture-20261008-a5/custody.json",
+      "sha256": "85e2c9f6262a627e0f6007699e1762e6806420bd8ae870d6dd102823e9ee6f8b"
+    },
+    "dispatch": {
+      "bytes": 44079,
+      "path": "/private/tmp/lanl17-p3-dispatch-original-collect-capture-20261008-a5/dispatch-preregistration.json",
+      "sha256": "a098059f1f5c60ab342555026ab72fbfca1b84497cdf2d86dd9f62fb17f61da1"
+    },
+    "native_after-after": {
+      "bytes": 5403,
+      "path": "/private/tmp/lanl17-p3-native-release-query-capture-after-after-20261008-a5/native-observation-original.json",
+      "sha256": "586cbf7ad4de611a4c9c5a73772024fe8ebaa3ae8ac26565baa17d5cb10ac158"
+    },
+    "native_before-after": {
+      "bytes": 5403,
+      "path": "/private/tmp/lanl17-p3-native-release-query-capture-before-after-20261008-a5/native-observation-original.json",
+      "sha256": "f412f89b8433f706a42c2eed80c6675a93429fb602ca97f89389f5a3e5adb85a"
+    },
+    "native_before32": {
+      "bytes": 5403,
+      "path": "/private/tmp/lanl17-p3-native-release-query-capture-before32-20261008-a5/native-observation-original.json",
+      "sha256": "208aa7b5fcc32f332d9d7f22a4f2e2f3cafa62126a0773b704b35a033cf64f3b"
+    },
+    "native_preexec32": {
+      "bytes": 5403,
+      "path": "/private/tmp/lanl17-p3-native-release-query-capture-preexec32-20261008-a5/native-observation-original.json",
+      "sha256": "265eb26c281572e7f78c7d02851c90eca0780a496c1731bd64fac9781c3e01b7"
+    },
+    "release": {
+      "bytes": 9431,
+      "path": "/private/tmp/lanl17-p3-release32-capture-20261008-a5/lanl17-p3-release-custody-20261008-a5.json",
+      "sha256": "5e99a2b7bd2437656559751f44e63ebdfb5ee654b28e2f2514d00f94e2142811"
+    },
+    "request": {
+      "bytes": 7836,
+      "path": "/private/tmp/lanl17-p3-release-request-finalized-20261008-a5.json",
+      "sha256": "52021810a29e4bbfb84da4bbb081da8513fcd6420b286da7ca56e7315cbac590"
+    }
+  },
+  "scope": "Interim custody; final numerical/D30/scientific report/full strict audit pending",
+  "verdict": "PASS"
+}

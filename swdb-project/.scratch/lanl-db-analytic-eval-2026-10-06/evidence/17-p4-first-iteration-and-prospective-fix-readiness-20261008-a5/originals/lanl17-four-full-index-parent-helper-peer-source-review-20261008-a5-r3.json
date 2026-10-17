@@ -1,0 +1,391 @@
+{
+  "format": "swdb.lanl17-four-full-index-parent-helper-independent-source-review.v1",
+  "reviewed_utc": "2026-10-09T00:44:24.954881+00:00",
+  "review_date_ET": "2026-10-08",
+  "reviewer": "audit_inputs independent peer",
+  "result": "PASS_SOURCE_ONLY",
+  "source_pin": {
+    "path": "/private/tmp/lanl17_prepare_four_full_index_metadata_20261008_a5_r3.py",
+    "bytes": 28658,
+    "sha256": "b27ca6f053fbad92347cd045fe6144168ae011a045a96a37343c81716bc92ca8"
+  },
+  "handoff_pin": {
+    "path": "/private/tmp/lanl17-four-full-index-parent-helper-source-handoff-20261008-a5-r3.md",
+    "bytes": 9976,
+    "sha256": "d3c6a329630fe59ce708b0a082d1cbf321d093216907b594eac889ac146aad03"
+  },
+  "draft_inventory_pin": {
+    "path": "/private/tmp/lanl17-four-full-index-preparation-draft-inventory-20261008-a5.json",
+    "bytes": 3203,
+    "sha256": "6767b0d3a63db4db5c973fd43ebb2a3d9b83a73a9798b125f71a8a43e087b84a"
+  },
+  "draft_pins": [
+    {
+      "path": "/private/tmp/lanl17-p1-full-index-parent-input-specification-SOURCE-ONLY-draft-20261008-a5.json",
+      "bytes": 9060,
+      "sha256": "d351897d1696da34fc0acb31846a1338cb7ef0caccf1fcca689b1fecfa9008df"
+    },
+    {
+      "path": "/private/tmp/lanl17-p1-full-index-parent-input-bootstrap-SOURCE-ONLY-draft-20261008-a5.json",
+      "bytes": 7524,
+      "sha256": "18daa725ec09c5d0645d9528422c250f8f6153d6aa18f8edd7f5eb15f2b2e0c0"
+    },
+    {
+      "path": "/private/tmp/lanl17-p1-full-index-metadata-action-SOURCE-ONLY-draft-20261008-a5.json",
+      "bytes": 5585,
+      "sha256": "3e8c40c08227e8e506a2473fec5eeedf4d0d3fe47c0a67c6d89a15d841cba1e8"
+    },
+    {
+      "path": "/private/tmp/lanl17-p2-full-index-parent-input-specification-SOURCE-ONLY-draft-20261008-a5.json",
+      "bytes": 9060,
+      "sha256": "aaf6d17cd171269021ef32d0e266580ee5fd87f0799b5e12b09b2ffe9b9637e0"
+    },
+    {
+      "path": "/private/tmp/lanl17-p2-full-index-parent-input-bootstrap-SOURCE-ONLY-draft-20261008-a5.json",
+      "bytes": 7524,
+      "sha256": "9b5b27ffbf54e78584dc0854df9e26727bd9f3fad61bdb667b6636d3763c9b58"
+    },
+    {
+      "path": "/private/tmp/lanl17-p2-full-index-metadata-action-SOURCE-ONLY-draft-20261008-a5.json",
+      "bytes": 5585,
+      "sha256": "3548089b6893807e25761dd1eea4b6f7d938ca7a0dc692be4c3f8f94072cf9a2"
+    },
+    {
+      "path": "/private/tmp/lanl17-p3-full-index-parent-input-specification-SOURCE-ONLY-draft-20261008-a5.json",
+      "bytes": 9060,
+      "sha256": "4d8df0ac7a41fded02432e9c7f11a4d773f03b85b1ef2838f58d6e79f9b8dec0"
+    },
+    {
+      "path": "/private/tmp/lanl17-p3-full-index-parent-input-bootstrap-SOURCE-ONLY-draft-20261008-a5.json",
+      "bytes": 7524,
+      "sha256": "dccd7e67232e9eb19f28799c9f52b86c00eec4152b678a1b2dd358d11eeb8704"
+    },
+    {
+      "path": "/private/tmp/lanl17-p3-full-index-metadata-action-SOURCE-ONLY-draft-20261008-a5.json",
+      "bytes": 5585,
+      "sha256": "7353c03a3f6f40475c17b80bfa02751bcbf60def0433b2ea20b9f0d16999d682"
+    },
+    {
+      "path": "/private/tmp/lanl17-p4-full-index-parent-input-specification-SOURCE-ONLY-draft-20261008-a5.json",
+      "bytes": 9060,
+      "sha256": "6e616122659d28c36b47abb6d401722c6303c0760d71abecf9e296779c26dd83"
+    },
+    {
+      "path": "/private/tmp/lanl17-p4-full-index-parent-input-bootstrap-SOURCE-ONLY-draft-20261008-a5.json",
+      "bytes": 7524,
+      "sha256": "50698ccc845fa422282b368da42d6fac81fb950979c1f0edbad5d8278c1091dc"
+    },
+    {
+      "path": "/private/tmp/lanl17-p4-full-index-metadata-action-SOURCE-ONLY-draft-20261008-a5.json",
+      "bytes": 5585,
+      "sha256": "6e980f1c80de13ef63fa7972eb11a48f0dea1c5f05edef1687aad255d37ddcf1"
+    }
+  ],
+  "checks": [
+    {
+      "check": "fixed_original_lanl17_prepare_four_full_index_metadata_20261008_a5_r3.py",
+      "result": "PASS",
+      "basis": "Current source/draft bytes equal assigned original pins."
+    },
+    {
+      "check": "fixed_original_lanl17-four-full-index-parent-helper-source-handoff-20261008-a5-r3.md",
+      "result": "PASS",
+      "basis": "Current source/draft bytes equal assigned original pins."
+    },
+    {
+      "check": "fixed_original_lanl17-four-full-index-preparation-draft-inventory-20261008-a5.json",
+      "result": "PASS",
+      "basis": "Current source/draft bytes equal assigned original pins."
+    },
+    {
+      "check": "syntax_AST_only",
+      "result": "PASS",
+      "basis": "Parsed source AST without import, compilation, main, source execution or tests."
+    },
+    {
+      "check": "stdlib_metadata_only_imports",
+      "result": "PASS",
+      "basis": "No subprocess, YAML, project/control imports, networking or Store dependency."
+    },
+    {
+      "check": "no_dynamic_execution_calls",
+      "result": "PASS",
+      "basis": "AST contains no dynamic control import or execution."
+    },
+    {
+      "check": "inventory_typed_future_boundary",
+      "result": "PASS",
+      "basis": "All 12 drafts remain future, not actual approvals or admitted input."
+    },
+    {
+      "check": "draft_pin_lanl17-p1-full-index-parent-input-specification-SOURCE-ONLY-draft-20261008-a5.json",
+      "result": "PASS",
+      "basis": "Exact retained inventory descriptor."
+    },
+    {
+      "check": "draft_unexecuted_lanl17-p1-full-index-parent-input-specification-SOURCE-ONLY-draft-20261008-a5.json",
+      "result": "PASS",
+      "basis": "Explicit source-only future draft."
+    },
+    {
+      "check": "explicit_future_attestations_lanl17-p1-full-index-parent-input-specification-SOURCE-ONLY-draft-20261008-a5.json",
+      "result": "PASS",
+      "basis": "No runtime true/default consent or fabricated timestamps."
+    },
+    {
+      "check": "draft_pin_lanl17-p1-full-index-parent-input-bootstrap-SOURCE-ONLY-draft-20261008-a5.json",
+      "result": "PASS",
+      "basis": "Exact retained inventory descriptor."
+    },
+    {
+      "check": "draft_unexecuted_lanl17-p1-full-index-parent-input-bootstrap-SOURCE-ONLY-draft-20261008-a5.json",
+      "result": "PASS",
+      "basis": "Explicit source-only future draft."
+    },
+    {
+      "check": "explicit_future_attestations_lanl17-p1-full-index-parent-input-bootstrap-SOURCE-ONLY-draft-20261008-a5.json",
+      "result": "PASS",
+      "basis": "No runtime true/default consent or fabricated timestamps."
+    },
+    {
+      "check": "draft_pin_lanl17-p1-full-index-metadata-action-SOURCE-ONLY-draft-20261008-a5.json",
+      "result": "PASS",
+      "basis": "Exact retained inventory descriptor."
+    },
+    {
+      "check": "draft_unexecuted_lanl17-p1-full-index-metadata-action-SOURCE-ONLY-draft-20261008-a5.json",
+      "result": "PASS",
+      "basis": "Explicit source-only future draft."
+    },
+    {
+      "check": "draft_pin_lanl17-p2-full-index-parent-input-specification-SOURCE-ONLY-draft-20261008-a5.json",
+      "result": "PASS",
+      "basis": "Exact retained inventory descriptor."
+    },
+    {
+      "check": "draft_unexecuted_lanl17-p2-full-index-parent-input-specification-SOURCE-ONLY-draft-20261008-a5.json",
+      "result": "PASS",
+      "basis": "Explicit source-only future draft."
+    },
+    {
+      "check": "explicit_future_attestations_lanl17-p2-full-index-parent-input-specification-SOURCE-ONLY-draft-20261008-a5.json",
+      "result": "PASS",
+      "basis": "No runtime true/default consent or fabricated timestamps."
+    },
+    {
+      "check": "draft_pin_lanl17-p2-full-index-parent-input-bootstrap-SOURCE-ONLY-draft-20261008-a5.json",
+      "result": "PASS",
+      "basis": "Exact retained inventory descriptor."
+    },
+    {
+      "check": "draft_unexecuted_lanl17-p2-full-index-parent-input-bootstrap-SOURCE-ONLY-draft-20261008-a5.json",
+      "result": "PASS",
+      "basis": "Explicit source-only future draft."
+    },
+    {
+      "check": "explicit_future_attestations_lanl17-p2-full-index-parent-input-bootstrap-SOURCE-ONLY-draft-20261008-a5.json",
+      "result": "PASS",
+      "basis": "No runtime true/default consent or fabricated timestamps."
+    },
+    {
+      "check": "draft_pin_lanl17-p2-full-index-metadata-action-SOURCE-ONLY-draft-20261008-a5.json",
+      "result": "PASS",
+      "basis": "Exact retained inventory descriptor."
+    },
+    {
+      "check": "draft_unexecuted_lanl17-p2-full-index-metadata-action-SOURCE-ONLY-draft-20261008-a5.json",
+      "result": "PASS",
+      "basis": "Explicit source-only future draft."
+    },
+    {
+      "check": "draft_pin_lanl17-p3-full-index-parent-input-specification-SOURCE-ONLY-draft-20261008-a5.json",
+      "result": "PASS",
+      "basis": "Exact retained inventory descriptor."
+    },
+    {
+      "check": "draft_unexecuted_lanl17-p3-full-index-parent-input-specification-SOURCE-ONLY-draft-20261008-a5.json",
+      "result": "PASS",
+      "basis": "Explicit source-only future draft."
+    },
+    {
+      "check": "explicit_future_attestations_lanl17-p3-full-index-parent-input-specification-SOURCE-ONLY-draft-20261008-a5.json",
+      "result": "PASS",
+      "basis": "No runtime true/default consent or fabricated timestamps."
+    },
+    {
+      "check": "draft_pin_lanl17-p3-full-index-parent-input-bootstrap-SOURCE-ONLY-draft-20261008-a5.json",
+      "result": "PASS",
+      "basis": "Exact retained inventory descriptor."
+    },
+    {
+      "check": "draft_unexecuted_lanl17-p3-full-index-parent-input-bootstrap-SOURCE-ONLY-draft-20261008-a5.json",
+      "result": "PASS",
+      "basis": "Explicit source-only future draft."
+    },
+    {
+      "check": "explicit_future_attestations_lanl17-p3-full-index-parent-input-bootstrap-SOURCE-ONLY-draft-20261008-a5.json",
+      "result": "PASS",
+      "basis": "No runtime true/default consent or fabricated timestamps."
+    },
+    {
+      "check": "draft_pin_lanl17-p3-full-index-metadata-action-SOURCE-ONLY-draft-20261008-a5.json",
+      "result": "PASS",
+      "basis": "Exact retained inventory descriptor."
+    },
+    {
+      "check": "draft_unexecuted_lanl17-p3-full-index-metadata-action-SOURCE-ONLY-draft-20261008-a5.json",
+      "result": "PASS",
+      "basis": "Explicit source-only future draft."
+    },
+    {
+      "check": "draft_pin_lanl17-p4-full-index-parent-input-specification-SOURCE-ONLY-draft-20261008-a5.json",
+      "result": "PASS",
+      "basis": "Exact retained inventory descriptor."
+    },
+    {
+      "check": "draft_unexecuted_lanl17-p4-full-index-parent-input-specification-SOURCE-ONLY-draft-20261008-a5.json",
+      "result": "PASS",
+      "basis": "Explicit source-only future draft."
+    },
+    {
+      "check": "explicit_future_attestations_lanl17-p4-full-index-parent-input-specification-SOURCE-ONLY-draft-20261008-a5.json",
+      "result": "PASS",
+      "basis": "No runtime true/default consent or fabricated timestamps."
+    },
+    {
+      "check": "draft_pin_lanl17-p4-full-index-parent-input-bootstrap-SOURCE-ONLY-draft-20261008-a5.json",
+      "result": "PASS",
+      "basis": "Exact retained inventory descriptor."
+    },
+    {
+      "check": "draft_unexecuted_lanl17-p4-full-index-parent-input-bootstrap-SOURCE-ONLY-draft-20261008-a5.json",
+      "result": "PASS",
+      "basis": "Explicit source-only future draft."
+    },
+    {
+      "check": "explicit_future_attestations_lanl17-p4-full-index-parent-input-bootstrap-SOURCE-ONLY-draft-20261008-a5.json",
+      "result": "PASS",
+      "basis": "No runtime true/default consent or fabricated timestamps."
+    },
+    {
+      "check": "draft_pin_lanl17-p4-full-index-metadata-action-SOURCE-ONLY-draft-20261008-a5.json",
+      "result": "PASS",
+      "basis": "Exact retained inventory descriptor."
+    },
+    {
+      "check": "draft_unexecuted_lanl17-p4-full-index-metadata-action-SOURCE-ONLY-draft-20261008-a5.json",
+      "result": "PASS",
+      "basis": "Explicit source-only future draft."
+    },
+    {
+      "check": "fixed_R_C_F6_and_four_actual_Stores",
+      "result": "PASS",
+      "basis": "Lines12-30,105,217-219 bind R/tree,C,F6,S,RAW,M2 and actual campaign-runs/extensa/CID/records. Source/catalog current cleanliness is explicit parent observation, not helper discovery."
+    },
+    {
+      "check": "M2_true_seal_without_required_body_policy_field",
+      "result": "PASS",
+      "basis": "Lines94-96,219 require original canonical true digest but call sealed(...,False) for immutable M2; descriptor retains canonical_ensure_ascii true. Finite original load floats accepted by strict at65."
+    },
+    {
+      "check": "closed_JSON_and_finite_metadata",
+      "result": "PASS",
+      "basis": "Lines51-66 duplicate keys/nonfinite/depth>40 refused; UTC intervals bounded300s;45s monotonic+alarm and metadata CAP8MiB."
+    },
+    {
+      "check": "owned_original_9stat_and_byte_stability",
+      "result": "PASS",
+      "basis": "Lines72-104 require owned namespace/canonical nonsymlink routes, regular UID/nlink1, all9stat equality before/fd/after, original bytesSHA and final reread; no raw YAML/provider/catalog bodies opened."
+    },
+    {
+      "check": "original_inventory76_schema_and_full_bounds",
+      "result": "PASS",
+      "basis": "Lines116-130 match inventory76 context/control pins/true digest policy; rows stat7, sorted unique eligible nonhidden yaml/yml,16384records,128MiB/file,2GiBcatalog,8MiBmetadata,writer60..3600."
+    },
+    {
+      "check": "original28_full_public_validation_pins",
+      "result": "PASS",
+      "basis": "Lines132-140 require actual RAW validate-CID four metadata originals, exact public argv actual Store, exit0, OK count, empty stderr, count equals complete inventory; does not execute validation."
+    },
+    {
+      "check": "summary_binding_no_manufactured_science",
+      "result": "PASS",
+      "basis": "Lines141-147 preserve selected original present summary binding or explicitly parent-observed absence; paired forecasts/events/eligibility/science never generated."
+    },
+    {
+      "check": "explicit_current_parent_attestation",
+      "result": "PASS",
+      "basis": "Lines107-114 require closed fields and actual independent parent evidence for all-four root/peer custody, current native released/no kernel/FD9, process quiescence, catalog continuity/exclusive ownership/no consumers, source R/F6, physical native pins/Bash startup, HOME/auth,fresh outputs and genuine approval; no default true."
+    },
+    {
+      "check": "source_controls_preserved",
+      "result": "PASS",
+      "basis": "All nine control descriptors fixed and byte-read by220; no selected source imports/actions. No chmod source/native/summary, no policy/20pairs/limits rewrite."
+    },
+    {
+      "check": "six_fresh_pairwise_disjoint_routes",
+      "result": "PASS",
+      "basis": "Lines154-155 exclude S/RAW and all six output relations both directions; parent owned existing parents, fresh nonexistent routes."
+    },
+    {
+      "check": "a2_exact_specification_and_review_bases",
+      "result": "PASS",
+      "basis": "Lines157-161 construct original11fields a2 specification, original8fields7a request projection, fixed controls7a, original8pins, inherited9field snapshot and exact writer/author review basis+canonical payload digests from explicit parent assertions."
+    },
+    {
+      "check": "a2_action_transport_contract",
+      "result": "PASS",
+      "basis": "Lines163-165 exact selected a2 CLI, source_pins LIST compatible64fd, collectempty, finite n+120/n+250. Generated plan marked executablefalse/scientificfalse and expected request explicitly not original; exact bytes require parent+peer review before execution."
+    },
+    {
+      "check": "actual_a2_request_custody_boundary",
+      "result": "PASS",
+      "basis": "Lines169-182 require actual original unsealed plan/spec/request, true sealed authorcustody with canonical flag, explicit parent original review, exact request equality, source/context/eightpins/review/catalog/payload/snapshot/summary/limits links and current fresh continuity attestation after custody."
+    },
+    {
+      "check": "bootstrap56_original_contract",
+      "result": "PASS",
+      "basis": "Lines187-192 match original0d first20 values + original59 INNER_FLAGS28 +8outer tail. GNU direct W+420/K60 envelope argv uses1ee and canonicaltrue digest; absolute Bash --noprofile --norc prefix preserved."
+    },
+    {
+      "check": "native_source_and_digest_pins",
+      "result": "PASS",
+      "basis": "Lines31-37,111,187-194 retain literal Bash/Python/GNUtimeout/sha256sum/wc/mkdir source pins plus bootstrap0d/outer59/envelope1ee/writer7a/authora2/helper28/M2. Native executables remain parent-attested physical originals, not generic private sourcepins."
+    },
+    {
+      "check": "bounded_parent_capture_and_original_limits",
+      "result": "PASS",
+      "basis": "Lines193-195 explicit finite remote W+780..7200/local remote+85..9000; original writerW/innerW+120/outerW+420/bootstrapW+720/K60/16MiBlogs/16KiBstructured retained."
+    },
+    {
+      "check": "private_fresh_original_outputs",
+      "result": "PASS",
+      "basis": "Lines198-208 create fresh0700/OEXCL0600 metadata, fsync each file, readback bytes/all9stat, reread originals and enforce actual attestation notexpired before success. Partial failures retained."
+    },
+    {
+      "check": "privacy_closed_return",
+      "result": "PASS",
+      "basis": "Lines223-227 emit compact pins/scopefalse only, refusal hashes message instead of raw diagnostics. No body transfer, SSH, source import, test, control execution or Store use."
+    },
+    {
+      "check": "runtime_and_science_admission_not_claimed",
+      "result": "PASS",
+      "basis": "Source-only source PASS does not attest actual catalog/index completeness, all-four normal custody/current native clearance, generated spec/action approval or scientific pairing. P3 previously observed records0/events0 remains historical, and actual strict6a audit still required."
+    }
+  ],
+  "check_count": 58,
+  "findings": [],
+  "target_source_imported_or_executed": false,
+  "controls_imported_or_executed": false,
+  "tests_or_remote_actions_run": false,
+  "raw_catalog_or_selected_YAML_provider_bodies_read": false,
+  "source_or_repo_modified": false,
+  "actual_input_or_runtime_admission": false,
+  "scientific_admission": false,
+  "required_before_runtime": [
+    "Parent independently reviews exact actual metadata input/attestation/original inventory and validation pins and generated specification/actions.",
+    "All four actual normal original stop/release/AFTER custodies have separate current root and peer original reviews; current native/process/source/storage observations support explicit attestation.",
+    "Original a2 author runs before bootstrap stage; actual unsealed request and true sealed author-custody originals are independently reviewed.",
+    "Parent and independent peer review exact generated 56-argument bootstrap/source/native/private routes before any runtime. Original inner/outer custody/index originals and final strict6a audit remain future actual gates."
+  ]
+}

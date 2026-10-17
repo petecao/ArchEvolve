@@ -1,0 +1,21 @@
+message_version: '1.0'
+id: fga03.t75-baseline.uniform22.t1.request.a1
+candidate: typed-library-bfs-scalar-profile-20261003-a1.baseline
+machine: mbit10
+evaluator: swdb.native.evaluator.scalable.v3
+threads: 1
+repetitions: 20
+sources: [0, 1234, 7777]
+roi: bfs.complete_call.v1
+workload:
+  id: bfs-20261004-uniform22.2f83a134a6bef789
+comparison_baseline: dx100-bfs-scalar
+build:
+  compiler: /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang++
+  flags: [-std=c++11, -O3, -Wall, -fopenmp, -pthread]
+  toolchain_flags: [--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13]
+  run_library_paths: [/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu]
+budget:
+  build_seconds: 300
+  run_seconds: 120
+  total_seconds: 7200

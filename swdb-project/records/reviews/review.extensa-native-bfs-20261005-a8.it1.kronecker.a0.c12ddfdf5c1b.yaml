@@ -1,0 +1,40 @@
+kind: review
+schema_version: '0.4'
+id: review.extensa-native-bfs-20261005-a8.it1.kronecker.a0.c12ddfdf5c1b
+status: reviewed
+created: '2026-10-05'
+updated: '2026-10-05'
+provenance:
+- id: review
+  kind: agent_run
+  description: Candidate review recorded by Yan-Ru Jhou through swdb promote. Performed by an agent under
+    Yan-Ru Jhou's delegation (Yan-Ru Jhou's 2026-10-05 delegation ("certify it", ticket 75); re-promoted
+    2026-10-05 by the code review (spec review C3) citing the native certify 1.5 record of the current
+    contract content); review document .scratch/typed-library-dx100-bfs-2026-10-03/frontier-staging-contract-review-2026-10-05.md.
+  uri: null
+target_kind: candidate
+target:
+  id: extensa-native-bfs-20261005-a8.it1.kronecker.a0
+  content_sha256: 7acca955a1f85a8563280d57b3d4e594bd0312393aeff946eda92f1577ad6ea3
+reviewer: Yan-Ru Jhou
+reviewed_at: '2026-10-05T23:15:01.783041+00:00'
+evidence:
+- certification.ac33f5548c154caba9adbf0e4abb8925
+- extensa-native-bfs-20261005-a8.summary
+performed_by: agent
+delegated_by: Yan-Ru Jhou
+delegation: Yan-Ru Jhou's 2026-10-05 delegation ("certify it", ticket 75); re-promoted 2026-10-05 by the
+  code review (spec review C3) citing the native certify 1.5 record of the current contract content
+review_document: .scratch/typed-library-dx100-bfs-2026-10-03/frontier-staging-contract-review-2026-10-05.md
+origin:
+  mode: extensa
+  campaign: extensa-native-bfs-20261005-a8
+reevaluation:
+  team_protocol: bfs-native-scale22-ci-team-20261005.9f1ed533a09ae832
+  protocol: bfs-native-scale22-ci-team-20261005-reeval-uniform-random-bb0f642780c4.2e33442a1cf31c02
+  workload_class: uniform_random
+  workloads:
+  - bfs-20261004-uniform22.2f83a134a6bef789
+  requests:
+  - id: reeval-9534c5107d8c-c1e45d3b
+    sha256: 6a321193cd33f7e22f40d31c059c51b99e1a1dc8021ea3fbded0b07bb2245403

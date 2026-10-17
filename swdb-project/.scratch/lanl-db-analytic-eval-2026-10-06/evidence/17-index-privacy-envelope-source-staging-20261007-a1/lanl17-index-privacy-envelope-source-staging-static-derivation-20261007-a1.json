@@ -1,0 +1,117 @@
+{
+  "local_functions_AST_exact": [
+    "sha",
+    "digest",
+    "strict_json",
+    "checked_file"
+  ],
+  "remote_top_functions_AST_exact": [
+    "sha",
+    "digest",
+    "strict_json",
+    "alarm"
+  ],
+  "remote_nested_functions_AST_exact": [
+    "remaining",
+    "checked",
+    "git",
+    "source_gate",
+    "python_tree",
+    "original_blob",
+    "sealed",
+    "exact_pin",
+    "entry",
+    "target_checked"
+  ],
+  "exact_full_original_byte_reversal": true,
+  "explicit_literal_replacements": {
+    "remote": [
+      {
+        "original": "RECEIPT_FORMAT='swdb.lanl17-reviewed-input-author-sources-staging.v1'",
+        "derived": "RECEIPT_FORMAT='swdb.lanl17-reviewed-index-privacy-envelope-source-staging.v1'"
+      },
+      {
+        "original": " assert {v['target'] for v in CONFIG}=={'publication_author.py','index_request_author.py','passive_inventory.py'} and len(CONFIG)==3",
+        "derived": " assert {v['target'] for v in CONFIG}=={'envelope.py'} and len(CONFIG)==1"
+      },
+      {
+        "original": "destination=base/'lanl17-input-author-source-20261007-a1'",
+        "derived": "destination=base/'lanl17-index-privacy-source-20261007-a1'"
+      },
+      {
+        "original": "'remote_destination_contains_only_three_source_files':True",
+        "derived": "'remote_destination_contains_only_one_source_file':True"
+      },
+      {
+        "original": "Fresh source copies only; exact original reviews and NOTRUN/later synthetic chronology retained. Actual input review and executions require separate parent approval; original7a execution still requires its reviewed private remote stderr envelope.",
+        "derived": "One exact envelope source copy only; original source preparation/review chronology retained. No envelope/original7a main or actual inputs. Real argv/input and separate private remote startup/outer-capture review remain required before execution."
+      }
+    ],
+    "local": [
+      {
+        "original": "OUTPUT = Path('/private/tmp/lanl17-reviewed-input-author-sources-staging-actual-20261007-a1.json')",
+        "derived": "OUTPUT = Path('/private/tmp/lanl17-reviewed-index-privacy-envelope-source-staging-actual-20261007-a1.json')"
+      },
+      {
+        "original": "row['format'] == 'swdb.lanl17-reviewed-input-author-sources-staging.v1'",
+        "derived": "row['format'] == 'swdb.lanl17-reviewed-index-privacy-envelope-source-staging.v1'"
+      },
+      {
+        "original": "row['destination'] == '/data1/yanruj/lanl17-input-author-source-20261007-a1'",
+        "derived": "row['destination'] == '/data1/yanruj/lanl17-index-privacy-source-20261007-a1'"
+      },
+      {
+        "original": "row['remote_destination_contains_only_three_source_files'] is True",
+        "derived": "row['remote_destination_contains_only_one_source_file'] is True"
+      },
+      {
+        "original": "len(row['sources']) == 3",
+        "derived": "len(row['sources']) == 1"
+      }
+    ]
+  },
+  "local_and_decoded_remote_syntax_AST_only": true,
+  "original_sha256": "d5780992722de678ea22e4f92fb5b6c1316cc12f038ae9c2a239780cb6c1f09f",
+  "CONFIG": [
+    {
+      "target": "envelope.py",
+      "source": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-privacy-envelope-controls-20261007/lanl17_remote_original_index_writer_privacy_envelope_20261007.py",
+        "bytes": 38790,
+        "sha256": "1ee5ffbdf1ef322cfd5bfec4b6e402c29d23c776e855f01d25208ebbece0fcfc"
+      },
+      "review": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-privacy-envelope-controls-20261007/lanl17-original-index-writer-privacy-envelope-parent-review-20261007.json",
+        "bytes": 7051,
+        "sha256": "70beddcfeb95e3b612476b358021581b288b031321be01b2e95c6dfd4f3c383a",
+        "format": "swdb.lanl17-original-index-writer-privacy-envelope-parent-source-review.v1",
+        "identity_sha256": "4a1023632f0db9da20860d1ade13efac5503bea6eabd0854a1432208cfb4a443"
+      },
+      "manifest": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-privacy-envelope-controls-20261007/manifest.json",
+        "bytes": 8784,
+        "sha256": "69e9ee241ad19e45dd89cfd974c311633926a6c10b41ffb8242a4e5b2febf03a",
+        "format": "swdb.lanl17-original-index-writer-privacy-envelope-archival-custody.v1",
+        "identity_sha256": "0e916296aea2b8c0ba930c5bf11f15e0b4b2b7de05192594a2786fa496e4de1d"
+      }
+    }
+  ],
+  "original_driver_pin": {
+    "path": "/private/tmp/lanl-stage-reviewed17-input-author-sources-from-git-20261007-a1-r1.py",
+    "bytes": 23612,
+    "sha256": "d5780992722de678ea22e4f92fb5b6c1316cc12f038ae9c2a239780cb6c1f09f"
+  },
+  "derived_driver_pin": {
+    "path": "/private/tmp/lanl-stage-reviewed17-index-privacy-envelope-source-from-git-20261007-a1.py",
+    "bytes": 19246,
+    "sha256": "103b7557c5428b04626db360922907b1873440d089cb093dd7da0e122364551b"
+  },
+  "complete_diff_pin": {
+    "path": "/private/tmp/lanl17-index-privacy-envelope-source-staging-derivation-20261007-a1.diff",
+    "bytes": 16814,
+    "sha256": "dcdb2f9be846715f6f2c57520cdb6d9fd6bb042b0f04a76b9b8b8e993ffe09f5"
+  },
+  "remote_exact_single_custody_and_explicit_literal_reversal": true,
+  "remote_changes_closed_to_review_schema_config_cardinality_destination_receipt_scope_only": true,
+  "no_scientific_budget_or_deadline_or_process_or_mode_guard_change": true
+}

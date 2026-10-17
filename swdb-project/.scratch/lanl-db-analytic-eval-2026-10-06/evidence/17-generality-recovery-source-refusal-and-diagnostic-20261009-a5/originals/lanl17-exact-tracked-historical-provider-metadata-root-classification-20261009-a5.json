@@ -1,0 +1,81 @@
+{
+  "actual_remote_body_SHA_not_yet_observed": true,
+  "backup_removal_index_approved": false,
+  "credential_configuration_classification": false,
+  "date_ET": "2026-10-09 00:52 ET",
+  "format": "swdb.lanl17-exact-tracked-historical-provider-metadata-classification.v1",
+  "future_preflight_root_peer_review_still_required": true,
+  "known_committed_role": {
+    "classification": "rewrite_provider",
+    "resolved_kind": "codex",
+    "role": "profiling",
+    "state": "completed",
+    "version": "codex-cli 0.153.0"
+  },
+  "local_committed_source_body_inspected": true,
+  "metadata_name_stat_original": {
+    "bytes": 2536,
+    "path": "/private/tmp/lanl17-generality-sensitive-entry-name-stat-diagnostic-capture-20261009-a5-a1/names-original.json",
+    "sha256": "d12c8faa3930a523c3382e38947f6f3a3cb7287d919eb50c47b89a8637572af9"
+  },
+  "observed_exact_tracked_entry_metadata": {
+    "Git_metadata": {
+      "diagnostic_direct_entry_contents_read_or_hashed": false,
+      "exact_entry_git_mode": "100644",
+      "exact_entry_tracked": true,
+      "ignored_by_rules_even_if_tracked": false,
+      "tracked_descendant_count": 0
+    },
+    "kind": "regular",
+    "relative_path": "swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/annotation-a3/provider.json",
+    "stat": {
+      "ctime_ns": 1791381880551391511,
+      "dev": 2097,
+      "gid": 114316761,
+      "ino": 55610029,
+      "mode": 33204,
+      "mtime_ns": 1791381880551391511,
+      "nlink": 1,
+      "size": 16916,
+      "uid": 114316761
+    }
+  },
+  "parent_source_classification_reviewed": true,
+  "preflight_R5_refusal_preserved": true,
+  "relative_path": "swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/annotation-a3/provider.json",
+  "remote_selected_body_read_or_hashed_by_diagnostic": false,
+  "reviewed_utc": "2026-10-09T04:52:28.839155+00:00",
+  "root_decision": "Permit future remote hash/read only of this exact already-approved Git project source receipt after original nine-stat and Git blob/mode provenance checks; no general sensitive basename exception. Exact size/SHA must match afterward. Keep archive/source bodies remote.",
+  "scientific_admission": false,
+  "source_Git_blob": "4c83fa85d1e8a6544fe2a757cf83d7168c86cf86",
+  "source_bytes": 16916,
+  "source_commit": "c4ab2fdbb0b0c57ee9f515522835897f24466d6b",
+  "source_sha256": "e706199fe28531573974e2e63675a97a550f6b030f7c7b3569de90bd08c0b5d9",
+  "top_level_keys": [
+    "audit",
+    "budget_usd_enforced",
+    "classification",
+    "cli_version",
+    "command",
+    "effort",
+    "executable_sha256",
+    "guard_command",
+    "guard_policy",
+    "guard_result",
+    "host_wall_s",
+    "lane",
+    "model",
+    "output_schema_sha256",
+    "prompt_sha256",
+    "provider",
+    "resolved_kind",
+    "returncode",
+    "role",
+    "state",
+    "stream",
+    "timeout_s",
+    "version",
+    "workspace",
+    "workspace_manifest"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "format": "swdb.lanl14-final-acceptance-preparation.v1",
+  "updated": "2026-10-07 ET",
+  "scope": "Exact actual PR public request and read-only acceptance check; nine-report reviewed helpers remain unchanged. Preparation only, pending actual final services model export.",
+  "actual_characterization": {
+    "id": "pagerank.jacobi.kron-g16.cpu.t1.characterization.generality.a1",
+    "sha256": "73b9bd54b5e3a89f431325b4d6ac211c18a925aecafaba5fdd994cf9c2c70e18"
+  },
+  "request": {
+    "path": ".scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-pr-final-freeze-request-20261007-a1.json",
+    "sha256": "2ee4a07880bb1bca74b5e3611d0a7147befc9ebabb340a832935c4c32443fe90"
+  },
+  "checker": {
+    "path": ".scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-check-pr-final-replay-20261007.py",
+    "sha256": "86df23903c131913cd952d3648cfed58e43824982308082bb235579d4b7da3bf"
+  },
+  "portable_controls": {
+    "passed": 11,
+    "identity_sha256": "41f244ca892cfd1e38efbaf35ae679b5bd63b8fe2b56c2c802d8f06c0ca00292",
+    "actual_acceptance": false
+  },
+  "initial_final_C": {
+    "commit": "f893fed400347ed23d92e917d8bde21b75e5375d",
+    "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+    "requires_actual_export_and_clean_final_source": true
+  },
+  "reviewed_nine_helpers_unchanged": {
+    "/private/tmp/lanl14_final_reports.py": "764b0c36acd3433803b47f6fde3d1b20dc7676cf154bb05856ae605d7fbf42ae",
+    "/private/tmp/lanl14_final_export.py": "25cc765143f5b202f3e5284cdf7ccd89543da4b5b5350ebf07823f0592973a23",
+    "/private/tmp/lanl14_final_controls.py": "288516ebb5bc0710f93c630e79457585796d1ecd881d43da7f3d41941fad53ff"
+  },
+  "model_export": null,
+  "actual_replay": null,
+  "final_nine_reports": null,
+  "parameter_retuning": 0,
+  "provider_calls": 0,
+  "application_execution": 0,
+  "recovery_used": false,
+  "identity_sha256": "f6c4eac5929ab81f3aa3f997e170e06afbeb6dced23589fa046fbd35c4fd6c47"
+}

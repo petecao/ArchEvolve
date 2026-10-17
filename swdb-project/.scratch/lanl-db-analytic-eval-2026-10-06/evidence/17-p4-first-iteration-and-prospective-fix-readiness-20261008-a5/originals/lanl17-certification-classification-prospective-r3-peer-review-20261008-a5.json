@@ -1,0 +1,166 @@
+{
+  "format": "swdb.lanl17-prospective-certification-classification-independent-source-review.v1",
+  "status": "PASS_SOURCE_ONLY_NOT_APPLIED_OR_TESTED",
+  "scientific_admission": false,
+  "target_import_main_tests_remote_repo_edits": false,
+  "reviewed_patch": {
+    "path": "/private/tmp/lanl17-certification-classification-prospective-r3-20261008-a5.diff",
+    "bytes": 23678,
+    "sha256": "d8d44eb826470f0331e5aabcc882fbdb226e23a010ca94b7888a3535d5b0910d"
+  },
+  "reviewed_rationale": {
+    "path": "/private/tmp/lanl17-certification-classification-prospective-rationale-r3-20261008-a5.md",
+    "bytes": 8000,
+    "sha256": "e3f27f6f9e6afdf057c32d6f86a5cbf63de53f50c01e96c8e1d692ff6bd09d1d"
+  },
+  "prior_findings": {
+    "path": "/private/tmp/lanl17-certification-classification-prospective-r2-peer-findings-r1-20261008-a5.md",
+    "bytes": 5355,
+    "sha256": "5bca878289cd19f6f042db5ecf20451d3e4d47a52197ebce34f2491e416d21a4"
+  },
+  "frozen_R": "5e12a9796432654d88def24ecea617d16ca605b2",
+  "file_count": 10,
+  "files": [
+    {
+      "path": "swdb-project/swdb/certification_common.py",
+      "original_bytes": 8940,
+      "original_sha256": "bcda49503338fba874abb8612778b29a1a3bc0b19f2b128e85976a05e1d60c22",
+      "proposed_bytes": 9999,
+      "proposed_sha256": "4474004a85541c1c1d69e51b0537aac95403ce5b53983b02ef5e5d3976768543",
+      "exact_R_contexts": true,
+      "AST_syntax_valid": true
+    },
+    {
+      "path": "swdb-project/swdb/campaign_targets.py",
+      "original_bytes": 71343,
+      "original_sha256": "727d4399e4bde1996484e3013770e5ab21ef4a30e8fa7313c4697aaa6359211f",
+      "proposed_bytes": 71108,
+      "proposed_sha256": "e65c03ebd9741ad2853915314602e664271ae7236aa7453c1ea3731effbae377",
+      "exact_R_contexts": true,
+      "AST_syntax_valid": true
+    },
+    {
+      "path": "swdb-project/swdb/certification.py",
+      "original_bytes": 77561,
+      "original_sha256": "b7de18069b2bfc0d0e008c0c0e898a613cfcf9297e388d724f271eb9fa5299e7",
+      "proposed_bytes": 77665,
+      "proposed_sha256": "578c403408e8a16ceb7952e6a74f25e4ea242f4f2af43cfea42695b212f313fb",
+      "exact_R_contexts": true,
+      "AST_syntax_valid": true
+    },
+    {
+      "path": "swdb-project/swdb/certification_blinding.py",
+      "original_bytes": 34388,
+      "original_sha256": "cfd1e2db6656b4ca8428050b606e550a2abfd48af1d302e6d606b48d3cc622f9",
+      "proposed_bytes": 34412,
+      "proposed_sha256": "9826cceb849230810a6108f0afec1324195a10abf26ac1fbd9db9764be3e787c",
+      "exact_R_contexts": true,
+      "AST_syntax_valid": true
+    },
+    {
+      "path": "swdb-project/swdb/certification_faults.py",
+      "original_bytes": 4820,
+      "original_sha256": "e88b52e15589e20dd859a0d36d067047aae4d9f56d5928d024ee32e5766f9974",
+      "proposed_bytes": 4954,
+      "proposed_sha256": "f73fd8644f81bbdd641eb2d3f109f89d7ecfef0178dd57c2e0bb821491228e68",
+      "exact_R_contexts": true,
+      "AST_syntax_valid": true
+    },
+    {
+      "path": "swdb-project/swdb/certification_isolation.py",
+      "original_bytes": 17943,
+      "original_sha256": "9097e28085fdab03e70078c10907eb6061fd1a91ad9f82e005a37f18f6a052eb",
+      "proposed_bytes": 18018,
+      "proposed_sha256": "0d8e823b38ca9ae5492e026b274fd88d9157bc9812d40087307d47f54e84f4af",
+      "exact_R_contexts": true,
+      "AST_syntax_valid": true
+    },
+    {
+      "path": "swdb-project/swdb/certification_process.py",
+      "original_bytes": 17206,
+      "original_sha256": "d2a24ea28403c92dd00d1ef22848fd67e610a6db7e92905a331acaaaacf7f8ce",
+      "proposed_bytes": 17226,
+      "proposed_sha256": "3b67fe836bb0766c8339ae545921fc6355cf7c14db08ee0bd2f2c32e57205fbd",
+      "exact_R_contexts": true,
+      "AST_syntax_valid": true
+    },
+    {
+      "path": "swdb-project/swdb/certification_native.py",
+      "original_bytes": 33461,
+      "original_sha256": "42832cf86d87cd76148f631edc6c7546ed24648af914200439786e8766fbba77",
+      "proposed_bytes": 33780,
+      "proposed_sha256": "9b05d4e3df575009604949b9a277885551e05f6339d15f29100baf7e4e9f8fac",
+      "exact_R_contexts": true,
+      "AST_syntax_valid": true
+    },
+    {
+      "path": "swdb-project/tests/test_extensa_targets.py",
+      "original_bytes": 30786,
+      "original_sha256": "027376c51bb3c38f95d10eee5bca0c461295c732925c42418bda970c58903f3e",
+      "proposed_bytes": 39448,
+      "proposed_sha256": "5f1aa67a7b6f38b2ccc912e776520ebbdd24aea631a8b35b5d4c83ab46f296c9",
+      "exact_R_contexts": true,
+      "AST_syntax_valid": true
+    },
+    {
+      "path": "swdb-project/swdb/certification_legality.py",
+      "original_bytes": 23969,
+      "original_sha256": "7f1769d570d2ad5d20513fe1270d3328653888ef52b0e51abff06eb6d411de72",
+      "proposed_bytes": 24117,
+      "proposed_sha256": "9e34b60fcbebe85ca96ea8f9ae1a7f039c37c01ffd43f83250d0fb282de7b768",
+      "exact_R_contexts": true,
+      "AST_syntax_valid": true
+    }
+  ],
+  "R2_to_R3_changed_files": [
+    "swdb-project/swdb/campaign_targets.py",
+    "swdb-project/swdb/certification_blinding.py",
+    "swdb-project/swdb/certification_native.py",
+    "swdb-project/tests/test_extensa_targets.py"
+  ],
+  "positive_only_blinding_wrappers": [
+    [
+      473,
+      "common.candidate_check(instrument, source)"
+    ]
+  ],
+  "adapter_except_order": [
+    "certification_common.CandidateRefusal",
+    "(Failure, UsageError, OSError)"
+  ],
+  "shared_native_authored_guard": [
+    [
+      485,
+      "common.CandidateFailure('BFS frontier logging statement or correctness check differs from the protected text')"
+    ]
+  ],
+  "checks": [
+    "All10 completefiles reconstructed by exactfrozenR git-show contexts/removals; AST syntaxvalid; no targetexecution",
+    "Only4 files differ from R2 reconstruction: adapter operationalOSError, blindingpositive wrapper placement, native14/15guard, tests",
+    "R2finding1 resolved: shared native14/15 frontier guard now CandidateFailure defaultcertification_aborted; source/profiles/driver/graphs remain outside",
+    "R2finding2 resolved: shared instrumentlambda originalunwrapped; exactlyone candidate_check(instrument, source) positivecall; generatedcontrol call remainsuntyped",
+    "R2finding3 resolved: CandidateRefusal caught first, Failure/UsageError/OSError thenraiseexisting Stop(infrastructure_failure)",
+    "Existing inner Stop block retains row/provider_calls and outerStopterminates; interruptedrows do not append completediterations oradvanceplateau",
+    "No blanket Exception/BaseException converter or whole-certification candidate_check; operationalclasses bounded and explicit",
+    "CandidateFailure/Usage retain standaloneFailure/Usage bases, publicmessages and explicit harness/site checks; no stringheuristicclassifier",
+    "Candidate buildnonzero matrix/verdict failures stillordinaryfeedback; trustedcompiler/Build/profile/library/snapshot/source-integrity remainoperational",
+    "Authoredscope/header/protection/functionsignature/harness/directive/site distinctions retained; trusted snapshotdefinition remainsunwrapped",
+    "Missing normativeknob remains untyped Failure; authoredschedule-controlsite remains typedCandidateFailure",
+    "No schema/protocol/CLIflag/scientificbudget/library/record/pairing/verdictcomputations changed by prospectivepatch",
+    "Proposed operational4cases include trustedFileNotFoundError and asserts interruptedproviderhistory/no repair/no evaluation/no completediteration",
+    "Proposed native8cases exercise actual sharedguard both1.4/1.5 with missing/duplicateanchor/verifier, mockingpreludefunctions only",
+    "Proposed blinding2cases reach realpositive/control flow: successfulpositivebefore trustedcontrolFailure remainsuntyped; positiveFailure typed",
+    "Blindingfixture supplies matrixgraphs/driver/build/plugin/legality/control metadata needed before realguard; missing oracle/run attrs are after expectedfailure",
+    "Nativefixture supplies sources/threads/rewritepath/hook/harness and mocks matrix/stagingprelude; actualguard raises before driver/build access",
+    "Proposed inherited3adapterfeedback+1directchecker cases retain CLIcategory and normativeknob distinction",
+    "All18 new parametrizedcases sourceparsed only; no runtime/testpass claimed",
+    "Existing olddrafts/readme/actualR/F6/M2/stop/release evidence untouched; opaque aborteddigests cannotidentify causes"
+  ],
+  "check_count": 20,
+  "material_findings": [],
+  "remaining": [
+    "Actual implementation/testing and full Standards+Spec review remainfuture afterfrozenR custody/FINALIZE protections",
+    "No actualoriginalcampaign cause inferred from opaque certification_aborted digests",
+    "Focused proposedtests mustprove behavior whenlater safelyapplied; this source review is not a runtime result"
+  ]
+}

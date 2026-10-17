@@ -1,0 +1,101 @@
+{
+  "child_native_network_attempts": [],
+  "compiler_boundary": "Explicit synthetic closed source input; actual Lowering dataclass, model renderer and new public module. No real parser replay or native run claimed.",
+  "date": "2026-10-16 ET",
+  "failed": 0,
+  "outcomes": [
+    {
+      "name": "test_closed_move_derives_source_local_transfer_scalar_and_reverse_cleanup",
+      "passed": true
+    },
+    {
+      "name": "test_closed_move_accounts_for_private_administrative_storage_in_source_order",
+      "passed": true
+    },
+    {
+      "name": "test_closed_move_binds_complete_observed_statement_and_dependency_censuses",
+      "passed": true
+    }
+  ],
+  "passed": 3,
+  "raw_bytes": 1446503,
+  "scientific_acceptance": false,
+  "source_pins": [
+    {
+      "bytes": 54,
+      "path": "__init__.py",
+      "sha256": "bcbd2c199a6b63c92302a8daf37c26909a76332b89452797351082ddba66b743"
+    },
+    {
+      "bytes": 29179,
+      "path": "std_models.py",
+      "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+    },
+    {
+      "bytes": 170578,
+      "path": "c_lowering.py",
+      "sha256": "37201a198250021e3d9912a7fbaafa2b8dd9377db8d87027e51045897a246243"
+    },
+    {
+      "bytes": 14470,
+      "path": "heap_model_vcs.py",
+      "sha256": "f20e0ec130222aeda96b4fbb8e72eef8d922d3f33e84077777203f7e6d159092"
+    },
+    {
+      "bytes": 8185,
+      "path": "vector_reallocation_model.py",
+      "sha256": "92ad23030531650924a51b0a3bd1abb479afa373a7d1dd2a543b9ae225ab8b89"
+    },
+    {
+      "bytes": 50364,
+      "path": "vector_reallocation_vcs.py",
+      "sha256": "f2185ad536bca5e8845ff0b718d81fe1787f1d6fedea7e53907dbe75969861e9"
+    },
+    {
+      "bytes": 7516,
+      "path": "vector_reallocation_inventory.py",
+      "sha256": "0a0474084a17b84788585a62a9e0b63b88eb43efd858101769db267579af5f07"
+    },
+    {
+      "bytes": 8197,
+      "path": "vector_reallocation_private_frame.py",
+      "sha256": "062c68a138b4aeb0887f50490d405f3b1fdd50284e6e8404e096df02568982da"
+    },
+    {
+      "bytes": 14594,
+      "path": "vector_owned_transfer.py",
+      "sha256": "6fa50d3b0ff6610c541bfa787179b37c6c8b50e4155fb2b0605d00e1eaffd085"
+    },
+    {
+      "bytes": 10583,
+      "path": "vector_owned_source_view.py",
+      "sha256": "c76c45afc64a84f6d1cbe1e23e05c175dc1b612abb5f23679d40e7db6c43f8f2"
+    },
+    {
+      "bytes": 8386,
+      "path": "heap_reallocation.mlw",
+      "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+    },
+    {
+      "bytes": 2389,
+      "path": "vector_owned_state.mlw",
+      "sha256": "a2c295d2c6720a9c8c522f05e19723c2d2d2a32b63f9b198aab03f195269e4b6"
+    },
+    {
+      "bytes": 3128,
+      "path": "vector_owned_effects.mlw",
+      "sha256": "6bfc13341d2faceb5a3fb64bd2d5bff22dd03c52a1fa3d5c4cb39b6e9c83f7f5"
+    },
+    {
+      "bytes": 27207,
+      "path": "vector_reallocation_closed_evidence.py",
+      "sha256": "5d997dfbb1f2bef48ca07126d3a98697756254af1fc26d8f18a94aef009fc77f"
+    },
+    {
+      "bytes": 29207,
+      "path": "vector_owned_move_source.py",
+      "sha256": "62fc6ab9ba9b31b8a67aefebd08d9787dd954cba61e63cd46628ae769040fcdf"
+    }
+  ],
+  "stage": "green-v3"
+}

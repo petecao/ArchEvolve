@@ -1,0 +1,11 @@
+--- lanl17_prepare_original32_requests_20261008_a5_r2.py
++++ lanl17_prepare_original32_requests_selected_20261009_a5_r3.py
+@@ -163,7 +163,7 @@
+  root.mkdir(mode=0o700);outputs={};argvs={}
+  for kind,obs in (('trajectory',t),('candidate_selection',selection)):
+   selected=pins if kind=='trajectory' else {k:x for k,x in pins.items() if k in {'manifest_M2','summary'} or k.startswith('public_candidate_export:')}
+-  request={'format':'swdb.lanl17-parent-capture-request.v1','producer_sha256':P,'source_plan_sha256':PLAN,'auditor_sha256':A,'collector_sha256':B,'capture':kind,'context':ctx,'observations':obs,'inputs':selected,'read_roots':['/data/yanruj/EvolveSWDB_runs','/data1/yanruj']}
++  request={'format':'swdb.lanl17-parent-capture-request.v1','producer_sha256':P,'source_plan_sha256':PLAN,'auditor_sha256':A,'collector_sha256':B,'capture':kind,'context':ctx,'observations':obs,'inputs':selected,'read_roots':sorted({source['path'] for pin in selected.values() for source in (pin,pin['writer_source'],*pin.get('canonical_policy_sources',[]))})}
+   request['identity_sha256']=digest(request);outputs[kind]=emit(root,kind+'-request.json',request)
+   outputs[kind].update(identity_sha256=request['identity_sha256'],canonical_ensure_ascii=True,remote_request_path=routes[kind+'_request'])
+   argvs[kind]=['/usr/bin/python3.12','-B',PRODUCER,'--request',routes[kind+'_request'],'--request-sha256',outputs[kind]['sha256'],'--output',routes[kind+'_output']]

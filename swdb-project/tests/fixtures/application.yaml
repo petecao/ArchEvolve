@@ -1,0 +1,28 @@
+# A valid application record used as the base for validation tests.
+kind: application
+schema_version: "0.2"
+id: fixture-app
+status: draft
+deprecated_by: null
+created: 2026-09-22
+updated: 2026-09-22
+provenance:
+  - id: src-fixture
+    kind: source_code
+    description: Test fixture, not a real application.
+    uri: null
+name: Fixture Application
+source:
+  origin: upstream
+  uri: https://example.org/fixture
+  commit: 0123456789abcdef0123456789abcdef01234567
+  local_path: null
+license: BSD-3-Clause
+language: C++11
+parallel_model: openmp
+build:
+  command: make
+  flags: -O3
+domain: graph
+notes: []
+extensions: {}

@@ -1,0 +1,87 @@
+{
+  "author_green": {
+    "bytes": 1307,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/pure-compiler-unit-adapter-v2-green.log",
+    "sha256": "20139faa2092809a1550318f880e471bfacfa528d26030c716bbea4c73af3d42"
+  },
+  "author_red": {
+    "bytes": 2111,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/pure-compiler-unit-adapter-v2-red.log",
+    "sha256": "a9e60c165e02e5f68529a99fcff02869beb38969f3ecb99ba82bd5a84cb8a8b1"
+  },
+  "boundaries": {
+    "actual_controller_admitted": false,
+    "actual_original_TU_ABI_observed": false,
+    "current_0_2": false,
+    "full_ticket28": false,
+    "optional_hardware_body_theorem_required": false,
+    "source_or_public_admission": false
+  },
+  "budgets": {
+    "rss_bytes": 4294967296,
+    "stage_bytes": 134217728,
+    "total_bytes": 268435456,
+    "whole_seconds": 180
+  },
+  "checks": {
+    "budgets": "Four Clang-only phases retain 180s/4GiB and128MiB per AST file/256MiB total; no native/version/linker/prover calls or filtered-ID fallback. Actual stdout/stderr/dependency/preprocessed byte limits and physical runtime closure must be enforced by the independently reviewed root controller.",
+    "coordinate_correlation": "Both AST phases now use -x c++ and exactly the same original control/*.cpp input used by their preprocessing phase. No AST phase reads .ii or selects c++-cpp-output. This matches prepare_unit source path/bytes, observed_abi probe locality and V3 original-byte span binding. Caller remains one complete TU; filtered ABI roots remain literal-only with no cross-TU ID joins.",
+    "dependency_protocol": "AST phases emit distinct caller.ast.d and abi.ast.d. The plan explicitly requires independently parsed physical membership equal to preprocessing, rejecting new/missing/rebound inputs. Original source/probe, used dependency, compiler/runtime/control pins must be checked before and after each AST and again at final capture.",
+    "exact_inverse": "Three unique documented edits recover V1 adapter bytes exactly. All function/class ASTs except capture_recipe are identical; no consumer/binder, JSON, ABI, source/probe, geometry or bypass gate changes.",
+    "physical_preservation": "All21 V2 file rows and all20 V1 rows match current physical sizes/SHA. Headers, declaration-only stub, fixture,29-root probe, dispatch V2, binder V3 and26/27/132 contract design remain exact. V1 is preserved.",
+    "regressions": "Read retained RED and GREEN logs and the new thirteenth control. It fails on the old recipe and requires original source AST inputs, distinct AST depfiles and the exact recheck policy. Author GREEN reports13tests0fail/error/skip. Reviewer only used own readers/hash/AST checks; no project functions or tests executed.",
+    "timing_boundary": "Original AST parsing rereads physical source/headers. First used-header pins arise after preprocessing, and transient changes between checks remain explicit timing TCB. No invented frozen-buffer/source map is asserted. Actual enforcement of parsing both depfiles and all rechecks is a mandatory future controller duty, not implemented or observed by this passive recipe."
+  },
+  "closes_finding": {
+    "actual_compiler_capture_observed": false,
+    "id": "parsed_buffer_vs_original_source",
+    "prior_review": {
+      "bytes": 9346,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-compiler-unit-v1-independent-static-findings-20261016.json",
+      "sha256": "399d4839d9a98e875f85e8c0668553ed51cf1dfea13a62a59240286af0ae2e74"
+    },
+    "status": "CLOSED_IN_PROSPECTIVE_RECIPE"
+  },
+  "date": "2026-10-16 ET",
+  "decision": "Static PASS for the exact V2 source preparation and original-buffer recipe. Root must separately review/admit an enforcing bounded capture controller and observe real artifacts before source/public integration.",
+  "findings": [],
+  "inverse": {
+    "bytes": 3458,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-unit-v2-inverse-delta.json",
+    "sha256": "58bc9fec16d8b9f3339d139d2eaa54003dd1b6a104801f859aca0e98b25aa8a5"
+  },
+  "mandatory_remaining_production_gates": [
+    "Root-selected actual compiler/source/runtime/resource/recipe admission and retained same-TU evidence within caps",
+    "Original caller macro/pragma configuration versus fixed source/MMIO profile; separate probe is not that evidence",
+    "Scoped expression/descriptor/local initialization and complete CPU-access lowering",
+    "New isolated model/entry and actual positive/negative public source verdicts with independent reconciliation"
+  ],
+  "module": {
+    "bytes": 14281,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler_unit_adapter_v2.py",
+    "sha256": "1cf112859f976f77e8381c777c977f5cf5857d6e18f1bd0e24f9689148e80317"
+  },
+  "packet": {
+    "bytes": 7445,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-unit-source-packet-v2.json",
+    "sha256": "9bb859c0683a0e1b9f22ccfc2ef550d8208d40a1de1d9c0c66849794a0a1fc59"
+  },
+  "plan": {
+    "bytes": 7452,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-plan-v2.json",
+    "sha256": "a912eb1347bf53bb973a8ec8c6066a90e1c0535f191da2e705577feb264a043a"
+  },
+  "readme": {
+    "bytes": 8713,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/README-compiler-unit-adapter-v2.md",
+    "sha256": "7ac80c56613c58ca9dafb5353455ff65ba18e0ec606ed0b6bf9993ce73af83d3"
+  },
+  "reviewer": "/root/lane_coordination",
+  "scope": "Narrow original-buffer AST recipe correction to the frozen V1 consumer. Preparation only; no actual controller, compiler, native, version, SSH, verifier, solver or tests executed.",
+  "status": "PASS_STATIC_ORIGINAL_BUFFER_RECIPE_V2",
+  "tests": {
+    "bytes": 10200,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/test_compiler_unit_adapter_v2.py",
+    "sha256": "5d32991d6900c32ec7b3f08428de02b6ab3a87ac23a6c29d43f25daf04fa8ed0"
+  }
+}

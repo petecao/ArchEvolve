@@ -1,0 +1,1054 @@
+{
+  "format": "swdb.cpu-development-region-diagnostic.v1",
+  "source_commit": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "actual_development_admission_identity": "6cd637d4903cb8595ce31efad000e1492fd6af7b0b0f9879231d6a757d983fb6",
+  "kernels": [
+    {
+      "kernel": "bfs",
+      "prediction_seconds": 0.08459283293734217,
+      "native_median_seconds": 0.00153,
+      "prediction_over_native": 55.28943329238051,
+      "estimate_file_sha256": "dc4035f1a48302f13ae0e22ad29865b2ade2aa43ba42f924e9252c1cb0ae9269",
+      "estimate_sha256": "91141811b3bf23102552104b85a64663803201fcd29e3c412fb2f36f3c783407",
+      "selected_median_prediction_trial": 2,
+      "selected_trial_sources": [
+        18064
+      ],
+      "region_seconds_sum": 0.08459283293734218,
+      "limiting_resource_plus_additive_totals": {
+        "memory_service_scenario": 0.08457419177241378,
+        "additive:native_service_costs": 1.6572632012060535e-06,
+        "native_service_costs": 1.2720521259307867e-05,
+        "compute_throughput": 4.263380467891483e-06
+      },
+      "top_predicted_regions": [
+        {
+          "id": "loop:bfs.cc:1717:6e2a9b58e359bcfa",
+          "predicted_seconds": 0.053639654397940585,
+          "share_of_selected_trial": 0.6340921864819379,
+          "limiting_bound": "memory_service_scenario",
+          "bounds": [
+            {
+              "model": "compute_throughput",
+              "seconds": 0.0004621321324470514
+            },
+            {
+              "model": "memory_service_scenario",
+              "seconds": 0.053639604733666364
+            },
+            {
+              "model": "native_service_costs",
+              "seconds": 0.0
+            }
+          ],
+          "additive_overheads": [
+            {
+              "model": "native_service_costs",
+              "seconds": 4.966427421863573e-08
+            }
+          ],
+          "memory_cells": [
+            {
+              "update_kind": "read",
+              "element_bytes": 8,
+              "primitive": "ordinary_read",
+              "requests": 1654498,
+              "seconds_per_request": 2.1667417526245115e-08,
+              "constructed_seconds": 0.03584869896233749,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "read",
+              "element_bytes": 4,
+              "primitive": "ordinary_read",
+              "requests": 809768,
+              "seconds_per_request": 2.152584743499756e-08,
+              "constructed_seconds": 0.017430942425743105,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "write",
+              "element_bytes": 8,
+              "primitive": "ordinary_write",
+              "requests": 520675,
+              "seconds_per_request": 5.751372650265695e-10,
+              "constructed_seconds": 0.00029945959546770907,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "write",
+              "element_bytes": 4,
+              "primitive": "ordinary_write",
+              "requests": 104135,
+              "seconds_per_request": 5.810126289725305e-10,
+              "constructed_seconds": 6.050375011805446e-05,
+              "footprint_bytes": 8388608
+            }
+          ]
+        },
+        {
+          "id": "loop:bfs.cc:3354:4fc081ce5a20fcdd",
+          "predicted_seconds": 0.01259756972095394,
+          "share_of_selected_trial": 0.14892005957862822,
+          "limiting_bound": "memory_service_scenario",
+          "bounds": [
+            {
+              "model": "compute_throughput",
+              "seconds": 0.00010908968987363716
+            },
+            {
+              "model": "memory_service_scenario",
+              "seconds": 0.01259756972095394
+            },
+            {
+              "model": "native_service_costs",
+              "seconds": 0.0
+            }
+          ],
+          "additive_overheads": [
+            {
+              "model": "native_service_costs",
+              "seconds": 0.0
+            }
+          ],
+          "memory_cells": [
+            {
+              "update_kind": "read",
+              "element_bytes": 8,
+              "primitive": "ordinary_read",
+              "requests": 514540,
+              "seconds_per_request": 2.1667417526245115e-08,
+              "constructed_seconds": 0.011148753013954162,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "read",
+              "element_bytes": 4,
+              "primitive": "ordinary_read",
+              "requests": 65537,
+              "seconds_per_request": 2.152584743499756e-08,
+              "constructed_seconds": 0.0014107394633474351,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "write",
+              "element_bytes": 4,
+              "primitive": "ordinary_write",
+              "requests": 65536,
+              "seconds_per_request": 5.810126289725305e-10,
+              "constructed_seconds": 3.807724365234376e-05,
+              "footprint_bytes": 8388608
+            }
+          ]
+        },
+        {
+          "id": "loop:bfs.cc:1791:c91be0a18a4752c0",
+          "predicted_seconds": 0.008158598619593106,
+          "share_of_selected_trial": 0.09644550650805336,
+          "limiting_bound": "memory_service_scenario",
+          "bounds": [
+            {
+              "model": "compute_throughput",
+              "seconds": 0.00014630615078183346
+            },
+            {
+              "model": "memory_service_scenario",
+              "seconds": 0.008158598619593106
+            },
+            {
+              "model": "native_service_costs",
+              "seconds": 0.0
+            }
+          ],
+          "additive_overheads": [
+            {
+              "model": "native_service_costs",
+              "seconds": 0.0
+            }
+          ],
+          "memory_cells": [
+            {
+              "update_kind": "read",
+              "element_bytes": 8,
+              "primitive": "ordinary_read",
+              "requests": 306716,
+              "seconds_per_request": 2.1667417526245115e-08,
+              "constructed_seconds": 0.006645743633979797,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "read",
+              "element_bytes": 4,
+              "primitive": "ordinary_read",
+              "requests": 66800,
+              "seconds_per_request": 2.152584743499756e-08,
+              "constructed_seconds": 0.001437926608657837,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "write",
+              "element_bytes": 8,
+              "primitive": "ordinary_write",
+              "requests": 86558,
+              "seconds_per_request": 5.751372650265695e-10,
+              "constructed_seconds": 4.978273138616981e-05,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "write",
+              "element_bytes": 4,
+              "primitive": "ordinary_write",
+              "requests": 43279,
+              "seconds_per_request": 5.810126289725305e-10,
+              "constructed_seconds": 2.514564556930215e-05,
+              "footprint_bytes": 8388608
+            }
+          ]
+        },
+        {
+          "id": "loop:bfs.cc:3093:d28ec09d2dd27686",
+          "predicted_seconds": 0.004252224252287417,
+          "share_of_selected_trial": 0.05026695648598311,
+          "limiting_bound": "memory_service_scenario",
+          "bounds": [
+            {
+              "model": "compute_throughput",
+              "seconds": 8.18315202877096e-05
+            },
+            {
+              "model": "memory_service_scenario",
+              "seconds": 0.004252224252287417
+            },
+            {
+              "model": "native_service_costs",
+              "seconds": 0.0
+            }
+          ],
+          "additive_overheads": [
+            {
+              "model": "native_service_costs",
+              "seconds": 0.0
+            }
+          ],
+          "memory_cells": [
+            {
+              "update_kind": "read",
+              "element_bytes": 8,
+              "primitive": "ordinary_read",
+              "requests": 131140,
+              "seconds_per_request": 2.1667417526245115e-08,
+              "constructed_seconds": 0.002841465134391784,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "read",
+              "element_bytes": 4,
+              "primitive": "ordinary_read",
+              "requests": 65537,
+              "seconds_per_request": 2.152584743499756e-08,
+              "constructed_seconds": 0.0014107394633474351,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "write",
+              "element_bytes": 4,
+              "primitive": "ordinary_write",
+              "requests": 17,
+              "seconds_per_request": 5.810126289725305e-10,
+              "constructed_seconds": 9.877214692533018e-09,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "write",
+              "element_bytes": 8,
+              "primitive": "ordinary_write",
+              "requests": 17,
+              "seconds_per_request": 5.751372650265695e-10,
+              "constructed_seconds": 9.777333505451682e-09,
+              "footprint_bytes": 8388608
+            }
+          ]
+        },
+        {
+          "id": "loop:bfs.cc:5199:82c2122db9c90924",
+          "predicted_seconds": 0.00424147552427759,
+          "share_of_selected_trial": 0.05013989219889641,
+          "limiting_bound": "memory_service_scenario",
+          "bounds": [
+            {
+              "model": "compute_throughput",
+              "seconds": 8.181778758342063e-05
+            },
+            {
+              "model": "memory_service_scenario",
+              "seconds": 0.00424147552427759
+            },
+            {
+              "model": "native_service_costs",
+              "seconds": 0.0
+            }
+          ],
+          "additive_overheads": [
+            {
+              "model": "native_service_costs",
+              "seconds": 0.0
+            }
+          ],
+          "memory_cells": [
+            {
+              "update_kind": "read",
+              "element_bytes": 4,
+              "primitive": "ordinary_read",
+              "requests": 131073,
+              "seconds_per_request": 2.152584743499756e-08,
+              "constructed_seconds": 0.002821457400847435,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "read",
+              "element_bytes": 8,
+              "primitive": "ordinary_read",
+              "requests": 65537,
+              "seconds_per_request": 2.1667417526245115e-08,
+              "constructed_seconds": 0.001420017542417526,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "write",
+              "element_bytes": 4,
+              "primitive": "ordinary_write",
+              "requests": 1,
+              "seconds_per_request": 5.810126289725305e-10,
+              "constructed_seconds": 5.810126289725305e-10,
+              "footprint_bytes": 8388608
+            }
+          ]
+        },
+        {
+          "id": "loop:bfs.cc:2357:401922b5b521a378",
+          "predicted_seconds": 0.0010577616126312911,
+          "share_of_selected_trial": 0.012504151662762898,
+          "limiting_bound": "memory_service_scenario",
+          "bounds": [
+            {
+              "model": "compute_throughput",
+              "seconds": 1.9564000618457794e-05
+            },
+            {
+              "model": "memory_service_scenario",
+              "seconds": 0.0010577616126312911
+            },
+            {
+              "model": "native_service_costs",
+              "seconds": 0.0
+            }
+          ],
+          "additive_overheads": [
+            {
+              "model": "native_service_costs",
+              "seconds": 0.0
+            }
+          ],
+          "memory_cells": [
+            {
+              "update_kind": "read",
+              "element_bytes": 8,
+              "primitive": "ordinary_read",
+              "requests": 24708,
+              "seconds_per_request": 2.1667417526245115e-08,
+              "constructed_seconds": 0.0005353585522384643,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "read",
+              "element_bytes": 4,
+              "primitive": "ordinary_read",
+              "requests": 23004,
+              "seconds_per_request": 2.152584743499756e-08,
+              "constructed_seconds": 0.0004951805943946839,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "compare-and-swap",
+              "element_bytes": 4,
+              "primitive": "integer_strong_seq_cst_compare_exchange",
+              "requests": 3408,
+              "seconds_per_request": 5.530259847640991e-09,
+              "constructed_seconds": 1.8847125560760497e-05,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "write",
+              "element_bytes": 4,
+              "primitive": "ordinary_write",
+              "requests": 7668,
+              "seconds_per_request": 5.810126289725305e-10,
+              "constructed_seconds": 4.455204838961364e-06,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "write",
+              "element_bytes": 8,
+              "primitive": "ordinary_write",
+              "requests": 6816,
+              "seconds_per_request": 5.751372650265695e-10,
+              "constructed_seconds": 3.920135598421098e-06,
+              "footprint_bytes": 8388608
+            }
+          ]
+        },
+        {
+          "id": "unmapped.gapbs-bfs-do.QueueToBitmap.45.1.2298107626477124825",
+          "predicted_seconds": 0.000465756077042222,
+          "share_of_selected_trial": 0.005505857421599854,
+          "limiting_bound": "memory_service_scenario",
+          "bounds": [
+            {
+              "model": "compute_throughput",
+              "seconds": 1.9518075734376905e-05
+            },
+            {
+              "model": "memory_service_scenario",
+              "seconds": 0.000465756077042222
+            },
+            {
+              "model": "native_service_costs",
+              "seconds": 0.0
+            }
+          ],
+          "additive_overheads": [
+            {
+              "model": "native_service_costs",
+              "seconds": 0.0
+            }
+          ],
+          "memory_cells": [
+            {
+              "update_kind": "read",
+              "element_bytes": 8,
+              "primitive": "ordinary_read",
+              "requests": 20400,
+              "seconds_per_request": 2.1667417526245115e-08,
+              "constructed_seconds": 0.00044201531753540035,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "compare-and-swap",
+              "element_bytes": 8,
+              "primitive": "integer_strong_seq_cst_compare_exchange",
+              "requests": 3400,
+              "seconds_per_request": 5.832301795482636e-09,
+              "constructed_seconds": 1.9829826104640962e-05,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "write",
+              "element_bytes": 8,
+              "primitive": "ordinary_write",
+              "requests": 6800,
+              "seconds_per_request": 5.751372650265695e-10,
+              "constructed_seconds": 3.910933402180673e-06,
+              "footprint_bytes": 8388608
+            }
+          ]
+        }
+      ],
+      "source_request_construction_totals": [
+        {
+          "update_kind": "read",
+          "element_bytes": 8,
+          "primitive": "ordinary_read",
+          "footprint_bytes": 8388608,
+          "requests": 2721509,
+          "constructed_seconds": 0.058968071804433815,
+          "seconds_per_request": 2.1667417526245115e-08
+        },
+        {
+          "update_kind": "read",
+          "element_bytes": 4,
+          "primitive": "ordinary_read",
+          "footprint_bytes": 8388608,
+          "requests": 1165318,
+          "constructed_seconds": 0.02508445748125649,
+          "seconds_per_request": 2.152584743499756e-08
+        },
+        {
+          "update_kind": "write",
+          "element_bytes": 8,
+          "primitive": "ordinary_write",
+          "footprint_bytes": 8388608,
+          "requests": 626241,
+          "constructed_seconds": 0.00036017453598750384,
+          "seconds_per_request": 5.751372650265695e-10
+        },
+        {
+          "update_kind": "write",
+          "element_bytes": 4,
+          "primitive": "ordinary_write",
+          "footprint_bytes": 8388608,
+          "requests": 220726,
+          "constructed_seconds": 0.00012824459354259074,
+          "seconds_per_request": 5.810126289725305e-10
+        },
+        {
+          "update_kind": "compare-and-swap",
+          "element_bytes": 8,
+          "primitive": "integer_strong_seq_cst_compare_exchange",
+          "footprint_bytes": 8388608,
+          "requests": 3400,
+          "constructed_seconds": 1.9829826104640962e-05,
+          "seconds_per_request": 5.832301795482636e-09
+        },
+        {
+          "update_kind": "compare-and-swap",
+          "element_bytes": 4,
+          "primitive": "integer_strong_seq_cst_compare_exchange",
+          "footprint_bytes": 8388608,
+          "requests": 3408,
+          "constructed_seconds": 1.8847125560760497e-05,
+          "seconds_per_request": 5.530259847640991e-09
+        },
+        {
+          "update_kind": "add-update",
+          "element_bytes": 8,
+          "primitive": "integer_seq_cst_add",
+          "footprint_bytes": 8388608,
+          "requests": 4,
+          "constructed_seconds": 2.0807893514633177e-08,
+          "seconds_per_request": 5.201973378658294e-09
+        },
+        {
+          "update_kind": "read",
+          "element_bytes": 1,
+          "primitive": "ordinary_read",
+          "footprint_bytes": 256,
+          "requests": 3,
+          "constructed_seconds": 4.151598304521951e-09,
+          "seconds_per_request": 1.3838661015073167e-09
+        }
+      ],
+      "measured_region_seconds_available": false
+    },
+    {
+      "kernel": "bc",
+      "prediction_seconds": 0.64771215194357,
+      "native_median_seconds": 0.01923,
+      "prediction_over_native": 33.68237919623349,
+      "estimate_file_sha256": "896b4edeb91917cec165401419192ab3851b32818f567cbb438fc231a8de1bb8",
+      "estimate_sha256": "adb4a93491f6dab2d6f85935ec36830e5ac135f65cec32663224dd36b206b749",
+      "selected_median_prediction_trial": 3,
+      "selected_trial_sources": [
+        30164
+      ],
+      "region_seconds_sum": 0.6477121519435701,
+      "limiting_resource_plus_additive_totals": {
+        "native_service_costs": 1.1867476636606159e-05,
+        "additive:native_service_costs": 5.737264482397681e-06,
+        "memory_service_scenario": 0.6476708874175312,
+        "compute_throughput": 2.3659784919665226e-05
+      },
+      "top_predicted_regions": [
+        {
+          "id": "gapbs-bc-brandes/pbfs-edge",
+          "predicted_seconds": 0.33188625691585927,
+          "share_of_selected_trial": 0.5123977617526216,
+          "limiting_bound": "memory_service_scenario",
+          "bounds": [
+            {
+              "model": "compute_throughput",
+              "seconds": 0.004206903681146739
+            },
+            {
+              "model": "memory_service_scenario",
+              "seconds": 0.33188349608559803
+            },
+            {
+              "model": "native_service_costs",
+              "seconds": 0.0
+            }
+          ],
+          "additive_overheads": [
+            {
+              "model": "native_service_costs",
+              "seconds": 2.7608302612304686e-06
+            }
+          ],
+          "memory_cells": [
+            {
+              "update_kind": "read",
+              "element_bytes": 4,
+              "primitive": "ordinary_read",
+              "requests": 9696173,
+              "seconds_per_request": 2.152584743499756e-08,
+              "constructed_seconds": 0.2087183407013426,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "read",
+              "element_bytes": 8,
+              "primitive": "ordinary_read",
+              "requests": 5524399,
+              "seconds_per_request": 2.1667417526245115e-08,
+              "constructed_seconds": 0.11969945971457098,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "add-update",
+              "element_bytes": 8,
+              "primitive": "floating_monotonic_add",
+              "requests": 413105,
+              "seconds_per_request": 7.568024635314941e-09,
+              "constructed_seconds": 0.0031263888169717788,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "compare-and-swap",
+              "element_bytes": 4,
+              "primitive": "integer_strong_seq_cst_compare_exchange",
+              "requests": 46687,
+              "seconds_per_request": 5.530259847640991e-09,
+              "constructed_seconds": 0.00025819124150681493,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "write",
+              "element_bytes": 4,
+              "primitive": "ordinary_write",
+              "requests": 93374,
+              "seconds_per_request": 5.810126289725305e-10,
+              "constructed_seconds": 5.4251473217681064e-05,
+              "footprint_bytes": 8388608
+            }
+          ]
+        },
+        {
+          "id": "gapbs-bc-brandes/back-edge",
+          "predicted_seconds": 0.1896881562352018,
+          "share_of_selected_trial": 0.2928587269298721,
+          "limiting_bound": "memory_service_scenario",
+          "bounds": [
+            {
+              "model": "compute_throughput",
+              "seconds": 0.0024625589366605778
+            },
+            {
+              "model": "memory_service_scenario",
+              "seconds": 0.1896881562352018
+            },
+            {
+              "model": "native_service_costs",
+              "seconds": 0.0
+            }
+          ],
+          "additive_overheads": [
+            {
+              "model": "native_service_costs",
+              "seconds": 0.0
+            }
+          ],
+          "memory_cells": [
+            {
+              "update_kind": "read",
+              "element_bytes": 8,
+              "primitive": "ordinary_read",
+              "requests": 7523317,
+              "seconds_per_request": 2.1667417526245115e-08,
+              "constructed_seconds": 0.1630108506212978,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "read",
+              "element_bytes": 4,
+              "primitive": "ordinary_read",
+              "requests": 1239315,
+              "seconds_per_request": 2.152584743499756e-08,
+              "constructed_seconds": 0.026677305613904002,
+              "footprint_bytes": 8388608
+            }
+          ]
+        },
+        {
+          "id": "unmapped.gapbs-bc-brandes.PBFS.45.4.15975176246384606928",
+          "predicted_seconds": 0.05659004829603738,
+          "share_of_selected_trial": 0.08736913168330925,
+          "limiting_bound": "memory_service_scenario",
+          "bounds": [
+            {
+              "model": "compute_throughput",
+              "seconds": 0.0023714749047793445
+            },
+            {
+              "model": "memory_service_scenario",
+              "seconds": 0.05659004829603738
+            },
+            {
+              "model": "native_service_costs",
+              "seconds": 0.0
+            }
+          ],
+          "additive_overheads": [
+            {
+              "model": "native_service_costs",
+              "seconds": 0.0
+            }
+          ],
+          "memory_cells": [
+            {
+              "update_kind": "read",
+              "element_bytes": 8,
+              "primitive": "ordinary_read",
+              "requests": 2478630,
+              "seconds_per_request": 2.1667417526245115e-08,
+              "constructed_seconds": 0.053705511103076926,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "compare-and-swap",
+              "element_bytes": 8,
+              "primitive": "integer_strong_seq_cst_compare_exchange",
+              "requests": 413105,
+              "seconds_per_request": 5.832301795482636e-09,
+              "constructed_seconds": 0.0024093530332228545,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "write",
+              "element_bytes": 8,
+              "primitive": "ordinary_write",
+              "requests": 826210,
+              "seconds_per_request": 5.751372650265695e-10,
+              "constructed_seconds": 0.000475184159737602,
+              "footprint_bytes": 8388608
+            }
+          ]
+        },
+        {
+          "id": "gapbs-bc-brandes/back-vertex",
+          "predicted_seconds": 0.023443584429734717,
+          "share_of_selected_trial": 0.03619444896840097,
+          "limiting_bound": "memory_service_scenario",
+          "bounds": [
+            {
+              "model": "compute_throughput",
+              "seconds": 9.715680213163733e-05
+            },
+            {
+              "model": "memory_service_scenario",
+              "seconds": 0.023443492526373386
+            },
+            {
+              "model": "native_service_costs",
+              "seconds": 0.0
+            }
+          ],
+          "additive_overheads": [
+            {
+              "model": "native_service_costs",
+              "seconds": 9.190336132952968e-08
+            }
+          ],
+          "memory_cells": [
+            {
+              "update_kind": "read",
+              "element_bytes": 8,
+              "primitive": "ordinary_read",
+              "requests": 793708,
+              "seconds_per_request": 2.1667417526245115e-08,
+              "constructed_seconds": 0.01719760262992096,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "read",
+              "element_bytes": 4,
+              "primitive": "ordinary_read",
+              "requests": 280140,
+              "seconds_per_request": 2.152584743499756e-08,
+              "constructed_seconds": 0.006030250900440216,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "write",
+              "element_bytes": 8,
+              "primitive": "ordinary_write",
+              "requests": 233440,
+              "seconds_per_request": 5.751372650265695e-10,
+              "constructed_seconds": 0.0001342600431478024,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "write",
+              "element_bytes": 4,
+              "primitive": "ordinary_write",
+              "requests": 140064,
+              "seconds_per_request": 5.810126289725305e-10,
+              "constructed_seconds": 8.137895286440852e-05,
+              "footprint_bytes": 8388608
+            }
+          ]
+        },
+        {
+          "id": "gapbs-bc-brandes/pbfs-frontier",
+          "predicted_seconds": 0.020361116250515947,
+          "share_of_selected_trial": 0.03143543963073561,
+          "limiting_bound": "memory_service_scenario",
+          "bounds": [
+            {
+              "model": "compute_throughput",
+              "seconds": 9.715680213163733e-05
+            },
+            {
+              "model": "memory_service_scenario",
+              "seconds": 0.020361024347154616
+            },
+            {
+              "model": "native_service_costs",
+              "seconds": 0.0
+            }
+          ],
+          "additive_overheads": [
+            {
+              "model": "native_service_costs",
+              "seconds": 9.190336132952968e-08
+            }
+          ],
+          "memory_cells": [
+            {
+              "update_kind": "read",
+              "element_bytes": 8,
+              "primitive": "ordinary_read",
+              "requests": 700332,
+              "seconds_per_request": 2.1667417526245115e-08,
+              "constructed_seconds": 0.015174385850990294,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "read",
+              "element_bytes": 4,
+              "primitive": "ordinary_read",
+              "requests": 233452,
+              "seconds_per_request": 2.152584743499756e-08,
+              "constructed_seconds": 0.00502525213539505,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "write",
+              "element_bytes": 8,
+              "primitive": "ordinary_write",
+              "requests": 233440,
+              "seconds_per_request": 5.751372650265695e-10,
+              "constructed_seconds": 0.0001342600431478024,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "write",
+              "element_bytes": 4,
+              "primitive": "ordinary_write",
+              "requests": 46688,
+              "seconds_per_request": 5.810126289725305e-10,
+              "constructed_seconds": 2.7126317621469505e-05,
+              "footprint_bytes": 8388608
+            }
+          ]
+        },
+        {
+          "id": "gapbs-bc-brandes/normalize-div",
+          "predicted_seconds": 0.007110244331999779,
+          "share_of_selected_trial": 0.010977475581806341,
+          "limiting_bound": "memory_service_scenario",
+          "bounds": [
+            {
+              "model": "compute_throughput",
+              "seconds": 5.454505300809568e-05
+            },
+            {
+              "model": "memory_service_scenario",
+              "seconds": 0.007110244331999779
+            },
+            {
+              "model": "native_service_costs",
+              "seconds": 0.0
+            }
+          ],
+          "additive_overheads": [
+            {
+              "model": "native_service_costs",
+              "seconds": 0.0
+            }
+          ],
+          "memory_cells": [
+            {
+              "update_kind": "read",
+              "element_bytes": 4,
+              "primitive": "ordinary_read",
+              "requests": 196609,
+              "seconds_per_request": 2.152584743499756e-08,
+              "constructed_seconds": 0.0042321753383474355,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "read",
+              "element_bytes": 8,
+              "primitive": "ordinary_read",
+              "requests": 131072,
+              "seconds_per_request": 2.1667417526245115e-08,
+              "constructed_seconds": 0.0028399917499999996,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "write",
+              "element_bytes": 4,
+              "primitive": "ordinary_write",
+              "requests": 65536,
+              "seconds_per_request": 5.810126289725305e-10,
+              "constructed_seconds": 3.807724365234376e-05,
+              "footprint_bytes": 8388608
+            }
+          ]
+        },
+        {
+          "id": "gapbs-bc-brandes/normalize-max",
+          "predicted_seconds": 0.007100966394499779,
+          "share_of_selected_trial": 0.01096315141408437,
+          "limiting_bound": "memory_service_scenario",
+          "bounds": [
+            {
+              "model": "compute_throughput",
+              "seconds": 0.00010908968987363716
+            },
+            {
+              "model": "memory_service_scenario",
+              "seconds": 0.007100966394499779
+            },
+            {
+              "model": "native_service_costs",
+              "seconds": 0.0
+            }
+          ],
+          "additive_overheads": [
+            {
+              "model": "native_service_costs",
+              "seconds": 0.0
+            }
+          ],
+          "memory_cells": [
+            {
+              "update_kind": "read",
+              "element_bytes": 4,
+              "primitive": "ordinary_read",
+              "requests": 262145,
+              "seconds_per_request": 2.152584743499756e-08,
+              "constructed_seconds": 0.0056428932758474356,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "read",
+              "element_bytes": 8,
+              "primitive": "ordinary_read",
+              "requests": 65536,
+              "seconds_per_request": 2.1667417526245115e-08,
+              "constructed_seconds": 0.0014199958749999998,
+              "footprint_bytes": 8388608
+            },
+            {
+              "update_kind": "write",
+              "element_bytes": 4,
+              "primitive": "ordinary_write",
+              "requests": 65536,
+              "seconds_per_request": 5.810126289725305e-10,
+              "constructed_seconds": 3.807724365234376e-05,
+              "footprint_bytes": 8388608
+            }
+          ]
+        }
+      ],
+      "source_request_construction_totals": [
+        {
+          "update_kind": "read",
+          "element_bytes": 8,
+          "primitive": "ordinary_read",
+          "footprint_bytes": 8388608,
+          "requests": 17545083,
+          "constructed_seconds": 0.38015663889362517,
+          "seconds_per_request": 2.1667417526245115e-08
+        },
+        {
+          "update_kind": "read",
+          "element_bytes": 4,
+          "primitive": "ordinary_read",
+          "footprint_bytes": 8388608,
+          "requests": 12104554,
+          "constructed_seconds": 0.26056078267268945,
+          "seconds_per_request": 2.152584743499756e-08
+        },
+        {
+          "update_kind": "add-update",
+          "element_bytes": 8,
+          "primitive": "floating_monotonic_add",
+          "footprint_bytes": 8388608,
+          "requests": 413105,
+          "constructed_seconds": 0.0031263888169717788,
+          "seconds_per_request": 7.568024635314941e-09
+        },
+        {
+          "update_kind": "compare-and-swap",
+          "element_bytes": 8,
+          "primitive": "integer_strong_seq_cst_compare_exchange",
+          "footprint_bytes": 8388608,
+          "requests": 413105,
+          "constructed_seconds": 0.0024093530332228545,
+          "seconds_per_request": 5.832301795482636e-09
+        },
+        {
+          "update_kind": "write",
+          "element_bytes": 8,
+          "primitive": "ordinary_write",
+          "footprint_bytes": 8388608,
+          "requests": 1433952,
+          "constructed_seconds": 0.0008247192314593793,
+          "seconds_per_request": 5.751372650265695e-10
+        },
+        {
+          "update_kind": "write",
+          "element_bytes": 4,
+          "primitive": "ordinary_write",
+          "footprint_bytes": 8388608,
+          "requests": 607858,
+          "constructed_seconds": 0.0003531731746219844,
+          "seconds_per_request": 5.810126289725305e-10
+        },
+        {
+          "update_kind": "compare-and-swap",
+          "element_bytes": 4,
+          "primitive": "integer_strong_seq_cst_compare_exchange",
+          "footprint_bytes": 8388608,
+          "requests": 46687,
+          "constructed_seconds": 0.00025819124150681493,
+          "seconds_per_request": 5.530259847640991e-09
+        },
+        {
+          "update_kind": "add-update",
+          "element_bytes": 8,
+          "primitive": "integer_seq_cst_add",
+          "footprint_bytes": 8388608,
+          "requests": 8,
+          "constructed_seconds": 4.1615787029266353e-08,
+          "seconds_per_request": 5.201973378658294e-09
+        },
+        {
+          "update_kind": "read",
+          "element_bytes": 1,
+          "primitive": "ordinary_read",
+          "footprint_bytes": 256,
+          "requests": 4,
+          "constructed_seconds": 5.535464406029267e-09,
+          "seconds_per_request": 1.3838661015073167e-09
+        }
+      ],
+      "measured_region_seconds_available": false
+    }
+  ],
+  "scope": "Diagnostic decomposition of already frozen forecasts after accepted development only; no measured region timing, cost fitting, rate/recipe/band change or holdout outcome access. Per-region values use the actual median forecast trial, so components sum that forecast; display medians across regions are not substituted.",
+  "store_or_native_or_provider_or_remote_invocations": 0,
+  "identity_sha256": "6b5fda6f48bcd715cde3d6367767865304c311d2d091b3216e54e911f5724c7d"
+}

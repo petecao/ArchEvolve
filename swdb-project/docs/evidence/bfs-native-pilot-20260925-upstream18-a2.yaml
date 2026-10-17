@@ -1,0 +1,547 @@
+id: bfs-native-pilot-20260925-upstream18-a2
+created: '2026-09-25'
+timezone: America/Detroit
+host: mbit10
+state: complete
+role: unchanged_source_baseline_pilot
+gain_claim: false
+protocol_freeze: false
+repository_commit: 9fff245d609bea1d01b7cb4821f8a0c8a74676cb
+source_snapshot: bfs-native-pilot-20260925-upstream18-a2.source
+candidate: bfs-native-pilot-20260925-upstream18-a2.baseline
+unchanged_source_sha256: d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056
+lane:
+  socket_lane:
+    aligned_cell_age_s: ''
+    aligned_to: no_gapbs_batch_running
+    command:
+    - bash
+    - -c
+    - set -eu; cd '/data1/yanruj/EvolveSWDB_graph_bfs_20260925_uniform18'; /usr/bin/time -v python3 scripts/bfs_native_pilot.py
+      --id bfs-native-pilot-20260925-upstream18-a2 --implementation gapbs-bfs-do --workloads bfs-20260925-uniform18.cd2169a5c421baf7
+      bfs-20260925-kronecker18.48de8267ac2098d5 --runs-dir '/data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925'
+      --records '/data1/yanruj/EvolveSWDB_graph_bfs_20260925_uniform18/records' --lane mbit10-evaluation-node1
+    cpus_allowed_list: 1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63
+    ended_utc: '2026-09-26T02:36:23Z'
+    exit_code: 0
+    host: mbit10
+    job: swdb-bfs-native-upstream18-a2
+    lease_generation: 392
+    lease_name: mbit10-evaluation-node1
+    load1_at_start: 12.37
+    load1_max: 32
+    node: 1
+    numa_memory_policy: bind:1
+    numactl: --cpunodebind=1 --membind=1
+    preregistration_sha256: null
+    started_utc: '2026-09-26T02:09:24Z'
+bounds:
+  threads: 4
+  repetitions: 5
+  warmups: 0
+  evaluation_seconds: 1200
+  profile_seconds: 1200
+  driver_seconds: 7200
+driver_host_wall_s: 1618.2349555464461
+measurement_limits:
+- Calibration only; no frozen comparison or optimization gain.
+- Primary ROI is complete-call wall time; diagnostic thread CPU and modeled cache events are separate
+  quantities.
+- Stage elapsed intervals and subprocess sums are recorded separately; unexplained residual host cost
+  is not attributed.
+- Per-source five-sample range divided by median is large; final policy must account for this observed
+  variability.
+- Automatic source attribution retains its explicitly bounded scope.
+workloads:
+- workload: bfs-20260925-uniform18.cd2169a5c421baf7
+  family: uniform_random
+  state: complete
+  evaluation: bfs-native-pilot-20260925-upstream18-a2.uniform-random.evaluation
+  timing_summary:
+  - source_position: 0
+    source: 0
+    samples: [0.004893488, 0.004337344, 0.004729244, 0.005268395, 0.006248497]
+    median_seconds: 0.004893488
+    relative_spread: 0.3905502578120148
+  - source_position: 1
+    source: 1234
+    samples: [0.005790999, 0.004142641, 0.006332351, 0.005124849, 0.005099929]
+    median_seconds: 0.005124849
+    relative_spread: 0.42727307672869974
+  - source_position: 2
+    source: 7777
+    samples: [0.008173827, 0.00580816, 0.006909457, 0.005573794, 0.007044821]
+    median_seconds: 0.006909457
+    relative_spread: 0.3763006268075769
+  region_profile: bfs-native-pilot-20260925-upstream18-a2.uniform-random.profile
+  profile_package: bfs-native-pilot-20260925-upstream18-a2.uniform-random.package.v1.ac70410e93d0c3a6
+  package_completeness: complete
+  reasons: []
+  primary_correctness_checks: 15
+  primary_binary_sha256: 741493a212d925d2a382dacabb7cd171895db2384ed799387e9631d842cb56b3
+  profile_executions_verified: 6
+  available_memory_observations: 18
+  diagnostic_binary_artifacts:
+    primary_binary_sha256: 741493a212d925d2a382dacabb7cd171895db2384ed799387e9631d842cb56b3
+    region_binary:
+      path: /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-upstream18-a2.uniform-random.profile/bfs-regions
+      sha256: 38b83ba470434dc3b2ca2917deb2d39dc86b73478a0920cabcb25f9f2f3a25b0
+      difference: automatic source scope guards; original build flags retained
+    memory_binary:
+      path: /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-upstream18-a2.uniform-random.profile/bfs-memory
+      sha256: e14311d06009a239e6694947212e1e1172c7e150b7c56a02d8051a1cd73b6ec9
+      flags: [-std=c++11, -O3, -Wall, -fopenmp, -g]
+      wrapper_sha256: b13c8607e0a32ea70f6a83a83edabf2d548b182143aad9712c95cdf06ab43671
+      difference: original candidate source; client ROI guards and debug info, no region guards
+  canonical_graph_sha256: 7d7dd24c2397071f4ad8fb3125079a4e42ecdbaa853745d84161bcd410d0164b
+  num_vertices: 262144
+  num_directed_edges: 8388040
+  evaluation_accounting:
+    first_stage_started: '2026-09-26T02:09:45.321106+00:00'
+    last_stage_finished: '2026-09-26T02:17:44.488910+00:00'
+    stage_interval_seconds: 479.167804
+    recorded_subprocess_wall_seconds: 46.52698213979602
+    subprocesses:
+    - stage: compiler_identity
+      source: null
+      repetition: null
+      host_wall_s: 0.0042153168469667435
+    - stage: build
+      source: null
+      repetition: null
+      host_wall_s: 2.775617060251534
+    - stage: execution
+      source: 0
+      repetition: 0
+      host_wall_s: 2.9239457128569484
+    - stage: execution
+      source: 1234
+      repetition: 0
+      host_wall_s: 2.7720631631091237
+    - stage: execution
+      source: 7777
+      repetition: 0
+      host_wall_s: 2.8235500110313296
+    - stage: execution
+      source: 0
+      repetition: 1
+      host_wall_s: 2.671902089379728
+    - stage: execution
+      source: 1234
+      repetition: 1
+      host_wall_s: 2.723216368816793
+    - stage: execution
+      source: 7777
+      repetition: 1
+      host_wall_s: 2.722600015811622
+    - stage: execution
+      source: 0
+      repetition: 2
+      host_wall_s: 2.7717724218964577
+    - stage: execution
+      source: 1234
+      repetition: 2
+      host_wall_s: 2.9725376470014453
+    - stage: execution
+      source: 7777
+      repetition: 2
+      host_wall_s: 3.273918930441141
+    - stage: execution
+      source: 0
+      repetition: 3
+      host_wall_s: 3.5251929787918925
+    - stage: execution
+      source: 1234
+      repetition: 3
+      host_wall_s: 2.8234713580459356
+    - stage: execution
+      source: 7777
+      repetition: 3
+      host_wall_s: 2.7741436371579766
+    - stage: execution
+      source: 0
+      repetition: 4
+      host_wall_s: 2.671496585942805
+    - stage: execution
+      source: 1234
+      repetition: 4
+      host_wall_s: 2.8721239482983947
+    - stage: execution
+      source: 7777
+      repetition: 4
+      host_wall_s: 3.425214894115925
+  profile_accounting:
+    first_stage_started: '2026-09-26T02:18:22.204062+00:00'
+    last_stage_finished: '2026-09-26T02:22:07.443766+00:00'
+    stage_interval_seconds: 225.239704
+    recorded_subprocess_wall_seconds: 65.01944751199335
+    subprocesses:
+    - stage: compiler_identity
+      source: null
+      repetition: null
+      host_wall_s: 0.00430190097540617
+    - stage: preprocessor_identity
+      source: null
+      repetition: null
+      host_wall_s: 0.03254337050020695
+    - stage: source_discovery
+      source: null
+      repetition: null
+      host_wall_s: 0.6665178230032325
+    - stage: region_build
+      source: null
+      repetition: null
+      host_wall_s: 2.9733018409460783
+    - stage: region_execution
+      source: null
+      repetition: null
+      host_wall_s: 3.325718332082033
+    - stage: region_execution
+      source: null
+      repetition: null
+      host_wall_s: 3.2234205147251487
+    - stage: region_execution
+      source: null
+      repetition: null
+      host_wall_s: 2.924566582776606
+    - stage: memory_collector_identity
+      source: null
+      repetition: null
+      host_wall_s: 0.008324061520397663
+    - stage: memory_build
+      source: null
+      repetition: null
+      host_wall_s: 3.6742805475369096
+    - stage: memory_execution
+      source: 0
+      repetition: 0
+      host_wall_s: 16.513225307688117
+    - stage: memory_execution
+      source: 1234
+      repetition: 0
+      host_wall_s: 15.811819968745112
+    - stage: memory_execution
+      source: 7777
+      repetition: 0
+      host_wall_s: 15.8614272614941
+  raw_validation:
+    state: passed
+    primary_outputs: 15
+    diagnostic_outputs: 6
+    region_outputs: 3
+    callgrind_roi_summaries: 3
+    source_artifact_rehashed: true
+    binary_artifacts_rehashed: 3
+    canonical_graph_file_rehashed: true
+    sealed_package_identity_verified: true
+- workload: bfs-20260925-kronecker18.48de8267ac2098d5
+  family: kronecker
+  state: complete
+  evaluation: bfs-native-pilot-20260925-upstream18-a2.kronecker.evaluation
+  timing_summary:
+  - source_position: 0
+    source: 0
+    samples: [0.006369765, 0.006381815, 0.007271143, 0.006341302, 0.004845842]
+    median_seconds: 0.006369765
+    relative_spread: 0.3807520371630664
+  - source_position: 1
+    source: 1234
+    samples: [0.008160028, 0.005915747, 0.007747723, 0.004875526, 0.006685496]
+    median_seconds: 0.006685496
+    relative_spread: 0.4912877070003482
+  - source_position: 2
+    source: 7777
+    samples: [0.004286861, 0.005260357, 0.00419623, 0.004602018, 0.006324185]
+    median_seconds: 0.004602018
+    relative_spread: 0.46239606190153987
+  region_profile: bfs-native-pilot-20260925-upstream18-a2.kronecker.profile
+  profile_package: bfs-native-pilot-20260925-upstream18-a2.kronecker.package.v1.6a34b061dcca355b
+  package_completeness: complete
+  reasons: []
+  primary_correctness_checks: 15
+  primary_binary_sha256: 741493a212d925d2a382dacabb7cd171895db2384ed799387e9631d842cb56b3
+  profile_executions_verified: 6
+  available_memory_observations: 18
+  diagnostic_binary_artifacts:
+    primary_binary_sha256: 741493a212d925d2a382dacabb7cd171895db2384ed799387e9631d842cb56b3
+    region_binary:
+      path: /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-upstream18-a2.kronecker.profile/bfs-regions
+      sha256: 38b83ba470434dc3b2ca2917deb2d39dc86b73478a0920cabcb25f9f2f3a25b0
+      difference: automatic source scope guards; original build flags retained
+    memory_binary:
+      path: /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-upstream18-a2.kronecker.profile/bfs-memory
+      sha256: fa34f3b9412587d2367a557bff95c0129115aa1a07c195c2481f62f0d38779aa
+      flags: [-std=c++11, -O3, -Wall, -fopenmp, -g]
+      wrapper_sha256: b13c8607e0a32ea70f6a83a83edabf2d548b182143aad9712c95cdf06ab43671
+      difference: original candidate source; client ROI guards and debug info, no region guards
+  canonical_graph_sha256: cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7
+  num_vertices: 262143
+  num_directed_edges: 7610898
+  evaluation_accounting:
+    first_stage_started: '2026-09-26T02:22:44.382157+00:00'
+    last_stage_finished: '2026-09-26T02:31:07.866575+00:00'
+    stage_interval_seconds: 503.484418
+    recorded_subprocess_wall_seconds: 29.534881954081357
+    subprocesses:
+    - stage: compiler_identity
+      source: null
+      repetition: null
+      host_wall_s: 0.010075408965349197
+    - stage: build
+      source: null
+      repetition: null
+      host_wall_s: 2.976204783655703
+    - stage: execution
+      source: 0
+      repetition: 0
+      host_wall_s: 1.7197691658511758
+    - stage: execution
+      source: 1234
+      repetition: 0
+      host_wall_s: 1.7196290455758572
+    - stage: execution
+      source: 7777
+      repetition: 0
+      host_wall_s: 1.57021498773247
+    - stage: execution
+      source: 0
+      repetition: 1
+      host_wall_s: 1.6688278634101152
+    - stage: execution
+      source: 1234
+      repetition: 1
+      host_wall_s: 1.7700007185339928
+    - stage: execution
+      source: 7777
+      repetition: 1
+      host_wall_s: 1.719172801822424
+    - stage: execution
+      source: 0
+      repetition: 2
+      host_wall_s: 1.8195994244888425
+    - stage: execution
+      source: 1234
+      repetition: 2
+      host_wall_s: 2.021084831096232
+    - stage: execution
+      source: 7777
+      repetition: 2
+      host_wall_s: 1.5686553809791803
+    - stage: execution
+      source: 0
+      repetition: 3
+      host_wall_s: 1.7202354026958346
+    - stage: execution
+      source: 1234
+      repetition: 3
+      host_wall_s: 1.5196706531569362
+    - stage: execution
+      source: 7777
+      repetition: 3
+      host_wall_s: 1.8189511056989431
+    - stage: execution
+      source: 0
+      repetition: 4
+      host_wall_s: 1.9707278283312917
+    - stage: execution
+      source: 1234
+      repetition: 4
+      host_wall_s: 1.7699678502976894
+    - stage: execution
+      source: 7777
+      repetition: 4
+      host_wall_s: 2.1720947017893195
+  profile_accounting:
+    first_stage_started: '2026-09-26T02:31:46.490135+00:00'
+    last_stage_finished: '2026-09-26T02:35:46.464941+00:00'
+    stage_interval_seconds: 239.974806
+    recorded_subprocess_wall_seconds: 55.389237105846405
+    subprocesses:
+    - stage: compiler_identity
+      source: null
+      repetition: null
+      host_wall_s: 0.0043532634153962135
+    - stage: preprocessor_identity
+      source: null
+      repetition: null
+      host_wall_s: 0.032547940500080585
+    - stage: source_discovery
+      source: null
+      repetition: null
+      host_wall_s: 0.6664362736046314
+    - stage: region_build
+      source: null
+      repetition: null
+      host_wall_s: 2.9234337462112308
+    - stage: region_execution
+      source: null
+      repetition: null
+      host_wall_s: 2.322057663463056
+    - stage: region_execution
+      source: null
+      repetition: null
+      host_wall_s: 2.020172473974526
+    - stage: region_execution
+      source: null
+      repetition: null
+      host_wall_s: 1.969581961631775
+    - stage: memory_collector_identity
+      source: null
+      repetition: null
+      host_wall_s: 0.008604424074292183
+    - stage: memory_build
+      source: null
+      repetition: null
+      host_wall_s: 3.7242133049294353
+    - stage: memory_execution
+      source: 0
+      repetition: 0
+      host_wall_s: 14.012435615062714
+    - stage: memory_execution
+      source: 1234
+      repetition: 0
+      host_wall_s: 13.500162019394338
+    - stage: memory_execution
+      source: 7777
+      repetition: 0
+      host_wall_s: 14.20523841958493
+  raw_validation:
+    state: passed
+    primary_outputs: 15
+    diagnostic_outputs: 6
+    region_outputs: 3
+    callgrind_roi_summaries: 3
+    source_artifact_rehashed: true
+    binary_artifacts_rehashed: 3
+    canonical_graph_file_rehashed: true
+    sealed_package_identity_verified: true
+driver_stages:
+- command: get
+  state: complete
+  host_wall_s: 2.7231339821591973
+  returncode: 0
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.driver/00-get.json
+  stdout_sha256: 1b842f53ef6b4ff8a7b6b34c9619546510c1911c288cdb3c800064cfb456874f
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.driver/00-get.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: get
+  state: complete
+  host_wall_s: 1.8196531776338816
+  returncode: 0
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.driver/01-get.json
+  stdout_sha256: 78aa152bf1ccba188d48a427aa00455e6dbdc8640d8ab0c11d41cbb7fd82ab8e
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.driver/01-get.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: source-snapshot
+  state: complete
+  host_wall_s: 5.132102617062628
+  returncode: 0
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.driver/02-source-snapshot.json
+  stdout_sha256: 2bcbe65f6dc8ee10dabd45146b8c674e416849e571db80095b1a3d399b9a7fa2
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.driver/02-source-snapshot.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: baseline-candidate
+  state: complete
+  host_wall_s: 5.178090635687113
+  returncode: 0
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.driver/03-baseline-candidate.json
+  stdout_sha256: b1aec9615ae9ad0a58d986e18a8d1a50ed004dbf9651e70116f323141db27dcc
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.driver/03-baseline-candidate.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: evaluate
+  state: complete
+  host_wall_s: 495.888793756254
+  returncode: 0
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.driver/04-evaluate.json
+  stdout_sha256: 593f67e4f0bb1eb3c234c6fbd9f8978e3b13b09094e2c67aa90b58e8b2290033
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.driver/04-evaluate.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: bfs-profile
+  state: complete
+  host_wall_s: 269.619576651603
+  returncode: 0
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.driver/05-bfs-profile.json
+  stdout_sha256: 685f0b2cafd2d4af72fa6b6d784a3c37599c3c7f2cbda2926831a730e561fd4d
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.driver/05-bfs-profile.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: profile-package
+  state: complete
+  host_wall_s: 8.338095118291676
+  returncode: 0
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.driver/06-profile-package.json
+  stdout_sha256: abb2044317d8e006313b3e82db2be1a95697570148dada328dafc0261adc2e4f
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.driver/06-profile-package.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: profile-strategies
+  state: complete
+  host_wall_s: 1.9195411894470453
+  returncode: 0
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.driver/07-profile-strategies.json
+  stdout_sha256: 9308ef81f2176d18f5df2c77efe6627460544b13eb77e71acda5f59446f7ed60
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.driver/07-profile-strategies.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: get
+  state: complete
+  host_wall_s: 2.9223341923207045
+  returncode: 0
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.driver/08-get.json
+  stdout_sha256: 5410bacf3ecf836e02f75eb5bb0b5fdec88032d100d72a86c6725a25ebf3566e
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.driver/08-get.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: evaluate
+  state: complete
+  host_wall_s: 522.0893206885085
+  returncode: 0
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.driver/09-evaluate.json
+  stdout_sha256: bc7c06094b4f4ef84bad92d4409ad95d35cde972c8347e0f175d1ad0376cf3e1
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.driver/09-evaluate.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: bfs-profile
+  state: complete
+  host_wall_s: 286.5220711892471
+  returncode: 0
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.driver/10-bfs-profile.json
+  stdout_sha256: e8d22504778053a21499916a38b7c4bdfd1282f00b9342b0e18445a204b23608
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.driver/10-bfs-profile.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: profile-package
+  state: complete
+  host_wall_s: 10.395062650553882
+  returncode: 0
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.driver/11-profile-package.json
+  stdout_sha256: ea404f5d1ac67ff90383e84c82b6b5a8253c062545d8000b1df9b0b7c13180e7
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.driver/11-profile-package.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: profile-strategies
+  state: complete
+  host_wall_s: 2.221205803565681
+  returncode: 0
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.driver/12-profile-strategies.json
+  stdout_sha256: c1d0d9c68307755f8b690a376867b97e42a2b5631982c1c9e5d8144c3117eee0
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.driver/12-profile-strategies.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: get
+  state: complete
+  host_wall_s: 3.324150377884507
+  returncode: 0
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.driver/13-get.json
+  stdout_sha256: 1507c122a44c0bd99f2224cd4b348cade6e0dc580428e52292d8257f719ae1f6
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.driver/13-get.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+raw_receipts:
+- path: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.driver/driver.json
+  sha256: fd5a85fc52ed84c6acea6ffd2efab32cb834183cccdb3a1e5acc4f5b4d4b4f3d
+- path: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.launch/ended.txt
+  sha256: 9227c690c17e9b1357e81abd0d23deaacbb9dc3de9bbba3423ab9fbbc54e270b
+- path: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.launch/exit-code.txt
+  sha256: 9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa
+- path: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.launch/host-preflight.txt
+  sha256: 3b54cfacda3aaef71ca4f8fefc8e74df6db7d1a9c089c54b2a94906fe9150315
+- path: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.launch/job.stderr
+  sha256: ee474191e9159ae71340495701e5f897f1f2a94b2465f5ee830e941f9e628c0f
+- path: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.launch/job.stdout
+  sha256: b041d47051af21aa26dd04817828668b07a9171b4ab0e4102e0a790f2a2128eb
+- path: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.launch/lane.json
+  sha256: cfa244bfe022896fd8863db6f95e525612d1e16a15892f9dccdabf557796d4ea
+- path: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a2.launch/started.txt
+  sha256: 329162cf2f9de68b079a4ee8fa4e882f34a2aaf1098a4074d8b9986852b9be31

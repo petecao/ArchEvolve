@@ -1,0 +1,22 @@
+{
+  "sealed": false,
+  "argv": [
+    "ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "mbit10",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=60",
+    "240",
+    "/usr/bin/python3.12",
+    "-B",
+    "-s",
+    "-P",
+    "-"
+  ],
+  "started_utc": "2026-10-08T08:19:10.151926+00:00",
+  "parent_timeout_seconds": 360,
+  "launcher_source_sha256": "b4c750adb773ca1ab5f394854886aa5e9c5a6452a51079305e66a1ef848d53a9"
+}

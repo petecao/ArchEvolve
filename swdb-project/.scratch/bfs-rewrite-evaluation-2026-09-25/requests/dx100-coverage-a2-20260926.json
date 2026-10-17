@@ -1,0 +1,124 @@
+{
+  "message_version": "1.0",
+  "id": "bfs-dx100-coverage-20260926-a2",
+  "created": "2026-09-26",
+  "role": "fixed_unchanged_author_correctness_coverage",
+  "lane": "mbit10-evaluation-node0",
+  "window": {
+    "not_before": "2026-09-26T16:00:00-04:00",
+    "latest_start": "2026-09-26T21:00:00-04:00",
+    "absolute_end": "2026-09-26T22:00:00-04:00"
+  },
+  "bounds": {
+    "outer_seconds": 3600,
+    "cleanup_seconds": 30,
+    "generation_registration_seconds": 120,
+    "compile_seconds": 240,
+    "execute_seconds": 3100,
+    "checkpoint_seconds": 300,
+    "simulation_seconds": 2700,
+    "sampled_rss_bytes": 51539607552,
+    "artifact_bytes": 4294967296,
+    "raw_reserve_bytes": 32212254720,
+    "build_reserve_bytes": 10737418240,
+    "sample_gap_seconds": 30,
+    "work_seconds": 3570,
+    "sample_interval_seconds": 5,
+    "node_available_bytes": 55834574848,
+    "global_available_bytes": 68719476736
+  },
+  "rss_source": "linux.proc_pid_stat.field24.v1",
+  "run_root": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2",
+  "build_root": "/data1/yanruj/EvolveSWDB_builds/bfs-dx100-coverage-20260926-a2.compile",
+  "fixed_prerequisites": {
+    "paired": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-paired-pilot-20260926-a1.dispatch/terminal-validation.json",
+      "sha256": "d9979ec1a493de0184f9e4b93fb9fbe2c20d8a6bb029ce28ef43d7c4b66551db"
+    },
+    "provider": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-provider-initial-20260926-a1/terminal-validation.json",
+      "sha256": "1f455257e4542f67555389195be532de3a131d677083f4e5372c6afcdf02ad1c"
+    },
+    "a3": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/witness-a3-dispatch1/terminal-validation.json",
+      "sha256": "21ee990e45c9da567579aedbcab2e0554ab457fdcabd69f40c478d78e2d4c3e9"
+    },
+    "coverage": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926.dispatch/terminal-validation.json",
+      "sha256": "65969e8cae4ce113c289ba79c9b3aafd852f36724dcd8c060d8f37837c5c971a"
+    }
+  },
+  "historical_coverage_commit": "53f2e7686a41d3472c9e0824a0a9b09117884e0b",
+  "native": {
+    "id": "bfs-native-one-thread-pilot-20260926-a1",
+    "plan_path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/native-one-thread-pilot-20260926-a1.json",
+    "plan_sha256": "a96b98b86d2f90eb1de3e3daa1464589e9ee909a7a0128e7913b82eabc5530db",
+    "commit": "319645eab0a25c815fa03fe1c372d32b4ba45d10",
+    "outcomes": [
+      "complete",
+      "primary_unqualified",
+      "failed"
+    ],
+    "qualification_is_prerequisite": false
+  },
+  "graph": {
+    "vertices": 8212,
+    "directed_arcs": 147492,
+    "source": 0,
+    "canonical_sha256": "e03a3905f9105b898b730387092d92a68b854cdd44280adb39b1bd9423a4a968",
+    "representation_sha256": "d4697713f585b9670e1c44d26df94c72889f4c82fbd68b72e15627e6a0b39a56",
+    "representation_bytes": 622829,
+    "generator_sha256": "c4527c65266284f594709bfc7be1d829d40111f339198bd866d7a3348dfadb5f"
+  },
+  "record_sha256": {
+    "mbit10": "fcb0123f0bdb9bc004348eb8c6444f03304b6612e0cb2e26a82e621b07d82a79",
+    "dx100-e4fc4af-4c": "94cf9373c255c1c36d4b6f622124aec90e8bd485d66fa2af996d6e46c91e04e1",
+    "bfs-dx100-build-20260925-a2": "13d277a961e44fe0ee254b4685126572fb06394fea455e3e1d450626cc535cea",
+    "bfs-author-maa-compile-20260925-a1.candidate": "1018e9002c86a2e0ef7850be0bc66dbec9849d388cced45542c61a18cd619fff",
+    "bfs-author-maa-compile-20260925-a1.source": "f1b53e83398c74871f0cf46dc8f98b728254992a8ee63aaf7419732680b42fb6",
+    "bfs-dx100-witness-20260926-a3": "f8fd24e9bccb02b013063810c7211f7cdc5e57416ebc961c37c4c927a6e9e2d4",
+    "bfs-dx100-coverage-20260926-a1.compile": "523ec04e019f3ae12ebd2d352b8c2ad6ee28a728322fbdb0dc82d670560dd059",
+    "bfs-dx100-coverage-20260926-a1.execute": "f64b604d10bf579c832145b07d6b6cee39d81833d23711375a6625f59fbc57f9",
+    "bfs-dx100-coverage-20260926-a1.workload.241d37f1ee522c01": "05c3161d87de0959a8d87eb255ed1117b50861c287abcd61fdde2c8112946f9a"
+  },
+  "compile_request": {
+    "message_version": "1.0",
+    "id": "bfs-dx100-coverage-20260926-a2.compile",
+    "machine": "mbit10",
+    "hardware_target": "dx100-e4fc4af-4c",
+    "model_root": "/data1/yanruj/DX100-bfs-e4fc4af",
+    "build_evaluation": "bfs-dx100-build-20260925-a2",
+    "candidate": "bfs-author-maa-compile-20260925-a1.candidate",
+    "function": "DOBFSMAA",
+    "accelerated": true,
+    "roi": "bfs.complete_call.v1",
+    "budget": {
+      "total_seconds": 240,
+      "build_seconds": 240,
+      "memory_gib": 48,
+      "storage_gib": 4
+    }
+  },
+  "execution_binding": {
+    "template": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/dx100-witness-a3.yaml",
+    "template_sha256": "ff0f415ba5e4fc3ac36b36bb32aa782ca875bcc3e5cc1d185b629a9f6e01ebbd",
+    "binary": "fresh exact compile result",
+    "workload": "fresh registration of fixed bytes",
+    "sources": [
+      0
+    ]
+  },
+  "gain_claim": false,
+  "automatic_retry_allowed": false,
+  "provider_calls": false,
+  "required_runtime_sha256": {
+    "swdb/dx100.py": "f4e82d3163d3c2d3d4764aace07da952b0ca67c0aaf480c3738ccd9f0641deec",
+    "scripts/bfs_owned_rss.py": "e9e48a661ed1cb68eee64711090d83e0bd1be7524f012c19d48b21da99475cb3",
+    "tests/test_dx100_interruption.py": "abfec3c0aa58f3c52506df4f463d1573cef118e8e14547a4298e064d4941aa46",
+    "scripts/bfs_simulator_batch.py": "413bd1420bb9cbbdd7fe23cd2037c5257ad530cebd5039ba4c440977976dafda",
+    "scripts/bfs_simulator_series.py": "a26f28184d8b9b7c458d1436d5fdf43b21df633dab74e45949f95f6f05bbb54e",
+    "scripts/bfs_native_one_thread_pilot.py": "5b0dd95f73a5166bad3b602b07274af4915e8c08070769e9e989ddf00e27ab0a"
+  },
+  "interruption_fix_commit": "76fd5b40333e49cd7cf9ad7626fee74321362a85",
+  "shared_runtime_base_commit": "76fd5b40333e49cd7cf9ad7626fee74321362a85"
+}

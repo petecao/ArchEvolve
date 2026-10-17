@@ -1,0 +1,73 @@
+{
+  "sealed": false,
+  "status": "SOURCE_ONLY_NOT_RUN",
+  "original_guard_pin": {
+    "path": "/private/tmp/lanl_consumed_detached_source_guard_r4_20261008_r3.py",
+    "bytes": 88521,
+    "sha256": "96e033426d492fab3be2a07757ab1e89665a7a67d0f06d3941f274b1214dd294"
+  },
+  "original_observer_pin": {
+    "path": "/private/tmp/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r5.py",
+    "bytes": 58755,
+    "sha256": "50ad9bf511f90429a040bf5c25cc9a4bd15b12cb28419ad414d586269e5cdc99"
+  },
+  "packet_pins": {
+    "lanl_consumed_detached_source_guard_r4_20261008_r3.py": {
+      "path": "/private/tmp/lanl_consumed_detached_source_guard_r4_20261008_r3.py",
+      "bytes": 88521,
+      "sha256": "96e033426d492fab3be2a07757ab1e89665a7a67d0f06d3941f274b1214dd294"
+    },
+    "lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r5.py": {
+      "path": "/private/tmp/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r5.py",
+      "bytes": 58755,
+      "sha256": "50ad9bf511f90429a040bf5c25cc9a4bd15b12cb28419ad414d586269e5cdc99"
+    },
+    "lanl_consumed_detached_source_guard_r5_20261008_a1.py": {
+      "path": "/private/tmp/lanl_consumed_detached_source_guard_r5_20261008_a1.py",
+      "bytes": 88872,
+      "sha256": "a84dc9ca7ccd20e6485cc8e9a2007b3b982fad9c5ae19dacbb1f164d664748cb"
+    },
+    "lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r6.py": {
+      "path": "/private/tmp/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r6.py",
+      "bytes": 58750,
+      "sha256": "488fb42df44d338204b5cff58b10e7f0ff9c7feaee6490b33ba94201ba4f7665"
+    },
+    "lanl17-setgid-guard-complete-original-derivation-20261008-a1.diff": {
+      "path": "/private/tmp/lanl17-setgid-guard-complete-original-derivation-20261008-a1.diff",
+      "bytes": 963,
+      "sha256": "ae3daf3478ecdda42b726efcbbc4e68fea4c2ce5be66658730b407b2530227f9"
+    },
+    "lanl17-setgid-observer-complete-original-derivation-20261008-a1.diff": {
+      "path": "/private/tmp/lanl17-setgid-observer-complete-original-derivation-20261008-a1.diff",
+      "bytes": 881,
+      "sha256": "4313e908f3b9be609d9f57911c409f748cc5a3f04edaf265605bbf2720d45c09"
+    },
+    "lanl17_setgid_root_virtual_path_regression_source_20261008_a1.py": {
+      "path": "/private/tmp/lanl17_setgid_root_virtual_path_regression_source_20261008_a1.py",
+      "bytes": 9064,
+      "sha256": "1ff994f06bcfb26423137aea89cc415ffcb9e6facacb5dcd4f32fe9b73994e93"
+    }
+  },
+  "static_comparison_only": {
+    "guard_changed_method_names": [
+      "Guard.path"
+    ],
+    "guard_walk_unchanged": true,
+    "all_guard_AST_except_Guard_path_unchanged": true,
+    "ROWS_RECEIPTS_FUTURE_SOURCE_HASHES_LIMITS_unchanged": true,
+    "all_observer_definitions_unchanged": true,
+    "observer_changed_assignments": [
+      "R3",
+      "R3_BYTES",
+      "R3_SHA"
+    ],
+    "whole_byte_reversals_exact": true,
+    "complete_unified_diffs_exact": true,
+    "test_method_count": 15,
+    "test_harness_parsed_not_compiled_or_executed": true
+  },
+  "selected_targets_imported_or_invoked": false,
+  "test_bodies_executed": 0,
+  "actual_observer_success_or_storage_admission_claimed": false,
+  "scope": "Parent-selected demonstrated inherited directory-SGID root-path correction; no walk-entry policy, scientific caps, auth-denial or other semantic gate changes."
+}

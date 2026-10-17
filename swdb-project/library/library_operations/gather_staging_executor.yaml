@@ -1,0 +1,106 @@
+# Library operation seeded from Extensa (ticket 51). Created 2026-10-03 ET.
+# Updated 2026-10-04 ET (ticket 55): pattern key in chain form, one role and address shape per step.
+id: operation.gather_staging_executor
+kind: library_operation
+provenance:
+  origin:
+    kind: extensa_source
+    repository: MaizeHPC/MemAcc
+    commit: af3d6d7f7a69a72facdc3b95b42e78c952f44a76
+    paths:
+    - DataLayoutAPI/gather_staging.hh
+    - AgenticRefiner/transformations/staging/gather_staging_executor.yaml
+  license: Apache-2.0 WITH LLVM-exception (Q66 assumption, pending Peter)
+  semantics:
+    source: AgenticRefiner/transformations/staging/gather_staging_executor.yaml
+    output_equivalence: bitwise_identical
+signature: template <typename ValueT, typename IndexT> class GatherStagingExecutor { void build(size_t row_len);
+  void gather_stream_row(ValueT* dst_row, const ValueT* src_row, const IndexT* idx); static void flush(); }
+intent: 'Gather staging: each destination row is gathered through one shared index map into an aligned staging buffer
+  and drained to the destination; dst_row[j] = src_row[idx[j]] for j < row_len, padding untouched.'
+location:
+  root: library
+  path: library_operations/gather_staging.hh
+  symbol: GatherStagingExecutor
+code_sha256: abf418f24f2d6cc7f77643cf7b9e1cddf72477bf2cd9d32e6ae5cb9e2f3ff379
+reference_semantics:
+  root: library
+  path: library_operations/reference/movement_reference.hh
+  sha256: 465470e4b50f4446801f005fc0bb787f4e4b064d8585044ca710c91d28cbcc8c
+  symbol: gather_stream
+uses_intrinsics: []
+uses_library_operations: []
+pattern_key:
+- roles:
+  - target
+  address_shapes:
+  - stream
+  update_kind: read
+- roles:
+  - index
+  - target
+  address_shapes:
+  - stream
+  - single_valued_indirect
+  update_kind: read
+differential_test:
+  root: library
+  path: library_operations/drivers/gather_stream_run.cpp.tmpl
+  sha256: 894a60aa1f43801b361e69481771009e980af293403f6f4d679179881d55d839
+  family: gather_stream
+  files:
+    reference_template:
+      root: library
+      path: library_operations/drivers/gather_stream_ref.cpp.tmpl
+      sha256: 56d0312f8afb9d1a45c4b87bf154bc274daf1d7b2dc0797f79e4c7b1cf9d985f
+    candidate_template:
+      root: library
+      path: library_operations/drivers/gather_staging_executor_cand.cpp.tmpl
+      sha256: fd30f6e29fb8a987a576daec7e1d20c7e3093818501321f6d97497a9ad9e4d72
+  input_set:
+    seeds: post_hoc
+    sizes:
+      rows: 16
+      row_len: 61
+      dst_stride: 63
+      src_stride: 128
+clauses:
+- id: whole_row_drained
+  role: postcondition
+  statement: Every element j < row_len of every row is written; padding is not.
+  natural_language_only: checked by bitwise equality with the plain C++ reference and the input frame check
+  discharge_mode: differential_test
+  negative_control:
+    id: partial_drain
+    kind: dropped_operand
+    check: differential_mismatch
+    mutation:
+      root: library
+      path: library_operations/controls/gather_staging_executor.partial_drain.hh
+      sha256: b6c957591af1e2ac5e8fcf04ac3a7b058f714541c9fc4b08b0ee5a47c6e5d222
+- id: row_element_reads_its_index
+  role: postcondition
+  statement: dst_row[j] = src_row[idx[j]].
+  natural_language_only: checked by bitwise equality with the plain C++ reference and the input frame check
+  discharge_mode: differential_test
+  negative_control:
+    id: index_shift
+    kind: index_bounds
+    check: differential_mismatch
+    mutation:
+      root: library
+      path: library_operations/controls/gather_staging_executor.index_shift.hh
+      sha256: cb020e4b610709317a5d41fcf364d6616a35911d0bd28eb14e68e96a461dd7ea
+- id: source_read_only
+  role: frame
+  statement: The source rows and the index map are not written.
+  natural_language_only: checked by bitwise equality with the plain C++ reference and the input frame check
+  discharge_mode: differential_test
+  negative_control:
+    id: aliasing_write
+    kind: aliasing
+    check: frame_violation
+    mutation:
+      root: library
+      path: library_operations/controls/gather_staging_executor.aliasing_write.hh
+      sha256: f46bb64c0397fd7fbb3c6201f308d51fe6c55e55aef6f6be97a7cd3b0e46da1a

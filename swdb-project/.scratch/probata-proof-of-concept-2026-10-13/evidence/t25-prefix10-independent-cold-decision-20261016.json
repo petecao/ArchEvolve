@@ -1,0 +1,372 @@
+{
+  "CSV_data_rows": 0,
+  "actual_command_sha256": "c5accdb49dd2574b2bfd0cbf2a02320137756b39adcbdf5d3adc2cb3fc85f2e5",
+  "actual_submission_count": null,
+  "caller_acceptance": false,
+  "cold_capture_checks": 202428,
+  "cold_capture_seconds": 12.432225971482694,
+  "compiler_header_files": 1983,
+  "consumer_bytes": 1338015867,
+  "consumer_files": 1616,
+  "created": "2026-10-16 ET",
+  "distinct_lemma_owners": 10,
+  "entry_sha256": "6cdf4ca34c5c6b11d30fab45d078742fea18de4dc84afb3d8e01b52c2b7c3549",
+  "expected_sha256": "7066731f62e2e1273b001f599728d5127611252982702d89dfa6204c2af1adfd",
+  "full_model_acceptance": false,
+  "guard": {
+    "outer-resources.json": {
+      "cpu_seconds": 111.26903,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 790986752,
+      "timed_out": false,
+      "wall_seconds": 88.00281638652086
+    },
+    "resources.json": {
+      "cpu_seconds": 92.177179,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 737509376,
+      "timed_out": false,
+      "wall_seconds": 86.0265857661143
+    }
+  },
+  "import_source_modules": 30,
+  "installed_tools_and_import_surface_pins": 192,
+  "lane": {
+    "aligned_cell_age_s": "",
+    "aligned_to": "no_gapbs_batch_running",
+    "command": [
+      "timeout",
+      "--signal=TERM",
+      "--kill-after=60",
+      "1620",
+      "bash",
+      "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-copy-prefix10-v1/run.sh"
+    ],
+    "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+    "ended_utc": "2026-10-16T17:00:31Z",
+    "exit_code": 0,
+    "host": "mbit10",
+    "job": "probata-resume-20261016-c978393b-t25-copy-prefix10-v1",
+    "lease_generation": 603,
+    "lease_name": "mbit10-evaluation-node0",
+    "load1_at_start": 0.08,
+    "load1_max": 32,
+    "node": 0,
+    "numa_memory_policy": "bind:0",
+    "numactl": "--cpunodebind=0 --membind=0",
+    "preregistration_sha256": null,
+    "started_utc": "2026-10-16T16:59:03Z"
+  },
+  "local_evidence_pins": [
+    {
+      "bytes": 442632,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-prefix10-passive-cold-metadata-v4-20261016.json",
+      "sha256": "57c4d1fddb9a5bd01d96e0fcc585f4395ec1cace0f539603c45f51a338124614"
+    },
+    {
+      "bytes": 2710,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-prefix10-passive-cold-launch-supplement-v2-20261016.json",
+      "sha256": "cc8a647cda0042007fed5df80cd6558c5b9fc56fa8717807ea2aae462812ddf0"
+    },
+    {
+      "bytes": 27606,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-prefix10-passive-cold-audit-20261016.py",
+      "sha256": "83c62cc697f47320d26ab3df5b96d769b196a0b5db1ed20754fec45bf65f2f91"
+    }
+  ],
+  "lock_boundary": "Socket node0 generation603 lease is the actual Linux exclusion. SWDB_VERIFIER_LOCK was a marker; no per-raw advisory lock file existed and retained wrappers do not acquire it.",
+  "materialized_files": 22,
+  "materialized_solver_file_distribution": {
+    "Alt-Ergo": 20,
+    "CVC5": 2
+  },
+  "method_boundary": "Diagnostic retains legacy fixture checks/version0 metadata; current ordinary setup/reader source attestation was independently reconstructed. No public-method certification is inferred.",
+  "native_ordinary_direct_valid": 10,
+  "native_properties": 20,
+  "native_smoke": 0,
+  "observer_refusal_causes": [
+    "CVC5 standard get-info epilogue framing",
+    "Why3 multiplication operator lexing; corrected without changing producer"
+  ],
+  "observer_refusals_retained": [
+    "t25-prefix10-passive-cold-metadata-20261016.json",
+    "t25-prefix10-passive-cold-metadata-v2-20261016.json",
+    "t25-prefix10-passive-cold-metadata-v3-20261016.json"
+  ],
+  "original_v2_acceptance": false,
+  "primary_support_reuse": "Exact source/formula attribution only, byte-identical selected installed sources/drivers/tools. No historical proof result reused.",
+  "prior_primary_reference_pins": [
+    {
+      "bytes": 227438,
+      "path": "/private/tmp/probata-t25-cell4-prior-support-comparison-v1-20261016.json",
+      "sha256": "0c48ca1ec365509dde88e9695f5251d5d20815117c04afb589770bc0c3ba9319"
+    },
+    {
+      "bytes": 122055,
+      "path": "/private/tmp/probata-t25-cell4-diagnostic-expected-v5-046f6b9e-20261016.json",
+      "sha256": "89354ee2608825ba184a59e649582d7e6ecbaa678a6396742e509b9173f067ba"
+    }
+  ],
+  "producer_packet_sha256": "fed0e1ff46d33afbf38f032e2ef39481fb23378b7ebef711301582d38fad61c1",
+  "project_heap_desired_axioms_or_lemmas": 0,
+  "raw_bytes": 24181554,
+  "raw_files": 448,
+  "raw_pre_post_equal": true,
+  "review_decision": "PASS_SCOPED_COLD_RECONCILIATION",
+  "reviewed_root_command_sha256": "314059a95ea72a2fd7a4ad12621231c20a043dfab3e74bf94a0f7b3132cc49f3",
+  "root_final_decision_pending": true,
+  "scope": "Ten fresh conditional copied-prefix mathematical duties under explicit source/import/standard arithmetic/map/datatype/solver TCB. No proof of C-body RTE/smoke reachability, independent antecedent feasibility, model-to-C++/caller refinement or full61/67/127 closure.",
+  "short_goal_identity_unique_across_leaves": false,
+  "source_and_helpers": 330,
+  "source_commit": "c978393b119a3614229a37f0f2c8ca2a097c750b",
+  "source_consumer_receipts_equal": true,
+  "submitted_byte_attestation": false,
+  "support_comparison": [
+    {
+      "all_support_exact_primary_multiset": true,
+      "full_A_range_case_equivalent": true,
+      "goal_sha256": "e48a145437d06f949c3404ac3a8785c3f03bd2c1003112f55e49ec6e89a48c0a",
+      "id": "grow.copy.step.advanced_copied_prefix.prior.access",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-copy-prefix10-v1/copy-prefix10-diagnostic-profile/leaf-grow.copy.step.advanced_copied_prefix.prior.access/prover-files/typed_real/check_lemma_t25v3_grow_copy_step_advanced_copied_prefix_Why3_Alt_Ergo_2_6_4.psmt2",
+      "solver": "Alt-Ergo",
+      "source_predicates_exact": true,
+      "support_assertions": 42,
+      "task_sha256": "04c7c38bcf4da3b3cdd6139e01010e38880795011f77768ae50179288648acec"
+    },
+    {
+      "all_support_exact_primary_multiset": true,
+      "full_A_range_case_equivalent": true,
+      "goal_sha256": "e48a145437d06f949c3404ac3a8785c3f03bd2c1003112f55e49ec6e89a48c0a",
+      "id": "grow.copy.step.advanced_copied_prefix.prior.access",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-copy-prefix10-v1/copy-prefix10-diagnostic-profile/leaf-grow.copy.step.advanced_copied_prefix.prior.access/prover-files/typed_real/zilch-typed_real_check_lemma_t25v3_grow_copy_step_advanced_copied_prefix_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+      "solver": "Alt-Ergo",
+      "source_predicates_exact": true,
+      "support_assertions": 42,
+      "task_sha256": "cd81e41d4e5573c0b6f078b4d4af062129c0e3ae3249afecd96d30dbbdf77f47"
+    },
+    {
+      "all_support_exact_primary_multiset": true,
+      "full_A_range_case_equivalent": true,
+      "goal_sha256": "25b48b946c9237b7554696cee8d2ec01e50766cd1a91bb4bc622caedc8ca8b60",
+      "id": "grow.copy.step.advanced_copied_prefix.prior.initialization",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-copy-prefix10-v1/copy-prefix10-diagnostic-profile/leaf-grow.copy.step.advanced_copied_prefix.prior.initialization/prover-files/typed_real/check_lemma_t25v3_grow_copy_step_advanced_copied_prefix_Why3_Alt_Ergo_2_6_4.psmt2",
+      "solver": "Alt-Ergo",
+      "source_predicates_exact": true,
+      "support_assertions": 42,
+      "task_sha256": "bccb50994ca14e67b3f3f486e3d87ca575696089992d0b0ebdf806f7863807c2"
+    },
+    {
+      "all_support_exact_primary_multiset": true,
+      "full_A_range_case_equivalent": true,
+      "goal_sha256": "25b48b946c9237b7554696cee8d2ec01e50766cd1a91bb4bc622caedc8ca8b60",
+      "id": "grow.copy.step.advanced_copied_prefix.prior.initialization",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-copy-prefix10-v1/copy-prefix10-diagnostic-profile/leaf-grow.copy.step.advanced_copied_prefix.prior.initialization/prover-files/typed_real/zilch-typed_real_check_lemma_t25v3_grow_copy_step_advanced_copied_prefix_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+      "solver": "Alt-Ergo",
+      "source_predicates_exact": true,
+      "support_assertions": 42,
+      "task_sha256": "22d30e4fdd6436037273f8b3c8a36c429a35f07f01fd5b1a1aca9f5b317ea693"
+    },
+    {
+      "all_support_exact_primary_multiset": true,
+      "full_A_range_case_equivalent": true,
+      "goal_sha256": "ba872503f93e452fd49ce6fa475085ec57c90f7f76ebf611c82a597d3eafd46a",
+      "id": "grow.copy.step.advanced_copied_prefix.prior.integer",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-copy-prefix10-v1/copy-prefix10-diagnostic-profile/leaf-grow.copy.step.advanced_copied_prefix.prior.integer/prover-files/typed_real/check_lemma_t25v3_grow_copy_step_advanced_copied_prefix_Why3_Alt_Ergo_2_6_4.psmt2",
+      "solver": "Alt-Ergo",
+      "source_predicates_exact": true,
+      "support_assertions": 42,
+      "task_sha256": "a4f9f955c29d0112e2f968bf84cc13fe6c18d655a60510718747d1fd4c75bddc"
+    },
+    {
+      "all_support_exact_primary_multiset": true,
+      "full_A_range_case_equivalent": true,
+      "goal_sha256": "ba872503f93e452fd49ce6fa475085ec57c90f7f76ebf611c82a597d3eafd46a",
+      "id": "grow.copy.step.advanced_copied_prefix.prior.integer",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-copy-prefix10-v1/copy-prefix10-diagnostic-profile/leaf-grow.copy.step.advanced_copied_prefix.prior.integer/prover-files/typed_real/zilch-typed_real_check_lemma_t25v3_grow_copy_step_advanced_copied_prefix_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+      "solver": "Alt-Ergo",
+      "source_predicates_exact": true,
+      "support_assertions": 42,
+      "task_sha256": "9e1fa02570d35a1deb41910b0d14ccab823a3860fd331eb0862fab158566dadc"
+    },
+    {
+      "all_support_exact_primary_multiset": true,
+      "full_A_range_case_equivalent": true,
+      "goal_sha256": "972d83cb3f33e851f041168b7edcf8b51d1e9ec409c13b1391f380b885cfebe2",
+      "id": "grow.copy.step.advanced_copied_prefix.prior.bounds",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-copy-prefix10-v1/copy-prefix10-diagnostic-profile/leaf-grow.copy.step.advanced_copied_prefix.prior.bounds/prover-files/typed_real/check_lemma_t25v3_grow_copy_step_advanced_copied_prefix_Why3_Alt_Ergo_2_6_4.psmt2",
+      "solver": "Alt-Ergo",
+      "source_predicates_exact": true,
+      "support_assertions": 42,
+      "task_sha256": "63a57b1c465375c392a7faedf29687f27dcd646320b25eb441915dd3869fcbd4"
+    },
+    {
+      "all_support_exact_primary_multiset": true,
+      "full_A_range_case_equivalent": true,
+      "goal_sha256": "972d83cb3f33e851f041168b7edcf8b51d1e9ec409c13b1391f380b885cfebe2",
+      "id": "grow.copy.step.advanced_copied_prefix.prior.bounds",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-copy-prefix10-v1/copy-prefix10-diagnostic-profile/leaf-grow.copy.step.advanced_copied_prefix.prior.bounds/prover-files/typed_real/zilch-typed_real_check_lemma_t25v3_grow_copy_step_advanced_copied_prefix_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+      "solver": "Alt-Ergo",
+      "source_predicates_exact": true,
+      "support_assertions": 42,
+      "task_sha256": "71d95dd77249f84ca9cf67489c270abe45a07d085358fea569aed7e476b1bc78"
+    },
+    {
+      "all_support_exact_primary_multiset": true,
+      "full_A_range_case_equivalent": true,
+      "goal_sha256": "2d41b6762b9c7ea96690d49ffce0301eea0101e4a153c99bbbea6477379821e5",
+      "id": "grow.copy.step.advanced_copied_prefix.prior.value",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-copy-prefix10-v1/copy-prefix10-diagnostic-profile/leaf-grow.copy.step.advanced_copied_prefix.prior.value/prover-files/typed_real/check_lemma_t25v3_grow_copy_step_advanced_copied_prefix_Why3_Alt_Ergo_2_6_4.psmt2",
+      "solver": "Alt-Ergo",
+      "source_predicates_exact": true,
+      "support_assertions": 42,
+      "task_sha256": "24f2a209b515a0b860cea02a273e22a3f814ade7930e1405b20c46c66393a954"
+    },
+    {
+      "all_support_exact_primary_multiset": true,
+      "full_A_range_case_equivalent": true,
+      "goal_sha256": "2d41b6762b9c7ea96690d49ffce0301eea0101e4a153c99bbbea6477379821e5",
+      "id": "grow.copy.step.advanced_copied_prefix.prior.value",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-copy-prefix10-v1/copy-prefix10-diagnostic-profile/leaf-grow.copy.step.advanced_copied_prefix.prior.value/prover-files/typed_real/zilch-typed_real_check_lemma_t25v3_grow_copy_step_advanced_copied_prefix_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+      "solver": "Alt-Ergo",
+      "source_predicates_exact": true,
+      "support_assertions": 42,
+      "task_sha256": "863f0e6556f08f6b65eaaf6f69b1efa3ef283334c1f40475ff47e1fbc77fdba5"
+    },
+    {
+      "all_support_exact_primary_multiset": true,
+      "full_A_range_case_equivalent": true,
+      "goal_sha256": "3c7319737eacc66ce31f76fa17986146ed75d849fb99168e5c3b2a609b2f7955",
+      "id": "grow.copy.step.advanced_copied_prefix.written.access",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-copy-prefix10-v1/copy-prefix10-diagnostic-profile/leaf-grow.copy.step.advanced_copied_prefix.written.access/prover-files/typed_real/check_lemma_t25v3_grow_copy_step_advanced_copied_prefix_Why3_Alt_Ergo_2_6_4.psmt2",
+      "solver": "Alt-Ergo",
+      "source_predicates_exact": true,
+      "support_assertions": 42,
+      "task_sha256": "9fe89b717e32cf14f33c6d70b2a2a4c16abaa57050c6c4982738dedea183e9b2"
+    },
+    {
+      "all_support_exact_primary_multiset": true,
+      "full_A_range_case_equivalent": true,
+      "goal_sha256": "3c7319737eacc66ce31f76fa17986146ed75d849fb99168e5c3b2a609b2f7955",
+      "id": "grow.copy.step.advanced_copied_prefix.written.access",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-copy-prefix10-v1/copy-prefix10-diagnostic-profile/leaf-grow.copy.step.advanced_copied_prefix.written.access/prover-files/typed_real/zilch-typed_real_check_lemma_t25v3_grow_copy_step_advanced_copied_prefix_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+      "solver": "Alt-Ergo",
+      "source_predicates_exact": true,
+      "support_assertions": 42,
+      "task_sha256": "b3a82469abe120cce52162955a6ea8a1b075cff635933af65cb5b584fc30238f"
+    },
+    {
+      "all_support_exact_primary_multiset": true,
+      "full_A_range_case_equivalent": true,
+      "goal_sha256": "13b56f1dee8a7d91494f476217acf4fbb7440c490565a95670af4ac50d00c022",
+      "id": "grow.copy.step.advanced_copied_prefix.written.access",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-copy-prefix10-v1/copy-prefix10-diagnostic-profile/leaf-grow.copy.step.advanced_copied_prefix.written.access/prover-files/typed_real/check_lemma_t25v3_grow_copy_step_advanced_copied_prefix_Why3_CVC5_1_2_1.smt2",
+      "solver": "CVC5",
+      "source_predicates_exact": true,
+      "support_assertions": 22,
+      "task_sha256": "675eda9d75cbb2634f1c3501f360bf9244852feea5e62645614eb8a14aa3a5a2"
+    },
+    {
+      "all_support_exact_primary_multiset": true,
+      "full_A_range_case_equivalent": true,
+      "goal_sha256": "13b56f1dee8a7d91494f476217acf4fbb7440c490565a95670af4ac50d00c022",
+      "id": "grow.copy.step.advanced_copied_prefix.written.access",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-copy-prefix10-v1/copy-prefix10-diagnostic-profile/leaf-grow.copy.step.advanced_copied_prefix.written.access/prover-files/typed_real/zilch-typed_real_check_lemma_t25v3_grow_copy_step_advanced_copied_prefix_CVC5_1dt2dt1-wp_goal.smt2",
+      "solver": "CVC5",
+      "source_predicates_exact": true,
+      "support_assertions": 22,
+      "task_sha256": "d9706f97451dfb11339a1b64b1df69cda94039727842d6c30e75293375d64502"
+    },
+    {
+      "all_support_exact_primary_multiset": true,
+      "full_A_range_case_equivalent": true,
+      "goal_sha256": "b254b0a6c4589b501e73993cf8a5a0ef31d5ab9a483a709a2088c33bc5354d31",
+      "id": "grow.copy.step.advanced_copied_prefix.written.initialization",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-copy-prefix10-v1/copy-prefix10-diagnostic-profile/leaf-grow.copy.step.advanced_copied_prefix.written.initialization/prover-files/typed_real/check_lemma_t25v3_grow_copy_step_advanced_copied_prefix_Why3_Alt_Ergo_2_6_4.psmt2",
+      "solver": "Alt-Ergo",
+      "source_predicates_exact": true,
+      "support_assertions": 42,
+      "task_sha256": "169b982e42fa125eab9e2e72c8c284e99b848d5c5995d8a0c3cf8840887ab5fa"
+    },
+    {
+      "all_support_exact_primary_multiset": true,
+      "full_A_range_case_equivalent": true,
+      "goal_sha256": "b254b0a6c4589b501e73993cf8a5a0ef31d5ab9a483a709a2088c33bc5354d31",
+      "id": "grow.copy.step.advanced_copied_prefix.written.initialization",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-copy-prefix10-v1/copy-prefix10-diagnostic-profile/leaf-grow.copy.step.advanced_copied_prefix.written.initialization/prover-files/typed_real/zilch-typed_real_check_lemma_t25v3_grow_copy_step_advanced_copied_prefix_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+      "solver": "Alt-Ergo",
+      "source_predicates_exact": true,
+      "support_assertions": 42,
+      "task_sha256": "0af2fe02cbffd56907931c61574cb711cdd029a46a9ba0a10859bd507ccc0890"
+    },
+    {
+      "all_support_exact_primary_multiset": true,
+      "full_A_range_case_equivalent": true,
+      "goal_sha256": "a5d2bd1414494a2e5cd95e3bbab038e8ec6ea355b69812b186a1627a08e52e98",
+      "id": "grow.copy.step.advanced_copied_prefix.written.integer",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-copy-prefix10-v1/copy-prefix10-diagnostic-profile/leaf-grow.copy.step.advanced_copied_prefix.written.integer/prover-files/typed_real/check_lemma_t25v3_grow_copy_step_advanced_copied_prefix_Why3_Alt_Ergo_2_6_4.psmt2",
+      "solver": "Alt-Ergo",
+      "source_predicates_exact": true,
+      "support_assertions": 42,
+      "task_sha256": "936561a71693f62c3e6ac90c436347f4b6718aa961b59c3a43ddb92deb71455d"
+    },
+    {
+      "all_support_exact_primary_multiset": true,
+      "full_A_range_case_equivalent": true,
+      "goal_sha256": "a5d2bd1414494a2e5cd95e3bbab038e8ec6ea355b69812b186a1627a08e52e98",
+      "id": "grow.copy.step.advanced_copied_prefix.written.integer",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-copy-prefix10-v1/copy-prefix10-diagnostic-profile/leaf-grow.copy.step.advanced_copied_prefix.written.integer/prover-files/typed_real/zilch-typed_real_check_lemma_t25v3_grow_copy_step_advanced_copied_prefix_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+      "solver": "Alt-Ergo",
+      "source_predicates_exact": true,
+      "support_assertions": 42,
+      "task_sha256": "d478a642afba1f9dfab153b20a08457d4c316467fb1c102dcfce4db64bd2fdc9"
+    },
+    {
+      "all_support_exact_primary_multiset": true,
+      "full_A_range_case_equivalent": true,
+      "goal_sha256": "54d6470ba6227da7131354f417b75df3b7b1b6bc19119b0c48e9e4bf68d61702",
+      "id": "grow.copy.step.advanced_copied_prefix.written.bounds",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-copy-prefix10-v1/copy-prefix10-diagnostic-profile/leaf-grow.copy.step.advanced_copied_prefix.written.bounds/prover-files/typed_real/check_lemma_t25v3_grow_copy_step_advanced_copied_prefix_Why3_Alt_Ergo_2_6_4.psmt2",
+      "solver": "Alt-Ergo",
+      "source_predicates_exact": true,
+      "support_assertions": 42,
+      "task_sha256": "a990a49cb4acedd100a5d902dec6fd08fb14d188036e8775a5f8d593d9bc00c1"
+    },
+    {
+      "all_support_exact_primary_multiset": true,
+      "full_A_range_case_equivalent": true,
+      "goal_sha256": "54d6470ba6227da7131354f417b75df3b7b1b6bc19119b0c48e9e4bf68d61702",
+      "id": "grow.copy.step.advanced_copied_prefix.written.bounds",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-copy-prefix10-v1/copy-prefix10-diagnostic-profile/leaf-grow.copy.step.advanced_copied_prefix.written.bounds/prover-files/typed_real/zilch-typed_real_check_lemma_t25v3_grow_copy_step_advanced_copied_prefix_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+      "solver": "Alt-Ergo",
+      "source_predicates_exact": true,
+      "support_assertions": 42,
+      "task_sha256": "929a6af38e81aa52d2a1119f89c8eaa53ffc9a89ef79a63c5260ad7cd567370f"
+    },
+    {
+      "all_support_exact_primary_multiset": true,
+      "full_A_range_case_equivalent": true,
+      "goal_sha256": "468dd375236699888c7d9da83483952fd996972c6a5a3d1bc183d270ed346c0d",
+      "id": "grow.copy.step.advanced_copied_prefix.written.value",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-copy-prefix10-v1/copy-prefix10-diagnostic-profile/leaf-grow.copy.step.advanced_copied_prefix.written.value/prover-files/typed_real/check_lemma_t25v3_grow_copy_step_advanced_copied_prefix_Why3_Alt_Ergo_2_6_4.psmt2",
+      "solver": "Alt-Ergo",
+      "source_predicates_exact": true,
+      "support_assertions": 42,
+      "task_sha256": "25607ec6210c5b0f7a384a203c5ef297c3dd302d0792148d9e069ece2771dae3"
+    },
+    {
+      "all_support_exact_primary_multiset": true,
+      "full_A_range_case_equivalent": true,
+      "goal_sha256": "468dd375236699888c7d9da83483952fd996972c6a5a3d1bc183d270ed346c0d",
+      "id": "grow.copy.step.advanced_copied_prefix.written.value",
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t25-copy-prefix10-v1/copy-prefix10-diagnostic-profile/leaf-grow.copy.step.advanced_copied_prefix.written.value/prover-files/typed_real/zilch-typed_real_check_lemma_t25v3_grow_copy_step_advanced_copied_prefix_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+      "solver": "Alt-Ergo",
+      "source_predicates_exact": true,
+      "support_assertions": 42,
+      "task_sha256": "5324023633e0961856a09167918b37b4a52db43ad4f6eb36111d5caa428c0473"
+    }
+  ],
+  "ticket_closure": false,
+  "unexecuted_model_targets": 51
+}

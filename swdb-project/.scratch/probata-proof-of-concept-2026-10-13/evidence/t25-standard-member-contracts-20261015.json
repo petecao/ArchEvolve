@@ -1,0 +1,569 @@
+{
+  "created": "2026-10-15 ET",
+  "ticket": 25,
+  "status": "claimed",
+  "boundary": "Contract fixtures and raw diagnostics, before final incoming-pointer array-object provenance policy. No production method3 or general vector/lifetime completion. Model text/domain unchanged; at uses checked relational guard elision, not its original body unchanged. Other member contracts still need the explicit array-object domain review.",
+  "filter_policy_commit": "830bc76996f210d5afbb931c47cabe67bb3a025b",
+  "filter_policy": "-wp-no-filter-init boolean required exactly once, opposites and = variants refused; retains original hypotheses rather than adding premises",
+  "reports": [
+    {
+      "path": "/private/tmp/probata-t25-filter-flag-green.jsonl",
+      "sha256": "a0a3bbdc34a0c7ada33a25c5b3da431e49bf7ad087e5e13985d036b9d8d65d73",
+      "passed": 61,
+      "failed": 0,
+      "session_finish": [
+        {
+          "exitstatus": 0,
+          "$report_type": "SessionFinish"
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/probata-t25-filter-real-isolated.jsonl",
+      "sha256": "fa796fa6a5cff14e6c9936305479e2c96f3d3bd8f158b1053a1088d1165853bb",
+      "passed": 4,
+      "failed": 0,
+      "session_finish": [
+        {
+          "exitstatus": 0,
+          "$report_type": "SessionFinish"
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/probata-t25-member-contracts-nofilter.jsonl",
+      "sha256": "445b4035f8a088145ad2f26586add2743a83c4a5c6d358c088522d3883f5031d",
+      "passed": 14,
+      "failed": 5,
+      "session_finish": [
+        {
+          "exitstatus": 1,
+          "$report_type": "SessionFinish"
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/probata-t25-at-view-public-final.jsonl",
+      "sha256": "e43f7deeb79762bbdfa4ace8975daf077c1b2a316d3e6d72ed3fbccc9bc2f3b2",
+      "passed": 2,
+      "failed": 0,
+      "session_finish": [
+        {
+          "exitstatus": 0,
+          "$report_type": "SessionFinish"
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/probata-t25-at-view-controls.jsonl",
+      "sha256": "b84b813e557ceda0fd51e9b7b10a27b903055f4dedfb7ba4f81576080809d375",
+      "passed": 2,
+      "failed": 0,
+      "session_finish": [
+        {
+          "exitstatus": 0,
+          "$report_type": "SessionFinish"
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/probata-t25-at-view-setup-canonical.jsonl",
+      "sha256": "6e1bda1e2b646576efef782bdf97aa270b502fcddfe2a382ca550c79385bff92",
+      "passed": 75,
+      "failed": 0,
+      "session_finish": [
+        {
+          "exitstatus": 0,
+          "$report_type": "SessionFinish"
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/probata-t25-at-view-setup-real.jsonl",
+      "sha256": "6502a9fbf053c0c3d4888d99f7746b59739ab53fc0c4e3bb3d08e1cd478f3d07",
+      "passed": 13,
+      "failed": 0,
+      "session_finish": [
+        {
+          "exitstatus": 0,
+          "$report_type": "SessionFinish"
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/probata-t25-at-view-setup-final.jsonl",
+      "sha256": "e07caabd525ec9b55e84a96a9236fe5d43b92edb05fd70d3852d68db8effefc8",
+      "passed": 62,
+      "failed": 13,
+      "session_finish": [
+        {
+          "exitstatus": 1,
+          "$report_type": "SessionFinish"
+        }
+      ]
+    }
+  ],
+  "initial_member_batch": [
+    {
+      "record": "proof.model.std_pair_int_int_copy_ctor.20261015t103059z.88f10104",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_pair_int_int_copy_ctor"
+      },
+      "path": "/private/tmp/probata-t25-member-contracts-nofilter/wp-standard-members0/records/proofs/proof.model.std_pair_int_int_copy_ctor.20261015t103059z.88f10104.yaml",
+      "sha256": "ac732d4e42f2caed39a439ea217928611fac6c7c8886bf86c0f5d9496550ff2d",
+      "verdict": "proven",
+      "failure_class": null,
+      "goals": 8,
+      "valid_goals": 8,
+      "smoke": 1,
+      "source_pin": {
+        "id": "std_pair_int_int_copy_ctor",
+        "sha256": "1f1f9ebf452c7d86ee02c3f6c496bde748c0cc2f3efea1cc7275f57370ca92d2"
+      },
+      "contract_pin": {
+        "id": "std_pair_int_int_copy_ctor",
+        "sha256": "1f1f9ebf452c7d86ee02c3f6c496bde748c0cc2f3efea1cc7275f57370ca92d2"
+      },
+      "view": null,
+      "view_pins": {}
+    },
+    {
+      "record": "proof.model.std_pair_int_int_ctor.20261015t103051z.9b550318",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_pair_int_int_ctor"
+      },
+      "path": "/private/tmp/probata-t25-member-contracts-nofilter/wp-standard-members0/records/proofs/proof.model.std_pair_int_int_ctor.20261015t103051z.9b550318.yaml",
+      "sha256": "55c750809c24e00719da96f4b5b6ce1b7af3be1c82dae922832a853a2473c300",
+      "verdict": "proven",
+      "failure_class": null,
+      "goals": 9,
+      "valid_goals": 9,
+      "smoke": 1,
+      "source_pin": {
+        "id": "std_pair_int_int_ctor",
+        "sha256": "7f000ab6ce06710ec0054bed42f16b045d4ef6b237c8d16b3feaa80b922ed335"
+      },
+      "contract_pin": {
+        "id": "std_pair_int_int_ctor",
+        "sha256": "7f000ab6ce06710ec0054bed42f16b045d4ef6b237c8d16b3feaa80b922ed335"
+      },
+      "view": null,
+      "view_pins": {}
+    },
+    {
+      "record": "proof.model.std_pair_int_int_ctor_default.20261015t103043z.1d565c82",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_pair_int_int_ctor_default"
+      },
+      "path": "/private/tmp/probata-t25-member-contracts-nofilter/wp-standard-members0/records/proofs/proof.model.std_pair_int_int_ctor_default.20261015t103043z.1d565c82.yaml",
+      "sha256": "ad50efe83199e4647d247f9cbee658e04f87b3f4fcb0e46cbffcf819dd28dbdb",
+      "verdict": "proven",
+      "failure_class": null,
+      "goals": 9,
+      "valid_goals": 9,
+      "smoke": 1,
+      "source_pin": {
+        "id": "std_pair_int_int_ctor_default",
+        "sha256": "2d6cacca8d32276da7d48cffd24c5efde0f95838ded3086364045a2327ab93e8"
+      },
+      "contract_pin": {
+        "id": "std_pair_int_int_ctor_default",
+        "sha256": "2d6cacca8d32276da7d48cffd24c5efde0f95838ded3086364045a2327ab93e8"
+      },
+      "view": null,
+      "view_pins": {}
+    },
+    {
+      "record": "proof.model.std_pair_int_int_operator_assign.20261015t103119z.ce809a05",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_pair_int_int_operator_assign"
+      },
+      "path": "/private/tmp/probata-t25-member-contracts-nofilter/wp-standard-members0/records/proofs/proof.model.std_pair_int_int_operator_assign.20261015t103119z.ce809a05.yaml",
+      "sha256": "03991080d696144839643a8e4589bdba80a5c1f1605121dde74a468e0549c380",
+      "verdict": "proven",
+      "failure_class": null,
+      "goals": 9,
+      "valid_goals": 9,
+      "smoke": 1,
+      "source_pin": {
+        "id": "std_pair_int_int_operator_assign",
+        "sha256": "2405af576ec5aea5f043f42b01adaa1193a3ef1cfd846c2fecd09fa7cd10c2e9"
+      },
+      "contract_pin": {
+        "id": "std_pair_int_int_operator_assign",
+        "sha256": "2405af576ec5aea5f043f42b01adaa1193a3ef1cfd846c2fecd09fa7cd10c2e9"
+      },
+      "view": null,
+      "view_pins": {}
+    },
+    {
+      "record": "proof.model.std_vector_int_at.20261015t102850z.41320c78",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_vector_int_at"
+      },
+      "path": "/private/tmp/probata-t25-member-contracts-nofilter/wp-standard-members0/records/proofs/proof.model.std_vector_int_at.20261015t102850z.41320c78.yaml",
+      "sha256": "1cebe094dd4942634f662ef2b83b1b6e430eaeef4a87319b1397063cb815e30c",
+      "verdict": "not_proven",
+      "failure_class": "vacuous_pass",
+      "goals": 14,
+      "valid_goals": 12,
+      "smoke": 4,
+      "source_pin": {
+        "id": "std_vector_int_at",
+        "sha256": "558f2f79db45fc8d947335193a572585d34f81861d1f02157608a966ae8700e9"
+      },
+      "contract_pin": {
+        "id": "std_vector_int_at",
+        "sha256": "558f2f79db45fc8d947335193a572585d34f81861d1f02157608a966ae8700e9"
+      },
+      "view": null,
+      "view_pins": {}
+    },
+    {
+      "record": "proof.model.std_vector_int_begin.20261015t102956z.611cf519",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_vector_int_begin"
+      },
+      "path": "/private/tmp/probata-t25-member-contracts-nofilter/wp-standard-members0/records/proofs/proof.model.std_vector_int_begin.20261015t102956z.611cf519.yaml",
+      "sha256": "dd32f8a56250bc136c03783b6ae7d33cf78202619602a9c4cf1cd08aa791e83b",
+      "verdict": "proven",
+      "failure_class": null,
+      "goals": 7,
+      "valid_goals": 7,
+      "smoke": 1,
+      "source_pin": {
+        "id": "std_vector_int_begin",
+        "sha256": "5bd8c7629f3fd6d7653c9398b488431eb27847b9e5ff6a5bc650ae812634d297"
+      },
+      "contract_pin": {
+        "id": "std_vector_int_begin",
+        "sha256": "5bd8c7629f3fd6d7653c9398b488431eb27847b9e5ff6a5bc650ae812634d297"
+      },
+      "view": null,
+      "view_pins": {}
+    },
+    {
+      "record": "proof.model.std_vector_int_clear.20261015t103026z.5e186aae",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_vector_int_clear"
+      },
+      "path": "/private/tmp/probata-t25-member-contracts-nofilter/wp-standard-members0/records/proofs/proof.model.std_vector_int_clear.20261015t103026z.5e186aae.yaml",
+      "sha256": "c2b9961dae5c32df443f6b6c056ed02420f769efadeece53d2c6f4c333d084bf",
+      "verdict": "proven",
+      "failure_class": null,
+      "goals": 6,
+      "valid_goals": 6,
+      "smoke": 1,
+      "source_pin": {
+        "id": "std_vector_int_clear",
+        "sha256": "689e7608c68043e8a1991aef99350857d52ceb5978b17f09a75b056985ab1108"
+      },
+      "contract_pin": {
+        "id": "std_vector_int_clear",
+        "sha256": "689e7608c68043e8a1991aef99350857d52ceb5978b17f09a75b056985ab1108"
+      },
+      "view": null,
+      "view_pins": {}
+    },
+    {
+      "record": "proof.model.std_vector_int_ctor.20261015t102713z.0d090274",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_vector_int_ctor"
+      },
+      "path": "/private/tmp/probata-t25-member-contracts-nofilter/wp-standard-members0/records/proofs/proof.model.std_vector_int_ctor.20261015t102713z.0d090274.yaml",
+      "sha256": "1e3cac17abb77ac19d949ce0b3ff1d6225827b095bc1d6c3d373e4e0f0d96db9",
+      "verdict": "proven",
+      "failure_class": null,
+      "goals": 10,
+      "valid_goals": 10,
+      "smoke": 1,
+      "source_pin": {
+        "id": "std_vector_int_ctor",
+        "sha256": "9e4b81e87ab91f0e51d686553615cdccf721a861203bb175d8bca8e7c1dee440"
+      },
+      "contract_pin": {
+        "id": "std_vector_int_ctor",
+        "sha256": "9e4b81e87ab91f0e51d686553615cdccf721a861203bb175d8bca8e7c1dee440"
+      },
+      "view": null,
+      "view_pins": {}
+    },
+    {
+      "record": "proof.model.std_vector_int_data.20261015t102931z.4d1aade8",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_vector_int_data"
+      },
+      "path": "/private/tmp/probata-t25-member-contracts-nofilter/wp-standard-members0/records/proofs/proof.model.std_vector_int_data.20261015t102931z.4d1aade8.yaml",
+      "sha256": "0f715c3bd60f24feee9ab3004a60f05a2e1c4c7c6b735dcda27adbe11215516d",
+      "verdict": "proven",
+      "failure_class": null,
+      "goals": 7,
+      "valid_goals": 7,
+      "smoke": 1,
+      "source_pin": {
+        "id": "std_vector_int_data",
+        "sha256": "ee4f867911135688f5b76932243b38aaff73a56d85ffeb24229725c7d4ec6f3f"
+      },
+      "contract_pin": {
+        "id": "std_vector_int_data",
+        "sha256": "ee4f867911135688f5b76932243b38aaff73a56d85ffeb24229725c7d4ec6f3f"
+      },
+      "view": null,
+      "view_pins": {}
+    },
+    {
+      "record": "proof.model.std_vector_int_empty.20261015t102947z.3ac10cc9",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_vector_int_empty"
+      },
+      "path": "/private/tmp/probata-t25-member-contracts-nofilter/wp-standard-members0/records/proofs/proof.model.std_vector_int_empty.20261015t102947z.3ac10cc9.yaml",
+      "sha256": "9026d2c29fe0fc5ce97dbc20cf15fa5f12e78c8d323ca59c7de6690d209134a4",
+      "verdict": "proven",
+      "failure_class": null,
+      "goals": 7,
+      "valid_goals": 7,
+      "smoke": 1,
+      "source_pin": {
+        "id": "std_vector_int_empty",
+        "sha256": "b7c61504b19c0209874d0d212acf14ad73339b586e4ae305ed9289ab8a3fd263"
+      },
+      "contract_pin": {
+        "id": "std_vector_int_empty",
+        "sha256": "b7c61504b19c0209874d0d212acf14ad73339b586e4ae305ed9289ab8a3fd263"
+      },
+      "view": null,
+      "view_pins": {}
+    },
+    {
+      "record": "proof.model.std_vector_int_end.20261015t103007z.e8dc5771",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_vector_int_end"
+      },
+      "path": "/private/tmp/probata-t25-member-contracts-nofilter/wp-standard-members0/records/proofs/proof.model.std_vector_int_end.20261015t103007z.e8dc5771.yaml",
+      "sha256": "dd638f2fcd98708dbe4554b922bc469d06b3cb1126ba9cdf7c36ebc30e6cf0a4",
+      "verdict": "proven",
+      "failure_class": null,
+      "goals": 16,
+      "valid_goals": 16,
+      "smoke": 3,
+      "source_pin": {
+        "id": "std_vector_int_end",
+        "sha256": "d7ba1f155627e243c1c293f6eaccf3cb42499a95b0ce24b1fd6cb53d8e93599d"
+      },
+      "contract_pin": {
+        "id": "std_vector_int_end",
+        "sha256": "d7ba1f155627e243c1c293f6eaccf3cb42499a95b0ce24b1fd6cb53d8e93599d"
+      },
+      "view": null,
+      "view_pins": {}
+    },
+    {
+      "record": "proof.model.std_vector_int_move_ctor.20261015t102832z.241b1538",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_vector_int_move_ctor"
+      },
+      "path": "/private/tmp/probata-t25-member-contracts-nofilter/wp-standard-members0/records/proofs/proof.model.std_vector_int_move_ctor.20261015t102832z.241b1538.yaml",
+      "sha256": "ade09679b7d58ae4a80d0ef6770ffd3f68bad0156bff3d3b760b130cc87c5b52",
+      "verdict": "proven",
+      "failure_class": null,
+      "goals": 14,
+      "valid_goals": 14,
+      "smoke": 1,
+      "source_pin": {
+        "id": "std_vector_int_move_ctor",
+        "sha256": "2275b2a0533c16643f1ea7ae324aae852c9e2509e4e05085107636e172e3e676"
+      },
+      "contract_pin": {
+        "id": "std_vector_int_move_ctor",
+        "sha256": "2275b2a0533c16643f1ea7ae324aae852c9e2509e4e05085107636e172e3e676"
+      },
+      "view": null,
+      "view_pins": {}
+    },
+    {
+      "record": "proof.model.std_vector_int_operator_index.20261015t102841z.f8401abd",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_vector_int_operator_index"
+      },
+      "path": "/private/tmp/probata-t25-member-contracts-nofilter/wp-standard-members0/records/proofs/proof.model.std_vector_int_operator_index.20261015t102841z.f8401abd.yaml",
+      "sha256": "a678e39d91bcbb2b0f262c49f655e1dc87ac04bbcbf42bb97a777b0e73e5a52c",
+      "verdict": "proven",
+      "failure_class": null,
+      "goals": 7,
+      "valid_goals": 7,
+      "smoke": 1,
+      "source_pin": {
+        "id": "std_vector_int_operator_index",
+        "sha256": "7b3548b6db64e22cd6b39bd968b4bface472f01f0477731f82187e35e347718f"
+      },
+      "contract_pin": {
+        "id": "std_vector_int_operator_index",
+        "sha256": "7b3548b6db64e22cd6b39bd968b4bface472f01f0477731f82187e35e347718f"
+      },
+      "view": null,
+      "view_pins": {}
+    },
+    {
+      "record": "proof.model.std_vector_int_size.20261015t102939z.b0276764",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_vector_int_size"
+      },
+      "path": "/private/tmp/probata-t25-member-contracts-nofilter/wp-standard-members0/records/proofs/proof.model.std_vector_int_size.20261015t102939z.b0276764.yaml",
+      "sha256": "c9bec9225c8dfcb731ae7703cef61d3b9ea2985c4ac6a072416fe1594025d39a",
+      "verdict": "proven",
+      "failure_class": null,
+      "goals": 7,
+      "valid_goals": 7,
+      "smoke": 1,
+      "source_pin": {
+        "id": "std_vector_int_size",
+        "sha256": "4842b64d109b55b6f26f3261845316b4a9d32c88a7aa01186c343f9ed7e03329"
+      },
+      "contract_pin": {
+        "id": "std_vector_int_size",
+        "sha256": "4842b64d109b55b6f26f3261845316b4a9d32c88a7aa01186c343f9ed7e03329"
+      },
+      "view": null,
+      "view_pins": {}
+    },
+    {
+      "record": "proof.model.std_vector_int_swap.20261015t103033z.a97819d5",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_vector_int_swap"
+      },
+      "path": "/private/tmp/probata-t25-member-contracts-nofilter/wp-standard-members0/records/proofs/proof.model.std_vector_int_swap.20261015t103033z.a97819d5.yaml",
+      "sha256": "d65dc14f9089bce41e266f361a21639d5255d22c005a7554d9d9957b1dd75bb0",
+      "verdict": "proven",
+      "failure_class": null,
+      "goals": 12,
+      "valid_goals": 12,
+      "smoke": 1,
+      "source_pin": {
+        "id": "std_vector_int_swap",
+        "sha256": "0bb1a1ee04c3643ff68edac876d827c1429326f24bdd01890bf35b4a2b64d83d"
+      },
+      "contract_pin": {
+        "id": "std_vector_int_swap",
+        "sha256": "0bb1a1ee04c3643ff68edac876d827c1429326f24bdd01890bf35b4a2b64d83d"
+      },
+      "view": null,
+      "view_pins": {}
+    }
+  ],
+  "checked_at_final": [
+    {
+      "record": "proof.model.std_vector_int_at.20261015t104400z.b39f6b56",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_vector_int_at"
+      },
+      "path": "/private/tmp/probata-t25-at-view-public-final/test_a_changed_at_contract_wit0/records/proofs/proof.model.std_vector_int_at.20261015t104400z.b39f6b56.yaml",
+      "sha256": "3e64ab1d1bdf6287730832b35e23d0a3f752cf1cd8cf3cb6a0a5d4be43c0a476",
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "goals": 0,
+      "valid_goals": 0,
+      "smoke": 0,
+      "source_pin": {
+        "id": "std_vector_int_at",
+        "sha256": "e00d797116853d703173ea75ca8bfb311336adb3b51491a44ce066566e678522"
+      },
+      "contract_pin": {
+        "id": "std_vector_int_at",
+        "sha256": "e00d797116853d703173ea75ca8bfb311336adb3b51491a44ce066566e678522"
+      },
+      "view": null,
+      "view_pins": {}
+    },
+    {
+      "record": "proof.model.std_vector_int_at.20261015t104349z.455257b0",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_vector_int_at"
+      },
+      "path": "/private/tmp/probata-t25-at-view-public-final/wp-standard-members0/records/proofs/proof.model.std_vector_int_at.20261015t104349z.455257b0.yaml",
+      "sha256": "4272c2f9537c4febf6fb1dc87ee440dabc8cf27db37acbc28b7faf017dbd8b7c",
+      "verdict": "proven",
+      "failure_class": null,
+      "goals": 8,
+      "valid_goals": 8,
+      "smoke": 1,
+      "source_pin": {
+        "id": "std_vector_int_at",
+        "sha256": "558f2f79db45fc8d947335193a572585d34f81861d1f02157608a966ae8700e9"
+      },
+      "contract_pin": {
+        "id": "std_vector_int_at",
+        "sha256": "558f2f79db45fc8d947335193a572585d34f81861d1f02157608a966ae8700e9"
+      },
+      "view": {
+        "version": 1,
+        "model": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        },
+        "original_text_sha256": "558f2f79db45fc8d947335193a572585d34f81861d1f02157608a966ae8700e9",
+        "view_text_sha256": "6bf11be24a0d4e518e742ca56d484d57e0dc97bc9e245418864f9ecf66a8534c",
+        "original_contract_sha256": "b0edf698e69a0a06ad2b80ad9822688ee9fe1e32488d573450eca69d7f1f9b5f",
+        "view_contract_sha256": "b0edf698e69a0a06ad2b80ad9822688ee9fe1e32488d573450eca69d7f1f9b5f",
+        "source_ast": {
+          "function": "std_vector_int_at",
+          "guard": "n >= this->size",
+          "guard_effects": [],
+          "then": "abort()",
+          "else": null,
+          "return": "this->data + n"
+        },
+        "mapping": {
+          "source": "if (n >= this->size) SWDB_MODEL_FAIL(\"std.vector.at.out_of_range\");",
+          "view": "/*@ assert at_guard_false: n < this->size; */"
+        },
+        "guard_elision_obligation": "at_guard_false",
+        "input_premises_added": []
+      },
+      "view_pins": {
+        "standard_model_view_check": {
+          "id": "standard-model-view-check-1",
+          "sha256": "a9b0ac93e830fa966114f0a853b638d93a2274f64cf48a0cd5fe14c1bd2774b1"
+        },
+        "standard_model_view_certificate": {
+          "id": "standard-model-view-certificate-1",
+          "sha256": "0961d151d88bbb25eb0315fed17996bd0433790e68ffd25b746c8e99b5aa77e0"
+        }
+      }
+    }
+  ],
+  "baseline_test_failures": "14 member proof tests passed; at failed its defensive dead branch smoke. Four invalid-flag test assertions were masked by mutating a method after recording15 proofs; isolated fresh seeds then4PASS. Neither baseline session is represented as all-green.",
+  "raw_diagnostics": [
+    {
+      "path": "/private/tmp/probata-vector-owner-probes/move-filter-results.json",
+      "sha256": "30b0e9d08c62644f208b2517ce15041b9d007dd49d6c0bee15535137061bf039"
+    },
+    {
+      "path": "/private/tmp/probata-vector-owner-probes/filter-negative-results.json",
+      "sha256": "919d6599b21464b516a617970e2f3ac5e334254d952ddadad7e3e45fee17f10f"
+    }
+  ],
+  "raw_diagnostic_boundary": "move unmodified original contract becomes14/14 with no-filter-init; null/uninitialized reads, wrong post, contradictory pre(smoke), stale liveness stay unproved. Stronger separated/inline diagnostic variants are not original-contract acceptance.",
+  "checker": {
+    "path": "swdb/standard_model_view.py",
+    "sha256": "a9b0ac93e830fa966114f0a853b638d93a2274f64cf48a0cd5fe14c1bd2774b1"
+  },
+  "checked_at_method": "Exact stdmodels2 and original C text SHA plus independent pinned Clang C-AST; pure n>=this->size abort replaced with checked at_guard_false:n<this->size assertion. Original/view contracts identical, no added input premise; original/native/CBMC abort retained; exact source/view/certificate/checker revalidated immediately before WP. Changed model lacking bound is unsupported before WP.",
+  "setup_regression": "Canonical driver64db6160, same helper/adapter/setup source bytes as checked-at proof:75PASS227.11s. Earlier sandboxed full run62PASS13FAIL because watchdog sysctl EPERM (no verifier evidence); escalation replay13PASS142.30s. The final75 supersedes that invocation error and includes all real13 fact controls with -wp-no-filter-init."
+}

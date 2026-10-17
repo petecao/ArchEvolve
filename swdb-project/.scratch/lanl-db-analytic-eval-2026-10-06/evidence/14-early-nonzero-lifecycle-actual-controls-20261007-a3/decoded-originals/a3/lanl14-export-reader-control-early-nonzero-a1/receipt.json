@@ -1,0 +1,172 @@
+{
+  "format": "swdb.lanl14-early-nonzero-supervisor-linux-fixture.v1",
+  "updated": "2026-10-07 ET",
+  "canonical_ensure_ascii": false,
+  "passed": true,
+  "started_utc": "2026-10-07T23:43:40.146798+00:00",
+  "ended_utc": "2026-10-07T23:43:55.788162+00:00",
+  "cases": [
+    {
+      "case": "early_nonzero7",
+      "passed": true,
+      "supervisor_receipt_sha256": "9f6a20b4008eed60009cd619ad38f7e7a02dbadcc6ade74d9dcc6b7f405206c7",
+      "supervisor_receipt_identity_sha256": "f50c0a997fa7dd6b196ebdaaa0f426de91adf60c1c4a3ad3370cb4c78882cc18",
+      "original_marker": {
+        "sha256": "e870c7c3797ec312f78e58a3878816454db2da9fdb3c16d7322ec0530a71607d",
+        "bytes": 760,
+        "identity_sha256": "5db5fc9c6da8414d765345896b6532011206962371cf55dfb529694b0ce53254"
+      },
+      "worker_exit": 7,
+      "owned_before": {
+        "leader": {
+          "pid": 2174861,
+          "uid": 114316761,
+          "start_time": "591855318",
+          "state": "R",
+          "ppid": 2174860,
+          "process_group": 2174861,
+          "session": 2174861
+        },
+        "same_group": {
+          "pid": 2174862,
+          "uid": 114316761,
+          "start_time": "591855323",
+          "state": "S",
+          "ppid": 2174861,
+          "process_group": 2174861,
+          "session": 2174861
+        },
+        "escaped_session": {
+          "pid": 2174863,
+          "uid": 114316761,
+          "start_time": "591855323",
+          "state": "R",
+          "ppid": 2174862,
+          "process_group": 2174863,
+          "session": 2174863
+        }
+      },
+      "owned_after": {
+        "leader": null,
+        "same_group": null,
+        "escaped_session": null
+      },
+      "unrelated_sibling_before": {
+        "pid": 2174859,
+        "uid": 114316761,
+        "start_time": "591855303",
+        "state": "R",
+        "ppid": 2174858,
+        "process_group": 2174859,
+        "session": 2174859
+      },
+      "unrelated_sibling_after_worker_cleanup": {
+        "pid": 2174859,
+        "uid": 114316761,
+        "start_time": "591855303",
+        "state": "S",
+        "ppid": 2174858,
+        "process_group": 2174859,
+        "session": 2174859
+      },
+      "unrelated_sibling_survived_worker_cleanup": true
+    }
+  ],
+  "cases_expected": 1,
+  "cases_passed": 1,
+  "fixture": true,
+  "failure_type": null,
+  "observed_before_after": {
+    "sibling_before": {
+      "pid": 2174859,
+      "uid": 114316761,
+      "start_time": "591855303",
+      "state": "R",
+      "ppid": 2174858,
+      "process_group": 2174859,
+      "session": 2174859
+    },
+    "worker_before": {
+      "pid": 2174860,
+      "uid": 114316761,
+      "start_time": "591855303",
+      "state": "R",
+      "ppid": 2174858,
+      "process_group": 2174860,
+      "session": 2174860
+    },
+    "owned_before": {
+      "leader": {
+        "pid": 2174861,
+        "uid": 114316761,
+        "start_time": "591855318",
+        "state": "R",
+        "ppid": 2174860,
+        "process_group": 2174861,
+        "session": 2174861
+      },
+      "same_group": {
+        "pid": 2174862,
+        "uid": 114316761,
+        "start_time": "591855323",
+        "state": "S",
+        "ppid": 2174861,
+        "process_group": 2174861,
+        "session": 2174861
+      },
+      "escaped_session": {
+        "pid": 2174863,
+        "uid": 114316761,
+        "start_time": "591855323",
+        "state": "R",
+        "ppid": 2174862,
+        "process_group": 2174863,
+        "session": 2174863
+      }
+    },
+    "worker_exit": 7,
+    "owned_after": {
+      "leader": null,
+      "same_group": null,
+      "escaped_session": null
+    },
+    "sibling_after_worker_cleanup": {
+      "pid": 2174859,
+      "uid": 114316761,
+      "start_time": "591855303",
+      "state": "S",
+      "ppid": 2174858,
+      "process_group": 2174859,
+      "session": 2174859
+    }
+  },
+  "worker_exit": 7,
+  "supervisor_sha256": "503fc5defcf96a5177599185a9895c00ae64b3e1b0058128b9e283ef3bd39f3f",
+  "fixture_script_sha256": "388b9b1be3ce29c3d677ab2796c049793bf763504d4be7ad8e9f399c94354624",
+  "selected_source_sha256": "928af82facd9f36dfdbca6595d2c2e9d1091dd0064c9fe53fc41c163879e026e",
+  "cleanup_helper_sha256": "31e1d71bc6e9ef4a5a5f1d5fbff136ceef249935f8f00601edf45277fce249ec",
+  "processes_py_sha256": "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "estimator_modules": 185,
+  "native_python_sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+  "host": "mbit10",
+  "uid": 114316761,
+  "subreaper_enabled": true,
+  "cleanup": {
+    "survivor_count": 0,
+    "subreaper": true,
+    "original_private_cleanup": {
+      "sha256": "8c452fb7048138b148a0191aa4e3c94d8390c4839cf6286798791c8ef15f31b0",
+      "bytes": 79
+    }
+  },
+  "cleanup_errors": [],
+  "worker_wait_s": 100,
+  "harness_alarm_s": 240,
+  "production_exporter_cap_s": 18000,
+  "scientific_admission": false,
+  "reader_mode_runtime_proof": false,
+  "selected_exporter_or_reader_main_invoked": false,
+  "scope": "ONE synthetic early-exit7 process lifecycle case through exporter-mode shared supervise(fixture=True). No selected control main/Store/validate/compiler/evaluator/provider/Git/SSH; no scientific/export/reader admission.",
+  "identity_sha256": "ccfa52cd13d1eb7cbf520572a5f238a0f380d9babee9c2df52d38465bd89ac7e"
+}

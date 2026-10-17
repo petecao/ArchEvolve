@@ -1,0 +1,303 @@
+--- lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r1.py
++++ lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r2.py
+@@ -81,6 +81,186 @@
+         require(count==s.st_size and stamp(os.fstat(fd))==stamp(s)==stamp(p.lstat()),'bootstrap_changed')
+         body=b''.join(parts);return body,{'path':str(p),'bytes':len(body),'sha256':sha(body),'stat':stamp(s)}
+     finally:os.close(fd)
++
++def exact_account_pam_service_identification(identification_pin, parent_review_identity_sha256,
++                                             check_deadline, charge_bytes):
++    """Exact reviewed OS-role exclusion; protected references remain UNOBSERVED.
++
++    Callers must bind the ordinary original file pin in their actual reviewed
++    configuration. This helper checks current public identity, not reference
++    freedom. Budget callbacks belong to that caller's finite metadata inspection.
++    No service descendants, parent, or other unreadable consumer are exempted.
++    """
++    require(re.fullmatch('[0-9a-f]{64}', parent_review_identity_sha256),
++            'account_service_parent_review_identity_missing')
++    require(identification_pin['path'] == str(BASE/'lanl-account-pam-service-identification-20261008-a1/identification.json')
++            and identification_pin['bytes'] == 3818
++            and identification_pin['sha256'] == 'ece0155e6a1e61e07cabb8a05e2a13ac9577a9ee1418e8f8eed450ce310ce0fa',
++            'account_service_original_identification_pin_changed')
++
++    def read_fd(fd, cap):
++        pieces, count = [], 0
++        while True:
++            check_deadline()
++            part = os.read(fd, min(1024*1024, cap-count+1))
++            if not part:
++                break
++            count += len(part)
++            charge_bytes(len(part))
++            require(count <= cap, 'account_service_read_limit')
++            pieces.append(part)
++        return b''.join(pieces)
++
++    def regular_file(path, size, digest, owner, mode=None, original_stat=None):
++        check_deadline()
++        path = P(path)
++        require(path.is_absolute() and path.resolve(strict=True) == path
++                and not any(q.is_symlink() for q in (path, *path.parents)),
++                'account_service_file_route_changed')
++        before = path.lstat()
++        require(stat.S_ISREG(before.st_mode) and before.st_uid == owner
++                and before.st_nlink == 1 and before.st_size == size
++                and not before.st_mode & 0o7000, 'account_service_file_identity_changed')
++        if mode is not None:
++            require(stat.S_IMODE(before.st_mode) == mode, 'account_service_native_mode_changed')
++        if original_stat is not None:
++            require(stamp(before) == original_stat, 'account_service_original_file_stat_changed')
++        fd = os.open(path, os.O_RDONLY|os.O_NOFOLLOW|os.O_CLOEXEC)
++        try:
++            require(stamp(os.fstat(fd)) == stamp(before), 'account_service_file_open_changed')
++            raw = read_fd(fd, size)
++            require(len(raw) == size and sha(raw) == digest
++                    and stamp(os.fstat(fd)) == stamp(before)
++                    and stamp(path.lstat()) == stamp(before), 'account_service_file_bytes_or_stat_changed')
++        finally:
++            os.close(fd)
++        return raw, stamp(before)
++
++    # The original document remains UNSEALED; its exact returned bytes are checked.
++    base_stat = BASE.lstat()
++    require(not any(q.is_symlink() for q in (BASE, *BASE.parents))
++            and BASE.resolve(strict=True) == BASE and stat.S_ISDIR(base_stat.st_mode)
++            and base_stat.st_uid == UID and stat.S_IMODE(base_stat.st_mode) == 0o700,
++            'account_service_original_private_ancestor_changed')
++    original, original_stat = regular_file(identification_pin['path'], 3818,
++        identification_pin['sha256'], UID, original_stat=identification_pin.get('stat'))
++    document = strict_json(original)
++    require(document['format'] == 'swdb.exact-account-pam-service-original-identification.v1'
++            and document['sealed'] is False and 'identity_sha256' not in document
++            and document['stable_exact_process_identities_and_public_metadata'] is True
++            and document['semantic_service_classification_and_fresh_creation_chronology_require_parent_review'] is True
++            and document['reference_free_or_global_visibility_or_cleanup_clearance_claimed'] is False,
++            'account_service_original_identification_policy_changed')
++
++    def proc_bytes(path):
++        check_deadline()
++        fd = os.open(path, os.O_RDONLY|os.O_NOFOLLOW|os.O_CLOEXEC)
++        try:
++            return read_fd(fd, LIMITS['one_proc_bytes'])
++        finally:
++            os.close(fd)
++
++    def current_process(pid, start, ppid, name, cmd_size, cmd_sha, child):
++        proc = P('/proc')/str(pid)
++        raw_stat = proc_bytes(proc/'stat')
++        values = raw_stat[raw_stat.rfind(b')')+2:].split()
++        require(int(values[19]) == start and int(values[1]) == ppid,
++                'account_service_current_PID_or_parent_changed')
++        fields = {}
++        for line in proc_bytes(proc/'status').decode().splitlines():
++            if ':' in line:
++                key, value = line.split(':', 1)
++                require(key not in fields, 'account_service_duplicate_status_field')
++                fields[key] = value.strip()
++        uids = [int(value) for value in fields['Uid'].split()]
++        gids = [int(value) for value in fields['Gid'].split()]
++        require(fields['Name'] == name and int(fields['PPid']) == ppid
++                and uids == [UID]*4 and gids == [UID]*4,
++                'account_service_current_name_UID_GID_or_parent_changed')
++        require(all(int(fields[key], 16) == 0 for key in ('CapInh','CapPrm','CapEff','CapAmb'))
++                and int(fields['CapBnd'], 16) == 0x000001ffffffffff,
++                'account_service_capability_predicate_changed')
++        if child:
++            require(values[0] == b'S' and fields['State'].split()[0] == 'S'
++                    and int(fields['Threads']) == 1 and int(fields['TracerPid']) == 0
++                    and all(int(fields[key], 16) == 0 for key in ('SigPnd','ShdPnd')),
++                    'account_service_child_state_thread_tracer_or_pending_changed')
++        cmd = proc_bytes(proc/'cmdline')
++        cgroup = proc_bytes(proc/'cgroup')
++        require(len(cmd) == cmd_size and sha(cmd) == cmd_sha
++                and len(cgroup) == 70
++                and sha(cgroup) == 'f6b0978005408a4cbf4759816cf4703b0e097284eabe55f01f1cea870640e455',
++                'account_service_current_command_or_cgroup_changed')
++        # SigBlk is observed, never required zero/nonzero: wait may temporarily unblock.
++        return {'pid':pid, 'start_ticks':start, 'ppid':ppid, 'name':name,
++                'uids':uids, 'gids':gids, 'state':values[0].decode(),
++                'capability_bound':fields['CapBnd'], 'signal_blocked_observed':fields['SigBlk'],
++                'cmdline_pin':{'bytes':len(cmd), 'sha256':sha(cmd)},
++                'cgroup_pin':{'bytes':len(cgroup), 'sha256':sha(cgroup)}}
++
++    def boot_identity():
++        rows = [line for line in proc_bytes(P('/proc/stat')).splitlines() if line.startswith(b'btime ')]
++        require(len(rows) == 1 and int(rows[0].split()[1]) == 1785498067
++                and os.sysconf('SC_CLK_TCK') == 100, 'account_service_boot_or_clock_changed')
++        return {'boot_epoch':1785498067, 'clock_ticks':100}
++
++    def current_pair():
++        return [current_process(359656, 40749693, 359655, '(sd-pam)', 9,
++                    '971490059d839d27af3ded30a476216b92689d837b0236a700723fb13640e370', True),
++                current_process(359655, 40749691, 1, 'systemd', 49,
++                    'a4eb13854c1664d48464c575a8c86538e8a379ecd5e1e40ab6c56b61b9b9ffb5', False)]
++
++    boot_before = boot_identity()
++    before = current_pair()
++    require(os.readlink(P('/proc/359655/exe')) == '/usr/lib/systemd/systemd',
++            'account_service_parent_executable_changed')
++    native_constants = [('/usr/lib/systemd/systemd', 100816,
++        'b472aadf808bef87c0eb203056a77cb64bd268b71b756306013a53de68a94173'),
++        ('/usr/lib/systemd/systemd-executor', 137792,
++        'b8424efa6f861031c04310fd7bfe485330bb74f53edae341803ffe3f487fd044')]
++    require([(pin['path'], pin['bytes'], pin['sha256']) for pin in document['native_files']]
++            == native_constants, 'account_service_original_native_pins_changed')
++    native_pins = []
++    for path, size, digest in native_constants:
++        original_native = next(pin for pin in document['native_files'] if pin['path'] == path)
++        raw_native, native_stat = regular_file(path, size, digest, 0, 0o755,
++                                              original_native['stat'])
++        if path.endswith('/systemd-executor'):
++            require(b'(sd-pam)' in raw_native, 'account_service_executor_role_literal_missing')
++        native_pins.append({'path':path, 'bytes':size, 'sha256':digest, 'stat':native_stat})
++    after = current_pair()
++    require([{key:value for key,value in item.items() if key != 'signal_blocked_observed'} for item in before]
++            == [{key:value for key,value in item.items() if key != 'signal_blocked_observed'} for item in after]
++            and os.readlink(P('/proc/359655/exe')) == '/usr/lib/systemd/systemd'
++            and boot_identity() == boot_before, 'account_service_identity_changed_during_check')
++    for pin in native_pins:
++        require(stamp(P(pin['path']).lstat()) == pin['stat'], 'account_service_native_changed_after_check')
++    regular_file(identification_pin['path'], 3818, identification_pin['sha256'], UID,
++                 original_stat=original_stat)
++    # Close the identity interval after all final public and original-file reads.
++    for pid, start, ppid in ((359656,40749693,359655), (359655,40749691,1)):
++        final_stat = proc_bytes(P('/proc')/str(pid)/'stat')
++        final_values = final_stat[final_stat.rfind(b')')+2:].split()
++        require(int(final_values[19]) == start and int(final_values[1]) == ppid
++                and (pid != 359656 or final_values[0] == b'S'),
++                'account_service_final_PID_parent_or_child_state_changed')
++    require(stamp(BASE.lstat()) == stamp(base_stat), 'account_service_private_ancestor_changed_during_check')
++    check_deadline()
++    return {'classification':'excluded_exact_system_service', 'pid':359656,
++            'start_ticks':40749693, 'parent_pid':359655, 'parent_start_ticks':40749691,
++            'original_identification_pin':dict(identification_pin),
++            'original_identification_policy':'original_unsealed',
++            'parent_review_identity_sha256':parent_review_identity_sha256,
++            'before_public_identity':before, 'after_public_identity':after,
++            'boot_identity':boot_before, 'native_file_pins':native_pins,
++            'classification_basis':'Exact current public identity plus parent-reviewed trusted OS lifecycle and original fresh-creation custodies; not file mtime inference.',
++            'trusted_OS_role_and_fresh_creation_chronology_are_parent_semantic_binding':True,
++            'child_executable_to_executor_relationship_is_inherited_OS_role_not_observed_exe':True,
++            'protected_child_fields':{key:'UNOBSERVED' for key in ('fd','cwd','root','exe','maps','syscall','meaningful_wait_channel')},
++            'reference_free_claimed':False, 'global_privileged_visibility_or_clearance_claimed':False,
++            'other_consumers_parent_and_descendants_exempted':False,
++            'signal_blocked_mask_zero_or_nonzero_is_not_predicated':True}
++
+ 
+ class Observer:
+     def __init__(self,args,module,guard,own_pin,guard_pin,native_pin):
+@@ -297,6 +477,67 @@
+             if not values:self.gap('future_source_pin_not_observed_in_durable_evidence',{'basename':name})
+         return {'exact_R3_expected_pin_sources':found,'choice_or_staged_alias_completeness_not_generated':True,
+                 'only_PRIMARY_evidence_searched':True,'actual_staged_aliases_are_separate_parent_pending_protected_pins':True}
++    def account_service_review(self):
++        # Input semantic review is not a plan/clearance generated by this observer.
++        path=P(self.args.account_service_review)
++        require(path==BASE/'lanl-account-pam-service-identification-20261008-a1/parent-review.json',
++                'fixed_account_service_review_route')
++        pin,raw=self.bounded_read(path,256*1024)
++        require(raw is not None and pin['sha256']==self.args.account_service_review_sha256,
++                'account_service_review_original_byte_pin')
++        review=self.m.strict_json(raw)
++        require(review['format']=='swdb.exact-account-service-semantic-parent-review.v1'
++                and review['canonical_ensure_ascii'] is True
++                and review['accepted_for_exact_service_role_exclusion'] is True
++                and re.fullmatch('[0-9a-f]{64}',review['identity_sha256'])
++                and review['identity_sha256']==sha(canonical({k:v for k,v in review.items() if k!='identity_sha256'},True)),
++                'account_service_review_original_True_seal_or_role')
++        original_pin={'path':str(BASE/'lanl-account-pam-service-identification-20261008-a1/identification.json'),
++                      'bytes':3818,'sha256':'ece0155e6a1e61e07cabb8a05e2a13ac9577a9ee1418e8f8eed450ce310ce0fa'}
++        require(review['original_identification_pin']==original_pin
++                and review['shared_helper_source_sha256']=='f6c4076013eaa487c0e810ba4329512657bef9b1b74a0c074a7231bcc0466883'
++                and review['reviewed_guard_source']=={'path':'/private/tmp/lanl_consumed_detached_source_guard_r4_20261008_r1.py',
++                    'bytes':81694,'sha256':'d30481a540a40f0c4b4695e105dc25f6febf152e391b5a34861b817d0d6960a6'},
++                'account_service_review_original_or_helper_source_changed')
++        proofs=[{'path':str(EV/'14-supervised-r5-export-actual-custody-20261008-a1/actual/remote-preregistration.json'),
++                 'bytes':39887,'sha256':'70a8a1a4c99a46f92a2e9f7291daabe8305a0aa20927570cc9947adf5fc72987',
++                 'original_policy_not_modified':True},
++                {'path':str(EV/'14-generality-final-final-20261007-a1-export.json'),
++                 'bytes':32840,'sha256':'02b369f0624964fa4293f563a7b51e142dc369101147ac7fe848503c4b50eb5d',
++                 'original_policy_not_modified':True}]
++        require(review['original_fresh_E_custody_pins']==proofs
++                and review['trusted_systemd_lifecycle_source']=='https://github.com/systemd/systemd-stable/blob/v255.4/src/core/exec-invoke.c#L1213-L1291'
++                and review['signal_wait_kernel_source']=='https://github.com/torvalds/linux/blob/v6.8/kernel/signal.c#L3629-L3645'
++                and type(review['assumption']) is str and bool(review['assumption'])
++                and type(review['fresh_E_creation_semantic_basis']) is str and bool(review['fresh_E_creation_semantic_basis'])
++                and review['protected_child_fields_unobserved']==['fd','cwd','root','exe','maps','syscall','meaningful_wait_channel']
++                and review['service_reference_free_or_global_visibility_claimed'] is False
++                and review['selected_source_subset_or_actual_guard_cleanup_admitted'] is False
++                and review['scientific_admission'] is False and review['capacity_admission'] is False,
++                'account_service_review_semantic_scope_or_original_proofs_changed')
++        for proof in proofs:
++            proof_pin,_=self.bounded_read(P(proof['path']),256*1024)
++            require(proof_pin['bytes']==proof['bytes'] and proof_pin['sha256']==proof['sha256'],
++                    'account_service_original_fresh_E_custody_byte_pin_changed')
++        # The definition's exact globals use hash-verified R3 pure functions;
++        # no Guard table/method mutation or fabricated plan is needed.
++        helper_globals={key:getattr(self.m,key) for key in
++                       ('P','BASE','UID','LIMITS','require','sha','strict_json','stamp','os','re','stat')}
++        helper_globals['__builtins__']=self.m.__dict__['__builtins__']
++        helper=types.FunctionType(exact_account_pam_service_identification.__code__,helper_globals,
++                                  'exact_account_pam_service_identification')
++        item={'original_review_file_pin':pin,'original_review_policy':'explicit_original_True',
++              'original_identity_sha256':review['identity_sha256'],
++              'accepted_for_exact_service_role_exclusion_input':True,
++              'original_identification_pin':original_pin,
++              'shared_helper_source_pin':{'bytes':11151,
++                  'sha256':'f6c4076013eaa487c0e810ba4329512657bef9b1b74a0c074a7231bcc0466883'},
++              'trusted_OS_role_and_fresh_E_creation_are_parent_semantic_binding':True,
++              'service_reference_free_or_global_visibility_or_cleanup_clearance_generated':False}
++        self.charge(item)
++        self.output['observations']['account_service_original_semantic_review_input']=item
++        return helper,original_pin,review['identity_sha256']
++
+     def owned_processes(self):
+         snapshots={};inaccessible_foreign=0
+         procs=sorted((p for p in P('/proc').iterdir() if p.name.isdecimal()),key=lambda p:int(p.name))
+@@ -326,12 +567,23 @@
+                 seen.add(parent)
+                 if parent in owned:relevant.add(pid);break
+                 parent=snapshots[parent]['ppid']
+-        records=[]
++        helper,identification_pin,review_identity=self.account_service_review()
++        def charge_service_bytes(count):
++            self.g.read_bytes+=count
++            require(self.g.read_bytes<=LIMITS['total_file_bytes'],'cumulative_account_service_read_limit')
++        records=[];excluded=[]
+         for pid in sorted(relevant):
+             self.left();r=snapshots[pid];proc=r['path']
+             before=self.g.proc_read(proc/'stat',LIMITS['one_proc_bytes'])
+             if before is None:continue
+             start=int(before[before.rfind(b')')+2:].split()[19]);hits=[]
++            if pid==359656:
++                # Deliberately outside the inherited disappearing-process catch:
++                # missing native/original evidence must fail, never skip the predicate.
++                audit=helper(identification_pin,review_identity,self.left,charge_service_bytes)
++                require(start==audit['start_ticks'],'account_service_snapshot_PID_changed')
++                self.charge(audit);excluded.append(audit)
++                continue
+             try:
+                 links=[proc/'cwd',proc/'root',proc/'exe',*sorted((proc/'fd').iterdir())]
+                 self.fds+=len(links);require(self.fds<=LIMITS['process_fds'],'process_fd_limit')
+@@ -354,6 +606,9 @@
+             except FileNotFoundError:
+                 if proc.exists():raise Refused('relevant_process_field_missing')
+         return {'owned_or_owned_descendant_snapshots':records,'process_links_observed':self.fds,
++                'excluded_exact_system_services':excluded,
++                'excluded_service_protected_references_unobserved_not_reference_free':True,
++                'other_owned_or_owned_descendant_inaccessible_references_still_refuse':True,
+                 'inaccessible_unidentified_process_count':inaccessible_foreign,
+                 'privileged_identified_consumers_require_separate_parent_original_evidence':True,
+                 'args_maps_environment_auth_bodies_not_transferred':True,'global_clearance_not_claimed':True,
+@@ -450,7 +705,10 @@
+     parser=argparse.ArgumentParser(description=__doc__)
+     parser.add_argument('--expected-primary',required=True)
+     parser.add_argument('--source-sha256',required=True)
++    parser.add_argument('--account-service-review',required=True)
++    parser.add_argument('--account-service-review-sha256',required=True)
+     args=parser.parse_args();require(re.fullmatch('[0-9a-f]{40}',args.expected_primary),'exact40_expected_primary')
++    require(re.fullmatch('[0-9a-f]{64}',args.account_service_review_sha256),'account_service_review_file_pin_argument')
+     require(re.fullmatch('[0-9a-f]{64}',args.source_sha256),'own_source_pin_argument')
+     require(sys.platform=='linux' and socket.gethostname().split('.')[0]=='mbit10' and os.uname().machine=='x86_64'
+             and os.getuid()==os.geteuid()==UID and pwd.getpwuid(UID).pw_name==ACCOUNT,'host_account')

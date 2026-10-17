@@ -1,0 +1,268 @@
+{
+  "schema_version": 1,
+  "kind": "memory_admission_remediation_audit",
+  "created_utc": "2026-10-03T12:44:38.814518+00:00",
+  "host": "mbit10",
+  "project_commit": "f6972ebbf9c842c1a7091716505577d06c637231",
+  "model_revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+  "simulation_artifact": {
+    "path": "/data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt",
+    "sha256": "f4038c88318ee09085b6c07f163094a07a31a256f21b652d4f3cfa046feb1f6b",
+    "verification_basis": "Prior live full hash verification at 2026-10-03T12:11Z; current discovery does not reread this large file."
+  },
+  "source_references": [
+    {
+      "role": "public_model_configuration",
+      "path": "/data1/yanruj/ArchEvolve/swdb-project/swdb/dx100.py",
+      "sha256": "4083cd1c9f5516b854fdaee4f964d4ab1c48b5b93db4e76e9058c6bc9ea55790",
+      "bytes": 62640,
+      "lines": [
+        346,
+        379,
+        705,
+        838
+      ]
+    },
+    {
+      "role": "protocol_template",
+      "path": "/data1/yanruj/ArchEvolve/swdb-project/tools/typed_library_gem5_driver.py",
+      "sha256": "edb212d0640abe0276c70eeb799969a1bd9bfb4431f1275e19abe9d4dbfaf1ac",
+      "bytes": 34429,
+      "lines": [
+        95,
+        134
+      ]
+    },
+    {
+      "role": "checkpoint_binding",
+      "path": "/data1/yanruj/ArchEvolve/swdb-project/swdb/dx100_checkpoint.py",
+      "sha256": "006dd1bbe8c993323ad61cba0cf570f64bd5c1048af694e801ab54161ef30dd0",
+      "bytes": 2965,
+      "lines": [
+        9,
+        40
+      ]
+    },
+    {
+      "role": "maa_address_map",
+      "path": "/data1/yanruj/DX100-bfs-e4fc4af/configs/common/MAAConfig.py",
+      "sha256": "9fd396d36edf29da0ef846d4b13c3c255db0620a45aa577bf783abd8261f1f01",
+      "bytes": 8534,
+      "lines": [
+        78,
+        109
+      ]
+    },
+    {
+      "role": "guest_mmio",
+      "path": "/data1/yanruj/DX100-bfs-e4fc4af/benchmarks/API/MAA_gem5.hpp",
+      "sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174",
+      "bytes": 27473,
+      "lines": [
+        12,
+        25,
+        71,
+        90
+      ]
+    },
+    {
+      "role": "sparse_guest_backing",
+      "path": "/data1/yanruj/DX100-bfs-e4fc4af/src/mem/physical.cc",
+      "sha256": "bac8e462d6c36c74efd253f0db6dc59d72263dad6f7b06504e67cf3798959779",
+      "bytes": 17701,
+      "lines": [
+        199,
+        263,
+        451,
+        484
+      ]
+    },
+    {
+      "role": "ramulator_instantiation",
+      "path": "/data1/yanruj/DX100-bfs-e4fc4af/src/mem/ramulator2.cc",
+      "sha256": "66ada813cea0c2391dae5561e67aa6449922af9ecbc1d1e883b21d56f0ce39e1",
+      "bytes": 11984,
+      "lines": [
+        40,
+        61
+      ]
+    },
+    {
+      "role": "ramulator_configuration",
+      "path": "/data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/example_gem5_config.yaml",
+      "sha256": "aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b",
+      "bytes": 380,
+      "lines": []
+    }
+  ],
+  "phase_evidence": [
+    {
+      "role": "small_companion",
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-ac10-companion-20260928-a3/runs/bfs-t17-ac10-companion-20260928-a3.execute/simulation/host-memory-phases.jsonl",
+      "sha256": "0086701faec00cc8497cdc47e92ea390d8156569d2e0fcdbef60209a3dad7a96",
+      "graph_bytes": 622829,
+      "record": "bfs-t17-ac10-companion-20260928-a3.execute",
+      "observations": [
+        {
+          "phase": "instantiate_end",
+          "host_time_ns": 1790687659080060644,
+          "elapsed_s": 65.48014139942825,
+          "process_status": {
+            "RssAnon": "30065384 kB",
+            "RssFile": "47076 kB",
+            "VmHWM": "30112460 kB",
+            "VmRSS": "30112460 kB",
+            "VmSize": "46955584 kB"
+          },
+          "allocator_numeric_properties": {
+            "generic.current_allocated_bytes": 30393786112,
+            "generic.heap_size": 30611120128,
+            "tcmalloc.central_cache_free_bytes": 214049640,
+            "tcmalloc.pageheap_free_bytes": 1097728,
+            "tcmalloc.pageheap_unmapped_bytes": 0,
+            "tcmalloc.thread_cache_free_bytes": 1523096
+          }
+        },
+        {
+          "phase": "statistics_dump_end",
+          "host_time_ns": 1790687768473829871,
+          "elapsed_s": 174.87390959076583,
+          "process_status": {
+            "RssAnon": "33689312 kB",
+            "RssFile": "51932 kB",
+            "VmHWM": "33741244 kB",
+            "VmRSS": "33741244 kB",
+            "VmSize": "50601048 kB"
+          },
+          "allocator_numeric_properties": {
+            "generic.current_allocated_bytes": 33937479168,
+            "generic.heap_size": 34318909440,
+            "tcmalloc.central_cache_free_bytes": 342750144,
+            "tcmalloc.pageheap_free_bytes": 33480704,
+            "tcmalloc.pageheap_unmapped_bytes": 0,
+            "tcmalloc.thread_cache_free_bytes": 3382848
+          }
+        }
+      ]
+    },
+    {
+      "role": "uniform18_diagnostic",
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.uniform18/bfs-t17-routes-20260928-a3.candidate.uniform18/bfs-t17-routes-20260928-a3.candidate.uniform18.s0.r0.diagnostic.evaluation/simulation/host-memory-phases.jsonl",
+      "sha256": "b1007e856463949df1a074235de2887451c8f2f88dfe0e1ec0c22059d8fa0af9",
+      "graph_bytes": 34600749,
+      "record": "bfs-t17-routes-20260928-a3.candidate.uniform18.s0.r0.diagnostic.evaluation",
+      "observations": [
+        {
+          "phase": "instantiate_end",
+          "host_time_ns": 1790667298586774491,
+          "elapsed_s": 66.27367486432195,
+          "process_status": {
+            "RssAnon": "30156720 kB",
+            "RssFile": "47440 kB",
+            "VmHWM": "30204160 kB",
+            "VmRSS": "30204160 kB",
+            "VmSize": "46983268 kB"
+          },
+          "allocator_numeric_properties": {
+            "generic.current_allocated_bytes": 30394533624,
+            "generic.heap_size": 30632091648,
+            "tcmalloc.central_cache_free_bytes": 215831272,
+            "tcmalloc.pageheap_free_bytes": 20463616,
+            "tcmalloc.pageheap_unmapped_bytes": 0,
+            "tcmalloc.thread_cache_free_bytes": 544288
+          }
+        },
+        {
+          "phase": "statistics_dump_end",
+          "host_time_ns": 1790670196965278380,
+          "elapsed_s": 2964.652179237455,
+          "process_status": {
+            "RssAnon": "34175668 kB",
+            "RssFile": "52236 kB",
+            "VmHWM": "34227904 kB",
+            "VmRSS": "34227904 kB",
+            "VmSize": "51035604 kB"
+          },
+          "allocator_numeric_properties": {
+            "generic.current_allocated_bytes": 34345442768,
+            "generic.heap_size": 34756517888,
+            "tcmalloc.central_cache_free_bytes": 348365504,
+            "tcmalloc.pageheap_free_bytes": 53493760,
+            "tcmalloc.pageheap_unmapped_bytes": 0,
+            "tcmalloc.thread_cache_free_bytes": 7704944
+          }
+        }
+      ]
+    }
+  ],
+  "mmio_evidence": {
+    "four_core_guest_header_base_bytes": 17179869184,
+    "model_maa_address_base": "options.mem_size",
+    "current_guest_memory": "16GB",
+    "configuration_and_checkpoint_and_binding_fix_16gb": true
+  },
+  "heap_evidence": {
+    "companion_instantiation_allocated_bytes": 30393786112,
+    "uniform18_instantiation_allocated_bytes": 30394533624,
+    "difference_bytes": 747512,
+    "companion_peak_rss_kib": 33741244,
+    "uniform18_peak_rss_kib": 34227904,
+    "interpretation": "Large tcmalloc-managed model heap and final statistics allocation dominate the tiny graph. Anonymous guest backing and nonzero-only checkpoint restore do not justify a proportional RSS saving from lower declared capacity."
+  },
+  "current_node_free": {
+    "node0": {
+      "memfree_bytes": 31327043584,
+      "memfree_gib": 29.175582885742188,
+      "admitted_36gib": false
+    },
+    "node1": {
+      "memfree_bytes": 24752463872,
+      "memfree_gib": 23.052528381347656,
+      "admitted_36gib": false
+    }
+  },
+  "host_budget_gib": 36,
+  "identified_remaining_cache": {
+    "observed_utc": "2026-10-03T12:40:11Z",
+    "scope": "Owned historical files >=1MiB in two SWDB run roots plus EvolveSWDB_builds; excludes current inputs and current prune roots. This is not an exhaustive host-cache inventory.",
+    "aggregate_observed_cached_bytes": 4667785216,
+    "large_candidate_inventory": [
+      {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-uniform22/graph-dx100.sg",
+        "device": 2065,
+        "inode": 11831109,
+        "owner_uid": 114316761,
+        "mode": "0o664",
+        "nlink": 1,
+        "mtime_ns": 1790391354282913307,
+        "size": 553645861,
+        "cached_bytes": 553648128,
+        "dirty_bytes": 0,
+        "writeback_bytes": 0
+      },
+      {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-reference-m-simulator-batch-20260929-c2/bfs-t16-reference-m-simulator-batch-20260929-c2.maa/bfs-t16-reference-m-simulator-batch-20260929-c2.maa/bfs-t16-reference-m-simulator-batch-20260929-c2.maa.s0.r0.primary.evaluation/checkpoint/cpt.8936615500/system.physmem.store0.pmem",
+        "device": 2065,
+        "inode": 14036316,
+        "owner_uid": 114316761,
+        "mode": "0o664",
+        "nlink": 1,
+        "mtime_ns": 1790665119001879440,
+        "size": 480389177,
+        "cached_bytes": 480391168,
+        "dirty_bytes": 0,
+        "writeback_bytes": 0
+      }
+    ],
+    "known_use_check": "Prior lsof had no visible handles; unrelated /run/snapd/ns warning limits completeness. Every future action requires fresh identities, clean-cache and known-use checks.",
+    "numa_placement": "unavailable"
+  },
+  "conclusion": {
+    "smaller_guest_supported_by_current_target_and_protocol": false,
+    "reason": "Changing only guest memory relocates MAA MMIO away from the fixed four-core guest header, breaks current target/protocol/checkpoint bindings, and has no measured evidence of enough RSS reduction.",
+    "safe_operation": "Preserve 16GB guest/MMIO model and 36GiB admission; wait for actual eligible node MemFree >=36GiB. A changed target/model requires new bindings, fresh checkpoints/protocol, and measured resource evidence.",
+    "cache_or_model_changes_performed": false,
+    "gem5_or_other_job_started": false,
+    "raw_evidence_copied": false
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "command_plan": {
+      "additionalProperties": false,
+      "properties": {
+        "bytes": {
+          "maximum": 8388608,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "path": {
+          "pattern": "^/",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "bytes",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "profile": {
+      "additionalProperties": false,
+      "properties": {
+        "bytes": {
+          "maximum": 8388608,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "path": {
+          "pattern": "^/",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "bytes",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "root_admission": {
+      "additionalProperties": false,
+      "properties": {
+        "bytes": {
+          "maximum": 8388608,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "path": {
+          "pattern": "^/",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "bytes",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "runtime": {
+      "additionalProperties": false,
+      "properties": {
+        "bytes": {
+          "maximum": 8388608,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "path": {
+          "pattern": "^/",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "bytes",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "enum": [
+        "checked-whole-actual-selection-1",
+        "checked-whole-candidate-selection-1"
+      ]
+    }
+  },
+  "required": [
+    "schema",
+    "profile",
+    "command_plan",
+    "root_admission",
+    "runtime"
+  ],
+  "type": "object"
+}

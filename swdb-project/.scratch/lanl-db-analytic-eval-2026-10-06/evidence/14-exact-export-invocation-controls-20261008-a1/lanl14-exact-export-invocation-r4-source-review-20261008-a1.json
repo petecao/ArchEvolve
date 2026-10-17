@@ -1,0 +1,105 @@
+{
+  "format": "swdb.lanl14-exact-export-invocation-final-source-review.v1",
+  "sealed": false,
+  "status": "SOURCE_ONLY_NOT_RUN",
+  "selected_source": {
+    "path": "/private/tmp/lanl14_invoke_reviewed_supervised_export_20261008_a1_r4.py",
+    "bytes": 30654,
+    "sha256": "7f0568754989cdce7bc6903b4d2fd246702a4ad5fae84e0306bcc2239151fa6e"
+  },
+  "R1_preserved": {
+    "path": "/private/tmp/lanl14_invoke_reviewed_supervised_export_20261008_a1_r1.py",
+    "bytes": 29841,
+    "sha256": "52dc4ff21cd22113ff415f617380761d5c42b7a75cfab8d3aaf3b8f5be182c13"
+  },
+  "initial_draft_preserved": {
+    "path": "/private/tmp/lanl14_invoke_reviewed_supervised_export_20261008_a1.py",
+    "bytes": 41865,
+    "sha256": "fe07b9e3492804a4e7baf3959e0d53d146b9558bb5041842dc54e4d2e86a2fb0"
+  },
+  "source_derivation": {
+    "path": "/private/tmp/lanl14-exact-export-invocation-r4-complete-r3-derivation-20261008-a1.diff",
+    "bytes": 2163,
+    "sha256": "b8fbeee1dd980158c4cf77529ece83961c67af3ae6b1dfbd5fb6a05eecff1475"
+  },
+  "reviewed_source_dependency": {
+    "path": "/private/tmp/lanl14_correct_completed_report_transfer_modes_20261008_a1.py",
+    "bytes": 29985,
+    "sha256": "ee12a535ea2c3e6976c920f483c72e8367cd36ec311bf26585137023a2d29ec7"
+  },
+  "recipe": {
+    "path": "/private/tmp/lanl14-supervised-export-reader-future-invocation-review-20261007-a1.md",
+    "bytes": 19842,
+    "sha256": "468766d3f5597ae2bebf6765d861c6c785d9058f1f533ab1a4a82c232b68bb0f"
+  },
+  "original_supervisor": {
+    "path": "/private/tmp/lanl14_export_reader_administrative_supervisor_20261007_a1_r1.py",
+    "bytes": 14547,
+    "sha256": "503fc5defcf96a5177599185a9895c00ae64b3e1b0058128b9e283ef3bd39f3f"
+  },
+  "original_exporter": {
+    "path": "/private/tmp/lanl14_final_export_lossless_gzip_20261007_a1.py",
+    "bytes": 22967,
+    "sha256": "928af82facd9f36dfdbca6595d2c2e9d1091dd0064c9fe53fc41c163879e026e"
+  },
+  "static": {
+    "syntax_parsed": true,
+    "target_compiled_imported_or_executed": false,
+    "tests_executed": 0,
+    "read_only_reviewed_helper_calls": [
+      "Budget",
+      "checked",
+      "completion",
+      "native",
+      "now",
+      "original_true",
+      "private_json",
+      "read_file",
+      "read_json",
+      "released",
+      "source_identity",
+      "stamp",
+      "subjects",
+      "true_digest"
+    ],
+    "forbidden_mutation_helper_calls": [],
+    "exact_imported_bytes_not_importlib_path_reread": true,
+    "helper_main_called": false,
+    "module_name_avoids_main": true,
+    "os_fchmod_or_chmod_calls": 0,
+    "exact_future_argv_literals": [
+      "18120s",
+      "--kill-after=60s",
+      "exporter",
+      "18000"
+    ],
+    "wait18300": true,
+    "returned_max16384": true,
+    "all_new_receipts_unsealed": true,
+    "original_readonly_names_unbound": []
+  },
+  "pending_actual_prerequisites": [
+    "all-nine M/acceptance/final validation exact originals and SHA pins",
+    "g510 ended runner/wrapper0 and original cleanup",
+    "all three authoritative released leases and live reserves",
+    "actual completed21 correction private receipt/journal/current target afterstats",
+    "full parent-selected primary40 and exact wrapper upstream40",
+    "physical ee12a0644 after durable delivery and immutable native/source checks",
+    "fresh disjoint0700 admin/absent leaf/export W/branches/validation/gzip",
+    "one complete actual CLI/SSH/private original capture parent review"
+  ],
+  "no_actual_inputs_results_or_pins_constructed": true,
+  "SSH_or_project_mutation": false,
+  "scientific_admission": false,
+  "R2_preserved": {
+    "path": "/private/tmp/lanl14_invoke_reviewed_supervised_export_20261008_a1_r2.py",
+    "bytes": 30006,
+    "sha256": "576c9040c7e3083b1b5bc254e3a624dc26c2a2243c3bb2036537289b25f5381f"
+  },
+  "source_review_chronology": "R2 source-only full local read found two removed JSON hook references; R3 qualifies them through the exact reviewed module and adds empty-stream budget checks. Zero runtime/tests/imports. R4 binds the actual e79 runner-error.txt filename (source line217), and checks original503f child argv/F6/UID/cleanup identities from its existing receipt. No new scientific field, action or test.",
+  "R3_preserved": {
+    "path": "/private/tmp/lanl14_invoke_reviewed_supervised_export_20261008_a1_r3.py",
+    "bytes": 30048,
+    "sha256": "3bfa397640bf53347bca2dc690fdc68dc4b10b765e4869110fd43e720c417c39"
+  }
+}

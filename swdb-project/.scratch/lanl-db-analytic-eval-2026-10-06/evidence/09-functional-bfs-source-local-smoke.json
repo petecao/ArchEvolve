@@ -1,0 +1,256 @@
+{
+  "date": "2026-10-06 ET",
+  "state": "passed_source_only_local_smoke",
+  "strict_remote_certification": "pending_parent_execution",
+  "raw_receipt": "/private/tmp/lanl-ticket09-source-smoke-20261006-a1/runs/local.bfs.functional.preparation.20261006a3/source-preparation-receipt.json",
+  "raw_receipt_sha256": "1b02ffe054b7803a7ed084a6bf529f51ebb5cdcfa0b29fae5d11711ac563918f",
+  "tested_script_sha256": "a92aaa25dc550120945ff9c640683500e038ce6a9ebe56f05f1ff0a0ed10d4b9",
+  "original_record_files_unchanged": 584,
+  "copied_store_valid_record_count": 590,
+  "prior_attempts": [
+    {
+      "prefix": "local.bfs.functional.preparation.20261006a1",
+      "retained": "source registration passed; fixture-package rejected unsupported --mode; no candidate"
+    },
+    {
+      "prefix": "local.bfs.functional.preparation.20261006a2",
+      "retained": "source registration passed; fixture-package rejected unsupported --mode; no candidate"
+    }
+  ],
+  "negative_pin_check": {
+    "changed": "read_offload_body_sha256",
+    "outcome": "refused_before_records_or_raw_directory_writes",
+    "execution_performed": false
+  },
+  "fingerprint_checks": {
+    "red": "8 failed, 3 passed",
+    "green": "58 passed, 26 deselected in 23.84 s",
+    "direct_candidate_binding": "old YAML parser and exact-byte SHA-256 match; wrong source and changed tree refused"
+  },
+  "source_only_receipt": {
+    "date": "2026-10-06 ET",
+    "state": "unverified_source_candidate_created",
+    "execution_performed": false,
+    "source_preparation_git_commit": "3d46b46a15fde0fa1273d8955ee03fe2f53c205e",
+    "pins_sha256": "101f43baa23cc8c4f7423b76e0fb89e868e4735dff6e72cd6212b6aa9adae377",
+    "canonical_source_sha256": "2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af",
+    "fresh_source": {
+      "id": "local.bfs.functional.preparation.20261006a3.source",
+      "record_sha256": "ac044b773c3bca5d67c33f552b7ff484d6f1291fe8bdf7af490bae0b91af111a",
+      "protections_sha256": "f8794171718e89617d74f6351d7ba4b72a4ded83c5d6218721464ecb22b9455c"
+    },
+    "profile": {
+      "id": "local.bfs.functional.preparation.20261006a3.fixture-profile",
+      "record_sha256": "caaceb6be2595c0525466b16f33ac0f1b3bb55ee80a76d58c2115c8aec63e44f",
+      "evidence_classification": "contract_fixture"
+    },
+    "proposal": {
+      "id": "local.bfs.functional.preparation.20261006a3.proposal",
+      "request_sha256": "5ba1ad6df1f72ec2d71f597fc741f30d3a1ef4b9fef3760f60d9d73f60301439",
+      "patch_sha256": "cc99ca4d024983ab02c17f5db74db5210a7450968787ccad25562da4d9873cff"
+    },
+    "candidate": {
+      "id": "local.bfs.functional.preparation.20261006a3.proposal.candidate-1",
+      "record_sha256": "982097d4a2ed4bc4c0809338e7e894db240ad7eb0975cf41201a4c21980aa591",
+      "tree_sha256": "991de65287fe1fae3a20412704cccb6140a93f84cc11200032b20214f5174ff1",
+      "bfs_sha256": "093c56b91837122380fd5e66766c92947e5f1c5194dd4c038936bc28934864dc",
+      "header_sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c"
+    },
+    "library": {
+      "contract": {
+        "id": "contract.bfs_read_offload",
+        "content_sha256": "867fac18c28938268242e7d4b60049f3c3e97113512a761cc8a763735a77db51"
+      },
+      "entries": [
+        {
+          "id": "intrinsic.dxc_const_i32",
+          "content_sha256": "d321f3c5d234afa7a41121f923a6e0a0edef51015c4f7ebe3cbe463c0a92950f"
+        },
+        {
+          "id": "intrinsic.dxc_gather",
+          "content_sha256": "f1a54734b19e5223a1b2b11b91d177913ecda7296ce45592acb91412b4c6609d"
+        },
+        {
+          "id": "intrinsic.dxc_range_loop",
+          "content_sha256": "dd2abc9caac3f39254ffa28d254b8308b95f73b496b1fb9a40bb8f570da54f57"
+        },
+        {
+          "id": "intrinsic.dxc_session_begin",
+          "content_sha256": "69f444bf9d4800ebb4b1b29d45496b3cc2f0f49ea404bba4a65ec5343439de91"
+        },
+        {
+          "id": "intrinsic.dxc_stream_load",
+          "content_sha256": "2deb4038416c9950ab524497a10071c69b5b295f87659d43d0ec24a8313fe79c"
+        },
+        {
+          "id": "intrinsic.dxc_thread_context",
+          "content_sha256": "9a25951c2ee114ff9e1c5265c2da5452bf3f8c5f850c36afeb157b00be0e8e88"
+        },
+        {
+          "id": "intrinsic.dxc_tile_pointer",
+          "content_sha256": "c276531e321c1fdfd12f6730d91e1351e5a864a0214931452e29bae78b10d20e"
+        },
+        {
+          "id": "intrinsic.dxc_tile_size",
+          "content_sha256": "8072dc02828ab0b865a11bd063b96b7412de71f435a450c1cb156e793f957c06"
+        },
+        {
+          "id": "intrinsic.dxc_wait",
+          "content_sha256": "e349a9c69489091c35d5cb3654cae16b0b5361f8706fd4c4f21052756cc815de"
+        },
+        {
+          "id": "lowering.dxc_const_i32.dx100-mmio.1.0-e4fc4af",
+          "content_sha256": "e4916a2ec1bbb672ce27b6c4ef52a10a38e19458c914d09bb9e0c0969eea5bcf"
+        },
+        {
+          "id": "lowering.dxc_gather.dx100-mmio.1.0-e4fc4af",
+          "content_sha256": "3ad324abd6d51613450786e617deafad181831cb82be867ae479968374a2a8f9"
+        },
+        {
+          "id": "lowering.dxc_range_loop.dx100-mmio.1.0-e4fc4af",
+          "content_sha256": "683c4ecb61a61ea24de68930b11b40bc8a987465d3ec39cf6e1330af6b2a3831"
+        },
+        {
+          "id": "lowering.dxc_session_begin.dx100-mmio.1.0-e4fc4af",
+          "content_sha256": "8584f0c4b2358692e6f76be3d653ee461baa8addaab8a9fd15788a3382984569"
+        },
+        {
+          "id": "lowering.dxc_stream_load.dx100-mmio.1.0-e4fc4af",
+          "content_sha256": "bfd124d6ce44b13ab96c3f4bb1d8b640aca4ade018ef007138004abc9b5f5f53"
+        },
+        {
+          "id": "lowering.dxc_thread_context.dx100-mmio.1.0-e4fc4af",
+          "content_sha256": "3dd51312fd5d6bc55939b475163bb881ccfc0b68335b060d24a16d12b48dff3e"
+        },
+        {
+          "id": "lowering.dxc_tile_pointer.dx100-mmio.1.0-e4fc4af",
+          "content_sha256": "842531eb06ab38e5c79eecceaf36b536d690d2c2be580f94949b727429c8b7dc"
+        },
+        {
+          "id": "lowering.dxc_tile_size.dx100-mmio.1.0-e4fc4af",
+          "content_sha256": "91a183168d5adb02cf9ee7eefbbeb396615dec36d4b8ec0ebce88c0c42c5b323"
+        },
+        {
+          "id": "lowering.dxc_wait.dx100-mmio.1.0-e4fc4af",
+          "content_sha256": "d0cda6d52b5a86f3d53f8c4af12be8a8eac3c64fdcd37244ed35d70735acaae2"
+        }
+      ],
+      "shipped_files": [
+        {
+          "path": "benchmarks/gapbs/src/swdb_dxc_lowering.hpp",
+          "sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c",
+          "lowerings": [
+            "lowering.dxc_const_i32.dx100-mmio.1.0-e4fc4af",
+            "lowering.dxc_gather.dx100-mmio.1.0-e4fc4af",
+            "lowering.dxc_range_loop.dx100-mmio.1.0-e4fc4af",
+            "lowering.dxc_session_begin.dx100-mmio.1.0-e4fc4af",
+            "lowering.dxc_stream_load.dx100-mmio.1.0-e4fc4af",
+            "lowering.dxc_thread_context.dx100-mmio.1.0-e4fc4af",
+            "lowering.dxc_tile_pointer.dx100-mmio.1.0-e4fc4af",
+            "lowering.dxc_tile_size.dx100-mmio.1.0-e4fc4af",
+            "lowering.dxc_wait.dx100-mmio.1.0-e4fc4af"
+          ]
+        }
+      ]
+    },
+    "strict_certification": {
+      "state": "pending_parent_execution",
+      "matrix": {
+        "family": "candidate",
+        "version": "1.6",
+        "sources_sha256": "309d9cd5140bbb5bf87408ed5f1a4fba40271275704294003be8444829f61311",
+        "tile_sizes": [
+          16384,
+          1024
+        ],
+        "max_threads": 4,
+        "sources": [
+          0
+        ]
+      },
+      "argv": [
+        "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+        "-m",
+        "swdb",
+        "certify",
+        "contract.bfs_read_offload",
+        "--candidate",
+        "local.bfs.functional.preparation.20261006a3.proposal.candidate-1",
+        "--records",
+        "/private/tmp/lanl-ticket09-source-smoke-20261006-a1/records",
+        "--library",
+        "/Users/yanrujhou/.codex/worktrees/lanl-ticket09-candidate-prep/ArchEvolve/swdb-project/library",
+        "--runs-dir",
+        "/private/tmp/lanl-ticket09-source-smoke-20261006-a1/runs/local.bfs.functional.preparation.20261006a3/strict-certification",
+        "--command-version",
+        "1.6",
+        "--tile-sizes",
+        "16384,1024",
+        "--threads",
+        "4",
+        "--sources",
+        "0",
+        "--mode",
+        "archevolve",
+        "--format",
+        "json"
+      ]
+    },
+    "public_commands": [
+      {
+        "argv": [
+          "add",
+          "/private/tmp/lanl-ticket09-source-smoke-20261006-a1/runs/local.bfs.functional.preparation.20261006a3/source-record.json",
+          "--agent",
+          "--agent-name",
+          "swdb-canonical-read-offload-preparation",
+          "--records",
+          "/private/tmp/lanl-ticket09-source-smoke-20261006-a1/records",
+          "--db",
+          "/private/tmp/lanl-ticket09-source-smoke-20261006-a1/runs/local.bfs.functional.preparation.20261006a3/index.sqlite",
+          "--mode",
+          "archevolve"
+        ],
+        "returncode": 0,
+        "stdout_sha256": "c93e36edceb8b3144f05fa5d694f0e437ed25bbb33c7d954322688c98f606689",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "argv": [
+          "fixture-package",
+          "local.bfs.functional.preparation.20261006a3.source",
+          "--id",
+          "local.bfs.functional.preparation.20261006a3.fixture-profile",
+          "--records",
+          "/private/tmp/lanl-ticket09-source-smoke-20261006-a1/records",
+          "--db",
+          "/private/tmp/lanl-ticket09-source-smoke-20261006-a1/runs/local.bfs.functional.preparation.20261006a3/index.sqlite",
+          "--format",
+          "json"
+        ],
+        "returncode": 0,
+        "stdout_sha256": "2eb195f1bb277f9f4c09cbb24c3877b9e4b5a48468a09cc3261e34af6dbdea86",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "argv": [
+          "submit",
+          "/private/tmp/lanl-ticket09-source-smoke-20261006-a1/runs/local.bfs.functional.preparation.20261006a3/request.json",
+          "--runs-dir",
+          "/private/tmp/lanl-ticket09-source-smoke-20261006-a1/runs/local.bfs.functional.preparation.20261006a3/candidate-artifacts",
+          "--records",
+          "/private/tmp/lanl-ticket09-source-smoke-20261006-a1/records",
+          "--db",
+          "/private/tmp/lanl-ticket09-source-smoke-20261006-a1/runs/local.bfs.functional.preparation.20261006a3/index.sqlite",
+          "--mode",
+          "archevolve",
+          "--format",
+          "json"
+        ],
+        "returncode": 0,
+        "stdout_sha256": "05bba216c8156a4557f576e2a2c90bee43173f191258c718f1917c3841659176",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  }
+}

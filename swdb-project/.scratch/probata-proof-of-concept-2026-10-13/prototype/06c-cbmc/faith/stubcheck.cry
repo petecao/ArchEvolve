@@ -1,0 +1,127 @@
+// Ticket 06 continuation (CBMC box), 2026-10-14 ET. THROWAWAY. Faithfulness test 3: each C stub
+// (dx100_stubs.h) against the SAW summary it ports (../../06-two-lanes/summaries.saw over
+// ../../06-two-lanes/ghost.cry, imported unchanged). One function per summary. Its inputs are one
+// logged call: arguments, the state before (S) and after, and ok (the stub completed; 0 = a CHECK
+// failed). ok = 1: the SAW precondition holds and the state after equals the summary's
+// postcondition, every location the summary does not name unchanged. ok = 0: the SAW
+// precondition is false (SAW would reject the call too).
+module stubcheck where
+import ghost
+
+// S: ghost state (pack layout, 81 words), tile memory (16), queue (8), offsets (4), neighbors (3),
+// parent (3).
+type S = [115][32]
+gw : S -> GW
+gw s = take`{81} s
+tdOf : S -> Tiles
+tdOf s = split (take`{16} (drop`{81} s))
+qOf : S -> [8][32]
+qOf s = take`{8} (drop`{97} s)
+oOf : S -> [4][32]
+oOf s = take`{4} (drop`{105} s)
+nOf : S -> [3][32]
+nOf s = take`{3} (drop`{109} s)
+pOf : S -> [3][32]
+pOf s = drop`{112} s
+memSame : S -> S -> Bit
+memSame a b = drop`{97} a == drop`{97} b
+gOf : S -> G
+gOf s = unpack (gw s)
+rdyW : S -> [1][32]
+rdyW s = take`{1} s
+fpW : S -> [8][32]
+fpW s = drop`{73} (gw s)
+
+// The whole state unchanged (probes, checks without effect).
+same : S -> S -> Bit
+same a b = a == b
+
+vConst : [32] -> [32] -> S -> S -> Bit -> Bit
+vConst v r pre post ok = if ok then pc /\ gw post == pack (constR (gOf pre) r v) /\ tdOf post == tdOf pre /\ memSame pre post
+                         else ~pc
+  where pc = r < 8
+
+vWait : Bit -> [32] -> S -> S -> Bit -> Bit
+vWait old t pre post ok = if ok then pc /\ gw post == pack (if old then waitOld (gOf pre) t else waitT (gOf pre) t)
+                                     /\ tdOf post == tdOf pre /\ memSame pre post
+                          else ~pc
+  where pc = t < 8
+
+vSize : [32] -> [32] -> S -> S -> Bit -> Bit
+vSize t ret pre post ok = if ok then pc /\ same pre post /\ ret == zext (drop`{16} ((gOf pre).sz @ t)) else ~pc
+  where pc = (t < 8) /\ readyW (rdyW pre) t
+
+vProbeTile : [32] -> S -> S -> Bit -> Bit
+vProbeTile t pre post ok = if ok then pc /\ same pre post else ~pc
+  where pc = (t < 8) /\ readyW (rdyW pre) t
+
+vProbeCpu : [32] -> [32] -> S -> S -> Bit -> Bit
+vProbeCpu m w pre post ok = if ok then pc /\ same pre post else ~pc
+  where pc = (m < 4) /\ cpuOkW (rdyW pre) (fpW pre) m (w != 0)
+
+vPoke : [32] -> [32] -> S -> S -> Bit -> Bit
+vPoke r v pre post ok = if ok then pc /\ gw post == pack { g | reg = update g.reg r v } /\ tdOf post == tdOf pre /\ memSame pre post
+                        else ~pc
+  where pc = r < 8
+        g = gOf pre
+
+vStreamBounds : [32] -> [32] -> [32] -> S -> S -> Bit -> Bit
+vStreamBounds lo hi st pre post ok = if ok then pc /\ same pre post else ~pc
+  where reg = (gOf pre).reg
+        pc = (lo < 8 /\ hi < 8 /\ st < 8) /\ (reg @ lo >=$ 0) /\ (reg @ hi >=$ reg @ lo) /\ (reg @ st >$ 0)
+
+vStreamCap : [32] -> [32] -> [32] -> S -> S -> Bit -> Bit
+vStreamCap lo hi st pre post ok = if ok then pc /\ same pre post else ~pc
+  where pc = (lo < 8 /\ hi < 8 /\ st < 8) /\ (streamNR (gOf pre).reg lo hi st <= 2)
+
+// The queue load (SAW: one override, g_queue, offset 0, region 0). isq: the pointer is g_queue.
+vStreamLoad : Bit -> [32] -> [32] -> [32] -> [32] -> [32] -> S -> S -> Bit -> Bit
+vStreamLoad isq lo hi st dst cond pre post ok =
+  if ok then pc /\ gw post == pack (streamG g 0 lo hi st dst)
+             /\ tdOf post == update td dst (streamVals g q (0 : [64]) lo hi st (td @ dst)) /\ memSame pre post
+  else ~pc
+  where g = gOf pre
+        td = tdOf pre
+        q = qOf pre
+        pc = isq /\ (lo < 8 /\ hi < 8 /\ st < 8 /\ dst < 8 /\ cond == -1) /\ streamOk g q (0 : [64]) lo hi st
+
+// A gather from one region: mem is the region's array, off its element offset, m its id.
+vGather : {l} (fin l, l >= 1, 64 >= width l) => [l][32] -> [64] -> [32] -> [32] -> [32] -> [32] -> S -> S -> Bit -> Bit
+vGather mem off m ix dst cond pre post ok =
+  if ok then pc /\ gw post == pack (gatherG g m ix dst)
+             /\ tdOf post == update td dst (gatherVals g mem off td ix dst) /\ memSame pre post
+  else ~pc
+  where g = gOf pre
+        td = tdOf pre
+        pc = (ix < 8 /\ dst < 8 /\ cond == -1) /\ gatherOk g mem off td ix
+
+vRange : [32] -> [32] -> [32] -> [32] -> [32] -> [32] -> [32] -> [32] -> S -> S -> Bit -> Bit
+vRange li lj lo up st rows cols cond pre post ok =
+  if ok then pc /\ gw post == pack (rangeG g td li lj lo up st rows cols)
+             /\ tdOf post == rangeTiles g td li lj lo up st rows cols /\ memSame pre post
+  else ~pc
+  where g = gOf pre
+        td = tdOf pre
+        pc = (li < 8 /\ lj < 8 /\ lo < 8 /\ up < 8 /\ st < 8 /\ rows < 8 /\ cols < 8 /\ rows != cols /\ cond == -1)
+             /\ rangeOk g td li lj lo up st
+
+vAlu : [32] -> [32] -> [32] -> [32] -> [32] -> S -> S -> Bit -> Bit
+vAlu src r dst op cond pre post ok =
+  if ok then pc /\ gw post == pack (aluG g src r dst) /\ tdOf post == update td dst (aluVals g td src r dst) /\ memSame pre post
+  else ~pc
+  where g = gOf pre
+        td = tdOf pre
+        pc = src < 8 /\ r < 8 /\ dst < 8 /\ op == 13 /\ cond == -1
+
+// The parent store (SAW: one override, g_parent, offset 0, region 3). isp: the pointer is g_parent.
+vStore : Bit -> [32] -> [32] -> [32] -> [32] -> S -> S -> Bit -> Bit
+vStore isp ix sr cd dst pre post ok =
+  if ok then pc /\ gw post == pack (storeG g 3 ix sr cd dst)
+             /\ tdOf post == update td dst (storeDst g p (0 : [64]) td ix sr cd dst)
+             /\ pOf post == storeMem g p (0 : [64]) td ix sr cd
+             /\ take`{15} (drop`{97} post) == take`{15} (drop`{97} pre)
+  else ~pc
+  where g = gOf pre
+        td = tdOf pre
+        p = pOf pre
+        pc = isp /\ (ix < 8 /\ sr < 8 /\ cd < 8 /\ dst < 8) /\ storeOk g p (0 : [64]) td ix sr cd

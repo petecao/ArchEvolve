@@ -1,0 +1,26 @@
+{
+  "created": "2026-09-27",
+  "state": "plan_and_reader_ready_for_independent_review",
+  "scope": "T16 only; no T15 allowance or runtime changes",
+  "plan_canonical_sha256": "5d60f36a9fcea96aed9f1f491d6ad9275a3219b1e9798fc9ad41cccd0640a7db",
+  "files": {
+    "scripts/bfs_simulator_recovery.py": "3e2128e8918994862f67905d80f8925c19ee405e8cd9174b3a63ec4d979cf5ed",
+    "tests/test_bfs_simulator_recovery.py": "75e937fbf2046ccda3f2140e694425c1ad4143c97215e0fcb6b2c66b06e04d71",
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t16-seal-recovery-simulator-batch-20260927-a1.json": "f0f3a6000059f2925eb512ac928aee0d9a3ea57a8a53e10abe245d68be734cb1"
+  },
+  "tests": "106 passed in0.53s",
+  "log": "/private/tmp/bfs-t16-seal-plan-reader-tests-20260927.log",
+  "prior_seconds": 12574,
+  "fresh_proof_seconds": 600,
+  "fresh_proof_bytes": 2147483648,
+  "prior_reserved_proofs_retained": true,
+  "original_hard_end": "2026-09-27T20:16:17.225985-04:00",
+  "latest_full_series_start": "2026-09-27T14:15:47.225985-04:00",
+  "execution_admitted": false,
+  "pending": [
+    "Independent integration review",
+    "Immutable runtime export",
+    "Fresh exact-runtime66+5+2 Linux proof",
+    "New sealed admission and live lane/capacity"
+  ]
+}

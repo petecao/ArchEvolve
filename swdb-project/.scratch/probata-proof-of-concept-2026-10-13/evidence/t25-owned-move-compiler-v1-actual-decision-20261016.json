@@ -1,0 +1,175 @@
+{
+  "C_events": [
+    {
+      "kind": "declare_receiver",
+      "ordinal": 0,
+      "sha256": "b0c36d00cc712f694acf7ba1f6dd3bcca527d045b3485370bcd6423b3253fac5"
+    },
+    {
+      "kind": "model_call",
+      "ordinal": 1,
+      "sha256": "c5f26003e4dfca5daf0588921ed3f48711de5b776061f1a6e38c77273307b6e7"
+    },
+    {
+      "kind": "model_call",
+      "ordinal": 2,
+      "sha256": "ef91192c35c6c8eb8b7b12ed095ac01d8d006f40f45365d0eec28115c9a8dcd3"
+    },
+    {
+      "kind": "declare_receiver",
+      "ordinal": 3,
+      "sha256": "614927373dbb92fa841d2728c275eb75c07a44a2cf8af90d652c561000e4cbd4"
+    },
+    {
+      "kind": "model_call",
+      "ordinal": 4,
+      "sha256": "a0b618aa4689ae2ed5e55e7c924b294284b668c388a64c7ad4eb06c22d99a501"
+    },
+    {
+      "kind": "guarded_capture",
+      "ordinal": 5,
+      "sha256": "43a9008020b7f36f0aee2503badc1c1bd7319c972ce5bfa492370c3a453ed872"
+    },
+    {
+      "kind": "unclassified",
+      "ordinal": 6,
+      "sha256": "21d7ee777fb0dfa56cb4c7c04932b87d4d6dcd62442efeefd91c2907ec30a52c"
+    },
+    {
+      "kind": "model_call",
+      "ordinal": 7,
+      "sha256": "5118f04061e893dd4be2d93b886de8ef4848d6575ba1c626bba8df6559360af9"
+    },
+    {
+      "kind": "model_call",
+      "ordinal": 8,
+      "sha256": "984df4c8af6049800e0f2b4094b53d8fb9eb389d04a6bf7a9eb35a5ee94a74b4"
+    },
+    {
+      "kind": "return_scalar",
+      "ordinal": 9,
+      "sha256": "dab360f4b2f0c2f471b36b3f09f585484bd6ae1d38b4c1ba3985c198ea43a8d3"
+    },
+    {
+      "kind": "model_call",
+      "ordinal": 10,
+      "sha256": "b8a0bae0ae7e84c8d86868f11c82c5c7d4dd7a3840bba606353b881718462b51"
+    },
+    {
+      "kind": "model_call",
+      "ordinal": 11,
+      "sha256": "984df4c8af6049800e0f2b4094b53d8fb9eb389d04a6bf7a9eb35a5ee94a74b4"
+    }
+  ],
+  "all_lane_leases_released_at_collection": true,
+  "classification": "ACTUAL_COMPILER_OBSERVATION_COMPLETE_NO_PROOF_ADMISSION",
+  "compiler_identity_at_two_observation_points_equal": true,
+  "compiler_worker": {
+    "exit_code": 0,
+    "out_of_memory": false,
+    "output_limit": false,
+    "peak_rss_bytes": 277549056,
+    "timed_out": false,
+    "wall_seconds": 14.542700216174126
+  },
+  "complete_provenance_retained": true,
+  "date": "2026-10-16 ET",
+  "ended_utc": "2026-10-16T23:07:54Z",
+  "generation": 641,
+  "independent_spec": {
+    "bytes": 5311,
+    "path": ".scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-move-compiler-observation-independent-spec-review-v1-20261016.json",
+    "sha256": "e5f1d765ddc8f9f8879cc578990a437eb1d5887639e2547487608abffb78c985"
+  },
+  "inner": {
+    "cpu_seconds": 25.453075,
+    "exit_code": 0,
+    "out_of_memory": false,
+    "peak_rss_bytes": 323764224,
+    "timed_out": false,
+    "wall_seconds": 17.859711785800755
+  },
+  "launcher_execution": {
+    "bytes": 1579,
+    "path": ".scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-move-compiler-v1-launch-execution-20261016.json",
+    "sha256": "81bcda6b3f9cb55bfd5277253b11d004aaff917c1aa4233649390da3c6ee7641"
+  },
+  "limitations": [
+    "Compiler-only observation supplies inputs for a future checked source interpretation; it is not a body or caller theorem",
+    "No raw generated C/AST transferred; compact event/signature/source range metadata only",
+    "Model reset state is stronger than portable moved-from C++17 value guarantee and retains explicit library/model correspondence TCB",
+    "No total Typed-to-Heap encoding, original frame/ownership/source effect rule or current proof record granted",
+    "Observed compiler component/header/provenance and declared runtime points do not imply continuous loader/source-to-binary closure"
+  ],
+  "metadata_observation": {
+    "bytes": 11440,
+    "path": ".scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-move-compiler-v1-first-actual-observation-20261016.json",
+    "sha256": "4e514b839697e43a13702560c4c7a5f7a53697a240f2b1f00970e4e41cf35b26"
+  },
+  "node": 1,
+  "outer": {
+    "cpu_seconds": 31.092748999999998,
+    "exit_code": 0,
+    "out_of_memory": false,
+    "peak_rss_bytes": 377765888,
+    "timed_out": false,
+    "wall_seconds": 19.939489986747503
+  },
+  "proof_or_source_or_member_or_Typed_or_caller_or_ticket_admission": false,
+  "raw_bytes": 1737864,
+  "raw_directories": 5,
+  "raw_files": 40,
+  "raw_links_or_specials": 0,
+  "retained_artifacts": [
+    {
+      "bytes": 5642,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-032e1851-t25-owned-move-compiler-observation-v1/owned-move-compiler-observation-v1-profile/compiler/original-lowering.c",
+      "sha256": "5c33a1a1843045d0b9d2ba43eb8d590c9e6106c794982286b28505c64e896e34"
+    },
+    {
+      "bytes": 336756,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-032e1851-t25-owned-move-compiler-observation-v1/owned-move-compiler-observation-v1-profile/compiler/lowering-metadata.json",
+      "sha256": "ca0736731d753db6ec6772f213300db07cbbe38098e97eaaf41e769950ef5fe8"
+    },
+    {
+      "bytes": 336445,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-032e1851-t25-owned-move-compiler-observation-v1/owned-move-compiler-observation-v1-profile/compiler/anchors.json",
+      "sha256": "6b26deb28ae4f57ddef7d0446e5cff766565fcaab8a7d32c7a6e8ab198865f73"
+    },
+    {
+      "bytes": 55478,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-032e1851-t25-owned-move-compiler-observation-v1/owned-move-compiler-observation-v1-profile/compiler/original-function-ast.json",
+      "sha256": "e385ab1bccac8a23617dbecaa133e3853b9ab1d53464a70c01be5931b8dfbf1a"
+    },
+    {
+      "bytes": 3285,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-032e1851-t25-owned-move-compiler-observation-v1/owned-move-compiler-observation-v1-profile/compiler/compiler-before.json",
+      "sha256": "2cb70eef317c5e3a45fb3b00ea9526e6f9576fcf11efb78c015bec4dbb55db73"
+    },
+    {
+      "bytes": 3285,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-032e1851-t25-owned-move-compiler-observation-v1/owned-move-compiler-observation-v1-profile/compiler/compiler-after.json",
+      "sha256": "2cb70eef317c5e3a45fb3b00ea9526e6f9576fcf11efb78c015bec4dbb55db73"
+    },
+    {
+      "bytes": 932,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-032e1851-t25-owned-move-compiler-observation-v1/owned-move-compiler-observation-v1-profile/compiler/observation.json",
+      "sha256": "d630fd13827bd86e200f66e0548106f5d9d1dfe041dd0052abbd4fd94fac00a1"
+    }
+  ],
+  "root_admission": {
+    "bytes": 2265,
+    "path": ".scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-move-compiler-v1-root-admission-20261016.json",
+    "sha256": "38be274ca87120beebaf65b97e66d987d5d89313c86dfac5003428841b37b7aa"
+  },
+  "source_clean_after_producer": true,
+  "source_commit": "032e1851eec7b195c7a3737997d5f5ea1d1343a5",
+  "source_cpp_statement_count": 5,
+  "started_utc": "2026-10-16T23:07:34Z",
+  "strict_whole_raw_event_census": {
+    "bytes": 16294,
+    "path": ".scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-move-compiler-v1-source-event-census-20261016.json",
+    "sha256": "719cf5f57bd2340c3b7219f88c32865e76a2c166335b99dc75c60f71657cbaae"
+  },
+  "verifier_or_native_user_program_executed": false
+}

@@ -1,0 +1,84 @@
+{
+  "format": "swdb.independent-service-compact-receipt.v1",
+  "updated": "2026-10-06 ET",
+  "kind": "float-memory",
+  "phase": "elapsed",
+  "source_commit": "3006d91e2d076db0104f3b7734131dec5f26caad",
+  "source_clean": true,
+  "raw_directory": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-float-memory-elapsed-20261006-a1",
+  "raw_transferred": false,
+  "lane": {
+    "aligned_cell_age_s": "",
+    "aligned_to": "no_gapbs_batch_running",
+    "command": [
+      "python3",
+      "/data/yanruj/EvolveSWDB_runs/lanl-analytic-float-memory-elapsed-20261006-a1/runner.py"
+    ],
+    "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+    "ended_utc": "2026-10-07T03:45:35Z",
+    "exit_code": 0,
+    "host": "mbit10",
+    "job": "swdb-lanl-float-memory-elapsed-20261006-a1",
+    "lease_generation": 499,
+    "lease_name": "mbit10-evaluation-node0",
+    "load1_at_start": 1.19,
+    "load1_max": 32,
+    "node": 0,
+    "numa_memory_policy": "bind:0",
+    "numactl": "--cpunodebind=0 --membind=0",
+    "preregistration_sha256": null,
+    "started_utc": "2026-10-07T03:35:08Z"
+  },
+  "new_records": [
+    {
+      "id": "mbit10.cpu.lanl20261006.resource.float-memory.a1",
+      "kind": "cpu_memory_resource_calibration",
+      "path": "cpu_memory_resource_calibrations/mbit10.cpu.lanl20261006.resource.float-memory.a1.yaml",
+      "sha256": "653941c3b97418e9bf7253f46c2616ec31a7a269f67027bf613961a95667e93a",
+      "identity_sha256": "c6ef995368ca6eb13a505f264f23b520b34914ff4b42997868d557d634e57e30",
+      "file_sha256": "c51013dba09ec5aada4c522ac07e8a71b99e1ae200333bb8bc87417966d3f8b9",
+      "bytes": 22032,
+      "service_cells": 2,
+      "evidence_kind": "native"
+    },
+    {
+      "id": "mbit10.cpu.lanl20261006.service.float-memory.a1",
+      "kind": "cpu_service_calibration",
+      "path": "cpu_service_calibrations/mbit10.cpu.lanl20261006.service.float-memory.a1.yaml",
+      "sha256": "eca80cffb766770b9480e0576f3976ee69b8a4a7624ee21300078e6ac3147fd5",
+      "identity_sha256": "ff5def50262dc74260d5a6990bb5435786a64de0a49a34796cc8f8b0bbb3b3e8",
+      "file_sha256": "f41d562d6839d83bb035e2d2f50bcd882ecd88fa1d2afebad0b1f2c90127ab49",
+      "bytes": 18147,
+      "service_cells": 2,
+      "evidence_kind": "native"
+    }
+  ],
+  "preregistration_sha256": "2cdca008c117474ac61beaabc38451011718e941be1f0820c46b514bd6fc38dc",
+  "validation": "OK: 631 record(s) valid",
+  "completed_utc": "2026-10-07T03:45:35.124831+00:00",
+  "prior_record_bytes_preserved": true,
+  "scope": "Exact independent service construction; no application accuracy or physical latency claim.",
+  "receipt": {
+    "identity_sha256": "a403142340ca0c6f7a454b859e3eebdb326d43c556af36ac2053dc2175683efb",
+    "file_sha256": "c7e2e4e817b84125a153f8c7e1b02ab6a59a3fcfabb3f713baf77b30710a0e93",
+    "bytes": 20236,
+    "service_cells": 2,
+    "settings": {
+      "group": "memory_float_v1",
+      "repetitions": 7,
+      "min_trial_s": 0.05,
+      "max_wall_s": 900.0,
+      "event_cap": 134217728,
+      "count_build_cap_bytes": 67108864,
+      "timed_data_cap_bytes": 26214400,
+      "live_payload_cap_bytes": 8388608,
+      "footprint_bytes": [
+        32768,
+        8388608
+      ],
+      "trial_resolution_scope": "gross_aggregate_only; paired driver retained"
+    },
+    "context_sha256": "dbea0f9bdf25601e88db4d8936b1032cbec65a41d72eb8110d6a5cf06772d6ad"
+  },
+  "identity_sha256": "2f805fcd02f16c8c5accf62e6596217fa5ac0a1fec94fd3a1c8df02a9eafb5f2"
+}

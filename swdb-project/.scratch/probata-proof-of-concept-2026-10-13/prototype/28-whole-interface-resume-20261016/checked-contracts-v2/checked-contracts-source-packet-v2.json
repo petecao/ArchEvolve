@@ -1,0 +1,78 @@
+{
+  "WP_summary_supported": false,
+  "controls": {
+    "canonicalizing_file_directory_and_root_alias_refusals": true,
+    "child_or_native_execution": false,
+    "errors": 0,
+    "failures": 0,
+    "production_import": false,
+    "real_library_resolve_AST": true,
+    "size_gate_before_resolver_read_hash": true,
+    "skips": 0,
+    "tests": 16
+  },
+  "date": "2026-10-16 ET",
+  "files": {
+    "checked-contracts-proposed-v2.patch": {
+      "bytes": 16091,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v2/checked-contracts-proposed-v2.patch",
+      "sha256": "64e370639a01c7f3682d4f8a70e69828d9d9b2e3d01278fa957e5c1f34d15de6"
+    },
+    "dx100_whole_checked_v2.py": {
+      "bytes": 13395,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v2/dx100_whole_checked_v2.py",
+      "sha256": "0c8e0fb429a4a497821d20436d777870bc0608ec3dbe79d42eb5201ad5d23105"
+    },
+    "proof_semantics.base.py": {
+      "bytes": 34602,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v2/proof_semantics.base.py",
+      "sha256": "9c3fd649fecd2162a7d8f0b416ea1e5543991bf40cc8f8a0eb115a0e24b66436"
+    },
+    "proof_semantics.proposed.py": {
+      "bytes": 35096,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v2/proof_semantics.proposed.py",
+      "sha256": "c213b716fcf6a7ef6db42ad09be1620a1f6838be8a8abaf96e32dafd7bd21013"
+    },
+    "pure-hook-controls-v2.log": {
+      "bytes": 2758,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v2/pure-hook-controls-v2.log",
+      "sha256": "71adea59230f23022cc7ff51943471306f47392e64839afdc9b33a1e3784e84a"
+    },
+    "test_checked_contracts_v2.py": {
+      "bytes": 13294,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v2/test_checked_contracts_v2.py",
+      "sha256": "561041369c26a3ab22fab8b4c967d8602f80b550cc054b8b3c2c4d46f2dce8b9"
+    },
+    "test_proof_semantics_hook_v2.py": {
+      "bytes": 3903,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v2/test_proof_semantics_hook_v2.py",
+      "sha256": "4e3b12c157f7f7b02d6c0dfc539fc343276e26652312baa0f5173bb107266be4"
+    },
+    "validator-v2-v1-inverse.patch": {
+      "bytes": 3057,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v2/validator-v2-v1-inverse.patch",
+      "sha256": "7111bc1e16040932455c5808a01ab0c80b3b9cc0f5e12cf294056ea284cdeba1"
+    }
+  },
+  "finding": {
+    "bytes": 10248,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-checked-contracts-v1-independent-source-review-20261016.json",
+    "sha256": "6bcd88c1a5877b056c0b155dbc26a418df4b80306b45a5ce6e2db07581dbc3b4"
+  },
+  "inverse": {
+    "changed_function_ASTs": [
+      "pinned"
+    ],
+    "complete_text_inverse": true,
+    "one_added_import": "from swdb import paths"
+  },
+  "predecessor": {
+    "bytes": 3058,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v1/checked-contracts-source-packet-v1.json",
+    "sha256": "637006bd7d2df2d3a9a64cc2948ddc4c7e45fdc90cb80e9c5b9f89308cc1b97e"
+  },
+  "scope": "CHECKED-01 only: inspect the original canonical root/components and bound regular-file size before canonicalizing Library.resolve or hashing; no Library._pin unbounded pre-read. Bounded read and physical content/nine-field/parent-metadata rechecks. Every other function and all proof semantics hook bytes unchanged.",
+  "shared_production_modified": false,
+  "source_admission_granted": false,
+  "status": "FROZEN_NARROW_PIN_SEAM_REPAIR_PENDING_INDEPENDENT_REVIEW"
+}

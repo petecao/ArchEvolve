@@ -1,0 +1,99 @@
+--- /private/tmp/lanl14_remove_consumed_export_checkout_20261008_a1_r2_r1.py
++++ /private/tmp/lanl14_remove_consumed_export_checkout_20261008_a1_r3.py
+@@ -14,6 +14,7 @@
+ LIMITS = {'one_proc_bytes': 16*1024*1024}
+ ACCOUNT_SERVICE_HELPER_SHA256='f6c4076013eaa487c0e810ba4329512657bef9b1b74a0c074a7231bcc0466883'
+ ACCOUNT_SERVICE_IDENTIFICATION_PIN={'path':str(BASE/'lanl-account-pam-service-identification-20261008-a1/identification.json'),'bytes':3818,'sha256':'ece0155e6a1e61e07cabb8a05e2a13ac9577a9ee1418e8f8eed450ce310ce0fa'}
++RAW_TOP_LANE_SIDECAR_PIN={'path': '/data/yanruj/EvolveSWDB_runs/lanl17-cleanup-smoke-20261006-a1.lane.json', 'bytes': 988, 'sha256': '83ba263a56756047716a2e550c3acc7a9d73eadefbbc9e245cdb697092369c1c', 'stat': {'ctime_ns': 1791344103814358923, 'dev': 2065, 'gid': 114316761, 'ino': 9345428, 'mode': 33204, 'mtime_ns': 1791344103814358923, 'nlink': 1, 'size': 988, 'uid': 114316761}}
+ deadline=time.monotonic()+600
+ def require(v,s):
+  if not v:raise ValueError(s)
+@@ -223,6 +224,59 @@
+             'reference_free_claimed':False, 'global_privileged_visibility_or_clearance_claimed':False,
+             'other_consumers_parent_and_descendants_exempted':False,
+             'signal_blocked_mask_zero_or_nonzero_is_not_predicated':True}
++
++def exact_original_raw_lane_sidecar(check_deadline, selected_paths):
++    """One exact original regular RAW sibling; no generic regular-file waiver."""
++    check_deadline()
++    pin=RAW_TOP_LANE_SIDECAR_PIN;path=P(pin['path'])
++    require(path.parent==RAW and path.name=='lanl17-cleanup-smoke-20261006-a1.lane.json'
++            and path.resolve(strict=True)==path
++            and not any(p.is_symlink() for p in (path,*path.parents)),
++            'exact_original_top_sidecar_route')
++    before=path.lstat()
++    require(stat.S_ISREG(before.st_mode) and before.st_uid==UID and before.st_nlink==1
++            and stamp(before)==pin['stat'] and before.st_size==988,
++            'exact_original_top_sidecar_stat')
++    fd=os.open(path,os.O_RDONLY|os.O_NOFOLLOW|os.O_CLOEXEC)
++    try:
++        require(stamp(os.fstat(fd))==stamp(before),'exact_original_top_sidecar_open')
++        parts=[];count=0
++        while True:
++            check_deadline()
++            part=os.read(fd,min(988-count+1,988))
++            if not part:break
++            count+=len(part);require(count<=988,'exact_original_top_sidecar_read_bound');parts.append(part)
++        raw=b''.join(parts)
++        require(count==988 and sha(raw)==pin['sha256']
++                and stamp(os.fstat(fd))==stamp(before)==stamp(path.lstat()),
++                'exact_original_top_sidecar_returned_bytes')
++    finally:os.close(fd)
++    def unique(pairs):
++        result={}
++        for key,value in pairs:
++            require(key not in result,'original_top_sidecar_duplicate_key');result[key]=value
++        return result
++    def bad(value):raise ValueError('original_top_sidecar_nonfinite_JSON')
++    value=json.loads(raw,object_pairs_hook=unique,parse_constant=bad)
++    require(type(value) is dict and set(value)=={'socket_lane'},'original_top_sidecar_JSON_shape')
++    refs=[]
++    def visit(item,location):
++        if type(item) is dict:
++            for key,child in item.items():visit(child,location+[key])
++        elif type(item) is list:
++            for index,child in enumerate(item):visit(child,location+[index])
++        elif type(item) is str and item.startswith('/'):
++            require(not any(item==str(p) or item.startswith(str(p)+'/') for p in selected_paths),
++                    'original_top_sidecar_JSON_selected_reference')
++            refs.append({'JSON_location':location,'path':item})
++    visit(value,[])
++    require(not any(str(p).encode() in raw for p in selected_paths),
++            'original_top_sidecar_literal_selected_reference')
++    return {'path':str(path),'bytes':988,'sha256':pin['sha256'],'stat':stamp(before),
++            'original_policy':'original_UNSEALED_socket_lane_metadata_no_reseal',
++            'original_absolute_JSON_references':refs,
++            'literal_and_original_JSON_selected_reference_checks':True,
++            'unchanged_historical_mode0664_beneath_existing_private_RAW_ancestor':True}
+ 
+ def read(p,expected=None):
+  tick();require(p.is_absolute() and not any(x.is_symlink() for x in (p,*p.parents)),'absolute nonsymlink')
+@@ -288,16 +342,25 @@
+   except (FileNotFoundError,ProcessLookupError):continue
+   except PermissionError:raise ValueError('inaccessible relevant owned consumer')
+  def raw_walk_error(error):raise ValueError('incomplete original raw subtree visibility') from error
+- for root in RAW.iterdir():
+-  if not root.name.startswith('lanl'):continue
++ raw_namespace=sorted(p.name for p in RAW.iterdir() if p.name.startswith('lanl'))
++ original_top_sidecar=exact_original_raw_lane_sidecar(tick,[E])
++ require(P(original_top_sidecar['path']).name in raw_namespace,'original top sidecar namespace retained')
++ for name in raw_namespace:
++  root=RAW/name
++  if root==P(original_top_sidecar['path']):
++   require(stamp(root.lstat())==original_top_sidecar['stat'],'original top sidecar still exact');continue
+   require(root.is_dir() and not root.is_symlink(),'original raw root')
+   for folder,dirs,files in os.walk(root,followlinks=False,onerror=raw_walk_error):
+    tick()
+    for name in dirs+files:
+     entries+=1;require(entries<=400000,'bounded raw links inventory');p=P(folder)/name
+     if p.is_symlink():require(not inside(str(p.resolve(strict=True))),'raw dereferenced physical E');raw_links+=1
++ require(sorted(p.name for p in RAW.iterdir() if p.name.startswith('lanl'))==raw_namespace
++         and exact_original_raw_lane_sidecar(tick,[E])==original_top_sidecar,'original full raw namespace and sidecar continuity')
+  before=free();identities(args.expected_primary);require(read(PRIMARY/RECEIPT,ep['sha256'])[0]==er and read(AD,ap['sha256'])[0]==ar and read(review_path,review_pin['sha256'])[0]==review_raw and not git(E,'status','--porcelain'),'immediate final continuity')
+  if args.remove:git(PRIMARY,'worktree','remove',str(E));require(not os.path.lexists(E),'only E removed')
+  identities(args.expected_primary);require(ERAW.is_dir() and read(PRIMARY/RECEIPT,ep['sha256'])[0]==er and read(AD,ap['sha256'])[0]==ar and read(review_path,review_pin['sha256'])[0]==review_raw,'original raw/receipt/admission retained')
+- print(json.dumps({'format':'swdb.lanl14-consumed-pure-E-checkout-removal.v1','sealed':False,'checked_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'expected_primary':args.expected_primary,'path':str(E),'commit':EC,'branch':B,'removed':args.remove,'process_links_checked':process_links,'excluded_exact_system_services':excluded_exact_system_services,'account_service_review':review_pin,'account_service_parent_review_identity_sha256':service_review['identity_sha256'],'account_service_helper_source_sha256':ACCOUNT_SERVICE_HELPER_SHA256,'account_service_helper_read_bytes':helper_read_bytes,'raw_symlinks_checked':raw_links,'raw_entries_checked':entries,'ignored_and_untracked_files':0,'raw_and_original_controls_and_execution_sources_and_Git_refs_retained':True,'original_receipt':ep,'original_reader':ap,'free_before_bytes':before,'free_after_bytes':free(),'recovered_bytes':free()-before,'scientific_admission':False,'capacity_admission':False},sort_keys=True))
++ require(sorted(p.name for p in RAW.iterdir() if p.name.startswith('lanl'))==raw_namespace
++         and exact_original_raw_lane_sidecar(tick,[E])==original_top_sidecar,'retained original full raw namespace and sidecar')
++ print(json.dumps({'raw_namespace_names':raw_namespace,'original_top_regular_sidecar':original_top_sidecar,'format':'swdb.lanl14-consumed-pure-E-checkout-removal.v1','sealed':False,'checked_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'expected_primary':args.expected_primary,'path':str(E),'commit':EC,'branch':B,'removed':args.remove,'process_links_checked':process_links,'excluded_exact_system_services':excluded_exact_system_services,'account_service_review':review_pin,'account_service_parent_review_identity_sha256':service_review['identity_sha256'],'account_service_helper_source_sha256':ACCOUNT_SERVICE_HELPER_SHA256,'account_service_helper_read_bytes':helper_read_bytes,'raw_symlinks_checked':raw_links,'raw_entries_checked':entries,'ignored_and_untracked_files':0,'raw_and_original_controls_and_execution_sources_and_Git_refs_retained':True,'original_receipt':ep,'original_reader':ap,'free_before_bytes':before,'free_after_bytes':free(),'recovered_bytes':free()-before,'scientific_admission':False,'capacity_admission':False},sort_keys=True))
+ if __name__=='__main__':main()

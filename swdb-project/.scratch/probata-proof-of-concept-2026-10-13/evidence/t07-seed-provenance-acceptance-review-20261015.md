@@ -1,0 +1,23 @@
+# Ticket 07 seed-provenance acceptance review — 2026-10-15 ET
+
+**Decision: an otherwise successful run retaining these mechanical frame seeds cannot close ticket 07 under its current literal acceptance criterion. A fresh, separately named method22 can satisfy the existing criterion without asking to weaken it.**
+
+Read-only review of issue07, design map13/spec, and prototype prompt/tool/generator code. No current concrete candidate hints or provider output were inspected; no tests, providers or WP runs were launched. The supplied run24 composition (41 final records: five mechanical frame seeds, 36 Codex) is coordinator-provided audit context, not independently recounted here. No qualifying proof exists in that context.
+
+## Why seeded success would remain ineligible
+
+- Ticket07:35–36 says: “every hint in the counted run comes from Codex, none from the implementing agent.” This is a positive origin requirement: proving that a program rather than the implementing agent emitted a record does not make its origin Codex.
+- Ticket07:560–562 explicitly labels as an undecided assumption its interpretation that mechanical frame seeds are “part of the method” and “not agent hints.” Documenting that assumption is neither user approval nor an amendment to the acceptance criterion.
+- Design map13 item5 (`issues/13-proof-hint-loop.md:138–142`) includes `loop assigns` in hint vocabulary. Item9 permits source-attributed seeds, but keeps distinct provenance labels seed/agent/human and names contract-proof and previously proven-candidate sources. It does not turn a mechanical generator's output into Codex output or exempt frame annotations from the narrower ticket07 test.
+- The prototype inserts actual `{anchor, kind: loop_assigns, text}` records (`frame_seeds.py:272–276`). `edit_loop.py:397–398` requires mechanical seeds for the current strict staged mode; line424 excludes `loop_assigns` from provider kinds, prompt95–96 says they are fixed, and `edit_core.py:58` refuses their edits. Thus merely telling Codex to confirm or retype existing seeds would preserve supplied proof content, not establish independent authorship.
+
+Keep existing provenance and historical method labels unchanged. Even deleting seeds from only the final set would not erase their earlier use in the counted trajectory. Existing seeded runs remain useful, separately reported method experiments, with their actual proof outcomes; this provenance issue does not invalidate a theorem that WP might independently check, but it prevents the claimed Codex-only spike acceptance.
+
+## Minimal prospective method22 protocol
+
+1. **Start clean:** freeze a new method/source manifest and fresh output/provider session. Begin from a genuinely empty hint set; retain the no-hint report. Do not invoke frame generation or FRAME_FILTER insertion in any counted branch. Exclude mechanical/historical concrete frame payloads and earlier-run provider hints from the provider workspace, examples, best-set display and feedback. Immutable source, anchors, summaries, open-goal reports and generic syntax guidance remain allowed.
+2. **Let Codex author frames:** expose `loop_assigns` through the same frozen edit/check tool as other allowed kinds; remove the seed-specific requirement and misleading fixed-seed prompt for this named mode. Codex derives locations and bounds from allowed source/contracts. A deterministic merger may place/order text; it must not invent, widen, repair or replace its semantic frame content. Do not impose textual novelty: independently derived correct frames may coincide with old ones.
+3. **Enforce origin:** retain raw provider tool/final-answer operations, provider/model/effort/session/round pins, and hashes linking each proposal to every merged hint record. Reject any generated, imported, human or untraceable hint before using it in this counted run. Preserve ancestry on edits; copying/relabeling seed records is forbidden. Apply this to all checked/attempted sets, not just final hints. Do not give provider-authored frame goals seed exemptions from ordinary checks or acceptance accounting.
+4. **Keep scientific acceptance:** count provider frame synthesis, checking and solving within the same 60-minute budget; preserve vocabulary, source immutability, resource/debt guards and fresh all-goal/cache-none final replay with smoke tests. Only then apply the identical final hints to the separately retained covering-wait negative. Record failure honestly if any proof, provenance or budget condition is unmet.
+
+This is a prospective protocol recommendation, not approval of an unreviewed implementation or a new successful-run claim. Existing evidence must never be upgraded by relabeling.

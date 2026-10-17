@@ -1,0 +1,356 @@
+{
+  "format": "swdb.lanl17-metadata-supervisor-actual-compact.v1",
+  "verified_utc": "2026-10-07T08:04:31.514700+00:00",
+  "raw_directory": "/data/yanruj/EvolveSWDB_runs/lanl17-metadata-supervisor-fixture-20261007-a3",
+  "control_directory": "/data/yanruj/EvolveSWDB_runs/lanl17-metadata-supervisor-fixture-control-20261007-a3",
+  "raw_transferred": false,
+  "receipt": {
+    "format": "swdb.lanl17-metadata-supervisor-linux-fixture.v1",
+    "passed": true,
+    "started_utc": "2026-10-07T08:02:36.517053+00:00",
+    "ended_utc": "2026-10-07T08:03:27.814796+00:00",
+    "cases": [
+      {
+        "case": "returned",
+        "passed": true,
+        "supervisor_receipt_sha256": "0cbb9f92fec47494114ac5e47b166174ec10d3f4687bb25c6c444ced49e6898e",
+        "supervisor_receipt_identity_sha256": "55884233d063ef9939ff7ee3ef118a87391d5effefd15507ca7ced4808317c3b",
+        "supervisor_exit": 0,
+        "owned_before": {
+          "leader": {
+            "pid": 2096750,
+            "uid": 114316761,
+            "start_time": "586208950",
+            "state": "R",
+            "session": 2096750
+          },
+          "same_group": {
+            "pid": 2096751,
+            "uid": 114316761,
+            "start_time": "586208955",
+            "state": "S",
+            "session": 2096750
+          },
+          "escaped_session": {
+            "pid": 2096752,
+            "uid": 114316761,
+            "start_time": "586208955",
+            "state": "R",
+            "session": 2096752
+          }
+        },
+        "owned_after": "terminated_and_reaped",
+        "unrelated_sibling_survived": true
+      },
+      {
+        "case": "timeout",
+        "passed": true,
+        "supervisor_receipt_sha256": "994bc9bb15be6c0912012c3ae66cb33e335325846566420b23939894c2a503e9",
+        "supervisor_receipt_identity_sha256": "8c9ab08fd036afad8cd26560849bbbda5798f8c4d9da35534d731f4af52dd6e0",
+        "supervisor_exit": 124,
+        "owned_before": {
+          "leader": {
+            "pid": 2096825,
+            "uid": 114316761,
+            "start_time": "586210496",
+            "state": "R",
+            "session": 2096825
+          },
+          "same_group": {
+            "pid": 2096826,
+            "uid": 114316761,
+            "start_time": "586210501",
+            "state": "S",
+            "session": 2096825
+          },
+          "escaped_session": {
+            "pid": 2096827,
+            "uid": 114316761,
+            "start_time": "586210501",
+            "state": "R",
+            "session": 2096827
+          }
+        },
+        "owned_after": "terminated_and_reaped",
+        "unrelated_sibling_survived": true
+      },
+      {
+        "case": "term",
+        "passed": true,
+        "supervisor_receipt_sha256": "4118ea9e92c20217e6594c8557271065a22fc437f4bfa1031057d00ca68c4a8f",
+        "supervisor_receipt_identity_sha256": "a9110a7a27d5946250bc064fa5d949919a3b5cd5f5bb6f88a427d202af3100be",
+        "supervisor_exit": 143,
+        "owned_before": {
+          "leader": {
+            "pid": 2096843,
+            "uid": 114316761,
+            "start_time": "586212534",
+            "state": "R",
+            "session": 2096843
+          },
+          "same_group": {
+            "pid": 2096845,
+            "uid": 114316761,
+            "start_time": "586212539",
+            "state": "S",
+            "session": 2096843
+          },
+          "escaped_session": {
+            "pid": 2096846,
+            "uid": 114316761,
+            "start_time": "586212539",
+            "state": "R",
+            "session": 2096846
+          }
+        },
+        "owned_after": "terminated_and_reaped",
+        "unrelated_sibling_survived": true
+      }
+    ],
+    "fixture": true,
+    "failure_type": null,
+    "helper_sha256": "69dcfe546d3042228ccca4fb29e8409da88443ba15680f30bfdc929ea12ae2b9",
+    "supervisor_sha256": "16661d7a9347e328a5263b06d807f3632c5abcfcf41a0bd97655a6bba302176b",
+    "fixture_script_sha256": "a848ef2d5c6dba58e6814bf80d8bdf24edeb33812bda343ecf25ff6f28745b0f",
+    "processes_py_sha256": "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289",
+    "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+    "cleanup": {
+      "subreaper": true,
+      "terminated_owned_processes": [],
+      "survivors": {}
+    },
+    "cleanup_errors": [],
+    "host": "mbit10",
+    "uid": 114316761,
+    "provider_calls": 0,
+    "application_outcomes": 0,
+    "scope": "Actual owned fixture process cleanup only. No prepare/finalize metadata action, model/population/campaign/performance/D30 admission.",
+    "identity_sha256": "6949a57ab0e12df785356a7fb3aea4f98bd5a23ef4de14871ff82fde71f9a0c6"
+  },
+  "receipt_file_sha256": "28077edce1cc9a218ab2ba6bfd96d91e404e80ae4964f109062927d6b274653a",
+  "case_receipts": [
+    {
+      "case": "returned",
+      "receipt": {
+        "format": "swdb.lanl17-metadata-supervisor.v1",
+        "action": "prepare",
+        "started_utc": "2026-10-07T08:02:36.611371+00:00",
+        "ended_utc": "2026-10-07T08:02:51.950845+00:00",
+        "elapsed_control_s": 15.33947588596493,
+        "timeout_s": 30,
+        "timed_out": false,
+        "signal_received": null,
+        "state": "child_returned",
+        "child_exit": 0,
+        "supervisor_exit": 0,
+        "argv_sha256": "4062f1781d6a0410d5a56eb06a515096644155d7e5833ac282abd0e0ec6a9410",
+        "helper_sha256": "69dcfe546d3042228ccca4fb29e8409da88443ba15680f30bfdc929ea12ae2b9",
+        "cleanup_implementation_sha256": "69dcfe546d3042228ccca4fb29e8409da88443ba15680f30bfdc929ea12ae2b9",
+        "processes_py_sha256": "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289",
+        "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+        "supervisor_sha256": "16661d7a9347e328a5263b06d807f3632c5abcfcf41a0bd97655a6bba302176b",
+        "uid": 114316761,
+        "cleanup": {
+          "subreaper": true,
+          "terminated_owned_processes": [
+            {
+              "pid": 2096751,
+              "start_time": "586208955",
+              "signal": "SIGTERM"
+            },
+            {
+              "pid": 2096752,
+              "start_time": "586208955",
+              "signal": "SIGTERM"
+            },
+            {
+              "pid": 2096752,
+              "start_time": "586208955",
+              "signal": "SIGKILL"
+            }
+          ],
+          "survivors": {}
+        },
+        "cleanup_errors": [],
+        "error_type": null,
+        "fixture": true,
+        "application_outcomes": 0,
+        "provider_calls": 0,
+        "scope": "Metadata child exit/owned cleanup only; no model/population/campaign/unique-pair/accuracy admission. Full argv/environment/auth omitted.",
+        "identity_sha256": "55884233d063ef9939ff7ee3ef118a87391d5effefd15507ca7ced4808317c3b"
+      },
+      "file_sha256": "0cbb9f92fec47494114ac5e47b166174ec10d3f4687bb25c6c444ced49e6898e"
+    },
+    {
+      "case": "timeout",
+      "receipt": {
+        "format": "swdb.lanl17-metadata-supervisor.v1",
+        "action": "prepare",
+        "started_utc": "2026-10-07T08:02:52.078216+00:00",
+        "ended_utc": "2026-10-07T08:03:12.304384+00:00",
+        "elapsed_control_s": 20.226169547997415,
+        "timeout_s": 5,
+        "timed_out": true,
+        "signal_received": null,
+        "state": "timeout",
+        "child_exit": -15,
+        "supervisor_exit": 124,
+        "argv_sha256": "34c460d3306752e0723fc110698f31530dab0c1cd7f647bfdd34a101d89c5205",
+        "helper_sha256": "69dcfe546d3042228ccca4fb29e8409da88443ba15680f30bfdc929ea12ae2b9",
+        "cleanup_implementation_sha256": "69dcfe546d3042228ccca4fb29e8409da88443ba15680f30bfdc929ea12ae2b9",
+        "processes_py_sha256": "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289",
+        "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+        "supervisor_sha256": "16661d7a9347e328a5263b06d807f3632c5abcfcf41a0bd97655a6bba302176b",
+        "uid": 114316761,
+        "cleanup": {
+          "subreaper": true,
+          "terminated_owned_processes": [
+            {
+              "pid": 2096826,
+              "start_time": "586210501",
+              "signal": "SIGTERM"
+            },
+            {
+              "pid": 2096827,
+              "start_time": "586210501",
+              "signal": "SIGTERM"
+            },
+            {
+              "pid": 2096827,
+              "start_time": "586210501",
+              "signal": "SIGKILL"
+            }
+          ],
+          "survivors": {}
+        },
+        "cleanup_errors": [],
+        "error_type": null,
+        "fixture": true,
+        "application_outcomes": 0,
+        "provider_calls": 0,
+        "scope": "Metadata child exit/owned cleanup only; no model/population/campaign/unique-pair/accuracy admission. Full argv/environment/auth omitted.",
+        "identity_sha256": "8c9ab08fd036afad8cd26560849bbbda5798f8c4d9da35534d731f4af52dd6e0"
+      },
+      "file_sha256": "994bc9bb15be6c0912012c3ae66cb33e335325846566420b23939894c2a503e9"
+    },
+    {
+      "case": "term",
+      "receipt": {
+        "format": "swdb.lanl17-metadata-supervisor.v1",
+        "action": "finalize",
+        "started_utc": "2026-10-07T08:03:12.457364+00:00",
+        "ended_utc": "2026-10-07T08:03:27.755261+00:00",
+        "elapsed_control_s": 15.297897755168378,
+        "timeout_s": 30,
+        "timed_out": false,
+        "signal_received": "SIGTERM",
+        "state": "signal",
+        "child_exit": -15,
+        "supervisor_exit": 143,
+        "argv_sha256": "33625a5cdf9dbc5798193c05a241954712bd842c9afa7d032e59f255efe5b009",
+        "helper_sha256": "69dcfe546d3042228ccca4fb29e8409da88443ba15680f30bfdc929ea12ae2b9",
+        "cleanup_implementation_sha256": "69dcfe546d3042228ccca4fb29e8409da88443ba15680f30bfdc929ea12ae2b9",
+        "processes_py_sha256": "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289",
+        "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+        "supervisor_sha256": "16661d7a9347e328a5263b06d807f3632c5abcfcf41a0bd97655a6bba302176b",
+        "uid": 114316761,
+        "cleanup": {
+          "subreaper": true,
+          "terminated_owned_processes": [
+            {
+              "pid": 2096845,
+              "start_time": "586212539",
+              "signal": "SIGTERM"
+            },
+            {
+              "pid": 2096846,
+              "start_time": "586212539",
+              "signal": "SIGTERM"
+            },
+            {
+              "pid": 2096846,
+              "start_time": "586212539",
+              "signal": "SIGKILL"
+            }
+          ],
+          "survivors": {}
+        },
+        "cleanup_errors": [],
+        "error_type": null,
+        "fixture": true,
+        "application_outcomes": 0,
+        "provider_calls": 0,
+        "scope": "Metadata child exit/owned cleanup only; no model/population/campaign/unique-pair/accuracy admission. Full argv/environment/auth omitted.",
+        "identity_sha256": "a9110a7a27d5946250bc064fa5d949919a3b5cd5f5bb6f88a427d202af3100be"
+      },
+      "file_sha256": "4118ea9e92c20217e6594c8557271065a22fc437f4bfa1031057d00ca68c4a8f"
+    }
+  ],
+  "dispatch_preregistration": {
+    "format": "swdb.lanl17-metadata-fixture-dispatch.v1",
+    "checked_utc": "2026-10-07T08:02:36.243639+00:00",
+    "source_C_preserved": true,
+    "supervisor_sha256": "16661d7a9347e328a5263b06d807f3632c5abcfcf41a0bd97655a6bba302176b",
+    "fixture_sha256": "a848ef2d5c6dba58e6814bf80d8bdf24edeb33812bda343ecf25ff6f28745b0f",
+    "selected_helper_sha256": "69dcfe546d3042228ccca4fb29e8409da88443ba15680f30bfdc929ea12ae2b9",
+    "wrapper_sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8",
+    "both_lanes_free_before_dispatch": true,
+    "prior_model_completed": true,
+    "other_elapsed_cpu_phases_absent": true,
+    "capacity_bytes": {
+      "/data1": 24263753728,
+      "/data": 51775590400
+    },
+    "memory_available_bytes": 126070820864,
+    "outer_s": 180,
+    "outer_kill_after_s": 60,
+    "fixture_alarm_s": 120,
+    "application_outcomes_collected": 0,
+    "provider_calls": 0,
+    "scope": "Owned Linux process fixture only; no model/population/campaign admission.",
+    "identity_sha256": "9cbee64cbd2a4bc05fb091f2a38f198e81c67497a28eef0ef00ca95bce4bf1f6"
+  },
+  "dispatch_preregistration_file_sha256": "fe90bbd0dc961b7974a71cda88961e1f859f29464a7bfab3c06eaed0bb9598e5",
+  "lane": {
+    "aligned_cell_age_s": "",
+    "aligned_to": "none",
+    "command": [
+      "python3",
+      "/data1/yanruj/lanl17-metadata-supervisor-linux-fixture-20261007-a1.py",
+      "--supervisor",
+      "/data1/yanruj/lanl17-metadata-supervisor-caps-20261007-a3.py",
+      "--supervisor-sha",
+      "16661d7a9347e328a5263b06d807f3632c5abcfcf41a0bd97655a6bba302176b",
+      "--helper",
+      "/data1/yanruj/lanl17-control-caps-20261007-a3.py",
+      "--project",
+      "/data1/yanruj/ArchEvolve-lanl-cpu-model-validation-20261006-a1/swdb-project",
+      "--output",
+      "/data/yanruj/EvolveSWDB_runs/lanl17-metadata-supervisor-fixture-20261007-a3"
+    ],
+    "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+    "ended_utc": "2026-10-07T08:03:27Z",
+    "exit_code": 0,
+    "host": "mbit10",
+    "job": "swdb-lanl17-metadata-supervisor-fixture-20261007-a3",
+    "lease_generation": 546,
+    "lease_name": "mbit10-evaluation-node1",
+    "load1_at_start": 1.13,
+    "load1_max": 32,
+    "node": 1,
+    "numa_memory_policy": "bind:1",
+    "numactl": "--cpunodebind=1 --membind=1",
+    "preregistration_sha256": null,
+    "started_utc": "2026-10-07T08:02:36Z"
+  },
+  "lane_file_sha256": "530f8854e0ae41302f9f8c8d5aef2a813a4d8dff53dc11e736a1a1327a4a2c4b",
+  "source_C_preserved": true,
+  "primary_source_commit": "dfb1e1c4c885b0ef95edd6742e2403526907eda9",
+  "python_modules": 185,
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "node1_released": true,
+  "legacy_released": true,
+  "node0_state_after_fixture": "released",
+  "scope": "Actual owned process fixture cleanup only, no campaign/model/population/performance admission; original091/a2 plus fresh selected69dc primitive proof retained.",
+  "identity_sha256": "4da6d0847d356f7bc13358ab42e3c2cec04154a3a0d249e4100f4ff0cf5d1ce2"
+}

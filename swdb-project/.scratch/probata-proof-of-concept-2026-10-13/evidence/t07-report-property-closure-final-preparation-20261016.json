@@ -1,0 +1,109 @@
+{
+  "date": "2026-10-16 ET",
+  "status": "final source freeze for independent review; fresh native/API reporter compile pending",
+  "supersedes_source_checkpoint": "b5e6350f (preserved in Git; allowed empty module IDs as proof references, now refused)",
+  "prior_source_receipt": {
+    "commit": "b5e6350f",
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t07-report-property-closure-preparation-20261016.json",
+    "scope": "historical source hashes describe that Git checkpoint, not evolving physical worktree"
+  },
+  "changed_sources": [
+    {
+      "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/swdb/proof_report.ml",
+      "resolved": "/private/tmp/probata-resume-t07-private-array/swdb-project/swdb/proof_report.ml",
+      "sha256": "22919544d02fc3fdc628ee44984852787043e61f82ed8613074e21751e9d1d6d",
+      "bytes": 7873
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/swdb/proof_setup.py",
+      "resolved": "/private/tmp/probata-resume-t07-private-array/swdb-project/swdb/proof_setup.py",
+      "sha256": "656ef11e22be540a6bc97fc91b46229052569deee1cc9d2f4740ccc7b09606cf",
+      "bytes": 45484
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/tests/test_proof_report_closure.py",
+      "resolved": "/private/tmp/probata-resume-t07-private-array/swdb-project/tests/test_proof_report_closure.py",
+      "sha256": "93e7d2f0d994b133ce8a9d0d44e548ce0b7710c1106fa4d5a2b1b2d9e171a41c",
+      "bytes": 4797
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/tests/test_proof_setup.py",
+      "resolved": "/private/tmp/probata-resume-t07-private-array/swdb-project/tests/test_proof_setup.py",
+      "sha256": "67ef1eebab65cae858d9714051b1e02ff30b5be41bb342a32b1d711c93a137dd",
+      "bytes": 26164
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/tests/fixtures/proof/wp/fake_framac.py",
+      "resolved": "/private/tmp/probata-resume-t07-private-array/swdb-project/tests/fixtures/proof/wp/fake_framac.py",
+      "sha256": "3f0bc7722af0541aa19b4aa678193fb4f84a662e324cfc2c1711d39d5795083f",
+      "bytes": 3775
+    }
+  ],
+  "final_pure_control_files": [
+    {
+      "path": "/private/tmp/probata-t07-report-closure-empty-refs-red-20261016.log",
+      "resolved": "/private/tmp/probata-t07-report-closure-empty-refs-red-20261016.log",
+      "sha256": "407dcd550127cf3abbfe7aa3430231acb830605c930645d7f654d7e51e7ebba9",
+      "bytes": 6234
+    },
+    {
+      "path": "/private/tmp/probata-t07-report-closure-empty-refs-red-20261016.log.summary.json",
+      "resolved": "/private/tmp/probata-t07-report-closure-empty-refs-red-20261016.log.summary.json",
+      "sha256": "62cfa1350ee693b5527fcfd9968b0127be46105e2d8770b0a533b94588fa15cf",
+      "bytes": 1992
+    },
+    {
+      "path": "/private/tmp/probata-t07-report-closure-public-final-20261016.log",
+      "resolved": "/private/tmp/probata-t07-report-closure-public-final-20261016.log",
+      "sha256": "37894783919dee8966ffa0437de85c0c172481c4ca32962396c69d8ea7b1b4f7",
+      "bytes": 100
+    },
+    {
+      "path": "/private/tmp/probata-t07-report-closure-public-final-20261016.log.summary.json",
+      "resolved": "/private/tmp/probata-t07-report-closure-public-final-20261016.log.summary.json",
+      "sha256": "935544918cc7b7181ec57cf17f0cbb642f63602cb7977f54a00df4f010f886f8",
+      "bytes": 2406
+    },
+    {
+      "path": "/private/tmp/probata-t07-report-closure-actual-reader-control-20261016.log",
+      "resolved": "/private/tmp/probata-t07-report-closure-actual-reader-control-20261016.log",
+      "sha256": "ed8fea66aa8cf847c6bc9e40f4f365ee0f230c6af19073b463bcbcbd0db16aa6",
+      "bytes": 777
+    },
+    {
+      "path": "/private/tmp/probata-t07-report-closure-actual-reader-control-20261016.log.summary.json",
+      "resolved": "/private/tmp/probata-t07-report-closure-actual-reader-control-20261016.log.summary.json",
+      "sha256": "4038dbdf09cac46a1063dabe894d15c580936522e46c6679bc62a8915e10682c",
+      "bytes": 2051
+    },
+    {
+      "path": "/private/tmp/probata-t07-report-closure-actual-reader-control-20261016.py",
+      "resolved": "/private/tmp/probata-t07-report-closure-actual-reader-control-20261016.py",
+      "sha256": "43ba80473e7a0193077599e8ec87f798a8104204e4119f834fc83f0cbdf27803",
+      "bytes": 1585
+    },
+    {
+      "path": "/private/tmp/probata-t07-report-closure-actual-reader-control-20261016/summary.json",
+      "resolved": "/private/tmp/probata-t07-report-closure-actual-reader-control-20261016/summary.json",
+      "sha256": "da2b296d64da1a778f7c3f0ca275aba71ad791b4d5dbdd61024fb81fcb817054",
+      "bytes": 859
+    }
+  ],
+  "control_results": "29 passed15.18s; guard15.688086750s126.171875MiB. Exact retained actual consumer refusal passed0.394s29.34MiB.",
+  "checker_identity": {
+    "proof_setup_check": {
+      "version": "1",
+      "sha256": "150d85bbac4d4aaab5816fa5bac7237c51a20e662c076d01de7a002c4f20cd3b"
+    },
+    "verdict_reading": {
+      "version": "1",
+      "sha256": "150d85bbac4d4aaab5816fa5bac7237c51a20e662c076d01de7a002c4f20cd3b"
+    }
+  },
+  "source_C_header_or_observer_changed": false,
+  "OCaml_compile_or_formal_by_author": false,
+  "original_positive_complete_claim_accepted": false,
+  "proof_acceptance": false,
+  "Typed_init_or_lifetime_qualified": false,
+  "TD_or_counted_acceptance": false
+}

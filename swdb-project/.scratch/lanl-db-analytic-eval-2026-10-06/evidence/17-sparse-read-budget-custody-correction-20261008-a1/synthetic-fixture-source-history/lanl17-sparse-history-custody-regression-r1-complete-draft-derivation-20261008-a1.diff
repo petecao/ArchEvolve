@@ -1,0 +1,204 @@
+--- /private/tmp/lanl17_sparse_history_custody_isolated_regression_source_20261008_a1.py
++++ /private/tmp/lanl17_sparse_history_custody_isolated_regression_source_20261008_a1_r1.py
+@@ -1,6 +1,6 @@
+ """SOURCE-ONLY synthetic regression proposal. NOT RUN.
+ 
+-Only the named AST definitions below are lifted from byte-pinned R4/R2 sources
++Only the named AST definitions below are lifted from byte-pinned R5/R2 sources
+ at a future parent-authorized invocation. No operational module/main imports,
+ Guard.__init__/perform, native Git/process/proc calls or real source/RAW paths.
+ Every virtual operational route maps to a fresh temporary sandbox. Synthetic
+@@ -19,14 +19,14 @@
+ import types
+ import unittest
+ 
+-SOURCE = Path('/private/tmp/lanl_sparse_retire_consumed_source_guard_20261008_a1_r4.py')
+-SOURCE_BYTES = 180876
+-SOURCE_SHA = 'e59627dc1aba75cdb4d8e3a3a7a8138e8d73556b663c05231813d53bcaf5d3b1'
++SOURCE = Path('/private/tmp/lanl_sparse_retire_consumed_source_guard_20261008_a1_r5.py')
++SOURCE_BYTES = 180887
++SOURCE_SHA = 'd75baaf9dbe7192b02812cab525ccd6c50c81fd312d67cbfae7b9c8fdf955301'
+ LEGACY = Path('/private/tmp/lanl_sparse_retire_consumed_source_guard_20261008_a1_r2.py')
+ LEGACY_BYTES = 166145
+ LEGACY_SHA = '4956a7453ae569d7ccf6e1a9ed98a1a933bee2e35cca1774932afbfba819bd26'
+ PURE_DEFINITIONS = ('Refused', 'require', 'sha', 'canonical', 'strict_json',
+-                    'stamp', 'inside', 'any_inside')
++                    'stamp', 'inside', 'any_inside', 'now')
+ METHODS = ('read', 'pinned', 'pin_fact', 'sealed', 'historical_custody_projection',
+            'historical_custody_eligible_paths', 'check_inherited_history_file',
+            'inherit_historical_custody', 'record_historical_custody',
+@@ -61,11 +61,24 @@
+     before = path.lstat()
+     if not stat.S_ISREG(before.st_mode) or before.st_nlink != 1:
+         raise ValueError('test_source_not_single_regular_file')
+-    raw = path.read_bytes()
++    fields = ('st_dev', 'st_ino', 'st_mode', 'st_uid', 'st_gid', 'st_nlink',
++              'st_size', 'st_mtime_ns', 'st_ctime_ns')
++    if before.st_size != count:
++        raise ValueError('test_source_size_changed')
++    fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_CLOEXEC)
++    try:
++        opened = os.fstat(fd)
++        if any(getattr(before, key) != getattr(opened, key) for key in fields):
++            raise ValueError('test_source_open_identity_changed')
++        with os.fdopen(fd, 'rb', closefd=False) as stream:
++            raw = stream.read(count + 1)
++        final_fd = os.fstat(fd)
++    finally:
++        os.close(fd)
+     after = path.lstat()
+-    fields = ('st_dev', 'st_ino', 'st_size', 'st_mtime_ns', 'st_ctime_ns')
+-    if (len(raw) != count or digest(raw) != expected or
+-            any(getattr(before, key) != getattr(after, key) for key in fields)):
++    if (len(raw) != count or digest(raw) != expected or any(
++            getattr(before, key) != getattr(final_fd, key) or
++            getattr(before, key) != getattr(after, key) for key in fields)):
+         raise ValueError('test_source_pin_or_identity_changed')
+     return ast.parse(raw, filename=str(path))
+ 
+@@ -94,16 +107,19 @@
+     def __init__(self, fs, value):
+         self.fs = fs
+         self.route = PurePosixPath(str(value))
+-        if not self.route.is_absolute() or '..' in self.route.parts:
+-            raise ValueError('synthetic_route_not_absolute_or_escape')
+-        if not any(str(self.route) == root or str(self.route).startswith(root + '/')
+-                   for root in (BASE, RAW)):
++        if '..' in self.route.parts:
++            raise ValueError('synthetic_route_escape')
++        if self.route.is_absolute() and not any(
++                str(self.route) == root or str(self.route).startswith(root + '/')
++                for root in (BASE, RAW)):
+             raise ValueError('synthetic_route_outside_two_virtual_roots')
+ 
+     def __str__(self):
+         return str(self.route)
+ 
+     def __fspath__(self):
++        if not self.route.is_absolute():
++            raise ValueError('relative_synthetic_path_has_no_physical_route')
+         return str(self.fs.root.joinpath(*self.route.parts[1:]))
+ 
+     def __truediv__(self, other):
+@@ -135,7 +151,7 @@
+         return self.route.parts
+ 
+     def is_absolute(self):
+-        return True
++        return self.route.is_absolute()
+ 
+     def lstat(self):
+         return Path(os.fspath(self)).lstat()
+@@ -222,7 +238,7 @@
+     # Future execution only: compile exactly these helpers and selected methods.
+     cls = ast.ClassDef(name='LiftedGuard', bases=[], keywords=[],
+                        body=[copy.deepcopy(named[name]) for name in METHODS],
+-                       decorator_list=[])
++                       decorator_list=[], type_params=[])
+     module = ast.fix_missing_locations(ast.Module(body=helpers + [cls], type_ignores=[]))
+     exec(compile(module, str(SOURCE) + ':closed-synthetic-AST', 'exec'), namespace)
+     original_parse = namespace['strict_json']
+@@ -240,6 +256,29 @@
+     old.name = 'legacy_gate'
+     exec(compile(ast.fix_missing_locations(ast.Module(body=[old], type_ignores=[])),
+                  str(LEGACY) + ':one-legacy-gate-AST', 'exec'), namespace)
++    # Exact publish prefix through the unchanged compact_receipt_limit require.
++    # The later Linux/account/output publication portion is never lifted/called.
++    publish = copy.deepcopy(named['publish'])
++    prefix = []
++    found_cap = False
++    for statement in publish.body:
++        prefix.append(statement)
++        if (isinstance(statement, ast.Expr) and isinstance(statement.value, ast.Call)
++                and isinstance(statement.value.func, ast.Name)
++                and statement.value.func.id == 'require'
++                and len(statement.value.args) == 2
++                and isinstance(statement.value.args[1], ast.Constant)
++                and statement.value.args[1].value == 'compact_receipt_limit'):
++            found_cap = True
++            break
++    if not found_cap or any(isinstance(node, ast.Name) and node.id in
++                           ('sys', 'socket', 'UID', 'print', 'open')
++                           for statement in prefix for node in ast.walk(statement)):
++        raise ValueError('publication_prefix_boundary_changed')
++    publish.name = 'compact_publication_prefix'
++    publish.body = prefix + [ast.Return(value=ast.Name(id='body', ctx=ast.Load()))]
++    exec(compile(ast.fix_missing_locations(ast.Module(body=[publish], type_ignores=[])),
++                 str(SOURCE) + ':receipt-prefix-only-AST', 'exec'), namespace)
+     return namespace
+ 
+ 
+@@ -522,7 +561,9 @@
+             ('RAW_pass_missing', lambda r: r.update(full_raw_byte_passes=1)),
+             ('counter_overflow', lambda r: r.update(bytes_read=16 * 1024**3 + 1)),
+             ('old_full_tree_policy', lambda r: r['initial_checks']['trees'][ROW].update(regular_bytes_verified=True)),
+-            ('future_finish', lambda r: r.update(finished_at='2026-10-08T10:11:00+00:00'))]
++            ('future_finish', lambda r: r.update(finished_at='2026-10-08T10:11:00+00:00')),
++            ('prior_start_too_old', lambda r: r.update(started_at='2026-10-08T10:06:00+00:00',
++                                                     finished_at='2026-10-08T10:07:00+00:00'))]
+         for label, mutate in cases:
+             with self.subTest(case=label):
+                 f = self.fresh(); g = f.guard(True); f.bundle_for(g, receipt_change=mutate)
+@@ -550,6 +591,15 @@
+         f = self.fresh(); g = f.guard(True)
+         with self.assertRaisesRegex(f.Refused, '^retirement_requires_original_default_history_custody$'):
+             g.inherit_historical_custody()
++        for label, alter in (
++                ('missing_True_policy', lambda b: b['original_guard_receipt'].pop('canonical_ensure_ascii')),
++                ('wrong_status_file_SHA', lambda b: b['status'].update(sha256='0' * 64)),
++                ('wrong_stdout_file_SHA', lambda b: b['stdout'].update(sha256='0' * 64))):
++            with self.subTest(binding=label):
++                f = self.fresh(); g = f.guard(True); f.bundle_for(g)
++                alter(g.parent_review['successful_default_original_bindings'])
++                with self.assertRaises(f.Refused):
++                    g.inherit_historical_custody()
+ 
+     def test_review_digest_backlinks_status_and_stdout_bindings_refuse(self):
+         cases = [
+@@ -675,5 +725,46 @@
+         self.assertEqual(len(calls), 2)
+ 
+ 
++    def test_compact_receipt_345_witnesses_preserves_whole_object_True_seal(self):
++        f = self.fixture; g = f.guard(False)
++        sample = f.history[0]
++        witnesses = []
++        for index in range(345):
++            witnesses.append({'path': RAW + '/lanl-isolated-history-long-20261008-a1/'
++                              + ('nested-' * 7) + '/original-' + str(index) + '.json',
++                              'bytes': 1000 + index, 'sha256': 'a' * 64,
++                              'stat': {**sample['stat'], 'size': 1000 + index,
++                                       'ino': 20000 + index}, 'reference_hits': bool(index % 2)})
++        g.facts.update(format='swdb.library-preserving-sparse-retirement-guard.v1',
++                       canonical_ensure_ascii=True, admitted=True, failure=None,
++                       historical_byte_custody={
++                           'format': 'swdb.original-historical-byte-custody.v1',
++                           'all_history_bytes_freshly_read_in_this_operation': True,
++                           'inherited_history_files': 0,
++                           'historical_projection_sha256': 'b' * 64, 'files': witnesses},
++                       initial_checks={'synthetic': 'no original actual record fields'},
++                       guard_source_sha256=SOURCE_SHA)
++        g.walk_entries = 345
++        raw = f.ns['compact_publication_prefix'](g)
++        self.assertLessEqual(len(raw), 256 * 1024)
++        self.assertEqual(raw[-1:], b'\n')
++        decoded = json.loads(raw)
++        identity = decoded.pop('identity_sha256')
++        self.assertEqual(digest(wire(decoded)), identity)
++        self.assertEqual(decoded['historical_byte_custody']['files'], witnesses)
++        self.assertEqual(len(decoded['historical_byte_custody']['files']), 345)
++        self.assertTrue(decoded['canonical_ensure_ascii'])
++        self.assertNotIn(b'\n  ', raw)
++
++    def test_compact_receipt_oversize_refuses_before_any_native_or_publication_boundary(self):
++        f = self.fixture; g = f.guard(False)
++        g.facts.update(canonical_ensure_ascii=True, admitted=False, failure='synthetic',
++                       synthetic_padding='x' * (256 * 1024))
++        g.walk_entries = 0
++        with self.assertRaisesRegex(f.Refused, '^compact_receipt_limit$'):
++            f.ns['compact_publication_prefix'](g)
++        self.assertFalse(f.fs.physical(BASE + '/receipt.json').exists())
++
++
+ if __name__ == '__main__':
+     unittest.main(verbosity=2)

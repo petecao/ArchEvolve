@@ -1,0 +1,73 @@
+{
+  "SSH": 0,
+  "boundary": "These controls verify normalized retained metadata and source target/context identities. Accepted mathematical scope remains exactly the historical root decisions and declared TCB. No source/Typed/allocator/body/caller proof or new proof record is established.",
+  "catalog": {
+    "bytes": 256695,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/scientific-bundle-v3/catalog.json",
+    "sha256": "42100d4ecb63de8718f6d16071f179ba3fb173cd94511730b195106426a1cb60"
+  },
+  "classification": "PASS: pure retained-JSON normalization and fail-closed integrity controls",
+  "compiler_native_verifier_solver_calls": 0,
+  "created": "2026-10-16 ET",
+  "project_imports": 0,
+  "scientific_proof_rerun": false,
+  "source_or_caller_admission": false,
+  "subprocesses": 0,
+  "summary": {
+    "bundle_bytes": 9378545,
+    "complete_origin_value_or_explicit_derivation_checks": 101,
+    "components": [
+      {
+        "id": "constructor",
+        "source_commit": "6216fc9440897bebc16a09eeb124ce76f202f185",
+        "targets": 35
+      },
+      {
+        "id": "destructor",
+        "source_commit": "2e01d27d0aea7f3c2056d3abb06600b4cefa29be",
+        "targets": 11
+      },
+      {
+        "id": "private_frame",
+        "source_commit": "f918f5d52035fd99499280a0a8058efd0ed4ef55",
+        "targets": 9
+      },
+      {
+        "id": "gluing",
+        "source_commit": "fb197c5ddd173065ca781766886c6a797684a838",
+        "targets": 4
+      },
+      {
+        "id": "positive",
+        "source_commit": "04af74c121a733589fbe1a2087ad602deaef598b",
+        "targets": 23
+      }
+    ],
+    "direct_valid_ordinary_native_rows": 89,
+    "documents": 91,
+    "inventory_only_ordinary": 2,
+    "largest_document_bytes": 3890086,
+    "native_report_rows": 90,
+    "normalized_ordinary": 91,
+    "normalized_smoke": 1,
+    "origin_operations": {
+      "JSON value preserved; canonical JSON serialization": 99,
+      "derived-excluded-raw-field-descriptors: canonical_C, canonical_theory, recipe_command; canonical JSON value hash and length, not copied source values": 1,
+      "top-level-object-subset: all original keys except metadata; metadata is separately retained field by field": 1
+    },
+    "registered_property_entries": 175,
+    "resolved_locations": 300,
+    "source_targets": 82
+  },
+  "tamper_controls": [
+    "canonical input mismatch refused",
+    "document hash mismatch refused",
+    "unknown JSON pointer refused",
+    "unaccepted gluing target refused"
+  ],
+  "version_history": {
+    "v1": "Physical dtor method artifact representation was made consistent in v2; v1 retained.",
+    "v2": "Two derived document provenance operations were incorrectly described as unchanged JSON values; v3 labels and verifies those exact derivations. All 91 objects and all 82 target/outcome values are unchanged from v2.",
+    "v2_to_v3_exact_inverse_checked": true
+  }
+}

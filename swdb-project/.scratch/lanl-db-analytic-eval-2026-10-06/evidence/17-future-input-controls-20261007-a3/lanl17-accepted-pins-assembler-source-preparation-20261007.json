@@ -1,0 +1,68 @@
+{
+  "format": "swdb.lanl17-accepted-pins-assembler-source-preparation.v1",
+  "prepared_utc": "2026-10-07T14:17:46.462374+00:00",
+  "state": "source_only_preparation_unexecuted",
+  "canonical_ensure_ascii": true,
+  "assembler_source": {
+    "path": "/private/tmp/lanl17_assemble_selected_actual_input_pins_20261007.py",
+    "bytes": 32903,
+    "sha256": "8a68973d0bb6830196feba8c1022900d536d2aa19730033bd160f210be86e1c6"
+  },
+  "source_handoff": {
+    "path": "/private/tmp/lanl17-accepted-pins-assembler-source-handoff-20261007.md",
+    "bytes": 14843,
+    "sha256": "26c7e78de52c9bbbaf2c80237d8520534710fc3a836eae01d2159c248042ee99"
+  },
+  "approved_unchanged_sources": [
+    {
+      "path": "/private/tmp/lanl17_selected_record_trajectory_auditor_a2r1s1_20261007.py",
+      "bytes": 115130,
+      "sha256": "6a91ed1015bcc1caa771348e8bd1f591254ba130e55570ed18bc8121d67a06da"
+    },
+    {
+      "path": "/private/tmp/lanl17_compact_attempt_custody_a2r1_20261007.py",
+      "bytes": 24818,
+      "sha256": "b08db809b80cbebc6ce98dd8df8fdd4f327b170cdd7a545af0876ad68a832a5c"
+    },
+    {
+      "path": "/private/tmp/lanl17-r1s1-future-actual-input-construction-plan-20261007.md",
+      "bytes": 11817,
+      "sha256": "e3420b334ce05f7268699b0079987d1d2afc98fe5cb5503e6069a89038b59170"
+    },
+    {
+      "path": "/private/tmp/lanl17-auditor-a2r1s1-accepted-input-contract-20261007.md",
+      "bytes": 5288,
+      "sha256": "192eb5d1c2b461f9d42b3532a934c8dc107bb193f29fabbb5ba2dec94acd2978"
+    }
+  ],
+  "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "syntax": {
+    "ast_parse": true,
+    "compile_code_object_only": true,
+    "imports_declared": [
+      "argparse",
+      "datetime",
+      "hashlib",
+      "json",
+      "math",
+      "os",
+      "pathlib",
+      "re",
+      "stat",
+      "subprocess",
+      "sys",
+      "time",
+      "yaml"
+    ],
+    "swdb_or_scripts_imports_declared": false
+  },
+  "actual_final_R_EF_ER_or_spec_assigned": false,
+  "actual_input_root_constructed": false,
+  "assembler_imports_or_invocations": 0,
+  "approved_collector_auditor_reader_imports_or_invocations": 0,
+  "Store_campaign_provider_native_remote_actions": 0,
+  "synthetic_regression_executions": 0,
+  "claim_scope": "Syntax and original approved source-byte pins only; no runtime path, writer policy, actual-input or semantic admission is tested.",
+  "identity_sha256": "4080fc6f9305e9b08b3ab2f58cd8d3001ae121303b1324bb7a1745578d9e180a"
+}

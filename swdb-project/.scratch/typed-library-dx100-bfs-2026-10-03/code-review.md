@@ -1,0 +1,126 @@
+# Implementation code review
+
+Created: 2026-10-03 ET
+
+Review base: `9ef348fdaa5b26ff5e37a66d1781084b1b2eea40` on `yanrujhou_main`.
+Initial Standards and Spec review covered `ed8c233`; final independent review covered
+the corrections committed in `349cf1e`.
+The final fixes and evidence are committed in the local correction batch. Both final independent reviews pass.
+
+| Axis | Priority | Finding | Correction and evidence |
+|---|---|---|---|
+| Standards | P1 | Fixture certification could grant real certification, sharing and submission | State, promotion and review validation require `evidence_kind: execution`. Temporary execution-envelope test doubles are explicitly labeled and isolated. Independent gate replay refuses fixture-only admission. |
+| Standards | P2 | An arbitrary reviewer could grant the shared tier | Promotion and current-review checks require Yan-Ru Jhou or the `yanrujhou` alias; persisted promotion uses the canonical name. Independent replay refuses unrelated reviewers. |
+| Spec | P1 | Differential certification compiled the canonical driver/header instead of the selected lowering's declared inputs | Compile the pinned lowering, driver and intrinsic reference through explicit include seams; validate the supported input set; honor build definitions; reject matrix overrides; recheck input hashes after execution. 109 focused regressions pass, including broken repinned headers, changed macros, drivers and source stability. All ten durable lowerings pass recertification. Fresh candidate receipt `certification.1e4397e31d594245bc10bd80ff2107f5` passes ten matrix cells and rejects sixteen controls. |
+| Spec | P2 | A completed missing witness became inconclusive and a positive run could hide it | Completed required-witness failure derives refuted and fails evaluator correctness/gain eligibility. Incomplete continuation/frontier output remains unverified. Six public evaluator regressions plus existing v2/read-only checks pass: 33 total. Library-state regressions pass: 31 total. |
+| Standards | P1 | Repinning intrinsic semantics could promote an unchanged lowering using an old receipt | Certification captures the complete dependency closure before execution, persists every normative hash, and checks those hashes after execution. State, review and promotion require current bindings. Ten new producer/schema regressions pass, including actual compiled changed-reference failure and mid-run mutation abort. All twelve fresh durable receipts and 22 final public submission checks pass; all 3,679 current cases have verified coverage. |
+| Standards | P2 | A stale target proposal could reinterpret its result using a changed contract witness | Target state requires the current contract hash and complete contract dependency closure before interpreting its checks. Both changed-witness and changed-dependency regressions pass. Independent replay confirms stale evidence derives draft, while a valid current proposal still grants evaluated_on_target. |
+
+The Standards agent independently rechecked the two admission fixes with the actual
+normative library and an isolated in-memory store. The Spec agent independently
+reproduced rejection of a broken repinned lowering and altered reference, and found
+no further actionable producer/witness issue. Human review, send, cleanup and
+real target-run tasks remain separate; fixture checks do not resolve those tasks.
+
+The earlier serial full-suite run was superseded after review fixes: 1,111 passed,
+15 skipped, one previously fixed failure, then an intentional interrupt. It is not a
+passing full-suite result. The fresh frozen suite contains 3,661 cases in 133 files,
+split into three disjoint file partitions with separate temporary directories,
+logs and JUnit receipts under `/private/tmp/swdb-typed-library-verification-20261003`.
+
+Full-suite follow-up, 03:37 ET: simulator batch-admission/recovery/T16 setup
+errors exposed a synthetic fixture missing `settings.workloads`. The fixture now
+explicitly declares its timed workload. All 174 tests in the three affected files
+pass in a fresh process; no product-code gate was weakened. Original test groups
+continue and their final results will be combined with the complete affected-file
+rerun, keeping the superseded setup errors visible in the verification ledger.
+
+Fixture audit, 03:40 ET: the intrinsic SQL test also assumed only three legacy
+rows. Its added-scatter assertions are preserved and inventory completeness now
+uses the authoritative YAML IDs. The complete affected-file rerun passes 184 cases
+in 48.77s. JUnit: `/private/tmp/swdb-typed-library-verification-20261003/affected-fixtures.xml`.
+No further stale accelerator inventories or production inventory defect were found.
+
+03:50 ET: partition3 finished with 1,180 passed,10 skipped and 30 setup errors.
+JUnit identity matching confirms every error is covered by the fresh passing
+affected-file receipt. Two other partitions remain active; no final full-suite
+pass is asserted until complete unique-case coverage is checked.
+
+Final Standards closeout, 04:08 ET: no new actionable documented-standard
+violation or baseline smell. All 21 current hashes/states and packet receipt
+references were independently checked. Human and real-target tasks remain open.
+
+Final Spec closeout, 04:09 ET: no new actionable issue in the local
+implementation. The BFS contract binds 18 dependency pins (nine intrinsic/lowering
+pairs; ALU is unused). All 21 current entries validate and remain experimental.
+Remote tickets 27/28/29/34/36 are unexecuted, ticket 31 is conditional and untriggered,
+and the eight human tickets remain open.
+
+Standards: four admission/custody findings corrected and independently confirmed.
+Spec: two producer/witness findings corrected and independently confirmed.
+No remaining actionable finding on either axis.
+
+Full partition closeout, 04:12 ET: partition1 finished 1,212 passed, three
+skipped and six failed; partition2 finished 1,197 passed and 23 skipped; partition3
+finished 1,180 passed, ten skipped and30 setup errors. One failure is the already
+corrected intrinsic inventory assertion. Five ISA-profile failures come from a
+fixture that copies intrinsic records without their operation dependencies; it
+now copies the operation folder too. Complete ISA-file rerun is active. Product
+validation and ISA rejection semantics remain unchanged.
+
+Final verification, 04:15 ET: all 3,679 current collected cases have exact
+receipt coverage: 3,643 pass, 36 skip, zero unresolved failure/error. The frozen
+3,661-case suite is combined with 391 unique fresh affected-file cases, including
+18 added review regressions. All 36 original fixture failures/errors have fresh
+passing case-matched receipts; original logs are preserved. The full ISA file
+passes 25 cases; final submit file passes 22; library 35, producer/delivery 120,
+gem5 driver 6. All 404 records validate and git diff --check passes. See
+[verification.json](verification.json) for hashes, partitions and corrections.
+
+Supplemental runtime review, 2026-10-03 08:37 ET: fixed baseline `8959b4dfd149273e89884be87bee9c0adb60e0fc`, working diff of the collector, region-profile schema, two complete affected test files, and format documentation. Independent Standards and Spec reviewers both report no actionable discrepancy. Collector uses one continuous complete-BFS interval and exactly one final client dump, with only TDStep/outlined-worker self costs retained and whole-call cache history disclosed. Strict summary/self-cost checks, counter hierarchy, raw reparse, source and binary pins remain unchanged. Historical `tdstep_position` and new aggregate `dump_position` require exactly one valid coordinate.
+
+Fresh affected-file verification passed all58 cases twice; durable JUnit records58 passed in32.34s. Current collection reconciles3,687 cases to3,651 pass and36 skip with zero unresolved failure/error, preserving the two retired historical test names and all original failed receipts. Eight new cases cover the runtime correction. All425 current local records validate. Real a1 is partial/failed and preserved; fresh remote a2 is still required before tickets27/34 can close.
+
+Actual evidence audit, 2026-10-03 08:57 ET: independent a2 sealed package, all source manifests, graph/binary/output/raw pins and compatible public context checks pass. Strict raw reparse verifies one client dump,2,138 parsed self-cost rows, exactly31 retained TDStep/worker rows, and exact seven mapped statement costs. Attribution remains bounded/partial and costs simulated; queue append has no attributable debug row. The provider workspace withholds per-line truth, prior claims and evaluator/accelerator material. Actual provider attempt2 guard/audit passes and login copy is deleted, but schema400 exposed unsupported uniqueItems; this runtime issue is being corrected at the Codex transport seam with full local validation retained.
+
+Supplemental provider transport review, 2026-10-03 09:01 ET: fixed baseline `f6972ebbf9c842c1a7091716505577d06c637231`; exact adapter/test diff reviewed independently on Standards and Spec axes. Both pass with no actionable discrepancy. A copied wire schema removes `uniqueItems` only at schema nodes, preserving property/definition names and literal const/enum/default/example data. The normative schema, real local validator, model/effort pins, guard, audit and credential cleanup remain unchanged. Three new focused regressions pass; complete affected-file tests are running before publication and fresh actual annotation.
+
+Provider transport verification, 2026-10-03 09:03 ET: all45 cases in the two affected files pass in344.07s. Complete stdout plus exact45-case list and their hashes are preserved without an artificial JUnit rerun. Current full-suite identity coverage is3,690 cases:3,654 pass,36 skip, zero unresolved. Both independent review axes pass; no actionable code issue remains. Actual provider success still requires a fresh post-sync request.
+
+Actual annotation closeout, 2026-10-03 09:19 ET: independent audit reproduces all seven raw-derived simulated costs, midranks, Spearman0.4925690038994379, top-three2/3 and exactly two cost contradictions. Full source/input/prompt/provider/wire pins, append-only claims and unchanged facts/profile verify. Three actual commands only read declared inputs; no compiler/profiler/evaluator/benchmark run. Metadata6c65bdf is published/read back and all443 records validate.
+
+Supplemental production P2 finding: the two actual completed `candidate_build` records in8506be7 erroneously refute19cited entries because `_target_state` conflated executed compilation with completed target execution. Historical reconstruction confirms all21 shared/certified at8959b4d and19 shared/refuted at8506be7/f642a94 with identical normative pins; annotation changes no state. The correction requires entered simulation/execution history before deriving target status. Actual compilation/discovery/collection/package records cannot affect it; genuine completed required-witness or normal-exit failure still refutes, and incomplete actual runs remain inconclusive. All47 affected cases pass in8.18s, including12newregressions from real public preparation shape. Standards review passes againstf642a94; Spec review and publication are pending.
+
+Final target-state review, 2026-10-03 09:23 ET: both independent Standards and Spec axes pass against fixed f642a94. The extra Spec checkpoint finding is corrected: the trusted guest driver requests checkpoint before ROI/BFS, so checkpoint-only history derives inconclusive after identity checks and cannot grant target qualification or refute its timed witness. The simulation/execution verdict predicates remain strict. Final affected file passes all50 cases in7.95s, including15 new production-shape regressions; original47-case receipt remains byte-identical. Current collection reconciles3,705 identities to3,669 pass/36 skip with zero unresolved. Corrected local actual-record readback restores all21 shared/certified entries without modifying normative entries, dependency pins or reviews. No remaining actionable review finding.
+
+Publication readback, 2026-10-03 09:26 ET: final correction5943c9a is synchronized on mbit10; all443 records validate and the live derived-state query returns all21 shared/certified. Normative entries, dependencies and actual promotion reviews remain unchanged. No target execution is inferred from preparation.
+
+Memory-admission follow-up, 2026-10-03 ET: both independent Standards and Spec axes pass against fixed e74c85b. The selected-node estimate preserves the measured36 GiB budget and16GB/MMIO model. Review findings are corrected: disjoint counters reconcile; complete zone managed totals are required for cache credit; present contradictions refuse before missing-proof fallback; impossible managed/reserve totals refuse even when MemFree suffices. Final affected files pass39 cases in7.47s with22 new adversaries. Reconciled coverage is3,727 identities (3,691 pass/36 skip), zero unresolved. All earlier local receipts are retained. [Admission clarification](evaluation/memory-admission-clarification.md).
+
+Bounded-completion review, 2026-10-03 11:08 ET: both independent Standards and Spec axes pass against fixed `e6dee10dd74dc475eaf783016d1f3ddbf102e7ee`. The actual primary companion exposed a P1 classification defect: strict v2 guest completion passed with a bound zero-status exit witness, while the library incorrectly required a normal simulator exit. Individual v2 executions now use `validate_record_witness`, preserving exact seals, checker/binding identities, protected correctness, present-file verification, retained custody and remote-unverified availability. Detected v2 validation failures cannot fall back to legacy flags. Aggregate wrappers execute no guest; their actual component records independently derive target state. Legacy normal-exit behavior, checkpoint/incomplete handling, required coverage and real correctness/L3 refutation precedence remain intact.
+
+All 200 affected tests pass in 8.57s, including 25 new cases: coherent bounded/normal v2 completion, nineteen malformed or tampered adversaries, and four aggregate cases. The corrected public fixture retains its genuine bounded-completion semantics. Reconciled current coverage is 3,752 identities: 3,716 pass and 36 skip, zero unresolved. No normative entry, dependency pin, protected binary, frozen protocol or model changed. [JUnit receipt](evaluation/bounded-completion-a1-junit-20261003.xml).
+
+Post-ROI budget review, 2026-10-03 12:13 ET: fixed baseline982d19b23eb0303ecacc938c5334e6479b861197. Both final independent Standards and Spec reviews pass with no actionable findings. The production diff changes only the common post-seal verification ceiling from10**10 to the retained T17v2 value10**14 for all6roles. Baseline historical completion alone requires57/84billion ticks; candidate gain is not used. Strict checker/witness, sealed ROI, model/source/compiler, no post-ROI CPU change, wall limits and36GiB/8GiB/16GBguest constraints remain unchanged. Four new regressions fail before correction, and168affected cases pass in6.39s afterward; exact request comparisons prove every other field unchanged. Fresh a2 builds bind actual new binary hashes and companions validate the exact candidate primary binary used for timing. This local review/test receipt is not successful target execution. [Decision](evaluation/post-roi-budget-decision.md).
+
+Published evidence audit, 2026-10-03 12:17 ET: independent Spec reviewer reopens all8 historical v2 metadata records and actuala1digest/workload/outcome/checkpoint totals; all match. All29testreceipt hashes match;3756identities=3720pass+36skip,714fresh cases,36initial failures corrected,2retired names and zero unresolved. Root subsequently corrects the operational helper suffix and independently checks actual .lease files before/after source synchronization; this metadata correction does not change production code or passing test receipts.
+
+
+Postprocessing recovery review, 2026-10-03 15:05 ET: fixed baseline4c9bb01c190c20f3aa28ecc878cfc4d12ade6253. Standards PASS; Spec PASS. The host-only3600s bound is explicit for public aggregation/comparison and leaves physical execution budgets and frozen treatment unchanged. Exact first-pair recovery binds original failed timeout custody, both completed commands/request/output files/current public records and reconstructed full plans. Fresh IDs avoid old failed outcomes. Authoritative uniform aggregation/comparison precede all missing Kronecker requests. No failed/fixture/nested or changed evidence is reused.
+
+The Spec repeat-run finding is closed by refusing any extra same-freeze physical timed history, across namespaces. Both axes' JSON scalar alias findings are closed with canonical digest equality for request file, manifest request content, planned request and public record request; consistently resealed request-only and record-only bool/float adversaries refuse before public commands. All35focused cases pass in6.02s; the broader6files pass138cases in134.85s, jointly covering142distinct affected cases. Preserved RED confirms the original300s bug. No remaining finding; current coverage3781=3745pass+36skip/826fresh cases/zero unresolved. Raw/public target acceptance still requires actual qualified recovery and final independent audit. [Decision](evaluation/postprocess-recovery-decision.md); [verification](verification.json).
+
+
+Final full-source review, 2026-10-03 17:56 ET: recorded base9ef348fdaa5b26ff5e37a66d1781084b1b2eea40 to source6cfcd245ba34c8df5947307aad2cf2353400b281, all21 scoped commits. StandardsPASS: no actionable documented-standard violation or baseline smell. SpecPASS: no new consequential defect, missing implementation requirement or scope creep across assigned tickets1–37. Both independent reviewers preserve strict dependency, witness, admission, recovery, retention and provider boundaries; proposed ADRs and human-owned02/37 remain separate facts. Reviews are read-only with no test rerun or remote access. Both public results are qualified simulated joint hardware/software point ratios; final independent raw audit and compact export/delivery reconciliation remain pending.
+
+2026-10-03 18:40 ET — final operator and actual-audit reconciliation: Standards PASS and Spec PASS for the identical custody-r2 operator, and both axes independently reconcile the actual compact root readback. Failedr1 remains failed/wrapper1; only its pinned completed six-witness/54-artifact and two complete raw/sample/frontier/companion/metric sections carry into fresh r2. The production retention reader qualifies exactly8 missing successful checkpoint members using exact path/SHA/bytes/evaluation/prune-intent/source-pass authority; exactly3 mutable lease hashes remain historical pinned-manifest snapshots. All52 other custody files hash-match. Fresh r2 completes/wrapper0,481validrecords/19usedshared-evaluated, actualrootstop/all3released leases. No tests, physical samples, fulltrace parsing, public aggregates/comparisons or productionsource changes repeated. Final new11YAML/result-summary/Git publication reconciliation remains pending. [Actual readback](evaluation/timed-a2-r1-independent-audit.json); [failed audit preserved](evaluation/final-audit-r1-failure-summary.json).
+
+2026-10-03 18:47 ET — final publication reconciliation PASS on both axes. Exact13files/Gitblobs/22summarycanonicalreferences and481records reconcile. Spec found one reporting sentence overclaiming allbulkraw retention; only that limitation changed to distinguish retained traces/logs/failedcheckpoints from automatically pruned successful checkpoint payloads. Independent recheck confirms final summary17815B/SHAf2e8926a8d55527c7b2f36b4b94dc83419ab110c1c91cc79af2ea9e8953c8dc5 and no other semantic change. StandardsPASS/SpecPASS, zerounresolvedfindings. All35testreceipt hashes rechecked; no unnecessary test/measurement repetition.29resolved;30exact-link/delivery/claimreceipts remainpending.
+
+2026-10-03 19:00 ET — final exact ticket30 StandardsPASS/SpecPASS. All7publication0a495 Git path/line links, official ratios/ms values, scope/provenance/custody, recipient/sender/subject and plain/HTML multipart hashes independently match. Zero remaining review findings. Actual send was subsequently rejected by automatic approval review; review PASS is not delivery. No tests or measurements repeated. [Exact dispatch and review hashes](drafts/outgoing-2026-10-03/30-first-gem5-result-dispatch.json).
+
+2026-10-03 19:06 ET — final blocked-delivery metadata reconciliation StandardsPASS/SpecPASS:33resolved,30needs-info,02/37human-owned,31wontfix; originalrejection/zeroSentprecheck and exactunchangedreviewedpayload retained. No false send/claim/completion. Root corrected a readback-only Store.get() dict access after sourceFF; fresh actual481record/21librarystate/hash/lease readback passes. No production change/test/physical/public rerun.
+
+2026-10-03 19:36 ET — communication ownership changed by direct human instruction: draft-only for Josh/Peter/Eric;30ready-for-human with send/claim boxes unchecked. Reviewed bodies/hashes remain unchanged; no production implementation or measured evidence changes. Historical rejection remains preserved and no send/claim is inferred.
+
+Final ownership metadata StandardsPASS/SpecPASS,2026-10-03 19:38 ET: exact33resolved/02+30+37human/31wontfix, agent_send_authorized=false, superseded approval question, unchanged draft hashes and preserved historical receipts. No remaining agent communication action or implementation finding.

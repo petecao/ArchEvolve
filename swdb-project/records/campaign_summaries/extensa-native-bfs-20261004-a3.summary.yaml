@@ -1,0 +1,128 @@
+kind: campaign_summary
+schema_version: '0.4'
+id: extensa-native-bfs-20261004-a3.summary
+status: draft
+created: '2026-10-04'
+updated: '2026-10-04'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+mode: extensa
+campaign: extensa-native-bfs-20261004-a3
+campaign_file:
+  path: campaigns/extensa/extensa-native-bfs-20261004-a3.yaml
+  sha256: b6060c628326282223df2863b8e46b78b8732f169d90af519449bc384da3df24
+swdb_commit: fd983a6b11c820e6f8a6deb13028e5d13afec3a2
+extensa_source:
+  repository: MaizeHPC/MemAcc
+  commit: af3d6d7f7a69a72facdc3b95b42e78c952f44a76
+target: native_cpu
+evidence_basis: measured
+evidence_kind: execution
+protocol:
+  id: extensa-native-bfs-20261004-a3.protocol.fork_scalar_tdstep.9544fea32a718556
+  identity_sha256: 9544fea32a718556a0bbbdd99399f4f989e1790c141ba9cfbd27f4a7c959965a
+  settings:
+    target: native_cpu
+    roi: bfs.complete_call.v1
+    threads: 1
+    repetitions: 10
+    sources: [0, 1234, 7777]
+    region_pairs: []
+    differences: 'Extensa campaign extensa-native-bfs-20261004-a3: provider rewrites of the fork''s scalar
+      TDStep (scalar-only snapshot plus patch) versus the unchanged full-source dx100-bfs-scalar DOBFS,
+      and separately versus upstream direction-optimizing GAPBS BFS. Native evaluator v2 (mmap SG driver,
+      compiled structural verifier).'
+    evidence_basis: measured
+    profitability:
+      minimum_speedup: 1.05
+      maximum_relative_spread: 0.1
+      rule: lower bound strictly above the minimum; every spread at most the maximum
+    workloads:
+      kronecker: bfs-20261004-kronecker22.3dc69be403db57e9
+      uniform_random: bfs-20261004-uniform22.facb16e6260c3a82
+  by_role:
+    fork_scalar_tdstep:
+      id: extensa-native-bfs-20261004-a3.protocol.fork_scalar_tdstep.9544fea32a718556
+      identity_sha256: 9544fea32a718556a0bbbdd99399f4f989e1790c141ba9cfbd27f4a7c959965a
+    upstream_do_bfs:
+      id: extensa-native-bfs-20261004-a3.protocol.upstream_do_bfs.4d3b06c2e47dfff0
+      identity_sha256: 4d3b06c2e47dfff07ac5c3bf01ab9fd0b0f6bad6eb6cd06165527622f5a13aad
+      aa: extensa-native-bfs-20261004-a3.protocol.upstream_do_bfs.aa.55a356f8f0c6f649
+baselines:
+- role: fork_scalar_tdstep
+  candidate: bfs-native-pilot-20260925-dx10018-a1.baseline
+  evaluation_ids_by_class: {}
+- role: upstream_do_bfs
+  candidate: bfs-native-pilot-20260925-upstream18-a2.baseline
+  evaluation_ids_by_class: {}
+workload_classes:
+- class: kronecker
+  workload: bfs-20261004-kronecker22.3dc69be403db57e9
+  sources: [0, 1234, 7777]
+- class: uniform_random
+  workload: bfs-20261004-uniform22.facb16e6260c3a82
+  sources: [0, 1234, 7777]
+label: single graph per class
+provider:
+  name: codex
+  model: gpt-5.6-sol
+  effort: xhigh
+pilot:
+  spreads_by_class_and_role:
+    kronecker:
+      fork_scalar_tdstep: 0.161169554503515
+      upstream_do_bfs: 0.012377126628754164
+    uniform_random:
+      fork_scalar_tdstep: 0.057209633374513465
+      upstream_do_bfs: 0.13433781826592
+  passed: false
+setup:
+  provider_calls: []
+iterations: []
+per_class:
+- class: kronecker
+  verdict: no_gain
+  best: null
+  best_level: null
+  best_selection_baseline: null
+  best_other_baseline: null
+  faster_uncertified: []
+  label: single graph per class
+- class: uniform_random
+  verdict: no_gain
+  best: null
+  best_level: null
+  best_selection_baseline: null
+  best_other_baseline: null
+  faster_uncertified: []
+  label: single graph per class
+budgets:
+  limits:
+    max_iterations: 8
+    plateau_iterations: 4
+    lane_hours: 24
+    provider_calls_per_iteration: 3
+    provider_calls_setup: 1
+    disk_gb: 20
+    lanes: 1
+  used:
+    iterations: 0
+    lane_hours: 0.994307
+    provider_calls_counted: 0
+    provider_calls_uncounted: 0
+    disk_gb_peak: 2.364865
+pauses: []
+stop_reason: baseline_unstable
+stop_detail: baseline A/A spread exceeds 0.1
+artifacts: []
+retentions: []
+library_entries: []
+site_finder: null

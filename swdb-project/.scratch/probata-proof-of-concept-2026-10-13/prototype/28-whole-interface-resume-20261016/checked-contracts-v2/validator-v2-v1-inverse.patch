@@ -1,0 +1,58 @@
+--- checked-contracts-v2/dx100_whole_checked_v2.py
++++ checked-contracts-v1/dx100_whole_checked_v1.py
+@@ -11,8 +11,6 @@
+ import re
+ import stat
+ 
+-from swdb import paths
+-
+ KIND = 'dx100-whole-interface-checked-body-1'
+ SOURCE_KIND = 'dx100-whole-interface-source-v1'
+ DESIGN_SHA = 'a6139eea1e141c68bb351026b7cdb38a2458eb4b8be3a772a8251a7060db6e1c'
+@@ -70,37 +68,19 @@
+ def pinned(library, row, *, limit=4 * 1024 * 1024):
+     need(type(row) is dict and set(row) == {'root', 'path', 'sha256'}
+          and row['root'] in {'library', 'project'} and type(row['path']) is str
+-         and row['path'] and Path(row['path']).parts and row['path'] == Path(row['path']).as_posix()
+-         and not Path(row['path']).is_absolute()
++         and row['path'] and not Path(row['path']).is_absolute()
+          and '..' not in Path(row['path']).parts
+          and type(row['sha256']) is str and re.fullmatch('[0-9a-f]{64}', row['sha256']),
+          'exact portable library/project pin required')
+-    # Inspect the original portable components before Library.resolve can erase
+-    # an in-root alias. No unbounded Library._pin read precedes the size gate.
+-    base = Path(library.root if row['root'] == 'library' else paths.HOME)
+-    need(base.is_absolute() and base.resolve(strict=True) == base,
+-         'canonical physical reference root required')
+-    path, directories = base, [(base, base.lstat())]
+-    need(stat.S_ISDIR(directories[0][1].st_mode), 'physical reference root must be a directory')
+-    parts = Path(row['path']).parts
+-    for index, component in enumerate(parts):
+-        path = path / component
+-        before = path.lstat()
+-        if index + 1 < len(parts):
+-            need(stat.S_ISDIR(before.st_mode), 'portable path component must be a physical directory')
+-            directories.append((path, before))
+-        else:
+-            need(stat.S_ISREG(before.st_mode) and 0 < before.st_size <= limit,
+-                 'bounded canonical regular entry input required')
+-    need(path.resolve(strict=True) == path and Path(library.resolve(row)) == path,
+-         'portable reference resolution differs from its physical components')
+-    with path.open('rb') as handle:
+-        raw = handle.read(limit + 1)
++    library._pin(row)
++    path = Path(library.resolve(row))
++    before = path.lstat()
++    need(path.is_absolute() and path.resolve(strict=True) == path
++         and stat.S_ISREG(before.st_mode) and 0 < before.st_size <= limit,
++         'bounded canonical regular entry input required')
++    raw = path.read_bytes()
+     need(stable_metadata(path.lstat()) == stable_metadata(before)
+-         and len(raw) == before.st_size and len(raw) <= limit
+-         and hashlib.sha256(raw).hexdigest() == row['sha256']
+-         and all(stable_metadata(parent.lstat()) == stable_metadata(old)
+-                 for parent, old in directories),
++         and len(raw) == before.st_size and hashlib.sha256(raw).hexdigest() == row['sha256'],
+          'entry input changed or differs from its physical pin')
+     return raw
+ 

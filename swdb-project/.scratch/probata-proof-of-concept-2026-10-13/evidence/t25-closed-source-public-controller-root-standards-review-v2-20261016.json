@@ -1,0 +1,80 @@
+{
+  "created": "2026-10-16 ET",
+  "reviewer": "root",
+  "axis": "Standards",
+  "status": "PASS",
+  "command": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v2/inert-dcdecf31-node1/command.json",
+    "sha256": "579a916abc62b2253f7090353dc1c6e4ff38ca5f6e201ec5fb845549d7fa6aa7"
+  },
+  "source_commit": "dcdecf317a0e9b34f3ce12d5b914eb823c439fbc",
+  "source_files_verified_against_Git": 595,
+  "staged_controls": [
+    {
+      "bytes": 18385,
+      "name": "closed_python_surface.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/closed_python_surface.py",
+      "sha256": "748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af"
+    },
+    {
+      "bytes": 9610,
+      "name": "python_startup_roles_v2.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python_startup_roles_v2.py",
+      "sha256": "5e9d2e6dfa2aaa7999f4670a979d3cc32736b852a612f77d4e2f7c71bc229618"
+    },
+    {
+      "bytes": 2709,
+      "name": "python_role_observer_v2.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python_role_observer_v2.py",
+      "sha256": "9b100cbe2fdef3e7d429ccdf05d6489d44855a84328e2dd8532eb547beeaf43b"
+    },
+    {
+      "bytes": 116503,
+      "name": "t28-linux-runtime-observer-v2-actual-20261016.json",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-linux-runtime-observer-v2-actual-20261016.json",
+      "sha256": "092397608fe3a08c42d85e9c8e121ed139f0d94e345a12ae3aaa57ad6e93a5f0"
+    },
+    {
+      "bytes": 19781,
+      "name": "reviewed_wp_gates.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v2/reviewed_wp_gates.py",
+      "sha256": "76a0dc85050e70de0fbbc29099fa6cc50afa9e9edb085d991127c92f7f059151"
+    },
+    {
+      "bytes": 3637,
+      "name": "reviewed_native_gates.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v2/reviewed_native_gates.py",
+      "sha256": "c13376db78d81e351486b3e0d44c295b6f679ee9863f21023639a9893b25d283"
+    },
+    {
+      "bytes": 9100,
+      "name": "reviewed-function-lineage.json",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v2/reviewed-function-lineage.json",
+      "sha256": "81534a7de64403203b758a008f7557941927eedafad35517141503539b028ec0"
+    },
+    {
+      "bytes": 26061,
+      "name": "entry.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v2/inert-dcdecf31-node1/entry.py",
+      "sha256": "7a20337b07556627522f51e578a9ca526cbd9fc62ed1fab16f388fe007c08a91"
+    },
+    {
+      "bytes": 676474,
+      "name": "policy.json",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v2/inert-dcdecf31-node1/policy.json",
+      "sha256": "9e1957fe89b9b5269ee1113d24b9a990c1fca2564ff59905c88991c20b94b4af"
+    }
+  ],
+  "blocking_findings": [],
+  "checks": [
+    "Explicit five-case public fixture selection, current exact source/runtime/guard and staged-control membership before project imports",
+    "Inherited19 helper definitions plus complete WP/Why3/OCaml/header/Python/native runtime and startup roles retain their reviewed scope; no old host composite is promoted",
+    "Five original physical records and JUnit cases are required with no skips/errors/failures; safe checked-source record keeps24 source_rule goals,82 math targets and both original plus extra source TCB assumptions",
+    "Missing bundle/stale method/wrong result/default-method controls must remain unsupported with no new native WP log; no CBMC or solver proof requested",
+    "Exact pinned pytest prefix for five parameter cases; current alias may target0..4 and final exact five directories/current4 required without traversal",
+    "Reviewed bounded finalization preserves64KiB reserve/16KiB result, exclusive fsync, exact post-write extent/aliases and strict whole deadline",
+    "No scientific selector or goal relaxation; source route is fixture-only and normal/native results remain explicitly not_proven"
+  ],
+  "method": "Independent full entry/command/policy/README/test source review with physical pin/Git source hash checks; no test, project import, compiler/verifier/solver or SSH execution",
+  "boundary": "Standards/controller readiness only. Actual public/compiler/source records and independent full scientific reconciliation remain required."
+}

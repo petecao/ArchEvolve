@@ -1,0 +1,43 @@
+{
+  "format": "swdb.bfs.workload-reregistration.v1",
+  "created": "2026-09-29",
+  "workload": "bfs-dx100-coverage-20260929-b1.workload.458b302ba97083f5",
+  "source_workload": "bfs-dx100-coverage-20260926-a2.workload.6b1e2f2dc16f6a0e",
+  "request": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260929-b1/register.json",
+    "sha256": "ec78484a4ff4d9735546477c30dd3fda0bdc23f5131e155c0c820faebd50f304"
+  },
+  "canonical_sha256": "e03a3905f9105b898b730387092d92a68b854cdd44280adb39b1bd9423a4a968",
+  "a2_canonical_sha256": "e03a3905f9105b898b730387092d92a68b854cdd44280adb39b1bd9423a4a968",
+  "canonical_equal_to_a2": true,
+  "representations": [
+    {
+      "id": "bfs-dx100-coverage-20260929-b1.workload.dx100",
+      "application": "dx100-gapbs",
+      "format": "gapbs_sg32le",
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/graph/coverage.sg",
+      "sha256": "d4697713f585b9670e1c44d26df94c72889f4c82fbd68b72e15627e6a0b39a56",
+      "bytes": 622829,
+      "canonical_sha256": "e03a3905f9105b898b730387092d92a68b854cdd44280adb39b1bd9423a4a968",
+      "adjacency_verified": true
+    },
+    {
+      "id": "bfs-dx100-coverage-20260929-b1.workload.upstream",
+      "application": "gapbs",
+      "format": "gapbs_sg64le",
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260929-b1/coverage.sg64",
+      "sha256": "eeac4da06fb920df509e0604227e821e658d62426894d4832e4cf5278900553b",
+      "bytes": 655689,
+      "canonical_sha256": "e03a3905f9105b898b730387092d92a68b854cdd44280adb39b1bd9423a4a968",
+      "adjacency_verified": true
+    }
+  ],
+  "realized_equal_to_a2": true,
+  "sources": [
+    0
+  ],
+  "fresh_get_returncode": 0,
+  "fresh_get_matches": true,
+  "code_commit": "2cad928246be656aa1e2e7e299ff0f679bf682bd",
+  "d13_equivalent": true
+}

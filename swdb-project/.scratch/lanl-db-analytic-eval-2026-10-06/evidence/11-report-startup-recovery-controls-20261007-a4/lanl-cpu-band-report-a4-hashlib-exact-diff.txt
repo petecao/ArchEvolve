@@ -1,0 +1,78 @@
+--- a3-decoded-runner
++++ a4-decoded-runner
+@@ -1,7 +1,7 @@
+ import sys
+ sys.dont_write_bytecode=True
+ from pathlib import Path
+-import copy,datetime,json,math,os,shutil,signal,subprocess,time
++import copy,datetime,hashlib,json,math,os,shutil,signal,subprocess,time
+ S=Path(SOURCE_VALUE);R=Path(RAW_VALUE);C=COMMIT_VALUE;W=S/'swdb-project'
+ M=Path('/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3')
+ H=Path('/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3')
+--- lanl-dispatch-cpu-band-report-a3-metadata2400-cleanup60.py
++++ lanl-dispatch-cpu-band-report-a4-metadata2400-cleanup60-hashlib.py
+@@ -4,7 +4,7 @@
+ revision=sys.argv[1];assert len(sys.argv)==2 and len(revision)==40 and all(c in '0123456789abcdef' for c in revision)
+ assert socket.gethostname().split('.')[0]=='mbit10'
+ source=Path('/data1/yanruj/ArchEvolve-lanl-cpu-model-validation-20261006-a1')
+-raw=Path('/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261006-a3')
++raw=Path('/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4')
+ model=Path('/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3')
+ heldout=Path('/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3')
+ memacc=Path('/data1/yanruj/Memacc-repro-20260925');relative='AgenticRefiner/scripts/host/socket_lane.sh';wrapper=memacc/relative
+@@ -25,7 +25,7 @@
+ 
+ runner=RUNNER_TEMPLATE.replace('SOURCE_VALUE',repr(str(source))).replace('RAW_VALUE',repr(str(raw))).replace('COMMIT_VALUE',repr(revision))
+ compile(runner,str(raw/'runner.py'),'exec');(raw/'runner.py').write_text(runner)
+-parts=['timeout','--signal=TERM','--kill-after=60s','18300s','bash',wrapper,'0','swdb-lanl-cpu-band-report-20261006-a3','--record',raw/'lane.json','--','python3',raw/'runner.py']
++parts=['timeout','--signal=TERM','--kill-after=60s','18300s','bash',wrapper,'0','swdb-lanl-cpu-band-report-20261007-a4','--record',raw/'lane.json','--','python3',raw/'runner.py']
+ shell=' '.join(shlex.quote(str(x)) for x in parts)+' > '+shlex.quote(str(raw/'dispatch.log'))+' 2> '+shlex.quote(str(raw/'dispatch-error.log'))+'; lanl_report_exit=$?; printf "%s\\n" "$lanl_report_exit" > '+shlex.quote(str(raw/'exit-code.txt'))
+-command(['tmux','new-session','-d','-s','swdb-lanl-cpu-band-report-20261006-a3',shell])
++command(['tmux','new-session','-d','-s','swdb-lanl-cpu-band-report-20261007-a4',shell])
+ print(json.dumps({'source_commit':revision,'raw':str(raw),'preregistration_sha256':hashlib.sha256((raw/'preregistration.json').read_bytes()).hexdigest()}))
+--- lanl-export-cpu-band-report-a3.py
++++ lanl-export-cpu-band-report-a4.py
+@@ -4,7 +4,7 @@
+ revision=sys.argv[1];assert len(sys.argv)==2 and len(revision)==40 and all(c in '0123456789abcdef' for c in revision)
+ assert socket.gethostname().split('.')[0]=='mbit10'
+ source=Path('/data1/yanruj/ArchEvolve-lanl-cpu-model-validation-20261006-a1')
+-raw=Path('/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261006-a3')
++raw=Path('/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4')
+ M=Path('/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3');H=Path('/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3')
+ checkout=Path('/data1/yanruj/ArchEvolve-lanl-cpu-band-report-evidence-20261006-a3');branch='codex/lanl-cpu-band-report-evidence-a3'
+ def git(repo,*args):return subprocess.check_output(['git','-C',str(repo),*map(str,args)],text=True).strip()
+--- lanl-admit-cpu-future-phase-cleanup60-20261007.py
++++ lanl-admit-cpu-future-phase-cleanup60-report-a4-20261007.py
+@@ -53,8 +53,8 @@
+  assert set(heldout['bands'])=={'bfs','bc'}
+  # A failed held-out width is a scientific result; report it unchanged.
+  assert all(row['state'] in ('validated','failed') for row in heldout['bands'].values())
+- helper=controls/'lanl-dispatch-cpu-band-report-a3-metadata2400-cleanup60.py'
+- expected='dd74dbbe238c1d0c8222d894acd94ef1d344049da257d2a0d744afefb3d2b120'
++ helper=controls/'lanl-dispatch-cpu-band-report-a4-metadata2400-cleanup60-hashlib.py'
++ expected='543b79ea40a54537ee23b37ec1f44afbc8b135cad3fff25fb82d35db7b5130c7'
+  argv=['python3',str(helper),C]
+ else:
+  helper=controls/'lanl-dispatch-cpu-model-validation-a3-metadata2400-cleanup60.py'
+--- lanl-export-completed-cpu-phase-guard-20261007.py
++++ lanl-export-completed-cpu-phase-guard-report-a4-20261007.py
+@@ -6,7 +6,7 @@
+ C='f893fed400347ed23d92e917d8bde21b75e5375d'
+ source=P('/data1/yanruj/ArchEvolve-lanl-cpu-model-validation-20261006-a1')
+ controls=P('/data1/yanruj/lanl-cpu-controls-20261007-a1')
+-raw=P('/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-'+('band-report' if phase=='report' else phase)+'-20261006-a3')
++raw=P('/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-'+('band-report' if phase=='report' else phase)+('-20261007-a4' if phase=='report' else '-20261006-a3'))
+ def git(*args):return subprocess.check_output(['git','-C',str(source),*args],text=True,timeout=120).strip()
+ assert git('rev-parse','HEAD')==C and not git('status','--porcelain')
+ leases={name:json.loads((P('/data1/yanruj/lact-host-lease')/(name+'.meta.json')).read_bytes()) for name in ('mbit10-evaluation-node0','mbit10-evaluation-node1','mbit10-evaluation')}
+@@ -22,8 +22,8 @@
+  expected='2d59a2d5f6ce54d4692fc962dbc9e38dab4f86076f1873ab78a1484522c681f6'
+  args=['holdout',C]
+ else:
+- exporter=controls/'lanl-export-cpu-band-report-a3.py'
+- expected='788c5cfd72433916daac544420de5251eb6d549c56afaeba455a82416f11dbb1'
++ exporter=controls/'lanl-export-cpu-band-report-a4.py'
++ expected='1d1251baeba12c65c40a7a616060e5ff236197ce73f77335534d4a4d83fe32a6'
+  args=[C]
+ assert hashlib.sha256(exporter.read_bytes()).hexdigest()==expected
+ # The original exporter performs receipt seals, records, clean source and all-free checks again.

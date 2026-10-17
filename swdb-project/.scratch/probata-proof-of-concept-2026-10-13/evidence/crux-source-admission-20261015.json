@@ -1,0 +1,81 @@
+{
+  "assumptions": [
+    "Reuse the existing conservative bounded_initialization analyzer on the entire retained source closure before summary substitution, for both Crux forms.",
+    "A C++ cut without this source analysis stays unsupported, even if Crux could compile it.",
+    "An explicit shared source initializedness/origin-policy refusal ends the bounded chain; parse/read failures still follow the existing route.",
+    "The existing initialized-input restriction remains explicit: initialized scalars and distinct nonnull primitive harness buffers of exactly physical capacity. Logical sizes do not shorten those buffers."
+  ],
+  "base": "3f177e630d0efaddd4709270afad05affe6077d2",
+  "changes": [
+    "Direct Crux C/C++ refuses uninitialized locals and unsupported local/global aggregate origins, helper reads and pointer rebinding before bitcode or verifier launch.",
+    "Generator-owned replay rebuilds original closure, source admission, current summary stubs, harness and exact input bytes before execution and again at the final proof-setup boundary.",
+    "Records expose bounded_initialization and source_admission plus corresponding proof-setup hashes; source analyzer is pinned for both forms.",
+    "The fallback policy module is now a checked method dependency."
+  ],
+  "created": "2026-10-15 ET",
+  "limitations": [
+    "No real Crux/CBMC acceptance or refutation was run for this patch. Positive controls reach a fake reader that reports parse_error; they do not prove a source unit.",
+    "This is a conservative restricted-language admission, not a complete source-initializedness or C++ origin analysis. Broader C++ cuts, unsupported aggregate/storage/lifetime cases remain refused.",
+    "Explicit entry array domains and imported domain-bearing summary assumptions remain refused on Crux until separate checked source-operation/call alignment exists.",
+    "Generic imported-summary proof-source/bounds binding remains a separate known gap owned by the main session. Fresh stub identity alone does not certify summary eligibility; this patch leaves the delegated _summary selection unchanged.",
+    "The source-after-bitcode mutation controls are rejected by the existing generic input-hash gate; they are not evidence of a newly discovered public source-drift bypass."
+  ],
+  "merged_integration": "44d50f7e1e6e59cebaeff0e3b9e230d9c9d962f6",
+  "red_green": [
+    "Original public Crux C++ uninitialized discarded read reached the controlled reader and returned parse_error; now it is refused before bitcode and verifier.",
+    "Passing primitive source initially lacked initialization/source-admission proof-setup receipts; both receipts are now present on checked stand-in launches.",
+    "The bounded route initially attempted all three adapters after a source-policy refusal; now it stops at the first refusal.",
+    "Changing a copied bounded_chain.py initially left the frozen execution method usable; now method pinning rejects it before the scripted command."
+  ],
+  "review": {
+    "date": "2026-10-15 ET",
+    "performed_by": "agent",
+    "reviewer": "main session",
+    "scope": "Independent read of Crux/bounded_chain/proof_setup diff confirmed both-form source admission, unchecked-cut refusal, fresh rebuild and policy termination; no human code review claimed."
+  },
+  "reviewed_root_dependency": "07a9a2997592e0ae7cfb5bc240a6546b9a8ab1d9",
+  "scope": "Ticket 23/36 follow-up: Crux original-source initializedness and primitive-origin backstop; scoped guard evidence only",
+  "sha256": {
+    "docs/reference/format-v0.4-stubs-check-mode.md": "580494e3102e02c793bdfa44e85d3baa1bbc6f40a47fe05c6b492fed1e3220a0",
+    "swdb/bounded_chain.py": "aa01e75fc9f35fffc4547e7a873f3d033ca4e329d15644cd5fd07426f91ae104",
+    "swdb/bounded_initialization.py": "12885e27dc1cb62b6c89ed4c2b5728c350dc6b0a5781b09ab70ff058e83b287d",
+    "swdb/bounded_std_initialization.py": "a68b6c4dbf312ad5675c29fe2cb6a287a88fc46ba4de332085dc7c8592aadd4d",
+    "swdb/c_lowering.py": "bac8d6b68b9fc6c370f6ea5a3aba322cda50f856ead4b33e90714557d982830a",
+    "swdb/cbmc_adapter.py": "2d8cd8a1beb6a69d12a33d2d493d50dfc8d206355c729cf4d647faa60dfbe753",
+    "swdb/cbmc_translator.py": "95daa8d0d9a4e77a1d5ab477659dbe42eb8029dfb9534661b35d52a38e6e00d1",
+    "swdb/crux_adapter.py": "24c2197f9b9cb30dc792872a399955c832a32fd2988a3a3a0c9f91a7a4ae0d31",
+    "swdb/proof_setup.py": "caf25d864386dc3561dd375c709f8d10bc225a30097bd0ea65e7559ad1c75d13",
+    "tests/test_bounded_array_domains.py": "0d5d7449fae547e5b7d84d9909447278d316bbbec8e523a139fd4cb2d3432927",
+    "tests/test_bounded_entry_window_view.py": "24eb4b27cb0ff9631158c8a0328accadfbf085f7070c39bbfb608c080ca36ec2",
+    "tests/test_crux_admission.py": "41aa17f78321772cf4948156722c86a86294b265d605a1ca6f49cdc62c2a1300",
+    "tests/test_crux_fallbacks.py": "d33ba37ec8f5154c683367cd6b8b057a0ec3fef432f2fa4c1ebeac95c58aa4cd",
+    "tests/test_format_doc.py": "5997477b947f18f6c4206c3719f1536b4b85f7c1839e010c316290166045881f",
+    "tests/test_proof_setup.py": "a0d73a227f0edce9566f9e943e33d88d150bd442461c96f5f7f18d6d4924e588"
+  },
+  "verification": {
+    "command": "SWDB_FRAMA_C=none SWDB_VERIFIER_LOCK=/private/tmp/probata-crux-final-standin.lock python -m pytest -q tests/test_crux_admission.py 'tests/test_proof_setup.py::test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation[swdb/bounded_chain.py]' tests/test_format_doc.py tests/test_bounded_array_domains.py tests/test_bounded_entry_window_view.py tests/test_crux_fallbacks.py -k 'not test_each_crux_fallback_proves and not test_crux_llvm_on_map and not test_a_crux_loop and not test_contradictory and not test_the_bounded_route and not test_when_each_earlier and not test_a_timeout_is and not test_a_real_valued_unit_goes and not test_a_crux_job and not test_a_crux_counterexample and not test_each_crux_regression' --tb=short",
+    "counts_by_file": {
+      "tests.test_bounded_array_domains": 27,
+      "tests.test_bounded_entry_window_view": 2,
+      "tests.test_crux_admission": 19,
+      "tests.test_crux_fallbacks": 6,
+      "tests.test_format_doc": 4,
+      "tests.test_proof_setup": 1
+    },
+    "deselected": 14,
+    "diff_check": "passed",
+    "elapsed_seconds": 50.03,
+    "exit_code": 0,
+    "junit": {
+      "path": "/private/tmp/probata-crux-admission-evidence/focused.xml",
+      "sha256": "4c804b76e58f593e91f1e8a55a49b493f311bc169e6bbc0183dbb66b83e7b6ee"
+    },
+    "log": {
+      "path": "/private/tmp/probata-crux-admission-evidence/focused.log",
+      "sha256": "7d6d0661c1aacf46238e0b7f80d6b3126a84d379c9e84c4f259710ef0f03801c"
+    },
+    "native_compilation": "Clang source analysis, bitcode compilation and C/C++ differential execution are used where appropriate; symbolic-verifier commands are explicit stand-ins.",
+    "passed": 59,
+    "real_verifier_jobs": 0
+  }
+}

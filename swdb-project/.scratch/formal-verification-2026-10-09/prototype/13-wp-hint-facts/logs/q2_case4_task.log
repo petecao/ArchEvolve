@@ -1,0 +1,7 @@
+== q2_case4_task: frama-c q2_logic.c -cpp-extra-args=-DCASE=4 -wp -wp-cache none -wp-gen -wp-prover alt-ergo -wp-msg-key print-generated
+[kernel] Parsing q2_logic.c (with preprocessing)
+[kernel:annot-error] q2_logic.c:20: Failure: 
+  ill-formed inductive definition: nb should not be used as negative occurrence. Ignoring global annotation
+[kernel] User Error: warning annot-error treated as fatal error.
+[kernel] Frama-C aborted: invalid user input.
+exit=1

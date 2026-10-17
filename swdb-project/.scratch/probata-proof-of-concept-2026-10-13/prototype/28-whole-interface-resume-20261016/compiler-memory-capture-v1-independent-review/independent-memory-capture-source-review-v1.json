@@ -1,0 +1,84 @@
+{
+  "checks": {
+    "165s_entry_180s_4GiB_guard_and_120s_clipped_AST_phase": true,
+    "all_JSON_inverse_old_new_claims_verified": true,
+    "bounded_2GiB_expanded_stream_128MiB_file_256MiB_aggregate_1MiB_reserve": true,
+    "complete_original_caller_TU_no_filter_or_frozen_offset_join": true,
+    "dependency_runtime_source_control_and_finalization_guards_unchanged": true,
+    "exact_memory_source_55b9_and_two_caller_recipe_substitutions": true,
+    "full_predecessor_text_and_AST_reconstructed": true,
+    "new_success_is_four_zero_exit_observation_only": true,
+    "node1_source2baf_and_runtime_role_guard_binding_consistent": true,
+    "root_must_unset_LIBRARY_PATH_and_match_exact_wrapper_hashes": true,
+    "separate_ABI_literals_never_ID_joined": true
+  },
+  "command": {
+    "bytes": 13773,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-memory-capture-v1/linux_memory_capture_command_v1.json",
+    "sha256": "eae29286c205e12c3895bfec1e738aefc811e1f263288520f377b5c785490111"
+  },
+  "command_inverse_edits": 15,
+  "date": "2026-10-16 ET",
+  "entry": {
+    "bytes": 28899,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-memory-capture-v1/linux_memory_capture_v1.py",
+    "sha256": "685ba0fd66de6fb891e634b616fd47d36bffed2fbfa03ecc90ba0925985933a5"
+  },
+  "entry_inverse_edits": 16,
+  "findings": [],
+  "inverse": {
+    "bytes": 49198,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-memory-capture-v1/memory-capture-v1-inverse.json",
+    "sha256": "dbce496d020755685de232bab08e9d6c4ef2e90928201aea1b2432c3a05234c7"
+  },
+  "no_project_import_tests_SSH_compiler_native_solver_or_main_execution": true,
+  "not_established": [
+    "fresh source/runtime/lane/environment state",
+    "actual compiler exits or complete output",
+    "strict compiler JSON role grammar/inverse",
+    "AST/ABI/source/call/body/model/native/public acceptance",
+    "full ticket28 acceptance"
+  ],
+  "packet": {
+    "bytes": 7734,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-memory-capture-v1/memory-capture-source-packet-v1.json",
+    "sha256": "74b8bbc1b5276c5c84916073675a09dcc663e7548c5983a853fcc04c75fccd69"
+  },
+  "pin_occurrences_checked": 20,
+  "policy": {
+    "bytes": 666024,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-memory-capture-v1/linux_memory_capture_policy_v1.json",
+    "sha256": "d1bfb65ad9bf85aab9cd7dce14ef3b5002134878d86dbaae432814b3082c7cf6"
+  },
+  "policy_inverse_edits": 18,
+  "retained_controls": {
+    "errors": 0,
+    "failures": 0,
+    "rerun_by_reviewer": false,
+    "skips": 0,
+    "tests": 10
+  },
+  "review_source": {
+    "bytes": 8982,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-memory-capture-v1-independent-review/review_static.py",
+    "sha256": "672d2b1e210b2a3f794472c318af1ba2bb079ef5a025d8f119887fd5d54f1732"
+  },
+  "reviewer_scope": "Independent complete entry/preparation/control-source reading plus metadata/AST/hash/inverse checks; no target execution",
+  "schema": "independent-memory-capture-static-review-1",
+  "unchanged_function_ASTs": [
+    "_stable_capture_stat",
+    "pin",
+    "save",
+    "recheck",
+    "original_helpers",
+    "check_derived_stub",
+    "compare_dependencies",
+    "finalization_payloads",
+    "finalize_capture",
+    "bind_zlib",
+    "lossless_recipe",
+    "stream_caller_ast"
+  ],
+  "unique_physical_paths": 20,
+  "verdict": "PASS_SOURCE_ONLY_COMPILER_OBSERVATION_PACKET"
+}

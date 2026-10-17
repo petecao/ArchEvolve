@@ -1,0 +1,650 @@
+{
+  "created_utc": "2026-10-16T19:37:29.429695+00:00",
+  "created": "2026-10-16 ET",
+  "kind": "native86-v4",
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4",
+  "actual": {
+    "lane.json": {
+      "socket_lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "command": [
+          "timeout",
+          "--signal=TERM",
+          "--kill-after=60",
+          "300",
+          "bash",
+          "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/run.sh"
+        ],
+        "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+        "ended_utc": "2026-10-16T19:36:22Z",
+        "exit_code": 0,
+        "host": "mbit10",
+        "job": "probata-resume-20261016-2baf722f-t28-whole-native86-v4",
+        "lease_generation": 612,
+        "lease_name": "mbit10-evaluation-node0",
+        "load1_at_start": 1.48,
+        "load1_max": 32,
+        "node": 0,
+        "numa_memory_policy": "bind:0",
+        "numactl": "--cpunodebind=0 --membind=0",
+        "preregistration_sha256": null,
+        "started_utc": "2026-10-16T19:36:01Z"
+      }
+    },
+    "outer-resources.json": {
+      "exit_code": 0,
+      "peak_rss_bytes": 210575360,
+      "out_of_memory": false,
+      "timed_out": false,
+      "wall_seconds": 20.9580143019557,
+      "cpu_seconds": 24.7175
+    },
+    "resources.json": {
+      "cpu_seconds": 18.964198999999997,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 157097984,
+      "timed_out": false,
+      "wall_seconds": 19.033972126431763
+    },
+    "source-after.json": {
+      "commit": "2baf722fdaa6cba24b859eae3172a6f597417d72",
+      "source_unchanged": true,
+      "tracked_changes": ""
+    },
+    "root-guard-adaptation.json": {
+      "rss_cap_bytes": 4294967296,
+      "timeout_seconds": 180,
+      "run_environment_unset": [
+        "LIBRARY_PATH"
+      ],
+      "files": {
+        "execute.py": {
+          "original_sha256": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612",
+          "actual_sha256": "8442533f911e2ba7f10757a5b16ba451d4ece7d9d5dc292ce5b9d8c29eabdcbf"
+        },
+        "watch.py": {
+          "original_sha256": "4485ae66aa50c65f2b579f84836576aa67b54431978da71cac6eea6a68ecd07c",
+          "actual_sha256": "49be8a36d6e04b50e1ab599dad8b00f78a1c639132c3079c523c2c0c9177c5f0"
+        },
+        "run.sh": {
+          "original_sha256": "650f815cb7562767829d94e8868da56990c98301376b999af6c659fbe499fcf3",
+          "actual_sha256": "901415b8bf07078acbaca6549e01a6836967524f1f06a36d57e80ac58e2b9603"
+        }
+      },
+      "scope": "Exact resource-literal substitution only; reviewed original wrappers and launch remain retained"
+    },
+    "native86-linux-role.json": {
+      "Mac_counted_claim": false,
+      "derived_marker": "fc3b8dd938d1fbaf86885d7581e075788b9d82b86663abbe961d17d3f57e3bfa",
+      "launch": {
+        "bytes": 1629,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/launch.json",
+        "sha256": "707b777f541ac3b8877b03e2c73aef0739a943b2bdd2631c3d4a4458faf1178a"
+      },
+      "live": {
+        "ancestor_chain": [
+          3918891,
+          3918852,
+          3918851,
+          3918848,
+          3918847
+        ],
+        "ancestor_pid": 3918778,
+        "cpus": [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24,
+          26,
+          28,
+          30,
+          32,
+          34,
+          36,
+          38,
+          40,
+          42,
+          44,
+          46,
+          48,
+          50,
+          52,
+          54,
+          56,
+          58,
+          60,
+          62
+        ],
+        "fd9_matches_lease": true,
+        "generation": 612,
+        "lease": "mbit10-evaluation-node0",
+        "memory_policy": "bind:0"
+      },
+      "scope": "actual Linux execute/watch/socket role"
+    },
+    "native86-python-entry-role.json": {
+      "base_prefix": "/usr",
+      "executable": "/data1/yanruj/venvs/swdb-test/bin/python",
+      "flags": {
+        "dont_write_bytecode": true,
+        "isolated": 1,
+        "no_user_site": 1,
+        "optimize": 0,
+        "safe_path": true
+      },
+      "initial_sys_path": [
+        "/usr/lib/python312.zip",
+        "/usr/lib/python3.12",
+        "/usr/lib/python3.12/lib-dynload",
+        "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages",
+        "/usr/local/lib/python3.12/dist-packages",
+        "/usr/lib/python3/dist-packages",
+        "/usr/lib/python3.12/dist-packages"
+      ],
+      "module_origins": {
+        "_distutils_hack": {
+          "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+          "path": "/usr/lib/python3/dist-packages/_distutils_hack/__init__.py",
+          "sha256": "46849a60a7cc85189cf6b5ac62b3f135004862ce6a96540a81c95ef6fbc4dc3e",
+          "spec_origin": "/usr/lib/python3/dist-packages/_distutils_hack/__init__.py"
+        },
+        "jsonschema": {
+          "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+          "path": "/usr/lib/python3/dist-packages/jsonschema/__init__.py",
+          "sha256": "87497644f54cf648a653bfa34d22a812782e577406bebad0be59c937717a50f9",
+          "spec_origin": "/usr/lib/python3/dist-packages/jsonschema/__init__.py"
+        },
+        "psutil": {
+          "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+          "path": "/usr/lib/python3/dist-packages/psutil/__init__.py",
+          "sha256": "6167ff8b6663b89a842d17cd97a9d7d2766ea22d3d197a8c64f255b0c24c0904",
+          "spec_origin": "/usr/lib/python3/dist-packages/psutil/__init__.py"
+        },
+        "pytest": {
+          "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+          "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/pytest/__init__.py",
+          "sha256": "ee37885c9583f843390684dfb496907f87a0905128e7a3cf4ad227f49ff34c2d",
+          "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/pytest/__init__.py"
+        },
+        "site": {
+          "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+          "path": "/usr/lib/python3.12/site.py",
+          "sha256": "619436355cbe91c3b29681ab486ee63f5f2e0a7d6274dfae747bdb94e60bca55",
+          "spec_origin": "frozen"
+        },
+        "sitecustomize": {
+          "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+          "path": "/etc/python3.12/sitecustomize.py",
+          "sha256": "43d81125d92376b1a69d53a71126a041cc9a18d8080e92dea0a2ae23be138b1e",
+          "spec_origin": "/usr/lib/python3.12/sitecustomize.py"
+        },
+        "yaml": {
+          "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+          "path": "/usr/lib/python3/dist-packages/yaml/__init__.py",
+          "sha256": "6e1974e6a49e3bed59c654918c6aef9769bd9eb5dbd67f7e1906ad4cdd0caea7",
+          "spec_origin": "/usr/lib/python3/dist-packages/yaml/__init__.py"
+        }
+      },
+      "packages": [
+        "pytest",
+        "yaml",
+        "jsonschema",
+        "psutil"
+      ],
+      "post_package_sys_path": [
+        "/usr/lib/python312.zip",
+        "/usr/lib/python3.12",
+        "/usr/lib/python3.12/lib-dynload",
+        "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages",
+        "/usr/local/lib/python3.12/dist-packages",
+        "/usr/lib/python3/dist-packages",
+        "/usr/lib/python3.12/dist-packages"
+      ],
+      "prefix": "/data1/yanruj/venvs/swdb-test",
+      "pycache_prefix": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/entry-source-cache",
+      "role": "entry-isolated",
+      "schema": "guarded-python-role-observation-2",
+      "scope": "Actual role initial and post-package states recorded separately; no project import/compiler/proof",
+      "startup_environment": {
+        "PROBATA_OUTPUT": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4",
+        "PYTEST_DISABLE_PLUGIN_AUTOLOAD": null,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONNOUSERSITE": null,
+        "PYTHONPATH": "/data1/yanruj/probata-resume-20261016-2baf722f/swdb-project",
+        "PYTHONPYCACHEPREFIX": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/entry-source-cache",
+        "PYTHONSAFEPATH": null,
+        "SETUPTOOLS_USE_DISTUTILS": null,
+        "SWDB_VERIFIER_LOCK": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/verifier.lock",
+        "SWDB_VERIFIER_RSS_CAP_BYTES": "4294967296"
+      },
+      "user_site_enabled": false
+    },
+    "component/result.json": {
+      "accepted": true,
+      "after_input_errors": [],
+      "bytecode_cache_present": false,
+      "controls_by_language": {
+        "c11": {
+          "action_order_cases": 2,
+          "controls": 86,
+          "family_dtype_cases": 66,
+          "history_cases": 6,
+          "refusals": 6,
+          "subtract_fold_cases": 6
+        },
+        "cpp17": {
+          "action_order_cases": 2,
+          "controls": 86,
+          "family_dtype_cases": 66,
+          "history_cases": 6,
+          "refusals": 6,
+          "subtract_fold_cases": 6
+        }
+      },
+      "current_0_2": false,
+      "error": null,
+      "full_ticket28": false,
+      "header_timing_tcb": "dependencies first hashed after preprocessing; source/runtime known inputs checked before launch and after capture",
+      "private_native_controls_only": true,
+      "public_proof": false,
+      "wall_seconds": 18.925402379594743
+    },
+    "component/commands.json": [
+      {
+        "argv": [
+          "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+          "--no-default-config",
+          "-x",
+          "c",
+          "-std=c11",
+          "-O1",
+          "-g",
+          "-fsanitize=address,undefined",
+          "-fno-omit-frame-pointer",
+          "-fno-sanitize-recover=all",
+          "-E",
+          "-MD",
+          "-MF",
+          "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/c11.d",
+          "-MT",
+          "c11",
+          "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/control/whole_values_native_v1.c",
+          "-o",
+          "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/c11.i"
+        ],
+        "cwd": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component",
+        "name": "c11-preprocess",
+        "returncode": 0,
+        "stderr": {
+          "bytes": 104,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/c11-preprocess.stderr",
+          "sha256": "d5705e5f0e990454e816909f71386efeef8872bd7e7760d063d203ae6369da3a"
+        },
+        "stdout": {
+          "bytes": 0,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/c11-preprocess.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timeout_seconds": 45
+      },
+      {
+        "argv": [
+          "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+          "--no-default-config",
+          "-x",
+          "cpp-output",
+          "-std=c11",
+          "-O1",
+          "-g",
+          "-fsanitize=address,undefined",
+          "-fno-omit-frame-pointer",
+          "-fno-sanitize-recover=all",
+          "-c",
+          "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/c11.i",
+          "-o",
+          "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/c11.o"
+        ],
+        "cwd": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component",
+        "name": "c11-compile",
+        "returncode": 0,
+        "stderr": {
+          "bytes": 104,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/c11-compile.stderr",
+          "sha256": "d5705e5f0e990454e816909f71386efeef8872bd7e7760d063d203ae6369da3a"
+        },
+        "stdout": {
+          "bytes": 0,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/c11-compile.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timeout_seconds": 60
+      },
+      {
+        "argv": [
+          "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+          "--no-default-config",
+          "-O1",
+          "-g",
+          "-fsanitize=address,undefined",
+          "-fno-omit-frame-pointer",
+          "-fno-sanitize-recover=all",
+          "-fuse-ld=/usr/bin/x86_64-linux-gnu-ld.bfd",
+          "-Wl,-t",
+          "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/c11.o",
+          "-o",
+          "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/c11.native"
+        ],
+        "cwd": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component",
+        "name": "c11-link",
+        "returncode": 0,
+        "stderr": {
+          "bytes": 0,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/c11-link.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 1926,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/c11-link.stdout",
+          "sha256": "ece8cea8d00083db3261a397f6501794d407557214b33a95570443b35ac4bf80"
+        },
+        "timeout_seconds": 45
+      },
+      {
+        "argv": [
+          "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/c11.native"
+        ],
+        "cwd": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component",
+        "name": "c11-run",
+        "returncode": 0,
+        "stderr": {
+          "bytes": 0,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/c11-run.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 118,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/c11-run.stdout",
+          "sha256": "4c82294fcb1c474e139f48406da912801e59c97edb327ad2aa6bc1266469491b"
+        },
+        "timeout_seconds": 20
+      },
+      {
+        "argv": [
+          "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+          "--no-default-config",
+          "-x",
+          "c++",
+          "-std=c++17",
+          "-O1",
+          "-g",
+          "-fsanitize=address,undefined",
+          "-fno-omit-frame-pointer",
+          "-fno-sanitize-recover=all",
+          "-E",
+          "-MD",
+          "-MF",
+          "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/cpp17.d",
+          "-MT",
+          "cpp17",
+          "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/control/whole_values_native_v1.c",
+          "-o",
+          "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/cpp17.ii"
+        ],
+        "cwd": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component",
+        "name": "cpp17-preprocess",
+        "returncode": 0,
+        "stderr": {
+          "bytes": 0,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/cpp17-preprocess.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 0,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/cpp17-preprocess.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timeout_seconds": 45
+      },
+      {
+        "argv": [
+          "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+          "--no-default-config",
+          "-x",
+          "c++-cpp-output",
+          "-std=c++17",
+          "-O1",
+          "-g",
+          "-fsanitize=address,undefined",
+          "-fno-omit-frame-pointer",
+          "-fno-sanitize-recover=all",
+          "-c",
+          "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/cpp17.ii",
+          "-o",
+          "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/cpp17.o"
+        ],
+        "cwd": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component",
+        "name": "cpp17-compile",
+        "returncode": 0,
+        "stderr": {
+          "bytes": 104,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/cpp17-compile.stderr",
+          "sha256": "d5705e5f0e990454e816909f71386efeef8872bd7e7760d063d203ae6369da3a"
+        },
+        "stdout": {
+          "bytes": 0,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/cpp17-compile.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timeout_seconds": 60
+      },
+      {
+        "argv": [
+          "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+          "--no-default-config",
+          "-O1",
+          "-g",
+          "-fsanitize=address,undefined",
+          "-fno-omit-frame-pointer",
+          "-fno-sanitize-recover=all",
+          "-fuse-ld=/usr/bin/x86_64-linux-gnu-ld.bfd",
+          "-Wl,-t",
+          "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/cpp17.o",
+          "-o",
+          "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/cpp17.native"
+        ],
+        "cwd": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component",
+        "name": "cpp17-link",
+        "returncode": 0,
+        "stderr": {
+          "bytes": 0,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/cpp17-link.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 1928,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/cpp17-link.stdout",
+          "sha256": "fd6e8c4dab7070c0bc4fcecf15bb788f7084556f276755c218e97c7fc8cb1df6"
+        },
+        "timeout_seconds": 45
+      },
+      {
+        "argv": [
+          "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/cpp17.native"
+        ],
+        "cwd": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component",
+        "name": "cpp17-run",
+        "returncode": 0,
+        "stderr": {
+          "bytes": 0,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/cpp17-run.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 118,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/cpp17-run.stdout",
+          "sha256": "4c82294fcb1c474e139f48406da912801e59c97edb327ad2aa6bc1266469491b"
+        },
+        "timeout_seconds": 20
+      }
+    ],
+    "component/observations.json": [
+      {
+        "binary": {
+          "bytes": 3423608,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/c11.native",
+          "sha256": "5f2a7dc9eea208112174f17f18dd5a2078c8d3450699831eeff5e82837028a0b"
+        },
+        "language": "c11",
+        "private_native_only": true,
+        "result": {
+          "action_order_cases": 2,
+          "controls": 86,
+          "family_dtype_cases": 66,
+          "history_cases": 6,
+          "refusals": 6,
+          "subtract_fold_cases": 6
+        }
+      },
+      {
+        "binary": {
+          "bytes": 3431656,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/cpp17.native",
+          "sha256": "d84c27d48b6e4c1289b5b738ee753fac0a1ba284459b7c534dab3e1bb06c00ef"
+        },
+        "language": "cpp17",
+        "private_native_only": true,
+        "result": {
+          "action_order_cases": 2,
+          "controls": 86,
+          "family_dtype_cases": 66,
+          "history_cases": 6,
+          "refusals": 6,
+          "subtract_fold_cases": 6
+        }
+      }
+    ]
+  },
+  "metadata_pins": {
+    "lane.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/lane.json",
+      "sha256": "f946b78cee1f9f40819ecd42180e44992b0a19ddfc198de828a871bad55fa21a",
+      "bytes": 829
+    },
+    "outer-resources.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/outer-resources.json",
+      "sha256": "bdf1dbee54b04915243ff496f4618756efa77c1f4265aa2d4237c0de63d755b7",
+      "bytes": 162
+    },
+    "resources.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/resources.json",
+      "sha256": "55f04568e6aceaa5094d517ae8975bcf24ab17fa25dded7b4bd91f1242c9b7fa",
+      "bytes": 175
+    },
+    "source-after.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/source-after.json",
+      "sha256": "a185a8f90eeed849768421e0c786f76c8ae4c1573e2287ab6114d1098c7be818",
+      "bytes": 112
+    },
+    "root-guard-adaptation.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/root-guard-adaptation.json",
+      "sha256": "fba89bce199f8ee06bcb9804105b81a4a9d1e0da2e54720496b21aaa555c9b3f",
+      "bytes": 864
+    },
+    "native86-linux-role.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/native86-linux-role.json",
+      "sha256": "f5f1e88545178578ee2d97118eb48558ee5d01e93cd2f48f5e2a25d63b6e535d",
+      "bytes": 1014
+    },
+    "native86-python-entry-role.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/native86-python-entry-role.json",
+      "sha256": "957fe74faadc8ade23fcb1c4f482ed083aa7714da4f845e25b1cab7c061e5f2e",
+      "bytes": 4403
+    },
+    "component/result.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/result.json",
+      "sha256": "4364ef38b920ccbeba37bb36dd235b9a5286bbb3ec705133568dfc89d1f5fa05",
+      "bytes": 797
+    },
+    "component/commands.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/commands.json",
+      "sha256": "1397718f2ee7d9f79455821db72a939f9d8aca422328386d442f8c85a03ad1be",
+      "bytes": 9733
+    },
+    "component/observations.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/observations.json",
+      "sha256": "d0ad4234c581876fc5ce34fcb8856ef6c204dd6c081db9668f046e22678d0251",
+      "bytes": 1011
+    }
+  },
+  "artifact_manifest": {
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4/component/artifact-manifest.json",
+    "sha256": "4321e4902a972fb060673074a6aa6b821c42db3cbe3b0626e85ccf69112275a5",
+    "bytes": 7761
+  },
+  "manifest_rows_verified": 29,
+  "raw_files": 62,
+  "raw_bytes": 9587978,
+  "settlement": {
+    "selected_live_processes": [],
+    "proc_read_failures": 0,
+    "target_and_legacy_leases": {
+      "mbit10-evaluation-node0": {
+        "active_session": null,
+        "heartbeat_at": "2026-10-16T19:36:22Z",
+        "lease": {
+          "acquired_at": "2026-10-16T19:36:01Z",
+          "daemon_pid": 3918778,
+          "daemon_start_token": "sh3918778-1792179361",
+          "generation": 612,
+          "host": "mbit10",
+          "lease_name": "mbit10-evaluation-node0",
+          "mode": "measure",
+          "session_id": null
+        },
+        "attempt_pid": null,
+        "attempt_start_token": null,
+        "recovered_from_generation": null,
+        "released_at": "2026-10-16T19:36:22Z",
+        "session_note": null,
+        "session_state": "none",
+        "state": "released",
+        "writer": "hostlock.sh"
+      },
+      "mbit10-evaluation": {
+        "active_session": null,
+        "heartbeat_at": "2026-09-12T04:49:11Z",
+        "lease": {
+          "acquired_at": "2026-09-12T01:35:42Z",
+          "daemon_pid": 209457,
+          "daemon_start_token": "sh209457-1789176942",
+          "generation": 77,
+          "host": "mbit10",
+          "lease_name": "mbit10-evaluation",
+          "mode": "measure",
+          "session_id": null
+        },
+        "attempt_pid": null,
+        "attempt_start_token": null,
+        "recovered_from_generation": null,
+        "released_at": "2026-09-12T04:49:11Z",
+        "session_note": null,
+        "session_state": "none",
+        "state": "released",
+        "writer": "hostlock.sh"
+      }
+    },
+    "boundary": "Finite process/lease observation; no claim about inaccessible or future state."
+  },
+  "scope": "Successful private C11/C++17 ASan/UBSan control execution only; independent cold source/runtime/link/header audit pending. No public/formal/source-call/current0.2/full ticket acceptance."
+}

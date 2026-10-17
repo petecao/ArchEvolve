@@ -1,0 +1,180 @@
+date: '2026-09-25'
+id: bfs-campaign-preparation-20260925-a1
+repository_commit: f3b50df793f6e81716a0b428c8a9321015892047
+host: mbit10
+preparation_lane:
+  socket_lane:
+    aligned_cell_age_s: ''
+    aligned_to: no_gapbs_batch_running
+    command:
+    - bash
+    - /data/yanruj/EvolveSWDB_runs/bfs-campaign-preparation-20260925/bfs-campaign-preparation-20260925-a1.prepare/run.sh
+    cpus_allowed_list: 0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62
+    ended_utc: '2026-09-26T03:37:37Z'
+    exit_code: 0
+    host: mbit10
+    job: swdb-bfs-prepare-a1
+    lease_generation: 274
+    lease_name: mbit10-evaluation-node0
+    load1_at_start: 16.3
+    load1_max: 32
+    node: 0
+    numa_memory_policy: bind:0
+    numactl: --cpunodebind=0 --membind=0
+    preregistration_sha256: null
+    started_utc: '2026-09-26T03:34:55Z'
+patch_build_lane:
+  socket_lane:
+    aligned_cell_age_s: ''
+    aligned_to: no_gapbs_batch_running
+    command:
+    - bash
+    - /data/yanruj/EvolveSWDB_runs/bfs-campaign-preparation-20260925/bfs-campaign-preparation-20260925-a1.patch-build/run.sh
+    cpus_allowed_list: 0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62
+    ended_utc: '2026-09-26T03:43:11Z'
+    exit_code: 0
+    host: mbit10
+    job: swdb-bfs-patch-build-a1
+    lease_generation: 275
+    lease_name: mbit10-evaluation-node0
+    load1_at_start: 13.83
+    load1_max: 32
+    node: 0
+    numa_memory_policy: bind:0
+    numactl: --cpunodebind=0 --membind=0
+    preregistration_sha256: null
+    started_utc: '2026-09-26T03:41:01Z'
+envelopes:
+- id: bfs-campaign-preparation-20260925-a1.dx100-instructions
+  path: /data/yanruj/EvolveSWDB_runs/bfs-campaign-preparation-20260925/bfs-campaign-preparation-20260925-a1.prepare/dx100-instructions.proposal.json
+  sha256: 9dbfb4bc446507a09a3589d51d1c448336a7fda62456358a4f65b0c326512095
+  route: natural_language
+  strategy: existing-dx100-top-down-offload
+  profile_packages:
+  - bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.5828ff2030b22718
+  - bfs-native-pilot-20260925-dx10018-a1.kronecker.package.v1.1d44ec6b44f05000
+  source_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  state: prepared_not_submitted
+- id: bfs-campaign-preparation-20260925-a1.dx100-patch
+  path: /data/yanruj/EvolveSWDB_runs/bfs-campaign-preparation-20260925/bfs-campaign-preparation-20260925-a1.prepare/dx100-patch.proposal.json
+  sha256: 0ea3a52dc2814b7aa1bee1865084ef3599a12ffe645f4c3d8af6b19fb15ce9b2
+  route: patch
+  strategy: cpu-frontier-load-balancing-and-redundant-work-elimination
+  profile_packages:
+  - bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.5828ff2030b22718
+  - bfs-native-pilot-20260925-dx10018-a1.kronecker.package.v1.1d44ec6b44f05000
+  source_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  state: candidate_created
+- id: bfs-campaign-preparation-20260925-a1.upstream-annotated
+  path: /data/yanruj/EvolveSWDB_runs/bfs-campaign-preparation-20260925/bfs-campaign-preparation-20260925-a1.prepare/upstream-annotated.proposal.json
+  sha256: ad27ef024dc527fd45e8fba305d543f94f723a4bea28574445b00b0962736f88
+  route: annotated_source
+  strategy: upstream-hybrid-dx100-top-down-offload
+  profile_packages:
+  - bfs-native-pilot-20260925-upstream18-a2.uniform-random.package.v1.ac70410e93d0c3a6
+  - bfs-native-pilot-20260925-upstream18-a2.kronecker.package.v1.6a34b061dcca355b
+  source_sha256: d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056
+  state: prepared_not_submitted
+- id: bfs-campaign-preparation-20260925-a1.upstream-instructions
+  path: /data/yanruj/EvolveSWDB_runs/bfs-campaign-preparation-20260925/bfs-campaign-preparation-20260925-a1.prepare/upstream-instructions.proposal.json
+  sha256: 09f0622dcd1bf3e08150f0a4464b2fc97a5b4b3de336f82c8db6fed7d65d26f3
+  route: structured_instructions
+  strategy: remove-dead-initial-bitmap-clear
+  profile_packages:
+  - bfs-native-pilot-20260925-upstream18-a2.uniform-random.package.v1.ac70410e93d0c3a6
+  - bfs-native-pilot-20260925-upstream18-a2.kronecker.package.v1.6a34b061dcca355b
+  source_sha256: d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056
+  state: prepared_not_submitted
+provider_preflight:
+  version: 2.1.278 (Claude Code)
+  help:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-campaign-preparation-20260925/bfs-campaign-preparation-20260925-a1.prepare/provider-help.txt
+    sha256: ae85d661e9c086f05637ebcd868f5702b477ff6e55e2e65b8ada7807cd51a4b6
+  required_flags_present:
+  - --safe-mode
+  - --tools
+  - --strict-mcp-config
+  - --mcp-config
+  - --no-session-persistence
+  - --json-schema
+  - --max-budget-usd
+  provider_calls: 0
+  automatic_approval_review: 'Rejected source/profile export to external Claude: broad Claude Code authorization
+    was deemed insufficient for this exact payload. No provider call was executed; no workaround or retry
+    was attempted.'
+candidate: bfs-campaign-preparation-20260925-a1.dx100-patch.candidate-1
+candidate_sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+diff_sha256: 3f8576a511cbd768995d39307d0f84e55fded0ab5c5c00211c078e144fd16d67
+builds:
+  primary:
+    evaluation: bfs-campaign-preparation-20260925-a1.dx100-patch.primary.build
+    binary_sha256: 8877e72c3cbfb73d10cbc8b0f26a7a451b0d8e49ac492d11d1621602a9bd5199
+    candidate_sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+    flags:
+    - -std=c++11
+    - -O3
+    - -Wall
+    - -g
+    - -fopenmp
+    - -DGEM5
+    - -DNUM_CORES=4
+    - -DTILE_SIZE=16384
+    compiler_version:
+    - g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+    - Copyright (C) 2023 Free Software Foundation, Inc.
+    regions: 0
+    selected_regions: []
+    correctness: unverified
+    timing_samples: 0
+  diagnostic:
+    evaluation: bfs-campaign-preparation-20260925-a1.dx100-patch.diagnostic.build
+    binary_sha256: e399438768319f8f51637879885c731b340e3623add49d38b977fe1b6567a872
+    candidate_sha256: 10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028
+    flags:
+    - -std=c++11
+    - -O3
+    - -Wall
+    - -g
+    - -fopenmp
+    - -DGEM5
+    - -DNUM_CORES=4
+    - -DTILE_SIZE=16384
+    compiler_version:
+    - g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+    - Copyright (C) 2023 Free Software Foundation, Inc.
+    regions: 31
+    selected_regions:
+    - id: function:bfs.cc:10396:d26a44a368eb08b9
+      kind: function
+      name: TDStep
+      lines: [227, 258]
+      source_sha256: d26a44a368eb08b98f2b96274b5fef16382c8ddba3ab716a7853d4de6fd51ce5
+    - id: function:bfs.cc:13287:71949e7157b42ff3
+      kind: function
+      name: DOBFS
+      lines: [313, 364]
+      source_sha256: 71949e7157b42ff39306d16765a69b4fd6059a0c9a17e820a538a6c8b7b9811e
+    correctness: unverified
+    timing_samples: 0
+bounds:
+  date: '2026-09-25'
+  outer_seconds: 900
+  submission_seconds: 180
+  compile_cli_seconds: 300
+  build_seconds: 120
+  build_total_seconds: 240
+  compiler_memory_gib: 16
+  compiler_storage_gib: 1
+  provider_invocation: false
+  guest_execution: false
+  performance_timing: false
+  gain_claim: false
+audit:
+  state: passed
+  source_matches_fixed_literal_patch: true
+  all_other_source_files_unchanged: true
+  protected_inputs_verified: true
+  binary_driver_source_runtime_hashes_verified: true
+  all_discovered_region_byte_hashes_verified: true
+guest_execution: false
+gain_claim: false

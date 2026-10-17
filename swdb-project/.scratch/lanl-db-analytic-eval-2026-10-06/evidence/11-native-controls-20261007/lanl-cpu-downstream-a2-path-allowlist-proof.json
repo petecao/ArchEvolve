@@ -1,0 +1,150 @@
+{
+  "format": "swdb.cpu-downstream-path-allowlist-public-proof.v1",
+  "source_commit": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "tests_run": 9,
+  "failures": 0,
+  "errors": 0,
+  "all_other_bytes_unchanged": true,
+  "immutable_paths": [
+    {
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-linux-cleanup-smoke-mbit10-20261006-a1.json",
+      "sha256": "50b4b0bc44af1a8991227e00c8050ba472226dc0f6b562cd8a8eb2ffa9661613"
+    },
+    {
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-openmp-bfs.g16-projection-mbit10-20261006-a1.json",
+      "sha256": "a540cfbb98d105cbad8bab41359b1838b51a251780c495395f96fbe6534d5761"
+    },
+    {
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-openmp-bfs.g17-projection-mbit10-20261006-a1.json",
+      "sha256": "9a2244b3680e6810651183c51786976b80e3679d082145c6a94a48732fb540a1"
+    },
+    {
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-openmp-bc.g16-projection-mbit10-20261006-a1.json",
+      "sha256": "e2014d2d2c71cb8b18ce69ab87abb4c6f6c805d98e27e266ee9fb39c607bd999"
+    },
+    {
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-openmp-bc.g17-projection-mbit10-20261006-a1.json",
+      "sha256": "4f3884043652063b4f5d15a96f44a48c052241fe4659bda10abd9d87a5a203eb"
+    }
+  ],
+  "helpers": [
+    {
+      "path": "/private/tmp/lanl-dispatch-cpu-model-validation-a2.py",
+      "sha256": "70619cbf44dfb8c850178b73e61afbc157d7247cb36b86908543bd7c0ee42d4f",
+      "explicit_literal_allowlist": [
+        {
+          "old_exact_literal": "'-20261006-a1'",
+          "new_exact_literal": "'-20261006-a2'",
+          "occurrences": 4
+        },
+        {
+          "old_exact_literal": "'-20261006-a1/records'",
+          "new_exact_literal": "'-20261006-a2/records'",
+          "occurrences": 1
+        },
+        {
+          "old_exact_literal": "'/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a1/acceptance.json'",
+          "new_exact_literal": "'/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a2/acceptance.json'",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/lanl-export-cpu-model-validation-a2.py",
+      "sha256": "a277f61e0e5781858596499d51cb974e2391f1a81f3266d29ba52a13aeb0e9cd",
+      "explicit_literal_allowlist": [
+        {
+          "old_exact_literal": "'-20261006-a1'",
+          "new_exact_literal": "'-20261006-a2'",
+          "occurrences": 1
+        },
+        {
+          "old_exact_literal": "'-20261006-a1/records'",
+          "new_exact_literal": "'-20261006-a2/records'",
+          "occurrences": 1
+        },
+        {
+          "old_exact_literal": "'-evidence-20261006-a1'",
+          "new_exact_literal": "'-evidence-20261006-a2'",
+          "occurrences": 1
+        },
+        {
+          "old_exact_literal": "'-evidence-a1'",
+          "new_exact_literal": "'-evidence-a2'",
+          "occurrences": 1
+        },
+        {
+          "old_exact_literal": "'-mbit10-20261006-a1.json'",
+          "new_exact_literal": "'-mbit10-20261006-a2.json'",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/lanl-dispatch-cpu-band-report-a2.py",
+      "sha256": "f8eb4847bd791fdf8d90f75b1ddbea1f74e76f2ebf16ab9926532d3eb9bc609b",
+      "explicit_literal_allowlist": [
+        {
+          "old_exact_literal": "'/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261006-a1'",
+          "new_exact_literal": "'/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261006-a2'",
+          "occurrences": 1
+        },
+        {
+          "old_exact_literal": "'/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a1'",
+          "new_exact_literal": "'/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a2'",
+          "occurrences": 2
+        },
+        {
+          "old_exact_literal": "'/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a1'",
+          "new_exact_literal": "'/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a2'",
+          "occurrences": 2
+        },
+        {
+          "old_exact_literal": "'swdb-lanl-cpu-band-report-20261006-a1'",
+          "new_exact_literal": "'swdb-lanl-cpu-band-report-20261006-a2'",
+          "occurrences": 2
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/lanl-export-cpu-band-report-a2.py",
+      "sha256": "8a82b44a7fe4bcf1e8942f93705362840bb8147606604f1785c58829d73c86ab",
+      "explicit_literal_allowlist": [
+        {
+          "old_exact_literal": "'/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261006-a1'",
+          "new_exact_literal": "'/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261006-a2'",
+          "occurrences": 1
+        },
+        {
+          "old_exact_literal": "'/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a1'",
+          "new_exact_literal": "'/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a2'",
+          "occurrences": 1
+        },
+        {
+          "old_exact_literal": "'/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a1'",
+          "new_exact_literal": "'/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a2'",
+          "occurrences": 1
+        },
+        {
+          "old_exact_literal": "'/data1/yanruj/ArchEvolve-lanl-cpu-band-report-evidence-20261006-a1'",
+          "new_exact_literal": "'/data1/yanruj/ArchEvolve-lanl-cpu-band-report-evidence-20261006-a2'",
+          "occurrences": 1
+        },
+        {
+          "old_exact_literal": "'codex/lanl-cpu-band-report-evidence-a1'",
+          "new_exact_literal": "'codex/lanl-cpu-band-report-evidence-a2'",
+          "occurrences": 1
+        },
+        {
+          "old_exact_literal": "'11-cpu-band-report-mbit10-20261006-a1.json'",
+          "new_exact_literal": "'11-cpu-band-report-mbit10-20261006-a2.json'",
+          "occurrences": 1
+        }
+      ]
+    }
+  ],
+  "cleanup_sha256": "0cc65f1a8dc5c8311c82e38b89035c1e554aeebd8e1682ea89dbc54bedc6f413",
+  "native_collector_s": 900,
+  "remote_execution": false,
+  "identity_sha256": "51625bf160da0468dc39f5e95c767fb13c19448026036a4303d5f70310744696"
+}

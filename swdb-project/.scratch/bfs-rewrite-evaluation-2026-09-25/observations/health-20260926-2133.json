@@ -1,0 +1,603 @@
+{
+  "receipt": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926.dispatch/health-20260926-2133.json",
+    "bytes": 278230,
+    "sha256": "c4c544c8030ff7e90b74f3f970d8fbf2dd77ddd4f1f1a9ddc4e42bb9d59f5436"
+  },
+  "observed_at": "2026-09-26T21:33:24.877641-04:00",
+  "leases": {
+    "mbit10-evaluation-node0": {
+      "state": "held",
+      "generation": 332,
+      "kernel": [
+        "8: FLOCK  ADVISORY  WRITE 3089781 08:31:55201761 0 EOF"
+      ],
+      "owner": {
+        "pid": 3089727,
+        "parent_pid": 3089726,
+        "start_ticks": 497036314,
+        "state": "S",
+        "rss_bytes": 3670016
+      }
+    },
+    "mbit10-evaluation-node1": {
+      "state": "released",
+      "generation": 413,
+      "kernel": [],
+      "owner": null
+    },
+    "mbit10-evaluation": {
+      "state": "released",
+      "generation": 77,
+      "kernel": [],
+      "owner": null
+    }
+  },
+  "disk": {
+    "/data1": {
+      "free_bytes": 17370226688
+    },
+    "/data": {
+      "free_bytes": 182565216256
+    }
+  },
+  "load": "1.09 1.19 1.25 2/1531 3144658",
+  "capacity": [
+    {
+      "node": 0,
+      "estimated_available_kib": 29896260,
+      "global_available_kib": 93222596,
+      "eligible": false
+    },
+    {
+      "node": 1,
+      "estimated_available_kib": 61336972,
+      "global_available_kib": 93222596,
+      "eligible": true
+    }
+  ],
+  "heads": {
+    "active_acceptance": {
+      "path": "/data1/yanruj/EvolveSWDB_dx100_acceptance_20260926_a1",
+      "head": "53f2e7686a41d3472c9e0824a0a9b09117884e0b",
+      "branch": "HEAD"
+    },
+    "native_paired": {
+      "path": "/data1/yanruj/EvolveSWDB_native_paired_20260926_a1",
+      "head": "98b5f50e93f531ce0395fe7e161f812a406d6d9d",
+      "branch": "HEAD"
+    },
+    "a3": {
+      "path": "/data1/yanruj/EvolveSWDB_dx100_continuation_20260926_a3",
+      "head": "1018432fdb3800522d723afb874f3bffa41dd0e5",
+      "branch": "HEAD"
+    },
+    "historical_dx": {
+      "path": "/data1/yanruj/EvolveSWDB_dx100_20260925_a1",
+      "head": "5802a5a76599de952f58a57d00c193ea9f1341d7",
+      "branch": "HEAD"
+    },
+    "historical_native": {
+      "path": "/data1/yanruj/EvolveSWDB_graph_bfs_20260925_uniform18",
+      "head": "41303ed7fb02f9a5c515e2e951d27e20869c73e9",
+      "branch": "codex/bfs-native-repeatability-evidence-20260926-a1"
+    },
+    "historical_witness": {
+      "path": "/data1/yanruj/EvolveSWDB_dx100_witness_20260926_a1",
+      "head": "51df06120982e23e4f3f0590ec3132ebf23f9af3",
+      "branch": "codex/bfs-dx100-witness-evidence-20260926-a1"
+    },
+    "helper": {
+      "path": "/data1/yanruj/Memacc-evolveswdb-lane",
+      "head": "42ce8dce1ecfb949d6e5d4ee3c98c078bc7ddc65",
+      "branch": "yanrujhou_main"
+    },
+    "orchestration": {
+      "path": "/data1/yanruj/EvolveSWDB_bfs_orchestration_20260926_a1",
+      "head": "a53e619de11278e2763c7a22576308d1a23f19bf",
+      "branch": "HEAD"
+    },
+    "native_one_thread": {
+      "path": "/data1/yanruj/EvolveSWDB_native_one_thread_20260926_a1",
+      "head": "319645eab0a25c815fa03fe1c372d32b4ba45d10",
+      "branch": "HEAD"
+    },
+    "a2_tested": {
+      "path": "/data1/yanruj/EvolveSWDB_dx100_coverage_a2_20260926",
+      "head": "67313d9b2a45d9f0fb23d935b56e755a3a19fa7f",
+      "branch": "HEAD"
+    },
+    "supervision": {
+      "path": "/data1/yanruj/EvolveSWDB_bfs_supervision_20260926_a1",
+      "head": "3f38a2bf9cde4fb23edebd787a9d4d8ab9549e07",
+      "branch": "HEAD"
+    },
+    "reader_a2": {
+      "path": "/data1/yanruj/EvolveSWDB_bfs_reader_20260926_a2",
+      "head": "5e8b750b14679d5962d1e4b40cd5fa0f1b6981b0",
+      "branch": "HEAD"
+    },
+    "a2_tested_v2": {
+      "path": "/data1/yanruj/EvolveSWDB_dx100_coverage_a2_20260926_v2",
+      "head": "5a0b15fe666b2d094a2b2b9847ff5a30ef16fb4f",
+      "branch": "HEAD"
+    },
+    "supervision_v2": {
+      "path": "/data1/yanruj/EvolveSWDB_bfs_supervision_20260926_a2",
+      "head": "4c109430d4c7b80df220c4064e4e2c9ddbc66005",
+      "branch": "HEAD"
+    },
+    "t15_gzip_correction": {
+      "path": "/data1/yanruj/EvolveSWDB_t15_gzip_correction_20260926_a1",
+      "head": "d5e215966a7d4d673050a78c6a6d77053aa62a85",
+      "branch": "codex/bfs-t15-gzip-correction-20260926-a1"
+    },
+    "t16_freeze": {
+      "path": "/data1/yanruj/EvolveSWDB_t16_freeze_20260926_a1",
+      "head": "3f38a2bf9cde4fb23edebd787a9d4d8ab9549e07"
+    },
+    "campaign_preflight": {
+      "path": "/data1/yanruj/EvolveSWDB_simulator_campaign_20260926_a1",
+      "head": "d11dc04449997734a93b982646977b04008afeff"
+    },
+    "scalar_preparation": "6732d5327c4f9e22d97367ee3eeb3c09118867d3"
+  },
+  "helper": {
+    "path": "/data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh",
+    "bytes": 10510,
+    "sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8"
+  },
+  "upstream": {
+    "observed_at": "2026-09-26T21:33:25.644992-04:00",
+    "value": "42ce8dce1ecfb949d6e5d4ee3c98c078bc7ddc65\trefs/heads/yanrujhou_main",
+    "method": "git ls-remote only; no fetch or checkout update"
+  },
+  "historical_hashes_unchanged": true,
+  "terminal_live_count": 0,
+  "scalar_same_identity": [
+    {
+      "pid": 3124933,
+      "start_ticks": 497301499,
+      "same_identity_present": true,
+      "current": {
+        "pid": 3124933,
+        "parent_pid": 359742,
+        "start_ticks": 497301499,
+        "state": "Z",
+        "rss_bytes": 0
+      }
+    }
+  ],
+  "bounded_preparations": {
+    "gzip": {
+      "raw_exists": true,
+      "dispatch_exists": true,
+      "preflight.json": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1.dispatch/preflight.json",
+        "bytes": 36265,
+        "sha256": "8b6414f6635d257278c891d6ec7a6b27943117160d9363b19e957f39a12d8dee"
+      },
+      "launch.json": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1.dispatch/launch.json",
+        "bytes": 1461,
+        "sha256": "389685335177cde710f2cb33855f855d7d5306b0e52f7c8aec98fa828b108b12"
+      },
+      "launch.json_metadata": {
+        "outer_started": "2026-09-26T20:58:40.448469-04:00",
+        "outer_deadline": "2026-09-26T21:00:10.448469-04:00",
+        "pane_identity": {
+          "pid": 3121022,
+          "start_ticks": 497265330
+        },
+        "command": [
+          "timeout",
+          "--signal=TERM",
+          "--kill-after=30s",
+          "59.999874000000005s",
+          "bash",
+          "/data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh",
+          "1",
+          "bfs-gem5-gzip-transport-20260926-a1",
+          "--record",
+          "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1.dispatch/lane.json",
+          "--",
+          "env",
+          "-u",
+          "PYTHONPATH",
+          "-u",
+          "PYTHONHOME",
+          "-u",
+          "PYTHONSTARTUP",
+          "-u",
+          "PYTHONUSERBASE",
+          "-u",
+          "PYTHONOPTIMIZE",
+          "-u",
+          "PYTEST_ADDOPTS",
+          "-u",
+          "PYTEST_PLUGINS",
+          "-u",
+          "LD_PRELOAD",
+          "-u",
+          "LD_LIBRARY_PATH",
+          "PYTHONNOUSERSITE=1",
+          "PYTHONDONTWRITEBYTECODE=1",
+          "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1",
+          "/usr/bin/python3.12",
+          "-s",
+          "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1.dispatch/supervisor.py",
+          "--outer-started",
+          "2026-09-26T20:58:40.448469-04:00",
+          "--outer-deadline",
+          "2026-09-26T21:00:10.448469-04:00",
+          "--pane-pid",
+          "3121022",
+          "--pane-start-ticks",
+          "497265330",
+          "--config-sha256",
+          "b87cc7f19f19511443a7e12a7d708c5281b360bd056cb3cc07ee394de95f7178",
+          "--supervisor-source-commit",
+          "179afc0d434aa4e1ba2fed94bdac81071a5d762d"
+        ]
+      },
+      "lane.json": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1.dispatch/lane.json",
+        "bytes": 1497,
+        "sha256": "f34bc3114a1b9f0359907cb9051b805dceb610005e3632c6fa9ec281e0fe8f46"
+      },
+      "lane.json_metadata": {
+        "socket_lane": {
+          "aligned_cell_age_s": "",
+          "aligned_to": "no_gapbs_batch_running",
+          "command": [
+            "env",
+            "-u",
+            "PYTHONPATH",
+            "-u",
+            "PYTHONHOME",
+            "-u",
+            "PYTHONSTARTUP",
+            "-u",
+            "PYTHONUSERBASE",
+            "-u",
+            "PYTHONOPTIMIZE",
+            "-u",
+            "PYTEST_ADDOPTS",
+            "-u",
+            "PYTEST_PLUGINS",
+            "-u",
+            "LD_PRELOAD",
+            "-u",
+            "LD_LIBRARY_PATH",
+            "PYTHONNOUSERSITE=1",
+            "PYTHONDONTWRITEBYTECODE=1",
+            "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1",
+            "/usr/bin/python3.12",
+            "-s",
+            "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1.dispatch/supervisor.py",
+            "--outer-started",
+            "2026-09-26T20:58:40.448469-04:00",
+            "--outer-deadline",
+            "2026-09-26T21:00:10.448469-04:00",
+            "--pane-pid",
+            "3121022",
+            "--pane-start-ticks",
+            "497265330",
+            "--config-sha256",
+            "b87cc7f19f19511443a7e12a7d708c5281b360bd056cb3cc07ee394de95f7178",
+            "--supervisor-source-commit",
+            "179afc0d434aa4e1ba2fed94bdac81071a5d762d"
+          ],
+          "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+          "ended_utc": "2026-09-27T00:58:43Z",
+          "exit_code": 0,
+          "host": "mbit10",
+          "job": "bfs-gem5-gzip-transport-20260926-a1",
+          "lease_generation": 412,
+          "lease_name": "mbit10-evaluation-node1",
+          "load1_at_start": 1.07,
+          "load1_max": 32,
+          "node": 1,
+          "numa_memory_policy": "bind:1",
+          "numactl": "--cpunodebind=1 --membind=1",
+          "preregistration_sha256": null,
+          "started_utc": "2026-09-27T00:58:40Z"
+        }
+      },
+      "terminal-validation.json": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1.dispatch/terminal-validation.json",
+        "bytes": 12515,
+        "sha256": "fc478833e8b93b6f373d0dba49192f40e3f7f01d95c6b1538ab3d42dcc0f70b5"
+      },
+      "outer.exit": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1.dispatch/outer.exit",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "outer_exit": 0,
+      "driver": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1/driver.json",
+        "bytes": 36479,
+        "sha256": "913293ee4dcacef41aee597c6f2df534bd96e295d2ba93a17f070a5d02764aa1"
+      },
+      "driver_state": "complete",
+      "driver_times": {
+        "started": "2026-09-26T20:58:40.448469-04:00",
+        "outer_started": null,
+        "finished": "2026-09-26T20:58:43.761814-04:00",
+        "outer_deadline": "2026-09-26T21:00:10.448469-04:00",
+        "elapsed_seconds": 3.304258,
+        "host_wall_s": null
+      }
+    },
+    "scalar": {
+      "raw_exists": true,
+      "dispatch_exists": true,
+      "admission.json": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1.dispatch/admission.json",
+        "bytes": 28856,
+        "sha256": "ac1854ba021d13a2299699f8a81ea6ceef26d27e4ec3b112786b9a006cf78de2"
+      },
+      "preflight.json": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1.dispatch/preflight.json",
+        "bytes": 37514,
+        "sha256": "6351528dbc8f2a35655cedd7871ebe4cbc60e67a931b4c551168b9ad02a954d7"
+      },
+      "launch.json": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1.dispatch/launch.json",
+        "bytes": 1595,
+        "sha256": "8b9e0d6bd2944806829c88e6be7be4122602d91a1abbaca73fe9d2930cc04301"
+      },
+      "launch.json_metadata": {
+        "outer_started": "2026-09-26T21:04:42.140521-04:00",
+        "outer_deadline": "2026-09-26T21:24:42.140521-04:00",
+        "pane_identity": {
+          "pid": 3124933,
+          "start_ticks": 497301499
+        },
+        "command": [
+          "timeout",
+          "--signal=TERM",
+          "--kill-after=30s",
+          "1169.999879s",
+          "bash",
+          "/data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh",
+          "1",
+          "bfs-scalar-v2-preparation-20260926-a1",
+          "--record",
+          "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1.dispatch/lane.json",
+          "--",
+          "env",
+          "-u",
+          "PYTHONPATH",
+          "-u",
+          "PYTHONHOME",
+          "-u",
+          "PYTHONSTARTUP",
+          "-u",
+          "PYTHONUSERBASE",
+          "-u",
+          "PYTHONOPTIMIZE",
+          "-u",
+          "PYTEST_ADDOPTS",
+          "-u",
+          "PYTEST_PLUGINS",
+          "-u",
+          "LD_PRELOAD",
+          "-u",
+          "LD_LIBRARY_PATH",
+          "PYTHONNOUSERSITE=1",
+          "PYTHONDONTWRITEBYTECODE=1",
+          "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1",
+          "/usr/bin/python3.12",
+          "-s",
+          "/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1/scripts/bfs_scalar_v2_builds.py",
+          "--expected-commit",
+          "6732d5327c4f9e22d97367ee3eeb3c09118867d3",
+          "--admission",
+          "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1.dispatch/admission.json",
+          "--admission-sha256",
+          "ac1854ba021d13a2299699f8a81ea6ceef26d27e4ec3b112786b9a006cf78de2",
+          "--lane",
+          "1",
+          "--outer-started",
+          "2026-09-26T21:04:42.140521-04:00",
+          "--outer-deadline",
+          "2026-09-26T21:24:42.140521-04:00",
+          "--pane-pid",
+          "3124933",
+          "--pane-start-ticks",
+          "497301499"
+        ]
+      },
+      "lane.json": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1.dispatch/lane.json",
+        "bytes": 1632,
+        "sha256": "27e8e12f85a130ed0a6654fbaad90436a9d7c22a3bc931d94e5eb7024271ca37"
+      },
+      "lane.json_metadata": {
+        "socket_lane": {
+          "aligned_cell_age_s": "",
+          "aligned_to": "no_gapbs_batch_running",
+          "command": [
+            "env",
+            "-u",
+            "PYTHONPATH",
+            "-u",
+            "PYTHONHOME",
+            "-u",
+            "PYTHONSTARTUP",
+            "-u",
+            "PYTHONUSERBASE",
+            "-u",
+            "PYTHONOPTIMIZE",
+            "-u",
+            "PYTEST_ADDOPTS",
+            "-u",
+            "PYTEST_PLUGINS",
+            "-u",
+            "LD_PRELOAD",
+            "-u",
+            "LD_LIBRARY_PATH",
+            "PYTHONNOUSERSITE=1",
+            "PYTHONDONTWRITEBYTECODE=1",
+            "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1",
+            "/usr/bin/python3.12",
+            "-s",
+            "/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1/scripts/bfs_scalar_v2_builds.py",
+            "--expected-commit",
+            "6732d5327c4f9e22d97367ee3eeb3c09118867d3",
+            "--admission",
+            "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1.dispatch/admission.json",
+            "--admission-sha256",
+            "ac1854ba021d13a2299699f8a81ea6ceef26d27e4ec3b112786b9a006cf78de2",
+            "--lane",
+            "1",
+            "--outer-started",
+            "2026-09-26T21:04:42.140521-04:00",
+            "--outer-deadline",
+            "2026-09-26T21:24:42.140521-04:00",
+            "--pane-pid",
+            "3124933",
+            "--pane-start-ticks",
+            "497301499"
+          ],
+          "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+          "ended_utc": "2026-09-27T01:08:44Z",
+          "exit_code": 1,
+          "host": "mbit10",
+          "job": "bfs-scalar-v2-preparation-20260926-a1",
+          "lease_generation": 413,
+          "lease_name": "mbit10-evaluation-node1",
+          "load1_at_start": 1.21,
+          "load1_max": 32,
+          "node": 1,
+          "numa_memory_policy": "bind:1",
+          "numactl": "--cpunodebind=1 --membind=1",
+          "preregistration_sha256": null,
+          "started_utc": "2026-09-27T01:04:42Z"
+        }
+      },
+      "terminal-validation.json": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1.dispatch/terminal-validation.json",
+        "bytes": 31512,
+        "sha256": "a60fe6c7cdabf91b8c3d368e045f225a9464102602349c55c1ee574aa9a288b1"
+      },
+      "outer.exit": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1.dispatch/outer.exit",
+        "bytes": 2,
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+      },
+      "outer_exit": 1,
+      "driver": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1/bfs-scalar-v2-preparation-20260926-a1.driver/driver.json",
+        "bytes": 114734,
+        "sha256": "3fa6dd435ba13fcc00630b90d17266b23aead96e3001cd392a8f66b49fee94f7"
+      },
+      "driver_state": "failed",
+      "driver_times": {
+        "started": "2026-09-26T21:04:42.697947-04:00",
+        "outer_started": "2026-09-26T21:04:42.140521-04:00",
+        "finished": null,
+        "outer_deadline": "2026-09-26T21:24:42.140521-04:00",
+        "elapsed_seconds": null,
+        "host_wall_s": null
+      }
+    }
+  },
+  "t16_actual_budget": {
+    "total_seconds": 18000,
+    "checkpoint_seconds": 3600,
+    "run_seconds": 14400,
+    "memory_gib": 48,
+    "storage_gib": 15
+  },
+  "t17_primary_terminal": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-t17-build-only-20260926.dispatch/terminal-validation.json",
+    "bytes": 4265,
+    "sha256": "4495783bea9d86bc5095e917540abef7b65bef6b94c158adaa41dc88f78fe625"
+  },
+  "t17_primary_record": {
+    "path": "/data1/yanruj/EvolveSWDB_provider_20260926_a1/records/evaluations/bfs-t17-build-only-20260926-a1.yaml",
+    "bytes": 17230,
+    "sha256": "d5ed1ec5b43665379a2b8d59cc2b4cbc582502beb62f5184041079e606229215"
+  },
+  "t16": {
+    "state": "running",
+    "reason": null,
+    "outer_exit": null,
+    "sample": {
+      "observed_at": "2026-09-26T21:33:27.497358-04:00",
+      "raw_bytes": 584400896,
+      "charged_raw_bytes": 1715388416,
+      "elapsed_seconds": 4377.271414134651,
+      "charged_elapsed_seconds": 4630.2714160028845,
+      "sampled_tree_rss_bytes": 30931394560
+    },
+    "live_processes": [
+      {
+        "pid": 3093548,
+        "parent_pid": 3090376,
+        "start_ticks": 497060228,
+        "state": "R",
+        "rss_bytes": 30650925056,
+        "argv_prefix": "/data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt --debug-flags=MAATrace --outdir=/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1/bfs-t16-simulator-batch-20260926-a1.artifact.scalar/bfs-t16-simulator-batch-20260926-a1.artifact.scalar.s0.r0.primary.evaluation/simulation /data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1/bfs-t16-simulator-batch-20260926-a1.artifact.sc"
+      },
+      {
+        "pid": 3090376,
+        "parent_pid": 3089858,
+        "start_ticks": 497043709,
+        "state": "S",
+        "rss_bytes": 103317504,
+        "argv_prefix": "/usr/bin/python3.12 -m swdb dx100-execute /data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1/bfs-t16-simulator-batch-20260926-a1.artifact.scalar/bfs-t16-simulator-batch-20260926-a1.artifact.scalar.driver/bfs-t16-simulator-batch-20260926-a1.artifact.scalar.s0.r0.primary.evaluation.request.json --runs-dir /data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1/bfs-t16-simulato"
+      },
+      {
+        "pid": 3089858,
+        "parent_pid": 3089797,
+        "start_ticks": 497039930,
+        "state": "S",
+        "rss_bytes": 97198080,
+        "argv_prefix": "/usr/bin/python3.12 /data1/yanruj/EvolveSWDB_simulator_campaign_20260926_a2/scripts/bfs_simulator_series.py --id bfs-t16-simulator-batch-20260926-a1.artifact.scalar --candidate bfs-author-scalar-compile-20260925-a1.candidate --workload bfs-20260925-uniform22.f23b09bb0c0601b5 --build-evaluation bfs-dx100-build-20260925-a2 --diagnostic-build bfs-author-scalar-compile-20260925-a1.diagnostic.build --c"
+      },
+      {
+        "pid": 3089797,
+        "parent_pid": 3089727,
+        "start_ticks": 497036338,
+        "state": "S",
+        "rss_bytes": 79953920,
+        "argv_prefix": "/usr/bin/python3.12 -s /data1/yanruj/EvolveSWDB_simulator_campaign_20260926_a2/scripts/bfs_simulator_batch.py t16 --admission /data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1.dispatch/admission-a2.json --admission-sha256 94f2e768e2bfb304dcffe9602133584f605fd68b366749a7b4b3d3f9431ffcca --runs-dir /data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1 --lane 0 --outer-start"
+      }
+    ],
+    "series": [
+      {
+        "id": "bfs-t16-simulator-batch-20260926-a1.artifact.scalar",
+        "state": "running",
+        "reason": null,
+        "completed_samples": 0,
+        "stages_complete": 7
+      }
+    ]
+  },
+  "top_cpu": [
+    "PID    PPID USER     STAT ELAPSED %CPU %MEM   RSS COMMAND",
+    "3144659 3144623 yanruj   R          0  200  0.0  4720 ps",
+    "3093548 3090376 yanruj   Rs      4135 99.9 22.7 29933864 gem5.opt",
+    "3144623 3144612 yanruj   S          0 46.8  0.0 31860 python3",
+    "3089797 3089727 yanruj   Sl      4374  7.0  0.0 79400 python3.12",
+    "3144561 1439329 root     Ss         0  4.5  0.0 11264 sshd",
+    "   1706    1684 root     Sl   4974727  3.3  1.3 1780308 falcon-sensor-b",
+    "3090376 3089858 yanruj   Ss      4300  0.9  0.0 102076 python3.12",
+    "3089858 3089797 yanruj   Ssl     4338  0.7  0.0 95872 python3.12",
+    "      1       0 root     Ss   4974737  0.6  0.0 13272 systemd",
+    "   1903       1 message+ Ss   4974726  0.3  0.0  6708 dbus-daemon",
+    "2807861 2000725 kidong   Sl    109186  0.1  0.3 421400 MainThread"
+  ],
+  "created": "2026-09-26",
+  "monitoring_concern": {
+    "state": "rejected; actual T16 run_seconds14400 verified",
+    "reference": {
+      "path": "/private/tmp/bfs-t16-timeout-bound-check-20260926.json",
+      "sha256": "df8e3a8aab4ce54a650407fb5f6a1d43e7f08015e9587183c15625b48da3b0a2"
+    }
+  }
+}

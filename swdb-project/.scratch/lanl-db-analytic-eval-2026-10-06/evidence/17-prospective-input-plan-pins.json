@@ -1,0 +1,47 @@
+{
+  "format": "swdb.prospective-agreement-input-plan.v1",
+  "updated": "2026-10-06 21:04 ET",
+  "state": "a2_preparation_not_frozen_or_dispatched",
+  "repository_commit": "d94dd75d0a13e9d552a2c28da67a7bacf74066c8",
+  "dx_source_revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+  "generator_directory_sha256": "9b15a2ad58d672d534a14c808320a5d666af62cbe017f14703d955bea2279cc1",
+  "source_file_sha256": {
+    "converter.cc": "8c5ce5fc37304103c16390f67f27b565aa4f7d3d178dc02cf12b3f5e25b42648",
+    "generator.h": "24bfdab312afdf6e552ef9a23d124332984761cdb94f109bb15009710d1dbafe",
+    "command_line.h": "de1415dfe29eb6ba436d57523b2dee8fa3268a0785ae690bde9e94e9444172b2",
+    "util.h": "a103e6c5767d724adc9b6b421ecade4b2d2c4351e5ea0da5d2c9bf16a9fcecf6",
+    "builder.h": "2d3646e12dc2ae9776cfa429aaec699d031b4826c79a356983cf109753f1eb01",
+    "writer.h": "3fd16ac75a8c069c7cf09d540ca35b66ec51813406b5fd2f8149253bebd9ebea",
+    "graph.h": "79a271a3e3b01d6f02750b2b828ad94b3696eff080eb068bc3fcf80bc81139e0",
+    "benchmark.h": "87c20752c8437dd5152d00e7c995bedfab15b8929219f85846f47e0f9a4b339f"
+  },
+  "scale": 18,
+  "families": [
+    "kronecker",
+    "uniform_random"
+  ],
+  "edge_factors": [
+    14,
+    15,
+    17,
+    18
+  ],
+  "requested_sources": [
+    0
+  ],
+  "fixed_seed": 27491095,
+  "policy": "no population or statistical-policy freeze",
+  "graph_or_application_execution": false,
+  "historical_outcome_values_used": false,
+  "static_checks": {
+    "shell": "bash -n passed",
+    "embedded_python_blocks": 3,
+    "public_register_cli": "help-only passed",
+    "graph_generation": false,
+    "remote_execution": false,
+    "source_hashes": "directory and all eight source files matched",
+    "external_helper_import": "passed from a real external script with exact recipe PYTHONPATH export; empty and inherited paths",
+    "external_helper_import_evidence": "17-external-helper-import-smoke.json"
+  },
+  "runbook_revision_parent": "b80b2b0407afb7caeeec43fa3ebc00bd9895defb"
+}

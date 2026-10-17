@@ -1,0 +1,35 @@
+--- /private/tmp/lanl17_read_finalize_completion_originals_20261008_a5_a1.py
++++ /private/tmp/lanl17_read_finalize_completion_originals_20261008_a5_r1.py
+@@ -107,7 +107,7 @@
+     need(sys.platform=='linux' and socket.gethostname().split('.')[0]=='mbit10' and os.getuid()==os.geteuid()==UID and pwd.getpwuid(UID).pw_name=='yanruj','native_host_account')
+     need(Path('/proc/self/exe').resolve(strict=True)==Path('/usr/bin/python3.12') and sys.flags.dont_write_bytecode and not sys.flags.optimize,'native_Python_flags')
+     for p,n,d in PINS:need(len(take(p,n))==n and sha(BODIES[str(p)])==d,'unchanged_selected_source')
+-    m=sealed(RAW/'manifest.json',2*1024*1024,'swdb.lanl17-manifest.v1',True,False)
++    m=sealed(RAW/'manifest.json',2*1024*1024,'swdb.lanl17-parent-population.v1',True,False)
+     need(sha(BODIES[str(RAW/'manifest.json')])==M2_SHA and m['identity_sha256']==M2_ID and m['source']==str(S) and m['raw']==str(RAW) and m['source_commit']==R and m['helper_sha256']==PINS[0][2] and m['estimator_sha256']==F6,'original_M2_scope')
+     pre=sealed(FINALIZE/'preregistration.json',131072,'swdb.lanl17-metadata-dispatch-preregistration.v1',False)
+     need(pre['action']=='finalize' and pre['final_source_commit']==pre['cleanup_source_commit']==R and pre['source']==str(S) and pre['raw']==str(RAW) and pre['project']==str(S/'swdb-project') and pre['source_code_equivalent_F6'] is True,'finalize_preregistration_phase')
+@@ -118,8 +118,11 @@
+     sup=sealed(FINALIZE/'supervisor-receipt.json',131072,'swdb.lanl17-metadata-supervisor.v1',False)
+     need(sup['action']=='finalize' and sup['state']=='child_returned' and type(sup['child_exit']) is int and type(sup['supervisor_exit']) is int and sup['child_exit']==sup['supervisor_exit']==0,'successful_supervisor')
+     need(sup['timeout_s']==78000 and sup['timed_out'] is False and sup['signal_received'] is None and sup['fixture'] is False and sup['error_type'] is None and sup['cleanup_errors']==[] and sup['cleanup']['subreaper'] is True and sup['cleanup']['survivors']=={},'normal_owned_cleanup')
++    need(type(sup['cleanup']) is dict and set(sup['cleanup'])=={'subreaper','terminated_owned_processes','survivors'} and type(sup['cleanup']['terminated_owned_processes']) is list and len(sup['cleanup']['terminated_owned_processes'])<=1024,'closed_supervisor_cleanup')
++    for row in sup['cleanup']['terminated_owned_processes']:
++        need(type(row) is dict and set(row)=={'pid','start_time','signal'} and type(row['pid']) is int and row['pid']>0 and type(row['start_time']) is str and re.fullmatch('[0-9]{1,32}',row['start_time']) is not None and row['signal'] in ('SIGTERM','SIGKILL'),'closed_owned_process_metadata')
+     need(sup['uid']==UID and sup['helper_sha256']==sup['cleanup_implementation_sha256']==PINS[0][2] and sup['supervisor_sha256']==PINS[2][2] and sup['estimator_sha256']==F6 and sup['provider_calls']==sup['application_outcomes']==0,'supervisor_source_scope')
+-    need(take(FINALIZE/'helper.stderr',65536,True)==b'','helper_stderr_not_empty')
++    take(FINALIZE/'helper.stderr',65536,False)  # Original git worktree/push diagnostics may be nonempty; never return body.
+     result=strict(take(RAW/'final-export.json',65536,True));helper=strict(take(FINALIZE/'helper.stdout',65536,True))
+     need(helper==result and set(result)=={'branch','commit','paths','raw_transferred'} and result['branch']=='codex/lanl17-actual-report-evidence-20261007-a5' and result['raw_transferred'] is False and type(result['commit']) is str and re.fullmatch('[0-9a-f]{40}',result['commit']) is not None,'closed_final_export')
+     paths=result['paths'];need(type(paths) is list and 1<=len(paths)<=16384 and len(set(paths))==len(paths) and all(type(p) is str and len(p)<=4096 and (p.startswith('swdb-project/records/') and p.endswith('.yaml') or p==str(EVIDENCE/'17-actual-report-mbit10-20261007-a5.json')) and '..' not in Path(p).parts for p in paths),'pure_export_paths')
+@@ -152,8 +155,8 @@
+     modules={}
+     for p in sorted((S/'swdb-project/swdb').rglob('*.py')):modules[p.relative_to(S/'swdb-project/swdb').as_posix()]=sha(metadata(p,2*1024*1024)[0])
+     need(len(modules)==185 and sha(encode(modules))==F6,'physical_source185_F6')
+-    ef={'commit':git(EF,'rev-parse','HEAD'),'tree':git(EF,'rev-parse','HEAD^{tree}'),'parents':git(EF,'rev-list','--parents','-n','1','HEAD').split()[1:]}
+-    need(ef['commit']==EF_COMMIT and ef['parents']==[R] and not git(EF,'status','--porcelain'),'original_EF_clean_parent')
++    ef={'commit':git(EF,'rev-parse','HEAD'),'tree':git(EF,'rev-parse','HEAD^{tree}'),'parents':git(EF,'rev-list','--parents','-n','1','HEAD').split()[1:],'paths':git(EF,'diff','--name-only',R,'HEAD').splitlines()}
++    need(ef['commit']==EF_COMMIT and ef['parents']==[R] and set(ef['paths'])==set(m['freeze_export']['paths']) and not git(EF,'diff','--name-only','--diff-filter=DMRTUXB',R,'HEAD') and not git(EF,'status','--porcelain'),'original_EF_clean_parent')
+     er={'commit':git(ER,'rev-parse','HEAD'),'tree':git(ER,'rev-parse','HEAD^{tree}'),'parents':git(ER,'rev-list','--parents','-n','1','HEAD').split()[1:],'branch':git(ER,'branch','--show-current'),'paths':git(ER,'diff','--name-only',R,'HEAD').splitlines()}
+     need(er['commit']==result['commit'] and er['parents']==[R] and er['branch']==result['branch'] and set(er['paths'])==set(paths) and not git(ER,'diff','--name-only','--diff-filter=DMRTUXB',R,'HEAD') and not git(ER,'status','--porcelain'),'actual_ER_pure_additions_clean')
+     # Re-read every captured original before any allowed body leaves this reader.

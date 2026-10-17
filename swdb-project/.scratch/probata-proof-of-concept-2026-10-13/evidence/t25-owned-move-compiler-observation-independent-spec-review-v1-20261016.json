@@ -1,0 +1,60 @@
+{
+  "author_controls_retained": {
+    "child_native_network_attempts": [],
+    "errors": 0,
+    "failures": 0,
+    "tests": 6
+  },
+  "date": "2026-10-16 ET",
+  "entry": {
+    "bytes": 31172,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/compiler-observation-v1/inert-032e1851-compiler-v1/entry.py",
+    "sha256": "401dc56426f6a7ddcfac7748b7d0742d1b6f25ec31b254f759ba30c5b79f7a4e"
+  },
+  "findings": [],
+  "fixture": {
+    "bytes": 327,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/fixtures/proof/lowering/vector_owned_transfer.cc",
+    "sha256": "a0dc043284f96a5b7c052963b51188318ae4abc6a85ee347fea78b6ab392d3a2"
+  },
+  "independent_checks": [
+    "All 13 preparation documents physically match complete bytes and SHA-256. Prior entry/expected/command pins and current compressed bootstrap payloads match. Six-substitution whole command inverse reconstructs predecessor exactly.",
+    "All inherited shared top-level helper ASTs and remaining/source_check/runtime_check nested ASTs match prior public9V3. Worker cleanup guard is byte-identical after only function/log-name reversal. Source commit, 334 source blobs, two helper pins, consumer trees and declared runtime/tool/import/config/ELF inventories are preserved rather than relabeled.",
+    "The original 327-byte fixture is a separately staged external input with its own exact SHA, not present in source032e Git. Its source includes count/value construction, saved data alias, fresh destination move construction, guarded saved-buffer scalar read and normal reverse-scope destruction. It never observes moved-from emptiness.",
+    "Worker checks external fixture and disabled Frama-C/CBMC selectors before project import, observes exact public runtime/compiler identity, calls public c_lowering.lower once, refuses summaries/defines/unexpected function/source/large C, retains complete C/anchors/lowering metadata and one additional original filtered AST parse. Frozen source confirms the two used APIs and no alternate source rewrite.",
+    "Worker metadata is finite JSON, bounded to16MiB, exclusive and fsynced. Parent guard applies150s leaf with profile remaining budget,8GiB process-tree RSS and128MiB file/512MiB aggregate accounting, kill/reap on every post-spawn exception, plus4MiB finalization reserve and root sibling/post-exit headroom.",
+    "Current main verifies complete required artifacts, before/after runtime/compiler identity and staged fixture/worker hashes, then current source and declared runtime again. Final strict extent/deadline failure exits unsuccessfully; producer strings alone are not acceptance.",
+    "Linux admission binds reviewed socket lane/watch-execute source/budget/wrapper/entry metadata. Verifier-lock marker is metadata, not a held advisory-lock claim. No new verifier, native user-program, method/catalog, proof-record or scientific dispatch is introduced."
+  ],
+  "inspection_history": [
+    "An initial read-only inspector incorrectly expected a source_files key rather than source_blobs; corrected before receipt. A later attempted Git lookup confirmed the new fixture is external rather than source032e tracked. Neither executed the entry or mutated targets."
+  ],
+  "packet": {
+    "bytes": 3703,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/compiler-observation-v1/inert-032e1851-compiler-v1/packet.json",
+    "sha256": "f908b31432e537a76a2846c718ae4d4c177e7e53d3ffec1a5a06f9fa5d8b4325"
+  },
+  "preparation": {
+    "bytes": 6347,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-move-compiler-observation-preparation-v1-20261016.json",
+    "sha256": "39162a2843bdc5d1a5ef2c281b3241be878a1f11e46568ef8198a5de42959a37"
+  },
+  "review_axis": "Independent Spec and entry correctness",
+  "review_execution": {
+    "actual_entry_worker_compiler_native_verifier_SSH_or_project_import": false,
+    "reviewer_test_rerun": false,
+    "stdlib_Git_AST_hash_JSON_only": true
+  },
+  "scope_limits": [
+    "No compiler run or move-source correctness proof has happened in this review. The fixture may still be unsupported by actual public lowering; failed/partial output must remain a refusal.",
+    "Move model source-zero reset requires complete selected library/model correspondence; no portable C++ moved-from emptiness theorem is inferred.",
+    "Source/Typed/Heap/ownership/lifetime/layout/current-member/caller/ticket admission remain false. Runtime observations preserve cached identity, OS/loader/source-to-binary and between-check trust boundaries.",
+    "Root owns actual lane/source/disk admission and must require successful full final settlement, not a producer_complete string from partial metadata."
+  ],
+  "verdict": "PASS_COMPILER_OBSERVATION_PREPARATION_ONLY",
+  "worker": {
+    "bytes": 4039,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/compiler-observation-v1/worker.py",
+    "sha256": "bd3dfa7374666998326b2b9cac956b1d4b4e2246158ce747053488bbdbea6733"
+  }
+}

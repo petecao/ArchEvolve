@@ -1,0 +1,18 @@
+{
+  "SSH_calls": 0,
+  "actual_auditor_executions": 0,
+  "auditor_sha256": "aed8c5402047f13f4a02aa371eef80499accef8b490ae4feadc1883b2bc1d3dc",
+  "caller_acceptance": false,
+  "compiler_solver_runs": 0,
+  "created": "2026-10-16 ET",
+  "prior_scientific_review_sha256": "de0cf0a2e7bb67828d367cb64619c4f92f500bb25ff8862d6b4b798afaea2cfa",
+  "prior_write_hook_review_sha256": "f4f99857384f729e166324b787f450290af9d010fcb996d30f57c14fb1189757",
+  "review": [
+    "Exact AST inverse changes only one source-definition comparison and adds frame_order_nnf. All source goals, full antecedents, other definitions, support assertions, source/runtime/native/task guards remain unchanged.",
+    "Normalization is only exact propositional De Morgan/double negation and total-order negation of integer < and <= in the physically source-bound P_t25_frame; no missing source conjunct or theorem assumption is admitted.",
+    "The exact source owner/sort makes the numeric total-order rewrite valid. Missing disjunct, reversed bound and changed extent remain refused by the retained six controls.",
+    "V1/V3 actual observer refusals and unexecuted V2 remain preserved; this is passive metadata inspection, not a scientific rerun or proof acceptance."
+  ],
+  "source_typed_bridge_established": false,
+  "status": "PASS_FOR_SCOPED_PASSIVE_COLD_INSPECTION"
+}

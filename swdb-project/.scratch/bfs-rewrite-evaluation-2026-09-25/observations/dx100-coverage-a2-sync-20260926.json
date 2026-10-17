@@ -1,0 +1,24 @@
+{
+  "created": "2026-09-26T19:27:12.470156-04:00",
+  "state": "synchronized and validated",
+  "upstream_commit": "21d58c4812a368d1707e7d1f5eae9758c0be7a75",
+  "local_import_commit": "916043c754a307fc0326748d27f843a78bbb1058",
+  "branch": "codex/bfs-dx100-coverage-evidence-20260926-a2",
+  "repository": "ruchou/EvolveSWDB",
+  "inventory": {
+    "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/observations/dx100-coverage-a2-record-inventory-20260926.json",
+    "sha256": "2933be39d3b1b2c4ed5d2dfbc2e41f78bb0a50d21ddb44968707f0e1e180c6fb"
+  },
+  "file_count": 3,
+  "bytes": 64110,
+  "file_and_canonical_digests": "all exact",
+  "validation": {
+    "command": "python3 -m swdb validate --records records",
+    "exit_code": 0,
+    "result": "OK: 216 record(s) valid",
+    "earlier_command_error": "validate does not accept --db or --format; parser exited 2 before validation; rerun used supported arguments"
+  },
+  "raw_transferred": false,
+  "held_native_or_provider_packets_transferred": false,
+  "gain_claim": false
+}

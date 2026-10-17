@@ -1,0 +1,11 @@
+name: count_scopes
+description: What one recorded count covers; a count without a scope must not be multiplied or compared.
+values:
+  - value: per_sweep
+    meaning: One pass of the kernel's outer iterative loop (for example one PageRank iteration over all vertices).
+  - value: per_call
+    meaning: One call of the kernel function (all its sweeps until it returns).
+  - value: per_run
+    meaning: One process run of the benchmark (all trials, plus graph building if stated).
+  - value: per_trial
+    meaning: One timed trial as the benchmark's own timer brackets it (one kernel call in gapbs).

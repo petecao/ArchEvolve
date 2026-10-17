@@ -1,0 +1,20 @@
+{
+  "created": "2026-10-06 21:50 ET",
+  "scope": "Public copied-store contract fixtures only; no native/gem5 performance evidence.",
+  "red": {
+    "tests": 3,
+    "failed": 3,
+    "seconds": 199.66
+  },
+  "green": {
+    "tests": 3,
+    "passed": 3,
+    "seconds": 187.53
+  },
+  "checks": [
+    "Missing prior shared-baseline ledger refuses resume before provider access.",
+    "Changed frozen implementation policy refuses resume before provider access.",
+    "Copied campaign summary rejects outcome timestamp earlier than its immutable estimate."
+  ],
+  "historical_compatibility": "Campaign summaries without paired_estimates retain their original schema/validation behavior."
+}

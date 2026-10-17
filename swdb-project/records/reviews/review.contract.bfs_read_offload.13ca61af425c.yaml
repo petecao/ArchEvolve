@@ -1,0 +1,25 @@
+kind: review
+schema_version: '0.4'
+id: review.contract.bfs_read_offload.13ca61af425c
+status: reviewed
+created: '2026-10-11'
+updated: '2026-10-11'
+provenance:
+- id: review
+  kind: agent_run
+  description: 'Review recorded by Yan-Ru Jhou through swdb promote. Performed by an agent under Yan-Ru
+    Jhou''s delegation (2026-10-11 23:45 ET: Yan-Ru read the review packet and explicitly instructed the
+    agent to promote contract.bfs_read_offload (hash-only re-pin in 87e8646e)); review document swdb-project/.scratch/lanl-shaped-db-followups-2026-10-11/review-packet.md.'
+  uri: null
+target:
+  id: contract.bfs_read_offload
+  content_sha256: 3b2d7428190895f1c0570285b41539fccae3d674308a8cb95be478481426ee47
+reviewer: Yan-Ru Jhou
+reviewed_at: '2026-10-12T03:51:48.565715+00:00'
+evidence:
+- certification.df1986d8f0d64a28b19fd23ae672055c
+performed_by: agent
+delegated_by: Yan-Ru Jhou
+delegation: '2026-10-11 23:45 ET: Yan-Ru read the review packet and explicitly instructed the agent to
+  promote contract.bfs_read_offload (hash-only re-pin in 87e8646e)'
+review_document: swdb-project/.scratch/lanl-shaped-db-followups-2026-10-11/review-packet.md

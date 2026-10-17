@@ -1,0 +1,52 @@
+{
+  "accepted_for_exact_service_role_exclusion": true,
+  "assumption": "The exact root-owned installed systemd/executor and current stable account service identity follow the trusted systemd255.4 PAM lifecycle; protected child executable/cwd/fds/maps are not observed and its loaded instruction address/build is not claimed verified.",
+  "canonical_ensure_ascii": true,
+  "capacity_admission": false,
+  "created_utc": "2026-10-08T02:30:43.929525+00:00",
+  "exact_scope": "Only PID359656/start40749693 with parent359655/start40749691 and all helper current native/UID/GID/capability/command/cgroup/boot predicates; parent, descendants and every other ordinary/identified consumer remain checked.",
+  "format": "swdb.exact-account-service-semantic-parent-review.v1",
+  "fresh_E_creation_semantic_basis": "Parent previously accepted original R5/928 fresh export-creation guards and ONE actual successful export/prereg/receipt on 2026-10-08 01:15--01:33Z, which created E after the legacy account service. Filesystem directory mtimes alone are not used.",
+  "identity_sha256": "d02a195ddf6445bcb4dab65f6b14775b481c927340ad0ef0191bb7b1deddab2f",
+  "original_fresh_E_custody_pins": [
+    {
+      "bytes": 39887,
+      "original_policy_not_modified": true,
+      "path": "/data1/yanruj/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-supervised-r5-export-actual-custody-20261008-a1/actual/remote-preregistration.json",
+      "sha256": "70a8a1a4c99a46f92a2e9f7291daabe8305a0aa20927570cc9947adf5fc72987"
+    },
+    {
+      "bytes": 32840,
+      "original_policy_not_modified": true,
+      "path": "/data1/yanruj/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-generality-final-final-20261007-a1-export.json",
+      "sha256": "02b369f0624964fa4293f563a7b51e142dc369101147ac7fe848503c4b50eb5d"
+    }
+  ],
+  "original_identification_pin": {
+    "bytes": 3818,
+    "path": "/data1/yanruj/lanl-account-pam-service-identification-20261008-a1/identification.json",
+    "sha256": "ece0155e6a1e61e07cabb8a05e2a13ac9577a9ee1418e8f8eed450ce310ce0fa"
+  },
+  "protected_child_fields_unobserved": [
+    "fd",
+    "cwd",
+    "root",
+    "exe",
+    "maps",
+    "syscall",
+    "meaningful_wait_channel"
+  ],
+  "reviewed_guard_source": {
+    "bytes": 81694,
+    "path": "/private/tmp/lanl_consumed_detached_source_guard_r4_20261008_r1.py",
+    "sha256": "d30481a540a40f0c4b4695e105dc25f6febf152e391b5a34861b817d0d6960a6"
+  },
+  "scientific_admission": false,
+  "selected_source_subset_or_actual_guard_cleanup_admitted": false,
+  "service_birth_utc_from_exact_kernel_identity": "2026-08-05T04:52:43.930000+00:00",
+  "service_reference_free_or_global_visibility_claimed": false,
+  "shared_helper_source_sha256": "f6c4076013eaa487c0e810ba4329512657bef9b1b74a0c074a7231bcc0466883",
+  "signal_wait_kernel_source": "https://github.com/torvalds/linux/blob/v6.8/kernel/signal.c#L3629-L3645",
+  "source_review_boundary": "Parent full R4/helper diffs and independent04 full review, exact original helper/other-definition preservation; caller wrappers require their own source review before invocation.",
+  "trusted_systemd_lifecycle_source": "https://github.com/systemd/systemd-stable/blob/v255.4/src/core/exec-invoke.c#L1213-L1291"
+}

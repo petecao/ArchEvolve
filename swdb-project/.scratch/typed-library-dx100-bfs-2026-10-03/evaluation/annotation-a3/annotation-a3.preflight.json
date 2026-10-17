@@ -1,0 +1,118 @@
+{
+  "time": "2026-10-03T13:05:58.482084+00:00",
+  "node": 0,
+  "threads": 4,
+  "node0_free_bytes": 32214380544,
+  "disk_available_bytes": 46269698048,
+  "load": [
+    1.23828125,
+    1.18408203125,
+    1.318359375
+  ],
+  "leases": {
+    "mbit10-evaluation.meta.json": {
+      "active_session": null,
+      "heartbeat_at": "2026-09-12T04:49:11Z",
+      "lease": {
+        "acquired_at": "2026-09-12T01:35:42Z",
+        "daemon_pid": 209457,
+        "daemon_start_token": "sh209457-1789176942",
+        "generation": 77,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation",
+        "mode": "measure",
+        "session_id": null
+      },
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "recovered_from_generation": null,
+      "released_at": "2026-09-12T04:49:11Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation-node1.meta.json": {
+      "active_session": null,
+      "heartbeat_at": "2026-10-03T12:51:22Z",
+      "lease": {
+        "acquired_at": "2026-10-03T12:48:39Z",
+        "daemon_pid": 1568990,
+        "daemon_start_token": "sh1568990-1791031719",
+        "generation": 506,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node1",
+        "mode": "measure",
+        "session_id": null
+      },
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "recovered_from_generation": null,
+      "released_at": "2026-10-03T12:51:22Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation-node0.meta.json": {
+      "active_session": null,
+      "heartbeat_at": "2026-10-03T12:51:47Z",
+      "lease": {
+        "acquired_at": "2026-10-03T12:51:22Z",
+        "daemon_pid": 1570461,
+        "daemon_start_token": "sh1570461-1791031882",
+        "generation": 438,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node0",
+        "mode": "measure",
+        "session_id": null
+      },
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "recovered_from_generation": null,
+      "released_at": "2026-10-03T12:51:47Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    }
+  },
+  "arch_head": "f642a94ba41e79f79b28a540cb8d758e15bec633",
+  "source_hashes": {
+    "swdb-project/swdb/provider_adapters.py": "475289077f191e880c9f6c6c892084d8b6b0ecc5683135a101a2b5998e6528ae",
+    "swdb-project/tools/typed_library_profile_driver.py": "de89dc761ead96e20962dfdbf38e09e880487d9aaf7ed9c34d4eb3118da14bf1"
+  },
+  "lane_head": "76cca359136794afa5ede975cfac8293cfa2ab9a",
+  "dispatcher_sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8",
+  "profile_package": "typed-library-bfs-scalar-profile-20261003-a2.package.v1.619546ae9c6f60fe",
+  "provider": {
+    "kind": "codex",
+    "model": "gpt-5.6-sol",
+    "effort": "xhigh",
+    "wrapper": "/data1/yanruj/.npm-global/bin/codex",
+    "native": "/data1/yanruj/.npm-global/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/bin/codex",
+    "version": "codex-cli 0.153.0",
+    "native_sha256": "fce635028842bfe9257140e8b7d53162732945e2f356fc35225be0702b4974be",
+    "guard": "strace"
+  },
+  "login_configuration": {
+    "environment": "CODEX_HOME",
+    "value": "/data1/yanruj/.codex",
+    "metadata": {
+      "path": "/data1/yanruj/.codex/auth.json",
+      "parent_directory": "/data1/yanruj/.codex",
+      "owner": "yanruj",
+      "mode": "0o600",
+      "regular_file": true,
+      "symlink": false,
+      "readable": true
+    }
+  },
+  "semantic_output_schema_sha256": "aa1aec6a43285f16c7815cad29bb99d151a661caea506071b7c90a1d78de4507",
+  "expected_wire_schema_file_sha256": "3928d885d99918a2dae55546682d1cdcde7e537a2455459a19a802659cc84796",
+  "cache_release_receipt": {
+    "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-trace-cache-release-20261003-a3/operator-receipt.json",
+    "sha256": "b23ddb33b5eadf6645903b93e66ef8c66b0d88132a46334ed5578ccce9d57266"
+  },
+  "approval_reference": "typed-library-related-approval-20261003"
+}

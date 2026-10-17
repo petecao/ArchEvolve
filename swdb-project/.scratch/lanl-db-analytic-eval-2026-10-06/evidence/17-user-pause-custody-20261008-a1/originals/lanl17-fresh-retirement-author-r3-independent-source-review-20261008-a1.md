@@ -1,0 +1,13 @@
+# Fresh-output RETIRE author R3: independent source review
+
+2026-10-08 ET. **No concrete blocker found. SOURCE ONLY / NOT RUN by this reviewer.** No supplied definition import/compile/lift/call/main, test, SSH, Git or project action occurred. This review grants no retirement, recovery, capacity or scientific admission.
+
+Exact selected source: `/private/tmp/lanl17_author_fresh_sparse_retirement_parent_request_20261008_a1_r3.py` —38653B/`10de4f2a80422da5c81698374ee1579e031d5bbcf83ef0f23dada8ec1d556236`. Its current local physical file is regular, nonsymlink, UID501, single-link,0600. This satisfies the unchanged own-source reader's exact0600 requirement at lines129–150; no reader permission rule was relaxed.
+
+Complete adjacent diff `/private/tmp/lanl17-fresh-retirement-author-r3-complete-r2-derivation-20261008-a1.diff` —812B/`53c0473662b17788befaa8dd04145a099eae680f439c1f8387e91fb45266f9ac` regenerates exactly from the original R2 `ab80545158b84846d4dc80b3d2c32e7344f7250e938b71708d50712bdfb8ee72`. Whole-byte reversal is exact. The sole AST leaf changes lines566–568's required output basename from `lanl17-actual-sparse-retirement-parent-request-20261008-a4.json` to `...-a5.json`. Every other byte, function/class, main branch/statement and constant is identical; only main's destination literal differs.
+
+All LIMITS/FIXED/FILES/DEFAULT IDs/G5/W2/source-directory/control/decoded-directory/MUTABLE/FIELDS nodes are identical. Thus the genuine a3 default bindings, ordered16-row scope,345 witnesses/153 eligible conditional reuse, original old-plan/configuration/review/backlinks, explicit parent acceptance, fresh four-copy capacity and immutable subset/protections remain the previously reviewed contract. CLI,90s author/120s fresh-capacity/16MiB input/2MiB output limits and original scientific policy remain unchanged.
+
+The new a5 output still requires absence, canonical directTMP route and exclusive0600 publication plus reread/final checks; existing a4 output is not rewritten or relabeled. Original R2 source and history remain intact. Parent-reported expired-plan/prereg-before-SSH failure does not become success through this filename change. Future input freshness, actual plan/publication and native action acceptance remain separate.
+
+Retained parent acceptance original `/private/tmp/lanl17-parent-successful-default-a3-acceptance-20261008-a1.json` —3303B/`4631e95102313fd48ad9aa8482e959eac9c0050b500536c8f3f10b1347730cba`; format `swdb.sparse-default-original-parent-acceptance-input.v1`, UNSEALED. DEFAULT receipt cf0a31cd/True fdbc5e1d remains the already reviewed original, not resealed here. No source fix requested.

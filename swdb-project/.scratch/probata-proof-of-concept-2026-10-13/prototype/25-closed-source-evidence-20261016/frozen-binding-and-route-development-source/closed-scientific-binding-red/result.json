@@ -1,0 +1,103 @@
+{
+  "caller_acceptance": false,
+  "created": "2026-10-16 ET",
+  "external_native_attempts": [],
+  "failed": 2,
+  "outcomes": [
+    {
+      "error": "ImportError: cannot import name 'vector_reallocation_closed_binding' from 'swdb' (/private/tmp/probata-resume-20261016-t25-closed-scientific-binding-red/swdb/__init__.py)",
+      "name": "test_closed_binding_matches_all_scientific_targets_without_relabeling_history",
+      "passed": false,
+      "traceback": "Traceback (most recent call last):\n  File \"<reviewed-child-free-binding-harness>\", line 69, in main\n  File \"/private/tmp/probata-resume-20261016-t25-closed-scientific-binding-red/test_closed_scientific_binding.py\", line 15, in test_closed_binding_matches_all_scientific_targets_without_relabeling_history\n    from swdb import vector_reallocation_closed_binding as binding\nImportError: cannot import name 'vector_reallocation_closed_binding' from 'swdb' (/private/tmp/probata-resume-20261016-t25-closed-scientific-binding-red/swdb/__init__.py)\n"
+    },
+    {
+      "error": "ImportError: cannot import name 'vector_reallocation_closed_binding' from 'swdb' (/private/tmp/probata-resume-20261016-t25-closed-scientific-binding-red/swdb/__init__.py)",
+      "name": "test_closed_binding_refuses_changed_targets_context_or_historical_scope",
+      "passed": false,
+      "traceback": "Traceback (most recent call last):\n  File \"<reviewed-child-free-binding-harness>\", line 69, in main\n  File \"/private/tmp/probata-resume-20261016-t25-closed-scientific-binding-red/test_closed_scientific_binding.py\", line 41, in test_closed_binding_refuses_changed_targets_context_or_historical_scope\n    from swdb import vector_reallocation_closed_binding as binding\nImportError: cannot import name 'vector_reallocation_closed_binding' from 'swdb' (/private/tmp/probata-resume-20261016-t25-closed-scientific-binding-red/swdb/__init__.py)\n"
+    }
+  ],
+  "passed": 0,
+  "raw_bytes": 258963,
+  "source_pins": [
+    {
+      "path": "__init__.py",
+      "sha256": "bcbd2c199a6b63c92302a8daf37c26909a76332b89452797351082ddba66b743"
+    },
+    {
+      "path": "std_models.py",
+      "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+    },
+    {
+      "path": "heap_model_vcs.py",
+      "sha256": "f20e0ec130222aeda96b4fbb8e72eef8d922d3f33e84077777203f7e6d159092"
+    },
+    {
+      "path": "vector_reallocation_model.py",
+      "sha256": "92ad23030531650924a51b0a3bd1abb479afa373a7d1dd2a543b9ae225ab8b89"
+    },
+    {
+      "path": "vector_reallocation_inventory.py",
+      "sha256": "0a0474084a17b84788585a62a9e0b63b88eb43efd858101769db267579af5f07"
+    },
+    {
+      "path": "vector_reallocation_vcs.py",
+      "sha256": "f2185ad536bca5e8845ff0b718d81fe1787f1d6fedea7e53907dbe75969861e9"
+    },
+    {
+      "path": "vector_reallocation_composition.py",
+      "sha256": "fbce29f010d92be33b09a0f31c440f8db97c7f0dfd0769a41a59e71bdfe6e108"
+    },
+    {
+      "path": "vector_reallocation_caller_packets.py",
+      "sha256": "a30b633404723d99c84ee3473eb0a352fe6641274e036524451826940abc59f0"
+    },
+    {
+      "path": "vector_reallocation_calls.py",
+      "sha256": "d1d7ea169a50b82d5545ab0a3fa02910849d944b9104a5839e0955dd5a283a95"
+    },
+    {
+      "path": "vector_reallocation_caller_vcs.py",
+      "sha256": "e8e514a1208d6653e8ae424b37309a3ce299690050ecac2710aed580b9ab397a"
+    },
+    {
+      "path": "vector_reallocation_lifetime.py",
+      "sha256": "d20ac49e7896ed47632ad05f6f0610caee805649da81d3f469da2b6237051159"
+    },
+    {
+      "path": "vector_reallocation_capacity.py",
+      "sha256": "e4aa221acb78151895fa5c5d3cbdab6050b151b42a7096521a90fcdf3c95f617"
+    },
+    {
+      "path": "heap_reallocation.mlw",
+      "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+    },
+    {
+      "path": "vector_reallocation_caller_view.py",
+      "sha256": "47c286034927b11db471c45ebce061856c4bc73008f0baf2cbdae255a2293413"
+    },
+    {
+      "path": "vector_reallocation_private_frame.py",
+      "sha256": "062c68a138b4aeb0887f50490d405f3b1fdd50284e6e8404e096df02568982da"
+    },
+    {
+      "path": "vector_reallocation_closed_view.py",
+      "sha256": "758092d5997274b29e22f2196c46af361b7cfdfd5c9eb83ee328ae6a877eb757"
+    },
+    {
+      "path": "vector_reallocation_closed_lifetime.py",
+      "sha256": "ac631823afe598629032482b9383a4bfb8f6673ca71f1f7795a55c6d905361ee"
+    },
+    {
+      "path": "vector_reallocation_closed_lifetime_parts.py",
+      "sha256": "ce98fdba6a2439a72997cbc956daa1854a722cab3d8681897557384122f229f9"
+    },
+    {
+      "path": "vector_reallocation_closed_evidence.py",
+      "sha256": "5d997dfbb1f2bef48ca07126d3a98697756254af1fc26d8f18a94aef009fc77f"
+    }
+  ],
+  "source_typed_bridge_established": false,
+  "stage": "red",
+  "whole_alarm_seconds": 120
+}

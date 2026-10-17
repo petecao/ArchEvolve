@@ -1,0 +1,65 @@
+kind: comparison_result
+schema_version: '0.4'
+id: bfs-contract-20260925-a3.comparison
+status: draft
+created: '2026-09-25'
+updated: '2026-09-25'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: bfs-contract-20260925-a3.comparison
+  protocol: bfs-contract-20260925-a3.fixture-protocol.d414370aaa72b04e
+  baseline_evaluation: bfs-contract-20260925-a3.baseline.evaluation
+  candidate_evaluation: bfs-contract-20260925-a3.candidate.evaluation
+  comparison_baseline: bfs-contract-20260925-a3.independent-reference
+decision:
+  state: fixture_comparison
+  reasons:
+  - Contract fixture durations are not empirical performance evidence.
+gain_claim: false
+evidence_kind: contract_fixture
+metrics:
+  per_source_position_speedup:
+    0: 0.5
+    1: 0.5
+  confidence_interval:
+    confidence: 0.95
+    lower: 0.5
+    upper: 0.5
+    method: independent per-source bootstrap of median ratios
+    resamples: 2000
+  relative_spread:
+    baseline:
+      0: 0.0
+      1: 0.0
+    candidate:
+      0: 0.0
+      1: 0.0
+  workload: bfs-contract-20260925-a3.workload.584a833b37d4d8a1
+  attribution: software_on_fixed_target
+  disclosed_differences:
+    software:
+    - Explicit fixture source identity differs; artificial durations establish no performance.
+    accelerator: []
+    configuration: []
+  fixture_ratio: 0.5
+region_comparisons: []
+finished_at: '2026-09-26T02:05:38.235304+00:00'
+protocol: bfs-contract-20260925-a3.fixture-protocol.d414370aaa72b04e
+protocol_sha256: d414370aaa72b04e762587ba0120a7b7ee2a567284287164478d654f105922d5
+baseline_evaluation: bfs-contract-20260925-a3.baseline.evaluation
+candidate_evaluation: bfs-contract-20260925-a3.candidate.evaluation
+comparison_baseline: bfs-contract-20260925-a3.independent-reference
+source_ancestor: gapbs-bfs-do
+evaluation_identities:
+  bfs-contract-20260925-a3.baseline.evaluation: b5476bb0a5d2ba0fe24616cc0135d56b419d723277553c128d49abd8a2de6187
+  bfs-contract-20260925-a3.candidate.evaluation: f5b934ab35203cb59c6f1066a419cb1f6fe59c649a233cb5245d4e66ba6ab00f

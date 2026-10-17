@@ -1,0 +1,30 @@
+{
+  "actual_remote_execution": false,
+  "boundary": "V2 frozen unchanged; no shared production application or actual public acceptance. Complete retained original-TU normalization remains an explicit integration gate.",
+  "date": "2026-10-16 ET",
+  "findings": [
+    {
+      "detail": "assumed_clause references omit a real library #clause fragment and put the clause in a separate reference.clause field. handoff_level._sentence partitions reference.id on # and requires an actual clause, so successful proof handoff cannot render these assumptions; deduplication by kind/id/hash also collapses owned contexts.",
+      "file": "swdb/dx100_checked_source.py",
+      "function": "record_assumptions",
+      "id": "T28-STD-01",
+      "priority": 2,
+      "required_fix": "Use the existing proof_semantics rule mechanism with distinct library-backed rule IDs, pinned sentences/owners and record_assumption=true, and exercise real handoff/candidate-level handling."
+    }
+  ],
+  "packet": {
+    "bytes": 25242,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v2/source-packet-v2.json",
+    "sha256": "e49034a2cacbbc0d5df5b48152ec8701ccc5df12fd70f53b7a21a14a92a239ac"
+  },
+  "related_independent_spec": {
+    "bytes": 4329,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v2/independent-production-route-v2-spec-review-20261016.json",
+    "sha256": "77f0517db60732029d66e1d3e0e16df3c00dbcf2ac13017bd5da85f2c65aa601"
+  },
+  "reviewed": [
+    "Full checked source/adapter/native/validator plus production hook diff; source-only review."
+  ],
+  "reviewer": "root",
+  "status": "REQUEST_CHANGES"
+}

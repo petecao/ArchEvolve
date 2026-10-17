@@ -1,0 +1,18 @@
+# Remaining BFS evidence gaps
+
+Navigation updated: 2026-09-28 (Eastern Time).
+
+Created: 2026-09-26 ET. Independent read-only checkpoint, through the retained 18:52 observations plus Host's 19:00 failed-readback report. All 21 ticket contracts and the originating spec were checked. Thirteen tickets are resolved; T13 and T15–T21 remain claimed. These are known incomplete acceptance obligations, not new implementation defects. No host artifact was reopened or execution initiated for this audit.
+
+| Ticket | Actual progress and evidence still required | Spec requirement |
+|---|---|---|
+| T13 | The a3 timed-guest witness passed; fixed-coverage a1 failed. Corrected A2 Linux fixtures passed, but actual fixed-graph simulator full/tail/competing coverage and its complete terminal readback are still needed. | L219: “Exercise full/tail tiles and competing parent updates”; L317 requires linkage to timed code. |
+| T15 | Native collection completed 240 primary checks, four controls, 24 spread groups and four packages, with independent cleanup. Both readback attempts failed before qualification; the latest failure is Host-reported pending sealed evidence. Simulator pilot collection, source-specific native and controlled-simulator protocol freezes remain. The native publisher supports native mode only. | L262: “Before candidate performance assessment, freeze workloads, threads, targets/configurations…” |
+| T16 | Prescribed graph/source and builds are prepared. Two independent protocol freezes, actual artifact/matched-control scalar/MAA series, profiling, aggregates and two comparisons remain. | L322: “Both the artifact reference pair and controlled simulator comparisons execute…” |
+| T17 | Actual natural-language candidate and public compilation succeeded. Both-family exact-binary correctness, accelerator coverage, ROI, regions, memory and frozen comparisons remain. | L318: “At least one accelerator-using candidate from each starting implementation…” |
+| T18 | Actual patch candidate and builds exist. Fresh paired native baseline/candidate execution, correctness, reprofiling and frozen comparisons on both families remain. | L319: “Native execution produces actual correctness, timing, and profiling evidence…” |
+| T19 | Actual structured proposal created a candidate. Its native build/evaluation/reprofiling/comparison chain on both families remains; reassessment preserves origin separately from fresh one-thread context. | L313: “their resulting candidates are evaluated on both graph families.” |
+| T20 | Actual HW-labeled annotated submission ended unresolved, without a candidate. Context supplement remains unsent pending exact approval. A changed candidate and both-family accelerated evaluation chain remain. | L327: “Representative SW/HW submissions exercise the real workflow”; L318. |
+| T21 | Acceptance remains 0/8, with no qualified candidate gain or evaluated HW chain. Final public coverage, retained failures, fresh retrieval and AC01–AC20 review remain. | L324: “At least one correct candidate demonstrates a gain”; L325 requires every case. |
+
+A correct regression can complete an individual case; the global gain obligation remains separate. Linux contract proofs, build success, resolved infrastructure tickets and completed baseline collection do not complete campaign cells (L329). Canonical transfers and later public retrieval must preserve all failed attempts. Current local summaries do not replace held remote proposal/candidate/native records or external raw evidence.

@@ -1,0 +1,30 @@
+{
+  "observed_at": "2026-09-27T00:18:36.055113-04:00",
+  "scope": "Independent scoped supplemental producer/consumer Standards correctness review",
+  "state": "scoped_pass",
+  "files": {
+    "scripts/bfs_supervision_supplement.py": "e2ddf39589b8db49cbf1c89d1dd106dbbd2d54637f3e41582d78a5ad0defaef6",
+    "scripts/bfs_simulator_recovery.py": "e242c904684bd0e433d0c9501c3c1cd2d8e2f342db8188cfe1894b829d657744",
+    "scripts/bfs_linux_fixture.py": "277e0827a079eed032cc8f7cdedcbc2867f8880e247ea20b9e5dbe7096f48c3a",
+    "tests/test_bfs_simulator_recovery.py": "02b896a87adacdd6122b3f170c3f71f45db451156a930c65a31a5c6c19f93d75",
+    "tests/test_bfs_linux_fixture.py": "95221714be8b97a2fb9288a86adedc3d3688b838e01fd56a8975612f2da13da6"
+  },
+  "tests": {
+    "result": "109 passed in 1.61s",
+    "log": "/private/tmp/bfs-supplement-producer-independent-20260927.log",
+    "sha256": "b622d071e3b44a371efb193a4f4f57436a2ff1680bba0f77da4b5167f85a14cd",
+    "independent_probe": "/private/tmp/test_bfs_supplement_publication_review_20260927.py",
+    "probe_scope": "Post-link directory fsync failure removes success link and preserves audit attempt, staging, terminal artifacts"
+  },
+  "checked": [
+    "Fixed run identity, supervisor delegation, 90/60/30 bounds, host/runtime/pytest/RLIMIT/signal admission",
+    "Continuous direct/adopted/sample/ancestor union and two post-helper lease/process snapshots",
+    "One-shot audit marker, settled ledger, exact commands/testcases/output hashes and shared pre-publication consumer",
+    "No standalone extra allowance: enclosing operator must enforce full shared 600-second/2GiB group"
+  ],
+  "limitations": [
+    "No remote execution or actual Linux proof",
+    "Group operator and wall-clock dispatch sequencing are outside this scoped producer review",
+    "Not final whole-task Standards/Spec review"
+  ]
+}

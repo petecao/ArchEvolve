@@ -1,0 +1,138 @@
+{
+  "completed": "2026-10-15 14:31 ET",
+  "published_implementation_and_handoff_commit": "8bae60b9346f0e2a241b15300d7f1f6643f01d73",
+  "review_baseline": "150930b4be39526e6eeefd881987dba1c6d6e4d3",
+  "reviewed_runtime": "53471f7f942d2c1ae7456d4fd08b776777006447",
+  "review_fix": "0951cc9ed484688eb7f2deae37175050deb09223",
+  "validation": {
+    "passed": 313,
+    "deselected": 42,
+    "seconds": 747.43,
+    "evidence": "evidence/closeout-validation-20261015.json"
+  },
+  "ticket_counts": {
+    "resolved": 32,
+    "ready-for-agent": 31,
+    "claimed": 0
+  },
+  "ready_frontier": [
+    7,
+    24,
+    27
+  ],
+  "cleanup": {
+    "remote_branches_removed": 30,
+    "local_branches_removed": 53,
+    "worktrees_removed": 33,
+    "remaining_worktrees": [
+      {
+        "worktree": "/Users/yanrujhou/CLionProjects/ArchEvolve",
+        "HEAD": "8bae60b9346f0e2a241b15300d7f1f6643f01d73",
+        "branch": "refs/heads/yanrujhou_main"
+      },
+      {
+        "worktree": "/Users/yanrujhou/.codex/worktrees/lanl-analytic-eval/ArchEvolve",
+        "HEAD": "682f03796cb4f438a7be272f08138eaed1848624",
+        "branch": "refs/heads/codex/lanl-analytic-eval"
+      },
+      {
+        "worktree": "/Users/yanrujhou/.codex/worktrees/lanl-ticket17/ArchEvolve",
+        "HEAD": "9eee5ebe60dee46e803181c22be0e93dbcb43e02",
+        "branch": "refs/heads/codex/lanl17-storage-guard-cost"
+      },
+      {
+        "worktree": "/Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a012fcac5f347a306",
+        "HEAD": "c3de51f4bae375ea64d8b8548d420b0048f0b581",
+        "branch": "refs/heads/worktree-agent-a012fcac5f347a306"
+      },
+      {
+        "worktree": "/Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a54d4d429b904320e",
+        "HEAD": "d9ac390b6d9d77031c224c40df6d5c62595efbe3",
+        "branch": "refs/heads/probata-poc/t25"
+      }
+    ],
+    "preserved_raw_outputs": true,
+    "recovery_tag": "probata-source-recovery-20261015",
+    "archive_commit": "7c42c55899b6c1dab7666c862014bce9a3801e1f",
+    "archive_tree_matches_precleanup_main": true,
+    "bundle_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/recovery/source-recovery.bundle",
+    "bundle_bytes": 83304432,
+    "bundle_sha256": "89fa3564e4f6adca9c9e62569490195a08e27ee428bddb26b01ccd155ccbd99f",
+    "dirty_source_snapshots": [
+      {
+        "worktree": "/private/tmp/probata-standard-at-view",
+        "stash": "f405f258e15a99e841c5043f421b0fb1f2ee64f7",
+        "before": {
+          "head": "e44162182d02ee549b444acfca7cdb9644b780c7",
+          "index_tree": "fffc889006965dbbe50d1c2e19be3ae65a1229c8",
+          "cached_patch_sha256": "93913237cbc69da48f860077f8c858bad22446c5db862d8125b599e97e0d51c3",
+          "unstaged_patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "untracked": {}
+        },
+        "restore": [
+          "git",
+          "stash",
+          "apply",
+          "--index",
+          "f405f258e15a99e841c5043f421b0fb1f2ee64f7"
+        ],
+        "boundary": "Stash and archive ancestry retained; original index/untracked verified."
+      },
+      {
+        "worktree": "/private/tmp/probata-vector-ownership",
+        "stash": "8b51c2ef4ba291e635624d7af3baf314f5a36f0c",
+        "before": {
+          "head": "e44162182d02ee549b444acfca7cdb9644b780c7",
+          "index_tree": "cf5ebd19f3bd9ed09e8538da675bca74adee2625",
+          "cached_patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "unstaged_patch_sha256": "7326b4e17b90bd6291958cff85a6e7762e137504f079293614d289f4489df8de",
+          "untracked": {}
+        },
+        "restore": [
+          "git",
+          "stash",
+          "apply",
+          "--index",
+          "8b51c2ef4ba291e635624d7af3baf314f5a36f0c"
+        ],
+        "boundary": "Stash and archive ancestry retained; original index/untracked verified."
+      }
+    ],
+    "full_manifest_in_annotated_tag": true,
+    "local_manifest_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/recovery/source-recovery-manifest.json",
+    "local_execution_receipt_sha256": "043d15eb964ea8486676438afe6b7b1d5bd42896e5fafd1757e26f22c6978b19"
+  },
+  "remote": {
+    "observed": "2026-10-15 14:25 ET",
+    "leases": {
+      "mbit10-evaluation.meta.json": {
+        "state": "released",
+        "generation": 77,
+        "released_at": "2026-09-12T04:49:11Z"
+      },
+      "mbit10-evaluation-node1.meta.json": {
+        "state": "released",
+        "generation": 600,
+        "released_at": "2026-10-15T17:52:42Z"
+      },
+      "mbit10-evaluation-node0.meta.json": {
+        "state": "released",
+        "generation": 568,
+        "released_at": "2026-10-15T17:51:19Z"
+      }
+    },
+    "owned_evaluation_processes": [],
+    "eval_checkout": "94769312e4511fd7c90b873e6ebf2c86a2cb5a9e",
+    "eval_checkout_changes": "",
+    "origin_yanmain": "8bae60b9346f0e2a241b15300d7f1f6643f01d73",
+    "load": "14:25:16 up 76 days,  6:44, 11 users,  load average: 0.07, 0.09, 0.17",
+    "disk": "Filesystem      Size  Used Avail Use% Mounted on\n/dev/sdd1       1.8T  1.7T   21G  99% /data1\n/dev/sdb1       1.8T  1.7T   95G  95% /data\n",
+    "boundary": "Git refs synchronized; historical evaluation checkout unchanged, raw outputs retained, no new job."
+  },
+  "automation": {
+    "id": "probata-implementation-progress",
+    "status": "PAUSED",
+    "future_session": "Create/attach a heartbeat to the new chat on resume; keep the old chat paused."
+  },
+  "boundary": "Controlled pause, not full spec acceptance. Unmerged historical source is archived, not merged implementation. No raw evaluation output was deleted. Final receipt commit is documentation only."
+}

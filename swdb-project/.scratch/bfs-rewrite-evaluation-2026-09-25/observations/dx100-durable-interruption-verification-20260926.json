@@ -1,0 +1,51 @@
+{
+  "created": "2026-09-26",
+  "id": "bfs-dx100-durable-interruption-verification-20260926",
+  "change": "Persist interrupted/failed simulator outcome before optional postmortem collection, preserving the original operational error. Historical records remain unchanged.",
+  "files": [
+    {
+      "path": "swdb/dx100.py",
+      "bytes": 57054,
+      "sha256": "f4e82d3163d3c2d3d4764aace07da952b0ca67c0aaf480c3738ccd9f0641deec"
+    },
+    {
+      "path": "tests/test_dx100_interruption.py",
+      "bytes": 4695,
+      "sha256": "4aa6c6090ec0e755303b5d62c87071b4908b1c2da0e71f2ed86b06fa07d90e73"
+    },
+    {
+      "path": "docs/bfs-dx100-execution.md",
+      "bytes": 16108,
+      "sha256": "2beb4c5a8e06059f4e691dfaa93da2116bad17f42d83e1d8fc79b3c368b087ce"
+    }
+  ],
+  "validation": [
+    {
+      "scope": "DX100 and resources focused suite",
+      "passed": 42,
+      "seconds": 68.66,
+      "log": {
+        "path": "/private/tmp/bfs-dx100-interruption-focused-20260926.log",
+        "bytes": 110,
+        "sha256": "0adfc643431f722a2c9ef5c59faa3800f088ffd4def883d827f52264a0fd4aff"
+      }
+    },
+    {
+      "scope": "Independent root public SIGTERM tests including blocked postmortem public get",
+      "passed": 2,
+      "seconds": 3.04,
+      "log": {
+        "path": "/private/tmp/bfs-dx100-interruption-independent-20260926.log",
+        "bytes": 98,
+        "sha256": "24489772c535a1369766fb2378c64ae884c31ec9a4554deca696a32ae6808442"
+      }
+    }
+  ],
+  "review": "Root inspected implementation and regression tests; no remaining finding in this scope. Signal handlers remain active during optional postmortem; final persistence retains existing handler restoration order.",
+  "empirical_evidence": false,
+  "limitations": [
+    "Postmortem scan time is not bounded by this change.",
+    "Abrupt SIGKILL before terminal persistence cannot be guaranteed recoverable.",
+    "Does not retroactively repair or qualify the failed coverage record."
+  ]
+}

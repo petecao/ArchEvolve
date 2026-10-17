@@ -1,0 +1,241 @@
+{
+  "created": "2026-09-26",
+  "id": "bfs-native-paired-pilot-20260926-a1",
+  "host": "mbit10",
+  "state": "collection_complete_calibration_unqualified",
+  "started_at_et": "2026-09-26 11:13:30 ET",
+  "finished_at_et": "2026-09-26 13:23:55 ET",
+  "code_commit": "98b5f50e93f531ce0395fe7e161f812a406d6d9d",
+  "observations": 240,
+  "passed_correctness_checks": 240,
+  "outer_exit_code": 0,
+  "lane": {
+    "name": "mbit10-evaluation-node1",
+    "generation": 400,
+    "state": "released"
+  },
+  "driver_receipt": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-paired-pilot-20260926-a1/bfs-native-paired-pilot-20260926-a1.driver/driver.json",
+    "sha256": "a59d271e6f1407408dd7f8e16b6df0435772d5b12b61f46bf4e388e8edaec632",
+    "bytes": 154677
+  },
+  "terminal_audit": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-paired-pilot-20260926-a1.dispatch/terminal-validation.json",
+    "sha256": "d9979ec1a493de0184f9e4b93fb9fbe2c20d8a6bb029ce28ef43d7c4b66551db",
+    "observed_identity_count": 83,
+    "state": "terminal_no_live_owned_processes",
+    "remaining_identity": {
+      "pid": 3034758,
+      "start_ticks": 493754291,
+      "state": "Z",
+      "rss_bytes": 0,
+      "scope": "exact original tmux pane; shared tmux server untouched"
+    }
+  },
+  "fixed_controls": {
+    "failed_spread_groups": 7,
+    "role_source_groups": 24,
+    "maximum_relative_spread_allowed": 0.1,
+    "directional_checks": 8,
+    "numerical_gain_checks_above_floor": 0,
+    "minimum_speedup": 1.05,
+    "all_observations_retained": true,
+    "changed_thresholds": false,
+    "retry_performed": false
+  },
+  "cases": {
+    "dx100.uniform-random": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-paired-pilot-20260926-a1.dispatch/first-cell-fixed-policy-analysis.json",
+      "sha256": "86afd75a4cc7c44a89201053a5945190f13f4b45ab5d608ec81168ed3eb73171",
+      "observations": 60,
+      "passed_checks": 60,
+      "baseline_over_candidate": {
+        "ratio": 0.997256,
+        "confidence_interval_95": [
+          0.984188,
+          1.00963
+        ]
+      },
+      "candidate_over_baseline": {
+        "ratio": 1.002752,
+        "confidence_interval_95": [
+          0.990353,
+          1.016063
+        ]
+      },
+      "maximum_relative_spread": 0.081338,
+      "ceiling": 0.1,
+      "whole_study_state": "unqualified_incomplete",
+      "gain_claim": false
+    },
+    "upstream.uniform-random": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-paired-pilot-20260926-a1.dispatch/second-cell-fixed-policy-analysis.json",
+      "sha256": "920189ff3c8abebafac60c00639497a90c4e07a3d70844b83cbe6302ab336a79",
+      "bytes": 6902,
+      "observations": 60,
+      "passed_checks": 60,
+      "baseline_over_candidate": {
+        "ratio": 1.0062486,
+        "confidence_interval_95": [
+          0.9954416,
+          1.0165401
+        ]
+      },
+      "candidate_over_baseline": {
+        "ratio": 0.9937902,
+        "confidence_interval_95": [
+          0.9836343,
+          1.0043927
+        ]
+      },
+      "failed_source": 0,
+      "failed_role": "candidate",
+      "relative_spread": 0.1591826,
+      "ceiling": 0.1,
+      "spread_gate_passed": false,
+      "gain_claim": false
+    },
+    "dx100.kronecker": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-paired-pilot-20260926-a1.dispatch/third-cell-fixed-policy-analysis.json",
+      "bytes": 6824,
+      "sha256": "1494b241394f87e06dffa29737f4f7d4133ee140ebfd54105779fe4b8804e272",
+      "completed_at_et": "2026-09-26 12:50:51 ET",
+      "observations": 60,
+      "passed_checks": 60,
+      "baseline_over_candidate": {
+        "ratio": 1.01937589,
+        "confidence_interval_95": [
+          0.99698372,
+          1.03831107
+        ]
+      },
+      "candidate_over_baseline": {
+        "ratio": 0.9809924,
+        "confidence_interval_95": [
+          0.96304593,
+          1.0030233
+        ]
+      },
+      "failed_source_groups": 4,
+      "total_source_groups": 6,
+      "maximum_relative_spread": 0.5340568,
+      "maximum_spread_source": 1234,
+      "maximum_spread_role": "candidate",
+      "other_failed_relative_spreads": [
+        0.1214757,
+        0.108353,
+        0.1174884
+      ],
+      "ceiling": 0.1,
+      "spread_gate_passed": false,
+      "gain_claim": false
+    },
+    "upstream.kronecker": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-paired-pilot-20260926-a1.dispatch/fourth-cell-fixed-policy-analysis.json",
+      "bytes": 6871,
+      "sha256": "37da3e5848b1bedcf5fe831d62abf693a459b9f71a5008b256e2d73cebc4b7e7",
+      "observations": 60,
+      "passed_checks": 60,
+      "baseline_over_candidate": {
+        "ratio": 1.00275785,
+        "confidence_interval_95": [
+          0.98400446,
+          1.01700158
+        ]
+      },
+      "candidate_over_baseline": {
+        "ratio": 0.99724973,
+        "confidence_interval_95": [
+          0.98327776,
+          1.01622491
+        ]
+      },
+      "failed_groups": [
+        {
+          "role": "candidate",
+          "source": 7777,
+          "relative_spread": 0.12719239
+        },
+        {
+          "role": "baseline",
+          "source": 0,
+          "relative_spread": 0.1245667
+        }
+      ],
+      "spread_gate_passed": false,
+      "gain_claim": false
+    }
+  },
+  "metadata_commit": {
+    "commit": "b722d132e0aba20a5b7fd524a3d2b31034e12a6e",
+    "branch": "codex/bfs-native-paired-evidence-20260926-a1",
+    "files": 12,
+    "host_local_only_at_observation": true,
+    "measured_checkout_head_changed": false
+  },
+  "readback_view": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-paired-review-20260926-a1/record-view-manifest.json",
+    "bytes": 66346,
+    "sha256": "7baaf8b956a00a50cbcb50c0e36e19b568d0ab674854432d80f4ba8af9e423b9",
+    "base_commit": "98b5f50e93f531ce0395fe7e161f812a406d6d9d",
+    "historical_commit": "ee7af80a16eb92a42f4eef757cf1bdfa988d74d2",
+    "historical_imports": 4,
+    "new_paired_imports": 12,
+    "imported_bytes": 1207691,
+    "total_records": 202,
+    "basis": "Same-host Git archive plus exact verified blobs; no canonical record edits."
+  },
+  "gain_claim": false,
+  "protocol_freeze": false,
+  "ticket15_complete": false,
+  "readback": {
+    "state": "timed_out",
+    "started_at_et": "2026-09-26 13:29:20.573 ET",
+    "finished_at_et": "2026-09-26 13:32:15.602 ET",
+    "elapsed_seconds": 175.028874,
+    "exit_code": 124,
+    "review_produced": false,
+    "freeze_request_produced": false,
+    "retried": false,
+    "terminal_verified": true,
+    "lane_generation": 401,
+    "lane_state": "released",
+    "timeout_process_group_empty": true,
+    "terminal_audit": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-paired-review-20260926-a1/prepare-terminal-validation.json",
+      "bytes": 3340,
+      "sha256": "2deb2eaf3699e1c030e4e27d3413eaf14cd5677e71e3b99997b2a6dd0147534f"
+    },
+    "receipt": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-paired-review-20260926-a1/prepare-receipt.json",
+      "sha256": "2cf5845cb0a908d7503d52796b89f1f2e712ddfbdb1274ecd6568a993f161a50"
+    },
+    "selection_sha256": "9aebd8a565b55c117d49626caa0ee58fb7ee7c51ef31d06b3a53825a0e26dceb",
+    "basis": "Host worker retained actual exit and independent cleanup; no completed public protocol revalidation or qualification."
+  },
+  "final_resource_summary": {
+    "reported_host_wall_seconds": 7824.3898,
+    "peak_sampled_rss_bytes": 1218088960,
+    "maximum_sample_gap_seconds": 8.549,
+    "maximum_guard_seconds": 3.651,
+    "precision_note": "Numeric summaries are rounded as reported by the host worker; exact values remain in the hashed final driver."
+  },
+  "case_analysis_scope": "Per-cell analysis fields preserve their observation-time values, including earlier whole-study incomplete labels; the terminal study state is collection_complete_calibration_unqualified.",
+  "updated": "2026-09-26",
+  "metadata_sync": {
+    "date": "2026-09-26",
+    "commit": "b722d132e0aba20a5b7fd524a3d2b31034e12a6e",
+    "destination": "git@github.com:ruchou/EvolveSWDB.git",
+    "branch": "codex/bfs-native-paired-evidence-20260926-a1",
+    "files": 12,
+    "bytes": 1047987,
+    "pushed": true,
+    "remote_sha_verified": true,
+    "inventory": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-paired-pilot-20260926-a1.dispatch/native12-export-inventory.json",
+      "bytes": 14011,
+      "sha256": "d428cd292cada978987affeac8aa9be5939c82988cc002621f0e60dba6c25635"
+    },
+    "scope": "Four evaluation-pair and eight evaluation metadata records only; excludes source excerpts, patches, provider payloads and raw artifacts."
+  }
+}

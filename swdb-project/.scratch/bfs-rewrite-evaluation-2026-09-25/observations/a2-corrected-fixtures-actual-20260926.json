@@ -1,0 +1,350 @@
+{
+  "created": "2026-09-26",
+  "observed_at": "2026-09-26T18:52:03.158891-04:00",
+  "supervisor_commit": "4c109430d4c7b80df220c4064e4e2c9ddbc66005",
+  "tested_commit": "5a0b15fe666b2d094a2b2b9847ff5a30ef16fb4f",
+  "evidence_kind": "contract_fixture",
+  "original_failure_preserved": true,
+  "fixtures": [
+    {
+      "id": "bfs-a2-owned-linux-20260926-a2",
+      "kind": "owned_cleanup",
+      "state": "complete",
+      "started": "2026-09-26T18:49:46.549407-04:00",
+      "finished": "2026-09-26T18:49:52.615551-04:00",
+      "outer_deadline": "2026-09-26T18:51:16.549407-04:00",
+      "elapsed_seconds": 6.057596,
+      "testcases": [
+        "test_linux_a2_reaps_detached_child[False]",
+        "test_linux_a2_reaps_detached_child[True]"
+      ],
+      "all_stage_returncodes": [
+        0,
+        0,
+        0
+      ],
+      "outer_exit": 0,
+      "driver": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-a2-owned-linux-20260926-a2/driver.json",
+        "sha256": "9f1f01793df97da0c3afa973dd9ed2b9163aa7e9f8a87f7ddb841da5bc8891bb",
+        "bytes": 99123
+      },
+      "pending": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-a2-owned-linux-20260926-a2/proof.pending.json",
+        "sha256": "db26adcdbf2b21ddc6519d6b94c464d823eaea1341241ab61a3c7a99fe914c3f",
+        "bytes": 89134
+      },
+      "proof": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-a2-owned-linux-20260926-a2/proof.json",
+        "sha256": "0011d3a010e46be3e2cc015d4a6811ce42f85c43df20ce4e874b2077c6178350",
+        "bytes": 89558
+      },
+      "terminal_audit": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-a2-owned-linux-20260926-a2/terminal-audit.json",
+        "sha256": "daf4083d4df2b93ec8770c8c8d08969f0ec67f01423668089a5910cbf2a55c48",
+        "bytes": 11574
+      },
+      "audit_receipt": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-a2-owned-linux-20260926-a2.dispatch/audit-receipt.json",
+        "sha256": "710c704db4051ed08c582eed71723fd40e2ea33f49d3291de1e9c2a86591b9e7",
+        "bytes": 1794
+      },
+      "proof_pending_binding": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-a2-owned-linux-20260926-a2/proof.pending.json",
+        "sha256": "db26adcdbf2b21ddc6519d6b94c464d823eaea1341241ab61a3c7a99fe914c3f"
+      },
+      "proof_terminal_binding": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-a2-owned-linux-20260926-a2/terminal-audit.json",
+        "sha256": "daf4083d4df2b93ec8770c8c8d08969f0ec67f01423668089a5910cbf2a55c48"
+      },
+      "tested_runtime_snapshots": {
+        "before": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-a2-owned-linux-20260926-a2/runtime-before.json",
+          "sha256": "857a0c2f9bb620e7a386ab3ce139b3fa6dfc0136f6ae346506c0f57fa14a062c"
+        },
+        "after": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-a2-owned-linux-20260926-a2/runtime-after.json",
+          "sha256": "857a0c2f9bb620e7a386ab3ce139b3fa6dfc0136f6ae346506c0f57fa14a062c"
+        }
+      },
+      "tested_runtime_equal": true,
+      "resource_validation": {
+        "samples": 5,
+        "peak_sampled_rss_bytes": 110223360,
+        "observed_identities": [
+          {
+            "pid": 3080302,
+            "start_ticks": 496491967
+          },
+          {
+            "pid": 3080341,
+            "start_ticks": 496492483
+          }
+        ],
+        "hard_memory_quota": false
+      },
+      "max_coverage_gap_seconds": 3.134816,
+      "sampled_peak_output_bytes": 327680,
+      "cleanup_ledger": {
+        "ledger": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-a2-owned-linux-20260926-a2/cleanup-ledger.json",
+          "sha256": "b665d7cae2ed56a0a737ef4db4c3977548105aada8cd84372798fc5305dcf476"
+        },
+        "binding": "4006170b7f0912e0839a9bd629c92bc26f35f177bcb18bf9d046d6f665793590",
+        "spent_seconds": 0.5066871054470539,
+        "events": 9
+      },
+      "ledger_reservations": {},
+      "exceeded_grants": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "retained_union_count": 7,
+      "process_observation_counts": [
+        7,
+        7
+      ],
+      "nonabsent_processes": [
+        [
+          {
+            "pid": 3080229,
+            "parent_pid": 359742,
+            "start_ticks": 496491939,
+            "state": "Z",
+            "rss_bytes": 0,
+            "role": "tmux_launcher"
+          }
+        ],
+        [
+          {
+            "pid": 3080229,
+            "parent_pid": 359742,
+            "start_ticks": 496491939,
+            "state": "Z",
+            "rss_bytes": 0,
+            "role": "tmux_launcher"
+          }
+        ]
+      ],
+      "lease_observations": [
+        {
+          "mbit10-evaluation": {
+            "state": "released",
+            "generation": 77,
+            "kernel_held": false
+          },
+          "mbit10-evaluation-node0": {
+            "state": "released",
+            "generation": 327,
+            "kernel_held": false
+          },
+          "mbit10-evaluation-node1": {
+            "state": "released",
+            "generation": 405,
+            "kernel_held": false
+          }
+        },
+        {
+          "mbit10-evaluation": {
+            "state": "released",
+            "generation": 77,
+            "kernel_held": false
+          },
+          "mbit10-evaluation-node0": {
+            "state": "released",
+            "generation": 327,
+            "kernel_held": false
+          },
+          "mbit10-evaluation-node1": {
+            "state": "released",
+            "generation": 405,
+            "kernel_held": false
+          }
+        }
+      ],
+      "audit_started": "2026-09-26T18:50:15.689210-04:00",
+      "audit_finished": "2026-09-26T18:50:16.685062-04:00",
+      "audit_elapsed": 0.9958791639655828,
+      "audit_returncode": 0
+    },
+    {
+      "id": "bfs-a2-interruption-linux-20260926-a2",
+      "kind": "dx100_interruption",
+      "state": "complete",
+      "started": "2026-09-26T18:50:45.536882-04:00",
+      "finished": "2026-09-26T18:50:54.876608-04:00",
+      "outer_deadline": "2026-09-26T18:52:15.536882-04:00",
+      "elapsed_seconds": 9.330524,
+      "testcases": [
+        "test_public_interruption_is_durable_before_postmortem[raises]",
+        "test_public_interruption_is_durable_before_postmortem[stalls]"
+      ],
+      "all_stage_returncodes": [
+        0,
+        0,
+        0
+      ],
+      "outer_exit": 0,
+      "driver": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-a2-interruption-linux-20260926-a2/driver.json",
+        "sha256": "473a3fc1f3aff8238e59c083626f91df90477081f55800ecfc9938b72ad9d554",
+        "bytes": 99597
+      },
+      "pending": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-a2-interruption-linux-20260926-a2/proof.pending.json",
+        "sha256": "210d13f3a6785a0283ea986aa9afd054e9472756ff1bb3726d4296b537aec4cd",
+        "bytes": 89204
+      },
+      "proof": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-a2-interruption-linux-20260926-a2/proof.json",
+        "sha256": "b4b91938989edc68998207e3be47bb18b486a13597ab586642d9db716dd6b29a",
+        "bytes": 89642
+      },
+      "terminal_audit": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-a2-interruption-linux-20260926-a2/terminal-audit.json",
+        "sha256": "49e123ef11092a2247d4efe71332c88451827ac8860c644756322e31b3588c43",
+        "bytes": 12128
+      },
+      "audit_receipt": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-a2-interruption-linux-20260926-a2.dispatch/audit-receipt.json",
+        "sha256": "02b506675a5fa296a94ec326ab3123c4293fd09046aa4451497e4ac1094eaba9",
+        "bytes": 1850
+      },
+      "proof_pending_binding": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-a2-interruption-linux-20260926-a2/proof.pending.json",
+        "sha256": "210d13f3a6785a0283ea986aa9afd054e9472756ff1bb3726d4296b537aec4cd"
+      },
+      "proof_terminal_binding": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-a2-interruption-linux-20260926-a2/terminal-audit.json",
+        "sha256": "49e123ef11092a2247d4efe71332c88451827ac8860c644756322e31b3588c43"
+      },
+      "tested_runtime_snapshots": {
+        "before": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-a2-interruption-linux-20260926-a2/runtime-before.json",
+          "sha256": "857a0c2f9bb620e7a386ab3ce139b3fa6dfc0136f6ae346506c0f57fa14a062c"
+        },
+        "after": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-a2-interruption-linux-20260926-a2/runtime-after.json",
+          "sha256": "857a0c2f9bb620e7a386ab3ce139b3fa6dfc0136f6ae346506c0f57fa14a062c"
+        }
+      },
+      "tested_runtime_equal": true,
+      "resource_validation": {
+        "samples": 5,
+        "peak_sampled_rss_bytes": 154157056,
+        "observed_identities": [
+          {
+            "pid": 3080666,
+            "start_ticks": 496497868
+          },
+          {
+            "pid": 3080698,
+            "start_ticks": 496498160
+          },
+          {
+            "pid": 3080699,
+            "start_ticks": 496498207
+          }
+        ],
+        "hard_memory_quota": false
+      },
+      "max_coverage_gap_seconds": 3.481257,
+      "sampled_peak_output_bytes": 1228800,
+      "cleanup_ledger": {
+        "ledger": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-a2-interruption-linux-20260926-a2/cleanup-ledger.json",
+          "sha256": "f829a3b6faa2d472dcab6135ceeb7fe2383b68658027204bf460a63f6dc7a1ce"
+        },
+        "binding": "54008ffd3629b33b464129a45bcb7417d745763e1e50d7f5d5d21e0a0163cc5c",
+        "spent_seconds": 0.510652314685285,
+        "events": 9
+      },
+      "ledger_reservations": {},
+      "exceeded_grants": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "retained_union_count": 8,
+      "process_observation_counts": [
+        8,
+        8
+      ],
+      "nonabsent_processes": [
+        [
+          {
+            "pid": 3080593,
+            "parent_pid": 359742,
+            "start_ticks": 496497838,
+            "state": "Z",
+            "rss_bytes": 0,
+            "role": "tmux_launcher"
+          }
+        ],
+        [
+          {
+            "pid": 3080593,
+            "parent_pid": 359742,
+            "start_ticks": 496497838,
+            "state": "Z",
+            "rss_bytes": 0,
+            "role": "tmux_launcher"
+          }
+        ]
+      ],
+      "lease_observations": [
+        {
+          "mbit10-evaluation": {
+            "state": "released",
+            "generation": 77,
+            "kernel_held": false
+          },
+          "mbit10-evaluation-node0": {
+            "state": "released",
+            "generation": 327,
+            "kernel_held": false
+          },
+          "mbit10-evaluation-node1": {
+            "state": "released",
+            "generation": 406,
+            "kernel_held": false
+          }
+        },
+        {
+          "mbit10-evaluation": {
+            "state": "released",
+            "generation": 77,
+            "kernel_held": false
+          },
+          "mbit10-evaluation-node0": {
+            "state": "released",
+            "generation": 327,
+            "kernel_held": false
+          },
+          "mbit10-evaluation-node1": {
+            "state": "released",
+            "generation": 406,
+            "kernel_held": false
+          }
+        }
+      ],
+      "audit_started": "2026-09-26T18:51:18.613241-04:00",
+      "audit_finished": "2026-09-26T18:51:19.606294-04:00",
+      "audit_elapsed": 0.9930811189115047,
+      "audit_returncode": 0
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "created": "2026-09-26",
+  "scope": "Actual Linux contract admission tests; not simulator execution evidence",
+  "supervisor_commit": "3f38a2bf9cde4fb23edebd787a9d4d8ab9549e07",
+  "tested_commit": "67313d9b2a45d9f0fb23d935b56e755a3a19fa7f",
+  "owned_cleanup": {
+    "state": "passed",
+    "pytest_result": "2 passed in1.74s",
+    "outer_start": "2026-09-26T18:18:29.681807-04:00",
+    "outer_deadline": "2026-09-26T18:19:59.681807-04:00",
+    "driver_finished": "2026-09-26T18:18:35.721318-04:00",
+    "outer_exit": 0,
+    "lane": 1,
+    "lease_generation": 403,
+    "lease_state": "released",
+    "auditor_started": "2026-09-26T18:20:07.953-04:00",
+    "auditor_finished": "2026-09-26T18:20:08.950-04:00",
+    "auditor_exit": 0,
+    "proof": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-a2-owned-linux-20260926-a1/proof.json",
+      "sha256": "9cb1bc9445299cbdfb1bb6755a1a19f443aa65eab66cb4025b7e6752bbbc713a"
+    },
+    "terminal_audit_sha256": "9c63d79b66722ff11ee6158b9060a297fd2b7384ae845ee813ce195499b33722",
+    "external_audit_receipt_sha256": "298c1f233b2ca95508f6f57cddcb14c571493e80c33e0506909e9f76e99089ec"
+  },
+  "interruption": {
+    "state": "failed_before_simulation",
+    "pytest_result": "2 failed in1.50s",
+    "outer_start": "2026-09-26T18:21:11.415731-04:00",
+    "outer_deadline": "2026-09-26T18:22:41.415731-04:00",
+    "outer_exit": 1,
+    "lane": 1,
+    "lease_generation": 404,
+    "lease_state": "released",
+    "released_at": "2026-09-26T18:21:16-04:00",
+    "reason": "mbit10 cannot disable socket lane policy",
+    "canonical_outcome_stage": "validation",
+    "execution_stages": 0,
+    "correctness": "unverified",
+    "pytest_stderr_bytes": 0,
+    "passed_proof": false,
+    "pending_proof": false,
+    "terminal": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-a2-interruption-linux-20260926-a1.dispatch/terminal-validation.json",
+      "bytes": 13279,
+      "sha256": "ee7c1fb65ab1bd1be1a98d287da06dd46b38dca45fa3a9969fb9015e99a6ccf7"
+    },
+    "cleanup": {
+      "observed_at": "2026-09-26T18:27:57-04:00",
+      "retained_identities": 6,
+      "checked_twice": true,
+      "absent": 5,
+      "only_survivor": {
+        "pid": 3076939,
+        "start_ticks": 496320426,
+        "state": "Z",
+        "rss_bytes": 0,
+        "role": "exact_recorded_pane"
+      },
+      "kernel_lock": "empty",
+      "cleanup_seconds": 0.3921412066,
+      "settled_ledger_events": 7
+    }
+  },
+  "next_action": "Repair fixture host/lane setup without weakening production guard; review a separate prelaunch test/plan pin revision and fresh proofs. Actual simulator A2 remains unused with21:00 cutoff and3600-second cap unchanged.",
+  "limits": [
+    "First valid proof does not substitute for the second failed selection or a changed tested runtime.",
+    "No fixture retry, admission, measurement, freeze or gain occurred.",
+    "Original tests, failures, raw outputs and both historical checkouts remain unchanged on mbit10."
+  ]
+}

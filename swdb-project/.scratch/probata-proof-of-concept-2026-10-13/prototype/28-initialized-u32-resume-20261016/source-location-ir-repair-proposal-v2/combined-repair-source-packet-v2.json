@@ -1,0 +1,59 @@
+{
+  "actual_compiler_native_solver_launched": false,
+  "controls": {
+    "command": "python3 -I -B swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/source-location-ir-repair-proposal-v2/test_counter_guard_forms_v2.py",
+    "elapsed_s": 0.083,
+    "errors": 0,
+    "failures": 0,
+    "initial_fixture_correction": "Synthetic regex fixture did not escape parentheses; only test pattern corrected before final18pass",
+    "old_source_location_controls_included": 11,
+    "passed": 18,
+    "source_location_negative_mutations_included": 90
+  },
+  "date": "2026-10-16 ET",
+  "files": {
+    "README.md": {
+      "bytes": 1966,
+      "sha256": "2c031b8400181e84321c24d1c09e57bec381c3158062b036f7cd082f50c3b115"
+    },
+    "base-source.py": {
+      "bytes": 47822,
+      "sha256": "c023a4a6298fab7a34f4213f888b6c0fb4fe5c405e5a53741942e3e2accb81cb"
+    },
+    "combined-repair.patch": {
+      "bytes": 8844,
+      "sha256": "8438f543db4d443b8d643bda43a0efdf5b9c2c993ddae61512de15d3ddfb2274"
+    },
+    "ir-only-repair.patch": {
+      "bytes": 3551,
+      "sha256": "df0b520e4cc14f17d6db3bd792050f7212da0dd0c6173a21965b4b35604c3d25"
+    },
+    "proposal-base.json": {
+      "bytes": 803,
+      "sha256": "8d830637051ab20814e7e63aca6cfea7a605dc298cf94085adb9961066d6a968"
+    },
+    "proposed-source.py": {
+      "bytes": 52100,
+      "sha256": "01c043e544e50c30fc3d92b6be5a8b097f4dfef0606f53c29068a2ba008ac145"
+    },
+    "replay_retained_observation_v2.py": {
+      "bytes": 12483,
+      "sha256": "698fc864703a8d838f25c96c41b63430e1cb0a9aaa35392fc2c6e6181b8e3f5a"
+    },
+    "source-location-v1-reviewed.py": {
+      "bytes": 50236,
+      "sha256": "63d8fff0599d409b7cd89af28d5a52ddc4fd38972057645abc5ede5b9a50237c"
+    },
+    "test_counter_guard_forms_v2.py": {
+      "bytes": 10158,
+      "sha256": "2c39dda33b70fbef19c3e42023716fd2dfc1fb9c91662774eb3425499ee39343"
+    }
+  },
+  "original_caller_answer_pair": [
+    711,
+    1107
+  ],
+  "retained_replay": "Pending independent review; same exact diagnostic bytes only",
+  "scope": "Signed i32 comparison plus uniquely paired branch/census; no source/proof clause change",
+  "status": "SOURCE_PROPOSAL_AND_PURE_CONTROLS_ONLY"
+}

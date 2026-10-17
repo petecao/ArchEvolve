@@ -1,0 +1,13 @@
+name: address_shapes
+description: How a step computes the address of its array element (attributes named in each meaning).
+values:
+  - value: stream
+    meaning: Address advances by a fixed stride of elements per iteration (attribute stride; 0 means the same element is reused).
+  - value: single_valued_indirect
+    meaning: Address is one value read by the previous step, passed through an index transform (attribute index_transform).
+  - value: ranged_indirect
+    meaning: Addresses span a range whose bounds are values read by the previous step (for example CSR offsets[u] to offsets[u+1]).
+  - value: pointer_chase
+    meaning: Address is a value read from the same array in the previous access (for example comp[comp[n]] repeated until fixed).
+  - value: data_dependent_merge
+    meaning: Two sorted ranges walked together, each advancing by a comparison of the current values (for example sorted-list intersection).

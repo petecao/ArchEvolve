@@ -1,0 +1,57 @@
+# Ticket 56 acceptance campaign, seventh attempt. Created 2026-10-04 23:25 ET.
+# a6 (speed rule ci_width.v1, ticket 66) closed both classes baseline_unstable on the upstream DO-BFS A/A
+# (two-level trials); the fork A/A passed in both classes. Ticket 72 (agent-decided under Yan-Ru's delegation,
+# pre-registered 2026-10-04 23:19 ET before this run): speed rule ci_width.v2, as v1 except that the A/A pilot
+# gates only on the selection baseline (fork scalar TDStep); upstream is reported beside each candidate with its
+# own verdict and a per-side level mix. Evaluator v3. Isolation as a5/a6. One run; no rerun chosen by outcome.
+format: swdb.extensa-campaign.v1
+id: extensa-native-bfs-20261004-a7
+created: 2026-10-04 23:25 ET
+mode: extensa
+kernel: gapbs-bfs
+target: native_cpu
+machine: mbit10
+base_source: fork_scalar_tdstep
+baselines:
+  - role: fork_scalar_tdstep
+    candidate: bfs-native-pilot-20260925-dx10018-a1.baseline
+  - role: upstream_do_bfs
+    candidate: bfs-native-pilot-20260925-upstream18-a2.baseline
+protocol:
+  roi: bfs.complete_call.v1
+  threads: 1
+  repetitions: 20
+  sources: [0, 1234, 7777]
+  region_pairs: false
+  evaluator: swdb.native.evaluator.scalable.v3
+  speed_rule: swdb.speed_rule.ci_width.v2
+  isolation: other_socket_free
+  differences: >-
+    Extensa campaign extensa-native-bfs-20261004-a7: provider rewrites of the fork's scalar
+    TDStep (scalar-only snapshot plus patch) versus the unchanged full-source dx100-bfs-scalar
+    DOBFS, and separately versus upstream direction-optimizing GAPBS BFS. Native evaluator v3
+    (mmap SG driver, saturating parent narrowing, compiled structural verifier); CI-width speed rule v2.
+workload_classes:
+  - class: kronecker
+    workload: bfs-20261004-kronecker22.0b2b1e1555d0a1e8
+  - class: uniform_random
+    workload: bfs-20261004-uniform22.2f83a134a6bef789
+label: single graph per class
+library:
+  allowed_tiers: [shared, experimental]
+  contracts: []
+regions: query
+provider: {name: codex, model: gpt-5.6-sol, effort: xhigh}
+budgets:
+  max_iterations: 8
+  plateau_iterations: 4
+  lane_hours: 24
+  provider_calls_per_iteration: 3
+  provider_calls_setup: 1
+  disk_gb: 20
+  lanes: 1
+runs_root: /data/yanruj/EvolveSWDB_runs   # 2026-10-04 20:46 ET: /data1 had 40 GB free, /data 60 GB; a 20 GB campaign would push /data1 to the 20 GB floor
+approval:
+  by: Yan-Ru Jhou
+  date: 2026-10-03
+  scope: standing mbit10 dispatch approval; Q62 go-ahead for tickets 56 and 57 (one campaign within its budgets is one dispatch); ticket 66 decided by Yan-Ru 2026-10-04; ticket 72 agent-decided under Yan-Ru's delegation 2026-10-04 (speed rule ci_width.v2, pre-registered 2026-10-04 23:19 ET; one A/A pilot then the campaign, no reruns); ticket 71 evaluator v3

@@ -1,0 +1,349 @@
+id: bfs-workloads18-20260925
+created: '2026-09-25'
+timezone: America/Detroit
+host: mbit10
+state: complete
+role: baseline_workload_preparation
+gain_claim: false
+correction_repository_commit: 524f3fdc30adce1575bd024316dd53a819a1d7aa
+correction:
+  reason: Pinned CLBase::ParseArgs forces symmetrization for synthetic -u/-g inputs
+    even without -s. Version1 effective symmetrize:false metadata was erroneous; immutable
+    originals are retained and superseded.
+  graph_regenerated: false
+  graph_paths_or_hashes_changed: false
+  source_sequence_changed: false
+  outer_wall_budget_s: 600
+  each_registration_wall_budget_s: 240
+  lane:
+    socket_lane:
+      aligned_cell_age_s: ''
+      aligned_to: no_gapbs_batch_running
+      command:
+      - bash
+      - -c
+      - set -eu; cd '/data1/yanruj/EvolveSWDB_graph_bfs_20260925_uniform18'; timeout
+        --signal=INT --kill-after=15s 240s python3 -m swdb register-workload '/data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-generator-metadata-v2-a1/uniform18.request.json'
+        --records records --format json >'/data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-generator-metadata-v2-a1/uniform18.stdout.json'
+        2>'/data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-generator-metadata-v2-a1/uniform18.stderr';
+        timeout --signal=INT --kill-after=15s 240s python3 -m swdb register-workload
+        '/data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-generator-metadata-v2-a1/kronecker18.request.json'
+        --records records --format json >'/data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-generator-metadata-v2-a1/kronecker18.stdout.json'
+        2>'/data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-generator-metadata-v2-a1/kronecker18.stderr'
+      cpus_allowed_list: 1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63
+      ended_utc: '2026-09-26T01:43:50Z'
+      exit_code: 0
+      host: mbit10
+      job: swdb-bfs-graph-v2
+      lease_generation: 389
+      lease_name: mbit10-evaluation-node1
+      load1_at_start: 14.7
+      load1_max: 32
+      node: 1
+      numa_memory_policy: bind:1
+      numactl: --cpunodebind=1 --membind=1
+      preregistration_sha256: null
+      started_utc: '2026-09-26T01:43:25Z'
+  raw_receipts:
+  - path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-generator-metadata-v2-a1/host-preflight.txt
+    sha256: 8d4dfc3684025c2e35bceb447bc89eedebdb3af0a4fabafdb67de02de50fa3b9
+    bytes: 245
+  - path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-generator-metadata-v2-a1/host-preflight-complete.txt
+    sha256: 871a46b3bc934d1195052bba51e58b0b7ab25fd33bef2098c1660bbec11011b7
+    bytes: 6135
+  - path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-generator-metadata-v2-a1/job.stdout
+    sha256: 677d748157eb1245cbcc358f55a5d821a04d9b1a538c3971d84613028bcc3e41
+    bytes: 234
+  - path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-generator-metadata-v2-a1/job.stderr
+    sha256: ccc8ce8a4792a4387ddb4ca20f6fa8a32aef83565a85dac2b515958ed8f3f035
+    bytes: 3209
+  - path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-generator-metadata-v2-a1/started.txt
+    sha256: 21aa58c5aed10df0a1fd7363f93229bd24e1e5ee71307de90ce27b8cfd8d0123
+    bytes: 26
+  - path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-generator-metadata-v2-a1/ended.txt
+    sha256: fc09a19c1dcbf7753ceff0046a41567d9c714c936ab189de63b0fd9fa916982b
+    bytes: 26
+  - path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-generator-metadata-v2-a1/exit-code.txt
+    sha256: 9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa
+    bytes: 2
+workloads:
+- requested_id: bfs-20260925-uniform18
+  version1: bfs-20260925-uniform18.176feafe5d830058
+  version2: bfs-20260925-uniform18.cd2169a5c421baf7
+  canonical_sha256: 7d7dd24c2397071f4ad8fb3125079a4e42ecdbaa853745d84161bcd410d0164b
+  sources:
+  - 0
+  - 1234
+  - 7777
+  realized:
+    num_vertices: 262144
+    num_directed_edges: 8388040
+    directed: false
+    isolated_vertices: 0
+    minimum_out_degree: 9
+    maximum_out_degree: 58
+  representations:
+  - id: bfs-20260925-uniform18.dx100
+    path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-uniform18/graph.sg32
+    sha256: c6a430be5cf64a1b144d01f9bcbaeab2fcb45e0fac2359da36de8087b1b4790d
+    bytes: 34600749
+    format: gapbs_sg32le
+  - id: bfs-20260925-uniform18.upstream
+    path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-uniform18/graph.sg64
+    sha256: af148b98e84f35c217e7c64816e26a014110d530c5400840652eeead91d97a1c
+    bytes: 35649337
+    format: gapbs_sg64le
+  generator:
+    name: DX100 GAPBS converter
+    revision: e4fc4afdf894f295442cef3604667a469fab8e62
+    parameters:
+      scale: 18
+      edge_factor: 16
+      seed: 27491095
+      symmetrize: true
+      binary_sha256: a6cd0fd88a8de97decd087e9f1e43117ace95230f710b0bd7745f7bd33b492e6
+      source_sha256: 9b15a2ad58d672d534a14c808320a5d666af62cbe017f14703d955bea2279cc1
+      explicit_symmetrize_flag: false
+    command:
+    - /data1/yanruj/EvolveSWDB_builds/bfs-workloads-20260925/bfs-20260925-uniform18/converter
+    - -u
+    - '18'
+    - -k
+    - '16'
+    - -b
+    - /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-uniform18/graph.sg32
+  generation_repository_commit: 342fcff84b16dae86e42e70169929c2211143bd1
+  generation_bounds:
+    compile_s: 180
+    generate_s: 900
+    register_s: 2400
+    address_space_gib: 48
+    threads: 4
+  generation_stages:
+  - stage: compile
+    argv:
+    - g++
+    - -std=c++11
+    - -O3
+    - -fopenmp
+    - /data1/yanruj/EvolveSWDB_graph_bfs_20260925_uniform18/apps/dx100/benchmarks/gapbs/src/converter.cc
+    - -o
+    - /data1/yanruj/EvolveSWDB_builds/bfs-workloads-20260925/bfs-20260925-uniform18/converter
+    timeout_s: 180
+    state: complete
+    returncode: 0
+    host_wall_s: 3.3808860909193754
+    stdout_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  - stage: generate
+    argv:
+    - /data1/yanruj/EvolveSWDB_builds/bfs-workloads-20260925/bfs-20260925-uniform18/converter
+    - -u
+    - '18'
+    - -k
+    - '16'
+    - -b
+    - /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-uniform18/graph.sg32
+    timeout_s: 900
+    state: complete
+    returncode: 0
+    host_wall_s: 0.42278906609863043
+    stdout_sha256: bff776c478f414a10420814871b62e9397e7e687ee93757c11fc75939a96429a
+    stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  - stage: register
+    argv:
+    - /usr/bin/python3
+    - -m
+    - swdb
+    - register-workload
+    - /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-uniform18/register.json
+    - --records
+    - /data1/yanruj/EvolveSWDB_graph_bfs_20260925_uniform18/records
+    - --format
+    - json
+    timeout_s: 2400
+    state: complete
+    returncode: 0
+    host_wall_s: 27.75508122704923
+    stdout_sha256: 658d0b2fae2d5f0f61ae49b604a1a52a24517b67e2e535e5ec6766ec21374de2
+    stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  generation_lane:
+    socket_lane:
+      aligned_cell_age_s: ''
+      aligned_to: no_gapbs_batch_running
+      command:
+      - bash
+      - /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-uniform18.launch/run.sh
+      cpus_allowed_list: 1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63
+      ended_utc: '2026-09-26T01:28:38Z'
+      exit_code: 0
+      host: mbit10
+      job: swdb-uniform18
+      lease_generation: 386
+      lease_name: mbit10-evaluation-node1
+      load1_at_start: 16.4
+      load1_max: 32
+      node: 1
+      numa_memory_policy: bind:1
+      numactl: --cpunodebind=1 --membind=1
+      preregistration_sha256: null
+      started_utc: '2026-09-26T01:28:02Z'
+  raw_receipts:
+  - path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-uniform18/driver.json
+    sha256: f6a729140fda6268213f137d85dd15bd0ac350cd0c1d95fe649210c32b1e859a
+    bytes: 2822
+  - path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-uniform18/register.json
+    sha256: dfdc63a4df97497e5b98157eeab4ea9bd7e72fe8eccaf50bcb266fac3213b162
+    bytes: 1542
+  - path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-uniform18.launch/generation.log
+    sha256: 0304f37c4fbfacb86231b4e7e255e3855da15af67f74e494e97eacaca7ac12f8
+    bytes: 8923
+  - path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-uniform18.launch/dispatch.log
+    sha256: c57e119c16af5dbe054c31abcdeba8497a1a0ec5f2feaf37841cb368874e8e3c
+    bytes: 1756
+  - path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-generator-metadata-v2-a1/uniform18.request.json
+    sha256: b06de11bb9fc585f85396d0c9c1be3d90ca228304a6dc4728979729ec5a891d3
+    bytes: 1932
+  - path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-generator-metadata-v2-a1/uniform18.stdout.json
+    sha256: 1b842f53ef6b4ff8a7b6b34c9619546510c1911c288cdb3c800064cfb456874f
+    bytes: 4017
+- requested_id: bfs-20260925-kronecker18
+  version1: bfs-20260925-kronecker18.7c1e520d3db5a1bc
+  version2: bfs-20260925-kronecker18.48de8267ac2098d5
+  canonical_sha256: cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7
+  sources:
+  - 0
+  - 1234
+  - 7777
+  realized:
+    num_vertices: 262143
+    num_directed_edges: 7610898
+    directed: false
+    isolated_vertices: 88159
+    minimum_out_degree: 0
+    maximum_out_degree: 25251
+  representations:
+  - id: bfs-20260925-kronecker18.dx100
+    path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-kronecker18/graph.sg32
+    sha256: 9cec454bd8d3f175181a7e3906404ad8a812330c5e5bf1de62d63fad5e0f1143
+    bytes: 31492177
+    format: gapbs_sg32le
+  - id: bfs-20260925-kronecker18.upstream
+    path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-kronecker18/graph.sg64
+    sha256: 2159d525de7476a967d668b6587c5205cf94faeae734c2541d712028e70315ae
+    bytes: 32540761
+    format: gapbs_sg64le
+  generator:
+    name: DX100 GAPBS converter
+    revision: e4fc4afdf894f295442cef3604667a469fab8e62
+    parameters:
+      scale: 18
+      edge_factor: 16
+      seed: 27491095
+      symmetrize: true
+      binary_sha256: a6cd0fd88a8de97decd087e9f1e43117ace95230f710b0bd7745f7bd33b492e6
+      source_sha256: 9b15a2ad58d672d534a14c808320a5d666af62cbe017f14703d955bea2279cc1
+      explicit_symmetrize_flag: false
+    command:
+    - /data1/yanruj/EvolveSWDB_builds/bfs-workloads-20260925/bfs-20260925-kronecker18/converter
+    - -g
+    - '18'
+    - -k
+    - '16'
+    - -b
+    - /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-kronecker18/graph.sg32
+  generation_repository_commit: 342fcff84b16dae86e42e70169929c2211143bd1
+  generation_bounds:
+    compile_s: 180
+    generate_s: 900
+    register_s: 2400
+    address_space_gib: 48
+    threads: 4
+  generation_stages:
+  - stage: compile
+    argv:
+    - g++
+    - -std=c++11
+    - -O3
+    - -fopenmp
+    - /data1/yanruj/EvolveSWDB_graph_bfs_20260925_uniform18/apps/dx100/benchmarks/gapbs/src/converter.cc
+    - -o
+    - /data1/yanruj/EvolveSWDB_builds/bfs-workloads-20260925/bfs-20260925-kronecker18/converter
+    timeout_s: 180
+    state: complete
+    returncode: 0
+    host_wall_s: 3.1771159945055842
+    stdout_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  - stage: generate
+    argv:
+    - /data1/yanruj/EvolveSWDB_builds/bfs-workloads-20260925/bfs-20260925-kronecker18/converter
+    - -g
+    - '18'
+    - -k
+    - '16'
+    - -b
+    - /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-kronecker18/graph.sg32
+    timeout_s: 900
+    state: complete
+    returncode: 0
+    host_wall_s: 0.42088067904114723
+    stdout_sha256: c6e0fffa8c2a7a8ef8513bdc4ebdd31e909543eaf7664169da4c44da9729a11e
+    stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  - stage: register
+    argv:
+    - /usr/bin/python3
+    - -m
+    - swdb
+    - register-workload
+    - /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-kronecker18/register.json
+    - --records
+    - /data1/yanruj/EvolveSWDB_graph_bfs_20260925_uniform18/records
+    - --format
+    - json
+    timeout_s: 2400
+    state: complete
+    returncode: 0
+    host_wall_s: 28.799352732487023
+    stdout_sha256: 55275c9b198462368fa40eb24a48b19cb833847b59a6c0ccc57657386cc7fba8
+    stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  generation_lane:
+    socket_lane:
+      aligned_cell_age_s: ''
+      aligned_to: no_gapbs_batch_running
+      command:
+      - bash
+      - /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-kronecker18.launch/run.sh
+      cpus_allowed_list: 1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63
+      ended_utc: '2026-09-26T01:32:11Z'
+      exit_code: 0
+      host: mbit10
+      job: swdb-kronecker18
+      lease_generation: 387
+      lease_name: mbit10-evaluation-node1
+      load1_at_start: 18.59
+      load1_max: 32
+      node: 1
+      numa_memory_policy: bind:1
+      numactl: --cpunodebind=1 --membind=1
+      preregistration_sha256: null
+      started_utc: '2026-09-26T01:31:35Z'
+  raw_receipts:
+  - path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-kronecker18/driver.json
+    sha256: 52b9adf8b16f0fd9fa2d967c096dba7f58f4a9771e62e17d0d4152496f07144c
+    bytes: 2837
+  - path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-kronecker18/register.json
+    sha256: 5353c1c80b91ca53bf527f29f375cc0d954806149e40ede612e32ddb9a41f45a
+    bytes: 1549
+  - path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-kronecker18.launch/generation.log
+    sha256: b3db7fa5203756330062b93712466db31ffb28abf8e240d29d78b49e2be841ac
+    bytes: 8932
+  - path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-kronecker18.launch/dispatch.log
+    sha256: e8d691828f3f7e4daebb27e06cd18cee479186ddd4ad67ec331b366ea909101d
+    bytes: 1768
+  - path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-generator-metadata-v2-a1/kronecker18.request.json
+    sha256: dbe1d1135f325f3490b1badd3d9b36478da440f9eb0b136f07a82b6d0d4c1d43
+    bytes: 1945
+  - path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-generator-metadata-v2-a1/kronecker18.stdout.json
+    sha256: 78aa152bf1ccba188d48a427aa00455e6dbdc8640d8ab0c11d41cbb7fd82ab8e
+    bytes: 4037

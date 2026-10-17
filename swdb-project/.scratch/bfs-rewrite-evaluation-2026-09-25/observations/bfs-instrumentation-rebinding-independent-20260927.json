@@ -1,0 +1,34 @@
+{
+  "date": "2026-09-27 ET",
+  "scope": "Independent first-stage local public freeze/binding reproduction; prospective continuation packet not yet reviewed",
+  "verdict": "pass_for_local_binding_test_only",
+  "log": {
+    "path": "/private/tmp/bfs-instrumentation-rebinding-independent-20260927.log",
+    "sha256": "d317ab1d5cfbe7248781ab095959be9c853a5dce91718bca86c6b2a9d273aada",
+    "text": ".                                                                        [100%]\n1 passed in 50.39s\n"
+  },
+  "files": {
+    "tests/test_bfs_instrumentation_rebinding.py": "1f895ef5587879cb13d0e0b01b0bfb7b85306b58ca62bffcbd5353d42cb0a3ca",
+    "docs/bfs-t16-instrumentation-preparation-20260927.md": "0f2823002b20e7bcbf33f3c5bb86a70638ab6e916168a24def36d2aba1ff4c60"
+  },
+  "code_commit": "043d385c1e2bca65134a77044348616800cec39f",
+  "runtime": "923cf33b955104fdf96705b648933e7d486a3810",
+  "actual_git_runtime_hashes": {
+    "scripts/dx100_verify.py": "476874619644d1256dcc5ca1e853c47b7be2e1dc56f538aaa2dd783842e7ad10",
+    "swdb/dx100_witness.py": "c9d3e14b70a3689799314556fab2922b1723c00960902109af2922a958cd3498",
+    "scripts/dx100_host_memory.py": "655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd"
+  },
+  "checks": [
+    "Original frozen binding succeeds",
+    "Changed driver alone rejects exact instrumentation failure",
+    "Changed parser alone rejects exact instrumentation failure",
+    "Both changed hashes reject old protocol",
+    "Fresh immutable freeze binds with new hashes",
+    "Original protocol record remains identical"
+  ],
+  "limits": [
+    "Fixtures only, no simulation or remote evaluation",
+    "Candidate-role actual binding not separately invoked by this one test; prospective both-role settings require independent packet inspection",
+    "No production gate edits"
+  ]
+}

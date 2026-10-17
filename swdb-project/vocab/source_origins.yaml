@@ -1,0 +1,9 @@
+name: source_origins
+description: Who maintains an application's source.
+values:
+  - value: upstream
+    meaning: A public upstream repository, pinned to one commit.
+  - value: collaborator
+    meaning: Supplied by an ArchEvolve collaborator.
+  - value: local
+    meaning: Written in this repository.

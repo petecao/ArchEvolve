@@ -1,0 +1,67 @@
+{
+  "actual_preparation_receiver_context_and_public_admission": false,
+  "all_other_module_bytes_exact": true,
+  "date": "2026-10-16 ET",
+  "explicit_reader_and_adapter_module_pins": {
+    "compiler_unit_adapter_v3.py": {
+      "bytes": 15063,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-normalized-ingress-v3/observer/modules/compiler_unit_adapter_v3.py",
+      "sha256": "775ab2ecf6068153a6167473129dcd416dc2727c9afe0ef6e0846bab62d3085c"
+    },
+    "compiler_unit_adapter_v4.py": {
+      "bytes": 23873,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-normalized-ingress-v3/observer/modules/compiler_unit_adapter_v4.py",
+      "sha256": "b5bd7293259f69ffe4e5d6094cb6bd46c2d5527ef95cd28d0aaa95d88529e6c6"
+    },
+    "memory_normalized_capture_ingress_v1.py": {
+      "bytes": 24961,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-normalized-ingress-v3/observer/modules/memory_normalized_capture_ingress_v1.py",
+      "sha256": "6e01c75ca17d9feff04263d4963cf7ee3a1c46e9d30c03bf4b0282812f8bd599"
+    },
+    "memory_normalized_compiler_adapter_v1.py": {
+      "bytes": 5462,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-normalized-ingress-v3/observer/modules/memory_normalized_compiler_adapter_v1.py",
+      "sha256": "f05980d1cc52fce7026247eea0b625af734ed42526ebcb337c270090071b1a47"
+    }
+  },
+  "files": {
+    "observer/modules/observation_source_bridge_v1.py": {
+      "basis": {
+        "bytes": 2774,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-normalized-ingress-v2/observer/modules/observation_source_bridge_v1.py",
+        "sha256": "53edf556c0115bfff5307e9c6cec5969dcfe02e960c710ab26c0e676de17c72a"
+      },
+      "replacements": [
+        {
+          "count": 1,
+          "new": "from swdb._dx100_whole import compiler_unit_adapter_v3 as compiler\nfrom swdb._dx100_whole import compiler_unit_adapter_v4 as semantic_compiler",
+          "old": "from swdb._dx100_whole import compiler_unit_adapter_v3 as compiler"
+        }
+      ]
+    },
+    "observer/observe_memory_entry_v1.py": {
+      "basis": {
+        "bytes": 12103,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-normalized-ingress-v2/observer/observe_memory_entry_v1.py",
+        "sha256": "9c516247ce86a6c235960348824245fdd769aab5990e79253726661074314c72"
+      },
+      "replacements": [
+        {
+          "count": 1,
+          "new": "MANIFEST_SHA = '9147d63f3735f73bc1a3146027b9e92a006a5fe58ccaf7061758aaf6c9e5552b'",
+          "old": "MANIFEST_SHA = '791319838f360682ac1e75225bcbd792e65f84f422544a26c696b72cac6ba94d'"
+        },
+        {
+          "count": 1,
+          "new": "MODULE_NAMES = ('swdb._dx100_whole.whole_interface_v4', 'swdb._dx100_whole.compiler_unit_adapter_v3', 'swdb._dx100_whole.compiler_unit_adapter_v4', 'swdb._dx100_whole.receiver_state_draws_v2', 'swdb.dx100_whole_checked', 'swdb.dx100_checked_source', 'swdb._dx100_whole.lossless_gzip_v2', 'swdb._dx100_whole.role_normalized_gzip_v2', 'swdb._dx100_whole.closed_python_surface', 'swdb._dx100_whole.strict_minify_v2', 'swdb._dx100_whole.abi_role_transport_v1', 'swdb._dx100_whole.memory_normalized_compiler_adapter_v1', 'swdb._dx100_whole.memory_normalized_capture_ingress_v1', 'swdb._dx100_whole.source_memory_selection_v1', 'swdb._dx100_whole.memory_source_preparation_v1')",
+          "old": "MODULE_NAMES = ('swdb._dx100_whole.whole_interface_v4', 'swdb._dx100_whole.compiler_unit_adapter_v3', 'swdb._dx100_whole.receiver_state_draws_v2', 'swdb.dx100_whole_checked', 'swdb.dx100_checked_source', 'swdb._dx100_whole.lossless_gzip_v2', 'swdb._dx100_whole.role_normalized_gzip_v2', 'swdb._dx100_whole.closed_python_surface', 'swdb._dx100_whole.strict_minify_v2', 'swdb._dx100_whole.abi_role_transport_v1', 'swdb._dx100_whole.memory_normalized_compiler_adapter_v1', 'swdb._dx100_whole.memory_normalized_capture_ingress_v1', 'swdb._dx100_whole.source_memory_selection_v1', 'swdb._dx100_whole.memory_source_preparation_v1')"
+        },
+        {
+          "count": 2,
+          "new": "fixed-memory-modules-v2.json",
+          "old": "fixed-memory-modules-v1.json"
+        }
+      ]
+    }
+  }
+}

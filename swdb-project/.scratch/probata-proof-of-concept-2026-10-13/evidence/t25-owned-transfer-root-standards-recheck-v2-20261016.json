@@ -1,0 +1,50 @@
+{
+  "created": "2026-10-16 ET",
+  "axis": "Standards",
+  "decision": "PASS",
+  "preparation": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer-preparation-v2-20261016.json",
+    "bytes": 13371,
+    "sha256": "a417b4e3921df8957ffb2c2ef4afab212827ef921d892f91e25850ab81ab4855"
+  },
+  "reviewed_files": [
+    {
+      "bytes": 14594,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_owned_transfer.py",
+      "sha256": "6fa50d3b0ff6610c541bfa787179b37c6c8b50e4155fb2b0605d00e1eaffd085"
+    },
+    {
+      "bytes": 2389,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_owned_state.mlw",
+      "sha256": "a2c295d2c6720a9c8c522f05e19723c2d2d2a32b63f9b198aab03f195269e4b6"
+    },
+    {
+      "bytes": 6036,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_owned_transfer.py",
+      "sha256": "65c73181c4bb61d2837eb0ddb7728f9164681e211a9695296ac676bfe5bdd971"
+    },
+    {
+      "bytes": 2923,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-prefix10-resume-20261016/run_pure_owned_transfer.py",
+      "sha256": "7a433f796f768f0dbf221e5c10ff9a6e6fa5bbc447dadaad444803d9a9dc7ca9"
+    }
+  ],
+  "resolved_finding": "V1 STD-01: literal type-registry source slices and canonical values now enter identity and complete manifest; observed full module hash retained separately.",
+  "verification": {
+    "physical_pin_rows_checked": 30,
+    "unchanged_nonmanifest_files": 20,
+    "manifest_changes": [
+      "type_registry",
+      "checker"
+    ],
+    "retained_tests": "Legacy regression1fail/3pass; successor4pass, no external native attempts",
+    "reviewer_compiler_native_solver_tests_executed": false
+  },
+  "checks": [
+    "Closed accepted element domain derives from the exact pinned literal registry, with duplicate/name/shape validation.",
+    "Pure public prepare/check identity mutation control changes only FLOAT_TYPES, rejects old packet under new identity and retains launch refusal.",
+    "Original eight source units, ten complete formulas and theory bytes unchanged; every source/Heap/ownership/lifetime/default admission stays pending.",
+    "Small artifact module follows neighboring preparation/check conventions and project scope/date requirements."
+  ],
+  "scope": "Preparation seam only. No formal or source theorem, model adoption, caller route or full-ticket acceptance."
+}

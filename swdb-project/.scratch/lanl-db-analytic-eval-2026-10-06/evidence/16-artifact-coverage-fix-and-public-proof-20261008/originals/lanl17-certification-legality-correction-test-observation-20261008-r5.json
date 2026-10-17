@@ -1,0 +1,27 @@
+{
+  "format": "swdb.local-certification-test-observation.v1",
+  "recorded_utc": "2026-10-09T01:24:47.156041+00:00",
+  "passed": 31,
+  "failed": 0,
+  "seconds": 71.31,
+  "exit_code": 0,
+  "originals": [
+    {
+      "path": "/private/tmp/lanl17-certification-legality-correction-tests-20261008-r5.stdout",
+      "bytes": 110,
+      "sha256": "3b8186c827e015998de2e9144daa9926f8767dbb7f0c4f6421e3c393ec062d3a"
+    },
+    {
+      "path": "/private/tmp/lanl17-certification-legality-correction-tests-20261008-r5.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/lanl17-certification-legality-correction-tests-20261008-r5.exit-code.txt",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    }
+  ],
+  "scope": "Entire legality suite, four previously failing real certification callers; original assertion/compiler/evaluator/control paths preserved",
+  "remote_scientific_admission": false
+}

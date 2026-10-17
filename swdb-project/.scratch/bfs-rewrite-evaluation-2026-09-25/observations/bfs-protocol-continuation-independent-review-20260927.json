@@ -1,0 +1,125 @@
+{
+  "date": "2026-09-27 ET",
+  "verdict": "pass_for_reviewed_preparation_source",
+  "scope": "Six-file author protocol/continuation source, local public binding reproduction, independent Git-backed settings invariance; not actual Linux proof or launch clearance",
+  "findings": [],
+  "files": [
+    {
+      "path": "scripts/bfs_simulator_batch.py",
+      "bytes": 71801,
+      "sha256": "a97c40af832804d8a8473fb898990133022f9356d977663b82ffbba072210fad"
+    },
+    {
+      "path": "scripts/bfs_simulator_recovery.py",
+      "bytes": 43193,
+      "sha256": "f222e40425525df21619be703661e771548fb8f85f2deb7938158596f2135676"
+    },
+    {
+      "path": "tests/test_bfs_protocol_recovery.py",
+      "bytes": 6891,
+      "sha256": "13c1445874cae3fafc10182ad4bcaf47c47698d866a297ae9914f6fb729a486d"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t16-protocol-recovery-simulator-batch-20260927-a1.json",
+      "bytes": 35214,
+      "sha256": "b9634068e923bf3a1ef19e274e7a36ac0ffeb04d4dfabb67c9be921e5d0549e0"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/author-reference-seal-runtime-freeze-20260927-a1.yaml",
+      "bytes": 10594,
+      "sha256": "8783bd8c6db1a3f475d052259292e7584fa9a4659811cdcb147a546530651dc6"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/author-matched-control-seal-runtime-freeze-20260927-a1.yaml",
+      "bytes": 10664,
+      "sha256": "edcbe6ccbae6f1aa1701e1b00060f45253f69f397fa4c7de674abab11d6cb9d4"
+    }
+  ],
+  "tests": [
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 /Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -B -m pytest -q -p no:cacheprovider tests/test_bfs_protocol_recovery.py tests/test_bfs_simulator_recovery.py tests/test_bfs_simulator_batch.py",
+      "result": "207 passed, 2 existing Linux skips in 22.13s",
+      "log": {
+        "path": "/private/tmp/bfs-protocol-continuation-independent-20260927.log",
+        "bytes": 272,
+        "sha256": "e73827a2cdd4dcb1cc90e155215c59b4520e01fde09dcc5fffb28cecda225c84"
+      }
+    },
+    {
+      "result": "1 public binding reproduction passed in 50.39s",
+      "receipt": {
+        "path": "/private/tmp/bfs-instrumentation-rebinding-independent-20260927.json",
+        "bytes": 1817,
+        "sha256": "b063290c2d6e0f907e25918f9be138de5ee8af0950fbf02c319e767e6d1709bc"
+      }
+    }
+  ],
+  "structure": {
+    "date": "2026-09-27 ET",
+    "protocols": {
+      "artifact": {
+        "old_request": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/author-reference-freeze-v1.yaml",
+        "new_request": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/author-reference-seal-runtime-freeze-20260927-a1.yaml",
+        "old_id": "bfs-author-reference-20260925",
+        "new_id": "author-reference-seal-runtime-20260927-a1",
+        "both_roles_match_exact_923_runtime": true,
+        "all_other_fields_identical": true,
+        "old_request_unchanged_from_HEAD": true
+      },
+      "control": {
+        "old_request": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/author-matched-control-freeze-v1.yaml",
+        "new_request": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/author-matched-control-seal-runtime-freeze-20260927-a1.yaml",
+        "old_id": "bfs-author-matched-control-20260925",
+        "new_id": "author-matched-control-seal-runtime-20260927-a1",
+        "both_roles_match_exact_923_runtime": true,
+        "all_other_fields_identical": true,
+        "old_request_unchanged_from_HEAD": true
+      }
+    },
+    "exact_runtime_hashes": {
+      "driver_sha256": "476874619644d1256dcc5ca1e853c47b7be2e1dc56f538aaa2dd783842e7ad10",
+      "parser_sha256": "c9d3e14b70a3689799314556fab2922b1723c00960902109af2922a958cd3498",
+      "observer_sha256": "655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd"
+    },
+    "plan_top_level_differences": [
+      "accounting",
+      "budget_authority",
+      "id",
+      "protocol_requests",
+      "series"
+    ],
+    "series_difference": "IDs only; all scientific fields identical",
+    "prior_closed_charge": {
+      "seconds": 15013,
+      "bytes": 8243990528
+    },
+    "new_proof_reservation": {
+      "seconds": 600,
+      "bytes": 2147483648
+    },
+    "cumulative": {
+      "seconds": 15613,
+      "bytes": 10391474176
+    },
+    "hard_end": "2026-09-27T20:16:17.225985-04:00",
+    "latest_full_series_start": "2026-09-27T14:15:47.225985-04:00",
+    "canonical_plan_sha256": "eb0d62b55afc0c3632ef264ee0ed916d14792ac27836debcb2718048e8b226a8"
+  },
+  "checks": [
+    "Both independent protocol requests preserve all fields except new IDs and two runtime hash leaves in each role",
+    "All exact923 Git verifier_runtime hashes independently computed",
+    "All scientific series fields unchanged, IDs only differ",
+    "Prior failure remains failed/unverified/empty timing and samples; recursive charges retain strict closure/storage checks",
+    "No historical proof alias accepted; new600s/2GiB reserved within existing pool",
+    "validate_inputs calls exact protocol/runtime check; operator preparation invokes it before creating dispatch metadata",
+    "Old request files unchanged from HEAD; swdb/bfs_protocol.py has no diff"
+  ],
+  "pending": [
+    "Public freezing and exact immutable protocol record review",
+    "Exported runtime/proof operator inventory",
+    "Fresh exact-runtime Linux proof and actual retained closure/admission validation",
+    "Actual resource/lease admission and scientific execution remain root-owned"
+  ],
+  "author_final_inventory_matches": true,
+  "author_receipt": "/private/tmp/bfs-protocol-continuation-author-20260927.json"
+}

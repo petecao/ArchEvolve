@@ -1,0 +1,22 @@
+{
+  "message_version": "1.0",
+  "id": "bfs-acceptance-report-20260927-e1",
+  "candidate_protocols": [
+    "bfs-native-one-thread-dx100-scalar-20260927.0d2d6da657751ff3",
+    "bfs-native-one-thread-upstream-do-20260927.9d4b53fd41e79297"
+  ],
+  "artifact_reference_comparisons": [],
+  "controlled_reference_comparisons": [],
+  "handoff": {
+    "path": "docs/bfs-handoff-contract-v1.md",
+    "sha256": "aba134c001e7fbfd4e7627aa37ac298359c41dbd35ba6dc3c459ed09b290694c",
+    "contracts": {"profile_package": "1.0", "rewrite_proposal": "1.0", "evaluation_result": "1.0"},
+    "examples": [
+      "bfs-campaign-preparation-20260925-a1.dx100-instructions",
+      "bfs-campaign-preparation-20260925-a1.dx100-patch",
+      "bfs-campaign-preparation-20260925-a1.upstream-instructions",
+      "bfs-campaign-preparation-20260925-a1.upstream-annotated-context6"
+    ],
+    "live_collaborator_integration": false
+  }
+}

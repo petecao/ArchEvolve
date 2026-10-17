@@ -1,0 +1,429 @@
+{
+  "actual_guards": {
+    "outer-resources.json": {
+      "cpu_seconds": 345.949081,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 1066860544,
+      "timed_out": false,
+      "wall_seconds": 222.55604431591928
+    },
+    "resources.json": {
+      "cpu_seconds": 301.778847,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 1013907456,
+      "timed_out": false,
+      "wall_seconds": 220.55684205982834
+    }
+  },
+  "actual_lane": {
+    "aligned_cell_age_s": "",
+    "aligned_to": "no_gapbs_batch_running",
+    "command": [
+      "timeout",
+      "--signal=TERM",
+      "--kill-after=60",
+      "1620",
+      "bash",
+      "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-fb197c5d-t25-closed-lifetime6-public-v1/run.sh"
+    ],
+    "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+    "ended_utc": "2026-10-16T19:03:25Z",
+    "exit_code": 0,
+    "host": "mbit10",
+    "job": "probata-resume-20261016-fb197c5d-t25-closed-lifetime6-public-v1",
+    "lease_generation": 611,
+    "lease_name": "mbit10-evaluation-node0",
+    "load1_at_start": 0.69,
+    "load1_max": 32,
+    "node": 0,
+    "numa_memory_policy": "bind:0",
+    "numactl": "--cpunodebind=0 --membind=0",
+    "preregistration_sha256": null,
+    "started_utc": "2026-10-16T18:59:42Z"
+  },
+  "actual_solver_submission_count": null,
+  "all_actual_task_goals_source_equivalent": true,
+  "all_six_acceptance": false,
+  "all_six_proven": false,
+  "auditor": {
+    "bytes": 46419,
+    "path": "prototype/25-closed-lifetime-glue-20261016/cold-auditor-v6.py",
+    "sha256": "9a373fe5a32bd11c36149d65f1470c98def984dec10c35465ac7d198f7f8651b"
+  },
+  "body_acceptance": false,
+  "caller_acceptance": false,
+  "checks": 209460,
+  "classification": "INDEPENDENT_INTEGRITY_PASS_WITH_FOUR_CONDITIONAL_MATH_GOALS_AND_TWO_TIMEOUTS",
+  "cold_integrity_complete": true,
+  "complete_common_task_and_import_audit": true,
+  "conditional_math_proven_goal_ids": [
+    "receiver.entry",
+    "constructor.frame",
+    "buffer.identity",
+    "zero.cleanup"
+  ],
+  "created": "2026-10-16 ET",
+  "current_constructor_body_record_admitted": false,
+  "direct_import_roots": [
+    "bool.Bool",
+    "frama_c_wp.qed.Qed",
+    "heap_reallocation.Heap",
+    "int.Abs",
+    "int.ComputerDivision",
+    "int.Int",
+    "map.Map",
+    "real.RealInfix",
+    "why3.BuiltIn.BuiltIn"
+  ],
+  "first_refusal_diagnosis": "Original actual V1 refusal did not retain open-event values. A local read-only Git reproduction identified its stdin FIFO wrapper (integer fd 4, mode w, flags 16778753). Reviewed V3 omits unused stdin and narrowly permits writable FIFO descriptors only during fixed read-only Git; pathname and regular-file writes including mutation flags remain refused.",
+  "four_goal_conditional_reuse_eligible_for_root_decision": true,
+  "frozen_packet": [
+    {
+      "bytes": 4159,
+      "path": "prototype/25-closed-lifetime-glue-20261016/inert-fb197c5d-public-v1/packet.json",
+      "sha256": "853a2f425917e49ba5beed3c3f13ac3856e5c0abf061b0c042b457442b348bc0"
+    },
+    {
+      "bytes": 34712,
+      "path": "prototype/25-closed-lifetime-glue-20261016/inert-fb197c5d-public-v1/entry.py",
+      "sha256": "76a687229c3d28e504102aad1bdd2c3efc47b1992cf1703c94a2291ec6f7c263"
+    },
+    {
+      "bytes": 188656,
+      "path": "prototype/25-closed-lifetime-glue-20261016/inert-fb197c5d-public-v1/expected.json",
+      "sha256": "a10f2ee5864b8c39c22e72b29f34e3195b59839e0fdc9a6ae9e5c6c5f7ecd4b2"
+    },
+    {
+      "bytes": 90722,
+      "path": "prototype/25-closed-lifetime-glue-20261016/inert-fb197c5d-public-v1/root-command.json",
+      "sha256": "bcc571f2916e00b2ca3cdbec4b8fdd837e1ad405f2b032491119cb5a84231080"
+    }
+  ],
+  "generated_smoke_goals": 0,
+  "goal_source_normalizations": [
+    {
+      "labels": [
+        "literal_source"
+      ],
+      "tasks": 12
+    },
+    {
+      "labels": [
+        "literal_source_source_definition_and_fresh_buffer_substitution"
+      ],
+      "tasks": 6
+    },
+    {
+      "labels": [
+        "positive_antecedent_dominates_scalar_branch_source_definition_and_fresh_buffer_substitution"
+      ],
+      "tasks": 6
+    }
+  ],
+  "heap_module_has_axioms_or_lemmas": false,
+  "import_modules": 30,
+  "independent_parent_static_reviews": [
+    {
+      "bytes": 3158,
+      "path": "evidence/t25-closed-lifetime6-cold-auditor-parent-static-review-v1-20261016.json",
+      "sha256": "de0cf0a2e7bb67828d367cb64619c4f92f500bb25ff8862d6b4b798afaea2cfa"
+    },
+    {
+      "bytes": 1199,
+      "path": "evidence/t25-closed-lifetime6-cold-auditor-parent-static-review-v3-20261016.json",
+      "sha256": "f4f99857384f729e166324b787f450290af9d010fcb996d30f57c14fb1189757"
+    },
+    {
+      "bytes": 1339,
+      "path": "evidence/t25-closed-lifetime6-cold-auditor-parent-static-review-v4-20261016.json",
+      "sha256": "44171cf138b0a86597a73a4d6c354b85d1344f5c50a80cb9cd3577156ca9f52a"
+    },
+    {
+      "bytes": 1315,
+      "path": "evidence/t25-closed-lifetime6-cold-auditor-parent-static-review-v5-20261016.json",
+      "sha256": "bfdde8ba7789062008554e36d3b52da76eb34c25510d0c9f60c756894c963a38"
+    },
+    {
+      "bytes": 1362,
+      "path": "evidence/t25-closed-lifetime6-cold-auditor-parent-static-review-v6-20261016.json",
+      "sha256": "562e09cf0f0ec7fddb3fde3b34a43f4423979467624f14fb69ceb4ab966c1bad"
+    }
+  ],
+  "leaves": [
+    {
+      "CSV_rows": 0,
+      "failure_class": null,
+      "goal": "typed_real_check_lemma_t25_closed_receiver_entry",
+      "id": "receiver.entry",
+      "input": {
+        "bytes": 5982,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-fb197c5d-t25-closed-lifetime6-public-v1/closed-lifetime6-public-v1-profile/leaf-receiver.entry/wp_input.c",
+        "sha256": "e2a209ecae6c0e6f0ee148a6f698ad4a89b117486042d3a775a0179da5bb84da"
+      },
+      "native_results": [
+        "failed",
+        "valid"
+      ],
+      "normal_verdict": "proven",
+      "ordinary": 1,
+      "passed": true,
+      "properties": 2,
+      "property": "check_lemma_t25_closed_receiver_entry",
+      "smoke": 0
+    },
+    {
+      "CSV_rows": 0,
+      "failure_class": null,
+      "goal": "typed_real_check_lemma_t25_closed_constructor_frame",
+      "id": "constructor.frame",
+      "input": {
+        "bytes": 5725,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-fb197c5d-t25-closed-lifetime6-public-v1/closed-lifetime6-public-v1-profile/leaf-constructor.frame/wp_input.c",
+        "sha256": "11e25f8df22cb8fb36e9cb86f37c62bcb72ae8022a23a5cd57c4d68d49cdbd6e"
+      },
+      "native_results": [
+        "timeout",
+        "valid"
+      ],
+      "normal_verdict": "proven",
+      "ordinary": 1,
+      "passed": true,
+      "properties": 2,
+      "property": "check_lemma_t25_closed_constructor_frame",
+      "smoke": 0
+    },
+    {
+      "CSV_rows": 0,
+      "failure_class": null,
+      "goal": "typed_real_check_lemma_t25_closed_buffer_identity",
+      "id": "buffer.identity",
+      "input": {
+        "bytes": 6150,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-fb197c5d-t25-closed-lifetime6-public-v1/closed-lifetime6-public-v1-profile/leaf-buffer.identity/wp_input.c",
+        "sha256": "1fdf5472d4fa6c932a19cdd8aa0f872588bb849137b7530987a526d4d8070338"
+      },
+      "native_results": [
+        "valid"
+      ],
+      "normal_verdict": "proven",
+      "ordinary": 1,
+      "passed": true,
+      "properties": 2,
+      "property": "check_lemma_t25_closed_buffer_identity",
+      "smoke": 0
+    },
+    {
+      "CSV_rows": 0,
+      "failure_class": null,
+      "goal": "typed_real_check_lemma_t25_closed_zero_cleanup",
+      "id": "zero.cleanup",
+      "input": {
+        "bytes": 5882,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-fb197c5d-t25-closed-lifetime6-public-v1/closed-lifetime6-public-v1-profile/leaf-zero.cleanup/wp_input.c",
+        "sha256": "fc17fbcb8761d8d4c67cde988cba3e0af0528d6cf5fda679adbde5f0e56835a5"
+      },
+      "native_results": [
+        "valid"
+      ],
+      "normal_verdict": "proven",
+      "ordinary": 1,
+      "passed": true,
+      "properties": 2,
+      "property": "check_lemma_t25_closed_zero_cleanup",
+      "smoke": 0
+    },
+    {
+      "CSV_rows": 0,
+      "failure_class": "timeout",
+      "goal": "typed_real_check_lemma_t25_closed_positive_exit_image",
+      "id": "positive.exit_image",
+      "input": {
+        "bytes": 6260,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-fb197c5d-t25-closed-lifetime6-public-v1/closed-lifetime6-public-v1-profile/leaf-positive.exit_image/wp_input.c",
+        "sha256": "9e18a0b7f5ce529bad0fabe8971586e3728fdba8ae7cfdeb13ad66a591718095"
+      },
+      "native_results": [
+        "timeout",
+        "unknown",
+        "timeout"
+      ],
+      "normal_verdict": "not_proven",
+      "ordinary": 1,
+      "passed": false,
+      "properties": 2,
+      "property": "check_lemma_t25_closed_positive_exit_image",
+      "smoke": 0
+    },
+    {
+      "CSV_rows": 0,
+      "failure_class": "timeout",
+      "goal": "typed_real_check_lemma_t25_closed_positive_cleanup",
+      "id": "positive.cleanup",
+      "input": {
+        "bytes": 6274,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-fb197c5d-t25-closed-lifetime6-public-v1/closed-lifetime6-public-v1-profile/leaf-positive.cleanup/wp_input.c",
+        "sha256": "b9c368e2082bd48c5a16fdf5185b878c23d9ba65020cf3090efdad8e74c43997"
+      },
+      "native_results": [
+        "timeout",
+        "unknown",
+        "timeout"
+      ],
+      "normal_verdict": "not_proven",
+      "ordinary": 1,
+      "passed": false,
+      "properties": 2,
+      "property": "check_lemma_t25_closed_positive_cleanup",
+      "smoke": 0
+    }
+  ],
+  "materialized_tasks": 24,
+  "materialized_tasks_by_goal": {
+    "buffer.identity": 2,
+    "constructor.frame": 4,
+    "positive.cleanup": 6,
+    "positive.exit_image": 6,
+    "receiver.entry": 4,
+    "zero.cleanup": 2
+  },
+  "non_goal_assertion_instances": 770,
+  "normal_engine_policy": "Unchanged normal engine and native reader, Typed+Var+Machine with real arithmetic, complete configured three-prover portfolio, no cache, RTE/init/smoke/status-all flags. Six global lemmas have six ordinary goals, twelve registered properties, no generated smoke goals and header-only property CSVs; this does not cover a caller C body.",
+  "observer_attempt_history": [
+    {
+      "acceptance": false,
+      "bytes": 164,
+      "classification": "REFUSED_PASSIVE_SIX_COLD",
+      "error": "remote writes forbidden",
+      "path": "evidence/t25-closed-lifetime6-passive-cold-metadata-v1-20261016.json",
+      "sha256": "2b45e56f5c661ff0125e2a28a003772c2138c749d3b9968fcd241130d4428ceb",
+      "version": 1
+    },
+    {
+      "acceptance": false,
+      "bytes": 200,
+      "classification": "REFUSED_PASSIVE_SIX_COLD",
+      "error": "independent source definition constructor.frame P_t25_frame",
+      "path": "evidence/t25-closed-lifetime6-passive-cold-metadata-v3-20261016.json",
+      "sha256": "ab798f4d3303c68c5dcabbc7c048880f16d0547fa2b478c752fd86985e59e51e",
+      "version": 3
+    },
+    {
+      "acceptance": false,
+      "bytes": 334,
+      "classification": "REFUSED_PASSIVE_SIX_COLD",
+      "error": "independent complete source goal positive.exit_image check_lemma_t25_closed_positive_exit_image_Why3_Alt_Ergo_2_6_4.psmt2 actual=85b546af18ee30ada4fbef78db05d85f25e7a8e684ea3cb0ce2c7fe053c1fcc8",
+      "path": "evidence/t25-closed-lifetime6-passive-cold-metadata-v4-20261016.json",
+      "sha256": "034e9cb658ed6b51eb64665d7fa644e4cf9dfcbee9b3cf100e08f49b319544be",
+      "version": 4
+    },
+    {
+      "acceptance": false,
+      "bytes": 195,
+      "classification": "REFUSED_PASSIVE_SIX_COLD",
+      "error": "complete source definition closure positive.exit_image",
+      "path": "evidence/t25-closed-lifetime6-passive-cold-metadata-v5-20261016.json",
+      "sha256": "93bb0e0f23314bacb0cf940cce5e0f897545fe659877da2487ed21e690df524a",
+      "version": 5
+    },
+    {
+      "acceptance": false,
+      "bytes": 462006,
+      "classification": "COMPLETE_SIX_SOURCE_COLD_NOT_PROVEN",
+      "error": null,
+      "path": "evidence/t25-closed-lifetime6-passive-cold-metadata-v6-20261016.json",
+      "sha256": "64af07b2da9ca8c2137041dd59e6c0f5d6fc31f2c064c62d5427b4a756e08ed5",
+      "version": 6
+    }
+  ],
+  "observer_refusals_preserved": true,
+  "ordinary_goals": 6,
+  "passive_elapsed_seconds": 16.195211282931268,
+  "passive_metadata": {
+    "bytes": 462006,
+    "path": "evidence/t25-closed-lifetime6-passive-cold-metadata-v6-20261016.json",
+    "sha256": "64af07b2da9ca8c2137041dd59e6c0f5d6fc31f2c064c62d5427b4a756e08ed5"
+  },
+  "prior_support_primary_source_attribution_pins": [
+    {
+      "bytes": 325852,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-private-frame9-passive-cold-metadata-v3-20261016.json",
+      "sha256": "6b83bc96c026bbb0bd40db81475f666172ac89e3187ff5f6cf215ac46f93ad28"
+    },
+    {
+      "bytes": 43043,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-private-frame9-independent-cold-decision-20261016.json",
+      "sha256": "8c8764bcdc2d6939251cc3966eb9032220b69040f24560c2fb03d7b3eb4e201f"
+    },
+    {
+      "bytes": 4094,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-private-frame9-passive-cold-support-supplement-20261016.json",
+      "sha256": "00a8f14bbac8b98405735053270a33158280d0dfd9a19d70cd10bae37c05add3"
+    }
+  ],
+  "producer_complete": true,
+  "producer_result": {
+    "bytes": 14768,
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-fb197c5d-t25-closed-lifetime6-public-v1/closed-lifetime6-public-v1-profile/result.json",
+    "sha256": "d91ab4ab367a08cd0387d1fae18d9e207b09d9a0971c90ba0c3f9a5a4d7043df"
+  },
+  "property_csv_data_rows": 0,
+  "public_proof_record_created": false,
+  "raw_bytes": 23879857,
+  "raw_files": 364,
+  "raw_pre_post_equal": true,
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-fb197c5d-t25-closed-lifetime6-public-v1",
+  "recommendation": "Retain this complete partial result. Root may adopt only the first four duties as conditional mathematical evidence under the declared translation/support/solver TCB. Do not admit the complete six-duty profile or any source/body/caller/public proof record.",
+  "registered_properties": 12,
+  "remaining_dependencies": [
+    "Both positive gluing duties remain unproven under the actual normal timeout outcomes.",
+    "Current constructor body record and complete actual caller ordinary proof remain pending; retained conditional model math is not an opaque source premise.",
+    "Source allocation/freshness/validity/freeability/frame/release and Typed/lifetime bridge remain explicit TCB/dependency gates; no stronger public caller requires were introduced."
+  ],
+  "remote_execution_scope": "Stdlib-only in-place metadata reading plus fixed read-only Git. No compiler, native helper, verifier, solver or project import; no raw C/AST/SMT transferred or raw files written.",
+  "root_adoption_performed": false,
+  "scientific_execution_by_this_audit": false,
+  "selected_runtime_physical_pins": 192,
+  "selected_runtime_source_files": 10,
+  "source_and_helper_count": 334,
+  "source_commit": "fb197c5ddd173065ca781766886c6a797684a838",
+  "source_compiler_context": "Exact frozen fb197 source/helpers/consumers, fresh canonical inputs and original anchors/provenance, selected physical tools/WP artifacts/config, full standard support/driver surfaces, libclang and all 1983 selected headers checked. Compiler use-time binding is retained producer evidence; continuous immutability is not claimed.",
+  "source_consumer_receipts": [
+    {
+      "count": 1624,
+      "receipt": {
+        "bytes": 640316,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-fb197c5d-t25-closed-lifetime6-public-v1/closed-lifetime6-public-v1-profile/source-consumers-0.json",
+        "sha256": "1045283f22d6e34f46bb67c202403cace88f1dee727001adaa5e6505c79c9660"
+      },
+      "total_bytes": 1338047287
+    },
+    {
+      "count": 1624,
+      "receipt": {
+        "bytes": 640316,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-fb197c5d-t25-closed-lifetime6-public-v1/closed-lifetime6-public-v1-profile/source-consumers-1.json",
+        "sha256": "1045283f22d6e34f46bb67c202403cace88f1dee727001adaa5e6505c79c9660"
+      },
+      "total_bytes": 1338047287
+    }
+  ],
+  "source_definition_instances": 106,
+  "source_definition_policy": "All actual definitions match independently transcribed source. Only P_t25_frame admits exact De Morgan/order-negation form. The positive-state function is fully unfolded in matching source-goal variants; only that unused definition is absent from positive SMT closure. Complete printed common source declarations remain checked.",
+  "source_goal_policy": "The full positive source antecedent is retained. forall b with b=next(before) is eliminated by capture-free defining-equality substitution, retaining all nine other antecedents. Cleanup scalar-branch reduction uses the retained 0<n premise. No actual goal or raw source was changed.",
+  "source_typed_bridge_established": false,
+  "submitted_byte_attestation": false,
+  "support_policy": "All 770 non-goal assertion instances match 46 exact prior primary-source-attributed standard/Heap support formulas. No old goal/proof, desired or sibling theorem is imported as an assertion. The prospective new false-array recognition was not needed for this actual run.",
+  "ticket25_complete": false,
+  "unexecuted_observer_versions": [
+    2
+  ],
+  "unique_non_goal_assertions": 46,
+  "universal_proof_setup_attested": false,
+  "unmatched_support_assertions": 0,
+  "unproven_goal_ids": [
+    "positive.exit_image",
+    "positive.cleanup"
+  ]
+}

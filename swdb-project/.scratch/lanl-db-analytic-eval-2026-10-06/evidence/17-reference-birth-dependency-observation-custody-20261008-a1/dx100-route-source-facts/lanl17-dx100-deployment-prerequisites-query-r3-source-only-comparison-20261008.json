@@ -1,0 +1,61 @@
+{
+  "actual_route_diagnostic_pin": {
+    "bytes": 3214,
+    "path": "/private/tmp/lanl17-original-dx100-fixed-source-route-stat-diagnostic-original-20261008-a1.json",
+    "sha256": "131d4cc21ba61a6c3a34ce5113f48b613abcd1e3950f9c7b3699f013806054c9"
+  },
+  "added_constants": [
+    "CREATOR_GID",
+    "BASE_IDENTITY",
+    "C_IDENTITY"
+  ],
+  "format": "swdb.lanl17-deployment-query-r3-source-only-comparison.v1",
+  "only_changed_definitions": [
+    "private_base",
+    "directory",
+    "target",
+    "main"
+  ],
+  "original_actual_R2_failure_pin": {
+    "bytes": 184,
+    "path": "/private/tmp/lanl17-original-dx100-deployment-prerequisites-query-actual-20261008-a1-r2.json",
+    "sha256": "1a3ae9fce6848085d8d337b816bffb40506f044e8bc5364c1c84739d1bcd9f83"
+  },
+  "originals_preserved": true,
+  "runtime_boundary": "Parent full source/argv review and one explicit actual query required. No request/binding/admission exists.",
+  "sealed": false,
+  "source_pins": [
+    {
+      "bytes": 15383,
+      "path": "/private/tmp/lanl17_read_original_dx100_deployment_prerequisites_20261008_a1_r2.py",
+      "sha256": "9110d17ab02836bc49161ba28d659087f810784eef794502a6c384d607ec8de2"
+    },
+    {
+      "bytes": 15906,
+      "path": "/private/tmp/lanl17_read_original_dx100_deployment_prerequisites_20261008_a1_r3.py",
+      "sha256": "6d40fa3a6091abf01e88ee85c04636fed1ef051cc17729255a6485855596a4c1"
+    },
+    {
+      "bytes": 3816,
+      "path": "/private/tmp/lanl17-dx100-deployment-prerequisites-query-r3-complete-r2-derivation-20261008.diff",
+      "sha256": "80c4c57f542f1352b9a27e7d451a3a535a82cea763ac97030791590b8e03b8a4"
+    }
+  ],
+  "target_main_or_import_or_compile_or_test_or_SSH_executed": false,
+  "unchanged_definitions": [
+    "require",
+    "tick",
+    "sha",
+    "canonical",
+    "values",
+    "stamp",
+    "identity",
+    "canonical_path",
+    "read",
+    "git",
+    "unique_pairs",
+    "OriginalLoader",
+    "records",
+    "hooks"
+  ]
+}

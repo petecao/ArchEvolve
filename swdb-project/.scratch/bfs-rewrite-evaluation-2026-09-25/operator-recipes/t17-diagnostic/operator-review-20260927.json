@@ -1,0 +1,35 @@
+{
+  "observed_at": "2026-09-27T00:38:52.619340-04:00",
+  "scope": "T17 operator scoped independent review",
+  "state": "scoped_pass",
+  "operator_commit": "7aaaafe6d39b0e3054af866dfccd188f3ae51529",
+  "runtime_commit": "8cbfee600f23416a8e9578fa8d3ce3f0e19fced8",
+  "files": {
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/t17-diagnostic/prepare.py": "3116a2bcf81ddd3316911f5c67e558d430b96363685eb563191dc96a6ef432dd",
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/t17-diagnostic/launch-20260927.sh": "d0b8bcccfd353a32cd5e26d0748d63e855150fb67c37ed1ee98d74edd781b9ac",
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/t17-diagnostic/runtime-manifest.json": "447ff528f5015587c702d42007a3607cf0373a800714d8ab59a515cdf9c7afc9",
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/t17-diagnostic/test_prepare.py": "c0babd4da92a726428401c753854af8ab9bb987e2919e375257b8e329da0b75f"
+  },
+  "tests": {
+    "result": "33 passed in0.41s",
+    "selection": [
+      "operator-recipes/t17-diagnostic/test_prepare.py",
+      "tests/test_bfs_t17_diagnostic_build.py"
+    ],
+    "log": "/private/tmp/bfs-t17-operator-independent-20260927.log",
+    "sha256": "4143be45811a4def348b19171d039d231e69accd3c5fe98990c89c41afeb01b6",
+    "shell_syntax": "passed"
+  },
+  "checked": [
+    "Evidence Git objects read from separate operatorcheckout; active runtime unchanged",
+    "Fixed complete Git record archive and exact3overlays; canonicaldataonlyview; refusals preserve oldroots",
+    "802entry fullguard and pinnedsystemPython; canonicalruntime Python consistentwithfivecaseproof reader",
+    "Actual driverCLI options matched; Bashpane captured beforeprocesssubstitution; original600/570/30 clock",
+    "Existing T17 driver retains180compiler/240public/2GiBtotal/1GiBbuild bounds; no alternate evaluator orprimaryrecompile"
+  ],
+  "limitations": [
+    "Fresh capacity/helper/lane admission remains required",
+    "No actual diagnostic build executed byreviewer",
+    "External prepared recordview/admission must be independently reopened beforelaunch"
+  ]
+}

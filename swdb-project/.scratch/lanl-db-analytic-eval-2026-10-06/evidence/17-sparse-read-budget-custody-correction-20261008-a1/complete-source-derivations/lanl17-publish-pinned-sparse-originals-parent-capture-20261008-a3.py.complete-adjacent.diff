@@ -1,0 +1,18 @@
+--- lanl17-publish-pinned-sparse-originals-parent-capture-20261008-a1-r1.py
++++ lanl17-publish-pinned-sparse-originals-parent-capture-20261008-a3.py
+@@ -1,11 +1,11 @@
+ import ast,datetime,hashlib,json,os,pathlib,shlex,signal,subprocess,sys
+ T=pathlib.Path('/private/tmp')
+-SOURCE=T/'lanl_publish_parent_sparse_plan_review_originals_20261008_a1_r1.py'
+-DIGEST='72527faeabe146304ac647f8edef90d5de49bcbf9aae768515e588e025cb71d9'
++SOURCE=T/'lanl_publish_parent_sparse_plan_review_originals_20261008_a2.py'
++DIGEST='5e667fa8ca26ece4825631e5d51feca490f3e154688a38399518bf9c237df2d9'
+ INSTALL='''import hashlib,os,pathlib,stat,sys
+ BASE=pathlib.Path('/data1/yanruj')
+-P=BASE/'lanl17-publish-sparse-parent-originals-20261008-a2.py'
+-SHA='72527faeabe146304ac647f8edef90d5de49bcbf9aae768515e588e025cb71d9'
++P=BASE/'lanl17-publish-sparse-parent-originals-20261008-a3.py'
++SHA='5e667fa8ca26ece4825631e5d51feca490f3e154688a38399518bf9c237df2d9'
+ assert os.uname().nodename.split('.')[0]=='mbit10' and os.getuid()==os.geteuid()==114316761
+ assert sys.flags.dont_write_bytecode and sys.flags.no_user_site and not sys.flags.optimize
+ assert BASE.resolve(strict=True)==BASE and not any(q.is_symlink() for q in (BASE,*BASE.parents))

@@ -1,0 +1,219 @@
+{
+  "schema_version": 1,
+  "run_id": "typed-library-trace-cache-release-20261003-a1",
+  "host": "mbit10",
+  "operator_uid": 114316761,
+  "branch": "yanrujhou_main",
+  "git_commit": "8959b4dfd149273e89884be87bee9c0adb60e0fc",
+  "started_utc": "2026-10-03T12:23:19.262214+00:00",
+  "finished_utc": "2026-10-03T12:23:19.398308+00:00",
+  "advised_count": 0,
+  "skipped_count": 12,
+  "postcheck_error_count": 0,
+  "total_cached_before_bytes": null,
+  "total_cached_after_bytes": null,
+  "node0_memfree_meets_36gib_at_finish": false,
+  "note": "Cache counts and MemFree are observed snapshots; no guarantee of sustained admission. Fresh driver admission and valid profile package remain required. No gem5 launched.",
+  "action": "posix_fadvise_POSIX_FADV_DONTNEED_owned_idle_historical_traces",
+  "operator_receipt": {
+    "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-trace-cache-release-20261003-a1/operator-receipt.json",
+    "sha256": "7dc43f4ccf7bea75b3f591668d50fb74665f6a3aabe50083aca85aef8e715be0",
+    "bytes": 22512
+  },
+  "event_log": {
+    "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-trace-cache-release-20261003-a1/operator-events.jsonl",
+    "sha256": "a6258a56dc08b6528eb093753c7ce139a10835f1056befa81a1546fa61dc50a1",
+    "bytes": 12079
+  },
+  "node_memfree_before": {
+    "node0": 28030394368,
+    "node1": 16772214784
+  },
+  "node_memfree_after": {
+    "node0": 28030394368,
+    "node1": 16771698688
+  },
+  "immutable_identities": [
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b3/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b3.kronecker18.s1.r0.primary.evaluation/simulation/roi-debug.trace.gz",
+      "approved_identity": {
+        "device": 2065,
+        "owner_uid": 114316761,
+        "inode": 13911838,
+        "mtime_ns": 1790561528287856178,
+        "size": 983636648
+      },
+      "status": "skipped",
+      "identity_unchanged": null,
+      "reason": "known_use_or_inaccessible_owned_process",
+      "cached_before_bytes": null,
+      "cached_after_bytes": null
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b3/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s0.r0.primary.evaluation/simulation/roi-debug.trace.gz",
+      "approved_identity": {
+        "device": 2065,
+        "owner_uid": 114316761,
+        "inode": 13907638,
+        "mtime_ns": 1790542060961546318,
+        "size": 1297018969
+      },
+      "status": "skipped",
+      "identity_unchanged": null,
+      "reason": "known_use_or_inaccessible_owned_process",
+      "cached_before_bytes": null,
+      "cached_after_bytes": null
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b3/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s1.r0.diagnostic.evaluation/simulation/roi-debug.trace.gz",
+      "approved_identity": {
+        "device": 2065,
+        "owner_uid": 114316761,
+        "inode": 13916078,
+        "mtime_ns": 1790564184438403941,
+        "size": 1298891623
+      },
+      "status": "skipped",
+      "identity_unchanged": null,
+      "reason": "known_use_or_inaccessible_owned_process",
+      "cached_before_bytes": null,
+      "cached_after_bytes": null
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b3/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18/bfs-t15-pilot-simulator-batch-20260927-b3.uniform18.s1.r0.primary.evaluation/simulation/roi-debug.trace.gz",
+      "approved_identity": {
+        "device": 2065,
+        "owner_uid": 114316761,
+        "inode": 13909445,
+        "mtime_ns": 1790559666582661057,
+        "size": 1298570830
+      },
+      "status": "skipped",
+      "identity_unchanged": null,
+      "reason": "known_use_or_inaccessible_owned_process",
+      "cached_before_bytes": null,
+      "cached_after_bytes": null
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.candidate.kronecker18/bfs-t17-routes-20260928-a3.candidate.kronecker18.s0.r0.diagnostic.evaluation/simulation/roi-debug.trace.gz",
+      "approved_identity": {
+        "device": 2065,
+        "owner_uid": 114316761,
+        "inode": 14036776,
+        "mtime_ns": 1790684872279930866,
+        "size": 986116482
+      },
+      "status": "skipped",
+      "identity_unchanged": null,
+      "reason": "known_use_or_inaccessible_owned_process",
+      "cached_before_bytes": null,
+      "cached_after_bytes": null
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.candidate.kronecker18/bfs-t17-routes-20260928-a3.candidate.kronecker18.s0.r0.primary.evaluation/simulation/roi-debug.trace.gz",
+      "approved_identity": {
+        "device": 2065,
+        "owner_uid": 114316761,
+        "inode": 14036701,
+        "mtime_ns": 1790681651218104182,
+        "size": 986112386
+      },
+      "status": "skipped",
+      "identity_unchanged": null,
+      "reason": "known_use_or_inaccessible_owned_process",
+      "cached_before_bytes": null,
+      "cached_after_bytes": null
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.uniform18/bfs-t17-routes-20260928-a3.candidate.uniform18/bfs-t17-routes-20260928-a3.candidate.uniform18.s0.r0.diagnostic.evaluation/simulation/roi-debug.trace.gz",
+      "approved_identity": {
+        "device": 2065,
+        "owner_uid": 114316761,
+        "inode": 14036415,
+        "mtime_ns": 1790670197000564712,
+        "size": 1301405356
+      },
+      "status": "skipped",
+      "identity_unchanged": null,
+      "reason": "known_use_or_inaccessible_owned_process",
+      "cached_before_bytes": null,
+      "cached_after_bytes": null
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.uniform18/bfs-t17-routes-20260928-a3.candidate.uniform18/bfs-t17-routes-20260928-a3.candidate.uniform18.s0.r0.primary.evaluation/simulation/roi-debug.trace.gz",
+      "approved_identity": {
+        "device": 2065,
+        "owner_uid": 114316761,
+        "inode": 14035802,
+        "mtime_ns": 1790655388845696329,
+        "size": 1300754749
+      },
+      "status": "skipped",
+      "identity_unchanged": null,
+      "reason": "known_use_or_inaccessible_owned_process",
+      "cached_before_bytes": null,
+      "cached_after_bytes": null
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t20.kronecker18/bfs-t20-routes-20260928-a3.candidate.kronecker18/bfs-t20-routes-20260928-a3.candidate.kronecker18.s0.r0.diagnostic.evaluation/simulation/roi-debug.trace.gz",
+      "approved_identity": {
+        "device": 2065,
+        "owner_uid": 114316761,
+        "inode": 14036644,
+        "mtime_ns": 1790679514892392140,
+        "size": 987622691
+      },
+      "status": "skipped",
+      "identity_unchanged": null,
+      "reason": "known_use_or_inaccessible_owned_process",
+      "cached_before_bytes": null,
+      "cached_after_bytes": null
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t20.kronecker18/bfs-t20-routes-20260928-a3.candidate.kronecker18/bfs-t20-routes-20260928-a3.candidate.kronecker18.s0.r0.primary.evaluation/simulation/roi-debug.trace.gz",
+      "approved_identity": {
+        "device": 2065,
+        "owner_uid": 114316761,
+        "inode": 14036476,
+        "mtime_ns": 1790672318244762558,
+        "size": 989129782
+      },
+      "status": "skipped",
+      "identity_unchanged": null,
+      "reason": "known_use_or_inaccessible_owned_process",
+      "cached_before_bytes": null,
+      "cached_after_bytes": null
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t20.uniform18/bfs-t20-routes-20260928-a3.candidate.uniform18/bfs-t20-routes-20260928-a3.candidate.uniform18.s0.r0.diagnostic.evaluation/simulation/roi-debug.trace.gz",
+      "approved_identity": {
+        "device": 2065,
+        "owner_uid": 114316761,
+        "inode": 14036016,
+        "mtime_ns": 1790664934305874840,
+        "size": 1300633626
+      },
+      "status": "skipped",
+      "identity_unchanged": null,
+      "reason": "known_use_or_inaccessible_owned_process",
+      "cached_before_bytes": null,
+      "cached_after_bytes": null
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t20.uniform18/bfs-t20-routes-20260928-a3.candidate.uniform18/bfs-t20-routes-20260928-a3.candidate.uniform18.s0.r0.primary.evaluation/simulation/roi-debug.trace.gz",
+      "approved_identity": {
+        "device": 2065,
+        "owner_uid": 114316761,
+        "inode": 14035859,
+        "mtime_ns": 1790657859501123921,
+        "size": 1300474753
+      },
+      "status": "skipped",
+      "identity_unchanged": null,
+      "reason": "known_use_or_inaccessible_owned_process",
+      "cached_before_bytes": null,
+      "cached_after_bytes": null
+    }
+  ],
+  "summary_correction_2026_10_03": "All12 actions skipped; cache byte totals were unobserved. Null corrects the generated empty-subset zero and leaves the original operator receipt unchanged."
+}

@@ -1,0 +1,995 @@
+kind: implementation
+schema_version: '0.2'
+id: gapbs-tc-ordered
+status: draft
+deprecated_by: null
+created: '2026-09-22'
+updated: '2026-09-22'
+provenance:
+- id: src-gapbs-tc
+  kind: source_code
+  description: gapbs src/tc.cc lines 52-100 (OrderedCount, WorthRelabelling, Hybrid) and 131-143 (main),
+    src/builder.h lines 366-402 (RelabelByDegree), src/benchmark.h (SourcePicker, BenchmarkKernel, NodeID)
+    and src/graph.h (CSRGraph, Neighborhood) at commit 2972aeb2703165bafd921222f4ed7196f542d3a8, read
+    2026-09-22.
+  uri: https://github.com/sbeamer/gapbs/blob/2972aeb2703165bafd921222f4ed7196f542d3a8/src/tc.cc#L52-L100
+name: gapbs Triangle Counting, ordered sorted-list intersection with optional degree relabeling (Hybrid)
+kernel: gapbs-tc
+function: Hybrid
+origin:
+  kind: application_source
+  description: The triangle-counting implementation gapbs builds as its tc binary (src/tc.cc).
+  derived_from: null
+code:
+- root: application
+  path: src/tc.cc
+  lines: [95, 100]
+  excerpt: |-
+    size_t Hybrid(const Graph &g) {
+      if (WorthRelabelling(g))
+        return OrderedCount(Builder::RelabelByDegree(g));
+      else
+        return OrderedCount(g);
+    }
+  sha256: null
+- root: application
+  path: src/tc.cc
+  lines: [52, 71]
+  excerpt: |-
+    size_t OrderedCount(const Graph &g) {
+      size_t total = 0;
+      #pragma omp parallel for reduction(+ : total) schedule(dynamic, 64)
+      for (NodeID u=0; u < g.num_nodes(); u++) {
+        for (NodeID v : g.out_neigh(u)) {
+          if (v > u)
+            break;
+          auto it = g.out_neigh(v).begin();
+          for (NodeID w : g.out_neigh(u)) {
+            if (w > v)
+              break;
+            while (*it < w)
+              it++;
+            if (w == *it)
+              total++;
+          }
+        }
+      }
+      return total;
+    }
+  sha256: null
+- root: application
+  path: src/tc.cc
+  lines: [75, 91]
+  excerpt: |-
+    bool WorthRelabelling(const Graph &g) {
+      int64_t average_degree = g.num_edges() / g.num_nodes();
+      if (average_degree < 10)
+        return false;
+      SourcePicker<Graph> sp(g);
+      int64_t num_samples = min(int64_t(1000), g.num_nodes());
+      int64_t sample_total = 0;
+      pvector<int64_t> samples(num_samples);
+      for (int64_t trial=0; trial < num_samples; trial++) {
+        samples[trial] = g.out_degree(sp.PickNext());
+        sample_total += samples[trial];
+      }
+      sort(samples.begin(), samples.end());
+      double sample_average = static_cast<double>(sample_total) / num_samples;
+      double sample_median = samples[num_samples/2];
+      return sample_average / 1.3 > sample_median;
+    }
+  sha256: null
+- root: application
+  path: src/builder.h
+  lines: [367, 402]
+  excerpt: |2-
+      static
+      CSRGraph<NodeID_, DestID_, invert> RelabelByDegree(
+          const CSRGraph<NodeID_, DestID_, invert> &g) {
+        if (g.directed()) {
+          std::cout << "Cannot relabel directed graph" << std::endl;
+          std::exit(-11);
+        }
+        Timer t;
+        t.Start();
+        typedef std::pair<int64_t, NodeID_> degree_node_p;
+        pvector<degree_node_p> degree_id_pairs(g.num_nodes());
+        #pragma omp parallel for
+        for (NodeID_ n=0; n < g.num_nodes(); n++)
+          degree_id_pairs[n] = std::make_pair(g.out_degree(n), n);
+        std::sort(degree_id_pairs.begin(), degree_id_pairs.end(),
+                  std::greater<degree_node_p>());
+        pvector<NodeID_> degrees(g.num_nodes());
+        pvector<NodeID_> new_ids(g.num_nodes());
+        #pragma omp parallel for
+        for (NodeID_ n=0; n < g.num_nodes(); n++) {
+          degrees[n] = degree_id_pairs[n].first;
+          new_ids[degree_id_pairs[n].second] = n;
+        }
+        pvector<SGOffset> offsets = ParallelPrefixSum(degrees);
+        DestID_* neighs = new DestID_[offsets[g.num_nodes()]];
+        DestID_** index = CSRGraph<NodeID_, DestID_>::GenIndex(offsets, neighs);
+        #pragma omp parallel for
+        for (NodeID_ u=0; u < g.num_nodes(); u++) {
+          for (NodeID_ v : g.out_neigh(u))
+            neighs[offsets[new_ids[u]]++] = new_ids[v];
+          std::sort(index[new_ids[u]], index[new_ids[u]+1]);
+        }
+        t.Stop();
+        PrintTime("Relabel", t.Seconds());
+        return CSRGraph<NodeID_, DestID_, invert>(g.num_nodes(), index, neighs);
+      }
+  sha256: null
+build:
+  compiler: g++
+  flags: -std=c++11 -O3 -Wall -fopenmp
+  command: '{cxx} {flags} {source} -o {binary}'
+run:
+  command: '{binary} {input_args} -n {trials}'
+  timer: gapbs_trial_time
+  threads_env: OMP_NUM_THREADS
+  sweep_log_flag: null
+  kernel_symbols: [Hybrid, OrderedCount, WorthRelabelling, RelabelByDegree]
+  index_stream: null
+loops:
+- id: worth-sample
+  description: 'WorthRelabelling: out-degrees of up to 1000 random non-isolated vertices'
+  parent: null
+  trip_count:
+    value: 1000
+    formula: null
+    scope: per_call
+    basis: code_reading
+    evidence_refs: [src-gapbs-tc]
+    note: min(1000, num_nodes) samples (line 80); every pilot input has num_nodes >= 65536. Skipped entirely
+      when the average degree num_edges/num_nodes (undirected edges, integer division) is below 10 (lines
+      76-78).
+  parallel:
+    construct: serial
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/tc.cc
+    lines: [83, 86]
+    excerpt: |2-
+        for (int64_t trial=0; trial < num_samples; trial++) {
+          samples[trial] = g.out_degree(sp.PickNext());
+          sample_total += samples[trial];
+        }
+    sha256: null
+- id: relabel-pairs
+  description: 'RelabelByDegree: degree_id_pairs[n] = (out_degree(n), n)'
+  parent: null
+  trip_count:
+    value: null
+    formula: null
+    scope: per_call
+    basis: unknown
+    evidence_refs: [src-gapbs-tc]
+    note: Runs only when WorthRelabelling(g) returns true (tc.cc line 96), which depends on the input's
+      degree distribution; then num_nodes iterations; otherwise 0.
+  parallel:
+    construct: omp_parallel_for
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/builder.h
+    lines: [378, 380]
+    excerpt: |2-
+          #pragma omp parallel for
+          for (NodeID_ n=0; n < g.num_nodes(); n++)
+            degree_id_pairs[n] = std::make_pair(g.out_degree(n), n);
+    sha256: null
+  condition: only when WorthRelabelling returns true (tc.cc lines 95-100)
+- id: relabel-ids
+  description: 'RelabelByDegree: after sorting the pairs by decreasing degree, degrees[n] and new_ids[old
+    id] = n'
+  parent: null
+  trip_count:
+    value: null
+    formula: null
+    scope: per_call
+    basis: unknown
+    evidence_refs: [src-gapbs-tc]
+    note: Runs only when WorthRelabelling(g) returns true (tc.cc line 96), which depends on the input's
+      degree distribution; then num_nodes iterations; otherwise 0.
+  parallel:
+    construct: omp_parallel_for
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/builder.h
+    lines: [385, 389]
+    excerpt: |2-
+          #pragma omp parallel for
+          for (NodeID_ n=0; n < g.num_nodes(); n++) {
+            degrees[n] = degree_id_pairs[n].first;
+            new_ids[degree_id_pairs[n].second] = n;
+          }
+    sha256: null
+  condition: only when WorthRelabelling returns true (tc.cc lines 95-100)
+- id: relabel-vertex
+  description: 'RelabelByDegree: for u over all vertices, write u''s neighbors under their new IDs into
+    the new CSR, then sort that list'
+  parent: null
+  trip_count:
+    value: null
+    formula: null
+    scope: per_call
+    basis: unknown
+    evidence_refs: [src-gapbs-tc]
+    note: Runs only when WorthRelabelling(g) returns true (tc.cc line 96), which depends on the input's
+      degree distribution; then num_nodes iterations; otherwise 0.
+  parallel:
+    construct: omp_parallel_for
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/builder.h
+    lines: [393, 398]
+    excerpt: |2-
+          #pragma omp parallel for
+          for (NodeID_ u=0; u < g.num_nodes(); u++) {
+            for (NodeID_ v : g.out_neigh(u))
+              neighs[offsets[new_ids[u]]++] = new_ids[v];
+            std::sort(index[new_ids[u]], index[new_ids[u]+1]);
+          }
+    sha256: null
+  condition: only when WorthRelabelling returns true (tc.cc lines 95-100)
+- id: relabel-edge
+  description: 'RelabelByDegree: for v in g.out_neigh(u): neighs[offsets[new_ids[u]]++] = new_ids[v]'
+  parent: relabel-vertex
+  trip_count:
+    value: null
+    formula: null
+    scope: per_call
+    basis: unknown
+    evidence_refs: [src-gapbs-tc]
+    note: Runs only when WorthRelabelling(g) returns true (tc.cc line 96), which depends on the input's
+      degree distribution; then num_edges_directed iterations in total; otherwise 0.
+  parallel:
+    construct: nested_serial
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/builder.h
+    lines: [395, 396]
+    excerpt: |2-
+            for (NodeID_ v : g.out_neigh(u))
+              neighs[offsets[new_ids[u]]++] = new_ids[v];
+    sha256: null
+  condition: only when WorthRelabelling returns true (tc.cc lines 95-100)
+- id: count-vertex
+  description: 'OrderedCount: for u over all vertices of the graph it receives (relabeled or not)'
+  parent: null
+  trip_count:
+    value: null
+    formula: num_nodes
+    scope: per_call
+    basis: code_reading
+    evidence_refs: [src-gapbs-tc]
+    note: Relabeling keeps the vertex count.
+  parallel:
+    construct: omp_parallel_for
+    schedule: dynamic, 64
+    reduction: '+ : total'
+  code:
+    root: application
+    path: src/tc.cc
+    lines: [54, 69]
+    excerpt: |2-
+        #pragma omp parallel for reduction(+ : total) schedule(dynamic, 64)
+        for (NodeID u=0; u < g.num_nodes(); u++) {
+          for (NodeID v : g.out_neigh(u)) {
+            if (v > u)
+              break;
+            auto it = g.out_neigh(v).begin();
+            for (NodeID w : g.out_neigh(u)) {
+              if (w > v)
+                break;
+              while (*it < w)
+                it++;
+              if (w == *it)
+                total++;
+            }
+          }
+        }
+    sha256: null
+- id: count-v
+  description: For v in g.out_neigh(u) while v <= u (the lists are sorted, so the loop breaks at the first
+    v > u)
+  parent: count-vertex
+  trip_count:
+    value: null
+    formula: num_edges_undirected
+    scope: per_call
+    basis: code_reading
+    evidence_refs: [src-gapbs-tc]
+    note: 'Iterations that pass the v > u test (line 57): each undirected edge once, from its higher endpoint,
+      since the built graph has no self loops or duplicate edges (SquishCSR, builder.h lines 139-170)
+      and relabeling keeps the edges. Plus at most one read per u that triggers the break.'
+  parallel:
+    construct: nested_serial
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/tc.cc
+    lines: [56, 68]
+    excerpt: |2-
+          for (NodeID v : g.out_neigh(u)) {
+            if (v > u)
+              break;
+            auto it = g.out_neigh(v).begin();
+            for (NodeID w : g.out_neigh(u)) {
+              if (w > v)
+                break;
+              while (*it < w)
+                it++;
+              if (w == *it)
+                total++;
+            }
+          }
+    sha256: null
+- id: count-w
+  description: 'For w in g.out_neigh(u) while w <= v: advance it through g.out_neigh(v) to the first element
+    >= w and count a match'
+  parent: count-v
+  trip_count:
+    value: null
+    formula: null
+    scope: per_call
+    basis: unknown
+    evidence_refs: [src-gapbs-tc]
+    note: For each edge (u, v) with v < u, the neighbors w of u with w <= v, plus one break read (lines
+      60-62); the sum depends on the degree distribution and on the labeling (relabeled or not).
+  parallel:
+    construct: nested_serial
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/tc.cc
+    lines: [60, 67]
+    excerpt: |2-
+            for (NodeID w : g.out_neigh(u)) {
+              if (w > v)
+                break;
+              while (*it < w)
+                it++;
+              if (w == *it)
+                total++;
+            }
+    sha256: null
+- id: count-advance
+  description: 'while (*it < w) it++: advance the pointer into g.out_neigh(v)'
+  parent: count-w
+  trip_count:
+    value: null
+    formula: null
+    scope: per_call
+    basis: unknown
+    evidence_refs: [src-gapbs-tc]
+    note: 'Data dependent: for one (u, v) pair, it advances at most to the first element of neigh(v) above
+      the last w examined (lines 63-64).'
+  parallel:
+    construct: nested_serial
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/tc.cc
+    lines: [63, 64]
+    excerpt: |2-
+              while (*it < w)
+                it++;
+    sha256: null
+access_patterns:
+- id: count-v-read
+  expression: v in g.out_neigh(u), read until v > u
+  loop: count-v
+  steps:
+  - array:
+      name: g.out_index_
+      role: offsets
+      element_type: NodeID* (pointer into out_neighbors_)
+      element_bytes: 8
+      element_count: num_nodes + 1
+      layout: array_of_pointers
+    address_shape: stream
+    stride: 1
+    note: reads out_index_[u] and out_index_[u+1] of the graph OrderedCount receives
+  - array:
+      name: g.out_neighbors_
+      role: target
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+    address_shape: ranged_indirect
+    note: walks the prefix of out_neighbors_[out_index_[u] .. out_index_[u+1]) with values <= u, plus
+      the element that ends it (lines 56-58)
+  update_kind: read
+  update:
+    pseudocode: 'for v in out_neigh(u): if (v > u) break'
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+      note: Each list prefix is read once per call by this loop; the element at a given position belongs
+        to one u.
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+      note: OrderedCount takes const Graph&; nothing writes the graph during the count.
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+      note: 'Read only: other threads read the same neighbor array through count-merge.'
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+      note: Plain loads of a read-only array.
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+      note: Integer control flow; the count is exact.
+  evidence_refs: [src-gapbs-tc]
+- id: count-merge
+  expression: sorted intersection of g.out_neigh(u) (w, up to v) and g.out_neigh(v) (*it)
+  loop: count-w
+  steps:
+  - array:
+      name: g.out_index_
+      role: offsets
+      element_type: NodeID* (pointer into out_neighbors_)
+      element_bytes: 8
+      element_count: num_nodes + 1
+      layout: array_of_pointers
+    address_shape: stream
+    stride: 1
+    note: out_index_[u], out_index_[u+1] (line 56)
+  - array:
+      name: g.out_neighbors_
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+    address_shape: ranged_indirect
+    note: the neighbors v of u with v <= u (lines 56-58)
+  - array:
+      name: g.out_index_
+      role: offsets
+      element_type: NodeID* (pointer into out_neighbors_)
+      element_bytes: 8
+      element_count: num_nodes + 1
+      layout: array_of_pointers
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: g.out_neigh(v).begin() reads out_index_[v] (and out_index_[v+1] for the Neighborhood bound,
+      graph.h lines 109-116) (line 59)
+  - array:
+      name: g.out_neighbors_
+      role: target
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+    address_shape: data_dependent_merge
+    note: 'two sorted ranges walked together: w over neigh(u) up to v (line 60) and it over neigh(v),
+      advanced while *it < w (lines 63-64); a match w == *it counts a triangle (line 65). it needs no
+      end check: w <= v < u and u is in neigh(v), so *it stops at u at the latest.'
+  update_kind: read
+  update:
+    pseudocode: 'it = neigh(v).begin(); for w in neigh(u): if (w > v) break; while (*it < w) it++; if
+      (w == *it) total++'
+    side_effects: total++ on each match, an OpenMP + reduction over size_t (line 54)
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+      note: neigh(v) is walked once for every u > v adjacent to v, and neigh(u) once for every v < u;
+        high-degree lists are walked many times.
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+      note: OrderedCount takes const Graph&; out_index_ and out_neighbors_ are not written.
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+      note: Iterations share only the total reduction; the merge reads only the graph.
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+      note: 'Read only: all threads read the one neighbor array.'
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+      note: No stores to arrays; the count is an OpenMP reduction.
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+      note: Any order of u (schedule dynamic, 64) gives the same count.
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+      note: Integer count; exact.
+  evidence_refs: [src-gapbs-tc]
+- id: relabel-degree-read
+  expression: g.out_degree(n) = out_index_[n+1] - out_index_[n] (RelabelByDegree)
+  loop: relabel-pairs
+  steps:
+  - array:
+      name: g.out_index_
+      role: target
+      element_type: NodeID* (pointer into out_neighbors_)
+      element_bytes: 8
+      element_count: num_nodes + 1
+      layout: array_of_pointers
+    address_shape: stream
+    stride: 1
+    note: the input graph's index, before relabeling (builder.h line 380)
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+      note: The input graph is const.
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+    shared_target_between_threads:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+  evidence_refs: [src-gapbs-tc]
+  condition: 'only when WorthRelabelling returns true (tc.cc lines 75-91, 95-100): average degree at least
+    10 and sampled mean / 1.3 above the sampled median'
+- id: relabel-pairs-write
+  expression: degree_id_pairs[n] = std::make_pair(g.out_degree(n), n)
+  loop: relabel-pairs
+  steps:
+  - array:
+      name: degree_id_pairs
+      role: target
+      element_type: std::pair<int64_t, NodeID> (16 bytes with padding)
+      element_bytes: 16
+      element_count: num_nodes
+      layout: array_of_structs
+    address_shape: stream
+    stride: 1
+  update_kind: write
+  update:
+    pseudocode: degree_id_pairs[n] = (out_degree(n), n)
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+    shared_target_between_threads:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+  evidence_refs: [src-gapbs-tc]
+  condition: 'only when WorthRelabelling returns true (tc.cc lines 75-91, 95-100): average degree at least
+    10 and sampled mean / 1.3 above the sampled median'
+- id: relabel-degrees-write
+  expression: degrees[n] = degree_id_pairs[n].first
+  loop: relabel-ids
+  steps:
+  - array:
+      name: degrees
+      role: target
+      element_type: NodeID (int32_t), pvector<NodeID>
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: reads degree_id_pairs[n].first in the same order (builder.h line 387)
+  update_kind: write
+  update:
+    pseudocode: degrees[n] = degree_id_pairs[n].first
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+    shared_target_between_threads:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+  evidence_refs: [src-gapbs-tc]
+  condition: 'only when WorthRelabelling returns true (tc.cc lines 75-91, 95-100): average degree at least
+    10 and sampled mean / 1.3 above the sampled median'
+- id: relabel-new-ids
+  expression: new_ids[degree_id_pairs[n].second] = n
+  loop: relabel-ids
+  steps:
+  - array:
+      name: degree_id_pairs
+      role: index
+      element_type: std::pair<int64_t, NodeID> (16 bytes with padding)
+      element_bytes: 16
+      element_count: num_nodes
+      layout: array_of_structs
+    address_shape: stream
+    stride: 1
+    note: reads the .second field (the old ID) of the sorted pairs (builder.h line 388)
+  - array:
+      name: new_ids
+      role: target
+      element_type: NodeID (int32_t), pvector<NodeID>
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: 'scatter: new_ids[old id] = new id'
+  update_kind: write
+  update:
+    pseudocode: new_ids[degree_id_pairs[n].second] = n
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+      note: The .second fields are a permutation of the vertex IDs, so each new_ids element is written
+        once.
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+      note: degree_id_pairs is only read in this loop.
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+    shared_target_between_threads:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+      note: Distinct elements per iteration.
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+  evidence_refs: [src-gapbs-tc]
+  condition: 'only when WorthRelabelling returns true (tc.cc lines 75-91, 95-100): average degree at least
+    10 and sampled mean / 1.3 above the sampled median'
+- id: relabel-neighbor-ids
+  expression: new_ids[v] for v in g.out_neigh(u) (RelabelByDegree)
+  loop: relabel-edge
+  steps:
+  - array:
+      name: g.out_index_
+      role: offsets
+      element_type: NodeID* (pointer into out_neighbors_)
+      element_bytes: 8
+      element_count: num_nodes + 1
+      layout: array_of_pointers
+    address_shape: stream
+    stride: 1
+    note: the input graph's out_index_[u], out_index_[u+1]
+  - array:
+      name: g.out_neighbors_
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+    address_shape: ranged_indirect
+    note: walks all of u's neighbors in the input graph (builder.h line 395)
+  - array:
+      name: new_ids
+      role: target
+      element_type: NodeID (int32_t), pvector<NodeID>
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: new_ids[v] (builder.h line 396)
+  update_kind: read
+  update:
+    pseudocode: new_v = new_ids[v]
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+      note: Each v is read once per edge; vertices with degree above 1 repeat.
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+      note: The input graph is const.
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+      note: 'Read only: all threads read new_ids, written before this loop (builder.h lines 385-389).'
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+  evidence_refs: [src-gapbs-tc]
+  condition: 'only when WorthRelabelling returns true (tc.cc lines 75-91, 95-100): average degree at least
+    10 and sampled mean / 1.3 above the sampled median'
+- id: relabel-offsets-bump
+  expression: offsets[new_ids[u]]++
+  loop: relabel-edge
+  steps:
+  - array:
+      name: new_ids
+      role: index
+      element_type: NodeID (int32_t), pvector<NodeID>
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 0
+    note: new_ids[u], the same element for every edge of u
+  - array:
+      name: offsets
+      role: target
+      element_type: SGOffset (int64_t), pvector<SGOffset>
+      element_bytes: 8
+      element_count: num_nodes + 1
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: the write cursor of u's new list (builder.h line 396)
+  update_kind: add_update
+  update:
+    pseudocode: offsets[new_ids[u]] += 1 (post-increment, the old value is the store address)
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+      note: The same offsets element is incremented once per edge of u; no other u maps to it (new_ids
+        is a permutation).
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+    shared_target_between_threads:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+      note: Each u belongs to one thread and owns offsets[new_ids[u]].
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+      note: A plain increment; no two threads touch the same element.
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+  evidence_refs: [src-gapbs-tc]
+  condition: 'only when WorthRelabelling returns true (tc.cc lines 75-91, 95-100): average degree at least
+    10 and sampled mean / 1.3 above the sampled median'
+- id: relabel-neighs-store
+  expression: neighs[offsets[new_ids[u]]++] = new_ids[v]
+  loop: relabel-edge
+  steps:
+  - array:
+      name: new_ids
+      role: index
+      element_type: NodeID (int32_t), pvector<NodeID>
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 0
+    note: new_ids[u]
+  - array:
+      name: offsets
+      role: offsets
+      element_type: SGOffset (int64_t), pvector<SGOffset>
+      element_bytes: 8
+      element_count: num_nodes + 1
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: offsets[new_ids[u]], the running start of u's new list
+  - array:
+      name: relabeled neighs
+      role: target
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+    address_shape: ranged_indirect
+    note: fills the range of u's new list in order, one element per edge (builder.h line 396)
+  update_kind: write
+  update:
+    pseudocode: neighs[offsets[new_ids[u]]++] = new_ids[v]
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+      note: Each element of the new neighbor array is written once.
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+    shared_target_between_threads:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+      note: The ranges of different u are disjoint.
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+      note: Plain stores to disjoint ranges.
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+      note: 'Order within a list does not matter: each list is sorted right after (builder.h line 397).'
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-tc]
+  evidence_refs: [src-gapbs-tc]
+  condition: 'only when WorthRelabelling returns true (tc.cc lines 75-91, 95-100): average degree at least
+    10 and sampled mean / 1.3 above the sampled median'
+notes:
+- 'Relabeling is inside the timed kernel: BenchmarkKernel times Hybrid (benchmark.h lines 107-109), and
+  Hybrid calls WorthRelabelling and, if it returns true, Builder::RelabelByDegree before OrderedCount
+  (tc.cc lines 95-100). WorthRelabelling returns true when the average degree is at least 10 and the sampled
+  mean degree / 1.3 exceeds the sampled median (lines 75-91), so the decision depends on the input''s
+  degree distribution: expected true for power-law (Kronecker) inputs with enough edges, false for uniform-random
+  ones; the profile''s run log shows a "Relabel" time line (builder.h line 400) when it happened.'
+- The loops and patterns of RelabelByDegree run only when relabeling happens; their trip counts are basis
+  unknown for that reason. Footprints sum all arrays of all patterns, so they include the relabeled copy
+  (relabeled index, relabeled neighs), new_ids, degrees, offsets, and degree_id_pairs even on inputs that
+  are not relabeled. On relabeled inputs OrderedCount's g.out_index_/g.out_neighbors_ are the relabeled
+  copy, which has the same sizes.
+- 'Not recorded as access patterns: the std::sort of degree_id_pairs (builder.h lines 381-382) and of
+  each new list (line 397), which are library code (tc.cc defines _GLIBCXX_PARALLEL, lines 4-7, so the
+  pair sort may run in parallel); ParallelPrefixSum and GenIndex (lines 390-392); and the WorthRelabelling
+  samples, whose vertex IDs come from a random generator (SourcePicker, benchmark.h lines 45-68), which
+  no address shape describes. Their functions are also not in kernel_symbols, so simulated misses leave
+  them out.'
+- The count total is an OpenMP + reduction over size_t, not an array access, so it has no access pattern.
+- 'run.index_stream is null: the extractor walks every full list g.out_neigh(u) of the graph as built,
+  while OrderedCount reads only the prefix of each list below u (break at line 58), walks neighbor lists
+  through the merge in a data-dependent order, and on inputs that are relabeled works on a graph with
+  different IDs and list order. The extractor''s out_neighbors_by_vertex order is exact for none of these.'
+- 'run.sweep_log_flag is null: tc has no outer iterative loop and never calls PrintStep.'
+- NodeID is int32_t (src/benchmark.h line 31); gapbs CSR index arrays hold pointers (DestID_**), 8 bytes
+  per element on 64-bit hosts. tc requires an undirected graph (lines 137-140), for which out_index_ and
+  in_index_ are the same array; OrderedCount reads only the out_ side.
+extensions: {}

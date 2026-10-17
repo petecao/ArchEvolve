@@ -1,0 +1,20 @@
+{
+  "date_et": "2026-10-15",
+  "reviewer": "root",
+  "verdict": "PASS: static launch utility review, actual metadata/launch acceptance separate",
+  "utility": {
+    "path": "/private/tmp/probata-t07-launch26.py",
+    "sha256": "3a1c84da36aa837c64f3a5929cbcc627c6350b8f4a1261f7e82872468e7bc83b"
+  },
+  "checks": [
+    "Exact immutable manifestcbeed and cleanac6/source42 disk+Git; toolchain binaries/nativeWP/META/packages/Python pins checked.",
+    "Actual opam bootstrap and exact captured HOME/PATH/TMPDIR revalidated and reproduced in driver environment. OCaml query selection included.",
+    "Default metadata-only and explicit --launch repeat both leases/process/disk checks and fresh-output gates; exact full METHOD23 argv retained.",
+    "No old-run hint/accounting/baseline import or new clock. Plain-driver boundary and existing per-verifier sampled8GiB guards explicit.",
+    "Exclusive start/exit receipts and unchanged source postcheck; finite non-atomic trusted-user process observations do not assert hostile containment."
+  ],
+  "limitations": [
+    "No actual counted run accepted by this static review.",
+    "No global hard memory quota or OS scheduling bound; existing reviewed method deadline/ownership cleanup remains authoritative."
+  ]
+}

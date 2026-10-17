@@ -1,0 +1,54 @@
+{
+  "date": "2026-10-16 ET",
+  "edits": [
+    {
+      "new": "RAW_NAME = \"probata-resume-20261016-t28-full-tu-2baf722f-v4\"",
+      "old": "RAW_NAME = \"probata-resume-20261016-t28-full-tu-2baf722f-v3\""
+    },
+    {
+      "new": "STAGE_BYTES, TOTAL_BYTES = 134217728, 268435456\nFINAL_METADATA_RESERVE = 1048576",
+      "old": "STAGE_BYTES, TOTAL_BYTES = 134217728, 268435456"
+    },
+    {
+      "new": "def finalization_payloads(raw, out, result, *, used_bytes, elapsed):\n    \"\"\"Plan exact final metadata extent before publication; never raise caps.\"\"\"\n    result = dict(result)\n    if not (0 <= elapsed <= ENTRY_SECONDS):\n        result[\"accepted\"] = False\n        result[\"finalization_refusal\"] = \"entry deadline exceeded\"\n    result[\"wall_seconds\"] = elapsed\n    existing = [path for path in sorted(out.rglob(\"*\"))\n                if path.is_file() and path not in {out / \"result.json\", out / \"artifact-manifest.json\"}]\n    rows = [{\"relative\": str(path.relative_to(out)), **pin(path)} for path in existing]\n    def encode(value):\n        return (json.dumps(value, sort_keys=True, indent=2, allow_nan=False) + \"\\n\").encode()\n    def plan(value):\n        result_bytes = encode(value)\n        result_row = {\"relative\": \"result.json\", \"path\": str(out / \"result.json\"),\n                      \"bytes\": len(result_bytes), \"sha256\": hashlib.sha256(result_bytes).hexdigest()}\n        manifest_bytes = encode(sorted([*rows, result_row], key=lambda row: Path(row[\"relative\"]).parts))\n        return result_bytes, manifest_bytes\n    result_bytes, manifest_bytes = plan(result)\n    if used_bytes + len(result_bytes) + len(manifest_bytes) > TOTAL_BYTES:\n        result[\"accepted\"] = False\n        result[\"finalization_refusal\"] = \"projected final raw budget exceeded\"\n        result_bytes, manifest_bytes = plan(result)\n    return result, result_bytes, manifest_bytes\n\n\ndef finalize_capture(raw, out, result, *, started):\n    def used():\n        return sum(path.stat().st_size for path in raw.rglob(\"*\") if path.is_file())\n    value, result_bytes, manifest_bytes = finalization_payloads(raw, out, result,\n        used_bytes=used(), elapsed=time.monotonic() - started)\n    if len(result_bytes) + len(manifest_bytes) > FINAL_METADATA_RESERVE or used() + len(result_bytes) + len(manifest_bytes) > TOTAL_BYTES:\n        raise ValueError(\"reserved final metadata cannot fit unchanged raw budget\")\n    for name, data in ((\"result.json\", result_bytes), (\"artifact-manifest.json\", manifest_bytes)):\n        with (out / name).open(\"xb\") as stream:\n            stream.write(data)\n    # Check the settled view after serialization and both publications. If an\n    # overrun occurred, invalidate only these two owned final metadata files.\n    elapsed, total = time.monotonic() - started, used()\n    if value[\"accepted\"] and (elapsed > ENTRY_SECONDS or total > TOTAL_BYTES):\n        value[\"accepted\"] = False\n        value[\"finalization_refusal\"] = \"settled entry deadline or raw budget exceeded\"\n        value[\"wall_seconds\"] = elapsed\n        result_size = (out / \"result.json\").stat().st_size\n        manifest_size = (out / \"artifact-manifest.json\").stat().st_size\n        value, result_bytes, manifest_bytes = finalization_payloads(raw, out, value,\n            used_bytes=total-result_size-manifest_size, elapsed=elapsed)\n        for name, data in ((\"result.json\", result_bytes), (\"artifact-manifest.json\", manifest_bytes)):\n            with (out / name).open(\"wb\") as stream:\n                stream.write(data)\n    return value[\"accepted\"]\n\n\ndef main(argv):",
+      "old": "def main(argv):"
+    },
+    {
+      "new": "if remaining <= 0 or bytes_used() > TOTAL_BYTES-FINAL_METADATA_RESERVE:",
+      "old": "if remaining <= 0 or bytes_used() > TOTAL_BYTES:"
+    },
+    {
+      "new": "if time.monotonic() >= expires or bytes_used() > TOTAL_BYTES-FINAL_METADATA_RESERVE or stdout.tell()",
+      "old": "if time.monotonic() >= expires or bytes_used() > TOTAL_BYTES or stdout.tell()"
+    },
+    {
+      "new": "if row[\"returncode\"] or bytes_used() > TOTAL_BYTES-FINAL_METADATA_RESERVE:",
+      "old": "if row[\"returncode\"] or bytes_used() > TOTAL_BYTES:"
+    },
+    {
+      "new": "group = {\"label\": label, \"dependencies\": dependencies, \"frozen\": pin(out / (label + \".ii\")),\n                     \"preprocess_dependency\": pin(out / (label + \".d\"))}",
+      "old": "group = {\"label\": label, \"dependencies\": dependencies, \"frozen\": pin(out / (label + \".ii\"))}"
+    },
+    {
+      "new": "recheck(dependencies + original_inputs + [group[\"frozen\"], group[\"preprocess_dependency\"]])",
+      "old": "recheck(dependencies + original_inputs + [group[\"frozen\"]])"
+    },
+    {
+      "new": "recheck(group[\"dependencies\"] + [group[\"frozen\"], group[\"preprocess_dependency\"]] + [group[k]",
+      "old": "recheck(group[\"dependencies\"] + [group[\"frozen\"]] + [group[k]"
+    },
+    {
+      "new": "        accepted = finalize_capture(raw, out, {\"accepted\": accepted, \"error\": error, \"after_input_errors\": after_errors,\n            \"bytecode_cache_present\": cache_present,\n            \"source_names\": sorted({row[\"name\"] for row in prepared[\"calls\"]}) if prepared else [],\n            \"source_call_count\": len(prepared[\"calls\"]) if prepared else 0,\n            \"scope\": \"Actual Clang source/ABI preparation only; source/CPU/model/public admission remains required\",\n            \"native_or_solver_executed\": False, \"public_proof\": False, \"current_0_2\": False, \"full_ticket28\": False}, started=started)\n    return 0 if accepted else 1",
+      "old": "        save(out / \"result.json\", {\"accepted\": accepted, \"error\": error, \"after_input_errors\": after_errors,\n            \"wall_seconds\": time.monotonic() - started, \"bytecode_cache_present\": cache_present,\n            \"source_names\": sorted({row[\"name\"] for row in prepared[\"calls\"]}) if prepared else [],\n            \"source_call_count\": len(prepared[\"calls\"]) if prepared else 0,\n            \"scope\": \"Actual Clang source/ABI preparation only; source/CPU/model/public admission remains required\",\n            \"native_or_solver_executed\": False, \"public_proof\": False, \"current_0_2\": False, \"full_ticket28\": False})\n        save(out / \"artifact-manifest.json\", [{\"relative\": str(p.relative_to(out)), **pin(p)} for p in sorted(out.rglob(\"*\")) if p.is_file()])\n    return 0 if accepted and bytes_used() <= TOTAL_BYTES else 1"
+    }
+  ],
+  "predecessor": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v3/linux_compiler_capture_v3.py",
+    "sha256": "90b60b564b5c5babec63f6fc663c36d03f8b43444ef52f8147f9997fa03bc34d"
+  },
+  "scope": "Fresh namespace, final budget/deadline verdict and1MiB final metadata reserve; initial preprocess depfile snapshot. Capture recipe/source/runtime/scientific meaning and stated128/256MiB/4GiB/165/180s caps unchanged.",
+  "successor": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v4/linux_compiler_capture_v4.py",
+    "sha256": "46a75ec392801da84535ef968eead48f0c9ebdfdc62840de5885c2edb2dcaec0"
+  }
+}

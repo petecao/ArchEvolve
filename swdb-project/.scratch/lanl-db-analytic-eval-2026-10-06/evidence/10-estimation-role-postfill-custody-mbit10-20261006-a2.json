@@ -1,0 +1,58 @@
+{
+  "format": "swdb.estimation-role-postfill-custody.v1",
+  "updated": "2026-10-06 ET",
+  "source_commit": "a7a9b9e8b9d52245490b7dfd372f3be05f67ce27",
+  "raw_directory": "/data/yanruj/EvolveSWDB_runs/lanl-estimation-role-20261006-a2",
+  "raw_transferred": false,
+  "runner_exit_code_verbatim": "1\n",
+  "outer_exit_code_verbatim": "1\n",
+  "runner_error_verbatim": "AssertionError: \n",
+  "runner_error_file_sha256": "5048a1044bec2cdfcef63fb62f5f0bf2b025ee9212e0d583dbfcf9fb1ccdd194",
+  "original_runner_lane": {
+    "host": "mbit10",
+    "job": "swdb-lanl-estimation-role-20261006-a2",
+    "node": 0,
+    "lease_name": "mbit10-evaluation-node0",
+    "lease_generation": 492,
+    "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+    "numa_memory_policy": "bind:0",
+    "started_utc": "2026-10-07T02:21:18Z",
+    "ended_utc": "2026-10-07T02:26:39Z",
+    "exit_code": 1
+  },
+  "preregistration_sha256": "7a693f3956adfae11367c7731baa036f2d183e2e8fa36aea890bb53f948c11cb",
+  "original_provider": {
+    "state": "completed",
+    "returncode": 0,
+    "lane": "mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 492)",
+    "receipt_sha256": "8d7244d9d3d3ab20eec56a6f598590eb6e0dfe4922938d32471b653c366d0a1e"
+  },
+  "disposition": "Completed successful inference was followed by an external wrapper/native hash-equality assertion; no inference is repeated.",
+  "configured_entrypoint_sha256": "61b0194f3bb6534439c8d26a3ed57d0805f84b884588b761795323eeb92fcf70",
+  "adapter_executable_sha256": "fce635028842bfe9257140e8b7d53162732945e2f356fc35225be0702b4974be",
+  "preserved_artifact_sha256s": {
+    "provider-config.json": "addd3a07d593b0639127aa60604849ba3bef3d88546a28328768504cb92a7155",
+    "runner-exit-code.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "provider/workspace.json": "24f6d064c7ea6a3b6aba8b85cbfa4c82d9f30f35428a3e8744a1107938abbf1e",
+    "runner-completed.txt": "c6d0e2959812d4b4364416071b1f2dbd8f128c58241d130832c0057404e9655f",
+    "fill.argv.json": "44b4f9daa8f3a36e73b9c5490c6abfb4a224396ff7c27233f0ad3a6b4b050c19",
+    "provider/provider-home/final-message.json": "28d67059149aac7e674d516e1b6aff92ed66f8553a060013fd37faeb6ded242c",
+    "runner.py": "2b29f6044402998925c16595d0097eecbb41bc1e4de3840504929d297c041e9f",
+    "provider/audit.json": "3594e5e10f83f4d777c540b220fd0ef0376fdbe9f539a93c5c88ed3712b0746b",
+    "provider/provider.json": "8d7244d9d3d3ab20eec56a6f598590eb6e0dfe4922938d32471b653c366d0a1e",
+    "runner-error.txt": "5048a1044bec2cdfcef63fb62f5f0bf2b025ee9212e0d583dbfcf9fb1ccdd194",
+    "prepare.stdout": "4a0a53660222552a9e164114a5e09d5471a6ff0e135be310ba23dad4116aa16e",
+    "fill.stdout": "dcfc32587975c6c9fa21462ec57596e8650a0b89c4274e464fdd55da19dd2438",
+    "fill.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "provider/guard-audit.json": "d3a1f4ce1bf8ed4cecd8e458ff0937f3391b39915dcca1b8dd8f19159706f108",
+    "provider/process-cleanup.json": "90ed068345c9c53b295fece734c9db16e2f2e7fd2f72be11227474ba4196c6c7",
+    "preregistration.json": "7a693f3956adfae11367c7731baa036f2d183e2e8fa36aea890bb53f948c11cb",
+    "lane.json": "f4a9a150ff3d7553f59669b6c0e98a27279cf07ed212a6d92f543c84f4c45f12"
+  },
+  "a1_failure": {
+    "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/10-estimation-role-failed-mbit10-20261006-a1.json",
+    "identity_sha256": "f26fdb135032db0cf5989b783bb8fde1406c68e3e44be6a5450d0da5fc8e63d3",
+    "file_sha256": "abc19a352f925afef52a85a7375ce31ab57446902dcd0976a742202112f8ef15"
+  },
+  "identity_sha256": "700699b0fc01ad2d7380e828b624ca84b6a4401b77ebe6a964227c1a1278d22e"
+}

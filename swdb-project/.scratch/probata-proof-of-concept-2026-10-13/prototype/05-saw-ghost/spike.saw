@@ -1,0 +1,76 @@
+// Ticket 05 spike (a), 2026-10-14 ET. Throwaway. Usage: saw spike.saw, in a folder holding
+// fixture.bc (built from fixture.cpp; run_spike.sh does both variants).
+//
+// Ghost state: `pending`, a fixed-size array of 8 tiles x 8 bits (Cryptol [8][8]);
+// pending @ t != 0 means tile t has an uncovered writer (map 16 item 10, reduced to one field).
+// Only the issue and wait specs below, used as llvm_verify overrides, change it.
+// The read spec only checks it: its precondition `g @ t == 0` is the ghost-state check.
+
+let tiles = 8;
+let ghost_t = llvm_array tiles (llvm_int 8);
+
+// dx100::issue(const Command*): marks the command's destination tile unready.
+let issue_spec pending = do {
+  g <- llvm_fresh_var "issue_g" ghost_t;
+  kind <- llvm_fresh_var "issue_kind" (llvm_int 32);
+  t <- llvm_fresh_var "issue_tile" (llvm_int 32);
+  base <- llvm_fresh_var "issue_base" (llvm_int 32);
+  range <- llvm_fresh_var "issue_range" (llvm_int 32);
+  cmd <- llvm_alloc_readonly (llvm_alias "struct.Command");
+  llvm_points_to (llvm_field cmd "kind") (llvm_term kind);
+  llvm_points_to (llvm_field cmd "dst_tile") (llvm_term t);
+  llvm_points_to (llvm_field cmd "base") (llvm_term base);
+  llvm_points_to (llvm_field cmd "range") (llvm_term range);
+  llvm_precond {{ t < 8 }};
+  llvm_ghost_value pending g;
+  llvm_execute_func [cmd];
+  llvm_ghost_value pending {{ update g t 1 }};
+};
+
+// dx100::wait(int): marks the tile ready.
+let wait_spec pending = do {
+  g <- llvm_fresh_var "wait_g" ghost_t;
+  t <- llvm_fresh_var "wait_tile" (llvm_int 32);
+  llvm_precond {{ t < 8 }};
+  llvm_ghost_value pending g;
+  llvm_execute_func [llvm_term t];
+  llvm_ghost_value pending {{ update g t 0 }};
+};
+
+// dx100::read(int, unsigned): the ghost-state check. Leaves the ghost state unchanged.
+let read_spec pending = do {
+  g <- llvm_fresh_var "read_g" ghost_t;
+  t <- llvm_fresh_var "read_tile" (llvm_int 32);
+  i <- llvm_fresh_var "read_idx" (llvm_int 32);
+  llvm_precond {{ t < 8 }};
+  // GHOST_CHECK_AT_READ: tile t has no uncovered writer. SAW 1.6 binds `g` from the ghost
+  // line only if this precondition is written BEFORE it; written after, `g` stays unbound
+  // and the check fails on every input (runs exp_B_verbose, exp_C, exp_E; ticket 05 Answer).
+  llvm_precond {{ g @ t == 0 }};
+  llvm_ghost_value pending g;
+  llvm_execute_func [llvm_term t, llvm_term i];
+  llvm_ghost_value pending g;
+  v <- llvm_fresh_var "read_value" (llvm_int 32);
+  llvm_return (llvm_term v);
+};
+
+// kernel(int a, int b, unsigned base): any distinct tiles a, b < 8, any start state.
+let kernel_spec pending = do {
+  g0 <- llvm_fresh_var "g0" ghost_t;
+  a <- llvm_fresh_var "a" (llvm_int 32);
+  b <- llvm_fresh_var "b" (llvm_int 32);
+  base <- llvm_fresh_var "base" (llvm_int 32);
+  llvm_precond {{ a < 8 /\ b < 8 /\ a != b }};
+  llvm_ghost_value pending g0;
+  llvm_execute_func [llvm_term a, llvm_term b, llvm_term base];
+  ret <- llvm_fresh_var "ret" (llvm_int 32);  // any return value
+  llvm_return (llvm_term ret);
+};
+
+pending <- declare_ghost_state "pending";
+m <- llvm_load_module "fixture.bc";
+issue_ov <- llvm_unsafe_assume_spec m "_ZN5dx1005issueEPK7Command" (issue_spec pending);
+wait_ov <- llvm_unsafe_assume_spec m "_ZN5dx1004waitEi" (wait_spec pending);
+read_ov <- llvm_unsafe_assume_spec m "_ZN5dx1004readEij" (read_spec pending);
+llvm_verify m "_Z6kerneliij" [issue_ov, wait_ov, read_ov] false (kernel_spec pending) z3;
+print "SPIKE: kernel verified";

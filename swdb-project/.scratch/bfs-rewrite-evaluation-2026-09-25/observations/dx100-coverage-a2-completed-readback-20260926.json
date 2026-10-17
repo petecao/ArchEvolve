@@ -1,0 +1,149 @@
+{
+  "receipt": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2.dispatch/completed-readback.json",
+    "sha256": "deabf45fe14b64f12574c700d396edf4bbff2bdd8bb17293927095010943eba1",
+    "bytes": 4551
+  },
+  "created": "2026-09-26",
+  "started": "2026-09-26T19:17:21.845768-04:00",
+  "finished": "2026-09-26T19:17:53.800679-04:00",
+  "elapsed_seconds": 31.95491079799831,
+  "state": "passed",
+  "code_commit": "5a0b15fe666b2d094a2b2b9847ff5a30ef16fb4f",
+  "reader": "scripts.bfs_dx100_coverage_a2.validate_completed",
+  "result": {
+    "audit": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2.dispatch/terminal-validation.json",
+      "sha256": "6df37b96da525b36e79a351096bf8e565550a61050f247d798e8366f9a1f3815"
+    },
+    "evaluation": {
+      "path": "/data1/yanruj/EvolveSWDB_dx100_coverage_a2_20260926_v2/records/evaluations/bfs-dx100-coverage-20260926-a2.execute.yaml",
+      "sha256": "06c14337c23210cf86c848f803956deddf1afce94fe3d71f1482f8597526eb4c"
+    },
+    "evaluation_sha256": "c213c93028e8bfcb85aaad4772cc1034953e0cd9e757c4d77c02c2b9f3f90bc6",
+    "repository_commit": "5a0b15fe666b2d094a2b2b9847ff5a30ef16fb4f",
+    "coverage": {
+      "state": "observed",
+      "tick_interval": [
+        5622403663,
+        5912526180
+      ],
+      "completed_trace_units": {
+        "S": 8,
+        "I": 96,
+        "R": 24,
+        "A": 16
+      },
+      "address_space_contract": {
+        "model_revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+        "instruction_baseAddr": "guest virtual; compared only with returned parent.data()",
+        "recvData_addr": "translated physical cache line; compared only with other physical words",
+        "source_evidence": [
+          {
+            "path": "src/mem/MAA/IF.cc",
+            "sha256": "fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561",
+            "lines": [
+              38,
+              63
+            ]
+          },
+          {
+            "path": "src/mem/MAA/IndirectAccess.cc",
+            "sha256": "7e238a370f25ff5a7a1211548630a291d6358c32d8a199fc58bfacd37d1d35db",
+            "lines": [
+              494,
+              505
+            ]
+          }
+        ]
+      },
+      "range_output_tile_sizes": {
+        "0": 8,
+        "1024": 4,
+        "2048": 4,
+        "16384": 8
+      },
+      "full_tiles": {
+        "state": "observed",
+        "count": 8,
+        "capacity": 16384
+      },
+      "tail_tiles": {
+        "state": "observed",
+        "count": 8,
+        "capacity": 16384
+      },
+      "competing_parent_updates": {
+        "state": "observed",
+        "count": 14546,
+        "samples": [
+          {
+            "physical_word_address": 4098048,
+            "prior_value": 3073,
+            "new_value": 3074,
+            "tick": 5766927344,
+            "line": 882875
+          },
+          {
+            "physical_word_address": 4098052,
+            "prior_value": 3073,
+            "new_value": 3074,
+            "tick": 5766927344,
+            "line": 882878
+          },
+          {
+            "physical_word_address": 4098056,
+            "prior_value": 3073,
+            "new_value": 3074,
+            "tick": 5766927344,
+            "line": 882881
+          },
+          {
+            "physical_word_address": 4098060,
+            "prior_value": 3073,
+            "new_value": 3074,
+            "tick": 5766927344,
+            "line": 882884
+          },
+          {
+            "physical_word_address": 4098064,
+            "prior_value": 3073,
+            "new_value": 3074,
+            "tick": 5766927344,
+            "line": 882887
+          },
+          {
+            "physical_word_address": 4098068,
+            "prior_value": 3073,
+            "new_value": 3074,
+            "tick": 5766927344,
+            "line": 882890
+          },
+          {
+            "physical_word_address": 4098072,
+            "prior_value": 3073,
+            "new_value": 3074,
+            "tick": 5766927344,
+            "line": 882893
+          },
+          {
+            "physical_word_address": 4098076,
+            "prior_value": 3073,
+            "new_value": 3074,
+            "tick": 5766927344,
+            "line": 882896
+          }
+        ],
+        "parent_storage": {
+          "virtual_address": 444384,
+          "count": 8212,
+          "line": 2837671
+        },
+        "target_tracking_truncated": false,
+        "definition": "Different signed32 vector-store values observed at the same physical word, from instructions whose virtual base is the returned parent array."
+      },
+      "limits": "Positive counts prove these finite observed cases only. Graph topology is not substituted for executed updates; traces outside the selected ROI are excluded."
+    },
+    "gain_claim": false
+  }
+}

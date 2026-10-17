@@ -1,0 +1,91 @@
+{
+  "created": "2026-09-27",
+  "source_commit": "60cdd5e787ef590d8a6a7bdacc91c29719feb066",
+  "commit": "8cbfee600f23416a8e9578fa8d3ce3f0e19fced8",
+  "sole_parent": "0dc0d4fecfe2903ff0cc1ba9e6b738a8f5c1a4f1",
+  "branch": "codex/bfs-supervision-recovery-runtime-20260927-a1",
+  "files": {
+    "scripts/bfs_owned_execution.py": {
+      "mode": "100644",
+      "blob": "f35c6197060f6a13288fa2042a1bf3139ad277dd",
+      "bytes": 22595,
+      "sha256": "66d2636b705f6a1ca29c01850b21ef5b3f7a941ca30277d6f4d4da8c9c3b88fb"
+    },
+    "tests/test_bfs_owned_execution.py": {
+      "mode": "100644",
+      "blob": "7f2ffc8d7dc02e1b60c54c661ada997dbadde33a",
+      "bytes": 21069,
+      "sha256": "b522507bdef8ef31715955033af2c128f119f64d2a51a30f31c25d99edf909a9"
+    },
+    "scripts/bfs_linux_fixture.py": {
+      "mode": "100644",
+      "blob": "978ed1edefead24291baa71b44c36a8dd7b5b8f9",
+      "bytes": 15716,
+      "sha256": "277e0827a079eed032cc8f7cdedcbc2867f8880e247ea20b9e5dbe7096f48c3a"
+    },
+    "tests/test_bfs_linux_fixture.py": {
+      "mode": "100644",
+      "blob": "19af6db837751660f51e4e76de714f0e5f822a06",
+      "bytes": 12904,
+      "sha256": "95221714be8b97a2fb9288a86adedc3d3688b838e01fd56a8975612f2da13da6"
+    },
+    "scripts/bfs_simulator_recovery.py": {
+      "mode": "100644",
+      "blob": "3eebf4a2b28809778439a3f2fa67b7a74634b95a",
+      "bytes": 27405,
+      "sha256": "e242c904684bd0e433d0c9501c3c1cd2d8e2f342db8188cfe1894b829d657744"
+    },
+    "scripts/bfs_simulator_batch.py": {
+      "mode": "100644",
+      "blob": "1729b7144f4ccbf698c1850f55e162ea2901b1e8",
+      "bytes": 67829,
+      "sha256": "b08335b912e5e83e58f366ed5294c32c2de06073600c8faf4fe2cb370918b4e6"
+    },
+    "scripts/bfs_supervision_supplement.py": {
+      "mode": "100644",
+      "blob": "8924b9a6c30e85538ef71581b01adece177fa551",
+      "bytes": 9638,
+      "sha256": "e2ddf39589b8db49cbf1c89d1dd106dbbd2d54637f3e41582d78a5ad0defaef6"
+    },
+    "tests/test_bfs_simulator_recovery.py": {
+      "mode": "100644",
+      "blob": "bb563bf836e104799650b9b4566050e14a50f19f",
+      "bytes": 27261,
+      "sha256": "02b896a87adacdd6122b3f170c3f71f45db451156a930c65a31a5c6c19f93d75"
+    },
+    "tests/test_bfs_simulator_setup_recovery.py": {
+      "mode": "100644",
+      "blob": "158abb88d9ac49319c01cc04f3276521eb70eb8a",
+      "bytes": 15835,
+      "sha256": "e4eee9b891f0284af86ab1e8b623e5e9c0415c1c2b4880c40e99dd4f043641a0"
+    },
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t15-supervision-recovery-simulator-batch-20260926-a1.json": {
+      "mode": "100644",
+      "blob": "b00258dc70372e3c54d70480110b45c0971a8163",
+      "bytes": 10526,
+      "sha256": "b25650774e11a3975ba7c7d63e8453886e0ebe77d5f79514f57fbd7214768fb5"
+    },
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t16-supervision-recovery-simulator-batch-20260926-a1.json": {
+      "mode": "100644",
+      "blob": "1b4a1c106668df25a720cfe578f3bb9aabb4434d",
+      "bytes": 14056,
+      "sha256": "a99d3c9e787881d7e04a01b714bd1bf07e4b045cdbbe3efb5cb8da11e50eba16"
+    },
+    "docs/bfs-supervision-recovery-20260926.md": {
+      "mode": "100644",
+      "blob": "25a023c967ab01f8191d67effbe8060ef04bfa3d",
+      "bytes": 5800,
+      "sha256": "78ce2dcca11b52dc249cd9fbc807e773e366d7f643ca1eb31817a470485b1f67"
+    }
+  },
+  "bytes": 250634,
+  "method": "external index; exact source Git blobs; main HEAD and index unchanged",
+  "remote_transfer": "pushed and remote ref verified",
+  "actual_linux_execution": false,
+  "host_checkout": {
+    "path": "/data1/yanruj/EvolveSWDB_supervision_recovery_runtime_20260927_a1",
+    "commit": "8cbfee600f23416a8e9578fa8d3ce3f0e19fced8",
+    "branch": "HEAD",
+    "git_status_porcelain": ""
+  }
+}

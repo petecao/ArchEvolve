@@ -1,0 +1,137 @@
+kind: proposal
+schema_version: '0.4'
+id: bfs-instruction-smoke-20260925-a1.natural-language.proposal
+status: draft
+created: '2026-09-25'
+updated: '2026-09-25'
+message_version: '1.0'
+producer:
+  name: swdb-bounded-instruction-diagnostic-client
+  role: sw
+  test_client: true
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: bfs-instruction-smoke-20260925-a1.natural-language.proposal
+  producer:
+    name: swdb-bounded-instruction-diagnostic-client
+    role: sw
+    test_client: true
+  implementation: dx100-bfs-scalar
+  source_snapshot: bfs-instruction-smoke-20260925-a1.natural-language.source
+  profile_package: bfs-instruction-smoke-20260925-a1.natural-language.package
+  source_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  regions:
+  - benchmarks/gapbs/src/bfs.cc:1-536:6835fc42dfadcb60
+  intent: Remove the redundant parent[v] = u store immediately following successful compare_and_swap(parent[v],
+    curr_val, u) in the scalar TDStep. The successful CAS already performs that write. Preserve the CAS,
+    queue insertion, scout count, and every other algorithmic step. Do not change the accelerator branch.
+  parameters:
+    remove_redundant_post_cas_store: true
+  constraints:
+    editable_files: [benchmarks/gapbs/src/bfs.cc]
+    preserve_correctness: true
+    preserve_roi: true
+  payload:
+    kind: natural_language
+    content: Remove the redundant parent[v] = u store immediately following successful compare_and_swap(parent[v],
+      curr_val, u) in the scalar TDStep. The successful CAS already performs that write. Preserve the
+      CAS, queue insertion, scout count, and every other algorithmic step. Do not change the accelerator
+      branch.
+  required_operations: []
+payload_sha256: 129ebe14792d519cfa84cce408837b052aca85a5c94dadd6751f81afb8a65960
+outcome:
+  state: candidate_created
+  stage: rewriting
+  reason: null
+attempts:
+- number: 1
+  stage: rewriting
+  state: completed
+  provider:
+    provider:
+      kind: claude
+      command:
+      - /data1/yanruj/.npm-global/bin/claude
+      timeout_s: 300
+      max_repairs: 1
+      total_seconds: 600
+      budget_usd: 5
+    command:
+    - /data1/yanruj/.npm-global/bin/claude
+    - -p
+    - --safe-mode
+    - --tools
+    - ''
+    - --strict-mcp-config
+    - --mcp-config
+    - '{"mcpServers":{}}'
+    - --no-session-persistence
+    - --output-format
+    - json
+    - --json-schema
+    - '{"type": "object", "additionalProperties": false, "required": ["interpretation", "patch", "unresolved"],
+      "properties": {"interpretation": {"type": "string"}, "patch": {"type": "string"}, "unresolved":
+      {"type": "array", "items": {"type": "string"}}}}'
+    - --max-budget-usd
+    - '5'
+    timeout_s: 300
+    classification: rewrite_provider
+    prompt_sha256: c3cd4430bb0421accc52effb3c8bef744985d6a998304cd1f1528a648a88307c
+    state: completed
+    executable_sha256: 5c4735937844e84f8a93306e841a5b0e12252909b07870f789b190468da147ab
+    version: 2.1.278 (Claude Code)
+    returncode: 0
+    host_wall_s: 102.81669832393527
+  candidate: bfs-instruction-smoke-20260925-a1.natural-language.proposal.candidate-1
+raw_artifacts:
+- path: /data/yanruj/EvolveSWDB_runs/bfs-instruction-smoke-20260925/bfs-instruction-smoke-20260925-a1.natural-language.proposal
+  stage: rewriting
+source_snapshot: bfs-instruction-smoke-20260925-a1.natural-language.source
+profile_package: bfs-instruction-smoke-20260925-a1.natural-language.package
+provider:
+  kind: claude
+  command:
+  - /data1/yanruj/.npm-global/bin/claude
+  timeout_s: 300
+  max_repairs: 1
+  total_seconds: 600
+  budget_usd: 5
+repair_budget:
+  max_repairs: 1
+  total_seconds: 600
+  used_seconds: 102.81669832393527
+  repairs: 0
+interpretation:
+  interpretation: 'The intent targets the redundant `parent[v] = u;` store that immediately follows a
+    successful `compare_and_swap(parent[v], curr_val, u)` inside the scalar `TDStep` function (benchmarks/gapbs/src/bfs.cc).
+    This is the function actually invoked at runtime under this build (build flags are `-DFUNC` with no
+    `-DMAA`, so `main()`''s `#ifdef MAA` selects `DOBFS`, which calls `TDStep`, matching the evaluator''s
+    declared `kernel_symbols: [DOBFS, TDStep, InitParent]`). Since `compare_and_swap` already performs
+    the write to `parent[v]` on success, the subsequent plain store is dead/redundant and its removal
+    does not change the algorithm''s result, the CAS itself, the queue push, or any control flow — it
+    only eliminates one redundant non-atomic write inside the timed ROI loop body. The accelerator function
+    `TDStepMAA` (its MAA/tile branch and its own scalar fallback branch) is left completely unmodified,
+    per the "Do not change the accelerator branch" constraint, since it is out of scope for this instruction
+    and is not even reached in this build configuration. The protected `BFSVerifier` and all ROI/timer
+    calls are untouched.'
+  patch: |
+    --- a/benchmarks/gapbs/src/bfs.cc
+    +++ b/benchmarks/gapbs/src/bfs.cc
+    @@ -244,10 +244,9 @@ void TDStep(const Graph &g, pvector<SGOffset> &VertexOffsets, pvector<NodeID>
+                     if (curr_val < 0) {
+                         // indirect write (parent, v_tile, u_tile)
+                         // core fetch v tile
+                         if (compare_and_swap(parent[v], curr_val, u)) {
+    -                        parent[v] = u;
+                             lqueue.push_back(v);
+                         }
+                     }
+                 }
+             }
+  unresolved: []
+candidate: bfs-instruction-smoke-20260925-a1.natural-language.proposal.candidate-1

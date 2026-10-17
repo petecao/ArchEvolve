@@ -1,0 +1,623 @@
+{
+  "actual_formal_run": false,
+  "added_caller_requires": [],
+  "all_three_stronger_proofs_required": true,
+  "authoring_history_note": "The wrong-root author helper refused before module edits; green-v2 retained one failure on unchanged source. Corrected green-v2b passed. The first metadata freeze refused a wrong evidence-directory path before writing the packet; its script is retained. No result was relabeled.",
+  "bounds_increased": false,
+  "canonical_count": 48,
+  "canonical_total_bytes": 128149,
+  "capture_free_typed_existential_introduction": true,
+  "complete_old_case_statement_inverse_checked": true,
+  "date": "2026-10-16 ET",
+  "full_original_quantifiers_antecedent_guards_active_ready_preserved": true,
+  "kernel_definition_slices": 19,
+  "launch": "unconditionally refused after canonical public check",
+  "mathematical_admission": false,
+  "new_axioms": [],
+  "observed_publication_baseline": "001df353dc4aa46ab43c395997b760fb2b203ab2",
+  "original_alt_ergo_failure_cause_resolved": false,
+  "original_cases_retained": 3,
+  "original_g644_evidence": [
+    {
+      "bytes": 17171,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t25-owned-swap-header3-public-v1-producer-settlement-20261016.json",
+      "sha256": "bcb3c7c94e7f3e209787b26bca6d655515d6c7d8cd8c265c316744057335831b"
+    },
+    {
+      "bytes": 7653,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-swap-header3-public-v1-native-diagnostics-001-stdout-20261016.json",
+      "sha256": "45b17f7a7485c0ad561e96fe75d086863e0178a250b3e35291fa880d30caa00c"
+    },
+    {
+      "bytes": 49400,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-swap-header3-public-v1-complete-settlement-001-stdout-20261016.json",
+      "sha256": "43452f8b9465c900c9621f83fd61b6357fd4acaa8d95b651a9c9d3c4f458244a"
+    }
+  ],
+  "original_g644_outcome": "all three old cases unproved; Alt-Ergo Failed / CVC5 Unknown / Z3 Timeout per case",
+  "outputs": [
+    {
+      "bytes": 24198,
+      "path": "swdb/vector_owned_swap_header_witness.py",
+      "sha256": "c66f73db459483af2ca23c7a880fff3fe4e4141c5d15b134730ffa4cdfa6a5db"
+    },
+    {
+      "bytes": 9605,
+      "path": "tests/test_vector_owned_swap_header_witness.py",
+      "sha256": "c4e4d79b7876250db66a0f9748d7dd97286b69b3d80b5279f39540c8f6b03677"
+    },
+    {
+      "bytes": 3628,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/README.md",
+      "sha256": "fbddb66c71c228da38fc117d891c5bf4e80ed6406b64f7a484e86347f98aa859"
+    },
+    {
+      "bytes": 8918,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/add_kernel_slice_v2.py",
+      "sha256": "018ecdff79f20fd2ab4e6013b4de6df3ada680213d7d14012b3fd8efe892e1ea"
+    },
+    {
+      "bytes": 9015,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/canonical-files-v1.json",
+      "sha256": "a18a621591ba5a3c75c4f822cad97598a49b2e0220a2301b242fc9b73751fc20"
+    },
+    {
+      "bytes": 27177,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/derivation-v1.json",
+      "sha256": "abcc98d2ae5f2eff53f639b3dbdca1435bc41ef4ae16b730bd9d05f7e12847ef"
+    },
+    {
+      "bytes": 6296,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/freeze_source_v1.py",
+      "sha256": "311fa330f33e5e01d74c6bdb7a693d61a28c191a0e94cff26b1711a47f29de52"
+    },
+    {
+      "bytes": 8911,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/authoring-wrong-root-v2.py",
+      "sha256": "a11c478846ede3cbd090c3a936c43ec77ac5ab011666eb6e36a0f135ae8c4b94"
+    },
+    {
+      "bytes": 4753,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/green-v1/module.py",
+      "sha256": "91d74e886d6296c12984a148c7412c27c84e71f5280c89c94ddc5cdc20a51701"
+    },
+    {
+      "bytes": 2007,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/green-v1/result.json",
+      "sha256": "d04c4f72b8a3fd6565a9c9f820f0ea5a97433c8e128fb93cb65cabdf8fa66308"
+    },
+    {
+      "bytes": 2183,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/green-v1/test.py",
+      "sha256": "aac2ce5f37304cb4b0f9e8a2871425054d99163caa36e39c8d9792e1e6637bd0"
+    },
+    {
+      "bytes": 4753,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/green-v2/module.py",
+      "sha256": "91d74e886d6296c12984a148c7412c27c84e71f5280c89c94ddc5cdc20a51701"
+    },
+    {
+      "bytes": 2771,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/green-v2/result.json",
+      "sha256": "ede26cded08de2340f52861a250ab84dec439119cb8035c3c81930664555fb18"
+    },
+    {
+      "bytes": 5484,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/green-v2/test.py",
+      "sha256": "5059e0de89a3cca5e42c80f6c95555cea40dd8659ca0154b456ec46d3049c9a5"
+    },
+    {
+      "bytes": 22718,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/green-v2b/module.py",
+      "sha256": "57e24e688cae80e9f3ee6b9a62e42083e71f163237183457d316f168003c3437"
+    },
+    {
+      "bytes": 2135,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/green-v2b/result.json",
+      "sha256": "0f0c9859608c8550a767e2ef7a22b2b32888ea3bc03d8636130ea208cfaefaa2"
+    },
+    {
+      "bytes": 5484,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/green-v2b/test.py",
+      "sha256": "5059e0de89a3cca5e42c80f6c95555cea40dd8659ca0154b456ec46d3049c9a5"
+    },
+    {
+      "bytes": 23949,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/green-v3/module.py",
+      "sha256": "1363865513f6a7ed5eb350b3113f2a5eb6f732b42e8fa325cf1a87e9d4c6d95c"
+    },
+    {
+      "bytes": 2260,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/green-v3/result.json",
+      "sha256": "32ac27c7cedfd6c0f6d4f1db506a8b073ea230be4301f59e0a440677866089e4"
+    },
+    {
+      "bytes": 6966,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/green-v3/test.py",
+      "sha256": "8b97ba83efeae77d617d6c8b061e4243a6c60252e309a8a7ee2d9431eabfec5a"
+    },
+    {
+      "bytes": 24198,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/green-v4/module.py",
+      "sha256": "c66f73db459483af2ca23c7a880fff3fe4e4141c5d15b134730ffa4cdfa6a5db"
+    },
+    {
+      "bytes": 2380,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/green-v4/result.json",
+      "sha256": "dcacfbd4f62eecf383ac9c4f893055b70164fce101cd6802fd960e80264b0466"
+    },
+    {
+      "bytes": 9605,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/green-v4/test.py",
+      "sha256": "c4e4d79b7876250db66a0f9748d7dd97286b69b3d80b5279f39540c8f6b03677"
+    },
+    {
+      "bytes": 6179,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/metadata-wrong-evidence-path-v1.py",
+      "sha256": "918089fc78f3ca36be45dd2d2d9d670130e1c2876a14a7259d84bda4799e53b7"
+    },
+    {
+      "bytes": 2585,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/red-v1/result.json",
+      "sha256": "c5607cde9b9bbfcbe87b2561f74902b50a3ca05215a483d5163d5ab0ef66d4a2"
+    },
+    {
+      "bytes": 2183,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/red-v1/test.py",
+      "sha256": "aac2ce5f37304cb4b0f9e8a2871425054d99163caa36e39c8d9792e1e6637bd0"
+    },
+    {
+      "bytes": 4753,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/red-v2/module.py",
+      "sha256": "91d74e886d6296c12984a148c7412c27c84e71f5280c89c94ddc5cdc20a51701"
+    },
+    {
+      "bytes": 2767,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/red-v2/result.json",
+      "sha256": "0e417c78b55ee59f0ac613bcbc78c9102f044da8947cc0ec69a248193fa5ac12"
+    },
+    {
+      "bytes": 5484,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/red-v2/test.py",
+      "sha256": "5059e0de89a3cca5e42c80f6c95555cea40dd8659ca0154b456ec46d3049c9a5"
+    },
+    {
+      "bytes": 22718,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/red-v3/module.py",
+      "sha256": "57e24e688cae80e9f3ee6b9a62e42083e71f163237183457d316f168003c3437"
+    },
+    {
+      "bytes": 3365,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/red-v3/result.json",
+      "sha256": "1aaa69acb335a885c1d6a59d99c2b1e37ba9e029996b8a972cd1a4679780bbc1"
+    },
+    {
+      "bytes": 6966,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/red-v3/test.py",
+      "sha256": "8b97ba83efeae77d617d6c8b061e4243a6c60252e309a8a7ee2d9431eabfec5a"
+    },
+    {
+      "bytes": 23949,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/red-v4/module.py",
+      "sha256": "1363865513f6a7ed5eb350b3113f2a5eb6f732b42e8fa325cf1a87e9d4c6d95c"
+    },
+    {
+      "bytes": 3144,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/red-v4/result.json",
+      "sha256": "8eb150f17a034618a811937067f172b920e9f35b9d408a991ca7165e02142a15"
+    },
+    {
+      "bytes": 9605,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/red-v4/test.py",
+      "sha256": "c4e4d79b7876250db66a0f9748d7dd97286b69b3d80b5279f39540c8f6b03677"
+    },
+    {
+      "bytes": 59926,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/manifest.json",
+      "sha256": "76f7ff895a903836987199c52886f19e0ef608b10398114d5acb5d42ea7920a0"
+    },
+    {
+      "bytes": 898,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/obligations/000-t25_owned_swap_header_witness_left.c",
+      "sha256": "21750fb2bf3128d673b50afbe4d55fc6d87da5a15dcd2f9fc3750b970b0b1779"
+    },
+    {
+      "bytes": 899,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/obligations/001-t25_owned_swap_header_witness_right.c",
+      "sha256": "f694cde4cdb50df6471b433aa4581f5668197fefe17b2b3b02b7e6218cea8e4f"
+    },
+    {
+      "bytes": 976,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/obligations/002-t25_owned_swap_header_witness_other.c",
+      "sha256": "c4a48786de4a10d30f2fcd780486cf992ba8a1e204c45e1d2e3187f759a77ee1"
+    },
+    {
+      "bytes": 1685,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/original/std_vector_double_move_ctor.c",
+      "sha256": "977e6275f008c2469b59efc0f72b79d4ba39d7f7c8919cbd9e7151f4a9291b24"
+    },
+    {
+      "bytes": 1788,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/original/std_vector_double_swap.c",
+      "sha256": "4a8527cbf4937fd2b47823b9d22c9274b7c2319a1af088d50f32a5d7e743a4eb"
+    },
+    {
+      "bytes": 1668,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/original/std_vector_float_move_ctor.c",
+      "sha256": "1299df3bee8f039786fb55413f26c4b11209ce610cbf7e38b2bb6dbee8a247d0"
+    },
+    {
+      "bytes": 1769,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/original/std_vector_float_swap.c",
+      "sha256": "7dcb086471a30e8cea6fe36e108a80f1f0e04506500b0f1687474f6064a220f3"
+    },
+    {
+      "bytes": 1634,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/original/std_vector_int_move_ctor.c",
+      "sha256": "2275b2a0533c16643f1ea7ae324aae852c9e2509e4e05085107636e172e3e676"
+    },
+    {
+      "bytes": 1696,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/original/std_vector_int_ptr_move_ctor.c",
+      "sha256": "0fe29734b41543041a896eb9483add235ae0c37c97e34f389fca7823a16268af"
+    },
+    {
+      "bytes": 1801,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/original/std_vector_int_ptr_swap.c",
+      "sha256": "01f06406a2b174bbe84db6c7c1232d80f1ef0c51aae52fbfd1aed1c9237b7931"
+    },
+    {
+      "bytes": 1731,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/original/std_vector_int_swap.c",
+      "sha256": "0bb1a1ee04c3643ff68edac876d827c1429326f24bdd01890bf35b4a2b64d83d"
+    },
+    {
+      "bytes": 931,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/reference-cases/obligations/000-t25_owned_swap_header_left.c",
+      "sha256": "cef14f6d5c847bdaaf22509f1b43c17ee9aed1c30a021809fb72aa4bbd8ff3ed"
+    },
+    {
+      "bytes": 932,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/reference-cases/obligations/001-t25_owned_swap_header_right.c",
+      "sha256": "1b3544efb2d536b4daea8a2dac4dcb50a9b9ec6393ab595c4561471ea3ffaa2f"
+    },
+    {
+      "bytes": 949,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/reference-cases/obligations/002-t25_owned_swap_header_other.c",
+      "sha256": "735edf01ca2e8bc0bea2b1ec910292e3a3d510c57489cfa88d51beedaf6320e7"
+    },
+    {
+      "bytes": 586,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/reference-obligations/000-t25_owned_effect_move_destination_header.c",
+      "sha256": "60240fa742a147d78bc54c512420d9a85e4e6ecd790711562db8bc985d9da689"
+    },
+    {
+      "bytes": 580,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/reference-obligations/001-t25_owned_effect_move_source_empty.c",
+      "sha256": "9b1806c057f87725d1978aef31a8d25e0dd37bd9d14d3b9a2d924032629bc941"
+    },
+    {
+      "bytes": 588,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/reference-obligations/002-t25_owned_effect_move_incoming_frame.c",
+      "sha256": "55331d638d52fd11561b52cb9d88dfa8f6f3e20890462c10e7a462ed6bc0b2ad"
+    },
+    {
+      "bytes": 642,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/reference-obligations/003-t25_owned_effect_move_owner_correspondence.c",
+      "sha256": "3340e52d4ed852b8c8a69d14be4692d6d6245b093f8bb31c5bf4a292bcf90d9d"
+    },
+    {
+      "bytes": 693,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/reference-obligations/004-t25_owned_effect_swap_left_header.c",
+      "sha256": "3fab57b9196b55b86cf20cc0ea6181a38e0bdbbe8ecf6f06865dd59d0935d3fa"
+    },
+    {
+      "bytes": 694,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/reference-obligations/005-t25_owned_effect_swap_right_header.c",
+      "sha256": "9e6d0dda572705cdf5b4c2469a4dd0d66015ccefe102b49a87bf32ff0a1fde11"
+    },
+    {
+      "bytes": 761,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/reference-obligations/006-t25_owned_effect_swap_temporary_lifetime.c",
+      "sha256": "bff552ceb0d7b09b213e6585683c7e7c3c3b5140b14f3b31697257574cfaf20f"
+    },
+    {
+      "bytes": 699,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/reference-obligations/007-t25_owned_effect_swap_incoming_frame.c",
+      "sha256": "8d4f8ec024986bc2c12f8a10f152ac9a0ab87abb248b957e7d74b8ffe1a1ad6b"
+    },
+    {
+      "bytes": 721,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/reference-obligations/008-t25_owned_effect_swap_owner_correspondence.c",
+      "sha256": "f59232cf9139d28b313913dadeb9c0455aec0a022359dd2c67148d3e66f1b2a3"
+    },
+    {
+      "bytes": 683,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/reference-parts/obligations/000-t25_owned_swap_parts_heap_frontier.c",
+      "sha256": "de7506a9928a31a9290695b14c6244b3758ffe5a10b8334e1799e42072c6ee37"
+    },
+    {
+      "bytes": 773,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/reference-parts/obligations/001-t25_owned_swap_parts_heap_issued.c",
+      "sha256": "577021bbdc5bce95e7861daaa2d80e72bd822c4431997a101cd79cf616bb42ca"
+    },
+    {
+      "bytes": 888,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/reference-parts/obligations/002-t25_owned_swap_parts_heap_live.c",
+      "sha256": "806766b3af5538e84ae61799caad3f42f3819104436737965a6b2687f10b1f59"
+    },
+    {
+      "bytes": 978,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/reference-parts/obligations/003-t25_owned_swap_parts_heap_separated.c",
+      "sha256": "0be5ee6a9366980694a0d3cb3a4c6380114a6767742bec2a4787c5d3dc36485c"
+    },
+    {
+      "bytes": 685,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/reference-parts/obligations/004-t25_owned_swap_parts_owners_frontier.c",
+      "sha256": "80565a0bf3742b825898da1622becf44d36d5afb4ff3f76a8a619a59f7916cfa"
+    },
+    {
+      "bytes": 965,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/reference-parts/obligations/005-t25_owned_swap_parts_owners_exclusive.c",
+      "sha256": "d1d52a61951853876e90ae0f102505874762c35b37cfcdddea8c701603956e5e"
+    },
+    {
+      "bytes": 884,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/reference-parts/obligations/006-t25_owned_swap_parts_owners_ranges.c",
+      "sha256": "272b0399efb6111291e45b7676bfd67a9bc59047ead196f7821a07442a5c95a2"
+    },
+    {
+      "bytes": 902,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/reference-parts/obligations/007-t25_owned_swap_parts_owners_disjoint.c",
+      "sha256": "a574c9ce37a28084f810ff6873af317d7da540108e6e3ce759e217af02843ede"
+    },
+    {
+      "bytes": 781,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/reference-parts/obligations/008-t25_owned_swap_parts_receiver_0.c",
+      "sha256": "8a067f5a46397ea59dc26e9c78b180aab6f9c42972a79d7a0fd730fc15637ea3"
+    },
+    {
+      "bytes": 781,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/reference-parts/obligations/009-t25_owned_swap_parts_receiver_8.c",
+      "sha256": "d84cf02c807d5939732a6bcb84847c32434ea426b3bc7c2d980e9d35e258b97c"
+    },
+    {
+      "bytes": 783,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/reference-parts/obligations/010-t25_owned_swap_parts_receiver_16.c",
+      "sha256": "517271da87f5f3baa7c105b1ae2638474583181c86d63745883c8b3364893938"
+    },
+    {
+      "bytes": 918,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/reference-parts/obligations/011-t25_owned_swap_parts_header_ready.c",
+      "sha256": "9f45f81235e57d8332a430c2256327234dbddbc2cb5dff8adabf00d385486bb3"
+    },
+    {
+      "bytes": 876,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/reference-parts/obligations/012-t25_owned_swap_parts_freeable_buffer.c",
+      "sha256": "8386dd2b7892338b5ff76efe9a4ce1ac4d3138dab13f1465efe6e4ad9b575891"
+    },
+    {
+      "bytes": 8386,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/theory/heap_reallocation.mlw",
+      "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+    },
+    {
+      "bytes": 3128,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/theory/vector_owned_effects.mlw",
+      "sha256": "6bfc13341d2faceb5a3fb64bd2d5bff22dd03c52a1fa3d5c4cb39b6e9c83f7f5"
+    },
+    {
+      "bytes": 2389,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/theory/vector_owned_state.mlw",
+      "sha256": "a2c295d2c6720a9c8c522f05e19723c2d2d2a32b63f9b198aab03f195269e4b6"
+    },
+    {
+      "bytes": 2230,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/views/std_vector_double_move_ctor.c",
+      "sha256": "85a02f1c4bdd4c3d678b9e68811cc86e01f3e0c20040965fa336b2a69d4e72fc"
+    },
+    {
+      "bytes": 2333,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/views/std_vector_double_swap.c",
+      "sha256": "f9b1de63f63ca58083aee5cb013553cc187171e639a3d9c43ae26c9ff9af6587"
+    },
+    {
+      "bytes": 2208,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/views/std_vector_float_move_ctor.c",
+      "sha256": "67f0078944d65d0dc6ec013226fe868ac5a37d1be589fab2a2343c17d1254eba"
+    },
+    {
+      "bytes": 2309,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/views/std_vector_float_swap.c",
+      "sha256": "d3c9b081d9f6fc1eef5d9b5cdd9fe1c2e87a7dbe8b6394cea95c22e1d5a44a42"
+    },
+    {
+      "bytes": 2164,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/views/std_vector_int_move_ctor.c",
+      "sha256": "2d6e21a0fcf10945cfb84debd6483a926060acdb54d907c4362561ad2cf48278"
+    },
+    {
+      "bytes": 2246,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/views/std_vector_int_ptr_move_ctor.c",
+      "sha256": "2ef113564e37137ce8a7e47ba098b8225d37cd4cc425b1e8beef8e08e6116cf0"
+    },
+    {
+      "bytes": 2351,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/views/std_vector_int_ptr_swap.c",
+      "sha256": "6b976113b22ba6372b252ebd2dc4d3c4dbb7612fc7d657caf7f234d7e952d7d7"
+    },
+    {
+      "bytes": 2261,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/inert-all-types-v1/views/std_vector_int_swap.c",
+      "sha256": "3d115e18d34d416019f05283463f33b2b80274599fb080064a83eb57d8f6398a"
+    },
+    {
+      "bytes": 44655,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/original-header3-manifest-v1.json",
+      "sha256": "d5579ade7e846d1e7175ace4d6a09f084c32111518480b2b7270cfda554910f0"
+    },
+    {
+      "bytes": 5539,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/prepare_source_v1.py",
+      "sha256": "c49337aa3069da73ae7d4e242b4402e434e347083cb4dcb47b7f84247f7e65c7"
+    },
+    {
+      "bytes": 3385,
+      "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/run_public_controls.py",
+      "sha256": "f981c69438aa6a925efb83749c694db31f0d3a3944fb5f0b45cdd55d73384c17"
+    }
+  ],
+  "physical_predecessor_containers": 7,
+  "review_state": "pending parent independent Spec and root Standards",
+  "scope": "inert stronger Header3 constructive witnesses",
+  "self_swap_guard_overlap_preserved": true,
+  "sibling_theorem_premises": [],
+  "source_heap_typed_body_caller_default_public_record_admission": false,
+  "source_inputs": [
+    {
+      "bytes": 29179,
+      "path": "swdb/std_models.py",
+      "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+    },
+    {
+      "bytes": 171522,
+      "path": "swdb/c_lowering.py",
+      "sha256": "8ede503e30cb6f57ead88ee622362d5a1c05290edcb6b4b157b9ca443f64925e"
+    },
+    {
+      "bytes": 14594,
+      "path": "swdb/vector_owned_transfer.py",
+      "sha256": "6fa50d3b0ff6610c541bfa787179b37c6c8b50e4155fb2b0605d00e1eaffd085"
+    },
+    {
+      "bytes": 2389,
+      "path": "swdb/vector_owned_state.mlw",
+      "sha256": "a2c295d2c6720a9c8c522f05e19723c2d2d2a32b63f9b198aab03f195269e4b6"
+    },
+    {
+      "bytes": 8386,
+      "path": "swdb/heap_reallocation.mlw",
+      "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+    },
+    {
+      "bytes": 10583,
+      "path": "swdb/vector_owned_source_view.py",
+      "sha256": "c76c45afc64a84f6d1cbe1e23e05c175dc1b612abb5f23679d40e7db6c43f8f2"
+    },
+    {
+      "bytes": 3128,
+      "path": "swdb/vector_owned_effects.mlw",
+      "sha256": "6bfc13341d2faceb5a3fb64bd2d5bff22dd03c52a1fa3d5c4cb39b6e9c83f7f5"
+    },
+    {
+      "bytes": 11992,
+      "path": "swdb/vector_owned_swap_parts.py",
+      "sha256": "99783303b973a29b55d9f6f9e562295a41248699062982c105ac0a97e18a4f6b"
+    },
+    {
+      "bytes": 7014,
+      "path": "swdb/vector_owned_swap_header_cases.py",
+      "sha256": "daa2ff0ec0c854fa28b534792bbdc099ae28a810671226d43494cec863148e03"
+    },
+    {
+      "bytes": 24198,
+      "path": "swdb/vector_owned_swap_header_witness.py",
+      "sha256": "c66f73db459483af2ca23c7a880fff3fe4e4141c5d15b134730ffa4cdfa6a5db"
+    }
+  ],
+  "stronger_goals_equivalent_to_original_claimed": false,
+  "targets": 3,
+  "tdd_stages": [
+    {
+      "failed": 0,
+      "passed": 1,
+      "result": {
+        "bytes": 2007,
+        "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/green-v1/result.json",
+        "sha256": "d04c4f72b8a3fd6565a9c9f820f0ea5a97433c8e128fb93cb65cabdf8fa66308"
+      },
+      "stage": "green-v1"
+    },
+    {
+      "failed": 1,
+      "passed": 1,
+      "result": {
+        "bytes": 2771,
+        "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/green-v2/result.json",
+        "sha256": "ede26cded08de2340f52861a250ab84dec439119cb8035c3c81930664555fb18"
+      },
+      "stage": "green-v2"
+    },
+    {
+      "failed": 0,
+      "passed": 2,
+      "result": {
+        "bytes": 2135,
+        "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/green-v2b/result.json",
+        "sha256": "0f0c9859608c8550a767e2ef7a22b2b32888ea3bc03d8636130ea208cfaefaa2"
+      },
+      "stage": "green-v2b"
+    },
+    {
+      "failed": 0,
+      "passed": 3,
+      "result": {
+        "bytes": 2260,
+        "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/green-v3/result.json",
+        "sha256": "32ac27c7cedfd6c0f6d4f1db506a8b073ea230be4301f59e0a440677866089e4"
+      },
+      "stage": "green-v3"
+    },
+    {
+      "failed": 0,
+      "passed": 4,
+      "result": {
+        "bytes": 2380,
+        "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/green-v4/result.json",
+        "sha256": "dcacfbd4f62eecf383ac9c4f893055b70164fce101cd6802fd960e80264b0466"
+      },
+      "stage": "green-v4"
+    },
+    {
+      "failed": 1,
+      "passed": 0,
+      "result": {
+        "bytes": 2585,
+        "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/red-v1/result.json",
+        "sha256": "c5607cde9b9bbfcbe87b2561f74902b50a3ca05215a483d5163d5ab0ef66d4a2"
+      },
+      "stage": "red-v1"
+    },
+    {
+      "failed": 1,
+      "passed": 1,
+      "result": {
+        "bytes": 2767,
+        "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/red-v2/result.json",
+        "sha256": "0e417c78b55ee59f0ac613bcbc78c9102f044da8947cc0ec69a248193fa5ac12"
+      },
+      "stage": "red-v2"
+    },
+    {
+      "failed": 1,
+      "passed": 2,
+      "result": {
+        "bytes": 3365,
+        "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/red-v3/result.json",
+        "sha256": "1aaa69acb335a885c1d6a59d99c2b1e37ba9e029996b8a972cd1a4679780bbc1"
+      },
+      "stage": "red-v3"
+    },
+    {
+      "failed": 1,
+      "passed": 3,
+      "result": {
+        "bytes": 3144,
+        "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/history/red-v4/result.json",
+        "sha256": "8eb150f17a034618a811937067f172b920e9f35b9d408a991ca7165e02142a15"
+      },
+      "stage": "red-v4"
+    }
+  ],
+  "unchanged_inherited_files": 41
+}

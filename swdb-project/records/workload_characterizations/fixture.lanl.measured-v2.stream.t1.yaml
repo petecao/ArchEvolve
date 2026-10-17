@@ -1,0 +1,537 @@
+kind: workload_characterization
+schema_version: '0.4'
+id: fixture.lanl.measured-v2.stream.t1
+status: draft
+created: '2026-10-06'
+updated: '2026-10-06'
+provenance:
+- id: analytic
+  kind: measurement
+  description: LLVM 22 static pass plus one IR-instrumented native count run; no timing measurement.
+  uri: null
+format: swdb.workload-characterization.v1
+subject:
+  kind: implementation
+  id: gapbs-bfs-do
+input: kron-g16-k16
+source:
+  path: /data1/yanruj/ArchEvolve-lanl-estimates-20261006/swdb-project/tests/fixtures/analytic/stream.cpp
+  sha256: 9d769e90838e6e38a0577dd878886c055f22ac37ec855ce7ce033cd07cb47200
+  build_flags: []
+  run_arguments: ['17']
+  protected_driver: unchanged; separately compiled instrumentation
+binding:
+  state: fixture
+  subject_source_identity:
+    subject_record_sha256: 9bf61bf51ce76a09a7b4a8aaf163d28b1ce7284f8a708aaeecb8129550e10190
+    registered_source:
+      origin: upstream
+      uri: https://github.com/sbeamer/gapbs
+      commit: 2972aeb2703165bafd921222f4ed7196f542d3a8
+      local_path: apps/gapbs
+    registered_function: DOBFS
+  input_record_sha256: 007414cce3289b38c0107115770d0a3315632092b0264b68b3e16bbdda00c5d9
+  roi: fixture.stream.v1
+  threads: 1
+  run_arguments_sha256: ff79e6583582a4445d69f80c3ecd3034c158754bd33c7c62958c861edf7f2a62
+  note: Source/input/ROI binding to a registered subject is not certified by an arbitrary supplied translation-unit
+    SHA; application evidence needs the registered-source/protocol adapter.
+host:
+  machine: mbit10
+  architecture: x86_64
+  system: Linux-6.8.0-136-generic-x86_64-with-glibc2.39
+toolchain:
+  llvm_version: 22.1.8
+  llvm_bin: /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin
+  compiler_flags:
+  - --gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13
+  plugin_linkage: host_symbols
+  run_library_paths: []
+counting:
+  level: source_normalized_ir
+  passes:
+  - function(sroa,mem2reg),cgscc(inline),function(loop-simplify)
+  pipeline_version: source-normalized-v2
+  summary: single_run
+  native_runs: 1
+  basis: measured
+  vector_multiplicity: instrumented before vectorization and unrolling; existing fixed vectors counted
+    by lane
+  operation_definition: Normalized IR arithmetic/comparison operations; FMA counts two floating-point
+    operations; checked integer arithmetic counts the result and overflow predicate (two per lane); branches
+    count terminator executions; optimizer hints, address and cast instructions excluded.
+  loop_definition: Body entries when the header condition chooses inside/outside; header entries for other
+    loop shapes.
+  binary_sha256: 105c356960904fee736d644730f9b8f6a19a9a3905e22c44d8fef3c6255f73de
+  counts_sha256: d00489d54797b1cb3a8eadc48c260dffe0620c7a20aa200c65404464b2a6dba6
+  output_directory: /data/yanruj/EvolveSWDB_runs/lanl-analytic-bound-estimates-20261006-a1/fixture-counted
+static_analysis:
+  basis: code_reading
+  source_ir_sha256: 93287de9c7b2d4483fc9c73e28573fd01770a9dbb7fd42652d419186a8a1deff
+  optimized_ir_sha256: 2f2f16c88499725d54b4064b43833d093c0a8625f57dcc0c6ce429e45ed708f5
+  loops:
+  - backedge_taken_count: (0 smax %2)
+    depth: 1
+    function: stream
+    line: 4
+    llvm_function: stream
+    mapped: true
+    path: /data1/yanruj/ArchEvolve-lanl-estimates-20261006/swdb-project/tests/fixtures/analytic/stream.cpp
+    region: fixture.stream
+    static_header_trip_count: null
+  optimized_facts:
+    accesses:
+    - address_expression: '{%0,+,32}<nuw><%15>'
+      address_shape: stream
+      column: 12
+      element_bytes: 4
+      function: stream
+      ir_lanes: 4
+      line: 5
+      llvm_function: stream
+      path: /data1/yanruj/ArchEvolve-lanl-estimates-20261006/swdb-project/tests/fixtures/analytic/stream.cpp
+      read_write: false
+      region: fixture.stream
+      region_index: 3
+      site: 0
+      stride_bytes: 32
+      update_kind: read
+    - address_expression: '{(16 + %0),+,32}<nuw><%15>'
+      address_shape: stream
+      column: 12
+      element_bytes: 4
+      function: stream
+      ir_lanes: 4
+      line: 5
+      llvm_function: stream
+      path: /data1/yanruj/ArchEvolve-lanl-estimates-20261006/swdb-project/tests/fixtures/analytic/stream.cpp
+      read_write: false
+      region: fixture.stream
+      region_index: 3
+      site: 1
+      stride_bytes: 32
+      update_kind: read
+    - address_expression: '{%1,+,32}<nuw><%15>'
+      address_shape: stream
+      column: 10
+      element_bytes: 4
+      function: stream
+      ir_lanes: 4
+      line: 5
+      llvm_function: stream
+      path: /data1/yanruj/ArchEvolve-lanl-estimates-20261006/swdb-project/tests/fixtures/analytic/stream.cpp
+      read_write: false
+      region: fixture.stream
+      region_index: 3
+      site: 2
+      stride_bytes: 32
+      update_kind: write
+    - address_expression: '{(16 + %1),+,32}<nuw><%15>'
+      address_shape: stream
+      column: 10
+      element_bytes: 4
+      function: stream
+      ir_lanes: 4
+      line: 5
+      llvm_function: stream
+      path: /data1/yanruj/ArchEvolve-lanl-estimates-20261006/swdb-project/tests/fixtures/analytic/stream.cpp
+      read_write: false
+      region: fixture.stream
+      region_index: 3
+      site: 3
+      stride_bytes: 32
+      update_kind: write
+    - address_expression: '{((4 * %30)<nuw><nsw> + %0),+,4}<nuw><%33>'
+      address_shape: stream
+      column: 12
+      element_bytes: 4
+      function: stream
+      ir_lanes: 1
+      line: 5
+      llvm_function: stream
+      path: /data1/yanruj/ArchEvolve-lanl-estimates-20261006/swdb-project/tests/fixtures/analytic/stream.cpp
+      read_write: false
+      region: fixture.stream
+      region_index: 2
+      site: 4
+      stride_bytes: 4
+      update_kind: read
+    - address_expression: '{((4 * %30)<nuw><nsw> + %1),+,4}<nuw><%33>'
+      address_shape: stream
+      column: 10
+      element_bytes: 4
+      function: stream
+      ir_lanes: 1
+      line: 5
+      llvm_function: stream
+      path: /data1/yanruj/ArchEvolve-lanl-estimates-20261006/swdb-project/tests/fixtures/analytic/stream.cpp
+      read_write: false
+      region: fixture.stream
+      region_index: 2
+      site: 5
+      stride_bytes: 4
+      update_kind: write
+    - address_expression: '{((4 * %44)<nuw><nsw> + %0),+,16}<nuw><%48>'
+      address_shape: stream
+      column: 12
+      element_bytes: 4
+      function: stream
+      ir_lanes: 1
+      line: 5
+      llvm_function: stream
+      path: /data1/yanruj/ArchEvolve-lanl-estimates-20261006/swdb-project/tests/fixtures/analytic/stream.cpp
+      read_write: false
+      region: fixture.stream
+      region_index: 1
+      site: 6
+      stride_bytes: 16
+      update_kind: read
+    - address_expression: '{((4 * %44)<nuw><nsw> + %1),+,16}<nuw><%48>'
+      address_shape: stream
+      column: 10
+      element_bytes: 4
+      function: stream
+      ir_lanes: 1
+      line: 5
+      llvm_function: stream
+      path: /data1/yanruj/ArchEvolve-lanl-estimates-20261006/swdb-project/tests/fixtures/analytic/stream.cpp
+      read_write: false
+      region: fixture.stream
+      region_index: 1
+      site: 7
+      stride_bytes: 16
+      update_kind: write
+    - address_expression: '{(4 + (4 * %44)<nuw><nsw> + %0),+,16}<nuw><%48>'
+      address_shape: stream
+      column: 12
+      element_bytes: 4
+      function: stream
+      ir_lanes: 1
+      line: 5
+      llvm_function: stream
+      path: /data1/yanruj/ArchEvolve-lanl-estimates-20261006/swdb-project/tests/fixtures/analytic/stream.cpp
+      read_write: false
+      region: fixture.stream
+      region_index: 1
+      site: 8
+      stride_bytes: 16
+      update_kind: read
+    - address_expression: '{(4 + (4 * %44)<nuw><nsw> + %1),+,16}<nuw><%48>'
+      address_shape: stream
+      column: 10
+      element_bytes: 4
+      function: stream
+      ir_lanes: 1
+      line: 5
+      llvm_function: stream
+      path: /data1/yanruj/ArchEvolve-lanl-estimates-20261006/swdb-project/tests/fixtures/analytic/stream.cpp
+      read_write: false
+      region: fixture.stream
+      region_index: 1
+      site: 9
+      stride_bytes: 16
+      update_kind: write
+    - address_expression: '{(8 + (4 * %44)<nuw><nsw> + %0),+,16}<nuw><%48>'
+      address_shape: stream
+      column: 12
+      element_bytes: 4
+      function: stream
+      ir_lanes: 1
+      line: 5
+      llvm_function: stream
+      path: /data1/yanruj/ArchEvolve-lanl-estimates-20261006/swdb-project/tests/fixtures/analytic/stream.cpp
+      read_write: false
+      region: fixture.stream
+      region_index: 1
+      site: 10
+      stride_bytes: 16
+      update_kind: read
+    - address_expression: '{(8 + (4 * %44)<nuw><nsw> + %1),+,16}<nuw><%48>'
+      address_shape: stream
+      column: 10
+      element_bytes: 4
+      function: stream
+      ir_lanes: 1
+      line: 5
+      llvm_function: stream
+      path: /data1/yanruj/ArchEvolve-lanl-estimates-20261006/swdb-project/tests/fixtures/analytic/stream.cpp
+      read_write: false
+      region: fixture.stream
+      region_index: 1
+      site: 11
+      stride_bytes: 16
+      update_kind: write
+    - address_expression: '{(12 + (4 * %44)<nuw><nsw> + %0),+,16}<nuw><%48>'
+      address_shape: stream
+      column: 12
+      element_bytes: 4
+      function: stream
+      ir_lanes: 1
+      line: 5
+      llvm_function: stream
+      path: /data1/yanruj/ArchEvolve-lanl-estimates-20261006/swdb-project/tests/fixtures/analytic/stream.cpp
+      read_write: false
+      region: fixture.stream
+      region_index: 1
+      site: 12
+      stride_bytes: 16
+      update_kind: read
+    - address_expression: '{(12 + (4 * %44)<nuw><nsw> + %1),+,16}<nuw><%48>'
+      address_shape: stream
+      column: 10
+      element_bytes: 4
+      function: stream
+      ir_lanes: 1
+      line: 5
+      llvm_function: stream
+      path: /data1/yanruj/ArchEvolve-lanl-estimates-20261006/swdb-project/tests/fixtures/analytic/stream.cpp
+      read_write: false
+      region: fixture.stream
+      region_index: 1
+      site: 13
+      stride_bytes: 16
+      update_kind: write
+    loops:
+    - backedge_taken_count: ((-4 + (zext i32 %2 to i64) + (-1 * %44)<nsw>) /u 4)
+      depth: 1
+      function: stream
+      line: 4
+      llvm_function: stream
+      mapped: true
+      path: /data1/yanruj/ArchEvolve-lanl-estimates-20261006/swdb-project/tests/fixtures/analytic/stream.cpp
+      region: fixture.stream
+      static_header_trip_count: null
+    - backedge_taken_count: (-1 + (zext i2 (trunc i32 %2 to i2) to i64))<nsw>
+      depth: 1
+      function: stream
+      line: 4
+      llvm_function: stream
+      mapped: true
+      path: /data1/yanruj/ArchEvolve-lanl-estimates-20261006/swdb-project/tests/fixtures/analytic/stream.cpp
+      region: fixture.stream
+      static_header_trip_count: null
+    - backedge_taken_count: ((-8 + (8 * (zext i28 (trunc i64 ((zext i32 %2 to i64) /u 8) to i28) to i64))<nuw><nsw>)<nsw>
+        /u 8)
+      depth: 1
+      function: stream
+      line: 4
+      llvm_function: stream
+      mapped: true
+      path: /data1/yanruj/ArchEvolve-lanl-estimates-20261006/swdb-project/tests/fixtures/analytic/stream.cpp
+      region: fixture.stream
+      static_header_trip_count: null
+    regions:
+    - function: stream
+      id: gapbs-bfs-do/serial.11364838466093919563
+      index: 0
+      is_loop: false
+      line: 3
+      llvm_function: stream
+      mapped: true
+      path: /data1/yanruj/ArchEvolve-lanl-estimates-20261006/swdb-project/tests/fixtures/analytic/stream.cpp
+    - function: stream
+      id: fixture.stream
+      index: 1
+      is_loop: true
+      line: 4
+      llvm_function: stream
+      mapped: true
+      path: /data1/yanruj/ArchEvolve-lanl-estimates-20261006/swdb-project/tests/fixtures/analytic/stream.cpp
+    - function: stream
+      id: fixture.stream
+      index: 2
+      is_loop: true
+      line: 4
+      llvm_function: stream
+      mapped: true
+      path: /data1/yanruj/ArchEvolve-lanl-estimates-20261006/swdb-project/tests/fixtures/analytic/stream.cpp
+    - function: stream
+      id: fixture.stream
+      index: 3
+      is_loop: true
+      line: 4
+      llvm_function: stream
+      mapped: true
+      path: /data1/yanruj/ArchEvolve-lanl-estimates-20261006/swdb-project/tests/fixtures/analytic/stream.cpp
+    unmodeled_calls: []
+  mapping_note: Optimized loops/accesses are reported separately; optimized vector/unroll/call elimination
+    is never used as a source count multiplier.
+coverage:
+  scope: function
+  function: stream
+  whole_timed_call: null
+  count_coverage: normalized instructions in selected debug functions; indirect callees and other translation
+    units are not claimed
+  missing_costs: []
+  missing_counts: []
+regions:
+- id: gapbs-bfs-do/serial.11364838466093919563
+  source_location:
+    function: stream
+    line: 3
+    path: /data1/yanruj/ArchEvolve-lanl-estimates-20261006/swdb-project/tests/fixtures/analytic/stream.cpp
+    llvm_function: stream
+  active_workers:
+    value: 1
+    basis: measured
+  mapped: true
+  kind: serial_remainder
+  access_patterns: []
+  operation_counts:
+    integer:
+      value: 0
+      basis: measured
+      formula: null
+      scope: per_run
+    floating_point:
+      value: 0
+      basis: measured
+      formula: null
+      scope: per_run
+    branch:
+      value: 2
+      basis: measured
+      formula: null
+      scope: per_run
+    atomic:
+      value: 0
+      basis: measured
+      formula: null
+      scope: per_run
+  dynamic_counts:
+    loop_iterations:
+      value: null
+      basis: unknown
+      formula: null
+      scope: per_run
+  footprint_bytes:
+    value: 0
+    basis: measured
+    note: Live union of virtual byte ranges in this exclusive IR region; addresses are never persisted.
+  accelerator_calls: []
+  address_stream_counts: {}
+  worker_context:
+    team_sizes: [1]
+    measurement: Distinct executing workers per exclusive region within one trial; team sizes are context,
+      not an active-worker multiplier.
+- id: fixture.stream
+  source_location:
+    function: stream
+    line: 4
+    path: /data1/yanruj/ArchEvolve-lanl-estimates-20261006/swdb-project/tests/fixtures/analytic/stream.cpp
+    llvm_function: stream
+  active_workers:
+    value: 1
+    basis: measured
+  mapped: true
+  kind: loop
+  access_patterns:
+  - id: access.0
+    source_location:
+      function: stream
+      line: 5
+      column: 12
+      path: /data1/yanruj/ArchEvolve-lanl-estimates-20261006/swdb-project/tests/fixtures/analytic/stream.cpp
+      llvm_function: stream
+    address_shape:
+      value: stream
+      basis: code_reading
+    stride_bytes:
+      value: 4
+      basis: code_reading
+    element_bytes: 4
+    update_kind: read
+    read_write: false
+    element_count:
+      value: 17
+      basis: measured
+      formula: null
+      scope: per_run
+    bytes_accessed:
+      value: 68
+      basis: measured
+      formula: null
+      scope: per_run
+    observed_address_span_bytes:
+      value: 68
+      basis: measured
+    observed_unique_bytes:
+      value: 68
+      basis: measured
+    address_expression: '{%0,+,4}<nw><%4>'
+    ir_lanes: 1
+  - id: access.1
+    source_location:
+      function: stream
+      line: 5
+      column: 10
+      path: /data1/yanruj/ArchEvolve-lanl-estimates-20261006/swdb-project/tests/fixtures/analytic/stream.cpp
+      llvm_function: stream
+    address_shape:
+      value: stream
+      basis: code_reading
+    stride_bytes:
+      value: 4
+      basis: code_reading
+    element_bytes: 4
+    update_kind: write
+    read_write: false
+    element_count:
+      value: 17
+      basis: measured
+      formula: null
+      scope: per_run
+    bytes_accessed:
+      value: 68
+      basis: measured
+      formula: null
+      scope: per_run
+    observed_address_span_bytes:
+      value: 68
+      basis: measured
+    observed_unique_bytes:
+      value: 68
+      basis: measured
+    address_expression: '{%1,+,4}<nw><%4>'
+    ir_lanes: 1
+  operation_counts:
+    integer:
+      value: 35
+      basis: measured
+      formula: null
+      scope: per_run
+    floating_point:
+      value: 34
+      basis: measured
+      formula: null
+      scope: per_run
+    branch:
+      value: 52
+      basis: measured
+      formula: null
+      scope: per_run
+    atomic:
+      value: 0
+      basis: measured
+      formula: null
+      scope: per_run
+  dynamic_counts:
+    loop_iterations:
+      value: 17
+      basis: measured
+      formula: null
+      scope: per_run
+  footprint_bytes:
+    value: 136
+    basis: measured
+    note: Live union of virtual byte ranges in this exclusive IR region; addresses are never persisted.
+  accelerator_calls: []
+  address_stream_counts: {}
+  worker_context:
+    team_sizes: [1]
+    measurement: Distinct executing workers per exclusive region within one trial; team sizes are context,
+      not an active-worker multiplier.
+unmapped_loops: []
+unmodeled_calls: []
+evidence_kind: contract_fixture
+identity_sha256: 1df0e9fb46b18df2d9f218301d6afc6cd9c875343c4aade85fd2b49243003a4d

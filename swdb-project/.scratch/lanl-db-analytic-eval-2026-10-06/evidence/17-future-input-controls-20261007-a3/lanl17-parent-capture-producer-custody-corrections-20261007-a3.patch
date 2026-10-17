@@ -1,0 +1,100 @@
+--- lanl17_parent_capture_projection_producer_a2_20261007.py
++++ lanl17_parent_capture_projection_producer_a3_20261007.py
+@@ -19,6 +19,7 @@
+ import pwd
+ import re
+ import socket
++import stat
+ import sys
+ import yaml
+ sys.dont_write_bytecode=True
+@@ -77,6 +78,16 @@
+  with path.open('rb') as stream:
+   for block in iter(lambda:stream.read(1024*1024),b''):h.update(block)
+  return h.hexdigest()
++def returned_bytes(path,expected_size,expected_sha):
++ # Parse only this bounded returned byte string, not a separately hashed read.
++ p=regular(path);require(type(expected_size)is int and 0<=expected_size<=MAX_BYTES,'Bounded exact returned size required');hex64(expected_sha)
++ with p.open('rb') as stream:
++  before=os.fstat(stream.fileno());require(stat.S_ISREG(before.st_mode) and before.st_uid==os.getuid() and before.st_size==expected_size,'Returned-byte original fd ownership/type/size differs')
++  raw=stream.read(expected_size+1);after=os.fstat(stream.fileno())
++ require(len(raw)==expected_size and sha(raw)==expected_sha,'Exact returned original bytes differ before parsing')
++ final=regular(path).stat();keys=('st_dev','st_ino','st_mode','st_uid','st_size','st_mtime_ns','st_ctime_ns')
++ require(all(getattr(before,k)==getattr(after,k)==getattr(final,k) for k in keys),'Original changed/replaced while returning bytes')
++ return raw
+ 
+ # Exact public safe projection vocabulary/functions are inserted by the
+ # source-only preparation builder below this marker; no original module runs.
+@@ -220,7 +231,7 @@
+     self.policy_pins[str(sp)]=dict(source)
+   if encoding=='hash_only':value=None
+   else:
+-   raw=p.read_bytes()
++   raw=returned_bytes(p,size,pin['sha256'])
+    if encoding=='json':value=strict_json(raw)
+    elif encoding=='yaml':value=yaml.load(raw,Loader=RecordLoader)
+    else:require(len(raw)<=64 and re.fullmatch(rb'-?[0-9]+\s*',raw),'Original exit file is not an integer');value=int(raw)
+@@ -235,6 +246,20 @@
+   for pin in self.pins.values():
+    require(hash_file(regular(pin['path']))==pin['sha256'],'Original changed during capture')
+    w=pin['writer_source'];require(hash_file(regular(w['path']))==w['sha256'],'Original writer changed during capture')
++
++def manifest_output_roots(inputs,context):
++ # All capture roles bind the original M2. Raw/campaign paths are never
++ # accepted from caller observations; the four child paths are exact routing
++ # in immutable helper28d and collectorb08, below the original M2 raw root.
++ m2=inputs.compact('manifest_M2','swdb.lanl17-parent-population.v1')
++ require(inputs.pins['manifest_M2']['writer_source']['sha256']==HELPER and inputs.pins['manifest_M2']['canonical_ensure_ascii'] is True,'Original M2 writer/policy is not reviewed helper28d')
++ require(m2['identity_sha256']==context['manifest_identity_sha256'] and m2['source_commit']==context['source_commit'] and m2['source']==context['source_path'] and m2['helper_sha256']==HELPER and m2['estimator_sha256']==F6 and m2['source_clean'] is True and m2['policy']==context['policy'],'Exact original M2/source/policy differs before output containment')
++ raw=Path(m2['raw']);require(raw.is_absolute() and '..' not in raw.parts and str(raw).startswith('/data/yanruj/') and raw.is_dir() and raw.stat().st_uid==os.getuid() and all(not v.is_symlink() for v in (raw,*raw.parents)),'Exact original M2 raw root must exist under owned nonsymlink external storage')
++ campaigns=tuple(raw/'campaign-runs'/'extensa'/('extensa-gem5-bfs-20261006-p'+str(i)) for i in range(1,5))
++ for root in campaigns:
++  require(all(not v.is_symlink() for v in (root,*root.parents)),'Original campaign root has symlink component')
++  if root.exists():require(root.is_dir() and root.stat().st_uid==os.getuid(),'Existing original campaign root ownership/type differs')
++ return (Path(m2['source']),raw,*campaigns)
+ 
+ def collector(inputs,name,phase,context):
+  value=inputs.compact(name,'swdb.lanl17-attempt-control-custody.v2')
+@@ -394,7 +419,7 @@
+ 
+ def main():
+  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--request',required=True,type=Path);p.add_argument('--request-sha256',required=True);p.add_argument('--output',required=True,type=Path)
+- a=p.parse_args();request=regular(a.request);require(request.stat().st_size<=MAX_BYTES and hash_file(request)==hex64(a.request_sha256),'Exact bounded parent-approved request file SHA differs');raw=request.read_bytes()
++ a=p.parse_args();request=regular(a.request);require(request.stat().st_size<=MAX_BYTES and hash_file(request)==hex64(a.request_sha256),'Exact bounded parent-approved request file SHA differs');raw=returned_bytes(request,request.stat().st_size,a.request_sha256)
+  spec=strict_json(raw);fields(spec,('format','identity_sha256','producer_sha256','source_plan_sha256','auditor_sha256','collector_sha256','capture','context','observations','inputs','read_roots'));require(spec['format']=='swdb.lanl17-parent-capture-request.v1' and spec['identity_sha256']==digest({k:v for k,v in spec.items() if k!='identity_sha256'},ensure_ascii=True),'Exact separately approved request seal required')
+  require(spec['producer_sha256']==hash_file(Path(__file__)) and spec['source_plan_sha256']==PLAN and spec['auditor_sha256']==AUDITOR and spec['collector_sha256']==COLLECTOR,'Prospective approved producer/plan/auditor/collector pins differ')
+  kind=spec['capture'];require(kind in CAPTURES,'Only original specified capture formats supported');ctx=spec['context'];account=fields(ctx['account'],('platform','host','uid','user'))
+@@ -411,23 +436,28 @@
+   q=Path(r);require(q.is_absolute() and '..' not in q.parts and str(q).startswith(('/data/yanruj/','/data1/yanruj/')) and all(not v.is_symlink() for v in (q,*q.parents)),'Own external original read root required')
+  if kind!='publication':require(ctx['campaign'] in {f'extensa-gem5-bfs-20261006-p{i}' for i in range(1,5)},'Original frozen campaign ID required')
+  if kind in {'dispatch_state','release','unclean_resume'}:require(type(ctx['attempt'])is int and 1<=ctx['attempt']<=256,'Explicit bounded actual attempt number required')
+- inputs=Inputs(spec);body=build(kind,ctx,need(spec,'observations'),inputs)
++ inputs=Inputs(spec);forbidden_output_roots=manifest_output_roots(inputs,ctx);body=build(kind,ctx,need(spec,'observations'),inputs)
+  # Every factual flag in body either came from an exact original input or an
+  # explicitly required observation. No accepted/complete/released defaults.
+  body['parent_capture_provenance']={'producer_sha256':spec['producer_sha256'],'capture_request_file_sha256':a.request_sha256,'capture_request_identity_sha256':spec['identity_sha256'],'canonical_ensure_ascii':True,
+   'context_pins':{k:ctx[k] for k in ('source_commit','source_C','estimator_sha256','helper_sha256','manifest_identity_sha256','policy')},
++  'output_exclusion_roots':[str(root) for root in forbidden_output_roots],'output_exclusion_basis':'Exact original sealed M2.source/M2.raw plus immutable helper28d and collectorb08 four-campaign routing',
+   'original_inputs':inputs.pins,'source_plan_sha256':PLAN,'auditor_sha256':AUDITOR,'collector_sha256':COLLECTOR,'observations_sha256':digest(spec['observations']),
+   'scope':'Separate parent capture; original inputs unchanged/unsealed where original. Explicit source enforcement and selection completeness are inherited, never independently manufactured. No normal/substantive trajectory status is inferred.'}
+  body['identity_sha256']=digest(body,ensure_ascii=True);encoded=(json.dumps(body,indent=2,ensure_ascii=True,allow_nan=False)+'\n').encode();require(len(encoded)<=MAX_BYTES,'Bounded sanitized capture exceeds auditor pin limit')
+  output=a.output;require(output.is_absolute() and '..' not in output.parts and not output.exists() and all(not v.is_symlink() for v in (output,*output.parents)),'Fresh explicit external output required')
+  require(str(output).startswith('/data/yanruj/') and output.parent.is_dir() and output.parent.stat().st_uid==os.getuid(),'Fresh own external capture directory required')
+- require(not output.is_relative_to(Path(need(ctx,'source_path'))) and all(output!=Path(pin['path']) for pin in inputs.pins.values()),'No source/original input may be overwritten')
++ require(not any(output.is_relative_to(root) for root in forbidden_output_roots) and all(output!=Path(pin['path']) for pin in inputs.pins.values()),'Output cannot enter original source/M2 raw/four campaign roots or overwrite originals')
+  inputs.recheck();require(hash_file(request)==a.request_sha256,'Parent-approved request changed during capture')
++ require(hash_file(regular(Path(__file__)))==spec['producer_sha256'],'Own producer source changed before publication')
+  fd=os.open(output,os.O_WRONLY|os.O_CREAT|os.O_EXCL,0o600)
+  with os.fdopen(fd,'wb') as stream:stream.write(encoded)
+- inputs.recheck();print(json.dumps({'format':body['format'],'capture':kind,'path':str(output),'bytes':len(encoded),'sha256':sha(encoded),'identity_sha256':body['identity_sha256'],'canonical_ensure_ascii':True,'original_inputs_preserved':True,'auditor_or_collector_or_project_executed':False,'producer_sha256':spec['producer_sha256']}))
++ inputs.recheck();require(hash_file(request)==a.request_sha256,'Parent-approved request changed before success')
++ require(hash_file(regular(Path(__file__)))==spec['producer_sha256'],'Own producer source changed before success')
++ print(json.dumps({'format':body['format'],'capture':kind,'path':str(output),'bytes':len(encoded),'sha256':sha(encoded),'identity_sha256':body['identity_sha256'],'canonical_ensure_ascii':True,'original_inputs_preserved':True,'auditor_or_collector_or_project_executed':False,'producer_sha256':spec['producer_sha256']}))
+ 
+ if __name__=='__main__':
+  try:main()
+- except (ValueError,KeyError,TypeError,OSError) as exc:
+-  print(str(exc),file=sys.stderr);raise SystemExit(2)
++ except (ValueError,KeyError,TypeError,OSError,yaml.YAMLError) as exc:
++  # Original YAML/parser context or source values never enter diagnostics.
++  print(json.dumps({'format':'swdb.lanl17-parent-capture-refusal.v1','state':'refused','exception_class':type(exc).__name__[:128],'exception_message_sha256':sha(str(exc).encode('utf-8',errors='replace')),'raw_exception_or_parser_context_transferred':False}),file=sys.stderr);raise SystemExit(2)

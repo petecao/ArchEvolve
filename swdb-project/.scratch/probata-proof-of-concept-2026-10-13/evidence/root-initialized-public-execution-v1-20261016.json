@@ -1,0 +1,120 @@
+{
+  "at_utc": "2026-10-16T15:24:20.069271+00:00",
+  "scope": "compiler/scripted public workflow only",
+  "workflow_controls_passed": false,
+  "root_entry": {
+    "path": "/private/tmp/probata-root-initialized-public-launch-v1-20261016.py",
+    "sha256": "913e56a9faf8ee212cae2cc6b984daf016c972d4d63f9cf9ce0dff4f63b7a2b2",
+    "bytes": 7740
+  },
+  "raw": "/private/tmp/probata-t28-initialized-u32-public-compiler-standin-v1-188a478e-20261016",
+  "raw_bytes_before_root_receipt": 29376873,
+  "resources": {
+    "exit_code": 1,
+    "peak_rss_bytes": 2837250048,
+    "out_of_memory": false,
+    "timed_out": false,
+    "wall_seconds": 33.50893370900303,
+    "cpu_seconds": 50.849447999999995
+  },
+  "guard": {
+    "cmd": [
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+      "-I",
+      "-B",
+      "/private/tmp/probata-t28-initialized-u32-public-control-entry-v1-20261016.py",
+      "--project",
+      "/private/tmp/probata-resume-t25-pair/swdb-project",
+      "--output",
+      "/private/tmp/probata-t28-initialized-u32-public-compiler-standin-v1-188a478e-20261016/component",
+      "--source-policy",
+      "/private/tmp/probata-t28-initialized-u32-route-evidence-v2-97a033a4-20261016.json",
+      "--runtime-policy",
+      "/private/tmp/probata-t28-initialized-u32-public-runtime-policy-template-v1-20261016.json",
+      "--runtime-sha256",
+      "67804e55f69b188983493033ec8180f6c784b181831d0db12919b401bea7e0c0",
+      "--expected-commit",
+      "188a478eaf29089050b70adfbc4a546d20440cb4"
+    ],
+    "exit_code": 1,
+    "wall_s": 33.373200541653205,
+    "peak_rss_mb": 2691.8125,
+    "cap_gb": 8.0,
+    "killed_by_watchdog": false,
+    "timed_out": false,
+    "queue_timed_out": false,
+    "timeout_s": 240.0,
+    "queue_timeout_s": 30.0,
+    "lock_wait_s": 0.0007264166488312185,
+    "runner_pid": 40510,
+    "clock": "continuous_monotonic",
+    "clock_info": {
+      "kind": "continuous_monotonic",
+      "implementation": "mach_continuous_time",
+      "includes_sleep": true,
+      "numer": 125,
+      "denom": 3
+    },
+    "log": "/private/tmp/probata-t28-initialized-u32-public-compiler-standin-v1-188a478e-20261016/guard.log",
+    "inspection_events": [],
+    "inspection_failure": null,
+    "primary_inspection_failure": null,
+    "cleanup_inspection_failure": null,
+    "cleanup_inspection_failures": [],
+    "inspection_retry_boundary": "AccessDenied uses a 200 ms environ retry admission window and 21-attempt cap, or three attempts for other operations; only the exact proc_environ SystemError raised by the requested environ operation shares that policy; individual OS calls are not forcibly timed; all pauses count and RSS/deadline checks remain mandatory after inspection; only independently confirmed gone/zombie or changed birth is skipped; persistent live or unknown failure fails closed",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "unconfirmed_children": [],
+    "error": null,
+    "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment",
+    "rss_scope": "live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches; sampled, not a kernel quota",
+    "finished": "2026-10-16 11:24:18 EDT"
+  },
+  "result": {
+    "actual_formal_acceptance": false,
+    "current_0_2": false,
+    "error": null,
+    "full_ticket28": false,
+    "native_caller_execution": false,
+    "raw_bytes_before_receipt": 29335998,
+    "runtime_pins_unchanged": true,
+    "scope": "compiler/scripted-persistence observation only",
+    "source_body_proof": false,
+    "source_unchanged": true,
+    "test_exit_code": 1,
+    "wall_s": 32.917468125000596
+  },
+  "junit": [
+    {
+      "name": "test_public_initialized_u32_has_ordinary_prewrite_capacity_and_original_partial_frame",
+      "classname": "tests.test_dx100_initialized_register",
+      "failure": true,
+      "error": false,
+      "skipped": false
+    }
+  ],
+  "source_unchanged": true,
+  "runtime_pins_unchanged": true,
+  "finite_settlement_sweeps": [
+    {
+      "active_selected_tools": [],
+      "inspection_denials": [],
+      "same_uid_metadata_count": 692
+    },
+    {
+      "active_selected_tools": [],
+      "inspection_denials": [],
+      "same_uid_metadata_count": 692
+    },
+    {
+      "active_selected_tools": [],
+      "inspection_denials": [],
+      "same_uid_metadata_count": 692
+    }
+  ],
+  "leases_present": [],
+  "actual_formal_acceptance": false,
+  "source_body_proof": false,
+  "native_caller_execution": false,
+  "current_0_2": false,
+  "full_ticket28": false
+}

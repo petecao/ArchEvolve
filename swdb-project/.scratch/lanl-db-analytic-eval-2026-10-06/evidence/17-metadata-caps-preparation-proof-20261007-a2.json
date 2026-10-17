@@ -1,0 +1,89 @@
+{
+  "format": "swdb.lanl17-metadata-caps-preparation.v1",
+  "checked_date": "2026-10-07 ET",
+  "base_commit": "b408b65e8ae7f2f807d0380106b440f7b27e5cc5",
+  "frozen_model_source": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "source_modules": 185,
+  "cap_helper": {
+    "path": "17-metadata-caps-helper-20261007-a2.py",
+    "sha256": "09136ee553984b2c0cf929a6746f037aa4e1874f863aa2e83e0e0842a8b65ed9"
+  },
+  "original_helper_sha256": "31e1d71bc6e9ef4a5a5f1d5fbff136ceef249935f8f00601edf45277fce249ec",
+  "original_linux_smoke_sha256": "4d0bdf1d4c8d2ce96d948085a785cde15c389a4c50413962bc7db14df57cf9d6",
+  "exact_allowed_line_changes": [
+    {
+      "original": "    run_cli(source, raw, 'validate-before-freeze', ['python3', '-m', 'swdb', 'validate', '--records', base / 'records'], 900, env)",
+      "revised": "    run_cli(source, raw, 'validate-before-freeze', ['python3', '-m', 'swdb', 'validate', '--records', base / 'records'], 1400, env)"
+    },
+    {
+      "original": "    policy = json.loads(run_cli(source, raw, 'population-freeze', argv, 900, env))",
+      "revised": "    policy = json.loads(run_cli(source, raw, 'population-freeze', argv, 1400, env))"
+    },
+    {
+      "original": "        run_cli(source, raw, 'validate-' + cid, ['python3', '-m', 'swdb', 'validate', '--records', folder], 900)",
+      "revised": "        run_cli(source, raw, 'validate-' + cid, ['python3', '-m', 'swdb', 'validate', '--records', folder], 1400)"
+    },
+    {
+      "original": "    run_cli(source, raw, 'validate-final-export', ['python3', '-m', 'swdb', 'validate', '--records', raw / 'base/records'], 1200)",
+      "revised": "    run_cli(source, raw, 'validate-final-export', ['python3', '-m', 'swdb', 'validate', '--records', raw / 'base/records'], 1400)"
+    }
+  ],
+  "exact_reverse_reproduces_original": true,
+  "other_helper_bytes_identical": true,
+  "prepare_outer_envelope_s": 4500,
+  "finalize_outer_envelope_s": 12000,
+  "metadata_caps_are_measured_upper_bound": false,
+  "portable_controls": {
+    "path": "17-metadata-caps-portable-proof-20261007-a2.json",
+    "sha256": "c759032ed2a6301529f007b2858f22454bea2d7fb4ace3268635b0549e74b49e",
+    "passed": 14
+  },
+  "budget_module_gate": {
+    "command": "python -m pytest tests/test_campaign_budget_fixes.py -q -p no:cacheprovider",
+    "passed": 7,
+    "seconds": 2018.83,
+    "output": "7 passed in 2018.83s (0:33:38)",
+    "scope": "Unchanged contract-fixture regressions. No real provider/application performance evidence.",
+    "initial_source_commit": "0640028b4f48594864f16393cc83c60cd969efba",
+    "final_source_commit": "b408b65e8ae7f2f807d0380106b440f7b27e5cc5",
+    "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+    "only_checkpoint_docs_changed_during_gate": [
+      "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-metadata-processing-source-audit-20261007.md",
+      "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/progress.md"
+    ],
+    "implementation_and_catalog_bytes_unchanged": true
+  },
+  "count_correction": "Initially reported this seven-case module as eight. Required gate is seven actual budget cases, not eight.",
+  "supplementary_existing_test": {
+    "node": "tests/test_extensa_machinery.py::test_plateau_and_max_iterations_stop_with_their_reasons",
+    "passed": 1,
+    "seconds": 0.07,
+    "required_gate": false,
+    "note": "Completed before parent steering corrected the count; does not change the required seven-case denominator.",
+    "source_commit": "b408b65e8ae7f2f807d0380106b440f7b27e5cc5"
+  },
+  "actual_linux_smoke": {
+    "path": "17-linux-cleanup-smoke-mbit10-20261007-a2.json",
+    "compact_file_sha256": "ba6c9686b2847866e582949de96f2e188e299e5fe947b5ce5ce6a605ba21e99a",
+    "receipt_sha256": "b1c34be10178dad05c9bfad64da7a19ea0961162ded1becc0982060111ec4232",
+    "identity_sha256": "3b2ab676c70098fb054fe40396dabc77d935817ae7eed72bc92d541c727e92d0",
+    "node": 1,
+    "generation": 543,
+    "exit_code": 0,
+    "provider_calls": 0,
+    "application_outcomes": 0,
+    "processes_py_sha256": "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289",
+    "source": "parent-reported immutable C, exact cleanup-module bytes verified",
+    "scope": "Actual cleanup smoke executed once by parent. Read-only verification repair did not rerun it."
+  },
+  "original_actual_linux_receipt_preserved": "17-linux-cleanup-smoke-mbit10-20261006-a1.json",
+  "population_freezes": 0,
+  "provider_calls": 0,
+  "campaigns": 0,
+  "campaign_outcomes": 0,
+  "ticket_state": "claimed",
+  "flow_b_switch": "not_admitted",
+  "scope": "Metadata-control preparation plus bounded cleanup proof. No actual population/campaign or D30 accuracy/rank evidence.",
+  "identity_sha256": "632122505e2b2be0eff445622bb22f9d3389ddd2ad1eedf0d5659845c9fb9ea8"
+}

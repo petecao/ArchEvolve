@@ -1,0 +1,83 @@
+{
+  "format": "swdb.ticket16.integrated-merger-proof.v1",
+  "created_utc": "2026-10-07T02:21:24.973606+00:00",
+  "created_local_date": "2026-10-06 ET",
+  "base": "b3898b3275b42c654fc73add7841a8379daa5c26",
+  "ticket16_done_tip": "10268fc31644c570c9621fcd66fb280609d7932c",
+  "integration_merge_tip": "828522e5646f24c2e58f41188710a9ffb7202a13",
+  "scope": "All changed tracked paths are inside swdb-project. Parent owns main/push/remote dispatch.",
+  "changed_paths_before_proof": [
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/16-blind-pairing-runbook.md",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/16-integrated-acceptance-proof-20261006.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/16-pairing-adapters-proof-20261006.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/16-pairing-final-public-proof-20261006.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/16-pairing-foundation-proof-20261006.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/16-pairing-integrity-proof-20261006.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-external-helper-import-smoke.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-prospective-input-plan-pins.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-prospective-input-run-plan.md",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-prospective-inputs-mbit10-20261006-a2.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/issues/16-extensa-blind-paired-estimates.md",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/map.md",
+    "swdb-project/records/workloads/lanl17-prospective-20261006-a2-kronecker.g18.k14.061b9007efcdebb7.yaml",
+    "swdb-project/records/workloads/lanl17-prospective-20261006-a2-kronecker.g18.k15.15b1ec00b24140f4.yaml",
+    "swdb-project/records/workloads/lanl17-prospective-20261006-a2-kronecker.g18.k17.7c5f5ee1ddda25c4.yaml",
+    "swdb-project/records/workloads/lanl17-prospective-20261006-a2-kronecker.g18.k18.feb23b36a57d4c05.yaml",
+    "swdb-project/records/workloads/lanl17-prospective-20261006-a2-uniform_random.g18.k14.9027c7c5f57e8926.yaml",
+    "swdb-project/records/workloads/lanl17-prospective-20261006-a2-uniform_random.g18.k15.34444aebb8080315.yaml",
+    "swdb-project/records/workloads/lanl17-prospective-20261006-a2-uniform_random.g18.k17.451edf9faac833c0.yaml",
+    "swdb-project/records/workloads/lanl17-prospective-20261006-a2-uniform_random.g18.k18.c0396050e37ceed6.yaml",
+    "swdb-project/schemas/campaign_summary.schema.json",
+    "swdb-project/schemas/extensa_campaign.schema.json",
+    "swdb-project/schemas/paired_estimate.schema.json",
+    "swdb-project/swdb/archevolve.py",
+    "swdb-project/swdb/campaign.py",
+    "swdb-project/swdb/campaign_fixture.py",
+    "swdb-project/swdb/campaign_targets.py",
+    "swdb-project/swdb/extensa_pairing.py",
+    "swdb-project/swdb/rules.py",
+    "swdb-project/swdb/store.py",
+    "swdb-project/tests/test_extensa_pairing.py",
+    "swdb-project/vocab/record_kinds.yaml"
+  ],
+  "source_bundle_sha256": "884e76a509b5e21da543749fc761420d1f75c5316155d4b23fabd0f62fbc9bb5",
+  "tested_ticket16_bundle_preserved": true,
+  "public_gate": {
+    "passed": 4,
+    "failed": 0,
+    "seconds": 321.81,
+    "tests": [
+      "tests/test_extensa_pairing.py::test_fixture_freezes_each_artifact_input_before_pilot_and_comparison",
+      "tests/test_extensa_pairing.py::test_synthetic_estimates_do_not_change_timing_selection_or_plateau",
+      "tests/test_extensa_pairing.py::test_team_protocol_recursively_refuses_paired_receipt_but_extensa_keeps_dispatch",
+      "tests/test_extensa_targets.py::test_gem5_baselines_only_runs_no_provider_call_and_resume_reuses_them"
+    ]
+  },
+  "canonical_validation": {
+    "result": "passed",
+    "records": 625
+  },
+  "preservation": {
+    "prior_record_library_app_blobs": 865,
+    "prior_record_yaml_blobs": 617,
+    "manifest_sha256": "19a4a3fc5e60ce55c0e76da794b0316e49db69e2812324892193851949de5056",
+    "all_prior_blobs_equal": true,
+    "other_issue_blobs_equal": true,
+    "only_ticket16_map_row_changed": true,
+    "llvm_observer_runtime_source_blobs_equal": true,
+    "llvm_manifest_sha256": "0db748acaf3a82e248e681f068c3d93c82aea7115a2b470c5b9a55bfd49aa029"
+  },
+  "added_records": [
+    "swdb-project/records/workloads/lanl17-prospective-20261006-a2-kronecker.g18.k14.061b9007efcdebb7.yaml",
+    "swdb-project/records/workloads/lanl17-prospective-20261006-a2-kronecker.g18.k15.15b1ec00b24140f4.yaml",
+    "swdb-project/records/workloads/lanl17-prospective-20261006-a2-kronecker.g18.k17.7c5f5ee1ddda25c4.yaml",
+    "swdb-project/records/workloads/lanl17-prospective-20261006-a2-kronecker.g18.k18.feb23b36a57d4c05.yaml",
+    "swdb-project/records/workloads/lanl17-prospective-20261006-a2-uniform_random.g18.k14.9027c7c5f57e8926.yaml",
+    "swdb-project/records/workloads/lanl17-prospective-20261006-a2-uniform_random.g18.k15.34444aebb8080315.yaml",
+    "swdb-project/records/workloads/lanl17-prospective-20261006-a2-uniform_random.g18.k17.451edf9faac833c0.yaml",
+    "swdb-project/records/workloads/lanl17-prospective-20261006-a2-uniform_random.g18.k18.c0396050e37ceed6.yaml"
+  ],
+  "agreement_eligible_real_pairs": 0,
+  "boundary": "Real forecasts remain structural unknowns with null seconds. These orchestration checks do not prove numerical agreement, prospective population independence, application performance, or a FUNC-to-MMIO counted backend/whole-call bridge.",
+  "identity_sha256": "9a72a371536b1dc2807647b44ca766b75071f7a95619dde3343a66f27614ea9b"
+}

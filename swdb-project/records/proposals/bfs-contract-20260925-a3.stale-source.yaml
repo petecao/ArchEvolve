@@ -1,0 +1,50 @@
+kind: proposal
+schema_version: '0.4'
+id: bfs-contract-20260925-a3.stale-source
+status: draft
+created: '2026-09-25'
+updated: '2026-09-25'
+message_version: '1.0'
+producer:
+  name: swdb-contract-demonstration-client
+  role: sw
+  test_client: true
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  producer:
+    name: swdb-contract-demonstration-client
+    role: sw
+    test_client: true
+  implementation: gapbs-bfs-do
+  source_snapshot: bfs-contract-20260925-a3.source
+  source_sha256: '0000000000000000000000000000000000000000000000000000000000000000'
+  profile_package: bfs-contract-20260925-a3.fixture-package
+  regions:
+  - src/bfs.cc:122-179:437882a50dcae474
+  intent: Explicit contract fixture; no empirical timing or strategy benefit is claimed.
+  parameters:
+    evidence_classification: contract_fixture
+  constraints:
+    editable_files: [src/bfs.cc]
+    preserve_correctness: true
+    preserve_roi: true
+  payload:
+    kind: patch
+    content: "--- a/src/bfs.cc\n+++ b/src/bfs.cc\n@@ -120,7 +120,7 @@\n }\n \n pvector<NodeID> DOBFS(const\
+      \ Graph &g, NodeID source, bool logging_enabled = false,\n-                      int alpha = 15,\
+      \ int beta = 18) {\n+                      int alpha = 14, int beta = 18) {\n   if (logging_enabled)\n\
+      \     PrintStep(\"Source\", static_cast<int64_t>(source));\n   Timer t;\n"
+  required_operations: []
+  id: bfs-contract-20260925-a3.stale-source
+payload_sha256: 764cd444912d1538fc7108c7276e585a1774615cd0a64a9018ba11ea3fc62199
+outcome:
+  state: rejected
+  stage: validation
+  reason: stale or conflicting source identity
+attempts: []
+raw_artifacts: []

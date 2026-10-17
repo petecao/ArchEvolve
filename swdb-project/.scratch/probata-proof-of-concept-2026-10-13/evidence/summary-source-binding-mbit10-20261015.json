@@ -1,0 +1,2069 @@
+{
+  "audited_at_utc": "2026-10-15T13:51:24.259197+00:00",
+  "source": "fddb1462dfb9ff8d7885521bc6edaf367d97a12e",
+  "jobs": [
+    {
+      "node": 0,
+      "shard": "native",
+      "source": "fddb1462dfb9ff8d7885521bc6edaf367d97a12e",
+      "output": "/data/yanruj/EvolveSWDB_runs/probata-native-20261015-0932-node0",
+      "counts": {
+        "passed": 132
+      },
+      "exit": 0,
+      "wrapper_exit": 0,
+      "summary_line": "132 passed, 1 deselected in 145.05s (0:02:25)",
+      "lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "command": [
+          "bash",
+          "-c",
+          "cd /data1/yanruj/probata-t27 && bash swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/27-proof-semantics/run_acceptance.sh fddb1462dfb9ff8d7885521bc6edaf367d97a12e \"$1\" -o \"cache_dir=$PROBATA_OUTPUT/pytest-cache\"",
+          "bash",
+          "native"
+        ],
+        "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+        "ended_utc": "2026-10-15T13:35:03Z",
+        "exit_code": 0,
+        "host": "mbit10",
+        "job": "probata-native-20261015-0932",
+        "lease_generation": 555,
+        "lease_name": "mbit10-evaluation-node0",
+        "load1_at_start": 0,
+        "load1_max": 32,
+        "node": 0,
+        "numa_memory_policy": "bind:0",
+        "numactl": "--cpunodebind=0 --membind=0",
+        "preregistration_sha256": null,
+        "started_utc": "2026-10-15T13:32:37Z"
+      },
+      "output_bytes": 14909306,
+      "budget_bytes": 2147483648,
+      "artifacts": [
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-native-20261015-0932-node0/pytest.log",
+          "bytes": 314,
+          "sha256": "ca7d3895f7ec6fdf5ab11b9114546944693a89e2083a54f46c2d8b1183575e53"
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-native-20261015-0932-node0/report.jsonl",
+          "bytes": 295004,
+          "sha256": "927b2babfacff991b9afc2f7cbe7f3052662928f94669dff88085aa8b72b1e1e"
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-native-20261015-0932-node0/selection.txt",
+          "bytes": 276,
+          "sha256": "0ce62ec934d9de22ed200ac3c939436a824cd0faa30221bdaf777002847dc32c"
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-native-20261015-0932-node0/environment.txt",
+          "bytes": 6201,
+          "sha256": "42fc1c97c12e81804773617498dfb94bf9884d2fe6f7c732fd6ee60b7855f96e"
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-native-20261015-0932-node0/lane.json",
+          "bytes": 914,
+          "sha256": "4147ac5739c94c42efe1b2e672996098b03c5cdab3817e3d839e11ea0d93d4c2"
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-native-20261015-0932-node0/launch.sh",
+          "bytes": 1430,
+          "sha256": "b7ddd6ebdf9ed4b788f01f6b8cf352167083b53b76b40bcf7537fbf35703bcc8"
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-native-20261015-0932-node0/retention.txt",
+          "bytes": 376,
+          "sha256": "71fdeabe857fbe9da3533aacced52866b42a29b0642e05ce64fba2cc1d836628"
+        }
+      ]
+    },
+    {
+      "node": 1,
+      "shard": "bounded-windows",
+      "source": "fddb1462dfb9ff8d7885521bc6edaf367d97a12e",
+      "output": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1",
+      "counts": {
+        "passed": 17
+      },
+      "exit": 0,
+      "wrapper_exit": 0,
+      "summary_line": "17 passed in 581.79s (0:09:41)",
+      "lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "command": [
+          "bash",
+          "-c",
+          "cd /data1/yanruj/probata-t27 && bash swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/27-proof-semantics/run_acceptance.sh fddb1462dfb9ff8d7885521bc6edaf367d97a12e \"$1\" tests/test_summary_source_binding.py -o \"cache_dir=$PROBATA_OUTPUT/pytest-cache\"",
+          "bash",
+          "bounded-windows"
+        ],
+        "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+        "ended_utc": "2026-10-15T13:42:19Z",
+        "exit_code": 0,
+        "host": "mbit10",
+        "job": "probata-bounded-windows-20261015-0932",
+        "lease_generation": 596,
+        "lease_name": "mbit10-evaluation-node1",
+        "load1_at_start": 0,
+        "load1_max": 32,
+        "node": 1,
+        "numa_memory_policy": "bind:1",
+        "numactl": "--cpunodebind=1 --membind=1",
+        "preregistration_sha256": null,
+        "started_utc": "2026-10-15T13:32:37Z"
+      },
+      "output_bytes": 29696311,
+      "budget_bytes": 2147483648,
+      "artifacts": [
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/pytest.log",
+          "bytes": 228,
+          "sha256": "bb1a4cc802127b50d5ddbb108878325d21618ff4ca99614ff70fc38fef5a58cf"
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/report.jsonl",
+          "bytes": 37649,
+          "sha256": "a765fb1b112772e87652feacd1ffbb45b388b86751d4fb9571721776f6b9dd7e"
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/selection.txt",
+          "bytes": 263,
+          "sha256": "bdd1dfd2a3091370dff7dbe6592dbc6b3200f90324fdd82eb7c7c09d637a626a"
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/environment.txt",
+          "bytes": 6210,
+          "sha256": "4d907e077e4a8a5b0ac51ef841c55b094576d41ba58ccfb5dc2a57db79183370"
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/lane.json",
+          "bytes": 969,
+          "sha256": "3fbe2f7b13fb835381a8fbca814e800964e26a155dce6c950772a9a289b4b0d7"
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/launch.sh",
+          "bytes": 1467,
+          "sha256": "bea9ea12a13222b6b5b6a106d6b63283422d1658a696dfd8528eaf8cb66c211d"
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/retention.txt",
+          "bytes": 376,
+          "sha256": "71fdeabe857fbe9da3533aacced52866b42a29b0642e05ce64fba2cc1d836628"
+        }
+      ]
+    }
+  ],
+  "proof_records": [
+    {
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/pytest/divergent-summary0/records/proofs/proof.cbmc-safe.candidate-1.20261015t133645z.cb1c5e79.yaml",
+        "bytes": 5659,
+        "sha256": "80f6443558a51e1100ee78d7fd68d7124bade155b9e78a4ae14d4de68d1a8371"
+      },
+      "id": "proof.cbmc-safe.candidate-1.20261015t133645z.cb1c5e79",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "cbmc-safe.candidate-1",
+        "function": "swdb_fixture_clamp_all"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 2
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "intentionally_mutated_dependency_control": false,
+      "pins": {
+        "contract": {
+          "id": "contract.fixture_cbmc_clamp_all",
+          "sha256": "3c046e31e8a218488d01de9347909302c2da0fd2f133c7263a29f1c6b64d5dce"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        },
+        "summaries": [],
+        "c_lowering": {
+          "id": "swdb_fixture_clamp_all.c",
+          "sha256": "480cc75d9bcdeed750670dc85a98877a8f6511e5119710d882456b47c434a958"
+        }
+      },
+      "setup": {
+        "check": {
+          "version": "1",
+          "sha256": "4ea13f2781aca8490873a498ac4ae7efb49af739ddfe4941689cfdb5e14fc9d0"
+        },
+        "verdict": "passed",
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        }
+      },
+      "reading": {
+        "check": null,
+        "verdict": null
+      },
+      "verifier_launched": false,
+      "summary_bindings": null,
+      "forms": null,
+      "agreement": {
+        "verdict": null,
+        "runs": null,
+        "sampled": null
+      },
+      "goals": 0,
+      "goal_status_counts": {},
+      "artifact_count": 2,
+      "all_artifact_hashes_match": true,
+      "expected_mutated_artifacts": []
+    },
+    {
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/pytest/divergent-summary0/records/proofs/proof.cbmc-safe.candidate-1.20261015t133706z.ba5c12a7.yaml",
+        "bytes": 5533,
+        "sha256": "181237fa87fd573d2d802eeed0c205f21375d819632e7ecc7ae91df9abaa2aaf"
+      },
+      "id": "proof.cbmc-safe.candidate-1.20261015t133706z.ba5c12a7",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "cbmc-safe.candidate-1",
+        "function": "swdb_fixture_clamp_all"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 2
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "intentionally_mutated_dependency_control": false,
+      "pins": {
+        "contract": {
+          "id": "contract.fixture_cbmc_clamp_all",
+          "sha256": "3c046e31e8a218488d01de9347909302c2da0fd2f133c7263a29f1c6b64d5dce"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        },
+        "summaries": [],
+        "c_lowering": {
+          "id": "swdb_fixture_clamp_all.c",
+          "sha256": "480cc75d9bcdeed750670dc85a98877a8f6511e5119710d882456b47c434a958"
+        }
+      },
+      "setup": {
+        "check": {
+          "version": "1",
+          "sha256": "4ea13f2781aca8490873a498ac4ae7efb49af739ddfe4941689cfdb5e14fc9d0"
+        },
+        "verdict": "passed",
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        }
+      },
+      "reading": {
+        "check": null,
+        "verdict": null
+      },
+      "verifier_launched": false,
+      "summary_bindings": null,
+      "forms": null,
+      "agreement": {
+        "verdict": null,
+        "runs": null,
+        "sampled": null
+      },
+      "goals": 0,
+      "goal_status_counts": {},
+      "artifact_count": 2,
+      "all_artifact_hashes_match": true,
+      "expected_mutated_artifacts": []
+    },
+    {
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/pytest/divergent-summary0/records/proofs/proof.cbmc-safe.candidate-1.20261015t133736z.690cd17e.yaml",
+        "bytes": 5584,
+        "sha256": "58fa331795b228e7b0860d9d3e732c7f82ba1db17a55e3b1196c911fc9d843be"
+      },
+      "id": "proof.cbmc-safe.candidate-1.20261015t133736z.690cd17e",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "cbmc-safe.candidate-1",
+        "function": "swdb_fixture_clamp_all"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 2
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "intentionally_mutated_dependency_control": false,
+      "pins": {
+        "contract": {
+          "id": "contract.fixture_cbmc_clamp_all",
+          "sha256": "3c046e31e8a218488d01de9347909302c2da0fd2f133c7263a29f1c6b64d5dce"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        },
+        "summaries": [],
+        "c_lowering": {
+          "id": "swdb_fixture_clamp_all.c",
+          "sha256": "480cc75d9bcdeed750670dc85a98877a8f6511e5119710d882456b47c434a958"
+        }
+      },
+      "setup": {
+        "check": {
+          "version": "1",
+          "sha256": "4ea13f2781aca8490873a498ac4ae7efb49af739ddfe4941689cfdb5e14fc9d0"
+        },
+        "verdict": "passed",
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        }
+      },
+      "reading": {
+        "check": null,
+        "verdict": null
+      },
+      "verifier_launched": false,
+      "summary_bindings": null,
+      "forms": null,
+      "agreement": {
+        "verdict": null,
+        "runs": null,
+        "sampled": null
+      },
+      "goals": 0,
+      "goal_status_counts": {},
+      "artifact_count": 2,
+      "all_artifact_hashes_match": true,
+      "expected_mutated_artifacts": []
+    },
+    {
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/pytest/divergent-summary0/records/proofs/proof.contract.fixture_cbmc_clamp.20261015t133641z.00fe9d98.yaml",
+        "bytes": 12357,
+        "sha256": "2adbbfce9ea08b7a1792d337ff0a340a9129e26bf1a87a5b3f539a05c24c42bf"
+      },
+      "id": "proof.contract.fixture_cbmc_clamp.20261015t133641z.00fe9d98",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.fixture_cbmc_clamp"
+      },
+      "bounds": {
+        "threads": 1
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "intentionally_mutated_dependency_control": false,
+      "pins": {
+        "contract": {
+          "id": "contract.fixture_cbmc_clamp",
+          "sha256": "ef667368d5de66ed7b93861302ab04e2c42b2274eb343097296cf6e3a161d507"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        },
+        "summaries": [],
+        "c_lowering": {
+          "id": "swdb_fixture_clamp.c",
+          "sha256": "4c5c54d2934eae0d55b54830840d4cc6671e96d6f46dff384d8ab307d4959f79"
+        }
+      },
+      "setup": {
+        "check": {
+          "version": "1",
+          "sha256": "4ea13f2781aca8490873a498ac4ae7efb49af739ddfe4941689cfdb5e14fc9d0"
+        },
+        "verdict": "passed",
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        }
+      },
+      "reading": {
+        "check": null,
+        "verdict": null
+      },
+      "verifier_launched": true,
+      "summary_bindings": null,
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "agreement": {
+        "verdict": "agree",
+        "runs": 343,
+        "sampled": false
+      },
+      "goals": 19,
+      "goal_status_counts": {
+        "success": 18,
+        "failure": 1
+      },
+      "artifact_count": 7,
+      "all_artifact_hashes_match": true,
+      "expected_mutated_artifacts": []
+    },
+    {
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/pytest/divergent-summary0/records/proofs/proof.contract.fixture_cbmc_clamp.20261015t133702z.b0fbfb00.yaml",
+        "bytes": 12357,
+        "sha256": "70e948e11e804bbe88a30ee9ef71ad0bfe2aaed17373f891858e4425a496ea4e"
+      },
+      "id": "proof.contract.fixture_cbmc_clamp.20261015t133702z.b0fbfb00",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.fixture_cbmc_clamp"
+      },
+      "bounds": {
+        "threads": 1
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "intentionally_mutated_dependency_control": false,
+      "pins": {
+        "contract": {
+          "id": "contract.fixture_cbmc_clamp",
+          "sha256": "ef667368d5de66ed7b93861302ab04e2c42b2274eb343097296cf6e3a161d507"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        },
+        "summaries": [],
+        "c_lowering": {
+          "id": "swdb_fixture_clamp.c",
+          "sha256": "4c5c54d2934eae0d55b54830840d4cc6671e96d6f46dff384d8ab307d4959f79"
+        }
+      },
+      "setup": {
+        "check": {
+          "version": "1",
+          "sha256": "4ea13f2781aca8490873a498ac4ae7efb49af739ddfe4941689cfdb5e14fc9d0"
+        },
+        "verdict": "passed",
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        }
+      },
+      "reading": {
+        "check": null,
+        "verdict": null
+      },
+      "verifier_launched": true,
+      "summary_bindings": null,
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "agreement": {
+        "verdict": "agree",
+        "runs": 343,
+        "sampled": false
+      },
+      "goals": 19,
+      "goal_status_counts": {
+        "success": 18,
+        "failure": 1
+      },
+      "artifact_count": 7,
+      "all_artifact_hashes_match": true,
+      "expected_mutated_artifacts": []
+    },
+    {
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/pytest/divergent-summary0/records/proofs/proof.contract.fixture_cbmc_clamp.20261015t133732z.46b75686.yaml",
+        "bytes": 12358,
+        "sha256": "cd4f70cd165dfec4a0685460ba8a312ef6669eee311c7fefdf7a9e2bbf332479"
+      },
+      "id": "proof.contract.fixture_cbmc_clamp.20261015t133732z.46b75686",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.fixture_cbmc_clamp"
+      },
+      "bounds": {
+        "threads": 1
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "intentionally_mutated_dependency_control": false,
+      "pins": {
+        "contract": {
+          "id": "contract.fixture_cbmc_clamp",
+          "sha256": "ef667368d5de66ed7b93861302ab04e2c42b2274eb343097296cf6e3a161d507"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        },
+        "summaries": [],
+        "c_lowering": {
+          "id": "swdb_fixture_clamp.c",
+          "sha256": "4c5c54d2934eae0d55b54830840d4cc6671e96d6f46dff384d8ab307d4959f79"
+        }
+      },
+      "setup": {
+        "check": {
+          "version": "1",
+          "sha256": "4ea13f2781aca8490873a498ac4ae7efb49af739ddfe4941689cfdb5e14fc9d0"
+        },
+        "verdict": "passed",
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        }
+      },
+      "reading": {
+        "check": null,
+        "verdict": null
+      },
+      "verifier_launched": true,
+      "summary_bindings": null,
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "agreement": {
+        "verdict": "agree",
+        "runs": 343,
+        "sampled": false
+      },
+      "goals": 19,
+      "goal_status_counts": {
+        "success": 18,
+        "failure": 1
+      },
+      "artifact_count": 7,
+      "all_artifact_hashes_match": true,
+      "expected_mutated_artifacts": []
+    },
+    {
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t133414z.3b7bc1fa.yaml",
+        "bytes": 19296,
+        "sha256": "34b3e6825a89c5fe74295bd86e86fcc947bbec5409780ab2211aeec850f4ebf1"
+      },
+      "id": "proof.dx100-fixtures.candidate-1.20261015t133414z.3b7bc1fa",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "window_form"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 4
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "intentionally_mutated_dependency_control": false,
+      "pins": {
+        "contract": {
+          "id": "contract.fixture_dx_window_form",
+          "sha256": "993ecbd86e6b92e27874c44699049897a2b181cf023ab498a968aa00eced2a61"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "70ff14cdc7580bbb31b9a380f7180f354a498e1fcea3b940ed2315f04c8ca4b2"
+        },
+        "summaries": [],
+        "c_lowering": {
+          "id": "window_form.c",
+          "sha256": "a94fbd8289158934dd7c3d22dc253c33038152ff8c9620c79ce425dbe6a4a4fe"
+        }
+      },
+      "setup": {
+        "check": {
+          "version": "1",
+          "sha256": "4ea13f2781aca8490873a498ac4ae7efb49af739ddfe4941689cfdb5e14fc9d0"
+        },
+        "verdict": "passed",
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "70ff14cdc7580bbb31b9a380f7180f354a498e1fcea3b940ed2315f04c8ca4b2"
+        }
+      },
+      "reading": {
+        "check": null,
+        "verdict": null
+      },
+      "verifier_launched": true,
+      "summary_bindings": null,
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "agreement": {
+        "verdict": "agree",
+        "runs": 3750,
+        "sampled": false
+      },
+      "goals": 45,
+      "goal_status_counts": {
+        "success": 44,
+        "failure": 1
+      },
+      "artifact_count": 7,
+      "all_artifact_hashes_match": true,
+      "expected_mutated_artifacts": []
+    },
+    {
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t133441z.5f03970b.yaml",
+        "bytes": 20942,
+        "sha256": "08d72cab57704af834c20bc620a19b088f43daebbb247b98adad4684eb05f094"
+      },
+      "id": "proof.dx100-fixtures.candidate-1.20261015t133441z.5f03970b",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "window_read"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 4
+      },
+      "verdict": "refuted",
+      "failure_class": null,
+      "intentionally_mutated_dependency_control": false,
+      "pins": {
+        "contract": {
+          "id": "contract.fixture_dx_window_read",
+          "sha256": "c3be41b81da98d1b5bfd7773f99e369c2423b68a0dd40647f82a3f15d85907ce"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "70ff14cdc7580bbb31b9a380f7180f354a498e1fcea3b940ed2315f04c8ca4b2"
+        },
+        "summaries": [],
+        "c_lowering": {
+          "id": "window_read.c",
+          "sha256": "d20e3d335bb012e60c0f5d095062e8cc2c21d7049cc75501ba0bdf5027047888"
+        }
+      },
+      "setup": {
+        "check": {
+          "version": "1",
+          "sha256": "4ea13f2781aca8490873a498ac4ae7efb49af739ddfe4941689cfdb5e14fc9d0"
+        },
+        "verdict": "passed",
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "70ff14cdc7580bbb31b9a380f7180f354a498e1fcea3b940ed2315f04c8ca4b2"
+        }
+      },
+      "reading": {
+        "check": null,
+        "verdict": null
+      },
+      "verifier_launched": true,
+      "summary_bindings": null,
+      "forms": {
+        "c_lowering": "refuted",
+        "cxx": "refuted (counterexample replayed)"
+      },
+      "agreement": {
+        "verdict": "agree",
+        "runs": 3750,
+        "sampled": false
+      },
+      "goals": 50,
+      "goal_status_counts": {
+        "success": 48,
+        "failure": 2
+      },
+      "artifact_count": 8,
+      "all_artifact_hashes_match": true,
+      "expected_mutated_artifacts": []
+    },
+    {
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t133512z.ddf66fa8.yaml",
+        "bytes": 19988,
+        "sha256": "8370400b6df7c9f1554807db28200eb66226caecbfb4ae0f51be800719bd30f1"
+      },
+      "id": "proof.dx100-fixtures.candidate-1.20261015t133512z.ddf66fa8",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "window_form"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 4
+      },
+      "verdict": "refuted",
+      "failure_class": null,
+      "intentionally_mutated_dependency_control": false,
+      "pins": {
+        "contract": {
+          "id": "contract.fixture_dx_window_form",
+          "sha256": "993ecbd86e6b92e27874c44699049897a2b181cf023ab498a968aa00eced2a61"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "70ff14cdc7580bbb31b9a380f7180f354a498e1fcea3b940ed2315f04c8ca4b2"
+        },
+        "summaries": [],
+        "c_lowering": {
+          "id": "window_form.c",
+          "sha256": "8ff1fe39df056d87b8332d31425daca7fdc5f481546f1fe0df47679cc7b6ee13"
+        }
+      },
+      "setup": {
+        "check": {
+          "version": "1",
+          "sha256": "4ea13f2781aca8490873a498ac4ae7efb49af739ddfe4941689cfdb5e14fc9d0"
+        },
+        "verdict": "passed",
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "70ff14cdc7580bbb31b9a380f7180f354a498e1fcea3b940ed2315f04c8ca4b2"
+        }
+      },
+      "reading": {
+        "check": null,
+        "verdict": null
+      },
+      "verifier_launched": true,
+      "summary_bindings": null,
+      "forms": {
+        "c_lowering": "refuted",
+        "cxx": "refuted (counterexample replayed)"
+      },
+      "agreement": {
+        "verdict": "agree",
+        "runs": 3750,
+        "sampled": false
+      },
+      "goals": 45,
+      "goal_status_counts": {
+        "success": 43,
+        "failure": 2
+      },
+      "artifact_count": 8,
+      "all_artifact_hashes_match": true,
+      "expected_mutated_artifacts": []
+    },
+    {
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t133544z.618569a8.yaml",
+        "bytes": 7226,
+        "sha256": "9cdb93a03dbed49dc815c4bd63b48b5e2987ebd1a338cda5fc5066b8fd855007"
+      },
+      "id": "proof.dx100-fixtures.candidate-1.20261015t133544z.618569a8",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "window_form"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 4
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "intentionally_mutated_dependency_control": false,
+      "pins": {
+        "contract": {
+          "id": "contract.fixture_dx_window_form",
+          "sha256": "5fdd55bdd06622ef30826111415ad64199c72c239b9b0f47ffb024a0c3afbc47"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "70ff14cdc7580bbb31b9a380f7180f354a498e1fcea3b940ed2315f04c8ca4b2"
+        },
+        "summaries": [],
+        "c_lowering": {
+          "id": "window_form.c",
+          "sha256": "a94fbd8289158934dd7c3d22dc253c33038152ff8c9620c79ce425dbe6a4a4fe"
+        }
+      },
+      "setup": {
+        "check": {
+          "version": "1",
+          "sha256": "4ea13f2781aca8490873a498ac4ae7efb49af739ddfe4941689cfdb5e14fc9d0"
+        },
+        "verdict": "passed",
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "70ff14cdc7580bbb31b9a380f7180f354a498e1fcea3b940ed2315f04c8ca4b2"
+        }
+      },
+      "reading": {
+        "check": null,
+        "verdict": null
+      },
+      "verifier_launched": false,
+      "summary_bindings": null,
+      "forms": null,
+      "agreement": {
+        "verdict": null,
+        "runs": null,
+        "sampled": null
+      },
+      "goals": 0,
+      "goal_status_counts": {},
+      "artifact_count": 2,
+      "all_artifact_hashes_match": true,
+      "expected_mutated_artifacts": []
+    },
+    {
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/pytest/test_a_narrower_array_summary_0/records/proofs/proof.cbmc-safe.candidate-1.20261015t133908z.58da75a4.yaml",
+        "bytes": 5702,
+        "sha256": "ae702212ad84394ebeca73361f1009371601709cc4c94d869e47831b061b552e"
+      },
+      "id": "proof.cbmc-safe.candidate-1.20261015t133908z.58da75a4",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "cbmc-safe.candidate-1",
+        "function": "swdb_fixture_call_outside"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 3
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "intentionally_mutated_dependency_control": false,
+      "pins": {
+        "contract": {
+          "id": "contract.fixture_cbmc_call_outside",
+          "sha256": "6f4459c11d813aaaa8fa53a34e4f344eb3731fca68899f2c646918c608fcbdcd"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        },
+        "summaries": [],
+        "c_lowering": {
+          "id": "swdb_fixture_call_outside.c",
+          "sha256": "47741fe4cd72a40fbddfafadf451762af415b1a8470d3804538400590dc7701f"
+        }
+      },
+      "setup": {
+        "check": {
+          "version": "1",
+          "sha256": "4ea13f2781aca8490873a498ac4ae7efb49af739ddfe4941689cfdb5e14fc9d0"
+        },
+        "verdict": "passed",
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        }
+      },
+      "reading": {
+        "check": null,
+        "verdict": null
+      },
+      "verifier_launched": false,
+      "summary_bindings": null,
+      "forms": null,
+      "agreement": {
+        "verdict": null,
+        "runs": null,
+        "sampled": null
+      },
+      "goals": 0,
+      "goal_status_counts": {},
+      "artifact_count": 2,
+      "all_artifact_hashes_match": true,
+      "expected_mutated_artifacts": []
+    },
+    {
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/pytest/test_a_narrower_array_summary_0/records/proofs/proof.contract.fixture_cbmc_add_one.20261015t133904z.5b087a4a.yaml",
+        "bytes": 21894,
+        "sha256": "540e218615b4960ebf845066213b519071da98da160a5ecbc6ad2ee41e59eb16"
+      },
+      "id": "proof.contract.fixture_cbmc_add_one.20261015t133904z.5b087a4a",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.fixture_cbmc_add_one"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 2
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "intentionally_mutated_dependency_control": false,
+      "pins": {
+        "contract": {
+          "id": "contract.fixture_cbmc_add_one",
+          "sha256": "7eaa57631a8c1bb5924d33faaa6d858c8cea9ae8d46e903ba646e4dcab631967"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        },
+        "summaries": [],
+        "c_lowering": {
+          "id": "swdb_fixture_add_one.c",
+          "sha256": "f35ea36b686c0ea788a559878c7d280418afaf38f4acf379a25997bbe666f4d1"
+        }
+      },
+      "setup": {
+        "check": {
+          "version": "1",
+          "sha256": "4ea13f2781aca8490873a498ac4ae7efb49af739ddfe4941689cfdb5e14fc9d0"
+        },
+        "verdict": "passed",
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        }
+      },
+      "reading": {
+        "check": null,
+        "verdict": null
+      },
+      "verifier_launched": true,
+      "summary_bindings": null,
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "agreement": {
+        "verdict": "agree",
+        "runs": 700,
+        "sampled": false
+      },
+      "goals": 68,
+      "goal_status_counts": {
+        "success": 67,
+        "failure": 1
+      },
+      "artifact_count": 7,
+      "all_artifact_hashes_match": true,
+      "expected_mutated_artifacts": []
+    },
+    {
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/pytest/test_a_newer_ineligible_summar0/records/proofs/proof.cbmc-safe.candidate-1.20261015t134112z.f713153e.yaml",
+        "bytes": 27556,
+        "sha256": "c13dbfba2157321e40e930513cc1f3bb07d157895834c82cb4bec4202ee76d57"
+      },
+      "id": "proof.cbmc-safe.candidate-1.20261015t134112z.f713153e",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "cbmc-safe.candidate-1",
+        "function": "swdb_fixture_clamp_all"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 2
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "intentionally_mutated_dependency_control": false,
+      "pins": {
+        "contract": {
+          "id": "contract.fixture_cbmc_clamp_all",
+          "sha256": "3c046e31e8a218488d01de9347909302c2da0fd2f133c7263a29f1c6b64d5dce"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        },
+        "summaries": [
+          {
+            "id": "contract.fixture_cbmc_clamp",
+            "sha256": "ef667368d5de66ed7b93861302ab04e2c42b2274eb343097296cf6e3a161d507",
+            "proof_record": "proof.contract.fixture_cbmc_clamp.20261015t134109z.8b95d55d",
+            "assumes": [
+              "contract.fixture_cbmc_clamp#clamp_post.ensures1",
+              "contract.fixture_cbmc_clamp#clamp_post.ensures2"
+            ]
+          }
+        ],
+        "c_lowering": {
+          "id": "swdb_fixture_clamp_all.c",
+          "sha256": "6fad0dc959dd44c677426bcbb9ffccfeb51627e5f3ea43b9ea350891bf11eb8b"
+        }
+      },
+      "setup": {
+        "check": {
+          "version": "1",
+          "sha256": "4ea13f2781aca8490873a498ac4ae7efb49af739ddfe4941689cfdb5e14fc9d0"
+        },
+        "verdict": "passed",
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        }
+      },
+      "reading": {
+        "check": null,
+        "verdict": null
+      },
+      "verifier_launched": true,
+      "summary_bindings": [
+        {
+          "entry": "contract.fixture_cbmc_clamp",
+          "proof_record": "proof.contract.fixture_cbmc_clamp.20261015t134109z.8b95d55d",
+          "source_sha256": "1456ddec913474742976ff1c7f01e9b0c390a63b180fc04177175a202f06c4fd",
+          "callee_lowering_sha256": "8939a8ecb0d48cf0c7be96b31476b91e25724999e12ebc45474dd2f60058113a",
+          "proof_lowering_sha256": "4c5c54d2934eae0d55b54830840d4cc6671e96d6f46dff384d8ab307d4959f79",
+          "finite_bounds": {},
+          "call_count": 1,
+          "scope": "equal fresh global callee closure; finite arguments follow from unchanged entry bounds"
+        }
+      ],
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "agreement": {
+        "verdict": "agree",
+        "runs": 100,
+        "sampled": false
+      },
+      "goals": 93,
+      "goal_status_counts": {
+        "success": 91,
+        "failure": 2
+      },
+      "artifact_count": 7,
+      "all_artifact_hashes_match": true,
+      "expected_mutated_artifacts": []
+    },
+    {
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/pytest/test_a_newer_ineligible_summar0/records/proofs/proof.contract.fixture_cbmc_clamp.20261015t134109z.8b95d55d.later.yaml",
+        "bytes": 12624,
+        "sha256": "fcdf437fec2f5d3ae35ccdeaa65b5e4911e74676610b441ac4bb77e279ba05eb"
+      },
+      "id": "proof.contract.fixture_cbmc_clamp.20261015t134109z.8b95d55d.later",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.fixture_cbmc_clamp"
+      },
+      "bounds": {
+        "threads": 1
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "intentionally_mutated_dependency_control": true,
+      "pins": {
+        "contract": {
+          "id": "contract.fixture_cbmc_clamp",
+          "sha256": "ef667368d5de66ed7b93861302ab04e2c42b2274eb343097296cf6e3a161d507"
+        },
+        "method_version": {
+          "id": "method.contract-fixture-1",
+          "sha256": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29"
+        },
+        "summaries": [],
+        "c_lowering": {
+          "id": "swdb_fixture_clamp.c",
+          "sha256": "4c5c54d2934eae0d55b54830840d4cc6671e96d6f46dff384d8ab307d4959f79"
+        }
+      },
+      "setup": {
+        "check": {
+          "version": "1",
+          "sha256": "4ea13f2781aca8490873a498ac4ae7efb49af739ddfe4941689cfdb5e14fc9d0"
+        },
+        "verdict": "passed",
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        }
+      },
+      "reading": {
+        "check": null,
+        "verdict": null
+      },
+      "verifier_launched": true,
+      "summary_bindings": null,
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "agreement": {
+        "verdict": "agree",
+        "runs": 343,
+        "sampled": false
+      },
+      "goals": 19,
+      "goal_status_counts": {
+        "success": 18,
+        "failure": 1
+      },
+      "artifact_count": 7,
+      "all_artifact_hashes_match": true,
+      "expected_mutated_artifacts": []
+    },
+    {
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/pytest/test_a_newer_ineligible_summar0/records/proofs/proof.contract.fixture_cbmc_clamp.20261015t134109z.8b95d55d.yaml",
+        "bytes": 12448,
+        "sha256": "4e07a0407fba02afc5d8deaf2ef2756e7f411b3469b52b1f2ad1a60a3559c6c5"
+      },
+      "id": "proof.contract.fixture_cbmc_clamp.20261015t134109z.8b95d55d",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.fixture_cbmc_clamp"
+      },
+      "bounds": {
+        "threads": 1
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "intentionally_mutated_dependency_control": false,
+      "pins": {
+        "contract": {
+          "id": "contract.fixture_cbmc_clamp",
+          "sha256": "ef667368d5de66ed7b93861302ab04e2c42b2274eb343097296cf6e3a161d507"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        },
+        "summaries": [],
+        "c_lowering": {
+          "id": "swdb_fixture_clamp.c",
+          "sha256": "4c5c54d2934eae0d55b54830840d4cc6671e96d6f46dff384d8ab307d4959f79"
+        }
+      },
+      "setup": {
+        "check": {
+          "version": "1",
+          "sha256": "4ea13f2781aca8490873a498ac4ae7efb49af739ddfe4941689cfdb5e14fc9d0"
+        },
+        "verdict": "passed",
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        }
+      },
+      "reading": {
+        "check": null,
+        "verdict": null
+      },
+      "verifier_launched": true,
+      "summary_bindings": null,
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "agreement": {
+        "verdict": "agree",
+        "runs": 343,
+        "sampled": false
+      },
+      "goals": 19,
+      "goal_status_counts": {
+        "success": 18,
+        "failure": 1
+      },
+      "artifact_count": 7,
+      "all_artifact_hashes_match": true,
+      "expected_mutated_artifacts": []
+    },
+    {
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/pytest/test_a_summary_proof_must_matc0/records/proofs/proof.cbmc-safe.candidate-1.20261015t133929z.d94c7045.yaml",
+        "bytes": 5685,
+        "sha256": "cab63118831503933227b10ad97e889cc827e1678ef274cd445607d1a323bd52"
+      },
+      "id": "proof.cbmc-safe.candidate-1.20261015t133929z.d94c7045",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "cbmc-safe.candidate-1",
+        "function": "swdb_fixture_clamp_all"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 2
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "intentionally_mutated_dependency_control": true,
+      "pins": {
+        "contract": {
+          "id": "contract.fixture_cbmc_clamp_all",
+          "sha256": "3c046e31e8a218488d01de9347909302c2da0fd2f133c7263a29f1c6b64d5dce"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        },
+        "summaries": [],
+        "c_lowering": {
+          "id": "swdb_fixture_clamp_all.c",
+          "sha256": "6fad0dc959dd44c677426bcbb9ffccfeb51627e5f3ea43b9ea350891bf11eb8b"
+        }
+      },
+      "setup": {
+        "check": {
+          "version": "1",
+          "sha256": "4ea13f2781aca8490873a498ac4ae7efb49af739ddfe4941689cfdb5e14fc9d0"
+        },
+        "verdict": "passed",
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        }
+      },
+      "reading": {
+        "check": null,
+        "verdict": null
+      },
+      "verifier_launched": false,
+      "summary_bindings": null,
+      "forms": null,
+      "agreement": {
+        "verdict": null,
+        "runs": null,
+        "sampled": null
+      },
+      "goals": 0,
+      "goal_status_counts": {},
+      "artifact_count": 2,
+      "all_artifact_hashes_match": true,
+      "expected_mutated_artifacts": []
+    },
+    {
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/pytest/test_a_summary_proof_must_matc0/records/proofs/proof.contract.fixture_cbmc_clamp.20261015t133925z.36969ba8.yaml",
+        "bytes": 12662,
+        "sha256": "85b3dc0611d20cf3a029f57425fb4045f5301368d4a8304ca88a768c499f4726"
+      },
+      "id": "proof.contract.fixture_cbmc_clamp.20261015t133925z.36969ba8",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.fixture_cbmc_clamp"
+      },
+      "bounds": {
+        "threads": 1
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "intentionally_mutated_dependency_control": true,
+      "pins": {
+        "contract": {
+          "id": "contract.fixture_cbmc_clamp",
+          "sha256": "ef667368d5de66ed7b93861302ab04e2c42b2274eb343097296cf6e3a161d507"
+        },
+        "method_version": {
+          "id": "method.contract-fixture-1",
+          "sha256": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29"
+        },
+        "summaries": [],
+        "c_lowering": {
+          "id": "swdb_fixture_clamp.c",
+          "sha256": "4c5c54d2934eae0d55b54830840d4cc6671e96d6f46dff384d8ab307d4959f79"
+        }
+      },
+      "setup": {
+        "check": {
+          "version": "1",
+          "sha256": "4ea13f2781aca8490873a498ac4ae7efb49af739ddfe4941689cfdb5e14fc9d0"
+        },
+        "verdict": "passed",
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        }
+      },
+      "reading": {
+        "check": null,
+        "verdict": null
+      },
+      "verifier_launched": true,
+      "summary_bindings": null,
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "agreement": {
+        "verdict": "agree",
+        "runs": 343,
+        "sampled": false
+      },
+      "goals": 19,
+      "goal_status_counts": {
+        "success": 18,
+        "failure": 1
+      },
+      "artifact_count": 7,
+      "all_artifact_hashes_match": true,
+      "expected_mutated_artifacts": []
+    },
+    {
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/pytest/test_a_summary_proof_must_matc1/records/proofs/proof.cbmc-safe.candidate-1.20261015t133948z.84e39e80.yaml",
+        "bytes": 5685,
+        "sha256": "d6c6d080f9d4290e35b272747f03827d2b4e37c47d944ce7e816fcc7d8cb76a0"
+      },
+      "id": "proof.cbmc-safe.candidate-1.20261015t133948z.84e39e80",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "cbmc-safe.candidate-1",
+        "function": "swdb_fixture_clamp_all"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 2
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "intentionally_mutated_dependency_control": true,
+      "pins": {
+        "contract": {
+          "id": "contract.fixture_cbmc_clamp_all",
+          "sha256": "3c046e31e8a218488d01de9347909302c2da0fd2f133c7263a29f1c6b64d5dce"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        },
+        "summaries": [],
+        "c_lowering": {
+          "id": "swdb_fixture_clamp_all.c",
+          "sha256": "6fad0dc959dd44c677426bcbb9ffccfeb51627e5f3ea43b9ea350891bf11eb8b"
+        }
+      },
+      "setup": {
+        "check": {
+          "version": "1",
+          "sha256": "4ea13f2781aca8490873a498ac4ae7efb49af739ddfe4941689cfdb5e14fc9d0"
+        },
+        "verdict": "passed",
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        }
+      },
+      "reading": {
+        "check": null,
+        "verdict": null
+      },
+      "verifier_launched": false,
+      "summary_bindings": null,
+      "forms": null,
+      "agreement": {
+        "verdict": null,
+        "runs": null,
+        "sampled": null
+      },
+      "goals": 0,
+      "goal_status_counts": {},
+      "artifact_count": 2,
+      "all_artifact_hashes_match": true,
+      "expected_mutated_artifacts": []
+    },
+    {
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/pytest/test_a_summary_proof_must_matc1/records/proofs/proof.contract.fixture_cbmc_clamp.20261015t133945z.ef155488.yaml",
+        "bytes": 12659,
+        "sha256": "6f4d0e20ba2469819c2427fb8cc3922e2bf40fb7632eced09228c5d11d17560b"
+      },
+      "id": "proof.contract.fixture_cbmc_clamp.20261015t133945z.ef155488",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.fixture_cbmc_clamp"
+      },
+      "bounds": {
+        "threads": 1
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "intentionally_mutated_dependency_control": true,
+      "pins": {
+        "contract": {
+          "id": "contract.fixture_cbmc_clamp",
+          "sha256": "ef667368d5de66ed7b93861302ab04e2c42b2274eb343097296cf6e3a161d507"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        },
+        "summaries": [],
+        "c_lowering": {
+          "id": "swdb_fixture_clamp.c",
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        }
+      },
+      "setup": {
+        "check": {
+          "version": "1",
+          "sha256": "4ea13f2781aca8490873a498ac4ae7efb49af739ddfe4941689cfdb5e14fc9d0"
+        },
+        "verdict": "passed",
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        }
+      },
+      "reading": {
+        "check": null,
+        "verdict": null
+      },
+      "verifier_launched": true,
+      "summary_bindings": null,
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "agreement": {
+        "verdict": "agree",
+        "runs": 343,
+        "sampled": false
+      },
+      "goals": 19,
+      "goal_status_counts": {
+        "success": 18,
+        "failure": 1
+      },
+      "artifact_count": 7,
+      "all_artifact_hashes_match": true,
+      "expected_mutated_artifacts": []
+    },
+    {
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/pytest/test_a_summary_proof_must_matc2/records/proofs/proof.cbmc-safe.candidate-1.20261015t134008z.94f3b209.yaml",
+        "bytes": 5684,
+        "sha256": "97df06be3c97891c2b93cec5362125a65f10644c9ab43d80f2718a9bd6910e95"
+      },
+      "id": "proof.cbmc-safe.candidate-1.20261015t134008z.94f3b209",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "cbmc-safe.candidate-1",
+        "function": "swdb_fixture_clamp_all"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 2
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "intentionally_mutated_dependency_control": true,
+      "pins": {
+        "contract": {
+          "id": "contract.fixture_cbmc_clamp_all",
+          "sha256": "3c046e31e8a218488d01de9347909302c2da0fd2f133c7263a29f1c6b64d5dce"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        },
+        "summaries": [],
+        "c_lowering": {
+          "id": "swdb_fixture_clamp_all.c",
+          "sha256": "6fad0dc959dd44c677426bcbb9ffccfeb51627e5f3ea43b9ea350891bf11eb8b"
+        }
+      },
+      "setup": {
+        "check": {
+          "version": "1",
+          "sha256": "4ea13f2781aca8490873a498ac4ae7efb49af739ddfe4941689cfdb5e14fc9d0"
+        },
+        "verdict": "passed",
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        }
+      },
+      "reading": {
+        "check": null,
+        "verdict": null
+      },
+      "verifier_launched": false,
+      "summary_bindings": null,
+      "forms": null,
+      "agreement": {
+        "verdict": null,
+        "runs": null,
+        "sampled": null
+      },
+      "goals": 0,
+      "goal_status_counts": {},
+      "artifact_count": 2,
+      "all_artifact_hashes_match": true,
+      "expected_mutated_artifacts": []
+    },
+    {
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/pytest/test_a_summary_proof_must_matc2/records/proofs/proof.contract.fixture_cbmc_clamp.20261015t134005z.99776bfc.yaml",
+        "bytes": 12659,
+        "sha256": "e4224deef8d33ef69b3e7a05875391514db329d3f0f62b78c3163356626530d7"
+      },
+      "id": "proof.contract.fixture_cbmc_clamp.20261015t134005z.99776bfc",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.fixture_cbmc_clamp"
+      },
+      "bounds": {
+        "threads": 1
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "intentionally_mutated_dependency_control": true,
+      "pins": {
+        "contract": {
+          "id": "contract.fixture_cbmc_clamp",
+          "sha256": "ef667368d5de66ed7b93861302ab04e2c42b2274eb343097296cf6e3a161d507"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        },
+        "summaries": [],
+        "c_lowering": {
+          "id": "swdb_fixture_clamp.c",
+          "sha256": "4c5c54d2934eae0d55b54830840d4cc6671e96d6f46dff384d8ab307d4959f79"
+        }
+      },
+      "setup": {
+        "check": {
+          "version": "1",
+          "sha256": "4ea13f2781aca8490873a498ac4ae7efb49af739ddfe4941689cfdb5e14fc9d0"
+        },
+        "verdict": "passed",
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        }
+      },
+      "reading": {
+        "check": null,
+        "verdict": null
+      },
+      "verifier_launched": true,
+      "summary_bindings": null,
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "agreement": {
+        "verdict": "agree",
+        "runs": 343,
+        "sampled": false
+      },
+      "goals": 19,
+      "goal_status_counts": {
+        "success": 18,
+        "failure": 1
+      },
+      "artifact_count": 7,
+      "all_artifact_hashes_match": false,
+      "expected_mutated_artifacts": [
+        {
+          "name": "differential_c",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/pytest/test_a_summary_proof_must_matc2/runs-outside-repo/proof.contract.fixture_cbmc_clamp.20261015t134005z.99776bfc/cbmc/differential_c.c",
+          "expected_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "actual_sha256": "7a515a7acc139f04542e9fd0fe80a6dcbd431a0c186fe256529faeb1782600b1"
+        }
+      ]
+    },
+    {
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/pytest/test_a_summary_proof_must_matc3/records/proofs/proof.cbmc-safe.candidate-1.20261015t134029z.a9b1a13a.yaml",
+        "bytes": 5685,
+        "sha256": "0dace3430747b02add94e89f177ba14704e4999281d4864c12d48f8a782c406a"
+      },
+      "id": "proof.cbmc-safe.candidate-1.20261015t134029z.a9b1a13a",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "cbmc-safe.candidate-1",
+        "function": "swdb_fixture_clamp_all"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 2
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "intentionally_mutated_dependency_control": true,
+      "pins": {
+        "contract": {
+          "id": "contract.fixture_cbmc_clamp_all",
+          "sha256": "3c046e31e8a218488d01de9347909302c2da0fd2f133c7263a29f1c6b64d5dce"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        },
+        "summaries": [],
+        "c_lowering": {
+          "id": "swdb_fixture_clamp_all.c",
+          "sha256": "6fad0dc959dd44c677426bcbb9ffccfeb51627e5f3ea43b9ea350891bf11eb8b"
+        }
+      },
+      "setup": {
+        "check": {
+          "version": "1",
+          "sha256": "4ea13f2781aca8490873a498ac4ae7efb49af739ddfe4941689cfdb5e14fc9d0"
+        },
+        "verdict": "passed",
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        }
+      },
+      "reading": {
+        "check": null,
+        "verdict": null
+      },
+      "verifier_launched": false,
+      "summary_bindings": null,
+      "forms": null,
+      "agreement": {
+        "verdict": null,
+        "runs": null,
+        "sampled": null
+      },
+      "goals": 0,
+      "goal_status_counts": {},
+      "artifact_count": 2,
+      "all_artifact_hashes_match": true,
+      "expected_mutated_artifacts": []
+    },
+    {
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/pytest/test_a_summary_proof_must_matc3/records/proofs/proof.contract.fixture_cbmc_clamp.20261015t134026z.addd9cfb.yaml",
+        "bytes": 12660,
+        "sha256": "d2da0b3b303d1f2311c070278bb34a0cc19d3073df7810d50801c418dd9ff976"
+      },
+      "id": "proof.contract.fixture_cbmc_clamp.20261015t134026z.addd9cfb",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.fixture_cbmc_clamp"
+      },
+      "bounds": {
+        "threads": 1
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "intentionally_mutated_dependency_control": true,
+      "pins": {
+        "contract": {
+          "id": "contract.fixture_cbmc_clamp",
+          "sha256": "ef667368d5de66ed7b93861302ab04e2c42b2274eb343097296cf6e3a161d507"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        },
+        "summaries": [],
+        "c_lowering": {
+          "id": "swdb_fixture_clamp.c",
+          "sha256": "4c5c54d2934eae0d55b54830840d4cc6671e96d6f46dff384d8ab307d4959f79"
+        }
+      },
+      "setup": {
+        "check": {
+          "version": "1",
+          "sha256": "4ea13f2781aca8490873a498ac4ae7efb49af739ddfe4941689cfdb5e14fc9d0"
+        },
+        "verdict": "passed",
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        }
+      },
+      "reading": {
+        "check": null,
+        "verdict": null
+      },
+      "verifier_launched": true,
+      "summary_bindings": null,
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "agreement": {
+        "verdict": "agree",
+        "runs": 343,
+        "sampled": false
+      },
+      "goals": 19,
+      "goal_status_counts": {
+        "success": 18,
+        "failure": 1
+      },
+      "artifact_count": 7,
+      "all_artifact_hashes_match": true,
+      "expected_mutated_artifacts": []
+    },
+    {
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/pytest/test_a_summary_proof_must_matc4/records/proofs/proof.cbmc-safe.candidate-1.20261015t134051z.9a655036.yaml",
+        "bytes": 5685,
+        "sha256": "80c6aca0b23165cc1518956513e210c8c93f81b9c2869886d22a8737e748d2db"
+      },
+      "id": "proof.cbmc-safe.candidate-1.20261015t134051z.9a655036",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "cbmc-safe.candidate-1",
+        "function": "swdb_fixture_clamp_all"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 2
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "intentionally_mutated_dependency_control": true,
+      "pins": {
+        "contract": {
+          "id": "contract.fixture_cbmc_clamp_all",
+          "sha256": "3c046e31e8a218488d01de9347909302c2da0fd2f133c7263a29f1c6b64d5dce"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        },
+        "summaries": [],
+        "c_lowering": {
+          "id": "swdb_fixture_clamp_all.c",
+          "sha256": "6fad0dc959dd44c677426bcbb9ffccfeb51627e5f3ea43b9ea350891bf11eb8b"
+        }
+      },
+      "setup": {
+        "check": {
+          "version": "1",
+          "sha256": "4ea13f2781aca8490873a498ac4ae7efb49af739ddfe4941689cfdb5e14fc9d0"
+        },
+        "verdict": "passed",
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        }
+      },
+      "reading": {
+        "check": null,
+        "verdict": null
+      },
+      "verifier_launched": false,
+      "summary_bindings": null,
+      "forms": null,
+      "agreement": {
+        "verdict": null,
+        "runs": null,
+        "sampled": null
+      },
+      "goals": 0,
+      "goal_status_counts": {},
+      "artifact_count": 2,
+      "all_artifact_hashes_match": true,
+      "expected_mutated_artifacts": []
+    },
+    {
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/pytest/test_a_summary_proof_must_matc4/records/proofs/proof.contract.fixture_cbmc_clamp.20261015t134048z.24acb876.yaml",
+        "bytes": 12659,
+        "sha256": "4730f5b2cfc5f956b176fb8b7633c578f0e583a42d30c6d3c229dbd03a3f6f15"
+      },
+      "id": "proof.contract.fixture_cbmc_clamp.20261015t134048z.24acb876",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.fixture_cbmc_clamp"
+      },
+      "bounds": {
+        "threads": 1
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "intentionally_mutated_dependency_control": true,
+      "pins": {
+        "contract": {
+          "id": "contract.fixture_cbmc_clamp",
+          "sha256": "ef667368d5de66ed7b93861302ab04e2c42b2274eb343097296cf6e3a161d507"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        },
+        "summaries": [],
+        "c_lowering": {
+          "id": "swdb_fixture_clamp.c",
+          "sha256": "4c5c54d2934eae0d55b54830840d4cc6671e96d6f46dff384d8ab307d4959f79"
+        }
+      },
+      "setup": {
+        "check": {
+          "version": "1",
+          "sha256": "4ea13f2781aca8490873a498ac4ae7efb49af739ddfe4941689cfdb5e14fc9d0"
+        },
+        "verdict": "passed",
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        }
+      },
+      "reading": {
+        "check": null,
+        "verdict": null
+      },
+      "verifier_launched": true,
+      "summary_bindings": null,
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "agreement": {
+        "verdict": "agree",
+        "runs": 343,
+        "sampled": false
+      },
+      "goals": 19,
+      "goal_status_counts": {
+        "success": 18,
+        "failure": 1
+      },
+      "artifact_count": 7,
+      "all_artifact_hashes_match": true,
+      "expected_mutated_artifacts": []
+    },
+    {
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/pytest/test_wp_keeps_the_checked_gene0/records/proofs/proof.contract.binding_leaf.20261015t134206z.641b25f5.yaml",
+        "bytes": 9315,
+        "sha256": "a5933a37ff9cfe2ea788c578b1f8c49b937259991f3c1f0d4d1e1c0118b35b79"
+      },
+      "id": "proof.contract.binding_leaf.20261015t134206z.641b25f5",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.binding_leaf"
+      },
+      "bounds": {
+        "threads": 1,
+        "input_size": "unbounded"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "intentionally_mutated_dependency_control": false,
+      "pins": {
+        "contract": {
+          "id": "contract.binding_leaf",
+          "sha256": "10e1caf7dfe693aab4922c114aef38b4be17b0791912499bf14173fa27c41fb7"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        },
+        "summaries": [],
+        "c_lowering": {
+          "id": "leaf.c",
+          "sha256": "92b85ee498de23e15af619f153aa7c14617a33f26a2622e473e22a8ba56169a2"
+        }
+      },
+      "setup": {
+        "check": {
+          "version": "1",
+          "sha256": "4ea13f2781aca8490873a498ac4ae7efb49af739ddfe4941689cfdb5e14fc9d0"
+        },
+        "verdict": "passed",
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        }
+      },
+      "reading": {
+        "check": {
+          "version": "1",
+          "sha256": "4ea13f2781aca8490873a498ac4ae7efb49af739ddfe4941689cfdb5e14fc9d0"
+        },
+        "verdict": "proven"
+      },
+      "verifier_launched": null,
+      "summary_bindings": null,
+      "forms": null,
+      "agreement": {
+        "verdict": null,
+        "runs": null,
+        "sampled": null
+      },
+      "goals": 4,
+      "goal_status_counts": {
+        "valid": 4
+      },
+      "artifact_count": 9,
+      "all_artifact_hashes_match": true,
+      "expected_mutated_artifacts": []
+    },
+    {
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-bounded-windows-20261015-0932-node1/pytest/test_wp_keeps_the_checked_gene0/records/proofs/proof.contract.binding_unit.20261015t134208z.19c27c50.yaml",
+        "bytes": 12091,
+        "sha256": "1181b4d0717181c6f59c8406a0ecd373b1264bcd375ff499a283038021014ff0"
+      },
+      "id": "proof.contract.binding_unit.20261015t134208z.19c27c50",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.binding_unit"
+      },
+      "bounds": {
+        "threads": 1,
+        "input_size": "unbounded"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "intentionally_mutated_dependency_control": false,
+      "pins": {
+        "contract": {
+          "id": "contract.binding_unit",
+          "sha256": "d8f689ac5928aede9380a893435b825f451c63f2d4f55b5dfb269916abebd1f5"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        },
+        "summaries": [
+          {
+            "id": "contract.binding_leaf",
+            "sha256": "10e1caf7dfe693aab4922c114aef38b4be17b0791912499bf14173fa27c41fb7",
+            "proof_record": "proof.contract.binding_leaf.20261015t134206z.641b25f5"
+          }
+        ],
+        "c_lowering": {
+          "id": "unit.c",
+          "sha256": "35479a14faacaa9e772bc0ab3bef1194eb6c02505382337b11e89ff1a563de45"
+        }
+      },
+      "setup": {
+        "check": {
+          "version": "1",
+          "sha256": "4ea13f2781aca8490873a498ac4ae7efb49af739ddfe4941689cfdb5e14fc9d0"
+        },
+        "verdict": "passed",
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "6a941a4e91e7c01c8aca7004b5d45881b31bb792c621c20b55b5736a3b39b534"
+        }
+      },
+      "reading": {
+        "check": {
+          "version": "1",
+          "sha256": "4ea13f2781aca8490873a498ac4ae7efb49af739ddfe4941689cfdb5e14fc9d0"
+        },
+        "verdict": "proven"
+      },
+      "verifier_launched": null,
+      "summary_bindings": [
+        {
+          "entry": "contract.binding_leaf",
+          "proof_record": "proof.contract.binding_leaf.20261015t134206z.641b25f5",
+          "source_sha256": "523d0513273c5ee584effe00ac8302d5e93982507c44db6812015a013f686014",
+          "callee_lowering_sha256": "92b85ee498de23e15af619f153aa7c14617a33f26a2622e473e22a8ba56169a2",
+          "proof_lowering_sha256": "92b85ee498de23e15af619f153aa7c14617a33f26a2622e473e22a8ba56169a2",
+          "finite_bounds": {},
+          "call_count": 1,
+          "scope": "equal fresh global callee closure; finite arguments follow from unchanged entry bounds"
+        }
+      ],
+      "forms": null,
+      "agreement": {
+        "verdict": null,
+        "runs": null,
+        "sampled": null
+      },
+      "goals": 11,
+      "goal_status_counts": {
+        "valid": 11
+      },
+      "artifact_count": 9,
+      "all_artifact_hashes_match": true,
+      "expected_mutated_artifacts": []
+    }
+  ],
+  "leases": [
+    {
+      "file": "mbit10-evaluation.meta.json",
+      "active_session": null,
+      "heartbeat_at": "2026-09-12T04:49:11Z",
+      "lease": {
+        "acquired_at": "2026-09-12T01:35:42Z",
+        "daemon_pid": 209457,
+        "daemon_start_token": "sh209457-1789176942",
+        "generation": 77,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation",
+        "mode": "measure",
+        "session_id": null
+      },
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "recovered_from_generation": null,
+      "released_at": "2026-09-12T04:49:11Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    {
+      "file": "mbit10-evaluation-node1.meta.json",
+      "active_session": null,
+      "heartbeat_at": "2026-10-15T13:42:20Z",
+      "lease": {
+        "acquired_at": "2026-10-15T13:32:37Z",
+        "daemon_pid": 3543817,
+        "daemon_start_token": "sh3543817-1792071157",
+        "generation": 596,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node1",
+        "mode": "measure",
+        "session_id": null
+      },
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "recovered_from_generation": null,
+      "released_at": "2026-10-15T13:42:20Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    {
+      "file": "mbit10-evaluation-node0.meta.json",
+      "active_session": null,
+      "heartbeat_at": "2026-10-15T13:35:03Z",
+      "lease": {
+        "acquired_at": "2026-10-15T13:32:37Z",
+        "daemon_pid": 3543807,
+        "daemon_start_token": "sh3543807-1792071157",
+        "generation": 555,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node0",
+        "mode": "measure",
+        "session_id": null
+      },
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "recovered_from_generation": null,
+      "released_at": "2026-10-15T13:35:03Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    }
+  ],
+  "uptime": "09:51:24 up 76 days,  2:10, 10 users,  load average: 0.02, 0.25, 0.52",
+  "disk": [
+    "/dev/sdd1       1.8T  1.7T   21G  99% /data1",
+    "/dev/sdb1       1.8T  1.7T   97G  95% /data"
+  ],
+  "retention": "Raw outputs stay on mbit10 for coordinator/ticket24/36 and independent source audit; compact metadata only exported.",
+  "interpretation": {
+    "date": "2026-10-15 ET",
+    "source_checkpoint": "fddb1462dfb9ff8d7885521bc6edaf367d97a12e",
+    "integration_merge": "45560225d9a0b7afc043809bf48246dd0c232de9",
+    "scope": "Two independent CPU socket jobs, frozen source, one test worker each. Native 132 passed/1 deselected; bounded/source-summary 17 passed. These are checkpoint acceptance results, not complete ticket24/36 acceptance.",
+    "record_audit": "27 retained proof records audited; one deliberately zeroed differential_c hash in the evidence-mutation negative control, all other referenced artifact hashes match. Mutated dependency controls are not accepted proofs.",
+    "policy": "No transferred ARM binaries; source synchronized by Git; raw outputs remain on mbit10.",
+    "audit_note": "The initial audit assertion used an untruncated pytest directory name. The final audit recognizes the actual truncated test_a_summary_proof_must_matc prefix and permits only the intended all-zero expected hash mutation."
+  }
+}

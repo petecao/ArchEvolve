@@ -1,0 +1,40 @@
+{
+  "address_space_bytes": 536870912,
+  "boundary": "No compiler/native/verifier/solver, no remote writes/lease changes. Existing G621 raw and d7 source only; unrelated source9 run on different immutable source may coexist. Full capture is not mathematical or ticket acceptance.",
+  "command": {
+    "bytes": 1299,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-v3/command.json",
+    "sha256": "8e866f34eb836f03d2df16ca8d9e53d319168a4c8a14fb321bb77167482fe23d"
+  },
+  "date": "2026-10-16 ET",
+  "entry": {
+    "bytes": 234555,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-v3/entry.py",
+    "sha256": "6898a2de2267ce14288deaee7c27a6a8c3d17b3bdc6879fcf51a2ad589781bc8"
+  },
+  "exact_remote_command": "/usr/bin/timeout --signal=TERM --kill-after=5 200 /usr/bin/env -i PATH=/usr/bin:/bin HOME=/nonexistent LANG=C LC_ALL=C /usr/bin/python3 -I -B -",
+  "expected_exit": 2,
+  "inner_alarm_seconds": 180,
+  "packet": {
+    "bytes": 5903,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-v3/source-packet.json",
+    "sha256": "9eb7859262ecca6043620c1246e4024c0de19a7aea4dd49e3bc41988c684e9fb"
+  },
+  "preflight": {
+    "bytes": 1922,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-source9-and-cold-v3-root-preflight-20261016.json",
+    "sha256": "caaa8a1c79e7167056139a058b8fc18e49e781f4e4c95ec1bf71794edc1d8124"
+  },
+  "spec": {
+    "bytes": 2440,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-cold-v3-parent-spec-review-20261016.json",
+    "sha256": "138ba5642abced56725b6a13e57c0211d958de49e313deba61ccd1a7dfd16905"
+  },
+  "standards": {
+    "bytes": 1655,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-cold-v3-root-standards-review-20261016.json",
+    "sha256": "18d26a51f83b39be01d12725ea4371dddb179a8e47eae39c5c092f4912584b9f"
+  },
+  "status": "ADMIT_ONCE_PASSIVE_FIRST_CAPTURE_ONLY",
+  "stdout_cap_bytes": 2097152
+}

@@ -1,0 +1,154 @@
+{
+  "created": "2026-10-16 ET",
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5",
+  "actual": {
+    "lane.json": {
+      "socket_lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "command": [
+          "timeout",
+          "--signal=TERM",
+          "--kill-after=60",
+          "1320",
+          "bash",
+          "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/run.sh"
+        ],
+        "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+        "ended_utc": "2026-10-16T19:47:37Z",
+        "exit_code": 0,
+        "host": "mbit10",
+        "job": "probata-resume-20261016-04af74c1-t28-initialized-pair-v5",
+        "lease_generation": 613,
+        "lease_name": "mbit10-evaluation-node0",
+        "load1_at_start": 0.01,
+        "load1_max": 32,
+        "node": 0,
+        "numa_memory_policy": "bind:0",
+        "numactl": "--cpunodebind=0 --membind=0",
+        "preregistration_sha256": null,
+        "started_utc": "2026-10-16T19:42:24Z"
+      }
+    },
+    "outer-resources.json": {
+      "exit_code": 0,
+      "peak_rss_bytes": 1997959168,
+      "out_of_memory": false,
+      "timed_out": false,
+      "wall_seconds": 312.80045202653855,
+      "cpu_seconds": 396.794567
+    },
+    "resources.json": {
+      "cpu_seconds": 334.46351300000003,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 1944481792,
+      "timed_out": false,
+      "wall_seconds": 310.712161869742
+    },
+    "source-after.json": {
+      "commit": "04af74c121a733589fbe1a2087ad602deaef598b",
+      "source_unchanged": true,
+      "tracked_changes": ""
+    }
+  },
+  "records": [
+    {
+      "pin": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/pytest/test_actual_initialized_u32_or0/records/proofs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194320z.17d8a1e8.yaml",
+        "bytes": 14742162,
+        "sha256": "ba307168e4cf18f59afecee5e95177f3f6b8a0aebcc90604d06a37d0716cb09d"
+      },
+      "id": "proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194320z.17d8a1e8",
+      "subject": {
+        "kind": "partial_library_summary",
+        "id": "contract.dx100_initialized_register_partial_fixture.v1"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "method_version": {
+        "id": "method.dx100-initialized-register-partial-fixture-v1",
+        "sha256": "cfe01c982a2a263042ae947e3afae60416743c9809ef9db4732934cf032cb490"
+      },
+      "ordinary_goals": {
+        "valid": 23
+      },
+      "smoke_goals": {
+        "valid": 10
+      },
+      "unproven_properties": [],
+      "proof_setup_verdict": "passed"
+    },
+    {
+      "pin": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/pytest/test_actual_initialized_u32_or1/records/proofs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194501z.d4e9fdf7.yaml",
+        "bytes": 14742869,
+        "sha256": "f1716318e0ecba8af829214f342ed264083a20f9b0343a0e05c2d3c4d0d517ad"
+      },
+      "id": "proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194501z.d4e9fdf7",
+      "subject": {
+        "kind": "partial_library_summary",
+        "id": "contract.dx100_initialized_register_partial_fixture.v1"
+      },
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "method_version": {
+        "id": "method.dx100-initialized-register-partial-fixture-v1",
+        "sha256": "cfe01c982a2a263042ae947e3afae60416743c9809ef9db4732934cf032cb490"
+      },
+      "ordinary_goals": {
+        "valid": 22,
+        "timeout": 1
+      },
+      "smoke_goals": {
+        "valid": 10
+      },
+      "unproven_properties": [
+        {
+          "property": "\\result \u2261 1107",
+          "kind": "postcondition",
+          "function": "trust_fixture",
+          "line": 34,
+          "status": "Unknown",
+          "goal": "typed_real_trust_fixture_ensures",
+          "failure_class": "timeout"
+        },
+        {
+          "property": "trust_fixture_ensures",
+          "goal": "typed_real_trust_fixture_ensures",
+          "status": "timeout",
+          "failure_class": "timeout"
+        }
+      ],
+      "proof_setup_verdict": "passed"
+    }
+  ],
+  "junit": [
+    {
+      "pin": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/junit.xml",
+        "bytes": 582,
+        "sha256": "15c6039c7d351e22dafa212978867de50236bdd09f7662379cf48864bad35d40"
+      },
+      "cases": [
+        {
+          "name": "test_actual_initialized_u32_original_partial_pair[correct-initialized-result]",
+          "classname": "tests.test_dx100_initialized_register_actual",
+          "failed": false,
+          "error": false,
+          "skipped": false
+        },
+        {
+          "name": "test_actual_initialized_u32_original_partial_pair[wrong-crossregister-result]",
+          "classname": "tests.test_dx100_initialized_register_actual",
+          "failed": false,
+          "error": false,
+          "skipped": false
+        }
+      ]
+    }
+  ],
+  "raw_files": 184,
+  "raw_bytes": 62761931,
+  "scope": "Actual two-case workflow completed, positive proven and false-result not_proven. Complete independent cold source/runtime/task/support/init/frame/smoke audit pending; no negative refutation or whole-interface acceptance."
+}

@@ -1,0 +1,38 @@
+{
+  "argv": [
+    "ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=10",
+    "mbit10",
+    "/usr/bin/env",
+    "-i",
+    "HOME=/nonexistent",
+    "PATH=/usr/bin:/bin",
+    "LANG=C",
+    "LC_ALL=C",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "300s",
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-",
+    "--retire-reviewed-1433"
+  ],
+  "date": "2026-10-16 ET",
+  "local_timeout_seconds": 320,
+  "no_actual_invocation_by_preparation": true,
+  "scope": "Source-only Git recovery ref and normal nonforced worktree removal; all raw retained. Root must serialize with protected SSH windows and fresh host preflight.",
+  "status": "INERT_ROOT_REVIEW_AND_ONCE_ADMISSION_REQUIRED",
+  "stderr_max_bytes": 16384,
+  "stdin": {
+    "bytes": 27350,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/retire-1433-source-v1/retirement.py",
+    "sha256": "80210f84476b23add326c10912ebf84e6fbf3965cb1ab04967b9cad4f40a41b2"
+  },
+  "stdout_max_bytes": 65536
+}

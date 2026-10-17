@@ -1,0 +1,27 @@
+{
+  "additive_patch": {
+    "bytes": 4360,
+    "path": "/private/tmp/lanl16-prospective-artifact-receipts-source-draft-20261008-r2/artifact-alias-additive-test-only.patch",
+    "sha256": "d483dce68eaa8f958d9ad978477033be4c2886175327b3bd28c4b0f1d19fe583"
+  },
+  "created_at_utc": "2026-10-09T01:13:52.082613+00:00",
+  "format": "swdb.private-source-draft.v1",
+  "parent_r1_inventory": {
+    "bytes": 2313,
+    "path": "/private/tmp/lanl16-prospective-artifact-receipts-source-draft-20261008-r1/inventory.json",
+    "sha256": "c25463aaf5750b7c8f65d3c217f3e75a6f5fb649521bfe1fa2588ebb4e453629"
+  },
+  "parent_test": {
+    "bytes": 19333,
+    "path": "/private/tmp/lanl16-prospective-artifact-receipts-source-draft-20261008-r1/swdb-project/tests/test_extensa_pairing.py",
+    "sha256": "7ab41c2f25fc6591765f0ec5fda90c4e893491870e46c0510bf642d988897d3e"
+  },
+  "product_design_changes": false,
+  "r2_test": {
+    "bytes": 23294,
+    "path": "/private/tmp/lanl16-prospective-artifact-receipts-source-draft-20261008-r2/swdb-project/tests/test_extensa_pairing.py",
+    "sha256": "0d02f1ee9819262ee9cce95df1bd786a74e050010989946f48b1b071006cd328"
+  },
+  "state": "ADDITIVE_SOURCE_TEST_DRAFT_ONLY_NOT_APPLIED_IMPORTED_OR_RUN",
+  "verification": "Own byte hashing and source AST parse only; no target import, tests, application/control execution or remote actions."
+}

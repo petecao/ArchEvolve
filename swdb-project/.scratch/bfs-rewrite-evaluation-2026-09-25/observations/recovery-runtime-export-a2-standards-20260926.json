@@ -1,0 +1,105 @@
+{
+  "format": "swdb.bfs.recovery-export-standards-review.v2",
+  "date": "2026-09-26",
+  "observed_at": "2026-09-26T22:31:32.256877-04:00",
+  "state": "exact_local_export_review_clean",
+  "commit": "eb2f51d0a02b7d3d1ca9cc02b022a18f1181a3e2",
+  "sole_parent": "d5e215966a7d4d673050a78c6a6d77053aa62a85",
+  "source_commit": "95808829a4f430e2167a9d3e620cdf67cea06a70",
+  "branch": "codex/bfs-recovery-runtime-20260926-a2",
+  "inventory": {
+    "path": "/private/tmp/bfs-recovery-runtime-export-a2-20260926.json",
+    "bytes": 7812,
+    "sha256": "1ce74601f8b16df2b43f4c425563016b5318c52958a1e982147b4d980d64b4c7"
+  },
+  "files": 26,
+  "bytes": 471563,
+  "modes": "100644",
+  "exact_inventory_blob_byte_hash_mode_local_source_match": true,
+  "entire_runtime_test_trees_equal_source": true,
+  "delta_from_blocked37c_exactly_reviewed_five_files": [
+    "docs/bfs-t17-diagnostic-build-20260926.md",
+    "scripts/bfs_scalar_v2_builds.py",
+    "scripts/bfs_t17_diagnostic_build.py",
+    "tests/test_bfs_scalar_v2_builds.py",
+    "tests/test_bfs_t17_diagnostic_build.py"
+  ],
+  "repair_review": {
+    "path": "/private/tmp/bfs-proof-cardinality-standards-recheck-20260926.json",
+    "bytes": 4049,
+    "sha256": "913048915a9f429f5ad81f9512eea418f7884ed6fd2deb01e4cd50fcdaa27a80"
+  },
+  "transitive_static_project_import_modules_present": 95,
+  "fixed_input_file_hashes_verified": {
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/t17-build-only-20260926-a1.json": "de1b10536fa91f675bb3372f9104c10fbf160f952ac9016538c5d38cdb6fc211",
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/t17-diagnostic-build-only-20260926-a1.json": "272def5a75dd974d8fa46b3ccdd56016ea1ddf0f2af545990fc02cc25405e5c1",
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/observations/t17-build-only-terminal-20260926.json": "a124548a4d1e71003faeb895d9e09d1e060933ba41a99f1d9ae282689c886536",
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/scalar-v2-20260926-a1.preparation.json": "055f1b4ef92f74c9d04b24ea6b9542998802686253caebd28d0ee5837e814383"
+  },
+  "scalar_manifest_requests_verified": 4,
+  "fixed_plan_record_anchors_verified": 15,
+  "canonical_record_changes": [],
+  "old_three_plan_files_unchanged": [
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t15-simulator-batch-20260926-a1.json",
+      "sha256": "2163c763fa9d985800ebab24670889c84680ffe76f2c44e7dd692b59f2e1ef99"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t16-simulator-batch-20260926-a1.json",
+      "sha256": "7436deb684d55883c8c8caac9099d021a9c0d6caf5bc00e17943b0e969525a04"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t15-correction-simulator-batch-20260926-a1.json",
+      "sha256": "d93e8c02574e1b2fcf90f8c8b1f79c2c83bd63b81d377e627ede71b7755f7f62"
+    }
+  ],
+  "new_plan_canonical_sha256": "8efb0d32c076280a936ec4da0945c9b0653e3128e41389a3fc3965e86522725e",
+  "held_paths_absent_tree_and_history": [
+    "records/proposals/bfs-campaign-preparation-20260925-a1.dx100-instructions.yaml",
+    "records/candidates/bfs-campaign-preparation-20260925-a1.dx100-instructions.candidate-1.yaml",
+    "records/proposals/bfs-campaign-preparation-20260925-a1.upstream-instructions.yaml",
+    "records/candidates/bfs-campaign-preparation-20260925-a1.upstream-instructions.candidate-1.yaml",
+    "records/proposals/bfs-campaign-preparation-20260925-a1.upstream-annotated.yaml",
+    "docs/evidence/bfs-provider-initial-20260926-a1.yaml",
+    "records/evaluation_pairs/bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.pair.yaml",
+    "records/evaluation_pairs/bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.pair.yaml",
+    "records/evaluation_pairs/bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.pair.yaml",
+    "records/evaluation_pairs/bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.pair.yaml",
+    "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline.yaml",
+    "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.candidate.yaml",
+    "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.baseline.yaml",
+    "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.candidate.yaml",
+    "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline.yaml",
+    "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.candidate.yaml",
+    "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline.yaml",
+    "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.candidate.yaml",
+    "records/profile_packages/bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline.package.v1.122d39652ae0c326.yaml",
+    "records/profile_packages/bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.baseline.package.v1.b8f33855cc6c657e.yaml",
+    "records/profile_packages/bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline.package.v1.f613a3b01a24e380.yaml",
+    "records/profile_packages/bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline.package.v1.ffd9925db46a63a9.yaml",
+    "records/region_profiles/bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline.profile.yaml",
+    "records/region_profiles/bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.baseline.profile.yaml",
+    "records/region_profiles/bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline.profile.yaml",
+    "records/region_profiles/bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline.profile.yaml",
+    "records/source_snapshots/bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline.package.v1.source.yaml",
+    "records/source_snapshots/bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.baseline.package.v1.source.yaml",
+    "records/source_snapshots/bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline.package.v1.source.yaml",
+    "records/source_snapshots/bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline.package.v1.source.yaml"
+  ],
+  "held_commit_absent_rev_list": "5f1b8028619976b36df5fa24b8aacb91bf488168",
+  "sole_added_observation": ".scratch/bfs-rewrite-evaluation-2026-09-25/observations/t17-build-only-terminal-20260926.json",
+  "exact_isolated_validation": {
+    "receipt": {
+      "path": "/private/tmp/bfs-recovery-runtime-isolated-a2-20260926.json",
+      "bytes": 1421,
+      "sha256": "61063b009ce2c6952ec6a6ead8d0e05582440decd26822e6ba4dca0f91afdb65"
+    },
+    "result": "Parent-run exact packet subset:553 passed,10 skipped in43.29s; outer52.1478s; commit unchanged, tracked diff empty. Reviewer did not repeat or modify worktree."
+  },
+  "disposition": "No remaining scoped inventory/dependency blocker. Prior approval rejection persists; no push until new exact payload-specific approval.",
+  "limitations": [
+    "No remote transfer, execution or Linux proof by reviewer",
+    "Future fresh a4 five-case proof plus public interruption proof and prospective charged admission still required",
+    "Inventory/dependency review does not imply empirical qualification or final all-ticket acceptance"
+  ]
+}

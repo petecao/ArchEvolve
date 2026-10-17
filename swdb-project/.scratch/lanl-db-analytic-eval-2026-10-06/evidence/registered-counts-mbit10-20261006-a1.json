@@ -1,0 +1,1327 @@
+{
+  "format": "swdb.registered-counting-compact-receipt.v1",
+  "source_commit": "67f1b3b70a599881e9dd5b423d61ce3d8cc17d67",
+  "raw_directory": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1",
+  "raw_transferred": false,
+  "counts_only": true,
+  "reports": [
+    {
+      "id": "bfs.kron-g16.t4.characterization",
+      "identity_sha256": "9d78d6bc4fb931ca1da21f82f45f4910a9031f50a52643a9198f32e24760edbb",
+      "record_file_sha256": "c829c2a3c97d7af2063d85739f759df347ae5a5c0231a7cc9872e963a44680c3",
+      "record_bytes": 9494360,
+      "counting": {
+        "level": "source_normalized_ir",
+        "passes": [
+          "function(sroa,mem2reg),cgscc(inline),function(loop-simplify)"
+        ],
+        "pipeline_version": "source-normalized-v2",
+        "summary": "per_trial_then_median_time",
+        "native_runs": 1,
+        "basis": "measured",
+        "vector_multiplicity": "instrumented before vectorization and unrolling; existing fixed vectors counted by lane",
+        "operation_definition": "Normalized IR arithmetic/comparison operations; FMA counts two floating-point operations, branches count terminator executions; address and cast instructions excluded.",
+        "loop_definition": "Body entries when the header condition chooses inside/outside; header entries for other loop shapes.",
+        "binary_sha256": "adf2fef82379a7288459fa7cc5d0861523ad9cb5affb5af23a66dd8360be864e",
+        "counts_sha256": "81666d37e4a4441c80dfd46cb982d5978b3e0000cd3f2c0073673b8def488c95",
+        "output_directory": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/bfs/counted"
+      },
+      "binding": {
+        "roi": "gapbs.trial_lambda.v1",
+        "threads": 4,
+        "input_record_sha256": "007414cce3289b38c0107115770d0a3315632092b0264b68b3e16bbdda00c5d9",
+        "source_root_sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056",
+        "run_arguments_sha256": "05b688f1f018a9594b3dfa144db47e70b1bbbcdaaa8be8bd8c2040e8dba24070"
+      },
+      "trials": [
+        {
+          "position": 0,
+          "sources": [
+            64863
+          ],
+          "executed_external_call_inventory": {
+            "llvm.experimental.noalias.scope.decl": {
+              "executions": 114465,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 10,
+              "event": "external_call"
+            },
+            "__kmpc_dispatch_init_4": {
+              "executions": 12,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 1,
+              "event": "openmp"
+            },
+            "__kmpc_dispatch_next_4": {
+              "executions": 204,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 1,
+              "event": "openmp"
+            },
+            "__kmpc_dispatch_deinit": {
+              "executions": 12,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 1,
+              "event": "openmp"
+            },
+            "__kmpc_reduce_nowait": {
+              "executions": 28,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "llvm.umul.with.overflow.i64": {
+              "executions": 24,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 6,
+              "event": "external_call"
+            },
+            "_Znam": {
+              "executions": 24,
+              "known_byte_subtotal": 1851392,
+              "unknown_size_sites": 0,
+              "event": "allocation"
+            },
+            "__kmpc_for_static_init_8": {
+              "executions": 20,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "__kmpc_for_static_fini": {
+              "executions": 32,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 5,
+              "event": "openmp"
+            },
+            "llvm.expect.i64": {
+              "executions": 20,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "external_call"
+            },
+            "llvm.memmove.p0.p0.i64": {
+              "executions": 5,
+              "known_byte_subtotal": 3140,
+              "unknown_size_sites": 0,
+              "event": "bulk_memory"
+            },
+            "_ZdaPv": {
+              "executions": 23,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 5,
+              "event": "external_call"
+            },
+            "__kmpc_for_static_init_4": {
+              "executions": 12,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 3,
+              "event": "openmp"
+            },
+            "_ZNSt6chrono3_V212system_clock3nowEv": {
+              "executions": 20,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 10,
+              "event": "external_call"
+            },
+            "llvm.memcpy.p0.p0.i64": {
+              "executions": 10,
+              "known_byte_subtotal": 80,
+              "unknown_size_sites": 0,
+              "event": "bulk_memory"
+            },
+            "__kmpc_fork_call": {
+              "executions": 11,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 6,
+              "event": "openmp"
+            }
+          }
+        },
+        {
+          "position": 1,
+          "sources": [
+            35711
+          ],
+          "executed_external_call_inventory": {
+            "llvm.experimental.noalias.scope.decl": {
+              "executions": 105634,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 10,
+              "event": "external_call"
+            },
+            "__kmpc_dispatch_init_4": {
+              "executions": 12,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 1,
+              "event": "openmp"
+            },
+            "__kmpc_dispatch_next_4": {
+              "executions": 204,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 1,
+              "event": "openmp"
+            },
+            "__kmpc_dispatch_deinit": {
+              "executions": 12,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 1,
+              "event": "openmp"
+            },
+            "__kmpc_reduce_nowait": {
+              "executions": 28,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "llvm.umul.with.overflow.i64": {
+              "executions": 24,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 6,
+              "event": "external_call"
+            },
+            "_Znam": {
+              "executions": 24,
+              "known_byte_subtotal": 1851392,
+              "unknown_size_sites": 0,
+              "event": "allocation"
+            },
+            "__kmpc_for_static_init_8": {
+              "executions": 20,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "__kmpc_for_static_fini": {
+              "executions": 32,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 5,
+              "event": "openmp"
+            },
+            "llvm.expect.i64": {
+              "executions": 20,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "external_call"
+            },
+            "llvm.memmove.p0.p0.i64": {
+              "executions": 9,
+              "known_byte_subtotal": 11372,
+              "unknown_size_sites": 0,
+              "event": "bulk_memory"
+            },
+            "_ZdaPv": {
+              "executions": 23,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 5,
+              "event": "external_call"
+            },
+            "__kmpc_for_static_init_4": {
+              "executions": 12,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 3,
+              "event": "openmp"
+            },
+            "_ZNSt6chrono3_V212system_clock3nowEv": {
+              "executions": 20,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 10,
+              "event": "external_call"
+            },
+            "llvm.memcpy.p0.p0.i64": {
+              "executions": 10,
+              "known_byte_subtotal": 80,
+              "unknown_size_sites": 0,
+              "event": "bulk_memory"
+            },
+            "__kmpc_fork_call": {
+              "executions": 11,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 6,
+              "event": "openmp"
+            }
+          }
+        },
+        {
+          "position": 2,
+          "sources": [
+            18064
+          ],
+          "executed_external_call_inventory": {
+            "llvm.experimental.noalias.scope.decl": {
+              "executions": 104203,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 10,
+              "event": "external_call"
+            },
+            "__kmpc_dispatch_init_4": {
+              "executions": 12,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 1,
+              "event": "openmp"
+            },
+            "__kmpc_dispatch_next_4": {
+              "executions": 204,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 1,
+              "event": "openmp"
+            },
+            "__kmpc_dispatch_deinit": {
+              "executions": 12,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 1,
+              "event": "openmp"
+            },
+            "__kmpc_reduce_nowait": {
+              "executions": 24,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "llvm.umul.with.overflow.i64": {
+              "executions": 20,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 6,
+              "event": "external_call"
+            },
+            "_Znam": {
+              "executions": 20,
+              "known_byte_subtotal": 1589248,
+              "unknown_size_sites": 0,
+              "event": "allocation"
+            },
+            "__kmpc_for_static_init_8": {
+              "executions": 16,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "__kmpc_for_static_fini": {
+              "executions": 28,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 5,
+              "event": "openmp"
+            },
+            "llvm.expect.i64": {
+              "executions": 16,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "external_call"
+            },
+            "llvm.memmove.p0.p0.i64": {
+              "executions": 9,
+              "known_byte_subtotal": 13700,
+              "unknown_size_sites": 0,
+              "event": "bulk_memory"
+            },
+            "_ZdaPv": {
+              "executions": 19,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 5,
+              "event": "external_call"
+            },
+            "__kmpc_for_static_init_4": {
+              "executions": 12,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 3,
+              "event": "openmp"
+            },
+            "_ZNSt6chrono3_V212system_clock3nowEv": {
+              "executions": 18,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 10,
+              "event": "external_call"
+            },
+            "llvm.memcpy.p0.p0.i64": {
+              "executions": 9,
+              "known_byte_subtotal": 72,
+              "unknown_size_sites": 0,
+              "event": "bulk_memory"
+            },
+            "__kmpc_fork_call": {
+              "executions": 10,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 6,
+              "event": "openmp"
+            }
+          }
+        },
+        {
+          "position": 3,
+          "sources": [
+            30164
+          ],
+          "executed_external_call_inventory": {
+            "llvm.experimental.noalias.scope.decl": {
+              "executions": 82178,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 10,
+              "event": "external_call"
+            },
+            "__kmpc_dispatch_init_4": {
+              "executions": 8,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 1,
+              "event": "openmp"
+            },
+            "__kmpc_dispatch_next_4": {
+              "executions": 136,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 1,
+              "event": "openmp"
+            },
+            "__kmpc_dispatch_deinit": {
+              "executions": 8,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 1,
+              "event": "openmp"
+            },
+            "__kmpc_reduce_nowait": {
+              "executions": 24,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "llvm.umul.with.overflow.i64": {
+              "executions": 24,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 6,
+              "event": "external_call"
+            },
+            "_Znam": {
+              "executions": 24,
+              "known_byte_subtotal": 1851392,
+              "unknown_size_sites": 0,
+              "event": "allocation"
+            },
+            "__kmpc_for_static_init_8": {
+              "executions": 20,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "__kmpc_for_static_fini": {
+              "executions": 32,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 5,
+              "event": "openmp"
+            },
+            "llvm.expect.i64": {
+              "executions": 20,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "external_call"
+            },
+            "llvm.memmove.p0.p0.i64": {
+              "executions": 13,
+              "known_byte_subtotal": 36916,
+              "unknown_size_sites": 0,
+              "event": "bulk_memory"
+            },
+            "_ZdaPv": {
+              "executions": 23,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 5,
+              "event": "external_call"
+            },
+            "__kmpc_for_static_init_4": {
+              "executions": 12,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 3,
+              "event": "openmp"
+            },
+            "_ZNSt6chrono3_V212system_clock3nowEv": {
+              "executions": 18,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 10,
+              "event": "external_call"
+            },
+            "llvm.memcpy.p0.p0.i64": {
+              "executions": 9,
+              "known_byte_subtotal": 72,
+              "unknown_size_sites": 0,
+              "event": "bulk_memory"
+            },
+            "__kmpc_fork_call": {
+              "executions": 10,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 6,
+              "event": "openmp"
+            }
+          }
+        },
+        {
+          "position": 4,
+          "sources": [
+            1014
+          ],
+          "executed_external_call_inventory": {
+            "llvm.experimental.noalias.scope.decl": {
+              "executions": 74780,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 10,
+              "event": "external_call"
+            },
+            "__kmpc_dispatch_init_4": {
+              "executions": 8,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 1,
+              "event": "openmp"
+            },
+            "__kmpc_dispatch_next_4": {
+              "executions": 136,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 1,
+              "event": "openmp"
+            },
+            "__kmpc_dispatch_deinit": {
+              "executions": 8,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 1,
+              "event": "openmp"
+            },
+            "__kmpc_reduce_nowait": {
+              "executions": 24,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "llvm.umul.with.overflow.i64": {
+              "executions": 24,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 6,
+              "event": "external_call"
+            },
+            "_Znam": {
+              "executions": 24,
+              "known_byte_subtotal": 1851392,
+              "unknown_size_sites": 0,
+              "event": "allocation"
+            },
+            "__kmpc_for_static_init_8": {
+              "executions": 20,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "__kmpc_for_static_fini": {
+              "executions": 32,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 5,
+              "event": "openmp"
+            },
+            "llvm.expect.i64": {
+              "executions": 20,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "external_call"
+            },
+            "llvm.memmove.p0.p0.i64": {
+              "executions": 13,
+              "known_byte_subtotal": 52128,
+              "unknown_size_sites": 0,
+              "event": "bulk_memory"
+            },
+            "_ZdaPv": {
+              "executions": 23,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 5,
+              "event": "external_call"
+            },
+            "__kmpc_for_static_init_4": {
+              "executions": 12,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 3,
+              "event": "openmp"
+            },
+            "_ZNSt6chrono3_V212system_clock3nowEv": {
+              "executions": 18,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 10,
+              "event": "external_call"
+            },
+            "llvm.memcpy.p0.p0.i64": {
+              "executions": 9,
+              "known_byte_subtotal": 72,
+              "unknown_size_sites": 0,
+              "event": "bulk_memory"
+            },
+            "__kmpc_fork_call": {
+              "executions": 10,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 6,
+              "event": "openmp"
+            }
+          }
+        }
+      ],
+      "pattern_comparisons": 13,
+      "unmapped_loops": 129,
+      "lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "command": [
+          "timeout",
+          "--signal=TERM",
+          "--kill-after=60",
+          "2100",
+          "bash",
+          "/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/bfs/job.sh"
+        ],
+        "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+        "ended_utc": "2026-10-06T21:25:28Z",
+        "exit_code": 0,
+        "host": "mbit10",
+        "job": "swdb-lanl-count-bfs-20261006-a1",
+        "lease_generation": 469,
+        "lease_name": "mbit10-evaluation-node0",
+        "load1_at_start": 1.2,
+        "load1_max": 32,
+        "node": 0,
+        "numa_memory_policy": "bind:0",
+        "numactl": "--cpunodebind=0 --membind=0",
+        "preregistration_sha256": null,
+        "started_utc": "2026-10-06T21:24:08Z"
+      },
+      "validation": "OK: 554 record(s) valid",
+      "estimate_state": "pending frozen measured target with typed calibration lineage"
+    },
+    {
+      "id": "bc.kron-g16.t4.characterization",
+      "identity_sha256": "8854ebbeb2a6fbd20b7dec8bbde7497de0d3b0cde1277c14ebe7310d75f9d8e0",
+      "record_file_sha256": "c22a1262492f06916227c21a202217460439c7fc2f434bf34d6f088c118689d2",
+      "record_bytes": 11533284,
+      "counting": {
+        "level": "source_normalized_ir",
+        "passes": [
+          "function(sroa,mem2reg),cgscc(inline),function(loop-simplify)"
+        ],
+        "pipeline_version": "source-normalized-v2",
+        "summary": "per_trial_then_median_time",
+        "native_runs": 1,
+        "basis": "measured",
+        "vector_multiplicity": "instrumented before vectorization and unrolling; existing fixed vectors counted by lane",
+        "operation_definition": "Normalized IR arithmetic/comparison operations; FMA counts two floating-point operations, branches count terminator executions; address and cast instructions excluded.",
+        "loop_definition": "Body entries when the header condition chooses inside/outside; header entries for other loop shapes.",
+        "binary_sha256": "6d429589def7f84865a4018b452a1085140274b6795e16e93a369e6d18bc2269",
+        "counts_sha256": "dc199c920d6d607a9e86daf18d32dd4c52356492c078f7354b49bb0ca94b9b55",
+        "output_directory": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/bc/counted"
+      },
+      "binding": {
+        "roi": "gapbs.trial_lambda.v1",
+        "threads": 4,
+        "input_record_sha256": "007414cce3289b38c0107115770d0a3315632092b0264b68b3e16bbdda00c5d9",
+        "source_root_sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056",
+        "run_arguments_sha256": "4704416cde3f41af1996c337813c03b5f73b46811746b928f3873dce265e7693"
+      },
+      "trials": [
+        {
+          "position": 0,
+          "sources": [
+            64863
+          ],
+          "executed_external_call_inventory": {
+            "llvm.umul.with.overflow.i64": {
+              "executions": 10,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 7,
+              "event": "external_call"
+            },
+            "_Znam": {
+              "executions": 10,
+              "known_byte_subtotal": 2062424,
+              "unknown_size_sites": 0,
+              "event": "allocation"
+            },
+            "__kmpc_fork_call": {
+              "executions": 15,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 8,
+              "event": "openmp"
+            },
+            "llvm.experimental.noalias.scope.decl": {
+              "executions": 93439,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 12,
+              "event": "external_call"
+            },
+            "_ZdaPv": {
+              "executions": 9,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 6,
+              "event": "external_call"
+            },
+            "__kmpc_dispatch_init_8": {
+              "executions": 56,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "__kmpc_dispatch_next_8": {
+              "executions": 1526,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "__kmpc_dispatch_deinit": {
+              "executions": 56,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "llvm.expect.i64": {
+              "executions": 33,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "external_call"
+            },
+            "llvm.memmove.p0.p0.i64": {
+              "executions": 17,
+              "known_byte_subtotal": 186860,
+              "unknown_size_sites": 0,
+              "event": "bulk_memory"
+            },
+            "__kmpc_barrier": {
+              "executions": 56,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "__kmpc_single": {
+              "executions": 28,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 1,
+              "event": "openmp"
+            },
+            "__kmpc_end_single": {
+              "executions": 7,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 1,
+              "event": "openmp"
+            },
+            "__kmpc_for_static_init_8": {
+              "executions": 16,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 3,
+              "event": "openmp"
+            },
+            "__kmpc_for_static_fini": {
+              "executions": 24,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 5,
+              "event": "openmp"
+            },
+            "_Znwm": {
+              "executions": 5,
+              "known_byte_subtotal": 248,
+              "unknown_size_sites": 0,
+              "event": "allocation"
+            },
+            "_ZdlPv": {
+              "executions": 5,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "external_call"
+            },
+            "_ZNSt6chrono3_V212system_clock3nowEv": {
+              "executions": 6,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 6,
+              "event": "external_call"
+            },
+            "llvm.memcpy.p0.p0.i64": {
+              "executions": 3,
+              "known_byte_subtotal": 24,
+              "unknown_size_sites": 0,
+              "event": "bulk_memory"
+            },
+            "__kmpc_for_static_init_4": {
+              "executions": 8,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "__kmpc_reduce_nowait": {
+              "executions": 4,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 1,
+              "event": "openmp"
+            }
+          }
+        },
+        {
+          "position": 1,
+          "sources": [
+            35711
+          ],
+          "executed_external_call_inventory": {
+            "llvm.umul.with.overflow.i64": {
+              "executions": 10,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 7,
+              "event": "external_call"
+            },
+            "_Znam": {
+              "executions": 10,
+              "known_byte_subtotal": 2062424,
+              "unknown_size_sites": 0,
+              "event": "allocation"
+            },
+            "__kmpc_fork_call": {
+              "executions": 15,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 8,
+              "event": "openmp"
+            },
+            "llvm.experimental.noalias.scope.decl": {
+              "executions": 93439,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 12,
+              "event": "external_call"
+            },
+            "_ZdaPv": {
+              "executions": 9,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 6,
+              "event": "external_call"
+            },
+            "__kmpc_dispatch_init_8": {
+              "executions": 56,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "__kmpc_dispatch_next_8": {
+              "executions": 1524,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "__kmpc_dispatch_deinit": {
+              "executions": 56,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "llvm.expect.i64": {
+              "executions": 33,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "external_call"
+            },
+            "llvm.memmove.p0.p0.i64": {
+              "executions": 18,
+              "known_byte_subtotal": 186864,
+              "unknown_size_sites": 0,
+              "event": "bulk_memory"
+            },
+            "__kmpc_barrier": {
+              "executions": 56,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "__kmpc_single": {
+              "executions": 28,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 1,
+              "event": "openmp"
+            },
+            "__kmpc_end_single": {
+              "executions": 7,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 1,
+              "event": "openmp"
+            },
+            "__kmpc_for_static_init_8": {
+              "executions": 16,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 3,
+              "event": "openmp"
+            },
+            "__kmpc_for_static_fini": {
+              "executions": 24,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 5,
+              "event": "openmp"
+            },
+            "_Znwm": {
+              "executions": 5,
+              "known_byte_subtotal": 248,
+              "unknown_size_sites": 0,
+              "event": "allocation"
+            },
+            "_ZdlPv": {
+              "executions": 5,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "external_call"
+            },
+            "_ZNSt6chrono3_V212system_clock3nowEv": {
+              "executions": 6,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 6,
+              "event": "external_call"
+            },
+            "llvm.memcpy.p0.p0.i64": {
+              "executions": 3,
+              "known_byte_subtotal": 24,
+              "unknown_size_sites": 0,
+              "event": "bulk_memory"
+            },
+            "__kmpc_for_static_init_4": {
+              "executions": 8,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "__kmpc_reduce_nowait": {
+              "executions": 4,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 1,
+              "event": "openmp"
+            }
+          }
+        },
+        {
+          "position": 2,
+          "sources": [
+            18064
+          ],
+          "executed_external_call_inventory": {
+            "llvm.umul.with.overflow.i64": {
+              "executions": 10,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 7,
+              "event": "external_call"
+            },
+            "_Znam": {
+              "executions": 10,
+              "known_byte_subtotal": 2062424,
+              "unknown_size_sites": 0,
+              "event": "allocation"
+            },
+            "__kmpc_fork_call": {
+              "executions": 14,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 8,
+              "event": "openmp"
+            },
+            "llvm.experimental.noalias.scope.decl": {
+              "executions": 93435,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 12,
+              "event": "external_call"
+            },
+            "_ZdaPv": {
+              "executions": 9,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 6,
+              "event": "external_call"
+            },
+            "__kmpc_dispatch_init_8": {
+              "executions": 48,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "__kmpc_dispatch_next_8": {
+              "executions": 1516,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "__kmpc_dispatch_deinit": {
+              "executions": 48,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "llvm.expect.i64": {
+              "executions": 28,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "external_call"
+            },
+            "llvm.memmove.p0.p0.i64": {
+              "executions": 17,
+              "known_byte_subtotal": 186804,
+              "unknown_size_sites": 0,
+              "event": "bulk_memory"
+            },
+            "__kmpc_barrier": {
+              "executions": 48,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "__kmpc_single": {
+              "executions": 24,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 1,
+              "event": "openmp"
+            },
+            "__kmpc_end_single": {
+              "executions": 6,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 1,
+              "event": "openmp"
+            },
+            "__kmpc_for_static_init_8": {
+              "executions": 16,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 3,
+              "event": "openmp"
+            },
+            "__kmpc_for_static_fini": {
+              "executions": 24,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 5,
+              "event": "openmp"
+            },
+            "_Znwm": {
+              "executions": 4,
+              "known_byte_subtotal": 120,
+              "unknown_size_sites": 0,
+              "event": "allocation"
+            },
+            "_ZdlPv": {
+              "executions": 4,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "external_call"
+            },
+            "_ZNSt6chrono3_V212system_clock3nowEv": {
+              "executions": 6,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 6,
+              "event": "external_call"
+            },
+            "llvm.memcpy.p0.p0.i64": {
+              "executions": 3,
+              "known_byte_subtotal": 24,
+              "unknown_size_sites": 0,
+              "event": "bulk_memory"
+            },
+            "__kmpc_for_static_init_4": {
+              "executions": 8,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "__kmpc_reduce_nowait": {
+              "executions": 4,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 1,
+              "event": "openmp"
+            }
+          }
+        },
+        {
+          "position": 3,
+          "sources": [
+            30164
+          ],
+          "executed_external_call_inventory": {
+            "llvm.umul.with.overflow.i64": {
+              "executions": 10,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 7,
+              "event": "external_call"
+            },
+            "_Znam": {
+              "executions": 10,
+              "known_byte_subtotal": 2062424,
+              "unknown_size_sites": 0,
+              "event": "allocation"
+            },
+            "__kmpc_fork_call": {
+              "executions": 14,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 8,
+              "event": "openmp"
+            },
+            "llvm.experimental.noalias.scope.decl": {
+              "executions": 93435,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 12,
+              "event": "external_call"
+            },
+            "_ZdaPv": {
+              "executions": 9,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 6,
+              "event": "external_call"
+            },
+            "__kmpc_dispatch_init_8": {
+              "executions": 48,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "__kmpc_dispatch_next_8": {
+              "executions": 1516,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "__kmpc_dispatch_deinit": {
+              "executions": 48,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "llvm.expect.i64": {
+              "executions": 28,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "external_call"
+            },
+            "llvm.memmove.p0.p0.i64": {
+              "executions": 17,
+              "known_byte_subtotal": 186804,
+              "unknown_size_sites": 0,
+              "event": "bulk_memory"
+            },
+            "__kmpc_barrier": {
+              "executions": 48,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "__kmpc_single": {
+              "executions": 24,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 1,
+              "event": "openmp"
+            },
+            "__kmpc_end_single": {
+              "executions": 6,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 1,
+              "event": "openmp"
+            },
+            "__kmpc_for_static_init_8": {
+              "executions": 16,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 3,
+              "event": "openmp"
+            },
+            "__kmpc_for_static_fini": {
+              "executions": 24,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 5,
+              "event": "openmp"
+            },
+            "_Znwm": {
+              "executions": 4,
+              "known_byte_subtotal": 120,
+              "unknown_size_sites": 0,
+              "event": "allocation"
+            },
+            "_ZdlPv": {
+              "executions": 4,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "external_call"
+            },
+            "_ZNSt6chrono3_V212system_clock3nowEv": {
+              "executions": 6,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 6,
+              "event": "external_call"
+            },
+            "llvm.memcpy.p0.p0.i64": {
+              "executions": 3,
+              "known_byte_subtotal": 24,
+              "unknown_size_sites": 0,
+              "event": "bulk_memory"
+            },
+            "__kmpc_for_static_init_4": {
+              "executions": 8,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "__kmpc_reduce_nowait": {
+              "executions": 4,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 1,
+              "event": "openmp"
+            }
+          }
+        },
+        {
+          "position": 4,
+          "sources": [
+            1014
+          ],
+          "executed_external_call_inventory": {
+            "llvm.umul.with.overflow.i64": {
+              "executions": 10,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 7,
+              "event": "external_call"
+            },
+            "_Znam": {
+              "executions": 10,
+              "known_byte_subtotal": 2062424,
+              "unknown_size_sites": 0,
+              "event": "allocation"
+            },
+            "__kmpc_fork_call": {
+              "executions": 14,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 8,
+              "event": "openmp"
+            },
+            "llvm.experimental.noalias.scope.decl": {
+              "executions": 93435,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 12,
+              "event": "external_call"
+            },
+            "_ZdaPv": {
+              "executions": 9,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 6,
+              "event": "external_call"
+            },
+            "__kmpc_dispatch_init_8": {
+              "executions": 48,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "__kmpc_dispatch_next_8": {
+              "executions": 1514,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "__kmpc_dispatch_deinit": {
+              "executions": 48,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "llvm.expect.i64": {
+              "executions": 28,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "external_call"
+            },
+            "llvm.memmove.p0.p0.i64": {
+              "executions": 15,
+              "known_byte_subtotal": 186796,
+              "unknown_size_sites": 0,
+              "event": "bulk_memory"
+            },
+            "__kmpc_barrier": {
+              "executions": 48,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "__kmpc_single": {
+              "executions": 24,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 1,
+              "event": "openmp"
+            },
+            "__kmpc_end_single": {
+              "executions": 6,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 1,
+              "event": "openmp"
+            },
+            "__kmpc_for_static_init_8": {
+              "executions": 16,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 3,
+              "event": "openmp"
+            },
+            "__kmpc_for_static_fini": {
+              "executions": 24,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 5,
+              "event": "openmp"
+            },
+            "_Znwm": {
+              "executions": 4,
+              "known_byte_subtotal": 120,
+              "unknown_size_sites": 0,
+              "event": "allocation"
+            },
+            "_ZdlPv": {
+              "executions": 4,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "external_call"
+            },
+            "_ZNSt6chrono3_V212system_clock3nowEv": {
+              "executions": 6,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 6,
+              "event": "external_call"
+            },
+            "llvm.memcpy.p0.p0.i64": {
+              "executions": 3,
+              "known_byte_subtotal": 24,
+              "unknown_size_sites": 0,
+              "event": "bulk_memory"
+            },
+            "__kmpc_for_static_init_4": {
+              "executions": 8,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 2,
+              "event": "openmp"
+            },
+            "__kmpc_reduce_nowait": {
+              "executions": 4,
+              "known_byte_subtotal": 0,
+              "unknown_size_sites": 1,
+              "event": "openmp"
+            }
+          }
+        }
+      ],
+      "pattern_comparisons": 20,
+      "unmapped_loops": 165,
+      "lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "command": [
+          "timeout",
+          "--signal=TERM",
+          "--kill-after=60",
+          "2100",
+          "bash",
+          "/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/bc/job.sh"
+        ],
+        "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+        "ended_utc": "2026-10-06T21:28:04Z",
+        "exit_code": 0,
+        "host": "mbit10",
+        "job": "swdb-lanl-count-bc-20261006-a1",
+        "lease_generation": 528,
+        "lease_name": "mbit10-evaluation-node1",
+        "load1_at_start": 1.2,
+        "load1_max": 32,
+        "node": 1,
+        "numa_memory_policy": "bind:1",
+        "numactl": "--cpunodebind=1 --membind=1",
+        "preregistration_sha256": null,
+        "started_utc": "2026-10-06T21:24:08Z"
+      },
+      "validation": "OK: 554 record(s) valid",
+      "estimate_state": "pending frozen measured target with typed calibration lineage"
+    }
+  ],
+  "limitations": [
+    "No native timing from instrumented execution is used as performance evidence.",
+    "Per-trial distinct worker identities show participation, not instantaneous concurrency.",
+    "Known operation/address counts do not supply missing runtime-call costs or a validated CPU error band.",
+    "Initial compiler intrinsic annotations are conservatively reported as missing external costs; corrected source will retain this original receipt and rerun counting."
+  ]
+}

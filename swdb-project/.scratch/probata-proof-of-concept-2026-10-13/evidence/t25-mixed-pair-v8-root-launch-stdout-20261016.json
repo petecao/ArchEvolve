@@ -1,0 +1,45 @@
+{
+  "launch": {
+    "created_utc": "2026-10-16T22:04:42.641175+00:00",
+    "source": "/data1/yanruj/probata-resume-20261016-36266e10",
+    "source_commit": "36266e101e0484f3c2cf5f3fae4322d5de648d85",
+    "node": 0,
+    "command": [
+      "/data1/yanruj/probata-verifiers/opam-2.6.1/opam",
+      "exec",
+      "--switch=framac-33",
+      "--",
+      "/data1/yanruj/venvs/swdb-test/bin/python",
+      "-I",
+      "-B",
+      "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/control/entry.py",
+      "/data1/yanruj/probata-resume-20261016-36266e10/swdb-project",
+      "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8",
+      "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/control/policy.json",
+      "0e7df71c422e83137d9fc18737233c756dab772cd3aca5b495008dc1f5a20f97"
+    ],
+    "timeout_seconds": 1200,
+    "rss_cap_bytes": 8589934592,
+    "workers": 1,
+    "rss_scope": "outer watchdog covers worker bootstrap, compiler provenance probes, inner monitor and proof process tree; trusted outer monitor excluded",
+    "planned_raw_budget_bytes": 268435456,
+    "raw_budget_enforcement": "coordinator monitors; not a filesystem quota",
+    "readers": [
+      "root",
+      "ticket25",
+      "lane_coordination"
+    ],
+    "log_name": "acceptance.log",
+    "reviewed_wrapper_reuse": {
+      "execute.py": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612",
+      "watch.py": "4485ae66aa50c65f2b579f84836576aa67b54431978da71cac6eea6a68ecd07c"
+    }
+  },
+  "output": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8",
+  "session": "probata-resume-20261016-36266e10-mixed-pair-public-v8",
+  "wrapper": {
+    "sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8",
+    "fetched_commit": "41f22f0ba765adcd4f4188aca91009ea0fe5a22b"
+  }
+}
+

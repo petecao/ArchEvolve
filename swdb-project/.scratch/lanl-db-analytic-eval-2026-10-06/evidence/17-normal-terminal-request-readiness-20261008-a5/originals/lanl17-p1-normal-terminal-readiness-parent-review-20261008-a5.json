@@ -1,0 +1,36 @@
+{
+  "dated_et": "2026-10-08 14:37 ET",
+  "format": "swdb.lanl17-parent-source-only-review.v1",
+  "independent_review": "review_plan source-only PASS delivered as collaboration messages; no separate peer control/test/runtime receipt",
+  "next_gate": "actual normal terminal + fresh R2release_ready511 AND normal_exit_set_only, actual four originals, fresh live source/nativewrapper/gen checks/no reuse; release32 then before/afterB08 fresh native checks; later strict trajectory/science admission",
+  "root_checks": [
+    "exact6 inherited ASTs",
+    "inline terminal source exact",
+    "closed normal metadata before byteexport",
+    "four stable byte/stat snapshots",
+    "R3 exact narrow inverse against R2",
+    "private local source permissions observed",
+    "seven input/three observation/request descriptor schemas and original writer bindings",
+    "freshness<=300s exclusive local OEXCL outputs",
+    "root actual native wrapper physical original10510/00c269,0777 owned/nlink1; generic private pin would refuse",
+    "producer32 exact writer hash/size and final rehash retained; fresh wrapper check before32 required"
+  ],
+  "runtime": "normal terminal reader/local request finalizer/producer32/B08 AFTER remain NOTRUN; root nativewrapper physical query was actually run read-only14:29; active monitor/process originals retained",
+  "scientific_admission": false,
+  "sealed": false,
+  "selected_finalizer": {
+    "bytes": 18274,
+    "path": "/private/tmp/lanl17_finalize_p1_normal_release_request_20261008_a5_r3.py",
+    "sha256": "47ec23095ba8ff40f98f1dffb720f387199240bba90d98f91f5545d33689df5c"
+  },
+  "selected_terminal_config": {
+    "bytes": 9134,
+    "path": "/private/tmp/lanl17-p1-terminal-metadata-reader-action-draft-r3-20261008-a5.json",
+    "sha256": "e6479716065ff7fc624d0b89ed59eb2b1857469ff7b5eb224c9774638085a6d3"
+  },
+  "selected_terminal_reader": {
+    "bytes": 7544,
+    "path": "/private/tmp/lanl17_read_p1_normal_terminal_originals_20261008_a5_r1.py",
+    "sha256": "bdf2f6bbe2893549f04ab41bbb06ffd0d698603e17098bc1aca0842f5eaf47e7"
+  }
+}

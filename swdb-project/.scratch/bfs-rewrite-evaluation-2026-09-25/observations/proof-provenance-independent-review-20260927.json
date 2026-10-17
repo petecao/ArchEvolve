@@ -1,0 +1,29 @@
+{
+  "observed_at": "2026-09-27T00:44:58.231982-04:00",
+  "state": "scoped_reader_repair_pass",
+  "files": {
+    "scripts/bfs_simulator_batch.py": "0ffcc7ef83b0be924d8f3c793110e112c9c5e8e6515547f2e233909b5e425183",
+    "scripts/bfs_simulator_recovery.py": "bea576ee47e69b56cd33d9d048a041a03613d48f34b59dc78e2603e0347ec64c",
+    "tests/test_bfs_simulator_recovery.py": "9f19ee93d39776b929e4865a0cf0c768a7acc90d9254052526eb3f5b9c0c71b3",
+    "docs/bfs-supervision-recovery-20260926.md": "cb569f488ac14405dbc4b05706698d0eec65be981d25ad168bc23494f54b2c09",
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t15-supervision-recovery-simulator-batch-20260926-a1.json": "f53081981bb3116f57b65a6b48471d9f7ed5a39a81cc64c1e926f58eab4e34cb",
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t16-supervision-recovery-simulator-batch-20260926-a1.json": "c3503db2f65421321d3c53c72069f82e205fea51bdf156811745882e5513b148"
+  },
+  "tests": {
+    "result": "333 passed,7 Linux skips in2.95s",
+    "log": "/private/tmp/bfs-proof-provenance-independent-20260927.log",
+    "sha256": "d60b8d9694ab3d05b0076854e2e82c61651c732da828ad2d3a41343ba9f958f1"
+  },
+  "independent_checks": [
+    "157entry immutableoldruntime map independentlyrecomputedfrom8cbGitblobs",
+    "All155nonconsumer runtime dependency singlehash mutations rejected",
+    "Bothnewplans equaloldGitJSON afterremoving onlylinux_proof_provenance",
+    "Supplementretainedargv untouched; canonicalPythonfilehash reopens; standardcurrentruntimevalidate_inputs unchanged",
+    "Oldproofcommit remainsdistinctfromcurrentexecution; no fixture rerun, refunds ordeadlinechanges"
+  ],
+  "limits": [
+    "Actualremote oldgroup compatibility onnewreader remains to verify after Gitdelivery",
+    "No source transfer outsideGit and no rawproof mutations",
+    "Not finalwhole-task review"
+  ]
+}

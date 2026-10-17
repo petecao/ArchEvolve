@@ -1,0 +1,34 @@
+{
+  "argv": [
+    "/usr/bin/env",
+    "-i",
+    "PATH=/usr/bin:/bin",
+    "HOME=/data1/yanruj/probata-verifiers/home",
+    "LANG=C",
+    "LC_ALL=C",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "/data1/yanruj/venvs/swdb-test/bin/python",
+    "-I",
+    "-B",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-native86-cold-context-v1/native86_cold_audit.py",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-native86-cold-context-v1/native86-cold-policy-admitted-v1.json",
+    "dba459b1bb7b4c2c0fe50751ffe1695819a69a7225ff5e97d1aef3a735654565"
+  ],
+  "classification": "PREPARED_PASSIVE_INVOCATION_PENDING_ROOT_ADMISSION",
+  "context_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-native86-cold-context-v1",
+  "date": "2026-10-16 ET",
+  "environment": {
+    "HOME": "/data1/yanruj/probata-verifiers/home",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "policy": {
+    "bytes": 13271,
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-native86-cold-context-v1/native86-cold-policy-admitted-v1.json",
+    "sha256": "dba459b1bb7b4c2c0fe50751ffe1695819a69a7225ff5e97d1aef3a735654565"
+  },
+  "scientific_reexecution": false,
+  "stdout_only": "compact reader metadata; no output written into original measurement raw"
+}

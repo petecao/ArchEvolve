@@ -1,0 +1,49 @@
+kind: intrinsic
+id: intrinsic.dxc_alu_scalar.functional-v1
+intrinsic_record: dxc_alu_scalar.functional-v1
+provenance:
+  origin:
+    source_configuration: Pinned source-only functional view, created 2026-10-06 ET
+  normalized_wrapper:
+    root: library
+    path: dx100/dxc_lowering.hpp
+    sha256: 7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c
+  functional_api:
+    root: project
+    path: apps/dx100/benchmarks/API/MAA_functional.hpp
+    sha256: ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc
+signature: void __dxc_alu_scalar(int src,int reg,int dst,Operation_t op)
+intent: Source-pinned functional semantic event for analytic observation.
+reference_semantics:
+  root: library
+  path: dx100/reference.hpp
+  sha256: 75b80bc3d0027b1700e2fc1f075683e617d059ca4bbef761bfeb31839d9fa897
+  symbol: alu_scalar
+hardware_operations:
+- dx100.functional.v1.alu_scalar
+memory_footprint:
+  reads: []
+  private_state: Emulator register/tile accesses are bookkeeping, not additional application
+    DRAM requests.
+completion:
+  mode: functional_source_semantics
+  host_concurrency: unknown
+lowerings:
+- lowering.dxc_alu_scalar.functional-v1.dx100-functional-source.1.0-e4fc4af
+clauses:
+- id: source-semantics
+  role: postcondition
+  statement: The FUNC-selected wrapper delegates to the pinned functional API; this
+    entry declares no executed certification or hardware visibility.
+  discharge_mode: open
+  negative_control:
+    id: none
+    reason: This source-only entry has no newly discharged execution claim.
+  formal:
+    language: reference
+    reference:
+      root: library
+      path: dx100/reference.hpp
+      sha256: 75b80bc3d0027b1700e2fc1f075683e617d059ca4bbef761bfeb31839d9fa897
+      symbol: alu_scalar
+  formal_label: stated

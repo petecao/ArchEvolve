@@ -1,0 +1,134 @@
+{
+  "acceptance": {
+    "actual_four_model_proofs": false,
+    "caller": false,
+    "default_catalog": false,
+    "ticket25": false
+  },
+  "author_pure_controls": {
+    "GREEN_errors": 0,
+    "GREEN_passed": 18,
+    "RED_errors": 0,
+    "RED_failures": 15,
+    "RED_tests": 18,
+    "boundary_attempts": []
+  },
+  "axis": "Spec and complementary Standards delta",
+  "checked_inputs": [
+    {
+      "bytes": 1411,
+      "name": "std_vector_int_ctor",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/std_vector_int_ctor.original.c",
+      "sha256": "9e4b81e87ab91f0e51d686553615cdccf721a861203bb175d8bca8e7c1dee440"
+    },
+    {
+      "bytes": 1439,
+      "name": "std_vector_float_ctor",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/std_vector_float_ctor.original.c",
+      "sha256": "2dc1ac63a6768f8acb8bd44f0704a8471aa05d7fc3f38b9b10cb44e678802ac0"
+    },
+    {
+      "bytes": 1453,
+      "name": "std_vector_double_ctor",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/std_vector_double_ctor.original.c",
+      "sha256": "9f3d9c0076c0de97097d75b2a69118c0390cedb2794259e48ee8a954bbade8d1"
+    },
+    {
+      "bytes": 1461,
+      "name": "std_vector_int_ptr_ctor",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/std_vector_int_ptr_ctor.original.c",
+      "sha256": "e908921cd7e6637a8d24bc1f0cfd0b78a113955bc754f96390b01dede83e8e57"
+    },
+    {
+      "bytes": 8565,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/public_default4_v2.py",
+      "sha256": "3af3ee7559e4c15d4f7e429ab96f4b83b12a3ddd40a16e521083df98b6f7fec0"
+    },
+    {
+      "bytes": 2006,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/finalization-v2/inverse-delta-v2.json",
+      "sha256": "1e022cebbd73199f3c219c0715f77d1becd243278592433b3d6c368c9eb4f8fe"
+    },
+    {
+      "bytes": 2335,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/finalization-v2/delta-v2.patch",
+      "sha256": "a300880bd6e6dce259adb02f0884b6ee02716544576c9ab89a52b1e4a08eee91"
+    },
+    {
+      "bytes": 7620,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/finalization-v2/pure_finalization_controls_v2.py",
+      "sha256": "8c69688d8168df3aaed72b794c690ff2b545a998ad9bb7d4b73e01ee0a4b4d27"
+    },
+    {
+      "bytes": 10887,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/finalization-v2/pure-red-v1.log",
+      "sha256": "3ff1532a39390c9c25b2fcad23de9358eead45aab565340cb2b8077216675063"
+    },
+    {
+      "bytes": 1950,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/finalization-v2/pure-green-v2.log",
+      "sha256": "8b62bfe1dc18818d1d4ff4113ef44fd8031cd05778dd0a9a4e45e2f60c8d2050"
+    },
+    {
+      "bytes": 2780,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/finalization-v2/pure-controls-v2-receipt.json",
+      "sha256": "3539dcb0745a035d976986b1560f09351bd5258bed60a35b8004f88c4633164f"
+    },
+    {
+      "bytes": 3224,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/finalization-v2/README.md",
+      "sha256": "3fb485081779dd9613855df3f00d592a0a734ed3c9fc8b006e4c65241a00753f"
+    },
+    {
+      "bytes": 2729,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/original-inputs.json",
+      "sha256": "e0d770b8a263e84cd61701efe1ab81c2ef585435e57fbe93336e438005cde11f"
+    },
+    {
+      "bytes": 7523,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/public_default4_v1.py",
+      "sha256": "785c7392cd85ad664f800813a26bfcce27add978de0e55f48fb654f6038e8c35"
+    },
+    {
+      "bytes": 4287,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-default4-public-preparation-v1-20261016.json",
+      "sha256": "c618fee834264bcbfd1020706d9b37e41b49acd3fc118d2b9dfd7abc6080de7e"
+    },
+    {
+      "bytes": 6869,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-default4-public-v1-independent-static-review-20261016.json",
+      "sha256": "00156dd41a8d773268c6b36c6a06dc1015734c21127df191ed339f0458f9ce88"
+    }
+  ],
+  "date": "2026-10-16 ET",
+  "entry": {
+    "bytes": 8565,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/public_default4_v2.py",
+    "sha256": "3af3ee7559e4c15d4f7e429ab96f4b83b12a3ddd40a16e521083df98b6f7fec0"
+  },
+  "findings": [],
+  "full_V1_inverse_exact": true,
+  "next_gate": "Root fresh Mac memory/disk/source/shared-lock preflight and separate exact actual admission.",
+  "original_four_complete_C_units_reconstructed_byte_exact": true,
+  "packet": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/finalization-v2/source-packet-v2.json",
+    "sha256": "015a3ac0ffbc1b660087bccc2ea7958659e90a5d4d0a3cfe172fdcaf2396d6e9"
+  },
+  "resolved_findings": [
+    "Exact ordered four-member census and every proven row must have integer exit0, OOM false and timeout false. Final-row resource failure cannot become successful completion.",
+    "Whole elapsed is measured after native archival, final incremental writes and all selected source postchecks; completion requires0<=elapsed<=900 and exit0 has a second post-flush deadline check.",
+    "Final complete output extent is remeasured after incremental metadata publication and supplied to the strict128MiB completion gate."
+  ],
+  "reviewer": "ticket25; independent reviewer of caller_assess V2 repair",
+  "reviewer_ran_SSH_native_prover_or_actual_main": false,
+  "reviewer_reran_runtime_or_compiler_tests": false,
+  "scope": "Default4 controller finalization repair only; root independently reviews full original public protocol",
+  "unchanged_scientific_protocol": [
+    "Exact a102 original source/model/contract and four payload pointer types; original requires/assigns/ensures unchanged.",
+    "Ordinary explicit method selection with complete RTE/init/ordinary/smoke/CFG selection; no added qualified checker, model predicate or solver filter.",
+    "One Mac worker, shared verifier lock,8GiB watchdog,180second jobs,240second leaves,900second whole.",
+    "Absolute WP task directory retained then moved per settled leaf with full per-file byte/length/hash relocation.",
+    "No allocating/release model or buffer payload access; no C++ caller/general allocation-domain admission."
+  ],
+  "verdict": "PASS"
+}

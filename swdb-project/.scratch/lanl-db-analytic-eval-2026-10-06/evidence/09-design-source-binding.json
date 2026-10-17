@@ -1,0 +1,49 @@
+{
+  "format": "swdb.design-source-binding.v1",
+  "updated": "2026-10-06 20:59 ET",
+  "target_description_sha256": {
+    "dx100-e4fc4af-functional-analytic-v1.t1": "77927522f8cb456b04176c5dbae7774edf6d18d5555ba5c77e9d72b4cc430cd5",
+    "dx100-e4fc4af-functional-analytic-v1.t4": "6351828a0ba1536f6862d428a2522ae36ea5a39753879abdb5b637b26d8ce211"
+  },
+  "catalog": {
+    "path": "catalog/hardware-v0.1.yaml",
+    "sha256": "adf17f3e114878ed0edbe55abb8ea219445fa2aef3c97e6c369230b796872fb0",
+    "access": "read_only"
+  },
+  "paper": {
+    "edition": "arXiv:2505.23073v2",
+    "url": "https://arxiv.org/pdf/2505.23073v2",
+    "sha256_from_catalog_review": "ec18bdc585f32e3da5c0fd467e686dd2137b3db88d4c327d510509213e7c44a3",
+    "scope": "Design ISA/interface/translation sections only; no performance calibration."
+  },
+  "claims": [
+    {
+      "id": "dxp-read",
+      "locator": "PDF pp.4-6, Table2, sections3.1-3.4; limitation section4.1p7"
+    },
+    {
+      "id": "row-grouping",
+      "locator": "PDF p.5 section3.3",
+      "interpretation": "Declared logical window/coalescing scenario, not physical observed hits."
+    },
+    {
+      "id": "dxp-interface",
+      "locator": "PDF pp.6-7 sections3.5-3.6 and4.1"
+    },
+    {
+      "id": "dxp-translation",
+      "locator": "PDF pp.6-7 section3.6"
+    }
+  ],
+  "configuration_source_revision": "e4fc4af",
+  "functional_backend": "FUNC",
+  "numerical_parameters_changed": false,
+  "observation_policy_changed": false,
+  "paper_performance_values_used": false,
+  "gem5_output_used": false,
+  "required_structural_unknowns": [
+    "host memory service mechanism",
+    "mixed-domain overlap policy",
+    "hardware/backend surrogate correspondence beyond functional-source scope"
+  ]
+}

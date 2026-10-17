@@ -1,0 +1,938 @@
+{
+  "approval_reference": "typed-library-related-approval-20261003",
+  "baseline": {
+    "id": "typed-library-bfs-gem5-20261003-a1.baseline",
+    "sha256": "1243593d22193ab3e82d078dd961469e9931920f3ecf9c2c626022c69118440f"
+  },
+  "builds": {
+    "baseline.primary": {
+      "artifacts": null,
+      "build": {
+        "adapter": "dx100.complete_call.v2",
+        "binary": "/data1/yanruj/EvolveSWDB_builds/typed-library-bfs-gem5-20261003-a1.baseline.primary.build/bfs",
+        "binary_sha256": "93051d5f2086cda4ca2b9a032407ffe83ac71c60cfc0372790e02d082ce6099d",
+        "compiler": "/usr/bin/g++-13",
+        "compiler_sha256": "1353e9bdd29a7295c7226bf6c63abccce056d8cac31f112e5cdbecc3f28c2769",
+        "compiler_version": [
+          "g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+          "Copyright (C) 2023 Free Software Foundation, Inc."
+        ],
+        "driver": {
+          "path": "/data1/yanruj/EvolveSWDB_builds/typed-library-bfs-gem5-20261003-a1.baseline.primary.build/complete_call.cc",
+          "sha256": "6c79a4e0adfb4caec4e94ae058e7ace4fd720580890aee4bb690396f9222a8cd"
+        },
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-g",
+          "-fopenmp",
+          "-DGEM5",
+          "-DNUM_CORES=4",
+          "-DTILE_SIZE=16384"
+        ],
+        "m5ops": {
+          "path": "/data1/yanruj/DX100-bfs-e4fc4af/util/m5/src/abi/x86/m5op.S",
+          "sha256": "fe20d70d689c341ee614121d7aac1431b81d2178943a113ea1aa1d7c5ef50c69"
+        },
+        "source_artifact": {
+          "files": [
+            {
+              "bytes": 1208,
+              "executable": false,
+              "path": "LICENSE",
+              "sha256": "b8c77da160595e378d8fa7635b1c777c7a84c56c79a24efbbbcd9203375231c2"
+            },
+            {
+              "bytes": 661,
+              "executable": false,
+              "path": "PROVENANCE.md",
+              "sha256": "9d4f2794ed7b492fae1cb946cce45b3247d9e27c7dfaae11df71d310701206a5"
+            },
+            {
+              "bytes": 4907,
+              "executable": false,
+              "path": "SHA256SUMS",
+              "sha256": "8cc8eb45740c436260623bda72b765524ec4692ddfee5c1c7dfd5f48ca8caf9a"
+            },
+            {
+              "bytes": 14,
+              "executable": false,
+              "path": "benchmarks/API/.gitignore",
+              "sha256": "ca7fabf7f4bedcc521ae2346c034463db580111de0da3494ed3f58c2558b7a88"
+            },
+            {
+              "bytes": 1323,
+              "executable": false,
+              "path": "benchmarks/API/MAA.hpp",
+              "sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd"
+            },
+            {
+              "bytes": 845,
+              "executable": false,
+              "path": "benchmarks/API/MAA_atomics.hpp",
+              "sha256": "896459489ded4a790a2b52da62b337f00b7310a4bafc6d3ceaa9d8c4f1eb026a"
+            },
+            {
+              "bytes": 4089,
+              "executable": false,
+              "path": "benchmarks/API/MAA_compiler_api.cpp",
+              "sha256": "15df982719e46110a9ba3d1a86ac34b65019f37c5b00199eaace7379159370d5"
+            },
+            {
+              "bytes": 25345,
+              "executable": false,
+              "path": "benchmarks/API/MAA_functional.hpp",
+              "sha256": "ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc"
+            },
+            {
+              "bytes": 27473,
+              "executable": false,
+              "path": "benchmarks/API/MAA_gem5.hpp",
+              "sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174"
+            },
+            {
+              "bytes": 9802,
+              "executable": false,
+              "path": "benchmarks/API/MAA_gem5_magic.hpp",
+              "sha256": "e3353661cce76167a2f986385e448c2a6aef471fc8424762183bae11ba769c32"
+            },
+            {
+              "bytes": 786,
+              "executable": false,
+              "path": "benchmarks/API/MAA_utility.hpp",
+              "sha256": "3fb818fff3a37e14d77ea009a2246788213c1e938a05515b361aceb010a2b10e"
+            },
+            {
+              "bytes": 6773,
+              "executable": false,
+              "path": "benchmarks/API/README.md",
+              "sha256": "f67f7c2e7e8f08f1f92f701accf39fcd981df373552caa1ad24ead487505a328"
+            },
+            {
+              "bytes": 354,
+              "executable": false,
+              "path": "benchmarks/API/gen_chkpt.sh",
+              "sha256": "f4a89124276963302b13546a84745cf25d3ce2b7032956201e7263384e2726ac"
+            },
+            {
+              "bytes": 4253,
+              "executable": false,
+              "path": "benchmarks/API/make.sh",
+              "sha256": "a3ebeedbe09348c70a7ac8f87a8ba796bf1c58e50f910029b16900e62468ee3f"
+            },
+            {
+              "bytes": 550,
+              "executable": false,
+              "path": "benchmarks/API/make_functional.sh",
+              "sha256": "09b2c73bccf0ada756ede4292d6c35f65972f77d892beef7c541eca4960adbe3"
+            },
+            {
+              "bytes": 11952,
+              "executable": false,
+              "path": "benchmarks/API/prefetch_depricated.cpp",
+              "sha256": "b0d93940467e0a72964f3e0a53e32f7da0a86fead090ef074aaf16be22611f8c"
+            },
+            {
+              "bytes": 886,
+              "executable": false,
+              "path": "benchmarks/API/run_chkpt.sh",
+              "sha256": "bf097be9e4ff373e9dafd11f20163446e8f1d105549d89970953c09162329010"
+            },
+            {
+              "bytes": 88043,
+              "executable": false,
+              "path": "benchmarks/API/test.cpp",
+              "sha256": "5157dd85b88d9ca2ef0a7126e7d88dfea027031cd1053a6e3979cb1ce7cb75d1"
+            },
+            {
+              "bytes": 2122,
+              "executable": false,
+              "path": "benchmarks/API/test_compiler.cpp",
+              "sha256": "9384dbb08f1e8e7897ba517074e5d528d02d82349ceea292282ffbd4eb6d0a48"
+            },
+            {
+              "bytes": 67088,
+              "executable": false,
+              "path": "benchmarks/API/test_functional.cpp",
+              "sha256": "20a8702bd7051b2214a18529ffa025dd956c0aaa6591eec1f5cf792549d46dc4"
+            },
+            {
+              "bytes": 66926,
+              "executable": false,
+              "path": "benchmarks/API/test_strided.cpp",
+              "sha256": "f2cf4aca9883ebb0e777b114624002f2ac83c3117161a9c712fadfbef5147cc0"
+            },
+            {
+              "bytes": 47822,
+              "executable": false,
+              "path": "benchmarks/API/test_tested_parallel.cpp",
+              "sha256": "9012d12c6664fe383798038f403c214c5da73ea3ed9a8e37471960a571f090f7"
+            },
+            {
+              "bytes": 4342,
+              "executable": false,
+              "path": "benchmarks/API/test_vectorized.cpp",
+              "sha256": "0281c06ae9918703f4d5e51b062cd35d5a7328f11274282cd7096b4e5a411335"
+            },
+            {
+              "bytes": 1499,
+              "executable": false,
+              "path": "benchmarks/gapbs/LICENSE",
+              "sha256": "bc33e6a6a2571d48fde7fc7d30be3aa11fb0558edd46173861274ac7a1f74fc3"
+            },
+            {
+              "bytes": 3375,
+              "executable": false,
+              "path": "benchmarks/gapbs/Makefile",
+              "sha256": "cc5a39f4950dc8bdfbbc32834043e379b13d9db79e4f96158d7960ac561f9daa"
+            },
+            {
+              "bytes": 33804,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/bc.cc",
+              "sha256": "9732327b347c5da72526923f44b4250afcd7816c3b0ca1d0c8a43cd1d77f36ea"
+            },
+            {
+              "bytes": 8682,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/bc_maa_full.cc",
+              "sha256": "a5f0e1467edfa7931db7546b6bcb4a41669a448d55cbe43c3846cd19c15dbaae"
+            },
+            {
+              "bytes": 41934,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/bc_new.cc",
+              "sha256": "b34131eaea5d8afa460b9fffbe7de83fe6abb5bde1d2b2ad6e9575ff7e2db0f0"
+            },
+            {
+              "bytes": 3565,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/benchmark.h",
+              "sha256": "87c20752c8437dd5152d00e7c995bedfab15b8929219f85846f47e0f9a4b339f"
+            },
+            {
+              "bytes": 20517,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/bfs.cc",
+              "sha256": "6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465"
+            },
+            {
+              "bytes": 4616,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/bfs_bu.cc",
+              "sha256": "ecd5f574fd10458703ad4af3bdf85ec522cca3821591e15456309f9906c70986"
+            },
+            {
+              "bytes": 1706,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/bitmap.h",
+              "sha256": "6f6e444c82b0e7d797cc9218ba85be7f5f702e95d4c134715c90e6a5b1288465"
+            },
+            {
+              "bytes": 16778,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/builder.h",
+              "sha256": "2d3646e12dc2ae9776cfa429aaec699d031b4826c79a356983cf109753f1eb01"
+            },
+            {
+              "bytes": 7422,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/cc.cc",
+              "sha256": "0986d8a21cf79e85c88b4615ef1b8aacc1ec1090784b2437d92ee22ae1163fd6"
+            },
+            {
+              "bytes": 4994,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/cc_sv.cc",
+              "sha256": "f239bd71cee27cba37f3824ae7b2520c291b116ccc83a329d09484b631c599ee"
+            },
+            {
+              "bytes": 8511,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/command_line.h",
+              "sha256": "de1415dfe29eb6ba436d57523b2dee8fa3268a0785ae690bde9e94e9444172b2"
+            },
+            {
+              "bytes": 775,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/converter.cc",
+              "sha256": "8c5ce5fc37304103c16390f67f27b565aa4f7d3d178dc02cf12b3f5e25b42648"
+            },
+            {
+              "bytes": 6418,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/generator.h",
+              "sha256": "24bfdab312afdf6e552ef9a23d124332984761cdb94f109bb15009710d1dbafe"
+            },
+            {
+              "bytes": 8276,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/graph.h",
+              "sha256": "79a271a3e3b01d6f02750b2b828ad94b3696eff080eb068bc3fcf80bc81139e0"
+            },
+            {
+              "bytes": 4198,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/platform_atomics.h",
+              "sha256": "9c8dbe6419b34d850af33ef14ea724c1c64de369d052a8f3c6e20038dcabe9cd"
+            },
+            {
+              "bytes": 12267,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/pr.cc",
+              "sha256": "9379044698f6c296b8d2a17e1dcc651e7d2f45a147882ccc4dd5334b332727c0"
+            },
+            {
+              "bytes": 3540,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/pr_spmv.cc",
+              "sha256": "ea1e58b6957b0bcc1e76f4fde54131aa52bdefd2014dae604a9b7d9d1a5dae70"
+            },
+            {
+              "bytes": 4265,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/pvector.h",
+              "sha256": "b3280b03eb774fdd27bbc1967c4f274e46d42179f149275e1b2c394986ebe03d"
+            },
+            {
+              "bytes": 9268,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/reader.h",
+              "sha256": "951fb6e82df079389b953f35363e8a502d79da4f3c56b8ce6eab7faac38800e1"
+            },
+            {
+              "bytes": 2502,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/sliding_queue.h",
+              "sha256": "3d5a1d3cff924737c2fc7c6b4fcbb859270f1fcc626c25aac4c780b7b6f4c02c"
+            },
+            {
+              "bytes": 21897,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/sssp.cc",
+              "sha256": "a3442b7f4c5f155dde5b3d76896d2dfc7d1a72deb7bea4581401f2d281b316b2"
+            },
+            {
+              "bytes": 13800,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/sssp_maa.cc",
+              "sha256": "3ed0f58d042c107aa8abdaa476ed86ab38d47670b55b1c36931b6dc3798d4c67"
+            },
+            {
+              "bytes": 4327,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/tc.cc",
+              "sha256": "de3a1a453e1e632ab2338a36c5a8f846a078a096f5c9ab7e7320b9448bbb43cb"
+            },
+            {
+              "bytes": 1161,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/timer.h",
+              "sha256": "3337a59a57341585d296ed01b3eb64ca7f5e02d8c0871f4920ab9d1cd7e63bcb"
+            },
+            {
+              "bytes": 1953,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/util.h",
+              "sha256": "a103e6c5767d724adc9b6b421ecade4b2d2c4351e5ea0da5d2c9bf16a9fcecf6"
+            },
+            {
+              "bytes": 2898,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/writer.h",
+              "sha256": "3fd16ac75a8c069c7cf09d540ca35b66ec51813406b5fd2f8149253bebd9ebea"
+            },
+            {
+              "bytes": 5479,
+              "executable": false,
+              "path": "include/gem5/asm/generic/m5ops.h",
+              "sha256": "28efe83deb0cd19d5d15b73d3544c7f45238c2744531657f5aa881da643e868d"
+            },
+            {
+              "bytes": 3937,
+              "executable": false,
+              "path": "include/gem5/m5ops.h",
+              "sha256": "bbef6be56e1fb63a820da56fe4306fbce67ee7bedbb43b6e72e0281c947f07e8"
+            }
+          ],
+          "path": "/data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-gem5-20261003-a1.baseline/source",
+          "sha256": "d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d"
+        }
+      },
+      "candidate": null,
+      "outcome": {
+        "reason": "Identified candidate compiled; no simulated correctness or timing inferred.",
+        "stage": "candidate_build",
+        "state": "complete"
+      },
+      "record": {
+        "id": "typed-library-bfs-gem5-20261003-a1.baseline.primary.build",
+        "sha256": "59184ea879b18a6c36700090111f4c2d0177f49cc3d890c4a6b2d953bec94231"
+      }
+    },
+    "candidate.diagnostic": {
+      "artifacts": null,
+      "build": {
+        "adapter": "dx100.complete_call.v2",
+        "binary": "/data1/yanruj/EvolveSWDB_builds/typed-library-bfs-gem5-20261003-a1.candidate.diagnostic.build/bfs",
+        "binary_sha256": "1c2ec50e6ea58bf5ef870c0c2a383a6814da6333ee2b2f528f3cca098e1cc189",
+        "compiler": "/usr/bin/g++-13",
+        "compiler_sha256": "1353e9bdd29a7295c7226bf6c63abccce056d8cac31f112e5cdbecc3f28c2769",
+        "compiler_version": [
+          "g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+          "Copyright (C) 2023 Free Software Foundation, Inc."
+        ],
+        "driver": {
+          "path": "/data1/yanruj/EvolveSWDB_builds/typed-library-bfs-gem5-20261003-a1.candidate.diagnostic.build/complete_call.cc",
+          "sha256": "67834299349dacdc143ff07a637c5498aed6abbeda3000cf7c5ae99e514d53f4"
+        },
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-g",
+          "-fopenmp",
+          "-DGEM5",
+          "-DNUM_CORES=4",
+          "-DTILE_SIZE=16384",
+          "-DMAA",
+          "-DSWDB_DXC_DIAGNOSTIC"
+        ],
+        "m5ops": {
+          "path": "/data1/yanruj/DX100-bfs-e4fc4af/util/m5/src/abi/x86/m5op.S",
+          "sha256": "fe20d70d689c341ee614121d7aac1431b81d2178943a113ea1aa1d7c5ef50c69"
+        },
+        "source_artifact": {
+          "files": [
+            {
+              "bytes": 1208,
+              "executable": false,
+              "path": "LICENSE",
+              "sha256": "b8c77da160595e378d8fa7635b1c777c7a84c56c79a24efbbbcd9203375231c2"
+            },
+            {
+              "bytes": 619,
+              "executable": false,
+              "path": "PROVENANCE.md",
+              "sha256": "3009aa7f259294b67bfbbee311ead96d66050a86f1a7bfde715556f10174e6c6"
+            },
+            {
+              "bytes": 1323,
+              "executable": false,
+              "path": "benchmarks/API/MAA.hpp",
+              "sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd"
+            },
+            {
+              "bytes": 845,
+              "executable": false,
+              "path": "benchmarks/API/MAA_atomics.hpp",
+              "sha256": "896459489ded4a790a2b52da62b337f00b7310a4bafc6d3ceaa9d8c4f1eb026a"
+            },
+            {
+              "bytes": 25345,
+              "executable": false,
+              "path": "benchmarks/API/MAA_functional.hpp",
+              "sha256": "ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc"
+            },
+            {
+              "bytes": 27473,
+              "executable": false,
+              "path": "benchmarks/API/MAA_gem5.hpp",
+              "sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174"
+            },
+            {
+              "bytes": 9802,
+              "executable": false,
+              "path": "benchmarks/API/MAA_gem5_magic.hpp",
+              "sha256": "e3353661cce76167a2f986385e448c2a6aef471fc8424762183bae11ba769c32"
+            },
+            {
+              "bytes": 786,
+              "executable": false,
+              "path": "benchmarks/API/MAA_utility.hpp",
+              "sha256": "3fb818fff3a37e14d77ea009a2246788213c1e938a05515b361aceb010a2b10e"
+            },
+            {
+              "bytes": 1499,
+              "executable": false,
+              "path": "benchmarks/gapbs/LICENSE",
+              "sha256": "bc33e6a6a2571d48fde7fc7d30be3aa11fb0558edd46173861274ac7a1f74fc3"
+            },
+            {
+              "bytes": 3565,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/benchmark.h",
+              "sha256": "87c20752c8437dd5152d00e7c995bedfab15b8929219f85846f47e0f9a4b339f"
+            },
+            {
+              "bytes": 11755,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/bfs.cc",
+              "sha256": "093c56b91837122380fd5e66766c92947e5f1c5194dd4c038936bc28934864dc"
+            },
+            {
+              "bytes": 1706,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/bitmap.h",
+              "sha256": "6f6e444c82b0e7d797cc9218ba85be7f5f702e95d4c134715c90e6a5b1288465"
+            },
+            {
+              "bytes": 16778,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/builder.h",
+              "sha256": "2d3646e12dc2ae9776cfa429aaec699d031b4826c79a356983cf109753f1eb01"
+            },
+            {
+              "bytes": 8511,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/command_line.h",
+              "sha256": "de1415dfe29eb6ba436d57523b2dee8fa3268a0785ae690bde9e94e9444172b2"
+            },
+            {
+              "bytes": 6418,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/generator.h",
+              "sha256": "24bfdab312afdf6e552ef9a23d124332984761cdb94f109bb15009710d1dbafe"
+            },
+            {
+              "bytes": 8276,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/graph.h",
+              "sha256": "79a271a3e3b01d6f02750b2b828ad94b3696eff080eb068bc3fcf80bc81139e0"
+            },
+            {
+              "bytes": 4198,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/platform_atomics.h",
+              "sha256": "9c8dbe6419b34d850af33ef14ea724c1c64de369d052a8f3c6e20038dcabe9cd"
+            },
+            {
+              "bytes": 4265,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/pvector.h",
+              "sha256": "b3280b03eb774fdd27bbc1967c4f274e46d42179f149275e1b2c394986ebe03d"
+            },
+            {
+              "bytes": 9268,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/reader.h",
+              "sha256": "951fb6e82df079389b953f35363e8a502d79da4f3c56b8ce6eab7faac38800e1"
+            },
+            {
+              "bytes": 2502,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/sliding_queue.h",
+              "sha256": "3d5a1d3cff924737c2fc7c6b4fcbb859270f1fcc626c25aac4c780b7b6f4c02c"
+            },
+            {
+              "bytes": 3153,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/swdb_dxc_lowering.hpp",
+              "sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c"
+            },
+            {
+              "bytes": 1161,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/timer.h",
+              "sha256": "3337a59a57341585d296ed01b3eb64ca7f5e02d8c0871f4920ab9d1cd7e63bcb"
+            },
+            {
+              "bytes": 1953,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/util.h",
+              "sha256": "a103e6c5767d724adc9b6b421ecade4b2d2c4351e5ea0da5d2c9bf16a9fcecf6"
+            },
+            {
+              "bytes": 2898,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/writer.h",
+              "sha256": "3fd16ac75a8c069c7cf09d540ca35b66ec51813406b5fd2f8149253bebd9ebea"
+            },
+            {
+              "bytes": 5479,
+              "executable": false,
+              "path": "include/gem5/asm/generic/m5ops.h",
+              "sha256": "28efe83deb0cd19d5d15b73d3544c7f45238c2744531657f5aa881da643e868d"
+            },
+            {
+              "bytes": 3937,
+              "executable": false,
+              "path": "include/gem5/m5ops.h",
+              "sha256": "bbef6be56e1fb63a820da56fe4306fbce67ee7bedbb43b6e72e0281c947f07e8"
+            }
+          ],
+          "path": "/data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-gem5-20261003-a1.proposal/source",
+          "sha256": "991de65287fe1fae3a20412704cccb6140a93f84cc11200032b20214f5174ff1"
+        }
+      },
+      "candidate": null,
+      "outcome": {
+        "reason": "Identified candidate compiled; no simulated correctness or timing inferred.",
+        "stage": "candidate_build",
+        "state": "complete"
+      },
+      "record": {
+        "id": "typed-library-bfs-gem5-20261003-a1.candidate.diagnostic.build",
+        "sha256": "3d0c54b44b13b0b7ca8625c0ba9790301d1c3b6457233c9121f07f334a356e51"
+      }
+    },
+    "candidate.primary": {
+      "artifacts": null,
+      "build": {
+        "adapter": "dx100.complete_call.v2",
+        "binary": "/data1/yanruj/EvolveSWDB_builds/typed-library-bfs-gem5-20261003-a1.candidate.primary.build/bfs",
+        "binary_sha256": "0def0c6a7e13c07f29e05260d12d0d243d70b29589d8c99cf97abc4a2f5e8069",
+        "compiler": "/usr/bin/g++-13",
+        "compiler_sha256": "1353e9bdd29a7295c7226bf6c63abccce056d8cac31f112e5cdbecc3f28c2769",
+        "compiler_version": [
+          "g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+          "Copyright (C) 2023 Free Software Foundation, Inc."
+        ],
+        "driver": {
+          "path": "/data1/yanruj/EvolveSWDB_builds/typed-library-bfs-gem5-20261003-a1.candidate.primary.build/complete_call.cc",
+          "sha256": "67834299349dacdc143ff07a637c5498aed6abbeda3000cf7c5ae99e514d53f4"
+        },
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-g",
+          "-fopenmp",
+          "-DGEM5",
+          "-DNUM_CORES=4",
+          "-DTILE_SIZE=16384",
+          "-DMAA"
+        ],
+        "m5ops": {
+          "path": "/data1/yanruj/DX100-bfs-e4fc4af/util/m5/src/abi/x86/m5op.S",
+          "sha256": "fe20d70d689c341ee614121d7aac1431b81d2178943a113ea1aa1d7c5ef50c69"
+        },
+        "source_artifact": {
+          "files": [
+            {
+              "bytes": 1208,
+              "executable": false,
+              "path": "LICENSE",
+              "sha256": "b8c77da160595e378d8fa7635b1c777c7a84c56c79a24efbbbcd9203375231c2"
+            },
+            {
+              "bytes": 619,
+              "executable": false,
+              "path": "PROVENANCE.md",
+              "sha256": "3009aa7f259294b67bfbbee311ead96d66050a86f1a7bfde715556f10174e6c6"
+            },
+            {
+              "bytes": 1323,
+              "executable": false,
+              "path": "benchmarks/API/MAA.hpp",
+              "sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd"
+            },
+            {
+              "bytes": 845,
+              "executable": false,
+              "path": "benchmarks/API/MAA_atomics.hpp",
+              "sha256": "896459489ded4a790a2b52da62b337f00b7310a4bafc6d3ceaa9d8c4f1eb026a"
+            },
+            {
+              "bytes": 25345,
+              "executable": false,
+              "path": "benchmarks/API/MAA_functional.hpp",
+              "sha256": "ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc"
+            },
+            {
+              "bytes": 27473,
+              "executable": false,
+              "path": "benchmarks/API/MAA_gem5.hpp",
+              "sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174"
+            },
+            {
+              "bytes": 9802,
+              "executable": false,
+              "path": "benchmarks/API/MAA_gem5_magic.hpp",
+              "sha256": "e3353661cce76167a2f986385e448c2a6aef471fc8424762183bae11ba769c32"
+            },
+            {
+              "bytes": 786,
+              "executable": false,
+              "path": "benchmarks/API/MAA_utility.hpp",
+              "sha256": "3fb818fff3a37e14d77ea009a2246788213c1e938a05515b361aceb010a2b10e"
+            },
+            {
+              "bytes": 1499,
+              "executable": false,
+              "path": "benchmarks/gapbs/LICENSE",
+              "sha256": "bc33e6a6a2571d48fde7fc7d30be3aa11fb0558edd46173861274ac7a1f74fc3"
+            },
+            {
+              "bytes": 3565,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/benchmark.h",
+              "sha256": "87c20752c8437dd5152d00e7c995bedfab15b8929219f85846f47e0f9a4b339f"
+            },
+            {
+              "bytes": 11755,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/bfs.cc",
+              "sha256": "093c56b91837122380fd5e66766c92947e5f1c5194dd4c038936bc28934864dc"
+            },
+            {
+              "bytes": 1706,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/bitmap.h",
+              "sha256": "6f6e444c82b0e7d797cc9218ba85be7f5f702e95d4c134715c90e6a5b1288465"
+            },
+            {
+              "bytes": 16778,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/builder.h",
+              "sha256": "2d3646e12dc2ae9776cfa429aaec699d031b4826c79a356983cf109753f1eb01"
+            },
+            {
+              "bytes": 8511,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/command_line.h",
+              "sha256": "de1415dfe29eb6ba436d57523b2dee8fa3268a0785ae690bde9e94e9444172b2"
+            },
+            {
+              "bytes": 6418,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/generator.h",
+              "sha256": "24bfdab312afdf6e552ef9a23d124332984761cdb94f109bb15009710d1dbafe"
+            },
+            {
+              "bytes": 8276,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/graph.h",
+              "sha256": "79a271a3e3b01d6f02750b2b828ad94b3696eff080eb068bc3fcf80bc81139e0"
+            },
+            {
+              "bytes": 4198,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/platform_atomics.h",
+              "sha256": "9c8dbe6419b34d850af33ef14ea724c1c64de369d052a8f3c6e20038dcabe9cd"
+            },
+            {
+              "bytes": 4265,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/pvector.h",
+              "sha256": "b3280b03eb774fdd27bbc1967c4f274e46d42179f149275e1b2c394986ebe03d"
+            },
+            {
+              "bytes": 9268,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/reader.h",
+              "sha256": "951fb6e82df079389b953f35363e8a502d79da4f3c56b8ce6eab7faac38800e1"
+            },
+            {
+              "bytes": 2502,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/sliding_queue.h",
+              "sha256": "3d5a1d3cff924737c2fc7c6b4fcbb859270f1fcc626c25aac4c780b7b6f4c02c"
+            },
+            {
+              "bytes": 3153,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/swdb_dxc_lowering.hpp",
+              "sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c"
+            },
+            {
+              "bytes": 1161,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/timer.h",
+              "sha256": "3337a59a57341585d296ed01b3eb64ca7f5e02d8c0871f4920ab9d1cd7e63bcb"
+            },
+            {
+              "bytes": 1953,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/util.h",
+              "sha256": "a103e6c5767d724adc9b6b421ecade4b2d2c4351e5ea0da5d2c9bf16a9fcecf6"
+            },
+            {
+              "bytes": 2898,
+              "executable": false,
+              "path": "benchmarks/gapbs/src/writer.h",
+              "sha256": "3fd16ac75a8c069c7cf09d540ca35b66ec51813406b5fd2f8149253bebd9ebea"
+            },
+            {
+              "bytes": 5479,
+              "executable": false,
+              "path": "include/gem5/asm/generic/m5ops.h",
+              "sha256": "28efe83deb0cd19d5d15b73d3544c7f45238c2744531657f5aa881da643e868d"
+            },
+            {
+              "bytes": 3937,
+              "executable": false,
+              "path": "include/gem5/m5ops.h",
+              "sha256": "bbef6be56e1fb63a820da56fe4306fbce67ee7bedbb43b6e72e0281c947f07e8"
+            }
+          ],
+          "path": "/data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-gem5-20261003-a1.proposal/source",
+          "sha256": "991de65287fe1fae3a20412704cccb6140a93f84cc11200032b20214f5174ff1"
+        }
+      },
+      "candidate": null,
+      "outcome": {
+        "reason": "Identified candidate compiled; no simulated correctness or timing inferred.",
+        "stage": "candidate_build",
+        "state": "complete"
+      },
+      "record": {
+        "id": "typed-library-bfs-gem5-20261003-a1.candidate.primary.build",
+        "sha256": "4b1d48f6ab0867ef2eda924cb31e2d791f37eb44fe9a17c7511d171c63389196"
+      }
+    }
+  },
+  "candidate": {
+    "id": "typed-library-bfs-gem5-20261003-a1.proposal.candidate-1",
+    "sha256": "619392902d6bc785a2446e12b6ed451998ef27aba3a5a91aadc3fd64cd824a55"
+  },
+  "certification": {
+    "id": "certification.1e4397e31d594245bc10bd80ff2107f5",
+    "sha256": "911bb67e623bb3eaee29754a5f6a979b426be2c13dc77c812ecbf44fd95b5c53"
+  },
+  "certified_tree_sha256": "991de65287fe1fae3a20412704cccb6140a93f84cc11200032b20214f5174ff1",
+  "driver": {
+    "exitcode": 0,
+    "finished": "2026-10-03T12:51:22.065235+00:00",
+    "lane": "mbit10-evaluation-node1 (verified: affinity, bind:1, lease held, generation 506)",
+    "memory_gib": 36,
+    "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.driver-prepare/driver.json",
+    "preflight": {
+      "disk": "/data1",
+      "format": "swdb.dispatch-preflight.v1",
+      "free_bytes": 46310678528,
+      "free_memory_bytes": 24646320128,
+      "memory_budget_bytes": 4294967296,
+      "memory_node": 1,
+      "observed_at": "2026-10-03T12:48:40.251504+00:00",
+      "planned_raw_bytes": 4294967296,
+      "reserve_bytes": 21474836480,
+      "runs_folder": "/data1/yanruj/EvolveSWDB_runs",
+      "secondary_free_bytes": 78837571584,
+      "state": "admitted"
+    },
+    "sha256": "f634db2ce35183b8a7ec991ef50fae4d136df79c5c46425054cc4048b0fb850c",
+    "started": "2026-10-03T12:48:40.141723+00:00",
+    "state": "complete",
+    "storage_gib": 8
+  },
+  "format": "swdb.typed-library.prepare-summary.v1",
+  "gain_claim": false,
+  "l3_outcome": "not_run",
+  "leases": [
+    {
+      "held": false,
+      "metadata": {
+        "active_session": null,
+        "attempt_pid": null,
+        "attempt_start_token": null,
+        "heartbeat_at": "2026-10-03T12:51:47Z",
+        "lease": {
+          "acquired_at": "2026-10-03T12:51:22Z",
+          "daemon_pid": 1570461,
+          "daemon_start_token": "sh1570461-1791031882",
+          "generation": 438,
+          "host": "mbit10",
+          "lease_name": "mbit10-evaluation-node0",
+          "mode": "measure",
+          "session_id": null
+        },
+        "recovered_from_generation": null,
+        "released_at": "2026-10-03T12:51:47Z",
+        "session_note": null,
+        "session_state": "none",
+        "state": "released",
+        "writer": "hostlock.sh"
+      },
+      "name": "mbit10-evaluation-node0"
+    },
+    {
+      "held": false,
+      "metadata": {
+        "active_session": null,
+        "attempt_pid": null,
+        "attempt_start_token": null,
+        "heartbeat_at": "2026-10-03T12:51:22Z",
+        "lease": {
+          "acquired_at": "2026-10-03T12:48:39Z",
+          "daemon_pid": 1568990,
+          "daemon_start_token": "sh1568990-1791031719",
+          "generation": 506,
+          "host": "mbit10",
+          "lease_name": "mbit10-evaluation-node1",
+          "mode": "measure",
+          "session_id": null
+        },
+        "recovered_from_generation": null,
+        "released_at": "2026-10-03T12:51:22Z",
+        "session_note": null,
+        "session_state": "none",
+        "state": "released",
+        "writer": "hostlock.sh"
+      },
+      "name": "mbit10-evaluation-node1"
+    },
+    {
+      "held": false,
+      "metadata": {
+        "active_session": null,
+        "attempt_pid": null,
+        "attempt_start_token": null,
+        "heartbeat_at": "2026-09-12T04:49:11Z",
+        "lease": {
+          "acquired_at": "2026-09-12T01:35:42Z",
+          "daemon_pid": 209457,
+          "daemon_start_token": "sh209457-1789176942",
+          "generation": 77,
+          "host": "mbit10",
+          "lease_name": "mbit10-evaluation",
+          "mode": "measure",
+          "session_id": null
+        },
+        "recovered_from_generation": null,
+        "released_at": "2026-09-12T04:49:11Z",
+        "session_note": null,
+        "session_state": "none",
+        "state": "released",
+        "writer": "hostlock.sh"
+      },
+      "name": "mbit10-evaluation"
+    }
+  ],
+  "next_dependency": {
+    "allowed_action": "fresh admission before any companion or timed dispatch",
+    "observed_memfree_bytes": {
+      "0": 32291319808,
+      "1": 24315101184
+    },
+    "required_memfree_bytes": 38654705664,
+    "state": "blocked_node_local_memory"
+  },
+  "next_stage": "companion",
+  "observed_at": "2026-10-03T12:53:05.774972+00:00",
+  "profile_package": {
+    "id": "typed-library-bfs-scalar-profile-20261003-a2.package.v1.619546ae9c6f60fe",
+    "sha256": "860c8d9e89f7a4cb593b4cdbd48c1eb96c1cf52d29dd834843f49f6abeca33b8"
+  },
+  "protocol": {
+    "copied_t17_treatment_verified": true,
+    "guest_memory": "16GB",
+    "record": {
+      "id": "typed-library-bfs-gem5-20261003-a1.protocol.8de9b516796360dc",
+      "sha256": "052470b18a37ced014f10ffbb3fa18625e5a4ad755cf39b89fa4685a21152e4f"
+    },
+    "region_pairs": [],
+    "supersedes": null,
+    "threads": 4,
+    "version": 1,
+    "workloads": [
+      "bfs-20260928-uniform18-s0.8c7e69dfa516e53c",
+      "bfs-20260928-kronecker18-s0.cf4283236c5cb50c"
+    ]
+  },
+  "raw_output_policy": "all logs, builds, binary and simulation data remain remote",
+  "source_commit": "f6972ebbf9c842c1a7091716505577d06c637231",
+  "submitted_tree_sha256": "991de65287fe1fae3a20412704cccb6140a93f84cc11200032b20214f5174ff1",
+  "tree_equality": true
+}

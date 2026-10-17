@@ -1,0 +1,13 @@
+test_all_short_input_and_compressed_chunk_boundaries (__main__.Controls.test_all_short_input_and_compressed_chunk_boundaries) ... ok
+test_both_roles_values_and_complete_streaming_inverse (__main__.Controls.test_both_roles_values_and_complete_streaming_inverse) ... ok
+test_corrupt_truncated_trailing_member_and_wrong_codec_identity_refuse (__main__.Controls.test_corrupt_truncated_trailing_member_and_wrong_codec_identity_refuse) ... ok
+test_exact_role_AST_preserved_and_no_child (__main__.Controls.test_exact_role_AST_preserved_and_no_child) ... ok
+test_expanded_192MiB_is_separate_from_physical_128MiB (__main__.Controls.test_expanded_192MiB_is_separate_from_physical_128MiB) ... ok
+test_manifest_and_normalized_identity_mutations_refuse (__main__.Controls.test_manifest_and_normalized_identity_mutations_refuse) ... ok
+test_unknown_reserved_collision_and_malformed_suffix_return_no_transport (__main__.Controls.test_unknown_reserved_collision_and_malformed_suffix_return_no_transport) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.030s
+
+OK
+{"tests": 7, "failures": 0, "errors": 0, "skips": 0, "child_events": [], "source_sha256": "6301baede48b9b0f1d3beaef2873e59026f5e9e26135bc2f7ba0a3f76825f941", "scope": "local synthetic stdlib compression/inverse only; no actual TU/root/compiler/normalization admission"}

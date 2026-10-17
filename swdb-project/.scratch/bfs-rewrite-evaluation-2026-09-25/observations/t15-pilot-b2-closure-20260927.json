@@ -1,0 +1,153 @@
+{
+ "created": "2026-09-27",
+ "id": "bfs-t15-pilot-simulator-batch-20260927-b2",
+ "observations": [
+  {
+   "family": "uniform18",
+   "driver_state": "failed",
+   "driver_reason": "ValueError: public stage exited 1",
+   "series_reason": "TimeoutExpired: Command '['/usr/bin/python3.12', '-m', 'swdb', 'profile-package', '/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b2/bfs-t15-pilot-simulator-batch-20260927-b2.uniform18/bfs-t15-pilot-simulator-batch-20260927-b2.uniform18/bfs-t15-pilot-simulator-batch-20260927-b2.uniform18.driver/bfs-t15-pilot-simulator-batch-20260927-b2.uniform18.s0.r0.package.request.json', '--records', '/data1/yanruj/EvolveSWDB_t15_pilot_runtime_20260927_b2/records', '--db', '/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b2/bfs-t15-pilot-simulator-batch-20260927-b2.uniform18/bfs-t15-pilot-simulator-batch-20260927-b2.uniform18/bfs-t15-pilot-simulator-batch-20260927-b2.uniform18.driver/swdb.sqlite', '--format', 'json']' timed out after 180 seconds",
+   "gem5_slot_waits_seconds": [
+    1832.0082190455869,
+    1809.2286283895373
+   ],
+   "cleanup_ledger": {
+    "state": "settled_within_budget",
+    "spent_seconds": 1.9151356283575305,
+    "settled_events": 29,
+    "dead_owner_charges": null
+   },
+   "executions_s0_r0": {
+    "primary": {
+     "outcome": "complete",
+     "correctness": "passed",
+     "stages": {
+      "execution_identity": null,
+      "checkpoint": 77.52934579178691,
+      "simulation": 2022.283964606002,
+      "execution_observations": null
+     },
+     "roi_seconds": 0.005731610302,
+     "full_tiles": 476,
+     "tail_tiles": 36,
+     "competing_parent_updates": "unobserved",
+     "trace_bytes": 1297018969,
+     "trace_uncompressed_bytes": 17790653260
+    },
+    "diagnostic": {
+     "outcome": "complete",
+     "correctness": "passed",
+     "stages": {
+      "execution_identity": null,
+      "checkpoint": 77.52895286306739,
+      "simulation": 2473.2873893519863,
+      "execution_observations": null
+     },
+     "roi_seconds": 0.015414111306,
+     "full_tiles": 476,
+     "tail_tiles": 36,
+     "competing_parent_updates": "observed",
+     "trace_bytes": 1296759565,
+     "trace_uncompressed_bytes": 17785454367
+    }
+   },
+   "profile_outcome": null,
+   "exit": "1"
+  },
+  {
+   "family": "kronecker18",
+   "driver_state": "failed",
+   "driver_reason": "ValueError: public stage exited 1",
+   "series_reason": "TimeoutExpired: Command '['/usr/bin/python3.12', '-m', 'swdb', 'profile-package', '/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b2/bfs-t15-pilot-simulator-batch-20260927-b2.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b2.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b2.kronecker18.driver/bfs-t15-pilot-simulator-batch-20260927-b2.kronecker18.s0.r0.package.request.json', '--records', '/data1/yanruj/EvolveSWDB_t15_pilot_runtime_20260927_b2/records', '--db', '/data/yanruj/EvolveSWDB_runs/bfs-t15-pilot-simulator-batch-20260927-b2/bfs-t15-pilot-simulator-batch-20260927-b2.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b2.kronecker18/bfs-t15-pilot-simulator-batch-20260927-b2.kronecker18.driver/swdb.sqlite', '--format', 'json']' timed out after 180 seconds",
+   "gem5_slot_waits_seconds": [
+    8.778832852840424e-05,
+    1762.1543601062149
+   ],
+   "cleanup_ledger": {
+    "state": "settled_within_budget",
+    "spent_seconds": 1.8332839746028193,
+    "settled_events": 29,
+    "dead_owner_charges": null
+   },
+   "executions_s0_r0": {
+    "primary": {
+     "outcome": "complete",
+     "correctness": "passed",
+     "stages": {
+      "execution_identity": null,
+      "checkpoint": 77.51326948776841,
+      "simulation": 1695.1181815378368,
+      "execution_observations": null
+     },
+     "roi_seconds": 0.005851991667,
+     "full_tiles": 436,
+     "tail_tiles": 16,
+     "competing_parent_updates": "unobserved",
+     "trace_bytes": 987175855,
+     "trace_uncompressed_bytes": 15017831797
+    },
+    "diagnostic": {
+     "outcome": "complete",
+     "correctness": "passed",
+     "stages": {
+      "execution_identity": null,
+      "checkpoint": 75.48475048784167,
+      "simulation": 2140.99234279152,
+      "execution_observations": null
+     },
+     "roi_seconds": 0.015906315387,
+     "full_tiles": 417,
+     "tail_tiles": 16,
+     "competing_parent_updates": "observed",
+     "trace_bytes": 944753205,
+     "trace_uncompressed_bytes": 14375146493
+    }
+   },
+   "profile_outcome": null,
+   "exit": "1"
+  }
+ ],
+ "identity_checks": [
+  {
+   "at": "2026-09-27T16:08:41.592345-04:00",
+   "identities": 79,
+   "live": [
+    [
+     4116774,
+     503110488,
+     "Z"
+    ]
+   ],
+   "allocated_bytes": 4837421056
+  },
+  {
+   "at": "2026-09-27T16:08:46.602842-04:00",
+   "identities": 79,
+   "live": [
+    [
+     4116774,
+     503110488,
+     "Z"
+    ]
+   ],
+   "allocated_bytes": 4837421056
+  }
+ ],
+ "lease": {
+  "state": "released",
+  "generation": 379,
+  "released_at": "2026-09-27T20:07:46Z"
+ },
+ "lane": {
+  "lease_generation": 379,
+  "started_utc": "2026-09-27T17:12:52Z",
+  "ended_utc": "2026-09-27T20:07:46Z",
+  "exit_code": 1
+ },
+ "outer_exit": "1",
+ "closed_at": "2026-09-27T16:08:51.615103-04:00",
+ "elapsed_seconds_since_admission": 10584,
+ "storage_stable": true,
+ "retained_bytes": 4837421056,
+ "closed_ok": false
+}

@@ -1,0 +1,72 @@
+{
+  "actual_compiler_or_verifier_execution_by_reviewer": false,
+  "checked": {
+    "artifact_checks": {
+      "green_records": 4,
+      "metadata_alias_census": "V2 removes a duplicate pytest-current observation path while preserving all ten unique physical regular record hashes, original test outcomes and original V1 metadata receipt.",
+      "physical_regular_retained_records": 10,
+      "red_records": 6,
+      "source_inverse_log_pin_occurrences": 11
+    },
+    "function_ast": "Exactly _prove_summary and _prove_model change; 29 other complete top-level function ASTs remain identical. No registry/parser/adapter/setup/writer/body/contract/dependency/native-outcome policy changes.",
+    "job_and_record_identity": "The same selected method object supplies method_version.pin, adapter construction and _run_job in both routes. Setup and written-record pins therefore retain selected file ID+SHA, with original library_summary or c_model subject and source/contract identities.",
+    "method_lifecycle": "Existing _current_method wraps select(default_root(records), ident). Explicit IDs select their immutable named draft/frozen file; no ID still selects highest-sequence frozen method. A missing explicit ID raises Failure before adapter/job/run directory or proof record creation. The repair does not freeze, edit or promote method status.",
+    "observer_boundary": "The fixture script invokes real cli.main after replacing only terminal WpAdapter.run and marking that test adapter non-real. The explicit observer returns not_proven/unknown contract_fixture metadata with verifier_launched=false and scientific_result=false. It is not a native/compiler/scientific test. Native tool selectors are none; each observer installs a child/connection audit and 45-second alarm.",
+    "production_diff": "Exactly two call-site additions forward getattr(args, method_version, None) to the existing _current_method in _prove_summary and _prove_model. Reversing only those two target function calls reconstructs complete dcdecf31 proof.py bytes. The existing candidate route remains unchanged.",
+    "public_test_seam": "Six parameterized separate-process public CLI cases cover both routes with named/default/missing selection. The tests compare final record method pins to physical method file SHA, setup method pin and terminal adapter selected_method, and assert missing names create no proof record/runs.",
+    "test_controls": "The fixture lineup is supplied explicitly rather than discovered. The source-method fixture remains a draft; default fixture stays frozen. No mock chooses a method on behalf of the real registry."
+  },
+  "date": "2026-10-16 ET",
+  "decision": "PASS for exact explicit-method forwarding repair",
+  "findings": [],
+  "full_ticket25": false,
+  "limits": [
+    "The original real public-five-case producer failure remains preserved. These compiler-free selection controls do not establish that repaired actual source/compiler/runtime/public workflow succeeds.",
+    "This does not prove either summary/model contract, change native verdicts, admit historical theorem records as current, or complete source/Typed/caller/ticket25 acceptance.",
+    "A separately reviewed and freshly pinned actual successor is required before root-owned public workflow evaluation."
+  ],
+  "pins": {
+    "after": {
+      "bytes": 51186,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-explicit-method-selection-20261016/proof.after.py",
+      "sha256": "6223247f6d9ee6a806ee32f2a4f5630e5fa41555488a70c3c4646b73f6892802"
+    },
+    "before": {
+      "bytes": 51108,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-explicit-method-selection-20261016/proof.before.py",
+      "sha256": "d03f89ab3dac0987d011552aeb1edcc212a8589a401ba5bface7102301c48fa2"
+    },
+    "method_selection_observer.py": {
+      "bytes": 1353,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/fixtures/proof/method_selection_observer.py",
+      "sha256": "8b0e505c12f13f7aadccf41fb3dc14388eb38ad194522e6ac77671b499a95048"
+    },
+    "preparation": {
+      "bytes": 14830,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-explicit-method-selection-repair-preparation-v2-20261016.json",
+      "sha256": "71cb0e200f81682f97abdd17047b027ef3d29369596b1bea12fe50214c2bf5c8"
+    },
+    "proof.py": {
+      "bytes": 51186,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/proof.py",
+      "sha256": "6223247f6d9ee6a806ee32f2a4f5630e5fa41555488a70c3c4646b73f6892802"
+    },
+    "test_summary_model_method_selection.py": {
+      "bytes": 3131,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_summary_model_method_selection.py",
+      "sha256": "3abf75ac2d7a31b928ba4ffb27229a0dc607f0b8992feb0926175a759147a711"
+    }
+  },
+  "retained_tdd": {
+    "green": "Six cases passed in 3.57 seconds after the two-line repair. Four written records are not_proven fixture metadata; both missing-name cases write none.",
+    "provenance": "Read exact pinned logs and rehashed all ten metadata-referenced physical proof records; no controls rerun.",
+    "red": "Final genuine RED-v5 has four failures (named/missing in each route) and two unchanged-default passes, 3.71 seconds. Earlier harness/setup/schema refusals are preserved separately.",
+    "scientific_result": false
+  },
+  "reviewer": "caller_assess",
+  "schema": "t25-explicit-summary-model-method-selection-independent-spec-review-2",
+  "scientific_result": false,
+  "scope": "Read-only static source/AST/hash/JSON and immutable Git inspection. No project imports, tests, observer child execution, compiler/native/verifier/solver or SSH.",
+  "source_baseline": "dcdecf317a0e9b34f3ce12d5b914eb823c439fbc",
+  "source_public_five_case_actual_success": false
+}

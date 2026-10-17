@@ -1,0 +1,233 @@
+{
+  "created": "2026-09-26",
+  "completed_at_et": "2026-09-26 14:00 ET",
+  "state": "implemented_and_independently_reviewed",
+  "scope": "D03/D13 native requested runtime inputs; no empirical calibration, actual team-size/placement claim or old-record migration.",
+  "source_files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-pilot-freeze.md",
+      "bytes": 10151,
+      "sha256": "6f430a9c51f7151ba8b1f7a82c6c36f6501f06bd04f134de004d770d503be4b4"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-protocol.md",
+      "bytes": 12755,
+      "sha256": "889b3514fac7b9deb72b0cc396d3bed49469e4f15dda5bdab14f6e2d52892732"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-native-runtime-20260926.md",
+      "bytes": 4946,
+      "sha256": "e6215c787995acbca962e4244db494e7348c7c84958c077b34fa19b2befb9e24"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_freeze_pilot.py",
+      "bytes": 52282,
+      "sha256": "0e2bbba5f48f656ea205dc9e1d284ae15ce2ec842c4d389df747a5a789c9e378"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_native_campaign.py",
+      "bytes": 36687,
+      "sha256": "0c286602b602bca1de248c6c07132376bf123627df2124eba6a070c8265327e4"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/swdb/bfs_native.py",
+      "bytes": 42346,
+      "sha256": "e385e50961b9c96ea7c6018aaa09a30df4c49f3286e56500e7ed3f1376a6e942"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/swdb/bfs_profiling.py",
+      "bytes": 34097,
+      "sha256": "b622f49ee228f6ff63cdd112f61cf965187f39ed4aed1fe3d6ebd90880a87443"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/swdb/bfs_protocol.py",
+      "bytes": 79345,
+      "sha256": "cb75a06225e090abdb4bffc88352b2fdefdcecc418d74911806b523f969cb88f"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/swdb/bfs_region_comparison.py",
+      "bytes": 24058,
+      "sha256": "dc047b2893bbd65b5b4354a749af5580fbacd1f392b5e5892b9f21c85d152b94"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/swdb/profile_package.py",
+      "bytes": 33186,
+      "sha256": "c2479b4d646ecfb06f57ab1ef1fe2d0c400758ae9b4a4ffc8a33e9e01ade164a"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_aggregation.py",
+      "bytes": 10005,
+      "sha256": "2e0482a07f777591ebb267c54bdeb6de35b3a8969d73963f25f4bcf744f4ccf3"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_native_campaign.py",
+      "bytes": 6513,
+      "sha256": "e2d57a211dcf34a1ae88ca9f70ef05de707d754dff6d67fb3b73b66ba1a1db8c"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_native_region_comparison.py",
+      "bytes": 20364,
+      "sha256": "efd841bc1aa8d270a4bf7bed16ecb59837b0928e6d6cf7e062a2b38268794b76"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_paired_freeze.py",
+      "bytes": 21609,
+      "sha256": "66a3a8d76281a3c586031e2976c3bb1da0cf4c11585a90d2320d3460cdf63c94"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_profiling.py",
+      "bytes": 27972,
+      "sha256": "30a278ce90c630ca9f52453ae3bc1a2efe8a24cfda56935c18022ef98c8547a1"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_protocol.py",
+      "bytes": 45453,
+      "sha256": "e755b33b6e82f6929b023babe749c11964740e6693c758929fb9e201072bd62f"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_profile_packages.py",
+      "bytes": 23405,
+      "sha256": "784f46882a56818b05c42fa189b894a6d1406e874b4484839b40a493aebfb87f"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_native_runtime.py",
+      "bytes": 13712,
+      "sha256": "3fac8f5804b79f4831f35114eeb61a5b6caff8743d0500b11a67cb62c1982518"
+    }
+  ],
+  "author_verification": {
+    "path": "/private/tmp/bfs-native-runtime-fix-verification-20260926.json",
+    "bytes": 6537,
+    "sha256": "32ecefd3a5ccf749ff21f5377ad21601f16d0220fcd1401180476dc4516c7b71"
+  },
+  "independent_review": {
+    "path": "/private/tmp/bfs-native-runtime-independent-review-20260926.json",
+    "bytes": 7777,
+    "sha256": "369b8b67081a642968eb74e84cc7f9da9a539cb37c7f2e7179d272c50861894f"
+  },
+  "campaign_followup_review": {
+    "path": "/private/tmp/bfs-campaign-runtime-independent-review-20260926.json",
+    "bytes": 4329,
+    "sha256": "71662ae22e4a12d026d7d8d7b58c5ca335db3395e7b0643908109b32b8dcd017"
+  },
+  "author_checks": [
+    {
+      "result": "80 passed125.43s; runtime/publisher/format",
+      "path": "/private/tmp/bfs-native-runtime-final-focused-20260926.log",
+      "bytes": 191,
+      "sha256": "d7b39b39bf16ec67741ba907fc2eb68671f66ffb97c46fb74300f78b9ec01879"
+    },
+    {
+      "result": "135 passed83.99s; package/campaign/freshness/serial publisher",
+      "path": "/private/tmp/bfs-runtime-package-compatibility-20260926.log",
+      "bytes": 191,
+      "sha256": "5139105aaffd5a5e547cca9dab33761a860184301a3ecd8d4ef24531f59fd999"
+    },
+    {
+      "result": "13 passed55.68s; simulator aggregation",
+      "path": "/private/tmp/bfs-runtime-simulator-compatibility-20260926.log",
+      "bytes": 100,
+      "sha256": "b912a3f609af8f97847e408ea87a2e98a24e2a2df92e7dfa5d226797e60eb50a"
+    },
+    {
+      "result": "2 passed0.06s; final serial missing/contradictory inputs",
+      "path": "/private/tmp/bfs-runtime-serial-observation-final-20260926.log",
+      "bytes": 113,
+      "sha256": "f915da19587b2489bd0588c9ae86579b1698baace8379c026eaf93a9556369dd"
+    },
+    {
+      "result": "143 passed2 failed361.23s; two assertions expected downstream runtime wording instead of upstream incomplete-package rejection",
+      "path": "/private/tmp/bfs-runtime-integration-20260926.log",
+      "bytes": 9662,
+      "sha256": "89e1f6768274bbd1932316dc73b6040b5997126dc97660535610e4c62e23e026"
+    },
+    {
+      "result": "2 passed42.33s; corrected assertions require runtime reason at assembly and comparator rejection",
+      "path": "/private/tmp/bfs-runtime-regional-corrected-20260926.log",
+      "bytes": 114,
+      "sha256": "4cea335501f2d54aa1b47c9a9d3b666afef60649d3d94fe989de9948614b1c95"
+    },
+    {
+      "result": "197 catalog records valid",
+      "path": "/private/tmp/bfs-native-runtime-catalog-20260926.log",
+      "bytes": 24,
+      "sha256": "d09f7fbb61d17a05e228ee066a8c859f64e1fadad53ca8bd6f837124eba13860"
+    }
+  ],
+  "publisher_and_public_checks": [
+    {
+      "command": "python3 -m pytest tests/test_bfs_paired_freeze.py -q -k 'unselected-boolean-version or unselected-float-version'",
+      "result": "2 failed,39 deselected in0.65s before correction",
+      "artifact": {
+        "path": "/private/tmp/bfs-runtime-member-version-before-20260926.log",
+        "bytes": 5705,
+        "sha256": "3590bc6cd91f4d066def5b7e138f744142cfa96439fee07ac0a0af4abcce7f33"
+      }
+    },
+    {
+      "command": "python3 -m pytest tests/test_bfs_paired_freeze.py -q",
+      "result": "41 passed in23.84s after correction",
+      "artifact": {
+        "path": "/private/tmp/bfs-runtime-member-version-after-20260926.log",
+        "bytes": 100,
+        "sha256": "eb93e2d56fbc19d56eaf21ae3773a54a19cac95ed5de5173172ad4afb7936e4e"
+      }
+    },
+    {
+      "command": "python3 /private/tmp/bfs-runtime-independent-adversarial-20260926.py",
+      "result": "6 independent public CLI fixture checks passed expected outcomes",
+      "script": {
+        "path": "/private/tmp/bfs-runtime-independent-adversarial-20260926.py",
+        "bytes": 4031,
+        "sha256": "49dff1257e884eb5470e7eb78d4a40d92ef67650fdf8bcafa471681259bd0e57"
+      },
+      "artifact": {
+        "path": "/private/tmp/bfs-runtime-independent-adversarial-20260926.log",
+        "bytes": 521,
+        "sha256": "1f380a345c287be5bf5f848930ac2f58bcab06d3530dd71546bcbf8de1cc4762"
+      },
+      "result_receipt": {
+        "path": "/private/tmp/bfs-runtime-independent-20260926-ek9r2ene/result.json",
+        "bytes": 4371,
+        "sha256": "1f0b92c9fd612b7adcdef0bf48abe1ec89ff043f3b6455c0857599f2ef154ca6"
+      }
+    }
+  ],
+  "campaign_checks": [
+    {
+      "command": "python3 -m pytest tests/test_bfs_native_campaign.py -q -k resealed_primary_runtime",
+      "result": "8 failed, 8 deselected in 0.13s",
+      "log": {
+        "path": "/private/tmp/bfs-campaign-runtime-before-20260926.log",
+        "bytes": 14394,
+        "sha256": "0d891b2286037c1921e07afd65c03218f74c0bc27aa5173b2d2513da21c6c0cc"
+      }
+    },
+    {
+      "command": "python3 -m pytest tests/test_bfs_native_campaign.py -q",
+      "result": "16 passed in 0.13s",
+      "log": {
+        "path": "/private/tmp/bfs-campaign-runtime-after-20260926.log",
+        "bytes": 99,
+        "sha256": "93f912eb887c1b526d5e1b81e0425ff99c6e6632f55a7b37394189a1b7adc02f"
+      }
+    },
+    {
+      "command": "python3 -m pytest tests/test_bfs_native_campaign.py tests/test_bfs_campaign_reuse.py tests/test_bfs_campaign_cleanup.py tests/test_bfs_native_runtime.py -q -k 'campaign or existing_candidate'",
+      "result": "47 passed, 37 deselected in 100.45s (0:01:40)",
+      "log": {
+        "path": "/private/tmp/bfs-campaign-runtime-integration-20260926.log",
+        "bytes": 126,
+        "sha256": "24ec50ea651c66f91b1c9d83986c791c4e72cdf8dac09bb92c5fcb662fb90dab"
+      }
+    }
+  ],
+  "independent_findings_addressed": [
+    "Strict explicit member runtime version before canonical comparison",
+    "Match both actual baseline package primary runtime maps against frozen policy before campaign assessment"
+  ],
+  "standards_readback": "Both narrow corrections reviewed; no additional concerns reported.",
+  "historical_records_modified": false,
+  "active_or_measured_host_code_changed": false,
+  "full_regression": "Prior 1300-pass run at83125b4 predates this change; a new isolated run will follow."
+}

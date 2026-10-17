@@ -1,0 +1,53 @@
+{
+  "format": "swdb.lanl17-finalize-progress-observer-independent-review-addendum.v1",
+  "checked_utc": "2026-10-09T02:00:38.384119+00:00",
+  "verdict": "R1_NOT_SELECTED_KNOWN_NATIVE_SCHEMA_DEFECT",
+  "superseded_review": {
+    "path": "/private/tmp/lanl17-finalize-progress-observer-independent-source-review-20261008-a5-r1.json",
+    "bytes": 3065,
+    "sha256": "5849add8e189e8b9b439837ceba12b297873a8dad80bcaa376c0660307272c16"
+  },
+  "source": {
+    "path": "/private/tmp/lanl17_observe_finalize_progress_metadata_20261008_a5_r1.py",
+    "bytes": 15507,
+    "sha256": "0aba03d2a6025b51ae58a18f24593f458494c0cecf014d8b546dd994535cf543"
+  },
+  "actual_native_packet": {
+    "path": "/private/tmp/lanl17-p4-native-post-after-capture-20261008-a5/native-original.json",
+    "bytes": 5403,
+    "sha256": "e25272648a9da76e315472396ae09977f6ad824fbb83efe09b4df222705045eb"
+  },
+  "findings": [
+    {
+      "source_line": 136,
+      "issue": "leases() uses v.get(socket_lane), but genuine hostlock metadata has top-level lease object; all three native rows become unknown.",
+      "impact": "Fail-closed diagnostic incompatibility; no false released clearance. Source-only R1 PASS missed comparing schema to actual retained original.",
+      "resolution": "Preserve R1 source and review bytes. Select fresh R2 using actual closed hostlock lease schema; independently compare against node0/node1/legacy originals before use."
+    }
+  ],
+  "native_top_level_keys": [
+    "active_session",
+    "attempt_pid",
+    "attempt_start_token",
+    "heartbeat_at",
+    "lease",
+    "recovered_from_generation",
+    "released_at",
+    "session_note",
+    "session_state",
+    "state",
+    "writer"
+  ],
+  "native_lease_keys": [
+    "acquired_at",
+    "daemon_pid",
+    "daemon_start_token",
+    "generation",
+    "host",
+    "lease_name",
+    "mode",
+    "session_id"
+  ],
+  "scientific_admission": false,
+  "target_imports_or_tests_or_remote_execution": false
+}

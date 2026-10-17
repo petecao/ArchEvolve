@@ -1,0 +1,170 @@
+{
+  "created": "2026-09-26",
+  "observed_at_et": "2026-09-26T15:40:45.261888-04:00",
+  "kind": "fresh_local_public_coverage_query",
+  "code_commit": "ea0c1f4",
+  "catalog_valid_records": 213,
+  "catalog_log": {
+    "path": "/private/tmp/bfs-catalog-checkpoint-20260926-1538.log",
+    "bytes": 24,
+    "sha256": "662fcf7eff5ed6b6446645a7c1594ca61556e75e82211e2df4498a715a5b37cd"
+  },
+  "request": {
+    "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/acceptance-checkpoint-20260926-a2.json",
+    "bytes": 191,
+    "sha256": "d0f2353b2cc3dc41f4be0a95ec63b1060bc39f9f00947af2587a2a107cb35e2a"
+  },
+  "output": {
+    "path": "/private/tmp/bfs-acceptance-checkpoint-20260926-a2.json",
+    "bytes": 943272,
+    "sha256": "97d42a9da929f84a9b072b2e4679d72c38fa8ab3d11a7338647f6f49732d2aaf"
+  },
+  "identity_sha256": "7c7ed9d48a4ee4a26e1253cf27a8474910831c338c7abe3723aa8512433e3b8e",
+  "matrix": [
+    {
+      "starting_implementation": "dx100-bfs-scalar",
+      "route": "instruction",
+      "payload": "natural_language",
+      "graph_family": "kronecker",
+      "required_basis": "simulated",
+      "accelerator_required": true,
+      "state": "incomplete",
+      "attempts": [],
+      "reasons": [
+        "no qualifying current execution for this required cell"
+      ]
+    },
+    {
+      "starting_implementation": "dx100-bfs-scalar",
+      "route": "instruction",
+      "payload": "natural_language",
+      "graph_family": "uniform_random",
+      "required_basis": "simulated",
+      "accelerator_required": true,
+      "state": "incomplete",
+      "attempts": [],
+      "reasons": [
+        "no qualifying current execution for this required cell"
+      ]
+    },
+    {
+      "starting_implementation": "dx100-bfs-scalar",
+      "route": "supplied_code",
+      "payload": "patch",
+      "graph_family": "kronecker",
+      "required_basis": "measured",
+      "accelerator_required": false,
+      "state": "incomplete",
+      "attempts": [],
+      "reasons": [
+        "no qualifying current execution for this required cell"
+      ]
+    },
+    {
+      "starting_implementation": "dx100-bfs-scalar",
+      "route": "supplied_code",
+      "payload": "patch",
+      "graph_family": "uniform_random",
+      "required_basis": "measured",
+      "accelerator_required": false,
+      "state": "incomplete",
+      "attempts": [],
+      "reasons": [
+        "no qualifying current execution for this required cell"
+      ]
+    },
+    {
+      "starting_implementation": "gapbs-bfs-do",
+      "route": "instruction",
+      "payload": "structured_instructions",
+      "graph_family": "kronecker",
+      "required_basis": "measured",
+      "accelerator_required": false,
+      "state": "incomplete",
+      "attempts": [],
+      "reasons": [
+        "no qualifying current execution for this required cell"
+      ]
+    },
+    {
+      "starting_implementation": "gapbs-bfs-do",
+      "route": "instruction",
+      "payload": "structured_instructions",
+      "graph_family": "uniform_random",
+      "required_basis": "measured",
+      "accelerator_required": false,
+      "state": "incomplete",
+      "attempts": [],
+      "reasons": [
+        "no qualifying current execution for this required cell"
+      ]
+    },
+    {
+      "starting_implementation": "gapbs-bfs-do",
+      "route": "supplied_code",
+      "payload": "annotated_source",
+      "graph_family": "kronecker",
+      "required_basis": "simulated",
+      "accelerator_required": true,
+      "state": "incomplete",
+      "attempts": [],
+      "reasons": [
+        "no qualifying current execution for this required cell"
+      ]
+    },
+    {
+      "starting_implementation": "gapbs-bfs-do",
+      "route": "supplied_code",
+      "payload": "annotated_source",
+      "graph_family": "uniform_random",
+      "required_basis": "simulated",
+      "accelerator_required": true,
+      "state": "incomplete",
+      "attempts": [],
+      "reasons": [
+        "no qualifying current execution for this required cell"
+      ]
+    }
+  ],
+  "criteria": {
+    "AC01": "satisfied_by_retained_metadata",
+    "AC02": "satisfied_by_retained_metadata",
+    "AC03": "satisfied_by_retained_metadata",
+    "AC04": "satisfied_by_retained_metadata",
+    "AC05": "satisfied_by_retained_metadata",
+    "AC06": "incomplete",
+    "AC07": "incomplete",
+    "AC08": "satisfied_by_retained_metadata",
+    "AC09": "satisfied_by_retained_metadata",
+    "AC10": "incomplete",
+    "AC11": "incomplete",
+    "AC12": "satisfied_by_retained_metadata",
+    "AC13": "satisfied_by_retained_metadata",
+    "AC14": "satisfied_by_retained_metadata",
+    "AC15": "incomplete",
+    "AC16": "incomplete",
+    "AC17": "incomplete",
+    "AC18": "incomplete",
+    "AC19": "incomplete",
+    "AC20": "incomplete"
+  },
+  "acceptance": "incomplete",
+  "gain_claim": false,
+  "external_verification_complete": false,
+  "reference_obligations": {
+    "artifact_reference_comparisons": {
+      "state": "incomplete",
+      "comparisons": []
+    },
+    "controlled_reference_comparisons": {
+      "state": "incomplete",
+      "comparisons": []
+    }
+  },
+  "limits": [
+    "Unestablished contract, changed-source, and collaborator handoff criteria remain incomplete.",
+    "Remote raw artifacts remain unverified on a host that cannot read them.",
+    "No gain over the authors' accelerated implementation is required.",
+    "No empirical protocol exists to select. This213-record local snapshot includes published paired history, tiny a3 witness and failed coverage a1, but excludes still-running native metadata and held remote provider/candidate packet. No raw artifacts copied from mbit10."
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "created": "2026-09-26",
+  "state": "reviewed_code_synchronized_actual_readback_pending",
+  "scope": "One original-code native evidence readback, no measurement, publication or retry",
+  "auxiliary_commit": "39d330fb61911e9bbbc8d65a30825452e63afb33",
+  "sole_parent": "3f38a2bf9cde4fb23edebd787a9d4d8ab9549e07",
+  "branch": "codex/bfs-native-readback-20260926-a1",
+  "implementation_commit": "6664e2e",
+  "destination": {
+    "repository": "ruchou/EvolveSWDB",
+    "visibility": "private",
+    "repository_id": "1382305006",
+    "owner": "ruchou",
+    "push_permission": true,
+    "remote_ref_verified": "39d330fb61911e9bbbc8d65a30825452e63afb33"
+  },
+  "inventory": {
+    "path": "/private/tmp/bfs-native-readback-export-inventory-20260926.json",
+    "bytes": 1548,
+    "sha256": "1154242689973dccff37bd32b4221c83b4cb34258cb0756698cb2334f378d28a"
+  },
+  "files": [
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/native-readback-20260926-a1.py",
+      "source": "/private/tmp/bfs-native-readback-recipe-20260926.py",
+      "mode": "100644",
+      "bytes": 6969,
+      "sha256": "d91d061933c5a5ae49a73227a1a5be79579acb531052621aa5bcc074ca5294eb",
+      "blob": "18a022d8fc4852eee600ef7efaa5701e870ffebf"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/native-readback-20260926-a1.json",
+      "source": "/private/tmp/bfs-native-readback-selection-template-v2-20260926.json",
+      "mode": "100644",
+      "bytes": 2475,
+      "sha256": "7625db24ea8c69586e255e8c8cfeee013469571caece6604998c246a66fb385a",
+      "blob": "70e29aeff3ad126add2780ba861ae648cade797b"
+    },
+    {
+      "path": "docs/bfs-native-readback-preflight-20260926.md",
+      "source": "/private/tmp/bfs-native-readback-preflight-v3-20260926.md",
+      "mode": "100644",
+      "bytes": 5661,
+      "sha256": "c765d6fad91bb706dfd9255bf657e723cfac1c51af34c98602c80ba1cb7ef36d",
+      "blob": "b39c2c12ce2ba1d5bb3668931b2f9f562d2fbb8c"
+    }
+  ],
+  "total_bytes": 15105,
+  "local_probes": {
+    "author": 6,
+    "independent_standards": 5
+  },
+  "bounds": {
+    "whole_seconds": 990,
+    "original_reader_work_seconds": 900,
+    "original_reader_cleanup_seconds": 30,
+    "cumulative_ancillary_seconds": 60,
+    "invocations": 1
+  },
+  "prelaunch_correction": "Preserved V1 selection; V2 adds actual driver reference bytes486592 to match the immutable audit dict. Historical paired driver ref was confirmed path+hash only; all four package IDs/order confirmed.",
+  "transfer": "Git-only auxiliary object; host must keep supervisor HEAD3f38 and collector HEAD319 unchanged. No raw output or held provider packet transferred.",
+  "limitations": [
+    "No actual readback result at this synchronization checkpoint.",
+    "Actual external zero exit, immutable output and independent lease/process closure remain required.",
+    "Passing readback is not protocol freeze, final candidate acceptance or gain."
+  ],
+  "standards_review_v2": {
+    "path": "/private/tmp/bfs-native-readback-standards-review-final-20260926.json",
+    "bytes": 6715,
+    "sha256": "36ebc1682f52c90deb3b287b6ee1b8792fdeb1a8896f7d2e476b561802c0a4ab"
+  },
+  "standards_review": {
+    "path": "/private/tmp/bfs-native-readback-standards-review-final-v3-20260926.json",
+    "bytes": 7654,
+    "sha256": "1efcd2759cb52f664dd1a453b12152a0f8d3f8a4c5a796411c0f8c10f5ec6f36"
+  }
+}

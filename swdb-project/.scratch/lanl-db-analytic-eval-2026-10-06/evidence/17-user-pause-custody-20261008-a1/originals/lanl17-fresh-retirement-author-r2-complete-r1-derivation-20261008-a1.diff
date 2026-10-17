@@ -1,0 +1,247 @@
+--- /private/tmp/lanl17_author_fresh_sparse_retirement_parent_request_20261008_a1_r1.py
++++ /private/tmp/lanl17_author_fresh_sparse_retirement_parent_request_20261008_a1_r2.py
+@@ -22,19 +22,22 @@
+ BASE = '/data1/yanruj'
+ PRIMARY = '5e12a9796432654d88def24ecea617d16ca605b2'
+ UID = 114316761
+-GUARD_SHA = '4956a7453ae569d7ccf6e1a9ed98a1a933bee2e35cca1774932afbfba819bd26'
+-WRAPPER_SHA = '1127d1fba8e004153cf086cace7d19ccd901e85902f9ad91924407922c85c6ca'
+-PUBLISHER_SHA = '72527faeabe146304ac647f8edef90d5de49bcbf9aae768515e588e025cb71d9'
++GUARD_SHA = 'd75baaf9dbe7192b02812cab525ccd6c50c81fd312d67cbfae7b9c8fdf955301'
++WRAPPER_SHA = 'e16f1afa5a427d452504e7a759a7562dcc05a98014e2b4ece1663db6755d39ec'
++PUBLISHER_SHA = '5e667fa8ca26ece4825631e5d51feca490f3e154688a38399518bf9c237df2d9'
+ SERVICE_SHA = 'fcf92eee1c4b8bdfaed979dc8bedab004c6c4b7e2b1410c7614bc92d60349f4a'
+-CONTROL = BASE+'/lanl17-detached-sparse-default-a1'
+-DECODED = TMP/'lanl17-detached-sparse-default-a1-originals-20261008'
++CONTROL = BASE+'/lanl17-detached-sparse-default-a3'
++DECODED = TMP/'lanl17-detached-sparse-default-a3-originals-20261008'
++SOURCE_DIRECTORY = BASE+'/lanl17-sparse-retirement-source-20261008-a2'
++DEFAULT_PLAN_ID = '4d3e5845e0a844d5181d0c6025f49c955ccbdcdc64b03491b78b01519765cd58'
++DEFAULT_REVIEW_ID = 'b51b17027c5f971df06b29eb04cf37f5521ac7296949cd4f0cea30495ea063a1'
+ FIXED = {
+-    'request': ('lanl17-actual-sparse-default-parent-request-20261008-a2.json', 527815,
+-                'fbf346baa605ade9ddd46477e9ea4cb5aba9bc753b2eca9e165f00bb70787173'),
+-    'plan': ('lanl17-actual-sparse-default-parent-plan-20261008-a2.json', 735074,
+-             'cbd6d8a7b86329fdd6aa518db3254bef9532883cda055ff49882148d7fe01a2d'),
+-    'review': ('lanl17-actual-sparse-default-parent-review-20261008-a2.json', 1882,
+-               '4220c2a3674c00b34f22f19c950db3b9068f89f09a24fa05cacfad5376fd8f49'),
++    'request': ('lanl17-actual-sparse-default-parent-request-20261008-a3.json', 535589,
++                '6d8cf50990054c0568d6b2fbb981bb4f47091207fc72fddb1678cf9919b3da09'),
++    'plan': ('lanl17-actual-sparse-default-parent-plan-20261008-a3.json', 740733,
++             'e2fb42a2bde17b3d9aab4c0d2121903a22dd3d7f29d7caab85acf22638677c02'),
++    'review': ('lanl17-actual-sparse-default-parent-review-20261008-a3.json', 3997,
++               'c3720a14075597ff55ca5a16644b74bc81c778ae8bd542c46279f9d039b2bd62'),
+ }
+ FILES = {'status.json':16384, 'configuration.json':16384, 'tmux.conf':16384,
+          'launch-status.json':16384, 'launch.stdout':16384, 'launch.stderr':16384,
+@@ -51,7 +54,7 @@
+     '/usr/bin/git': (4019024,'06b2aa74919b1993f9fd7e47060ea98d98c27206f16ccc2d35f51ced7e7877eb'),
+     '/usr/bin/bash': (1446024,'bc5945feb8bd26203ebfafea5ce1878bb2e32cb8fb50ab7ae395cfb1e1aaaef1'),
+ }
+-MUTABLE = {'checked_at','allocation_decision','fresh_capacity_and_cost',
++MUTABLE = {'checked_at','selection_reason','allocation_decision','fresh_capacity_and_cost',
+            'parent_review_facts','protected_file_pins','additional_protected_paths'}
+ FIELDS = ('dev','ino','mode','uid','gid','nlink','size','mtime_ns','ctime_ns')
+ 
+@@ -222,17 +225,24 @@
+          and config['scientific_action'] is False,'default_configuration_scope_changed')
+     for key in ('inputs','selected_rows','expected_primary','guard_attempt','retire_requested','reviewed_plan'):
+         need(config[key]==status[key],'configuration_status_binding_changed')
+-    for key,size,dig in (('wrapper',24115,WRAPPER_SHA),('guard',166145,GUARD_SHA),
++    for key,size,dig in (('wrapper',24114,WRAPPER_SHA),('guard',180887,GUARD_SHA),
+                          ('service_review',3258,SERVICE_SHA)):
+         need(status['inputs'][key]['bytes']==size and status['inputs'][key]['sha256']==dig,
+              'selected_default_source_changed')
++    for role,basename in (('guard','lanl_sparse_retire_consumed_source_guard_20261008_a1_r5.py'),
++                          ('wrapper','lanl17_detach_library_preserving_sparse_administration_20261008_a1_r2.py')):
++        pin = status['inputs'][role]; remote_pin(pin,262144)
++        need(pin['path']==SOURCE_DIRECTORY+'/'+basename
++             and any(all(v[k]==pin[k] for k in ('path','bytes','sha256','stat'))
++                     for v in old_plan['protected_file_pins'] if 'stat' in v),
++             'selected_source_original_plan_full_pin_changed')
+     need(set(status['inputs']['native'])==set(NATIVE),'native_pin_set_changed')
+     for path,(size,dig) in NATIVE.items():
+         pin = status['inputs']['native'][path]
+         need(pin['path']==path and pin['bytes']==size and pin['sha256']==dig,
+              'native_pin_changed')
+     attempt = status['guard_attempt']
+-    need(type(attempt) is str and re.fullmatch('a[1-9][0-9]*',attempt),'default_attempt_required')
++    need(attempt=='a3','exact_corrected_default_attempt_required')
+     output = BASE+'/lanl-library-preserving-sparse-retirement-20261008-'+attempt
+     need(config['guard_output_directory']==output
+          and entries['guard-receipt/receipt.json']['path']==output+'/receipt.json',
+@@ -272,10 +282,12 @@
+                                 'qualification_deferred_to':'assessment_completion'},
+          'default_process_scope_labels_changed')
+     for name,tree in initial['trees'].items():
+-        need(tree['regular_bytes_verified'] is True and tree['detached_clean_ignored0_untracked0'] is True
++        need(tree['regular_bytes_verified'] is False
++             and tree['tracked_mode_blob_source_inventory_sha256'] is None
++             and tree['detached_clean_ignored0_untracked0'] is True
+              and type(tree['tracked_entries']) is int and 0<tree['tracked_entries']<=LIMITS['tracked_entries'],
+-             'full_default_tracked_source_required')
+-        digest(tree['tracked_mode_blob_source_inventory_sha256']); digest(tree['tracked_stat_inventory_sha256'])
++             'metadata_first_default_tracked_source_required')
++        digest(tree['tracked_stat_inventory_sha256'])
+     need(initial['sources']['expected_primary']==PRIMARY
+          and initial['sources']['C']=='f893fed400347ed23d92e917d8bde21b75e5375d'
+          and initial['sources']['F6']=='f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3'
+@@ -287,13 +299,53 @@
+          and all(v['state']=='released' for v in initial['leases'].values()),
+          'default_released_lease_facts_required')
+     old_file = status['reviewed_plan']['file']
+-    need(old_file['path']==BASE+'/lanl-sparse-retirement-parent-plan-20261008-a2.json'
++    need(old_file['path']==BASE+'/lanl-sparse-retirement-parent-plan-20261008-a3.json'
+          and old_file['bytes']==FIXED['plan'][1] and old_file['sha256']==FIXED['plan'][2]
+          and status['reviewed_plan']['identity_sha256']==old_plan['identity_sha256']
+          and receipt['reviewed_plan_file_sha256']==old_file['sha256']
+          and receipt['reviewed_plan_identity_sha256']==old_plan['identity_sha256']
+          and receipt['parent_review_identity_sha256']==old_review['identity_sha256'],
+          'original_default_plan_review_binding_changed')
++    # Prior full-byte custody is authenticated original evidence, not a current read.
++    started = timestamp(receipt['started_at']); finished = timestamp(receipt['finished_at'])
++    checked = timestamp(old_plan['checked_at']); current = datetime.datetime.now(datetime.timezone.utc)
++    need(0<=(started-checked).total_seconds()<=300 and started<=finished<=current,
++         'original_default_chronology_changed')
++    projection = sorted(old_plan['historical_reference_files'],key=lambda pin:pin['path'])
++    need(len(projection)==345 and len({pin['path'] for pin in projection})==345
++         and {pin['path'] for pin in projection}==set(request['historical_file_reviews']),
++         'complete_original_historical_projection_required')
++    history = receipt['historical_byte_custody']
++    need(history['format']=='swdb.original-historical-byte-custody.v1'
++         and history['all_history_bytes_freshly_read_in_this_operation'] is True
++         and type(history['inherited_history_files']) is int and history['inherited_history_files']==0
++         and history['historical_projection_sha256']==sha(canonical(projection)),
++         'fresh_default_historical_byte_policy_required')
++    vectors = history['files']
++    need(type(vectors) is list and len(vectors)==345
++         and [v['path'] for v in vectors]==[p['path'] for p in projection],
++         'complete_ordered_default_historical_vectors_required')
++    for pin,witness in zip(projection,vectors):
++        need(type(witness) is dict and set(witness)=={'path','bytes','sha256','stat','reference_hits'}
++             and all(witness[k]==pin[k] for k in ('path','bytes','sha256','stat'))
++             and type(witness['reference_hits']) is bool
++             and type(witness['bytes']) is int and 0<=witness['bytes']<=LIMITS['one_file'],
++             'original_default_historical_vector_changed')
++        digest(witness['sha256']); observed = witness['stat']
++        need(set(observed)==set(FIELDS) and all(type(v) is int for v in observed.values())
++             and observed['uid']==UID and observed['nlink']==1 and stat.S_ISREG(observed['mode'])
++             and observed['size']==witness['bytes'], 'original_historical_full_stat_required')
++        reviewed = request['historical_file_reviews'][pin['path']]
++        need(all(reviewed[k]==pin[k] for k in ('bytes','sha256','handling','review_basis'))
++             and pin['handling']=='historical_only_not_dereferenced'
++             and type(pin['review_basis']) is str and pin['review_basis'],
++             'original_historical_classification_changed')
++    full_roots = request['reviewed_full_RAW_roots']
++    eligible = {p['path'] for p in projection
++                if p['path'].startswith('/data/yanruj/EvolveSWDB_runs/')
++                and not any(p['path']==r or p['path'].startswith(r+'/') for r in full_roots)}
++    need(len(full_roots)==30 and len(set(full_roots))==30 and len(eligible)==153,
++         'exact_original_inherited_history_scope_changed')
+     observations = custody['wrapper_custody_observation']
+     need(observations['selected_source_pins_bound'] is True
+          and observations['configuration_pin_matches_status'] is True
+@@ -347,7 +399,20 @@
+          and all(v=='released' for v in fresh['released_leases'].values())
+          and fresh['reserved_paths_still_absent']==request['reserved_absent_paths'],
+          'fresh_lease_or_reserved_route_changed')
+-    copies = {v['path']:v for v in fresh['private_control_copies']}
++    copy_rows = fresh['private_control_copies']
++    need(type(copy_rows) is list and len(copy_rows)==4, 'four_original_and_selected_source_copies_required')
++    copies = {v['path']:v for v in copy_rows}
++    expected_copies = {
++        BASE+'/lanl17-sparse-retirement-source-20261008-a1/lanl_sparse_retire_consumed_source_guard_20261008_a1_r2.py':
++            (166145,'4956a7453ae569d7ccf6e1a9ed98a1a933bee2e35cca1774932afbfba819bd26'),
++        BASE+'/lanl17-sparse-retirement-source-20261008-a1/lanl17_detach_library_preserving_sparse_administration_20261008_a1_r1.py':
++            (24115,'1127d1fba8e004153cf086cace7d19ccd901e85902f9ad91924407922c85c6ca'),
++        SOURCE_DIRECTORY+'/lanl_sparse_retire_consumed_source_guard_20261008_a1_r5.py':(180887,GUARD_SHA),
++        SOURCE_DIRECTORY+'/lanl17_detach_library_preserving_sparse_administration_20261008_a1_r2.py':(24114,WRAPPER_SHA)}
++    need(set(copies)==set(expected_copies),'exact_four_distinct_source_copy_routes_required')
++    for path,(size,expected) in expected_copies.items():
++        pin = copies[path]; remote_pin(pin,262144)
++        need(pin['bytes']==size and pin['sha256']==expected,'fresh_four_source_copy_pin_changed')
+     for p in request['protected_file_pins']:
+         if p['sha256'] in (GUARD_SHA,WRAPPER_SHA):
+             need(p['path'] in copies and all(copies[p['path']][k]==p[k] for k in ('bytes','sha256','stat')),
+@@ -414,25 +479,55 @@
+              'immutable_default_request_required')
+         original_seal(old_plan,'swdb.library-preserving-sparse-retirement-parent-plan.v1')
+         original_seal(old_review,'swdb.library-preserving-sparse-retirement-parent-review.v1')
+-        need(old_review['actual_default_only'] is True and old_plan['selected_rows']==request['selected_rows']
++        need(old_plan['identity_sha256']==DEFAULT_PLAN_ID and old_review['identity_sha256']==DEFAULT_REVIEW_ID
++             and old_review['actual_default_only'] is True and old_plan['selected_rows']==request['selected_rows']
+              and old_plan['parent_review_pin']['sha256']==FIXED['review'][2]
+              and old_plan['parent_review_pin']['identity_sha256']==old_review['identity_sha256'],
+              'original_default_only_review_changed')
++        need(old_plan['guard_source_sha256']==GUARD_SHA and old_plan['expected_primary']==PRIMARY
++             and old_plan['parent_review_pin']['path']==BASE+'/lanl-sparse-retirement-parent-review-20261008-a3.json'
++             and old_plan['parent_review_pin']['bytes']==FIXED['review'][1]
++             and old_review['accepted_for_exact_subset'] is True
++             and old_review['accepted_library_preserving_sparse_scope'] is True
++             and old_review['final14_completed_and_released'] is True,
++             'original_default_plan_source_and_review_scope_changed')
++        configuration = {k:copy.deepcopy(v) for k,v in old_plan.items()
++                         if k not in ('identity_sha256','parent_review_pin')}
++        backlinks = []
++        for key in ('control_siblings_complete_review','pending_alias_coverage_review',
++                    'receipt_source_proofs_complete_review','original_raw_files_complete_review'):
++            backlinks.append(configuration[key].pop('parent_review_identity_sha256'))
++        for consumer in configuration['relevant_privileged_consumers']:
++            backlinks.append(consumer.pop('parent_review_identity_sha256'))
++        need(all(link==old_review['identity_sha256'] for link in backlinks)
++             and sha(canonical(configuration))==old_review['reviewed_configuration_sha256'],
++             'whole_original_default_configuration_review_changed')
+         default,guard_output = defaults(inputs,args,request,old_plan,old_review)
+         body,parent_pin = inputs.read(args.parent_acceptance,65536,args.parent_acceptance_sha256)
+         parent = strict(body); parent_acceptance(parent,request,default)
+         fresh,fresh_pin,values = capacity(inputs,args.fresh_capacity_original,args.fresh_capacity_sha256,request)
+         out = copy.deepcopy(request)
+         out['checked_at'] = fresh['checked_at']; out['allocation_decision'].update(values)
++        out['selection_reason'] += (
++            ' The preceding DEFAULT-only authorization clause describes the preserved a3 request at creation. '
++            'This distinct fresh RETIRE request binds only the genuinely parent-accepted a3 DEFAULT originals; '
++            'eligible prior historical byte proofs require G5 current full-stat continuity, with two fresh RAW '
++            'passes and fresh per-row full regular-byte/Git-source/library checks unchanged. '
++            'The unsealed request itself establishes no actual retirement, recovery or scientific admission.')
+         out['fresh_capacity_and_cost'].update({
+             'checked_at':fresh['checked_at'],'actual_free_data1_bytes':fresh['actual_free_bytes']['/data1'],
+             'actual_free_data_bytes':fresh['actual_free_bytes']['/data'],
+             'fresh_capacity_original_pin':fresh_pin,'Q_bytes':values['required_floor_Q_bytes'],
+             'remaining_cost_terms':
+-                'The genuinely parent-accepted default supplies its original measured counters, bound '
+-                'in parent_review_facts.successful_default_original_bindings. Strict retirement '
+-                'checks and limits remain unchanged; default counters do not predict or substitute '
+-                'for actual retirement counter debits. The 64 MiB administrative allowance and retained '
++                'The genuinely parent-accepted a3 DEFAULT supplies historical original counters and all345 '
++                'full byte witnesses, bound in parent_review_facts.successful_default_original_bindings. '
++                'Only153 eligible history hashes may use prior-byte evidence plus G5 current complete-stat '
++                'continuity; the author observes no fresh remote history stats. The corrected source core '
++                'estimates DEFAULT14381124025B and conditional RETIRE14702545997B remain incomplete source '
++                'estimates, not total upper bounds or fit guarantees. Two fresh full RAW passes, every fresh '
++                'per-row tracked/Git/source/library byte check and all role/process/admin/plan debits remain. '
++                'Default counters do not predict or substitute for actual retirement counter debits. '
++                'The 64 MiB administrative allowance and retained '
+                 'index/witness estimates are conditional planning estimates, not universal caps or '
+                 'guaranteed recovery. Post-retirement statvfs remains required before scientific '
+                 'prepare. This unsealed request author gives no recovery, capacity or scientific '
+@@ -458,7 +553,8 @@
+             need(directory!=BASE and Path(directory).parent==Path(BASE),'no_BASE_ancestor_protection')
+             if directory not in out['additional_protected_paths']:
+                 out['additional_protected_paths'].append(directory)
+-        need(set(out)==set(request) and all(out[k]==request[k] for k in request if k not in MUTABLE),
++        need(out['selection_reason'].startswith(request['selection_reason'])
++             and set(out)==set(request) and all(out[k]==request[k] for k in request if k not in MUTABLE),
+              'outside_authorized_request_fields_changed')
+         need(out['protected_file_pins'][:len(request['protected_file_pins'])]==request['protected_file_pins']
+              and out['additional_protected_paths'][:len(request['additional_protected_paths'])]
+@@ -467,8 +563,8 @@
+         need(0<=(datetime.datetime.now(datetime.timezone.utc)-timestamp(out['checked_at'])).total_seconds()<=120,
+              'fresh_capacity_expired_during_authoring')
+         destination = Path(args.output)
+-        need(destination.parent==TMP and destination.name.startswith('lanl17-actual-sparse-retirement-parent-request-')
+-             and destination.suffix=='.json' and not os.path.lexists(destination),
++        need(destination==TMP/'lanl17-actual-sparse-retirement-parent-request-20261008-a4.json'
++             and not os.path.lexists(destination),
+              'fresh_direct_tmp_unsealed_request_required')
+         raw = canonical(out)+b'\n'; need(len(raw)<=2097152,'bounded_unsealed_request_required')
+         inputs.left(); fd = os.open(destination,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW|os.O_CLOEXEC,0o600)

@@ -1,0 +1,171 @@
+{
+  "date": "2026-10-16 ET",
+  "status": "source-selection/compiler preparation only",
+  "source_files": [
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/selected_source.py",
+      "sha256": "d798c944f03a76c457e930fb3d613fddb5189cef40dc52b0f1713d0962bf7e7e"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/checks/outslot/run_selected_source_controls.py",
+      "sha256": "9df5d22907b1580bf335d67fc3bbab180def96bcecc90fbf0f4fccc089dcc965"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/SELECTED-SOURCE-GATE-20261016.md",
+      "sha256": "b8ef0f48e20a3cad3c7b60bd34c73c1d2f52211e239118ecc7751d05327e729a"
+    }
+  ],
+  "selected_main_sha256": "093c56b91837122380fd5e66766c92947e5f1c5194dd4c038936bc28934864dc",
+  "actual_project_unit_sha256": "3c5867a2b8919806f681603836bd0cff448f21634485abf84e49ed71f25515ef",
+  "actual_fork_header_sha256": "3d5a1d3cff924737c2fc7c6b4fcbb859270f1fcc626c25aac4c780b7b6f4c02c",
+  "selected_compiler_observations": {
+    "field_map": {
+      "in": "unsigned long",
+      "local_queue": "int *",
+      "sq": "SlidingQueue<int> &",
+      "local_size": "const unsigned long"
+    },
+    "actual_default": 16384,
+    "new_array_has_payload_initializer": false,
+    "stable_source_binding": {
+      "main_sha256": "093c56b91837122380fd5e66766c92947e5f1c5194dd4c038936bc28934864dc",
+      "function": "TDStep",
+      "declaration_kind": "VarDecl",
+      "declaration_name": "lqueue",
+      "declaration_byte_range": [
+        2699,
+        2732
+      ],
+      "use_kind": "CXXMemberCallExpr/MemberExpr/DeclRefExpr",
+      "source_uses": [
+        {
+          "byte_range": [
+            4539,
+            4545
+          ],
+          "method": "push_back"
+        },
+        {
+          "byte_range": [
+            4931,
+            4937
+          ],
+          "method": "push_back"
+        },
+        {
+          "byte_range": [
+            4970,
+            4976
+          ],
+          "method": "flush"
+        }
+      ],
+      "implicit_capture_kind": "OMPForDirective/CapturedStmt/DeclRefExpr",
+      "implicit_capture_byte_ranges": [
+        [
+          4539,
+          4545
+        ],
+        [
+          4931,
+          4937
+        ]
+      ]
+    },
+    "OMP_capture_semantics": "Same-variable IDs checked only within this TDStep AST; captures require exact matching source-use ranges; threads=1 source scope only, no generic OpenMP/noescape theorem",
+    "normal_allocation_operator": {
+      "kind": "FunctionDecl",
+      "name": "operator new[]",
+      "type": {
+        "qualType": "void *(std::size_t)"
+      }
+    },
+    "normal_deallocation_operator": {
+      "kind": "FunctionDecl",
+      "name": "operator delete[]",
+      "type": {
+        "qualType": "void (void *) noexcept"
+      }
+    },
+    "dump_local_IDs_retained_only_in_raw_AST": true,
+    "full_selected_TU_parsed": true,
+    "compiler_path": "/opt/homebrew/opt/llvm/bin/clang++",
+    "compiler_resolved": "/opt/homebrew/Cellar/llvm/22.1.8/bin/clang-22",
+    "compiler_sha256": "305697d3868243dca6e4aabf4f628df7de135d701eb4fd78f6a5d7528fef4395",
+    "explicit_SDK": "/Library/Developer/CommandLineTools/SDKs/MacOSX27.0.sdk",
+    "SDK_settings_sha256": "7b93ad7e534cc4b31c6a4e39d19b5e0288acf2168c2649479a796d1cb51939fb",
+    "ambient_driver_configs_disabled": true,
+    "physical_include_files": 901,
+    "include_closure_boundary": "discovery preprocessing identifies inputs; every later syntax/macro/token/AST compiler run bracketed by exact physical rehashes; filesystem sampling is not atomic",
+    "host_context": "selected local compiler/macOS ABI; remote Linux/GEM5 ABI and link-time allocator replacement unqualified"
+  },
+  "source_record": {
+    "path": "/private/tmp/probata-t07-selected-source-controls-final2-20261016/selected/selected-source.json",
+    "sha256": "78434ea47f1dcfbb44bc4c85d5c1de0c66dcf48f79d804a41aa7d4b297ebd7c7"
+  },
+  "full_include_closure": {
+    "path": "/private/tmp/probata-t07-selected-source-controls-final2-20261016/selected/physical-include-closure.json",
+    "sha256": "b3c4ffdae728852eb5826f660dbe7737154a88502c6ce1dd08aad03ae23162c2"
+  },
+  "raw_artifact_manifest": {
+    "path": "/private/tmp/probata-t07-selected-source-artifacts-20261016.json",
+    "sha256": "6087e5125ba95294cb368d708d1060e098f7acd18b3cb84d0321e51b719dd8af",
+    "files": 495
+  },
+  "controls": {
+    "passed": 35,
+    "total": 35,
+    "receipt_sha256": "0dc84d2c8c51945edfef667e650c4cc213928082a297761a01a88cc39f589140",
+    "resources": {
+      "cmd": [
+        "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+        "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/checks/outslot/run_selected_source_controls.py",
+        "--output",
+        "/private/tmp/probata-t07-selected-source-controls-final2-20261016"
+      ],
+      "exit_code": 0,
+      "wall_s": 14.086562749987934,
+      "peak_rss_mb": 161.34375,
+      "cap_gb": 8.0,
+      "killed_by_watchdog": false,
+      "timed_out": false,
+      "queue_timed_out": false,
+      "timeout_s": 120.0,
+      "queue_timeout_s": 60.0,
+      "lock_wait_s": 0.0002733750152401626,
+      "runner_pid": 95525,
+      "clock": "continuous_monotonic",
+      "clock_info": {
+        "kind": "continuous_monotonic",
+        "implementation": "mach_continuous_time",
+        "includes_sleep": true,
+        "numer": 125,
+        "denom": 3
+      },
+      "log": "/private/tmp/probata-t07-selected-source-controls-final2-20261016.log",
+      "inspection_events": [],
+      "inspection_failure": null,
+      "primary_inspection_failure": null,
+      "cleanup_inspection_failure": null,
+      "cleanup_inspection_failures": [],
+      "inspection_retry_boundary": "AccessDenied uses a 200 ms environ retry admission window and 21-attempt cap, or three attempts for other operations; only the exact proc_environ SystemError raised by the requested environ operation shares that policy; individual OS calls are not forcibly timed; all pauses count and RSS/deadline checks remain mandatory after inspection; only independently confirmed gone/zombie or changed birth is skipped; persistent live or unknown failure fails closed",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unconfirmed_children": [],
+      "error": null,
+      "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment",
+      "rss_scope": "live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches; sampled, not a kernel quota",
+      "finished": "2026-10-16 03:16:25 EDT"
+    }
+  },
+  "retained_failure_boundaries": [
+    "Feature RED: public command absent; not an existing-contract counterexample",
+    "First reader profile refused implicit OpenMP capture references; successor retains exact same-variable/source-range binding",
+    "Default-config hardening exposed absent SDK; successor uses explicit physically pinned SDK; no system change"
+  ],
+  "execution_scope": "Compiler parsing/preprocessing/tokens and pure public source/AST controls only; no native program execution or formal/provider/SSH/version/config probe",
+  "historical_and_canonical_models_unchanged": true,
+  "allocator_correspondence": false,
+  "formal_acceptance": false,
+  "full_TD_or_counted_admissible": false,
+  "root_generation_packet_unchanged": "/private/tmp/probata-t07-private-array-generation-packet-v1-20261016.json"
+}

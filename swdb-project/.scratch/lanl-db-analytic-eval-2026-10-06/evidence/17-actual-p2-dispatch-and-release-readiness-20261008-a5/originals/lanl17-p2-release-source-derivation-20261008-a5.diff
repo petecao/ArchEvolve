@@ -1,0 +1,345 @@
+--- /private/tmp/lanl17_read_p1_native_release_observation_20261008_a5_r2.py
++++ /private/tmp/lanl17_read_p2_native_release_observation_20261008_a5_r2.py
+@@ -7,11 +7,11 @@
+ BASE=Path('/data1/yanruj')
+ META=BASE/'lact-host-lease/mbit10-evaluation-node0.meta.json'
+ LEASE=BASE/'lact-host-lease/mbit10-evaluation-node0.lease'
+-A=Path('/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p1/attempt-1')
++A=Path('/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p2/attempt-1')
+ R='5e12a9796432654d88def24ecea617d16ca605b2'
+ M2='66194a7e99716f5b59ddf081dfec752c34b51f1805470a4514171c53323b06c7'
+-DISPATCH='ee2d7bebe5a8003403a136b3fd8f62b1d72b743b6b47c1f8f97c4abb31ac53dd'
+-GENERATION=511
++DISPATCH='eb3979dd9836ab99ecdf5340bfa6bb72decac86a7a01abce663ccf0cd7b1a9f2'
++GENERATION=512
+ class Refused(ValueError): pass
+ def need(ok,code):
+     if not ok:raise Refused(code)
+@@ -105,7 +105,7 @@
+         v=strict(b)
+         if kind=='lane':
+             x=v.get('socket_lane');need(type(x) is dict,'lane_mapping')
+-            need(type(x.get('node')) is int and x['node']==0 and x.get('job')=='swdb-lanl17-20261007-a5-p1-a1' and x.get('lease_name')=='mbit10-evaluation-node0','lane_scalar_bindings')
++            need(type(x.get('node')) is int and x['node']==0 and x.get('job')=='swdb-lanl17-20261007-a5-p2-a1' and x.get('lease_name')=='mbit10-evaluation-node0','lane_scalar_bindings')
+             need(type(x.get('lease_generation')) is int and 0<=x['lease_generation']<=2**63-1 and type(x.get('exit_code')) is int and -2**31<=x['exit_code']<2**31,'lane_integer_fields')
+             for k in ('started_utc','ended_utc'):
+                 value=x.get(k);need(value is None or value=='' or (type(value) is str and 0<len(value)<=64 and re.fullmatch(r'[0-9T:.+Z-]+',value) is not None),'lane_UTC_scalar')
+@@ -113,7 +113,7 @@
+             out['projection']={k:x.get(k) for k in ('node','job','lease_name','lease_generation','started_utc','ended_utc','exit_code')}
+             out['record_errors_present']='record_errors' in x
+         else:
+-            expected={'format':'swdb.lanl17-stopped-attempt.v1','campaign':'extensa-gem5-bfs-20261006-p1','source_commit':R,'manifest_sha256':M2,'dispatch_sha256':DISPATCH}
++            expected={'format':'swdb.lanl17-stopped-attempt.v1','campaign':'extensa-gem5-bfs-20261006-p2','source_commit':R,'manifest_sha256':M2,'dispatch_sha256':DISPATCH}
+             need(all(v.get(k)==value for k,value in expected.items()),'stopped_scalar_bindings')
+             for k in ('started_utc','ended_utc'):
+                 value=v.get(k);need(type(value) is str and 0<len(value)<=64 and re.fullmatch(r'[0-9T:.+Z-]+',value) is not None,'stopped_UTC_scalar');utc(value)
+@@ -151,16 +151,16 @@
+             again,_=artifact(name,cap,kind);need(again==snapshots[name],'attempt_metadata_race')
+         reasons=[]
+         if v['state']!='released':reasons.append('native_lease_held')
+-        if lease['generation']!=GENERATION:reasons.append('native_generation_not511')
++        if lease['generation']!=GENERATION:reasons.append('native_generation_not512')
+         if secondlocks['matching_rows']:reasons.append('native_lease_kernel_lock_or_waiter_present')
+         if seconddaemon['FD9_matches_selected_lease']:reasons.append('daemon_FD9_still_open_to_selected_lease')
+         if any(not x['present'] for x in snapshots.values()):reasons.append('completed_attempt_metadata_missing')
+         if not reasons:
+             lane=values['lane.json']['socket_lane'];stop=values['stopped-receipt.json'];wrapper=values['wrapper.exit-code.txt'];runner=values['runner.exit-code.txt']
+-            need(lane.get('node')==0 and lane.get('lease_name')=='mbit10-evaluation-node0' and type(lane.get('lease_generation')) is int and lane['lease_generation']==GENERATION and lane.get('job')=='swdb-lanl17-20261007-a5-p1-a1','final_lane_binding')
++            need(lane.get('node')==0 and lane.get('lease_name')=='mbit10-evaluation-node0' and type(lane.get('lease_generation')) is int and lane['lease_generation']==GENERATION and lane.get('job')=='swdb-lanl17-20261007-a5-p2-a1','final_lane_binding')
+             need(type(lane.get('exit_code')) is int and lane['exit_code']!=-1,'final_lane_exit_missing')
+             ended=utc(lane.get('ended_utc'));need(ended>=utc(lane.get('started_utc')),'lane_time_order')
+-            need(stop.get('format')=='swdb.lanl17-stopped-attempt.v1' and stop.get('campaign')=='extensa-gem5-bfs-20261006-p1' and stop.get('source_commit')==R and stop.get('manifest_sha256')==M2 and stop.get('dispatch_sha256')==DISPATCH,'stopped_binding')
++            need(stop.get('format')=='swdb.lanl17-stopped-attempt.v1' and stop.get('campaign')=='extensa-gem5-bfs-20261006-p2' and stop.get('source_commit')==R and stop.get('manifest_sha256')==M2 and stop.get('dispatch_sha256')==DISPATCH,'stopped_binding')
+             need(type(stop.get('runner_exit_code')) is int and runner==stop['runner_exit_code'],'runner_stopped_exit_mismatch')
+             utc(stop.get('ended_utc'));need(stop.get('source_clean_after') is True,'stopped_source_dirty')
+             cleanup=stop.get('process_cleanup');need(type(cleanup) is dict and cleanup.get('subreaper') is True and cleanup.get('survivors')=={},'stopped_owned_cleanup_unknown')
+--- /private/tmp/lanl17_read_p1_normal_terminal_originals_20261008_a5_r2.py
++++ /private/tmp/lanl17_read_p2_normal_terminal_originals_20261008_a5_r2.py
+@@ -4,10 +4,10 @@
+ UID=114316761
+ FIELDS=('dev','ino','mode','uid','gid','nlink','size','mtime_ns','ctime_ns')
+ END=time.monotonic()+45
+-A=Path('/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p1/attempt-1')
++A=Path('/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p2/attempt-1')
+ R='5e12a9796432654d88def24ecea617d16ca605b2'
+ M2='66194a7e99716f5b59ddf081dfec752c34b51f1805470a4514171c53323b06c7'
+-DISPATCH='ee2d7bebe5a8003403a136b3fd8f62b1d72b743b6b47c1f8f97c4abb31ac53dd'
++DISPATCH='eb3979dd9836ab99ecdf5340bfa6bb72decac86a7a01abce663ccf0cd7b1a9f2'
+ F6='f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3'
+ POLICY={'frozen_at':'2026-10-08T16:05:25.347884+00:00','id':'extensa-gem5-bfs-20261006-p1.agreement.5bae2f42d9078864','identity_sha256':'5bae2f42d9078864caad73e81a16007edb6458f0b101628ded04a7ef3aedbf7d'}
+ class Refused(ValueError):pass
+@@ -59,7 +59,7 @@
+     caps={'stopped-receipt.json':65536,'runner.exit-code.txt':64,'wrapper.exit-code.txt':64,'lane.json':32768};rows={};raws={}
+     for name,cap in caps.items():raws[name],rows[name]=metadata(A/name,cap)
+     stop=strict(raws['stopped-receipt.json']);lane=strict(raws['lane.json']);s=lane.get('socket_lane');need(type(s) is dict,'lane_mapping')
+-    expected={'format':'swdb.lanl17-stopped-attempt.v1','campaign':'extensa-gem5-bfs-20261006-p1','source_commit':R,'manifest_sha256':M2,'dispatch_sha256':DISPATCH,'policy':POLICY,'estimator_sha256_after':F6,'infrastructure_error':None,'source_clean_after':True,'original_codex_home_restored':True,'account_home_unchanged':True,'raw_transferred':False,'scope':'Actual stopped attempt; no inferred completion, unique pairs or D30 success.'}
++    expected={'format':'swdb.lanl17-stopped-attempt.v1','campaign':'extensa-gem5-bfs-20261006-p2','source_commit':R,'manifest_sha256':M2,'dispatch_sha256':DISPATCH,'policy':POLICY,'estimator_sha256_after':F6,'infrastructure_error':None,'source_clean_after':True,'original_codex_home_restored':True,'account_home_unchanged':True,'raw_transferred':False,'scope':'Actual stopped attempt; no inferred completion, unique pairs or D30 success.'}
+     need(all(stop.get(k)==v for k,v in expected.items()),'normal_stopped_bindings')
+     stop_keys={'format','started_utc','ended_utc','campaign','source_commit','policy','manifest_sha256','dispatch_sha256','argv_sha256','runner_exit_code','public_exit_code','infrastructure_error','process_cleanup','original_codex_home_restored','account_home_unchanged','source_clean_after','estimator_sha256_after','raw_transferred','scope','identity_sha256'}
+     need(set(stop)==stop_keys,'closed_stopped_fields')
+@@ -75,7 +75,7 @@
+     for name in ('runner.exit-code.txt','wrapper.exit-code.txt'):
+         need(re.fullmatch(rb'-?[0-9]+\s*',raws[name]) is not None and int(raws[name])==0,'normal_original_integer_exit')
+     need(type(stop['runner_exit_code']) is int and type(stop['public_exit_code']) is int and stop['runner_exit_code']==stop['public_exit_code']==0,'normal_public_runner_exit')
+-    need(s.get('node')==0 and s.get('lease_name')=='mbit10-evaluation-node0' and type(s.get('lease_generation')) is int and s['lease_generation']==511 and s.get('job')=='swdb-lanl17-20261007-a5-p1-a1','final_lane_binding')
++    need(s.get('node')==0 and s.get('lease_name')=='mbit10-evaluation-node0' and type(s.get('lease_generation')) is int and s['lease_generation']==512 and s.get('job')=='swdb-lanl17-20261007-a5-p2-a1','final_lane_binding')
+     need(type(s.get('exit_code')) is int and s['exit_code']==0 and 'record_errors' not in s,'normal_lane_exit')
+     need(utc(s['started_utc'])<=utc(stop['started_utc'])<utc(stop['ended_utc']) and stop_within_native_end(stop['ended_utc'],s['ended_utc']),'original_terminal_time_order')
+     for name,cap in caps.items():
+--- /private/tmp/lanl17_finalize_p1_normal_release_request_20261008_a5_r4.py
++++ /private/tmp/lanl17_finalize_p2_normal_release_request_20261008_a5_r4.py
+@@ -1,21 +1,21 @@
+-"""Local p1-only normal-path request author. No remote/control/scientific execution."""
++"""Local p2-only normal-path request author. No remote/control/scientific execution."""
+ import argparse,base64,copy,datetime,hashlib,json,os,re,stat,sys
+ from pathlib import Path
+ R='5e12a9796432654d88def24ecea617d16ca605b2'
+ H='28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414'
+ N='00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8'
+-Q='df19c76a0a3c667f5d1b901677c72641a0f367e6971b4ee2e37a62871bbc7626'
++Q='3f89941c85bbf0dd4b080d3f75b1ab07089327dcee7e7b6f0b4f92d4fea4e029'
+ P='32bead204337aa66d0a732b6f143216946abafc5d2eb752577b0d90f7190b7b6'
+-DRAFT='0c7b8fd601b07c8e61f1e6709aeeefeb11de619a1b1e2d10c5a77086a86eba08'
++DRAFT='56fb9feb0e684273999e4d9f5be27511d5711592f33adf4f31d096e891d6c066'
+ M2SHA='b86d78bac1d0a09e176114d1c23491ede098c4fcf5af5ab96f318ceabc29b8d1'
+-DSHA='7e63d49398eb8f8e2f0d9332b84c1350276acd5b50b9287b2d0b694ec565a6b4'
++DSHA='c0c35fa265e2860a77e7ce1c528a21aa6cd18008b8d59d2e4c31ece6ac81dc69'
+ S='/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5'
+ RAW='/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5'
+-A=RAW+'/attempts/extensa-gem5-bfs-20261006-p1/attempt-1'
+-QUERY='/data1/yanruj/lanl17-p1-native-release-query-20261008-a5-r2.py'
+-OBS='/data1/yanruj/lanl17-p1-native-release-observation-20261008-a5.json'
+-REQUEST='/data/yanruj/EvolveSWDB_runs/lanl17-p1-release-request-20261008-a5.json'
+-OUTPUT='/data/yanruj/EvolveSWDB_runs/lanl17-p1-release-custody-20261008-a5.json'
++A=RAW+'/attempts/extensa-gem5-bfs-20261006-p2/attempt-1'
++QUERY='/data1/yanruj/lanl17-p2-native-release-query-20261008-a5-r2.py'
++OBS='/data1/yanruj/lanl17-p2-native-release-observation-20261008-a5.json'
++REQUEST='/data/yanruj/EvolveSWDB_runs/lanl17-p2-release-request-20261008-a5.json'
++OUTPUT='/data/yanruj/EvolveSWDB_runs/lanl17-p2-release-custody-20261008-a5.json'
+ PRODUCER='/data1/yanruj/lanl17-custody-source-20261007-a3/capture-producer.py'
+ FIELDS=('dev','ino','mode','uid','gid','nlink','size','mtime_ns','ctime_ns')
+ SEEN=[]
+@@ -77,27 +77,27 @@
+     p=argparse.ArgumentParser(description=__doc__,allow_abbrev=False)
+     for name in ('originals-directory','terminal-metadata-original','native-observation-original','manifest-original','dispatch-original','native-wrapper-source','output-request','output-action-config'):p.add_argument('--'+name,required=True,type=Path)
+     for name in ('terminal-metadata-sha256','native-observation-sha256','fresh-live-checked-utc','valid-until-utc'):p.add_argument('--'+name,required=True)
+-    for name in ('fresh-live-generation511-no-holder-and-sourceR-reviewed','normal-terminal-state-summary-reviewed','node0-reserved-through-after-custody'):p.add_argument('--'+name,action='store_true')
++    for name in ('fresh-live-generation512-no-holder-and-sourceR-reviewed','normal-terminal-state-summary-reviewed','node0-reserved-through-after-custody'):p.add_argument('--'+name,action='store_true')
+     a=p.parse_args();need(sys.platform=='darwin' and os.getuid()==os.geteuid()!=0 and sys.flags.dont_write_bytecode and not sys.flags.optimize,'local_parent_flags')
+-    need(a.fresh_live_generation511_no_holder_and_sourceR_reviewed and a.normal_terminal_state_summary_reviewed and a.node0_reserved_through_after_custody,'explicit_fresh_parent_normal_release_source_and_no_reuse_attestation')
++    need(a.fresh_live_generation512_no_holder_and_sourceR_reviewed and a.normal_terminal_state_summary_reviewed and a.node0_reserved_through_after_custody,'explicit_fresh_parent_normal_release_source_and_no_reuse_attestation')
+     for value in (a.terminal_metadata_sha256,a.native_observation_sha256):need(re.fullmatch('[0-9a-f]{64}',value) is not None,'explicit_original_SHA')
+     for out in (a.output_request,a.output_action_config):need(out.parent==Path('/private/tmp') and not os.path.lexists(out) and not out.is_symlink(),'fresh_private_output')
+     need(a.output_request!=a.output_action_config,'distinct_outputs')
+-    base=Path('/private/tmp');draft=strict(read(base/'lanl17-p1-release-request-draft-r1-20261008-a5.json',32768,DRAFT,12307));spec=copy.deepcopy(draft['request_template']);ctx=spec['context']
+-    need(draft['executable'] is False and spec['capture']=='release' and ctx['source_commit']==R and ctx['source_path']==S and ctx['campaign']=='extensa-gem5-bfs-20261006-p1' and type(ctx['attempt']) is int and ctx['attempt']==1,'reviewed_p1_scope')
++    base=Path('/private/tmp');draft=strict(read(base/'lanl17-p2-release-request-draft-r1-20261008-a5.json',32768,DRAFT,12397));spec=copy.deepcopy(draft['request_template']);ctx=spec['context']
++    need(draft['executable'] is False and spec['capture']=='release' and ctx['source_commit']==R and ctx['source_path']==S and ctx['campaign']=='extensa-gem5-bfs-20261006-p2' and type(ctx['attempt']) is int and ctx['attempt']==1,'reviewed_p1_scope')
+     read(base/'lanl17_parent_helpers_cleanup60_a4.py',65536,H,38195);read(a.native_wrapper_source,32768,N,10510)
+-    read(base/'lanl17_read_p1_native_release_observation_20261008_a5_r2.py',32768,Q,15125)
++    read(base/'lanl17_read_p2_native_release_observation_20261008_a5_r2.py',32768,Q,15125)
+     read(base/'lanl17_parent_capture_projection_producer_a3_20261007.py',65536,P,46165)
+-    read(base/'lanl17_read_p1_normal_terminal_originals_20261008_a5_r2.py',32768,'6ecee4f1ccd0227527da4cc5831cbc42aeb1120dd1b5f4656660dac92cb08818',7926)
+-    m=strict(read(a.manifest_original,1048576,M2SHA,292401));dispatch=strict(read(a.dispatch_original,65536,DSHA,44229));sealed(m);sealed(dispatch)
++    read(base/'lanl17_read_p2_normal_terminal_originals_20261008_a5_r2.py',32768,'53af532137b3c981ac6ee465b1272437cdc317aa55220e3ef659b8989e095127',7926)
++    m=strict(read(a.manifest_original,1048576,M2SHA,292401));dispatch=strict(read(a.dispatch_original,65536,DSHA,44111));sealed(m);sealed(dispatch)
+     need(m['source_commit']==R and m['source']==S and m['raw']==RAW and m['source_clean'] is True and m['helper_sha256']==H and m['estimator_sha256']==ctx['estimator_sha256'] and m['identity_sha256']==ctx['manifest_identity_sha256'] and m['policy']==ctx['policy'],'frozen_M2_context')
+     need(dispatch['identity_sha256']==spec['inputs']['dispatch']['identity_sha256'] and dispatch['source_commit']==R and dispatch['manifest_sha256']==m['identity_sha256'] and dispatch['policy']==ctx['policy'] and dispatch['campaign']==ctx['campaign'] and type(dispatch['attempt']) is int and dispatch['attempt']==1 and type(dispatch['node']) is int and dispatch['node']==0 and dispatch['resume'] is False and dispatch['baselines_only'] is False,'original_dispatch_bindings')
+     native_raw=read(a.native_observation_original,262144,a.native_observation_sha256);native=strict(native_raw)
+     need(native['format']=='swdb.lanl17-native-release-readonly-observation.v1' and native['sealed'] is False and native['scientific_admission'] is False and native['state']=='release_ready' and native['release_ready'] is True and native['normal_exit_set_only'] is True and native['unknown_reasons']==[] and native['not_ready_reasons']==[],'actual_R2_normal_release_ready')
+-    need(native['lease_name']=='mbit10-evaluation-node0' and type(native['required_generation']) is int and native['required_generation']==511 and native['original_exits']=={'wrapper':0,'runner':0,'lane':0,'public':0} and all(type(x) is int for x in native['original_exits'].values()),'actual_R2_generation_exits')
++    need(native['lease_name']=='mbit10-evaluation-node0' and type(native['required_generation']) is int and native['required_generation']==512 and native['original_exits']=={'wrapper':0,'runner':0,'lane':0,'public':0} and all(type(x) is int for x in native['original_exits'].values()),'actual_R2_generation_exits')
+     nb=base64.b64decode(native['native_metadata']['raw_base64'],validate=True);need(len(nb)<=32768,'native_metadata_cap');native_pin(native['native_metadata']['original_file_pin'],'/data1/yanruj/lact-host-lease/mbit10-evaluation-node0.meta.json',nb)
+-    nm=strict(nb);need(nm['state']=='released' and nm['lease']['lease_name']=='mbit10-evaluation-node0' and type(nm['lease']['generation']) is int and nm['lease']['generation']==511 and type(nm['lease']['daemon_pid']) is int and nm['lease']['daemon_pid']>0,'native_original_released511')
+-    need(native['native_metadata']['state']=='released' and native['native_metadata']['generation']==511 and native['native_metadata']['daemon_pid']==nm['lease']['daemon_pid'],'native_projection_matches_raw')
++    nm=strict(nb);need(nm['state']=='released' and nm['lease']['lease_name']=='mbit10-evaluation-node0' and type(nm['lease']['generation']) is int and nm['lease']['generation']==512 and type(nm['lease']['daemon_pid']) is int and nm['lease']['daemon_pid']>0,'native_original_released512')
++    need(native['native_metadata']['state']=='released' and native['native_metadata']['generation']==512 and native['native_metadata']['daemon_pid']==nm['lease']['daemon_pid'],'native_projection_matches_raw')
+     lease=native['native_lease_file'];need(lease['path']=='/data1/yanruj/lact-host-lease/mbit10-evaluation-node0.lease' and type(lease['stat']) is dict and set(lease['stat'])==set(FIELDS) and lease['inode']==lease['stat']['ino'] and lease['stat']['uid']==114316761 and lease['stat']['nlink']==1 and stat.S_ISREG(lease['stat']['mode']) and all(type(lease[k]) is int and lease[k]>=0 for k in ('device_major','device_minor','inode')),'native_lease_inode_identity')
+     need(native['kernel_locks_before']==native['kernel_locks_after'] and native['kernel_locks_after']['path']=='/proc/locks' and native['kernel_locks_after']['matching_rows']==[],'native_no_matching_kernel_lock')
+     need(native['daemon_before']==native['daemon_after'] and native['daemon_after']['pid']==nm['lease']['daemon_pid'] and native['daemon_after']['FD9'] in ('absent','process_absent') and native['daemon_after']['FD9_matches_selected_lease'] is False,'native_no_holder_FD9')
+@@ -116,11 +116,11 @@
+     for name in ('wrapper.exit-code.txt','runner.exit-code.txt'):need(re.fullmatch(rb'-?[0-9]+\s*',raws[name]) is not None and int(raws[name])==0,'normal_original_integer_exits')
+     clean=stop['process_cleanup'];need(type(clean) is dict and set(clean)=={'subreaper','terminated_owned_processes','survivors'} and clean['subreaper'] is True and clean['survivors']=={} and type(clean['terminated_owned_processes']) is list and len(clean['terminated_owned_processes'])<=1024,'normal_cleanup')
+     for row in clean['terminated_owned_processes']:need(type(row) is dict and set(row)=={'pid','start_time','signal'} and type(row['pid']) is int and row['pid']>0 and type(row['start_time']) is str and re.fullmatch('[0-9]{1,32}',row['start_time']) is not None and row['signal'] in ('SIGTERM','SIGKILL'),'closed_cleanup_PID_metadata')
+-    need(type(lane) is dict and type(lane['node']) is int and lane['node']==0 and lane['job']=='swdb-lanl17-20261007-a5-p1-a1' and lane['lease_name']=='mbit10-evaluation-node0' and type(lane['lease_generation']) is int and lane['lease_generation']==511 and type(lane['exit_code']) is int and lane['exit_code']==0 and 'record_errors' not in lane,'normal_final_lane511')
++    need(type(lane) is dict and type(lane['node']) is int and lane['node']==0 and lane['job']=='swdb-lanl17-20261007-a5-p2-a1' and lane['lease_name']=='mbit10-evaluation-node0' and type(lane['lease_generation']) is int and lane['lease_generation']==512 and type(lane['exit_code']) is int and lane['exit_code']==0 and 'record_errors' not in lane,'normal_final_lane511')
+     now=datetime.datetime.now(datetime.timezone.utc);fresh=utc(a.fresh_live_checked_utc);end=utc(a.valid_until_utc)
+     need(fresh<end and (end-fresh).total_seconds()<=300,'finite_parent_freshness_interval_300s')
+     need(utc(dispatch['checked_utc'])<=utc(stop['started_utc'])<utc(stop['ended_utc']) and utc(lane['started_utc'])<=utc(stop['started_utc']) and stop_within_native_end(stop['ended_utc'],lane['ended_utc']) and max(utc(stop['ended_utc']),utc(lane['ended_utc']))<=utc(native['checked_utc'])<=utc(terminal['checked_utc'])<=fresh<=now<=end,'actual_terminal_and_fresh_parent_chronology')
+-    spec['observations']={'lease_released':True,'lease_generation':511,'checked_utc':a.fresh_live_checked_utc}
++    spec['observations']={'lease_released':True,'lease_generation':512,'checked_utc':a.fresh_live_checked_utc}
+     copied_helper={'path':A+'/helper.py','bytes':38195,'sha256':H}
+     for name,basename in (('stopped','stopped-receipt.json'),('wrapper_exit','wrapper.exit-code.txt'),('runner_exit','runner.exit-code.txt'),('lane','lane.json')):
+         desc=spec['inputs'][name];desc['bytes']=len(raws[basename]);desc['sha256']=sha(raws[basename]);need(desc['path']==A+'/'+basename,'fixed_original_remote_path')
+@@ -145,4 +145,4 @@
+ if __name__=='__main__':
+     try:main()
+     except (ValueError,KeyError,TypeError,OSError,IndexError) as exc:
+-        print(json.dumps({'format':'swdb.lanl17-p1-local-release-author-refusal.v1','error_class':type(exc).__name__,'reason_sha256':sha(str(exc).encode()),'remote_or_producer_executed':False,'scientific_completion_not_inferred':True}),file=sys.stderr);raise SystemExit(2)
++        print(json.dumps({'format':'swdb.lanl17-p2-local-release-author-refusal.v1','error_class':type(exc).__name__,'reason_sha256':sha(str(exc).encode()),'remote_or_producer_executed':False,'scientific_completion_not_inferred':True}),file=sys.stderr);raise SystemExit(2)
+--- /private/tmp/lanl17-p1-release-request-draft-r1-20261008-a5.json
++++ /private/tmp/lanl17-p2-release-request-draft-r1-20261008-a5.json
+@@ -1,8 +1,9 @@
+ {
+   "derived_from": {
+-    "bytes": 5584,
+-    "path": "/private/tmp/lanl17-p1-dispatch-state-request-20261008-a5.json",
+-    "sha256": "b5198085b8da79dbdf311cdaffcf2bc733904bb85799c5d8ed8b950310cc3eb2"
++    "path": "/private/tmp/lanl17-p2-dispatch-original-collect-capture-20261008-a5/dispatch-preregistration.json",
++    "bytes": 44111,
++    "sha256": "c0c35fa265e2860a77e7ce1c528a21aa6cd18008b8d59d2e4c31ece6ac81dc69",
++    "identity_sha256": "eb3979dd9836ab99ecdf5340bfa6bb72decac86a7a01abce663ccf0cd7b1a9f2"
+   },
+   "executable": false,
+   "final_lane_parent_semantic_requirement": {
+@@ -14,8 +15,8 @@
+     "record_errors_absent_for_normal_terminal": true
+   },
+   "format": "swdb.lanl17-release-request-source-only-draft.v1",
+-  "generation_basis": "parent supplied active observation; final lane and native release must freshly match511",
+-  "known_active_generation": 511,
++  "generation_basis": "actual native lane original; no counter inference",
++  "known_active_generation": 512,
+   "native_live_reconfirmation_requirement": {
+     "actual_live_observations_required": [
+       "after completed wrapper immediately before release32",
+@@ -28,7 +29,7 @@
+     "node0_reserved_until_release_and_after_custody_complete": true,
+     "observations_not_yet_available": true,
+     "producer32_semantically_parses_lane_or_lease": false,
+-    "state_generation_holder_requirement": "selected native lease released, generation511 matching final lane, completed wrapper and no current native holder/fd9 lock; preserve actual query originals"
++    "state_generation_holder_requirement": "selected native lease released, generation512 matching final lane, completed wrapper and no current native holder/fd9 lock; preserve actual query originals"
+   },
+   "native_metadata_custody": "Native0664/0666 originals stay unchanged; exact owned stable-byte reader, fresh0600 query observation, exact query writer source and original route/stat/hash provenance. Genericcollect does not read writable native original.",
+   "request_template": {
+@@ -43,7 +44,7 @@
+         "user": "yanruj"
+       },
+       "attempt": 1,
+-      "campaign": "extensa-gem5-bfs-20261006-p1",
++      "campaign": "extensa-gem5-bfs-20261006-p2",
+       "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+       "helper_sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414",
+       "manifest_identity_sha256": "66194a7e99716f5b59ddf081dfec752c34b51f1805470a4514171c53323b06c7",
+@@ -71,7 +72,7 @@
+           "type": "integer"
+         },
+         "encoding": "hash_only",
+-        "path": "/data1/yanruj/lanl17-p1-native-release-observation-20261008-a5.json",
++        "path": "/data1/yanruj/lanl17-p2-native-release-observation-20261008-a5.json",
+         "sealed": false,
+         "sha256": {
+           "required_future_input": "authoritative_lease_observation.sha256",
+@@ -95,7 +96,7 @@
+         }
+       },
+       "dispatch": {
+-        "bytes": 44229,
++        "bytes": 44111,
+         "canonical_ensure_ascii": true,
+         "canonical_policy_sources": [
+           {
+@@ -105,10 +106,10 @@
+           }
+         ],
+         "encoding": "json",
+-        "identity_sha256": "ee2d7bebe5a8003403a136b3fd8f62b1d72b743b6b47c1f8f97c4abb31ac53dd",
+-        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p1/attempt-1/dispatch-preregistration.json",
++        "identity_sha256": "eb3979dd9836ab99ecdf5340bfa6bb72decac86a7a01abce663ccf0cd7b1a9f2",
++        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p2/attempt-1/dispatch-preregistration.json",
+         "sealed": true,
+-        "sha256": "7e63d49398eb8f8e2f0d9332b84c1350276acd5b50b9287b2d0b694ec565a6b4",
++        "sha256": "c0c35fa265e2860a77e7ce1c528a21aa6cd18008b8d59d2e4c31ece6ac81dc69",
+         "writer_source": {
+           "bytes": 38195,
+           "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-metadata-controls-20261007-a4/lanl17_parent_helpers_cleanup60_a4.py",
+@@ -123,7 +124,7 @@
+           "type": "integer"
+         },
+         "encoding": "hash_only",
+-        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p1/attempt-1/lane.json",
++        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p2/attempt-1/lane.json",
+         "sealed": false,
+         "sha256": {
+           "required_future_input": "lane.sha256",
+@@ -169,7 +170,7 @@
+           "type": "integer"
+         },
+         "encoding": "integer_exit",
+-        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p1/attempt-1/runner.exit-code.txt",
++        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p2/attempt-1/runner.exit-code.txt",
+         "sealed": false,
+         "sha256": {
+           "required_future_input": "runner_exit.sha256",
+@@ -177,7 +178,7 @@
+         },
+         "writer_source": {
+           "bytes": 38195,
+-          "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p1/attempt-1/helper.py",
++          "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p2/attempt-1/helper.py",
+           "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+         }
+       },
+@@ -192,7 +193,7 @@
+         "canonical_policy_sources": [
+           {
+             "bytes": 38195,
+-            "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p1/attempt-1/helper.py",
++            "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p2/attempt-1/helper.py",
+             "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+           }
+         ],
+@@ -201,7 +202,7 @@
+           "required_future_input": "stopped.identity_sha256",
+           "type": "sha256"
+         },
+-        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p1/attempt-1/stopped-receipt.json",
++        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p2/attempt-1/stopped-receipt.json",
+         "sealed": true,
+         "sha256": {
+           "required_future_input": "stopped.sha256",
+@@ -209,7 +210,7 @@
+         },
+         "writer_source": {
+           "bytes": 38195,
+-          "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p1/attempt-1/helper.py",
++          "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p2/attempt-1/helper.py",
+           "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+         }
+       },
+@@ -221,7 +222,7 @@
+           "type": "integer"
+         },
+         "encoding": "integer_exit",
+-        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p1/attempt-1/wrapper.exit-code.txt",
++        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p2/attempt-1/wrapper.exit-code.txt",
+         "sealed": false,
+         "sha256": {
+           "required_future_input": "wrapper_exit.sha256",
+@@ -243,7 +244,7 @@
+       "lease_generation": {
+         "min": 0,
+         "required_future_input": "actual_final_lane_and_native_generation",
+-        "required_value": 511,
++        "required_value": 512,
+         "type": "integer"
+       },
+       "lease_released": {
+@@ -257,7 +258,7 @@
+       "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5",
+       "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5",
+       "/data1/yanruj/Memacc-repro-20260925/AgenticRefiner/scripts/host/socket_lane.sh",
+-      "/data1/yanruj/lanl17-p1-native-release-observation-20261008-a5.json",
++      "/data1/yanruj/lanl17-p2-native-release-observation-20261008-a5.json",
+       {
+         "required_future_input": "actual_native_metadata_query_writer.path",
+         "type": "absolute_path"
+@@ -268,7 +269,7 @@
+   "scientific_admission": false,
+   "supersedes_source_only_draft": {
+     "bytes": 10877,
+-    "path": "/private/tmp/lanl17-p1-release-request-draft-20261008-a5.json",
++    "path": "/private/tmp/lanl17-p2-release-request-draft-20261008-a5.json",
+     "sha256": "3f04c3a497a8a0f4f37cda84758dd8fa6b244d79403b477f6d2adc665ed5addd"
+   }
+ }

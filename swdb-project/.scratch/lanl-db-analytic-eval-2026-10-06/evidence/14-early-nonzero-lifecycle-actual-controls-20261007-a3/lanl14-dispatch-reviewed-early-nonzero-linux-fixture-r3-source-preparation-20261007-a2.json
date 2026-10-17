@@ -1,0 +1,73 @@
+{
+  "R3_main_executed": false,
+  "SSH_executed": false,
+  "canonical_ensure_ascii": false,
+  "complete_r2_derivation": {
+    "bytes": 1142,
+    "path": "/private/tmp/lanl14-dispatch-reviewed-early-nonzero-linux-fixture-r3-complete-r2-derivation-20261007-a2.diff",
+    "sha256": "a192393745cfdfccef1c2ad028b70ac64ccadfe27dd7f827032f20c1958eea2a"
+  },
+  "decoded_remote_program": {
+    "bytes": 22601,
+    "sha256": "fb311d6bd2dc4252d356902c3f921299c1373d4d40266d58fbfe1e67dc895be1"
+  },
+  "format": "swdb.lanl14-one-fixture-dispatch-r3-source-preparation.v1",
+  "future_source_chmod_performed_by_this_preparation": false,
+  "handoff": {
+    "bytes": 3497,
+    "path": "/private/tmp/lanl14-dispatch-reviewed-early-nonzero-linux-fixture-r3-source-handoff-20261007-a2.md",
+    "sha256": "fa3248ec12a09c660df87895bfb5befd6b8d515923b24581ee63ddc8edaa3209"
+  },
+  "identity_sha256": "c041f9c3cdcf37252f7d99de89c9e4c48b8d2b542070737dc0be52ec6f08d680",
+  "parent_reported_prior_actual_boundary": {
+    "R2_failed_originals_not_rewritten": true,
+    "R2_preflight_exit": 1,
+    "fixture_bodies_executed": 0,
+    "preregistration_written": false,
+    "source_modes_diagnosed": true,
+    "wrapper_launched": false
+  },
+  "prepared_utc": "2026-10-07T23:39:02.591903+00:00",
+  "r2_originals_preserved": [
+    {
+      "bytes": 28967,
+      "path": "/private/tmp/lanl14-dispatch-reviewed-early-nonzero-linux-fixture-20261007-a1-r2.py",
+      "sha256": "cbaaef6a8f7f324502357daacc1ffa27b3245c0e23ebbaa9f827bdebdf7dc9b1"
+    },
+    {
+      "bytes": 2885,
+      "path": "/private/tmp/lanl14-dispatch-reviewed-early-nonzero-linux-fixture-r2-complete-r1-derivation-20261007-a1.diff",
+      "sha256": "2a86011864b075ac8446e0fe914167d67b2617d76f522a80b9015cebd8cc590e"
+    },
+    {
+      "bytes": 2814,
+      "path": "/private/tmp/lanl14-dispatch-reviewed-early-nonzero-linux-fixture-r2-source-handoff-20261007-a1.md",
+      "sha256": "28f5ba63f1c8ec845bd7f4977fe582d3b17058467826872faf26028b7b401b49"
+    },
+    {
+      "bytes": 3829,
+      "path": "/private/tmp/lanl14-dispatch-reviewed-early-nonzero-linux-fixture-r2-source-preparation-20261007-a1.json",
+      "sha256": "08f1b0458fb7b125a6e7ba43ae62ee20f86f4a153aef0e9356bf165f41a9694d"
+    }
+  ],
+  "scientific_admission": false,
+  "scope": "Two route literals only; R3 unexecuted and R2 preflight-failure chronology kept distinct.",
+  "source": {
+    "bytes": 28967,
+    "path": "/private/tmp/lanl14-dispatch-reviewed-early-nonzero-linux-fixture-20261007-a2-r3.py",
+    "sha256": "b2f92ea9a119dd5a0ce16d79a5ba36559df255fea55e5631830dacdceef95dd9"
+  },
+  "source_program_imported": false,
+  "source_staged": false,
+  "static_scope": {
+    "OUTPUT_basename_unchanged": true,
+    "all_other_AST_exact": true,
+    "changed_assignments": [
+      "ROOT",
+      "JOB"
+    ],
+    "full_r2_byte_reversal": true,
+    "functions_fields_caps_env_native_source_pins_unchanged": true
+  },
+  "tests_executed": false
+}

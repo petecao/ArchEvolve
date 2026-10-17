@@ -1,0 +1,216 @@
+{
+  "scope": "Unexecuted downstream-a3 path-only administrative preparation; only select after actual positive model-a3 admission.",
+  "source_commit": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "predecessor_strict_a2_identity": "643f4f2b364f4f67caf44f7aee62844e3eb52f8e45d10e7d941abe48b586123a",
+  "helpers": [
+    {
+      "path": "/private/tmp/lanl-dispatch-cpu-model-validation-a3.py",
+      "sha256": "b280f3d7bbc96d77f396c12999fdffed985191afef0503fb4de01f0269b0f1b3",
+      "original_path": "/private/tmp/lanl-dispatch-cpu-model-validation-a2.py",
+      "original_sha256": "70619cbf44dfb8c850178b73e61afbc157d7247cb36b86908543bd7c0ee42d4f",
+      "administrative_path_literal_allowlist": [
+        {
+          "old_exact_literal": "'-20261006-a2'",
+          "new_exact_literal": "'-20261006-a3'",
+          "occurrences": 4
+        },
+        {
+          "old_exact_literal": "'-20261006-a2/records'",
+          "new_exact_literal": "'-20261006-a3/records'",
+          "occurrences": 1
+        },
+        {
+          "old_exact_literal": "'/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a2/acceptance.json'",
+          "new_exact_literal": "'/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3/acceptance.json'",
+          "occurrences": 1
+        }
+      ],
+      "all_other_bytes_unchanged_after_explicit_literal_reversal": true,
+      "caps_and_science_unchanged": true
+    },
+    {
+      "path": "/private/tmp/lanl-export-cpu-model-validation-a3.py",
+      "sha256": "2d59a2d5f6ce54d4692fc962dbc9e38dab4f86076f1873ab78a1484522c681f6",
+      "original_path": "/private/tmp/lanl-export-cpu-model-validation-a2.py",
+      "original_sha256": "a277f61e0e5781858596499d51cb974e2391f1a81f3266d29ba52a13aeb0e9cd",
+      "administrative_path_literal_allowlist": [
+        {
+          "old_exact_literal": "'-20261006-a2'",
+          "new_exact_literal": "'-20261006-a3'",
+          "occurrences": 1
+        },
+        {
+          "old_exact_literal": "'-20261006-a2/records'",
+          "new_exact_literal": "'-20261006-a3/records'",
+          "occurrences": 1
+        },
+        {
+          "old_exact_literal": "'-evidence-20261006-a2'",
+          "new_exact_literal": "'-evidence-20261006-a3'",
+          "occurrences": 1
+        },
+        {
+          "old_exact_literal": "'-evidence-a2'",
+          "new_exact_literal": "'-evidence-a3'",
+          "occurrences": 1
+        },
+        {
+          "old_exact_literal": "'-mbit10-20261006-a2.json'",
+          "new_exact_literal": "'-mbit10-20261006-a3.json'",
+          "occurrences": 1
+        }
+      ],
+      "all_other_bytes_unchanged_after_explicit_literal_reversal": true,
+      "caps_and_science_unchanged": true
+    },
+    {
+      "path": "/private/tmp/lanl-dispatch-cpu-band-report-a3.py",
+      "sha256": "f5fb834e3f6fc06c1b17d16e50f8dddeec4f534f05c19c66913f8a2a0abf8694",
+      "original_path": "/private/tmp/lanl-dispatch-cpu-band-report-a2.py",
+      "original_sha256": "f8eb4847bd791fdf8d90f75b1ddbea1f74e76f2ebf16ab9926532d3eb9bc609b",
+      "administrative_path_literal_allowlist": [
+        {
+          "old_exact_literal": "'/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261006-a2'",
+          "new_exact_literal": "'/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261006-a3'",
+          "occurrences": 1
+        },
+        {
+          "old_exact_literal": "'/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a2'",
+          "new_exact_literal": "'/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3'",
+          "occurrences": 2
+        },
+        {
+          "old_exact_literal": "'/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a2'",
+          "new_exact_literal": "'/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3'",
+          "occurrences": 2
+        },
+        {
+          "old_exact_literal": "'swdb-lanl-cpu-band-report-20261006-a2'",
+          "new_exact_literal": "'swdb-lanl-cpu-band-report-20261006-a3'",
+          "occurrences": 2
+        }
+      ],
+      "all_other_bytes_unchanged_after_explicit_literal_reversal": true,
+      "caps_and_science_unchanged": true
+    },
+    {
+      "path": "/private/tmp/lanl-export-cpu-band-report-a3.py",
+      "sha256": "788c5cfd72433916daac544420de5251eb6d549c56afaeba455a82416f11dbb1",
+      "original_path": "/private/tmp/lanl-export-cpu-band-report-a2.py",
+      "original_sha256": "8a82b44a7fe4bcf1e8942f93705362840bb8147606604f1785c58829d73c86ab",
+      "administrative_path_literal_allowlist": [
+        {
+          "old_exact_literal": "'/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261006-a2'",
+          "new_exact_literal": "'/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261006-a3'",
+          "occurrences": 1
+        },
+        {
+          "old_exact_literal": "'/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a2'",
+          "new_exact_literal": "'/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3'",
+          "occurrences": 1
+        },
+        {
+          "old_exact_literal": "'/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a2'",
+          "new_exact_literal": "'/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3'",
+          "occurrences": 1
+        },
+        {
+          "old_exact_literal": "'/data1/yanruj/ArchEvolve-lanl-cpu-band-report-evidence-20261006-a2'",
+          "new_exact_literal": "'/data1/yanruj/ArchEvolve-lanl-cpu-band-report-evidence-20261006-a3'",
+          "occurrences": 1
+        },
+        {
+          "old_exact_literal": "'codex/lanl-cpu-band-report-evidence-a2'",
+          "new_exact_literal": "'codex/lanl-cpu-band-report-evidence-a3'",
+          "occurrences": 1
+        },
+        {
+          "old_exact_literal": "'11-cpu-band-report-mbit10-20261006-a2.json'",
+          "new_exact_literal": "'11-cpu-band-report-mbit10-20261006-a3.json'",
+          "occurrences": 1
+        }
+      ],
+      "all_other_bytes_unchanged_after_explicit_literal_reversal": true,
+      "caps_and_science_unchanged": true
+    }
+  ],
+  "administrative_caps": {
+    "metadata_stage_s": 1400,
+    "validate_s": 1400,
+    "collect_public_process_s": 2100,
+    "native_collector_s": 900,
+    "development_holdout_inner_s": 10000,
+    "development_holdout_outer_s": 10300,
+    "report_inner_s": 8400,
+    "report_outer_s": 8700
+  },
+  "collector_deadline_audit": {
+    "source_sha256": "86e6aef4b04142fe87fd4fb68144b2395916b0ea611454153733ddfbe6eb5d2e",
+    "store_preparse_line": 59,
+    "deadline_line": 88,
+    "publication_line": 207,
+    "native_commands_share_remaining_deadline": true,
+    "source_mutated": false,
+    "note": "The C collector starts args.max_wall_s deadline after Store/binding/protocol/lane preflight. Build, separate correctness and timing commands use the unchanged remaining900s deadline. Pure record construction/publication follows; expanded2100s enclosing process covers pre/post metadata and never extends application commands."
+  },
+  "immutable_evidence_refs": [
+    {
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-linux-cleanup-smoke-mbit10-20261006-a1.json",
+      "sha256": "50b4b0bc44af1a8991227e00c8050ba472226dc0f6b562cd8a8eb2ffa9661613"
+    },
+    {
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-openmp-bfs.g16-projection-mbit10-20261006-a1.json",
+      "sha256": "a540cfbb98d105cbad8bab41359b1838b51a251780c495395f96fbe6534d5761"
+    },
+    {
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-openmp-bfs.g17-projection-mbit10-20261006-a1.json",
+      "sha256": "9a2244b3680e6810651183c51786976b80e3679d082145c6a94a48732fb540a1"
+    },
+    {
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-openmp-bc.g16-projection-mbit10-20261006-a1.json",
+      "sha256": "e2014d2d2c71cb8b18ce69ab87abb4c6f6c805d98e27e266ee9fb39c607bd999"
+    },
+    {
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-openmp-bc.g17-projection-mbit10-20261006-a1.json",
+      "sha256": "4f3884043652063b4f5d15a96f44a48c052241fe4659bda10abd9d87a5a203eb"
+    }
+  ],
+  "native_collector_s": 900,
+  "remote_execution": false,
+  "consumed_export_cleanup": {
+    "path": "/private/tmp/lanl-remove-consumed-cpu-export-a3-20261007.py",
+    "sha256": "534834a42ab56d7005fd39a2a691a6972c9262ff59bb102a455f3c8f18263508",
+    "original_path": "/private/tmp/lanl-remove-consumed-cpu-export-a2-20261007.py",
+    "original_sha256": "0cc65f1a8dc5c8311c82e38b89035c1e554aeebd8e1682ea89dbc54bedc6f413",
+    "explicit_literal_changes": [
+      [
+        "'-evidence-20261006-a2'",
+        "'-evidence-20261006-a3'"
+      ],
+      [
+        "'-evidence-a2'",
+        "'-evidence-a3'"
+      ],
+      [
+        "'-mbit10-20261006-a2.json'",
+        "'-mbit10-20261006-a3.json'"
+      ]
+    ],
+    "all_other_bytes_unchanged": true,
+    "read_only_default": true
+  },
+  "portable_proofs": {
+    "development_holdout": {
+      "path": "/private/tmp/lanl-cpu-model-dispatch-a3-mocked-proof.json",
+      "identity_sha256": "b613b38971d851d806c1e9d443c8322eff8d785870ca2ac2bcf4b80630fceced",
+      "file_sha256": "0e03a91c48c47489feb7953d858341d3a358da8ca269670b00fa85ac164b7507"
+    },
+    "band_report": {
+      "path": "/private/tmp/lanl-cpu-band-report-a3-mocked-proof.json",
+      "identity_sha256": "74aa39be9a950ba4d65f6d8eb7d5ceaf4719dd7b2c72c3bd683cfbd2f6889253",
+      "file_sha256": "0682cee2ea66e5ba7f39f2c4e9c32cc3855d458f7559707d5cfb3719f9ca1183"
+    }
+  },
+  "identity_sha256": "4d49aa806b92aad4e6c1ea372129ff44a07b62ecfb228239e9b41d9bb396f8e1"
+}

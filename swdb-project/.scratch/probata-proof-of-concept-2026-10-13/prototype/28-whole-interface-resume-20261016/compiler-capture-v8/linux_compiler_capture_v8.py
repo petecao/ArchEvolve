@@ -1,0 +1,489 @@
+"""2026-10-16 ET. INERT until root admission: four Clang observation phases.
+
+No native executable, linker, version, WP/CBMC/solver or project import. Complete
+original-source full-TU IDs, separate literal ABI observation, exact dependency
+closure and explicit capture timing are retained. This is source preparation,
+never public source-call/model/proof admission.
+"""
+import ast
+import hashlib
+import json
+import os
+from pathlib import Path
+import resource
+import selectors
+import shutil
+import signal
+import stat
+import subprocess
+import sys
+import time
+import types
+
+
+RAW_NAME = "probata-resume-20261016-t28-full-tu-2baf722f-v8"
+SOURCE_COMMIT = "2baf722fdaa6cba24b859eae3172a6f597417d72"
+WHOLE_SECONDS, ENTRY_SECONDS, RSS_BYTES = 180, 165, 4294967296
+STAGE_BYTES, TOTAL_BYTES = 134217728, 268435456
+FINAL_METADATA_RESERVE = 1048576
+HELPER_SHA = "9f63dbe826ca70f2ceacd37b56753a5f212811a5a377c7baed59da4de60b7721"
+ADAPTER_SHA = "775ab2ecf6068153a6167473129dcd416dc2727c9afe0ef6e0846bab62d3085c"
+CODEC_SHA = "f93850883bdab523e59122812fa46877728127e8ba5997c567621347de739193"
+BINDER_SHA = "217cdda6ca8eaea99526010f2c379dad963ca81c18c79322ce02ab8cc9296ed8"
+
+
+def _stable_capture_stat(value):
+    return (value.st_dev, value.st_ino, value.st_mode, value.st_nlink,
+            value.st_uid, value.st_gid, value.st_size, value.st_mtime_ns, value.st_ctime_ns)
+
+
+def pin(path):
+    path = Path(path)
+    before = path.lstat()
+    if not stat.S_ISREG(before.st_mode) or path.resolve(strict=True) != path:
+        raise ValueError("canonical regular capture input required")
+    with path.open("rb") as stream:
+        value = hashlib.file_digest(stream, "sha256").hexdigest()
+    if _stable_capture_stat(path.lstat()) != _stable_capture_stat(before):
+        raise ValueError("capture input changed while hashing")
+    return {"path": str(path), "bytes": before.st_size, "sha256": value}
+
+
+def save(path, value):
+    with Path(path).open("x") as stream:
+        stream.write(json.dumps(value, sort_keys=True, indent=2, allow_nan=False) + "\n")
+
+
+def recheck(rows):
+    for row in rows:
+        if pin(row["path"]) != row:
+            raise ValueError("capture input changed: " + row["path"])
+
+
+def original_helpers(path):
+    if pin(path)["sha256"] != HELPER_SHA:
+        raise ValueError("exact reviewed native runtime/role helper source required")
+    wanted = {"make_dependencies", "verified_linux_lane", "physical_runtime"}
+    nodes = [node for node in ast.parse(Path(path).read_bytes()).body
+             if isinstance(node, ast.FunctionDef) and node.name in wanted]
+    if len(nodes) != 3 or {node.name for node in nodes} != wanted:
+        raise ValueError("exact three inherited helper nodes required")
+    namespace = {"Path": Path, "hashlib": hashlib, "json": json, "os": os, "stat": stat,
+                 "pin": pin, "recheck": recheck}
+    exec(compile(ast.Module(body=nodes, type_ignores=[]), "<reviewed-capture-role-runtime>", "exec"), namespace)
+    return namespace
+
+
+def check_derived_stub(control):
+    include = control / "include"
+    members = list(sorted(include.rglob("*")))
+    if [str(p.relative_to(include)) for p in members] != ["gem5", "gem5/m5ops.h"]:
+        raise ValueError("closed derived stub membership differs")
+    if include.is_symlink() or not include.is_dir() or members[0].is_symlink() or not members[0].is_dir():
+        raise ValueError("physical derived include directories required")
+    actual, original = pin(members[1]), pin(control / "m5ops.h")
+    if {k: actual[k] for k in ("bytes", "sha256")} != {k: original[k] for k in ("bytes", "sha256")}:
+        raise ValueError("derived declaration-only stub differs")
+
+
+def compare_dependencies(before, after, required):
+    names = [row["path"] for row in before]
+    if len(names) != len(set(names)) or after != names or not set(required) <= set(names):
+        raise ValueError("AST/preprocessing physical dependency membership differs")
+
+
+def check_prepared(prepared, declarations):
+    if {row["name"] for row in prepared["calls"]} != {row["name"] for row in declarations}:
+        raise ValueError("actual source fixture does not exercise all26 source names")
+    if {row["formal_arity"] for row in prepared["calls"] if row["name"] == "get_new_reg"} != {0, 1}:
+        raise ValueError("actual initialized/uninitialized register overload census differs")
+
+
+def finalization_payloads(raw, out, result, *, used_bytes, elapsed):
+    """Plan exact final metadata extent before publication; never raise caps."""
+    result = dict(result)
+    if not (0 <= elapsed <= ENTRY_SECONDS):
+        result["accepted"] = False
+        result["finalization_refusal"] = "entry deadline exceeded"
+    result["wall_seconds"] = elapsed
+    existing = [path for path in sorted(out.rglob("*"))
+                if path.is_file() and path not in {out / "result.json", out / "artifact-manifest.json"}]
+    rows = [{"relative": str(path.relative_to(out)), **pin(path)} for path in existing]
+    def encode(value):
+        return (json.dumps(value, sort_keys=True, indent=2, allow_nan=False) + "\n").encode()
+    def plan(value):
+        result_bytes = encode(value)
+        result_row = {"relative": "result.json", "path": str(out / "result.json"),
+                      "bytes": len(result_bytes), "sha256": hashlib.sha256(result_bytes).hexdigest()}
+        manifest_bytes = encode(sorted([*rows, result_row], key=lambda row: Path(row["relative"]).parts))
+        return result_bytes, manifest_bytes
+    result_bytes, manifest_bytes = plan(result)
+    if used_bytes + len(result_bytes) + len(manifest_bytes) > TOTAL_BYTES:
+        result["accepted"] = False
+        result["finalization_refusal"] = "projected final raw budget exceeded"
+        result_bytes, manifest_bytes = plan(result)
+    return result, result_bytes, manifest_bytes
+
+
+def finalize_capture(raw, out, result, *, started):
+    def used():
+        return sum(path.stat().st_size for path in raw.rglob("*") if path.is_file())
+    value, result_bytes, manifest_bytes = finalization_payloads(raw, out, result,
+        used_bytes=used(), elapsed=time.monotonic() - started)
+    if len(result_bytes) + len(manifest_bytes) > FINAL_METADATA_RESERVE or used() + len(result_bytes) + len(manifest_bytes) > TOTAL_BYTES:
+        raise ValueError("reserved final metadata cannot fit unchanged raw budget")
+    for name, data in (("result.json", result_bytes), ("artifact-manifest.json", manifest_bytes)):
+        with (out / name).open("xb") as stream:
+            stream.write(data)
+    # Check the settled view after serialization and both publications. If an
+    # overrun occurred, invalidate only these two owned final metadata files.
+    elapsed, total = time.monotonic() - started, used()
+    if value["accepted"] and (elapsed > ENTRY_SECONDS or total > TOTAL_BYTES):
+        value["accepted"] = False
+        value["finalization_refusal"] = "settled entry deadline or raw budget exceeded"
+        value["wall_seconds"] = elapsed
+        result_size = (out / "result.json").stat().st_size
+        manifest_size = (out / "artifact-manifest.json").stat().st_size
+        value, result_bytes, manifest_bytes = finalization_payloads(raw, out, value,
+            used_bytes=total-result_size-manifest_size, elapsed=elapsed)
+        for name, data in (("result.json", result_bytes), ("artifact-manifest.json", manifest_bytes)):
+            with (out / name).open("wb") as stream:
+                stream.write(data)
+    return value["accepted"]
+
+
+def bind_zlib(policy):
+    import _imp
+    import importlib.machinery
+    if _imp.is_builtin("zlib") != 1:
+        raise ValueError("exact selected built-in zlib required")
+    spec = importlib.machinery.BuiltinImporter.find_spec("zlib")
+    if spec is None or spec.origin != "built-in" or spec.loader is not importlib.machinery.BuiltinImporter:
+        raise ValueError("exact builtin zlib loader required")
+    import zlib
+    if zlib.__spec__.origin != "built-in" or zlib.__spec__.loader is not importlib.machinery.BuiltinImporter or getattr(zlib, "__file__", None) is not None:
+        raise ValueError("zlib import origin changed")
+    paths = set()
+    for line in Path("/proc/self/maps").read_text().splitlines():
+        fields = line.split()
+        if len(fields) >= 6 and fields[-1].startswith("/") and ("libz." in fields[-1] or "/zlib." in fields[-1]):
+            paths.add(fields[-1])
+    observed = {"interpreter": sys.executable, "physical_interpreter": pin(Path(sys.executable).resolve(strict=True)),
+        "builtin": _imp.is_builtin("zlib"), "spec_origin": zlib.__spec__.origin,
+        "loader_type": type(zlib.__spec__.loader).__module__ + "." + type(zlib.__spec__.loader).__qualname__,
+        "module_file": getattr(zlib, "__file__", None), "extension": None,
+        "ZLIB_VERSION": zlib.ZLIB_VERSION, "ZLIB_RUNTIME_VERSION": zlib.ZLIB_RUNTIME_VERSION,
+        "mapped_compression_objects": [pin(Path(path).resolve(strict=True)) for path in sorted(paths)]}
+    if observed != policy["zlib_binding"]:
+        raise ValueError("exact selected zlib interpreter/library binding differs")
+    return zlib, observed
+
+def lossless_recipe(adapter, *, compiler, project, raw):
+    recipe = adapter.capture_recipe(compiler=compiler, project=project, raw=raw)
+    caller = recipe["commands"][1]
+    if caller["phase"] != "caller-ast" or caller["stdout"] != str(Path(raw) / "component/caller.ast.json"):
+        raise ValueError("exact original caller AST recipe required")
+    caller["stdout"] += ".gz"
+    recipe["lossless_caller_stdout"] = {"codec": "gzip-single-member", "expanded_limit": 536870912,
+        "retained_file_limit": STAGE_BYTES, "complete_original_json": True,
+        "expanded_memory_is_not_retained_disk_bytes": True}
+    return recipe
+
+def stream_caller_ast(item, *, out, environment, remaining, bytes_used, limit, codec, zlib_module, row):
+    stdout_path = Path(item["stdout"])
+    stderr_path = out / "caller-ast.stderr"
+    expires = time.monotonic() + remaining
+    def check():
+        if time.monotonic() >= expires or bytes_used() > TOTAL_BYTES - FINAL_METADATA_RESERVE:
+            raise ValueError("lossless capture stage time/output allowance exceeded")
+    receipt, failure = None, None
+    with stdout_path.open("xb") as stdout, stderr_path.open("xb") as stderr:
+        capture = codec.Capture(zlib_module, stdout, expanded_limit=536870912, compressed_limit=STAGE_BYTES, check=check)
+        process = subprocess.Popen(item["argv"], cwd=out, env=environment, stdout=subprocess.PIPE, stderr=stderr,
+            start_new_session=True, preexec_fn=limit)
+        try:
+            os.set_blocking(process.stdout.fileno(), False)
+            with selectors.DefaultSelector() as selected:
+                selected.register(process.stdout, selectors.EVENT_READ)
+                while True:
+                    check()
+                    if not selected.select(timeout=min(0.05, max(0, expires-time.monotonic()))):
+                        continue
+                    block = os.read(process.stdout.fileno(), codec.CHUNK)
+                    if not block:
+                        break
+                    capture.feed(block)
+            row["returncode"] = process.wait(timeout=max(0.001, expires-time.monotonic()))
+            if row["returncode"] != 0:
+                raise ValueError("capture phase failed: caller-ast")
+            receipt = capture.finish()
+        except BaseException as error:
+            failure = error
+            try:
+                os.killpg(process.pid, signal.SIGKILL)
+            except ProcessLookupError:
+                pass
+            row["returncode"] = process.wait()
+        finally:
+            process.stdout.close()
+    row["stdout"], row["stderr"] = pin(stdout_path), pin(stderr_path)
+    if failure is not None:
+        raise failure
+    if row["stdout"]["bytes"] != receipt["compressed_bytes"] or row["stdout"]["sha256"] != receipt["compressed_sha256"]:
+        raise ValueError("physical compressed stdout differs from complete stream receipt")
+    row["lossless_stdout"] = receipt
+    save(out / "caller.ast.gzip.json", receipt)
+    check()
+
+
+def main(argv):
+    started = time.monotonic()
+    deadline = started + ENTRY_SECONDS
+    if len(argv) != 5 or not __debug__ or sys.flags.optimize or not sys.flags.isolated or not sys.dont_write_bytecode:
+        raise ValueError("exact isolated -I -B PROJECT RAW POLICY SHA invocation required")
+    project, raw, policy_path = (Path(value).resolve(strict=True) for value in argv[1:4])
+    if raw.name != RAW_NAME or raw.is_symlink() or raw.is_relative_to(project.parent):
+        raise ValueError("fresh external source-capture raw root required")
+    control = raw / "control"
+    if policy_path.parent != control or Path(__file__).resolve().parent != control:
+        raise ValueError("exact raw/control controller paths required")
+    policy_bytes = policy_path.read_bytes()
+    if hashlib.sha256(policy_bytes).hexdigest() != argv[4]:
+        raise ValueError("root-pinned capture policy differs")
+    policy = json.loads(policy_bytes)
+    if policy["raw_name"] != RAW_NAME or policy["source_commit"] != SOURCE_COMMIT or policy["source_project"] != str(project):
+        raise ValueError("exact source/raw identity required")
+    if policy["budgets"] != {"whole_seconds": WHOLE_SECONDS, "entry_seconds": ENTRY_SECONDS,
+            "rss_bytes": RSS_BYTES, "stage_bytes": STAGE_BYTES, "total_bytes": TOTAL_BYTES}:
+        raise ValueError("unchanged whole-tree/time/output capture budgets required")
+    if sys.executable != policy["python"]:
+        raise ValueError("selected Python invocation differs")
+    controls = policy["controller_files"]
+    derived = False
+
+    def control_check():
+        if policy_path.is_symlink() or not stat.S_ISREG(policy_path.lstat().st_mode):
+            raise ValueError("physical regular policy required")
+        expected = {policy_path.name, *controls} | ({"include"} if derived else set())
+        if {p.name for p in control.iterdir()} != expected:
+            raise ValueError("closed source-capture control membership differs")
+        for name, value in controls.items():
+            path = control / name
+            if path.name != name or pin(path) != {"path": str(path), **value}:
+                raise ValueError("staged capture controller differs: " + name)
+        if derived:
+            check_derived_stub(control)
+        if pin(__file__)["sha256"] != policy["entry_sha256"] or hashlib.sha256(policy_path.read_bytes()).hexdigest() != argv[4]:
+            raise ValueError("entry/policy changed")
+
+    control_check()
+    if shutil.disk_usage(raw).free < policy["disk_floor_bytes"] + TOTAL_BYTES:
+        raise ValueError("capture disk floor plus unchanged output allowance required")
+    for name, value in {"PROBATA_OUTPUT": str(raw), "SWDB_VERIFIER_LOCK": str(raw / "verifier.lock"),
+                        "SWDB_VERIFIER_RSS_CAP_BYTES": str(RSS_BYTES)}.items():
+        if os.environ.get(name) != value:
+            raise ValueError("actual Linux capture role differs: " + name)
+    launch = json.loads((raw / "launch.json").read_bytes())
+    command = [policy["python"], "-I", "-B", str(Path(__file__).resolve()), str(project), str(raw), str(policy_path), argv[4]]
+    if launch.get("command") != command or Path(launch["source"]).resolve() != project.parent or launch.get("source_commit") != SOURCE_COMMIT:
+        raise ValueError("actual launch source/command differs")
+    if any(launch.get(k) != v for k, v in {"rss_cap_bytes": RSS_BYTES, "workers": 1,
+                                         "timeout_seconds": WHOLE_SECONDS, "node": policy["node"]}.items()):
+        raise ValueError("actual capture lane/guard differs")
+    for name, value in policy["guard_files"].items():
+        if pin(raw / name)["sha256"] != value or launch.get("reviewed_wrapper_reuse", {}).get(name) != value:
+            raise ValueError("exact adapted execute/watch bytes required")
+    helpers = original_helpers(control / "linux_native86_entry_v4.py")
+    live = helpers["verified_linux_lane"](policy["node"])
+    marker = hashlib.sha256(json.dumps({"launch": pin(raw / "launch.json"), "live": live}, sort_keys=True).encode()).hexdigest()
+    save(raw / "capture-linux-role.json", {"launch": pin(raw / "launch.json"), "live": live,
+        "derived_marker": marker, "Mac_counted_claim": False})
+    cache = raw / "entry-source-cache"
+    if os.path.lexists(cache):
+        raise ValueError("absent entry source cache required")
+    sys.pycache_prefix = str(cache)
+    os.environ.update(PYTHONDONTWRITEBYTECODE="1", PYTHONPYCACHEPREFIX=str(cache))
+
+    def module(name, expected=None):
+        path = control / name
+        if expected is not None and pin(path)["sha256"] != expected:
+            raise ValueError("exact source consumer required")
+        data = path.read_bytes()
+        if hashlib.sha256(data).hexdigest() != controls[name]["sha256"]:
+            raise ValueError("capture module changed")
+        result = types.ModuleType("capture_" + name[:-3])
+        result.__file__ = str(path)
+        exec(compile(data, str(path), "exec"), result.__dict__)
+        return result
+
+    closed, roles, observer = (module(name) for name in ("closed_python_surface.py", "python_startup_roles_v2.py", "python_role_observer_v2.py"))
+    before = helpers["physical_runtime"](policy, closed)
+    save(raw / "capture-runtime-before.json", before)
+    roles.validate_role_plan_v2(policy["startup_roles"], metadata=policy["python_surface_binding"], source_project=project,
+        root_observer_bytes=(control / policy["root_observer_file"]).read_bytes(), closed=closed)
+    request = roles.role_request_v2(policy["startup_roles"], role="entry-isolated", environment=os.environ, cache=cache)
+    observed = observer.observe_role_v2(request)
+    roles.check_role_observation_v2(request, observed)
+    save(raw / "capture-python-entry-role.json", observed)
+    compiler = policy["compiler"]
+    if compiler["command"] != [compiler["wrapper"]["path"]] or compiler["version"] != "22.1.8":
+        raise ValueError("selected absolute LLVM22 wrapper required")
+    recheck([compiler["wrapper"], compiler["driver"]])
+    forbidden = ("CPATH", "C_INCLUDE_PATH", "CPLUS_INCLUDE_PATH", "OBJC_INCLUDE_PATH", "INCLUDE", "SDKROOT",
+        "GCC_EXEC_PREFIX", "COMPILER_PATH", "LIBRARY_PATH", "LD_PRELOAD", "LD_AUDIT", "ASAN_SYMBOLIZER_PATH", "UBSAN_OPTIONS", "ASAN_OPTIONS")
+    if any(os.environ.get(name) for name in forbidden):
+        raise ValueError("ambient compiler/loader/sanitizer override refused")
+    adapter = module("compiler_unit_adapter_v3.py", ADAPTER_SHA)
+    codec = module("lossless_gzip_v1.py", CODEC_SHA)
+    zlib_module, zlib_before = bind_zlib(policy)
+    save(raw / "capture-zlib-before.json", zlib_before)
+    binder = module("whole_interface_v4.py", BINDER_SHA)
+    declarations = binder.inventory(project)
+    out = raw / "component"
+    out.mkdir()
+    (out / "tmp").mkdir()
+    (control / "include").mkdir()
+    (control / "include/gem5").mkdir()
+    with (control / "include/gem5/m5ops.h").open("xb") as stream:
+        stream.write((control / "m5ops.h").read_bytes())
+    derived = True
+    control_check()
+    original_inputs = [pin(control / name) for name in ("source_call_fixture_v2.cpp", "compiler_abi_probe_v1.cpp", "m5ops.h")]
+    original_inputs += [pin(project / row["relative"]) for row in policy["source_inputs"]]
+    for row, expected in zip(original_inputs[3:], policy["source_inputs"]):
+        if {k: row[k] for k in ("bytes", "sha256")} != {k: expected[k] for k in ("bytes", "sha256")}:
+            raise ValueError("immutable source/header input differs")
+    recipe = lossless_recipe(adapter, compiler=compiler["command"][0], project=str(project), raw=str(raw))
+    if recipe != policy["capture_recipe"]:
+        raise ValueError("reviewed four-phase recipe differs")
+    environment = {"PATH": policy["path"], "HOME": policy["home"], "LANG": "C", "LC_ALL": "C", "TMPDIR": str(out / "tmp")}
+    environment.update(policy["native_runtime"]["loader_environment"])
+    save(out / "inputs-before.json", {"source": original_inputs, "environment": environment, "compiler": compiler,
+        "recipe": recipe, "entry": pin(__file__), "policy": pin(policy_path), "scope": "Clang observations only"})
+    commands, groups, prepared, error, after_errors = [], [], None, None, []
+
+    def bytes_used():
+        return sum(p.stat().st_size for p in raw.rglob("*") if p.is_file())
+
+    def limit():
+        resource.setrlimit(resource.RLIMIT_FSIZE, (STAGE_BYTES, STAGE_BYTES))
+
+    def stage(item):
+        remaining = min(45, deadline - time.monotonic() - 10)
+        if remaining <= 0 or bytes_used() > TOTAL_BYTES-FINAL_METADATA_RESERVE:
+            raise ValueError("capture time/output allowance exhausted")
+        name = item["phase"]
+        stdout_path = Path(item.get("stdout", str(out / (name + ".stdout"))))
+        stderr_path = out / (name + ".stderr")
+        row = {"phase": name, "argv": item["argv"], "cwd": str(out), "timeout_seconds": remaining}
+        commands.append(row)
+        if name == "caller-ast":
+            stream_caller_ast(item, out=out, environment=environment, remaining=remaining, bytes_used=bytes_used,
+                limit=limit, codec=codec, zlib_module=zlib_module, row=row)
+            return
+        with stdout_path.open("xb") as stdout, stderr_path.open("xb") as stderr:
+            process = subprocess.Popen(item["argv"], cwd=out, env=environment, stdout=stdout, stderr=stderr,
+                start_new_session=True, preexec_fn=limit)
+            expires = time.monotonic() + remaining
+            try:
+                while process.poll() is None:
+                    if time.monotonic() >= expires or bytes_used() > TOTAL_BYTES-FINAL_METADATA_RESERVE or stdout.tell() > STAGE_BYTES or stderr.tell() > STAGE_BYTES:
+                        raise ValueError("capture stage time/output cap exceeded")
+                    time.sleep(0.05)
+            except BaseException:
+                try:
+                    os.killpg(process.pid, signal.SIGKILL)
+                except ProcessLookupError:
+                    pass
+                process.wait()
+                raise
+            row["returncode"] = process.wait()
+        row["stdout"], row["stderr"] = pin(stdout_path), pin(stderr_path)
+        if row["returncode"] or bytes_used() > TOTAL_BYTES-FINAL_METADATA_RESERVE:
+            raise ValueError("capture phase failed: " + name)
+
+    try:
+        for offset, label in ((0, "caller"), (2, "abi")):
+            control_check()
+            recheck(original_inputs)
+            if helpers["physical_runtime"](policy, closed) != before:
+                raise ValueError("runtime differs before preprocessing")
+            stage(recipe["commands"][offset])
+            dependencies = [pin(path) for path in helpers["make_dependencies"]((out / (label + ".d")).read_text(), label, out)]
+            source_name = "source_call_fixture_v2.cpp" if label == "caller" else "compiler_abi_probe_v1.cpp"
+            required = {str(control / source_name), str(control / "include/gem5/m5ops.h"),
+                        str(project / "apps/dx100/benchmarks/API/MAA.hpp"), str(project / "apps/dx100/benchmarks/API/MAA_gem5.hpp")}
+            compare_dependencies(dependencies, [row["path"] for row in dependencies], required)
+            group = {"label": label, "dependencies": dependencies, "frozen": pin(out / (label + ".ii")),
+                     "preprocess_dependency": pin(out / (label + ".d"))}
+            groups.append(group)
+            recheck(dependencies + original_inputs + [group["frozen"], group["preprocess_dependency"]])
+            control_check()
+            if helpers["physical_runtime"](policy, closed) != before:
+                raise ValueError("runtime differs before original-source AST")
+            stage(recipe["commands"][offset + 1])
+            ast_used = helpers["make_dependencies"]((out / (label + ".ast.d")).read_text(), label + "-ast", out)
+            compare_dependencies(dependencies, ast_used, required)
+            recheck(dependencies + original_inputs + [group["frozen"], group["preprocess_dependency"]])
+            control_check()
+            if helpers["physical_runtime"](policy, closed) != before:
+                raise ValueError("runtime differs after original-source AST")
+            group["ast"] = pin(out / (label + (".ast.json.gz" if label == "caller" else ".ast.json")))
+            if label == "caller":
+                group["expanded_stream_receipt"] = pin(out / "caller.ast.gzip.json")
+            group["ast_dependency"] = pin(out / (label + ".ast.d"))
+        observation = {"commands": commands, "inputs": original_inputs, "groups": groups,
+            "source_commit": SOURCE_COMMIT, "original_source_coordinates": True,
+            "timing_tcb": recipe["dependency_timing_tcb"]}
+        save(out / "compiler-observation.json", observation)
+        stream_receipt = json.loads((out / "caller.ast.gzip.json").read_bytes())
+        def decode_check():
+            if time.monotonic() >= deadline - 10 or bytes_used() > TOTAL_BYTES - FINAL_METADATA_RESERVE:
+                raise ValueError("lossless decode entry deadline/output allowance exceeded")
+        with (out / "caller.ast.json.gz").open("rb") as compressed:
+            full_tu_raw = codec.decode(zlib_module, compressed, stream_receipt, expanded_limit=536870912,
+                compressed_limit=STAGE_BYTES, check=decode_check)
+        prepared = adapter.prepare_unit(binder.__dict__, full_tu_raw=full_tu_raw,
+            abi_raw=(out / "abi.ast.json").read_bytes(), source_path=control / "source_call_fixture_v2.cpp",
+            source_bytes=(control / "source_call_fixture_v2.cpp").read_bytes(), probe_path=control / "compiler_abi_probe_v1.cpp",
+            probe_bytes=(control / "compiler_abi_probe_v1.cpp").read_bytes(), declarations=declarations,
+            compiler_capture_pin=pin(out / "compiler-observation.json")["sha256"],
+            full_tu_compressed_bytes=stream_receipt["compressed_bytes"], full_tu_expanded_limit=536870912)
+        del full_tu_raw
+        check_prepared(prepared, declarations)
+        save(out / "source-preparation.json", prepared)
+    except Exception as failure:
+        error = {"type": type(failure).__name__, "message": str(failure)}
+    finally:
+        save(out / "commands.json", commands)
+        save(out / "used-inputs.json", groups)
+        try:
+            if helpers["physical_runtime"](policy, closed) != before:
+                raise ValueError("runtime differs after capture")
+            recheck(original_inputs)
+            control_check()
+            _zlib, zlib_after = bind_zlib(policy)
+            if zlib_after != zlib_before:
+                raise ValueError("zlib binding changed after capture")
+            save(raw / "capture-zlib-after.json", zlib_after)
+            for group in groups:
+                recheck(group["dependencies"] + [group["frozen"], group["preprocess_dependency"]] + [group[k] for k in ("ast", "ast_dependency", "expanded_stream_receipt") if k in group])
+            for name, expected in policy["guard_files"].items():
+                if pin(raw / name)["sha256"] != expected:
+                    raise ValueError("Linux guard changed after capture")
+        except Exception as failure:
+            after_errors.append({"type": type(failure).__name__, "message": str(failure)})
+        save(raw / "capture-runtime-after.json", {"runtime": before, "after_errors": after_errors})
+        cache_present = os.path.lexists(cache)
+        accepted = error is None and not after_errors and prepared is not None and len(commands) == 4 and not cache_present and bytes_used() <= TOTAL_BYTES
+        accepted = finalize_capture(raw, out, {"accepted": accepted, "error": error, "after_input_errors": after_errors,
+            "bytecode_cache_present": cache_present,
+            "source_names": sorted({row["name"] for row in prepared["calls"]}) if prepared else [],
+            "source_call_count": len(prepared["calls"]) if prepared else 0,
+            "scope": "Actual Clang source/ABI preparation only; source/CPU/model/public admission remains required",
+            "native_or_solver_executed": False, "public_proof": False, "current_0_2": False, "full_ticket28": False}, started=started)
+    return 0 if accepted else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main(sys.argv))

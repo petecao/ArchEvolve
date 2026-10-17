@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "comparison_result",
+  "title": "Comparison result",
+  "description": "Durable explicit comparison decision, including rejections. Introduced 2026-09-25.",
+  "properties": {
+    "schema_version": {
+      "const": "0.4"
+    },
+    "message_version": {
+      "const": "1.0"
+    },
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "enum": [
+            "sw",
+            "hw",
+            "operator",
+            "worker"
+          ]
+        },
+        "test_client": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name",
+        "role",
+        "test_client"
+      ]
+    },
+    "kind": {
+      "const": "comparison_result"
+    },
+    "request": {},
+    "protocol": {
+      "type": "string",
+      "x-ref": "protocol"
+    },
+    "candidate_evaluation": {
+      "type": "string",
+      "x-ref": "evaluation"
+    },
+    "baseline_evaluation": {
+      "type": "string",
+      "x-ref": "evaluation"
+    },
+    "comparison_baseline": {
+      "type": "string",
+      "x-ref": "implementation"
+    },
+    "source_ancestor": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "x-ref": "implementation"
+    },
+    "decision": {
+      "type": "object",
+      "required": [
+        "state",
+        "reasons"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "rejected",
+            "fixture_comparison",
+            "gain",
+            "regression",
+            "no_gain",
+            "inconclusive"
+          ]
+        },
+        "reasons": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "gain_claim": {
+      "type": "boolean"
+    },
+    "evidence_kind": {
+      "enum": [
+        "execution",
+        "contract_fixture",
+        "unknown"
+      ]
+    },
+    "metrics": {
+      "type": "object"
+    },
+    "region_comparisons": {
+      "type": "array"
+    },
+    "protocol_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "evaluation_identities": {
+      "type": "object"
+    },
+    "finished_at": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "message_version",
+    "producer",
+    "request",
+    "decision",
+    "gain_claim",
+    "evidence_kind",
+    "metrics",
+    "region_comparisons",
+    "finished_at"
+  ]
+}

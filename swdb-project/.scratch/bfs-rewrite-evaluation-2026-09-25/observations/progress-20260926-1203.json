@@ -1,0 +1,115 @@
+{
+  "created": "2026-09-26",
+  "observed_at_et": "2026-09-26 12:03:49 ET",
+  "actual_timestamp_note": "Scheduled 12:03 ET check observed at 12:03:49 ET.",
+  "source_receipt": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-paired-pilot-20260926-a1.dispatch/health-20260926-1203.json",
+    "sha256": "61b3a604e64b46850f5dfd9725a7badd88c019a399348d9539450c38e9e5fc00"
+  },
+  "tickets": {
+    "resolved": 13,
+    "claimed": 8,
+    "final_cells_accepted": 0,
+    "final_cells_required": 8,
+    "qualified_gain": false,
+    "empirical_freeze": false
+  },
+  "leases": {
+    "socket0": {
+      "state": "released",
+      "generation": 318
+    },
+    "socket1": {
+      "state": "held",
+      "generation": 400
+    },
+    "legacy": {
+      "state": "released",
+      "generation": 77
+    }
+  },
+  "paired": {
+    "state": "running",
+    "cell": "upstream.uniform-random",
+    "observations": 93,
+    "cell_required": 60,
+    "all_required": 240,
+    "remaining_cells": [
+      "dx100.kronecker",
+      "upstream.kronecker"
+    ],
+    "driver_pid": 3034830,
+    "driver_start_ticks": 493754313,
+    "evaluator_pid": 3038420,
+    "evaluator_start_ticks": 493946412,
+    "helper_pid": 3034761,
+    "started_at_et": "2026-09-26 11:13:30 ET",
+    "active_code": "98b5f50e93f531ce0395fe7e161f812a406d6d9d",
+    "sampled_rss_gib_latest": 1.01,
+    "sampled_rss_gib_peak": 1.04,
+    "resource_samples": 600,
+    "max_guard_seconds": 1.529,
+    "raw_mib": 571,
+    "stderr_or_failure_observed": false,
+    "cell_observations": 33,
+    "completed_cells": [
+      "dx100.uniform-random"
+    ],
+    "trial_pid": 3039816,
+    "trial_start_ticks": 494055787
+  },
+  "host": {
+    "load": [
+      1.09,
+      1.11,
+      1.07
+    ],
+    "estimated_node_available_gib": [
+      57.3,
+      57.39
+    ],
+    "global_available_gib": 116.59,
+    "memory_pressure_averages": 0,
+    "data1_free_gib": 16.46,
+    "data_free_gib": 183.16
+  },
+  "helper": {
+    "commit": "42ce8dce1ecfb949d6e5d4ee3c98c078bc7ddc65",
+    "script_sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8",
+    "active_checkout_unchanged": true
+  },
+  "history": "Native/T14/a1/provider receipt hashes and historical checkouts unchanged; expired a2 absent; a3 still unused. Idle a3 checkout remains1018432.",
+  "workers": "All three live subagents responsive. No dead or stranded worker. Coverage/batch/observer code preparation continues locally.",
+  "next_full_health_due_et": "2026-09-26 12:33 ET",
+  "first_cell_control": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-paired-pilot-20260926-a1.dispatch/first-cell-fixed-policy-analysis.json",
+    "sha256": "86afd75a4cc7c44a89201053a5945190f13f4b45ab5d608ec81168ed3eb73171",
+    "observations": 60,
+    "passed_checks": 60,
+    "baseline_over_candidate": {
+      "ratio": 0.997256,
+      "confidence_interval_95": [
+        0.984188,
+        1.00963
+      ]
+    },
+    "candidate_over_baseline": {
+      "ratio": 1.002752,
+      "confidence_interval_95": [
+        0.990353,
+        1.016063
+      ]
+    },
+    "maximum_relative_spread": 0.081338,
+    "ceiling": 0.1,
+    "whole_study_state": "unqualified_incomplete",
+    "gain_claim": false
+  },
+  "regression": {
+    "commit": "83125b42cd470a7c0348583cec8c9324251fccdf",
+    "passed": 1300,
+    "skipped": 3,
+    "exit_code": 0,
+    "receipt": "full-regression-83125b4-20260926.json"
+  }
+}

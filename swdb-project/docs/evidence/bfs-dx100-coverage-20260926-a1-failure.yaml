@@ -1,0 +1,73 @@
+created: '2026-09-26'
+updated: '2026-09-26'
+id: bfs-dx100-coverage-20260926-a1.failure-audit
+role: additive audit of one failed fixed coverage attempt; no record rewrite
+code_commit: 53f2e7686a41d3472c9e0824a0a9b09117884e0b
+outcome: failed
+coverage_accepted: false
+gain_claim: false
+retry_performed: false
+driver_state: failed
+public_evaluation_retained_state: running
+public_stage_retained_state: interrupted
+public_evaluation_note: Public evaluator was interrupted and force-stopped before
+  final outcome persistence; stale running top-level state is retained unchanged and
+  not a live process or accepted result.
+public_correctness: unverified
+public_timing_samples: 0
+driver_reason: 'InterruptedError: driver interrupted by signal 15'
+resource_error: 'ValueError: paired resource monitor failed: owned process RSS is
+  unavailable'
+cleanup_state: terminal_no_live_owned_processes
+owned_processes_absent: false
+owned_processes_nonrunning: true
+observed_process_identity_count: 14
+host_wall_seconds: 347.04961673822254
+sample_count: 65
+sampled_peak_bytes: 34714693632
+true_peak_known: false
+terminal_audit:
+  path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926.dispatch/terminal-validation.json
+  sha256: 65969e8cae4ce113c289ba79c9b3aafd852f36724dcd8c060d8f37837c5c971a
+  bytes: 8363
+retained_refs:
+  driver:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926/bfs-dx100-coverage-20260926-a1/driver.json
+    sha256: 88a15c0432e5635f80994bf89de3862af85bea3035ae70e00e24e8ca5d4e98fa
+  lane:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926.dispatch/lane.json
+    sha256: 3cf414b657fe9038858f3b0b2a0ff9b219e8dfc9f3f092e3fa6cd8d4b58a5466
+  outer_exit:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926.dispatch/outer.exit
+    sha256: 4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865
+  lease_snapshot:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926.dispatch/terminal-lease-snapshot.json
+    sha256: e7ca3dc482d2e576ccdd64dc3df63de6db052b1e7dd058434e1a1fd9509863f7
+  process_observations:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926/bfs-dx100-coverage-20260926-a1/process-observations.json
+    sha256: 10e5517c69dcf12e3e6390827c0248983c8d55f04ac09551958ef890d8cdf193
+  evaluation:
+    path: /data1/yanruj/EvolveSWDB_dx100_acceptance_20260926_a1/records/evaluations/bfs-dx100-coverage-20260926-a1.execute.yaml
+    sha256: dfa28a3bbe8170fe2e3dff6b140a41b4bfc7873c3e903fc39d73cc258acac26e
+  roi_seal:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926/bfs-dx100-coverage-20260926-a1/bfs-dx100-coverage-20260926-a1.execute/simulation/roi-seal.json
+    sha256: d300689e50d74bcf9fc0d5b521679c62efab22cb8669f5bfb630786ad95edafc
+  raw_simulation_log:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926/bfs-dx100-coverage-20260926-a1/bfs-dx100-coverage-20260926-a1.execute/002-simulation.log
+    sha256: ec81d30d246ee56c570a9766a0e59959ecac08b166e47154a3956b2f22d0cb97
+  post_roi_trace:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926/bfs-dx100-coverage-20260926-a1/bfs-dx100-coverage-20260926-a1.execute/simulation/post-roi-syscalls.log
+    sha256: bd123465b283dd771243ef0ffcfc91c33a5087aef2817f1e5ddde58da7eb2099
+record_ids:
+- bfs-dx100-coverage-20260926-a1.workload.241d37f1ee522c01
+- bfs-dx100-coverage-20260926-a1.compile
+- bfs-dx100-coverage-20260926-a1.execute
+observation_boundary: A sealed guest continuation exists, but the host evaluator was
+  interrupted. It is not accepted correctness, timing, or coverage evidence.
+persistence_diagnosis:
+  proven: Interrupted stage persisted before final top-level outcome. Parent forced
+    evaluator exit -9 after bounded cleanup.
+  source_ordering: Pinned execute finally performs correctness artifact scans before
+    its outer failure handler persists the terminal outcome.
+  limitation: No stack or phase sample identifies the exact post-interruption operation
+    at forced exit.

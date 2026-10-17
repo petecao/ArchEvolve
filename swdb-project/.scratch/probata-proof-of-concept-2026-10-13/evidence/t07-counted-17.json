@@ -1,0 +1,357 @@
+{
+  "created": "2026-10-15 ET",
+  "kind": "completed_counted_hint_spike_not_proven",
+  "source_commit": "af9a61b6fe582507f55b7f37dd12331925c17b16",
+  "worktree": "/private/tmp/probata-t07-run17",
+  "output": "/private/tmp/probata-t07-20261015-run17/counted-17",
+  "summary": {
+    "proven": false,
+    "within_budget": false,
+    "rounds": 1,
+    "codex_calls": 1,
+    "elapsed_min": 53.48,
+    "lock_wait_excluded_s": 0.0,
+    "best_n_open": 19,
+    "best_hints": 38,
+    "best_sha256": "2d2ddb4100be1498c284695ce8fc32424aa2d9612e7d140bbb275c639ed1c4e0",
+    "tool_calls": 35,
+    "show_goal_calls": 6,
+    "best_unit_hint_open": [
+      2,
+      17
+    ],
+    "phase_at_end": 1,
+    "wp_attempts": 15,
+    "tokens": {
+      "input_tokens": 9464124,
+      "cached_input_tokens": 9294848,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 34918,
+      "reasoning_output_tokens": 12623
+    },
+    "final": null,
+    "finished": "2026-10-15 08:25:15 EDT"
+  },
+  "source_manifest": {
+    "path": "/private/tmp/probata-t07-20261015-run17/source-manifest.json",
+    "sha256": "289954c92167bd6a89b05c6e56047d8d5d1a1325fd50a6d9c9ef8a08a30af542",
+    "bytes": 3663
+  },
+  "source_files_rechecked": 13,
+  "source_files_match": true,
+  "best_goal_count": 270,
+  "best_open_goals": [
+    {
+      "goal": "typed_TDStep_ensures_visited_iff_reachable",
+      "kind": "ensures",
+      "file": "tdstep_standin.c",
+      "line": 68,
+      "source": "ensures visited_iff_reachable: \\forall integer v; 0 <= v < num_nodes && \\old(parent->start_[v]) < 0 ==>",
+      "hint_ids": [],
+      "failure_class": "timeout",
+      "function": "TDStep"
+    },
+    {
+      "goal": "typed_TDStep_loop_invariant_td_chunk_idle_preserved",
+      "kind": "loop invariant preserved",
+      "file": "tdstep_standin.c",
+      "line": 113,
+      "source": "loop invariant td_chunk_idle: dxc_idle;",
+      "hint_ids": [
+        "seed1",
+        "r1c7h1",
+        "r1c12h1",
+        "r1c19h3",
+        "r1c23h3",
+        "r1c29h2"
+      ],
+      "failure_class": "timeout",
+      "function": "TDStep"
+    },
+    {
+      "goal": "typed_TDStep_loop_invariant_td_chunk_queue_preserved",
+      "kind": "loop invariant preserved",
+      "file": "tdstep_standin.c",
+      "line": 112,
+      "source": "loop invariant td_chunk_queue: td_queue_ok{Pre,Here}(parent,queue,lqueue.local_queue,lqueue.in,num_nodes);",
+      "hint_ids": [
+        "seed1",
+        "r1c7h1",
+        "r1c12h1",
+        "r1c19h3",
+        "r1c23h3",
+        "r1c29h2"
+      ],
+      "failure_class": "timeout",
+      "function": "TDStep"
+    },
+    {
+      "goal": "typed_TDStep_assert_td_rows_init",
+      "kind": "assert",
+      "file": "tdstep_standin.c",
+      "line": 133,
+      "source": "/*@ assert td_rows_init: dxc_reg[c.reg[2]] == 1 && dxc_tile_len[c.tile[1]] == dxc_tile_len[c.tile[2]] && dxc_tile_len[c.tile[1]] == end - begin && 0 <= dxc_tile_len[c.tile[1]] <= TILE_SIZE && (\\forall integer r; 0 <= r < dxc_tile_len[c.tile[1]] ==> 0 <= queue->shared[begin + r] < num_nodes && dxc_ti",
+      "hint_ids": [
+        "r1c17h1"
+      ],
+      "failure_class": "timeout",
+      "function": "TDStep"
+    },
+    {
+      "goal": "typed_TDStep_loop_invariant_td_cursor_preserved",
+      "kind": "loop invariant preserved",
+      "file": "tdstep_standin.c",
+      "line": 139,
+      "source": "loop invariant td_cursor: dxc_rl_state{Here}(dxc_tile_data[c.tile[1]],dxc_tile_data[c.tile[2]],dxc_tile_len[c.tile[1]],dxc_reg[c.reg[4]],dxc_reg[c.reg[5]]);",
+      "hint_ids": [
+        "seed2",
+        "r1c7h2",
+        "r1c14h1",
+        "r1c17h2",
+        "r1c19h4",
+        "r1c23h4",
+        "r1c29h3"
+      ],
+      "failure_class": "timeout",
+      "function": "TDStep"
+    },
+    {
+      "goal": "typed_TDStep_loop_invariant_td_range_queue_established",
+      "kind": "loop invariant established",
+      "file": "tdstep_standin.c",
+      "line": 142,
+      "source": "loop invariant td_range_queue: td_queue_ok{Pre,Here}(parent,queue,lqueue.local_queue,lqueue.in,num_nodes);",
+      "hint_ids": [
+        "seed2",
+        "r1c7h2",
+        "r1c14h1",
+        "r1c17h2",
+        "r1c19h4",
+        "r1c23h4",
+        "r1c29h3"
+      ],
+      "failure_class": "timeout",
+      "function": "TDStep"
+    },
+    {
+      "goal": "typed_TDStep_loop_invariant_td_rows_preserved",
+      "kind": "loop invariant preserved",
+      "file": "tdstep_standin.c",
+      "line": 138,
+      "source": "loop invariant td_rows: dxc_reg[c.reg[2]] == 1 && dxc_tile_len[c.tile[1]] == dxc_tile_len[c.tile[2]] && dxc_tile_len[c.tile[1]] == end - begin && 0 <= dxc_tile_len[c.tile[1]] <= TILE_SIZE && (\\forall integer r; 0 <= r < dxc_tile_len[c.tile[1]] ==> 0 <= queue->shared[begin + r] < num_nodes && dxc_til",
+      "hint_ids": [
+        "seed2",
+        "r1c7h2",
+        "r1c14h1",
+        "r1c17h2",
+        "r1c19h4",
+        "r1c23h4",
+        "r1c29h3"
+      ],
+      "failure_class": "timeout",
+      "function": "TDStep"
+    },
+    {
+      "goal": "typed_TDStep_assert_td_emitted_pairs",
+      "kind": "assert",
+      "file": "tdstep_standin.c",
+      "line": 156,
+      "source": "/*@ assert td_emitted_pairs: count == dxc_tile_len[c.tile[6]] && count == dxc_tile_len[c.tile[7]] && 0 < count <= TILE_SIZE && (\\forall integer q; 0 <= q < count ==> 0 <= dxc_tile_data[c.tile[6]][q] < end - begin && begin + dxc_tile_data[c.tile[6]][q] < queue->shared_out_end && 0 <= dxc_tile_data[c.",
+      "hint_ids": [
+        "r1c20h1"
+      ],
+      "failure_class": "timeout",
+      "function": "TDStep"
+    },
+    {
+      "goal": "typed_TDStep_assert_td_tiles_ready",
+      "kind": "assert",
+      "file": "tdstep_standin.c",
+      "line": 166,
+      "source": "/*@ assert td_tiles_ready: dxc_pending[c.tile[0]] == 0 && dxc_pending[c.tile[3]] == 0 && dxc_pending[c.tile[5]] == 0; */",
+      "hint_ids": [
+        "r1c19h2"
+      ],
+      "failure_class": "timeout",
+      "function": "TDStep"
+    },
+    {
+      "goal": "typed_TDStep_assert_td_batch_bounds",
+      "kind": "assert",
+      "file": "tdstep_standin.c",
+      "line": 173,
+      "source": "/*@ assert td_batch_bounds: 0 < count <= TILE_SIZE && count == dxc_tile_len[c.tile[0]] && count == dxc_tile_len[c.tile[3]] && count == dxc_tile_len[c.tile[5]] && (\\forall integer q; 0 <= q < count ==> 0 <= vertices[q] < num_nodes && 0 <= frontier[q] < num_nodes && bfs_frontier_edge{Pre}(queue,Vertex",
+      "hint_ids": [
+        "r1c23h2"
+      ],
+      "failure_class": "timeout",
+      "function": "TDStep"
+    },
+    {
+      "goal": "typed_TDStep_loop_invariant_td_k_parent_established",
+      "kind": "loop invariant established",
+      "file": "tdstep_standin.c",
+      "line": 180,
+      "source": "loop invariant td_k_parent: td_parent_ok{Pre,Here}(parent,queue,VertexOffsets->start_,g->out_neighbors_,num_nodes);",
+      "hint_ids": [
+        "seed3",
+        "r1c7h3",
+        "r1c23h5",
+        "r1c29h4"
+      ],
+      "failure_class": "timeout",
+      "function": "TDStep"
+    },
+    {
+      "goal": "typed_TDStep_loop_invariant_td_k_parent_preserved",
+      "kind": "loop invariant preserved",
+      "file": "tdstep_standin.c",
+      "line": 180,
+      "source": "loop invariant td_k_parent: td_parent_ok{Pre,Here}(parent,queue,VertexOffsets->start_,g->out_neighbors_,num_nodes);",
+      "hint_ids": [
+        "seed3",
+        "r1c7h3",
+        "r1c23h5",
+        "r1c29h4"
+      ],
+      "failure_class": "timeout",
+      "function": "TDStep"
+    },
+    {
+      "goal": "typed_TDStep_loop_invariant_td_k_queue_established",
+      "kind": "loop invariant established",
+      "file": "tdstep_standin.c",
+      "line": 181,
+      "source": "loop invariant td_k_queue: td_queue_ok{Pre,Here}(parent,queue,lqueue.local_queue,lqueue.in,num_nodes);",
+      "hint_ids": [
+        "seed3",
+        "r1c7h3",
+        "r1c23h5",
+        "r1c29h4"
+      ],
+      "failure_class": "timeout",
+      "function": "TDStep"
+    },
+    {
+      "goal": "typed_TDStep_loop_invariant_td_k_queue_preserved",
+      "kind": "loop invariant preserved",
+      "file": "tdstep_standin.c",
+      "line": 181,
+      "source": "loop invariant td_k_queue: td_queue_ok{Pre,Here}(parent,queue,lqueue.local_queue,lqueue.in,num_nodes);",
+      "hint_ids": [
+        "seed3",
+        "r1c7h3",
+        "r1c23h5",
+        "r1c29h4"
+      ],
+      "failure_class": "timeout",
+      "function": "TDStep"
+    },
+    {
+      "goal": "typed_TDStep_loop_invariant_td_k_values_preserved",
+      "kind": "loop invariant preserved",
+      "file": "tdstep_standin.c",
+      "line": 178,
+      "source": "loop invariant td_k_values: \\forall integer q; k <= q < count ==> 0 <= vertices[q] < num_nodes && 0 <= frontier[q] < num_nodes && bfs_frontier_edge{Pre}(queue,VertexOffsets->start_,g->out_neighbors_,frontier[q],vertices[q]);",
+      "hint_ids": [
+        "seed3",
+        "r1c7h3",
+        "r1c23h5",
+        "r1c29h4"
+      ],
+      "failure_class": "timeout",
+      "function": "TDStep"
+    },
+    {
+      "goal": "typed_TDStep_loop_invariant_td_j_parent_preserved",
+      "kind": "loop invariant preserved",
+      "file": "tdstep_standin.c",
+      "line": 231,
+      "source": "loop invariant td_j_parent: td_parent_ok{Pre,Here}(parent,queue,VertexOffsets->start_,g->out_neighbors_,num_nodes);",
+      "hint_ids": [
+        "seed5",
+        "r1c7h5",
+        "r1c23h7",
+        "r1c29h6"
+      ],
+      "failure_class": "timeout",
+      "function": "TDStep"
+    },
+    {
+      "goal": "typed_TDStep_loop_invariant_td_j_queue_preserved",
+      "kind": "loop invariant preserved",
+      "file": "tdstep_standin.c",
+      "line": 232,
+      "source": "loop invariant td_j_queue: td_queue_ok{Pre,Here}(parent,queue,lqueue.local_queue,lqueue.in,num_nodes);",
+      "hint_ids": [
+        "seed5",
+        "r1c7h5",
+        "r1c23h7",
+        "r1c29h6"
+      ],
+      "failure_class": "timeout",
+      "function": "TDStep"
+    },
+    {
+      "goal": "typed_TDStep_assert_td_flushed_queue",
+      "kind": "assert",
+      "file": "tdstep_standin.c",
+      "line": 259,
+      "source": "/*@ assert td_flushed_queue: queue->shared_in >= \\at(queue->shared_in,Pre) && (\\forall integer p; 0 <= p < \\at(queue->shared_in,Pre) ==> queue->shared[p] == \\at(queue->shared[p],Pre)) && (\\forall integer p; \\at(queue->shared_in,Pre) <= p < queue->shared_in ==> 0 <= queue->shared[p] < num_nodes && \\a",
+      "hint_ids": [
+        "r1c31h1"
+      ],
+      "failure_class": "timeout",
+      "function": "TDStep"
+    },
+    {
+      "goal": "typed_TDStep_call___dxc_gather_5_dxc_gather_requires_3",
+      "kind": "call-site precondition",
+      "file": "tdstep_standin.c",
+      "line": 160,
+      "source": "__dxc_gather(pvector_NodeID_data(parent), c.tile[0], c.tile[5]);",
+      "hint_ids": [],
+      "failure_class": "timeout",
+      "function": "TDStep"
+    }
+  ],
+  "canonical_hint_records_sha256": "7244910ba16e80dee047883e7c5a351a85e975e2cd59de697ad6e845a4b7352a",
+  "artifacts": {
+    "summary.json": {
+      "path": "/private/tmp/probata-t07-20261015-run17/counted-17/summary.json",
+      "sha256": "c55b7380504f2f12273560b8dc609c92473997c4598680cec949626665fb520e",
+      "bytes": 604
+    },
+    "best.json": {
+      "path": "/private/tmp/probata-t07-20261015-run17/counted-17/best.json",
+      "sha256": "2d2ddb4100be1498c284695ce8fc32424aa2d9612e7d140bbb275c639ed1c4e0",
+      "bytes": 26004
+    },
+    "meta.json": {
+      "path": "/private/tmp/probata-t07-20261015-run17/counted-17/meta.json",
+      "sha256": "c66a816532378cc58affaa214eb5807cf5fc319710f638e84acca600e93a0273",
+      "bytes": 2532
+    },
+    "history.json": {
+      "path": "/private/tmp/probata-t07-20261015-run17/counted-17/history.json",
+      "sha256": "7d8394ec87237fb5ab67eb41b9a1537bf4391c1ebfd2c7e914f1f3c849f3f262",
+      "bytes": 9227
+    },
+    "loop.log": {
+      "path": "/private/tmp/probata-t07-20261015-run17/counted-17/loop.log",
+      "sha256": "2f780265969343a7c95cf573b3ed409e1db43187905cf8570d003fac53ceae22",
+      "bytes": 1103
+    }
+  },
+  "storage": {
+    "mount": "Mac APFS /private/tmp",
+    "budget_bytes": 2147483648,
+    "readers": [
+      "coordinator",
+      "ticket07",
+      "ticket09"
+    ],
+    "retained_for": "offline hint and induction audit"
+  },
+  "boundary": "No final fresh-cache proof/smoke replay, complete proof, production RTE/init/origin acceptance or universal hint-validity claim. Remaining unit goals are visited_iff_reachable and gather precondition. Ticket07 remains claimed while the approved A1 timebox is open."
+}

@@ -1,0 +1,40 @@
+{
+  "created": "2026-09-26T16:09:00.705800-04:00",
+  "commit": "c2f987bb585dcccbd8658e9e7767fb694a6084b9",
+  "cwd": "/Users/yanrujhou/.codex/worktrees/bfs-validation/EvolveSWDB",
+  "command": [
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp",
+    "/private/tmp/bfs-full-suite-c2f987b-20260926"
+  ],
+  "state": "finished",
+  "timeout_seconds": 7200,
+  "classification": "local_contract_regression_not_empirical_evidence",
+  "pid": 96441,
+  "returncode": 1,
+  "finished": "2026-09-26T17:02:22.832656-04:00",
+  "elapsed_seconds": 3202.111823708983,
+  "log": {
+    "path": "/private/tmp/bfs-full-suite-c2f987b-20260926.log",
+    "bytes": 15790,
+    "sha256": "e85c1d39ba327c262ab60c0adc349923cc5de84d45908cc20a9c1c2c8b3b3c93"
+  },
+  "final_commit": "c2f987bb585dcccbd8658e9e7767fb694a6084b9",
+  "tracked_diff": "",
+  "counts": {
+    "passed": 1950,
+    "skipped": 18,
+    "failed": 3
+  },
+  "failures": [
+    "tests/test_dx100_smoke_cleanup.py::test_smoke_reaps_nested_evaluator_and_preserves_failure[deadline-dx100_smoke]",
+    "tests/test_dx100_smoke_cleanup.py::test_smoke_reaps_nested_evaluator_and_preserves_failure[deadline-dx100_candidate_smoke]",
+    "tests/test_dx100_witness_continuation.py::test_public_driver_preserves_failure_and_blocks_retry_after_stage_failure"
+  ],
+  "interpretation": "Failed exact-commit local regression; later fixes and empirical acceptance require separate evidence."
+}

@@ -1,0 +1,102 @@
+{
+  "date": "2026-10-06 ET",
+  "scope": "public certify parser with intercepted dispatch; no certification/evaluation execution",
+  "red": {
+    "retained_receipt": "/private/tmp/lanl-ticket09-source-smoke-20261006-a1/runs/local.bfs.functional.preparation.20261006a3/source-preparation-receipt.json",
+    "receipt_sha256": "1b02ffe054b7803a7ed084a6bf529f51ebb5cdcfa0b29fae5d11711ac563918f",
+    "exit_code": 2,
+    "error": "unrecognized arguments: --format json",
+    "dispatch_reached": false
+  },
+  "green": {
+    "actual_recipe_argv": [
+      "certify",
+      "contract.bfs_read_offload",
+      "--candidate",
+      "local.bfs.functional.preparation.20261006a3.proposal.candidate-1",
+      "--records",
+      "/private/tmp/lanl-ticket09-source-smoke-20261006-a1/records",
+      "--library",
+      "/Users/yanrujhou/.codex/worktrees/lanl-ticket09-candidate-prep/ArchEvolve/swdb-project/library",
+      "--runs-dir",
+      "/private/tmp/lanl-ticket09-source-smoke-20261006-a1/runs/local.bfs.functional.preparation.20261006a3/strict-certification",
+      "--command-version",
+      "1.6",
+      "--tile-sizes",
+      "16384,1024",
+      "--threads",
+      "4",
+      "--sources",
+      "0",
+      "--mode",
+      "archevolve"
+    ],
+    "recipe_script_sha256": "a96c8d7eb210f7a9b08b12ad76efecdedca6274b36d1fef59bb603ee3262a1a4",
+    "exit_code": 0,
+    "dispatch_reached": true,
+    "pinned_matrix": {
+      "command_version": "1.6",
+      "tile_sizes": "16384,1024",
+      "threads": 4,
+      "sources": "0"
+    }
+  },
+  "historical_receipt_modified": false,
+  "candidate_pins_modified": false,
+  "fresh_source_only_smoke": {
+    "receipt": "/private/tmp/lanl-ticket09-source-smoke-20261006-a1/runs/local.bfs.functional.preparation.20261006a4/source-preparation-receipt.json",
+    "receipt_sha256": "68df904effa8105857ee37cab3758d63b3f08b6448dc1289317c323303ef6730",
+    "candidate": {
+      "id": "local.bfs.functional.preparation.20261006a4.proposal.candidate-1",
+      "record_sha256": "1954303ed87e28b409455f99288bc3fa2874fefd91e61b4f40dc7f8fbf65aefc",
+      "tree_sha256": "991de65287fe1fae3a20412704cccb6140a93f84cc11200032b20214f5174ff1",
+      "bfs_sha256": "093c56b91837122380fd5e66766c92947e5f1c5194dd4c038936bc28934864dc",
+      "header_sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c"
+    },
+    "matrix": {
+      "family": "candidate",
+      "version": "1.6",
+      "sources_sha256": "309d9cd5140bbb5bf87408ed5f1a4fba40271275704294003be8444829f61311",
+      "tile_sizes": [
+        16384,
+        1024
+      ],
+      "max_threads": 4,
+      "sources": [
+        0
+      ]
+    },
+    "execution_performed": false,
+    "public_command_exit_codes": [
+      0,
+      0,
+      0
+    ],
+    "argv": [
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+      "-m",
+      "swdb",
+      "certify",
+      "contract.bfs_read_offload",
+      "--candidate",
+      "local.bfs.functional.preparation.20261006a4.proposal.candidate-1",
+      "--records",
+      "/private/tmp/lanl-ticket09-source-smoke-20261006-a1/records",
+      "--library",
+      "/Users/yanrujhou/.codex/worktrees/lanl-ticket09-candidate-prep/ArchEvolve/swdb-project/library",
+      "--runs-dir",
+      "/private/tmp/lanl-ticket09-source-smoke-20261006-a1/runs/local.bfs.functional.preparation.20261006a4/strict-certification",
+      "--command-version",
+      "1.6",
+      "--tile-sizes",
+      "16384,1024",
+      "--threads",
+      "4",
+      "--sources",
+      "0",
+      "--mode",
+      "archevolve"
+    ],
+    "candidate_tree_matches_retained_previous_smoke": true
+  }
+}

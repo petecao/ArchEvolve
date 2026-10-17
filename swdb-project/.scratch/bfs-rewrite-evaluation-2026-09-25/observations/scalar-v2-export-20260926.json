@@ -1,0 +1,54 @@
+{
+  "created": "2026-09-26T20:44:38.915392-04:00",
+  "commit": "6732d5327c4f9e22d97367ee3eeb3c09118867d3",
+  "parent": "8c39ae09406dad0da253b21dbe2c87e263f8c5fb",
+  "branch": "refs/heads/codex/bfs-scalar-v2-preparation-20260926-a1",
+  "source_commit": "ffe74c1e365893a372a5f6ed513563906a09b206",
+  "files": [
+    {
+      "path": "scripts/bfs_scalar_v2_builds.py",
+      "bytes": 25240,
+      "sha256": "4d2af07f5cf161f3a18e266532216ec725492207f7ac7a1fa077b8893e2a43c7"
+    },
+    {
+      "path": "tests/test_bfs_scalar_v2_builds.py",
+      "bytes": 21108,
+      "sha256": "1816e590f5e11aaa60091f2b8af9b913457e65f85961fc09b5303f7b489685dc"
+    },
+    {
+      "path": "docs/bfs-scalar-v2-builds-20260926.md",
+      "bytes": 8229,
+      "sha256": "d5f39deafd3cdeea248e71ac19e9195a4bf4360d626b83f42e7008ae014f4f84"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/scalar-v2-20260926-a1.preparation.json",
+      "bytes": 31130,
+      "sha256": "055f1b4ef92f74c9d04b24ea6b9542998802686253caebd28d0ee5837e814383"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/scalar-v2-20260926-a1.dx100.primary.json",
+      "bytes": 551,
+      "sha256": "59f2195fff3677662d1c7f862ba7fd28f2ee5bcfc7fadee023dd56bcaff40159"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/scalar-v2-20260926-a1.dx100.diagnostic.json",
+      "bytes": 553,
+      "sha256": "869d4dc70ac41fa6996554cb1666ff497dcafa6dc869719e07e725ad04ea880a"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/scalar-v2-20260926-a1.upstream.primary.json",
+      "bytes": 557,
+      "sha256": "b6f7eba34891f18a41f75617f41644b41ee28df8546e7db3a534e59319cdc493"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/scalar-v2-20260926-a1.upstream.diagnostic.json",
+      "bytes": 559,
+      "sha256": "ccce3d3936e36eac4f8aae98774f0ad54fa1dd8566ca87920dc4c9d950899bc5"
+    }
+  ],
+  "total_bytes": 87927,
+  "scope": "Eight reviewed scalar compilation preparation source/test/docs/request files only; no tracing changes, measured records, or held payload ancestry",
+  "pushed": true,
+  "actual_host_builds": 0,
+  "verified_remote": "6732d5327c4f9e22d97367ee3eeb3c09118867d3"
+}

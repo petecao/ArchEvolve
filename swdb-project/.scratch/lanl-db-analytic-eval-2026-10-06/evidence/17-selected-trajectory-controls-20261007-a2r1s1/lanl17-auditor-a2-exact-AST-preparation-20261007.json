@@ -1,0 +1,182 @@
+{
+  "format": "swdb.lanl17-auditor-a2-exact-AST-preparation.v1",
+  "source_preparation_identity": "868100b0139e8b162875e420f006e66e7c45460104ce25b5d21585dd1c3ae081",
+  "checked_projections": [
+    {
+      "symbol": "FORMAT",
+      "basis": "Original already pinned/checked pure projection retained exact"
+    },
+    {
+      "symbol": "LEDGER",
+      "basis": "Original already pinned/checked pure projection retained exact"
+    },
+    {
+      "symbol": "VERSION",
+      "basis": "Original already pinned/checked pure projection retained exact"
+    },
+    {
+      "symbol": "PAYLOAD",
+      "basis": "Original already pinned/checked pure projection retained exact"
+    },
+    {
+      "symbol": "paired_identity",
+      "basis": "Original already pinned/checked pure projection retained exact"
+    },
+    {
+      "symbol": "request_identity",
+      "basis": "Original already pinned/checked pure projection retained exact"
+    },
+    {
+      "symbol": "_time",
+      "basis": "Original already pinned/checked pure projection retained exact"
+    },
+    {
+      "symbol": "ledger_problems",
+      "basis": "Original already pinned/checked pure projection retained exact"
+    },
+    {
+      "symbol": "D30",
+      "basis": "Original already pinned/checked pure projection retained exact"
+    },
+    {
+      "symbol": "STATISTICS",
+      "basis": "Original already pinned/checked pure projection retained exact"
+    },
+    {
+      "symbol": "POLICY_KEYS",
+      "basis": "Original already pinned/checked pure projection retained exact"
+    },
+    {
+      "symbol": "REPORT_KEYS",
+      "basis": "Original already pinned/checked pure projection retained exact"
+    },
+    {
+      "symbol": "kendall_tau_b",
+      "basis": "Original already pinned/checked pure projection retained exact"
+    },
+    {
+      "symbol": "rank_statistics",
+      "basis": "Original already pinned/checked pure projection retained exact"
+    },
+    {
+      "symbol": "agreement_identity",
+      "basis": "Original already pinned/checked pure projection retained exact"
+    },
+    {
+      "symbol": "_forecasts",
+      "basis": "Original already pinned/checked pure projection retained exact"
+    },
+    {
+      "symbol": "_analyse",
+      "basis": "Original already pinned/checked pure projection retained exact"
+    },
+    {
+      "symbol": "StopReason",
+      "basis": "exact source text / AST"
+    },
+    {
+      "symbol": "STOP_PRECEDENCE",
+      "basis": "exact source text / AST"
+    },
+    {
+      "symbol": "IterationOutcome",
+      "basis": "exact source text / AST"
+    },
+    {
+      "symbol": "COMPLETED_ITERATION_OUTCOMES",
+      "basis": "exact source text / AST"
+    },
+    {
+      "symbol": "CallOutcome",
+      "basis": "exact source text / AST"
+    },
+    {
+      "symbol": "UNCOUNTED_CALL_OUTCOMES",
+      "basis": "exact source text / AST"
+    },
+    {
+      "symbol": "BUDGET_KEYS",
+      "basis": "exact source text / AST"
+    },
+    {
+      "symbol": "SearchBudget",
+      "basis": "exact source text / AST"
+    },
+    {
+      "symbol": "CallRecord",
+      "basis": "exact source text / AST"
+    },
+    {
+      "symbol": "IterationRecord",
+      "basis": "exact source text / AST"
+    },
+    {
+      "symbol": "CallRefused",
+      "basis": "exact source text / AST"
+    },
+    {
+      "symbol": "SearchLedger",
+      "basis": "exact source text / AST"
+    },
+    {
+      "symbol": "LEVEL_RANK",
+      "basis": "exact source text / AST"
+    },
+    {
+      "symbol": "selection_key",
+      "basis": "exact source text / AST"
+    },
+    {
+      "symbol": "select",
+      "basis": "exact source text / AST"
+    },
+    {
+      "symbol": "source_pairing_request",
+      "basis": "method lifted to module and function name changed"
+    },
+    {
+      "symbol": "source_pairing_context",
+      "basis": "method lifted to module and function name changed"
+    },
+    {
+      "symbol": "CALL_KEYS",
+      "basis": "Exact collector projection AST; only local function names renamed"
+    },
+    {
+      "symbol": "CANDIDATE_KEYS",
+      "basis": "Exact collector projection AST; only local function names renamed"
+    },
+    {
+      "symbol": "ITERATION_KEYS",
+      "basis": "Exact collector projection AST; only local function names renamed"
+    },
+    {
+      "symbol": "STATE_KEYS",
+      "basis": "Exact collector projection AST; only local function names renamed"
+    },
+    {
+      "symbol": "project_calls",
+      "basis": "Exact collector projection AST; only local function names renamed"
+    },
+    {
+      "symbol": "project_candidate",
+      "basis": "Exact collector projection AST; only local function names renamed"
+    },
+    {
+      "symbol": "project_iteration",
+      "basis": "Exact collector projection AST; only local function names renamed"
+    },
+    {
+      "symbol": "project_state",
+      "basis": "Exact collector projection AST; only local function names renamed"
+    }
+  ],
+  "projection_count": 42,
+  "imports_or_code_executed": false,
+  "actual_inputs_tests_Store_native_provider_SSH": false,
+  "source_AST_parse_passed": true,
+  "auditor_sha256": "b15e0e433730b1906c937e2248350278c2b6642d8ff1f909ccf749867f043060",
+  "collector_sha256": "edb822dc9b69796321e86ed042ad8debda33d00479d25f10fbc856b4d8e65780",
+  "checker_sha256": "cffad835a59e5e87b2727e7d87679513f819e9650c92c2994b60febb93dac575",
+  "identity_sha256": "984f3e90e48532d9a5dde8d8d3ff93ec3d5385aa2d739e77d20b9396ec6fdf41"
+}

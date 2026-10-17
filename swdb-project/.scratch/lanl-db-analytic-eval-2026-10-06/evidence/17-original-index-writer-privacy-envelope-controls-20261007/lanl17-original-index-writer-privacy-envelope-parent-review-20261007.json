@@ -1,0 +1,228 @@
+{
+  "format": "swdb.lanl17-original-index-writer-privacy-envelope-parent-source-review.v1",
+  "observed_utc": "2026-10-07T18:56:53.293704+00:00",
+  "state": "SOURCE_REVIEWED_NOT_RUN_REAL_INPUT_AND_OUTER_CAPTURE_REVIEW_REQUIRED",
+  "canonical_ensure_ascii": true,
+  "prepared_packet_pins": {
+    "envelope": {
+      "path": "/private/tmp/lanl17_remote_original_index_writer_privacy_envelope_20261007.py",
+      "bytes": 38790,
+      "sha256": "1ee5ffbdf1ef322cfd5bfec4b6e402c29d23c776e855f01d25208ebbece0fcfc"
+    },
+    "handoff": {
+      "path": "/private/tmp/lanl17-original-index-writer-privacy-envelope-source-handoff-20261007.md",
+      "bytes": 8850,
+      "sha256": "3436128bf534b97a8d3970cc10cdd2d8d3b7a207eaf8d1b45a6f05948bcaff89"
+    },
+    "static_source_comparison": {
+      "path": "/private/tmp/lanl17-original-index-writer-privacy-envelope-static-source-comparison-20261007.json",
+      "bytes": 7169,
+      "sha256": "dde47bbf5d20f5b4f902e32557f5f218e61c92b218695c22e78bd52f5f381c6a"
+    },
+    "preparation": {
+      "path": "/private/tmp/lanl17-original-index-writer-privacy-envelope-source-preparation-20261007.json",
+      "bytes": 6763,
+      "sha256": "ec35f405ecd2a7dac3437bc138fcd9eed9a96c65a1da879d40009ea4e4072ab1"
+    }
+  },
+  "original_pins": {
+    "writer": {
+      "path": "/private/tmp/lanl17_write_parent_full_record_index_20261007.py",
+      "bytes": 33445,
+      "sha256": "7a67d46f8ad7d453fe07bd458a21f663bd4dc7ec12e71de83ad8b5caaf28894b"
+    },
+    "author": {
+      "path": "/private/tmp/lanl17_author_parent_full_record_index_request_r1_20261007.py",
+      "bytes": 38266,
+      "sha256": "a2e69aef10deb6186ac49401516ffba9a165b2f3cc94c8001646b6ac9a5b701d"
+    },
+    "cleanup": {
+      "path": "/private/tmp/lanl17_parent_helpers_cleanup60_a4.py",
+      "bytes": 38195,
+      "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+    },
+    "processes": {
+      "path": "/Users/yanrujhou/.codex/worktrees/lanl-ticket14/ArchEvolve/swdb-project/swdb/processes.py",
+      "bytes": 912,
+      "sha256": "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289"
+    },
+    "supervisor": {
+      "path": "/private/tmp/lanl17_metadata_supervisor_cleanup60_a4.py",
+      "bytes": 8014,
+      "sha256": "fa703bbd4c71bb4bcf56f47d1e224449f627d5921295e00b9cc105f21e95bde0"
+    },
+    "existing_linux_receipt": {
+      "path": "/private/tmp/lanl17-cleanup60-helper-linux-actual-20261007-a4.json",
+      "bytes": 6807,
+      "sha256": "08ff2b2d10045b70ddbdf64714f5f7bf1223738ff511ec200c11fba14f2182e6"
+    }
+  },
+  "preparation_identity_sha256": "d87fb17569b4701ae092067293d8bd8c421296f4236df787255797c364ec62fe",
+  "existing_cleanup_receipt_identity_sha256": "63ded110c4f3e18e8f105aa54f87db2daef24f74a9fe6cb44300c091ebd6b296",
+  "independently_verified_function_class_AST_matches": [
+    {
+      "name": "Refused",
+      "original_role": "writer",
+      "AST_equal": true
+    },
+    {
+      "name": "require",
+      "original_role": "writer",
+      "AST_equal": true
+    },
+    {
+      "name": "sha",
+      "original_role": "writer",
+      "AST_equal": true
+    },
+    {
+      "name": "digest",
+      "original_role": "writer",
+      "AST_equal": true
+    },
+    {
+      "name": "exact",
+      "original_role": "writer",
+      "AST_equal": true
+    },
+    {
+      "name": "full_hash",
+      "original_role": "writer",
+      "AST_equal": true
+    },
+    {
+      "name": "strict_json",
+      "original_role": "writer",
+      "AST_equal": true
+    },
+    {
+      "name": "plain_record",
+      "original_role": "writer",
+      "AST_equal": true
+    },
+    {
+      "name": "utc",
+      "original_role": "writer",
+      "AST_equal": true
+    },
+    {
+      "name": "remaining",
+      "original_role": "writer",
+      "AST_equal": true
+    },
+    {
+      "name": "checked_path",
+      "original_role": "writer",
+      "AST_equal": true
+    },
+    {
+      "name": "stamp",
+      "original_role": "writer",
+      "AST_equal": true
+    },
+    {
+      "name": "file_pin",
+      "original_role": "writer",
+      "AST_equal": true
+    },
+    {
+      "name": "returned_bytes",
+      "original_role": "writer",
+      "AST_equal": true
+    },
+    {
+      "name": "record_relative",
+      "original_role": "writer",
+      "AST_equal": true
+    },
+    {
+      "name": "approved_inventory",
+      "original_role": "writer",
+      "AST_equal": true
+    },
+    {
+      "name": "fresh_output",
+      "original_role": "writer",
+      "AST_equal": true
+    },
+    {
+      "name": "original_seal",
+      "original_role": "writer",
+      "AST_equal": true
+    },
+    {
+      "name": "check_writer_review",
+      "original_role": "author",
+      "AST_equal": true
+    },
+    {
+      "name": "stop_group",
+      "original_role": "processes",
+      "AST_equal": true
+    },
+    {
+      "name": "own_processes",
+      "original_role": "cleanup",
+      "AST_equal": true
+    },
+    {
+      "name": "cleanup_owned",
+      "original_role": "cleanup",
+      "AST_equal": true
+    },
+    {
+      "name": "enable_subreaper",
+      "original_role": "supervisor",
+      "AST_equal": true
+    }
+  ],
+  "independently_verified_original_constant_Assign_names": [
+    "C",
+    "F6",
+    "HELPER",
+    "AUDITOR",
+    "COLLECTOR",
+    "CIDS",
+    "MAX_CATALOG_FILE",
+    "MAX_CATALOG_TOTAL",
+    "MAX_METADATA",
+    "MAX_RECORDS",
+    "MAX_DEADLINE",
+    "STAMP_KEYS"
+  ],
+  "complete_parent_source_read": true,
+  "complete_independent_ticket04_source_read": true,
+  "concrete_blockers_found": [],
+  "source_preservation_and_prospective_staging_reviewed": true,
+  "actual_envelope_invocation_reviewed": false,
+  "actual_input_argv_outer_capture_review_required": [
+    "exact original unsealed request bytes/SHA and eight fields",
+    "exact original parent-review digest and real parent-approved snapshot observations",
+    "a2 author path/hash",
+    "exact original sealed M2 source/raw/four campaign routes",
+    "fresh disjoint writer/log/outer-private-capture paths",
+    "exact canonical native Python executable/hash and original PyYAML availability",
+    "exact canonical GNU coreutils timeout executable/hash/family",
+    "actual confinement/process supervision and reviewed outer administrative allowance"
+  ],
+  "no_new_execution_or_scientific_evidence": true,
+  "review_markdown_pin": {
+    "path": "/private/tmp/lanl17-original-index-writer-privacy-envelope-parent-review-20261007.md",
+    "bytes": 1964,
+    "sha256": "7c9228ca465a2aadb597a253fe215f73cf0228d432b3df5ecce9857d79b125ab"
+  },
+  "not_performed": {
+    "target_import_or_compilation": 0,
+    "copied_callable_execution": 0,
+    "main_execution": 0,
+    "test_body_execution": 0,
+    "synthetic_repeat": 0,
+    "actual_request_catalog_index_or_input_construction": 0,
+    "SWDB_Store_or_public_validation": 0,
+    "Git_or_worktree_mutation": 0,
+    "SSH_or_remote_staging": 0,
+    "native_compiler_provider_scientific_execution": 0,
+    "actual14_reader_execution": 0
+  },
+  "identity_sha256": "4a1023632f0db9da20860d1ade13efac5503bea6eabd0854a1432208cfb4a443"
+}

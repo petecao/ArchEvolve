@@ -1,0 +1,255 @@
+{
+  "observed_utc": "2026-10-16T21:05:19.322630+00:00",
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v7",
+  "actual": {
+    "lane.json": {
+      "socket_lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "command": [
+          "timeout",
+          "--signal=TERM",
+          "--kill-after=60",
+          "300",
+          "bash",
+          "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v7/run.sh"
+        ],
+        "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+        "ended_utc": "2026-10-16T21:04:28Z",
+        "exit_code": 1,
+        "host": "mbit10",
+        "job": "probata-resume-20261016-2baf722f-t28-full-tu-v7",
+        "lease_generation": 637,
+        "lease_name": "mbit10-evaluation-node1",
+        "load1_at_start": 0.16,
+        "load1_max": 32,
+        "node": 1,
+        "numa_memory_policy": "bind:1",
+        "numactl": "--cpunodebind=1 --membind=1",
+        "preregistration_sha256": null,
+        "started_utc": "2026-10-16T21:03:53Z"
+      }
+    },
+    "outer-resources.json": {
+      "exit_code": 1,
+      "peak_rss_bytes": 323940352,
+      "out_of_memory": false,
+      "timed_out": false,
+      "wall_seconds": 34.9156660316512,
+      "cpu_seconds": 41.087593
+    },
+    "resources.json": {
+      "cpu_seconds": 32.725359,
+      "exit_code": 1,
+      "out_of_memory": false,
+      "peak_rss_bytes": 270462976,
+      "timed_out": false,
+      "wall_seconds": 32.88374383747578
+    },
+    "root-guard-adaptation.json": {
+      "rss_cap_bytes": 4294967296,
+      "timeout_seconds": 180,
+      "run_environment_unset": [
+        "LIBRARY_PATH"
+      ],
+      "files": {
+        "execute.py": {
+          "original_sha256": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612",
+          "actual_sha256": "8442533f911e2ba7f10757a5b16ba451d4ece7d9d5dc292ce5b9d8c29eabdcbf"
+        },
+        "watch.py": {
+          "original_sha256": "4485ae66aa50c65f2b579f84836576aa67b54431978da71cac6eea6a68ecd07c",
+          "actual_sha256": "49be8a36d6e04b50e1ab599dad8b00f78a1c639132c3079c523c2c0c9177c5f0"
+        },
+        "run.sh": {
+          "original_sha256": "650f815cb7562767829d94e8868da56990c98301376b999af6c659fbe499fcf3",
+          "actual_sha256": "d8de489b4f59620faf8eeec7b57cc7fed485bda5c671c748b2f85e462daa9df0"
+        }
+      },
+      "scope": "Exact resource-literal substitution only; reviewed original wrappers and launch remain retained"
+    },
+    "launch.json": {
+      "created_utc": "2026-10-16T21:03:53.296058+00:00",
+      "source": "/data1/yanruj/probata-resume-20261016-2baf722f",
+      "source_commit": "2baf722fdaa6cba24b859eae3172a6f597417d72",
+      "node": 1,
+      "command": [
+        "/data1/yanruj/venvs/swdb-test/bin/python",
+        "-I",
+        "-B",
+        "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v7/control/linux_compiler_capture_v7.py",
+        "/data1/yanruj/probata-resume-20261016-2baf722f/swdb-project",
+        "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v7",
+        "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v7/control/linux_compiler_capture_policy_v7.json",
+        "c62c9f6c2e69cc6da79e6a9068eff271a0213fbe3257cf75acc7524d7f877117"
+      ],
+      "timeout_seconds": 180,
+      "rss_cap_bytes": 4294967296,
+      "workers": 1,
+      "rss_scope": "outer watchdog covers worker bootstrap, compiler provenance probes, inner monitor and proof process tree; trusted outer monitor excluded",
+      "planned_raw_budget_bytes": 268435456,
+      "raw_budget_enforcement": "coordinator monitors; not a filesystem quota",
+      "readers": [
+        "root",
+        "ticket28"
+      ],
+      "log_name": "acceptance.log",
+      "reviewed_wrapper_reuse": {
+        "execute.py": "8442533f911e2ba7f10757a5b16ba451d4ece7d9d5dc292ce5b9d8c29eabdcbf",
+        "watch.py": "49be8a36d6e04b50e1ab599dad8b00f78a1c639132c3079c523c2c0c9177c5f0"
+      },
+      "reviewed_wrapper_originals": {
+        "execute.py": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612",
+        "watch.py": "4485ae66aa50c65f2b579f84836576aa67b54431978da71cac6eea6a68ecd07c"
+      }
+    },
+    "acceptance_tail": ""
+  },
+  "pins": [
+    {
+      "relative": "lane.json",
+      "bytes": 815,
+      "sha256": "fa858c8ff7771f9acb11410454ae6f0b60a2d32718edae1ee7ca0d72855e61ac"
+    },
+    {
+      "relative": "outer-resources.json",
+      "bytes": 164,
+      "sha256": "d2ec3c7d5cf643bed1cdf61f4f8f90a68b84c5a747ab5fe556327f0b8fafdaf1"
+    },
+    {
+      "relative": "resources.json",
+      "bytes": 165,
+      "sha256": "273a504344cb089aee91b444dc2c7ec44d33b4a77437fdb9ccd855a04a4fca91"
+    },
+    {
+      "relative": "root-guard-adaptation.json",
+      "bytes": 864,
+      "sha256": "ce1f3dba636cbaa53d476f8b80ec122f3fbc7fe3abc25e341552eb300ab7178b"
+    },
+    {
+      "relative": "launch.json",
+      "bytes": 1591,
+      "sha256": "3d01350460b14c0557f35daf63723543f91b87c992b28974e3b6cc482ca8bd00"
+    },
+    {
+      "relative": "acceptance.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "top_names": [
+    "acceptance.log",
+    "cache",
+    "capture-linux-role.json",
+    "capture-python-entry-role.json",
+    "capture-runtime-after.json",
+    "capture-runtime-before.json",
+    "component",
+    "control",
+    "dispatch-argv.json",
+    "dispatch-environment.json",
+    "dispatch.log",
+    "execute.py",
+    "lane.json",
+    "launch.json",
+    "outer-resources.json",
+    "preflight.json",
+    "resources.json",
+    "root-guard-adaptation.json",
+    "run.sh",
+    "runtime-provenance.json",
+    "source-after.json",
+    "source-manifest.json",
+    "tmp",
+    "watch.py",
+    "worker.log"
+  ],
+  "created": "2026-10-16 ET",
+  "classification": "CALLER_AST_PHASE_FAILURE_AT_EXACT_128MIB_FILE_LIMIT",
+  "source_commit": "2baf722fdaa6cba24b859eae3172a6f597417d72",
+  "component_result": {
+    "accepted": false,
+    "after_input_errors": [],
+    "bytecode_cache_present": false,
+    "current_0_2": false,
+    "error": {
+      "message": "capture phase failed: caller-ast",
+      "type": "ValueError"
+    },
+    "full_ticket28": false,
+    "native_or_solver_executed": false,
+    "public_proof": false,
+    "scope": "Actual Clang source/ABI preparation only; source/CPU/model/public admission remains required",
+    "source_call_count": 0,
+    "source_names": [],
+    "wall_seconds": 32.64920057822019
+  },
+  "component_files": [
+    {
+      "relative": "component/caller-preprocess.stderr",
+      "bytes": 0,
+      "mode": "0o100664"
+    },
+    {
+      "relative": "component/caller-preprocess.stdout",
+      "bytes": 0,
+      "mode": "0o100664"
+    },
+    {
+      "relative": "component/caller.d",
+      "bytes": 75695,
+      "mode": "0o100664"
+    },
+    {
+      "relative": "component/inputs-before.json",
+      "bytes": 9475,
+      "mode": "0o100664",
+      "sha256": "11bdc14e405f29dc40873c3ea4b021b8915098a37810d0a2681645a30b9b031e"
+    },
+    {
+      "relative": "component/used-inputs.json",
+      "bytes": 190049,
+      "mode": "0o100664"
+    },
+    {
+      "relative": "component/caller-ast.stderr",
+      "bytes": 8906,
+      "mode": "0o100664"
+    },
+    {
+      "relative": "component/artifact-manifest.json",
+      "bytes": 2637,
+      "mode": "0o100664",
+      "sha256": "63cc62fca8b7530bd2dca43aec90a40eedbc5f9f19e0594f4cb2526e48113ace"
+    },
+    {
+      "relative": "component/caller.ast.json",
+      "bytes": 134217728,
+      "mode": "0o100664"
+    },
+    {
+      "relative": "component/result.json",
+      "bytes": 486,
+      "mode": "0o100664",
+      "sha256": "fc8be64ff2ce7a7050ea2c163b6cbf2b87c59998b7aa1919119eadfad66a8eb5"
+    },
+    {
+      "relative": "component/caller.ii",
+      "bytes": 3633023,
+      "mode": "0o100664"
+    },
+    {
+      "relative": "component/commands.json",
+      "bytes": 3089,
+      "mode": "0o100664",
+      "sha256": "773df5490408555a548b3f290ad76d81f1ec9501d184b4298d1c30fc1f326a60"
+    }
+  ],
+  "compiler_stderr_pin": {
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v7/component/caller-ast.stderr",
+    "bytes": 8906,
+    "sha256": "2be2981bc7c471fb4091aec90659df4a9f47cd7b80cd389cb2303c1a241c97eb"
+  },
+  "scope": "No accepted full AST/source-call/public proof. Truncated128MiB AST remains remote; a bounded streaming/compressed same-TU successor requires new review/admission.",
+  "raw_payload_transferred": false
+}

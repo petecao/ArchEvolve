@@ -1,0 +1,19 @@
+{
+  "changes": [
+    {
+      "new": "probata-resume-20261016-t28-whole-native86-v2",
+      "old": "probata-resume-20261016-t28-whole-native86-v1"
+    },
+    {
+      "new": "    def control_check():\n        if policy_path.is_symlink() or not stat.S_ISREG(policy_path.lstat().st_mode):\n            raise ValueError(\"physical regular policy input required\")\n",
+      "old": "    def control_check():\n"
+    }
+  ],
+  "date": "2026-10-16 ET",
+  "new_sha256": "a8c61c8ff71f1d5e613c7931935474f082ceb649ba6d85cbfd036c7b9f38c44d",
+  "origin": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/linux_native86_entry_v1.py",
+    "sha256": "137429bc59d343e7902f951445e61b1eec4d9f7d70c506d3e26315929dedd2f9"
+  },
+  "scope": "Unexecuted V1 unchanged; fresh namespace plus physical regular policy check only"
+}

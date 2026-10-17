@@ -1,0 +1,111 @@
+Target: 64-bit little-endian aarch64-unknown-macos with esbmclibc
+Parsing accept.cpp
+In file included from accept.cpp:3:
+In file included from ./stub/verifier_prelude.hpp:5:
+/Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/cstdlib:93:5: error: <cstdlib> tried including <stdlib.h> but didn't find libc++'s <stdlib.h> header.           This usually means that your header search paths are not configured properly.           The header search paths should contain the C++ Standard Library headers before           any C Standard Library, and you are probably using compiler flags that make that           not be the case.
+   93 | #   error <cstdlib> tried including <stdlib.h> but didn't find libc++'s <stdlib.h> header. \
+      |     ^
+In file included from accept.cpp:4:
+In file included from ../../../../library/dx100/strict/MAA_functional.hpp:9:
+In file included from /Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/algorithm:1856:
+In file included from /Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/__algorithm/find.h:35:
+In file included from /Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/cwchar:116:
+In file included from /Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/cwctype:56:
+/Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/cctype:45:5: error: <cctype> tried including <ctype.h> but didn't find libc++'s <ctype.h> header.           This usually means that your header search paths are not configured properly.            The header search paths should contain the C++ Standard Library headers before           any C Standard Library.
+   45 | #   error <cctype> tried including <ctype.h> but didn't find libc++'s <ctype.h> header. \
+      |     ^
+In file included from accept.cpp:4:
+In file included from ../../../../library/dx100/strict/MAA_functional.hpp:9:
+In file included from /Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/algorithm:1856:
+In file included from /Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/__algorithm/find.h:35:
+/Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/cwchar:121:5: error: <cwchar> tried including <wchar.h> but didn't find libc++'s <wchar.h> header.           This usually means that your header search paths are not configured properly.           The header search paths should contain the C++ Standard Library headers before           any C Standard Library, and you are probably using compiler flags that make that           not be the case.
+  121 | #   error <cwchar> tried including <wchar.h> but didn't find libc++'s <wchar.h> header. \
+      |     ^
+In file included from accept.cpp:4:
+In file included from ../../../../library/dx100/strict/MAA_functional.hpp:9:
+In file included from /Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/algorithm:1865:
+In file included from /Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/__algorithm/inplace_merge.h:27:
+In file included from /Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/__memory/unique_ptr.h:20:
+In file included from /Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/__functional/hash.h:29:
+/Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/cstring:69:5: error: <cstring> tried including <string.h> but didn't find libc++'s <string.h> header.           This usually means that your header search paths are not configured properly.           The header search paths should contain the C++ Standard Library headers before           any C Standard Library, and you are probably using compiler flags that make that           not be the case.
+   69 | #   error <cstring> tried including <string.h> but didn't find libc++'s <string.h> header. \
+      |     ^
+In file included from accept.cpp:4:
+In file included from ../../../../library/dx100/strict/MAA_functional.hpp:9:
+In file included from /Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/algorithm:2062:
+In file included from /Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/iterator:693:
+In file included from /Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/__iterator/istreambuf_iterator.h:19:
+In file included from /Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/__string/char_traits.h:29:
+/Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/cstdio:107:5: error: <cstdio> tried including <stdio.h> but didn't find libc++'s <stdio.h> header.           This usually means that your header search paths are not configured properly.           The header search paths should contain the C++ Standard Library headers before           any C Standard Library, and you are probably using compiler flags that make that           not be the case.
+  107 | #   error <cstdio> tried including <stdio.h> but didn't find libc++'s <stdio.h> header. \
+      |     ^
+/Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/cstdio:120:9: error: target of using declaration conflicts with declaration already in scope
+  120 | using ::FILE _LIBCPP_USING_IF_EXISTS;
+      |         ^
+/esbmc-vfs/libc/headers/stdio.h:26:3: note: target of using declaration
+   26 | } FILE;
+      |   ^
+/Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/cwchar:137:1: note: conflicting declaration
+  137 | using ::FILE _LIBCPP_USING_IF_EXISTS;
+      | ^
+In file included from accept.cpp:4:
+In file included from ../../../../library/dx100/strict/MAA_functional.hpp:17:
+In file included from /Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/vector:363:
+In file included from /Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/locale:197:
+In file included from /Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/__locale:17:
+In file included from /Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/__locale_dir/locale_base_api.h:110:
+In file included from /Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/__locale_dir/support/apple.h:21:
+/Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/__locale_dir/support/bsd_like.h:71:12: error: no member named 'strtof_l' in the global namespace
+   71 |   return ::strtof_l(__nptr, __endptr, __loc);
+      |            ^~~~~~~~
+/Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/__locale_dir/support/bsd_like.h:75:12: error: no member named 'strtod_l' in the global namespace
+   75 |   return ::strtod_l(__nptr, __endptr, __loc);
+      |            ^~~~~~~~
+/Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/__locale_dir/support/bsd_like.h:79:12: error: no member named 'strtold_l' in the global namespace
+   79 |   return ::strtold_l(__nptr, __endptr, __loc);
+      |            ^~~~~~~~~
+/Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/__locale_dir/support/bsd_like.h:197:12: error: no member named 'snprintf_l' in the global namespace; did you mean 'snprintf'?
+  197 |   return ::snprintf_l(__s, __n, __loc, __format, std::forward<_Args>(__args)...);
+      |            ^~~~~~~~~~
+/esbmc-vfs/libc/headers/stdio.h:50:5: note: 'snprintf' declared here
+   50 | int snprintf(
+      |     ^
+In file included from accept.cpp:4:
+In file included from ../../../../library/dx100/strict/MAA_functional.hpp:17:
+In file included from /Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/vector:363:
+In file included from /Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/locale:197:
+In file included from /Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/__locale:17:
+In file included from /Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/__locale_dir/locale_base_api.h:110:
+In file included from /Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/__locale_dir/support/apple.h:21:
+/Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/__locale_dir/support/bsd_like.h:203:12: error: no member named 'asprintf_l' in the global namespace; did you mean 'isprint_l'?
+  203 |   return ::asprintf_l(__s, __loc, __format, std::forward<_Args>(__args)...); // non-standard
+      |            ^~~~~~~~~~
+/Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/xlocale/_ctype.h:228:9: note: 'isprint_l' declared here
+  228 | int     isprint_l(int, locale_t);
+      |         ^
+In file included from accept.cpp:4:
+../../../../library/dx100/strict/MAA_functional.hpp:46:82: error: reference to unresolved using declaration
+   46 |   std::fprintf(stderr,"SWDB_STRICT_ASSERT:%s\n",name); std::fflush(stderr); std::_Exit(86); }
+      |                                                                                  ^
+/Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/cstdlib:129:1: note: using declaration annotated with 'using_if_exists' here
+  129 | using ::_Exit _LIBCPP_USING_IF_EXISTS;
+      | ^
+In file included from accept.cpp:4:
+../../../../library/dx100/strict/MAA_functional.hpp:46:82: error: reference to '_Exit' is ambiguous
+   46 |   std::fprintf(stderr,"SWDB_STRICT_ASSERT:%s\n",name); std::fflush(stderr); std::_Exit(86); }
+      |                                                                                  ^
+/Library/Developer/CommandLineTools/SDKs/MacOSX27.sdk/usr/include/c++/v1/cstdlib:129:9: note: candidate found by name lookup is 'std::__1::_Exit'
+  129 | using ::_Exit _LIBCPP_USING_IF_EXISTS;
+      |         ^
+./stub/verifier_prelude.hpp:7:29: note: candidate found by name lookup is 'std::_Exit'
+    7 | namespace std { inline void _Exit(int) { assert(0 && "strict-layer check failed"); abort(); } }
+      |                             ^
+In file included from accept.cpp:4:
+../../../../library/dx100/strict/MAA_functional.hpp:46:77: warning: expression result unused [-Wunused-value]
+   46 |   std::fprintf(stderr,"SWDB_STRICT_ASSERT:%s\n",name); std::fflush(stderr); std::_Exit(86); }
+      |                                                                             ^          ~~
+ERROR: PARSING ERROR
+ESBMC version 8.5.0 64-bit aarch64 macos
+real 0.56
+user 0.31
+sys 0.07

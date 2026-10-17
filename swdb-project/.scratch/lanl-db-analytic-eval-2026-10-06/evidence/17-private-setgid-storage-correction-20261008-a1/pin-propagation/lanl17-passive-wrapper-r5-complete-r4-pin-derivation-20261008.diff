@@ -1,0 +1,20 @@
+--- /private/tmp/lanl17_detach_passive_observer_administration_20261008_a1_r4.py
++++ /private/tmp/lanl17_detach_passive_observer_administration_20261008_a1_r5.py
+@@ -7,7 +7,7 @@
+ E = BASE/'ArchEvolve-lanl-generality-final-export-20261007-a1'
+ R = BASE/'ArchEvolve-lanl-generality-final-20261007-a1'
+ C = BASE/'ArchEvolve-lanl-cpu-model-validation-20261006-a1'
+-OBSERVER_SHA = '50ad9bf511f90429a040bf5c25cc9a4bd15b12cb28419ad414d586269e5cdc99'
++OBSERVER_SHA = '488fb42df44d338204b5cff58b10e7f0ff9c7feaee6490b33ba94201ba4f7665'
+ REVIEW = BASE/'lanl-account-pam-service-identification-20261008-a1/parent-review.json'
+ REVIEW_SHA = 'fcf92eee1c4b8bdfaed979dc8bedab004c6c4b7e2b1410c7614bc92d60349f4a'
+ NATIVE = {
+@@ -115,7 +115,7 @@
+  need(own.is_relative_to(BASE) and observer.is_relative_to(BASE)
+       and own!=observer and not any(p.is_relative_to(q) for p in (own,observer) for q in (PRIMARY,E,R,C)),'private_sources_outside_projects')
+  own_raw,own_pin=file_bytes(own,256*1024,UID,own_sha)
+- unused,observer_pin=file_bytes(observer,58755,UID,OBSERVER_SHA,58755)
++ unused,observer_pin=file_bytes(observer,58750,UID,OBSERVER_SHA,58750)
+  unused,review_pin=file_bytes(REVIEW,256*1024,UID,REVIEW_SHA,3258)
+  native={}
+  for path,(size,digest) in NATIVE.items():

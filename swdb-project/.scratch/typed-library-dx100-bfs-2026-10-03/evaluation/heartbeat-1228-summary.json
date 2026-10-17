@@ -1,0 +1,141 @@
+{
+  "format": "swdb.heartbeat-progress.v1",
+  "observed_et": "2026-10-03 12:30 ET",
+  "observed_utc": "2026-10-03T16:30:20.065898+00:00",
+  "source_commit": "4c9bb01c190c20f3aa28ecc878cfc4d12ade6253",
+  "branch": "yanrujhou_main",
+  "drivers": {
+    "prepare": {
+      "state": "complete",
+      "started": "2026-10-03T16:20:12.366728+00:00",
+      "finished": "2026-10-03T16:22:57.301253+00:00",
+      "runtime_commit": "4c9bb01c190c20f3aa28ecc878cfc4d12ade6253",
+      "lane": "mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 442)",
+      "progress": {
+        "stage": "compile-candidate.diagnostic",
+        "command": "dx100-compile",
+        "started": "2026-10-03T16:22:23.106947+00:00",
+        "state": "complete",
+        "request_id": "typed-library-bfs-gem5-20261003-a2.candidate.diagnostic.build",
+        "timeout_seconds": 660,
+        "lane": "mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 442)",
+        "finished": "2026-10-03T16:22:57.264800+00:00",
+        "record": {
+          "id": "typed-library-bfs-gem5-20261003-a2.candidate.diagnostic.build",
+          "sha256": "4566df93204f3e6b674c590514e3acc6a71b3bc8ad2238a510c3118c76e87563"
+        },
+        "outcome": {
+          "state": "complete",
+          "stage": "candidate_build",
+          "reason": "Identified candidate compiled; no simulated correctness or timing inferred."
+        }
+      }
+    },
+    "companion": {
+      "state": "running",
+      "started": "2026-10-03T16:24:56.828856+00:00",
+      "runtime_commit": "4c9bb01c190c20f3aa28ecc878cfc4d12ade6253",
+      "lane": "mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 443)",
+      "progress": {
+        "stage": "companion-timed",
+        "command": "dx100-execute",
+        "started": "2026-10-03T16:25:06.651531+00:00",
+        "state": "running",
+        "request_id": "typed-library-bfs-gem5-20261003-a2.companion.timed.evaluation",
+        "timeout_seconds": 3660,
+        "lane": "mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 443)"
+      }
+    }
+  },
+  "leases": {
+    "mbit10-evaluation-node0": {
+      "kernel_held": true,
+      "metadata_state": "held",
+      "generation": 443
+    },
+    "mbit10-evaluation-node1": {
+      "kernel_held": false,
+      "metadata_state": "released",
+      "generation": 506
+    },
+    "mbit10-evaluation": {
+      "kernel_held": false,
+      "metadata_state": "released",
+      "generation": 77
+    }
+  },
+  "actual_evaluations": {
+    "timed": {
+      "outcome": {
+        "state": "running",
+        "stage": "simulation",
+        "reason": null
+      },
+      "correctness": {
+        "state": "unverified",
+        "checks": []
+      }
+    }
+  },
+  "load1": 2.00244140625,
+  "disk_free_bytes": {
+    "/data1": 46051672064,
+    "/data": 78837571584
+  },
+  "owned_processes": [
+    "1590331 1590329     323 S     2092 timeout --signal=TERM --kill-after=90s 7800s bash /data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh 0 typed-library-bfs-gem5-20261003-a2-companion --record /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.dispatch-companion/lane.json --no-align --load1-max 8 --lease-timeout-s 30 -- python3 tools/typed_library_gem5_driver.py --stage companion --id typed-library-bfs-gem5-20261003-a2 --runs-dir /data1/yanruj/EvolveSWDB_runs --memory-gib 36 --storage-gib 8 --authoring-session codex-typed-library-dx100-bfs-20261003 --approval-reference typed-library-related-approval-20261003",
+    "1590332 1590331     323 S     3840 bash /data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh 0 typed-library-bfs-gem5-20261003-a2-companion --record /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.dispatch-companion/lane.json --no-align --max-cell-age-s 900 --load1-max 8 --lease-timeout-s 30 -- python3 tools/typed_library_gem5_driver.py --stage companion --id typed-library-bfs-gem5-20261003-a2 --runs-dir /data1/yanruj/EvolveSWDB_runs --memory-gib 36 --storage-gib 8 --authoring-session codex-typed-library-dx100-bfs-20261003 --approval-reference typed-library-related-approval-20261003",
+    "1590398 1590332     323 S    206672 python3 tools/typed_library_gem5_driver.py --stage companion --id typed-library-bfs-gem5-20261003-a2 --runs-dir /data1/yanruj/EvolveSWDB_runs --memory-gib 36 --storage-gib 8 --authoring-session codex-typed-library-dx100-bfs-20261003 --approval-reference typed-library-related-approval-20261003"
+  ],
+  "ticket_status_counts": {
+    "resolved": 32,
+    "ready_for_human": 3,
+    "claimed": 1,
+    "wontfix": 1
+  },
+  "test_review": {
+    "cases": 3756,
+    "passed": 3720,
+    "skipped": 36,
+    "unresolved": 0,
+    "receipt_hashes_rechecked": 29,
+    "standards": "passed",
+    "spec": "passed"
+  },
+  "worker_health": "cpp running; both reviewers completed normally; no dead worker",
+  "publication": "Local checkpoint deferred until measurements stop; frozen source4c9.",
+  "evidence_origin": "Live root SSH tool readback and local ledger hash verification; running stage is unsealed, raw was not copied.",
+  "later_phase_refresh": {
+    "observed_utc": "2026-10-03T16:31:40.897701+00:00",
+    "phase": "diagnostic checkpoint",
+    "owned_gem5_pid": 1591312,
+    "gem5_state": "Rs",
+    "rss_kib": 175420,
+    "primary": {
+      "worker_reported_evaluation_sha256": "75f17237a61bb17d1a6e4e0a546e56a90228ae648f8f6c225ff03a9985f096ae",
+      "worker_reported_outcome": "complete/passed",
+      "worker_reported_frontiers": [
+        1,
+        4097,
+        4113
+      ],
+      "worker_reported_read_only_mix": {
+        "stream_load": 2,
+        "indirect_load": 34,
+        "range_loop": 12,
+        "alu": 0,
+        "indirect_store": 0
+      },
+      "worker_reported_full_tiles": 8,
+      "worker_reported_tail_tiles": 2,
+      "worker_reported_l3": "inconclusive, expected uninstrumented",
+      "root_resource_sample": {
+        "simulator_pid": 1590864,
+        "last_sample_rss_kib": 33739208,
+        "last_sample_elapsed_s": 191.22599524632096,
+        "last_simulator_phase": "statistics_dump_end"
+      },
+      "independent_raw_public_validation": "Deferred until full measurements stop; worker strict acceptance required before timing."
+    }
+  }
+}

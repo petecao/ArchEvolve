@@ -1,0 +1,208 @@
+{
+ "run": "counted-28 (method25 run 1)",
+ "host": "mac",
+ "raw": "/tmp/claude/probata-runs/t07f/counted-28/",
+ "verdict": {
+  "pass": false,
+  "reason": "no qualifying final replay within the budget"
+ },
+ "minutes": 50.5,
+ "provider_calls": 3,
+ "usage": {
+  "input_tokens": 39702659,
+  "cached_input_tokens": 39113088,
+  "cache_write_input_tokens": 0,
+  "output_tokens": 67289,
+  "reasoning_output_tokens": 19790
+ },
+ "excluded_lock_wait_s": 0.0,
+ "pin": {
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh"
+ },
+ "codex_version": "codex-cli 0.153.0",
+ "git_head": "c2257e562f0e2cd05431a6df379b00caf196d00b",
+ "inputs": {
+  "bfs_unit.h": "1bcbf4dac683d6a46269fcd5f896fefc2571adc49d059b46f93fb25eb0f7b235",
+  "dxc_summaries.h": "d708c0ef974e5ede1aaadd2b5e66dd785affa5e1dc6ef37419bf9e72517ae0d2",
+  "gapbs_models.h": "ab1b7c8e4a5f0a447cec6fdf180326ad24b14bd0dffd03f2a42e370cb6d0995d",
+  "tdstep_standin.c": "0871f2a820f10d675bd5a78c7b0b13e951b985c40bd0f76d2097ff428bc80760"
+ },
+ "scripts": {
+  "m24.py": "afaed2d9c1a54c588d0b20c7b826f1ffb83a2b6de7b7d702b1590284c34250bd",
+  "m24_tool.py": "73def84da506a6cbabe4869569ebb2bb720ee4036bf6e97fd7346c2dc2872479",
+  "hints.py": "bd5b089b72de57f237f63513ce1c58ef0d1520516f9dd7adc3d9229ebe3c67aa",
+  "loop.py": "0b8b8d81360733870f91746691b8bbf19d9ada8744ce173df8f909e884afc279",
+  "wp_run.sh": "c0dda0c5d16c57c6db7f8c79258e66513242d2a34c2b6d15badf84bc9277a682",
+  "goal_print.py": "565fea12e6e3382ff06ce708799cd0abac02c52f69a9d219ef511d92dae2991f",
+  "falsify/falsify.py": "4203e3faacd1981360e598e56e6f876e936759df09c216c8d96253072aba2bf4",
+  "falsify/acsl_eval.py": "9e2ca0114c1aaa8179d713b07924f70be201ad73ba822bfc077e288b9db2292b",
+  "falsify/build.py": "42803e5691b76e1d7f2e519f5a55a5e7be7a74eb668ac531a7ab5e3df3d9a156",
+  "falsify/harness.c": "31044c2052b4cb92192fc98e17d5fda44ec6b9fceb1e44109686c048f9097aec",
+  "falsify/instances.py": "beee23887d9e7137223ae2d500022500a93c05546cb8dab0b6c6085d6b4288e3"
+ },
+ "baseline": {
+  "runs": [
+   {
+    "timeout_s": 3,
+    "wall_s": 302.21,
+    "open": 171,
+    "n_goals": 314
+   }
+  ],
+  "open": 171,
+  "minutes": 5.06
+ },
+ "rounds": [
+  {
+   "round": 1,
+   "codex": {
+    "exit": 0,
+    "wall_s": 2279.7,
+    "usage": {
+     "input_tokens": 34472287,
+     "cached_input_tokens": 34168576,
+     "cache_write_input_tokens": 0,
+     "output_tokens": 46852,
+     "reasoning_output_tokens": 15261
+    },
+    "error": null,
+    "killed_at_deadline": false,
+    "thread": "01a14624-8269-79b3-9237-9a49d50493a6"
+   },
+   "tool_calls": 63,
+   "tool_results": [
+    "falsified",
+    "falsified",
+    "check failed",
+    "check failed",
+    "check passed",
+    "not all proven",
+    "printed 1 goal block(s)",
+    "printed 1 goal block(s)",
+    "printed 1 goal block(s)",
+    "printed 1 goal block(s)",
+    "printed 1 goal block(s)",
+    "printed 1 goal block(s)",
+    "print failed",
+    "printed 2 goal block(s)",
+    "falsified",
+    "falsified",
+    "falsified",
+    "falsified",
+    "falsified",
+    "check passed",
+    "not all proven",
+    "falsified",
+    "check passed",
+    "not all proven",
+    "check passed",
+    "falsified",
+    "not all proven",
+    "check failed",
+    "check failed",
+    "check failed",
+    "check failed",
+    "check failed",
+    "check failed",
+    "check failed",
+    "check failed",
+    "check failed",
+    "check failed",
+    "check failed",
+    "check failed",
+    "check failed",
+    "check failed",
+    "check failed",
+    "check failed",
+    "check failed",
+    "check failed",
+    "check failed",
+    "check failed",
+    "check failed",
+    "check failed",
+    "check failed",
+    "check failed",
+    "check failed",
+    "check failed",
+    "check failed",
+    "check failed",
+    "check failed",
+    "check failed",
+    "check failed",
+    "check failed",
+    "check failed",
+    "falsified",
+    "check passed",
+    "not all proven"
+   ],
+   "minutes": 43.05,
+   "best_open": 81
+  },
+  {
+   "round": 2,
+   "codex": {
+    "exit": 0,
+    "wall_s": 274.2,
+    "usage": {
+     "input_tokens": 4809224,
+     "cached_input_tokens": 4604032,
+     "cache_write_input_tokens": 0,
+     "output_tokens": 12734,
+     "reasoning_output_tokens": 3786
+    },
+    "error": null,
+    "killed_at_deadline": false,
+    "thread": "01a14624-8269-79b3-9237-9a49d50493a6"
+   },
+   "tool_calls": 1,
+   "tool_results": [
+    "printed 2 goal block(s)"
+   ],
+   "minutes": 47.62,
+   "best_open": 81
+  },
+  {
+   "round": 3,
+   "codex": {
+    "exit": 0,
+    "wall_s": 172.5,
+    "usage": {
+     "input_tokens": 421148,
+     "cached_input_tokens": 340480,
+     "cache_write_input_tokens": 0,
+     "output_tokens": 7703,
+     "reasoning_output_tokens": 743
+    },
+    "error": null,
+    "killed_at_deadline": false,
+    "thread": "01a14624-8269-79b3-9237-9a49d50493a6"
+   },
+   "tool_calls": 2,
+   "tool_results": [
+    "print failed",
+    "printed 1 goal block(s)"
+   ],
+   "minutes": 50.5,
+   "best_open": 81
+  }
+ ],
+ "best": {
+  "n_open": 81,
+  "n_goals": 658,
+  "n_hints": 94,
+  "best_json_sha256": "a9ef796b39d465760a383c36ffa5d8d8dcfcfa9e6171a2cf364d548e177fe090"
+ },
+ "tool_calls": {
+  "check_failed": 35,
+  "check_passed": 5,
+  "falsify": 10,
+  "prove": 5,
+  "show_goal": 11
+ },
+ "check_failure_causes": {
+  "wp_strategy_undefined_at_goal_generation": 24,
+  "parse_errors": 10,
+  "vocabulary": 1
+ }
+}

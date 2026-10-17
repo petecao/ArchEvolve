@@ -1,0 +1,95 @@
+{
+  "date": "2026-10-16 ET",
+  "entry": {
+    "bytes": 12657,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/native_entry_v2.py",
+    "sha256": "fab5fab5fe7e3149c3c6c961c1bd97ac8e83a54cd7f4c89b133eda4ca2b11a29"
+  },
+  "entry_argv": [
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/private/tmp/probata-resume-20261016-t28-memory53-native-v2/entry-cache",
+    "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/native_entry_v2.py",
+    "--output",
+    "/private/tmp/probata-resume-20261016-t28-memory53-native-v2/component",
+    "--source-policy",
+    "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/source_policy_v2.json",
+    "--runtime-policy",
+    "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-public-v3-runtime-policy-with-python-packages.json"
+  ],
+  "guard_required": {
+    "cap_enforced_by_root_reviewed_c6_argv_not_environment": true,
+    "guard_source_pins": [
+      {
+        "bytes": 695,
+        "path": "/private/tmp/probata-mac-compiler-worker-b.py",
+        "sha256": "873ac0b65eaa7edd4e0f624a86e68141c0e340f9ab1ca6816a07598538548a0e"
+      },
+      {
+        "bytes": 28501,
+        "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+        "sha256": "c6f0d4b8c60fab912dd768c4c8c7e7737d8feca3a110d0de02dec4d38785db57"
+      },
+      {
+        "bytes": 8284,
+        "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/staged_search.py",
+        "sha256": "125e2562342e6ba684d1189ca29fb48476b73bee30d0fd368f7f7c6b4c6b2419"
+      }
+    ],
+    "independent_guard_cleanup_and_settlement_required": true,
+    "optional_inherited_tag_only": true,
+    "required_actual_marker": "SWDB_VERIFIER_RUN_TOKEN",
+    "rss_cap_bytes": 4294967296,
+    "shared_slot": "fresh compatible root admission required",
+    "whole_tree_seconds": 180,
+    "workers": 1
+  },
+  "header_dependency_timing_tcb": "Dependency files are emitted by original preprocessing; physical dependency hashes are first collected afterward, then checked after capture/compile/run. This does not reconstruct bytes read before the first capture or close concurrent modification-and-restoration/compiler-loader TCB.",
+  "plan": {
+    "bytes": 3676,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/plan_v2.md",
+    "sha256": "86f070fc151e4999e7b58188e730e0daa000ce4057b02e21e60dee9d10036306"
+  },
+  "raw_root": "/private/tmp/probata-resume-20261016-t28-memory53-native-v2",
+  "root_runtime_admission_context": {
+    "bytes": 1870,
+    "path": "/private/tmp/probata-resume-20261016-t28-public-v3-c978393b/root-runtime-and-resource-admission.json",
+    "sha256": "3e0836984209e4c45ed69872a3509746c15d143b1c4f3be35a41ec8f2fb02b69"
+  },
+  "runtime_policy": {
+    "bytes": 1640971,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-public-v3-runtime-policy-with-python-packages.json",
+    "sha256": "4171556ed48f8612eb364a88741831a3bfc9259d34c25750e8717dadeab408a1"
+  },
+  "scope": "Mac private53 preparation controls per language; no public source/value/history/proof/hardware acceptance",
+  "source_author_checks": {
+    "actual_guard_marker_source_checked": true,
+    "child_guard_run_token_preserved": true,
+    "compiler_native_runtime_executed": false,
+    "entry_ast_parsed": true,
+    "pure_make_dependency_parser_checks": 6,
+    "retained_receipt_omits_guard_run_token": true,
+    "source_and_extra_sanitizer_pins_match": true
+  },
+  "source_policy": {
+    "bytes": 7200,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/source_policy_v2.json",
+    "sha256": "a9630edaf8586c22ba4f9896e618eae5548df20c8659d95fc447eb346644080a"
+  },
+  "status": "INERT_NOT_EXECUTED",
+  "supersedes_unexecuted_v1": {
+    "command": {
+      "bytes": 3540,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/native_command_v1.json",
+      "sha256": "fe36abcbbb22b7b15a2f3aa14f6ecde3a7b77e13911379655d387b431cc12a79"
+    },
+    "entry": {
+      "bytes": 12676,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/native_entry_v1.py",
+      "sha256": "c7395c2318f3afa305aa8cde1175ecfbf19efde3c32958511ce68041d072c09f"
+    },
+    "reason": "V1 incorrectly required an unexported watchdog tag and cap variable"
+  }
+}

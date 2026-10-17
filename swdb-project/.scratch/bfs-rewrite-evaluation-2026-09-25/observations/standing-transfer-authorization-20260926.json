@@ -1,0 +1,28 @@
+{
+  "format": "swdb.bfs.standing-transfer-authorization.v1",
+  "recorded_at": "2026-09-26T23:11:10.197983-04:00",
+  "authority": "Direct user message in this task",
+  "scope": {
+    "github": "Private ruchou/EvolveSWDB repository on codex/bfs-* branches",
+    "mbit10": "Git-only code transfers for task builds/tests/evaluations, respecting two-lane leases",
+    "anthropic": "Claude Code for assigned implementation/review/bounded repair",
+    "data": "Task-related code, private project source, source excerpts, patches, profiles, evaluation metadata and research evidence",
+    "duration": "Until task completion or explicit user revocation",
+    "covers": "All pending and future task-related revisions, including26-file runtime, provider-result, native evidence and context-supplemented Claude payload",
+    "repeat_approval": "Not required solely for changed commits, filenames, sizes or task-related branch names"
+  },
+  "unchanged_constraints": [
+    "Existing resource budgets",
+    "Evidence preservation",
+    "Exclude credentials and unrelated data",
+    "No public publication",
+    "No destructive operations"
+  ],
+  "runtime_transfer": {
+    "commit": "eb2f51d0a02b7d3d1ca9cc02b022a18f1181a3e2",
+    "destination": "git@github.com:ruchou/EvolveSWDB.git",
+    "branch": "codex/bfs-recovery-runtime-20260926-a2",
+    "push_exit_code": 0,
+    "state": "pushed"
+  }
+}

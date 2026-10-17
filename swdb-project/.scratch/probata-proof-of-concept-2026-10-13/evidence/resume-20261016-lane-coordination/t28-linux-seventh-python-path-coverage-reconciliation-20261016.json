@@ -1,0 +1,86 @@
+{
+  "actual_source_profile_or_proof_acceptance": false,
+  "actual_sys_path_from_root_observer": [
+    "/usr/lib/python312.zip",
+    "/usr/lib/python3.12",
+    "/usr/lib/python3.12/lib-dynload",
+    "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages",
+    "/usr/local/lib/python3.12/dist-packages",
+    "/usr/lib/python3/dist-packages",
+    "/usr/lib/python3.12/dist-packages"
+  ],
+  "at_utc": "2026-10-16T18:18:08.973942+00:00",
+  "attribution_limit": "ObserverV2 recorded sys.path only after its four selected imports and reports site as frozen. The matching physical site.py explains the path under the explicit pinned interpreter/frozen-code TCB; execution timing and frozen-bytecode/source equivalence were not separately measured or proved.",
+  "counts_boundary": "Seven observed sys.path entries consist of four disjoint complete Python directory surfaces, covered descendants and an explicitly absent ZIP path. Do not infer broad permission for arbitrary additional descendants or mutate the admitted path list.",
+  "covered_descendant_in_original_complete_inventory": true,
+  "created": "2026-10-16 ET",
+  "decision": "PASS physical coverage reconciliation for the seventh observed sys.path entry; no fifth disjoint input tree",
+  "evidence_pins": [
+    {
+      "bytes": 7959,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-linux-seventh-python-path-passive-discovery-20261016.json",
+      "sha256": "c4fbf233038a3365f1f49f57b0ffd0234ea1efbc8ce23b6c5634119f9fbe8403"
+    },
+    {
+      "bytes": 116503,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-linux-runtime-observer-v2-actual-20261016.json",
+      "sha256": "092397608fe3a08c42d85e9c8e121ed139f0d94e345a12ae3aaa57ad6e93a5f0"
+    },
+    {
+      "bytes": 3991172,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-abstract25-linux-canonical-python-inventory.json",
+      "sha256": "4b03a892ea82cd3eb77735661e3c861c36f55629ce9d5b256647810cf3cbf3d7"
+    }
+  ],
+  "explanation": "Pinned Debian/Ubuntu site.py getsitepackages appends prefix/lib/pythonX.Y/dist-packages in its deprecated Debian compatibility branch. addsitepackages processes each existing directory via addsitedir. The observed base_prefix=/usr and version3.12 explain this exact directory without requiring a package-import mutation assumption.",
+  "no_pth_code_or_symlink_in_subtree": true,
+  "path": "/usr/lib/python3.12/dist-packages",
+  "prior_nested_inventory_equals_fresh_physical_subtree": true,
+  "reviewer_native_interpreter_or_version_probe_executed": false,
+  "root_surface": "/usr/lib/python3.12",
+  "source_attribution": [
+    {
+      "begin_line": 222,
+      "end_line": 245,
+      "function": "addsitedir",
+      "sha256": "39941776135d8d9f7e1b7dca511a853ee78407381ec224fc1fa6f927f7a191a5"
+    },
+    {
+      "begin_line": 362,
+      "end_line": 406,
+      "function": "getsitepackages",
+      "sha256": "c84c50ebf799571ee344bf03b9f85fd10fa0a776fd6208f58253ccc46b335992"
+    },
+    {
+      "begin_line": 408,
+      "end_line": 415,
+      "function": "addsitepackages",
+      "sha256": "264c816c2c64544f93dd242996c01dbbec5849347e8ace06973257c620e3df7b"
+    },
+    {
+      "begin_line": 516,
+      "end_line": 568,
+      "function": "venv",
+      "sha256": "6c242ef69602de9393556747034cda5478545775e738b8bdf92f0d432a307c3b"
+    },
+    {
+      "begin_line": 611,
+      "end_line": 638,
+      "function": "main",
+      "sha256": "1ce31eab3d02b18963e7b3cca1a69b3ce669a8cadacb1033d639e8f2d6979d0e"
+    }
+  ],
+  "startup_source_pin": {
+    "bytes": 23903,
+    "path": "/usr/lib/python3.12/site.py",
+    "sha256": "619436355cbe91c3b29681ab486ee63f5f2e0a7d6274dfae747bdb94e60bca55"
+  },
+  "subtree_counts": {
+    "directories": 1,
+    "entries": 2,
+    "files": 1,
+    "symlinks": 0
+  },
+  "subtree_inventory_sha256": "dd912d4724a7087387b2adaf717414a4c959bb5d6cd5898c98188027197c6f57",
+  "subtree_total_bytes": 7
+}

@@ -1,0 +1,306 @@
+{
+  "created": "2026-10-15 ET",
+  "ticket": 25,
+  "status": "claimed",
+  "base": "44d50f7e",
+  "scope": "immediate *v.data() scalar read after one checked growth in closed int owner",
+  "boundary": "All listed controls use stand-in WP or reject before it. Actual safe/current-data and stale-after-current-data controls are written but pending coordinated replay. No generic field/standalone model domain or ticket25 completion.",
+  "reports": [
+    {
+      "path": "/private/tmp/probata-owner-data-red.jsonl",
+      "sha256": "e91ac954a693744cfd0175fe01b000d0fe9a6425e31cbde6fd1264a3e299119d",
+      "calls": [
+        {
+          "test": "tests/test_closed_owner_data.py::test_an_immediate_data_read_carries_the_current_live_owner_domain",
+          "outcome": "failed",
+          "seconds": 2.965472250012681
+        }
+      ],
+      "finish": [
+        {
+          "exitstatus": 1
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/probata-owner-data-green.jsonl",
+      "sha256": "ad5472970f44981471ebc2de9aed2415803ea13acbf3e1e880df2284ced2ef17",
+      "calls": [
+        {
+          "test": "tests/test_closed_owner_data.py::test_an_immediate_data_read_carries_the_current_live_owner_domain",
+          "outcome": "passed",
+          "seconds": 4.886487083043903
+        }
+      ],
+      "finish": [
+        {
+          "exitstatus": 0
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/probata-owner-data-prelaunch.jsonl",
+      "sha256": "b84bec365913b359cfeb41fe1155959fd36b786f3f80a1ec8380a17efb823ab7",
+      "calls": [
+        {
+          "test": "tests/test_closed_owner_data.py::test_an_immediate_data_read_carries_the_current_live_owner_domain",
+          "outcome": "passed",
+          "seconds": 4.950917166017462
+        },
+        {
+          "test": "tests/test_closed_owner_data.py::test_current_owner_data_origin_does_not_admit_unchecked_offsets_or_casts[*(v.data()+n+1)]",
+          "outcome": "passed",
+          "seconds": 2.6168978750356473
+        },
+        {
+          "test": "tests/test_closed_owner_data.py::test_current_owner_data_origin_does_not_admit_unchecked_offsets_or_casts[*((int *)v.data())]",
+          "outcome": "passed",
+          "seconds": 2.5799061249708757
+        },
+        {
+          "test": "tests/test_closed_owner_data.py::test_a_rehashed_data_renderer_cannot_weaken_range_checks_or_change_the_returned_root[live_guard]",
+          "outcome": "passed",
+          "seconds": 3.4686064579873346
+        },
+        {
+          "test": "tests/test_closed_owner_data.py::test_a_rehashed_data_renderer_cannot_weaken_range_checks_or_change_the_returned_root[backing_guard]",
+          "outcome": "passed",
+          "seconds": 3.423217375006061
+        },
+        {
+          "test": "tests/test_closed_owner_data.py::test_a_rehashed_data_renderer_cannot_weaken_range_checks_or_change_the_returned_root[returned_root]",
+          "outcome": "passed",
+          "seconds": 3.386354250018485
+        },
+        {
+          "test": "tests/test_closed_owner_data.py::test_a_current_owner_data_read_does_not_revive_a_stale_captured_alias",
+          "outcome": "passed",
+          "seconds": 4.91294316702988
+        }
+      ],
+      "finish": [
+        {
+          "exitstatus": 0
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/probata-owner-data-prelaunch-regression.jsonl",
+      "sha256": "1c22dc7b51c6eaf342da5c83f96ed4fe19dd0bf3d5122efd2bc91c0f2cfaf52a",
+      "calls": [
+        {
+          "test": "tests/test_closed_owner_members.py::test_a_closed_at_call_records_its_qualified_live_domain_and_caller_discharge",
+          "outcome": "passed",
+          "seconds": 5.199186125013512
+        },
+        {
+          "test": "tests/test_closed_owner_members.py::test_a_standalone_at_model_keeps_its_opaque_incoming_field_refusal",
+          "outcome": "passed",
+          "seconds": 5.467395165993366
+        },
+        {
+          "test": "tests/test_closed_owner_members.py::test_missing_at_bounds_are_checked_without_adding_an_input_premise",
+          "outcome": "passed",
+          "seconds": 5.4234598749899305
+        },
+        {
+          "test": "tests/test_closed_owner_members.py::test_a_rehashed_renderer_cannot_drop_the_at_guard",
+          "outcome": "passed",
+          "seconds": 3.4994933750131167
+        },
+        {
+          "test": "tests/test_vector_ownership_wp.py::test_the_closed_owner_view_reports_typed_origins_for_all_source_and_generated_accesses",
+          "outcome": "passed",
+          "seconds": 7.392388959007803
+        },
+        {
+          "test": "tests/test_vector_ownership_wp.py::test_a_rehashed_renderer_cannot_hide_wrong_alias_origins_or_weakened_liveness[alias_offset]",
+          "outcome": "passed",
+          "seconds": 6.377112958987709
+        },
+        {
+          "test": "tests/test_vector_ownership_wp.py::test_a_rehashed_renderer_cannot_hide_wrong_alias_origins_or_weakened_liveness[liveness_guard]",
+          "outcome": "passed",
+          "seconds": 6.368833791988436
+        },
+        {
+          "test": "tests/test_vector_ownership_wp.py::test_a_rehashed_renderer_cannot_hide_wrong_alias_origins_or_weakened_liveness[range_guard_position]",
+          "outcome": "passed",
+          "seconds": 6.366228041995782
+        },
+        {
+          "test": "tests/test_vector_ownership_wp.py::test_a_rehashed_renderer_cannot_hide_wrong_alias_origins_or_weakened_liveness[unchecked_axiom]",
+          "outcome": "passed",
+          "seconds": 6.375937499979045
+        },
+        {
+          "test": "tests/test_vector_ownership_wp.py::test_a_rehashed_renderer_cannot_hide_wrong_alias_origins_or_weakened_liveness[unchecked_requires]",
+          "outcome": "passed",
+          "seconds": 6.371642042009626
+        },
+        {
+          "test": "tests/test_vector_ownership_wp.py::test_a_rehashed_renderer_cannot_hide_wrong_alias_origins_or_weakened_liveness[line_annotation]",
+          "outcome": "passed",
+          "seconds": 6.400674375006929
+        }
+      ],
+      "finish": [
+        {
+          "exitstatus": 0
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/probata-owner-data-model-red3.jsonl",
+      "sha256": "92ef228a7fcee77296aaf38ac6eb7a1ac1d0d4f829170e37dd83257fd524a875",
+      "calls": [
+        {
+          "test": "tests/test_closed_owner_data.py::test_a_rehashed_data_renderer_cannot_weaken_range_checks_or_change_the_returned_root[model_contract]",
+          "outcome": "failed",
+          "seconds": 2.1567560830153525
+        }
+      ],
+      "finish": [
+        {
+          "exitstatus": 1
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/probata-owner-data-prelaunch-final.jsonl",
+      "sha256": "74b65c503e674c6b7bd6c8051e79fb4606ec49644a26301581bef957b1614144",
+      "calls": [
+        {
+          "test": "tests/test_closed_owner_data.py::test_an_immediate_data_read_carries_the_current_live_owner_domain",
+          "outcome": "passed",
+          "seconds": 4.927584541030228
+        },
+        {
+          "test": "tests/test_closed_owner_data.py::test_current_owner_data_origin_does_not_admit_unchecked_offsets_or_casts[*(v.data()+n+1)]",
+          "outcome": "passed",
+          "seconds": 2.6227670409716666
+        },
+        {
+          "test": "tests/test_closed_owner_data.py::test_current_owner_data_origin_does_not_admit_unchecked_offsets_or_casts[*((int *)v.data())]",
+          "outcome": "passed",
+          "seconds": 2.62437133298954
+        },
+        {
+          "test": "tests/test_closed_owner_data.py::test_a_rehashed_data_renderer_cannot_weaken_range_checks_or_change_the_returned_root[live_guard]",
+          "outcome": "passed",
+          "seconds": 3.3779804999940097
+        },
+        {
+          "test": "tests/test_closed_owner_data.py::test_a_rehashed_data_renderer_cannot_weaken_range_checks_or_change_the_returned_root[backing_guard]",
+          "outcome": "passed",
+          "seconds": 3.3695495830033906
+        },
+        {
+          "test": "tests/test_closed_owner_data.py::test_a_rehashed_data_renderer_cannot_weaken_range_checks_or_change_the_returned_root[returned_root]",
+          "outcome": "passed",
+          "seconds": 3.3796654579928145
+        },
+        {
+          "test": "tests/test_closed_owner_data.py::test_a_rehashed_data_renderer_cannot_weaken_range_checks_or_change_the_returned_root[model_contract]",
+          "outcome": "passed",
+          "seconds": 3.2415994579787366
+        },
+        {
+          "test": "tests/test_closed_owner_data.py::test_a_current_owner_data_read_does_not_revive_a_stale_captured_alias",
+          "outcome": "passed",
+          "seconds": 4.945448292011861
+        }
+      ],
+      "finish": [
+        {
+          "exitstatus": 0
+        }
+      ]
+    }
+  ],
+  "source_hashes": {
+    "swdb-project/swdb/vector_ownership.py": "a93479583c7fd09d992bd5a68bf117280200c09f8749eafbe2dc0e9e077db8e7",
+    "swdb-project/swdb/model_domains.py": "37b2720fa7595eb6bd6b9e541211348526e0f087182a5d9416e3b379569725b0",
+    "swdb-project/tests/test_closed_owner_data.py": "15aef26f2762f0fae2a9228e498c98544fb1401ed3e7dac777eda8def91142d0"
+  },
+  "model_contract_control": "Correctly targeted RED3 exposed an unhandled missing contract substring under changed copied-runtime model_text; exact audited full data-text hash now rejects before AST extraction. No accepted proof/false proof occurred. Earlier attempts were test setup/path failures and do not count as intended RED.",
+  "regression_boundary": "11 existing owner/at stand-in controls passed before adding the final exact data-text hash check. Final8 new controls exercise the current data relation and exact-model refusal.",
+  "api": {
+    "source_access": "owner_data_read: outer UnaryOperator * span; inner noarg data() call span; exact persistent receiver",
+    "domain": "growth allocation, frozen backing/live extents, append producer pin, pure data-model return AST and full text SHA",
+    "view": "data[0] with immediate separate owner_data_live_i and owner_data_storage_i assertions, independent source/view count and root checks",
+    "shared_hooks": "none; existing complete delegates exact binding to model_domains.bind_source_access"
+  },
+  "postmerge_controls": [
+    {
+      "path": "/private/tmp/probata-owner-data-postmerge.jsonl",
+      "sha256": "3e968882c3a6f8b58ce09b27a5b5cf8e6475c702a51ac56aa259a13c65edb60d",
+      "source_commit": "b6b932fc54385b537a85d92957460e50023b1293",
+      "calls": [
+        {
+          "test": "tests/test_closed_owner_data.py::test_an_immediate_data_read_carries_the_current_live_owner_domain",
+          "outcome": "passed",
+          "seconds": 5.025411750015337
+        },
+        {
+          "test": "tests/test_closed_owner_data.py::test_current_owner_data_origin_does_not_admit_unchecked_offsets_or_casts[*(v.data()+n+1)]",
+          "outcome": "passed",
+          "seconds": 2.6393033750355244
+        },
+        {
+          "test": "tests/test_closed_owner_data.py::test_current_owner_data_origin_does_not_admit_unchecked_offsets_or_casts[*((int *)v.data())]",
+          "outcome": "passed",
+          "seconds": 2.6256015839753672
+        },
+        {
+          "test": "tests/test_closed_owner_data.py::test_a_rehashed_data_renderer_cannot_weaken_range_checks_or_change_the_returned_root[live_guard]",
+          "outcome": "passed",
+          "seconds": 3.4624540410004556
+        },
+        {
+          "test": "tests/test_closed_owner_data.py::test_a_rehashed_data_renderer_cannot_weaken_range_checks_or_change_the_returned_root[backing_guard]",
+          "outcome": "passed",
+          "seconds": 3.5224347499897704
+        },
+        {
+          "test": "tests/test_closed_owner_data.py::test_a_rehashed_data_renderer_cannot_weaken_range_checks_or_change_the_returned_root[returned_root]",
+          "outcome": "passed",
+          "seconds": 3.540506833989639
+        },
+        {
+          "test": "tests/test_closed_owner_data.py::test_a_rehashed_data_renderer_cannot_weaken_range_checks_or_change_the_returned_root[model_contract]",
+          "outcome": "passed",
+          "seconds": 3.1189684579730965
+        },
+        {
+          "test": "tests/test_closed_owner_data.py::test_a_current_owner_data_read_does_not_revive_a_stale_captured_alias",
+          "outcome": "passed",
+          "seconds": 5.024412958009634
+        }
+      ],
+      "finish": [
+        {
+          "exitstatus": 0
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/probata-owner-data-opaque-postmerge.jsonl",
+      "sha256": "3dd4c259ee0db7dd87631f1161a4938031b7fbc283a3162c2962f0960f3e60ba",
+      "source_commit": "b6b932fc54385b537a85d92957460e50023b1293",
+      "calls": [
+        {
+          "test": "tests/test_closed_owner_members.py::test_a_standalone_at_model_keeps_its_opaque_incoming_field_refusal",
+          "outcome": "passed",
+          "seconds": 5.580137416021898
+        }
+      ],
+      "finish": [
+        {
+          "exitstatus": 0
+        }
+      ]
+    }
+  ],
+  "postmerge_boundary": "8 new prelaunch controls PASS29.20s and standalone opaque at refusal PASS5.74s in a separate session after integration through19c64cb0. Actual safe/stale evidence remains exact67dfd7a8, not a postmerge actual WP replay."
+}

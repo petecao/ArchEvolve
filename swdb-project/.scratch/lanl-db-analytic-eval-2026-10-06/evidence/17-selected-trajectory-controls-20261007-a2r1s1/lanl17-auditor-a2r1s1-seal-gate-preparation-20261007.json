@@ -1,0 +1,159 @@
+{
+  "format": "swdb.lanl17-auditor-r1s1-seal-gate-source-preparation.v1",
+  "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "original_r1_auditor_sha256": "5be66dfa7d12feb0230e3e7b11e3571bc6631718ace1c1fe2c5f2cdbc6860d07",
+  "unchanged_collector_sha256": "b08db809b80cbebc6ce98dd8df8fdd4f327b170cdd7a545af0876ad68a832a5c",
+  "all_existing_Reader_methods_AST_exact_after_only_sealed_json_call_reversal": true,
+  "all_other_public_scientific_module_AST_exact": true,
+  "source_AST_parsed": true,
+  "sealed_reader_sites": [
+    {
+      "method": "sealed_json",
+      "reader": "json",
+      "line": 830,
+      "source": "self.json(pin)"
+    },
+    {
+      "method": "supervisor",
+      "reader": "sealed_json",
+      "line": 882,
+      "source": "self.sealed_json(pin)"
+    },
+    {
+      "method": "freeze",
+      "reader": "sealed_json",
+      "line": 890,
+      "source": "self.sealed_json(need(self.pins,'manifest_M2'))"
+    },
+    {
+      "method": "freeze",
+      "reader": "sealed_json",
+      "line": 890,
+      "source": "self.sealed_json(self.EF['receipt'])"
+    },
+    {
+      "method": "freeze",
+      "reader": "sealed_json",
+      "line": 890,
+      "source": "self.sealed_json(self.ER['receipt'])"
+    },
+    {
+      "method": "freeze",
+      "reader": "sealed_json",
+      "line": 938,
+      "source": "self.sealed_json(need(self.pins,'freeze_publication_custody'))"
+    },
+    {
+      "method": "freeze",
+      "reader": "sealed_json",
+      "line": 932,
+      "source": "self.sealed_json(need(self.pins,action+'_preregistration'))"
+    },
+    {
+      "method": "dependencies",
+      "reader": "sealed_json",
+      "line": 948,
+      "source": "self.sealed_json(need(admission,'receipt_pin'))"
+    },
+    {
+      "method": "dependencies",
+      "reader": "sealed_json",
+      "line": 953,
+      "source": "self.sealed_json(need(admission,'actual_export_receipt_pin'))"
+    },
+    {
+      "method": "attempt_states",
+      "reader": "sealed_json",
+      "line": 1064,
+      "source": "self.sealed_json(need(attempt,'before_custody'))"
+    },
+    {
+      "method": "attempt_states",
+      "reader": "sealed_json",
+      "line": 1064,
+      "source": "self.sealed_json(need(attempt,'after_custody'))"
+    },
+    {
+      "method": "attempt_states",
+      "reader": "sealed_json",
+      "line": 1083,
+      "source": "self.sealed_json(need(attempt,'dispatch_state_corroboration'))"
+    },
+    {
+      "method": "attempt_states",
+      "reader": "sealed_json",
+      "line": 1093,
+      "source": "self.sealed_json(need(before,'unclean_resume_admission_pin'))"
+    },
+    {
+      "method": "outcome_linkage",
+      "reader": "sealed_json",
+      "line": 1116,
+      "source": "self.sealed_json(need(raw,'refusal_custody_pin'))"
+    },
+    {
+      "method": "trajectory",
+      "reader": "sealed_json",
+      "line": 1179,
+      "source": "self.sealed_json(need(row,'projection'))"
+    },
+    {
+      "method": "trajectory",
+      "reader": "sealed_json",
+      "line": 1272,
+      "source": "self.sealed_json(need(row,'public_candidate_export_selection_custody'))"
+    },
+    {
+      "method": "trajectory",
+      "reader": "sealed_json",
+      "line": 1203,
+      "source": "self.sealed_json(need(attempt,'dispatch'))"
+    },
+    {
+      "method": "trajectory",
+      "reader": "sealed_json",
+      "line": 1203,
+      "source": "self.sealed_json(need(attempt,'stopped'))"
+    },
+    {
+      "method": "trajectory",
+      "reader": "sealed_json",
+      "line": 1203,
+      "source": "self.sealed_json(need(attempt,'release_custody'))"
+    },
+    {
+      "method": "trajectory",
+      "reader": "sealed_json",
+      "line": 1261,
+      "source": "self.sealed_json(need(row,'interrupted_selected_body_custody'))"
+    },
+    {
+      "method": "trajectory",
+      "reader": "json",
+      "line": 1266,
+      "source": "self.json(pin)"
+    }
+  ],
+  "new_sealed_sites": 19,
+  "unsealed_public_export_reader_preserved": true,
+  "actual_inputs_execution_imports_Store_tests_native_provider_SSH_staging": false,
+  "status": "Prospective source-only parent review pending",
+  "files": [
+    {
+      "path": "/private/tmp/lanl17_selected_record_trajectory_auditor_a2r1s1_20261007.py",
+      "bytes": 115130,
+      "sha256": "6a91ed1015bcc1caa771348e8bd1f591254ba130e55570ed18bc8121d67a06da"
+    },
+    {
+      "path": "/private/tmp/lanl17-auditor-a2r1s1-seal-gate-source-diff-20261007.txt",
+      "bytes": 18082,
+      "sha256": "e866aa63ea3aec6e4dca8f2b9c9c5a0589bbbec3067899f972591a2983ec9312"
+    },
+    {
+      "path": "/private/tmp/lanl17_prepare_auditor_a2r1s1_seals_20261007.py",
+      "bytes": 4887,
+      "sha256": "d977eee7b13dda443ba42e92b11018958e7c5ad6d3f68ba629ff554780014def"
+    }
+  ],
+  "identity_sha256": "01de27e9f11774ba0a724f79d754bb64aceb4e12b0a7d552562dc6c5559f73e0"
+}

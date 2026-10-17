@@ -1,0 +1,167 @@
+{
+  "actual_v2_status": "pending; no WP launched locally",
+  "base_commit": "d04781df",
+  "created": "2026-10-15 ET",
+  "domain_boundary": "Writable-object/writable-predecessor sufficient-domain proposal. Read-only and live zero-size cases excluded conservatively, not UB. All generated pointer assertions and actual WP obligations remain mandatory.",
+  "earlier_green": {
+    "passed": 13,
+    "path": "/private/tmp/probata-t24-std-domain-v2-public-final-green",
+    "pytest_seconds": 14.7
+  },
+  "final_public_receipts_green": {
+    "artifacts": [
+      {
+        "path": "/private/tmp/probata-t24-std-domain-v2-public-receipts-green/checks.log",
+        "sha256": "331365eaa512277bff952504f9085f53025785f7ec568fd688928b16c017dbf6"
+      },
+      {
+        "path": "/private/tmp/probata-t24-std-domain-v2-public-receipts-green/resources.json",
+        "sha256": "0521952c6a7c786198959e8c3b549ba1b98930bc07e9fd1d83f6f4bdf2ae7104"
+      },
+      {
+        "path": "/private/tmp/probata-t24-std-domain-v2-public-receipts-green/command.json",
+        "sha256": "15c8c3bd6a55b7cc7a75c573d8f54a4ee5f2799a78f1581cf7a4c5f69c9d1c06"
+      },
+      {
+        "path": "/private/tmp/probata-t24-std-domain-v2-public-receipts-green/guard.py",
+        "sha256": "2786da9b41b5b99e4e480a3b93d0c244e8a9798944700f95db685461f22dd5fd"
+      },
+      {
+        "path": "/private/tmp/probata-t24-std-domain-v2-public-receipts-green/junit.xml",
+        "sha256": "b4379bca3eafd4fe65d4f8f7d3d7b239878b57162ba6ec5e40d897cd91c665ad"
+      }
+    ],
+    "deselected": 10,
+    "passed": 3,
+    "public_receipts": [
+      {
+        "path": "/private/tmp/probata-t24-std-domain-v2-public-receipts-green/pytest/test_previous_readable_domain_0/public-validation.json",
+        "sha256": "71eda6b16cc1daecd114e86eef10266c57b06092f9e90a2659ca2d7260a9167d"
+      },
+      {
+        "path": "/private/tmp/probata-t24-std-domain-v2-public-receipts-green/pytest/test_qualified_fixture_passes_0/public-validation.json",
+        "sha256": "18c0ab4c87793f3100e3bd9610f5d60ab5862afb62579a3d9683ccb93a0f70f6"
+      }
+    ],
+    "pytest_seconds": 13.65,
+    "resources": {
+      "cpu_seconds": 13.460486999999999,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 385597440,
+      "timed_out": false,
+      "wall_seconds": 13.97103779099416
+    },
+    "skipped": 0
+  },
+  "new_qualified_contract": {
+    "id": "contract.fixture_wp24_std_models_object_domain_v2",
+    "sha256": "d586c9414b4ea374e9a0173f7b66b0de6ba0d19e3637f2da8d0bcc139baa61fe"
+  },
+  "original_actual_contract_sha256": "13fd0509e48eb0d9f45e8e6edc9a0fd5a4fec66d45f3e3cc525ee072b09c57d9",
+  "production_runtime_freeze": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+  "production_swdb_diff": [],
+  "public_admission_red": {
+    "artifacts": [
+      {
+        "path": "/private/tmp/probata-t24-std-domain-public-admission-red/checks.log",
+        "sha256": "cb2f0b403aa656f0db8d9e686501b3a4b346004c3755ac8057e851ab08aa584f"
+      },
+      {
+        "path": "/private/tmp/probata-t24-std-domain-public-admission-red/resources.json",
+        "sha256": "74c9d983199888d7272f4784c518b587bff2a25f835dcf967822d244bab316cc"
+      },
+      {
+        "path": "/private/tmp/probata-t24-std-domain-public-admission-red/command.json",
+        "sha256": "0e1aa924fee5c12dd0a309264200848852572baeb4630fdf697841de05110439"
+      },
+      {
+        "path": "/private/tmp/probata-t24-std-domain-public-admission-red/guard.py",
+        "sha256": "d3fe2130ef053c2accb248db512846498479e1a14cbb8355c2a3357e48ac501e"
+      },
+      {
+        "path": "/private/tmp/probata-t24-std-domain-public-admission-red/junit.xml",
+        "sha256": "c23da3fa9f0211e6a405bb813e8fd72beaa844cf8520af916bfc9d38b9e8bd2c"
+      }
+    ],
+    "failed": 1,
+    "passed": 11,
+    "pytest_seconds": 12.01,
+    "reason": "Actual6221 public admission failure reproduced before v2 helper change; eight forbidden memory built-in errors.",
+    "resources": {
+      "cpu_seconds": 11.644288000000001,
+      "exit_code": 1,
+      "out_of_memory": false,
+      "peak_rss_bytes": 376455168,
+      "timed_out": false,
+      "wall_seconds": 12.362519000016619
+    },
+    "skipped": 0
+  },
+  "rejected_first_qualification_sha256": "762deba8e2d8dc8961500d26209a6857553993225eadb0da6a12a8ba3b0c341a",
+  "rejected_launch_review": {
+    "path": "/private/tmp/probata-resume-t24/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t24-qualified-bootstrap-independent-review-20261015.json",
+    "sha256": "2a9c13273c72a5d75667f4fa07203c442ec1cbcf316818b87492df735beb0d45"
+  },
+  "sources": [
+    {
+      "path": "/private/tmp/probata-resume-t24/swdb-project/tests/t24_std_object_domain.py",
+      "sha256": "d3d9a510e72bf17bda1122f6cf0ca1c43a6a93438cd3723c5b59b183a488138b"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t24/swdb-project/tests/test_t24_std_object_domain.py",
+      "sha256": "d5f64eca5911d208788014637149b0b7d88bfe16c0522944ee3c562bf68e20b2"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t24/swdb-project/tests/fixtures/proof/regression_corpus/wp-std-empty-contract-gap.yaml",
+      "sha256": "917812af5c91afbf1d08618ce85c3d75a32e934ff4f1c51317ec4b12a9396479"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t24/swdb-project/tests/fixtures/proof/regression_corpus/wp-std-domain-public-vocabulary.yaml",
+      "sha256": "b82177a8f4b2e8e1afa56214f35a8de0bd2a8e887ac91865f40643ab9ebfe867"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t24/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/t24-std-object-domain.py",
+      "sha256": "50f1bb8a0e224931ef91d41f2476abfe6bcfa1fc459c51ebb588d7e4292790c7"
+    }
+  ],
+  "whole_profile_green": {
+    "artifacts": [
+      {
+        "path": "/private/tmp/probata-t24-std-domain-v2-corpus-green/checks.log",
+        "sha256": "d838142f1f49aff37f0ce3d2748fa3cff421b1d5afbfbb9456c6142d3708de2a"
+      },
+      {
+        "path": "/private/tmp/probata-t24-std-domain-v2-corpus-green/resources.json",
+        "sha256": "c59375e214014b0c512af4291b23674bdb95a4db999750d7d20cb310574b96d0"
+      },
+      {
+        "path": "/private/tmp/probata-t24-std-domain-v2-corpus-green/command.json",
+        "sha256": "3838f6ef3ae1f1d1ac2040c0545bec1228db1972551a1817ad5df7e951ccd2aa"
+      },
+      {
+        "path": "/private/tmp/probata-t24-std-domain-v2-corpus-green/guard.py",
+        "sha256": "d3fe2130ef053c2accb248db512846498479e1a14cbb8355c2a3357e48ac501e"
+      },
+      {
+        "path": "/private/tmp/probata-t24-std-domain-v2-corpus-green/junit.xml",
+        "sha256": "2083c290d80a346600e21fbd86ef32d3656f7d1e6696c3eb4e3461f60b50dba2"
+      }
+    ],
+    "passed": 13,
+    "pytest_seconds": 16.69,
+    "resources": {
+      "cpu_seconds": 16.297465,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 401227776,
+      "timed_out": false,
+      "wall_seconds": 17.08475300000282
+    },
+    "skipped": 0
+  },
+  "wrong_cwd_attempt": {
+    "path": "/private/tmp/probata-t24-std-domain-v2-public-green",
+    "result": "No tests found; no successful result claimed; subsequent module-rooted guarded runs passed."
+  }
+}

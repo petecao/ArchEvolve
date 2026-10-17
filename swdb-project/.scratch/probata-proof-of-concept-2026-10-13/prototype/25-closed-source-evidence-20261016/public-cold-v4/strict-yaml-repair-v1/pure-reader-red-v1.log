@@ -1,0 +1,40 @@
+test_actual_implicit_numbers_and_unsupported_syntax_still_refuse (__main__.Controls.test_actual_implicit_numbers_and_unsupported_syntax_still_refuse) ... ok
+test_explicit_long_scalar_keys_match_complete_nested_json (__main__.Controls.test_explicit_long_scalar_keys_match_complete_nested_json) ... ERROR
+test_explicit_short_collection_missing_value_and_duplicate_keys_refuse (__main__.Controls.test_explicit_short_collection_missing_value_and_duplicate_keys_refuse) ... ok
+test_no_children_or_reader_main (__main__.Controls.test_no_children_or_reader_main) ... ok
+test_plain_sha_beginning_binary_prefix_is_text (__main__.Controls.test_plain_sha_beginning_binary_prefix_is_text) ... ERROR
+test_ten_retained_real_fixture_records_still_parse (__main__.Controls.test_ten_retained_real_fixture_records_still_parse) ... ok
+
+======================================================================
+ERROR: test_explicit_long_scalar_keys_match_complete_nested_json (__main__.Controls.test_explicit_long_scalar_keys_match_complete_nested_json)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/strict-yaml-repair-v1/pure_reader_controls.py", line 23, in test_explicit_long_scalar_keys_match_complete_nested_json
+    self.assertEqual(Y['loads'](raw),{'hashes':{key:'0badbeef',quoted:[True,None,1]},'next':'done'})
+                     ^^^^^^^^^^^^^^^
+  File "inert-strict-reader", line 194, in loads
+  File "inert-strict-reader", line 187, in block
+  File "inert-strict-reader", line 150, in value
+  File "inert-strict-reader", line 184, in block
+  File "inert-strict-reader", line 13, in need
+ValueError: YAML mapping colon
+
+======================================================================
+ERROR: test_plain_sha_beginning_binary_prefix_is_text (__main__.Controls.test_plain_sha_beginning_binary_prefix_is_text)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/strict-yaml-repair-v1/pure_reader_controls.py", line 19, in test_plain_sha_beginning_binary_prefix_is_text
+    self.assertEqual(Y['loads'](('sha256: '+value+'\n').encode()),{'sha256':value})
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "inert-strict-reader", line 194, in loads
+  File "inert-strict-reader", line 187, in block
+  File "inert-strict-reader", line 158, in value
+  File "inert-strict-reader", line 32, in scalar
+  File "inert-strict-reader", line 13, in need
+ValueError: noncanonical YAML implicit scalar
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.011s
+
+FAILED (errors=2)
+{"date": "2026-10-16 ET", "tests": 6, "failures": 0, "errors": 2, "skips": 0, "child_events": [], "reader": "reader-red-v1.py", "reader_sha256": "467cef5049fc30f730f0176f7db336952f6ce006ec11a9b2872abec9ca53daf9", "remote_or_project_or_compiler_execution": false}

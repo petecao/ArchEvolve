@@ -1,0 +1,97 @@
+{
+  "actual_input": {
+    "$future": {
+      "expected_type": "fresh_original_private_remote_input_file",
+      "required_actual_input": "Complete unsealed actual author input (draft intentionally refused)",
+      "state": "NOTRUN"
+    }
+  },
+  "argv": [
+    "/usr/bin/python3.12",
+    "-B",
+    "/data1/yanruj/lanl17-actual-template-author-source-20261008-a5-r1/author.py",
+    "--input",
+    {
+      "$future": {
+        "expected_type": "absolute_original_input_path",
+        "required_actual_input": "actual reviewed complete input file",
+        "state": "NOTRUN"
+      }
+    },
+    "--input-sha256",
+    {
+      "$future": {
+        "expected_type": "sha256",
+        "required_actual_input": "actual whole input file bytes SHA",
+        "state": "NOTRUN"
+      }
+    },
+    "--author-sha256",
+    "ec1fc0133ef0e8f96a9436d897586f0dfd72f19b6e8fba77e930fe6c0688c01a",
+    "--parent-review-sha256",
+    {
+      "$future": {
+        "expected_type": "sha256",
+        "required_actual_input": "actual canonical-true input.parent_review digest",
+        "state": "NOTRUN"
+      }
+    },
+    "--metadata-deadline-seconds",
+    "120",
+    "--output-directory",
+    {
+      "$future": {
+        "expected_type": "fresh_absolute_external_owned_remote_path",
+        "required_actual_input": "Fresh output under an existing owned private0700 parent, outside S/RAW/fourcampaigns",
+        "state": "NOTRUN"
+      }
+    }
+  ],
+  "format": "swdb.lanl17-remote-template-author-future-command-worksheet.v1",
+  "next_SPEC339_flags": {
+    "campaign-root": [
+      "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p1",
+      "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p2",
+      "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p3",
+      "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p4"
+    ],
+    "parent-review-sha256": {
+      "$future": {
+        "expected_type": "sha256",
+        "required_actual_input": "actual template.parent_review canonical-true digest, different from author input parent_review digest",
+        "state": "NOTRUN"
+      }
+    },
+    "source-root": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5",
+    "template": {
+      "$future": {
+        "expected_type": "actual_output_pin",
+        "required_actual_input": "parent-template.json exact original bytes/hash",
+        "state": "NOTRUN"
+      }
+    },
+    "template-author-source": "/data1/yanruj/lanl17-actual-template-author-source-20261008-a5-r1/author.py",
+    "template-author-source-sha256": "ec1fc0133ef0e8f96a9436d897586f0dfd72f19b6e8fba77e930fe6c0688c01a",
+    "writer-source-alias": "spec339"
+  },
+  "output_roles": [
+    "parent-template.json unsealed",
+    "author-custody.json new canonical-true metadata-only custody"
+  ],
+  "parent_capture_route": {
+    "$future": {
+      "expected_type": "selected_finite_root_metadata_action",
+      "required_actual_input": "Root selects/reviews current trusted-native startup custody and exact config; preserve limits/no raw streams returned",
+      "state": "NOTRUN"
+    }
+  },
+  "prospective_remote_author_path": "/data1/yanruj/lanl17-actual-template-author-source-20261008-a5-r1/author.py",
+  "remote_author_staging_actual": false,
+  "selected_local_author_source_pin": {
+    "bytes": 26682,
+    "path": "/private/tmp/lanl17_author_remote_actual_accepted_input_template_20261008_a5_r1.py",
+    "sha256": "ec1fc0133ef0e8f96a9436d897586f0dfd72f19b6e8fba77e930fe6c0688c01a"
+  },
+  "state": "SOURCE_ONLY_NOTRUN_REQUIRES_ROOT_AND_PEER_SOURCE_REVIEW_AND_ACTUAL_INPUT_REVIEW",
+  "success_does_not_establish": "No original document hash/seal/body validity, Git cleanliness, public body closure, strict audit readiness, nonempty pairing or D30 scientific admission."
+}

@@ -1,0 +1,76 @@
+{
+  "format": "swdb.lanl17-metadata-caps-integrated-merger.v1",
+  "checked_utc": "2026-10-07T06:23:38.938210+00:00",
+  "base_commit": "b408b65e8ae7f2f807d0380106b440f7b27e5cc5",
+  "incoming_commit": "0243eec5053031ebeb16932cb19ada4638225871",
+  "integration_method": "fast-forward, then this custody proof only",
+  "preservation": {
+    "prior_blobs": 3472,
+    "prior_blob_map_sha256": "5e6187aef29baf56f05799456ed1611543fd776c3284401acf2823c6e59733f9",
+    "all_prior_blobs_preserved": true,
+    "protected_blobs": 1193,
+    "canonical_yaml_preserved": 665,
+    "source_and_tracker_changes": 0
+  },
+  "added_evidence_files": {
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-linux-cleanup-smoke-mbit10-20261007-a2.json": {
+      "sha256": "ba6c9686b2847866e582949de96f2e188e299e5fe947b5ce5ce6a605ba21e99a",
+      "bytes": 2617
+    },
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-metadata-caps-helper-20261007-a2.py": {
+      "sha256": "09136ee553984b2c0cf929a6746f037aa4e1874f863aa2e83e0e0842a8b65ed9",
+      "bytes": 38193
+    },
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-metadata-caps-portable-proof-20261007-a2.json": {
+      "sha256": "c759032ed2a6301529f007b2858f22454bea2d7fb4ace3268635b0549e74b49e",
+      "bytes": 883
+    },
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-metadata-caps-preparation-proof-20261007-a2.json": {
+      "sha256": "80a4bc871bc64671ec3954eefa3d546d140525c2f204b56cc51adbd6861d1a46",
+      "bytes": 4900
+    },
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-metadata-caps-runbook-20261007-a2.md": {
+      "sha256": "c187fdb20f9f8f2ca6b4eae2f2b433d5f62785e571651a89427dea2a54359a85",
+      "bytes": 4184
+    }
+  },
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "frozen_cpu_source": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "source_modules": 185,
+  "exact_four_cap_lines_reversed_to_original_sha256": "31e1d71bc6e9ef4a5a5f1d5fbff136ceef249935f8f00601edf45277fce249ec",
+  "preparation_proof_identity_sha256": "632122505e2b2be0eff445622bb22f9d3389ddd2ad1eedf0d5659845c9fb9ea8",
+  "passed_gate": {
+    "budget_module_cases": 7,
+    "budget_module_seconds": 2018.83,
+    "portable_controls": 14,
+    "actual_linux_smoke": true,
+    "actual_linux_identity_sha256": "3b2ab676c70098fb054fe40396dabc77d935817ae7eed72bc92d541c727e92d0",
+    "actual_linux_node": 1,
+    "actual_linux_generation": 543,
+    "actual_linux_receipt_sha256": "b1c34be10178dad05c9bfad64da7a19ea0961162ded1becc0982060111ec4232"
+  },
+  "count_correction": "Seven actual budget-module cases; prior eight-case count was incorrect. Supplementary plateau check is separate, not an enlarged gate.",
+  "supplementary_existing_test": {
+    "node": "tests/test_extensa_machinery.py::test_plateau_and_max_iterations_stop_with_their_reasons",
+    "passed": 1,
+    "seconds": 0.07,
+    "required_gate": false,
+    "note": "Completed before parent steering corrected the count; does not change the required seven-case denominator.",
+    "source_commit": "b408b65e8ae7f2f807d0380106b440f7b27e5cc5"
+  },
+  "canonical_validation_repeated": false,
+  "heavy_source_gates_repeated": false,
+  "observer_process_provider_and_campaign_controls_preserved": true,
+  "original_linux_a1_receipt_preserved": true,
+  "parent_progress_and_metadata_audit_preserved": true,
+  "ticket_map_and_issue_bytes_preserved": true,
+  "ticket17_state": "claimed",
+  "human18_gate_preserved": true,
+  "population_freezes": 0,
+  "provider_calls": 0,
+  "actual_campaigns": 0,
+  "actual_campaign_outcomes": 0,
+  "d30_admission": "not_established",
+  "scope": "Approved metadata-cap preparation and exact actual cleanup proof only. No forecast accuracy, campaign completion or flow-B switch is claimed.",
+  "identity_sha256": "5834bfe57252797e94e2c8854e50415cf71a0cb50b2e7dc00885a69943054038"
+}

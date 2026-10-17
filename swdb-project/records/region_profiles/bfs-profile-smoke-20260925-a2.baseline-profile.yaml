@@ -1,0 +1,144 @@
+kind: region_profile
+schema_version: '0.4'
+id: bfs-profile-smoke-20260925-a2.baseline-profile
+status: draft
+created: '2026-09-25'
+updated: '2026-09-25'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: bfs-profile-smoke-20260925-a2.baseline-profile
+  evaluation: bfs-native-smoke-20260925-a1.evaluation
+  memory: true
+  budget:
+    discovery_seconds: 120
+    build_seconds: 180
+    run_seconds: 180
+    total_seconds: 1200
+outcome:
+  state: failed
+  stage: source_discovery
+  reason: source_discovery exited with status 1; see /data/yanruj/EvolveSWDB_runs/bfs-profile-smoke-20260925/bfs-profile-smoke-20260925-a2.baseline-profile/002-source_discovery.log
+stages:
+- stage: compiler_identity
+  state: complete
+  started: '2026-09-25T22:20:25.418490+00:00'
+  command: [/usr/bin/g++, --version]
+  timeout_s: 30
+  log: /data/yanruj/EvolveSWDB_runs/bfs-profile-smoke-20260925/bfs-profile-smoke-20260925-a2.baseline-profile/000-compiler_identity.log
+  finished: '2026-09-25T22:20:34.746438+00:00'
+  returncode: 0
+  host_wall_s: 0.004150014370679855
+  log_sha256: 59d1cbef41d4ae78d5063d525b7aa13d18dc0493ea00537efc19b2ee398cb5a8
+- stage: preprocessor_identity
+  state: complete
+  started: '2026-09-25T22:20:44.145772+00:00'
+  command:
+  - /usr/bin/g++
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -fopenmp
+  - -pthread
+  - -DFUNC
+  - -dM
+  - -E
+  - -v
+  - -x
+  - c++
+  - /dev/null
+  timeout_s: 30
+  log: /data/yanruj/EvolveSWDB_runs/bfs-profile-smoke-20260925/bfs-profile-smoke-20260925-a2.baseline-profile/001-preprocessor_identity.log
+  finished: '2026-09-25T22:20:53.537299+00:00'
+  returncode: 0
+  host_wall_s: 0.032448677346110344
+  log_sha256: d58a7a01aae5e14f33d6a229c942108f4dbe465380c45e785f418d13981a2433
+- stage: source_discovery
+  state: failed
+  started: '2026-09-25T22:21:02.984899+00:00'
+  command:
+  - /usr/bin/python3
+  - /data1/yanruj/EvolveSWDB_profile_bfs_20260925_a2/swdb/bfs_discovery.py
+  - /data/yanruj/EvolveSWDB_runs/bfs-profile-smoke-20260925/bfs-profile-smoke-20260925-a2.baseline-profile/discovery-request.json
+  - /data/yanruj/EvolveSWDB_runs/bfs-profile-smoke-20260925/bfs-profile-smoke-20260925-a2.baseline-profile/discovery.json
+  timeout_s: 120.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-profile-smoke-20260925/bfs-profile-smoke-20260925-a2.baseline-profile/002-source_discovery.log
+  finished: '2026-09-25T22:21:13.177500+00:00'
+  returncode: 1
+  host_wall_s: 0.8169501759111881
+  log_sha256: aaa2d9aecb15d84cc125ff6bc1e011d0de565c0ed85ff3fe9c6b6b9229fd2d04
+regions: []
+dynamic_memory: []
+executions: []
+raw_artifacts:
+- host: mbit10
+  path: /data/yanruj/EvolveSWDB_runs/bfs-profile-smoke-20260925/bfs-profile-smoke-20260925-a2.baseline-profile
+  kind: diagnostic_profile
+reasons:
+- source_discovery exited with status 1; see /data/yanruj/EvolveSWDB_runs/bfs-profile-smoke-20260925/bfs-profile-smoke-20260925-a2.baseline-profile/002-source_discovery.log
+gain_claim: false
+candidate: bfs-native-smoke-20260925-a1.proposal.candidate-1
+source_snapshot: bfs-native-smoke-20260925-a1.source
+implementation: dx100-bfs-scalar
+machine: mbit10
+evaluation: bfs-native-smoke-20260925-a1.evaluation
+context:
+  candidate_sha256: 4284d7dc1a5b26ef8d9cd9d419cac18e98a86e8a66aac163843f07cab3fbfd2b
+  source_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  application: dx100-gapbs
+  adapter: dx100_scalar_func
+  target: mbit10
+  machine_sha256: fcb0123f0bdb9bc004348eb8c6444f03304b6612e0cb2e26a82e621b07d82a79
+  threads: 1
+  sources: [0, 3, 8]
+  repetitions: 1
+  roi: bfs.complete_call.v1
+  protocol: null
+  basis: measured
+  process_policy: one fresh process per source and repetition; graph construction before ROI
+  verifier: swdb.bfs.structural.v1
+  verifier_sha256: dd42362802fab797f3b23776a05002f9142b84590bc614e0c8c67cc1483e0309
+  backend_configuration: {}
+  instrumentation:
+    template_sha256: 2b7e9884ef98ddca2779c518211eb67da697c8565d86ec6dfb54fbecf38724c3
+    treatment: included
+  host: mbit10
+  architecture: x86_64
+  lane: 'mbit10-evaluation-node1 (verified: affinity, bind:1, lease held, generation 379)'
+  load_average: [8.9794921875, 8.79736328125, 8.09814453125]
+  budget:
+    discovery_seconds: 120.0
+    build_seconds: 180.0
+    run_seconds: 180.0
+    total_seconds: 1200.0
+  workload:
+    id: bfs-native-smoke-20260925-a1.graph
+    family: diagnostic
+    generator:
+      name: explicit-small-correctness-case
+      version: '1.0'
+    representation:
+      kind: inline_graph
+      sha256: 691eecc01480d05d8a9d9e5494522a3ff309989f34a2aa60d4fc9ee4abfff270
+    normalization: 'simple graph: remove self loops and duplicates; symmetrize if undirected; sort neighbors'
+    canonical_sha256: 3762adc123e79df54d24bce58e77627b375459898de001a62a17372bcc7fd9a7
+    adjacency_order_sha256: 3762adc123e79df54d24bce58e77627b375459898de001a62a17372bcc7fd9a7
+    num_vertices: 10
+    num_directed_edges: 8
+    directed: true
+    sources: [0, 3, 8]
+    canonical_path: /data/yanruj/EvolveSWDB_runs/bfs-native-smoke-20260925/bfs-native-smoke-20260925-a1.evaluation/graph.swdb
+    canonical_file_sha256: f1d7afd5722fb22960c08c3c04439291feba97e38fa902b43754a75f9d5fcddf
+  primary_binary_sha256: fec1b0374c3701689bddbad8d890dbbc6389972460f86bc66ee6b0959f0372d1
+  primary_evaluation: bfs-native-smoke-20260925-a1.evaluation
+  timing_basis: diagnostic accumulated thread CPU seconds; primary ROI wall timing remains in evaluation
+  overhead_treatment: scope instrumentation overhead is included; no synthetic subtraction or gain claim

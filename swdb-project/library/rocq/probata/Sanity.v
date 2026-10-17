@@ -1,0 +1,379 @@
+(* Probata Rocq development: sanity lemmas on the statement's definitions.
+   Created 2026-10-14 ET (ticket 41); revised 2026-10-15 ET with the statements.
+   Not part of the reviewed statement.  Each lemma is proven (Qed) and uses no axiom;
+   "Print Assumptions" below shows it. *)
+From Stdlib Require Import List Arith Lia Relations.
+From Probata Require Import Vocabulary Composition Reduction.
+Import ListNotations.
+
+Local Arguments Write {loc val arg}.
+Local Arguments Read {loc val arg}.
+Local Arguments HistoryRead {loc val arg}.
+Local Arguments Shared {loc val arg}.
+
+(** * Composition: the memory model is the history read, not sequential consistency *)
+Definition R := Composition.run nat nat nat.
+Definition init0 : nat -> nat := fun _ => 0.
+(* a claim: CAS from 0 to a; a failed CAS stores nothing *)
+Definition sa_claim : shared_action_kind -> nat -> nat -> option nat :=
+  fun _ a v => if Nat.eqb v 0 then Some a else None.
+Definition all_shared : nat -> nat -> sharing_class := fun _ _ => SharedActionsOnly.
+
+Lemma sync_lt : forall (X : R) i j, cpu_sync nat nat nat X i j -> i < j.
+Proof. intros X i j H. destruct H; assumption. Qed.
+
+Lemma hb_lt : forall (X : R) i j, hb_cpu nat nat nat X i j -> i < j.
+Proof.
+  intros X i j H. induction H as [i j H|i k j _ IH1 _ IH2].
+  - apply sync_lt in H. exact H.
+  - lia.
+Qed.
+
+Lemma hb_first : forall (X : R) i j,
+  hb_cpu nat nat nat X i j -> exists k, cpu_sync nat nat nat X i k /\ k <= j.
+Proof.
+  intros X i j H. induction H as [i j H|i k j H1 IH1 H2 _].
+  - exists j. split; [assumption | lia].
+  - destruct IH1 as [m [Hs Hm]]. exists m. split; [assumption|].
+    apply hb_lt in H2. lia.
+Qed.
+
+(* 1. Inside the admitted program class, a history read may return a stale value: thread 0
+      claims location 0 (an SC CAS), thread 1's relaxed load still reads the initial 0,
+      because nothing orders the CAS before the load.  Both threads fit SharedActionsOnly. *)
+Definition X_stale : R := [(0, Shared Claim true 5 0 0); (1, HistoryRead 0 0)].
+
+Lemma stale_run_fits : forall t,
+  fits nat nat nat nat (fun l => l) all_shared X_stale t.
+Proof.
+  intros t i e l H Hl. unfold at_ in H.
+  destruct i as [|[|i]]; simpl in H; [| |destruct i; discriminate];
+    inversion H; subst; simpl in Hl; inversion Hl; subst; unfold fits_event, inside; simpl.
+  - split; [reflexivity | discriminate].
+  - right; right; right. split; [reflexivity | discriminate].
+Qed.
+
+Lemma stale_history_read_allowed :
+  memory_ok nat nat nat init0 sa_claim X_stale (fun _ => None).
+Proof.
+  split.
+  - intros j t l v Hj.
+    destruct Hj as [Hj|Hj]; unfold at_ in Hj;
+      destruct j as [|[|j]]; simpl in Hj; try discriminate;
+      try (destruct j; discriminate).
+    inversion Hj; subst. split; [reflexivity|].
+    intros i [[w [t' [e [He Hw]]]] Hseen]. unfold at_ in He.
+    destruct i as [|[|i]]; simpl in He; try (destruct i; discriminate).
+    + destruct Hseen as [Hhb | [r [t1 [e1 [e2 [v1 [s [Hr [H1 [H2 _]]]]]]]]]].
+      * apply hb_first in Hhb. destruct Hhb as [k [Hs Hk]].
+        assert (Hk0 : 0 < k) by (apply sync_lt in Hs; exact Hs).
+        assert (k = 1) by lia. subst k.
+        destruct Hs as [t0 e0 e0' Hlt H0 H1 | t0 t0' k0 a l0 v0 k' a' l' v' Hlt H0 H1].
+        -- unfold at_ in *; simpl in *. inversion H0; subst. inversion H1.
+        -- unfold at_ in *; simpl in *. inversion H1.
+      * assert (r = 0) by lia. subst r. unfold at_ in *. simpl in *.
+        inversion H1; subst. inversion H2.
+    + inversion He; subst. discriminate.
+  - intros j t k f a l old Hj. unfold at_ in Hj.
+    destruct j as [|[|j]]; simpl in Hj; try discriminate; [|destruct j; discriminate].
+    inversion Hj; subst. split; [reflexivity|]. intros i v Hi. lia.
+Qed.
+
+(* 1b. So "a history read returns the latest write" is false (the claim negative/ makes). *)
+Lemma history_read_not_always_latest :
+  ~ (forall rf v, memory_ok nat nat nat init0 sa_claim
+                    ([(0, Shared Claim true 5 0 0); (1, HistoryRead 0 v)] : R) rf -> v = 5).
+Proof.
+  intros H. specialize (H (fun _ => None) 0 stale_history_read_allowed). discriminate.
+Qed.
+
+(* 2. A plain read after the thread's own write returns that write. *)
+Definition X_own (v : nat) : R := [(0, Write 0 1); (0, Read 0 v)].
+Lemma read_own_write : forall rf v,
+  memory_ok nat nat nat init0 sa_claim (X_own v) rf -> v = 1.
+Proof.
+  intros rf v [Hr _].
+  destruct (Hr 1 0 0 v (or_introl eq_refl)) as [Hsrc Hnew].
+  assert (Hs : seen nat nat nat sa_claim (hb_cpu nat nat nat (X_own v)) (X_own v) rf 1 0 0).
+  { split.
+    - exists 1, 0, (Write 0 1). split; reflexivity.
+    - left. apply t_step. apply (cpu_po nat nat nat (X_own v) 0 1 0 (Write 0 1) (Read 0 v));
+        [lia | reflexivity | reflexivity]. }
+  specialize (Hnew 0 Hs). unfold not_older, source_ok in *.
+  destruct (rf 1) as [i|]; [|contradiction].
+  destruct Hsrc as [Hi [t [e [He Hw]]]].
+  assert (i = 0) by lia. subst i.
+  unfold at_ in He. simpl in He. inversion He; subst. simpl in Hw. inversion Hw. reflexivity.
+Qed.
+
+(* 3. Must-prove control (15 item 12): read, failed CAS, re-read sees the winner's value.
+      Thread 1 claims location 0 with 5; thread 0's CAS (to 7) then fails and stores
+      nothing; its re-read returns 5, never the stale 0. *)
+Definition X_cas (old v : nat) : R :=
+  [(1, Shared Claim true 5 0 0); (0, Shared Claim true 7 0 old); (0, HistoryRead 0 v)].
+Lemma failed_cas_reread_sees_winner : forall rf old v,
+  memory_ok nat nat nat init0 sa_claim (X_cas old v) rf -> v = 5.
+Proof.
+  intros rf old v [Hr Hs].
+  destruct (Hs 1 0 Claim true 7 0 old eq_refl) as [Hsrc1 Hlat1].
+  assert (Hold : old = 5).
+  { unfold latest, source_ok in *. destruct (rf 1) as [i|].
+    - destruct Hsrc1 as [Hi [t [e [He Hw]]]]. assert (i = 0) by lia. subst i.
+      unfold at_ in He. simpl in He. inversion He; subst. simpl in Hw. inversion Hw.
+      reflexivity.
+    - exfalso. apply (Hlat1 0 5); [lia|]. exists 1, (Shared Claim true 5 0 0).
+      split; reflexivity. }
+  subst old.
+  destruct (Hr 2 0 0 v (or_intror eq_refl)) as [Hsrc Hnew].
+  assert (Hseen : seen nat nat nat sa_claim (hb_cpu nat nat nat (X_cas 5 v)) (X_cas 5 v) rf 2 0 0).
+  { split.
+    - exists 5, 1, (Shared Claim true 5 0 0). split; reflexivity.
+    - left. apply t_trans with 1.
+      + apply t_step.
+        apply (cpu_fence nat nat nat (X_cas 5 v) 0 1 1 0 Claim 5 0 0 Claim 7 0 5);
+          [lia | reflexivity | reflexivity].
+      + apply t_step.
+        apply (cpu_po nat nat nat (X_cas 5 v) 1 2 0 (Shared Claim true 7 0 5) (HistoryRead 0 v));
+          [lia | reflexivity | reflexivity]. }
+  specialize (Hnew 0 Hseen). unfold not_older, source_ok in *.
+  destruct (rf 2) as [i|]; [|contradiction].
+  destruct Hsrc as [Hi [t [e [He Hw]]]].
+  unfold at_ in He. destruct i as [|[|i]]; simpl in He; [| |lia];
+    inversion He; subst; simpl in Hw; inversion Hw; reflexivity.
+Qed.
+
+(* 3b. Ticket 42's stray-Exit counterexample (x = 0, l = 1, m = 2) is no longer a model run:
+       thread 1 performs an Exit with no open Enter, which omp_ok now refuses (t41c). *)
+Local Arguments Enter {loc val arg}.
+Local Arguments Exit {loc val arg}.
+Local Arguments DeviceRead {loc val arg}.
+Local Arguments DeviceCovered {loc val arg}.
+Definition X_stray : R :=
+  [(1, Shared Claim false 0 0 0); (0, DeviceRead 7 1 1); (0, Enter); (0, Read 2 0);
+   (1, Exit); (0, Write 2 1); (1, Shared Claim false 0 1 0); (0, DeviceCovered 7);
+   (0, Exit); (0, HistoryRead 0 0)].
+Lemma stray_exit_excluded : forall sa_new team_size space split_by_tid done rf,
+  ~ omp_ok nat nat nat sa_new team_size space split_by_tid done X_stray rf.
+Proof.
+  intros sa_new team_size space split_by_tid done rf [_ [_ [_ [_ [_ Hb]]]]].
+  specialize (Hb 1). simpl in Hb. discriminate.
+Qed.
+
+(** * Reduction: the hazard definition flags an unready read *)
+Local Arguments SCpu {res val core tile cmd}.
+Local Arguments SRun {res val core tile cmd}.
+Local Arguments Issue {res val tile cmd}.
+Local Arguments CpuRead {res val tile cmd}.
+Local Arguments Got {val}.
+Local Arguments Ack {val}.
+
+Definition fp_store : nat -> (nat -> nat) -> list nat * list (nat * nat) :=
+  fun _ _ => ([], [(7, 1)]).               (* the command writes element 7 *)
+Definition no_tiles : nat -> list nat := fun _ => [].
+(* 4. Semantics negative control (12 item 9): the same thread reads what its unfinished DX100
+      store writes (no wait in between): a hazard. *)
+Definition A_unready : Reduction.run nat nat nat nat nat :=
+  [SCpu 0 (Issue 0) Ack; SRun 0 (fun _ => 0); SCpu 0 (CpuRead 7) (Got 0)].
+
+(* No step up to step 2 covers anything: no wait, no CPU register write, and the only issue
+   (step 0) has no earlier command. *)
+Lemma no_cover_up_to_step_2 : forall n m,
+  covered nat nat nat nat nat nat nat no_tiles no_tiles no_tiles no_tiles no_tiles
+    (fun _ => false) (fun _ => false) (fun _ _ => False) A_unready n m -> 3 <= m.
+Proof.
+  intros n m Hc. induction Hc; try assumption;
+    unfold waits_at, issued in *;
+    repeat match goal with H : exists _, _ |- _ => destruct H end;
+    repeat match goal with H : _ \/ _ |- _ => destruct H end;
+    destruct m as [|[|[|m]]]; simpl in *; try discriminate; lia.
+Qed.
+
+Lemma unready_read_is_hazard :
+  hazard_own nat nat nat nat nat nat nat fp_store no_tiles no_tiles no_tiles no_tiles no_tiles
+    (fun _ => false) (fun _ => false) (fun _ _ => False) (fun _ _ => False) (fun _ _ => False)
+    (fun _ _ => True) (fun _ _ => True) A_unready 0 2.
+Proof.
+  left. exists (CpuRead 7), (Got 0). split; [reflexivity|].
+  left. exists 0. split; [|split].
+  - split; [exists 0, 0; reflexivity|]. split; [lia|].
+    intros m Hm Hc. apply no_cover_up_to_step_2 in Hc. lia.
+  - exists 0. reflexivity.
+  - exists 0, 0, (fun _ => 0). split; [reflexivity|]. split; [reflexivity|].
+    simpl. left. reflexivity.
+Qed.
+
+(* 5. The two covers ticket 27 requires (fixtures stall_condition, register_write). *)
+Local Arguments CpuWrite {res val tile cmd}.
+Definition tile0 : nat -> list nat := fun _ => [0].   (* every command names tile 0 *)
+Definition reg0 : nat -> list nat := fun _ => [0].    (* every command names register 0 *)
+Definition reg_elem : nat -> nat -> Prop := fun r g => r = 5 /\ g = 0.  (* element 5 is reg 0 *)
+
+(* 5a. Issue stall (IF.cc:193-212): command 1 writes tile 0, which the uncovered command 0
+       names, so gem5 dispatches it only after command 0 finished.  Its issue covers
+       command 0, which is no longer pending from that step on. *)
+Definition A_stall : Reduction.run nat nat nat nat nat :=
+  [SCpu 0 (Issue 0) Ack; SRun 0 (fun _ => 0); SCpu 0 (Issue 1) Ack; SRun 2 (fun _ => 0)].
+
+Lemma stall_covered :
+  covered nat nat nat nat nat nat nat no_tiles no_tiles tile0 no_tiles no_tiles
+    (fun _ => false) (fun _ => false) (fun _ _ => False) A_stall 0 2.
+Proof.
+  apply (cov_issue _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 0 0 0 1).
+  - reflexivity.
+  - reflexivity.
+  - lia.
+  - left. exists 0. simpl. split; [left; reflexivity | right; left; left; reflexivity].
+Qed.
+
+Lemma stall_not_pending :
+  ~ pending nat nat nat nat nat nat nat no_tiles no_tiles tile0 no_tiles no_tiles
+      (fun _ => false) (fun _ => false) (fun _ _ => False) A_stall 0 2.
+Proof. intros [_ [_ H]]. exact (H 2 (le_n 2) stall_covered). Qed.
+
+(* 5b. Register write (IF.cc:233-249): the CPU writes register 0 (element 5) while
+       command 0, which names register 0, is uncovered; gem5 holds the write until
+       command 0 finished.  The write covers command 0 at its own step. *)
+Definition A_regw : Reduction.run nat nat nat nat nat :=
+  [SCpu 0 (Issue 0) Ack; SRun 0 (fun _ => 0); SCpu 0 (CpuWrite 5 1) Ack].
+
+Lemma reg_write_covered :
+  covered nat nat nat nat nat nat nat no_tiles no_tiles no_tiles reg0 no_tiles
+    (fun _ => false) (fun _ => false) reg_elem A_regw 0 2.
+Proof.
+  apply (cov_reg_write _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 0 0 0 5 1 0).
+  - reflexivity.
+  - lia.
+  - reflexivity.
+  - split; reflexivity.
+  - simpl. left. reflexivity.
+Qed.
+
+Lemma reg_write_not_pending :
+  ~ pending nat nat nat nat nat nat nat no_tiles no_tiles no_tiles reg0 no_tiles
+      (fun _ => false) (fun _ => false) reg_elem A_regw 0 2.
+Proof. intros [_ [_ H]]. exact (H 2 (le_n 2) reg_write_covered). Qed.
+
+(* 2026-10-15 ET, fix (a): a device read of a lock-protected location may not
+   escape its critical section merely because its output tile is dead. *)
+Local Arguments Enter {loc val arg}.
+Local Arguments Exit {loc val arg}.
+Local Arguments DeviceRead {loc val arg}.
+Local Arguments DeviceWrite {loc val arg}.
+Definition locked_read_trace : list (Composition.event nat nat nat) :=
+  [Enter; DeviceRead 7 0 1; DeviceWrite 7 2 1; Exit].
+Definition locked0 : nat -> nat -> sharing_class :=
+  fun _ l => if Nat.eqb l 0 then LockProtected else ThreadOwned.
+
+Lemma locked_device_read_cannot_escape :
+  ~ quiet_ok nat nat nat nat (fun l => l) (fun _ => True) locked0 locked_read_trace.
+Proof.
+  intros [_ [Hcross _]].
+  assert (Hcrosses : crosses_sync nat nat nat locked_read_trace 7).
+  { exists 1, 3, (DeviceRead 7 0 1), Exit.
+    repeat split; try reflexivity; try lia.
+    - right. split; reflexivity.
+    - intros [m [[Hlo Hhi] Hcover]].
+      assert (m = 2) by lia. subst m. discriminate. }
+  specialize (Hcross 7 Hcrosses).
+  destruct Hcross as [_ Hreads].
+  specialize (Hreads 1 0 1 eq_refl). simpl in Hreads. apply Hreads. reflexivity.
+Qed.
+
+(* Read-only data changes class after the barrier, while c remains uncovered. *)
+Local Arguments Own {loc val arg}.
+Local Arguments Barrier {loc val arg}.
+Definition changing_read_trace : list (Composition.event nat nat nat) :=
+  [Own 2; Enter; DeviceRead 7 0 1; Read 2 0; DeviceWrite 7 2 1; Exit;
+   Barrier; DeviceCovered 7].
+Definition changing0 (next : sharing_class) : nat -> nat -> sharing_class :=
+  fun b l => if Nat.eqb l 0 then
+    (if Nat.eqb b 0 then ReadOnly else next) else ThreadOwned.
+
+Lemma changed_read_class_cannot_escape : forall next, next <> ReadOnly ->
+  ~ quiet_ok nat nat nat nat (fun l => l) (fun _ => True)
+      (changing0 next) changing_read_trace.
+Proof.
+  intros next Hnext [_ [_ Hstable]].
+  assert (Hcover : ~ covered_between nat nat nat changing_read_trace 7 2 7).
+  { intros [m [[Hlo Hhi] Hm]].
+    destruct m as [|[|[|[|[|[|[|m]]]]]]]; simpl in Hm; try discriminate; lia. }
+  specialize (Hstable 2 7 0 1 7 (DeviceCovered 7)
+    eq_refl ltac:(lia) eq_refl Hcover).
+  simpl in Hstable. exact (Hnext Hstable).
+Qed.
+
+Lemma readonly_to_locked_uncovered_rejected :
+  ~ quiet_ok nat nat nat nat (fun l => l) (fun _ => True)
+      (changing0 LockProtected) changing_read_trace.
+Proof. apply changed_read_class_cannot_escape. discriminate. Qed.
+Lemma readonly_to_owned_uncovered_rejected :
+  ~ quiet_ok nat nat nat nat (fun l => l) (fun _ => True)
+      (changing0 ThreadOwned) changing_read_trace.
+Proof. apply changed_read_class_cannot_escape. discriminate. Qed.
+
+Print Assumptions changed_read_class_cannot_escape.
+Print Assumptions readonly_to_locked_uncovered_rejected.
+Print Assumptions readonly_to_owned_uncovered_rejected.
+Print Assumptions locked_device_read_cannot_escape.
+Print Assumptions stale_run_fits.
+Print Assumptions stale_history_read_allowed.
+Print Assumptions history_read_not_always_latest.
+Print Assumptions read_own_write.
+Print Assumptions failed_cas_reread_sees_winner.
+Print Assumptions stray_exit_excluded.
+Print Assumptions unready_read_is_hazard.
+Print Assumptions stall_covered.
+Print Assumptions stall_not_pending.
+Print Assumptions reg_write_covered.
+Print Assumptions reg_write_not_pending.
+Print Assumptions shared_action_kinds_exactly_five.
+Print Assumptions sharing_classes_exactly_four.
+
+(* Ownership-handoff regression, 2026-10-15 ET. Classes remain ThreadOwned,
+   but an uncovered old owner can otherwise read a future new owner's write. *)
+Definition handoff_class (_ a : nat) : sharing_class :=
+  if Nat.eqb a 1 then SharedActionsOnly else ThreadOwned.
+Definition handoff_run : Composition.run nat nat nat :=
+  [(0, Barrier); (1, Own 0); (1, Own 2); (1, Enter);
+   (1, DeviceRead 8 0 1); (1, Read 2 0); (1, DeviceWrite 8 2 1);
+   (1, Exit); (1, Barrier); (0, Own 0); (0, DeviceRead 7 1 1);
+   (0, Enter); (0, Read 0 0); (0, Write 0 1);
+   (1, DeviceCovered 8); (1, Shared Claim false 0 1 0);
+   (0, DeviceCovered 7); (0, Exit)].
+Lemma uncovered_owned_handoff_rejected :
+  ~ reads_owner_stable nat nat nat nat (fun l => l) handoff_class handoff_run 1.
+Proof.
+  intro Hstable.
+  destruct (Hstable 4 8 0 1 9 0 eq_refl eq_refl ltac:(lia) eq_refl ltac:(lia))
+    as [q [[Hlo Hhi] Hcover]].
+  destruct q as [|[|[|[|[|[|[|[|[|q]]]]]]]]]; simpl in Hcover;
+    try discriminate; lia.
+Qed.
+
+Definition covered_handoff_run : Composition.run nat nat nat :=
+  [(0, DeviceRead 8 0 1); (0, DeviceCovered 8); (1, Own 0)].
+Lemma covered_owned_handoff_allowed :
+  reads_owner_stable nat nat nat nat (fun l => l) handoff_class covered_handoff_run 0.
+Proof.
+  intros i c l v j u Hi Hclass Hij Hj Htu.
+  destruct i as [|[|[|i]]]; simpl in Hi; try discriminate;
+    try (destruct i; discriminate).
+  inversion Hi; subst c l v.
+  destruct j as [|[|[|j]]]; simpl in Hj; try discriminate;
+    try (destruct j; discriminate).
+  inversion Hj; subst u. exists 1. repeat split; try lia; reflexivity.
+Qed.
+
+Definition static_owner_crossing_run : Composition.run nat nat nat :=
+  [(0, Own 0); (0, DeviceRead 8 0 1); (0, Barrier); (0, DeviceCovered 8)].
+Lemma static_owned_read_crossing_allowed :
+  reads_owner_stable nat nat nat nat (fun l => l) handoff_class static_owner_crossing_run 0.
+Proof.
+  intros i c l v j u Hi Hclass Hij Hj Htu.
+  destruct j as [|[|[|[|j]]]]; simpl in Hj; try discriminate;
+    try (destruct j; discriminate).
+  inversion Hj; subst u. contradiction.
+Qed.
+Print Assumptions uncovered_owned_handoff_rejected.
+Print Assumptions covered_owned_handoff_allowed.
+Print Assumptions static_owned_read_crossing_allowed.

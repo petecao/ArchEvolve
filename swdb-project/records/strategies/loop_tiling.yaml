@@ -1,0 +1,43 @@
+kind: strategy
+schema_version: '0.3'
+id: loop_tiling
+status: draft
+deprecated_by: null
+created: '2026-09-23'
+updated: '2026-09-23'
+provenance:
+- id: wolf-lam-1991
+  kind: paper
+  description: 'M. E. Wolf and M. S. Lam, "A data locality optimizing algorithm," PLDI 1991, pp. 30-44:
+    improves locality "by transforming the code via interchange, reversal, skewing and tiling"; without
+    tiling, data used in intervening iterations "may replace the data ... before it can be reused";
+    loops can be tiled if they are fully permutable (every dependence vector lexicographically
+    positive, with the tiled loops'' components non-negative unless an outer prefix is already
+    positive); the tile size is chosen for one level of the memory hierarchy; tiling improved a
+    500x500 matrix multiplication by a factor of 2.75 on one processor.'
+  uri: https://doi.org/10.1145/113445.113449
+name: Loop tiling
+target: loop
+effect:
+- kind: restructure_loop
+  restructure: tile
+parameters:
+- name: tile_size
+  meaning: Iterations per tile along each tiled loop.
+  unit: iterations
+preconditions:
+  requires_shapes: []
+  requires_semantics: []
+  unchecked:
+  - The tiled loops are fully permutable (Wolf and Lam); skewing can make a nest fully permutable.
+  - The loop bounds of the tiled loops do not depend on data read inside the nest (a CSR edge loop's
+    bounds come from offsets, so tiling it needs the loop restructured first).
+benefits_when:
+- condition: The data the loop nest reuses does not stay in the cache between uses; the tile size is
+    chosen so one tile's data fits in the targeted cache level.
+  terms:
+  - footprint_llc_ratio
+  - l2_bytes
+  - llc_bytes
+  basis: reported
+  source: wolf-lam-1991

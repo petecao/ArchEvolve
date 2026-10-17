@@ -1,0 +1,144 @@
+{
+  "format": "swdb.lanl17-index-privacy-envelope-source-staging-archival-custody.v1",
+  "canonical_ensure_ascii": true,
+  "archived_utc": "2026-10-07T19:19:07.102137+00:00",
+  "base_commit": "30015b4ff2190b7331f13cd85aeef9653bded734",
+  "base_tree": "059ed8e8850e2e5290560f610c5f5aace6a4a5a5",
+  "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-index-privacy-envelope-source-staging-20261007-a1/",
+  "entries": [
+    {
+      "role": "original_NOTRUN_sourcecopy_driver",
+      "origin": "/private/tmp/lanl-stage-reviewed17-index-privacy-envelope-source-from-git-20261007-a1.py",
+      "snapshot": "lanl-stage-reviewed17-index-privacy-envelope-source-from-git-20261007-a1.py",
+      "bytes": 19246,
+      "sha256": "103b7557c5428b04626db360922907b1873440d089cb093dd7da0e122364551b",
+      "original_bytes_preserved": true
+    },
+    {
+      "role": "original_source_only_handoff",
+      "origin": "/private/tmp/lanl17-index-privacy-envelope-source-staging-source-handoff-20261007-a1.md",
+      "snapshot": "lanl17-index-privacy-envelope-source-staging-source-handoff-20261007-a1.md",
+      "bytes": 5226,
+      "sha256": "6735104d947bac29c20ad76dc1d3a926c2dc504c69bcd6c606b8016609de307a",
+      "original_bytes_preserved": true
+    },
+    {
+      "role": "original_full_derivation_diff",
+      "origin": "/private/tmp/lanl17-index-privacy-envelope-source-staging-derivation-20261007-a1.diff",
+      "snapshot": "lanl17-index-privacy-envelope-source-staging-derivation-20261007-a1.diff",
+      "bytes": 16814,
+      "sha256": "dcdb2f9be846715f6f2c57520cdb6d9fd6bb042b0f04a76b9b8b8e993ffe09f5",
+      "original_bytes_preserved": true
+    },
+    {
+      "role": "original_unsealed_static_derivation",
+      "origin": "/private/tmp/lanl17-index-privacy-envelope-source-staging-static-derivation-20261007-a1.json",
+      "snapshot": "lanl17-index-privacy-envelope-source-staging-static-derivation-20261007-a1.json",
+      "bytes": 5446,
+      "sha256": "75ebc4376f6bc0c0acc896177c74b057c533142a7ad09bae37b55ca2928d9cdf",
+      "original_bytes_preserved": true,
+      "original_policy": "Original unsealed static AST/byte derivation; no retroactive seal or execution admission."
+    },
+    {
+      "role": "original_True_NOTRUN_preparation",
+      "origin": "/private/tmp/lanl17-index-privacy-envelope-source-staging-NOTRUN-preparation-20261007-a1.json",
+      "snapshot": "lanl17-index-privacy-envelope-source-staging-NOTRUN-preparation-20261007-a1.json",
+      "bytes": 5169,
+      "sha256": "f77fc31b7bc4bf0c489cebe2681956e6d240338aabe992f433dbe906627bb4fd",
+      "original_bytes_preserved": true,
+      "original_format": "swdb.lanl17-index-privacy-envelope-source-staging-NOTRUN-preparation.v1",
+      "original_identity_sha256": "87503b37b4bac29f7074aa92c26babd8c18b3df6dc4f639563ad37825fac7ad0",
+      "original_canonical_ensure_ascii": true
+    },
+    {
+      "role": "parent_complete_True_source_review",
+      "origin": "/private/tmp/lanl17-index-privacy-envelope-source-staging-parent-review-20261007-a1.json",
+      "snapshot": "lanl17-index-privacy-envelope-source-staging-parent-review-20261007-a1.json",
+      "bytes": 4418,
+      "sha256": "9c861a1add3d40b848304d80a9d7717b14f2a07f9e331c6658baa67ec5bc677b",
+      "original_bytes_preserved": true,
+      "original_format": "swdb.lanl17-index-privacy-envelope-source-staging-parent-source-review.v1",
+      "original_identity_sha256": "163ca6059d5fbeb9399cb497f11373ef135faebe850f034da7b4e3976567a038",
+      "original_canonical_ensure_ascii": true
+    },
+    {
+      "role": "parent_complete_review_note",
+      "origin": "/private/tmp/lanl17-index-privacy-envelope-source-staging-parent-review-20261007-a1.md",
+      "snapshot": "lanl17-index-privacy-envelope-source-staging-parent-review-20261007-a1.md",
+      "bytes": 2071,
+      "sha256": "ad9692b169fdf2fbb32c70bc6f998e0e626b1ae7e3c324ad716decca5c470420",
+      "original_bytes_preserved": true
+    },
+    {
+      "role": "later_actual_parent_sourcecopy_receipt",
+      "origin": "/private/tmp/lanl17-reviewed-index-privacy-envelope-source-staging-actual-20261007-a1.json",
+      "snapshot": "lanl17-reviewed-index-privacy-envelope-source-staging-actual-20261007-a1.json",
+      "bytes": 3396,
+      "sha256": "fbdb0364ff97773dd0935f6c930dd57b74d441452ee18d5eb0447a7683945f0c",
+      "original_bytes_preserved": true,
+      "original_format": "swdb.lanl17-reviewed-index-privacy-envelope-source-staging.v1",
+      "original_identity_sha256": "f66589a8923a0a9b205dbb7a6f7b6d38a1df6670beb959cb207b99bf3fa9900e",
+      "original_canonical_ensure_ascii": true
+    }
+  ],
+  "exact_original_snapshots": 8,
+  "exact_original_snapshot_bytes": 61786,
+  "new_archive_files": 10,
+  "original_explicit_True_sealed_JSONs": 3,
+  "original_unsealed_static_derivation_preserved": true,
+  "original_NOTRUN_review_and_later_actual_chronology_preserved": true,
+  "readme": {
+    "snapshot": "README.md",
+    "bytes": 3335,
+    "sha256": "1fe246be1202b364135250f15ee42d7fd43cd2ffb7c7d85b22c923c5cfa4907b"
+  },
+  "original_shape_reference_not_duplicated": {
+    "path": "/private/tmp/lanl-stage-reviewed17-input-author-sources-from-git-20261007-a1-r1.py",
+    "bytes": 23612,
+    "sha256": "d5780992722de678ea22e4f92fb5b6c1316cc12f038ae9c2a239780cb6c1f09f",
+    "durable_git_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-input-author-sources-staging-20261007-a1-r1/lanl-stage-reviewed17-input-author-sources-from-git-20261007-a1-r1.py",
+    "reference_only_not_duplicated": true
+  },
+  "actual_sourcecopy": {
+    "identity_sha256": "f66589a8923a0a9b205dbb7a6f7b6d38a1df6670beb959cb207b99bf3fa9900e",
+    "checked_utc": "2026-10-07T19:16:31.445349+00:00",
+    "source_git_revision": "30015b4ff2190b7331f13cd85aeef9653bded734",
+    "parent_reported_single_invocation_returncode": 0,
+    "returncode_scope": "Parent-approved single completed source copy; exact original receipt preserved",
+    "driver_sha256": "103b7557c5428b04626db360922907b1873440d089cb093dd7da0e122364551b",
+    "destination": "/data1/yanruj/lanl17-index-privacy-source-20261007-a1",
+    "source_filename": "envelope.py",
+    "source_bytes": 38790,
+    "source_sha256": "1ee5ffbdf1ef322cfd5bfec4b6e402c29d23c776e855f01d25208ebbece0fcfc",
+    "directory_mode": "0700",
+    "file_mode": "0600",
+    "second_remote_receipt_file": false,
+    "selected_envelope_original_writer_import_main_or_science": false
+  },
+  "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "retained_source_C_ref": "codex/lanl-ticket11-source-c",
+  "estimator_F6_original_custody": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "Python_modules_Git_equal_C": 185,
+  "canonical_YAML_unchanged": 686,
+  "previous_tracked_blobs": 3952,
+  "all_previous_blobs_modes_except_issue17_append_preserved": true,
+  "only_previous_file_change": {
+    "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/issues/17-agreement-report.md",
+    "operation": "append_only",
+    "status": "claimed",
+    "original_sha256": "e41f8cb798c84539175f60438fd18dda9beaf3ced2749ae238fbd75f7ffd9a27",
+    "append_bytes": 998,
+    "append_sha256": "266452cddf351b807718a43ec401d5f07f0389a033dbc42214dc26dab739320a",
+    "after_sha256": "137e12f3aa69d8d160048f41906061331aaa272c4785c8602ee83d8ca7092606"
+  },
+  "archive_actions": {
+    "staging_SSH_or_source_review_repeated": false,
+    "imports_main_tests_actual_inputs_Store_validation_science": false,
+    "push_or_integration_merge_cleanup": false,
+    "maps_progress_status_root_other_ticket_source_or_canonical_edits": false
+  },
+  "actual_real_input_argv_private_startup_outer_capture_review_still_required": true,
+  "scientific_admission_or_ticket_resolution": false,
+  "identity_semantics": "CanonicalTrue retention metadata excluding identity_sha256; original unsealed derivation and source-only chronology unchanged.",
+  "identity_sha256": "f1401bf35ac48d84fe03fa1d404f2e8a2bd13ae8ab9d41f54265a28495419040"
+}

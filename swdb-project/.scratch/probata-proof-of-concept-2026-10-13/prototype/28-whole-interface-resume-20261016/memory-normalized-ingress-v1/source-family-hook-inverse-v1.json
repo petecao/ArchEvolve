@@ -1,0 +1,42 @@
+{
+  "base": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v4/proposed/swdb/dx100_checked_source.py",
+    "sha256": "eaf7b6609a3404c31655110b1de15541246d913b14b67b53ebb3f7acbcbb89a2"
+  },
+  "finite_branch_files_untouched": [
+    "cbmc_adapter.py",
+    "formal_frame.py",
+    "proof_semantics.py",
+    "proof_setup.py"
+  ],
+  "future_fresh_producer_basis_method_and_receipts_required": true,
+  "replacements": [
+    {
+      "count": 3,
+      "new": "from swdb._dx100_whole import capture_family_dispatch_v1 as ingress",
+      "old": "from swdb._dx100_whole import normalized_capture_ingress_v2 as ingress"
+    },
+    {
+      "count": 1,
+      "new": "need(capture.get('kind') in ingress.NORMALIZED_KINDS, 'unknown complete capture input roles')",
+      "old": "need(capture.get('kind') == ingress.KIND, 'unknown complete capture input roles')"
+    },
+    {
+      "count": 1,
+      "new": "    from swdb._dx100_whole import runtime_projection_v3, normalized_compiler_adapter_v1\n    from swdb._dx100_whole import normalized_capture_ingress_v2, memory_normalized_capture_ingress_v1\n    from swdb._dx100_whole import memory_normalized_compiler_adapter_v1, memory_source_preparation_v1\n",
+      "old": "    from swdb._dx100_whole import runtime_projection_v3, normalized_compiler_adapter_v1\n"
+    },
+    {
+      "count": 1,
+      "new": "        ingress, normalized_capture_ingress_v2, memory_normalized_capture_ingress_v1,\n        memory_normalized_compiler_adapter_v1, memory_source_preparation_v1,\n        closed_python_surface, role_normalized_gzip_v2, lossless_gzip_v2, runtime_projection_v3, normalized_compiler_adapter_v1)",
+      "old": "        ingress, closed_python_surface, role_normalized_gzip_v2, lossless_gzip_v2, runtime_projection_v3, normalized_compiler_adapter_v1)"
+    },
+    {
+      "count": 1,
+      "new": "        'dx100_checked_source.py': Path(__file__), 'dx100_whole_checked.py': Path(contracts.__file__),\n        'memory_capture_facts_v1.json': Path(__file__).parent / '_dx100_whole/memory_capture_facts_v1.json',",
+      "old": "        'dx100_checked_source.py': Path(__file__), 'dx100_whole_checked.py': Path(contracts.__file__),"
+    }
+  ],
+  "schema": "memory-source-family-hook-inverse-1",
+  "shared_or_frozen_source_written": false
+}

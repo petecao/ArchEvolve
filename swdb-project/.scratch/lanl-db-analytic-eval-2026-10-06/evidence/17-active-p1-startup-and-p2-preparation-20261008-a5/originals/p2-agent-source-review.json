@@ -1,0 +1,69 @@
+{
+  "changed_leaves": [
+    {
+      "location": [
+        "argv",
+        15
+      ],
+      "p1": "extensa-gem5-bfs-20261006-p1",
+      "p2": "extensa-gem5-bfs-20261006-p2"
+    },
+    {
+      "location": [
+        "argv",
+        27
+      ],
+      "p1": "/data/yanruj/EvolveSWDB_runs/lanl17-p1-before-custody-20261008-a5",
+      "p2": "/data/yanruj/EvolveSWDB_runs/lanl17-p2-before-custody-20261008-a5"
+    },
+    {
+      "location": [
+        "collect",
+        0
+      ],
+      "p1": "/data/yanruj/EvolveSWDB_runs/lanl17-p1-before-custody-20261008-a5/custody.json",
+      "p2": "/data/yanruj/EvolveSWDB_runs/lanl17-p2-before-custody-20261008-a5/custody.json"
+    }
+  ],
+  "corrected_outputs": [
+    {
+      "bytes": 8623,
+      "path": "/private/tmp/lanl17-p2-before-dispatch-worksheet-r1-20261008-a5.md",
+      "sha256": "d39cfe66762e0e68e8e8ee7f4354e7fcbae1cf7c6e3372b6ef56a1146900d8ba"
+    },
+    {
+      "bytes": 3139,
+      "path": "/private/tmp/lanl17-p2-dispatch-parent-argv-draft-r1-20261008-a5-a2.json",
+      "sha256": "21949d683b64c6e374ba65fa441e975509706e87ac568e49114ab27425b6fd3c"
+    },
+    {
+      "bytes": 4736,
+      "path": "/private/tmp/lanl17-p2-dispatch-bootstrap-config-draft-r1-20261008-a5-a2.json",
+      "sha256": "8fa985769bdf8ea03c460651bba0505e735520abc3b2c56d81f48c360f6a3b8f"
+    }
+  ],
+  "derived_p2_before_config": {
+    "bytes": 1917,
+    "path": "/private/tmp/lanl17-p2-before-action-config-20261008-a5.json",
+    "sha256": "4d459584b9f37fb6b8319c1642df2ab52af9ac51685ad29284d49bfb17e8e97c"
+  },
+  "dispatcher_source_pin": {
+    "bytes": 29470,
+    "path": "/private/tmp/lanl17_capture_reviewed_normal_campaign_dispatch_20261008_a2r1.py",
+    "sha256": "76de56fc103d0ffa3d1b197fa93e474e4db4aef78698e69abb9197b994d8e8e3"
+  },
+  "dispatcher_source_unchanged": true,
+  "original_p1_before_config": {
+    "bytes": 1720,
+    "path": "/private/tmp/lanl17-p1-before-action-config-20261008-a5.json",
+    "sha256": "2b24436cef70bec7c3cbfbbf19130187a929b5d06f6ddf35c983531d7eedcbe5"
+  },
+  "original_p1_raw_bytes_preserved": true,
+  "primary_must_live_equal_scientific_R": "5e12a9796432654d88def24ecea617d16ca605b2",
+  "remote_executed": false,
+  "reversal_restores_exact_canonical_bytes": true,
+  "reversal_restores_exact_decoded_p1": true,
+  "source_only": true,
+  "unchanged_before_source_pins": true,
+  "unchanged_remote_local_waits": true
+}

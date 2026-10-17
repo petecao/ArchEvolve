@@ -1,0 +1,89 @@
+{
+  "created": "2026-10-16 ET",
+  "classification": "INDEPENDENT_CONTROLLER_REVIEW_PASS_ADMIT_ONCE_AFTER_FRESH_PREFLIGHT",
+  "preparation": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-closed-source-public-controller-repair-preparation-v4-20261016.json",
+    "bytes": 7991,
+    "sha256": "43e382143f67fd1e290fff863817797649baba8f92717fb12952fb32903fca3d"
+  },
+  "command": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v4/inert-1433b8f5-node0/command.json",
+    "bytes": 7233,
+    "sha256": "bf911fcea94fa02bf0f430d711c93797ef50b763736d30133c91568b45ab758d"
+  },
+  "controller_files": [
+    {
+      "bytes": 18385,
+      "name": "closed_python_surface.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/closed_python_surface.py",
+      "sha256": "748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af"
+    },
+    {
+      "bytes": 9610,
+      "name": "python_startup_roles_v2.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python_startup_roles_v2.py",
+      "sha256": "5e9d2e6dfa2aaa7999f4670a979d3cc32736b852a612f77d4e2f7c71bc229618"
+    },
+    {
+      "bytes": 2709,
+      "name": "python_role_observer_v2.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python_role_observer_v2.py",
+      "sha256": "9b100cbe2fdef3e7d429ccdf05d6489d44855a84328e2dd8532eb547beeaf43b"
+    },
+    {
+      "bytes": 116503,
+      "name": "t28-linux-runtime-observer-v2-actual-20261016.json",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-linux-runtime-observer-v2-actual-20261016.json",
+      "sha256": "092397608fe3a08c42d85e9c8e121ed139f0d94e345a12ae3aaa57ad6e93a5f0"
+    },
+    {
+      "bytes": 19781,
+      "name": "reviewed_wp_gates.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v4/reviewed_wp_gates.py",
+      "sha256": "76a0dc85050e70de0fbbc29099fa6cc50afa9e9edb085d991127c92f7f059151"
+    },
+    {
+      "bytes": 3637,
+      "name": "reviewed_native_gates.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v4/reviewed_native_gates.py",
+      "sha256": "c13376db78d81e351486b3e0d44c295b6f679ee9863f21023639a9893b25d283"
+    },
+    {
+      "bytes": 9100,
+      "name": "reviewed-function-lineage.json",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v4/reviewed-function-lineage.json",
+      "sha256": "81534a7de64403203b758a008f7557941927eedafad35517141503539b028ec0"
+    },
+    {
+      "bytes": 29360,
+      "name": "entry.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v4/inert-1433b8f5-node0/entry.py",
+      "sha256": "77b4c2cedc85f3325bbd14d7b5a436e48b7d00940355c4fe93aa59bdac52ae01"
+    },
+    {
+      "bytes": 677005,
+      "name": "policy.json",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v4/inert-1433b8f5-node0/policy.json",
+      "sha256": "e84f56859b73e1237d9c8b40b9ea50917e23e98de74202a0ed858eb39bfd9cce"
+    }
+  ],
+  "source_commit": "1433b8f58baa63538d1e8aa8a33d9ce566826407",
+  "pin_rows_checked": 26,
+  "source_gate": "All597sourceleaves/13roots identical to root-reviewedV3; production source is unchanged1433b8f5.",
+  "checks": [
+    "Exact source-derived one-slot lock directory/owner/formatted queue-ticket disappearance accepted only during activepoll after physical parent observation. Unknown paths/names, persistent queue-directory deletion, redirected/special paths still refuse.",
+    "Final successful settlement remains strict and requires absentlock/emptyqueue/full5physicalcases/exactalias->4. All source/native/runtime/JUnit/record/assumption/result-size/time-finalization criteria unchanged.",
+    "Progress metadata now aggregates5physicalcasepaths once per poll; it changes no verdict or record acceptance.",
+    "23no-child controls cover both preservedV3 race reproductions, active/final distinctions, unknown-path refusal and complete template inverse.",
+    "Original V3 three records are partial only; new full5run remains required."
+  ],
+  "guard": {
+    "external_timeout_seconds": 1320,
+    "per_file_bytes": 134217728,
+    "raw_budget_bytes": 536870912,
+    "rss_cap_bytes": 8589934592,
+    "whole_tree_seconds": 1200,
+    "workers": 1
+  },
+  "scope": "One five-case public workflow on node0,8GiB/1200s/1worker; no new WPsolver/Why3job, no retroactive helper closure or fullticket claim."
+}

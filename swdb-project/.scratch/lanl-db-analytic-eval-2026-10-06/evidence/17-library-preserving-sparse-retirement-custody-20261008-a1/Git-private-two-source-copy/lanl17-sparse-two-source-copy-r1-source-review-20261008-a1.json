@@ -1,0 +1,116 @@
+{
+  "boundary": {
+    "Git_commands": false,
+    "SSH": false,
+    "project_mutations": false,
+    "selected_mains": false,
+    "source_review_only": true,
+    "target_definition_compilation_or_calls": false,
+    "target_imports": false,
+    "tests": false
+  },
+  "checks": [
+    "Both native Git argv vectors put global --no-replace-objects before the subcommand and disable core.fsmonitor; successful exit with any stderr is refused.",
+    "Copier requires exact delivered administrative ref, full40 commit, frozen 5e ancestry, and exclusively A-status additions within the literal evidence prefix. Both source paths must be among those additions and exact 100644 blobs.",
+    "PRIMARY HEAD, branch, yanmain/origin yanmain/origin integration refs, whole ref inventory, native bytes/stats, common config and empty original retention bytes/stats are pinned before publication and rechecked afterward; there is no fetch, checkout, reset, ref write or configuration write.",
+    "BASE private0700/canonical owner route, PRIMARY/.git canonical owner/device/setgid rules, fixed Linux account/native Python and cleared routing overrides are enforced; HOME and CODEX_HOME are not read or changed.",
+    "Exactly two caller-pinned distinct basenames are copied into one absent direct-BASE0700 directory with exclusive0600 single-link files, fsync and final returned-byte/full-stat/immutable Git-blob rechecks.",
+    "Copier deadline180s, per-Git30s and16MiB streaming cap, bootstrap per-Git30s and512KiB blob cap, finite TERM5/KILL5 child cleanup, source512KiB caps and receipt16KiB cap remain unchanged. The prospective parent outer GNU600/KILL60 is separately required by the handoff.",
+    "Guard165299/d108a720 and wrapper24115/f6b8ca28 actual local source bytes match the complete handoff pins and satisfy the copier whitelist/size gates; this is source association, not copy, capacity or scientific admission."
+  ],
+  "comparisons": [
+    {
+      "changed_nodes": [
+        {
+          "definition": "git",
+          "top_level_index": 35,
+          "type": "FunctionDef"
+        }
+      ],
+      "complete_unified_diff_exact": true,
+      "role": "copier",
+      "same_top_level_node_count": true
+    },
+    {
+      "changed_nodes": [
+        {
+          "definition": null,
+          "top_level_index": 15,
+          "type": "Assign"
+        },
+        {
+          "definition": "git",
+          "top_level_index": 24,
+          "type": "FunctionDef"
+        }
+      ],
+      "complete_unified_diff_exact": true,
+      "role": "bootstrap",
+      "same_top_level_node_count": true
+    }
+  ],
+  "conclusion": "No concrete blocker found in the reviewed R1 two-source copy/bootstrap flow. Future use remains conditional on parent full review of the actual administrative commit, exact control pins, argv, fresh destination and outer native/private capture; no runtime acceptance is asserted.",
+  "concrete_findings": [],
+  "execution_status": "NOT RUN",
+  "format": "source-only-sparse-two-source-copy-r1-review.v1",
+  "reviewed_utc": "2026-10-08T09:40:27.219686+00:00",
+  "reviewer": "ticket02",
+  "sealed": false,
+  "source_pins": [
+    {
+      "bytes": 11785,
+      "path": "/private/tmp/lanl17_copy_sparse_retirement_sources_from_administrative_git_20261008_a1.py",
+      "sha256": "0306692835cc580bf11672f15dc43f50b93051a4e64029d35163b34e7ac5ca59"
+    },
+    {
+      "bytes": 11828,
+      "path": "/private/tmp/lanl17_copy_sparse_retirement_sources_from_administrative_git_20261008_a1_r1.py",
+      "sha256": "94f5f33bda82c7d64a9c4644c6630aa5fde598fc7d950d94e7ab74e3e60a37a9"
+    },
+    {
+      "bytes": 5546,
+      "path": "/private/tmp/lanl17_sparse_retirement_copy_native_stdin_bootstrap_20261008_a1.py",
+      "sha256": "828ca407b403ba225f4d9227095e2879ac54fe25f4793408fbf311796fb5c07b"
+    },
+    {
+      "bytes": 5620,
+      "path": "/private/tmp/lanl17_sparse_retirement_copy_native_stdin_bootstrap_20261008_a1_r1.py",
+      "sha256": "fd3c44fdcb7c69e6b6bfbe27221a8508547657b94e7af4b94bec47fc2cd09d8b"
+    },
+    {
+      "bytes": 1725,
+      "path": "/private/tmp/lanl17-sparse-two-source-copier-r1-complete-original-derivation-20261008.diff",
+      "sha256": "d741e600a6a286b951ea9395261b8de0596107bfe83a76befe47dcad7267c7c4"
+    },
+    {
+      "bytes": 1986,
+      "path": "/private/tmp/lanl17-sparse-two-source-bootstrap-r1-complete-original-derivation-20261008.diff",
+      "sha256": "b7ddc3b3d123ee80f88639ed0c72d56c68e8f4543b9b45590ee43b46fea91f3c"
+    },
+    {
+      "bytes": 2844,
+      "path": "/private/tmp/lanl17-sparse-two-source-git-copy-r1-static-comparison-20261008-a1.json",
+      "sha256": "e5becde5843a654f59a6c3163a4d64b70e636d918759fb746459758415fcd247"
+    },
+    {
+      "bytes": 4603,
+      "path": "/private/tmp/lanl17-sparse-two-source-administrative-git-copy-r1-source-handoff-20261008-a1.md",
+      "sha256": "b8ec39a7d248a7f241c74b83ff246a50be6849f67feab3d02621271c5678a193"
+    },
+    {
+      "bytes": 14940,
+      "path": "/private/tmp/lanl17-library-preserving-sparse-retirement-source-handoff-20261008-a1.md",
+      "sha256": "dd92b679313858ed48ec51a03641a949f04f60c6290eb6a2146a1f24ab06f538"
+    },
+    {
+      "bytes": 165299,
+      "path": "/private/tmp/lanl_sparse_retire_consumed_source_guard_20261008_a1_r1.py",
+      "sha256": "d108a7201161c6676941bccbc31292f9ac08c61835bbcd1bee0df2c01fe22e04"
+    },
+    {
+      "bytes": 24115,
+      "path": "/private/tmp/lanl17_detach_library_preserving_sparse_administration_20261008_a1.py",
+      "sha256": "f6b8ca281e36d0b7a1af18f5f35fcda1f5a94dd1a66d8a35e9795e5802790a60"
+    }
+  ]
+}

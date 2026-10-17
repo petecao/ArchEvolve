@@ -1,0 +1,118 @@
+kind: comparison_result
+schema_version: '0.4'
+id: typed-library-bfs-gem5-20261003-a2.recovery.r1.w1.comparison
+status: draft
+created: '2026-10-03'
+updated: '2026-10-03'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: typed-library-bfs-gem5-20261003-a2.recovery.r1.w1.comparison
+  protocol: typed-library-bfs-gem5-20261003-a2.protocol.84229924369fc6b0
+  comparison_baseline: dx100-bfs-scalar
+  baseline_evaluation: typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w1.baseline.aggregate
+  candidate_evaluation: typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w1.candidate.aggregate
+  companion_evaluations:
+    timed: typed-library-bfs-gem5-20261003-a2.companion.timed.evaluation
+    diagnostic: typed-library-bfs-gem5-20261003-a2.companion.diagnostic.evaluation
+decision:
+  state: gain
+  reasons: []
+gain_claim: true
+evidence_kind: execution
+metrics:
+  roi_speedup: 1.4027646957261597
+  per_source_position_speedup:
+    '0': 1.4027646957261597
+  confidence_interval:
+    confidence: 0.95
+    lower: 1.4027646957261597
+    upper: 1.4027646957261597
+    method: independent per-source bootstrap of median ratios
+    resamples: 2000
+  relative_spread:
+    baseline:
+      '0': 0.0
+    candidate:
+      '0': 0.0
+  companion_acceptance:
+    case: parent_gather_race
+    outcome: observed
+    evaluations:
+      timed:
+        evaluation: typed-library-bfs-gem5-20261003-a2.companion.timed.evaluation
+        sha256: 75f17237a61bb17d1a6e4e0a546e56a90228ae648f8f6c225ff03a9985f096ae
+        frontier_sizes:
+          state: passed
+          observed: [1, 4097, 4113]
+          oracle: [1, 4097, 4113]
+          lines:
+          - count: 1
+            line: 75
+          - count: 4097
+            line: 88
+          - count: 4113
+            line: 90
+          output:
+            path: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.companion.timed.evaluation/002-simulation.log
+            sha256: 4eaf735e6fcd1094de96afe4ac45f26294a63806532005d858080ea66213e826
+          basis: trusted original-adjacency BFS per-depth counts
+      diagnostic:
+        evaluation: typed-library-bfs-gem5-20261003-a2.companion.diagnostic.evaluation
+        sha256: c6e696d7fae07bc9ed1b8a573eca7bc83d80f9447d4b233f0c20d52daf9cbab9
+        frontier_sizes:
+          state: passed
+          observed: [1, 4097, 4113]
+          oracle: [1, 4097, 4113]
+          lines:
+          - count: 1
+            line: 75
+          - count: 4097
+            line: 88
+          - count: 4113
+            line: 90
+          output:
+            path: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.companion.diagnostic.evaluation/002-simulation.log
+            sha256: 370146111e83bb7bf4f7067cf1220bae0895120d73f7124a670b1764b35ee2d8
+          basis: trusted original-adjacency BFS per-depth counts
+        parent_gather_race:
+          outcome: observed
+          probes:
+          - cas_negative_hint_failures: 14546
+            l3_violations: 0
+            line: 94
+          output:
+            path: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.companion.diagnostic.evaluation/002-simulation.log
+            sha256: 370146111e83bb7bf4f7067cf1220bae0895120d73f7124a670b1764b35ee2d8
+          scope: finite diagnostic execution; observed means race exercised without an L3 violation
+  workload: bfs-20260928-kronecker18-s0.cf4283236c5cb50c
+  attribution: joint_hardware_software
+  disclosed_differences:
+    software:
+    - Fresh unchanged full-source dx100-bfs-scalar DOBFS versus Peter section 5 read offload applied to
+      the certified scalar-only snapshot; CPU compare-and-swap and queue updates are retained.
+    accelerator:
+    - MAA enabled only for the candidate role.
+    configuration:
+    - Both roles use LLC 8MiB/16-way and identical CPU, caches, memory and clock; accelerator presence
+      differs.
+region_comparisons: []
+finished_at: '2026-10-03T21:41:27.240711+00:00'
+protocol: typed-library-bfs-gem5-20261003-a2.protocol.84229924369fc6b0
+protocol_sha256: 84229924369fc6b0ef154a4c7f855caf6382d3265b1d45f628defecc5ca954cf
+baseline_evaluation: typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w1.baseline.aggregate
+candidate_evaluation: typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w1.candidate.aggregate
+comparison_baseline: dx100-bfs-scalar
+source_ancestor: dx100-bfs-scalar
+evaluation_identities:
+  typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w1.baseline.aggregate: b010bd6fe018a42099cf62b3481fa6f8bcc2edc1a5a0ed89fd39aa0b376470a3
+  typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w1.candidate.aggregate: 170eda1b522cf46b1fbcbe7e21485ef0f55954ebd6d87e38988751e994a7ba5d

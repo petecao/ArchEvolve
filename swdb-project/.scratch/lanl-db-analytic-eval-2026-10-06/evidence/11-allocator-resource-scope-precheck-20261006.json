@@ -1,0 +1,1374 @@
+{
+  "format": "swdb.cpu-allocator-gross-resource-admission.v1",
+  "updated": "2026-10-06 ET",
+  "source_commit": "ce38e9b",
+  "recipe": {
+    "id": "gross_allocator_loop_resource_v1",
+    "denominator": "source_normalized_exact_allocator_events",
+    "elapsed": "gross_uninstrumented_work_loop_only",
+    "includes_loop_control": true,
+    "composition": "max_with_counted_compute_resource",
+    "transfer_basis": "inferred",
+    "physical_instruction_latency": false,
+    "proven_application_upper_bound": false,
+    "freeze_scope": "after_independent_service_collection_before_application_timing",
+    "minimum_gross_window_s": 0.05,
+    "paired_rates_used": false
+  },
+  "records": [
+    {
+      "id": "mbit10.cpu.lanl20261006.resource.allocator.a1",
+      "sha256": "558011111e9dbbfb85534a7b580d176a4b8080dce8276bc9b5b661b3c53ffd07",
+      "identity_sha256": "907d1d1153adecdb0edce56fe7a5f465c6c8e9fc976f403bfaf9a250444e47f7",
+      "file_sha256": "2133466f17fca9864a66c88137748a01cad27e8be1b58fa49b437c85f8a6cfa4",
+      "source": {
+        "id": "mbit10.cpu.lanl20261006.service.allocator.a1",
+        "sha256": "7efd40f960ea01da9348d4fc614a73e07c9694eb916a250a2497e63b64b3a5eb",
+        "identity_sha256": "f564a776deaeb147698f8fd423e2d603ef426053d2a6f6a082e2a52debb09fac",
+        "receipt_sha256": "35e3802e6f8d28f958379f3e709b057ed59af092bec5c66c51cc4decda8f41bd",
+        "file_sha256": "55981bcf596fdf22e29c0e160b511eee4c7631aae5c602702575db5e408bfe9f"
+      },
+      "cells": 20,
+      "minimum_gross_s": 0.05598805600000001,
+      "minimum_driver_s": 1.7849999999999997e-05,
+      "maximum_driver_s": 0.006973864999999999,
+      "all_source_bytes_unchanged": true,
+      "frozen_ns": 1791344377524951000
+    },
+    {
+      "id": "mbit10.cpu.lanl20261006.resource.allocator-extra.a1",
+      "sha256": "c089727fa00d602845a2e6edf7914eb27a76f08dbdbde80c9c8eba2b53e40330",
+      "identity_sha256": "2443f884fe8038ea43b290ccd435c1022a4a4a7667499c723d2da6a10590c86e",
+      "file_sha256": "9556558f9d78e125352fce767adf47e8ee75ce1b417993c9f5dfca7d86dd9e7e",
+      "source": {
+        "id": "mbit10.cpu.lanl20261006.service.allocator-extra.a1",
+        "sha256": "11005fecb02a7ca8578d642bcc7209803b71e4f7596863cc1ad51a404f718cc9",
+        "identity_sha256": "2fca2d7caf1d919de1a44c5988a2feea9a20842ca5219d41b1b62bc867c48be1",
+        "receipt_sha256": "6e32f4d497b65be25030d036eff5a6fc56c3f48279c22e501392ac6b0f829bab",
+        "file_sha256": "b68c95fb58105bd698435537e1afa2e777fcfff6a3542ed22d02fbf4c52e20d7"
+      },
+      "cells": 16,
+      "minimum_gross_s": 0.06419580100000002,
+      "minimum_driver_s": 2.524300000000001e-05,
+      "maximum_driver_s": 0.0002436250000000001,
+      "all_source_bytes_unchanged": true,
+      "frozen_ns": 1791344484271654000
+    }
+  ],
+  "native_source_pinned": {
+    "CpuAllocatorWork.h": "6a4f4198d6ac45ca0c23ba130f423f3f47cf50b2ca9637376c0a8db77af4fe55",
+    "CpuAllocatorTimer.cpp": "da4bd29ab0ff509742fca87750a173ff5827eedbd429e22cd0c210533b5a8c83",
+    "CpuAllocatorCount.cpp": "6711bec276c97492543a370cc891b365b03948dc1cba3d1f154fdc58f3cbdf8f"
+  },
+  "original_primary_promise": {
+    "application_timings_collected": false,
+    "count_build_budget_mib": 64,
+    "date": "2026-10-06 ET",
+    "matrix_unchanged": true,
+    "min_gross_trial_seconds": 0.05,
+    "prior_count_only_identity": "ea0254781364e735b0bdf9f98a1ba27da050bbd3cf1adf63d87c7583dcdba6b3",
+    "prior_count_only_receipt": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-counts-20261006-a2/proof/count-proof.json",
+    "repetitions": 7,
+    "service_cells": 20,
+    "source_commit": "b9dabf361b429f0c07717f1891573f5d5f31b1ab",
+    "timed_data_budget_mib": 25
+  },
+  "extra_promise": {
+    "identity_sha256": "5c525239b33340949bf5e91e276d3d1ba465acabc1f2c7992474a09f3bfbc801",
+    "minimum_both_gross_driver_s": 0.05,
+    "fulfilled": false,
+    "paired_parameters_selected": false
+  },
+  "scope_allowlist": [
+    {
+      "id": "bfs.kron-g16.t1.characterization.objects.a1",
+      "sha256": "535d43719d2e9269dc557e900886c625b80c5aa686e7682861a4f6d045e143bc"
+    },
+    {
+      "id": "bc.kron-g16.t1.characterization.objects.a1",
+      "sha256": "8561948088366aa18409da1db1f204ac2579cdb8ee90f1a2c76079a96e2eb4fd"
+    },
+    {
+      "id": "bfs.kron-g17.t1.characterization.objects.a1",
+      "sha256": "49b5c58f3551b065c91c49c1fb09f54de2d2d71f08b6a4e1eedf3aad5ec415c5"
+    },
+    {
+      "id": "bc.kron-g17.t1.characterization.objects.a1",
+      "sha256": "6b8d515b3f38a13bfd302993f8ac5e88bd77615da171c710b4ecd81d058c67db"
+    }
+  ],
+  "compatibility_rows": 36,
+  "compatibility_missing": [],
+  "one_complete_allocator_mechanism": true,
+  "unique_abi_size_bins": 36,
+  "windows": [
+    {
+      "characterization": "bfs.kron-g16.t1.characterization.objects.a1",
+      "window": "aggregate",
+      "no_duplicate_or_unmatched_bins": true,
+      "strict_model_window_admitted": true,
+      "region_costs": [
+        {
+          "region": "gapbs-bfs-do/serial.433918642650629990",
+          "seconds": 6.326019706726074e-06,
+          "covered_calls": [
+            {
+              "site": 64,
+              "execution_count": 4
+            },
+            {
+              "site": 74,
+              "execution_count": 4
+            }
+          ]
+        },
+        {
+          "region": "gapbs-bfs-do/serial.292787490577224610",
+          "seconds": 1.5815049266815186e-06,
+          "covered_calls": [
+            {
+              "site": 83,
+              "execution_count": 1
+            },
+            {
+              "site": 90,
+              "execution_count": 1
+            }
+          ]
+        },
+        {
+          "region": "gapbs-bfs-do/serial.995486541436624707",
+          "seconds": 6.3945015525817906e-06,
+          "covered_calls": [
+            {
+              "site": 108,
+              "execution_count": 1
+            },
+            {
+              "site": 119,
+              "execution_count": 1
+            },
+            {
+              "site": 121,
+              "execution_count": 1
+            },
+            {
+              "site": 123,
+              "execution_count": 1
+            },
+            {
+              "site": 171,
+              "execution_count": 1
+            },
+            {
+              "site": 172,
+              "execution_count": 1
+            },
+            {
+              "site": 173,
+              "execution_count": 1
+            }
+          ]
+        }
+      ],
+      "observed_static_allocator_sites": 11,
+      "observed_allocator_executions": 17
+    },
+    {
+      "characterization": "bfs.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.0",
+      "no_duplicate_or_unmatched_bins": true,
+      "strict_model_window_admitted": false,
+      "region_costs": [],
+      "observed_static_allocator_sites": 11,
+      "observed_allocator_executions": 17
+    },
+    {
+      "characterization": "bfs.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.1",
+      "no_duplicate_or_unmatched_bins": true,
+      "strict_model_window_admitted": false,
+      "region_costs": [],
+      "observed_static_allocator_sites": 11,
+      "observed_allocator_executions": 17
+    },
+    {
+      "characterization": "bfs.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.2",
+      "no_duplicate_or_unmatched_bins": true,
+      "strict_model_window_admitted": false,
+      "region_costs": [],
+      "observed_static_allocator_sites": 11,
+      "observed_allocator_executions": 15
+    },
+    {
+      "characterization": "bfs.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.3",
+      "no_duplicate_or_unmatched_bins": true,
+      "strict_model_window_admitted": false,
+      "region_costs": [],
+      "observed_static_allocator_sites": 11,
+      "observed_allocator_executions": 17
+    },
+    {
+      "characterization": "bfs.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.4",
+      "no_duplicate_or_unmatched_bins": true,
+      "strict_model_window_admitted": false,
+      "region_costs": [],
+      "observed_static_allocator_sites": 11,
+      "observed_allocator_executions": 17
+    },
+    {
+      "characterization": "bc.kron-g16.t1.characterization.objects.a1",
+      "window": "aggregate",
+      "no_duplicate_or_unmatched_bins": true,
+      "strict_model_window_admitted": true,
+      "region_costs": [
+        {
+          "region": "gapbs-bc-brandes/serial.8966507832490436943",
+          "seconds": 1.686695262908937e-06,
+          "covered_calls": [
+            {
+              "site": 54,
+              "execution_count": 1
+            },
+            {
+              "site": 60,
+              "execution_count": 1
+            }
+          ]
+        },
+        {
+          "region": "gapbs-bc-brandes/serial.15975176246384606928",
+          "seconds": 1.5815049266815186e-06,
+          "covered_calls": [
+            {
+              "site": 64,
+              "execution_count": 1
+            },
+            {
+              "site": 78,
+              "execution_count": 1
+            }
+          ]
+        },
+        {
+          "region": "gapbs-bc-brandes/serial.8258255927620126506",
+          "seconds": 1.1061133927106856e-07,
+          "covered_calls": [
+            {
+              "site": 87,
+              "execution_count": 5
+            },
+            {
+              "site": 90,
+              "execution_count": 4
+            }
+          ]
+        },
+        {
+          "region": "gapbs-bc-brandes/serial.1890229910843872128",
+          "seconds": 6.923832966285644e-06,
+          "covered_calls": [
+            {
+              "site": 95,
+              "execution_count": 1
+            },
+            {
+              "site": 98,
+              "execution_count": 1
+            },
+            {
+              "site": 100,
+              "execution_count": 1
+            },
+            {
+              "site": 102,
+              "execution_count": 1
+            },
+            {
+              "site": 148,
+              "execution_count": 1
+            },
+            {
+              "site": 150,
+              "execution_count": 1
+            },
+            {
+              "site": 151,
+              "execution_count": 1
+            },
+            {
+              "site": 149,
+              "execution_count": 1
+            }
+          ]
+        },
+        {
+          "region": "gapbs-bc-brandes/source",
+          "seconds": 1.686695262908937e-06,
+          "covered_calls": [
+            {
+              "site": 131,
+              "execution_count": 1
+            },
+            {
+              "site": 144,
+              "execution_count": 1
+            }
+          ]
+        }
+      ],
+      "observed_static_allocator_sites": 16,
+      "observed_allocator_executions": 23
+    },
+    {
+      "characterization": "bc.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.0",
+      "no_duplicate_or_unmatched_bins": true,
+      "strict_model_window_admitted": false,
+      "region_costs": [],
+      "observed_static_allocator_sites": 16,
+      "observed_allocator_executions": 23
+    },
+    {
+      "characterization": "bc.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.1",
+      "no_duplicate_or_unmatched_bins": true,
+      "strict_model_window_admitted": false,
+      "region_costs": [],
+      "observed_static_allocator_sites": 16,
+      "observed_allocator_executions": 23
+    },
+    {
+      "characterization": "bc.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.2",
+      "no_duplicate_or_unmatched_bins": true,
+      "strict_model_window_admitted": false,
+      "region_costs": [],
+      "observed_static_allocator_sites": 16,
+      "observed_allocator_executions": 21
+    },
+    {
+      "characterization": "bc.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.3",
+      "no_duplicate_or_unmatched_bins": true,
+      "strict_model_window_admitted": false,
+      "region_costs": [],
+      "observed_static_allocator_sites": 16,
+      "observed_allocator_executions": 21
+    },
+    {
+      "characterization": "bc.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.4",
+      "no_duplicate_or_unmatched_bins": true,
+      "strict_model_window_admitted": false,
+      "region_costs": [],
+      "observed_static_allocator_sites": 16,
+      "observed_allocator_executions": 21
+    },
+    {
+      "characterization": "bfs.kron-g17.t1.characterization.objects.a1",
+      "window": "aggregate",
+      "no_duplicate_or_unmatched_bins": true,
+      "strict_model_window_admitted": true,
+      "region_costs": [
+        {
+          "region": "gapbs-bfs-do/serial.433918642650629990",
+          "seconds": 6.326019706726074e-06,
+          "covered_calls": [
+            {
+              "site": 64,
+              "execution_count": 4
+            },
+            {
+              "site": 74,
+              "execution_count": 4
+            }
+          ]
+        },
+        {
+          "region": "gapbs-bfs-do/serial.292787490577224610",
+          "seconds": 1.5815049266815186e-06,
+          "covered_calls": [
+            {
+              "site": 83,
+              "execution_count": 1
+            },
+            {
+              "site": 90,
+              "execution_count": 1
+            }
+          ]
+        },
+        {
+          "region": "gapbs-bfs-do/serial.995486541436624707",
+          "seconds": 6.754343936920168e-06,
+          "covered_calls": [
+            {
+              "site": 108,
+              "execution_count": 1
+            },
+            {
+              "site": 119,
+              "execution_count": 1
+            },
+            {
+              "site": 121,
+              "execution_count": 1
+            },
+            {
+              "site": 123,
+              "execution_count": 1
+            },
+            {
+              "site": 171,
+              "execution_count": 1
+            },
+            {
+              "site": 172,
+              "execution_count": 1
+            },
+            {
+              "site": 173,
+              "execution_count": 1
+            }
+          ]
+        }
+      ],
+      "observed_static_allocator_sites": 11,
+      "observed_allocator_executions": 17
+    },
+    {
+      "characterization": "bfs.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.0",
+      "no_duplicate_or_unmatched_bins": true,
+      "strict_model_window_admitted": false,
+      "region_costs": [],
+      "observed_static_allocator_sites": 11,
+      "observed_allocator_executions": 17
+    },
+    {
+      "characterization": "bfs.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.1",
+      "no_duplicate_or_unmatched_bins": true,
+      "strict_model_window_admitted": false,
+      "region_costs": [],
+      "observed_static_allocator_sites": 11,
+      "observed_allocator_executions": 17
+    },
+    {
+      "characterization": "bfs.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.2",
+      "no_duplicate_or_unmatched_bins": true,
+      "strict_model_window_admitted": false,
+      "region_costs": [],
+      "observed_static_allocator_sites": 11,
+      "observed_allocator_executions": 17
+    },
+    {
+      "characterization": "bfs.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.3",
+      "no_duplicate_or_unmatched_bins": true,
+      "strict_model_window_admitted": false,
+      "region_costs": [],
+      "observed_static_allocator_sites": 11,
+      "observed_allocator_executions": 17
+    },
+    {
+      "characterization": "bfs.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.4",
+      "no_duplicate_or_unmatched_bins": true,
+      "strict_model_window_admitted": false,
+      "region_costs": [],
+      "observed_static_allocator_sites": 11,
+      "observed_allocator_executions": 19
+    },
+    {
+      "characterization": "bc.kron-g17.t1.characterization.objects.a1",
+      "window": "aggregate",
+      "no_duplicate_or_unmatched_bins": true,
+      "strict_model_window_admitted": true,
+      "region_costs": [
+        {
+          "region": "gapbs-bc-brandes/serial.8966507832490436943",
+          "seconds": 2.042483325958253e-06,
+          "covered_calls": [
+            {
+              "site": 54,
+              "execution_count": 1
+            },
+            {
+              "site": 60,
+              "execution_count": 1
+            }
+          ]
+        },
+        {
+          "region": "gapbs-bc-brandes/serial.15975176246384606928",
+          "seconds": 1.5815049266815186e-06,
+          "covered_calls": [
+            {
+              "site": 64,
+              "execution_count": 1
+            },
+            {
+              "site": 78,
+              "execution_count": 1
+            }
+          ]
+        },
+        {
+          "region": "gapbs-bc-brandes/serial.8258255927620126506",
+          "seconds": 1.1061133927106856e-07,
+          "covered_calls": [
+            {
+              "site": 87,
+              "execution_count": 5
+            },
+            {
+              "site": 90,
+              "execution_count": 4
+            }
+          ]
+        },
+        {
+          "region": "gapbs-bc-brandes/serial.1890229910843872128",
+          "seconds": 7.836105969318977e-06,
+          "covered_calls": [
+            {
+              "site": 95,
+              "execution_count": 1
+            },
+            {
+              "site": 98,
+              "execution_count": 1
+            },
+            {
+              "site": 100,
+              "execution_count": 1
+            },
+            {
+              "site": 102,
+              "execution_count": 1
+            },
+            {
+              "site": 148,
+              "execution_count": 1
+            },
+            {
+              "site": 150,
+              "execution_count": 1
+            },
+            {
+              "site": 151,
+              "execution_count": 1
+            },
+            {
+              "site": 149,
+              "execution_count": 1
+            }
+          ]
+        },
+        {
+          "region": "gapbs-bc-brandes/source",
+          "seconds": 2.042483325958253e-06,
+          "covered_calls": [
+            {
+              "site": 131,
+              "execution_count": 1
+            },
+            {
+              "site": 144,
+              "execution_count": 1
+            }
+          ]
+        }
+      ],
+      "observed_static_allocator_sites": 16,
+      "observed_allocator_executions": 23
+    },
+    {
+      "characterization": "bc.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.0",
+      "no_duplicate_or_unmatched_bins": true,
+      "strict_model_window_admitted": false,
+      "region_costs": [],
+      "observed_static_allocator_sites": 16,
+      "observed_allocator_executions": 23
+    },
+    {
+      "characterization": "bc.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.1",
+      "no_duplicate_or_unmatched_bins": true,
+      "strict_model_window_admitted": false,
+      "region_costs": [],
+      "observed_static_allocator_sites": 16,
+      "observed_allocator_executions": 21
+    },
+    {
+      "characterization": "bc.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.2",
+      "no_duplicate_or_unmatched_bins": true,
+      "strict_model_window_admitted": false,
+      "region_costs": [],
+      "observed_static_allocator_sites": 16,
+      "observed_allocator_executions": 23
+    },
+    {
+      "characterization": "bc.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.3",
+      "no_duplicate_or_unmatched_bins": true,
+      "strict_model_window_admitted": false,
+      "region_costs": [],
+      "observed_static_allocator_sites": 16,
+      "observed_allocator_executions": 21
+    },
+    {
+      "characterization": "bc.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.4",
+      "no_duplicate_or_unmatched_bins": true,
+      "strict_model_window_admitted": false,
+      "region_costs": [],
+      "observed_static_allocator_sites": 16,
+      "observed_allocator_executions": 23
+    }
+  ],
+  "legacy_trial_scope_gap": [
+    {
+      "characterization": "bfs.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.0",
+      "region": "gapbs-bfs-do/serial.433918642650629990",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bfs.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.0",
+      "region": "gapbs-bfs-do/serial.292787490577224610",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bfs.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.0",
+      "region": "gapbs-bfs-do/serial.995486541436624707",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bfs.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.1",
+      "region": "gapbs-bfs-do/serial.433918642650629990",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bfs.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.1",
+      "region": "gapbs-bfs-do/serial.292787490577224610",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bfs.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.1",
+      "region": "gapbs-bfs-do/serial.995486541436624707",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bfs.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.2",
+      "region": "gapbs-bfs-do/serial.433918642650629990",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bfs.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.2",
+      "region": "gapbs-bfs-do/serial.292787490577224610",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bfs.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.2",
+      "region": "gapbs-bfs-do/serial.995486541436624707",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bfs.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.3",
+      "region": "gapbs-bfs-do/serial.433918642650629990",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bfs.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.3",
+      "region": "gapbs-bfs-do/serial.292787490577224610",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bfs.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.3",
+      "region": "gapbs-bfs-do/serial.995486541436624707",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bfs.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.4",
+      "region": "gapbs-bfs-do/serial.433918642650629990",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bfs.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.4",
+      "region": "gapbs-bfs-do/serial.292787490577224610",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bfs.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.4",
+      "region": "gapbs-bfs-do/serial.995486541436624707",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.0",
+      "region": "gapbs-bc-brandes/serial.8966507832490436943",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.0",
+      "region": "gapbs-bc-brandes/serial.15975176246384606928",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.0",
+      "region": "gapbs-bc-brandes/serial.8258255927620126506",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdlPv",
+        "call_shape.complete_scoped_bins._Znwm"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.0",
+      "region": "gapbs-bc-brandes/serial.1890229910843872128",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._ZdlPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.0",
+      "region": "gapbs-bc-brandes/source",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.1",
+      "region": "gapbs-bc-brandes/serial.8966507832490436943",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.1",
+      "region": "gapbs-bc-brandes/serial.15975176246384606928",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.1",
+      "region": "gapbs-bc-brandes/serial.8258255927620126506",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdlPv",
+        "call_shape.complete_scoped_bins._Znwm"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.1",
+      "region": "gapbs-bc-brandes/serial.1890229910843872128",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._ZdlPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.1",
+      "region": "gapbs-bc-brandes/source",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.2",
+      "region": "gapbs-bc-brandes/serial.8966507832490436943",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.2",
+      "region": "gapbs-bc-brandes/serial.15975176246384606928",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.2",
+      "region": "gapbs-bc-brandes/serial.8258255927620126506",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdlPv",
+        "call_shape.complete_scoped_bins._Znwm"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.2",
+      "region": "gapbs-bc-brandes/serial.1890229910843872128",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._ZdlPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.2",
+      "region": "gapbs-bc-brandes/source",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.3",
+      "region": "gapbs-bc-brandes/serial.8966507832490436943",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.3",
+      "region": "gapbs-bc-brandes/serial.15975176246384606928",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.3",
+      "region": "gapbs-bc-brandes/serial.8258255927620126506",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdlPv",
+        "call_shape.complete_scoped_bins._Znwm"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.3",
+      "region": "gapbs-bc-brandes/serial.1890229910843872128",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._ZdlPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.3",
+      "region": "gapbs-bc-brandes/source",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.4",
+      "region": "gapbs-bc-brandes/serial.8966507832490436943",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.4",
+      "region": "gapbs-bc-brandes/serial.15975176246384606928",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.4",
+      "region": "gapbs-bc-brandes/serial.8258255927620126506",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdlPv",
+        "call_shape.complete_scoped_bins._Znwm"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.4",
+      "region": "gapbs-bc-brandes/serial.1890229910843872128",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._ZdlPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g16.t1.characterization.objects.a1",
+      "window": "trial.4",
+      "region": "gapbs-bc-brandes/source",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bfs.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.0",
+      "region": "gapbs-bfs-do/serial.433918642650629990",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bfs.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.0",
+      "region": "gapbs-bfs-do/serial.292787490577224610",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bfs.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.0",
+      "region": "gapbs-bfs-do/serial.995486541436624707",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bfs.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.1",
+      "region": "gapbs-bfs-do/serial.433918642650629990",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bfs.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.1",
+      "region": "gapbs-bfs-do/serial.292787490577224610",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bfs.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.1",
+      "region": "gapbs-bfs-do/serial.995486541436624707",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bfs.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.2",
+      "region": "gapbs-bfs-do/serial.433918642650629990",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bfs.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.2",
+      "region": "gapbs-bfs-do/serial.292787490577224610",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bfs.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.2",
+      "region": "gapbs-bfs-do/serial.995486541436624707",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bfs.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.3",
+      "region": "gapbs-bfs-do/serial.433918642650629990",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bfs.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.3",
+      "region": "gapbs-bfs-do/serial.292787490577224610",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bfs.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.3",
+      "region": "gapbs-bfs-do/serial.995486541436624707",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bfs.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.4",
+      "region": "gapbs-bfs-do/serial.433918642650629990",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bfs.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.4",
+      "region": "gapbs-bfs-do/serial.292787490577224610",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bfs.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.4",
+      "region": "gapbs-bfs-do/serial.995486541436624707",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.0",
+      "region": "gapbs-bc-brandes/serial.8966507832490436943",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.0",
+      "region": "gapbs-bc-brandes/serial.15975176246384606928",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.0",
+      "region": "gapbs-bc-brandes/serial.8258255927620126506",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdlPv",
+        "call_shape.complete_scoped_bins._Znwm"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.0",
+      "region": "gapbs-bc-brandes/serial.1890229910843872128",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._ZdlPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.0",
+      "region": "gapbs-bc-brandes/source",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.1",
+      "region": "gapbs-bc-brandes/serial.8966507832490436943",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.1",
+      "region": "gapbs-bc-brandes/serial.15975176246384606928",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.1",
+      "region": "gapbs-bc-brandes/serial.8258255927620126506",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdlPv",
+        "call_shape.complete_scoped_bins._Znwm"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.1",
+      "region": "gapbs-bc-brandes/serial.1890229910843872128",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._ZdlPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.1",
+      "region": "gapbs-bc-brandes/source",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.2",
+      "region": "gapbs-bc-brandes/serial.8966507832490436943",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.2",
+      "region": "gapbs-bc-brandes/serial.15975176246384606928",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.2",
+      "region": "gapbs-bc-brandes/serial.8258255927620126506",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdlPv",
+        "call_shape.complete_scoped_bins._Znwm"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.2",
+      "region": "gapbs-bc-brandes/serial.1890229910843872128",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._ZdlPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.2",
+      "region": "gapbs-bc-brandes/source",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.3",
+      "region": "gapbs-bc-brandes/serial.8966507832490436943",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.3",
+      "region": "gapbs-bc-brandes/serial.15975176246384606928",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.3",
+      "region": "gapbs-bc-brandes/serial.8258255927620126506",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdlPv",
+        "call_shape.complete_scoped_bins._Znwm"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.3",
+      "region": "gapbs-bc-brandes/serial.1890229910843872128",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._ZdlPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.3",
+      "region": "gapbs-bc-brandes/source",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.4",
+      "region": "gapbs-bc-brandes/serial.8966507832490436943",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.4",
+      "region": "gapbs-bc-brandes/serial.15975176246384606928",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.4",
+      "region": "gapbs-bc-brandes/serial.8258255927620126506",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdlPv",
+        "call_shape.complete_scoped_bins._Znwm"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.4",
+      "region": "gapbs-bc-brandes/serial.1890229910843872128",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._ZdlPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    },
+    {
+      "characterization": "bc.kron-g17.t1.characterization.objects.a1",
+      "window": "trial.4",
+      "region": "gapbs-bc-brandes/source",
+      "missing": [
+        "call_shape.complete_scoped_bins._ZdaPv",
+        "call_shape.complete_scoped_bins._Znam"
+      ]
+    }
+  ],
+  "full_trial_model_admission": false,
+  "native_application_timings_collected": false,
+  "numeric_interpretation": "Uniform constructed gross allocator-loop resource. All measured trials, driver diagnostics and original paired records retained. The extra both-window promise failed, so no extra paired rate is selected; the primary gross-only promise remains satisfied. This new recipe freezes after independent service collection and before application timing, uses maximum with counted compute resources and makes no physical latency, measured application overlap or proven upper-bound claim.",
+  "identity_sha256": "5ea7f3c1966b3400116db44c4920040d39ddcb00033f1703b2d16b9f416610d6"
+}

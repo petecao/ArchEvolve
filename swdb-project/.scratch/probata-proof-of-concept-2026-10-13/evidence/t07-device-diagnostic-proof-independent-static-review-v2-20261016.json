@@ -1,0 +1,135 @@
+{
+  "AST_identical_functions": {
+    "probata-t07-device-weak-continuation-v2-20261016-entry.py": [
+      "bind_exports",
+      "call_side_properties",
+      "check_output",
+      "check_pin",
+      "check_tree",
+      "collect_operation_goals",
+      "digest",
+      "direct_calls",
+      "exact_universe",
+      "export_segments",
+      "legacy_scan_diagnostics",
+      "read_inventory",
+      "read_native_generation",
+      "read_property_closure",
+      "scan_diagnostics",
+      "scan_normalized",
+      "verify_prefix",
+      "verify_retained_cold",
+      "verify_runtime",
+      "write"
+    ],
+    "probata-t07-full20-proof-continuation-v1-20261016-entry.py": [
+      "check_pin",
+      "check_tree",
+      "classify_result_rows",
+      "digest",
+      "direct_calls",
+      "exact_universe",
+      "identity",
+      "output_entry_bytes",
+      "output_snapshot",
+      "read_journal",
+      "read_property_closure",
+      "read_result_rows",
+      "scan_normalized",
+      "validate_native_shape",
+      "validate_result_metadata",
+      "verify_prefix",
+      "verify_runtime",
+      "write"
+    ]
+  },
+  "blockers": [],
+  "checks": [
+    "Both complete unchanged original TUs, five normal roots and one weak root; full RTE/init/smoke/termination/property census, no goal/function/behavior filters and no generation-only replay.",
+    "Nine exact Git blobs staged from published bd ancestor; no mutable input adoption, contract/premise/hint/initializedness/reset changes or historical proof result reuse.",
+    "Private Why3 bytes exactly equal accepted full20 configuration: absolute AE2.6.4/Z35.1.0/CVC51.2.1, stock drivers, explicit no-detect/config,30s ordinary/2s smoke/par1/cache-none. The Z3 z3_487 pairing remains configuration TCB. Runtime delta only adds selected proof solver/server aliases and primary proof/serializer/detection sources; inherited pins are retained.",
+    "Fresh reporter/backend observer/journal compile inside one760s deadline. All subprocesses receive remaining time;780s active/8GiB/one worker/256MiB,50GiB free floor; separate proposed root1020 watchdog/live output reserve monitor required.47.117910375+780=827.117910375<900 aggregate.",
+    "Complete source property bijection retains all goals/origins/targets/Extern and separately discloses actual dependency changes; first observer computed/trivial/sequent and backend/short IDs equal pinned generation. Final per-prover outcomes remain fresh.",
+    "Per-prover cache/identity/error/timing/model metadata, exact native source/call-context bridges, final snapshot/journal and full DAG required. A complete diagnostic may retain unsafe/open/failed smokes; each positive-root candidate excludes open ordinary, unhealthy/empty smokes and result errors. No blended TU acceptance.",
+    "Primary register.ml Failed smoke-test warning is bound only to actual failed source smoke/property/line, retained as contradiction. Unknown warnings refuse. All Typed/From/capability residuals remain unresolved; no memory-model checks or premises are silently added.",
+    "Exact reviewed IPC rule admits metadata-only same-UID zero-byte why3server[hex6]sock directly under component TMPDIR; no connect/unlink. All other special files refuse.",
+    "All66 normal raw/176 weak raw/304 normal cold/11 weak cold exact memberships and pins preserved; source/runtime/recipe/input/config/module before/after and final failure gates prevent false success.",
+    "Thirty retained pure controls inspected, including accepted actual full20 reader compatibility and backend/formula mutations. No controls rerun by reviewer."
+  ],
+  "command": {
+    "bytes": 2025,
+    "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-20261016-command.json",
+    "resolved": "/private/tmp/probata-t07-device-diagnostic-proof-v2-20261016-command.json",
+    "sha256": "b08868ad3dd2a65f6e3f7e51cbccaa64f32b6c4d0daa46b99a75fd75f222d5a6"
+  },
+  "entry": {
+    "bytes": 74616,
+    "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-20261016-entry.py",
+    "resolved": "/private/tmp/probata-t07-device-diagnostic-proof-v2-20261016-entry.py",
+    "sha256": "e7deacf1e271c291a3b40f3da4d917df8f8b5dc5bc12b07a361bb18af12aecba"
+  },
+  "executed": {
+    "compiler_native_formal_prover_or_SSH": false,
+    "controls_or_tests": false,
+    "entry_main": false,
+    "project_import": false,
+    "reader_main": false
+  },
+  "expected": {
+    "bytes": 794273,
+    "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-20261016-expected.json",
+    "resolved": "/private/tmp/probata-t07-device-diagnostic-proof-v2-20261016-expected.json",
+    "sha256": "2a3a02e017e636abdcb8327505087adc2c8572d47bf5fdf8aab794e03ebb32d0"
+  },
+  "limitations": [
+    "Static prospective recipe only; root alone owns execution/admission/host/leases/outer watchdog.",
+    "Cold reference universes328/416 and85/176 are identities, never prior proof assumptions. Strict mismatch retains refusal without filtering.",
+    "Slot initialization and pointee payload initialization remain separate; generation does not predict weak proof outcome.",
+    "Source/bodyless helper/model/Typed applicability/alignment/compiler/driver/ABI/private storage TCB remains explicit.",
+    "No scientific proof/source/hardware/Init/lifetime/allocator/Graph/TD/count/current0.2 or ticket promotion."
+  ],
+  "matched_local_pin_instances": 1862,
+  "matched_local_unique_pins": 1843,
+  "packet": {
+    "bytes": 4597,
+    "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-20261016-packet.json",
+    "sha256": "5f9ce480ed9f898b54b57270ccd964b420b55a03c2cb06f25512a0c84a023662"
+  },
+  "pin_ledger": {
+    "bytes": 399714,
+    "path": "/private/tmp/merger-device-proof-v2-static-pins-20261016.json",
+    "sha256": "5d20728aba83a3e821509ce034047fdf384214b6a0c81345c5f288d175ad1e1a"
+  },
+  "plan": {
+    "bytes": 6851,
+    "path": "/private/tmp/probata-t07-device-diagnostic-proof-v2-20261016-plan.md",
+    "resolved": "/private/tmp/probata-t07-device-diagnostic-proof-v2-20261016-plan.md",
+    "sha256": "13cc551fcf2fdff7bd65a81a9f77f4c5f3b37e3ed091c32c08faaabe3350a861"
+  },
+  "reviewer": "/root/merger",
+  "root_outer_recipe_review_pending": true,
+  "runtime_delta_vs_generation": {
+    "primary_sources": [
+      "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/wpo.mli",
+      "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/wpo.ml",
+      "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/prover.mli",
+      "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/prover.ml",
+      "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/vCS.mli",
+      "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/vCS.ml",
+      "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/why3Provers.ml",
+      "/Users/yanrujhou/.opam/framac-33/share/why3/provers-detection-data.conf",
+      "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/stats.ml"
+    ],
+    "tools": [
+      "alt-ergo",
+      "cvc5",
+      "cvc5-selected-path",
+      "why3server",
+      "z3",
+      "z3-selected-path"
+    ]
+  },
+  "source_Git_blobs": 9,
+  "source_commit": "bd2610b6b7cff511c046206a78088cf693cee874",
+  "verdict": "PASS_STATIC_PROSPECTIVE_DIAGNOSTIC_ONLY"
+}

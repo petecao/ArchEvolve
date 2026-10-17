@@ -1,0 +1,23 @@
+.............................................................F
+=================================== FAILURES ===================================
+______ test_t20_certifies_under_1_5_with_records_written_by_the_evaluator ______
+
+tmp_path = PosixPath('/private/var/folders/x0/g9dhnccj0jjbxh_gblp35zvr0000gn/T/pytest-of-yanrujhou/pytest-707/test_t20_certifies_under_1_5_w0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109d54a70>
+
+    def test_t20_certifies_under_1_5_with_records_written_by_the_evaluator(tmp_path, monkeypatch):
+        record = _certify(tmp_path, monkeypatch, 'contract.bfs_read_offload', c.DEFAULT_SNAPSHOT,
+                          LIBRARY / 'dx100/peter-section5.patch')
+>       assert record['verdict'] == 'certified' and record['command']['version'] == '1.5'
+E       AssertionError: assert ('failed' == 'certified'
+E         
+E         - certified
+E         + failed)
+
+tests/test_certification_process.py:95: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_certification_process.py::test_t20_certifies_under_1_5_with_records_written_by_the_evaluator
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! KeyboardInterrupt !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+<frozen abc>:117: KeyboardInterrupt
+(to show a full traceback on KeyboardInterrupt use --full-trace)
+1 failed, 61 passed in 587.35s (0:09:47)

@@ -1,0 +1,16 @@
+{
+  "accepted_closed_artifacts_unchanged": true,
+  "all_other_functions_and_adapter_bytes_exact": true,
+  "replacements": [
+    {
+      "new": "    need(type(raw) is bytes and 0 < len(raw) <= LIMIT, 'bounded original ABI bytes required before hashing')\n    identity = (len(raw), sha(raw))\n    family = [name for name, expected in FAMILIES.items() if identity == expected]",
+      "old": "    need(type(raw) is bytes, 'original ABI bytes required')\n    family = [name for name, expected in FAMILIES.items() if (len(raw), sha(raw)) == expected]"
+    },
+    {
+      "new": "    return derived, {**receipt, 'selected_family': family[0],\n        'primitive_sources':[{\n            'role':role, 'bytes':row['bytes'], 'sha256':row['sha256']}\n            for role,row in zip(('paired-type-normalizer','strict-token-grammar'),before)],",
+      "old": "    return derived, {**receipt, 'selected_family': family[0], 'primitive_sources': before,"
+    }
+  ],
+  "schema": "ABI-helper-prehash-resource-inverse-2",
+  "semantic_primitive_identity": "Stable exact role/bytes/SHA only; enclosing fixed observer controls and normal producer manifests separately retain actual physical paths."
+}

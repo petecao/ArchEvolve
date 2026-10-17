@@ -1,0 +1,44 @@
+{
+  "actual_science_run": false,
+  "argv": [
+    "/data1/yanruj/venvs/swdb-test/bin/python",
+    "-I",
+    "-B",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/control/linux_compiler_capture_v10.py",
+    "/data1/yanruj/probata-resume-20261016-2baf722f/swdb-project",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/control/linux_compiler_capture_policy_v10.json",
+    "8d86faea6d8235c9431acddae4d28e08831afaaca1ebc506e9363d66e8e32517"
+  ],
+  "created": "2026-10-16 ET",
+  "decision": "ADMIT_ONCE_COMPILER_CAPTURE_V10_CONDITIONAL_FRESH_NODE1_PREFLIGHT",
+  "guards": {
+    "caller_ast_phase_seconds": 120,
+    "entry_seconds": 165,
+    "max_minifier_write_bytes": 65536,
+    "other_phase_seconds": 45,
+    "raw_stream_bytes": 2147483648,
+    "reserve_bytes": 1048576,
+    "retained_file_bytes": 134217728,
+    "retained_total_bytes": 268435456,
+    "rss_bytes": 4294967296,
+    "whole_seconds": 180
+  },
+  "independent_spec": {
+    "bytes": 14257,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-compiler-capture-v9-v10-independent-static-review-20261016.json",
+    "sha256": "6e17ab141cd9d8771ad0672db60ec660b4afe42c8b171f7b7e09929c1c7dbb7d"
+  },
+  "packet": {
+    "bytes": 8371,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v10/compiler-capture-source-packet-v10.json",
+    "sha256": "863a1143a6719872d602b8a9557c6b9fd8e31f8942f49ea9a16b6862e88ab147"
+  },
+  "root_standards": {
+    "bytes": 6878,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-compiler-capture-v10-root-standards-review-20261016.json",
+    "sha256": "a76fb236edb8eab9e545ceaf0672aa50f24f7e5d88d9e374fe5e042742865111"
+  },
+  "scope": "Complete original one-TU Clang capture/ABI preparation only; no solver/native, source-refinement/current0.2/public proof or fullticket acceptance. Prospective resource allocation explicit; V7/V8 failures and V9 source-only finding preserved.",
+  "source_commit": "2baf722fdaa6cba24b859eae3172a6f597417d72"
+}

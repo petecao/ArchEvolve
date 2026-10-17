@@ -1,0 +1,619 @@
+{
+  "receipt": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926.dispatch/health-20260926-2333.json",
+    "bytes": 513591,
+    "sha256": "49c8933e8a2903eaa9d8969493a910861ab160df2ecfce01e4bfe373fcb7f6b5"
+  },
+  "observed_at": "2026-09-26T23:33:16.413953-04:00",
+  "leases": {
+    "mbit10-evaluation-node0": {
+      "state": "released",
+      "generation": 332,
+      "kernel": [],
+      "owner": null
+    },
+    "mbit10-evaluation-node1": {
+      "state": "released",
+      "generation": 429,
+      "kernel": [],
+      "owner": null
+    },
+    "mbit10-evaluation": {
+      "state": "released",
+      "generation": 77,
+      "kernel": [],
+      "owner": null
+    }
+  },
+  "disk": {
+    "/data1": {
+      "free_bytes": 17264898048
+    },
+    "/data": {
+      "free_bytes": 177137070080
+    }
+  },
+  "load": "0.44 0.58 1.71 2/1519 3246950",
+  "capacity": [
+    {
+      "node": 0,
+      "estimated_available_kib": 59251144,
+      "global_available_kib": 122814552,
+      "eligible": true
+    },
+    {
+      "node": 1,
+      "estimated_available_kib": 61317028,
+      "global_available_kib": 122814552,
+      "eligible": true
+    }
+  ],
+  "heads": {
+    "active_acceptance": {
+      "path": "/data1/yanruj/EvolveSWDB_dx100_acceptance_20260926_a1",
+      "head": "53f2e7686a41d3472c9e0824a0a9b09117884e0b",
+      "branch": "HEAD"
+    },
+    "native_paired": {
+      "path": "/data1/yanruj/EvolveSWDB_native_paired_20260926_a1",
+      "head": "98b5f50e93f531ce0395fe7e161f812a406d6d9d",
+      "branch": "HEAD"
+    },
+    "a3": {
+      "path": "/data1/yanruj/EvolveSWDB_dx100_continuation_20260926_a3",
+      "head": "1018432fdb3800522d723afb874f3bffa41dd0e5",
+      "branch": "HEAD"
+    },
+    "historical_dx": {
+      "path": "/data1/yanruj/EvolveSWDB_dx100_20260925_a1",
+      "head": "5802a5a76599de952f58a57d00c193ea9f1341d7",
+      "branch": "HEAD"
+    },
+    "historical_native": {
+      "path": "/data1/yanruj/EvolveSWDB_graph_bfs_20260925_uniform18",
+      "head": "41303ed7fb02f9a5c515e2e951d27e20869c73e9",
+      "branch": "codex/bfs-native-repeatability-evidence-20260926-a1"
+    },
+    "historical_witness": {
+      "path": "/data1/yanruj/EvolveSWDB_dx100_witness_20260926_a1",
+      "head": "51df06120982e23e4f3f0590ec3132ebf23f9af3",
+      "branch": "codex/bfs-dx100-witness-evidence-20260926-a1"
+    },
+    "helper": {
+      "path": "/data1/yanruj/Memacc-evolveswdb-lane",
+      "head": "42ce8dce1ecfb949d6e5d4ee3c98c078bc7ddc65",
+      "branch": "yanrujhou_main"
+    },
+    "orchestration": {
+      "path": "/data1/yanruj/EvolveSWDB_bfs_orchestration_20260926_a1",
+      "head": "a53e619de11278e2763c7a22576308d1a23f19bf",
+      "branch": "HEAD"
+    },
+    "native_one_thread": {
+      "path": "/data1/yanruj/EvolveSWDB_native_one_thread_20260926_a1",
+      "head": "319645eab0a25c815fa03fe1c372d32b4ba45d10",
+      "branch": "HEAD"
+    },
+    "a2_tested": {
+      "path": "/data1/yanruj/EvolveSWDB_dx100_coverage_a2_20260926",
+      "head": "67313d9b2a45d9f0fb23d935b56e755a3a19fa7f",
+      "branch": "HEAD"
+    },
+    "supervision": {
+      "path": "/data1/yanruj/EvolveSWDB_bfs_supervision_20260926_a1",
+      "head": "3f38a2bf9cde4fb23edebd787a9d4d8ab9549e07",
+      "branch": "HEAD"
+    },
+    "reader_a2": {
+      "path": "/data1/yanruj/EvolveSWDB_bfs_reader_20260926_a2",
+      "head": "5e8b750b14679d5962d1e4b40cd5fa0f1b6981b0",
+      "branch": "HEAD"
+    },
+    "a2_tested_v2": {
+      "path": "/data1/yanruj/EvolveSWDB_dx100_coverage_a2_20260926_v2",
+      "head": "5a0b15fe666b2d094a2b2b9847ff5a30ef16fb4f",
+      "branch": "HEAD"
+    },
+    "supervision_v2": {
+      "path": "/data1/yanruj/EvolveSWDB_bfs_supervision_20260926_a2",
+      "head": "4c109430d4c7b80df220c4064e4e2c9ddbc66005",
+      "branch": "HEAD"
+    },
+    "setup_recovery": {
+      "path": "/data1/yanruj/EvolveSWDB_t15_setup_recovery_20260926_a1",
+      "head": "eb2f51d0a02b7d3d1ca9cc02b022a18f1181a3e2",
+      "branch": "codex/bfs-recovery-runtime-20260926-a2"
+    },
+    "t15_gzip_correction": {
+      "path": "/data1/yanruj/EvolveSWDB_t15_gzip_correction_20260926_a1",
+      "head": "d5e215966a7d4d673050a78c6a6d77053aa62a85",
+      "branch": "codex/bfs-t15-gzip-correction-20260926-a1"
+    },
+    "t16_freeze": {
+      "path": "/data1/yanruj/EvolveSWDB_t16_freeze_20260926_a1",
+      "head": "3f38a2bf9cde4fb23edebd787a9d4d8ab9549e07"
+    },
+    "campaign_preflight": {
+      "path": "/data1/yanruj/EvolveSWDB_simulator_campaign_20260926_a1",
+      "head": "d11dc04449997734a93b982646977b04008afeff"
+    },
+    "scalar_preparation": "6732d5327c4f9e22d97367ee3eeb3c09118867d3"
+  },
+  "active_campaign_head": "8c39ae09406dad0da253b21dbe2c87e263f8c5fb",
+  "helper": {
+    "path": "/data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh",
+    "bytes": 10510,
+    "sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8"
+  },
+  "upstream": {
+    "observed_at": "2026-09-26T23:33:17.309283-04:00",
+    "value": "15129f88c9d47fc015d31e8240591a836215dbfc\trefs/heads/yanrujhou_main",
+    "method": "git ls-remote only; no fetch or checkout update"
+  },
+  "historical_hashes_unchanged": true,
+  "prior_2133_receipts_unchanged": true,
+  "terminal_same_identities": [],
+  "campaign_light": {
+    "observed_at": "2026-09-26T23:33:19.215088-04:00",
+    "batches": {
+      "t16": {
+        "state": "failed",
+        "reason": "ProcessLookupError: [Errno 3] No such process",
+        "outer_exit": "1",
+        "sample": {
+          "observed_at": "2026-09-26T23:20:46.179554-04:00",
+          "raw_bytes": 657063936,
+          "charged_raw_bytes": 1788051456,
+          "elapsed_seconds": 10815.953607571311,
+          "charged_elapsed_seconds": 11068.95360939484,
+          "sampled_tree_rss_bytes": 280469504
+        },
+        "series": [
+          {
+            "id": "bfs-t16-simulator-batch-20260926-a1.artifact.scalar",
+            "state": "failed",
+            "reason": "InterruptedError: driver interrupted by signal 15",
+            "completed_samples": 0,
+            "stages_complete": 7,
+            "last_stages": [
+              {
+                "state": "complete",
+                "started": "2026-09-26T20:21:39.946528-04:00",
+                "finished": "2026-09-26T20:21:42.672767-04:00",
+                "returncode": 0,
+                "identity": {
+                  "pid": 3090339,
+                  "parent_pid": 3089858,
+                  "start_ticks": 497043283,
+                  "state": "R",
+                  "rss_bytes": 0
+                },
+                "reason": null
+              },
+              {
+                "state": "failed",
+                "started": "2026-09-26T20:21:44.208193-04:00",
+                "finished": "2026-09-26T23:20:50.917855-04:00",
+                "returncode": -9,
+                "identity": {
+                  "pid": 3090376,
+                  "parent_pid": 3089858,
+                  "start_ticks": 497043709,
+                  "state": "R",
+                  "rss_bytes": 0
+                },
+                "reason": "InterruptedError: driver interrupted by signal 15"
+              }
+            ]
+          }
+        ],
+        "live_processes": []
+      },
+      "t15-correction": {
+        "state": "failed",
+        "reason": "FileNotFoundError: [Errno 2] No such file or directory: '.swdb.sqlite.3156540.tmp-journal'",
+        "outer_exit": "1",
+        "sample": {
+          "observed_at": "2026-09-26T21:52:04.407301-04:00",
+          "raw_bytes": 11816960,
+          "charged_raw_bytes": 13174472704,
+          "elapsed_seconds": 78.55551547184587,
+          "charged_elapsed_seconds": 2274.555517265573,
+          "sampled_tree_rss_bytes": 303083520
+        },
+        "series": [
+          {
+            "id": "bfs-t15-correction-simulator-batch-20260926-a1.uniform18",
+            "state": "failed",
+            "reason": "InterruptedError: driver interrupted by signal 15",
+            "completed_samples": 0,
+            "stages_complete": 6,
+            "last_stages": [
+              {
+                "state": "complete",
+                "started": "2026-09-26T21:51:48.468705-04:00",
+                "finished": "2026-09-26T21:51:50.980100-04:00",
+                "returncode": 0,
+                "identity": {
+                  "pid": 3156499,
+                  "parent_pid": 3156228,
+                  "start_ticks": 497584135,
+                  "state": "R",
+                  "rss_bytes": 0
+                },
+                "reason": null
+              },
+              {
+                "state": "failed",
+                "started": "2026-09-26T21:51:52.680382-04:00",
+                "finished": "2026-09-26T21:52:07.721144-04:00",
+                "returncode": 1,
+                "identity": {
+                  "pid": 3156540,
+                  "parent_pid": 3156228,
+                  "start_ticks": 497584557,
+                  "state": "R",
+                  "rss_bytes": 0
+                },
+                "reason": "InterruptedError: driver interrupted by signal 15"
+              }
+            ]
+          }
+        ],
+        "live_processes": []
+      }
+    }
+  },
+  "t16_actual_budget": {
+    "total_seconds": 18000,
+    "checkpoint_seconds": 3600,
+    "run_seconds": 14400,
+    "memory_gib": 48,
+    "storage_gib": 15
+  },
+  "t17_primary_terminal": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-t17-build-only-20260926.dispatch/terminal-validation.json",
+    "bytes": 4265,
+    "sha256": "4495783bea9d86bc5095e917540abef7b65bef6b94c158adaa41dc88f78fe625"
+  },
+  "t17_primary_record": {
+    "path": "/data1/yanruj/EvolveSWDB_provider_20260926_a1/records/evaluations/bfs-t17-build-only-20260926-a1.yaml",
+    "bytes": 17230,
+    "sha256": "d5ed1ec5b43665379a2b8d59cc2b4cbc582502beb62f5184041079e606229215"
+  },
+  "scalar_terminal_current_present": [],
+  "t15_correction": {
+    "driver": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-correction-simulator-batch-20260926-a1/bfs-t15-correction-simulator-batch-20260926-a1.driver/driver.json",
+      "sha256": "ab4a9677cba2f87465ddb5e2c0122d18f465c7ce22407b1d408cc9981760170b"
+    },
+    "terminal": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-correction-simulator-batch-20260926-a1.dispatch/terminal-validation.json",
+      "bytes": 140187,
+      "sha256": "a381c65c739a76b24983103c34c73602016ade8a94753ffd6817d562950b3398"
+    },
+    "accounting": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-correction-simulator-batch-20260926-a1.dispatch/terminal-accounting.json",
+      "bytes": 2854,
+      "sha256": "70c8bf7b0ba8666c253495560c359fadca6111880e9d1fb54a5e17f74d895769"
+    },
+    "state": "failed",
+    "evaluation_outcome": {
+      "state": "interrupted",
+      "stage": "execution_identity",
+      "reason": "interrupted by SIGTERM"
+    },
+    "correctness": {
+      "state": "unverified",
+      "checks": []
+    },
+    "completed_samples": 0,
+    "lease_generation": 416,
+    "cleanup_state": "terminal_no_live_owned_processes",
+    "cleanup_ledger_readback": {
+      "state": "settled_within_budget",
+      "driver": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-correction-simulator-batch-20260926-a1/bfs-t15-correction-simulator-batch-20260926-a1.driver/driver.json",
+        "sha256": "ab4a9677cba2f87465ddb5e2c0122d18f465c7ce22407b1d408cc9981760170b"
+      },
+      "ledger": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-correction-simulator-batch-20260926-a1/bfs-t15-correction-simulator-batch-20260926-a1.driver/cleanup-ledger.json",
+        "sha256": "68102549df0df1e7e3d2e1a6a3c042d331af6ad270b1cc05b1d0671f431b79df"
+      },
+      "run_id": "bfs-t15-correction-simulator-batch-20260926-a1",
+      "driver_outcome": "failed",
+      "binding": "cc53cfa94e3c13d4e46bf0bec6e1009a02a15ac339df664c8e6b4b245fa99e2d",
+      "creator": {
+        "pid": 3155839,
+        "start_ticks": 497577900
+      },
+      "budget_seconds": 30,
+      "spent_seconds": 13.349886041134617,
+      "settled_events": 90,
+      "observed_at": "2026-09-26T21:54:05.864333-04:00",
+      "embedded_cleanup_snapshots": "nonfinal",
+      "process_absence_verified": false,
+      "empirical_qualification": false
+    }
+  },
+  "t15_correction_union_count": 105,
+  "t15_correction_current_present": [],
+  "t15_correction_closed_final_storage": {
+    "observed_at": "2026-09-26T21:54:06.147971-04:00",
+    "raw_bytes": 11886592,
+    "charged_raw_bytes": 13174542336,
+    "no_new_closed_root_writes": true
+  },
+  "closed_root_allocations": {
+    "t15_original": {
+      "paths": [
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1",
+          "allocated_bytes": 11014610944
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1.dispatch",
+          "allocated_bytes": 360448
+        }
+      ],
+      "total_bytes": 11014971392,
+      "expected_bytes": 11014971392,
+      "matches_closed_recount": true,
+      "method": "separate read-only du -sk metadata walks; no root writes"
+    },
+    "t15_correction": {
+      "paths": [
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-correction-simulator-batch-20260926-a1",
+          "allocated_bytes": 11665408
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-correction-simulator-batch-20260926-a1.dispatch",
+          "allocated_bytes": 221184
+        }
+      ],
+      "total_bytes": 11886592,
+      "expected_bytes": 11886592,
+      "matches_closed_recount": true,
+      "method": "separate read-only du -sk metadata walks; no root writes"
+    },
+    "scalar": {
+      "paths": [
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1",
+          "allocated_bytes": 13123584
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1.dispatch",
+          "allocated_bytes": 155648
+        }
+      ],
+      "total_bytes": 13279232,
+      "expected_bytes": null,
+      "matches_closed_recount": null,
+      "method": "separate read-only du -sk metadata walks; no root writes"
+    },
+    "gzip": {
+      "paths": [
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1",
+          "allocated_bytes": 94208
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1.dispatch",
+          "allocated_bytes": 106496
+        }
+      ],
+      "total_bytes": 200704,
+      "expected_bytes": 200704,
+      "matches_closed_recount": true,
+      "method": "separate read-only du -sk metadata walks; no root writes"
+    },
+    "scalar_full": {
+      "paths": [
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1",
+          "exists": true,
+          "allocated_bytes": 13123584
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1.dispatch",
+          "exists": true,
+          "allocated_bytes": 155648
+        },
+        {
+          "path": "/data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.tmp",
+          "exists": true,
+          "allocated_bytes": 4096
+        },
+        {
+          "path": "/data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.dx100.primary.build",
+          "exists": true,
+          "allocated_bytes": 1052672
+        },
+        {
+          "path": "/data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build",
+          "exists": true,
+          "allocated_bytes": 1105920
+        },
+        {
+          "path": "/data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.upstream.primary.build",
+          "exists": true,
+          "allocated_bytes": 1069056
+        },
+        {
+          "path": "/data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.upstream.diagnostic.build",
+          "exists": true,
+          "allocated_bytes": 1105920
+        },
+        {
+          "path": "/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1/records/evaluations/bfs-scalar-v2-preparation-20260926-a1.dx100.primary.build.yaml",
+          "exists": true,
+          "allocated_bytes": 20480
+        },
+        {
+          "path": "/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1/records/evaluations/bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build.yaml",
+          "exists": true,
+          "allocated_bytes": 90112
+        },
+        {
+          "path": "/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1/records/evaluations/bfs-scalar-v2-preparation-20260926-a1.upstream.primary.build.yaml",
+          "exists": true,
+          "allocated_bytes": 16384
+        },
+        {
+          "path": "/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1/records/evaluations/bfs-scalar-v2-preparation-20260926-a1.upstream.diagnostic.build.yaml",
+          "exists": true,
+          "allocated_bytes": 57344
+        }
+      ],
+      "total_bytes": 17801216,
+      "expected_bytes": 17801216,
+      "matches_closed_recount": true,
+      "method": "original exact11-path closed inventory; missing paths explicitly reported"
+    }
+  },
+  "closed_terminal_hashes_unchanged": {
+    "t15_original": true,
+    "t15_correction": true,
+    "scalar": true,
+    "gzip": true
+  },
+  "t16_roi_progress": {
+    "observed_at": "2026-09-26T23:33:19.326925-04:00",
+    "log_bytes": 168061,
+    "log_mtime": "2026-09-27T03:20:22.440918+00:00",
+    "read_bytes": 16384,
+    "read_offset": 151677,
+    "last_tick_in_tail": 308936615500,
+    "roi_seal_exists": false,
+    "roi_stats_exists": false,
+    "seal_markers_in_tail": 0,
+    "completed_roi_claim": false,
+    "prefix_read_bytes": 16384,
+    "explicit_entry_markers_in_prefix": {
+      "ROI start": 1
+    },
+    "prefix_beginning_simulation_text_present": false,
+    "last_host_phase": {
+      "phase": "simulate_begin",
+      "pid": 3093548,
+      "elapsed_s": 67.95671142172068,
+      "tick": null,
+      "cause": null
+    },
+    "phase_is_roi_entry_proof": false
+  },
+  "t16_active_execution_stage": {
+    "stage": "simulation",
+    "state": "interrupted",
+    "started": "2026-09-27T00:24:25.226146+00:00",
+    "finished": "2026-09-27T03:20:44.831355+00:00",
+    "timeout_s": 14400,
+    "host_wall_s": 10575.438591775484,
+    "returncode": null,
+    "reason": "interrupted by SIGTERM",
+    "recorded_start_plus_timeout": "2026-09-27T04:24:25.226146+00:00",
+    "boundary_basis": "Recorded stage start plus retained timeout; existing live monotonic guard remains authoritative."
+  },
+  "t16_failed_terminal": {
+    "terminal": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1.dispatch/terminal-validation.json",
+      "bytes": 1344179,
+      "sha256": "e049e2957c15994b8a34125e5113d96f7e2da7b4ecb69094da55523c3cfd0baf"
+    },
+    "accounting": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1.dispatch/terminal-accounting.json",
+      "bytes": 2164,
+      "sha256": "3a3fe7add8a31984dea554813befc8d27ed135e3b570b9eac142cf24f0dc53c3"
+    },
+    "state": "failed",
+    "union_count": 944,
+    "current_present": [
+      {
+        "pid": 3089722,
+        "parent_pid": 359742,
+        "start_ticks": 497036306,
+        "state": "Z",
+        "rss_bytes": 0
+      }
+    ],
+    "current_unknown": [],
+    "accounting_metadata": {
+      "created": "2026-09-26",
+      "id": "bfs-t16-simulator-batch-20260926-a1",
+      "state": "failed_readback",
+      "observed_at": "2026-09-26T23:25:50.293633-04:00",
+      "driver": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1/bfs-t16-simulator-batch-20260926-a1.driver/driver.json",
+        "sha256": "dadc3d1f149a4c2ffd9cb98281fa53b8fee1dee1609bba74131705ae7b98533e",
+        "bytes": 299232
+      },
+      "terminal": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1.dispatch/terminal-validation.json",
+        "sha256": "e049e2957c15994b8a34125e5113d96f7e2da7b4ecb69094da55523c3cfd0baf",
+        "bytes": 1344179
+      },
+      "cleanup_error": {
+        "state": "failed_readback",
+        "reason": "ValueError: final cleanup ledger has outstanding reservations",
+        "ledger": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1/bfs-t16-simulator-batch-20260926-a1.driver/cleanup-ledger.json",
+          "sha256": "38454147b9df88fadb63c46f5c7036ad72ed74639fd71be47b7e2e81a14e95a7"
+        },
+        "spent_seconds": 20.94487111307685,
+        "reservations": {
+          "b3aac8d5d3bc45ca83bf59b152ce8b3b": {
+            "pid": 3089858,
+            "seconds": 5,
+            "started": "2026-09-26T23:20:50.936598-04:00",
+            "purpose": "cleanup_or_finalization"
+          }
+        },
+        "settled_events": 117,
+        "budget_seconds": 30,
+        "process_absence_verified": false,
+        "empirical_qualification": false
+      },
+      "storage_error": {
+        "type": "ValueError",
+        "message": "driver storage snapshot is not a finite accounting number",
+        "source": "scripts/bfs_simulator_batch_terminal.py:186"
+      },
+      "driver_final_accounting": null,
+      "observed_initial_allocations": [
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1",
+          "allocated_bytes": 657186816
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1.dispatch",
+          "allocated_bytes": 1454080
+        }
+      ],
+      "admitted_storage": false,
+      "admitted_cleanup_budget": false,
+      "note": "Measured driver/ledger remain unchanged. A final read-only du count follows this additive accounting failure receipt."
+    },
+    "observed_at": "2026-09-26T23:33:19.403444-04:00",
+    "closed_allocated_bytes": 658644992,
+    "matches_closed_recount": true
+  },
+  "a4_failed_group": {
+    "observation": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-setup-recovery-linux-20260926-a1.dispatch/failed-group-observation.json",
+      "bytes": 30687,
+      "sha256": "50a12cb2568a07713a3bd5e6ff6553f81d0a0d9d470e0904a99d25aadd304c08"
+    },
+    "state": "failed",
+    "owned_cases_passed": 5,
+    "interruption_cases_passed": 2,
+    "interruption_auditor_returncode": 1,
+    "reason": "fixture lane subsequently reacquired by other generation before audit; pending remains unaccepted",
+    "re_audit_performed": false
+  },
+  "helper_host_subtree_status": "",
+  "created": "2026-09-26",
+  "evidence_kind": "typed read-only host metadata",
+  "next_full_audit": "2026-09-27T00:03:00-04:00"
+}

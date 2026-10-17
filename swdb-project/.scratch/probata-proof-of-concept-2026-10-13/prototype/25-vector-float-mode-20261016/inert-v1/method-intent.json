@@ -1,0 +1,35 @@
+{
+  "actual_execution_admitted": false,
+  "additional_existing_generic_tool_and_source_checks_required": true,
+  "method_intent": {
+    "c_lowering": {
+      "translators": [
+        {
+          "id": "vector-float-copy-mode-1",
+          "sha256": "b48124bf057279c5018abfe65b8b2065173e4fcced27c83d33abf269fc2d3867"
+        }
+      ]
+    },
+    "evidence_kind": "contract_fixture",
+    "id": "method.wp-vector-float-copy-v1",
+    "lineup": [
+      {
+        "flags": [
+          "-wp-cache",
+          "none",
+          "-wp-model",
+          "+float"
+        ],
+        "tool": "frama-c-wp",
+        "version": "33.0"
+      }
+    ],
+    "models": {
+      "std_vector": {
+        "id": "swdb-std-models-2",
+        "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+      }
+    }
+  },
+  "runnable_record": false
+}

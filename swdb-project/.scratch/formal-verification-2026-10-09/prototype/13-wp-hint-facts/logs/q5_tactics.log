@@ -1,0 +1,8 @@
+== q5_tactics: frama-c logs/q5_x.c -wp-tactic=?
+[kernel] Parsing logs/q5_x.c (with preprocessing)
+[wp] Registered tactics: Wp.TacRewrite.Left Wp.TacRewrite.Right Wp.absurd Wp.array
+    Wp.bitrange Wp.bittestrange Wp.bitwised Wp.choice Wp.clear Wp.compound
+    Wp.compute Wp.congruence Wp.contrapose Wp.cut Wp.filter Wp.havoc
+    Wp.induction Wp.instance Wp.lemma Wp.modmask Wp.normal_form Wp.overflow
+    Wp.range Wp.separated Wp.sequence Wp.shift Wp.split Wp.unfold Wp.valid
+exit=0

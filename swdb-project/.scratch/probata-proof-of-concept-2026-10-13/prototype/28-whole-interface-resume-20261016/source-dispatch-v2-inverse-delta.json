@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-16 ET",
+  "edits": [
+    {
+      "new": "U64_MAX = 2**64 - 1\n# Exact identity-MMIO profile of the pinned DXS backend and MAA_gem5.hpp:71-91.\nMMIO_BEGIN = 17179869184\nMMIO_END = MMIO_BEGIN + 8 * 32 * 16384 + 4 * 32 + 4 * 32 + 24",
+      "old": "U64_MAX = 2**64 - 1"
+    },
+    {
+      "new": "                 \"aligned nonwrapping complete source object projection required\")\n            need(base + extent * width <= MMIO_BEGIN or MMIO_END <= base,\n                 \"ordinary object overlaps modeled MMIO storage\")\n",
+      "old": "                 \"aligned nonwrapping complete source object projection required\")\n"
+    },
+    {
+      "new": "            \"mmio_excluded_span\": [MMIO_BEGIN, MMIO_END],\n            \"initialization_granted\": False, \"history_events_added\": 0,",
+      "old": "            \"initialization_granted\": False, \"history_events_added\": 0,"
+    },
+    {
+      "new": "    uint64_t span=(uint64_t)o->extent*bytes;\n    uint64_t begin=DXS_SOURCE_MEMORY;\n    uint64_t end=begin+UINT64_C(8)*DXS_SOURCE_TILES*DXS_SOURCE_WORDS+UINT64_C(4)*DXS_SOURCE_TILES+UINT64_C(4)*DXS_SOURCE_REGS+24;\n    DXM_CHECK(DXS_SOURCE_MEMORY==UINT64_C(17179869184) && DXS_SOURCE_TILES==32 && DXS_SOURCE_REGS==32 && DXS_SOURCE_WORDS==16384,\"source-mmio-profile\");\n    DXM_CHECK(o->guest<=UINT64_MAX-span && o->physical<=UINT64_MAX-span,\"source-object-overflow\");\n    DXM_CHECK((o->guest+span<=begin || end<=o->guest) && (o->physical+span<=begin || end<=o->physical),\"ordinary-mmio-alias-refused\");\n    return span;",
+      "old": "    return (uint64_t)o->extent*bytes;"
+    }
+  ],
+  "new_sha256": "a2652610ae6198b7a3045e30155c77bfd9637a79ae2c9b668407ee5ae8eb7e9a",
+  "origin_sha256": "ffbbeb7f127cabbc3fb12c9297a0b0e62a0d115895f8dc3fd1a763e2fc7ed750",
+  "scope": "Ordinary guest/physical MMIO exclusion plus exact matching runtime guard; source/value/native V1 packets unchanged"
+}

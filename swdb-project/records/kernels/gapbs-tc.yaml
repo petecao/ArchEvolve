@@ -1,0 +1,63 @@
+kind: kernel
+schema_version: '0.2'
+id: gapbs-tc
+status: draft
+deprecated_by: null
+created: '2026-09-22'
+updated: '2026-09-22'
+provenance:
+- id: src-gapbs-tc
+  kind: source_code
+  description: gapbs src/tc.cc (TCVerifier, lines 108-128; main, lines 131-143) and src/benchmark.h (BenchmarkKernel)
+    at commit 2972aeb2703165bafd921222f4ed7196f542d3a8, read 2026-09-22 from the copy in apps/gapbs.
+  uri: https://github.com/sbeamer/gapbs/blob/2972aeb2703165bafd921222f4ed7196f542d3a8/src/tc.cc#L108-L128
+name: gapbs Triangle Counting
+application: gapbs
+computes: The number of triangles (3-cliques) in an undirected graph, each triangle counted once, as a
+  size_t. The graph must be undirected with no duplicate edges or self loops and with sorted neighbor
+  lists (gapbs's Builder guarantees the last two); tc exits with -2 on a directed input (tc.cc lines 137-140).
+  No parameter changes the result.
+correctness_check:
+  command: '{binary} {input_args} -n 1 -v'
+  verifier:
+    description: 'TCVerifier: a serial count with std::set_intersection of the full neighbor lists of
+      u and v for every stored edge (u, v), divided by 6 (each triangle is found six times); it must equal
+      the kernel''s count exactly.'
+    code:
+      root: application
+      path: src/tc.cc
+      lines: [108, 128]
+      excerpt: |-
+        // Compares with simple serial implementation that uses std::set_intersection
+        bool TCVerifier(const Graph &g, size_t test_total) {
+          size_t total = 0;
+          vector<NodeID> intersection;
+          intersection.reserve(g.num_nodes());
+          for (NodeID u : g.vertices()) {
+            for (NodeID v : g.out_neigh(u)) {
+              auto new_end = set_intersection(g.out_neigh(u).begin(),
+                                              g.out_neigh(u).end(),
+                                              g.out_neigh(v).begin(),
+                                              g.out_neigh(v).end(),
+                                              intersection.begin());
+              intersection.resize(new_end - intersection.begin());
+              total += intersection.size();
+            }
+          }
+          total = total / 6;  // each triangle was counted 6 times
+          if (total != test_total)
+            cout << total << " != " << test_total << endl;
+          return total == test_total;
+        }
+      sha256: null
+  pass_criterion: 'the run exits 0 and prints Verification: PASS'
+  pass_regex: Verification:\s+PASS
+  tolerance:
+    value: null
+    measure: exact equality of the triangle counts
+    note: On a mismatch the verifier prints "<expected> != <result>" (line 126).
+baseline_implementation: gapbs-tc-ordered
+notes:
+- Any code whose count equals TCVerifier's implements this kernel (ADR 0001), whether or not it relabels
+  the graph first.
+extensions: {}

@@ -1,0 +1,81 @@
+kind: input
+schema_version: '0.2'
+id: urand-u16-k16
+status: draft
+deprecated_by: null
+created: '2026-09-22'
+updated: '2026-09-22'
+provenance:
+- id: src-gapbs-generator
+  kind: source_code
+  description: 'gapbs src/generator.h (Generator: num_nodes = 2^scale, num_edges = num_nodes * degree,
+    then ID permutation for Kronecker) and src/command_line.h (-g/-u set symmetrize) and src/builder.h
+    (vertex count = largest ID + 1) at commit 2972aeb2703165bafd921222f4ed7196f542d3a8, read 2026-09-22.'
+  uri: https://github.com/sbeamer/gapbs/blob/2972aeb2703165bafd921222f4ed7196f542d3a8/src/generator.h
+- id: measured-sizes
+  kind: measurement
+  description: Sizes of the built graph, first measured by swdb profile run gapbs-pr-gs.urand-u16-k16.mbit10.20260922t212431z.
+  uri: null
+name: uniform random graph, scale 16, requested degree 16 (gapbs -u 16 -k 16)
+generator:
+  application: gapbs
+  tool: gapbs built-in generator and Builder (inside every gapbs kernel binary)
+  arguments: -u 16 -k 16
+properties:
+  scale:
+    value: 16
+    basis: code_reading
+    evidence_refs: [src-gapbs-generator]
+  requested_degree:
+    value: 16
+    basis: code_reading
+    evidence_refs: [src-gapbs-generator]
+  num_nodes:
+    value: 65536
+    basis: measured
+    evidence_refs: [measured-sizes]
+    note: Measured by the scale-16 pilot profiles on mbit10 (the benchmark's 'Graph has' line and index_features
+      agree). gapbs's Builder sets the vertex count to the largest vertex ID in the generated edge list
+      + 1 (apps/gapbs/src/builder.h:322-323), so it is at most 2^scale and can be smaller when the top
+      IDs get no edge (the scale-22 Kronecker graph has 4194302).
+  num_edges_undirected:
+    value: 1048276
+    basis: measured
+    evidence_refs: [measured-sizes]
+    note: Measured by swdb profile run gapbs-pr-gs.urand-u16-k16.mbit10.20260922t212431z (the benchmark's
+      'Graph has' line and, when run, index_features).
+  num_edges_directed:
+    value: 2096552
+    basis: measured
+    evidence_refs: [measured-sizes]
+    note: Measured by swdb profile run gapbs-pr-gs.urand-u16-k16.mbit10.20260922t212431z (the benchmark's
+      'Graph has' line and, when run, index_features).
+  directed:
+    value: false
+    basis: code_reading
+    evidence_refs: [src-gapbs-generator]
+    note: CLBase::ParseArgs sets symmetrize for generated graphs, so the graph is undirected.
+  weighted:
+    value: false
+    basis: code_reading
+    evidence_refs: [src-gapbs-generator]
+    note: Unweighted as generated; sssp's WeightedBuilder adds its own weights to the same edges.
+  degree_distribution:
+    value: binomial
+    basis: inferred
+    evidence_refs: [src-gapbs-generator]
+    note: Each endpoint is drawn uniformly, so degrees are binomial around the mean; the profile's degree_skew
+      measures it.
+  index_locality:
+    value: random
+    basis: inferred
+    evidence_refs: [src-gapbs-generator]
+    note: Endpoints are uniform over all IDs.
+  input_density:
+    value: sparse_scattered
+    basis: inferred
+    evidence_refs: [src-gapbs-generator]
+    note: About 32 of 65536 possible neighbors per vertex in the stored CSR, spread over the ID range.
+notes:
+- Index data fits the 24 MiB L3 of one mbit10 socket (spec pilot input).
+extensions: {}

@@ -1,0 +1,12 @@
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+// Ported 2026-10-03 from MaizeHPC/MemAcc af3d6d7f7a69a72facdc3b95b42e78c952f44a76
+// Source: AgenticRefiner/refiner/synthesis/drivers/bin_drain_{ref,cand,run}.cpp.tmpl
+// SWDB changes: reference TU calls SWDB's plain C++ reference header (swdb_ref::) instead of DataLayoutAPI; run TU drops all timing and adds an input frame check (2026-10-03 ET)
+// Two-binary certification REFERENCE TU for family bin_drain: compiled from SWDB's
+// plain C++ reference semantics only; the candidate header is never included.
+#include "{{REFERENCE_HEADER}}"
+#include <cstddef>
+#include <cstdint>
+extern "C" void swdb_ref_bin_drain(double* target, const std::int32_t* dests, const double* vals, std::size_t n) {
+  swdb_ref::bin_drain<double, std::int32_t>(target, dests, vals, n);
+}

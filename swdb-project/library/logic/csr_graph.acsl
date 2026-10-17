@@ -1,0 +1,31 @@
+// version: 1.0
+// logic.csr_graph: the CSR graph model (Probata proof of concept ticket 26, 2026-10-14 ET; map 16
+// item 9). Shared by every graph kernel's contract; nothing in it is kernel-specific.
+//
+// A CSR graph with n vertices: vertex v's edges are j in [off[v], off[v + 1]), and nbr[j] is the
+// other end of edge j. Pull kernels read in-edges, push kernels out-edges; the model is the same.
+// The definitions are non-recursive; the file states no lemma.
+
+// the offsets array starts at 0 and never decreases (pairwise form, as the sum library's regrouping
+// lemma states it)
+predicate csr_offsets{L}(int *off, integer n) =
+  off[0] == 0 && (\forall integer u, w; 0 <= u <= w <= n ==> off[u] <= off[w]);
+
+// every edge end is a vertex of [0, m)
+predicate csr_ends_in{L}(int *off, int *nbr, integer n, integer m) =
+  \forall integer j; 0 <= j < off[n] ==> 0 <= nbr[j] < m;
+
+// a well-formed CSR graph over n vertices
+predicate csr_graph{L}(int *off, int *nbr, integer n) =
+  0 <= n && csr_offsets(off, n) && csr_ends_in(off, nbr, n, n);
+
+// the number of edges of the graph and of vertex v
+logic integer csr_edges{L}(int *off, integer n) = off[n];
+logic integer csr_degree{L}(int *off, integer v) = off[v + 1] - off[v];
+
+// edge j belongs to vertex v
+predicate csr_edge_of{L}(int *off, integer v, integer j) = off[v] <= j < off[v + 1];
+
+// u -> w is an edge of the graph (some edge of u ends at w)
+predicate csr_adjacent{L}(int *off, int *nbr, integer u, integer w) =
+  \exists integer j; off[u] <= j < off[u + 1] && nbr[j] == w;

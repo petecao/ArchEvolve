@@ -1,0 +1,1042 @@
+--- /private/tmp/lanl17_read_111_unresolved_RAW_reference_contexts_20261008_a1_r1.py
++++ /private/tmp/lanl17_read_68_remaining_grouped_RAW_reference_contexts_20261008_a1.py
+@@ -1,5 +1,5 @@
+ #!/usr/bin/env python3
+-"""SOURCE-ONLY 2026-10-08 ET: fixed 111-file, read-only stdin query.
++"""SOURCE-ONLY 2026-10-08 ET: remaining 68-file grouped read-only stdin query.
+ 
+ Parent reviews this exact source before any use. Hashes every original body;
+ projects reference metadata only. No selected-control import, subprocess,
+@@ -27,871 +27,13 @@
+ MAX_LINE = 4096
+ MAX_ALIAS_USES = 256
+ SECONDS = 600
+-EXPECTED_INPUT_BYTES = 240313888
+-EXPECTED_FILE_COUNT = 111
++EXPECTED_INPUT_BYTES = 105265473
++EXPECTED_FILE_COUNT = 68
+ INPUT_PACK_PIN = {'path': '/private/tmp/lanl17-all18-local-literal-historical-reference-candidates-20261008-a1-r1.json', 'bytes': 3292991, 'sha256': 'a28ceb16234634cc8ee74eef0fdb5b3e9fb5f01aad90390ca188a2102bbcf31e', 'original_failed_O_pin': {'bytes': 21616756, 'path': '/private/tmp/lanl17-detached-passive-observer-originals-20261008-a3/observer.stdout', 'sha256': '93c08ff387147c8709d53e8cc39569afcaeac2e5cb667602a6859e2eee6e63e5'}}
++PREVIOUS_FAILED_QUERY_PIN = {'path': '/private/tmp/lanl17-fixed111-original-RAW-reference-context-query-actual-20261008-a1.json', 'bytes': 33026896, 'sha256': '1efb74e79b693a06281066820442b46d4260ff8b726af08496edad55ccf8515d', 'original_query_state': 'stopped_with_partial_metadata', 'original_failure': {'class': 'Refused', 'code': 'projection_byte_budget', 'message_sha256': 'e858fb7e799e62099034dc94916829df2fad2969f4978e42fac808a2ed5654cf'}, 'completed_file_count': 43, 'completed_original_input_bytes': 135048415}
++EXCLUDED_COMPLETED_FILE_PINS = [{'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-counts-20261006-a2/runner.py', 'bytes': 3066, 'sha256': '0c27e8a413eeed578e3172415c483a3e317d0fbf3d9a9c608ba42c2524a514f4'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-elapsed-20261006-a1/runner.py', 'bytes': 3777, 'sha256': '176800f45b63ed6b57feb750181299cce50a9f9442a49def41169774720beb82'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-extra-count-20261006-a1/runner.py', 'bytes': 4765, 'sha256': '9dae599f2fee708f33fdb78b062cb82e742f0b933368ce4dfe60cb65e6997586'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-extra-elapsed-20261006-a1/runner.py', 'bytes': 4769, 'sha256': '8dce79a91c7256c38f9dca0fa8b26e7f6fdbe6f00eaca05aa59f78bdd8b727c0'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-bound-estimates-20261006-a1/05-compact-reports.json', 'bytes': 6932285, 'sha256': '020aa6857591d1f14ac949fa171ddad70f17e469bd0d350a176ac94b891c6181'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-bound-estimates-20261006-a1/bc-estimate.json', 'bytes': 6885788, 'sha256': '288dfd4223ff5d5e0b3c9db6c5517b820ef920f009a950970b20d052d280879e'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-bound-estimates-20261006-a1/bfs-estimate.json', 'bytes': 5809193, 'sha256': 'f54057cd145c357c56be8b8edaa4291b1e0666855469f29ee06ed03cea83f107'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-bound-estimates-20261006-a1/characterization.json', 'bytes': 21909, 'sha256': '895dd962955e1f49e03fb0fe32344e5f19afd86c88692886a45581d881327caf'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-bound-estimates-20261006-a1/job.sh', 'bytes': 5860, 'sha256': 'b8f590019ff572cfcfb8d1aca123a9babd6547cff016465dc0bc6aa8f543afdc'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-bound-estimates-20261006-a1/fixture-counted/optimized.json', 'bytes': 10024, 'sha256': '4b98500c4a699760076de1fdf76785e6c2301d5ad3236849ac5e8e023729d228'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-bound-estimates-20261006-a1/fixture-counted/source.json', 'bytes': 2087, 'sha256': '05ae2e0220e1d9027e761ce1fee4e9455aa1543afb69b98a9f9028087ecd861a'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-count-20261006-a1/runner.py', 'bytes': 4344, 'sha256': '3713b18ae2784afcd23c477025b9866948d5fa7198d248d147e405fac973c875'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-count-20261006-a2/runner.py', 'bytes': 4325, 'sha256': '39c6c61328ff6cfc42ae436a799c9c833d6d647a1196ae02b802fcb3347f745e'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-elapsed-20261006-a2/runner.py', 'bytes': 4327, 'sha256': '9647a7815f5a825857381a6c37e459b2269eca21b002ba7ea3885826f0fcd557'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-total-count-20261006-a1/runner.py', 'bytes': 4777, 'sha256': '8789833badce21aa846419cf6f575b5b298d7c7db5d7395b199917ea600b9c46'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-total-elapsed-20261006-a1/runner.py', 'bytes': 4779, 'sha256': 'd2dbabf3bf62cf5bddeff7decd91dcdd50445e9a9cb9c60e5fb0acd2e397e195'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-count-equivalence-20261006-a1/job.sh', 'bytes': 1301, 'sha256': 'f29947be9c7c8a2fbceb0cab6a47c89b5f075a47216ad863b1d68dcc93b401f4'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-count-equivalence-20261006-a2/job.sh', 'bytes': 1301, 'sha256': 'fee17f90515816c727b0e64b51b1704c488d6e2fb624695f4d28117b68267c18'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/bc/characterization.json', 'bytes': 17057373, 'sha256': '4e2ebed56006d9e32813e71265c1aa03357a5cdabfbe45e6d4f18575e2c93cea'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/bc/host-end.txt', 'bytes': 3508, 'sha256': 'b793b64a2424b3d4cd82d237b0001896ed3b4c7f8bd9bc461c27c76cd854db40'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/bc/job.sh', 'bytes': 1538, 'sha256': 'f5f2610772da00bcf42b4d22eff26d780a286b05b98c47113365a52a7e00cbaf'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/bc/counted/optimized.json', 'bytes': 2402422, 'sha256': '467eb12c2272bb0f817191247b16f595132bf0155d41c05a09404474807538b1'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/bc/counted/regions.json', 'bytes': 2185, 'sha256': 'd0db4e1c2c8277a379b5b08fe89e58792a8830df2a29e1c950361d96a73c6a82'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/bc/counted/source.json', 'bytes': 4069914, 'sha256': '03707e7b173ba4014d2f71732c8d08cbe7c514ef53ac8ef0220cd209b8f56255'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/bfs/characterization.json', 'bytes': 14191743, 'sha256': '8936544b49da8d62064ba812b1a99a6bde19df53d5fd47310f0dd01d02468352'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/bfs/job.sh', 'bytes': 1536, 'sha256': '5d27237c56b4787ecd8d1b1d96c24abeec7c035b9d627da4c10e409705448d12'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/bfs/counted/optimized.json', 'bytes': 2030850, 'sha256': '872806f32c9ce2d48056414f5886f483c0a9e7fa99ea8797ae0e291186931011'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/bfs/counted/regions.json', 'bytes': 3161, 'sha256': '21161762fd7d51088bc6221f4b58a8ee701a0b1bcac9df24abde9fbe3c36ccd2'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/bfs/counted/source.json', 'bytes': 3092421, 'sha256': 'a79c4fc327693af145e653237f7626bfaad8f3f7e1b92d55ac171f42620e5214'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a2/bc/characterization.json', 'bytes': 17268162, 'sha256': '3a36e568b689fa5dc046a730b78cda37b7de95e917f0d6070387202171edd9cf'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a2/bc/job.sh', 'bytes': 1541, 'sha256': '635f672ca8e041b1797a983f109a8ca558da1a1aaf1a9ed286d7942a485bbff4'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a2/bc/counted/optimized.json', 'bytes': 2463718, 'sha256': 'f7ee9f2352f22545d2c5d7e7cc00fdf30c8c69b864a3e4881c9d933bff24676a'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a2/bc/counted/regions.json', 'bytes': 2185, 'sha256': 'd0db4e1c2c8277a379b5b08fe89e58792a8830df2a29e1c950361d96a73c6a82'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a2/bc/counted/source.json', 'bytes': 4162542, 'sha256': 'd9041452c21a1d9057c1a3eca29fc8e4855cb1255792360c665382cefbf38a2d'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a2/bfs/characterization.json', 'bytes': 14381108, 'sha256': 'a0f6dbe625c69b3aabfad7520c9b288f71a239473555572e40cab5d8fb73da57'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a2/bfs/job.sh', 'bytes': 1539, 'sha256': '38b3c6acb297ec8b9efa09df63d572224ee99719c6c27e09f107ead39de163e4'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a2/bfs/counted/optimized.json', 'bytes': 2085784, 'sha256': '3f4b260348354e7ab0159bcd203c2dca3f2e6e1d8c83180f215503ad67762d75'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a2/bfs/counted/regions.json', 'bytes': 3161, 'sha256': '21161762fd7d51088bc6221f4b58a8ee701a0b1bcac9df24abde9fbe3c36ccd2'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a2/bfs/counted/source.json', 'bytes': 3175233, 'sha256': '77bf1ed3aa9ba3c1d86fca790074b6f91223c43f9275129ef997ed8ac2627ba7'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-object-counts-20261006-a1/runner.py', 'bytes': 4419, 'sha256': 'f7b0297720088df2d21bed067254932a782ed492c2713fab0e0e4ce604dd0605'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-object-counts-20261006-a1/bc/characterization.json', 'bytes': 25377935, 'sha256': '641c80c687d6580a44f7cebdf50b4062be8b077a9c5e91072dc4d776322605d5'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-object-counts-20261006-a1/bc/counted/optimized.json', 'bytes': 3553395, 'sha256': 'fcf2e092e70d55b97d887ab178e8e9e2b191374f25496528b9cc43e4f035d5cc'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-object-counts-20261006-a1/bc/counted/regions.json', 'bytes': 2365, 'sha256': '2984f52cdb983676a82ee58d384a9fc937b4b17cffa85440abf1edbf5ee393b9'}]
+ ROW_PATHS = {'ArchEvolve-lanl-allocator-a2-20261006': '/data1/yanruj/ArchEvolve-lanl-allocator-a2-20261006', 'ArchEvolve-lanl-bulk-services-20261006-a1': '/data1/yanruj/ArchEvolve-lanl-bulk-services-20261006-a1', 'ArchEvolve-lanl-bulk-total-services-20261006-a1': '/data1/yanruj/ArchEvolve-lanl-bulk-total-services-20261006-a1', 'ArchEvolve-lanl-clock-a2-20261006': '/data1/yanruj/ArchEvolve-lanl-clock-a2-20261006', 'ArchEvolve-lanl-count-20261006': '/data1/yanruj/ArchEvolve-lanl-count-20261006', 'ArchEvolve-lanl-estimates-20261006': '/data1/yanruj/ArchEvolve-lanl-estimates-20261006', 'ArchEvolve-lanl-estimation-role-20261006-a1': '/data1/yanruj/ArchEvolve-lanl-estimation-role-20261006-a1', 'ArchEvolve-lanl-estimation-role-20261006-a2': '/data1/yanruj/ArchEvolve-lanl-estimation-role-20261006-a2', 'ArchEvolve-lanl-float-memory-services-20261006-a1': '/data1/yanruj/ArchEvolve-lanl-float-memory-services-20261006-a1', 'ArchEvolve-lanl-functional-evaluation-20261006-a1': '/data1/yanruj/ArchEvolve-lanl-functional-evaluation-20261006-a1', 'ArchEvolve-lanl-functional-object-counts-20261006-a2': '/data1/yanruj/ArchEvolve-lanl-functional-object-counts-20261006-a2', 'ArchEvolve-lanl-functional-strict-20261006': '/data1/yanruj/ArchEvolve-lanl-functional-strict-20261006', 'ArchEvolve-lanl-independent-services-20261006-a1': '/data1/yanruj/ArchEvolve-lanl-independent-services-20261006-a1', 'ArchEvolve-lanl-memory-a1-20261006': '/data1/yanruj/ArchEvolve-lanl-memory-a1-20261006', 'ArchEvolve-lanl-native-object-counts-20261006-a1': '/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1', 'ArchEvolve-lanl-openmp-projections-20261006-a1': '/data1/yanruj/ArchEvolve-lanl-openmp-projections-20261006-a1', 'ArchEvolve-lanl-prospective-inputs-20261006-a2': '/data1/yanruj/ArchEvolve-lanl-prospective-inputs-20261006-a2', 'ArchEvolve-lanl-root-projection-20261006': '/data1/yanruj/ArchEvolve-lanl-root-projection-20261006'}
+ INPUTS = [
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-counts-20261006-a2/runner.py",
+-    "bytes": 3066,
+-    "sha256": "0c27e8a413eeed578e3172415c483a3e317d0fbf3d9a9c608ba42c2524a514f4",
+-    "original_stat": {
+-      "ctime_ns": 1791329487881583288,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14162775,
+-      "mode": 33204,
+-      "mtime_ns": 1791329487881583288,
+-      "nlink": 1,
+-      "size": 3066,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-allocator-a2-20261006"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-elapsed-20261006-a1/runner.py",
+-    "bytes": 3777,
+-    "sha256": "176800f45b63ed6b57feb750181299cce50a9f9442a49def41169774720beb82",
+-    "original_stat": {
+-      "ctime_ns": 1791330039218203468,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14163857,
+-      "mode": 33204,
+-      "mtime_ns": 1791330039218203468,
+-      "nlink": 1,
+-      "size": 3777,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-allocator-a2-20261006"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-extra-count-20261006-a1/runner.py",
+-    "bytes": 4765,
+-    "sha256": "9dae599f2fee708f33fdb78b062cb82e742f0b933368ce4dfe60cb65e6997586",
+-    "original_stat": {
+-      "ctime_ns": 1791342093235099150,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14181040,
+-      "mode": 33204,
+-      "mtime_ns": 1791342093235099150,
+-      "nlink": 1,
+-      "size": 4765,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-independent-services-20261006-a1"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-extra-elapsed-20261006-a1/runner.py",
+-    "bytes": 4769,
+-    "sha256": "8dce79a91c7256c38f9dca0fa8b26e7f6fdbe6f00eaca05aa59f78bdd8b727c0",
+-    "original_stat": {
+-      "ctime_ns": 1791342708215565937,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14182201,
+-      "mode": 33204,
+-      "mtime_ns": 1791342708215565937,
+-      "nlink": 1,
+-      "size": 4769,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-independent-services-20261006-a1"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-bound-estimates-20261006-a1/05-compact-reports.json",
+-    "bytes": 6932285,
+-    "sha256": "020aa6857591d1f14ac949fa171ddad70f17e469bd0d350a176ac94b891c6181",
+-    "original_stat": {
+-      "ctime_ns": 1791324084531889047,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14158696,
+-      "mode": 33204,
+-      "mtime_ns": 1791324084531889047,
+-      "nlink": 1,
+-      "size": 6932285,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-count-20261006"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-bound-estimates-20261006-a1/bc-estimate.json",
+-    "bytes": 6885788,
+-    "sha256": "288dfd4223ff5d5e0b3c9db6c5517b820ef920f009a950970b20d052d280879e",
+-    "original_stat": {
+-      "ctime_ns": 1791324035403381309,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14158689,
+-      "mode": 33204,
+-      "mtime_ns": 1791324035403381309,
+-      "nlink": 1,
+-      "size": 6885788,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-count-20261006"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-bound-estimates-20261006-a1/bfs-estimate.json",
+-    "bytes": 5809193,
+-    "sha256": "f54057cd145c357c56be8b8edaa4291b1e0666855469f29ee06ed03cea83f107",
+-    "original_stat": {
+-      "ctime_ns": 1791323906900053786,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14158682,
+-      "mode": 33204,
+-      "mtime_ns": 1791323906900053786,
+-      "nlink": 1,
+-      "size": 5809193,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-count-20261006"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-bound-estimates-20261006-a1/characterization.json",
+-    "bytes": 21909,
+-    "sha256": "895dd962955e1f49e03fb0fe32344e5f19afd86c88692886a45581d881327caf",
+-    "original_stat": {
+-      "ctime_ns": 1791323666164569036,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14158661,
+-      "mode": 33204,
+-      "mtime_ns": 1791323666164569036,
+-      "nlink": 1,
+-      "size": 21909,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-estimates-20261006"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-bound-estimates-20261006-a1/job.sh",
+-    "bytes": 5860,
+-    "sha256": "b8f590019ff572cfcfb8d1aca123a9babd6547cff016465dc0bc6aa8f543afdc",
+-    "original_stat": {
+-      "ctime_ns": 1791323570115578500,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14157771,
+-      "mode": 33261,
+-      "mtime_ns": 1791323570114578489,
+-      "nlink": 1,
+-      "size": 5860,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-estimates-20261006"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-bound-estimates-20261006-a1/fixture-counted/optimized.json",
+-    "bytes": 10024,
+-    "sha256": "4b98500c4a699760076de1fdf76785e6c2301d5ad3236849ac5e8e023729d228",
+-    "original_stat": {
+-      "ctime_ns": 1791323651940422314,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14158667,
+-      "mode": 33204,
+-      "mtime_ns": 1791323651940422314,
+-      "nlink": 1,
+-      "size": 10024,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-estimates-20261006"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-bound-estimates-20261006-a1/fixture-counted/source.json",
+-    "bytes": 2087,
+-    "sha256": "05ae2e0220e1d9027e761ce1fee4e9455aa1543afb69b98a9f9028087ecd861a",
+-    "original_stat": {
+-      "ctime_ns": 1791323651957422490,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14158669,
+-      "mode": 33204,
+-      "mtime_ns": 1791323651957422490,
+-      "nlink": 1,
+-      "size": 2087,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-estimates-20261006"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-count-20261006-a1/runner.py",
+-    "bytes": 4344,
+-    "sha256": "3713b18ae2784afcd23c477025b9866948d5fa7198d248d147e405fac973c875",
+-    "original_stat": {
+-      "ctime_ns": 1791335069501481629,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14171194,
+-      "mode": 33204,
+-      "mtime_ns": 1791335069501481629,
+-      "nlink": 1,
+-      "size": 4344,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-bulk-services-20261006-a1"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-count-20261006-a2/runner.py",
+-    "bytes": 4325,
+-    "sha256": "39c6c61328ff6cfc42ae436a799c9c833d6d647a1196ae02b802fcb3347f745e",
+-    "original_stat": {
+-      "ctime_ns": 1791335273618617760,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14172560,
+-      "mode": 33204,
+-      "mtime_ns": 1791335273618617760,
+-      "nlink": 1,
+-      "size": 4325,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-bulk-services-20261006-a1"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-elapsed-20261006-a2/runner.py",
+-    "bytes": 4327,
+-    "sha256": "9647a7815f5a825857381a6c37e459b2269eca21b002ba7ea3885826f0fcd557",
+-    "original_stat": {
+-      "ctime_ns": 1791336019713407936,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14173481,
+-      "mode": 33204,
+-      "mtime_ns": 1791336019713407936,
+-      "nlink": 1,
+-      "size": 4327,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-bulk-services-20261006-a1"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-total-count-20261006-a1/runner.py",
+-    "bytes": 4777,
+-    "sha256": "8789833badce21aa846419cf6f575b5b298d7c7db5d7395b199917ea600b9c46",
+-    "original_stat": {
+-      "ctime_ns": 1791337260898426162,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14174279,
+-      "mode": 33204,
+-      "mtime_ns": 1791337260898426162,
+-      "nlink": 1,
+-      "size": 4777,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-bulk-total-services-20261006-a1"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-total-elapsed-20261006-a1/runner.py",
+-    "bytes": 4779,
+-    "sha256": "d2dbabf3bf62cf5bddeff7decd91dcdd50445e9a9cb9c60e5fb0acd2e397e195",
+-    "original_stat": {
+-      "ctime_ns": 1791337825279365759,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14175139,
+-      "mode": 33204,
+-      "mtime_ns": 1791337825279365759,
+-      "nlink": 1,
+-      "size": 4779,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-bulk-total-services-20261006-a1"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-count-equivalence-20261006-a1/job.sh",
+-    "bytes": 1301,
+-    "sha256": "f29947be9c7c8a2fbceb0cab6a47c89b5f075a47216ad863b1d68dcc93b401f4",
+-    "original_stat": {
+-      "ctime_ns": 1791322060927073145,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14065675,
+-      "mode": 33204,
+-      "mtime_ns": 1791322060927073145,
+-      "nlink": 1,
+-      "size": 1301,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-count-20261006"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-count-equivalence-20261006-a2/job.sh",
+-    "bytes": 1301,
+-    "sha256": "fee17f90515816c727b0e64b51b1704c488d6e2fb624695f4d28117b68267c18",
+-    "original_stat": {
+-      "ctime_ns": 1791323115144893353,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14157299,
+-      "mode": 33261,
+-      "mtime_ns": 1791323115144893353,
+-      "nlink": 1,
+-      "size": 1301,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-count-20261006"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/bc/characterization.json",
+-    "bytes": 17057373,
+-    "sha256": "4e2ebed56006d9e32813e71265c1aa03357a5cdabfbe45e6d4f18575e2c93cea",
+-    "original_stat": {
+-      "ctime_ns": 1791322065925124487,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14065125,
+-      "mode": 33204,
+-      "mtime_ns": 1791322065925124487,
+-      "nlink": 1,
+-      "size": 17057373,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-count-20261006"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/bc/host-end.txt",
+-    "bytes": 3508,
+-    "sha256": "b793b64a2424b3d4cd82d237b0001896ed3b4c7f8bd9bc461c27c76cd854db40",
+-    "original_stat": {
+-      "ctime_ns": 1791322084968320121,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14065997,
+-      "mode": 33204,
+-      "mtime_ns": 1791322084968320121,
+-      "nlink": 1,
+-      "size": 3508,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-count-20261006"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/bc/job.sh",
+-    "bytes": 1538,
+-    "sha256": "f5f2610772da00bcf42b4d22eff26d780a286b05b98c47113365a52a7e00cbaf",
+-    "original_stat": {
+-      "ctime_ns": 1791321848400891501,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14065082,
+-      "mode": 33204,
+-      "mtime_ns": 1791321848400891501,
+-      "nlink": 1,
+-      "size": 1538,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-count-20261006"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/bc/counted/optimized.json",
+-    "bytes": 2402422,
+-    "sha256": "467eb12c2272bb0f817191247b16f595132bf0155d41c05a09404474807538b1",
+-    "original_stat": {
+-      "ctime_ns": 1791321867093083262,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14065633,
+-      "mode": 33204,
+-      "mtime_ns": 1791321867093083262,
+-      "nlink": 1,
+-      "size": 2402422,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-count-20261006"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/bc/counted/regions.json",
+-    "bytes": 2185,
+-    "sha256": "d0db4e1c2c8277a379b5b08fe89e58792a8830df2a29e1c950361d96a73c6a82",
+-    "original_stat": {
+-      "ctime_ns": 1791321857984989820,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14065622,
+-      "mode": 33204,
+-      "mtime_ns": 1791321857984989820,
+-      "nlink": 1,
+-      "size": 2185,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-count-20261006"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/bc/counted/source.json",
+-    "bytes": 4069914,
+-    "sha256": "03707e7b173ba4014d2f71732c8d08cbe7c514ef53ac8ef0220cd209b8f56255",
+-    "original_stat": {
+-      "ctime_ns": 1791321871993133535,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14065636,
+-      "mode": 33204,
+-      "mtime_ns": 1791321871993133535,
+-      "nlink": 1,
+-      "size": 4069914,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-count-20261006"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/bfs/characterization.json",
+-    "bytes": 14191743,
+-    "sha256": "8936544b49da8d62064ba812b1a99a6bde19df53d5fd47310f0dd01d02468352",
+-    "original_stat": {
+-      "ctime_ns": 1791321909902522528,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14065088,
+-      "mode": 33204,
+-      "mtime_ns": 1791321909902522528,
+-      "nlink": 1,
+-      "size": 14191743,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-count-20261006"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/bfs/job.sh",
+-    "bytes": 1536,
+-    "sha256": "5d27237c56b4787ecd8d1b1d96c24abeec7c035b9d627da4c10e409705448d12",
+-    "original_stat": {
+-      "ctime_ns": 1791321848306890537,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14064495,
+-      "mode": 33204,
+-      "mtime_ns": 1791321848306890537,
+-      "nlink": 1,
+-      "size": 1536,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-count-20261006"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/bfs/counted/optimized.json",
+-    "bytes": 2030850,
+-    "sha256": "872806f32c9ce2d48056414f5886f483c0a9e7fa99ea8797ae0e291186931011",
+-    "original_stat": {
+-      "ctime_ns": 1791321865151063338,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14065631,
+-      "mode": 33204,
+-      "mtime_ns": 1791321865151063338,
+-      "nlink": 1,
+-      "size": 2030850,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-count-20261006"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/bfs/counted/regions.json",
+-    "bytes": 3161,
+-    "sha256": "21161762fd7d51088bc6221f4b58a8ee701a0b1bcac9df24abde9fbe3c36ccd2",
+-    "original_stat": {
+-      "ctime_ns": 1791321857944989410,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14065617,
+-      "mode": 33204,
+-      "mtime_ns": 1791321857944989410,
+-      "nlink": 1,
+-      "size": 3161,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-count-20261006"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/bfs/counted/source.json",
+-    "bytes": 3092421,
+-    "sha256": "a79c4fc327693af145e653237f7626bfaad8f3f7e1b92d55ac171f42620e5214",
+-    "original_stat": {
+-      "ctime_ns": 1791321868073093316,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14065635,
+-      "mode": 33204,
+-      "mtime_ns": 1791321868073093316,
+-      "nlink": 1,
+-      "size": 3092421,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-count-20261006"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a2/bc/characterization.json",
+-    "bytes": 17268162,
+-    "sha256": "3a36e568b689fa5dc046a730b78cda37b7de95e917f0d6070387202171edd9cf",
+-    "original_stat": {
+-      "ctime_ns": 1791323206535833521,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14156771,
+-      "mode": 33204,
+-      "mtime_ns": 1791323206535833521,
+-      "nlink": 1,
+-      "size": 17268162,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-count-20261006"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a2/bc/job.sh",
+-    "bytes": 1541,
+-    "sha256": "635f672ca8e041b1797a983f109a8ca558da1a1aaf1a9ed286d7942a485bbff4",
+-    "original_stat": {
+-      "ctime_ns": 1791322969473395816,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14156727,
+-      "mode": 33204,
+-      "mtime_ns": 1791322969473395816,
+-      "nlink": 1,
+-      "size": 1541,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-count-20261006"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a2/bc/counted/optimized.json",
+-    "bytes": 2463718,
+-    "sha256": "f7ee9f2352f22545d2c5d7e7cc00fdf30c8c69b864a3e4881c9d933bff24676a",
+-    "original_stat": {
+-      "ctime_ns": 1791322998629695447,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14157277,
+-      "mode": 33204,
+-      "mtime_ns": 1791322998629695447,
+-      "nlink": 1,
+-      "size": 2463718,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-count-20261006"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a2/bc/counted/regions.json",
+-    "bytes": 2185,
+-    "sha256": "d0db4e1c2c8277a379b5b08fe89e58792a8830df2a29e1c950361d96a73c6a82",
+-    "original_stat": {
+-      "ctime_ns": 1791322990022606989,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14157261,
+-      "mode": 33204,
+-      "mtime_ns": 1791322990022606989,
+-      "nlink": 1,
+-      "size": 2185,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-count-20261006"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a2/bc/counted/source.json",
+-    "bytes": 4162542,
+-    "sha256": "d9041452c21a1d9057c1a3eca29fc8e4855cb1255792360c665382cefbf38a2d",
+-    "original_stat": {
+-      "ctime_ns": 1791323003471745212,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14157281,
+-      "mode": 33204,
+-      "mtime_ns": 1791323003471745212,
+-      "nlink": 1,
+-      "size": 4162542,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-count-20261006"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a2/bfs/characterization.json",
+-    "bytes": 14381108,
+-    "sha256": "a0f6dbe625c69b3aabfad7520c9b288f71a239473555572e40cab5d8fb73da57",
+-    "original_stat": {
+-      "ctime_ns": 1791323047614198962,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14066442,
+-      "mode": 33204,
+-      "mtime_ns": 1791323047614198962,
+-      "nlink": 1,
+-      "size": 14381108,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-count-20261006"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a2/bfs/job.sh",
+-    "bytes": 1539,
+-    "sha256": "38b3c6acb297ec8b9efa09df63d572224ee99719c6c27e09f107ead39de163e4",
+-    "original_stat": {
+-      "ctime_ns": 1791322969367394727,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14066437,
+-      "mode": 33204,
+-      "mtime_ns": 1791322969367394727,
+-      "nlink": 1,
+-      "size": 1539,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-count-20261006"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a2/bfs/counted/optimized.json",
+-    "bytes": 2085784,
+-    "sha256": "3f4b260348354e7ab0159bcd203c2dca3f2e6e1d8c83180f215503ad67762d75",
+-    "original_stat": {
+-      "ctime_ns": 1791322997089679619,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14157275,
+-      "mode": 33204,
+-      "mtime_ns": 1791322997089679619,
+-      "nlink": 1,
+-      "size": 2085784,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-count-20261006"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a2/bfs/counted/regions.json",
+-    "bytes": 3161,
+-    "sha256": "21161762fd7d51088bc6221f4b58a8ee701a0b1bcac9df24abde9fbe3c36ccd2",
+-    "original_stat": {
+-      "ctime_ns": 1791322990155608356,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14157266,
+-      "mode": 33204,
+-      "mtime_ns": 1791322990155608356,
+-      "nlink": 1,
+-      "size": 3161,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-count-20261006"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a2/bfs/counted/source.json",
+-    "bytes": 3175233,
+-    "sha256": "77bf1ed3aa9ba3c1d86fca790074b6f91223c43f9275129ef997ed8ac2627ba7",
+-    "original_stat": {
+-      "ctime_ns": 1791322999974709270,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14157279,
+-      "mode": 33204,
+-      "mtime_ns": 1791322999974709270,
+-      "nlink": 1,
+-      "size": 3175233,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-count-20261006"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-object-counts-20261006-a1/runner.py",
+-    "bytes": 4419,
+-    "sha256": "f7b0297720088df2d21bed067254932a782ed492c2713fab0e0e4ce604dd0605",
+-    "original_stat": {
+-      "ctime_ns": 1791333249123407085,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14167722,
+-      "mode": 33204,
+-      "mtime_ns": 1791333249123407085,
+-      "nlink": 1,
+-      "size": 4419,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-native-object-counts-20261006-a1"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-object-counts-20261006-a1/bc/characterization.json",
+-    "bytes": 25377935,
+-    "sha256": "641c80c687d6580a44f7cebdf50b4062be8b077a9c5e91072dc4d776322605d5",
+-    "original_stat": {
+-      "ctime_ns": 1791333654421665325,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14169717,
+-      "mode": 33204,
+-      "mtime_ns": 1791333654421665325,
+-      "nlink": 1,
+-      "size": 25377935,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-native-object-counts-20261006-a1"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-object-counts-20261006-a1/bc/counted/optimized.json",
+-    "bytes": 3553395,
+-    "sha256": "fcf2e092e70d55b97d887ab178e8e9e2b191374f25496528b9cc43e4f035d5cc",
+-    "original_stat": {
+-      "ctime_ns": 1791333434262353900,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14169726,
+-      "mode": 33204,
+-      "mtime_ns": 1791333434262353900,
+-      "nlink": 1,
+-      "size": 3553395,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-native-object-counts-20261006-a1"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+-  {
+-    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-object-counts-20261006-a1/bc/counted/regions.json",
+-    "bytes": 2365,
+-    "sha256": "2984f52cdb983676a82ee58d384a9fc937b4b17cffa85440abf1edbf5ee393b9",
+-    "original_stat": {
+-      "ctime_ns": 1791333425630263195,
+-      "dev": 2065,
+-      "gid": 114316761,
+-      "ino": 14169720,
+-      "mode": 33204,
+-      "mtime_ns": 1791333425630263195,
+-      "nlink": 1,
+-      "size": 2365,
+-      "uid": 114316761
+-    },
+-    "original_candidate_reference_rows": [
+-      "ArchEvolve-lanl-native-object-counts-20261006-a1"
+-    ],
+-    "original_reference_classification": "unclassified_literal_bytes"
+-  },
+   {
+     "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-object-counts-20261006-a1/bc/counted/source.json",
+     "bytes": 6202015,
+@@ -2369,14 +1511,65 @@
+         return 'source_or_execution_provenance'
+     return 'unclassified_scalar_reference'
+ 
+-def context_add(out, item, result, deadline):
++def charge_context(item, result, deadline):
++    # Every matched representation is inspected, counted and hashed before any
++    # grouping. The 200,000-site bound is unchanged, not a group-count bound.
+     check_time(deadline)
+     result['context_count'] += 1
+     require(result['context_count'] <= MAX_CONTEXTS, 'projection_context_budget')
+-    encoded = json.dumps(item, ensure_ascii=True, separators=(',',':')).encode()
++    census = result['active_file_projection_census']
++    census['matched_context_representations'] += 1
++    category = item['mechanical_context_category']
++    census['category_counts'][category] = census['category_counts'].get(category,0)+1
++    for row in item['matched_rows']:
++        census['row_context_counts'][row] = census['row_context_counts'].get(row,0)+1
++    kind = item.get('JSON_context_kind', 'scalar_value' if 'JSON_field' in item else
++                    'AST_literal' if 'AST' in item else 'matched_source_or_text_line')
++    census['representation_kind_counts'][kind] = census['representation_kind_counts'].get(kind,0)+1
++    if category in ('unclassified_scalar_reference','script_string_literal_reference',
++                    'source_code_path_mention','text_path_mention_only'):
++        census['mechanically_unresolved_category_counts'][category] = census['mechanically_unresolved_category_counts'].get(category,0)+1
++    return json.dumps(item,ensure_ascii=True,sort_keys=True,separators=(',',':')).encode()
++
++def retain_context(out, item, result, deadline):
++    check_time(deadline)
++    encoded=json.dumps(item,ensure_ascii=True,separators=(',',':')).encode()
+     result['projection_item_bytes'] += len(encoded)
+     require(result['projection_item_bytes'] <= OUTPUT_BYTES, 'projection_byte_budget')
+     out.append(item)
++
++def context_add(out, item, result, deadline):
++    charge_context(item,result,deadline)
++    retain_context(out,item,result,deadline)
++
++def JSON_field_pattern(keys):
++    # Preserve all actual non-index field names. Only numeric array positions
++    # and decimal object-index keys are generalized; the exact path is retained
++    # inside representative_context and every original context enters the chain.
++    return [{'numeric_index_kind':'array'} if isinstance(k,int) else
++            {'numeric_index_kind':'object'} if isinstance(k,str) and k.isdecimal() else k
++            for k in keys]
++
++def grouped_JSON_add(groups, order, item, result, deadline):
++    encoded=charge_context(item,result,deadline)
++    value=item['value']
++    pattern={'JSON_field_pattern':JSON_field_pattern(item['JSON_field']),
++        'JSON_context_kind':item.get('JSON_context_kind','scalar_value'),
++        'matched_rows':item['matched_rows'],
++        'mechanical_context_category':item['mechanical_context_category'],
++        'matched_path_literals':value['matched_path_literals'],
++        'value_projection_kind':value['projection_kind']}
++    key=json.dumps(pattern,ensure_ascii=True,sort_keys=True,separators=(',',':'))
++    if key not in groups:
++        groups[key]={'pattern':pattern,'representative':item,'count':0,'chain':hashlib.sha256()}
++        order.append(key)
++    group=groups[key]
++    group['count'] += 1
++    # Eight-byte unsigned big-endian length followed by the complete canonical
++    # original projected context, in deterministic traversal order. No indices,
++    # actual field names, original-string hashes or values are dropped from SHA.
++    group['chain'].update(len(encoded).to_bytes(8,'big'))
++    group['chain'].update(encoded)
+ 
+ def json_contexts(body, result, deadline):
+     def pairs(xs):
+@@ -2388,7 +1581,8 @@
+     def nonfinite(_):
+         raise Refused('original_JSON_nonfinite')
+     root = json.loads(body, object_pairs_hook=pairs, parse_constant=nonfinite)
+-    out = []
++    groups = {}
++    order = []
+     todo = [([],root)]
+     visited = 0
+     while todo:
+@@ -2399,16 +1593,28 @@
+         if isinstance(value,dict):
+             for key in value:
+                 if PATTERN.search(key):
+-                    context_add(out, {'JSON_field':keys+[key], 'JSON_context_kind':'dictionary_key',
++                    grouped_JSON_add(groups,order,{'JSON_field':keys+[key], 'JSON_context_kind':'dictionary_key',
+                         'matched_rows':labels(key), 'mechanical_context_category':json_category(keys+[key],key),
+-                        'value':value_projection(key)}, result, deadline)
++                        'value':value_projection(key)},result,deadline)
+             todo.extend((keys+[k],v) for k,v in value.items())
+         elif isinstance(value,list):
+             todo.extend((keys+[i],v) for i,v in enumerate(value))
+         elif isinstance(value,str) and PATTERN.search(value):
+-            context_add(out, {'JSON_field':keys, 'matched_rows':labels(value),
++            grouped_JSON_add(groups,order,{'JSON_field':keys, 'matched_rows':labels(value),
+                 'mechanical_context_category':json_category(keys,value),
+-                'value':value_projection(value)}, result, deadline)
++                'value':value_projection(value)},result,deadline)
++    out=[]
++    for key in order:
++        group=groups[key]
++        record=dict(group['pattern'])
++        record.update({'matched_context_count':group['count'],
++            'full_original_projected_contexts_chain_sha256':group['chain'].hexdigest(),
++            'chain_encoding':'each canonical ensure_ascii True sort_keys True compact JSON context prefixed with 8-byte big-endian byte length, traversal order',
++            'representative_context':group['representative'],
++            'representative_is_one_exact_example_not_all_original_values':True})
++        retain_context(out,record,result,deadline)
++    result['active_file_projection_census']['JSON_group_count']=len(out)
++    result['active_file_projection_census']['JSON_nodes_visited']=visited
+     return out
+ 
+ def call_name(node):
+@@ -2510,22 +1716,30 @@
+             'fixed_input_inventory')
+     require(len({p['path'] for p in INPUTS})==EXPECTED_FILE_COUNT,'fixed_input_duplicate')
+     deadline = time.monotonic()+SECONDS
+-    result = {'format':'swdb.fixed111.original_RAW_reference_context_query.v1','sealed':False,
++    result = {'format':'swdb.fixed68.remaining_grouped_original_RAW_reference_context_query.v1','sealed':False,
+         'started_utc':utc(),'finished_utc':None,'query_state':'started','failure':None,
+         'parent_supplied_stdin_source_sha256':args.source_sha256,
+         'stdin_source_pin_independently_rechecked_by_query':False,
+         'source_transport_byte_verification_is_parent_custody':True,
+-        'input_pack_pin':INPUT_PACK_PIN,'fixed_original_input_bytes':EXPECTED_INPUT_BYTES,
++        'input_pack_pin':INPUT_PACK_PIN,'previous_failed_query_pin':PREVIOUS_FAILED_QUERY_PIN,
++        'excluded_completed_file_pins':EXCLUDED_COMPLETED_FILE_PINS,
++        'fixed_original_input_bytes':EXPECTED_INPUT_BYTES,
+         'limits':{'one_file_bytes':ONE_FILE,'total_body_read_bytes':TOTAL_BYTES,'output_bytes':OUTPUT_BYTES,
+                   'seconds':SECONDS,'contexts':MAX_CONTEXTS,'string_value_bytes':MAX_VALUE,
+                   'source_line_bytes':MAX_LINE,'syntactic_alias_uses_per_literal':MAX_ALIAS_USES},
+         'body_bytes_read':0,'context_count':0,'projection_item_bytes':0,'file_observations':[],
++        'active_file_path':None,'active_file_projection_census':None,
+         'selected_control_imports_or_calls':False,'filesystem_writes_or_Git_actions':False,
+         'application_outcome_bodies_serialized':False,'scientific_actions_or_admission':False,
+         'current_queue_history_classification_clearance_or_global_stability_generated':False}
+     code = 0
+     try:
+         for pin in INPUTS:
++            result['active_file_path']=pin['path']
++            result['active_file_projection_census']={'matched_context_representations':0,
++                'category_counts':{},'row_context_counts':{},'representation_kind_counts':{},
++                'mechanically_unresolved_category_counts':{},
++                'all_categories_are_mechanical_reference_candidates_not_history_or_queue_findings':True}
+             body,before,after = read_original(pin,result,deadline)
+             record = {'original_file_pin':pin,'current_stat_before':before,'current_stat_after':after,
+                 'original_stat_equal_current':pin['original_stat']==before,
+@@ -2543,7 +1757,12 @@
+                     record['projection']=line_contexts(body.decode('utf-8'),suffix,result,deadline)
+             except (json.JSONDecodeError,UnicodeError,SyntaxError) as exc:
+                 record['projection_error']={'class':type(exc).__name__,'message_sha256':sha(str(exc).encode())}
++            record['projection_census']=result['active_file_projection_census']
++            record['projection_representation']='grouped_JSON_patterns_with_exact_example_count_full_context_chain' if suffix=='.json' else 'bounded_original_AST_or_line_contexts'
++            record['projection_gaps']=[] if record['projection_error'] is None else [{'kind':'original_body_parse_or_decode_error','details':record['projection_error']}]
+             result['file_observations'].append(record)
++            result['active_file_path']=None
++            result['active_file_projection_census']=None
+             del body
+         result['query_state']='fixed_file_metadata_query_finished'
+     except BaseException as exc:

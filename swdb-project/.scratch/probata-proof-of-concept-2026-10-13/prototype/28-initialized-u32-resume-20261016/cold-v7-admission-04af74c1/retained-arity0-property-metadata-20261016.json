@@ -1,0 +1,447 @@
+{
+  "classification": "PASSIVE_EXTERN_CLASSIFICATION_METADATA_ONLY",
+  "reader_audit_executed": false,
+  "records": [
+    {
+      "Extern_properties": [
+        {
+          "dependencies": [],
+          "description": "assigns SPD_count, REG_count, region_count;",
+          "emitter": "",
+          "function": "init_MAA",
+          "kind": "contract",
+          "line": 25,
+          "origin": null,
+          "property": "init_MAA_assigns",
+          "property_export_origin": "registered",
+          "source_file": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/pytest/test_actual_initialized_u32_or0/runs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194320z.17d8a1e8/scratch/wp_input.c",
+          "status_registered": true
+        },
+        {
+          "dependencies": [],
+          "description": "ensures\nSPD_count \u2261 0 \u2227 REG_count \u2261 0 \u2227 region_count \u2261 6",
+          "emitter": "",
+          "function": "init_MAA",
+          "kind": "contract",
+          "line": 25,
+          "origin": null,
+          "property": "init_MAA_ensures",
+          "property_export_origin": "registered",
+          "source_file": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/pytest/test_actual_initialized_u32_or0/runs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194320z.17d8a1e8/scratch/wp_input.c",
+          "status_registered": true
+        },
+        {
+          "dependencies": [],
+          "description": "assigns \\nothing;",
+          "emitter": "",
+          "function": "get_reg_unsigned_int",
+          "kind": "contract",
+          "line": 23,
+          "origin": null,
+          "property": "get_reg_unsigned_int_assigns",
+          "property_export_origin": "registered",
+          "source_file": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/pytest/test_actual_initialized_u32_or0/runs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194320z.17d8a1e8/scratch/wp_input.c",
+          "status_registered": true
+        },
+        {
+          "dependencies": [],
+          "description": "terminates\n\\false",
+          "emitter": "",
+          "function": "get_new_reg_unsigned_int_args1",
+          "kind": "contract",
+          "line": 13,
+          "origin": null,
+          "property": "get_new_reg_unsigned_int_args1_terminates",
+          "property_export_origin": "registered",
+          "source_file": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/pytest/test_actual_initialized_u32_or0/runs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194320z.17d8a1e8/scratch/wp_input.c",
+          "status_registered": true
+        },
+        {
+          "dependencies": [],
+          "description": "assigns \\nothing;",
+          "emitter": "",
+          "function": "get_new_reg_unsigned_int_args0",
+          "kind": "contract",
+          "line": 19,
+          "origin": null,
+          "property": "get_new_reg_unsigned_int_args0_assigns",
+          "property_export_origin": "registered",
+          "source_file": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/pytest/test_actual_initialized_u32_or0/runs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194320z.17d8a1e8/scratch/wp_input.c",
+          "status_registered": true
+        },
+        {
+          "dependencies": [],
+          "description": "ensures\n\\result \u2261 __swdb_dx_reg_words[\\old(reg_id)]",
+          "emitter": "",
+          "function": "get_reg_unsigned_int",
+          "kind": "contract",
+          "line": 21,
+          "origin": null,
+          "property": "get_reg_unsigned_int_ensures",
+          "property_export_origin": "registered",
+          "source_file": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/pytest/test_actual_initialized_u32_or0/runs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194320z.17d8a1e8/scratch/wp_input.c",
+          "status_registered": true
+        },
+        {
+          "dependencies": [],
+          "description": "terminates\n\\false",
+          "emitter": "",
+          "function": "get_reg_unsigned_int",
+          "kind": "contract",
+          "line": 21,
+          "origin": null,
+          "property": "get_reg_unsigned_int_terminates",
+          "property_export_origin": "registered",
+          "source_file": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/pytest/test_actual_initialized_u32_or0/runs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194320z.17d8a1e8/scratch/wp_input.c",
+          "status_registered": true
+        },
+        {
+          "dependencies": [],
+          "description": "assigns REG_count, __swdb_dx_reg_words[REG_count];",
+          "emitter": "",
+          "function": "get_new_reg_unsigned_int_args1",
+          "kind": "contract",
+          "line": 13,
+          "origin": null,
+          "property": "get_new_reg_unsigned_int_args1_assigns",
+          "property_export_origin": "registered",
+          "source_file": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/pytest/test_actual_initialized_u32_or0/runs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194320z.17d8a1e8/scratch/wp_input.c",
+          "status_registered": true
+        },
+        {
+          "dependencies": [],
+          "description": "ensures\n\\result \u2261 \\old(REG_count) \u2227 REG_count \u2261 \\old(REG_count) + 1 \u2227\n__swdb_dx_reg_words[\\result] \u2261 \\old(data)",
+          "emitter": "",
+          "function": "get_new_reg_unsigned_int_args1",
+          "kind": "contract",
+          "line": 13,
+          "origin": null,
+          "property": "get_new_reg_unsigned_int_args1_ensures",
+          "property_export_origin": "registered",
+          "source_file": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/pytest/test_actual_initialized_u32_or0/runs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194320z.17d8a1e8/scratch/wp_input.c",
+          "status_registered": true
+        }
+      ],
+      "expected_result": 711,
+      "goals": 33,
+      "inventory_sha256": "40c6b980145dfde1471c549c59e9ccad66982b714385a85419056d1bfce852f6",
+      "properties": 41,
+      "property_kind_census": {
+        "contract": 20,
+        "other": 21
+      },
+      "unexpected_Extern": [
+        {
+          "dependencies": [],
+          "description": "assigns \\nothing;",
+          "emitter": "",
+          "function": "get_new_reg_unsigned_int_args0",
+          "kind": "contract",
+          "line": 19,
+          "origin": null,
+          "property": "get_new_reg_unsigned_int_args0_assigns",
+          "property_export_origin": "registered",
+          "source_file": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/pytest/test_actual_initialized_u32_or0/runs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194320z.17d8a1e8/scratch/wp_input.c",
+          "status_registered": true
+        }
+      ],
+      "unused_arity0_CSV": [
+        {
+          "directory": ".",
+          "file": "wp_input.c",
+          "function": "get_new_reg_unsigned_int_args0",
+          "line": "17",
+          "property": "\\false",
+          "property kind": "precondition",
+          "status": "Ignored"
+        },
+        {
+          "directory": ".",
+          "file": "wp_input.c",
+          "function": "get_new_reg_unsigned_int_args0",
+          "line": "19",
+          "property": "assigns \\nothing;",
+          "property kind": "assigns clause",
+          "status": "Considered valid"
+        }
+      ],
+      "unused_arity0_all_properties": [
+        {
+          "call_context": null,
+          "dependencies": [
+            "get_new_reg_unsigned_int_args0_assigns"
+          ],
+          "description": "default behavior",
+          "emitter": "",
+          "extern": false,
+          "function": "get_new_reg_unsigned_int_args0",
+          "generated_smoke_failure": false,
+          "kind": "other",
+          "line": 19,
+          "origin": null,
+          "property": "get_new_reg_unsigned_int_args0",
+          "property_export_origin": "registered",
+          "property_variant": "IPBehavior",
+          "source_file": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/pytest/test_actual_initialized_u32_or0/runs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194320z.17d8a1e8/scratch/wp_input.c",
+          "status_registered": true
+        },
+        {
+          "call_context": null,
+          "dependencies": [],
+          "description": "requires\n\\false",
+          "emitter": "",
+          "extern": false,
+          "function": "get_new_reg_unsigned_int_args0",
+          "generated_smoke_failure": false,
+          "kind": "contract",
+          "line": 17,
+          "origin": null,
+          "property": "get_new_reg_unsigned_int_args0_requires",
+          "property_export_origin": "registered",
+          "property_variant": "IPPredicate",
+          "source_file": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/pytest/test_actual_initialized_u32_or0/runs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194320z.17d8a1e8/scratch/wp_input.c",
+          "status_registered": true
+        },
+        {
+          "call_context": null,
+          "dependencies": [],
+          "description": "assigns \\nothing;",
+          "emitter": "",
+          "extern": true,
+          "function": "get_new_reg_unsigned_int_args0",
+          "generated_smoke_failure": false,
+          "kind": "contract",
+          "line": 19,
+          "origin": null,
+          "property": "get_new_reg_unsigned_int_args0_assigns",
+          "property_export_origin": "registered",
+          "property_variant": "IPAssigns",
+          "source_file": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/pytest/test_actual_initialized_u32_or0/runs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194320z.17d8a1e8/scratch/wp_input.c",
+          "status_registered": true
+        }
+      ],
+      "unused_arity0_attached_goals": []
+    },
+    {
+      "Extern_properties": [
+        {
+          "dependencies": [],
+          "description": "assigns SPD_count, REG_count, region_count;",
+          "emitter": "",
+          "function": "init_MAA",
+          "kind": "contract",
+          "line": 25,
+          "origin": null,
+          "property": "init_MAA_assigns",
+          "property_export_origin": "registered",
+          "source_file": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/pytest/test_actual_initialized_u32_or1/runs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194501z.d4e9fdf7/scratch/wp_input.c",
+          "status_registered": true
+        },
+        {
+          "dependencies": [],
+          "description": "ensures\nSPD_count \u2261 0 \u2227 REG_count \u2261 0 \u2227 region_count \u2261 6",
+          "emitter": "",
+          "function": "init_MAA",
+          "kind": "contract",
+          "line": 25,
+          "origin": null,
+          "property": "init_MAA_ensures",
+          "property_export_origin": "registered",
+          "source_file": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/pytest/test_actual_initialized_u32_or1/runs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194501z.d4e9fdf7/scratch/wp_input.c",
+          "status_registered": true
+        },
+        {
+          "dependencies": [],
+          "description": "assigns \\nothing;",
+          "emitter": "",
+          "function": "get_reg_unsigned_int",
+          "kind": "contract",
+          "line": 23,
+          "origin": null,
+          "property": "get_reg_unsigned_int_assigns",
+          "property_export_origin": "registered",
+          "source_file": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/pytest/test_actual_initialized_u32_or1/runs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194501z.d4e9fdf7/scratch/wp_input.c",
+          "status_registered": true
+        },
+        {
+          "dependencies": [],
+          "description": "terminates\n\\false",
+          "emitter": "",
+          "function": "get_new_reg_unsigned_int_args1",
+          "kind": "contract",
+          "line": 13,
+          "origin": null,
+          "property": "get_new_reg_unsigned_int_args1_terminates",
+          "property_export_origin": "registered",
+          "source_file": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/pytest/test_actual_initialized_u32_or1/runs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194501z.d4e9fdf7/scratch/wp_input.c",
+          "status_registered": true
+        },
+        {
+          "dependencies": [],
+          "description": "assigns \\nothing;",
+          "emitter": "",
+          "function": "get_new_reg_unsigned_int_args0",
+          "kind": "contract",
+          "line": 19,
+          "origin": null,
+          "property": "get_new_reg_unsigned_int_args0_assigns",
+          "property_export_origin": "registered",
+          "source_file": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/pytest/test_actual_initialized_u32_or1/runs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194501z.d4e9fdf7/scratch/wp_input.c",
+          "status_registered": true
+        },
+        {
+          "dependencies": [],
+          "description": "ensures\n\\result \u2261 __swdb_dx_reg_words[\\old(reg_id)]",
+          "emitter": "",
+          "function": "get_reg_unsigned_int",
+          "kind": "contract",
+          "line": 21,
+          "origin": null,
+          "property": "get_reg_unsigned_int_ensures",
+          "property_export_origin": "registered",
+          "source_file": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/pytest/test_actual_initialized_u32_or1/runs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194501z.d4e9fdf7/scratch/wp_input.c",
+          "status_registered": true
+        },
+        {
+          "dependencies": [],
+          "description": "terminates\n\\false",
+          "emitter": "",
+          "function": "get_reg_unsigned_int",
+          "kind": "contract",
+          "line": 21,
+          "origin": null,
+          "property": "get_reg_unsigned_int_terminates",
+          "property_export_origin": "registered",
+          "source_file": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/pytest/test_actual_initialized_u32_or1/runs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194501z.d4e9fdf7/scratch/wp_input.c",
+          "status_registered": true
+        },
+        {
+          "dependencies": [],
+          "description": "assigns REG_count, __swdb_dx_reg_words[REG_count];",
+          "emitter": "",
+          "function": "get_new_reg_unsigned_int_args1",
+          "kind": "contract",
+          "line": 13,
+          "origin": null,
+          "property": "get_new_reg_unsigned_int_args1_assigns",
+          "property_export_origin": "registered",
+          "source_file": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/pytest/test_actual_initialized_u32_or1/runs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194501z.d4e9fdf7/scratch/wp_input.c",
+          "status_registered": true
+        },
+        {
+          "dependencies": [],
+          "description": "ensures\n\\result \u2261 \\old(REG_count) \u2227 REG_count \u2261 \\old(REG_count) + 1 \u2227\n__swdb_dx_reg_words[\\result] \u2261 \\old(data)",
+          "emitter": "",
+          "function": "get_new_reg_unsigned_int_args1",
+          "kind": "contract",
+          "line": 13,
+          "origin": null,
+          "property": "get_new_reg_unsigned_int_args1_ensures",
+          "property_export_origin": "registered",
+          "source_file": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/pytest/test_actual_initialized_u32_or1/runs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194501z.d4e9fdf7/scratch/wp_input.c",
+          "status_registered": true
+        }
+      ],
+      "expected_result": 1107,
+      "goals": 33,
+      "inventory_sha256": "34023ce81e77abb135d260e59295dbc4487bcb67a4b8dc688369b55b2d3b0495",
+      "properties": 41,
+      "property_kind_census": {
+        "contract": 20,
+        "other": 21
+      },
+      "unexpected_Extern": [
+        {
+          "dependencies": [],
+          "description": "assigns \\nothing;",
+          "emitter": "",
+          "function": "get_new_reg_unsigned_int_args0",
+          "kind": "contract",
+          "line": 19,
+          "origin": null,
+          "property": "get_new_reg_unsigned_int_args0_assigns",
+          "property_export_origin": "registered",
+          "source_file": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/pytest/test_actual_initialized_u32_or1/runs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194501z.d4e9fdf7/scratch/wp_input.c",
+          "status_registered": true
+        }
+      ],
+      "unused_arity0_CSV": [
+        {
+          "directory": ".",
+          "file": "wp_input.c",
+          "function": "get_new_reg_unsigned_int_args0",
+          "line": "17",
+          "property": "\\false",
+          "property kind": "precondition",
+          "status": "Ignored"
+        },
+        {
+          "directory": ".",
+          "file": "wp_input.c",
+          "function": "get_new_reg_unsigned_int_args0",
+          "line": "19",
+          "property": "assigns \\nothing;",
+          "property kind": "assigns clause",
+          "status": "Considered valid"
+        }
+      ],
+      "unused_arity0_all_properties": [
+        {
+          "call_context": null,
+          "dependencies": [
+            "get_new_reg_unsigned_int_args0_assigns"
+          ],
+          "description": "default behavior",
+          "emitter": "",
+          "extern": false,
+          "function": "get_new_reg_unsigned_int_args0",
+          "generated_smoke_failure": false,
+          "kind": "other",
+          "line": 19,
+          "origin": null,
+          "property": "get_new_reg_unsigned_int_args0",
+          "property_export_origin": "registered",
+          "property_variant": "IPBehavior",
+          "source_file": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/pytest/test_actual_initialized_u32_or1/runs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194501z.d4e9fdf7/scratch/wp_input.c",
+          "status_registered": true
+        },
+        {
+          "call_context": null,
+          "dependencies": [],
+          "description": "requires\n\\false",
+          "emitter": "",
+          "extern": false,
+          "function": "get_new_reg_unsigned_int_args0",
+          "generated_smoke_failure": false,
+          "kind": "contract",
+          "line": 17,
+          "origin": null,
+          "property": "get_new_reg_unsigned_int_args0_requires",
+          "property_export_origin": "registered",
+          "property_variant": "IPPredicate",
+          "source_file": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/pytest/test_actual_initialized_u32_or1/runs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194501z.d4e9fdf7/scratch/wp_input.c",
+          "status_registered": true
+        },
+        {
+          "call_context": null,
+          "dependencies": [],
+          "description": "assigns \\nothing;",
+          "emitter": "",
+          "extern": true,
+          "function": "get_new_reg_unsigned_int_args0",
+          "generated_smoke_failure": false,
+          "kind": "contract",
+          "line": 19,
+          "origin": null,
+          "property": "get_new_reg_unsigned_int_args0_assigns",
+          "property_export_origin": "registered",
+          "property_variant": "IPAssigns",
+          "source_file": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/pytest/test_actual_initialized_u32_or1/runs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194501z.d4e9fdf7/scratch/wp_input.c",
+          "status_registered": true
+        }
+      ],
+      "unused_arity0_attached_goals": []
+    }
+  ],
+  "scientific_reexecution": false
+}

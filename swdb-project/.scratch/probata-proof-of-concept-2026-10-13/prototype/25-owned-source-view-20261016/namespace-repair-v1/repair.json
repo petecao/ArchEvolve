@@ -1,0 +1,18 @@
+{
+  "actual_native_green": false,
+  "actual_native_red": "Frama-C125: vector_owned_effects.mlw:35 unbound next; zero goals; actual V2 retained",
+  "classification": "NARROW_NAMESPACE_REPAIR_PREPARATION",
+  "date": "2026-10-16 ET",
+  "dependency": {
+    "exact_definition": "function fresh_id (h:heap) : int = h.next",
+    "path": "swdb/heap_reallocation.mlw",
+    "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+  },
+  "new_theory_sha256": "6bfc13341d2faceb5a3fb64bd2d5bff22dd03c52a1fa3d5c4cb39b6e9c83f7f5",
+  "old_theory_sha256": "9db73c9cf698b6db29beabdf1e9b22d1da235971d6a21794a15c4f415cf6a6ce",
+  "ordinary_goal_statements_changed": false,
+  "original_c_layout_views_changed": false,
+  "replacement_count": 2,
+  "source_commit": "36266e101e0484f3c2cf5f3fae4322d5de648d85",
+  "source_or_caller_admission": false
+}

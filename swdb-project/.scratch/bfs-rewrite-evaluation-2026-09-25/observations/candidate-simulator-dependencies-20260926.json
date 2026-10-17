@@ -1,0 +1,516 @@
+{
+  "format": "swdb.bfs.candidate-simulator-dependency-review.v1",
+  "created": "2026-09-26T19:41:12.678218-04:00",
+  "state": "local_preparation_only",
+  "head": "0e6822ab2795d1d7cb456014d806b5c8617859de",
+  "remote_artifacts_reopened": false,
+  "provider_calls": 0,
+  "host_jobs": 0,
+  "bounds_changed": false,
+  "strategy_changes": false,
+  "source_files_changed": false,
+  "plan": {
+    "path": "docs/bfs-candidate-simulator-next-steps-20260926.md",
+    "bytes": 8903,
+    "sha256": "1ece584091863299b6499d3913c2064c3605ae9804dd16ce8b22793d33d9c787"
+  },
+  "source_pins": [
+    {
+      "path": "scripts/bfs_simulator_series.py",
+      "bytes": 30014,
+      "sha256": "cc8f514127ab509c4ea16fdd4a06c6c45d704e4fdb718c53ad9fcd9dfaf6edb6"
+    },
+    {
+      "path": "scripts/bfs_simulator_batch.py",
+      "bytes": 43797,
+      "sha256": "17a61980fb944046ed06f2f500d90e94d5bddc80f56501e655eb11e39633630c"
+    },
+    {
+      "path": "scripts/bfs_freeze_pilot.py",
+      "bytes": 54812,
+      "sha256": "5b7722c46afdd19f483516963ddd11764bb2e54aaa8ff3d1a061f598eb6b3552"
+    },
+    {
+      "path": "swdb/dx100.py",
+      "bytes": 57054,
+      "sha256": "f4e82d3163d3c2d3d4764aace07da952b0ca67c0aaf480c3738ccd9f0641deec"
+    },
+    {
+      "path": "swdb/dx100_candidate.py",
+      "bytes": 22412,
+      "sha256": "d75202db0cfdd7a1d30867c253b93a68b23d333f22c20184cb9ce9616068e613"
+    },
+    {
+      "path": "swdb/bfs_protocol.py",
+      "bytes": 79345,
+      "sha256": "cb75a06225e090abdb4bffc88352b2fdefdcecc418d74911806b523f969cb88f"
+    },
+    {
+      "path": "swdb/bfs_region_comparison.py",
+      "bytes": 24058,
+      "sha256": "dc047b2893bbd65b5b4354a749af5580fbacd1f392b5e5892b9f21c85d152b94"
+    },
+    {
+      "path": "swdb/bfs_coverage.py",
+      "bytes": 49640,
+      "sha256": "34e38c497c6b417f180823aebf9b8c408e4d7e3c15a44625564e545d5d95b4b9"
+    }
+  ],
+  "spec": {
+    "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/spec.md",
+    "constraints": [
+      {
+        "lines": [
+          217,
+          223
+        ],
+        "topic": "timed-binary structural and applicable accelerator correctness"
+      },
+      {
+        "lines": [
+          234,
+          238
+        ],
+        "topic": "matched semantic ROI and frozen diagnostic attribution"
+      },
+      {
+        "lines": [
+          246,
+          262
+        ],
+        "topic": "source comparator, matched controls and preassessment freeze"
+      },
+      {
+        "lines": [
+          313,
+          324
+        ],
+        "topic": "matrix and gain evidence remain actual obligations"
+      }
+    ]
+  },
+  "model_build": {
+    "id": "bfs-dx100-build-20260925-a2",
+    "present_in_local_catalog": true,
+    "canonical_sha256": "13d277a961e44fe0ee254b4685126572fb06394fea455e3e1d450626cc535cea",
+    "file": {
+      "path": "records/evaluations/bfs-dx100-build-20260925-a2.yaml",
+      "bytes": 11533,
+      "sha256": "e61de36a9c80a5f2c272c08bf12f0050c3ba9c25c7243432e2ea6cb4e29cecaf"
+    }
+  },
+  "target": {
+    "id": "dx100-e4fc4af-4c",
+    "present_in_local_catalog": true,
+    "canonical_sha256": "94cf9373c255c1c36d4b6f622124aec90e8bd485d66fa2af996d6e46c91e04e1",
+    "file": {
+      "path": "records/hardware_targets/dx100-e4fc4af-4c.yaml",
+      "bytes": 2302,
+      "sha256": "66e9458534e293b63b81cb813d4d268d7bb599f2862073adc74e5c86d1aa755f"
+    }
+  },
+  "baselines": [
+    {
+      "source": "dx100",
+      "comparison_baseline": "dx100-bfs-scalar",
+      "candidate": {
+        "id": "bfs-dx100-compile-20260925-a1.candidate",
+        "present_in_local_catalog": true,
+        "canonical_sha256": "965a13a8617a0be03838a0d41701a4bb8b6e2cfdc12c5893e0b686af874eaf35",
+        "file": {
+          "path": "records/candidates/bfs-dx100-compile-20260925-a1.candidate.yaml",
+          "bytes": 22538,
+          "sha256": "7e679b119e45b3bcf33472f865ff21290f448c2beff9d1fe524762a620833f11"
+        }
+      },
+      "source_snapshot": {
+        "id": "bfs-dx100-compile-20260925-a1.source",
+        "present_in_local_catalog": true,
+        "canonical_sha256": "ea9df8f1958a2e09550f8b82d4fb486f5dc805e6dec069e46d578cfebe5c0412",
+        "file": {
+          "path": "records/source_snapshots/bfs-dx100-compile-20260925-a1.source.yaml",
+          "bytes": 45318,
+          "sha256": "79453b2a9a7af40991fe3cd4ab0039911e650f2335496cccaae9a9cb44b4cf9d"
+        }
+      },
+      "source_artifact_sha256": "d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d",
+      "historical_builds": [
+        {
+          "id": "bfs-dx100-compile-20260925-a1.primary.build",
+          "present_in_local_catalog": true,
+          "canonical_sha256": "6cfa6ef7b39d58bef085b6b6c05d9ca8778b079209473529deca9272c6a79667",
+          "file": {
+            "path": "records/evaluations/bfs-dx100-compile-20260925-a1.primary.build.yaml",
+            "bytes": 16452,
+            "sha256": "e94b6d9851f9d60e403aae40ee3b8522a58f58d2848b74986bde700012c15a9d"
+          },
+          "adapter": "dx100.complete_call.v1",
+          "candidate": "bfs-dx100-compile-20260925-a1.candidate",
+          "function": "DOBFS",
+          "roi": "bfs.complete_call.v1",
+          "accelerated": false,
+          "diagnostic_regions": false,
+          "outcome": {
+            "state": "complete",
+            "stage": "candidate_build",
+            "reason": "Identified candidate compiled; no simulated correctness or timing inferred."
+          },
+          "binary_sha256": "bde41a46e02eed2f7f30b3d8abdd8157bbae0c425afa7476e07915a0c1b9b68d"
+        },
+        {
+          "id": "bfs-dx100-compile-20260925-a1.diagnostic.build",
+          "present_in_local_catalog": true,
+          "canonical_sha256": "08dcc7721780dfe7e04f142c4c25d6be76efa7db0c114e2286266f04d8b71e4e",
+          "file": {
+            "path": "records/evaluations/bfs-dx100-compile-20260925-a1.diagnostic.build.yaml",
+            "bytes": 87565,
+            "sha256": "4719ff0507514fd2879cdf6db0cbfd2d2f203f3f7ec68532ad555402c51b83cf"
+          },
+          "adapter": "dx100.complete_call.v1",
+          "candidate": "bfs-dx100-compile-20260925-a1.candidate",
+          "function": "DOBFS",
+          "roi": "bfs.complete_call.v1",
+          "accelerated": false,
+          "diagnostic_regions": true,
+          "outcome": {
+            "state": "complete",
+            "stage": "candidate_build",
+            "reason": "Identified candidate compiled; no simulated correctness or timing inferred."
+          },
+          "binary_sha256": "40a215eac6816704b92c0847e24c1aba7abf9c5699c23b2407e55b41b212f483"
+        }
+      ],
+      "needed_builds": [
+        {
+          "role": "primary",
+          "state": "not_observed_in_local_catalog",
+          "candidate": "bfs-dx100-compile-20260925-a1.candidate",
+          "function": "DOBFS",
+          "accelerated": false,
+          "diagnostic_regions": false,
+          "roi": "bfs.complete_call.v1",
+          "required_adapter": "dx100.complete_call.v2",
+          "request_id": null,
+          "budgets": null
+        },
+        {
+          "role": "diagnostic",
+          "state": "not_observed_in_local_catalog",
+          "candidate": "bfs-dx100-compile-20260925-a1.candidate",
+          "function": "DOBFS",
+          "accelerated": false,
+          "diagnostic_regions": true,
+          "roi": "bfs.complete_call.v1",
+          "required_adapter": "dx100.complete_call.v2",
+          "request_id": null,
+          "budgets": null
+        }
+      ]
+    },
+    {
+      "source": "upstream",
+      "comparison_baseline": "gapbs-bfs-do",
+      "candidate": {
+        "id": "bfs-upstream-compile-20260925-a1.candidate",
+        "present_in_local_catalog": true,
+        "canonical_sha256": "ccd0df5c59924a0968b6c860fb28a6ce19974790feb380919cf0ba81d5aa0f57",
+        "file": {
+          "path": "records/candidates/bfs-upstream-compile-20260925-a1.candidate.yaml",
+          "bytes": 16261,
+          "sha256": "3b3f572aac8ee18ed38155bc3b787182ab7345e9d9fafca84f575bb16cbc9124"
+        }
+      },
+      "source_snapshot": {
+        "id": "bfs-upstream-compile-20260925-a1.source",
+        "present_in_local_catalog": true,
+        "canonical_sha256": "bdb4c224ac90326e424c24e810737cb7de1556b72fd527ca0821bda5f3d1bec6",
+        "file": {
+          "path": "records/source_snapshots/bfs-upstream-compile-20260925-a1.source.yaml",
+          "bytes": 21804,
+          "sha256": "632b1a00ec91608125e5e12915ecaee45f01150602765fbd8b16404ca60283bc"
+        }
+      },
+      "source_artifact_sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056",
+      "historical_builds": [
+        {
+          "id": "bfs-upstream-compile-20260925-a1.primary.build",
+          "present_in_local_catalog": true,
+          "canonical_sha256": "0fd7495da0325acf4c7a4c0f0db4c656d4ef7cd5c43be7e7208eb4cfb0232b48",
+          "file": {
+            "path": "records/evaluations/bfs-upstream-compile-20260925-a1.primary.build.yaml",
+            "bytes": 14730,
+            "sha256": "474d6f93d91b4a59914ec7b9999de8243a6ad4670a36df2212ea66cac85cf58b"
+          },
+          "adapter": "dx100.complete_call.v1",
+          "candidate": "bfs-upstream-compile-20260925-a1.candidate",
+          "function": "DOBFS",
+          "roi": "bfs.complete_call.v1",
+          "accelerated": false,
+          "diagnostic_regions": false,
+          "outcome": {
+            "state": "complete",
+            "stage": "candidate_build",
+            "reason": "Identified candidate compiled; no simulated correctness or timing inferred."
+          },
+          "binary_sha256": "a86c2b79c0e6e0c3d2aa4f751f596d4b271ed624851288429a73e45e9fff28ca"
+        },
+        {
+          "id": "bfs-upstream-compile-20260925-a1.diagnostic.build",
+          "present_in_local_catalog": true,
+          "canonical_sha256": "c7bbe6864e8b8d8422fa624373e3b514f84deee589e4476bf83eef86b527f2e4",
+          "file": {
+            "path": "records/evaluations/bfs-upstream-compile-20260925-a1.diagnostic.build.yaml",
+            "bytes": 51937,
+            "sha256": "e22d7a4a5cdf8c963a09db0b06b2e479ce01ffdf203b7a17830e80bf5d48dc65"
+          },
+          "adapter": "dx100.complete_call.v1",
+          "candidate": "bfs-upstream-compile-20260925-a1.candidate",
+          "function": "DOBFS",
+          "roi": "bfs.complete_call.v1",
+          "accelerated": false,
+          "diagnostic_regions": true,
+          "outcome": {
+            "state": "complete",
+            "stage": "candidate_build",
+            "reason": "Identified candidate compiled; no simulated correctness or timing inferred."
+          },
+          "binary_sha256": "eff85e34ff260e62f08ce3ceeda8fa1513de701c42a921a9a36c6f43c8a09c45"
+        }
+      ],
+      "needed_builds": [
+        {
+          "role": "primary",
+          "state": "not_observed_in_local_catalog",
+          "candidate": "bfs-upstream-compile-20260925-a1.candidate",
+          "function": "DOBFS",
+          "accelerated": false,
+          "diagnostic_regions": false,
+          "roi": "bfs.complete_call.v1",
+          "required_adapter": "dx100.complete_call.v2",
+          "request_id": null,
+          "budgets": null
+        },
+        {
+          "role": "diagnostic",
+          "state": "not_observed_in_local_catalog",
+          "candidate": "bfs-upstream-compile-20260925-a1.candidate",
+          "function": "DOBFS",
+          "accelerated": false,
+          "diagnostic_regions": true,
+          "roi": "bfs.complete_call.v1",
+          "required_adapter": "dx100.complete_call.v2",
+          "request_id": null,
+          "budgets": null
+        }
+      ]
+    }
+  ],
+  "t17": {
+    "proposal": {
+      "id": "bfs-campaign-preparation-20260925-a1.dx100-instructions",
+      "present_in_local_catalog": false,
+      "retained_host_canonical_sha256": "a72f2cdd2503cb719169ef2d2dd2c61ad1f622e711e097cdbddba24a8e17705c",
+      "retained_host_file_sha256": "a556d0ca47c2f04661eaa9af35c6c86b5fff0afd22a76ebcd9f6d5df5b1551f6"
+    },
+    "candidate": {
+      "id": "bfs-campaign-preparation-20260925-a1.dx100-instructions.candidate-1",
+      "present_in_local_catalog": false,
+      "retained_host_canonical_sha256": "e31ff21a5676c29c653d0c443f13faaf32cad7e8cdf41754404422dc9a94ac11",
+      "retained_host_file_sha256": "2a4691b9036c7ecbbae4be956ece6d602e55a2a0f296f45a958f7e91c2ce9ac4",
+      "source_artifact_sha256": "ca09d2f439a56f295c5ccdc5e18a5fd5a4c2c9726005365f8125cc1d8979740a"
+    },
+    "primary_build": {
+      "id": "bfs-t17-build-only-20260926-a1",
+      "present_in_local_catalog": false,
+      "observed_host_record": {
+        "path": "/data1/yanruj/EvolveSWDB_provider_20260926_a1/records/evaluations/bfs-t17-build-only-20260926-a1.yaml",
+        "bytes": 17230,
+        "sha256": "d5ed1ec5b43665379a2b8d59cc2b4cbc582502beb62f5184041079e606229215"
+      },
+      "binary_sha256": "852e62314b7114079975fe25d70da4e77596490bcfa89fb4f7c64af585485527",
+      "state": "complete_build_only",
+      "correctness": "unverified",
+      "timing_samples": 0,
+      "terminal": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-t17-build-only-20260926.dispatch/terminal-validation.json",
+        "bytes": 4265,
+        "sha256": "4495783bea9d86bc5095e917540abef7b65bef6b94c158adaa41dc88f78fe625"
+      }
+    },
+    "needed": [
+      "approved canonical metadata availability in final execution Store",
+      "live exact source/build/binary/model verification",
+      "new accelerated diagnostic complete_call.v2 build",
+      "source-specific controlled_simulator protocol and actual both-family results"
+    ],
+    "retained_provider_budget": {
+      "max_repairs": 2,
+      "repairs": 0,
+      "total_seconds": 1800,
+      "used_seconds": 233.21830715797842
+    }
+  },
+  "t20": {
+    "original_proposal": {
+      "id": "bfs-campaign-preparation-20260925-a1.upstream-annotated",
+      "present_in_local_catalog": false
+    },
+    "observed_outcome": "unresolved",
+    "candidate": null,
+    "producer": {
+      "role": "hw",
+      "test_client": true
+    },
+    "context_supplement": {
+      "id": "bfs-campaign-preparation-20260925-a1.upstream-annotated-context1",
+      "state": "prepared_transfer_held_not_assumed_approved",
+      "prompt_bytes": 518016,
+      "prompt_sha256": "6042ab21a40f270ac9f21007de8e0a2d7c55850ab1448253697c446801d07f63",
+      "remaining_provider_seconds": 1737,
+      "used_original_provider_seconds": 62.419636563397944,
+      "timeout_seconds": 600,
+      "max_repairs": 2,
+      "per_call_usd": 10
+    },
+    "needed": [
+      "approved context transfer and retained explicit interpretation outcome",
+      "actual candidate from unchanged annotation intent",
+      "primary and diagnostic complete_call.v2 builds",
+      "source-specific controlled_simulator protocol and actual both-family results"
+    ]
+  },
+  "workload_inputs": {
+    "selection_state": "requires actual T15 feasibility output; preferred existing registrations only",
+    "preferred": [
+      {
+        "id": "bfs-20260925-uniform18.cd2169a5c421baf7",
+        "present_in_local_catalog": true,
+        "canonical_sha256": "e345524d8c91f4363292c47e81510c3fe34e3f80284ed9945ce4fa0e4e63afdd",
+        "file": {
+          "path": "records/workloads/bfs-20260925-uniform18.cd2169a5c421baf7.yaml",
+          "bytes": 3222,
+          "sha256": "b4dd2afe61f0dddda20b3b7880373d8934f2dcf40149257f9eba76d89eab06e0"
+        }
+      },
+      {
+        "id": "bfs-20260925-kronecker18.48de8267ac2098d5",
+        "present_in_local_catalog": true,
+        "canonical_sha256": "38ecdcb6ed58c15b9dbd3ed1449f18e4ffc69ddc2f2ab6a8192b144c25030199",
+        "file": {
+          "path": "records/workloads/bfs-20260925-kronecker18.48de8267ac2098d5.yaml",
+          "bytes": 3242,
+          "sha256": "c4da974337abf8a5be68c7c7f055c649aecc803ed1e1c910a32c02e4081c65ed"
+        }
+      }
+    ],
+    "ordered_sources": [
+      0,
+      1234,
+      7777
+    ],
+    "primary_repetitions": 2,
+    "warmups": 0,
+    "policy_from_current_t15_plan": {
+      "minimum_speedup": 1.05,
+      "maximum_relative_spread": 0.1,
+      "confidence": 0.95,
+      "bootstrap_resamples": 2000,
+      "bootstrap_seed": 20260925
+    },
+    "no_candidate_gain_based_selection": true
+  },
+  "protocols": {
+    "mode": "controlled_simulator",
+    "roi": "bfs.complete_call.v1",
+    "guest_cores": 4,
+    "verifier": "dx100.bfs.verifier.v2",
+    "returned_ids": null,
+    "required_before_freeze": [
+      "exact actual v2 build definitions for both roles",
+      "actual configured BASE/MAA matched CPU/cache/memory/clock mappings",
+      "simulation_identity model record digest and simulator file reference",
+      "per-role instrumentation including original adjacency and verifier runtime hashes",
+      "new diagnostic source region correspondence and collector hashes",
+      "actual T15 size/replay/spread/coverage evidence"
+    ],
+    "separate_from": [
+      "T16 author traversal protocols",
+      "native freeze publisher"
+    ],
+    "full_case_per_trial_warning": "required_accelerator_cases is enforced per timed replay; applicability must come from retained baseline evidence, with isolated sources/fallbacks preserved"
+  },
+  "public_path": [
+    "get --chain",
+    "dx100-compile only missing builds",
+    "freeze-protocol then fresh get --chain",
+    "dx100-execute exact primary/diagnostic cell requests",
+    "dx100-profile",
+    "profile-package",
+    "aggregate-evaluations per role/family",
+    "compare-evaluations with explicit source baseline and every region package",
+    "get --chain and bfs-coverage"
+  ],
+  "orchestration_limitations": [
+    {
+      "path": "scripts/bfs_simulator_series.py",
+      "reason": "diagnostic reuse exists, primary build reuse does not; complete-call primary always compiles with build_seconds300/total_seconds600; do not reset consumed T17 build allowance or silently increase limits"
+    },
+    {
+      "path": "scripts/bfs_simulator_batch.py",
+      "reason": "current fixed coordinator validates unchanged author series; generated candidate manifests require separate reviewed finite admission, not relabeling T15/T16 rows"
+    }
+  ],
+  "remaining_admission": [
+    "distinct request/output IDs verified unused on host",
+    "exact final source and canonical record synchronization only when authorized",
+    "prospective finite absolute work and shared cleanup allowance; no original pilot reset",
+    "reviewed owned-child supervision with original PID/start union and actual Linux proof for final code",
+    "explicit external --db under accounted raw root",
+    "fresh lane/capacity/reserve checks"
+  ],
+  "supporting_observations": [
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/observations/t17-build-only-preflight-20260926.json",
+      "bytes": 5237,
+      "sha256": "3085c06203e386862eb7b534afd8d0ff75e0129c20bc9f705f849b6b89d2f649"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/observations/t17-build-only-terminal-20260926.json",
+      "bytes": 1930,
+      "sha256": "a124548a4d1e71003faeb895d9e09d1e060933ba41a99f1d9ae282689c886536"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/observations/provider-initial-summary-20260926.json",
+      "bytes": 3202,
+      "sha256": "dc7a149e98524935dcd10576af13d4ac5e25b9b93bb44a8ef41cc543bf40fcf2"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/observations/provider-export-inventory-20260926.json",
+      "bytes": 2801,
+      "sha256": "59b15f0d9aee671ed3b924a3c7f51c42b37914d487ecb30723112f00521a3044"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/observations/dx100-coverage-a2-completed-readback-20260926.json",
+      "bytes": 4779,
+      "sha256": "976112a7c6e8384365c49341737229e5e02a01ba0fc61f2e3e23fe169593cc25"
+    }
+  ],
+  "prospective_cells_per_source_candidate": {
+    "families": 2,
+    "sources_per_family": 3,
+    "repetitions": 2,
+    "roles": 2,
+    "primary_executions": 24,
+    "diagnostic_executions": 24,
+    "packages": 24,
+    "aggregates": 4,
+    "comparisons": 2,
+    "actual_completed": 0,
+    "not_a_budget_grant": true
+  },
+  "strategy_plan": {
+    "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/campaign-plan.md",
+    "sha256": "bd7a0322103a5ea1145fbc4d71bc4bc37ab124fb2745cc91fd2bf671df3a7d0f",
+    "unchanged_intent_required": true
+  }
+}

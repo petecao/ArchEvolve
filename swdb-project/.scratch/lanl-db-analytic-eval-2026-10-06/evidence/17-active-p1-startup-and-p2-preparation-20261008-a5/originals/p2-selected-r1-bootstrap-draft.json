@@ -1,0 +1,123 @@
+{
+  "config_template": {
+    "attempt": 1,
+    "baselines_only": false,
+    "campaign": "extensa-gem5-bfs-20261006-p2",
+    "direct_dispatch_argv": [
+      "/usr/bin/python3.12",
+      "-B",
+      "/data1/yanruj/lanl17-control-cleanup60-20261007-a4.py",
+      "dispatch",
+      "--manifest",
+      "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/manifest.json",
+      "--campaign",
+      "extensa-gem5-bfs-20261006-p2",
+      "--node",
+      "0",
+      "--attempt",
+      "1"
+    ],
+    "expected_primary": null,
+    "node": 0,
+    "originals": {
+      "before": {
+        "bytes": null,
+        "identity_sha256": null,
+        "local_original": {
+          "bytes": null,
+          "path": "/private/tmp/lanl17-p2-before-capture-20261008-a5/custody.json",
+          "sha256": null,
+          "stat": null
+        },
+        "original_canonical_ensure_ascii": null,
+        "original_flag_present": null,
+        "remote_path": "/data/yanruj/EvolveSWDB_runs/lanl17-p2-before-custody-20261008-a5/custody.json",
+        "sha256": null
+      },
+      "manifest": {
+        "bytes": 292401,
+        "identity_sha256": "66194a7e99716f5b59ddf081dfec752c34b51f1805470a4514171c53323b06c7",
+        "local_original": {
+          "bytes": 292401,
+          "path": "/private/tmp/lanl17-prepare-completion-decoded-originals-20261008-a1/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/manifest.json",
+          "sha256": "b86d78bac1d0a09e176114d1c23491ede098c4fcf5af5ab96f318ceabc29b8d1",
+          "stat": [
+            16777229,
+            350289582,
+            33152,
+            501,
+            0,
+            1,
+            292401,
+            1791476721510610313,
+            1791476721510610313
+          ]
+        },
+        "original_canonical_ensure_ascii": true,
+        "original_flag_present": false,
+        "remote_path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/manifest.json",
+        "sha256": "b86d78bac1d0a09e176114d1c23491ede098c4fcf5af5ab96f318ceabc29b8d1"
+      },
+      "publication": {
+        "bytes": 7701,
+        "identity_sha256": "8ec6987cc6d8c8e9d74df60cfa3e40e5bafbbdfdb0dd87747af645bf82436220",
+        "local_original": {
+          "bytes": 7701,
+          "path": "/private/tmp/lanl17-first-producer-capture-20261008-a5/publication-custody.json",
+          "sha256": "e1fa63af665bea9937375b4be17fe3de7f013a1da0e1106e36817c828fc3d5e1",
+          "stat": [
+            16777229,
+            350297903,
+            33152,
+            501,
+            0,
+            1,
+            7701,
+            1791477336983942697,
+            1791477336983942697
+          ]
+        },
+        "original_canonical_ensure_ascii": true,
+        "original_flag_present": false,
+        "remote_path": "/data/yanruj/EvolveSWDB_runs/lanl17-first-publication-custody-20261008-a5.json",
+        "sha256": "e1fa63af665bea9937375b4be17fe3de7f013a1da0e1106e36817c828fc3d5e1"
+      }
+    },
+    "parent_exclusive_checked_utc": null,
+    "parent_exclusive_state_unchanged_reviewed": null,
+    "published_environment_overrides": {
+      "GIT_CONFIG_COUNT": "1",
+      "GIT_CONFIG_KEY_0": "core.hooksPath",
+      "GIT_CONFIG_VALUE_0": "/data1/yanruj/lanl17-dx100-hooks-20261008-a2",
+      "PATH": "/usr/bin:/bin:/usr/local/bin",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTHONNOUSERSITE": "1",
+      "PYTHONSAFEPATH": "1",
+      "SWDB_DX100_BINDING_REQUEST": "/data1/yanruj/lanl17-dx100-deployment-20261008-a2/request.json",
+      "SWDB_DX100_BINDING_REQUEST_SHA256": "a7f34492e2db1b21849da0e467bd546dc5bb6bc53b4ac443da5f43922f34bd8c"
+    },
+    "resume": false,
+    "serial_first_all_three_leases_required": true,
+    "valid_until_utc": null
+  },
+  "derived_from": {
+    "bytes": 14559,
+    "path": "/private/tmp/lanl17-normal-campaign-dispatch-capture-20261008-a5-p1-a2/stdin.py",
+    "sha256": "5d289c08d783fa939735b5df599080bc40e09fcdb764ad1027f375e5e31d648c"
+  },
+  "executable": false,
+  "format": "swdb.lanl17-parent-bootstrap-config-source-only-draft.v1",
+  "note": "Dispatcher constructs real CONFIG from actual local original bytes and current admission argv; this draft is never passed to BOOT.",
+  "primary_verification_requirement": {
+    "external_administrative_advancement_is_dispatch_blocker": true,
+    "must_live_verify_PRIMARY_and_origin_equal_required_commit": true,
+    "required_commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+    "substitute_new_administrative_HEAD": false
+  },
+  "scientific_admission": false,
+  "supersedes_source_only_draft": {
+    "bytes": 4205,
+    "path": "/private/tmp/lanl17-p2-dispatch-bootstrap-config-draft-20261008-a5-a2.json",
+    "sha256": "0aef414acbbd503f32b59d22967591e04d157cebabb2550f8287a14d59d1bcf5"
+  }
+}

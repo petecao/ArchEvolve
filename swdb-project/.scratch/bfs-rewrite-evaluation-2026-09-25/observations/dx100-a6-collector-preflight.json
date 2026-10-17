@@ -1,0 +1,66 @@
+{
+  "budget": {
+    "address_space_gib": 2,
+    "parser_seconds": 30,
+    "wall_seconds": 45
+  },
+  "checkout": "be4d543bcb2ee7e9213db0a6b2395db8656d1211",
+  "clocks": {
+    "system.clk_domain": {
+      "frequency_hz": [
+        3194888178.9137383
+      ],
+      "period_ticks": [
+        313
+      ]
+    },
+    "system.cpu_clk_domain": {
+      "frequency_hz": [
+        3194888178.9137383
+      ],
+      "period_ticks": [
+        313
+      ]
+    }
+  },
+  "collector_sha256": "47a8b7a6b447c807f8dbc41ba3ed4aeab968ab22ac17dd4ad5157b8b7e6f7de4",
+  "counter_count": 7253,
+  "created": "2026-09-25",
+  "dynamic_memory_metric_count": 39,
+  "elapsed_s": 0.056375445798039436,
+  "evaluation": "bfs-dx100-smoke-20260925-a6",
+  "gain_claim": false,
+  "kind": "read_only_collector_preflight",
+  "limitations": "Read-only parsing of retained unverified smoke evidence; no candidate-bound source profile, package, correctness acceptance, or comparison was created. Actual clock periods retain gem5 quantization of the requested frequency.",
+  "no_profile_or_package_created": true,
+  "positive_dynamic_memory_metric_count": 39,
+  "raw": {
+    "configuration": {
+      "bytes": 145060,
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-smoke-20260925-a6/simulation/config.ini",
+      "sha256": "262b2ee8538acd277c1638a5f77dd2cf224e20a1c13b3964ccb84b0f9a757f97"
+    },
+    "seal": {
+      "bytes": 820,
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-smoke-20260925-a6/simulation/roi-seal.json",
+      "sha256": "671a91899e45dfc351d68853f754a6a4a59d4af491d3c21cda511519f6d878e8"
+    },
+    "statistics": {
+      "bytes": 1011244,
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-smoke-20260925-a6/simulation/roi-stats.txt",
+      "sha256": "033b9f68a05a9f1301f40423e50cfb6e123cce0c967062dcc6e921aa440328c9"
+    }
+  },
+  "receipt": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/a6-read-only-profile-preflight.json",
+    "sha256": "fdacd923050e8ae4e51b5c785b82a3bc53ec53834abf1da8a571b6f9ebd1b003"
+  },
+  "roi": {
+    "conversion": "simTicks / simFreq; no fixed clock-period divisor",
+    "duration_s": 2.9122772e-05,
+    "sim_ticks": 29122772,
+    "tick_frequency_hz": 1000000000000,
+    "unit": "seconds"
+  },
+  "state": "parsed"
+}

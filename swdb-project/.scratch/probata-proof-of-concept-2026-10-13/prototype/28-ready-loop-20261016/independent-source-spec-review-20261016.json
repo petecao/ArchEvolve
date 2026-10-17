@@ -1,0 +1,55 @@
+{
+  "C_source_sha256": "db03f3b595528a85b3f174e49020979800ce52ede6356bb019466933042e8d2f",
+  "backend": {
+    "bytes": 69747,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_value_backend_v1.h",
+    "sha256": "c37481e56517d29729ffc83f2eb538cc5b5cb8ce5ab831babae3287cb332956f"
+  },
+  "concrete_model_refinement_admitted": false,
+  "controls": {
+    "bytes": 2688,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/test_ready_loop.py",
+    "sha256": "d76b7469439c20434b039d4509168611fe7d3d01a97760f86f67aacaf1d24cbb"
+  },
+  "date": "2026-10-16 ET",
+  "execution": {
+    "compiler_native_verifier_SSH": false,
+    "project_imported": false,
+    "tests_or_step_or_prepare_executed_by_reviewer": false
+  },
+  "findings": [],
+  "mandatory_concrete_correspondence_seam": [
+    "Select exactly one bound pending command whose four-byte physical_write and ready_roles include tile0, with dependencies0 and no other pending counted command.",
+    "For the narrow first bridge require its root already settled to the issued u32 value, or separately prove the full deferred-root/history relation; do not infer a fixed issued value from bound/pending alone.",
+    "Bind tile0 byte-image parents and shifts to that issued value, ownership to thread0, and the actual CPU post-read to the same bytes.",
+    "For a constant-root first bridge require no completion actions or other mutable footprint; otherwise explicitly account for action, size, ordinary-memory and node-settlement effects.",
+    "Exclude all interleaved source/CPU/device actions during the quotient loop, or prove each preserves the relation; no_other_issues alone does not exclude CPU writes.",
+    "Relate pending visible to an abstract last-accessible value; never perform or infer an allowed CPU tile read before cover.",
+    "Prove answer0 stutters all related concrete state; answer1 uses the actual query-to-wait-to-cover path and flips the modeled pending/observability relation.",
+    "Retain an explicit concrete global frame including pending/node/action effects. The local assigns_nothing contract cannot be installed as the original MMIO summary.",
+    "Bind each logical choice to the partial method with no fairness/finite-budget truncation and retain all original RTE/init/frame/smoke obligations.",
+    "Preserve root-owned source/receiver/entry assumptions and actual public/native-negative evidence as separate future gates."
+  ],
+  "original_source_or_public_ticket_acceptance": false,
+  "proof_admission": false,
+  "reviewed": {
+    "assigns_nothing_only_applies_to_the_local_quotient_fixture_not_backend_state": true,
+    "complete_source_and_five_control_definitions_read": true,
+    "completed_query_returns_one_with_installed_value": true,
+    "explicit_u32_and_boolean_type_domains_closed": true,
+    "logical_query_absent_original_header_not_disguised": true,
+    "negative_pending_access_fails_even_when_before_equals_issued": true,
+    "pending_one_choice_installs_issued_value_and_clears_pending": true,
+    "pending_zero_choice_is_stutter_without_cover": true,
+    "positive_loop_invariants_suffice_for_return_safety_by_inspection": true,
+    "terminates_false_no_variant_fairness_or_progress_premise": true,
+    "unbounded_zero_prefix_and_infinite_zero_behavior_allowed": true
+  },
+  "schema": "independent-readiness-quotient-spec-review-1",
+  "source": {
+    "bytes": 4902,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/ready_loop.py",
+    "sha256": "3e73b7826f61e626a472cf7ca49473b77e6c55b2d5cce28cd6a3fa9a1a0bf06f"
+  },
+  "verdict": "PASS_INERT_PARTIAL_QUOTIENT_PREPARATION_ONLY"
+}

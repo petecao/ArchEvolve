@@ -1,0 +1,40 @@
+--- /private/tmp/lanl_consumed_detached_source_guard_r1_20261007.py
++++ /private/tmp/lanl_consumed_detached_source_guard_r2_20261007.py
+@@ -819,11 +819,27 @@
+                 'allocation_decision_not_bound_to_actual_observation')
+         review = self.sealed(d['parent_review_pin'], LIMITS['plan_bytes'])
+         config = {k:v for k,v in d.items() if k not in ('identity_sha256', 'parent_review_pin')}
++        # Exclude only explicit back-links to this review, not their other facts/pins.
++        # The sealed review can then bind configuration without a digest cycle.
++        review_links = []
++        for key in ('control_siblings_complete_review', 'pending_alias_coverage_review',
++                    'receipt_source_proofs_complete_review', 'original_raw_files_complete_review'):
++            coverage = dict(config[key])
++            review_links.append(coverage.pop('parent_review_identity_sha256'))
++            config[key] = coverage
++        consumers = []
++        for item in config['relevant_privileged_consumers']:
++            consumer = dict(item)
++            review_links.append(consumer.pop('parent_review_identity_sha256'))
++            consumers.append(consumer)
++        config['relevant_privileged_consumers'] = consumers
+         require(review['format'] == 'swdb.consumed-detached-source-parent-review.v1'
+                 and review['accepted_for_exact_subset'] is True
+                 and review['reviewed_configuration_sha256'] == sha(canonical(config))
+                 and review['final14_completed_and_released'] is True,
+                 'concrete_parent_configuration_or_final14_review_missing')
++        require(all(link == review['identity_sha256'] for link in review_links),
++                'excluded_parent_review_link_not_bound')
+         native = d['native_git_pin']
+         require(native['path'] == '/usr/bin/git', 'fixed_native_git_path_required')
+         self.native_git()
+@@ -858,8 +874,8 @@
+             self.current_removal = {'row': name, 'started_at': now()}
+             self.git(PRIMARY, 'worktree', 'remove', str(BASE/name))
+             require(not os.path.lexists(BASE/name), 'worktree_remove_incomplete')
++            self.facts['removed_rows'].append(name)
+             self.current_removal = None
+-            self.facts['removed_rows'].append(name)
+             self.retain_git()
+             self.protect()
+             self.stable_inventory()

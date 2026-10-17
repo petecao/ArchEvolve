@@ -1,0 +1,27 @@
+# Certification profile (ticket 51). Created 2026-10-03 ET.
+format: swdb.certification-profile.v1
+id: profile.vertex_relabel_executor
+entry: operation.vertex_relabel_executor
+date: '2026-10-03'
+matrix:
+  builds:
+  - sanitized
+  - openmp
+  threads: 4
+  n_cases: 8
+  sizes:
+    n: 1031
+controls:
+- id: inverse_direction
+  category: ordering
+  expected_check: differential_mismatch
+- id: skip_last_vertex
+  category: dropped_operand
+  expected_check: differential_mismatch
+- id: aliasing_write
+  category: aliasing
+  expected_check: frame_violation
+required_categories:
+- aliasing
+- dropped_operand
+- ordering

@@ -1,0 +1,219 @@
+{
+  "format": "swdb.cpu-calibration-compact-receipt.v1",
+  "recorded": "2026-10-06 ET",
+  "evidence_kind": "native",
+  "source_commit": "97f5f196bd5e1c1405b2f24326e73761890f9930",
+  "receipt_sha256": "edde78d5210d8c55ebea529781c2707e2a18dfe44908603ce18a888019feb286",
+  "raw_directory": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-calibration-20261006-a1",
+  "raw_transferred": false,
+  "cells": 80,
+  "repetitions": 7,
+  "threads": [
+    1,
+    2,
+    4,
+    8,
+    16
+  ],
+  "lane": {
+    "aligned_cell_age_s": "",
+    "aligned_to": "no_gapbs_batch_running",
+    "command": [
+      "timeout",
+      "--signal=TERM",
+      "--kill-after=60",
+      "2100",
+      "bash",
+      "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-calibration-20261006-a1/job.sh"
+    ],
+    "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+    "ended_utc": "2026-10-06T21:07:53Z",
+    "exit_code": 0,
+    "host": "mbit10",
+    "job": "swdb-lanl-cpu-calibration-20261006-a1",
+    "lease_generation": 467,
+    "lease_name": "mbit10-evaluation-node0",
+    "load1_at_start": 1.05,
+    "load1_max": 32,
+    "node": 0,
+    "numa_memory_policy": "bind:0",
+    "numactl": "--cpunodebind=0 --membind=0",
+    "preregistration_sha256": null,
+    "started_utc": "2026-10-06T21:02:58Z"
+  },
+  "governor": null,
+  "no_turbo": null,
+  "compute_counts": {
+    "integer": {
+      "level": "source_normalized_ir",
+      "per_iteration": 26,
+      "per_invocation": 8,
+      "validation_points": [
+        [
+          32,
+          840
+        ],
+        [
+          64,
+          1672
+        ],
+        [
+          96,
+          2504
+        ]
+      ],
+      "characterization_sha256": [
+        "9ccd421892d31bfa861ca4a957c5ce9387c24123dd104fb470ee47fbce360e0c",
+        "ba8036183ad92ea3f37144ea9df404629854a3716a14f874777d8044cf2e3597",
+        "8cd42ccf1fe44dcc1a5bd29dc7a1f4bca413733241936c99cc6def536c6e9d3a"
+      ],
+      "source_sha256": "18505bf0e53496132ac3c4bf03881d804d6e0fd9dee51c5887fbda2190fd8393",
+      "basis": "inferred",
+      "timing": "separate uninstrumented binary",
+      "scope": "effective constructed work, not physical issue throughput"
+    },
+    "floating_point": {
+      "level": "source_normalized_ir",
+      "per_iteration": 8,
+      "per_invocation": 5,
+      "validation_points": [
+        [
+          32,
+          261
+        ],
+        [
+          64,
+          517
+        ],
+        [
+          96,
+          773
+        ]
+      ],
+      "characterization_sha256": [
+        "36a37244ce1dc23ea79c4c4ef2ffe5349650b20173588ffdf53d83486d2f691a",
+        "5101b1fed1f90f2ba9a68ad14c6434cd450ae52a13f6f01afddb8e328a163596",
+        "dfdcd6983712ac234fca77b579bdeb7ebdaa23ca863d578d4c8b95fa75d098f2"
+      ],
+      "source_sha256": "18505bf0e53496132ac3c4bf03881d804d6e0fd9dee51c5887fbda2190fd8393",
+      "basis": "inferred",
+      "timing": "separate uninstrumented binary",
+      "scope": "effective constructed work, not physical issue throughput"
+    },
+    "branch": {
+      "level": "source_normalized_ir",
+      "per_iteration": 5,
+      "per_invocation": 3,
+      "validation_points": [
+        [
+          32,
+          163
+        ],
+        [
+          64,
+          323
+        ],
+        [
+          96,
+          483
+        ]
+      ],
+      "characterization_sha256": [
+        "1281882afa8298e7d1431fd3176035ea5307c54aea8a75d05b43fe45dff4a2cc",
+        "94c83eff4f28e7fe99a8df58441b097f81f81f951c7f7c72091ca0fcee743f46",
+        "92fa7d088d7d84d557efc314bf95b48b32c190d0cb45d9f15efba025d25f0d5f"
+      ],
+      "source_sha256": "18505bf0e53496132ac3c4bf03881d804d6e0fd9dee51c5887fbda2190fd8393",
+      "basis": "inferred",
+      "timing": "separate uninstrumented binary",
+      "scope": "effective constructed work, not physical issue throughput"
+    },
+    "atomic": {
+      "level": "source_normalized_ir",
+      "per_iteration": 1,
+      "per_invocation": 0,
+      "validation_points": [
+        [
+          32,
+          32
+        ],
+        [
+          64,
+          64
+        ],
+        [
+          96,
+          96
+        ]
+      ],
+      "characterization_sha256": [
+        "b7a0c0190b5d1b4574138cf7748d5852f45de8a560cba587895b9d43ce08385a",
+        "d089e9c5de925dd0cbf16ca3c12e4564594f72187971f1d2a6f2889db55fb50f",
+        "3a6f638c3c0652ae539430f367e7459e6aa17f4d2a46e6d9c45c3b7b35946351"
+      ],
+      "source_sha256": "18505bf0e53496132ac3c4bf03881d804d6e0fd9dee51c5887fbda2190fd8393",
+      "basis": "inferred",
+      "timing": "separate uninstrumented binary",
+      "scope": "effective constructed work, not physical issue throughput"
+    }
+  },
+  "descriptions": [
+    {
+      "id": "mbit10.cpu.lanl20261006a1.t1",
+      "threads": 1,
+      "canonical_sha256": "b9605c94698ade1cb2a1416a6826e9c9e25cb1eeae8402816a8d4f8b3eecfb8f",
+      "record_sha256": "e25f6e353da5e4aa334b6ec46bebb2131472f26eeebb29bece7be4e228d3dd2f",
+      "useful_stream_bytes_per_s": 15023269476.174936,
+      "dependent_seconds_per_load": 9.494350147247315e-08,
+      "effective_requests_per_thread": null,
+      "plateau": "not_established"
+    },
+    {
+      "id": "mbit10.cpu.lanl20261006a1.t2",
+      "threads": 2,
+      "canonical_sha256": "bcc754a4ef83ad853c1df617a7578309623672fe663b14536f4162c2b51030d0",
+      "record_sha256": "75851a398e94b52be872470917d447595ea046210facd6118ff0b3a22cdd6e63",
+      "useful_stream_bytes_per_s": 25199719764.074497,
+      "dependent_seconds_per_load": 8.862691354751587e-08,
+      "effective_requests_per_thread": null,
+      "plateau": "not_established"
+    },
+    {
+      "id": "mbit10.cpu.lanl20261006a1.t4",
+      "threads": 4,
+      "canonical_sha256": "0e2b2e4610b5176a45e20f7d181b16c2ceda0e77b10ca97da07c7f4d07498169",
+      "record_sha256": "8c64b82715d527824db690e5a426adb0300fa753367ca53bd1635fcd77e2f85f",
+      "useful_stream_bytes_per_s": 36128542075.12418,
+      "dependent_seconds_per_load": 8.741248846054077e-08,
+      "effective_requests_per_thread": null,
+      "plateau": "not_established"
+    },
+    {
+      "id": "mbit10.cpu.lanl20261006a1.t8",
+      "threads": 8,
+      "canonical_sha256": "1c12fe0a69756db429aaafae3de6ed1f6199623e2ed2f15374513888f3b4af33",
+      "record_sha256": "97af83398fc4c12c7dcb472406a475aa25409c32b60f9f4be382d46a095f4ac1",
+      "useful_stream_bytes_per_s": 45869858956.90602,
+      "dependent_seconds_per_load": 8.759436511993408e-08,
+      "effective_requests_per_thread": null,
+      "plateau": "not_established"
+    },
+    {
+      "id": "mbit10.cpu.lanl20261006a1.t16",
+      "threads": 16,
+      "canonical_sha256": "b0171947ead7547e945fda4ba51bfe9fff8b05365de2421c4ee9158e1f43aaa0",
+      "record_sha256": "a611d95646848b4298c2d26fba2c85337142e3be165108056217e057f7ba577e",
+      "useful_stream_bytes_per_s": 57899653400.531685,
+      "dependent_seconds_per_load": 9.022013401985168e-08,
+      "effective_requests_per_thread": 4.203957595639796,
+      "plateau": "established_for_constructed_work"
+    }
+  ],
+  "validation": "558 records valid",
+  "limitations": [
+    "Constructed useful source-work rates, not physical issue rate/bus bandwidth/MSHR occupancy.",
+    "Raw runs, binaries, logs and address streams are not Git payload.",
+    "No CPU error band is established by this calibration.",
+    "Unrelated node1 Quicksilver CPU process3570800 retained and recorded as possible shared-host perturbation."
+  ]
+}

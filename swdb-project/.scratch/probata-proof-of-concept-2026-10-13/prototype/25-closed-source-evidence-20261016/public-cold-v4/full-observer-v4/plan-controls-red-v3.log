@@ -1,0 +1,69 @@
+test_all_five_complete_plan_hashes_match_actual_source_materialization (__main__.Controls.test_all_five_complete_plan_hashes_match_actual_source_materialization) ... 
+  test_all_five_complete_plan_hashes_match_actual_source_materialization (__main__.Controls.test_all_five_complete_plan_hashes_match_actual_source_materialization) (case='safe') ... FAIL
+  test_all_five_complete_plan_hashes_match_actual_source_materialization (__main__.Controls.test_all_five_complete_plan_hashes_match_actual_source_materialization) (case='missing_bundle') ... FAIL
+  test_all_five_complete_plan_hashes_match_actual_source_materialization (__main__.Controls.test_all_five_complete_plan_hashes_match_actual_source_materialization) (case='stale_method') ... FAIL
+  test_all_five_complete_plan_hashes_match_actual_source_materialization (__main__.Controls.test_all_five_complete_plan_hashes_match_actual_source_materialization) (case='wrong_result') ... FAIL
+  test_all_five_complete_plan_hashes_match_actual_source_materialization (__main__.Controls.test_all_five_complete_plan_hashes_match_actual_source_materialization) (case='default_method') ... FAIL
+test_type_and_null_contract_mutations_remain_distinct (__main__.Controls.test_type_and_null_contract_mutations_remain_distinct) ... ok
+test_v4_inverse_is_exact_and_all_other_functions_and_embeds_unchanged (__main__.Controls.test_v4_inverse_is_exact_and_all_other_functions_and_embeds_unchanged) ... ok
+
+======================================================================
+FAIL: test_all_five_complete_plan_hashes_match_actual_source_materialization (__main__.Controls.test_all_five_complete_plan_hashes_match_actual_source_materialization) (case='safe')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/full-observer-v4/plan_controls_v4.py", line 55, in test_all_five_complete_plan_hashes_match_actual_source_materialization
+    self.assertEqual(NS['digest'](plan), row['exact_plan_matrix']['actual_plan_sha256'])
+AssertionError: 'ec12ee0de69733c5e537b6cbb1f28b23a07c119b2c612474420950cc2bf34a81' != 'f414bbf02f5a07a6530b1b80a8c2d0d98ee1b13c8ecb473a893853500b9ba580'
+- ec12ee0de69733c5e537b6cbb1f28b23a07c119b2c612474420950cc2bf34a81
++ f414bbf02f5a07a6530b1b80a8c2d0d98ee1b13c8ecb473a893853500b9ba580
+
+
+======================================================================
+FAIL: test_all_five_complete_plan_hashes_match_actual_source_materialization (__main__.Controls.test_all_five_complete_plan_hashes_match_actual_source_materialization) (case='missing_bundle')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/full-observer-v4/plan_controls_v4.py", line 55, in test_all_five_complete_plan_hashes_match_actual_source_materialization
+    self.assertEqual(NS['digest'](plan), row['exact_plan_matrix']['actual_plan_sha256'])
+AssertionError: 'ec12ee0de69733c5e537b6cbb1f28b23a07c119b2c612474420950cc2bf34a81' != 'f414bbf02f5a07a6530b1b80a8c2d0d98ee1b13c8ecb473a893853500b9ba580'
+- ec12ee0de69733c5e537b6cbb1f28b23a07c119b2c612474420950cc2bf34a81
++ f414bbf02f5a07a6530b1b80a8c2d0d98ee1b13c8ecb473a893853500b9ba580
+
+
+======================================================================
+FAIL: test_all_five_complete_plan_hashes_match_actual_source_materialization (__main__.Controls.test_all_five_complete_plan_hashes_match_actual_source_materialization) (case='stale_method')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/full-observer-v4/plan_controls_v4.py", line 55, in test_all_five_complete_plan_hashes_match_actual_source_materialization
+    self.assertEqual(NS['digest'](plan), row['exact_plan_matrix']['actual_plan_sha256'])
+AssertionError: 'ec12ee0de69733c5e537b6cbb1f28b23a07c119b2c612474420950cc2bf34a81' != 'f414bbf02f5a07a6530b1b80a8c2d0d98ee1b13c8ecb473a893853500b9ba580'
+- ec12ee0de69733c5e537b6cbb1f28b23a07c119b2c612474420950cc2bf34a81
++ f414bbf02f5a07a6530b1b80a8c2d0d98ee1b13c8ecb473a893853500b9ba580
+
+
+======================================================================
+FAIL: test_all_five_complete_plan_hashes_match_actual_source_materialization (__main__.Controls.test_all_five_complete_plan_hashes_match_actual_source_materialization) (case='wrong_result')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/full-observer-v4/plan_controls_v4.py", line 55, in test_all_five_complete_plan_hashes_match_actual_source_materialization
+    self.assertEqual(NS['digest'](plan), row['exact_plan_matrix']['actual_plan_sha256'])
+AssertionError: 'f7676293231cb07bf811ceb0213dc2afbe7740092cb9ebfc5ab2f85db64d977b' != '8dd2ff5af20636fd4c0f427000db1cc0007830dded70fbe10a304b99b8ec53d2'
+- f7676293231cb07bf811ceb0213dc2afbe7740092cb9ebfc5ab2f85db64d977b
++ 8dd2ff5af20636fd4c0f427000db1cc0007830dded70fbe10a304b99b8ec53d2
+
+
+======================================================================
+FAIL: test_all_five_complete_plan_hashes_match_actual_source_materialization (__main__.Controls.test_all_five_complete_plan_hashes_match_actual_source_materialization) (case='default_method')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/full-observer-v4/plan_controls_v4.py", line 55, in test_all_five_complete_plan_hashes_match_actual_source_materialization
+    self.assertEqual(NS['digest'](plan), row['exact_plan_matrix']['actual_plan_sha256'])
+AssertionError: 'ec12ee0de69733c5e537b6cbb1f28b23a07c119b2c612474420950cc2bf34a81' != 'f414bbf02f5a07a6530b1b80a8c2d0d98ee1b13c8ecb473a893853500b9ba580'
+- ec12ee0de69733c5e537b6cbb1f28b23a07c119b2c612474420950cc2bf34a81
++ f414bbf02f5a07a6530b1b80a8c2d0d98ee1b13c8ecb473a893853500b9ba580
+
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.030s
+
+FAILED (failures=5)
+{"candidate": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/full-observer-v3/observer-v3.py", "candidate_sha256": "6e51a0f12b9d535d3827d1d717a410203d2bb4554533de65fd1d35024f491666", "child_events": [], "errors": 0, "failures": 5, "observer_main_or_project_import_or_actual_metadata_run": false, "skips": 0, "tests": 3}

@@ -1,0 +1,50 @@
+{
+  "format": "swdb.spec-enough-attempt-summary.v1",
+  "created": "2026-10-04 08:00 ET",
+  "ticket": 58,
+  "campaign": "extensa-gem5-bfs-20261004-s1",
+  "mode": "extensa",
+  "attempt": "a3",
+  "decisions": "agent-decided under Yan-Ru's 2026-10-04 delegation; revisable: 9 more counted calls beyond the original 9-call budget (the experiment needs 3 samples per input); hunk-count recount before scoring",
+  "host": "mbit10",
+  "checkout": {"path": "/data1/yanruj/ArchEvolve-spec58",
+               "sessions": {"branch": "t62-a3a6", "commit": "d56d972029a2dbdfd09da33457a80b16252629f4"},
+               "rescore": {"branch": "t62-a3-score", "commit": "3965ca16fb5f3796f87ae174cf8d4377b6218310"},
+               "transport": "git bundles from the agent worktree (not pushed)"},
+  "lanes": [
+    {"what": "reference, 9 sessions, first scoring", "node": 1, "lease": "mbit10-evaluation-node1", "generation": 512,
+     "load1_at_start": 1.32, "started_utc": "2026-10-04T10:59:08Z", "ended_utc": "2026-10-04T11:51:18Z", "lane_exit": 0,
+     "other_lane": "node 0: ticket 57 a6 (this agent)", "legacy_lease": "released"},
+    {"what": "rescore after the recount fix (no provider call)", "node": 1, "generation": 513, "load1_at_start": 1.40,
+     "started_utc": "2026-10-04T11:54:11Z", "ended_utc": "2026-10-04T11:56:49Z", "lane_exit": 0}
+  ],
+  "lane_script": "/data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh (origin/yanrujhou_main 76cca35, matches origin)",
+  "disk": {"/data1_free": "40G", "/data_free": "73G"},
+  "provider": {"name": "codex", "model": "gpt-5.6-sol", "effort": "xhigh", "session_lock": "swdb-session.lock in /data1/yanruj/.codex; sessions strictly sequential"},
+  "prompt_sha256": "c0a6afdfb4b148adbe8f0786bc4494d37f88a5cdb501298fe4ec19eb9bacf4cc",
+  "harness_sha256": "3740028b2bf0ccaf27da0041c68c24c880b419f9762a24320e6dae4c5c2614e7",
+  "reference_positive_control": {"certification": "certification.bc0341d701f441d4b8396116230eddd4", "verdict": "certified",
+                                 "matrix": "10/10", "controls_rejected": "16/16", "certifier": "ticket 62 library-side controls"},
+  "budget": {"counted_calls": 9, "uncounted_calls": 0, "lane_hours": 0.91},
+  "samples": [
+    {"sample": "spec-s1", "audit": "passed", "applies": false, "verdict": "not certified", "controls_rejected": "0/16", "cause": "patch context differs from bfs.cc at line 97 (a missing blank line)"},
+    {"sample": "spec-s2", "audit": "passed", "applies": true, "verdict": "failed", "certification": "certification.7b92c6301015401191489401b3af321f", "matrix": "0/10", "controls_rejected": "0/16", "cause": "strict layer: register_handle, thread_ownership_register"},
+    {"sample": "spec-s3", "audit": "passed", "applies": true, "verdict": "failed", "certification": "certification.66ac9db96cf247c289609bab1aa04f0b", "matrix": "0/10", "controls_rejected": "0/16", "cause": "strict layer: register_handle, thread_ownership_register"},
+    {"sample": "spec_draft-s1", "audit": "passed", "applies": "after recount", "verdict": "failed", "certification": "certification.9e6cd086559244209eaf0056ed3f414a", "matrix": "0/10", "controls_rejected": "0/16", "cause": "strict layer: register_handle, thread_ownership_register"},
+    {"sample": "spec_draft-s2", "audit": "passed", "applies": "after recount", "verdict": "failed", "certification": "certification.53d5357c54d64fa7bb96740c5d7b58e3", "matrix": "0/10", "controls_rejected": "0/16", "cause": "strict layer: register_handle, thread_ownership_register"},
+    {"sample": "spec_draft-s3", "audit": "passed", "applies": true, "verdict": "failed", "certification": "certification.5ce50322a61049729d89e8b07e9e21c8", "matrix": "0/10", "controls_rejected": "1/16", "cause": "strict layer: register_handle, thread_ownership_register"},
+    {"sample": "spec_draft_contract-s1", "audit": "passed", "applies": false, "verdict": "not certified", "controls_rejected": "0/16", "cause": "patch context differs from bfs.cc at line 97"},
+    {"sample": "spec_draft_contract-s2", "audit": "passed", "applies": false, "verdict": "not certified", "controls_rejected": "0/16", "cause": "patch context differs from bfs.cc at line 97"},
+    {"sample": "spec_draft_contract-s3", "audit": "passed", "applies": "after recount", "verdict": "failed", "certification": "certification.bef26e18576f4265aab059c304fce475", "matrix": "0/10", "controls_rejected": "0/16", "cause": "strict layer: register_handle, thread_ownership_register"}
+  ],
+  "per_input": {
+    "spec": {"certified": "0/3", "controls_rejected": "0/48", "applied": "2/3"},
+    "spec_draft": {"certified": "0/3", "controls_rejected": "1/48", "applied": "3/3"},
+    "spec_draft_contract": {"certified": "0/3", "controls_rejected": "0/48", "applied": "1/3"}
+  },
+  "finding": "All 9 samples pass plain values where DX100 expects register handles: `__dxc_stream_load(queue.shared, chunk_begin, chunk_end, 1, tile)` and `__dxc_range_loop(..., 1, ...)`. Peter v1.1 types these operands as int32_t values (sections 3.1 and 3.3, and the section 5 template). The lowering header types them as plain int. The contract names the fix only as the label 'E2 register handles'. Every applied sample fails the strict layer's register checks (register_handle, thread_ownership_register) in all 10 matrix cells. None reaches the frontier or witness checks. Adding the draft or the contract did not change this.",
+  "remote_summary": {"path": "/data1/yanruj/EvolveSWDB_runs/extensa/extensa-gem5-bfs-20261004-s1/summary-a3.json",
+                     "sha256": "d97a6a036d6e5b78fd941acdb4bf80c3c16907d19c5f68910805b35214528816"},
+  "evidence_basis": "simulated",
+  "gain_claim": false
+}

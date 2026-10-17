@@ -1,0 +1,73 @@
+{
+  "created": "2026-09-26",
+  "state": "clean",
+  "scope": "Only generated local clock/JSON/shell and read-only source review. No launch/preflight/auditor executed.",
+  "results": [
+    {
+      "kind": "owned_cleanup",
+      "id": "bfs-simulator-owned-linux-20260926-a3",
+      "newline_ordinals": [
+        [
+          10
+        ],
+        [
+          10
+        ]
+      ],
+      "JSON_shell_argv_identical": true,
+      "lane": "1",
+      "outer_seconds": 90,
+      "bash_syntax": "passed",
+      "synthetic_pane_only": true
+    },
+    {
+      "kind": "dx100_interruption",
+      "id": "bfs-simulator-interruption-linux-20260926-a3",
+      "newline_ordinals": [
+        [
+          10
+        ],
+        [
+          10
+        ]
+      ],
+      "JSON_shell_argv_identical": true,
+      "lane": "1",
+      "outer_seconds": 90,
+      "bash_syntax": "passed",
+      "synthetic_pane_only": true
+    }
+  ],
+  "files": [
+    {
+      "path": "/private/tmp/bfs-correction-fixture-launch-prepared-20260926.py",
+      "bytes": 6143,
+      "sha256": "a172519caf5fed1e0c202730e6ac4e2ad845f0956d6b96abb5c24a72fe29139c"
+    },
+    {
+      "path": "/private/tmp/bfs-correction-fixture-audit-prepared-20260926.py",
+      "bytes": 3286,
+      "sha256": "5b4bf52015c5ce76d52b8366d313c3f4421bf9d98a244d6d82eb3ac80395fbf0"
+    },
+    {
+      "path": "/private/tmp/bfs-correction-proofgroup-init-20260926.py",
+      "bytes": 3106,
+      "sha256": "dfec2d77cc23d4740da1549913aa8d5aeb144872db25d21941d33ef80a74d549"
+    },
+    {
+      "path": "/private/tmp/bfs-correction-proofgroup-readback-20260926.py",
+      "bytes": 1900,
+      "sha256": "323d4c9fbb63be5b0b57d9a3e9ebdba066d809ce937e14db4212e5e9f046d2f5"
+    },
+    {
+      "path": "/private/tmp/bfs-correction-proofgroup-final-20260926.py",
+      "bytes": 2493,
+      "sha256": "367b6f2b5acab009683c45d64d9a5e4f9d4317be5efc0f53ad6b10e5d29d7e8a"
+    }
+  ],
+  "metadata_schema": "Fixed group start+600, five roots <=2GiB; exact per-kind external audit and wrapper-exit readback; final endpoint after validator and last recount; no charged-root writes afterward.",
+  "limitations": [
+    "Remote capacity/helper/lease state must be freshly observed by host worker.",
+    "Actual proofs and eventual admission have not been produced by this dryrender."
+  ]
+}

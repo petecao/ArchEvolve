@@ -1,0 +1,506 @@
+{
+  "format": "swdb.cpu-allocator-count-only.v1",
+  "evidence_kind": "native_count_only",
+  "budgets": {
+    "count_build_cap_bytes": 67108864,
+    "timed_data_cap_bytes": 26214400
+  },
+  "timings_collected": false,
+  "machine": "mbit10",
+  "threads": 1,
+  "context": {
+    "compiler_version": "clang version 22.1.8 (https://github.com/llvm/llvm-project ca7933e47d3a3451d81e72ac174dcb5aa28b59d1)\nTarget: x86_64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin",
+    "flags": [
+      "-O3",
+      "-std=c++11",
+      "--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13"
+    ],
+    "host": "mbit10",
+    "architecture": "x86_64",
+    "source_sha256": {
+      "CpuAllocatorWork.h": "6a4f4198d6ac45ca0c23ba130f423f3f47cf50b2ca9637376c0a8db77af4fe55",
+      "CpuAllocatorTimer.cpp": "da4bd29ab0ff509742fca87750a173ff5827eedbd429e22cd0c210533b5a8c83",
+      "CpuAllocatorCount.cpp": "6711bec276c97492543a370cc891b365b03948dc1cba3d1f154fdc58f3cbdf8f"
+    },
+    "binary_sha256": "7e9ba61f872a34ac39a283bf94d9bb8cd73680755be422b4464a239f490fbca0",
+    "instrumented_timer": false,
+    "allocator_environment": {
+      "LD_LIBRARY_PATH": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu"
+    },
+    "allocator_environment_scope": "GLIBC_TUNABLES,MALLOC_*,LD_PRELOAD,LD_AUDIT,library_search",
+    "runtime_identity_method": "dynamic_linker_resolution_preexecution",
+    "optimized_event_proof": {
+      "ir_sha256": "7e5ff319d74864b7057af1fd0b7da6c0106cfab538578e9ddf22f482302907a8",
+      "retained_event_abis": [
+        "_Znam",
+        "_ZdaPv",
+        "_Znwm",
+        "_ZdlPv"
+      ]
+    },
+    "lane": "mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 496)",
+    "cpus": [
+      0
+    ],
+    "machine_sha256": "fcb0123f0bdb9bc004348eb8c6444f03304b6612e0cb2e26a82e621b07d82a79",
+    "system": "Linux",
+    "start_state": {
+      "load": [
+        2.05517578125,
+        1.77099609375,
+        1.84033203125
+      ],
+      "time_ns": 1791342196747896725,
+      "available_memory": "MemTotal:       131426264 kB\nMemFree:        18252824 kB\nMemAvailable:   122455024 kB\nBuffers:        12128060 kB\nCached:         63368148 kB\nSwapCached:            0 kB\nActive:          5981896 kB\nInactive:       71268216 kB\nActive(anon):    1727952 kB\nInactive(anon):    55668 kB\nActive(file):    4253944 kB\nInactive(file): 71212548 kB\nUnevictable:       39252 kB\nMlocked:           36180 kB\nSwapTotal:             0 kB\nSwapFree:              0 kB\nZswap:                 0 kB\nZswapped:              0 kB\nDirty:                 4 kB\nWriteback:             0 kB\nAnonPages:       1793512 kB\nMapped:          1129596 kB\nShmem:             14900 kB\nKReclaimable:   30054308 kB\nSlab:           32593256 kB\nSReclaimable:   29970476 kB\nSUnreclaim:      2622780 kB\nKernelStack:       25472 kB\nPageTables:        31816 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:    65713132 kB\nCommitted_AS:    5806248 kB\nVmallocTotal:   13743895347199 kB\nVmallocUsed:      432356 kB\nVmallocChunk:          0 kB\nPercpu:           374272 kB\nHardwareCorrupted:     8 kB\nAnonHugePages:         0 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nUnaccepted:            0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:    40398820 kB\nDirectMap2M:    91160576 kB\nDirectMap1G:     4194304 kB",
+      "governor": null,
+      "no_turbo": null
+    },
+    "free_disk_bytes": 55903436800,
+    "commit": "1703c98717ff303fdaa83b8044ac9b4060fedb78",
+    "dirty": false,
+    "loaded_libraries": {
+      "libstdc++.so.6.0.33": {
+        "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33",
+        "sha256": "1fd75fe70354a416d75aef22bcae68c47bd25d20e2d0568c30b1a9838cf62f11"
+      },
+      "libm.so.6": {
+        "path": "/usr/lib/x86_64-linux-gnu/libm.so.6",
+        "sha256": "fce00b6f25f459cf4ae0b7fae4257909a1a8a86f9149e7c029a5d617baf1ccd0"
+      },
+      "libgcc_s.so.1": {
+        "path": "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1",
+        "sha256": "d93224d2b0dab4247598be683adca02f5cf00586f99c187579cd7e92058fb7cb"
+      },
+      "libc.so.6": {
+        "path": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+        "sha256": "3a15d66867d83762c7f2f1e37359cb8f6c5743edb369c65285cb0b1c4f7498bf"
+      },
+      "ld-linux-x86-64.so.2": {
+        "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+        "sha256": "c20a2dc8917c755f02b94049356320fe1f62ac7d9f8994731f807d9df39302da"
+      }
+    }
+  },
+  "count_proof": {
+    "format": "swdb.cpu-allocator-count-proof.v1",
+    "pipeline": {
+      "version": "source-normalized-v2",
+      "passes": [
+        "function(sroa,mem2reg),cgscc(inline),function(loop-simplify)"
+      ]
+    },
+    "points": [
+      {
+        "event_size_bins": [
+          {
+            "bytes": 16384,
+            "events": 3
+          }
+        ],
+        "operation": "new_array",
+        "size_bytes": 16384,
+        "invoke": true,
+        "events": 3,
+        "opaque_events": 3,
+        "event_abi": "_Znam",
+        "characterization_sha256": "0eaaa200e01b384e6dbb659b0e8788c2ec366486bd3244acc1a04fd81a8c19df"
+      },
+      {
+        "event_size_bins": [
+          {
+            "bytes": 16384,
+            "events": 5
+          }
+        ],
+        "operation": "new_array",
+        "size_bytes": 16384,
+        "invoke": true,
+        "events": 5,
+        "opaque_events": 5,
+        "event_abi": "_Znam",
+        "characterization_sha256": "c5818b92ed69b35ed881d57dba4e7f9720aef8df849f285d1ae77a37e40d7713"
+      },
+      {
+        "event_size_bins": [],
+        "operation": "new_array",
+        "size_bytes": 16384,
+        "invoke": false,
+        "events": 3,
+        "opaque_events": 0,
+        "event_abi": "_Znam",
+        "characterization_sha256": "93f611c97c24b1d5ea3328c0d081143b35d1de4cd60f7a6e9320c26bad84b9ef"
+      },
+      {
+        "event_size_bins": [],
+        "operation": "new_array",
+        "size_bytes": 16384,
+        "invoke": false,
+        "events": 5,
+        "opaque_events": 0,
+        "event_abi": "_Znam",
+        "characterization_sha256": "8b54989048c939702b8c1a3a54fa610987b7bf9d6148b72e07a3c41e82858add"
+      },
+      {
+        "event_size_bins": [
+          {
+            "bytes": 1048568,
+            "events": 3
+          }
+        ],
+        "operation": "new_array",
+        "size_bytes": 1048568,
+        "invoke": true,
+        "events": 3,
+        "opaque_events": 3,
+        "event_abi": "_Znam",
+        "characterization_sha256": "1faaed2cad2cf0ea99e5100f0f1f17934debb8067c82e89b43c482fb4fec04bf"
+      },
+      {
+        "event_size_bins": [
+          {
+            "bytes": 1048568,
+            "events": 5
+          }
+        ],
+        "operation": "new_array",
+        "size_bytes": 1048568,
+        "invoke": true,
+        "events": 5,
+        "opaque_events": 5,
+        "event_abi": "_Znam",
+        "characterization_sha256": "11ac6d47f0077a89cbb3d98ad4d304d085c57b4761863d9c1055677cebb8fac9"
+      },
+      {
+        "event_size_bins": [],
+        "operation": "new_array",
+        "size_bytes": 1048568,
+        "invoke": false,
+        "events": 3,
+        "opaque_events": 0,
+        "event_abi": "_Znam",
+        "characterization_sha256": "8653c84ba55b450244c6df835d3ccfcc931b3c5410c2a03633dda2612de1af31"
+      },
+      {
+        "event_size_bins": [],
+        "operation": "new_array",
+        "size_bytes": 1048568,
+        "invoke": false,
+        "events": 5,
+        "opaque_events": 0,
+        "event_abi": "_Znam",
+        "characterization_sha256": "0283a2d7c1610a1c25a56b9359499ed56c8eb6deb8eb8d93cf19ef1f109f1208"
+      },
+      {
+        "event_size_bins": [
+          {
+            "bytes": 16384,
+            "events": 3
+          }
+        ],
+        "operation": "delete_array",
+        "size_bytes": 16384,
+        "invoke": true,
+        "events": 3,
+        "opaque_events": 3,
+        "event_abi": "_ZdaPv",
+        "characterization_sha256": "ca3a119adf8bffaacbfcf3fe13bb78b098ad6fb528085cd6eb4384ab0545a4dd"
+      },
+      {
+        "event_size_bins": [
+          {
+            "bytes": 16384,
+            "events": 5
+          }
+        ],
+        "operation": "delete_array",
+        "size_bytes": 16384,
+        "invoke": true,
+        "events": 5,
+        "opaque_events": 5,
+        "event_abi": "_ZdaPv",
+        "characterization_sha256": "c393c2d6deba10714de5e29296c35410658c0bfcf7d631fcbecebbfdfba69d7f"
+      },
+      {
+        "event_size_bins": [],
+        "operation": "delete_array",
+        "size_bytes": 16384,
+        "invoke": false,
+        "events": 3,
+        "opaque_events": 0,
+        "event_abi": "_ZdaPv",
+        "characterization_sha256": "9f86135ffd169c4b095a5bddab2e09e6a045fdff0dba0d6a717768c64e1d1645"
+      },
+      {
+        "event_size_bins": [],
+        "operation": "delete_array",
+        "size_bytes": 16384,
+        "invoke": false,
+        "events": 5,
+        "opaque_events": 0,
+        "event_abi": "_ZdaPv",
+        "characterization_sha256": "aaacf2a65ff42ba9409ced06d2e4b683c0a7cf1185581599fbb9d933a0b97c1d"
+      },
+      {
+        "event_size_bins": [
+          {
+            "bytes": 1048568,
+            "events": 3
+          }
+        ],
+        "operation": "delete_array",
+        "size_bytes": 1048568,
+        "invoke": true,
+        "events": 3,
+        "opaque_events": 3,
+        "event_abi": "_ZdaPv",
+        "characterization_sha256": "59a7b003c250cfe5a4a6251d137e72aadcda94d869a531eb7ca6cbb0778e117a"
+      },
+      {
+        "event_size_bins": [
+          {
+            "bytes": 1048568,
+            "events": 5
+          }
+        ],
+        "operation": "delete_array",
+        "size_bytes": 1048568,
+        "invoke": true,
+        "events": 5,
+        "opaque_events": 5,
+        "event_abi": "_ZdaPv",
+        "characterization_sha256": "13544867baf06fe01f1827416008838fe6639615b3c8a89e53139726f7d85674"
+      },
+      {
+        "event_size_bins": [],
+        "operation": "delete_array",
+        "size_bytes": 1048568,
+        "invoke": false,
+        "events": 3,
+        "opaque_events": 0,
+        "event_abi": "_ZdaPv",
+        "characterization_sha256": "9ee5ffe2bf5b865851d022dde175a16078bdb25d50a5ee3443e84726ca139b00"
+      },
+      {
+        "event_size_bins": [],
+        "operation": "delete_array",
+        "size_bytes": 1048568,
+        "invoke": false,
+        "events": 5,
+        "opaque_events": 0,
+        "event_abi": "_ZdaPv",
+        "characterization_sha256": "2f4d2851d8fbbe1a96b5447c7f623a484cca7a566c12eb552b4808bd01c859f1"
+      },
+      {
+        "event_size_bins": [
+          {
+            "bytes": 16384,
+            "events": 3
+          }
+        ],
+        "operation": "new_scalar",
+        "size_bytes": 16384,
+        "invoke": true,
+        "events": 3,
+        "opaque_events": 3,
+        "event_abi": "_Znwm",
+        "characterization_sha256": "a8e10011c1794ebf557ce9a8bcbed06228f845d4ace0dae26bcee6d5b1094e16"
+      },
+      {
+        "event_size_bins": [
+          {
+            "bytes": 16384,
+            "events": 5
+          }
+        ],
+        "operation": "new_scalar",
+        "size_bytes": 16384,
+        "invoke": true,
+        "events": 5,
+        "opaque_events": 5,
+        "event_abi": "_Znwm",
+        "characterization_sha256": "3b0a6bab362e5634d79308d5d6afede2a8b9f56bfa1810c3150124d84847ccfe"
+      },
+      {
+        "event_size_bins": [],
+        "operation": "new_scalar",
+        "size_bytes": 16384,
+        "invoke": false,
+        "events": 3,
+        "opaque_events": 0,
+        "event_abi": "_Znwm",
+        "characterization_sha256": "ddc2ea1b80c127d804185c71f7e9a81ddfa6e5349b520bbd4700f9a52054eca7"
+      },
+      {
+        "event_size_bins": [],
+        "operation": "new_scalar",
+        "size_bytes": 16384,
+        "invoke": false,
+        "events": 5,
+        "opaque_events": 0,
+        "event_abi": "_Znwm",
+        "characterization_sha256": "221432eb85b23fd5ac4ed9d016059d5efa0a4228229ee802a59b6248b212467c"
+      },
+      {
+        "event_size_bins": [
+          {
+            "bytes": 1048568,
+            "events": 3
+          }
+        ],
+        "operation": "new_scalar",
+        "size_bytes": 1048568,
+        "invoke": true,
+        "events": 3,
+        "opaque_events": 3,
+        "event_abi": "_Znwm",
+        "characterization_sha256": "1f1ce367236caf42d0757c25eafe58b267f5014c3d787a2f6f3b86e26d4dcafb"
+      },
+      {
+        "event_size_bins": [
+          {
+            "bytes": 1048568,
+            "events": 5
+          }
+        ],
+        "operation": "new_scalar",
+        "size_bytes": 1048568,
+        "invoke": true,
+        "events": 5,
+        "opaque_events": 5,
+        "event_abi": "_Znwm",
+        "characterization_sha256": "e7f34378ed84a76e8ce36c13e980dea9c70fc8cde6261667abebf62b994fe7d9"
+      },
+      {
+        "event_size_bins": [],
+        "operation": "new_scalar",
+        "size_bytes": 1048568,
+        "invoke": false,
+        "events": 3,
+        "opaque_events": 0,
+        "event_abi": "_Znwm",
+        "characterization_sha256": "87d832f7ac120df4af95d4fbd2f8f0c080a7bec5dbc2ca21845af5b6db2a6c59"
+      },
+      {
+        "event_size_bins": [],
+        "operation": "new_scalar",
+        "size_bytes": 1048568,
+        "invoke": false,
+        "events": 5,
+        "opaque_events": 0,
+        "event_abi": "_Znwm",
+        "characterization_sha256": "e7705caf2c0f27ddfa40060f4f66b4465847c4700496c360bcb8678eec64dfc1"
+      },
+      {
+        "event_size_bins": [
+          {
+            "bytes": 16384,
+            "events": 3
+          }
+        ],
+        "operation": "delete_scalar",
+        "size_bytes": 16384,
+        "invoke": true,
+        "events": 3,
+        "opaque_events": 3,
+        "event_abi": "_ZdlPv",
+        "characterization_sha256": "044e29dc01c3a50050f91af870eedab236103ebeaec1e49bf1d7e6913fc90ac9"
+      },
+      {
+        "event_size_bins": [
+          {
+            "bytes": 16384,
+            "events": 5
+          }
+        ],
+        "operation": "delete_scalar",
+        "size_bytes": 16384,
+        "invoke": true,
+        "events": 5,
+        "opaque_events": 5,
+        "event_abi": "_ZdlPv",
+        "characterization_sha256": "0f5d401d5fd7f6941a4b266d79a6559f5cf9232bf6eaaefd70b8c83cbf7268fb"
+      },
+      {
+        "event_size_bins": [],
+        "operation": "delete_scalar",
+        "size_bytes": 16384,
+        "invoke": false,
+        "events": 3,
+        "opaque_events": 0,
+        "event_abi": "_ZdlPv",
+        "characterization_sha256": "fdc5a166a43f790ddc35ee6105efd4d37c744b545be9d8dd69d3d55dc9611e69"
+      },
+      {
+        "event_size_bins": [],
+        "operation": "delete_scalar",
+        "size_bytes": 16384,
+        "invoke": false,
+        "events": 5,
+        "opaque_events": 0,
+        "event_abi": "_ZdlPv",
+        "characterization_sha256": "6f7a00b72a111f7a877daedbc38ee8a629d3b733e64962d1db00a8301a356998"
+      },
+      {
+        "event_size_bins": [
+          {
+            "bytes": 1048568,
+            "events": 3
+          }
+        ],
+        "operation": "delete_scalar",
+        "size_bytes": 1048568,
+        "invoke": true,
+        "events": 3,
+        "opaque_events": 3,
+        "event_abi": "_ZdlPv",
+        "characterization_sha256": "47823752dc1127f8bfe185e554a13fe4de1faaaa7aba344589cf3b1d54209f05"
+      },
+      {
+        "event_size_bins": [
+          {
+            "bytes": 1048568,
+            "events": 5
+          }
+        ],
+        "operation": "delete_scalar",
+        "size_bytes": 1048568,
+        "invoke": true,
+        "events": 5,
+        "opaque_events": 5,
+        "event_abi": "_ZdlPv",
+        "characterization_sha256": "e87087bec715a55a57f369dfd83865061287162eadd2aa857485435998f34806"
+      },
+      {
+        "event_size_bins": [],
+        "operation": "delete_scalar",
+        "size_bytes": 1048568,
+        "invoke": false,
+        "events": 3,
+        "opaque_events": 0,
+        "event_abi": "_ZdlPv",
+        "characterization_sha256": "66412d420c5ad19e3d5309580e0387379397140a83b0cbd97dd859c77892c14f"
+      },
+      {
+        "event_size_bins": [],
+        "operation": "delete_scalar",
+        "size_bytes": 1048568,
+        "invoke": false,
+        "events": 5,
+        "opaque_events": 0,
+        "event_abi": "_ZdlPv",
+        "characterization_sha256": "58afd5ae3a4ab5a0ff4c904e54b5527e6d6b30ab205d2fb35855c1936f73fe75"
+      }
+    ],
+    "source_sha256": "6a4f4198d6ac45ca0c23ba130f423f3f47cf50b2ca9637376c0a8db77af4fe55",
+    "count_driver_sha256": "6711bec276c97492543a370cc891b365b03948dc1cba3d1f154fdc58f3cbdf8f",
+    "plugin_source_sha256": "b461fd7025cfa675d5c191d7d73fee8bd04525c0344cd315dffedb61575b65a0",
+    "runtime_source_sha256": "43762b5079564a7f2fbc930befbdde85a5498ca82b635e82f5cc0476ffa9099e"
+  },
+  "sizes": [
+    16384,
+    466112,
+    524284,
+    1048568
+  ],
+  "identity_sha256": "c9254337a7259ab38d3e350f74716899daead7ec50f44d2333d0e89f2161bcbe"
+}

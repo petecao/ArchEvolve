@@ -1,0 +1,126 @@
+{
+  "created": "2026-09-26",
+  "role": "read_only_prospective_dependency_inventory",
+  "plans": {
+    "t15": {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t15-simulator-batch-20260926-a1.json",
+      "canonical_sha256": "bec894d3c21400617aa5b02afd9e97fcb104e11da1c1e52d43355aa10d788833"
+    },
+    "t16": {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t16-simulator-batch-20260926-a1.json",
+      "canonical_sha256": "8485d6ad0ca8708d9ef4d3342676748a5e39bc421d0a30d262fe2bff2f7c457e"
+    }
+  },
+  "existing_canonical_anchors": [
+    {
+      "id": "bfs-20260925-kronecker18.48de8267ac2098d5",
+      "path": "records/workloads/bfs-20260925-kronecker18.48de8267ac2098d5.yaml",
+      "canonical_sha256": "38ecdcb6ed58c15b9dbd3ed1449f18e4ffc69ddc2f2ab6a8192b144c25030199"
+    },
+    {
+      "id": "bfs-20260925-uniform18.cd2169a5c421baf7",
+      "path": "records/workloads/bfs-20260925-uniform18.cd2169a5c421baf7.yaml",
+      "canonical_sha256": "e345524d8c91f4363292c47e81510c3fe34e3f80284ed9945ce4fa0e4e63afdd"
+    },
+    {
+      "id": "bfs-20260925-uniform22.f23b09bb0c0601b5",
+      "path": "records/workloads/bfs-20260925-uniform22.f23b09bb0c0601b5.yaml",
+      "canonical_sha256": "fc48bf0cf2d8351f484fb0987519287ad7ef7624c6558b74ad52319ffee9c79e"
+    },
+    {
+      "id": "bfs-author-maa-compile-20260925-a1.candidate",
+      "path": "records/candidates/bfs-author-maa-compile-20260925-a1.candidate.yaml",
+      "canonical_sha256": "1018e9002c86a2e0ef7850be0bc66dbec9849d388cced45542c61a18cd619fff"
+    },
+    {
+      "id": "bfs-author-maa-compile-20260925-a1.diagnostic.build",
+      "path": "records/evaluations/bfs-author-maa-compile-20260925-a1.diagnostic.build.yaml",
+      "canonical_sha256": "de0c71b6f0fe54a88be05ca5fb93bb5980d44fc787294964a63568c70d785beb"
+    },
+    {
+      "id": "bfs-author-maa-compile-20260925-a1.source",
+      "path": "records/source_snapshots/bfs-author-maa-compile-20260925-a1.source.yaml",
+      "canonical_sha256": "f1b53e83398c74871f0cf46dc8f98b728254992a8ee63aaf7419732680b42fb6"
+    },
+    {
+      "id": "bfs-author-scalar-compile-20260925-a1.candidate",
+      "path": "records/candidates/bfs-author-scalar-compile-20260925-a1.candidate.yaml",
+      "canonical_sha256": "8814d635964686e49889e590e030eb05e012bb87d052741a4d52ef1e522f5ec2"
+    },
+    {
+      "id": "bfs-author-scalar-compile-20260925-a1.diagnostic.build",
+      "path": "records/evaluations/bfs-author-scalar-compile-20260925-a1.diagnostic.build.yaml",
+      "canonical_sha256": "7ba0257570dc65d3067a2b7e1c9341ea2be7ed88d84500e759cb74906cc9be3c"
+    },
+    {
+      "id": "bfs-author-scalar-compile-20260925-a1.source",
+      "path": "records/source_snapshots/bfs-author-scalar-compile-20260925-a1.source.yaml",
+      "canonical_sha256": "53ae9d2c9697a94eaf6ede230d29287c869f8110f6417eccded81acd34c99cb3"
+    },
+    {
+      "id": "bfs-dx100-build-20260925-a2",
+      "path": "records/evaluations/bfs-dx100-build-20260925-a2.yaml",
+      "canonical_sha256": "13d277a961e44fe0ee254b4685126572fb06394fea455e3e1d450626cc535cea"
+    },
+    {
+      "id": "bfs-dx100-coverage-20260926-a1.execute",
+      "path": "records/evaluations/bfs-dx100-coverage-20260926-a1.execute.yaml",
+      "canonical_sha256": "f64b604d10bf579c832145b07d6b6cee39d81833d23711375a6625f59fbc57f9"
+    },
+    {
+      "id": "bfs-dx100-witness-20260926-a1",
+      "path": "records/evaluations/bfs-dx100-witness-20260926-a1.yaml",
+      "canonical_sha256": "c5ec9b7ca044728d61fb01be67616ea66e6364bd1c160569ab5dad9382570b8e"
+    },
+    {
+      "id": "bfs-dx100-witness-20260926-a3",
+      "path": "records/evaluations/bfs-dx100-witness-20260926-a3.yaml",
+      "canonical_sha256": "f8fd24e9bccb02b013063810c7211f7cdc5e57416ebc961c37c4c927a6e9e2d4"
+    },
+    {
+      "id": "dx100-bfs-maa-reference",
+      "path": "records/implementations/dx100-bfs-maa-reference.yaml",
+      "canonical_sha256": "3f8646f57df66f2db9f8236240c82fcdf2d610f47d28b7814e749333bceb9ae0"
+    },
+    {
+      "id": "dx100-bfs-scalar",
+      "path": "records/implementations/dx100-bfs-scalar.yaml",
+      "canonical_sha256": "81ffac2bdf90e50f2350675edd53c16162c0251e8bb23fc17d4cfe421cd32e61"
+    },
+    {
+      "id": "dx100-e4fc4af-4c",
+      "path": "records/hardware_targets/dx100-e4fc4af-4c.yaml",
+      "canonical_sha256": "94cf9373c255c1c36d4b6f622124aec90e8bd485d66fa2af996d6e46c91e04e1"
+    },
+    {
+      "id": "mbit10",
+      "path": "records/machines/mbit10.yaml",
+      "canonical_sha256": "fcb0123f0bdb9bc004348eb8c6444f03304b6612e0cb2e26a82e621b07d82a79"
+    }
+  ],
+  "incremental_records_after_actual_A2": [
+    {
+      "id": "bfs-dx100-coverage-20260926-a2.compile",
+      "path": "records/evaluations/bfs-dx100-coverage-20260926-a2.compile.yaml"
+    },
+    {
+      "id": "bfs-dx100-coverage-20260926-a2.execute",
+      "path": "records/evaluations/bfs-dx100-coverage-20260926-a2.execute.yaml"
+    },
+    {
+      "id": "actual public register-workload returned content-addressed ID",
+      "path": "records/workloads/<actual returned workload ID>.yaml"
+    }
+  ],
+  "incremental_records_after_T16_freeze": [
+    "records/protocols/<actual artifact protocol ID>.yaml",
+    "records/protocols/<actual matched-control protocol ID>.yaml"
+  ],
+  "assumptions": [
+    "start from full already-valid final supervisor catalog; existing anchors are not a standalone pruned catalog",
+    "all raw/source/build paths stay host-local and are reopened, not copied or rewritten",
+    "successful A2 records/protocol returned IDs and final batch code pin not yet available; never invent them",
+    "canonical record materialization preserves exact source bytes and runtime checkout HEAD; batch has no --records switch",
+    "native terminal barrier uses original319 raw/runtime+existing a3 record; no native measurement/package import is required merely for batch admission"
+  ]
+}

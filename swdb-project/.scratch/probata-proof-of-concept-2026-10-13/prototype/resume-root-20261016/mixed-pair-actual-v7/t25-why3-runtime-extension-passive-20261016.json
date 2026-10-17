@@ -1,0 +1,318 @@
+{
+  "META": "description = \"Why3 library\"\nversion = \"1.8.2\"\narchive(byte) = \"why3.cma\"\narchive(native) = \"why3.cmxa\"\nplugin(byte) = \"why3.cma\"\nplugin(native) = \"why3.cmxs\"\nrequires = \"menhirLib str unix zarith dynlink zip   \"\n",
+  "count": 43,
+  "date": "2026-10-16 ET",
+  "directories": [
+    "commands",
+    "plugins"
+  ],
+  "files": [
+    {
+      "bytes": 213,
+      "mode": 420,
+      "relative": "META",
+      "sha256": "6624b93b8ac94d35235e51ac2cd245151ef144511ea5efd218be14f8a9577be8"
+    },
+    {
+      "bytes": 32624,
+      "mode": 420,
+      "relative": "commands/why3bench.cmxs",
+      "sha256": "d5f151f942620186cca1362b45ae8e91cf5d5728d491d35fe78abf328000e9e7"
+    },
+    {
+      "bytes": 49040,
+      "mode": 420,
+      "relative": "commands/why3config.cmxs",
+      "sha256": "67c3823a3b77a275ff52c0a74c2a00ab0d0b60f5af8260580c306bae08545fcb"
+    },
+    {
+      "bytes": 138960,
+      "mode": 420,
+      "relative": "commands/why3doc.cmxs",
+      "sha256": "4bb254b1a0319a721ad370806e06466a17b8973cfc4f8f685392c8d766664b4a"
+    },
+    {
+      "bytes": 47216,
+      "mode": 420,
+      "relative": "commands/why3execute.cmxs",
+      "sha256": "b0e41efaae45b251f912d6ed513113a887d1fd1015008f4caf9be88a2eaebb1a"
+    },
+    {
+      "bytes": 105632,
+      "mode": 420,
+      "relative": "commands/why3extract.cmxs",
+      "sha256": "1bf41ca7ac1c2cc969002ee8b69ecd26b063d5baaf9bb4eac11e215fb63e319c"
+    },
+    {
+      "bytes": 153616,
+      "mode": 420,
+      "relative": "commands/why3pp.cmxs",
+      "sha256": "ab4f6f42459dc2a6d487ab8e7821b594f671b4c95d56446959430b22580ef9c1"
+    },
+    {
+      "bytes": 132488,
+      "mode": 420,
+      "relative": "commands/why3prove.cmxs",
+      "sha256": "ebde44f91be86877bd9e3372f0fb5176f41d8bbda5a9aa204fdf70132136efa3"
+    },
+    {
+      "bytes": 32288,
+      "mode": 420,
+      "relative": "commands/why3realize.cmxs",
+      "sha256": "ddf5d3f4db868656acd1c808715b5e90a85aeb58d686b054e3958da0c43f5799"
+    },
+    {
+      "bytes": 92456,
+      "mode": 420,
+      "relative": "commands/why3replay.cmxs",
+      "sha256": "083fd4391931309748bfe3db7239f494a0feb48c4415c94b879bc304b1be03df"
+    },
+    {
+      "bytes": 428632,
+      "mode": 420,
+      "relative": "commands/why3session.cmxs",
+      "sha256": "8f60944fbfabe56209f6936236c599d53da40038874d93970df58305974d0cd3"
+    },
+    {
+      "bytes": 86064,
+      "mode": 420,
+      "relative": "commands/why3shell.cmxs",
+      "sha256": "ef5885d0f1642af83c7d23ce12bea58746de96f8d2ef2f69e7cc0be49787ae79"
+    },
+    {
+      "bytes": 53504,
+      "mode": 420,
+      "relative": "commands/why3show.cmxs",
+      "sha256": "96b5ba1ec1f379250f60c1f76783202a1205338dacd5ea3f7904e96c58bb3361"
+    },
+    {
+      "bytes": 123792,
+      "mode": 420,
+      "relative": "commands/why3wc.cmxs",
+      "sha256": "d9ea0f6b561764375f03ffb7587f0567f6b3309acaca0eed629bbe4a96f8b89e"
+    },
+    {
+      "bytes": 106936,
+      "mode": 420,
+      "relative": "commands/why3webserver.cmxs",
+      "sha256": "4db4aafba542d4287a6339a14d6a8a2cdaee146e26d898aa766b64998d2c2c0f"
+    },
+    {
+      "bytes": 3146471,
+      "mode": 420,
+      "relative": "plugins/cfg.cma",
+      "sha256": "b7f5012042d2b5647430abb1827104c13e57dd679dc2a1a20d504335856a9199"
+    },
+    {
+      "bytes": 1472928,
+      "mode": 420,
+      "relative": "plugins/cfg.cmxs",
+      "sha256": "01febc631e483d771117eb08389a81c219f848c77d40b6324cad7f394c79d5c8"
+    },
+    {
+      "bytes": 1436832,
+      "mode": 420,
+      "relative": "plugins/coma.cma",
+      "sha256": "25fd7afd6057b44e5983577efd832c4b16669eadeb898ddecbb6253cc7848974"
+    },
+    {
+      "bytes": 1266480,
+      "mode": 420,
+      "relative": "plugins/coma.cmxs",
+      "sha256": "abb1787ed8e8c073e287d58bf4f1153727cb6d52d36f525bb63a9d6fa37b0629"
+    },
+    {
+      "bytes": 16403,
+      "mode": 420,
+      "relative": "plugins/dimacs.cma",
+      "sha256": "e0bea753ac78b592029751a056b1e37a63f0b383f11038cb682d42a54d9f523e"
+    },
+    {
+      "bytes": 46640,
+      "mode": 420,
+      "relative": "plugins/dimacs.cmxs",
+      "sha256": "76aa037d683c097acac441c29e1379cc5525ebe0056dd1ec07351477d2949f20"
+    },
+    {
+      "bytes": 103964,
+      "mode": 420,
+      "relative": "plugins/forward_propagation.cma",
+      "sha256": "ca116d5878bc5e53e520f5fc8c0d905b364906adcc3a1d678a3fe9d1ceca4df4"
+    },
+    {
+      "bytes": 191832,
+      "mode": 420,
+      "relative": "plugins/forward_propagation.cmxs",
+      "sha256": "bd096440ca3c935f96a63fadda79858973c00227909ae38af24dd37d000e8909"
+    },
+    {
+      "bytes": 11906,
+      "mode": 420,
+      "relative": "plugins/genequlin.cma",
+      "sha256": "bf2559dccdb9604ca83b363a20925540c436448203b71c2a58c690b3a90a3711"
+    },
+    {
+      "bytes": 53560,
+      "mode": 420,
+      "relative": "plugins/genequlin.cmxs",
+      "sha256": "14983110896b875b3cb36dd2b6229cdeed29c8fc212397719b4a8e9771ba1476"
+    },
+    {
+      "bytes": 2035981,
+      "mode": 420,
+      "relative": "plugins/hypothesis_selection.cma",
+      "sha256": "83a367a80357e3fa7cc2dc0eaee32dd091dae1591738e9c3defdd171201fd09e"
+    },
+    {
+      "bytes": 587424,
+      "mode": 420,
+      "relative": "plugins/hypothesis_selection.cmxs",
+      "sha256": "cf77e693bafbbd30ea1fce2600739a3b17171408d1567f9ea6e7b20e8f1af438"
+    },
+    {
+      "bytes": 284754,
+      "mode": 420,
+      "relative": "plugins/microc.cma",
+      "sha256": "1864066a2129e89e445c611c76042afd1273d582cbb32d7ad71c8fe1cfcc070e"
+    },
+    {
+      "bytes": 280552,
+      "mode": 420,
+      "relative": "plugins/microc.cmxs",
+      "sha256": "4b6d3cdada46443c9dc74288de3550e59a31939bfec7a5b787beb97064863a8c"
+    },
+    {
+      "bytes": 360945,
+      "mode": 420,
+      "relative": "plugins/python.cma",
+      "sha256": "c074c1badd02eddd0e2b43acf809af036bc5bc3668749526b281955bcb1ac723"
+    },
+    {
+      "bytes": 350216,
+      "mode": 420,
+      "relative": "plugins/python.cmxs",
+      "sha256": "cedbb1f575a2728bd3963e6772efe61698a1110d03c29c397b67055584614fa9"
+    },
+    {
+      "bytes": 338736,
+      "mode": 420,
+      "relative": "plugins/tptp.cma",
+      "sha256": "ca80d640aec78d8145a93c06bef545e710e819673c67d3f9cb36a56ffc5d4c42"
+    },
+    {
+      "bytes": 438720,
+      "mode": 420,
+      "relative": "plugins/tptp.cmxs",
+      "sha256": "039c49408f2d90a99cbdc80cc6b5709db887b1bfe7502c0adc04433b34951532"
+    },
+    {
+      "bytes": 152,
+      "mode": 493,
+      "relative": "why3-call-pvs",
+      "sha256": "e349fc0331dc2c3e7c64c8c86b62b4f4549894829c9ceb9d03b9dc75feecf06b"
+    },
+    {
+      "bytes": 18337762,
+      "mode": 420,
+      "relative": "why3.a",
+      "sha256": "73c45c495dcc9cc05a5d3680054c5b78ee8ac1e7f5718f150042b0ca40156bac"
+    },
+    {
+      "bytes": 9674800,
+      "mode": 420,
+      "relative": "why3.cma",
+      "sha256": "aff2c2f89e7eff08b5cc29173e6494833386fd2f944b2cea7a8afa96faa280a7"
+    },
+    {
+      "bytes": 450144,
+      "mode": 420,
+      "relative": "why3.cmi",
+      "sha256": "abd61020988d8b75449247a28a2cb0e3064ed9feba5b9b20b1ec0225cb38a5de"
+    },
+    {
+      "bytes": 459684,
+      "mode": 420,
+      "relative": "why3.cmt",
+      "sha256": "c98e60a17920e406e93bd14de28cd55bbe68d51b65c9b0c1837717a540e888f8"
+    },
+    {
+      "bytes": 914274,
+      "mode": 420,
+      "relative": "why3.cmx",
+      "sha256": "3519d2d878ee1935c4dfabf4860e6f6bb883805db9711a9a614f5d948975d0ad"
+    },
+    {
+      "bytes": 5798,
+      "mode": 420,
+      "relative": "why3.cmxa",
+      "sha256": "3361c7a983c3b0c636cc383b7b37f5c6f9646e099b3b9cfccd21270d0caa761e"
+    },
+    {
+      "bytes": 14926432,
+      "mode": 420,
+      "relative": "why3.cmxs",
+      "sha256": "7c90b876b8151ba7d3524a57b1b270f50b27fb4bfb866dd4eb1d93fb2dab7cef"
+    },
+    {
+      "bytes": 32008,
+      "mode": 493,
+      "relative": "why3cpulimit",
+      "sha256": "2ffbbcf2f9d2f585e8aa89f6ae4fd8afd07be8a457c67f1e6a199aa73ae23532"
+    },
+    {
+      "bytes": 96944,
+      "mode": 493,
+      "relative": "why3server",
+      "sha256": "0792d33b448d306010a9cc5736eca61fe800376d5e5c1584b9cd221e2631d094"
+    }
+  ],
+  "installed_source_hints": [],
+  "inventory_sha256": "6e3153d07f0bd483dbdc9b6bcb3d62e48282e6d018f27207153145cecafab708",
+  "operation": "physical membership/hash/META and pureELFmetadata only; no executable/native/loader/tool probe",
+  "preflight": {
+    "available_bytes": {
+      "/data": 72300703744,
+      "/data1": 14231531520
+    },
+    "leases": [
+      {
+        "generation": 617,
+        "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation-node0.meta.json",
+        "state": "released"
+      },
+      {
+        "generation": 637,
+        "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation-node1.meta.json",
+        "state": "released"
+      },
+      {
+        "generation": 77,
+        "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation.meta.json",
+        "state": "released"
+      }
+    ],
+    "load": [
+      0.03271484375,
+      0.138671875,
+      0.27880859375
+    ],
+    "primary_branch": "yanrujhou_main",
+    "primary_commit": "c978393b119a3614229a37f0f2c8ca2a097c750b",
+    "source_commit": "dcdecf317a0e9b34f3ce12d5b914eb823c439fbc",
+    "time_utc": "2026-10-16T21:08:55.807247+00:00",
+    "uptime_seconds": "6686868.69",
+    "who_count": 0
+  },
+  "root": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/why3",
+  "schema": "why3-runtime-extension-passive-1",
+  "server_ELF": {
+    "interpreter": [
+      "/lib64/ld-linux-x86-64.so.2"
+    ],
+    "needed": [
+      "libc.so.6"
+    ],
+    "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/why3/why3server"
+  },
+  "total_bytes": 58905803
+}

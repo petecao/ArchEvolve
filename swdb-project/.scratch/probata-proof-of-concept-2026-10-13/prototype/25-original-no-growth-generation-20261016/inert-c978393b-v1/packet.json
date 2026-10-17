@@ -1,0 +1,125 @@
+{
+  "actual_generations": 0,
+  "author": {
+    "bytes": 11650,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-original-no-growth-generation-20261016/author.py",
+    "sha256": "ed727006e142eb8ac309bdeb76eb01c0a381352c03d1bd1ddfcc2c9f416ca762"
+  },
+  "bootstrap_bytes": 73178,
+  "cached_inputs": {
+    "anchors": {
+      "bytes": 355068,
+      "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_public_alias_controls_kee1/vector_realloc_v3_no_growth.anchors.json",
+      "sha256": "121a77c8994f705a651bc43c646d8b2da9e5deeb30a4eee145e1e9afa3a27252"
+    },
+    "lowered": {
+      "bytes": 6929,
+      "path": "/private/tmp/probata-t25-caller104-compiler-controls-v1-20261016/pytest/test_public_alias_controls_kee1/vector_realloc_v3_no_growth.c",
+      "sha256": "7082d6fc081e23547bf792f8029277695b83d933913545f290f66353ee5841ec"
+    }
+  },
+  "caller_acceptance": false,
+  "compiler_or_native_or_verifier_calls": 0,
+  "created": "2026-10-16 ET",
+  "entry": {
+    "bytes": 23717,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-original-no-growth-generation-20261016/inert-c978393b-v1/entry.py",
+    "sha256": "ce70eb290e599a05873adcc53f1ac2f83ad61e5c8a3ad2b43394ff55d341abf5"
+  },
+  "expected": {
+    "bytes": 145934,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-original-no-growth-generation-20261016/inert-c978393b-v1/expected.json",
+    "sha256": "16a01ace3dd88f29d4340d997c381ed2e523cd31e8659f4b16468d6313cf4836"
+  },
+  "function": "vector_realloc_v3_no_growth",
+  "independent_entry_review_pending": true,
+  "lowered_source_sha256": "7082d6fc081e23547bf792f8029277695b83d933913545f290f66353ee5841ec",
+  "model_acceptance": false,
+  "predecessor_packet": {
+    "bytes": 3284,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-prefix10-resume-20261016/inert-c978393b/packet.json",
+    "sha256": "fed0e1ff46d33afbf38f032e2ef39481fb23378b7ebef711301582d38fad61c1"
+  },
+  "project_imports": 0,
+  "public_proof_records_created": 0,
+  "remote_project": "/data1/yanruj/probata-resume-20261016-c978393b/swdb-project",
+  "resource_policy": {
+    "cap_bytes": 8589934592,
+    "frama_seconds": 210,
+    "output_budget_bytes": 1073741824,
+    "profile_seconds": 300,
+    "root_outer_seconds": 540,
+    "root_whole_seconds": 420,
+    "workers": 1
+  },
+  "reviewed_helpers_exact": [
+    "sha",
+    "pin",
+    "write",
+    "surface",
+    "linux_admission",
+    "consumer_closure"
+  ],
+  "root_admission_pending": true,
+  "root_command": {
+    "bytes": 73444,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-original-no-growth-generation-20261016/inert-c978393b-v1/root-command.json",
+    "sha256": "b39091ccbcec4c29a7be6f55a8344960cc6b68ed848b44cbaba780750c725e7e"
+  },
+  "root_kind": "t25-original-no-growth-generation-v1",
+  "runtime_sources": [
+    {
+      "name": "MemTyped.ml",
+      "sha256": "ad0d3c4e8e568a09d47bb658767e5ba476cc9e957f16b14981370642c5e235b5"
+    },
+    {
+      "name": "Cint.ml",
+      "sha256": "3b2a00bb65f4c785265c2295c323459e3dce66bb6c82e3d70ff3a659a3660156"
+    },
+    {
+      "name": "Factory.ml",
+      "sha256": "d2f4da6cb7b2f4a674880f4760680e84fe0a1c58ece95d0f2ff889b7902efcc5"
+    },
+    {
+      "name": "MemVar.ml",
+      "sha256": "43b8979a169ccfb7c6e7183970a8d3022d27d410487f139b397073f06a7476f6"
+    },
+    {
+      "name": "MemLoader.ml",
+      "sha256": "b59407d1220f7c0871bc556aaebf4748e9229053463881467ca6a3da851c9fe8"
+    },
+    {
+      "name": "Ctypes.ml",
+      "sha256": "a9f2a2f05e9e4e7ecabfd1324bff52ebd74f382e0db0989dba246a5ebfee8bec"
+    },
+    {
+      "name": "Wp_parameters.ml",
+      "sha256": "a4ace79d1262461ea14f73275db17eb332f76b265059fc238a6bc9538a81df2b"
+    },
+    {
+      "name": "ProverWhy3.ml",
+      "sha256": "18413bff579ac1557c0b5060a679d80d55cfce49099b9557a85ea8c66fe88526"
+    },
+    {
+      "name": "register.ml",
+      "sha256": "e4e0b524e4364f475f33fd618c542d4ddc86c2c35f8b6ba223ea704896bc019e"
+    },
+    {
+      "name": "Why3Provers.ml",
+      "sha256": "39da8a23d9f1fe8743579f9a15e9421ebcc8c1b699cce0a1a3443dde3bbf3746"
+    }
+  ],
+  "solver_proofs_requested": false,
+  "source_commit": "c978393b119a3614229a37f0f2c8ca2a097c750b",
+  "source_cpp_sha256": "1172e62dbff5076d25471285afcfa17927707dbe6fae121d9570109d39e62b57",
+  "source_package_count": 322,
+  "source_runtime_correspondence_proved": false,
+  "status": "INERT / UNREVIEWED / NOT EXECUTED",
+  "template": {
+    "bytes": 17710,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-original-no-growth-generation-20261016/entry-template.py",
+    "sha256": "189ee54191ba6419a9588e4de1d186c1d5ffe0e9905692fe05396fe17d9b589c"
+  },
+  "ticket_closure": false,
+  "wp_input_sha256": "aa223d8554e36fc8064f08b3bea3439358d266b4568a5a864a65955b94b1784a"
+}

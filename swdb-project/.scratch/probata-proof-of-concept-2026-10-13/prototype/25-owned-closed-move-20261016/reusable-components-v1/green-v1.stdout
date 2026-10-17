@@ -1,0 +1,17 @@
+{
+  "rows": [
+    {
+      "test": "test_reusable_components_bind_only_the_complete_unchanged_55_targets",
+      "passed": false,
+      "error": "pure reusable controls reject ctypes.dlopen",
+      "traceback": "Traceback (most recent call last):\n  File \"<stdin>\", line 14, in <module>\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_reallocation_reusable_components.py\", line 14, in test_reusable_components_bind_only_the_complete_unchanged_55_targets\n    result, files = packets.reusable_components(ARCHIVE)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_reallocation_closed_binding.py\", line 415, in reusable_components\n    'constructor': constructor.declaration(glue.CTOR),\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_reallocation_vcs.py\", line 694, in declaration\n    source = model.model_text(member)\n             ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_reallocation_model.py\", line 86, in model_text\n    source = std_models.model_text(original)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/std_models.py\", line 443, in model_text\n    definitions = _vector_unit(match) if match else None\n                  ^^^^^^^^^^^^^^^^^^^\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/std_models.py\", line 417, in _vector_unit\n    t = _element(v[len(\"std_vector_\"):])\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/std_models.py\", line 400, in _element\n    from swdb import c_lowering\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/c_lowering.py\", line 47, in <module>\n    from swdb import bounded_initialization, cpu_effects, std_models, stdlib_provenance, terminal_release, vector_ownership, wp_pointer_bounds\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/stdlib_provenance.py\", line 6, in <module>\n    import ctypes as C\n  File \"/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/ctypes/__init__.py\", line 472, in <module>\n    pythonapi = PyDLL(None)\n                ^^^^^^^^^^^\n  File \"/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/ctypes/__init__.py\", line 379, in __init__\n    self._handle = _dlopen(self._name, mode)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<stdin>\", line 6, in audit\nAssertionError: pure reusable controls reject ctypes.dlopen\n"
+    },
+    {
+      "test": "test_reusable_components_refuse_modified_missing_or_unbound_evidence",
+      "passed": true
+    }
+  ],
+  "attempts": [
+    "ctypes.dlopen"
+  ]
+}

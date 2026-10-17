@@ -1,0 +1,366 @@
+F.FF.F                                                                   [100%]
+=================================== FAILURES ===================================
+_ test_public_summary_and_model_preserve_explicit_method_selection[summary-named] _
+
+tmp_path = PosixPath('/private/tmp/probata-t25-explicit-method-selection-red-v5/test_public_summary_and_model_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10be71350>
+route = 'summary', selection = 'named'
+
+    @pytest.mark.parametrize('route, selection', [('summary', 'named'), ('summary', 'default'), ('summary', 'missing'),
+                                                 ('model', 'named'), ('model', 'default'), ('model', 'missing')])
+    def test_public_summary_and_model_preserve_explicit_method_selection(tmp_path, monkeypatch, route, selection):
+        # The observer never consults installed tools. These are explicit fixture
+        # method values only, supplied to the shared builder's no-discovery input.
+        template = yaml.safe_load((FIXTURES/'proof/methods/contract-fixture-1.yaml').read_bytes())
+        fixture_lineup = {row['tool']: row['version'] for row in template['lineup']
+                          if row['tool'] in {'frama-c-wp', 'alt-ergo', 'cvc5', 'z3'}}
+        monkeypatch.setenv('SWDB_DX100_SELECTOR_ACTUAL_LINEUP', json.dumps(fixture_lineup))
+        records, named = build_closed_source_fixture(tmp_path)
+        method = {'named': named, 'default': 'method.contract-fixture-1', 'missing': 'method.never-written'}[selection]
+        argv = ['prove', '--records', records, '--adapter', 'wp', '--runs-dir', tmp_path/'runs', '--format', 'json']
+        argv += ['--summary', CONTRACT_ID] if route == 'summary' else ['--model', 'std_vector_int_size']
+        if selection != 'default':
+            argv += ['--method-version', method]
+        environment = {**os.environ, 'PYTHONDONTWRITEBYTECODE': '1', 'SWDB_CLANG': 'none', 'SWDB_FRAMA_C': 'none',
+                       'SWDB_CBMC': 'none', 'SWDB_CRUX_LLVM': 'none'}
+        done = subprocess.run([sys.executable, '-B', str(FIXTURES/'proof/method_selection_observer.py'), *map(str, argv)],
+            cwd=REPO, env=environment, capture_output=True, text=True, timeout=60)
+        if selection == 'missing':
+            assert done.returncode == 1 and 'no method-version file' in done.stderr and method in done.stderr, done.stdout+done.stderr
+            assert not list((records/'proofs').glob('*.yaml'))
+            assert not (tmp_path/'runs').exists()
+            return
+        assert done.returncode == 0, done.stdout+done.stderr
+        record = yaml.safe_load((records/json.loads(done.stdout)['path']).read_bytes())
+        source = tmp_path/'library/methods'/(method.removeprefix('method.')+'.yaml')
+>       assert record['pins']['method_version'] == {'id': method, 'sha256': hashlib.sha256(source.read_bytes()).hexdigest()}
+E       AssertionError: assert {'id': 'metho...9b7b7de92b29'} == {'id': 'metho...e80c29535dc9'}
+E         
+E         Differing items:
+E         {'sha256': 'a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29'} != {'sha256': '04db257534cfb18bacd73f88f46e7cf2ed73748dd88f7d049eaae80c29535dc9'}
+E         {'id': 'method.contract-fixture-1'} != {'id': 'method.wp-vector-closed-source-v1'}
+E         Use -v to get more diff
+
+tests/test_summary_model_method_selection.py:43: AssertionError
+_ test_public_summary_and_model_preserve_explicit_method_selection[summary-missing] _
+
+tmp_path = PosixPath('/private/tmp/probata-t25-explicit-method-selection-red-v5/test_public_summary_and_model_2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10c23e360>
+route = 'summary', selection = 'missing'
+
+    @pytest.mark.parametrize('route, selection', [('summary', 'named'), ('summary', 'default'), ('summary', 'missing'),
+                                                 ('model', 'named'), ('model', 'default'), ('model', 'missing')])
+    def test_public_summary_and_model_preserve_explicit_method_selection(tmp_path, monkeypatch, route, selection):
+        # The observer never consults installed tools. These are explicit fixture
+        # method values only, supplied to the shared builder's no-discovery input.
+        template = yaml.safe_load((FIXTURES/'proof/methods/contract-fixture-1.yaml').read_bytes())
+        fixture_lineup = {row['tool']: row['version'] for row in template['lineup']
+                          if row['tool'] in {'frama-c-wp', 'alt-ergo', 'cvc5', 'z3'}}
+        monkeypatch.setenv('SWDB_DX100_SELECTOR_ACTUAL_LINEUP', json.dumps(fixture_lineup))
+        records, named = build_closed_source_fixture(tmp_path)
+        method = {'named': named, 'default': 'method.contract-fixture-1', 'missing': 'method.never-written'}[selection]
+        argv = ['prove', '--records', records, '--adapter', 'wp', '--runs-dir', tmp_path/'runs', '--format', 'json']
+        argv += ['--summary', CONTRACT_ID] if route == 'summary' else ['--model', 'std_vector_int_size']
+        if selection != 'default':
+            argv += ['--method-version', method]
+        environment = {**os.environ, 'PYTHONDONTWRITEBYTECODE': '1', 'SWDB_CLANG': 'none', 'SWDB_FRAMA_C': 'none',
+                       'SWDB_CBMC': 'none', 'SWDB_CRUX_LLVM': 'none'}
+        done = subprocess.run([sys.executable, '-B', str(FIXTURES/'proof/method_selection_observer.py'), *map(str, argv)],
+            cwd=REPO, env=environment, capture_output=True, text=True, timeout=60)
+        if selection == 'missing':
+>           assert done.returncode == 1 and 'no method-version file' in done.stderr and method in done.stderr, done.stdout+done.stderr
+E           AssertionError: {
+E               "record": {
+E                 "kind": "proof",
+E                 "schema_version": "0.4",
+E                 "id": "proof.contract.fixture_vector_closed_no_growth.20261016t205702z.5b367ce3",
+E                 "status": "draft",
+E                 "created": "2026-10-16",
+E                 "updated": "2026-10-16",
+E                 "provenance": [
+E                   {
+E                     "id": "prove",
+E                     "kind": "agent_run",
+E                     "description": "Written by swdb prove with the wp adapter.",
+E                     "uri": null
+E                   }
+E                 ],
+E                 "subject": {
+E                   "kind": "library_summary",
+E                   "id": "contract.fixture_vector_closed_no_growth"
+E                 },
+E                 "verdict": "not_proven",
+E                 "proof_setup_check": {
+E                   "check": {
+E                     "version": "1",
+E                     "sha256": "71dc2d3514c37274f7b46ca583e62cf9497a131ffa069a19ab727eb18359f646"
+E                   },
+E                   "verdict": "passed",
+E                   "method_version": {
+E                     "id": "method.contract-fixture-1",
+E                     "sha256": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29"
+E                   },
+E                   "hashes": {
+E                     "contract": "488708f1d78e138547e8617680c5250a9551e38fa41970df19d43eb393436816",
+E                     "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+E                     "run_plan": "5847e90307d9aca7b4d72058be3b0d391f98f8ac29cfb2e8b97bf750138bc3a5"
+E                   },
+E                   "runs": []
+E                 },
+E                 "failure_class": "unknown",
+E                 "settings": {
+E                   "tool": "test-method-selection-observer",
+E                   "flags": [],
+E                   "verifier_launched": false,
+E                   "selected_method": "method.contract-fixture-1",
+E                   "scientific_result": false
+E                 },
+E                 "pins": {
+E                   "code": {
+E                     "id": "contract.fixture_vector_closed_no_growth",
+E                     "sha256": "488708f1d78e138547e8617680c5250a9551e38fa41970df19d43eb393436816"
+E                   },
+E                   "contract": {
+E                     "id": "contract.fixture_vector_closed_no_growth",
+E                     "sha256": "488708f1d78e138547e8617680c5250a9551e38fa41970df19d43eb393436816"
+E                   },
+E                   "baseline_function": {
+E                     "not_applicable": "A library summary is proven on the entry's own code."
+E                   },
+E                   "reference_semantics": {
+E                     "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+E                   },
+E                   "proof_semantics": {
+E                     "not_applicable": "No proof-semantics version exists before ticket 27."
+E                   },
+E                   "method_version": {
+E                     "id": "method.contract-fixture-1",
+E                     "sha256": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29"
+E                   },
+E                   "summaries": [],
+E                   "minimum_bounds": {
+E                     "not_applicable": "No minimum-bounds version exists before ticket 33."
+E                   },
+E                   "predecessor_snapshot": {
+E                     "not_applicable": "A library summary has no predecessor."
+E                   },
+E                   "build_constants": []
+E                 },
+E                 "bounds": {
+E                   "threads": 1
+E                 },
+E                 "assumptions": [],
+E                 "job": {
+E                   "adapter": "wp",
+E                   "host": "mac",
+E                   "worker_core": "unpinned",
+E                   "wall_seconds": 0.004319,
+E                   "cpu_seconds": 0.004299,
+E                   "batch_load": {
+E                     "start": 6.616,
+E                     "end": 6.616
+E                   },
+E                   "peak_rss_bytes": 65126400,
+E                   "batch": "batch.proof.contract.fixture_vector_closed_no_growth.20261016t205702z.5b367ce3",
+E                   "position": 1
+E                 },
+E                 "evidence": {
+E                   "adapter_log": {
+E                     "path": "/private/tmp/probata-t25-explicit-method-selection-red-v5/test_public_summary_and_model_2/runs/proof.contract.fixture_vector_closed_no_growth.20261016t205702z.5b367ce3/adapter.log",
+E                     "sha256": "5bff1583f8d411048ac82a62eb98ee6f74ca0a9e48ee94441aaa60cdf14c2237"
+E                   }
+E                 },
+E                 "evidence_kind": "contract_fixture"
+E               },
+E               "path": "proofs/proof.contract.fixture_vector_closed_no_growth.20261016t205702z.5b367ce3.yaml"
+E             }
+E             
+E           assert (0 == 1)
+E            +  where 0 = CompletedProcess(args=['/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.venv/bin/python', '-B', '/Users/yanruj... },\n  "path": "proofs/proof.contract.fixture_vector_closed_no_growth.20261016t205702z.5b367ce3.yaml"\n}\n', stderr='').returncode
+
+tests/test_summary_model_method_selection.py:36: AssertionError
+_ test_public_summary_and_model_preserve_explicit_method_selection[model-named] _
+
+tmp_path = PosixPath('/private/tmp/probata-t25-explicit-method-selection-red-v5/test_public_summary_and_model_3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10bd69480>
+route = 'model', selection = 'named'
+
+    @pytest.mark.parametrize('route, selection', [('summary', 'named'), ('summary', 'default'), ('summary', 'missing'),
+                                                 ('model', 'named'), ('model', 'default'), ('model', 'missing')])
+    def test_public_summary_and_model_preserve_explicit_method_selection(tmp_path, monkeypatch, route, selection):
+        # The observer never consults installed tools. These are explicit fixture
+        # method values only, supplied to the shared builder's no-discovery input.
+        template = yaml.safe_load((FIXTURES/'proof/methods/contract-fixture-1.yaml').read_bytes())
+        fixture_lineup = {row['tool']: row['version'] for row in template['lineup']
+                          if row['tool'] in {'frama-c-wp', 'alt-ergo', 'cvc5', 'z3'}}
+        monkeypatch.setenv('SWDB_DX100_SELECTOR_ACTUAL_LINEUP', json.dumps(fixture_lineup))
+        records, named = build_closed_source_fixture(tmp_path)
+        method = {'named': named, 'default': 'method.contract-fixture-1', 'missing': 'method.never-written'}[selection]
+        argv = ['prove', '--records', records, '--adapter', 'wp', '--runs-dir', tmp_path/'runs', '--format', 'json']
+        argv += ['--summary', CONTRACT_ID] if route == 'summary' else ['--model', 'std_vector_int_size']
+        if selection != 'default':
+            argv += ['--method-version', method]
+        environment = {**os.environ, 'PYTHONDONTWRITEBYTECODE': '1', 'SWDB_CLANG': 'none', 'SWDB_FRAMA_C': 'none',
+                       'SWDB_CBMC': 'none', 'SWDB_CRUX_LLVM': 'none'}
+        done = subprocess.run([sys.executable, '-B', str(FIXTURES/'proof/method_selection_observer.py'), *map(str, argv)],
+            cwd=REPO, env=environment, capture_output=True, text=True, timeout=60)
+        if selection == 'missing':
+            assert done.returncode == 1 and 'no method-version file' in done.stderr and method in done.stderr, done.stdout+done.stderr
+            assert not list((records/'proofs').glob('*.yaml'))
+            assert not (tmp_path/'runs').exists()
+            return
+        assert done.returncode == 0, done.stdout+done.stderr
+        record = yaml.safe_load((records/json.loads(done.stdout)['path']).read_bytes())
+        source = tmp_path/'library/methods'/(method.removeprefix('method.')+'.yaml')
+>       assert record['pins']['method_version'] == {'id': method, 'sha256': hashlib.sha256(source.read_bytes()).hexdigest()}
+E       AssertionError: assert {'id': 'metho...9b7b7de92b29'} == {'id': 'metho...e80c29535dc9'}
+E         
+E         Differing items:
+E         {'sha256': 'a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29'} != {'sha256': '04db257534cfb18bacd73f88f46e7cf2ed73748dd88f7d049eaae80c29535dc9'}
+E         {'id': 'method.contract-fixture-1'} != {'id': 'method.wp-vector-closed-source-v1'}
+E         Use -v to get more diff
+
+tests/test_summary_model_method_selection.py:43: AssertionError
+_ test_public_summary_and_model_preserve_explicit_method_selection[model-missing] _
+
+tmp_path = PosixPath('/private/tmp/probata-t25-explicit-method-selection-red-v5/test_public_summary_and_model_5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10c1e6150>
+route = 'model', selection = 'missing'
+
+    @pytest.mark.parametrize('route, selection', [('summary', 'named'), ('summary', 'default'), ('summary', 'missing'),
+                                                 ('model', 'named'), ('model', 'default'), ('model', 'missing')])
+    def test_public_summary_and_model_preserve_explicit_method_selection(tmp_path, monkeypatch, route, selection):
+        # The observer never consults installed tools. These are explicit fixture
+        # method values only, supplied to the shared builder's no-discovery input.
+        template = yaml.safe_load((FIXTURES/'proof/methods/contract-fixture-1.yaml').read_bytes())
+        fixture_lineup = {row['tool']: row['version'] for row in template['lineup']
+                          if row['tool'] in {'frama-c-wp', 'alt-ergo', 'cvc5', 'z3'}}
+        monkeypatch.setenv('SWDB_DX100_SELECTOR_ACTUAL_LINEUP', json.dumps(fixture_lineup))
+        records, named = build_closed_source_fixture(tmp_path)
+        method = {'named': named, 'default': 'method.contract-fixture-1', 'missing': 'method.never-written'}[selection]
+        argv = ['prove', '--records', records, '--adapter', 'wp', '--runs-dir', tmp_path/'runs', '--format', 'json']
+        argv += ['--summary', CONTRACT_ID] if route == 'summary' else ['--model', 'std_vector_int_size']
+        if selection != 'default':
+            argv += ['--method-version', method]
+        environment = {**os.environ, 'PYTHONDONTWRITEBYTECODE': '1', 'SWDB_CLANG': 'none', 'SWDB_FRAMA_C': 'none',
+                       'SWDB_CBMC': 'none', 'SWDB_CRUX_LLVM': 'none'}
+        done = subprocess.run([sys.executable, '-B', str(FIXTURES/'proof/method_selection_observer.py'), *map(str, argv)],
+            cwd=REPO, env=environment, capture_output=True, text=True, timeout=60)
+        if selection == 'missing':
+>           assert done.returncode == 1 and 'no method-version file' in done.stderr and method in done.stderr, done.stdout+done.stderr
+E           AssertionError: {
+E               "record": {
+E                 "kind": "proof",
+E                 "schema_version": "0.4",
+E                 "id": "proof.model.std_vector_int_size.20261016t205704z.00cb309a",
+E                 "status": "draft",
+E                 "created": "2026-10-16",
+E                 "updated": "2026-10-16",
+E                 "provenance": [
+E                   {
+E                     "id": "prove",
+E                     "kind": "agent_run",
+E                     "description": "Written by swdb prove with the wp adapter.",
+E                     "uri": null
+E                   }
+E                 ],
+E                 "subject": {
+E                   "kind": "c_model",
+E                   "id": "std_vector_int_size"
+E                 },
+E                 "verdict": "not_proven",
+E                 "proof_setup_check": {
+E                   "check": {
+E                     "version": "1",
+E                     "sha256": "71dc2d3514c37274f7b46ca583e62cf9497a131ffa069a19ab727eb18359f646"
+E                   },
+E                   "verdict": "passed",
+E                   "method_version": {
+E                     "id": "method.contract-fixture-1",
+E                     "sha256": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29"
+E                   },
+E                   "hashes": {
+E                     "contract": "4842b64d109b55b6f26f3261845316b4a9d32c88a7aa01186c343f9ed7e03329",
+E                     "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+E                     "run_plan": "a97c36e9c7262e9d84719866249666dee71b00430b936f5f99db94157b15060b"
+E                   },
+E                   "runs": []
+E                 },
+E                 "failure_class": "unknown",
+E                 "settings": {
+E                   "tool": "test-method-selection-observer",
+E                   "flags": [],
+E                   "verifier_launched": false,
+E                   "selected_method": "method.contract-fixture-1",
+E                   "scientific_result": false
+E                 },
+E                 "pins": {
+E                   "code": {
+E                     "id": "std_vector_int_size",
+E                     "sha256": "4842b64d109b55b6f26f3261845316b4a9d32c88a7aa01186c343f9ed7e03329"
+E                   },
+E                   "contract": {
+E                     "id": "std_vector_int_size",
+E                     "sha256": "4842b64d109b55b6f26f3261845316b4a9d32c88a7aa01186c343f9ed7e03329"
+E                   },
+E                   "baseline_function": {
+E                     "not_applicable": "A C model is proven on its own text."
+E                   },
+E                   "reference_semantics": {
+E                     "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+E                   },
+E                   "proof_semantics": {
+E                     "not_applicable": "A C model makes no DX100 call."
+E                   },
+E                   "method_version": {
+E                     "id": "method.contract-fixture-1",
+E                     "sha256": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29"
+E                   },
+E                   "summaries": [],
+E                   "minimum_bounds": {
+E                     "not_applicable": "A C model has no minimum bounds."
+E                   },
+E                   "predecessor_snapshot": {
+E                     "not_applicable": "A C model has no predecessor."
+E                   },
+E                   "build_constants": []
+E                 },
+E                 "bounds": {
+E                   "threads": 1
+E                 },
+E                 "assumptions": [],
+E                 "job": {
+E                   "adapter": "wp",
+E                   "host": "mac",
+E                   "worker_core": "unpinned",
+E                   "wall_seconds": 0.00536,
+E                   "cpu_seconds": 0.00536,
+E                   "batch_load": {
+E                     "start": 6.616,
+E                     "end": 6.616
+E                   },
+E                   "peak_rss_bytes": 64847872,
+E                   "batch": "batch.proof.model.std_vector_int_size.20261016t205704z.00cb309a",
+E                   "position": 1
+E                 },
+E                 "evidence": {
+E                   "adapter_log": {
+E                     "path": "/private/tmp/probata-t25-explicit-method-selection-red-v5/test_public_summary_and_model_5/runs/proof.model.std_vector_int_size.20261016t205704z.00cb309a/adapter.log",
+E                     "sha256": "5bff1583f8d411048ac82a62eb98ee6f74ca0a9e48ee94441aaa60cdf14c2237"
+E                   }
+E                 },
+E                 "evidence_kind": "contract_fixture"
+E               },
+E               "path": "proofs/proof.model.std_vector_int_size.20261016t205704z.00cb309a.yaml"
+E             }
+E             
+E           assert (0 == 1)
+E            +  where 0 = CompletedProcess(args=['/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.venv/bin/python', '-B', '/Users/yanruj...act_fixture"\n  },\n  "path": "proofs/proof.model.std_vector_int_size.20261016t205704z.00cb309a.yaml"\n}\n', stderr='').returncode
+
+tests/test_summary_model_method_selection.py:36: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_summary_model_method_selection.py::test_public_summary_and_model_preserve_explicit_method_selection[summary-named]
+FAILED tests/test_summary_model_method_selection.py::test_public_summary_and_model_preserve_explicit_method_selection[summary-missing]
+FAILED tests/test_summary_model_method_selection.py::test_public_summary_and_model_preserve_explicit_method_selection[model-named]
+FAILED tests/test_summary_model_method_selection.py::test_public_summary_and_model_preserve_explicit_method_selection[model-missing]
+4 failed, 2 passed in 3.71s

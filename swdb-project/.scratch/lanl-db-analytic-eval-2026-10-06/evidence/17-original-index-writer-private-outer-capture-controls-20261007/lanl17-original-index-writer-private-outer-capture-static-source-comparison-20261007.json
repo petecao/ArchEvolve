@@ -1,0 +1,401 @@
+{
+  "format": "swdb.lanl17-private-outer-capture-static-source-comparison.v1",
+  "state": "SOURCE_ONLY_NOT_RUN",
+  "pins": {
+    "new_capture": {
+      "path": "/private/tmp/lanl17_remote_original_index_writer_private_outer_capture_20261007.py",
+      "bytes": 34658,
+      "sha256": "59c06dd5ea606414827a85d6e27f4aff1bc381827624590b2449415198399544"
+    },
+    "unchanged_envelope": {
+      "path": "/private/tmp/lanl17_remote_original_index_writer_privacy_envelope_20261007.py",
+      "bytes": 38790,
+      "sha256": "1ee5ffbdf1ef322cfd5bfec4b6e402c29d23c776e855f01d25208ebbece0fcfc"
+    },
+    "envelope_parent_review": {
+      "path": "/private/tmp/lanl17-original-index-writer-privacy-envelope-parent-review-20261007.json",
+      "bytes": 7051,
+      "sha256": "70beddcfeb95e3b612476b358021581b288b031321be01b2e95c6dfd4f3c383a"
+    },
+    "existing_linux_cleanup_receipt": {
+      "path": "/private/tmp/lanl17-cleanup60-helper-linux-actual-20261007-a4.json",
+      "bytes": 6807,
+      "sha256": "08ff2b2d10045b70ddbdf64714f5f7bf1223738ff511ec200c11fba14f2182e6"
+    }
+  },
+  "original_True_seals": {
+    "envelope_parent_review": "4a1023632f0db9da20860d1ade13efac5503bea6eabd0854a1432208cfb4a443",
+    "existing_linux_cleanup_receipt": "63ded110c4f3e18e8f105aa54f87db2daef24f74a9fe6cb44300c091ebd6b296"
+  },
+  "copied_functions_classes": [
+    {
+      "name": "Refused",
+      "reviewed_envelope_lines": [
+        53,
+        54
+      ],
+      "new_capture_lines": [
+        74,
+        75
+      ],
+      "AST_equal": true
+    },
+    {
+      "name": "require",
+      "reviewed_envelope_lines": [
+        56,
+        58
+      ],
+      "new_capture_lines": [
+        77,
+        79
+      ],
+      "AST_equal": true
+    },
+    {
+      "name": "sha",
+      "reviewed_envelope_lines": [
+        60,
+        61
+      ],
+      "new_capture_lines": [
+        81,
+        82
+      ],
+      "AST_equal": true
+    },
+    {
+      "name": "digest",
+      "reviewed_envelope_lines": [
+        63,
+        66
+      ],
+      "new_capture_lines": [
+        84,
+        87
+      ],
+      "AST_equal": true
+    },
+    {
+      "name": "exact",
+      "reviewed_envelope_lines": [
+        68,
+        70
+      ],
+      "new_capture_lines": [
+        89,
+        91
+      ],
+      "AST_equal": true
+    },
+    {
+      "name": "full_hash",
+      "reviewed_envelope_lines": [
+        72,
+        75
+      ],
+      "new_capture_lines": [
+        93,
+        96
+      ],
+      "AST_equal": true
+    },
+    {
+      "name": "strict_json",
+      "reviewed_envelope_lines": [
+        77,
+        86
+      ],
+      "new_capture_lines": [
+        98,
+        107
+      ],
+      "AST_equal": true
+    },
+    {
+      "name": "remaining",
+      "reviewed_envelope_lines": [
+        114,
+        117
+      ],
+      "new_capture_lines": [
+        109,
+        112
+      ],
+      "AST_equal": true
+    },
+    {
+      "name": "checked_path",
+      "reviewed_envelope_lines": [
+        119,
+        130
+      ],
+      "new_capture_lines": [
+        114,
+        125
+      ],
+      "AST_equal": true
+    },
+    {
+      "name": "stamp",
+      "reviewed_envelope_lines": [
+        132,
+        135
+      ],
+      "new_capture_lines": [
+        127,
+        130
+      ],
+      "AST_equal": true
+    },
+    {
+      "name": "file_pin",
+      "reviewed_envelope_lines": [
+        137,
+        142
+      ],
+      "new_capture_lines": [
+        132,
+        137
+      ],
+      "AST_equal": true
+    },
+    {
+      "name": "returned_bytes",
+      "reviewed_envelope_lines": [
+        144,
+        173
+      ],
+      "new_capture_lines": [
+        139,
+        168
+      ],
+      "AST_equal": true
+    },
+    {
+      "name": "fresh_output",
+      "reviewed_envelope_lines": [
+        205,
+        215
+      ],
+      "new_capture_lines": [
+        170,
+        180
+      ],
+      "AST_equal": true
+    },
+    {
+      "name": "original_seal",
+      "reviewed_envelope_lines": [
+        217,
+        223
+      ],
+      "new_capture_lines": [
+        182,
+        188
+      ],
+      "AST_equal": true
+    },
+    {
+      "name": "stop_group",
+      "reviewed_envelope_lines": [
+        249,
+        272
+      ],
+      "new_capture_lines": [
+        190,
+        213
+      ],
+      "AST_equal": true
+    },
+    {
+      "name": "own_processes",
+      "reviewed_envelope_lines": [
+        274,
+        293
+      ],
+      "new_capture_lines": [
+        215,
+        234
+      ],
+      "AST_equal": true
+    },
+    {
+      "name": "cleanup_owned",
+      "reviewed_envelope_lines": [
+        295,
+        319
+      ],
+      "new_capture_lines": [
+        236,
+        260
+      ],
+      "AST_equal": true
+    },
+    {
+      "name": "enable_subreaper",
+      "reviewed_envelope_lines": [
+        321,
+        323
+      ],
+      "new_capture_lines": [
+        262,
+        264
+      ],
+      "AST_equal": true
+    },
+    {
+      "name": "Interruption",
+      "reviewed_envelope_lines": [
+        340,
+        342
+      ],
+      "new_capture_lines": [
+        266,
+        268
+      ],
+      "AST_equal": true
+    },
+    {
+      "name": "PrivateParser",
+      "reviewed_envelope_lines": [
+        344,
+        346
+      ],
+      "new_capture_lines": [
+        270,
+        272
+      ],
+      "AST_equal": true
+    },
+    {
+      "name": "private_path",
+      "reviewed_envelope_lines": [
+        349,
+        353
+      ],
+      "new_capture_lines": [
+        274,
+        278
+      ],
+      "AST_equal": true
+    },
+    {
+      "name": "pinned_control",
+      "reviewed_envelope_lines": [
+        356,
+        360
+      ],
+      "new_capture_lines": [
+        280,
+        284
+      ],
+      "AST_equal": true
+    },
+    {
+      "name": "executable_pin",
+      "reviewed_envelope_lines": [
+        363,
+        383
+      ],
+      "new_capture_lines": [
+        286,
+        306
+      ],
+      "AST_equal": true
+    },
+    {
+      "name": "bundle_pins",
+      "reviewed_envelope_lines": [
+        386,
+        407
+      ],
+      "new_capture_lines": [
+        308,
+        329
+      ],
+      "AST_equal": true
+    },
+    {
+      "name": "private_file",
+      "reviewed_envelope_lines": [
+        410,
+        417
+      ],
+      "new_capture_lines": [
+        331,
+        338
+      ],
+      "AST_equal": true
+    },
+    {
+      "name": "stream_pin",
+      "reviewed_envelope_lines": [
+        420,
+        438
+      ],
+      "new_capture_lines": [
+        340,
+        358
+      ],
+      "AST_equal": true
+    },
+    {
+      "name": "bounded_print",
+      "reviewed_envelope_lines": [
+        441,
+        444
+      ],
+      "new_capture_lines": [
+        360,
+        363
+      ],
+      "AST_equal": true
+    }
+  ],
+  "copied_constant_Assign_names": [
+    "C",
+    "F6",
+    "HELPER",
+    "AUDITOR",
+    "COLLECTOR",
+    "CIDS",
+    "MAX_CATALOG_FILE",
+    "MAX_CATALOG_TOTAL",
+    "MAX_METADATA",
+    "MAX_RECORDS",
+    "MAX_DEADLINE",
+    "STAMP_KEYS",
+    "INDEX_WRITER",
+    "INDEX_WRITER_BYTES",
+    "AUTHOR_SHA256",
+    "AUTHOR_BYTES",
+    "CLEANUP_SHA256",
+    "CLEANUP_BYTES",
+    "PROCESSES_SHA256",
+    "STAGED_WRITER",
+    "LOG_FILE_CAP",
+    "RECEIPT_CAP",
+    "SIGNALS",
+    "FORBIDDEN"
+  ],
+  "copied_constant_Assign_AST_equal": true,
+  "unchanged_inner_flag_names_order": [
+    "request",
+    "request-sha256",
+    "request-author-source",
+    "request-author-source-sha256",
+    "parent-review-sha256",
+    "output-directory",
+    "log-directory",
+    "envelope-sha256",
+    "cleanup-helper-source",
+    "python-executable",
+    "python-executable-sha256",
+    "timeout-executable",
+    "timeout-executable-sha256",
+    "timeout-family"
+  ],
+  "generated_JSON_terminator_AST_codepoint": 10,
+  "scope": "Stdlib source-byte reading, source AST comparison and original metadata seal verification only. No target import/compilation, copied callable/main/test/actual input/Git/SSH execution."
+}

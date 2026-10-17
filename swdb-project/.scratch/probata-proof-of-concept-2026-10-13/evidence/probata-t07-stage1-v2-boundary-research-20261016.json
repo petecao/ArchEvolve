@@ -1,0 +1,216 @@
+{
+  "created": "2026-10-16 00:41 ET",
+  "scope": "passive V2 generation/source research; no source edits or new tool runs",
+  "source_commit": "c9b4ef08c7626e46ae30b6719d5367280ed953b7",
+  "facts": {
+    "goals": 245,
+    "properties": 352,
+    "ordinary_goals": 212,
+    "smoke_goals": 33,
+    "ordinary_function_set_matches_19_helpers": true,
+    "bodyless_call_smokes": 5,
+    "rte_initialization_properties": 31,
+    "normalized_noncomment_indirect_call_spelling_matches": 0
+  },
+  "supported_source_proposal": "Delete only eight pointer_comparable conjuncts; retain live endpoints/common base/order/offset/span/valid/init premises",
+  "warning_boundaries": {
+    "pointer_comparable": "blocking unsupported semantic builtin; remove redundant predicate, never suppress warning or axiomatize it",
+    "unaligned_pointer": "not automatically inapplicable; typed-pointer dereferences exist and WP skips this class; proper typed-object alignment remains source/caller correspondence boundary",
+    "invalid_function_pointer": "generic WPRTE capability warning; finite TU contains only direct named calls, no function-pointer values/calls; scope-specific inapplicability only",
+    "pedantic_from": "retain and review imprecision warning; not permission to omit any generated goal"
+  },
+  "external_smoke_contexts": [
+    {
+      "goal": {
+        "goal": "typed_swdb_new_NodeID_array_wp_smoke_dead_call_s51",
+        "property": "swdb_new_NodeID_array_wp_smoke_dead_call_s51",
+        "function": "swdb_new_NodeID_array",
+        "line": 272,
+        "smoke": true,
+        "passed": true,
+        "targets": [],
+        "results": []
+      },
+      "property_records": [
+        {
+          "property": "swdb_new_NodeID_array_wp_smoke_dead_call_s51",
+          "function": "swdb_new_NodeID_array",
+          "kind": "other",
+          "emitter": "",
+          "origin": null,
+          "dependencies": [],
+          "extern": false,
+          "generated_smoke_failure": false,
+          "line": 272,
+          "description": "wp_smoke_dead_call"
+        }
+      ],
+      "frozen_c9_call_context": {
+        "caller": "QueueBuffer_NodeID_QueueBuffer",
+        "line": 272
+      }
+    },
+    {
+      "goal": {
+        "goal": "typed_swdb_delete_NodeID_array_wp_smoke_dead_call_s54",
+        "property": "swdb_delete_NodeID_array_wp_smoke_dead_call_s54",
+        "function": "swdb_delete_NodeID_array",
+        "line": 279,
+        "smoke": true,
+        "passed": true,
+        "targets": [],
+        "results": []
+      },
+      "property_records": [
+        {
+          "property": "swdb_delete_NodeID_array_wp_smoke_dead_call_s54",
+          "function": "swdb_delete_NodeID_array",
+          "kind": "other",
+          "emitter": "",
+          "origin": null,
+          "dependencies": [],
+          "extern": false,
+          "generated_smoke_failure": false,
+          "line": 279,
+          "description": "wp_smoke_dead_call"
+        }
+      ],
+      "frozen_c9_call_context": {
+        "caller": "QueueBuffer_NodeID_destroy",
+        "line": 279
+      }
+    },
+    {
+      "goal": {
+        "goal": "typed_std_copy_NodeID_wp_smoke_dead_call_s59",
+        "property": "std_copy_NodeID_wp_smoke_dead_call_s59",
+        "function": "std_copy_NodeID",
+        "line": 299,
+        "smoke": true,
+        "passed": true,
+        "targets": [],
+        "results": []
+      },
+      "property_records": [
+        {
+          "property": "std_copy_NodeID_wp_smoke_dead_call_s59",
+          "function": "std_copy_NodeID",
+          "kind": "other",
+          "emitter": "",
+          "origin": null,
+          "dependencies": [],
+          "extern": false,
+          "generated_smoke_failure": false,
+          "line": 299,
+          "description": "wp_smoke_dead_call"
+        }
+      ],
+      "frozen_c9_call_context": {
+        "caller": "QueueBuffer_NodeID_flush",
+        "line": 299
+      }
+    },
+    {
+      "goal": {
+        "goal": "typed_sync_bool_compare_and_swap_NodeID_wp_smoke_dead_call_s1",
+        "property": "sync_bool_compare_and_swap_NodeID_wp_smoke_dead_call_s1",
+        "function": "__sync_bool_compare_and_swap_NodeID",
+        "line": 162,
+        "smoke": true,
+        "passed": true,
+        "targets": [],
+        "results": []
+      },
+      "property_records": [
+        {
+          "property": "sync_bool_compare_and_swap_NodeID_wp_smoke_dead_call_s1",
+          "function": "__sync_bool_compare_and_swap_NodeID",
+          "kind": "other",
+          "emitter": "",
+          "origin": null,
+          "dependencies": [],
+          "extern": false,
+          "generated_smoke_failure": false,
+          "line": 162,
+          "description": "wp_smoke_dead_call"
+        }
+      ],
+      "frozen_c9_call_context": {
+        "caller": "compare_and_swap",
+        "line": 162
+      }
+    },
+    {
+      "goal": {
+        "goal": "typed_sync_fetch_and_add_size_t_wp_smoke_dead_call_s4",
+        "property": "sync_fetch_and_add_size_t_wp_smoke_dead_call_s4",
+        "function": "__sync_fetch_and_add_size_t",
+        "line": 173,
+        "smoke": true,
+        "passed": true,
+        "targets": [],
+        "results": []
+      },
+      "property_records": [
+        {
+          "property": "sync_fetch_and_add_size_t_wp_smoke_dead_call_s4",
+          "function": "__sync_fetch_and_add_size_t",
+          "kind": "other",
+          "emitter": "",
+          "origin": null,
+          "dependencies": [],
+          "extern": false,
+          "generated_smoke_failure": false,
+          "line": 173,
+          "description": "wp_smoke_dead_call"
+        }
+      ],
+      "frozen_c9_call_context": {
+        "caller": "fetch_and_add_size_t",
+        "line": 173
+      }
+    }
+  ],
+  "pins": [
+    {
+      "path": "/private/tmp/probata-resume-t07-source-domains/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/gapbs_models.h",
+      "sha256": "62c482f54d2ed6771d0f91bbff5c807226ee2b9f5d53c9a2047f4dc63424bfd2"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-source-domains/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/tdstep_standin.c",
+      "sha256": "3cee3cb2062bbd07d7f1c42b769d967ae739824ef0cf5cc97ff7a534fc12a9b6"
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-stage1-v2-c9b4ef08-20261016/component/frama-generation.log",
+      "sha256": "5ecdd4045d3b7b884f80bb9661b3a3ba4c0fd58baabe10e09a53eebceeca3345"
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-stage1-v2-c9b4ef08-20261016/component/normalized.c",
+      "sha256": "d36d5c716b3746b5f83f3708a8642d9d324457958b1dfa4d7434a0ce2a1e2a63"
+    },
+    {
+      "path": "/private/tmp/probata-t07-helper-stage1-v2-c9b4ef08-20261016/component/wp-inventory.json",
+      "sha256": "515713ba83466a4a7765702f51729e95a6ad601db4a3be0b2eeb612fff95de34"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/MemTyped.ml",
+      "sha256": "ad0d3c4e8e568a09d47bb658767e5ba476cc9e957f16b14981370642c5e235b5"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/LogicSemantics.ml",
+      "sha256": "7612c77530d4fe9bb89ec0b28460685f801b10e9b32fc9bfa479548d1b6e9e03"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/wpRTE.ml",
+      "sha256": "965ef16094a23b6ce6efd849820ee818843d94d079bbe9e00c02374084d4c030"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c/kernel/kernel_services/ast_queries/logic_utils.ml",
+      "sha256": "2cbe4499acf4a4609316927d8825fa6d3795a14e5432585e0b4b111f87487171"
+    },
+    {
+      "path": "/private/tmp/probata-t07-pointer-domain-replacement-proposal-20261016.py",
+      "sha256": "5165da8a951b983f233b1259d3e319788b5ab6cc7939e8fe2cac834fe0f9fc03"
+    }
+  ]
+}

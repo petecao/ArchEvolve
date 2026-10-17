@@ -1,0 +1,149 @@
+--- /private/tmp/lanl_consumed_detached_source_guard_r7_20261008_a1.py
++++ /private/tmp/lanl_consumed_detached_source_guard_r9_20261008_a1.py
+@@ -742,6 +742,8 @@
+         self.output = None
+         self.native_git_stat = None
+         self.passive_stats = {}
++        # Unread removal-initial metadata is not a byte-verified passive cache.
++        self.initial_tracked_metadata_stats = {}
+         self.passive_hashes = {}
+         self.reference_hits = {}
+         self.directory_stats = {}
+@@ -752,7 +754,8 @@
+         self.facts = {'format': 'swdb.consumed-detached-source-guard.v1',
+                       'canonical_ensure_ascii': True, 'started_at': now(),
+                       'remove_requested': args.remove, 'selected_rows': args.select,
+-                      'removed_rows': [], 'failure': None, 'admitted': False,
++                      'removed_rows': [], 'pre_remove_full_byte_checks': {},
++                      'failure': None, 'admitted': False,
+                       'historical_references_retain_original_bytes': True,
+                       'capacity_gates_scientific_caps_provider_auth_raw_refs_objects_unchanged': True,
+                       'inspection_limits': LIMITS, 'external_processes_killed': False,
+@@ -996,7 +999,8 @@
+         return {'expected_primary': expected, 'C': C, 'F6': F6,
+                 'retained_refs_sha256': sha(refs), 'Python_blob_entries_exact_C': 185}
+ 
+-    def tree(self, path, expected_head):
++    def tree(self, path, expected_head, hash_regular_bytes=True):
++        require(type(hash_regular_bytes) is bool, 'private_tracked_byte_mode_required')
+         self.path(path, directory=True)
+         require(self.text_git(path, 'rev-parse', 'HEAD') == expected_head,
+                 'candidate_HEAD_changed')
+@@ -1012,6 +1016,7 @@
+         total = 0
+         allocated = 0
+         inventory = []
++        stat_inventory = []
+         for row in rows:
+             meta, name = row.split(b'\t', 1)
+             mode, kind, oid = meta.decode().split()
+@@ -1031,17 +1036,38 @@
+                 data = os.readlink(p).encode()
+                 require(stamp(p.lstat()) == stamp(before), 'tracked_symlink_changed')
+                 self.symlink_stats[str(p)] = {'stat':stamp(before),'link':os.readlink(p)}
+-            else:
++            elif hash_regular_bytes:
+                 data, got = self.read(p)
+                 require(tracked_mode_equivalent(stat.S_IMODE(before.st_mode), mode,
+                                                 self.private_ancestor(p)),
+                         'tracked_permission_mode_changed')
+                 require(got == stamp(before), 'tracked_identity_changed')
+-            actual_oid = hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()
+-            require(actual_oid == oid, 'tracked_source_bytes_changed')
+-            total += len(data)
++            else:
++                # Snapshot exact physical metadata now; regular bytes remain unread
++                # until this same row's full pre-remove SHA1-vs-Git-blob check.
++                unused, observed = self.path(p)
++                require(stamp(observed) == stamp(before), 'tracked_metadata_identity_changed')
++                require(before.st_nlink == 1 and before.st_size <= LIMITS['one_file'],
++                        'tracked_metadata_link_or_size_limit')
++                require(tracked_mode_equivalent(stat.S_IMODE(before.st_mode), mode,
++                                                self.private_ancestor(p)),
++                        'tracked_permission_mode_changed')
++                require(stamp(p.lstat()) == stamp(before), 'tracked_metadata_identity_changed')
++                witness = {**stamp(before), 'allocated_bytes': before.st_blocks*512}
++                if str(p) in self.initial_tracked_metadata_stats:
++                    require(self.initial_tracked_metadata_stats[str(p)] == witness,
++                            'initial_tracked_metadata_changed')
++                self.initial_tracked_metadata_stats[str(p)] = witness
++            if mode == '120000' or hash_regular_bytes:
++                actual_oid = hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()
++                require(actual_oid == oid, 'tracked_source_bytes_changed')
++                total += len(data)
++                inventory.append([mode, oid, str(rel), sha(data)])
++            else:
++                total += before.st_size
+             allocated += before.st_blocks*512
+-            inventory.append([mode, oid, str(rel), sha(data)])
++            stat_inventory.append([mode, oid, str(rel),
++                                   {**stamp(before), 'allocated_bytes': before.st_blocks*512}])
+         # Detached worktree registration/git-file is also required; no embedded repositories.
+         gd, _ = self.read(path/'.git', 4096)
+         require(gd.startswith(b'gitdir: '+str(PRIMARY/'.git/worktrees').encode()+b'/') and
+@@ -1069,7 +1095,9 @@
+         return {'head': expected_head, 'tree': self.text_git(path, 'rev-parse', 'HEAD^{tree}'),
+                 'tracked_entries': len(rows), 'tracked_logical_bytes': total,
+                 'tracked_allocated_bytes_observed': allocated,
+-                'tracked_mode_blob_source_inventory_sha256': sha(canonical(inventory)),
++                'tracked_mode_blob_source_inventory_sha256': sha(canonical(inventory)) if hash_regular_bytes else None,
++                'tracked_stat_inventory_sha256': sha(canonical(stat_inventory)),
++                'regular_bytes_verified': hash_regular_bytes,
+                 'gitfile_sha256': sha(gd), 'directory_stat': stamp(path.lstat()),
+                 'retained_objects': len(ids), 'detached_clean_ignored0_untracked0': True}
+ 
+@@ -1479,6 +1507,14 @@
+         self.privacy_gate()
+         def removed(path):
+             return any(inside(path,BASE/name) for name in self.facts['removed_rows'])
++        for path,expected in self.initial_tracked_metadata_stats.items():
++            if removed(path):
++                continue
++            self.left(); self.stat_checks += 1
++            require(self.stat_checks <= LIMITS['stat_checks'], 'stable_stat_check_limit')
++            s = P(path).lstat()
++            require({**stamp(s), 'allocated_bytes': s.st_blocks*512} == expected,
++                    'initial_tracked_metadata_inventory_changed')
+         for path,expected in self.passive_stats.items():
+             if removed(path):
+                 continue
+@@ -1514,9 +1550,18 @@
+         self.privacy_gate()
+         leases = self.leases()
+         self.retain_git(); self.protect(); self.stable_inventory()
+-        current = self.tree(BASE/name,ROWS[name]['head'])
+-        require(current == self.baseline[name], 'pre_remove_checkout_changed')
+-        self.process_references([name])
++        current = self.tree(BASE/name,ROWS[name]['head'],hash_regular_bytes=True)
++        baseline = self.baseline[name]
++        require(self.args.remove is True and baseline['regular_bytes_verified'] is False
++                and baseline['tracked_mode_blob_source_inventory_sha256'] is None
++                and current['regular_bytes_verified'] is True
++                and re.fullmatch('[0-9a-f]{64}',current['tracked_mode_blob_source_inventory_sha256']),
++                'full_pre_remove_regular_byte_check_required')
++        byte_result_fields = ('regular_bytes_verified', 'tracked_mode_blob_source_inventory_sha256')
++        require({k:v for k,v in current.items() if k not in byte_result_fields}
++                == {k:v for k,v in baseline.items() if k not in byte_result_fields},
++                'pre_remove_checkout_changed')
++        self.facts['pre_remove_full_byte_checks'][name] = current
+         later = self.leases()
+         require({k:v['sha256'] for k,v in later.items()}=={k:v['sha256'] for k,v in leases.items()},
+                 'released_lease_generation_changed_during_check')
+@@ -1530,7 +1575,8 @@
+         leases = self.leases()
+         sources = self.retain_git()
+         self.protect()
+-        trees = {p.name: self.tree(p, ROWS[p.name]['head']) for p in self.selected if p.name not in self.facts['removed_rows']}
++        trees = {p.name: self.tree(p, ROWS[p.name]['head'],hash_regular_bytes=not self.args.remove)
++                 for p in self.selected if p.name not in self.facts['removed_rows']}
+         if compare:
+             for k, v in trees.items():
+                 require(v == self.baseline[k], 'pre_remove_checkout_changed')
+@@ -1663,7 +1709,6 @@
+             self.current_removal = None
+             self.retain_git()
+             self.protect()
+-            self.stable_inventory()
+         self.leases()
+         self.retain_git()
+         self.protect()

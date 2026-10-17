@@ -1,0 +1,33 @@
+{
+  "actual_execution_admitted": false,
+  "canonical": {
+    "bytes": 14668,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-typed-allocating-payload-20261016/canonical-manifest-v1.json",
+    "sha256": "1e0a483a38bc28bfc090680d6cdacb3582a161bac02dd9746bd80661513b3b15"
+  },
+  "date": "2026-10-16 ET",
+  "kind": "typed-allocating-payload-source-v1",
+  "preparation": {
+    "bytes": 15345,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-typed-allocating-payload-20261016/preparation-v1.json",
+    "sha256": "fbc90f9f1923467b72ef519f406215b764ea12b924da3f236de6a9782c6b6024"
+  },
+  "source_and_tests": [
+    {
+      "bytes": 39511,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_allocating_payload.py",
+      "sha256": "b40ed5e0130bf52750c69484d72a3326dff9e9bd39a7b3f1e243f09489b1159f"
+    },
+    {
+      "bytes": 8100,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_typed_payload.mlw",
+      "sha256": "89c5564a6f07169ceda50b2685ad513dc28c6c5e2778d5f396797d62b7905f5e"
+    },
+    {
+      "bytes": 12202,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_allocating_payload.py",
+      "sha256": "d167d7bdfc95bc2133d20d7a751b3396d32706a0b7184160468a334e1a9c5f04"
+    }
+  ],
+  "source_or_caller_admission": false
+}

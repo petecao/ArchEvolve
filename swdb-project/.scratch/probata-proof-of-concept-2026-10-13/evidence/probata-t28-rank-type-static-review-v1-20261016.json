@@ -1,0 +1,33 @@
+{
+  "blockers": [],
+  "checks": [
+    "Entry AST parses; exact current file/command/expected/guard pins match",
+    "Three source MLW hashes match exact clean9704 worktree",
+    "Before Why3 execution: source/clean/config/tool/57-file stdlib checks, config plugin/library/loadpath override refusal, ambient Why3 library override refusal, guard marker and fresh outside-source output checks",
+    "Only three serial prove --type-only calls, no -P/driver/prover/session execution selection; no default plugins/stdlib, one explicit pinned standard-library loadpath, explicit pinned config",
+    "Child environment is constructed narrowly and retains guard marker; cwd/TMPDIR isolated output; no environment values dumped",
+    "Each call uses min(15, remaining45s) and stops at first nonzero result; root counted guard60active/30queue/8GiB sharedlock; after-source/stdlib/config recheck and hashes retained",
+    "Sources are conditional rank lemma, arbitrary finite delay family and independent no-progress controls. Type success supplies no proof, device fairness, source correspondence or negative-goal acceptance"
+  ],
+  "closed_finding": "Original assertion-only admission could be erased under Python optimization. Latest entry explicitly raises when not __debug__ before any assert, and command pins latest bytes. Root also requires no -O and absent/0 PYTHONOPTIMIZE. No prior actual dispatch occurred.",
+  "date_et": "2026-10-16",
+  "execution": "Reviewer performed only text/AST/hash/Git reads; no entry, guard, Why3, compiler, test, config detect, solver, SSH or actual launch.",
+  "external_admission_owned_by_root": [
+    "Fresh Mac lock/process/memory and guard/import-origin preflight",
+    "Physical runtime selection/configuration/standard-library byte checks at actual boundary",
+    "First outcome/resource/source-after and diagnostics cold audit"
+  ],
+  "files": {
+    "/private/tmp/probata-t28-rank-type-command-v1-20261016.json": "4101f54f1d05106006dcdcd41820ed54d6a0fefbb67aee4242ef616f363cd094",
+    "/private/tmp/probata-t28-rank-type-entry-v1-20261016.py": "34ec12d97c8abb33218ef4df7bb476ecf0924bdbd784aaa662269990544b426d",
+    "/private/tmp/probata-t28-rank-type-expected-v1-20261016.json": "ce9ef02e2c4821602333c1d28706ff89e45f0310ff45ab53d60eda196bcc1234"
+  },
+  "guard_sha256": "c6f0d4b8c60fab912dd768c4c8c7e7737d8feca3a110d0de02dec4d38785db57",
+  "source_commit": "9704c54b838863dd838d18a20dd0ade1633d5027",
+  "source_mlw_sha256": {
+    "delay_family.mlw": "d99660f76ad8469960f81491c7df4bfa974abc1133a61d32e9081fe0f60895f6",
+    "no_progress.mlw": "b80c777054a450f781351130baf91e9c0fdb37a4a59e5453e857921b9b85f465",
+    "readiness_rank.mlw": "44eb843146e57495579fed4a118df67bcc3858560dd381db62498a65055b150c"
+  },
+  "verdict": "PASS_PROSPECTIVE_TYPE_ONLY_ENTRY_STATIC_REVIEW"
+}

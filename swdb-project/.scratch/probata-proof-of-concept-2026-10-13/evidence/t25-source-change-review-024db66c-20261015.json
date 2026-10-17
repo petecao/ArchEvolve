@@ -1,0 +1,23 @@
+{
+  "baseline": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+  "date_et": "2026-10-15",
+  "files_after": {
+    "swdb-project/swdb/c_lowering.py": "741e1c24ace7c0fc8e89b56a660b0b155099170bd9d870c46617452de78e126c",
+    "swdb-project/swdb/dx100_interface.py": "d2c88c0f6eebb429225c9a6ee2463e39cd0a908b4772a5ec9a19cdd454cfbc8b",
+    "swdb-project/swdb/proof_semantics.py": "8612d3b871e5607933a8b13c241857660fd9f27c9ed927bd6cf7d5e68371d934",
+    "swdb-project/swdb/proof_setup.py": "027bfec85fa6a5f10699ced20956b9ac76d7787cdb0e3033c68f9a673e47df2a",
+    "swdb-project/swdb/stdlib_provenance.py": "4a7ca7d9b05a992e8172125fcbbfd175bb7ade2aec47cfb349126c9739b6e8e4"
+  },
+  "readers": [
+    "root",
+    "ticket24",
+    "merger",
+    "independent reviewer"
+  ],
+  "review_evidence": {
+    "path": "/private/tmp/probata-t25-source-allowlist-root-review-20261015.md",
+    "sha256": "56721e1851ecd784ab9d0789603011ff89e8dd611b3ca422ad202336f80b449f"
+  },
+  "scope": "First source-mapped unbounded heap capability; reviewed prerequisite production changes only. No body record, imported-axiom acceptance or ticket closure.",
+  "source_commit": "024db66c9ec4da43901f6662771a389b4567b334"
+}

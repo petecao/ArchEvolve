@@ -1,0 +1,49 @@
+{
+  "outcome": {
+    "state": "missing_observation",
+    "stage": "simulation",
+    "reason": "missing, ambiguous, interrupted, or incomplete post-ROI verifier outcome"
+  },
+  "checks": [
+    {
+      "state": "unverified",
+      "reason": "invalid completed DX100 v2 witness: evidence exceeds its 32 MiB or smaller read bound"
+    }
+  ],
+  "artifacts": {
+    "sealed_roi": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-lease-recovery-simulator-batch-20260927-a1/bfs-t15-lease-recovery-simulator-batch-20260927-a1.uniform18/bfs-t15-lease-recovery-simulator-batch-20260927-a1.uniform18.s0.r0.primary.evaluation/simulation/roi-seal.json",
+      "bytes": 72432,
+      "retained_sha256": "f4ddfc374da2857faf8f58a141fc1938d61761e0c26f13fcea8e19a1eaada9ce",
+      "actual_sha256": "f4ddfc374da2857faf8f58a141fc1938d61761e0c26f13fcea8e19a1eaada9ce"
+    },
+    "verification_parser": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-lease-recovery-simulator-batch-20260927-a1/bfs-t15-lease-recovery-simulator-batch-20260927-a1.uniform18/bfs-t15-lease-recovery-simulator-batch-20260927-a1.uniform18.s0.r0.primary.evaluation/verification-runtime/swdb/dx100_witness.py",
+      "bytes": 34287,
+      "retained_sha256": "2d589162b6595fee0abf4f1db54aa5b1a0964dab3f51aa408ac06505b6014091",
+      "actual_sha256": "2d589162b6595fee0abf4f1db54aa5b1a0964dab3f51aa408ac06505b6014091"
+    },
+    "verification_driver": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-lease-recovery-simulator-batch-20260927-a1/bfs-t15-lease-recovery-simulator-batch-20260927-a1.uniform18/bfs-t15-lease-recovery-simulator-batch-20260927-a1.uniform18.s0.r0.primary.evaluation/verification-runtime/scripts/dx100_verify.py",
+      "bytes": 9260,
+      "retained_sha256": "371657977d56816a37f4885f19923f37175331d2d15b5d7f6e6049d3fa8c1395",
+      "actual_sha256": "371657977d56816a37f4885f19923f37175331d2d15b5d7f6e6049d3fa8c1395"
+    },
+    "host_memory_observer": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-lease-recovery-simulator-batch-20260927-a1/bfs-t15-lease-recovery-simulator-batch-20260927-a1.uniform18/bfs-t15-lease-recovery-simulator-batch-20260927-a1.uniform18.s0.r0.primary.evaluation/verification-runtime/scripts/dx100_host_memory.py",
+      "bytes": 2866,
+      "retained_sha256": "655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd",
+      "actual_sha256": "655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd"
+    },
+    "post_roi_trace": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-lease-recovery-simulator-batch-20260927-a1/bfs-t15-lease-recovery-simulator-batch-20260927-a1.uniform18/bfs-t15-lease-recovery-simulator-batch-20260927-a1.uniform18.s0.r0.primary.evaluation/simulation/post-roi-syscalls.log",
+      "bytes": 39877,
+      "retained_sha256": "cb9cc0eb8308da14d7fd5df48d84984da6d993e9708cad897a3d49dde7c8c482",
+      "actual_sha256": "cb9cc0eb8308da14d7fd5df48d84984da6d993e9708cad897a3d49dde7c8c482"
+    }
+  },
+  "reader_source": "swdb/dx100_witness.py::_verify_artifact",
+  "seal_read_bound_bytes": 65536,
+  "trace_read_bound_bytes": 33554432,
+  "diagnosis": "The sealed_roi file exceeds the dedicated65536-byte seal cap; the error text mentions32MiB or smaller. No trace replay or scientific validity promotion performed."
+}

@@ -1,0 +1,182 @@
+id: bfs-native-pilot-20260925-upstream18-a1
+created: '2026-09-25'
+timezone: America/Detroit
+host: mbit10
+state: failed_before_build
+role: unchanged_source_baseline_pilot
+gain_claim: false
+repository_commit: 0923f9991606e2b2d20cb83d5d8943e1f5484fef
+source_snapshot: bfs-native-pilot-20260925-upstream18-a1.source
+baseline_candidate: bfs-native-pilot-20260925-upstream18-a1.baseline
+unchanged_source_sha256: d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056
+evaluation: bfs-native-pilot-20260925-upstream18-a1.uniform-random.evaluation
+outcome:
+  state: failed
+  stage: workload_resolution
+  reason: registered graph exceeds native materialization limits; use its external
+    SG representation
+diagnosis: Registered SG materialization uses a 5000000-adjacency parser limit; uniform18
+  has8388040 entries, within the native evaluator limit32000000. No scale18 cost or
+  timing was measured.
+next_action: Correct bounded registered-native materialization without changing graph
+  identity or native2m-vertex/32m-adjacency bounds. Retain this failed attempt.
+lane:
+  socket_lane:
+    aligned_cell_age_s: ''
+    aligned_to: no_gapbs_batch_running
+    command:
+    - bash
+    - -c
+    - set -eu; cd '/data1/yanruj/EvolveSWDB_graph_bfs_20260925_uniform18'; /usr/bin/time
+      -v python3 scripts/bfs_native_pilot.py --id bfs-native-pilot-20260925-upstream18-a1
+      --implementation gapbs-bfs-do --workloads bfs-20260925-uniform18.cd2169a5c421baf7
+      bfs-20260925-kronecker18.48de8267ac2098d5 --runs-dir '/data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925'
+      --records '/data1/yanruj/EvolveSWDB_graph_bfs_20260925_uniform18/records' --lane
+      mbit10-evaluation-node1
+    cpus_allowed_list: 1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63
+    ended_utc: '2026-09-26T01:53:17Z'
+    exit_code: 1
+    host: mbit10
+    job: swdb-bfs-native-upstream18
+    lease_generation: 391
+    lease_name: mbit10-evaluation-node1
+    load1_at_start: 15.2
+    load1_max: 32
+    node: 1
+    numa_memory_policy: bind:1
+    numactl: --cpunodebind=1 --membind=1
+    preregistration_sha256: null
+    started_utc: '2026-09-26T01:52:39Z'
+driver_bounds:
+  threads: 4
+  repetitions: 5
+  warmups: 0
+  evaluation_seconds: 1200
+  profile_seconds: 1200
+  driver_seconds: 7200
+driver_stages:
+- command:
+  - /usr/bin/python3
+  - -m
+  - swdb
+  - get
+  - bfs-20260925-uniform18.cd2169a5c421baf7
+  - --records
+  - /data1/yanruj/EvolveSWDB_graph_bfs_20260925_uniform18/records
+  - --format
+  - json
+  state: complete
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a1.driver/00-get.json
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a1.driver/00-get.stderr
+  returncode: 0
+  host_wall_s: 2.5727425096556544
+  stdout_sha256: 1b842f53ef6b4ff8a7b6b34c9619546510c1911c288cdb3c800064cfb456874f
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command:
+  - /usr/bin/python3
+  - -m
+  - swdb
+  - get
+  - bfs-20260925-kronecker18.48de8267ac2098d5
+  - --records
+  - /data1/yanruj/EvolveSWDB_graph_bfs_20260925_uniform18/records
+  - --format
+  - json
+  state: complete
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a1.driver/01-get.json
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a1.driver/01-get.stderr
+  returncode: 0
+  host_wall_s: 1.8693985482677817
+  stdout_sha256: 78aa152bf1ccba188d48a427aa00455e6dbdc8640d8ab0c11d41cbb7fd82ab8e
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command:
+  - /usr/bin/python3
+  - -m
+  - swdb
+  - source-snapshot
+  - gapbs-bfs-do
+  - --id
+  - bfs-native-pilot-20260925-upstream18-a1.source
+  - --runs-dir
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925
+  - --records
+  - /data1/yanruj/EvolveSWDB_graph_bfs_20260925_uniform18/records
+  - --format
+  - json
+  state: complete
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a1.driver/02-source-snapshot.json
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a1.driver/02-source-snapshot.stderr
+  returncode: 0
+  host_wall_s: 5.181214087642729
+  stdout_sha256: 6685bbd9b917b111db336bbd896f6a4d6ae254c2ff106d2ee1efe2b876ec6a05
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command:
+  - /usr/bin/python3
+  - -m
+  - swdb
+  - baseline-candidate
+  - bfs-native-pilot-20260925-upstream18-a1.source
+  - --id
+  - bfs-native-pilot-20260925-upstream18-a1.baseline
+  - --runs-dir
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925
+  - --records
+  - /data1/yanruj/EvolveSWDB_graph_bfs_20260925_uniform18/records
+  - --format
+  - json
+  state: complete
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a1.driver/03-baseline-candidate.json
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a1.driver/03-baseline-candidate.stderr
+  returncode: 0
+  host_wall_s: 5.080051374621689
+  stdout_sha256: ccc9a65edb22be1155f8b9e6438a11c2cf262111c8f563fd957aa66c547d1931
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command:
+  - /usr/bin/python3
+  - -m
+  - swdb
+  - evaluate
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a1.driver/bfs-native-pilot-20260925-upstream18-a1.uniform-random.evaluation.request.json
+  - --runs-dir
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925
+  - --lane
+  - mbit10-evaluation-node1
+  - --records
+  - /data1/yanruj/EvolveSWDB_graph_bfs_20260925_uniform18/records
+  - --format
+  - json
+  state: failed
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a1.driver/04-evaluate.json
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a1.driver/04-evaluate.stderr
+  returncode: 1
+  host_wall_s: 22.17942503001541
+  stdout_sha256: 15404249a411bdfb6a8170fe76eb136045915c32847d4f3711bb918b8359b4a4
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+raw_receipts:
+- path: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a1.driver/driver.json
+  sha256: a480d0ceed9c0b07d10c55825e8a84d5aa9575b52c374193a0036c3e2522e8f4
+  bytes: 5935
+- path: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a1.driver/04-evaluate.json
+  sha256: 15404249a411bdfb6a8170fe76eb136045915c32847d4f3711bb918b8359b4a4
+  bytes: 5032
+- path: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a1.driver/04-evaluate.stderr
+  sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  bytes: 0
+- path: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a1.launch/host-preflight.txt
+  sha256: 236ce4ffb3f82afb55c11e6313b869247285bac5001472fe3dfbddde30c7cfe5
+  bytes: 6178
+- path: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a1.launch/job.stdout
+  sha256: d3dc2510e51fe3d9b593dbbb4b09f6950e874ca0030adfc3f5d103ab5d88afdb
+  bytes: 241
+- path: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a1.launch/job.stderr
+  sha256: 876a9ac774913b573dca562c5a0f771be8ddc3dbd48de7577dc6e3df08ac469b
+  bytes: 4595
+- path: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a1.launch/started.txt
+  sha256: a8508a0d3bd488e50d4f0757335bcf5db6dda93a1acdcab65c7d1e88d8c5acf2
+  bytes: 26
+- path: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a1.launch/ended.txt
+  sha256: fcd0a081e546da64a1e17fbffe609e4ac6ccbb42d0f32a87a4b88d176e07a867
+  bytes: 26
+- path: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-upstream18-a1.launch/exit-code.txt
+  sha256: 4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865
+  bytes: 2

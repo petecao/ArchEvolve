@@ -1,0 +1,19 @@
+test_all_23_exact_enum_nodes (independent_semantic_ABI_controls.Controls.test_all_23_exact_enum_nodes) ... ok
+test_complete_actual_pipelines_old_red_new_green (independent_semantic_ABI_controls.Controls.test_complete_actual_pipelines_old_red_new_green) ... ok
+test_complete_physical_before_after (independent_semantic_ABI_controls.Controls.test_complete_physical_before_after) ... ok
+test_endian_selects_own_typed_apvalue_never_operand (independent_semantic_ABI_controls.Controls.test_endian_selects_own_typed_apvalue_never_operand) ... ok
+test_exact_stream_and_probe_selection_refuse_changes (independent_semantic_ABI_controls.Controls.test_exact_stream_and_probe_selection_refuse_changes) ... ok
+test_full_source_inverse_and_unchanged_nodes (independent_semantic_ABI_controls.Controls.test_full_source_inverse_and_unchanged_nodes) ... ok
+test_integral_range_and_source_coordinate_refusals (independent_semantic_ABI_controls.Controls.test_integral_range_and_source_coordinate_refusals) ... ok
+test_old_literal_pipeline_is_byte_behavior_unchanged (independent_semantic_ABI_controls.Controls.test_old_literal_pipeline_is_byte_behavior_unchanged) ... ok
+test_primary_source_bindings_and_probe_syntax (independent_semantic_ABI_controls.Controls.test_primary_source_bindings_and_probe_syntax) ... ok
+test_semantic_receipt_distinguishes_all_identities (independent_semantic_ABI_controls.Controls.test_semantic_receipt_distinguishes_all_identities) ... ok
+test_wrong_shape_type_cast_value_and_extra_expression_refuse (independent_semantic_ABI_controls.Controls.test_wrong_shape_type_cast_value_and_extra_expression_refuse) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.280s
+
+OK
+
+Both complete actual29-root/23-enum offline metadata pipelines pass; 506 shape mutations refuse.
+No remote original changed, no full TU or compiler/native/prover executed, and original reader refusals remain.

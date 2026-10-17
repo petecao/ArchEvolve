@@ -1,0 +1,33 @@
+--- /private/tmp/lanl17_finalize_p1_normal_release_request_20261008_a5_r3.py
++++ /private/tmp/lanl17_finalize_p1_normal_release_request_20261008_a5_r4.py
+@@ -49,6 +49,12 @@
+     need(type(v) is str and 0<len(v)<=64,'UTC_type');t=datetime.datetime.fromisoformat(v.replace('Z','+00:00'))
+     need(t.tzinfo is not None and t.utcoffset()==datetime.timedelta(0),'actual_UTC_required');return t
+ 
++def stop_within_native_end(stop_end,lane_end):
++    # Native socket_lane.sh now_utc emits whole seconds; retain that half-open bin.
++    t=utc(lane_end);v=utc(stop_end)
++    need(re.fullmatch(r'[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z',lane_end) is not None,'native_whole_second_end')
++    return v<t+datetime.timedelta(seconds=1)
++
+ def sealed(v):
+     need(v.get('canonical_ensure_ascii',True) is True and type(v.get('identity_sha256')) is str and re.fullmatch('[0-9a-f]{64}',v['identity_sha256']) is not None,'original_True_seal_policy')
+     need(sha(canonical_json({k:x for k,x in v.items() if k!='identity_sha256'}))==v['identity_sha256'],'original_seal')
+@@ -82,7 +88,7 @@
+     read(base/'lanl17_parent_helpers_cleanup60_a4.py',65536,H,38195);read(a.native_wrapper_source,32768,N,10510)
+     read(base/'lanl17_read_p1_native_release_observation_20261008_a5_r2.py',32768,Q,15125)
+     read(base/'lanl17_parent_capture_projection_producer_a3_20261007.py',65536,P,46165)
+-    read(base/'lanl17_read_p1_normal_terminal_originals_20261008_a5_r1.py',32768,'bdf2f6bbe2893549f04ab41bbb06ffd0d698603e17098bc1aca0842f5eaf47e7',7544)
++    read(base/'lanl17_read_p1_normal_terminal_originals_20261008_a5_r2.py',32768,'6ecee4f1ccd0227527da4cc5831cbc42aeb1120dd1b5f4656660dac92cb08818',7926)
+     m=strict(read(a.manifest_original,1048576,M2SHA,292401));dispatch=strict(read(a.dispatch_original,65536,DSHA,44229));sealed(m);sealed(dispatch)
+     need(m['source_commit']==R and m['source']==S and m['raw']==RAW and m['source_clean'] is True and m['helper_sha256']==H and m['estimator_sha256']==ctx['estimator_sha256'] and m['identity_sha256']==ctx['manifest_identity_sha256'] and m['policy']==ctx['policy'],'frozen_M2_context')
+     need(dispatch['identity_sha256']==spec['inputs']['dispatch']['identity_sha256'] and dispatch['source_commit']==R and dispatch['manifest_sha256']==m['identity_sha256'] and dispatch['policy']==ctx['policy'] and dispatch['campaign']==ctx['campaign'] and type(dispatch['attempt']) is int and dispatch['attempt']==1 and type(dispatch['node']) is int and dispatch['node']==0 and dispatch['resume'] is False and dispatch['baselines_only'] is False,'original_dispatch_bindings')
+@@ -113,7 +119,7 @@
+     need(type(lane) is dict and type(lane['node']) is int and lane['node']==0 and lane['job']=='swdb-lanl17-20261007-a5-p1-a1' and lane['lease_name']=='mbit10-evaluation-node0' and type(lane['lease_generation']) is int and lane['lease_generation']==511 and type(lane['exit_code']) is int and lane['exit_code']==0 and 'record_errors' not in lane,'normal_final_lane511')
+     now=datetime.datetime.now(datetime.timezone.utc);fresh=utc(a.fresh_live_checked_utc);end=utc(a.valid_until_utc)
+     need(fresh<end and (end-fresh).total_seconds()<=300,'finite_parent_freshness_interval_300s')
+-    need(utc(dispatch['checked_utc'])<=utc(stop['started_utc'])<utc(stop['ended_utc']) and utc(lane['started_utc'])<=utc(stop['started_utc']) and utc(stop['ended_utc'])<=utc(lane['ended_utc'])<=utc(native['checked_utc'])<=utc(terminal['checked_utc'])<=fresh<=now<=end,'actual_terminal_and_fresh_parent_chronology')
++    need(utc(dispatch['checked_utc'])<=utc(stop['started_utc'])<utc(stop['ended_utc']) and utc(lane['started_utc'])<=utc(stop['started_utc']) and stop_within_native_end(stop['ended_utc'],lane['ended_utc']) and max(utc(stop['ended_utc']),utc(lane['ended_utc']))<=utc(native['checked_utc'])<=utc(terminal['checked_utc'])<=fresh<=now<=end,'actual_terminal_and_fresh_parent_chronology')
+     spec['observations']={'lease_released':True,'lease_generation':511,'checked_utc':a.fresh_live_checked_utc}
+     copied_helper={'path':A+'/helper.py','bytes':38195,'sha256':H}
+     for name,basename in (('stopped','stopped-receipt.json'),('wrapper_exit','wrapper.exit-code.txt'),('runner_exit','runner.exit-code.txt'),('lane','lane.json')):

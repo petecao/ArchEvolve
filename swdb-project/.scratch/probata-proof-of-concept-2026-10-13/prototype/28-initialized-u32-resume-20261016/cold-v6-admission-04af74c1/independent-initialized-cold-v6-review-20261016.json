@@ -1,0 +1,54 @@
+{
+  "all_prior_audit_functions_byte_identical": true,
+  "changes": [
+    "Refusal prints at most16 traceback filename/function/line records and omitted count; no locals, source lines, payload or exception text",
+    "Fresh context and derived exact source/policy/command pins only; original admitted raw and all criteria unchanged"
+  ],
+  "classification": "PASS_INDEPENDENT_ERROR_REPORT_ONLY_SUCCESSOR",
+  "closed_env": {
+    "bytes": 1752,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v6-admission-04af74c1/initialized-cold-env-command-v6.json",
+    "sha256": "8fd6fd21c8b5b6442d0758ebcd8c3f6025c3a5016fe1fe55d94845edb5a16655"
+  },
+  "command": {
+    "bytes": 4700,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v6-admission-04af74c1/initialized-cold-command-04af74c1-v6.json",
+    "sha256": "940368e6459e3a49cd73ad40e5bd4f61e5701bb723f373a2782c6e771d623ebb"
+  },
+  "complete_AST_inverse": true,
+  "complete_cold_acceptance": false,
+  "date": "2026-10-16 ET",
+  "independent_controls": {
+    "audit_executed": false,
+    "exit_code": 0,
+    "skips": 0,
+    "tests": 5
+  },
+  "packet": {
+    "bytes": 4014,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v6-admission-04af74c1/initialized-cold-v6-source-packet.json",
+    "sha256": "4a9b856636e57e4ada84def48fdd6b216ebd345c1d03b1bdc77a75020b91039b"
+  },
+  "policy": {
+    "bytes": 51432,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v6-admission-04af74c1/initialized-cold-policy-04af74c1-v6.json",
+    "sha256": "d808194fac3c7fae403ba494e712179f68f87d1d7e420068a80ec6561524eb14"
+  },
+  "prior_refusal_preserved": {
+    "bytes": 2795,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v5-admission-04af74c1/initialized-cold-v5-actual-refusal-receipt-20261016.json",
+    "sha256": "ea8bb93bf34b6a86a1bb00d9cfdea91c3f346b0f50150c732782ae7887c05231"
+  },
+  "reader": {
+    "bytes": 52160,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v6-admission-04af74c1/initialized_cold_audit_v6.py",
+    "sha256": "02744c321c9bc60535f374d0b47b4d634b54e02c9786a31351c77859c3d8b598"
+  },
+  "reviewer": "/root/ticket28",
+  "root_admission_required_before_actual": true,
+  "scientific_reexecution": false,
+  "staged_controls": {
+    "bytes": 227281,
+    "count": 10
+  }
+}

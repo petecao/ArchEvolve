@@ -1,0 +1,108 @@
+{
+  "date_ET": "2026-10-16",
+  "at_utc": "2026-10-16T13:58:45.791932+00:00",
+  "root_entry": {
+    "path": "/private/tmp/probata-root-t07-device-weak-generation-launch-v1-20261016.py",
+    "sha256": "95e095699ef6bc5ed511c66c228b449960e1005ef88b34cbf603320993079202",
+    "bytes": 7110
+  },
+  "exit_code": 0,
+  "elapsed_seconds": 12.796694083022885,
+  "termination": null,
+  "guard": {
+    "cmd": [
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+      "-I",
+      "-B",
+      "/private/tmp/probata-t07-device-weak-continuation-v2-20261016-entry.py",
+      "--expected",
+      "/private/tmp/probata-t07-device-weak-continuation-v2-20261016-expected.json"
+    ],
+    "exit_code": 0,
+    "wall_s": 12.494940750009846,
+    "peak_rss_mb": 287.765625,
+    "cap_gb": 8.0,
+    "killed_by_watchdog": false,
+    "timed_out": false,
+    "queue_timed_out": false,
+    "timeout_s": 75.0,
+    "queue_timeout_s": 30.0,
+    "lock_wait_s": 0.0003980000037699938,
+    "runner_pid": 16366,
+    "clock": "continuous_monotonic",
+    "clock_info": {
+      "kind": "continuous_monotonic",
+      "implementation": "mach_continuous_time",
+      "includes_sleep": true,
+      "numer": 125,
+      "denom": 3
+    },
+    "log": "/private/tmp/probata-t07-device-weak-continuation-v2-bd2610b6-20261016/guard.log",
+    "inspection_events": [],
+    "inspection_failure": null,
+    "primary_inspection_failure": null,
+    "cleanup_inspection_failure": null,
+    "cleanup_inspection_failures": [],
+    "inspection_retry_boundary": "AccessDenied uses a 200 ms environ retry admission window and 21-attempt cap, or three attempts for other operations; only the exact proc_environ SystemError raised by the requested environ operation shares that policy; individual OS calls are not forcibly timed; all pauses count and RSS/deadline checks remain mandatory after inspection; only independently confirmed gone/zombie or changed birth is skipped; persistent live or unknown failure fails closed",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "unconfirmed_children": [],
+    "error": null,
+    "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment",
+    "rss_scope": "live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches; sampled, not a kernel quota",
+    "finished": "2026-10-16 09:58:45 EDT"
+  },
+  "result": {
+    "generation_completed": true,
+    "proof_acceptance": false,
+    "solver_invocation_permitted": false,
+    "full_TD_or_counted_admissible": false,
+    "source_commit": "bd2610b6b7cff511c046206a78088cf693cee874",
+    "cases": [
+      {
+        "case": "omitted-output",
+        "generation_completed": true,
+        "goals": 85,
+        "properties": 176,
+        "ordinary": 64,
+        "smokes": 21,
+        "initialization_properties": 2,
+        "defined_bodies": 1,
+        "backend_tasks": 50,
+        "internal_closures": 35,
+        "proof_acceptance": false
+      }
+    ],
+    "post_errors": [],
+    "normal_replayed": false,
+    "retained_normal_original_failed_receipt_upgraded": false,
+    "normal_cold_summary_sha256": "11f8202fdc03c951cd71c03b7b1e2a89d2112c1450d90a9e823d607e48c92a83",
+    "published_tip": "d6fc0b2258e090b3cdf7c5e91caf75051b321ae3",
+    "manifest_complete": true,
+    "elapsed_seconds": 12.10637845803285,
+    "within_internal_deadline": true
+  },
+  "source_after": {
+    "commit": "bd2610b6b7cff511c046206a78088cf693cee874",
+    "status": ""
+  },
+  "finite_settlement_sweeps": [
+    {
+      "active_selected_verifiers": [],
+      "inspection_denials": [],
+      "same_uid_metadata_count": 647
+    },
+    {
+      "active_selected_verifiers": [],
+      "inspection_denials": [],
+      "same_uid_metadata_count": 647
+    },
+    {
+      "active_selected_verifiers": [],
+      "inspection_denials": [],
+      "same_uid_metadata_count": 646
+    }
+  ],
+  "lease_paths_present_after": [],
+  "raw": "/private/tmp/probata-t07-device-weak-continuation-v2-bd2610b6-20261016",
+  "scope": "Generation/export only; no proof, TD, counted or source-body acceptance"
+}

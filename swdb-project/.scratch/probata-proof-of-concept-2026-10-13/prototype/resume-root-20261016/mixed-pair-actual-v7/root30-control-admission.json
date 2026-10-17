@@ -1,0 +1,65 @@
+{
+  "schema": "mixed-pair-root30-admission-1",
+  "date": "2026-10-16 ET",
+  "status": "ROOT_CONTROLS_PASSED",
+  "actual_success_admitted": true,
+  "source_commit": "dcdecf317a0e9b34f3ce12d5b914eb823c439fbc",
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-dcdecf31-t25-pair-pointer-controls-v2",
+  "tests": {
+    "cases": 30,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "cache_absent": true
+  },
+  "guard": {
+    "exit_code": 0,
+    "rss_cap_bytes": 8589934592,
+    "workers": 1,
+    "whole_seconds": 1200
+  },
+  "outer_exit_code": 0,
+  "formal_WP_CBMC_disabled": true,
+  "actual_flags": {
+    "SWDB_PAIR_ACTUAL": "0",
+    "SWDB_MIXED_PAIR_ACTUAL": "0"
+  },
+  "evidence": {
+    "command": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-dcdecf31-t25-pair-pointer-controls-v2/launch.json",
+      "bytes": 6062,
+      "sha256": "e52e2c9f88d870726016f9983be61f042c1d66d3c03d2f10d15250bbec74fcd2"
+    },
+    "junit": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-dcdecf31-t25-pair-pointer-controls-v2/junit.xml",
+      "bytes": 5034,
+      "sha256": "cee90dae141b5b64c2ee330c031c715b94cb30d0463f1608e774448f7574b244"
+    },
+    "result": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-dcdecf31-t25-pair-pointer-controls-v2/focus-result.json",
+      "bytes": 392,
+      "sha256": "1df9e4d25b2942208de0ca20556a752376c2cff1e435ff73d88135744b349a06"
+    },
+    "guard": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-dcdecf31-t25-pair-pointer-controls-v2/resources.json",
+      "bytes": 166,
+      "sha256": "6761d05c680e28d2a8fabefb9ef54b81c9dd13e1919291d2811d4b6b4ff9bcd9"
+    },
+    "outer": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-dcdecf31-t25-pair-pointer-controls-v2/outer-resources.json",
+      "bytes": 167,
+      "sha256": "1e3a9fcc6d4467f268168790fa586067d03d46838256b12d9b2cba348b315fbd"
+    },
+    "source_publication": {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-source-binding-pointer-publication-20261016.json",
+      "bytes": 1279,
+      "sha256": "cf1ee8632f8c33c62e31373654758433359a168cb62bc8782ef44b6b390074bb"
+    }
+  },
+  "execution_receipt": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-pair-pointer-controls-v2-root-execution-20261016.json",
+    "bytes": 14858,
+    "sha256": "43349b82ac06f5c067d82d47d044acd4a147fb9ae9fc0358e9c5fa76f7ee34fa"
+  },
+  "scope": "Actual30 control success only; no eight-record formal workflow or full ticket acceptance. Real Clang/native agreement case passed; formal WP/CBMC disabled or explicit parser-error stand-ins only."
+}

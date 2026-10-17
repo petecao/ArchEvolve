@@ -1,0 +1,78 @@
+kind: kernel
+schema_version: '0.2'
+id: gapbs-bfs
+status: draft
+deprecated_by: null
+created: '2026-09-22'
+updated: '2026-10-03'
+provenance:
+- id: src-gapbs-bfs
+  kind: source_code
+  description: gapbs src/bfs.cc (BFSVerifier, main), src/benchmark.h (SourcePicker,
+    BenchmarkKernel) and src/command_line.h (CLApp) at commit 2972aeb2703165bafd921222f4ed7196f542d3a8,
+    read 2026-09-22 from the copy in apps/gapbs.
+  uri: https://github.com/sbeamer/gapbs/blob/2972aeb2703165bafd921222f4ed7196f542d3a8/src/bfs.cc
+name: gapbs Breadth-First Search
+application: gapbs
+computes: 'A BFS parent array (pvector<NodeID>, int32_t) for a traversal over out-edges
+  from one source vertex: parent[source] = source; every other vertex reachable from
+  the source gets a parent u with an edge u -> v and depth(u) = depth(v) - 1 (any
+  such u is valid, so the tree is not unique); unreachable vertices get -1. The source
+  is chosen per trial by SourcePicker (src/benchmark.h lines 46-68): a uniformly random
+  vertex in [0, num_nodes - 1] from mt19937_64 seeded with kRandSeed = 27491095, redrawn
+  until its out-degree is non-zero, so trial k of every run uses the same source;
+  -r <node> fixes the source instead. The verifier has its own SourcePicker with the
+  same seed and replays the same sources.'
+correctness_check:
+  command: '{binary} {input_args} -n 1 -v'
+  verifier:
+    description: 'BFSVerifier: a serial BFS from the same source computes depths;
+      then parent[source] must equal source, every other reached vertex''s parent
+      must be an in-neighbor whose depth is one less, and a vertex must have parent
+      -1 exactly when the serial BFS does not reach it.'
+    code:
+      root: application
+      path: src/bfs.cc
+      lines:
+      - 196
+      - 247
+      excerpt: "// BFS verifier does a serial BFS from same source and asserts:\n\
+        // - parent[source] = source\n// - parent[v] = u  =>  depth[v] = depth[u]\
+        \ + 1 (except for source)\n// - parent[v] = u  => there is edge from u to\
+        \ v\n// - all vertices reachable from source have a parent\nbool BFSVerifier(const\
+        \ Graph &g, NodeID source,\n                 const pvector<NodeID> &parent)\
+        \ {\n  pvector<int> depth(g.num_nodes(), -1);\n  depth[source] = 0;\n  vector<NodeID>\
+        \ to_visit;\n  to_visit.reserve(g.num_nodes());\n  to_visit.push_back(source);\n\
+        \  for (auto it = to_visit.begin(); it != to_visit.end(); it++) {\n    NodeID\
+        \ u = *it;\n    for (NodeID v : g.out_neigh(u)) {\n      if (depth[v] == -1)\
+        \ {\n        depth[v] = depth[u] + 1;\n        to_visit.push_back(v);\n  \
+        \    }\n    }\n  }\n  for (NodeID u : g.vertices()) {\n    if ((depth[u] !=\
+        \ -1) && (parent[u] != -1)) {\n      if (u == source) {\n        if (!((parent[u]\
+        \ == u) && (depth[u] == 0))) {\n          cout << \"Source wrong\" << endl;\n\
+        \          return false;\n        }\n        continue;\n      }\n      bool\
+        \ parent_found = false;\n      for (NodeID v : g.in_neigh(u)) {\n        if\
+        \ (v == parent[u]) {\n          if (depth[v] != depth[u] - 1) {\n        \
+        \    cout << \"Wrong depths for \" << u << \" & \" << v << endl;\n       \
+        \     return false;\n          }\n          parent_found = true;\n       \
+        \   break;\n        }\n      }\n      if (!parent_found) {\n        cout <<\
+        \ \"Couldn't find edge from \" << parent[u] << \" to \" << u << endl;\n  \
+        \      return false;\n      }\n    } else if (depth[u] != parent[u]) {\n \
+        \     cout << \"Reachability mismatch\" << endl;\n      return false;\n  \
+        \  }\n  }\n  return true;\n}"
+      sha256: null
+  pass_criterion: 'the run exits 0 and prints Verification: PASS'
+  pass_regex: Verification:\s+PASS
+  tolerance:
+    value: null
+    measure: exact structural check of the parent array (source, one-level-closer
+      in-neighbor parent, reachability); no numeric tolerance
+    note: 'Exact but not bit-identical: any valid BFS tree passes, so two correct
+      runs may differ in parent values.'
+baseline_implementation: gapbs-bfs-do
+notes:
+- Code whose parent array passes BFSVerifier on the hardware target it is written
+  for implements this kernel (ADR 0008, narrowing ADR 0001). Direction-optimizing,
+  top-down-only and bottom-up-only BFS share the same kernel correctness criterion.
+  Functional-model certification is simulated pre-check evidence, not gem5 target
+  correctness.
+extensions: {}

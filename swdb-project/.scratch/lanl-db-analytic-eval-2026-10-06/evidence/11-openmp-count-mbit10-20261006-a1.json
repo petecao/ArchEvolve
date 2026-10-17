@@ -1,0 +1,45 @@
+{
+  "format": "swdb.independent-service-compact-receipt.v1",
+  "updated": "2026-10-06 ET",
+  "kind": "openmp",
+  "phase": "count",
+  "source_commit": "1703c98717ff303fdaa83b8044ac9b4060fedb78",
+  "source_clean": true,
+  "raw_directory": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-openmp-count-20261006-a1",
+  "raw_transferred": false,
+  "lane": {
+    "aligned_cell_age_s": "",
+    "aligned_to": "no_gapbs_batch_running",
+    "command": [
+      "python3",
+      "/data/yanruj/EvolveSWDB_runs/lanl-analytic-openmp-count-20261006-a1/runner.py"
+    ],
+    "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+    "ended_utc": "2026-10-07T02:37:36Z",
+    "exit_code": 0,
+    "host": "mbit10",
+    "job": "swdb-lanl-openmp-count-20261006-a1",
+    "lease_generation": 493,
+    "lease_name": "mbit10-evaluation-node0",
+    "load1_at_start": 1.16,
+    "load1_max": 32,
+    "node": 0,
+    "numa_memory_policy": "bind:0",
+    "numactl": "--cpunodebind=0 --membind=0",
+    "preregistration_sha256": null,
+    "started_utc": "2026-10-07T02:32:33Z"
+  },
+  "new_records": [],
+  "preregistration_sha256": "23033fb7a2afa87d904904c90bc2c07d2ecc90588fa7cdbe15d9fa43ac65c478",
+  "validation": "OK: 629 record(s) valid",
+  "completed_utc": "2026-10-07T02:37:36.706564+00:00",
+  "prior_record_bytes_preserved": true,
+  "scope": "Exact independent service construction; no application accuracy or physical latency claim.",
+  "count_proof": {
+    "identity_sha256": "d3ce6e1dec3ffc2d4b90727000877bb0ee0a3c8bb7be695c25594217a7e93e9e",
+    "file_sha256": "10d6cff36764279663df7c9c88ad7449e8b48abe50d4e9619c66e83057d06bfc",
+    "bytes": 87365,
+    "timings_collected": false
+  },
+  "identity_sha256": "534d184358fecaffd5ed669ee931c0c166d54fca61ebbf197447845029d23e0d"
+}

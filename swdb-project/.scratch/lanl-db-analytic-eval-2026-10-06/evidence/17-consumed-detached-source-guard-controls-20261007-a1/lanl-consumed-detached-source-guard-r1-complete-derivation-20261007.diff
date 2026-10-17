@@ -1,0 +1,359 @@
+--- /private/tmp/lanl_consumed_detached_source_guard_20261007.py
++++ /private/tmp/lanl_consumed_detached_source_guard_r1_20261007.py
+@@ -47,7 +47,7 @@
+           'plan_bytes': 2*1024*1024, 'inventory_bytes': 32*1024*1024,
+           'one_file': 512*1024*1024, 'total_file_bytes': 16*1024*1024*1024,
+           'walk_entries': 400000, 'tracked_entries': 20000,
+-          'processes': 10000, 'process_fds': 200000,
++          'stat_checks': 2000000, 'processes': 10000, 'process_fds': 200000,
+           'one_proc_bytes': 16*1024*1024, 'receipt_bytes': 256*1024}
+ 
+ class Refused(Exception):
+@@ -104,6 +104,13 @@
+         self.current_removal = None
+         self.output = None
+         self.native_git_stat = None
++        self.passive_stats = {}
++        self.passive_hashes = {}
++        self.reference_hits = {}
++        self.directory_stats = {}
++        self.symlink_stats = {}
++        self.raw_namespace = None
++        self.stat_checks = 0
+         self.facts = {'format': 'swdb.consumed-detached-source-guard.v1',
+                       'canonical_ensure_ascii': True, 'started_at': now(),
+                       'remove_requested': args.remove, 'selected_rows': args.select,
+@@ -164,7 +171,13 @@
+                 pieces.append(b)
+             require(count == before.st_size and stamp(os.fstat(fd)) == stamp(before)
+                     and stamp(p.lstat()) == stamp(before), 'file_read_identity_changed')
+-            return b''.join(pieces), stamp(before)
++            raw = b''.join(pieces)
++            if str(p) in self.passive_stats:
++                require(self.passive_stats[str(p)] == stamp(before), 'baseline_file_identity_changed')
++            self.passive_stats[str(p)] = stamp(before)
++            self.passive_hashes[str(p)] = sha(raw)
++            self.reference_hits[str(p)] = any(str(x).encode() in raw for x in self.selected)
++            return raw, stamp(before)
+         finally:
+             os.close(fd)
+ 
+@@ -176,6 +189,17 @@
+         if 'stat' in pin:
+             require(st == pin['stat'], 'pinned_stat_changed')
+         return raw
++
++    def pin_fact(self, pin):
++        # Only an already-byte-checked, stable baseline file can use this cache.
++        path = pin['path']
++        if path not in self.passive_stats:
++            self.pinned(pin)
++        require(self.passive_stats[path]['size'] == pin['bytes']
++                and self.passive_hashes[path] == pin['sha256'], 'cached_pin_changed')
++        require(stamp(P(path).lstat()) == self.passive_stats[path], 'cached_file_stat_changed')
++        if 'stat' in pin:
++            require(pin['stat'] == self.passive_stats[path], 'cached_pinned_stat_changed')
+ 
+     def sealed(self, pin, cap=None):
+         require(pin.get('canonical_ensure_ascii') is True and
+@@ -317,6 +341,7 @@
+                 require(stat.S_ISLNK(before.st_mode), 'tracked_symlink_mode_changed')
+                 data = os.readlink(p).encode()
+                 require(stamp(p.lstat()) == stamp(before), 'tracked_symlink_changed')
++                self.symlink_stats[str(p)] = {'stat':stamp(before),'link':os.readlink(p)}
+             else:
+                 data, got = self.read(p)
+                 require(stat.S_IMODE(before.st_mode) == (0o755 if mode == '100755' else 0o644),
+@@ -358,7 +383,10 @@
+                 'retained_objects': len(ids), 'detached_clean_ignored0_untracked0': True}
+ 
+     def walk(self, root):
+-        self.path(root, directory=True)
++        _, initial = self.path(root, directory=True)
++        if str(root) in self.directory_stats:
++            require(self.directory_stats[str(root)] == stamp(initial), 'baseline_root_directory_changed')
++        self.directory_stats[str(root)] = stamp(initial)
+         for folder, dirs, files in os.walk(root, topdown=True, followlinks=False,
+                                           onerror=lambda e: (_ for _ in ()).throw(Refused('walk_inaccessible'))):
+             self.left()
+@@ -369,6 +397,15 @@
+                 require(self.walk_entries <= LIMITS['walk_entries'], 'walk_entry_limit')
+                 s = p.lstat()
+                 require(s.st_uid == UID, 'walk_wrong_owner')
++                if stat.S_ISDIR(s.st_mode):
++                    if str(p) in self.directory_stats:
++                        require(self.directory_stats[str(p)] == stamp(s), 'baseline_directory_changed')
++                    self.directory_stats[str(p)] = stamp(s)
++                elif stat.S_ISLNK(s.st_mode):
++                    observed = {'stat':stamp(s),'link':os.readlink(p)}
++                    if str(p) in self.symlink_stats:
++                        require(self.symlink_stats[str(p)] == observed, 'baseline_symlink_changed')
++                    self.symlink_stats[str(p)] = observed
+                 yield p, s
+ 
+     def raw_inventory(self, root):
+@@ -414,6 +451,9 @@
+         require(self.plan['control_siblings_complete_review']['complete'] is True,
+                 'control_sibling_coverage_missing')
+         parent_raw_names = {p.name for p in RAW.iterdir() if p.name.startswith(('lanl-', 'lanl17-'))}
++        if self.raw_namespace is None:
++            self.raw_namespace = sorted(parent_raw_names)
++        require(sorted(parent_raw_names) == self.raw_namespace, 'raw_namespace_changed')
+         results = {}
+         for root in routes:
+             actual = self.raw_inventory(root)
+@@ -422,7 +462,7 @@
+             require(pin['receipt_key'] in RECEIPTS and
+                     any(inside(pin['path'], P(root)) for root in routes),
+                     'original_raw_pin_outside_receipt_routes')
+-            self.pinned(pin)
++            self.pin_fact(pin)
+         require(self.plan['original_raw_files_complete_review']['complete'] is True,
+                 'original_raw_file_pin_coverage_missing')
+         # All current LANL raw links are checked, including unrelated retained runs.
+@@ -455,36 +495,72 @@
+     def process_references(self):
+         pids = sorted(p for p in P('/proc').iterdir() if p.name.isdecimal())
+         require(len(pids) <= LIMITS['processes'], 'process_count_limit')
+-        relevant = 0
++        explicit = {int(x['pid']):x for x in self.plan['relevant_privileged_consumers']}
++        require(len(explicit) == len(self.plan['relevant_privileged_consumers']),
++                'duplicate_relevant_privileged_consumer')
++        for item in explicit.values():
++            require(item['identified_as_owned_consumer'] is True and item['review_basis']
++                    and item['parent_review_identity_sha256'] == self.plan['parent_review_pin']['identity_sha256'],
++                    'privileged_consumer_identification_missing')
++            self.pin_fact(item['identification_file_pin'])
++        snapshots = {}
+         for proc in pids:
+             self.left()
+-            status = self.proc_read(proc/'status', LIMITS['one_proc_bytes'])
+-            if status is None:
++            pid = int(proc.name)
++            owner = None
++            try:
++                owner = proc.stat().st_uid
++                with (proc/'status').open('rb') as f:
++                    status = f.read(LIMITS['one_proc_bytes']+1)
++                require(len(status) <= LIMITS['one_proc_bytes'], 'process_status_limit')
++            except FileNotFoundError:
++                require(not proc.exists(), 'process_status_missing')
+                 continue
++            except PermissionError:
++                # No invented security clearance for unrelated foreign host daemons.
++                require(owner != UID and pid not in explicit, 'relevant_process_status_inaccessible')
++                continue
++            self.read_bytes += len(status)
++            require(self.read_bytes <= LIMITS['total_file_bytes'], 'cumulative_process_read_limit')
+             fields = {}
+             for line in status.decode().splitlines():
+                 if ':' in line:
+-                    k, v = line.split(':', 1)
+-                    fields[k] = v.strip()
+-            uids = [int(x) for x in fields['Uid'].split()]
+-            caps = int(fields['CapEff'], 16)
+-            # Private /data1/yanruj 0700 excludes foreign unprivileged processes.
+-            if UID not in uids and not (caps & ((1<<1)|(1<<2))):
++                    k,v = line.split(':',1); fields[k] = v.strip()
++            snapshots[pid] = {'path':proc,'fields':fields,
++                              'uids':[int(x) for x in fields['Uid'].split()],
++                              'ppid':int(fields['PPid'])}
++        owned = {pid for pid,item in snapshots.items() if UID in item['uids']}
++        def owned_descendant(pid):
++            seen = set()
++            current = snapshots[pid]['ppid']
++            while current in snapshots and current not in seen:
++                if current in owned:
++                    return True
++                seen.add(current)
++                require(len(seen) <= LIMITS['processes'], 'process_ancestry_limit')
++                current = snapshots[current]['ppid']
++            return False
++        relevant = 0
++        identified = 0
++        for pid,item in snapshots.items():
++            if pid not in owned and pid not in explicit and not owned_descendant(pid):
+                 continue
+             relevant += 1
++            proc,fields = item['path'],item['fields']
+             before = self.proc_read(proc/'stat', LIMITS['one_proc_bytes'])
+             if before is None:
+                 continue
+             start = before[before.rfind(b')')+2:].split()[19]
+-            if fields.get('State', '').startswith('Z'):
++            if pid in explicit:
++                require(int(start) == explicit[pid]['start_ticks']
++                        and explicit[pid]['uid'] in item['uids'], 'identified_consumer_PID_changed')
++                identified += 1
++            if fields.get('State','').startswith('Z'):
+                 require(self.proc_read(proc/'maps', LIMITS['one_proc_bytes']) == b''
+                         and not list((proc/'fd').iterdir()), 'zombie_retains_references')
+                 continue
+-            if fields.get('Kthread') == '1':
+-                require(UID not in uids, 'unexpected_owner_kernel_thread')
+-                continue
+             try:
+-                links = [proc/'cwd', proc/'root', proc/'exe']
++                links = [proc/'cwd',proc/'root',proc/'exe']
+                 links.extend(sorted((proc/'fd').iterdir()))
+                 self.proc_fds += len(links)
+                 require(self.proc_fds <= LIMITS['process_fds'], 'process_fd_limit')
+@@ -497,28 +573,32 @@
+                         continue
+                     except PermissionError:
+                         raise Refused('relevant_process_link_inaccessible')
+-                    require(not any_inside(target, self.selected), 'live_process_source_dependency')
+-                    require(not inside(target.removesuffix(' (deleted)'), R14_PATH), 'live_final14_source_process')
++                    require(not any_inside(target,self.selected), 'live_process_source_dependency')
++                    require(not inside(target.removesuffix(' (deleted)'),R14_PATH), 'live_final14_source_process')
+                 maps = self.proc_read(proc/'maps', LIMITS['one_proc_bytes'])
+                 cmd = self.proc_read(proc/'cmdline', LIMITS['one_proc_bytes'])
+                 if maps is None or cmd is None:
+                     continue
+                 for line in maps.decode(errors='strict').splitlines():
+-                    pieces = line.split(None, 5)
+-                    if len(pieces) == 6:
+-                        require(not any_inside(pieces[5], self.selected), 'mapped_source_dependency')
++                    pieces = line.split(None,5)
++                    if len(pieces)==6:
++                        require(not any_inside(pieces[5],self.selected), 'mapped_source_dependency')
+                 require(not any(str(p).encode() in cmd for p in self.selected),
+                         'live_or_queued_helper_source_dependency')
+                 require(str(R14_PATH).encode() not in cmd, 'active_final14_command')
+                 after = self.proc_read(proc/'stat', LIMITS['one_proc_bytes'])
+                 if after is not None:
+-                    require(after[after.rfind(b')')+2:].split()[19] == start, 'process_PID_reused')
++                    require(after[after.rfind(b')')+2:].split()[19]==start, 'process_PID_reused')
+             except FileNotFoundError:
+                 require(not proc.exists(), 'relevant_process_field_disappeared')
+-        return {'relevant_processes': relevant, 'process_links_checked': self.proc_fds,
+-                'private_parent_excludes_foreign_unprivileged_UIDs': True,
+-                'inaccessible_privileged_or_owner_process_refuses': True,
+-                'raw_process_args_maps_auth_environment_not_serialized': True}
++        require(set(explicit) <= set(snapshots), 'identified_consumer_missing_from_process_snapshot')
++        return {'owned_or_owned_descendant_processes_checked':relevant,
++                'explicit_privileged_consumer_evidence_checked':identified,
++                'process_links_checked':self.proc_fds,
++                'foreign_unidentified_daemons_not_invented_as_consumers':True,
++                'inaccessible_relevant_owned_or_identified_consumer_refuses':True,
++                'global_privileged_security_clearance_claimed':False,
++                'raw_process_args_maps_auth_environment_not_serialized':True}
+ 
+     def aliases_and_sources(self):
+         require(self.plan['pending_alias_coverage_review']['complete'] is True and
+@@ -527,7 +607,7 @@
+         history = {x['path']: x for x in self.plan['historical_reference_files']}
+         require(len(history) == len(self.plan['historical_reference_files']), 'history_pin_duplicate')
+         for pin in history.values():
+-            self.pinned(pin)
++            self.pin_fact(pin)
+             require(pin['handling'] == 'historical_only_not_dereferenced'
+                     and isinstance(pin['review_basis'], str) and pin['review_basis'],
+                     'historical_classification_missing')
+@@ -541,9 +621,11 @@
+             for p, s in self.walk(root):
+                 if not stat.S_ISREG(s.st_mode) or p.suffix not in suffixes:
+                     continue
+-                b, _ = self.read(p)
+-                if any(str(x).encode() in b for x in self.selected):
+-                    require(str(p) in history and sha(b) == history[str(p)]['sha256'],
++                if str(p) not in self.passive_stats:
++                    self.read(p)
++                require(stamp(p.lstat()) == self.passive_stats[str(p)], 'baseline_metadata_changed')
++                if self.reference_hits[str(p)]:
++                    require(str(p) in history and self.passive_hashes[str(p)] == history[str(p)]['sha256'],
+                             'unclassified_physical_source_reference')
+         for pin in self.plan['pending_control_files']:
+             b = self.pinned(pin)
+@@ -614,7 +696,52 @@
+                     'reserved_future_route_exists_or_selected')
+         for pin in self.plan['protected_file_pins']:
+             require(not any_inside(pin['path'], self.selected), 'protected_file_inside_selection')
+-            self.pinned(pin)
++            self.pin_fact(pin)
++
++    def stable_inventory(self):
++        def removed(path):
++            return any(inside(path,BASE/name) for name in self.facts['removed_rows'])
++        for path,expected in self.passive_stats.items():
++            if removed(path):
++                continue
++            self.left(); self.stat_checks += 1
++            require(self.stat_checks <= LIMITS['stat_checks'], 'stable_stat_check_limit')
++            require(stamp(P(path).lstat()) == expected, 'baseline_file_inventory_changed')
++        for path,expected in self.directory_stats.items():
++            if removed(path):
++                continue
++            self.left(); self.stat_checks += 1
++            require(self.stat_checks <= LIMITS['stat_checks'], 'stable_stat_check_limit')
++            # Directory identity/ctime/mtime/size detects added or removed children.
++            require(stamp(P(path).lstat()) == expected, 'baseline_directory_inventory_changed')
++        for path,expected in self.symlink_stats.items():
++            if removed(path):
++                continue
++            self.left(); self.stat_checks += 1
++            require(self.stat_checks <= LIMITS['stat_checks'], 'stable_stat_check_limit')
++            p = P(path)
++            require(stamp(p.lstat()) == expected['stat'] and os.readlink(p) == expected['link'],
++                    'baseline_symlink_inventory_changed')
++            if inside(path,RAW):
++                require(not any_inside(str(p.resolve(strict=True)),self.selected),
++                        'raw_link_live_source_dependency')
++        names = sorted(p.name for p in RAW.iterdir() if p.name.startswith(('lanl-','lanl17-')))
++        require(names == self.raw_namespace, 'raw_namespace_changed')
++        return {'stat_checks':self.stat_checks,'unchanged_files':len(self.passive_stats),
++                'unchanged_directories':len(self.directory_stats),
++                'unchanged_symlinks':len(self.symlink_stats)}
++
++    def pre_remove_gate(self, name):
++        leases = self.leases()
++        self.retain_git(); self.protect(); self.stable_inventory()
++        current = self.tree(BASE/name,ROWS[name]['head'])
++        require(current == self.baseline[name], 'pre_remove_checkout_changed')
++        self.process_references()
++        later = self.leases()
++        require({k:v['sha256'] for k,v in later.items()}=={k:v['sha256'] for k,v in leases.items()},
++                'released_lease_generation_changed_during_check')
++        self.retain_git()
++        return current
+ 
+     def gate(self, compare=False):
+         self.left()
+@@ -721,7 +848,7 @@
+         self.facts['initial_checks'] = first
+         for name in self.args.select if self.args.remove else []:
+             require(self.left() > LIMITS['git_seconds']+30, 'insufficient_remaining_remove_budget')
+-            self.gate(compare=True)
++            self.pre_remove_gate(name)
+             require(sha(self.read(self.args.plan, LIMITS['plan_bytes'])[0]) == self.args.plan_sha256
+                     and sha(self.read(P(__file__).absolute(), LIMITS['plan_bytes'])[0]) == self.own_sha,
+                     'final_plan_or_own_source_changed')
+@@ -735,10 +862,17 @@
+             self.facts['removed_rows'].append(name)
+             self.retain_git()
+             self.protect()
+-            require(self.receipts_and_raw() == self.raw_before, 'post_remove_raw_changed')
++            self.stable_inventory()
+         self.leases()
+         self.retain_git()
+         self.protect()
++        self.stable_inventory()
++        # One final exact byte pass over preserved originals, not N rehashes.
++        require(self.receipts_and_raw()==self.raw_before, 'final_preserved_raw_bytes_changed')
++        self.aliases_and_sources()
++        for pin in self.plan['protected_file_pins']:
++            self.pinned(pin)
++        self.process_references()
+         require(sha(self.read(self.args.plan, LIMITS['plan_bytes'])[0]) == self.args.plan_sha256
+                 and sha(self.read(P(__file__).absolute(), LIMITS['plan_bytes'])[0]) == self.own_sha,
+                 'end_plan_or_source_changed')
+@@ -751,6 +885,9 @@
+         self.facts['finished_at'] = now()
+         self.facts['bytes_read'] = self.read_bytes
+         self.facts['walk_entries_checked'] = self.walk_entries
++        self.facts['stable_stat_checks'] = self.stat_checks
++        self.facts['full_raw_byte_passes'] = 2 if self.facts['admitted'] else 'incomplete'
++        self.facts['per_remove_full_remaining_catalog_rehash'] = False
+         self.facts['identity_sha256'] = sha(canonical(self.facts))
+         body = json.dumps(self.facts, sort_keys=True, indent=2, ensure_ascii=True, allow_nan=False).encode()+b'\n'
+         require(len(body) <= LIMITS['receipt_bytes'], 'compact_receipt_limit')

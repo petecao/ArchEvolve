@@ -1,0 +1,53 @@
+{
+  "classification": "ACTUAL_PASSIVE_DIAGNOSTIC_V6_REFUSED",
+  "compact_comparison": {
+    "bytes": 3443,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v6-admission-04af74c1/retained-flags-mismatch-metadata-20261016.json",
+    "sha256": "2ca5de5e30bcb734433d36768a3c4edbbee1282a9edddf0a4ef7f876012e4871"
+  },
+  "complete_cold_acceptance": false,
+  "date": "2026-10-16 ET",
+  "diagnosis": "Both actual21-element lists exactly match expected20-element prefix plus -wp-fct=trust_fixture. Exact04af producer appends this job-function selector. No scientific criterion has been changed.",
+  "exit_code": 1,
+  "failed_predicate": "settings.flags equals method flags + machdep/x86_64 + timeout30 + par1 + smoke",
+  "local_outer_wall_seconds": 15.6009840965271,
+  "preflight": {
+    "bytes": 420111,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v6-admission-04af74c1/preflight-settlement-v6-actual-20261016.json",
+    "sha256": "882c45e9d3272c73f8f0c26ae61455542ed14d61f862e714474996ca11f4e9c9"
+  },
+  "result": {
+    "classification": "REFUSED",
+    "error_type": "AssertionError",
+    "frames": [
+      {
+        "filename": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-cold-04af74c1-v6/control/initialized_cold_audit_v6.py",
+        "function": "<module>",
+        "line": 778
+      },
+      {
+        "filename": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-cold-04af74c1-v6/control/initialized_cold_audit_v6.py",
+        "function": "audit",
+        "line": 727
+      },
+      {
+        "filename": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-cold-04af74c1-v6/control/initialized_cold_audit_v6.py",
+        "function": "audit_record",
+        "line": 588
+      }
+    ],
+    "frames_omitted": 0,
+    "scientific_acceptance": false
+  },
+  "scientific_reexecution": false,
+  "stderr": {
+    "bytes": 0,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v6-admission-04af74c1/initialized-cold-v6-actual-stderr-20261016.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 659,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v6-admission-04af74c1/initialized-cold-v6-actual-stdout-20261016.json",
+    "sha256": "161babeee7fb06a067cb55bf88b4320a7e9a0bf1d3fb056a7a0e13717a9396ab"
+  }
+}

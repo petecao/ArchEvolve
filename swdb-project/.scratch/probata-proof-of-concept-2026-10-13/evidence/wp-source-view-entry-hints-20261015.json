@@ -1,0 +1,271 @@
+{
+  "created": "2026-10-15 ET",
+  "runtime_commit": "593c35d688cfa394000f45152edb96e5061f8151",
+  "source_pins": {
+    "swdb/helper_windows.py": "6ab445ad4ac32a1b72899f6debcf445c8afb7cd29d21503f21a2ab4a4bc145d5",
+    "swdb/nested_entry_reads.py": "23241b80acdb5fc4b9cd1fd741ed99901bb6623e3c2bc46f00a90a0cf3782887",
+    "swdb/wp_adapter.py": "a46f79b73140124bf92214bc60fe6db18780af7ab6036275a21f4ceddbb0220d",
+    "swdb/wp_pointer_bounds.py": "aac4def6847c76a8e1a4925aa29c43bef13876a1e3438e9d2a728d93be239fc7",
+    "swdb/proof_semantics.py": "e1b4eeef66c5fccf43618799597fe3a946574fcaacde4398ed96a9a1b1bd48fc",
+    "swdb/dx_array_domains.py": "f9b6dfa62ff01e01be2efef71e0571f9ee526920970ad06f7a4ba51a1988068e",
+    "swdb/c_lowering.py": "be64403fb590c610d40bed5d039aad193ee2e9ffb62244a5c1ecd8da659339d6",
+    "tests/test_wp_view_entry_hints.py": "34597b09e753d41f5f6d47cc08e7506014667998fdd976b6ffea204f51ef02dc",
+    "tests/test_helper_view_scope.py": "a0046927786735425fe5c0e93edb2a9dd55c18795ef85c2105ade5769934815c",
+    "tests/fixtures/proof/dx100/fixture_units.cc": "9efbb35205bf4ec93920659e1193dc78f59196d17e2c1fcc5188d87cf58ff0b2"
+  },
+  "controls": {
+    "passed": 8,
+    "pytest_seconds": 234.6,
+    "guard": {
+      "cmd": [
+        "/Users/yanrujhou/.pyenv/shims/python3",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_wp_view_entry_hints.py",
+        "tests/test_helper_view_scope.py",
+        "tests/test_wp_helper_windows.py::test_helper_view_keeps_source_anchored_hints_closed",
+        "--maxfail=1",
+        "--basetemp=/private/tmp/probata-view-entry-controls",
+        "--report-log=/private/tmp/probata-view-entry-controls.jsonl"
+      ],
+      "exit_code": 0,
+      "wall_s": 235.06,
+      "peak_rss_mb": 4005.0,
+      "cap_gb": 8.0,
+      "killed_by_watchdog": false,
+      "timed_out": false,
+      "timeout_s": 1200.0,
+      "log": "/private/tmp/probata-view-entry-controls.log",
+      "log_sha256": "6162559fd775410a624ec75eee0fa75a2a1802cedc738077c5018a1a8d720dd8",
+      "lock_wait_s": 0.0,
+      "finished": "2026-10-15 11:39:36 EDT"
+    },
+    "artifact_audit": {
+      "proof_records": 5,
+      "artifact_references": 70,
+      "all_match": true
+    }
+  },
+  "independent_review": "/private/tmp/probata-entry-view-hints-independent-review.md",
+  "actual_store": {
+    "pytest": "2 passed, 1 failed in 1089.80s",
+    "guard": {
+      "cmd": [
+        "/Users/yanrujhou/.pyenv/shims/python3",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_wp_view_entry_hints.py::test_actual_store_source_keeps_entry_witness_and_original_safety_obligations",
+        "--maxfail=1",
+        "--basetemp=/private/tmp/probata-store-entry-actual-corrected",
+        "--report-log=/private/tmp/probata-store-entry-actual-corrected.jsonl"
+      ],
+      "exit_code": 1,
+      "wall_s": 1090.29,
+      "peak_rss_mb": 4288.5,
+      "cap_gb": 8.0,
+      "killed_by_watchdog": false,
+      "timed_out": false,
+      "timeout_s": 1200.0,
+      "log": "/private/tmp/probata-store-entry-actual-corrected.log",
+      "log_sha256": "cbc020e6f6c5c8e0aaa6f6b611a3f2fe7a0a17884cbf38d9046a2bfd9516bf29",
+      "lock_wait_s": 0.0,
+      "finished": "2026-10-15 11:59:59 EDT"
+    },
+    "records": [
+      {
+        "record": "/private/tmp/probata-store-entry-actual-corrected/test_actual_store_source_keeps0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t154252z.ecc9dd62.yaml",
+        "sha256": "a137f81a45ef9f66f8998d654941a63ed4b528c6ff718e2dc772eb0f1e53858d",
+        "id": "proof.dx100-fixtures.candidate-1.20261015t154252z.ecc9dd62",
+        "verdict": "proven",
+        "failure_class": null,
+        "ordinary": {
+          "valid": 90
+        },
+        "smoke": {
+          "valid": 29
+        },
+        "open": [],
+        "setup": {
+          "check": {
+            "version": "1",
+            "sha256": "3251f9df2a1bc5a8fc10467745a5f301746499eff7f40e229088eefd7d32ce02"
+          },
+          "verdict": "passed",
+          "method_version": {
+            "id": "method.cbmc-fixture",
+            "sha256": "3d9f3ffabfe61352aab01c3c5ca91766646b3a36af696b6af29cc0fc45c3d092"
+          },
+          "hashes": {
+            "contract": "79b445daa0c14afa5eeb0b9ee9ac96bafc67d69253454429199ab3a0404d5916",
+            "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "run_plan": "d665d7d072ad544f8cf1a4748894b3b3321b8cb290a70f1a67e65cb1edb6fab1",
+            "stdlib_provenance": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+            "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "wp_input.c": "7431ddab65783a33de5509b58b11afa8e1f4ac9f290562308b25c697e8030c1a",
+            "bfs.cc": "1548c3422a56f6a5ba1233436cc5e33a887f2e4ea0b16b4d05e36a0ebd33338c",
+            "dxf_store_source_wait.c": "438a6106f795406c15939196c6fab1a7cee8d60f666e47007fe6bb35cb8bb428",
+            "source.cc": "e43ac56b8aa1fe7277cd09a5167f63e546e36f106e1c7df875a080ad8cf3e0df",
+            "helper_windows.json": "aa053d50e7861aedf64b69643c3dd0e9ed38f2e21b6e27e2d8df9139dc20c753",
+            "nested_entry_reads.json": "e56fa2b7a8c555949a80810c291b717568d07aa3759b9fcea5cb8464c7e68b7c",
+            "lowering": "58ac1b79d35ea8cbf3466bb9875b4cdbc4310f53c378858417d1aeb0d5d3368a"
+          },
+          "runs": [
+            {
+              "verdict": "passed",
+              "hashes": {
+                "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+                "stdlib_provenance": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+                "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+                "wp_input.c": "7431ddab65783a33de5509b58b11afa8e1f4ac9f290562308b25c697e8030c1a",
+                "bfs.cc": "1548c3422a56f6a5ba1233436cc5e33a887f2e4ea0b16b4d05e36a0ebd33338c",
+                "dxf_store_source_wait.c": "438a6106f795406c15939196c6fab1a7cee8d60f666e47007fe6bb35cb8bb428",
+                "source.cc": "e43ac56b8aa1fe7277cd09a5167f63e546e36f106e1c7df875a080ad8cf3e0df",
+                "helper_windows.json": "aa053d50e7861aedf64b69643c3dd0e9ed38f2e21b6e27e2d8df9139dc20c753",
+                "nested_entry_reads.json": "e56fa2b7a8c555949a80810c291b717568d07aa3759b9fcea5cb8464c7e68b7c",
+                "lowering": "58ac1b79d35ea8cbf3466bb9875b4cdbc4310f53c378858417d1aeb0d5d3368a"
+              },
+              "run_plan_sha256": "85e3b63084210cda36d330cd77cc537538a7e878a4f5db171ea85e3fca470045",
+              "tool": "wp"
+            }
+          ]
+        },
+        "reader": {
+          "check": {
+            "version": "1",
+            "sha256": "3251f9df2a1bc5a8fc10467745a5f301746499eff7f40e229088eefd7d32ce02"
+          },
+          "verdict": "proven"
+        },
+        "source_view_hints": {
+          "policy": "original-unit-entry assertions and ghost hints only",
+          "anchor": "dxf_store_source_wait.entry",
+          "count": 1,
+          "scope": "unchanged original parameters; ordinary hint and semantics checks remain mandatory"
+        },
+        "artifact_count": 22,
+        "artifact_set_sha256": "92d7dfd5d3212ee40eb663ff72e8a4c15f6c5bcfee6383854da960aad3515b9c"
+      },
+      {
+        "record": "/private/tmp/probata-store-entry-actual-corrected/test_actual_store_source_keeps1/records/proofs/proof.dx100-fixtures.candidate-1.20261015t155002z.8906a18a.yaml",
+        "sha256": "e3e4975cfd1554db4ee02ced1cf6f666899f77d5d903e26377c70217450b64af",
+        "id": "proof.dx100-fixtures.candidate-1.20261015t155002z.8906a18a",
+        "verdict": "not_proven",
+        "failure_class": "timeout",
+        "ordinary": {
+          "valid": 90,
+          "timeout": 1
+        },
+        "smoke": {
+          "valid": 29
+        },
+        "open": [
+          {
+            "goal": "typed_real_dxf_store_source_wait_call_maa_indirect_store_vector_requires_store_indices",
+            "status": "timeout"
+          }
+        ],
+        "setup": {
+          "check": {
+            "version": "1",
+            "sha256": "3251f9df2a1bc5a8fc10467745a5f301746499eff7f40e229088eefd7d32ce02"
+          },
+          "verdict": "passed",
+          "method_version": {
+            "id": "method.cbmc-fixture",
+            "sha256": "3d9f3ffabfe61352aab01c3c5ca91766646b3a36af696b6af29cc0fc45c3d092"
+          },
+          "hashes": {
+            "contract": "79b445daa0c14afa5eeb0b9ee9ac96bafc67d69253454429199ab3a0404d5916",
+            "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "run_plan": "d665d7d072ad544f8cf1a4748894b3b3321b8cb290a70f1a67e65cb1edb6fab1",
+            "stdlib_provenance": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+            "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "wp_input.c": "e1d44e9709e781a6feb049bd9f4de6e157ca8ce1c099c1cdfc8d6883ec50e7c5",
+            "bfs.cc": "1548c3422a56f6a5ba1233436cc5e33a887f2e4ea0b16b4d05e36a0ebd33338c",
+            "dxf_store_source_wait.c": "438a6106f795406c15939196c6fab1a7cee8d60f666e47007fe6bb35cb8bb428",
+            "source.cc": "e43ac56b8aa1fe7277cd09a5167f63e546e36f106e1c7df875a080ad8cf3e0df",
+            "helper_windows.json": "aa053d50e7861aedf64b69643c3dd0e9ed38f2e21b6e27e2d8df9139dc20c753",
+            "nested_entry_reads.json": "6877b14dacb5efb39c9d73a0fabdf358f05ceb6419270a80c77a19f7260726f8",
+            "lowering": "58ac1b79d35ea8cbf3466bb9875b4cdbc4310f53c378858417d1aeb0d5d3368a"
+          },
+          "runs": [
+            {
+              "verdict": "passed",
+              "hashes": {
+                "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+                "stdlib_provenance": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+                "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+                "wp_input.c": "e1d44e9709e781a6feb049bd9f4de6e157ca8ce1c099c1cdfc8d6883ec50e7c5",
+                "bfs.cc": "1548c3422a56f6a5ba1233436cc5e33a887f2e4ea0b16b4d05e36a0ebd33338c",
+                "dxf_store_source_wait.c": "438a6106f795406c15939196c6fab1a7cee8d60f666e47007fe6bb35cb8bb428",
+                "source.cc": "e43ac56b8aa1fe7277cd09a5167f63e546e36f106e1c7df875a080ad8cf3e0df",
+                "helper_windows.json": "aa053d50e7861aedf64b69643c3dd0e9ed38f2e21b6e27e2d8df9139dc20c753",
+                "nested_entry_reads.json": "6877b14dacb5efb39c9d73a0fabdf358f05ceb6419270a80c77a19f7260726f8",
+                "lowering": "58ac1b79d35ea8cbf3466bb9875b4cdbc4310f53c378858417d1aeb0d5d3368a"
+              },
+              "run_plan_sha256": "39ca4e3b7b1d02305826c35c953cb0cf1eb163d252a2023aee492371b0553de9",
+              "tool": "wp"
+            }
+          ]
+        },
+        "reader": {
+          "check": {
+            "version": "1",
+            "sha256": "3251f9df2a1bc5a8fc10467745a5f301746499eff7f40e229088eefd7d32ce02"
+          },
+          "verdict": "not_proven"
+        },
+        "source_view_hints": {
+          "policy": "original-unit-entry assertions and ghost hints only",
+          "anchor": "dxf_store_source_wait.entry",
+          "count": 1,
+          "scope": "unchanged original parameters; ordinary hint and semantics checks remain mandatory"
+        },
+        "artifact_count": 23,
+        "artifact_set_sha256": "ef81622a91fdcbe287b0509428cec7a60a36a991f707d3c6c9754530ee9c503f"
+      },
+      {
+        "record": "/private/tmp/probata-store-entry-actual-corrected/test_actual_store_source_keeps2/records/proofs/proof.dx100-fixtures.candidate-1.20261015t155846z.c30f5b5a.yaml",
+        "sha256": "ac9501ca1c1323fa2a285ff977532f839ac78cd29d61d67da9432f09c1a4dfc1",
+        "id": "proof.dx100-fixtures.candidate-1.20261015t155846z.c30f5b5a",
+        "verdict": "not_proven",
+        "failure_class": "unsupported_construct",
+        "ordinary": {},
+        "smoke": {},
+        "open": [],
+        "setup": {
+          "check": {
+            "version": "1",
+            "sha256": "3251f9df2a1bc5a8fc10467745a5f301746499eff7f40e229088eefd7d32ce02"
+          },
+          "verdict": "passed",
+          "method_version": {
+            "id": "method.cbmc-fixture",
+            "sha256": "3d9f3ffabfe61352aab01c3c5ca91766646b3a36af696b6af29cc0fc45c3d092"
+          },
+          "hashes": {
+            "contract": "79b445daa0c14afa5eeb0b9ee9ac96bafc67d69253454429199ab3a0404d5916",
+            "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "run_plan": "af841b5fe25bac21806c75c768b7f44a31cd6ee9786c3421b416e9be47c407de"
+          },
+          "runs": []
+        },
+        "reader": null,
+        "source_view_hints": {
+          "policy": "original-unit-entry assertions and ghost hints only",
+          "anchor": "dxf_store_source_wait.entry",
+          "count": 1,
+          "scope": "unchanged original parameters; ordinary hint and semantics checks remain mandatory"
+        },
+        "artifact_count": 14,
+        "artifact_set_sha256": "1f33d7d437650566d33bef169e2021e82e8d6e77e25209893014f9006c0b03f1"
+      }
+    ],
+    "all_hashes_match": true
+  },
+  "interpretation": "safe90ordinary+29smoke; short-frame90ordinaryValid+one store_indices timeout+29smoke; old-source early-read prelaunch unsupported, not accepted as hazard evidence. That negative has a separate prospective composed-source replay.",
+  "trust": "Original unit entry scope is preserved by independent unedited-byte/header and exact AST/binding checks. Only assert/ghost hints at that entry are admitted; normal Frama noninterference and semantics checks remain mandatory. All input validity, initializedness, array-window and RTE obligations remain ordinary proof goals.",
+  "boundaries": "Historical launch metadata false on actual records is corrected separately at b4dc2748; actual WP is evidenced by fresh report files and strict reader. Older early-CPU-read case stopped before hint checking and its test failed on missing hint_check; not counted as the required hazard control. No full ticket closure or current method/freeze claim."
+}

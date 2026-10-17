@@ -1,0 +1,62 @@
+{
+  "created": "2026-10-16 ET",
+  "observed_utc": "2026-10-16T21:11:45.362638+00:00",
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-1433b8f5-t25-closed-source-public-v3",
+  "actual": {
+    "lane.json": {
+      "socket_lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "command": [
+          "timeout",
+          "--signal=TERM",
+          "--kill-after=60",
+          "1320",
+          "bash",
+          "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-1433b8f5-t25-closed-source-public-v3/run.sh"
+        ],
+        "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+        "ended_utc": "",
+        "exit_code": -1,
+        "host": "mbit10",
+        "job": "probata-resume-20261016-1433b8f5-t25-closed-source-public-v3",
+        "lease_generation": 618,
+        "lease_name": "mbit10-evaluation-node0",
+        "load1_at_start": 0.09,
+        "load1_max": 32,
+        "node": 0,
+        "numa_memory_policy": "bind:0",
+        "numactl": "--cpunodebind=0 --membind=0",
+        "preregistration_sha256": null,
+        "started_utc": "2026-10-16T21:10:10Z"
+      }
+    },
+    "acceptance.log": "",
+    "worker.log": "",
+    "closed-source-profile/pytest.log": ""
+  },
+  "metadata_pins": [
+    {
+      "relative": "lane.json",
+      "bytes": 823,
+      "sha256": "a1a5af9351d77ada05a5fd2cfe64a937b2722cabf16d03cbb3d45e7ae22e0999"
+    },
+    {
+      "relative": "acceptance.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "relative": "worker.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "relative": "closed-source-profile/pytest.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "raw_payload_transferred": false
+}
+

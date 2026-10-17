@@ -1,0 +1,1671 @@
+kind: target_description
+schema_version: '0.4'
+id: mbit10.cpu.lanl20261006a2.v2.t2
+status: draft
+created: '2026-10-06'
+updated: '2026-10-06'
+provenance:
+- id: cpu-calibration
+  kind: measurement
+  description: CPU calibration aa2dd212a7e5a4ecd67962d428fa8cdf497f07857092378ae8c8d60fd5f3a088; threads=2;
+    useful source-element bytes
+  uri: null
+format: swdb.target-description.v1
+version: c1fa5ca6c606dd0317972a6415d921b07e12a37fdccfb20b0ae00b22044ff058
+target: mbit10
+threads: 2
+estimator_variant: team
+calibration_sources:
+- mbit10.cpu.lanl20261006a2.v2.calibration.t2
+dram_address_layout: null
+mechanisms:
+- model: compute_throughput
+  parameters:
+    integer_ops_per_s:
+      value: 23195094966.48907
+      basis: measured
+      source: CPU calibration aa2dd212a7e5a4ecd67962d428fa8cdf497f07857092378ae8c8d60fd5f3a088; threads=2;
+        useful source-element bytes; integer constructed work / uninstrumented elapsed; source_normalized_ir;
+        source-normalized-v2 numerator proof 5ce7552b4b3f58e83270784a5e2a916c0dd41fb2dec46a9789bc65106343a75d
+      unit: operations/s
+    floating_point_ops_per_s:
+      value: 6964154266.929415
+      basis: measured
+      source: CPU calibration aa2dd212a7e5a4ecd67962d428fa8cdf497f07857092378ae8c8d60fd5f3a088; threads=2;
+        useful source-element bytes; floating_point constructed work / uninstrumented elapsed; source_normalized_ir;
+        source-normalized-v2 numerator proof 5ce7552b4b3f58e83270784a5e2a916c0dd41fb2dec46a9789bc65106343a75d
+      unit: operations/s
+    branch_ops_per_s:
+      value: 4804877919.292415
+      basis: measured
+      source: CPU calibration aa2dd212a7e5a4ecd67962d428fa8cdf497f07857092378ae8c8d60fd5f3a088; threads=2;
+        useful source-element bytes; branch constructed work / uninstrumented elapsed; source_normalized_ir;
+        source-normalized-v2 numerator proof 5ce7552b4b3f58e83270784a5e2a916c0dd41fb2dec46a9789bc65106343a75d
+      unit: operations/s
+    atomic_ops_per_s:
+      value: 348282643.6281332
+      basis: measured
+      source: CPU calibration aa2dd212a7e5a4ecd67962d428fa8cdf497f07857092378ae8c8d60fd5f3a088; threads=2;
+        useful source-element bytes; atomic constructed work / uninstrumented elapsed; source_normalized_ir;
+        source-normalized-v2 numerator proof 5ce7552b4b3f58e83270784a5e2a916c0dd41fb2dec46a9789bc65106343a75d
+      unit: operations/s
+- model: streaming_bandwidth
+  parameters:
+    bytes_per_s:
+      value: 25191773888.8343
+      basis: measured
+      source: CPU calibration aa2dd212a7e5a4ecd67962d428fa8cdf497f07857092378ae8c8d60fd5f3a088; threads=2;
+        useful source-element bytes
+      unit: bytes/s
+- model: requests_in_flight_latency
+  parameters:
+    dependent_latency_s:
+      value: 8.846530628204346e-08
+      basis: measured
+      source: CPU calibration aa2dd212a7e5a4ecd67962d428fa8cdf497f07857092378ae8c8d60fd5f3a088; threads=2;
+        useful source-element bytes; C=1 effective elapsed seconds/load
+      unit: seconds/load
+    effective_requests_per_thread:
+      value: 10.783628482663065
+      basis: inferred
+      source: CPU calibration aa2dd212a7e5a4ecd67962d428fa8cdf497f07857092378ae8c8d60fd5f3a088; threads=2;
+        useful source-element bytes; plateau median of rate/thread * dependent seconds/load
+      unit: requests/thread
+- model: cache_fit
+  parameters:
+    capacity_bytes:
+      value: 25165824
+      basis: reported
+      source: CPU calibration aa2dd212a7e5a4ecd67962d428fa8cdf497f07857092378ae8c8d60fd5f3a088; threads=2;
+        useful source-element bytes; live kernel-reported shared cache capacity
+      unit: bytes
+    bytes_per_s:
+      value: 66498457514.34227
+      basis: measured
+      source: CPU calibration aa2dd212a7e5a4ecd67962d428fa8cdf497f07857092378ae8c8d60fd5f3a088; threads=2;
+        useful source-element bytes; warm cache-resident stream footprint
+      unit: bytes/s
+    cold_bytes_per_s:
+      value: 29055783198.883293
+      basis: measured
+      source: CPU calibration aa2dd212a7e5a4ecd67962d428fa8cdf497f07857092378ae8c8d60fd5f3a088; threads=2;
+        useful source-element bytes; cache state after untimed eviction, bus/page-fault traffic unclaimed
+      unit: bytes/s
+extensions:
+  cpu_calibration:
+    receipt_sha256: aa2dd212a7e5a4ecd67962d428fa8cdf497f07857092378ae8c8d60fd5f3a088
+    evidence_kind: native
+    context:
+      compiler: /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang++
+      compiler_version: |
+        clang version 22.1.8 (https://github.com/llvm/llvm-project ca7933e47d3a3451d81e72ac174dcb5aa28b59d1)
+        Target: x86_64-unknown-linux-gnu
+        Thread model: posix
+        InstalledDir: /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin
+      flags:
+      - -O3
+      - -std=c++17
+      - -pthread
+      - --gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13
+      host: mbit10
+      architecture: x86_64
+      runtime: std::thread; physical-core pinning on Linux
+      lane: 'mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 468)'
+      cpus: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30]
+      commit: 40435a907559a27e6a0cfe8ae4c17140a591405d
+      dirty: false
+      source_sha256:
+        CpuCalibration.cpp: 3368e0a9afb761ce0564a2959977ae7a2aaf7483a475843099268ddd475c6f47
+        CpuWork.h: 18505bf0e53496132ac3c4bf03881d804d6e0fd9dee51c5887fbda2190fd8393
+        CpuCount.cpp: 9d739f2f19f19d0c91d6ad50d5439e2a3c6c073be41d1d14fe111b368ddfd3f3
+      binary_sha256: 1efbe9b2afe0ad8c5ff3c11819d3868c5c7e5291703340daf73f01e5a9635567
+      start_state:
+        load: [1.88525390625, 2.10302734375, 2.0283203125]
+        time_ns: 1791321317678184149
+        available_memory: |-
+          MemTotal:       131426264 kB
+          MemFree:        27411468 kB
+          MemAvailable:   122736584 kB
+          Buffers:        12201404 kB
+          Cached:         54863560 kB
+          SwapCached:            0 kB
+          Active:          4224448 kB
+          Inactive:       64325040 kB
+          Active(anon):    1458032 kB
+          Inactive(anon):    56224 kB
+          Active(file):    2766416 kB
+          Inactive(file): 64268816 kB
+          Unevictable:       39252 kB
+          Mlocked:           36180 kB
+          SwapTotal:             0 kB
+          SwapFree:              0 kB
+          Zswap:                 0 kB
+          Zswapped:              0 kB
+          Dirty:               672 kB
+          Writeback:             0 kB
+          AnonPages:       1524440 kB
+          Mapped:          1125948 kB
+          Shmem:             14900 kB
+          KReclaimable:   29608484 kB
+          Slab:           32111796 kB
+          SReclaimable:   29524652 kB
+          SUnreclaim:      2587144 kB
+          KernelStack:       25488 kB
+          PageTables:        30776 kB
+          SecPageTables:         0 kB
+          NFS_Unstable:          0 kB
+          Bounce:                0 kB
+          WritebackTmp:          0 kB
+          CommitLimit:    65713132 kB
+          Committed_AS:    5482688 kB
+          VmallocTotal:   13743895347199 kB
+          VmallocUsed:      432500 kB
+          VmallocChunk:          0 kB
+          Percpu:           362496 kB
+          HardwareCorrupted:     8 kB
+          AnonHugePages:         0 kB
+          ShmemHugePages:        0 kB
+          ShmemPmdMapped:        0 kB
+          FileHugePages:         0 kB
+          FilePmdMapped:         0 kB
+          Unaccepted:            0 kB
+          HugePages_Total:       0
+          HugePages_Free:        0
+          HugePages_Rsvd:        0
+          HugePages_Surp:        0
+          Hugepagesize:       2048 kB
+          Hugetlb:               0 kB
+          DirectMap4k:    40398820 kB
+          DirectMap2M:    91160576 kB
+          DirectMap1G:     4194304 kB
+        governor: null
+        no_turbo: null
+      free_disk_bytes: 62370263040
+      last_level_cache:
+        capacity_bytes: 25165824
+        level: 3
+        sharing: 0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62
+        basis: reported
+      end_state:
+        load: [11.533203125, 5.087890625, 3.1025390625]
+        time_ns: 1791321569891771891
+        available_memory: |-
+          MemTotal:       131426264 kB
+          MemFree:        27394628 kB
+          MemAvailable:   122734820 kB
+          Buffers:        12201736 kB
+          Cached:         54877408 kB
+          SwapCached:            0 kB
+          Active:          4225452 kB
+          Inactive:       64339240 kB
+          Active(anon):    1459036 kB
+          Inactive(anon):    56220 kB
+          Active(file):    2766416 kB
+          Inactive(file): 64283020 kB
+          Unevictable:       39252 kB
+          Mlocked:           36180 kB
+          SwapTotal:             0 kB
+          SwapFree:              0 kB
+          Zswap:                 0 kB
+          Zswapped:              0 kB
+          Dirty:                16 kB
+          Writeback:             0 kB
+          AnonPages:       1525112 kB
+          Mapped:          1125808 kB
+          Shmem:             14900 kB
+          KReclaimable:   29609356 kB
+          Slab:           32111872 kB
+          SReclaimable:   29525524 kB
+          SUnreclaim:      2586348 kB
+          KernelStack:       25712 kB
+          PageTables:        31012 kB
+          SecPageTables:         0 kB
+          NFS_Unstable:          0 kB
+          Bounce:                0 kB
+          WritebackTmp:          0 kB
+          CommitLimit:    65713132 kB
+          Committed_AS:    5489596 kB
+          VmallocTotal:   13743895347199 kB
+          VmallocUsed:      432612 kB
+          VmallocChunk:          0 kB
+          Percpu:           363008 kB
+          HardwareCorrupted:     8 kB
+          AnonHugePages:         0 kB
+          ShmemHugePages:        0 kB
+          ShmemPmdMapped:        0 kB
+          FileHugePages:         0 kB
+          FilePmdMapped:         0 kB
+          Unaccepted:            0 kB
+          HugePages_Total:       0
+          HugePages_Free:        0
+          HugePages_Rsvd:        0
+          HugePages_Surp:        0
+          Hugepagesize:       2048 kB
+          Hugetlb:               0 kB
+          DirectMap4k:    40398820 kB
+          DirectMap2M:    91160576 kB
+          DirectMap1G:     4194304 kB
+        governor: null
+        no_turbo: null
+    settings:
+      threads: [1, 2, 4, 8, 16]
+      chains: [1, 16, 32, 64, 128]
+      repetitions: 7
+      working_set_bytes: 268435456
+      cache_bytes: 8388608
+      min_trial_s: 0.2
+      max_wall_s: 900.0
+      seed: 20261006
+      memory_cap_bytes: 1610612736
+      raw_cap_bytes: 52428800
+    series:
+    - shape: stream
+      chains: 1
+      seconds:
+        values: [0.341266579, 0.341473843, 0.340965247, 0.340972699, 0.34108691, 0.340981728, 0.340965174]
+        median: 0.340981728
+        min: 0.340965174
+        max: 0.341473843
+        spread: 0.0005086690000000171
+        repetitions: 7
+      useful_bytes_per_s:
+        values: [25170746626.202736, 25155468766.022, 25192991566.08767, 25192440970.178673, 25184005425.479385,
+          25191773888.8343, 25192996959.859604]
+        median: 25191773888.8343
+        min: 25155468766.022
+        max: 25192996959.859604
+        spread: 37528193.83760452
+        repetitions: 7
+      helper_bytes_per_s:
+        values: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        median: 0.0
+        min: 0.0
+        max: 0.0
+        spread: 0.0
+        repetitions: 7
+      footprint_bytes: 268435456
+      scope: partitioned, first-touched on bound worker; useful payload bytes; helper bytes separate;
+        compiler-only pass fence for repeated stores
+      source_access_derivation: payload source-element accesses only; index/offset helper elements separate;
+        checksum/control bookkeeping excluded
+      trials:
+      - seconds: 0.341266579
+        iterations: 1073741824
+        accesses: 2147483648
+        useful_bytes: 8589934592
+        helper_bytes: 0
+        checksum: 2.2204723358154297
+        worker_iterations: [536870912, 536870912]
+      - seconds: 0.341473843
+        iterations: 1073741824
+        accesses: 2147483648
+        useful_bytes: 8589934592
+        helper_bytes: 0
+        checksum: 2.2204723358154297
+        worker_iterations: [536870912, 536870912]
+      - seconds: 0.340965247
+        iterations: 1073741824
+        accesses: 2147483648
+        useful_bytes: 8589934592
+        helper_bytes: 0
+        checksum: 2.2204723358154297
+        worker_iterations: [536870912, 536870912]
+      - seconds: 0.340972699
+        iterations: 1073741824
+        accesses: 2147483648
+        useful_bytes: 8589934592
+        helper_bytes: 0
+        checksum: 2.2204723358154297
+        worker_iterations: [536870912, 536870912]
+      - seconds: 0.34108691
+        iterations: 1073741824
+        accesses: 2147483648
+        useful_bytes: 8589934592
+        helper_bytes: 0
+        checksum: 2.2204723358154297
+        worker_iterations: [536870912, 536870912]
+      - seconds: 0.340981728
+        iterations: 1073741824
+        accesses: 2147483648
+        useful_bytes: 8589934592
+        helper_bytes: 0
+        checksum: 2.2204723358154297
+        worker_iterations: [536870912, 536870912]
+      - seconds: 0.340965174
+        iterations: 1073741824
+        accesses: 2147483648
+        useful_bytes: 8589934592
+        helper_bytes: 0
+        checksum: 2.2204723358154297
+        worker_iterations: [536870912, 536870912]
+    - shape: single_valued_indirect
+      chains: 1
+      seconds:
+        values: [0.246000979, 0.246108526, 0.24604204, 0.246101514, 0.245961201, 0.246329586, 0.246350444]
+        median: 0.246101514
+        min: 0.245961201
+        max: 0.246350444
+        spread: 0.00038924300000001133
+        repetitions: 7
+      useful_bytes_per_s:
+        values: [1091196698.042409, 1090719855.8411584, 1091014592.4655802, 1090750932.9666295, 1091373171.4946375,
+          1089741026.8858244, 1089648760.6898732]
+        median: 1090750932.9666295
+        min: 1089648760.6898732
+        max: 1091373171.4946375
+        spread: 1724410.8047642708
+        repetitions: 7
+      helper_bytes_per_s:
+        values: [1091196698.042409, 1090719855.8411584, 1091014592.4655802, 1090750932.9666295, 1091373171.4946375,
+          1089741026.8858244, 1089648760.6898732]
+        median: 1090750932.9666295
+        min: 1089648760.6898732
+        max: 1091373171.4946375
+        spread: 1724410.8047642708
+        repetitions: 7
+      footprint_bytes: 268435456
+      scope: partitioned, first-touched on bound worker; useful payload bytes; helper bytes separate;
+        compiler-only pass fence for repeated stores
+      source_access_derivation: payload source-element accesses only; index/offset helper elements separate;
+        checksum/control bookkeeping excluded
+      trials:
+      - seconds: 0.246000979
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 268435456
+        helper_bytes: 268435456
+        checksum: 33290208.87401575
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.246108526
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 268435456
+        helper_bytes: 268435456
+        checksum: 33290208.87401575
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.24604204
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 268435456
+        helper_bytes: 268435456
+        checksum: 33290208.87401575
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.246101514
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 268435456
+        helper_bytes: 268435456
+        checksum: 33290208.87401575
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.245961201
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 268435456
+        helper_bytes: 268435456
+        checksum: 33290208.87401575
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.246329586
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 268435456
+        helper_bytes: 268435456
+        checksum: 33290208.87401575
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.246350444
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 268435456
+        helper_bytes: 268435456
+        checksum: 33290208.87401575
+        worker_iterations: [33554432, 33554432]
+    - shape: ranged_indirect
+      chains: 1
+      seconds:
+        values: [0.248370067, 0.248353241, 0.248353345, 0.248410534, 0.24832154, 0.248303806, 0.249169151]
+        median: 0.248353345
+        min: 0.248303806
+        max: 0.249169151
+        spread: 0.0008653450000000174
+        repetitions: 7
+      useful_bytes_per_s:
+        values: [1080788273.894535, 1080861497.5956767, 1080861044.9760602, 1080612209.464515, 1080999481.5592718,
+          1081076687.161211, 1077322192.264483]
+        median: 1080861044.9760602
+        min: 1077322192.264483
+        max: 1081076687.161211
+        spread: 3754494.896728039
+        repetitions: 7
+      helper_bytes_per_s:
+        values: [1350985342.3681686, 1351076871.9945958, 1351076306.2200754, 1350765261.8306437, 1351249351.9490898,
+          1351345858.9515138, 1346652740.3306038]
+        median: 1351076306.2200754
+        min: 1346652740.3306038
+        max: 1351345858.9515138
+        spread: 4693118.620909929
+        repetitions: 7
+      footprint_bytes: 268435456
+      scope: partitioned, first-touched on bound worker; useful payload bytes; helper bytes separate;
+        compiler-only pass fence for repeated stores
+      source_access_derivation: payload source-element accesses only; index/offset helper elements separate;
+        checksum/control bookkeeping excluded
+      trials:
+      - seconds: 0.248370067
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 268435456
+        helper_bytes: 335544320
+        checksum: 33290208.87401575
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.248353241
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 268435456
+        helper_bytes: 335544320
+        checksum: 33290208.87401575
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.248353345
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 268435456
+        helper_bytes: 335544320
+        checksum: 33290208.87401575
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.248410534
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 268435456
+        helper_bytes: 335544320
+        checksum: 33290208.87401575
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.24832154
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 268435456
+        helper_bytes: 335544320
+        checksum: 33290208.87401575
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.248303806
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 268435456
+        helper_bytes: 335544320
+        checksum: 33290208.87401575
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.249169151
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 268435456
+        helper_bytes: 335544320
+        checksum: 33290208.87401575
+        worker_iterations: [33554432, 33554432]
+    - shape: data_dependent_merge
+      chains: 1
+      seconds:
+        values: [0.225843498, 0.225888945, 0.225792063, 0.225876542, 0.225722619, 0.225670353, 0.225740969]
+        median: 0.225792063
+        min: 0.225670353
+        max: 0.225888945
+        spread: 0.00021859200000001744
+        repetitions: 7
+      useful_bytes_per_s:
+        values: [9508724417.649607, 9506811340.413317, 9510890486.881287, 9507333364.43587, 9513816530.721716,
+          9516019962.090458, 9513043172.947485]
+        median: 9510890486.881287
+        min: 9506811340.413317
+        max: 9516019962.090458
+        spread: 9208621.67714119
+        repetitions: 7
+      helper_bytes_per_s:
+        values: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        median: 0.0
+        min: 0.0
+        max: 0.0
+        spread: 0.0
+        repetitions: 7
+      footprint_bytes: 268435456
+      scope: partitioned, first-touched on bound worker; useful payload bytes; helper bytes separate;
+        compiler-only pass fence for repeated stores
+      source_access_derivation: 'per worker/pass: N output elements; N-1 compare/select steps each read
+        2 heads, reread 1 selected head, write 1 output; final tail reads/writes once: 4*N-2 accesses,
+        4 bytes each'
+      trials:
+      - seconds: 0.225843498
+        iterations: 134217728
+        accesses: 536870896
+        useful_bytes: 2147483584
+        helper_bytes: 0
+        checksum: 33554430
+        worker_iterations: [67108864, 67108864]
+      - seconds: 0.225888945
+        iterations: 134217728
+        accesses: 536870896
+        useful_bytes: 2147483584
+        helper_bytes: 0
+        checksum: 33554430
+        worker_iterations: [67108864, 67108864]
+      - seconds: 0.225792063
+        iterations: 134217728
+        accesses: 536870896
+        useful_bytes: 2147483584
+        helper_bytes: 0
+        checksum: 33554430
+        worker_iterations: [67108864, 67108864]
+      - seconds: 0.225876542
+        iterations: 134217728
+        accesses: 536870896
+        useful_bytes: 2147483584
+        helper_bytes: 0
+        checksum: 33554430
+        worker_iterations: [67108864, 67108864]
+      - seconds: 0.225722619
+        iterations: 134217728
+        accesses: 536870896
+        useful_bytes: 2147483584
+        helper_bytes: 0
+        checksum: 33554430
+        worker_iterations: [67108864, 67108864]
+      - seconds: 0.225670353
+        iterations: 134217728
+        accesses: 536870896
+        useful_bytes: 2147483584
+        helper_bytes: 0
+        checksum: 33554430
+        worker_iterations: [67108864, 67108864]
+      - seconds: 0.225740969
+        iterations: 134217728
+        accesses: 536870896
+        useful_bytes: 2147483584
+        helper_bytes: 0
+        checksum: 33554430
+        worker_iterations: [67108864, 67108864]
+    - shape: cache_stream
+      chains: 1
+      seconds:
+        values: [0.258347051, 0.258352237, 0.258430748, 0.25834989, 0.25828569, 0.258305184, 0.258411263]
+        median: 0.25834989
+        min: 0.25828569
+        max: 0.258430748
+        spread: 0.0001450579999999757
+        repetitions: 7
+      useful_bytes_per_s:
+        values: [66499188272.13554, 66497853409.33588, 66477651428.69145, 66498457514.34227, 66514986501.96223,
+          66509966691.183395, 66482664047.03885]
+        median: 66498457514.34227
+        min: 66477651428.69145
+        max: 66514986501.96223
+        spread: 37335073.27077484
+        repetitions: 7
+      helper_bytes_per_s:
+        values: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        median: 0.0
+        min: 0.0
+        max: 0.0
+        spread: 0.0
+        repetitions: 7
+      footprint_bytes: 8388608
+      scope: partitioned, first-touched on bound worker; useful payload bytes; helper bytes separate;
+        compiler-only pass fence for repeated stores
+      source_access_derivation: payload source-element accesses only; index/offset helper elements separate;
+        checksum/control bookkeeping excluded
+      trials:
+      - seconds: 0.258347051
+        iterations: 2147483648
+        accesses: 4294967296
+        useful_bytes: 17179869184
+        helper_bytes: 0
+        checksum: 2.9763779640197754
+        worker_iterations: [1073741824, 1073741824]
+      - seconds: 0.258352237
+        iterations: 2147483648
+        accesses: 4294967296
+        useful_bytes: 17179869184
+        helper_bytes: 0
+        checksum: 2.9763779640197754
+        worker_iterations: [1073741824, 1073741824]
+      - seconds: 0.258430748
+        iterations: 2147483648
+        accesses: 4294967296
+        useful_bytes: 17179869184
+        helper_bytes: 0
+        checksum: 2.9763779640197754
+        worker_iterations: [1073741824, 1073741824]
+      - seconds: 0.25834989
+        iterations: 2147483648
+        accesses: 4294967296
+        useful_bytes: 17179869184
+        helper_bytes: 0
+        checksum: 2.9763779640197754
+        worker_iterations: [1073741824, 1073741824]
+      - seconds: 0.25828569
+        iterations: 2147483648
+        accesses: 4294967296
+        useful_bytes: 17179869184
+        helper_bytes: 0
+        checksum: 2.9763779640197754
+        worker_iterations: [1073741824, 1073741824]
+      - seconds: 0.258305184
+        iterations: 2147483648
+        accesses: 4294967296
+        useful_bytes: 17179869184
+        helper_bytes: 0
+        checksum: 2.9763779640197754
+        worker_iterations: [1073741824, 1073741824]
+      - seconds: 0.258411263
+        iterations: 2147483648
+        accesses: 4294967296
+        useful_bytes: 17179869184
+        helper_bytes: 0
+        checksum: 2.9763779640197754
+        worker_iterations: [1073741824, 1073741824]
+    - shape: cache_cold_stream
+      chains: 1
+      seconds:
+        values: [0.00029403, 0.000295196, 0.000293126, 0.000287978, 0.000285648, 0.000284395, 0.000288707]
+        median: 0.000288707
+        min: 0.000284395
+        max: 0.000295196
+        spread: 1.0801000000000007e-05
+        repetitions: 7
+      useful_bytes_per_s:
+        values: [28529769071.183216, 28417078822.20626, 28617754822.15839, 29129336268.742752, 29366941130.34224,
+          29496327291.267426, 29055783198.883293]
+        median: 29055783198.883293
+        min: 28417078822.20626
+        max: 29496327291.267426
+        spread: 1079248469.0611649
+        repetitions: 7
+      helper_bytes_per_s:
+        values: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        median: 0.0
+        min: 0.0
+        max: 0.0
+        spread: 0.0
+        repetitions: 7
+      footprint_bytes: 8388608
+      scope: partitioned, first-touched on bound worker; useful payload bytes; helper bytes separate;
+        compiler-only pass fence for repeated stores
+      source_access_derivation: payload source-element accesses only; index/offset helper elements separate;
+        checksum/control bookkeeping excluded
+      trials:
+      - seconds: 0.00029403
+        iterations: 1048576
+        accesses: 2097152
+        useful_bytes: 8388608
+        helper_bytes: 0
+        checksum: 2.9763779640197754
+        worker_iterations: [524288, 524288]
+      - seconds: 0.000295196
+        iterations: 1048576
+        accesses: 2097152
+        useful_bytes: 8388608
+        helper_bytes: 0
+        checksum: 2.9763779640197754
+        worker_iterations: [524288, 524288]
+      - seconds: 0.000293126
+        iterations: 1048576
+        accesses: 2097152
+        useful_bytes: 8388608
+        helper_bytes: 0
+        checksum: 2.9763779640197754
+        worker_iterations: [524288, 524288]
+      - seconds: 0.000287978
+        iterations: 1048576
+        accesses: 2097152
+        useful_bytes: 8388608
+        helper_bytes: 0
+        checksum: 2.9763779640197754
+        worker_iterations: [524288, 524288]
+      - seconds: 0.000285648
+        iterations: 1048576
+        accesses: 2097152
+        useful_bytes: 8388608
+        helper_bytes: 0
+        checksum: 2.9763779640197754
+        worker_iterations: [524288, 524288]
+      - seconds: 0.000284395
+        iterations: 1048576
+        accesses: 2097152
+        useful_bytes: 8388608
+        helper_bytes: 0
+        checksum: 2.9763779640197754
+        worker_iterations: [524288, 524288]
+      - seconds: 0.000288707
+        iterations: 1048576
+        accesses: 2097152
+        useful_bytes: 8388608
+        helper_bytes: 0
+        checksum: 2.9763779640197754
+        worker_iterations: [524288, 524288]
+    - shape: compute_integer
+      chains: 1
+      seconds:
+        values: [0.300787083, 0.300832968, 0.300984507, 0.30087392, 0.300896456, 0.300906105, 0.301544631]
+        median: 0.300896456
+        min: 0.300787083
+        max: 0.301544631
+        spread: 0.0007575479999999968
+        repetitions: 7
+      useful_bytes_per_s:
+        values: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        median: 0.0
+        min: 0.0
+        max: 0.0
+        spread: 0.0
+        repetitions: 7
+      helper_bytes_per_s:
+        values: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        median: 0.0
+        min: 0.0
+        max: 0.0
+        spread: 0.0
+        repetitions: 7
+      footprint_bytes: 0
+      scope: scalar state; no payload arrays; uncontended atomic uses one private 8-byte word per worker;
+        logical footprint from shared source
+      source_access_derivation: payload source-element accesses only; index/offset helper elements separate;
+        checksum/control bookkeeping excluded
+      trials:
+      - seconds: 0.300787083
+        iterations: 268435456
+        accesses: 0
+        useful_bytes: 0
+        helper_bytes: 0
+        checksum: 2.3909978781464953e+19
+        worker_iterations: [134217728, 134217728]
+      - seconds: 0.300832968
+        iterations: 268435456
+        accesses: 0
+        useful_bytes: 0
+        helper_bytes: 0
+        checksum: 1.1954989390732476e+19
+        worker_iterations: [134217728, 134217728]
+      - seconds: 0.300984507
+        iterations: 268435456
+        accesses: 0
+        useful_bytes: 0
+        helper_bytes: 0
+        checksum: 0
+        worker_iterations: [134217728, 134217728]
+      - seconds: 0.30087392
+        iterations: 268435456
+        accesses: 0
+        useful_bytes: 0
+        helper_bytes: 0
+        checksum: 1.1954989390732476e+19
+        worker_iterations: [134217728, 134217728]
+      - seconds: 0.300896456
+        iterations: 268435456
+        accesses: 0
+        useful_bytes: 0
+        helper_bytes: 0
+        checksum: 2.3909978781464953e+19
+        worker_iterations: [134217728, 134217728]
+      - seconds: 0.300906105
+        iterations: 268435456
+        accesses: 0
+        useful_bytes: 0
+        helper_bytes: 0
+        checksum: 1.1954989390732476e+19
+        worker_iterations: [134217728, 134217728]
+      - seconds: 0.301544631
+        iterations: 268435456
+        accesses: 0
+        useful_bytes: 0
+        helper_bytes: 0
+        checksum: 0
+        worker_iterations: [134217728, 134217728]
+      operations_per_s:
+        values: [23203529228.68034, 23199990075.555817, 23188309396.93517, 23196832320.993458, 23195094966.48907,
+          23194351181.409233, 23145236739.43311]
+        median: 23195094966.48907
+        min: 23145236739.43311
+        max: 23203529228.68034
+        spread: 58292489.24723053
+        repetitions: 7
+      requested_working_set_bytes: 268435456
+    - shape: compute_floating_point
+      chains: 1
+      seconds:
+        values: [0.30864665, 0.308431765, 0.308306475, 0.308356132, 0.30841144, 0.308315506, 0.308362448]
+        median: 0.308362448
+        min: 0.308306475
+        max: 0.30864665
+        spread: 0.0003401749999999981
+        repetitions: 7
+      useful_bytes_per_s:
+        values: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        median: 0.0
+        min: 0.0
+        max: 0.0
+        spread: 0.0
+        repetitions: 7
+      helper_bytes_per_s:
+        values: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        median: 0.0
+        min: 0.0
+        max: 0.0
+        spread: 0.0
+        repetitions: 7
+      footprint_bytes: 0
+      scope: scalar state; no payload arrays; uncontended atomic uses one private 8-byte word per worker;
+        logical footprint from shared source
+      source_access_derivation: payload source-element accesses only; index/offset helper elements separate;
+        checksum/control bookkeeping excluded
+      trials:
+      - seconds: 0.30864665
+        iterations: 268435456
+        accesses: 0
+        useful_bytes: 0
+        helper_bytes: 0
+        checksum: 727467.9109962117
+        worker_iterations: [134217728, 134217728]
+      - seconds: 0.308431765
+        iterations: 268435456
+        accesses: 0
+        useful_bytes: 0
+        helper_bytes: 0
+        checksum: 727467.9186509829
+        worker_iterations: [134217728, 134217728]
+      - seconds: 0.308306475
+        iterations: 268435456
+        accesses: 0
+        useful_bytes: 0
+        helper_bytes: 0
+        checksum: 727467.926305806
+        worker_iterations: [134217728, 134217728]
+      - seconds: 0.308356132
+        iterations: 268435456
+        accesses: 0
+        useful_bytes: 0
+        helper_bytes: 0
+        checksum: 727467.9339605038
+        worker_iterations: [134217728, 134217728]
+      - seconds: 0.30841144
+        iterations: 268435456
+        accesses: 0
+        useful_bytes: 0
+        helper_bytes: 0
+        checksum: 727467.9416152315
+        worker_iterations: [134217728, 134217728]
+      - seconds: 0.308315506
+        iterations: 268435456
+        accesses: 0
+        useful_bytes: 0
+        helper_bytes: 0
+        checksum: 727467.9492700276
+        worker_iterations: [134217728, 134217728]
+      - seconds: 0.308362448
+        iterations: 268435456
+        accesses: 0
+        useful_bytes: 0
+        helper_bytes: 0
+        checksum: 727467.956924715
+        worker_iterations: [134217728, 134217728]
+      operations_per_s:
+        values: [6957741669.964666, 6962589141.880376, 6965418608.220926, 6964296912.376628, 6963047991.994072,
+          6965214581.195926, 6964154266.929415]
+        median: 6964154266.929415
+        min: 6957741669.964666
+        max: 6965418608.220926
+        spread: 7676938.256259918
+        repetitions: 7
+      requested_working_set_bytes: 268435456
+    - shape: compute_branch
+      chains: 1
+      seconds:
+        values: [0.27944458, 0.279292035, 0.27935826, 0.279270443, 0.279185527, 0.279382597, 0.279336397]
+        median: 0.279336397
+        min: 0.279185527
+        max: 0.27944458
+        spread: 0.0002590530000000091
+        repetitions: 7
+      useful_bytes_per_s:
+        values: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        median: 0.0
+        min: 0.0
+        max: 0.0
+        spread: 0.0
+        repetitions: 7
+      helper_bytes_per_s:
+        values: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        median: 0.0
+        min: 0.0
+        max: 0.0
+        spread: 0.0
+        repetitions: 7
+      footprint_bytes: 0
+      scope: scalar state; no payload arrays; uncontended atomic uses one private 8-byte word per worker;
+        logical footprint from shared source
+      source_access_derivation: payload source-element accesses only; index/offset helper elements separate;
+        checksum/control bookkeeping excluded
+      trials:
+      - seconds: 0.27944458
+        iterations: 268435456
+        accesses: 0
+        useful_bytes: 0
+        helper_bytes: 0
+        checksum: 3.010524309149406e+19
+        worker_iterations: [134217728, 134217728]
+      - seconds: 0.279292035
+        iterations: 268435456
+        accesses: 0
+        useful_bytes: 0
+        helper_bytes: 0
+        checksum: 2.0945551262480966e+19
+        worker_iterations: [134217728, 134217728]
+      - seconds: 0.27935826
+        iterations: 268435456
+        accesses: 0
+        useful_bytes: 0
+        helper_bytes: 0
+        checksum: 1.7182278364283466e+19
+        worker_iterations: [134217728, 134217728]
+      - seconds: 0.279270443
+        iterations: 268435456
+        accesses: 0
+        useful_bytes: 0
+        helper_bytes: 0
+        checksum: 2.551002908869106e+19
+        worker_iterations: [134217728, 134217728]
+      - seconds: 0.279185527
+        iterations: 268435456
+        accesses: 0
+        useful_bytes: 0
+        helper_bytes: 0
+        checksum: 1.9622881416348553e+19
+        worker_iterations: [134217728, 134217728]
+      - seconds: 0.279382597
+        iterations: 268435456
+        accesses: 0
+        useful_bytes: 0
+        helper_bytes: 0
+        checksum: 1.795099715028206e+19
+        worker_iterations: [134217728, 134217728]
+      - seconds: 0.279336397
+        iterations: 268435456
+        accesses: 0
+        useful_bytes: 0
+        helper_bytes: 0
+        checksum: 2.7125868434421424e+19
+        worker_iterations: [134217728, 134217728]
+      operations_per_s:
+        values: [4803017779.053006, 4805641113.252657, 4804501882.278333, 4806012664.934972, 4807474443.329578,
+          4804083362.429336, 4804877919.292415]
+        median: 4804877919.292415
+        min: 4803017779.053006
+        max: 4807474443.329578
+        spread: 4456664.2765722275
+        repetitions: 7
+      requested_working_set_bytes: 268435456
+    - shape: compute_atomic
+      chains: 1
+      seconds:
+        values: [0.385324708, 0.385279989, 0.385371506, 0.385370131, 0.385379053, 0.385439914, 0.385326953]
+        median: 0.385370131
+        min: 0.385279989
+        max: 0.385439914
+        spread: 0.0001599250000000052
+        repetitions: 7
+      useful_bytes_per_s:
+        values: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        median: 0.0
+        min: 0.0
+        max: 0.0
+        spread: 0.0
+        repetitions: 7
+      helper_bytes_per_s:
+        values: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        median: 0.0
+        min: 0.0
+        max: 0.0
+        spread: 0.0
+        repetitions: 7
+      footprint_bytes: 16
+      scope: scalar state; no payload arrays; uncontended atomic uses one private 8-byte word per worker;
+        logical footprint from shared source
+      source_access_derivation: payload source-element accesses only; index/offset helper elements separate;
+        checksum/control bookkeeping excluded
+      trials:
+      - seconds: 0.385324708
+        iterations: 134217728
+        accesses: 0
+        useful_bytes: 0
+        helper_bytes: 0
+        checksum: 174739777
+        worker_iterations: [67108864, 67108864]
+      - seconds: 0.385279989
+        iterations: 134217728
+        accesses: 0
+        useful_bytes: 0
+        helper_bytes: 0
+        checksum: 174739779
+        worker_iterations: [67108864, 67108864]
+      - seconds: 0.385371506
+        iterations: 134217728
+        accesses: 0
+        useful_bytes: 0
+        helper_bytes: 0
+        checksum: 174739781
+        worker_iterations: [67108864, 67108864]
+      - seconds: 0.385370131
+        iterations: 134217728
+        accesses: 0
+        useful_bytes: 0
+        helper_bytes: 0
+        checksum: 174739783
+        worker_iterations: [67108864, 67108864]
+      - seconds: 0.385379053
+        iterations: 134217728
+        accesses: 0
+        useful_bytes: 0
+        helper_bytes: 0
+        checksum: 174739785
+        worker_iterations: [67108864, 67108864]
+      - seconds: 0.385439914
+        iterations: 134217728
+        accesses: 0
+        useful_bytes: 0
+        helper_bytes: 0
+        checksum: 174739787
+        worker_iterations: [67108864, 67108864]
+      - seconds: 0.385326953
+        iterations: 134217728
+        accesses: 0
+        useful_bytes: 0
+        helper_bytes: 0
+        checksum: 174739789
+        worker_iterations: [67108864, 67108864]
+      operations_per_s:
+        values: [348323700.02081466, 348364129.5473563, 348281400.9606616, 348282643.6281332, 348274580.45572597,
+          348219587.8655162, 348321670.6099456]
+        median: 348282643.6281332
+        min: 348219587.8655162
+        max: 348364129.5473563
+        spread: 144541.68184012175
+        repetitions: 7
+      requested_working_set_bytes: 268435456
+    - shape: pointer_chase
+      chains: 1
+      seconds:
+        values: [0.371246886, 0.371170365, 0.370495191, 0.37022841, 0.370319912, 0.371050388, 0.371266098]
+        median: 0.371050388
+        min: 0.37022841
+        max: 0.371266098
+        spread: 0.001037687999999981
+        repetitions: 7
+      useful_bytes_per_s:
+        values: [180766133.07943007, 180803400.07748193, 181132888.1728994, 181263409.79613099, 181218621.59008077,
+          180861861.81268728, 180756778.9289503]
+        median: 180861861.81268728
+        min: 180756778.9289503
+        max: 181263409.79613099
+        spread: 506630.86718067527
+        repetitions: 7
+      helper_bytes_per_s:
+        values: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        median: 0.0
+        min: 0.0
+        max: 0.0
+        spread: 0.0
+        repetitions: 7
+      footprint_bytes: 268435456
+      scope: partitioned, first-touched on bound worker; useful payload bytes; helper bytes separate;
+        compiler-only pass fence for repeated stores
+      source_access_derivation: payload source-element accesses only; index/offset helper elements separate;
+        checksum/control bookkeeping excluded
+      trials:
+      - seconds: 0.371246886
+        iterations: 8388608
+        accesses: 8388608
+        useful_bytes: 67108864
+        helper_bytes: 0
+        checksum: 12884736
+        worker_iterations: [4194304, 4194304]
+      - seconds: 0.371170365
+        iterations: 8388608
+        accesses: 8388608
+        useful_bytes: 67108864
+        helper_bytes: 0
+        checksum: 12884736
+        worker_iterations: [4194304, 4194304]
+      - seconds: 0.370495191
+        iterations: 8388608
+        accesses: 8388608
+        useful_bytes: 67108864
+        helper_bytes: 0
+        checksum: 12884736
+        worker_iterations: [4194304, 4194304]
+      - seconds: 0.37022841
+        iterations: 8388608
+        accesses: 8388608
+        useful_bytes: 67108864
+        helper_bytes: 0
+        checksum: 12884736
+        worker_iterations: [4194304, 4194304]
+      - seconds: 0.370319912
+        iterations: 8388608
+        accesses: 8388608
+        useful_bytes: 67108864
+        helper_bytes: 0
+        checksum: 12884736
+        worker_iterations: [4194304, 4194304]
+      - seconds: 0.371050388
+        iterations: 8388608
+        accesses: 8388608
+        useful_bytes: 67108864
+        helper_bytes: 0
+        checksum: 12884736
+        worker_iterations: [4194304, 4194304]
+      - seconds: 0.371266098
+        iterations: 8388608
+        accesses: 8388608
+        useful_bytes: 67108864
+        helper_bytes: 0
+        checksum: 12884736
+        worker_iterations: [4194304, 4194304]
+    - shape: pointer_chase
+      chains: 16
+      seconds:
+        values: [0.283241335, 0.282868563, 0.282822792, 0.283569054, 0.282845392, 0.282873283, 0.282876421]
+        median: 0.282873283
+        min: 0.282822792
+        max: 0.283569054
+        spread: 0.0007462619999999975
+        repetitions: 7
+      useful_bytes_per_s:
+        values: [1895453966.8442109, 1897951848.3996398, 1898259005.9431987, 1893263402.4303653, 1898107330.6649451,
+          1897920179.3334439, 1897899125.3569345]
+        median: 1897920179.3334439
+        min: 1893263402.4303653
+        max: 1898259005.9431987
+        spread: 4995603.512833357
+        repetitions: 7
+      helper_bytes_per_s:
+        values: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        median: 0.0
+        min: 0.0
+        max: 0.0
+        spread: 0.0
+        repetitions: 7
+      footprint_bytes: 268435456
+      scope: partitioned, first-touched on bound worker; useful payload bytes; helper bytes separate;
+        compiler-only pass fence for repeated stores
+      source_access_derivation: payload source-element accesses only; index/offset helper elements separate;
+        checksum/control bookkeeping excluded
+      trials:
+      - seconds: 0.283241335
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 536870912
+        helper_bytes: 0
+        checksum: 252092464
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.282868563
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 536870912
+        helper_bytes: 0
+        checksum: 252092464
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.282822792
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 536870912
+        helper_bytes: 0
+        checksum: 252092464
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.283569054
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 536870912
+        helper_bytes: 0
+        checksum: 252092464
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.282845392
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 536870912
+        helper_bytes: 0
+        checksum: 252092464
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.282873283
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 536870912
+        helper_bytes: 0
+        checksum: 252092464
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.282876421
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 536870912
+        helper_bytes: 0
+        checksum: 252092464
+        worker_iterations: [33554432, 33554432]
+    - shape: pointer_chase
+      chains: 32
+      seconds:
+        values: [0.275797114, 0.275649381, 0.276140809, 0.27565313, 0.275588177, 0.275768347, 0.275860929]
+        median: 0.275768347
+        min: 0.275588177
+        max: 0.276140809
+        spread: 0.0005526319999999973
+        repetitions: 7
+      useful_bytes_per_s:
+        values: [1946615409.470891, 1947658688.9197474, 1944192580.3874936, 1947632199.931849, 1948091234.6976337,
+          1946818472.2447495, 1946165098.2839983]
+        median: 1946818472.2447495
+        min: 1944192580.3874936
+        max: 1948091234.6976337
+        spread: 3898654.310140133
+        repetitions: 7
+      helper_bytes_per_s:
+        values: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        median: 0.0
+        min: 0.0
+        max: 0.0
+        spread: 0.0
+        repetitions: 7
+      footprint_bytes: 268435456
+      scope: partitioned, first-touched on bound worker; useful payload bytes; helper bytes separate;
+        compiler-only pass fence for repeated stores
+      source_access_derivation: payload source-element accesses only; index/offset helper elements separate;
+        checksum/control bookkeeping excluded
+      trials:
+      - seconds: 0.275797114
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 536870912
+        helper_bytes: 0
+        checksum: 464947240
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.275649381
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 536870912
+        helper_bytes: 0
+        checksum: 464947240
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.276140809
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 536870912
+        helper_bytes: 0
+        checksum: 464947240
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.27565313
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 536870912
+        helper_bytes: 0
+        checksum: 464947240
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.275588177
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 536870912
+        helper_bytes: 0
+        checksum: 464947240
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.275768347
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 536870912
+        helper_bytes: 0
+        checksum: 464947240
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.275860929
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 536870912
+        helper_bytes: 0
+        checksum: 464947240
+        worker_iterations: [33554432, 33554432]
+    - shape: pointer_chase
+      chains: 64
+      seconds:
+        values: [0.275009429, 0.275113717, 0.275985001, 0.275269415, 0.275462544, 0.275151163, 0.275340498]
+        median: 0.275269415
+        min: 0.275009429
+        max: 0.275985001
+        spread: 0.0009755719999999801
+        repetitions: 7
+      useful_bytes_per_s:
+        values: [1952190926.5154686, 1951450904.936158, 1945290179.0123007, 1950347124.470766, 1948979720.4515762,
+          1951185327.1723225, 1949843615.086365]
+        median: 1950347124.470766
+        min: 1945290179.0123007
+        max: 1952190926.5154686
+        spread: 6900747.503167868
+        repetitions: 7
+      helper_bytes_per_s:
+        values: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        median: 0.0
+        min: 0.0
+        max: 0.0
+        spread: 0.0
+        repetitions: 7
+      footprint_bytes: 268435456
+      scope: partitioned, first-touched on bound worker; useful payload bytes; helper bytes separate;
+        compiler-only pass fence for repeated stores
+      source_access_derivation: payload source-element accesses only; index/offset helper elements separate;
+        checksum/control bookkeeping excluded
+      trials:
+      - seconds: 0.275009429
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 536870912
+        helper_bytes: 0
+        checksum: 1034545296
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.275113717
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 536870912
+        helper_bytes: 0
+        checksum: 1034545296
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.275985001
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 536870912
+        helper_bytes: 0
+        checksum: 1034545296
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.275269415
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 536870912
+        helper_bytes: 0
+        checksum: 1034545296
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.275462544
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 536870912
+        helper_bytes: 0
+        checksum: 1034545296
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.275151163
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 536870912
+        helper_bytes: 0
+        checksum: 1034545296
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.275340498
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 536870912
+        helper_bytes: 0
+        checksum: 1034545296
+        worker_iterations: [33554432, 33554432]
+    - shape: pointer_chase
+      chains: 128
+      seconds:
+        values: [0.275129133, 0.275156942, 0.275008156, 0.275067692, 0.275158947, 0.274941126, 0.275032082]
+        median: 0.275067692
+        min: 0.274941126
+        max: 0.275158947
+        spread: 0.00021782100000000693
+        repetitions: 7
+      useful_bytes_per_s:
+        values: [1951341561.4914176, 1951144347.2867203, 1952199963.1167302, 1951777426.4816241, 1951130129.8881626,
+          1952675904.8771775, 1952030134.433553]
+        median: 1951777426.4816241
+        min: 1951130129.8881626
+        max: 1952675904.8771775
+        spread: 1545774.989014864
+        repetitions: 7
+      helper_bytes_per_s:
+        values: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        median: 0.0
+        min: 0.0
+        max: 0.0
+        spread: 0.0
+        repetitions: 7
+      footprint_bytes: 268435456
+      scope: partitioned, first-touched on bound worker; useful payload bytes; helper bytes separate;
+        compiler-only pass fence for repeated stores
+      source_access_derivation: payload source-element accesses only; index/offset helper elements separate;
+        checksum/control bookkeeping excluded
+      trials:
+      - seconds: 0.275129133
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 536870912
+        helper_bytes: 0
+        checksum: 2167716264
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.275156942
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 536870912
+        helper_bytes: 0
+        checksum: 2167716264
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.275008156
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 536870912
+        helper_bytes: 0
+        checksum: 2167716264
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.275067692
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 536870912
+        helper_bytes: 0
+        checksum: 2167716264
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.275158947
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 536870912
+        helper_bytes: 0
+        checksum: 2167716264
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.274941126
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 536870912
+        helper_bytes: 0
+        checksum: 2167716264
+        worker_iterations: [33554432, 33554432]
+      - seconds: 0.275032082
+        iterations: 67108864
+        accesses: 67108864
+        useful_bytes: 536870912
+        helper_bytes: 0
+        checksum: 2167716264
+        worker_iterations: [33554432, 33554432]
+    compute_counts:
+      integer:
+        level: source_normalized_ir
+        pipeline:
+          version: source-normalized-v2
+          passes:
+          - function(sroa,mem2reg),cgscc(inline),function(loop-simplify)
+        per_iteration: 26
+        per_invocation: 8
+        validation_points:
+        - [32, 840]
+        - [64, 1672]
+        - [96, 2504]
+        characterization_sha256:
+        - 636112bcb5a32675f02308f15a44a5521a33c5b00b53eda7a96760a915719809
+        - 703c877451eed28d0d789ec1145cd74591ce2c51619a3f705df71201642f3367
+        - 499bbb8e27d4ed487c3eec801ac8c8a34b8af042b7dc86aa52052f245abb147b
+        source_sha256: 18505bf0e53496132ac3c4bf03881d804d6e0fd9dee51c5887fbda2190fd8393
+        basis: inferred
+        timing: separate uninstrumented binary
+        scope: effective constructed work, not physical issue throughput
+      floating_point:
+        level: source_normalized_ir
+        pipeline:
+          version: source-normalized-v2
+          passes:
+          - function(sroa,mem2reg),cgscc(inline),function(loop-simplify)
+        per_iteration: 8
+        per_invocation: 5
+        validation_points:
+        - [32, 261]
+        - [64, 517]
+        - [96, 773]
+        characterization_sha256:
+        - f380b5ce97645fe2d82737748fde1b63d333e4dc523729bb70a07965a8b2a9ec
+        - 514f0abb1aa05b9d85bed1f42678956c5ec6a369840d3c2040bfec3171dc4630
+        - 4aace0eae1c2aebb344d3d915cacc9439291a3fc4e00225d2fbe92b9e89ee28d
+        source_sha256: 18505bf0e53496132ac3c4bf03881d804d6e0fd9dee51c5887fbda2190fd8393
+        basis: inferred
+        timing: separate uninstrumented binary
+        scope: effective constructed work, not physical issue throughput
+      branch:
+        level: source_normalized_ir
+        pipeline:
+          version: source-normalized-v2
+          passes:
+          - function(sroa,mem2reg),cgscc(inline),function(loop-simplify)
+        per_iteration: 5
+        per_invocation: 3
+        validation_points:
+        - [32, 163]
+        - [64, 323]
+        - [96, 483]
+        characterization_sha256:
+        - 71f7c7954b49f240b6ff432633c14901edab6d75d06a5b90a77d9af38f2579e8
+        - 4508754e75e39c7fb393c1b755acc6b05d32ad5900ac88493a8515aa9f41a1ed
+        - cdfedb82e7e46acedaa232c92fbe8946488d27be241dc914b178a695eeff4421
+        source_sha256: 18505bf0e53496132ac3c4bf03881d804d6e0fd9dee51c5887fbda2190fd8393
+        basis: inferred
+        timing: separate uninstrumented binary
+        scope: effective constructed work, not physical issue throughput
+      atomic:
+        level: source_normalized_ir
+        pipeline:
+          version: source-normalized-v2
+          passes:
+          - function(sroa,mem2reg),cgscc(inline),function(loop-simplify)
+        per_iteration: 1
+        per_invocation: 0
+        validation_points:
+        - [32, 32]
+        - [64, 64]
+        - [96, 96]
+        characterization_sha256:
+        - 3ce82e934a1461c77772165cba20b7b9d708ee89a290357e63f3d3e0a6d232c9
+        - 7f961a17cefd78607e9e5ef5ba2855785722d60b80a7c2714c688a0ec1d65c58
+        - 15ea927cff9b9ec5f4867421008ade0e05b340e545a782b03cb2406787aca8aa
+        source_sha256: 18505bf0e53496132ac3c4bf03881d804d6e0fd9dee51c5887fbda2190fd8393
+        basis: inferred
+        timing: separate uninstrumented binary
+        scope: effective constructed work, not physical issue throughput
+    concurrency_curve:
+    - chains: 1
+      effective_requests_per_thread:
+        values: [0.9994707080182755, 0.99967676029308, 1.001498526872917, 1.0022201915838929, 1.0019725539360143,
+          1.0, 0.9994189881565755]
+        median: 1.0
+        min: 0.9994189881565755
+        max: 1.0022201915838929
+        spread: 0.002801203427317378
+        repetitions: 7
+    - chains: 16
+      effective_requests_per_thread:
+        values: [10.48011973252421, 10.49393072357779, 10.495629022713276, 10.468007923036623, 10.494790397716644,
+          10.493755622725248, 10.493639213570226]
+        median: 10.493755622725248
+        min: 10.468007923036623
+        max: 10.495629022713276
+        spread: 0.027621099676652605
+        repetitions: 7
+    - chains: 32
+      effective_requests_per_thread:
+        values: [10.762995525761738, 10.76876390301054, 10.749599505953501, 10.76861744323382, 10.771155483930649,
+          10.764118276416982, 10.76050571844482]
+        median: 10.764118276416982
+        min: 10.749599505953501
+        max: 10.771155483930649
+        spread: 0.021555977977147478
+        repetitions: 7
+    - chains: 64
+      effective_requests_per_thread:
+        values: [10.79382301470107, 10.789731374971755, 10.755668218360896, 10.783628482663065, 10.776067994202508,
+          10.788262973833042, 10.780844538168884]
+        median: 10.783628482663065
+        min: 10.755668218360896
+        max: 10.79382301470107
+        spread: 0.03815479634017471
+        repetitions: 7
+    - chains: 128
+      effective_requests_per_thread:
+        values: [10.7891268061387, 10.788036392699842, 10.793872978807217, 10.791536739254715, 10.787957783542472,
+          10.796504499657866, 10.79293398215267]
+        median: 10.791536739254715
+        min: 10.787957783542472
+        max: 10.796504499657866
+        spread: 0.008546716115393593
+        repetitions: 7
+    plateau:
+      state: established_for_constructed_work
+      criterion: last 3 distinct C medians within 15% relative range; <=25% elapsed spread; same footprint
+        and balanced workers
+      points:
+      - chains: 32
+        effective_requests_per_thread:
+          values: [10.762995525761738, 10.76876390301054, 10.749599505953501, 10.76861744323382, 10.771155483930649,
+            10.764118276416982, 10.76050571844482]
+          median: 10.764118276416982
+          min: 10.749599505953501
+          max: 10.771155483930649
+          spread: 0.021555977977147478
+          repetitions: 7
+      - chains: 64
+        effective_requests_per_thread:
+          values: [10.79382301470107, 10.789731374971755, 10.755668218360896, 10.783628482663065, 10.776067994202508,
+            10.788262973833042, 10.780844538168884]
+          median: 10.783628482663065
+          min: 10.755668218360896
+          max: 10.79382301470107
+          spread: 0.03815479634017471
+          repetitions: 7
+      - chains: 128
+        effective_requests_per_thread:
+          values: [10.7891268061387, 10.788036392699842, 10.793872978807217, 10.791536739254715, 10.787957783542472,
+            10.796504499657866, 10.79293398215267]
+          median: 10.791536739254715
+          min: 10.787957783542472
+          max: 10.796504499657866
+          spread: 0.008546716115393593
+          repetitions: 7
+      relative_range: 0.0025426008399505157
+      elapsed_relative_spreads: [0.0027966228672963445, 0.002003971833649194, 0.0035440624596814727, 0.0007918814398602906]
+      same_footprint: true
+      balanced_workers: true
+    dependent_latency_s:
+      values: [8.851215505599976e-08, 8.849391102790833e-08, 8.833293700218201e-08, 8.826933145523071e-08,
+        8.829114723205566e-08, 8.846530628204346e-08, 8.851673555374145e-08]
+      median: 8.846530628204346e-08
+      min: 8.826933145523071e-08
+      max: 8.851673555374145e-08
+      spread: 2.474040985107377e-10
+      repetitions: 7
+    effective_requests_per_thread:
+      value: 10.783628482663065
+      basis: inferred
+      source: CPU calibration aa2dd212a7e5a4ecd67962d428fa8cdf497f07857092378ae8c8d60fd5f3a088; threads=2;
+        useful source-element bytes; rate/thread * dependent seconds/load
+      unit: requests/thread
+    cache_scope:
+      footprint_bytes: 8388608
+      level: 3
+      sharing: 0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62
+      access_shape: stream; partitioned read+write float
+      residency_basis: inferred from footprint and warmup; serving cache level not measured
+    notes:
+    - Concurrency is model-effective under this constructed work, not physical MSHR occupancy.
+    - Rates are aggregate for this exact thread/compiler/runtime configuration.
+    - Source-normalized constructed compute work is not physical instruction issue throughput.
+    - Indirect payload rates include address/helper work in elapsed time; helper byte counts are separate.
+    source_count_equivalence_sha256: 5ce7552b4b3f58e83270784a5e2a916c0dd41fb2dec46a9789bc65106343a75d
+    calibration_record_sha256: 9a590176b04345b6087f44b00266398e25c2430f17e7d9e7b7e7cf799859d5fd

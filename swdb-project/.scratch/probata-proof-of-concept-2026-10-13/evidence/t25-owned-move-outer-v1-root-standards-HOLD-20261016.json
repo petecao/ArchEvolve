@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-16 ET",
+  "classification": "HOLD_BEFORE_ANY_ACTUAL_EXECUTION",
+  "outer_source": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/standalone-outer-v1/outer.py",
+    "bytes": 12512,
+    "sha256": "60e650d197f5666bcbf2b3db6b78f985db13c21d7a143e306882ed2f718337f2"
+  },
+  "full_source_read": true,
+  "findings": [
+    {
+      "id": "OUTER-GUARD-01",
+      "problem": "The deadline context exits/cancels before RSS TreeWatch.__exit__.join; a return is evaluated before both close, with no final settled RSS/deadline gate.",
+      "actual_main_context_order": [
+        "memory",
+        "deadline_alarm(gate, kill_children)"
+      ],
+      "required_repair": "Keep alarm active through RSS context closure; inspect final errors/extent/time after close before a zero exit."
+    },
+    {
+      "id": "OUTER-GUARD-02",
+      "problem": "Expiry latches output error before main-thread cleanup. Actual inherited audit allows fallback ps only in the output watcher thread, so main cleanup refuses, then SystemExit stops that watcher before its retry.",
+      "actual_pure_expiry_reproducer": {
+        "exit": 124,
+        "snapshot_callback_completed": false,
+        "retained_cleanup_error": "ValueError: latched output guard forbids subsequent producers or completion",
+        "actual_process_or_native_launch": false
+      },
+      "required_repair": "Explicit narrow owned cleanup snapshot scope or independently bound process-group/descendant identity; no general process bypass."
+    }
+  ],
+  "actual_source_profile_or_outer_run": false,
+  "shared_source_changed": false
+}

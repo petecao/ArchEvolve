@@ -1,0 +1,582 @@
+{
+  "format": "swdb.lanl17-private-outer-source-staging-r1-source-preparation.v1",
+  "prepared_utc": "2026-10-07T20:00:34.038663+00:00",
+  "state": "SOURCE_ONLY_NOT_RUN_PARENT_FULL_SCRIPT_CONFIG_AND_FUTURE_DELIVERED_REVISION_ARGV_REVIEW_REQUIRED",
+  "canonical_ensure_ascii": true,
+  "packet_pins": {
+    "original_reviewed_driver": {
+      "path": "/private/tmp/lanl-stage-reviewed17-index-privacy-envelope-source-from-git-20261007-a1.py",
+      "bytes": 19246,
+      "sha256": "103b7557c5428b04626db360922907b1873440d089cb093dd7da0e122364551b"
+    },
+    "selected_corrected_R1_driver": {
+      "path": "/private/tmp/lanl-stage-reviewed17-index-private-outer-sources-from-git-20261007-a1-r1.py",
+      "bytes": 21778,
+      "sha256": "e217f97e7392119d33f1e20a7868b9c0ad6af535511acbdca55742a521741bb6"
+    },
+    "complete_unsealed_derivation_diff": {
+      "path": "/private/tmp/lanl17-private-outer-source-staging-r1-derivation-20261007-a1.diff",
+      "bytes": 14243,
+      "sha256": "994b6c8954007709f91f1b457ef1bc4b7f39e97a587646e5e4ba6b7c7d66c3df"
+    },
+    "unsealed_reversal_static_comparison": {
+      "path": "/private/tmp/lanl17-private-outer-source-staging-r1-reversal-static-comparison-20261007-a1.json",
+      "bytes": 8821,
+      "sha256": "fdea81b267dc243b75e121f8b8a98f579695526a2b86f2916d67eb4865f240ee"
+    },
+    "full_source_handoff": {
+      "path": "/private/tmp/lanl17-private-outer-source-staging-r1-final-source-handoff-20261007-a1.md",
+      "bytes": 8718,
+      "sha256": "309e1fb0ee82ac4cacec9a0af61eb7c511c63afab5c0b80012780c453d43f270"
+    },
+    "preserved_unselected_never_run_draft": {
+      "path": "/private/tmp/lanl-stage-reviewed17-index-private-outer-sources-from-git-20261007-a1.py",
+      "bytes": 20843,
+      "sha256": "0beff183ad15786643b63d99ca1ceb9d29666f1dfc8e75b6f1b4764e64dcb87f"
+    },
+    "preserved_unselected_unsealed_diff": {
+      "path": "/private/tmp/lanl17-private-outer-source-staging-derivation-20261007-a1.diff",
+      "bytes": 17452,
+      "sha256": "fccd529311053890dd3f630cb07e4382ef4c41ec125ab094276d42e989b5674e"
+    }
+  },
+  "selected_script": "selected_corrected_R1_driver",
+  "original_and_unselected_draft_preserved": true,
+  "unselected_draft_reason": "Parent corrected original row shape and supplied the actual archive manifest; selected R1 is freshly derived from original103b, not the unselected review/preparation draft.",
+  "CONFIG": [
+    {
+      "target": "outer_capture.py",
+      "source": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/lanl17_remote_original_index_writer_private_outer_capture_20261007.py",
+        "bytes": 34658,
+        "sha256": "59c06dd5ea606414827a85d6e27f4aff1bc381827624590b2449415198399544"
+      },
+      "review": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/lanl17-original-index-writer-private-outer-capture-parent-review-20261007.json",
+        "bytes": 6493,
+        "sha256": "a9ab95d10d8e26a0a4b170f7184c31970d88c3b8f04f9dea6d02d38c3079e262",
+        "format": "swdb.lanl17-original-index-writer-private-outer-capture-parent-source-review.v1",
+        "identity_sha256": "b471b2d9e12fd4d54c3e74b25ed56782c6e319a4df59e271b5ddacde7befa687"
+      },
+      "manifest": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/manifest.json",
+        "bytes": 10568,
+        "sha256": "9d07052f2b54033a9a3c3fd860cf2ba657dfbb73fe381e03d6cfda0a45d3228c",
+        "format": "swdb.lanl17-original-index-writer-private-outer-capture-archival-custody.v1",
+        "identity_sha256": "00b2aa6a7e6542f4e3ac26325dd5c2fdabe37cd19347836b86e30d65edc71eae"
+      }
+    },
+    {
+      "target": "bootstrap.sh",
+      "source": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/lanl17_original_index_writer_outermost_private_bootstrap_20261007.sh",
+        "bytes": 6549,
+        "sha256": "0d1eb650d1bcb1a9f491d5fb790f083e371875ddd20fe0bf1f42d5fce05a9217"
+      },
+      "review": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/lanl17-original-index-writer-private-outer-capture-parent-review-20261007.json",
+        "bytes": 6493,
+        "sha256": "a9ab95d10d8e26a0a4b170f7184c31970d88c3b8f04f9dea6d02d38c3079e262",
+        "format": "swdb.lanl17-original-index-writer-private-outer-capture-parent-source-review.v1",
+        "identity_sha256": "b471b2d9e12fd4d54c3e74b25ed56782c6e319a4df59e271b5ddacde7befa687"
+      },
+      "manifest": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/manifest.json",
+        "bytes": 10568,
+        "sha256": "9d07052f2b54033a9a3c3fd860cf2ba657dfbb73fe381e03d6cfda0a45d3228c",
+        "format": "swdb.lanl17-original-index-writer-private-outer-capture-archival-custody.v1",
+        "identity_sha256": "00b2aa6a7e6542f4e3ac26325dd5c2fdabe37cd19347836b86e30d65edc71eae"
+      }
+    }
+  ],
+  "CONFIG_original_row_keys": [
+    "target",
+    "source",
+    "review",
+    "manifest"
+  ],
+  "unique_original_Git_pins": 4,
+  "shared_original_review_and_manifest_group": true,
+  "two_explicit_original_True_closures": {
+    "review": "b471b2d9e12fd4d54c3e74b25ed56782c6e319a4df59e271b5ddacde7befa687",
+    "manifest": "00b2aa6a7e6542f4e3ac26325dd5c2fdabe37cd19347836b86e30d65edc71eae"
+  },
+  "existing_archive_original_metadata_checked_read_only": {
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/lanl17_remote_original_index_writer_private_outer_capture_20261007.py": {
+      "path": "/Users/yanrujhou/.codex/worktrees/lanl-analytic-eval/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/lanl17_remote_original_index_writer_private_outer_capture_20261007.py",
+      "bytes": 34658,
+      "sha256": "59c06dd5ea606414827a85d6e27f4aff1bc381827624590b2449415198399544",
+      "declared_git_pin": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/lanl17_remote_original_index_writer_private_outer_capture_20261007.py",
+        "bytes": 34658,
+        "sha256": "59c06dd5ea606414827a85d6e27f4aff1bc381827624590b2449415198399544"
+      }
+    },
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/lanl17-original-index-writer-private-outer-capture-parent-review-20261007.json": {
+      "path": "/Users/yanrujhou/.codex/worktrees/lanl-analytic-eval/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/lanl17-original-index-writer-private-outer-capture-parent-review-20261007.json",
+      "bytes": 6493,
+      "sha256": "a9ab95d10d8e26a0a4b170f7184c31970d88c3b8f04f9dea6d02d38c3079e262",
+      "declared_git_pin": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/lanl17-original-index-writer-private-outer-capture-parent-review-20261007.json",
+        "bytes": 6493,
+        "sha256": "a9ab95d10d8e26a0a4b170f7184c31970d88c3b8f04f9dea6d02d38c3079e262",
+        "format": "swdb.lanl17-original-index-writer-private-outer-capture-parent-source-review.v1",
+        "identity_sha256": "b471b2d9e12fd4d54c3e74b25ed56782c6e319a4df59e271b5ddacde7befa687"
+      }
+    },
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/manifest.json": {
+      "path": "/Users/yanrujhou/.codex/worktrees/lanl-analytic-eval/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/manifest.json",
+      "bytes": 10568,
+      "sha256": "9d07052f2b54033a9a3c3fd860cf2ba657dfbb73fe381e03d6cfda0a45d3228c",
+      "declared_git_pin": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/manifest.json",
+        "bytes": 10568,
+        "sha256": "9d07052f2b54033a9a3c3fd860cf2ba657dfbb73fe381e03d6cfda0a45d3228c",
+        "format": "swdb.lanl17-original-index-writer-private-outer-capture-archival-custody.v1",
+        "identity_sha256": "00b2aa6a7e6542f4e3ac26325dd5c2fdabe37cd19347836b86e30d65edc71eae"
+      }
+    },
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/lanl17_original_index_writer_outermost_private_bootstrap_20261007.sh": {
+      "path": "/Users/yanrujhou/.codex/worktrees/lanl-analytic-eval/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/lanl17_original_index_writer_outermost_private_bootstrap_20261007.sh",
+      "bytes": 6549,
+      "sha256": "0d1eb650d1bcb1a9f491d5fb790f083e371875ddd20fe0bf1f42d5fce05a9217",
+      "declared_git_pin": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/lanl17_original_index_writer_outermost_private_bootstrap_20261007.sh",
+        "bytes": 6549,
+        "sha256": "0d1eb650d1bcb1a9f491d5fb790f083e371875ddd20fe0bf1f42d5fce05a9217"
+      }
+    }
+  },
+  "preparation_is_inherited_reference_not_fifth_Git_blob": {
+    "bytes": 7504,
+    "sha256": "568c866abc6cff7197d7b487ad59ff6361eb37f259ee8c66bdbbe8ba1f3dd7f5",
+    "identity_sha256": "e94cc1d15c7e9f9b4b3fb766063a4329bbe56cadd1f4f14715f9923a6d9866e7",
+    "canonical_ensure_ascii": true,
+    "binding": "Exact prepared_packet_pins.preparation and verified_original_True_seals.preparation from review plus matching original_explicit_True_NOTRUN_preparation manifest entry; no new fetch/schema/approval."
+  },
+  "complete_unsealed_diff_and_static_derivation": {
+    "diff_hunks": 7,
+    "whole_byte_forward_equals_selected_R1": true,
+    "whole_byte_reversal_equals_original103b": true,
+    "unchanged_function_ASTs": [
+      {
+        "scope": "local",
+        "function": "sha",
+        "original_lines": [
+          219,
+          220
+        ],
+        "r1_lines": [
+          245,
+          246
+        ],
+        "AST_equal": true
+      },
+      {
+        "scope": "local",
+        "function": "digest",
+        "original_lines": [
+          223,
+          225
+        ],
+        "r1_lines": [
+          249,
+          251
+        ],
+        "AST_equal": true
+      },
+      {
+        "scope": "local",
+        "function": "strict_json",
+        "original_lines": [
+          228,
+          237
+        ],
+        "r1_lines": [
+          254,
+          263
+        ],
+        "AST_equal": true
+      },
+      {
+        "scope": "local",
+        "function": "strict_json.pairs",
+        "original_lines": [
+          229,
+          234
+        ],
+        "r1_lines": [
+          255,
+          260
+        ],
+        "AST_equal": true
+      },
+      {
+        "scope": "local",
+        "function": "strict_json.nonfinite",
+        "original_lines": [
+          235,
+          236
+        ],
+        "r1_lines": [
+          261,
+          262
+        ],
+        "AST_equal": true
+      },
+      {
+        "scope": "local",
+        "function": "checked_file",
+        "original_lines": [
+          240,
+          256
+        ],
+        "r1_lines": [
+          266,
+          282
+        ],
+        "AST_equal": true
+      },
+      {
+        "scope": "remote",
+        "function": "sha",
+        "original_lines": [
+          12,
+          12
+        ],
+        "r1_lines": [
+          12,
+          12
+        ],
+        "AST_equal": true
+      },
+      {
+        "scope": "remote",
+        "function": "digest",
+        "original_lines": [
+          13,
+          13
+        ],
+        "r1_lines": [
+          13,
+          13
+        ],
+        "AST_equal": true
+      },
+      {
+        "scope": "remote",
+        "function": "strict_json",
+        "original_lines": [
+          14,
+          22
+        ],
+        "r1_lines": [
+          14,
+          22
+        ],
+        "AST_equal": true
+      },
+      {
+        "scope": "remote",
+        "function": "strict_json.pairs",
+        "original_lines": [
+          15,
+          20
+        ],
+        "r1_lines": [
+          15,
+          20
+        ],
+        "AST_equal": true
+      },
+      {
+        "scope": "remote",
+        "function": "strict_json.nonfinite",
+        "original_lines": [
+          21,
+          21
+        ],
+        "r1_lines": [
+          21,
+          21
+        ],
+        "AST_equal": true
+      },
+      {
+        "scope": "remote",
+        "function": "alarm",
+        "original_lines": [
+          23,
+          23
+        ],
+        "r1_lines": [
+          23,
+          23
+        ],
+        "AST_equal": true
+      },
+      {
+        "scope": "remote",
+        "function": "perform.remaining",
+        "original_lines": [
+          30,
+          32
+        ],
+        "r1_lines": [
+          30,
+          32
+        ],
+        "AST_equal": true
+      },
+      {
+        "scope": "remote",
+        "function": "perform.checked",
+        "original_lines": [
+          33,
+          41
+        ],
+        "r1_lines": [
+          33,
+          41
+        ],
+        "AST_equal": true
+      },
+      {
+        "scope": "remote",
+        "function": "perform.git",
+        "original_lines": [
+          43,
+          50
+        ],
+        "r1_lines": [
+          43,
+          50
+        ],
+        "AST_equal": true
+      },
+      {
+        "scope": "remote",
+        "function": "perform.source_gate",
+        "original_lines": [
+          51,
+          55
+        ],
+        "r1_lines": [
+          51,
+          55
+        ],
+        "AST_equal": true
+      },
+      {
+        "scope": "remote",
+        "function": "perform.python_tree",
+        "original_lines": [
+          56,
+          65
+        ],
+        "r1_lines": [
+          56,
+          65
+        ],
+        "AST_equal": true
+      },
+      {
+        "scope": "remote",
+        "function": "perform.original_blob",
+        "original_lines": [
+          66,
+          73
+        ],
+        "r1_lines": [
+          66,
+          73
+        ],
+        "AST_equal": true
+      },
+      {
+        "scope": "remote",
+        "function": "perform.sealed",
+        "original_lines": [
+          74,
+          78
+        ],
+        "r1_lines": [
+          74,
+          78
+        ],
+        "AST_equal": true
+      },
+      {
+        "scope": "remote",
+        "function": "perform.exact_pin",
+        "original_lines": [
+          79,
+          80
+        ],
+        "r1_lines": [
+          79,
+          80
+        ],
+        "AST_equal": true
+      },
+      {
+        "scope": "remote",
+        "function": "perform.entry",
+        "original_lines": [
+          81,
+          88
+        ],
+        "r1_lines": [
+          81,
+          88
+        ],
+        "AST_equal": true
+      },
+      {
+        "scope": "remote",
+        "function": "perform.target_checked",
+        "original_lines": [
+          134,
+          145
+        ],
+        "r1_lines": [
+          146,
+          157
+        ],
+        "AST_equal": true
+      }
+    ],
+    "unchanged_function_AST_count": 22,
+    "unchanged_local_constant_AST_names": [
+      "SOURCE_C",
+      "ESTIMATOR_F6",
+      "KEYS"
+    ],
+    "unchanged_remote_constant_AST_names": [
+      "SOURCE_C",
+      "F6",
+      "KEYS"
+    ],
+    "method": "Stdlib source/AST/literal/diff/file metadata only, no target or lifted callable execution, import, compilation or runtime test."
+  },
+  "exact_necessary_derivation_scope": [
+    "Two CONFIG source rows preserve target/source/review/manifest shape, exact source pins and one shared review/actual manifest group.",
+    "Fresh destination and local exclusive receipt names plus receipt format, source cardinality, copy-only scope.",
+    "Custody predicates match exact new original review/manifest fields and roles; preparation is inherited reference only.",
+    "All original low-level helpers, C/F6/stat-key constants, privacy and finite timeout semantics unchanged."
+  ],
+  "future_copy_only_destination": {
+    "path": "/data1/yanruj/lanl17-index-private-outer-source-20261007-a1",
+    "fresh_required": true,
+    "directory_mode": "0700",
+    "exact_source_files": [
+      {
+        "basename": "outer_capture.py",
+        "mode": "0600",
+        "bytes": 34658,
+        "sha256": "59c06dd5ea606414827a85d6e27f4aff1bc381827624590b2449415198399544"
+      },
+      {
+        "basename": "bootstrap.sh",
+        "mode": "0600",
+        "bytes": 6549,
+        "sha256": "0d1eb650d1bcb1a9f491d5fb790f083e371875ddd20fe0bf1f42d5fce05a9217"
+      }
+    ],
+    "source_executable_action": false,
+    "native_or_wrong_architecture_artifacts": 0,
+    "older_stages_opened_or_modified": false
+  },
+  "future_copy_only_receipt": {
+    "path": "/private/tmp/lanl17-reviewed-index-private-outer-source-staging-actual-20261007-a1.json",
+    "format": "swdb.lanl17-reviewed-index-private-outer-source-staging.v1",
+    "mode": "0600",
+    "fresh_exclusive": true,
+    "bytes_max": 16384,
+    "written_on_remote": false,
+    "raw_Git_SSH_stdout_stderr_returned_or_persisted": false,
+    "failure_output": "Exception class and diagnostic hashes only, partial files retained.",
+    "actual_receipt_created": false
+  },
+  "inherited_future_guards": {
+    "platform_host": "Linux mbit10",
+    "uid_euid": 114316761,
+    "account": "yanruj",
+    "remote_repo": "/data1/yanruj/ArchEvolve",
+    "branch": "yanrujhou_main",
+    "remote_HEAD_equals_mandatory_future_full_40_revision": true,
+    "tracked_clean_required": true,
+    "no_checkout_reset_update_or_untracked_cleanup": true,
+    "Git_path": "/usr/bin/git",
+    "Git_read_only_isolated_no_network_or_lazy_fetch": true,
+    "Git_source_mode_type": "100644 blob",
+    "source_and_copied_originals_prepost_recheck": true,
+    "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+    "estimator_F6_inherited_custody": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+    "exact_python_Git_blob_mode_identities_equal_C": 185,
+    "F6_live_import_or_computation": false,
+    "remote_alarm_seconds": 60,
+    "Git_each_seconds_max": 15,
+    "SSH_seconds_max": 120,
+    "nonsymlink_owned_absolute_paths": true,
+    "exclusive_O_NOFOLLOW_copy_fsync_directory_fsync": true,
+    "FD_path_stat_fields": [
+      "st_dev",
+      "st_ino",
+      "st_uid",
+      "st_mode",
+      "st_size",
+      "st_mtime_ns",
+      "st_ctime_ns"
+    ],
+    "copied_file_nlink": 1,
+    "exact_name_set_and_returned_bytes_sha_rechecked": true
+  },
+  "pending_actual_review_and_authorization": [
+    "Parent FULL selected R1 script, exact CONFIG and this source-only derivation/preparation review.",
+    "Explicit full40 then-delivered revision chosen by parent; no revision is filled or inferred in this packet.",
+    "Verified local native interpreter plus exact one-argument staging invocation, fresh local receipt and actual remote primary/head/UID/source conditions.",
+    "One later source-only copy owned by parent; this preparation does not execute or approve it.",
+    "Separate real M2/request/native-runtime/confinement/supervision/output/full56argv input review before any copied outer/bootstrap/envelope/original7a main after actual14 as directed."
+  ],
+  "not_performed": {
+    "staging_driver_or_remote_main": 0,
+    "copied_control_import_compilation_main": 0,
+    "Bash_invocation_or_syntax_test": 0,
+    "test_or_synthetic_repeat": 0,
+    "actual_catalog_request_index_input_or_argv_construction": 0,
+    "SWDB_Store_public_validation": 0,
+    "provider_native_compiler_scientific_execution": 0,
+    "SSH_remote_staging": 0,
+    "Git_command_or_worktree_mutation": 0,
+    "earlier_stage_read_or_mutation": 0,
+    "actual14_reader_or_report": 0
+  },
+  "source_only_private_preparation": true,
+  "scientific_admission_or_actual_result_or_ticket_resolution": false,
+  "identity_semantics": "Canonical whole-object ensure_ascii=True excluding only identity_sha256; original comparison/diff remain unsealed and previous sources/preparations unchanged.",
+  "preserved_preliminary_source_only_documents": {
+    "uncorrected_handoff": {
+      "path": "/private/tmp/lanl17-private-outer-source-staging-r1-source-handoff-20261007-a1.md",
+      "bytes": 8664,
+      "sha256": "aa6ed25e16348ca7e82759fdb5d55af421a17afd8f69ac28a6c571ee33cd8749"
+    },
+    "preliminary_True_preparation": {
+      "path": "/private/tmp/lanl17-private-outer-source-staging-r1-source-preparation-20261007-a1.json",
+      "bytes": 20785,
+      "sha256": "6409c6f1232d18e5b33ea0ad10fd559f904589f89f63e9692176a8e9fc9a657a",
+      "canonical_ensure_ascii": true,
+      "identity_sha256": "15c999eb4197f119e2c1c8330b4026de61385220211e335bb8e9e5e740b6a3d7"
+    },
+    "chronology": "Preliminary True preparation was written immediately before parent wording correction arrived; both originals retained byte-identical. No execution/admission occurred.",
+    "handoff_only_exact_correction": {
+      "before": "CONFIG retains the original two-row list structure.",
+      "after": "CONFIG retains the original row shape and list structure; cardinality changes from one source row to two.",
+      "occurrences": 1,
+      "byte_reversal_equals_preliminary": true
+    },
+    "selected_source_diff_static_pins_unchanged": true
+  },
+  "CONFIG_cardinality_original_one_selected_R1_two": true,
+  "identity_sha256": "71ca5a35fa56f8dc1fdfa040386f0cc874eed570110c5406bc887c5177737895"
+}

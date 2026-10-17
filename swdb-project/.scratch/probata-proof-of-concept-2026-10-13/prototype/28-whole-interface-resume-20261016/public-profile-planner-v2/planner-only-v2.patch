@@ -1,0 +1,13 @@
+--- a/pair_plan_v1.py
++++ b/pair_plan_v2.py
+@@ -41,7 +41,9 @@
+     jobs = []
+     for row in rows:
+         argv = [selection['python'], '-B', '-P', '-m', 'swdb', 'prove', '--records', selection['records'],
+-            '--summary', row['id'], '--adapter', 'cbmc', '--bounds', '{"threads":1}',
++            '--summary', row['id'], '--method-version', 'method.dx100-whole-checked-source-v1',
++            '--define', 'NUM_CORES=4', '--define', 'TILE_SIZE=16384',
++            '--adapter', 'cbmc', '--bounds', '{"threads":1}',
+             '--runs-dir', selection['runs'], '--format', 'json']
+         jobs.append({'expected_result': row['expected_result'], 'contract': {'id': row['id'], 'content_sha256': row['sha256']},
+             'argv': argv, 'cwd': selection['producer_project'],

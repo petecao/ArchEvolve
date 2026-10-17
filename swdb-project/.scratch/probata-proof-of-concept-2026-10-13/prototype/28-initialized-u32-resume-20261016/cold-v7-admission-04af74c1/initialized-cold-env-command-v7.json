@@ -1,0 +1,39 @@
+{
+  "argv": [
+    "/usr/bin/env",
+    "-i",
+    "HOME=/data1/yanruj/probata-verifiers/home",
+    "LANG=C",
+    "LC_ALL=C",
+    "PATH=/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "PYTHONPATH=/data1/yanruj/probata-resume-20261016-04af74c1/swdb-project",
+    "PYTHONPYCACHEPREFIX=/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-cold-04af74c1-v7/cache",
+    "/data1/yanruj/venvs/swdb-test/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-cold-04af74c1-v7/reader-source-cache",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-cold-04af74c1-v7/control/initialized_cold_audit_v7.py",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-cold-04af74c1-v7/control/initialized-cold-policy-04af74c1-v7.json",
+    "c1661a048f446d1bc62d468d364b25641b27c2f29a9613b838b630a62c0b90fb"
+  ],
+  "classification": "STAGED_PASSIVE_INVOCATION_PENDING_ROOT_ADMISSION",
+  "command_packet_sha256": "4e87d9a7a80b2b5d3eada01d4e109154edcfffc0c5351ea7fb6aeb66d2d77e5b",
+  "controls_staged": 10,
+  "date": "2026-10-16 ET",
+  "environment": {
+    "HOME": "/data1/yanruj/probata-verifiers/home",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/data1/yanruj/probata-resume-20261016-04af74c1/swdb-project",
+    "PYTHONPYCACHEPREFIX": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-cold-04af74c1-v7/cache"
+  },
+  "original_measurement_raw_untouched": true,
+  "outer_timeout_seconds": 180,
+  "reader_executed": false,
+  "staged_bytes": 228385,
+  "stdout": "Compact metadata only; no raw source/AST/LLVM/C/binary payload transfer."
+}

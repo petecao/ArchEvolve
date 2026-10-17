@@ -1,0 +1,184 @@
+{
+  "HOME_CODEX_HOME_original_token_preserved": false,
+  "HOME_CODEX_HOME_preserved": true,
+  "authentication_contents_read": false,
+  "bootstrap_preflight_s": 180,
+  "bootstrap_source_sha256": "6b54963bd9c92e11cc2ff1734a3b0a8a6fbbe6ca568ba2911bab2fc572d81e91",
+  "bootstrap_stdin": {
+    "bytes": 14410,
+    "mode": "0600",
+    "path": "/private/tmp/lanl17-scientific-prepare-capture-20261008-a2/stdin.py",
+    "sealed": false,
+    "sha256": "0de3691e7078438468f3779673009335f6c5769da03988c2fb787c4e1bac309e"
+  },
+  "direct_GNU_KILL_s": 60,
+  "direct_GNU_s": 18300,
+  "direct_prepare_argv": [
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=60s",
+    "18300s",
+    "/usr/bin/python3.12",
+    "/data1/yanruj/lanl17-metadata-dispatch-guard-cleanup60-20261007-a4.py",
+    "--action",
+    "prepare",
+    "--final-source-sha",
+    "5e12a9796432654d88def24ecea617d16ca605b2",
+    "--project",
+    "/data1/yanruj/ArchEvolve-lanl-cpu-model-validation-20261006-a1/swdb-project",
+    "--control",
+    "/data/yanruj/EvolveSWDB_runs/lanl17-metadata-prepare-20261007-a5",
+    "--guard-sha256",
+    "9c5d9658b524db94805a6b51453dc9edef7096a27312677896d595d39b94f6c6",
+    "--cleanup-proof",
+    "/data/yanruj/EvolveSWDB_runs/lanl17-cleanup-smoke-20261007-a4/receipt.json",
+    "--cleanup-proof-identity",
+    "18e58a44476709cc7520f9760ac94161cd67248e39ff662fbfb16378855d7ca1",
+    "--supervisor-proof",
+    "/data/yanruj/EvolveSWDB_runs/lanl17-metadata-supervisor-fixture-20261007-a4/receipt.json",
+    "--supervisor-proof-identity",
+    "ea9751eef12bc519be0c4159813e29fa5aa378693c6a31caea137599c5db744b",
+    "--",
+    "--source-sha",
+    "5e12a9796432654d88def24ecea617d16ca605b2",
+    "--cleanup-proof",
+    "/data/yanruj/EvolveSWDB_runs/lanl17-cleanup-smoke-20261007-a4/receipt.json",
+    "--source-ref",
+    "codex/lanl-analytic-eval",
+    "--source",
+    "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5",
+    "--raw",
+    "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5",
+    "--tag",
+    "20261007-a5"
+  ],
+  "execution_not_yet_started": true,
+  "explicit_child_environment_overrides": {
+    "GIT_CONFIG_COUNT": "1",
+    "GIT_CONFIG_KEY_0": "core.hooksPath",
+    "GIT_CONFIG_VALUE_0": "/data1/yanruj/lanl17-dx100-hooks-20261008-a2",
+    "PATH": "/usr/bin:/bin:/usr/local/bin",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONNOUSERSITE": "1",
+    "PYTHONSAFEPATH": "1",
+    "SWDB_DX100_BINDING_REQUEST": "/data1/yanruj/lanl17-dx100-deployment-20261008-a2/request.json",
+    "SWDB_DX100_BINDING_REQUEST_SHA256": "a7f34492e2db1b21849da0e467bd546dc5bb6bc53b4ac443da5f43922f34bd8c"
+  },
+  "format": "swdb.lanl17-scientific-prepare-parent-SSH-start.v1",
+  "local_SSH": {
+    "bytes": 1584560,
+    "path": "/usr/bin/ssh",
+    "sha256": "c7f9f9779c1dd141b04889c6cb214859d0702687e7fde34511bb5fa7af8951f1",
+    "stat": [
+      16777229,
+      1152921500312608790,
+      33261,
+      0,
+      0,
+      1,
+      1584560,
+      1790233837000000000,
+      1790233837000000000
+    ]
+  },
+  "local_owned_cleanup_source": {
+    "bytes": 912,
+    "path": "/Users/yanrujhou/.codex/worktrees/lanl-ticket17/ArchEvolve/swdb-project/swdb/processes.py",
+    "sha256": "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289",
+    "stat": [
+      16777229,
+      349336582,
+      33188,
+      501,
+      20,
+      1,
+      912,
+      1791339705112127581,
+      1791339705112127581
+    ]
+  },
+  "local_wait_s": 18720,
+  "no_retry": true,
+  "parent_admission_original": {
+    "bytes": 3784,
+    "path": "/private/tmp/lanl17-parent-prepare-storage-admission-original-20261008-a2.json",
+    "sha256": "2a1b7174828b023921c5d2883cd5e147467d17c92937a8d938c67d5a307223e8",
+    "stat": [
+      16777229,
+      350176776,
+      33152,
+      501,
+      0,
+      1,
+      3784,
+      1791473718319937944,
+      1791473718319937944
+    ]
+  },
+  "prestartup_source_sha256": "eb347e990ac96ad89ca38cd7444fb08685b66d2911580904519f3881b61d1e09",
+  "public_SSH_argv": [
+    "/usr/bin/ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=30",
+    "mbit10",
+    "exec /usr/bin/bash --noprofile --norc -p -c 'if [[ \"${CODEX_HOME-}\" != /data1/yanruj/.codex ]]; then exit 2; fi\nif [[ -n \"${SWDB_LANL17_ORIGINAL_CODEX_HOME-}\" && \"${SWDB_LANL17_ORIGINAL_CODEX_HOME-}\" != /data1/yanruj/.codex ]]; then exit 2; fi\nexport SWDB_LANL17_ORIGINAL_CODEX_HOME=/data1/yanruj/.codex || exit 2\nfor key in \"${!GIT_@}\"; do unset \"$key\" || exit 2; done\nunset PYTHONPATH PYTHONHOME PYTHONSTARTUP PYTHONINSPECT PYTHONOPTIMIZE LD_PRELOAD LD_LIBRARY_PATH BASH_ENV ENV || exit 2\nexport PATH=/usr/bin:/bin:/usr/local/bin PYTHONDONTWRITEBYTECODE=1 PYTHONNOUSERSITE=1 PYTHONSAFEPATH=1\nexport GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=core.hooksPath GIT_CONFIG_VALUE_0=/data1/yanruj/lanl17-dx100-hooks-20261008-a2\nexport SWDB_DX100_BINDING_REQUEST=/data1/yanruj/lanl17-dx100-deployment-20261008-a2/request.json SWDB_DX100_BINDING_REQUEST_SHA256=a7f34492e2db1b21849da0e467bd546dc5bb6bc53b4ac443da5f43922f34bd8c\nexec \"$@\"\n' reviewed-lanl17-prepare-prestartup /usr/bin/python3.12 -B -s -"
+  ],
+  "retirement_and_host_original_pins": {
+    "fresh_host_observation_pin": {
+      "bytes": 12457,
+      "path": "/private/tmp/lanl17-post-retirement-host-capture-20261008-a2/stdout",
+      "sha256": "39ad700092e5aad9c66349e81da3eca0f4b0bed2d8b20261e06b63431ea5baf5",
+      "stat": [
+        16777229,
+        350176646,
+        33152,
+        501,
+        0,
+        1,
+        12457,
+        1791473674013920368,
+        1791473674013920368
+      ]
+    },
+    "successful_retirement_pin": {
+      "bytes": 64569,
+      "path": "/private/tmp/lanl17-detached-sparse-retire-a4-originals-20261008/guard-receipt/receipt.json",
+      "sha256": "93e99138ae34869de92f46d81f0b2ccd5f3da8097555dc92f7f772f17dc22b29",
+      "stat": [
+        16777229,
+        350148932,
+        33152,
+        501,
+        0,
+        1,
+        64569,
+        1791472649817655995,
+        1791472649817655995
+      ]
+    }
+  },
+  "sealed": false,
+  "selected_prepare_completion_and_scientific_admission_not_assessed": true,
+  "source": {
+    "bytes": 29451,
+    "path": "/private/tmp/lanl17_capture_reviewed_scientific_prepare_20261008_a4.py",
+    "sha256": "bd75569d45a6442c2edef72a721f51b5093faf9ab7c8a34347df30a624b2691d",
+    "stat": [
+      16777229,
+      350176518,
+      33152,
+      501,
+      0,
+      1,
+      29451,
+      1791473618048878442,
+      1791473618048878442
+    ]
+  },
+  "started_utc": "2026-10-08T15:35:32.387016+00:00",
+  "task_marker_restored_to_public_CODEX_HOME": true,
+  "task_marker_value": "/data1/yanruj/.codex"
+}

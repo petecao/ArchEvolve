@@ -1,0 +1,207 @@
+{
+  "created": "2026-09-27",
+  "state": "fixed_operator_dependencies_unresolved",
+  "dispatch_allowed": false,
+  "new_allocation": false,
+  "execution_implemented": false,
+  "aggregate_seconds": null,
+  "aggregate_retained_bytes": null,
+  "original_outer_deadline": null,
+  "diagnostic_prerequisite": {
+    "request_file": "diagnostic-request-prospective.json",
+    "request_sha256": "863cc3d67466e50db2d7cd42a6a248de6d8bc1672c8c85bd4474a06a45a69796",
+    "state": "not_dispatched_no_allocation",
+    "primary_recompile": false,
+    "provider_calls": 0,
+    "guest_executions": 0,
+    "public_compile_max_seconds": 240,
+    "compiler_max_seconds": 180,
+    "rss_bytes": 17179869184,
+    "build_subset_max_bytes": 1073741824,
+    "stage_max_retained_bytes": 2147483648,
+    "aggregate_charged_wall_seconds": null,
+    "aggregate_charged_bytes": null,
+    "record_view_rule": "Exact canonical Git records plus the two pinned implementation source attachments; empty writer lock allowed. New output ID only."
+  },
+  "series": [
+    {
+      "id": "bfs-t17-controlled-uniform_random-baseline-20260927-a1",
+      "family": "uniform_random",
+      "role": "baseline",
+      "candidate": {
+        "id": "bfs-dx100-compile-20260925-a1.candidate",
+        "canonical_sha256": "965a13a8617a0be03838a0d41701a4bb8b6e2cfdc12c5893e0b686af874eaf35",
+        "host_artifacts_reverified": false
+      },
+      "primary_build": {
+        "id": "bfs-scalar-v2-preparation-20260926-a1.dx100.primary.build",
+        "canonical_sha256": null,
+        "host_artifacts_reverified": false
+      },
+      "diagnostic_build": {
+        "id": "bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build",
+        "canonical_sha256": null,
+        "host_artifacts_reverified": false
+      },
+      "required_runtime_bindings": [
+        "python",
+        "runtime",
+        "configuration",
+        "runs_dir",
+        "records",
+        "lane",
+        "workload",
+        "protocol",
+        "primary_build",
+        "diagnostic_build",
+        "total_seconds",
+        "checkpoint_seconds",
+        "run_seconds",
+        "diagnostic_seconds",
+        "memory_gib",
+        "storage_gib",
+        "batch_storage_gib",
+        "verification_ticks",
+        "owned_cleanup_ledger",
+        "owned_cleanup_binding"
+      ]
+    },
+    {
+      "id": "bfs-t17-controlled-uniform_random-candidate-20260927-a1",
+      "family": "uniform_random",
+      "role": "candidate",
+      "candidate": {
+        "id": "bfs-campaign-preparation-20260925-a1.dx100-instructions.candidate-1",
+        "canonical_sha256": "e31ff21a5676c29c653d0c443f13faaf32cad7e8cdf41754404422dc9a94ac11",
+        "host_artifacts_reverified": false
+      },
+      "primary_build": {
+        "id": "bfs-t17-build-only-20260926-a1",
+        "canonical_sha256": "3cf348c46fa9e017173fc4c79debf6e3ecdc2b0821be9cb5c81ef4e82fc45630",
+        "host_artifacts_reverified": false
+      },
+      "diagnostic_build": {
+        "id": "bfs-t17-diagnostic-build-only-20260927-a2",
+        "canonical_sha256": null,
+        "host_artifacts_reverified": false
+      },
+      "required_runtime_bindings": [
+        "python",
+        "runtime",
+        "configuration",
+        "runs_dir",
+        "records",
+        "lane",
+        "workload",
+        "protocol",
+        "primary_build",
+        "diagnostic_build",
+        "total_seconds",
+        "checkpoint_seconds",
+        "run_seconds",
+        "diagnostic_seconds",
+        "memory_gib",
+        "storage_gib",
+        "batch_storage_gib",
+        "verification_ticks",
+        "owned_cleanup_ledger",
+        "owned_cleanup_binding"
+      ]
+    },
+    {
+      "id": "bfs-t17-controlled-kronecker-baseline-20260927-a1",
+      "family": "kronecker",
+      "role": "baseline",
+      "candidate": {
+        "id": "bfs-dx100-compile-20260925-a1.candidate",
+        "canonical_sha256": "965a13a8617a0be03838a0d41701a4bb8b6e2cfdc12c5893e0b686af874eaf35",
+        "host_artifacts_reverified": false
+      },
+      "primary_build": {
+        "id": "bfs-scalar-v2-preparation-20260926-a1.dx100.primary.build",
+        "canonical_sha256": null,
+        "host_artifacts_reverified": false
+      },
+      "diagnostic_build": {
+        "id": "bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build",
+        "canonical_sha256": null,
+        "host_artifacts_reverified": false
+      },
+      "required_runtime_bindings": [
+        "python",
+        "runtime",
+        "configuration",
+        "runs_dir",
+        "records",
+        "lane",
+        "workload",
+        "protocol",
+        "primary_build",
+        "diagnostic_build",
+        "total_seconds",
+        "checkpoint_seconds",
+        "run_seconds",
+        "diagnostic_seconds",
+        "memory_gib",
+        "storage_gib",
+        "batch_storage_gib",
+        "verification_ticks",
+        "owned_cleanup_ledger",
+        "owned_cleanup_binding"
+      ]
+    },
+    {
+      "id": "bfs-t17-controlled-kronecker-candidate-20260927-a1",
+      "family": "kronecker",
+      "role": "candidate",
+      "candidate": {
+        "id": "bfs-campaign-preparation-20260925-a1.dx100-instructions.candidate-1",
+        "canonical_sha256": "e31ff21a5676c29c653d0c443f13faaf32cad7e8cdf41754404422dc9a94ac11",
+        "host_artifacts_reverified": false
+      },
+      "primary_build": {
+        "id": "bfs-t17-build-only-20260926-a1",
+        "canonical_sha256": "3cf348c46fa9e017173fc4c79debf6e3ecdc2b0821be9cb5c81ef4e82fc45630",
+        "host_artifacts_reverified": false
+      },
+      "diagnostic_build": {
+        "id": "bfs-t17-diagnostic-build-only-20260927-a2",
+        "canonical_sha256": null,
+        "host_artifacts_reverified": false
+      },
+      "required_runtime_bindings": [
+        "python",
+        "runtime",
+        "configuration",
+        "runs_dir",
+        "records",
+        "lane",
+        "workload",
+        "protocol",
+        "primary_build",
+        "diagnostic_build",
+        "total_seconds",
+        "checkpoint_seconds",
+        "run_seconds",
+        "diagnostic_seconds",
+        "memory_gib",
+        "storage_gib",
+        "batch_storage_gib",
+        "verification_ticks",
+        "owned_cleanup_ledger",
+        "owned_cleanup_binding"
+      ]
+    }
+  ],
+  "remaining_gates": [
+    "Qualified T15 graph/source selection and actual complete primary/diagnostic host costs",
+    "Fresh diagnostic allocation inside prospective aggregate, exact runtime/proof/record view and successful new build",
+    "Controlled protocol complete target/build/instrumentation maps and actual content-addressed freeze",
+    "Per-role diagnostic region correspondence from actual build outputs",
+    "Exact Git runtime/Python proof, free lane, raw/build capacity and original aggregate clock",
+    "Whole next series plus remaining shared cleanup fits the original allocated clock",
+    "Fresh immutable runtime, Linux proof, host lease/capacity and all artifact bindings",
+    "Actual freeze result and paired-package correspondence before comparison/retrieval"
+  ],
+  "scope": "Command construction only; no subprocess, provider, lease, compiler, or evaluator call."
+}

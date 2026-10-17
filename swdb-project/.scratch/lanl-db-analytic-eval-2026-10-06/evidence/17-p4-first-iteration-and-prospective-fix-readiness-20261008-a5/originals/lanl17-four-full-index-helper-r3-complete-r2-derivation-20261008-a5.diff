@@ -1,0 +1,40 @@
+--- /private/tmp/lanl17_prepare_four_full_index_metadata_20261008_a5_r2.py
++++ /private/tmp/lanl17_prepare_four_full_index_metadata_20261008_a5_r3.py
+@@ -4,7 +4,7 @@
+ Two stages preserve the actual a2 original boundary: specification, then bootstrap.
+ Approvals are required explicit parent attestations, never inferred from a hash.
+ """
+-import argparse,datetime,hashlib,json,os,pwd,re,signal,socket,stat,sys,time
++import argparse,datetime,hashlib,json,math,os,pwd,re,signal,socket,stat,sys,time
+ from pathlib import Path
+ UID=114316761
+ CAP=8*1024**2
+@@ -62,7 +62,7 @@
+    for y in x.values():walk(y,depth+1)
+   elif type(x) is list:
+    for y in x:walk(y,depth+1)
+-  else:need(x is None or type(x) in (bool,str,int),'closed_metadata_scalar')
++  else:need(x is None or type(x) in (bool,str,int) or type(x) is float and math.isfinite(x),'closed_metadata_scalar')
+  walk(v);return v
+ def hash64(v):need(type(v) is str and re.fullmatch('[0-9a-f]{64}',v) is not None,'actual_SHA256');return v
+ def utc(v):
+@@ -105,9 +105,9 @@
+ def context(cid):return {'source_C':C,'estimator_sha256':F6,'final_R':{'commit':R,'tree':TREE},'account':ACCOUNT,'campaign':cid,'source_path':S,'project':S+'/swdb-project','records_directory':RAW+'/campaign-runs/extensa/'+cid+'/records','manifest_identity_sha256':M2['identity_sha256']}
+ def request(spec):return {'format':'swdb.lanl17-parent-record-index-request.v1','context':spec['context'],'originals':spec['originals'],'catalog_inventory':spec['catalog_inventory'],'summary_binding':spec['summary_binding'],'limits':spec['limits'],'parent_review':spec['writer_parent_review'],'output_directory':spec['writer_output_directory']}
+ def attestation(v,cid):
+- exact(v,('campaign','records_directory','catalog_inventory_sha256','validation_files_sha256','prior_validation_full_catalogue','catalog_unchanged_since_original_validation','all_campaign_processes_stopped','exclusive_snapshot_ownership_confirmed','no_catalog_consumers_confirmed','all_four_normal_custodies_root_and_peer_reviewed','source_R_F6_current_and_clean','native_tools_current_owned_regular_byte_pins_reviewed','native_Bash_startup_and_1024_byte_ulimit_units_reviewed','HOME_and_public_auth_preserved','all_outputs_currently_fresh_owned_and_disjoint','actual_inputs_parent_approved','fixtures_or_replays_allowed','observed_utc','reviewed_utc','valid_until_utc','native_executable_sha256'),'explicit_parent_attestation')
++ exact(v,('campaign','records_directory','catalog_inventory_sha256','validation_files_sha256','prior_validation_full_catalogue','catalog_unchanged_since_original_validation','all_campaign_processes_stopped','exclusive_snapshot_ownership_confirmed','no_catalog_consumers_confirmed','all_four_normal_custodies_root_and_peer_reviewed','all_native_leases_currently_released_no_kernel_holder_or_FD9','source_R_F6_current_and_clean','native_tools_current_owned_regular_byte_pins_reviewed','native_Bash_startup_and_1024_byte_ulimit_units_reviewed','HOME_and_public_auth_preserved','all_outputs_currently_fresh_owned_and_disjoint','actual_inputs_parent_approved','fixtures_or_replays_allowed','observed_utc','reviewed_utc','valid_until_utc','native_executable_sha256'),'explicit_parent_attestation')
+  need(v['campaign']==cid and v['records_directory']==context(cid)['records_directory'],'attested_catalog_route')
+- for k in ('prior_validation_full_catalogue','catalog_unchanged_since_original_validation','all_campaign_processes_stopped','exclusive_snapshot_ownership_confirmed','no_catalog_consumers_confirmed','all_four_normal_custodies_root_and_peer_reviewed','source_R_F6_current_and_clean','native_tools_current_owned_regular_byte_pins_reviewed','native_Bash_startup_and_1024_byte_ulimit_units_reviewed','HOME_and_public_auth_preserved','all_outputs_currently_fresh_owned_and_disjoint','actual_inputs_parent_approved'):need(v[k] is True,'explicit_true_parent_'+k)
++ for k in ('prior_validation_full_catalogue','catalog_unchanged_since_original_validation','all_campaign_processes_stopped','exclusive_snapshot_ownership_confirmed','no_catalog_consumers_confirmed','all_four_normal_custodies_root_and_peer_reviewed','all_native_leases_currently_released_no_kernel_holder_or_FD9','source_R_F6_current_and_clean','native_tools_current_owned_regular_byte_pins_reviewed','native_Bash_startup_and_1024_byte_ulimit_units_reviewed','HOME_and_public_auth_preserved','all_outputs_currently_fresh_owned_and_disjoint','actual_inputs_parent_approved'):need(v[k] is True,'explicit_true_parent_'+k)
+  need(v['fixtures_or_replays_allowed'] is False and v['native_executable_sha256']==NATIVE,'no_replays_and_exact_native_pins')
+  observed,reviewed,end=map(utc,(v['observed_utc'],v['reviewed_utc'],v['valid_until_utc']));now=datetime.datetime.now(datetime.timezone.utc)
+  need(observed<=reviewed<=now<end and 0<(end-observed).total_seconds()<=300,'fresh_parent_attestation_interval')
+@@ -172,6 +172,7 @@
+  plan=unsealed(strict(read(data['author_preparation_plan'])));spec=unsealed(strict(read(data['specification_original'])));req=unsealed(strict(read(data['request_original'])));custody=sealed(strict(read(data['author_custody_original'])))
+  need(plan['format']=='swdb.lanl17-full-index-author-preparation.v1' and plan['executable'] is False and plan['scientific_admission'] is False and plan['specification_pin']==data['specification_original'],'original_preparation_binding')
+  need(spec['context']==context(cid) and req==request(spec) and req['context']==context(cid),'actual_original_a2_request_equality')
++ need(spec['format']=='swdb.lanl17-parent-record-index-request-author-spec.v1' and spec['controls']=={'index_writer':CONTROLS['writer']} and req['originals']['manifest_M2']==M2 and all(req['originals'][role]==CONTROLS[name] for role,name in (('helper_source','helper'),('auditor_source','auditor'),('collector_source','collector'))),'actual_original_fixed_sources')
+  need(digest(spec['writer_parent_review'])==plan['writer_parent_review_sha256'] and digest(spec['author_review'])==plan['author_review_sha256'],'original_review_digest_binding')
+  need(spec['writer_parent_review']['reviewed_request_payload_sha256']==digest({k:v for k,v in req.items() if k!='parent_review'}) and spec['author_review']['reviewed_specification_payload_sha256']==digest({k:v for k,v in spec.items() if k!='author_review'}),'original_review_payload_bindings')
+  need(custody['format']=='swdb.lanl17-parent-record-index-request-author-custody.v1' and custody['state']=='parent_authored_unsealed_index_request_with_inherited_snapshot_review' and custody['actual_campaign_admission'] is False and custody['request_sealed'] is False and custody['bare_index_file_published_or_index_writer_executed'] is False,'actual_author_custody_scope')

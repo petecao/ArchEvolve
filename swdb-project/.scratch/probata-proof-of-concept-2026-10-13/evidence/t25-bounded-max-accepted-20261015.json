@@ -1,0 +1,148 @@
+{
+  "source": "d874c4dc2b70972462deab4cb03d66b76e4026c2",
+  "test": "original bounded vector/pair maximum, unchanged n3 fixture",
+  "outcome": "1PASS224.48s; CBMC C lowering proven within recorded bounds;625 native C/C++ cases agree, not a C++ formal proof",
+  "record": {
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-t25-bounded-max-20261015-1305-node0/pytest/test_a_unit_using_vector_membe0/records/proofs/proof.vector-safe.candidate-1.20261015t170733z.b0818ecb.yaml",
+    "sha256": "132be41badf59daff755721a22596f8486c5e0dae68fc8bbce5c921b73212da5",
+    "verdict": "proven",
+    "bounds": {
+      "threads": 1,
+      "n": 3
+    },
+    "evidence_kind": "contract_fixture",
+    "certificate_sha256": "ef9ee6f8eba16626d94e37dc854dae401933a590216c40d71af88da9671af185",
+    "verifier_launched": true,
+    "setup_verdict": "passed"
+  },
+  "bounded_properties": {
+    "ordinary_success": 310,
+    "reachability_expected_failures": 1,
+    "unwinding": 4,
+    "flags": [
+      "-DSWDB_CBMC",
+      "--unwind",
+      "4",
+      "--unwinding-assertions",
+      "--pointer-overflow-check",
+      "--sat-solver",
+      "cadical",
+      "--no-malloc-may-fail"
+    ]
+  },
+  "agreement": {
+    "runs": 625,
+    "sampled": false,
+    "domain": {
+      "n": {
+        "role": "size",
+        "values": [
+          -1,
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "a": {
+        "role": "element",
+        "values": [
+          -2,
+          -1,
+          0,
+          1,
+          2
+        ]
+      }
+    },
+    "c_output_sha256": "8fe5d11ec0e909600144e1029e9b2baa2ffe3b9bee051a3a7da3965599ecd9ab",
+    "cxx_output_sha256": "8fe5d11ec0e909600144e1029e9b2baa2ffe3b9bee051a3a7da3965599ecd9ab",
+    "undefined_behavior_runs": 0,
+    "verdict": "agree"
+  },
+  "standard_library": {
+    "implementation": "libc++",
+    "version": "22.1.8",
+    "header_macro": "_LIBCPP_VERSION=220108"
+  },
+  "std_models": {
+    "id": "swdb-std-models-2",
+    "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+  },
+  "platform_probes": [
+    {
+      "spelling": "assert.h",
+      "target": {
+        "path": "/usr/include/assert.h",
+        "sha256": "538cc7466f2e7b6d34f716f4f4ef601fc6ce940098668c207b1a0d30c8e2341a"
+      },
+      "clean_header_count": 10
+    },
+    {
+      "spelling": "getopt.h",
+      "target": {
+        "path": "/usr/include/getopt.h",
+        "sha256": "58d58eaa08943a3f777fb34dbc38c7035d5e8acc977d1016ac9def8cbb4cf7db"
+      },
+      "clean_header_count": 12
+    }
+  ],
+  "audit": {
+    "records": 1,
+    "report_references": 7,
+    "adapter_logs": 1,
+    "total_artifact_references": 8,
+    "declared_absolute_file_pin_references": 1599,
+    "unique_absolute_pinned_files": 860,
+    "runtime_test_fixture_reader_schema_source_pins": 202,
+    "certificate_self_hash_matches": true,
+    "fixture_matches_historical_0cc": true,
+    "errors": []
+  },
+  "resources": {
+    "exit_code": 0,
+    "peak_rss_bytes": 512581632,
+    "out_of_memory": false,
+    "timed_out": false,
+    "wall_seconds": 224.91383142583072,
+    "cpu_seconds": 225.639356
+  },
+  "source_after": {
+    "commit": "d874c4dc2b70972462deab4cb03d66b76e4026c2",
+    "tracked_changes": "",
+    "source_unchanged": true
+  },
+  "lane": {
+    "aligned_cell_age_s": "",
+    "aligned_to": "no_gapbs_batch_running",
+    "command": [
+      "timeout",
+      "2000",
+      "bash",
+      "/data/yanruj/EvolveSWDB_runs/probata-t25-bounded-max-20261015-1305-node0/run.sh"
+    ],
+    "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+    "ended_utc": "2026-10-15T17:08:59Z",
+    "exit_code": 0,
+    "host": "mbit10",
+    "job": "probata-t25-bounded-max-platform-probes",
+    "lease_generation": 565,
+    "lease_name": "mbit10-evaluation-node0",
+    "load1_at_start": 0.0,
+    "load1_max": 32,
+    "node": 0,
+    "numa_memory_policy": "bind:0",
+    "numactl": "--cpunodebind=0 --membind=0",
+    "preregistration_sha256": null,
+    "started_utc": "2026-10-15T17:05:14Z"
+  },
+  "output_bytes_before_audit": 11804232,
+  "boundary": "No stale/at batch, member-body proofs, generic origins, production method3 or fullticket25 completion. Prior3refusals immutable.",
+  "created": "2026-10-15 ET",
+  "ticket_status": "claimed",
+  "retention_readers": [
+    "coordinator",
+    "ticket25 acceptance",
+    "independent audit"
+  ]
+}

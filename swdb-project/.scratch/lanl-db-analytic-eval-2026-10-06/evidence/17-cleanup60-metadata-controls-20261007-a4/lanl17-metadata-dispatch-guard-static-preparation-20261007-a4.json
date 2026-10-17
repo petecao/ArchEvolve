@@ -1,0 +1,65 @@
+{
+  "format": "swdb.lanl17-metadata-dispatch-guard-static-preparation.v1",
+  "updated_utc": "2026-10-07T08:30:09.881568+00:00",
+  "guard": {
+    "path": "/private/tmp/lanl17_metadata_dispatch_guard_cleanup60_a4_20261007.py",
+    "remote_path": "/data1/yanruj/lanl17-metadata-dispatch-guard-cleanup60-20261007-a4.py",
+    "sha256": "9c5d9658b524db94805a6b51453dc9edef7096a27312677896d595d39b94f6c6",
+    "bytes": 14577
+  },
+  "readme": {
+    "path": "/private/tmp/lanl17-metadata-dispatch-guard-cleanup60-20261007-a4.md",
+    "sha256": "fa0d7f4dc075d2ef756c35563f1ec254811218dfa2e16d339aa537dfb087ad9d",
+    "bytes": 7161
+  },
+  "cleanup60_preparation": {
+    "path": "/private/tmp/lanl17-cleanup60-source-preparation-20261007-a4.json",
+    "identity_sha256": "a54a5bd80926276cba55ee689f91e665d3dc199a6832cdce0948c654d612009d",
+    "file_sha256": "2b8c370df82d9f36dd89e5d6a9980b5f440a6651a52e05b8c92d7bb815c31735"
+  },
+  "parent_portable_actual": {
+    "path": "/private/tmp/lanl17-cleanup60-parent-portable-actual-20261007-a4.json",
+    "identity_sha256": "fd9a7a48ddacbd0dfa1f3ae49a1ab5fefae043b23332be02905a09e54155b05e",
+    "file_sha256": "12b79ec1aabe1d644d2c46c7c9925ef60c183e729f0f7f06e394baac087470da",
+    "cases": 9,
+    "elapsed_s": 0.256,
+    "new_run_by_guard_author": false
+  },
+  "helper_sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414",
+  "supervisor_sha256": "fa703bbd4c71bb4bcf56f47d1e224449f627d5921295e00b9cc105f21e95bde0",
+  "limits": {
+    "prepare": {
+      "wait": 18000,
+      "term": 18120,
+      "kill": 60,
+      "parent": 18300
+    },
+    "finalize": {
+      "wait": 78000,
+      "term": 78120,
+      "kill": 60,
+      "parent": 78300
+    }
+  },
+  "required_explicit_execution_checked_finalR": true,
+  "required_new_actual4d_and_a848_proof_paths_and_parent_identities": true,
+  "required_clean185_module_F6_and_exact_finalR_python_Git_blobs": true,
+  "all_free_checks_preserved_no_measurement_lease_acquisition": true,
+  "original_helper_tail_and_environment_preserved": true,
+  "no_credential_content_or_full_argv_export": true,
+  "exact_parent_timeout_ancestry_required_before_exec": true,
+  "exec_pinned_existing_supervisor_no_new_cleanup_implementation": true,
+  "syntax": "passed_static_AST",
+  "guard_import_or_execution": "not_run",
+  "host_test_reruns": 0,
+  "Store_constructions": 0,
+  "population_actions": 0,
+  "provider_calls": 0,
+  "SSH_dispatches": 0,
+  "fresh_original4d_smoke": "not_run",
+  "fresh_a848_fixture": "not_run",
+  "integration_untouched": true,
+  "source_C_F6_and_existing_controls_proofs_unchanged": true,
+  "scope": "Source-only prospective parent dispatch guards; parent full review/actual new cleanup and final catalogue/source admission still required.",
+  "identity_sha256": "a49f86321261f863b0c592bf8b1a680e5b775f03131b55fac19c0726d1774d1e"
+}

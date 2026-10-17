@@ -1,0 +1,30 @@
+test_01_inventory_and_all_instances (__main__.Controls) ... ok
+test_02_defaults_overloads_and_exact_type_identity (__main__.Controls) ... ok
+test_03_binding_refusals (__main__.Controls) ... ok
+test_04_literal_roles_and_all_66_dtype_maps (__main__.Controls) ... ok
+test_05_width_counted_and_refused_domains (__main__.Controls) ... ok
+test_06_emitted_wrapper_routes_and_pinned_backend (__main__.Controls) ... ok
+test_07_one_tu_parser_rejects_filtered_id_joins_and_malformed_streams (__main__.Controls) ... ok
+test_08_exact_probe_alias_layout_geometry_and_refusal_controls (__main__.Controls) ... ok
+test_09_real_tu_protocol_binding_and_physical_source_refusal (__main__.Controls) ... ok
+test_10_prospective_recipe_has_one_full_tu_and_independent_abi_literals (__main__.Controls) ... ok
+test_11_macro_free_source_observation_fixture_inverse (__main__.Controls) ... ok
+test_12_source_cannot_name_private_state_or_bypass_public_mmio_calls (__main__.Controls) ... ok
+test_13_original_buffer_ast_and_matching_dependency_census (__main__.Controls) ... FAIL
+
+======================================================================
+FAIL: test_13_original_buffer_ast_and_matching_dependency_census (__main__.Controls)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/test_compiler_unit_adapter_v2.py", line 147, in test_13_original_buffer_ast_and_matching_dependency_census
+    self.assertEqual(observation["argv"][-1], "/inert/raw/control/" + filename)
+AssertionError: '/inert/raw/component/caller.ii' != '/inert/raw/control/source_call_fixture_v2.cpp'
+- /inert/raw/component/caller.ii
++ /inert/raw/control/source_call_fixture_v2.cpp
+
+
+----------------------------------------------------------------------
+Ran 13 tests in 2.087s
+
+FAILED (failures=1)
+{"ABI_roots_synthetic_only": 29, "compiler_native_project_child_execution": false, "date": "2026-10-16 ET", "errors": 0, "failures": 1, "skips": 0, "tests": 13}

@@ -1,0 +1,41 @@
+{
+  "argv": [
+    "ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "mbit10",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=60",
+    "660",
+    "/usr/bin/python3.12",
+    "-B",
+    "-",
+    "--expected-primary",
+    "260a0d8ce9dce63a852d88e8cf2bb8cd484e78f1",
+    "--source-sha256",
+    "ef9b4e57f7e7636f8275fe1a712b5ca4abae6773f70f56064d8d5ad21691ec10"
+  ],
+  "elapsed_seconds": 2.7277373749529943,
+  "finished_utc": "2026-10-08T07:26:40.800857+00:00",
+  "format": "swdb.parent-fixed-dependency-query-original-transport-custody.v1",
+  "returncode": 0,
+  "sealed": false,
+  "source": {
+    "bytes": 33776,
+    "path": "/private/tmp/lanl17_query_fixed_queued_dependency_bytes_20261008_a1_r1.py",
+    "sha256": "ef9b4e57f7e7636f8275fe1a712b5ca4abae6773f70f56064d8d5ad21691ec10"
+  },
+  "started_utc": "2026-10-08T07:26:38.073020+00:00",
+  "stderr": {
+    "bytes": 0,
+    "path": "/private/tmp/lanl17-fixed-queued-dependency-byte-query-original-actual-20261008-a1.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 87891,
+    "path": "/private/tmp/lanl17-fixed-queued-dependency-byte-query-original-actual-20261008-a1.json",
+    "sha256": "0a1d0596d8165ce7293857b9090c218ac487e7509496f47a063d483eeada7cd0"
+  }
+}

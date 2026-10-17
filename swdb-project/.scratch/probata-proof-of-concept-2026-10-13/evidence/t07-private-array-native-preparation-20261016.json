@@ -1,0 +1,71 @@
+{
+  "created": "2026-10-16 ET",
+  "status": "prospective private typed lexical array; compiler/native preparation only",
+  "base_outslot": "971ad6324299ebe40a5146eed0de5172a9384137",
+  "source": {
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/private_array_lowering.py": "cdf27c56d434700b99ef25f12bdbae04be4a12648748ada1442f8ee260850385",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/PRIVATE-ARRAY-REFINEMENT-20261016.md": "5d8d915ef0b4f68b8bee77599ad7a1e0da958f690a976a5b400420236542c56c",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/checks/outslot/private_array_native.c": "415699d8ef85c2a5f62f1066ea74ffbf1c67f7e31bf6fc7e70a6d524c1b1e65c",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/checks/outslot/run_private_array_controls.py": "e9dd97ac0ecd315c116a90420894ab53c7f37823b971ea0ddd442c6b0a2e5004",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/checks/outslot/td_behavior.c": "2ff9ce3cc13541e6139bf5d35d16de0c67fb9a8e194a637f72b06127788da9c0",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array/bfs_unit.h": "a9f3bb9954057676acd2216e05c4051f0782198ed44c7f3088cb309d09eb1d69",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array/dxc_summaries.h": "724f5b0fa31c0b601d4a5780df3d6514d3a308a99e0c9a8eed04a29cde9060c1",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array/gapbs_models.h": "77b579f9d90a4775c8bd2cb5a91a7896dcf0cc17b0743a098dc14e6bc30f7d5f",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array/private-array-map.json": "1b37b29d78f3c00d2147052c656dec7202044eca2c7cf361e04fb2623ab11efa",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array/sites/copy-positive.c": "041240b6e4c320f50bbefdae145cbadf04672e2b9fac6754da08a7de015bc9fa",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array/sites/history-positive.c": "7b061fe6d12696cf9a0e7a49bb73ea614cf897605c2c1bca4785ed6ca082e343",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array/sites/missing-store.c": "01434f91cf191c47ce012e12cdcc3c766c778a5be17b3daa8e637e78f75e6b9f",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array/sites/positive.c": "7e7a23698dc44961f6cb2410079aa12c0024d300333e959dd545f691de5fd09e",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array/sites/uninitialized-scalar.c": "688fd83ba3a0ee4136738bde9ab0e286255f344de67e052db5efe1b3500635fb",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array/sites/wrong-cell.c": "0a265eb1ed3436dd8cf251b73c15bc71b54a9181910fc5d7fac45a820b673ca7",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_private_array/tdstep_standin.c": "ab8e1f4c833805c21d291a152e8fcebd62b66bfc945b16d19c344063657b07c5"
+  },
+  "helper_bodies": 20,
+  "original_bodies_retained": 19,
+  "new_binding_bodies": 1,
+  "standard_allocator_summaries_removed": [
+    "swdb_new_NodeID_array_out",
+    "swdb_delete_NodeID_array"
+  ],
+  "scope": "one exact default16384 successful-normal private QueueBuffer lifetime; no generic allocator/delete/source theorem",
+  "incoming_SlidingQueue": "symbolic num_nodes unchanged",
+  "native_controls": {
+    "path": "/private/tmp/probata-t07-private-array-controls-final-20261016",
+    "controls_sha256": "4063f2260367919ab9348c90f3484fa53238dc2a9ee6758f3d38764c578af0b3",
+    "passed": 43,
+    "same_path_negatives": [
+      "missing-store",
+      "wrong-cell",
+      "uninitialized-scalar"
+    ],
+    "native_undefined_negatives_executed": false,
+    "same_path_analyzer_diagnostics": "one core.uninitialized.Assign at each intended site; all three positive analyzers emit no diagnostic",
+    "three_way_TD": "original/outslot/private values and event counts identical; ASan+UBSan"
+  },
+  "resources": {
+    "guard_path": "/private/tmp/probata-t07-private-array-controls-final-20261016.log.summary.json",
+    "guard_sha256": "0f3a6a39292d873a32a5c67f766b5f9626359ca0720e207c6db36684cdd0256e",
+    "wall_s": 1.4444540416589007,
+    "peak_rss_mb": 41.75,
+    "cap_gb": 8.0,
+    "timeout_s": 120.0,
+    "inspection_failure": null,
+    "unconfirmed_children": []
+  },
+  "artifact_manifest": {
+    "path": "/private/tmp/probata-t07-private-array-artifacts-20261016.json",
+    "sha256": "f5c3f879010c40f1d2ef47ea42203e39ba46b2e5ee22f91a163c738d612a9a76"
+  },
+  "raw_red": "/private/tmp/probata-t07-private-array-native-red-20261016.log",
+  "pending_gates": [
+    "actual ACSL/type/generation support",
+    "exact address-taken array init-map and lexical reentry semantics",
+    "same-path formal ordinary/init/smoke evidence",
+    "source alignment/same-array/lifetime/nonescape/private-frame correspondence",
+    "full C++/device caller bridge"
+  ],
+  "allocator_correspondence": "REFUSED_PENDING_FORMAL_AND_SOURCE_GATES",
+  "TD_or_counted_admissible": false,
+  "proof_acceptance": false,
+  "formal_Why3_solver_provider_SSH_called": false
+}

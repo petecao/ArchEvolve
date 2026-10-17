@@ -1,0 +1,139 @@
+{
+  "actual_native_compiler_solver_or_CLI_run": false,
+  "complete_diagnostic_gate": "one exact subject/method public record, nonempty ordinary goals and preserved native files; explicit integer exit0/no OOM/no watchdog timeout, final settled profile extent and time. Either native proven or not_proven is a completed diagnostic; neither grants source admission.",
+  "controls": {
+    "bytes": 4546,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/normal-public-v1/test_controls.py",
+    "sha256": "1732236b1c36b2f5ce5bbd2c8ce7b64b7d67be1475711d1fdffe8cc8f48ed15a"
+  },
+  "date": "2026-10-16 ET",
+  "entry": {
+    "bytes": 11623,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/normal-public-v1/public_move_diagnostic_v1.py",
+    "sha256": "a6f3d4ae7a0745a838c97f859c0ceee780e81bfe494c2b1037294f9661c8c7ea"
+  },
+  "fallback_cleanup": "complete original source retained; all infeasible synthetic sites and lifetime unsupported facts stay explicit",
+  "inputs": [
+    {
+      "bytes": 104308,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/wp_adapter.py",
+      "sha256": "56231cad5a34d866c274086ffb16cd004966e5c1cf5c3224b145144b8a91c229"
+    },
+    {
+      "bytes": 64171,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/wp_pointer_bounds.py",
+      "sha256": "62215cc74768061aff3ded4b449b0f4ec776c0243c15194bfefcf064dc737241"
+    },
+    {
+      "bytes": 53397,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/proof_setup.py",
+      "sha256": "e65f083540d0c4aafca8c2a2183f71dad644fd314aff02ff04cd2331fabcc79d"
+    },
+    {
+      "bytes": 51186,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/proof.py",
+      "sha256": "6223247f6d9ee6a806ee32f2a4f5630e5fa41555488a70c3c4646b73f6892802"
+    },
+    {
+      "bytes": 36527,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/schemas/proof.schema.json",
+      "sha256": "e803f92837d52035f09d1281aa43ce334fcea81942d3f0bd4a16959383a487f8"
+    },
+    {
+      "bytes": 29179,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/std_models.py",
+      "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+    },
+    {
+      "bytes": 170578,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/c_lowering.py",
+      "sha256": "37201a198250021e3d9912a7fbaafa2b8dd9377db8d87027e51045897a246243"
+    },
+    {
+      "bytes": 31224,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_owned_move_source.py",
+      "sha256": "978518aa169bf6975a906a43d96ffe450f9a2e1fefd158cccd338c67b16337bc"
+    },
+    {
+      "bytes": 3079,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/testkit/standard_library.py",
+      "sha256": "e02a87c48bce91bb8d42fe1d2299362a945ccadc4528d252ed52e1be8517e351"
+    },
+    {
+      "bytes": 327,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/fixtures/proof/lowering/vector_owned_transfer.cc",
+      "sha256": "a0dc043284f96a5b7c052963b51188318ae4abc6a85ee347fea78b6ab392d3a2"
+    },
+    {
+      "bytes": 4037,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/fixtures/proof/methods/contract-fixture-1.yaml",
+      "sha256": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29"
+    },
+    {
+      "bytes": 5239,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/methods/probata-draft-1.yaml",
+      "sha256": "497aa683887094e3217945132134112469e028c2a50a7966838bbebf902d3ae5"
+    }
+  ],
+  "kind": "inert-original-closed-move-normal-public-WP-diagnostic",
+  "mathematical_source_Heap_Typed_body_caller_default_public_admission": false,
+  "original_contract": [
+    "requires 0 <= n;",
+    "assigns \\nothing;",
+    "ensures \\result == (n > 0 ? 7 : 0);"
+  ],
+  "original_lowering_reference": {
+    "bytes": 5642,
+    "role": "reference only; actual normal public lowering is retained independently",
+    "sha256": "5c33a1a1843045d0b9d2ba43eb8d590c9e6106c794982286b28505c64e896e34"
+  },
+  "prospective_source": "7ce1d4e13a682f1ae6794a32b260d9c41147eb8c",
+  "public_interface": "normal swdb prove --adapter wp --summary contract.fixture_vector_owned_move_capture --method-version method.wp-vector-owned-move-diagnostic-v1",
+  "pure_controls": {
+    "external_attempts": [],
+    "failed": 0,
+    "passed": 15,
+    "stderr": {
+      "bytes": 1724,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/normal-public-v1/pure-controls-v1.stderr",
+      "sha256": "4925faea5cf46ad01eff5a1b50faa0c7b550958f6f0c6c4a41e8326af33409a6"
+    },
+    "stdout": {
+      "bytes": 105,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/normal-public-v1/pure-controls-v1.stdout",
+      "sha256": "3575d62ecd78b499513eb65a4c2cfd50752fc733967cf925cfbf3dbe73456785"
+    }
+  },
+  "scheduling": {
+    "RSS_cap_bytes": 8589934592,
+    "host": "Mac",
+    "job_seconds": 420,
+    "leaf_outer_seconds": 480,
+    "root_outer_seconds": 720,
+    "shared_verifier_lock": "ordinary framework lock unchanged; root admission required",
+    "whole_seconds": 600,
+    "workers": 1
+  },
+  "scientific_limits": [
+    "modular constructor post-state remains conditional",
+    "native freeable or ignored unsupported facts preserved",
+    "stronger selected moved-from-empty source-model correspondence is an explicit future source-route TCB and is not inferred from C++17 conformance",
+    "all original ordinary/RTE/init/frame/smoke goals retained for later exact source-ledger review"
+  ],
+  "source": {
+    "bytes": 327,
+    "sha256": "a0dc043284f96a5b7c052963b51188318ae4abc6a85ee347fea78b6ab392d3a2"
+  },
+  "source_edits_or_override_hints": [],
+  "storage": {
+    "destination": "/private/tmp/probata-vector-owned-move-normal-public-20261016-v1",
+    "preflight_free_bytes": 21474836480,
+    "profile_budget_bytes": 134217728,
+    "standalone_WP_tasks": "one absolute native-working dir archived unchanged after normal process settlement; SHA-256 relocation census retained"
+  },
+  "template": {
+    "bytes": 8565,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/public_default4_v2.py",
+    "sha256": "3af3ee7559e4c15d4f7e429ab96f4b83b12a3ddd40a16e521083df98b6f7fec0"
+  }
+}

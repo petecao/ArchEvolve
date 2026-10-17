@@ -1,0 +1,776 @@
+{
+  "created": "2026-10-15 ET",
+  "ticket": "36",
+  "scope": "CBMC pointer formation, bounded DX100 tile object extents, frozen verdict reading dependencies",
+  "primary_source": {
+    "url": "https://diffblue.github.io/cbmc/cprover-manual/md_memory-primitives.html",
+    "relevant_lines": "18-25,54; independent objects and pointer-overflow-check"
+  },
+  "cbmc": {
+    "cbmc_version": "6.11.0",
+    "command": [
+      "/opt/homebrew/bin/cbmc"
+    ],
+    "binary_sha256": "216a8a11add362e5eaf191bbc3d3b4e2d72f1ef1461d9e00bff483c61aa049ad"
+  },
+  "raw_controls": [
+    {
+      "case": "outside_formation",
+      "mode": "baseline",
+      "command": [
+        "/opt/homebrew/bin/cbmc",
+        "/private/tmp/probata-cbmc-pointers/outside_formation.c",
+        "--sat-solver",
+        "cadical",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--json-ui"
+      ],
+      "source_sha256": "ac0c7a4f553a690f1dc505629cf9a502ab4f3bbc22974191d199c5b94f252bc0",
+      "result": {
+        "exit_code": 0,
+        "peak_rss_bytes": 19480576,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 0.10492374998284504,
+        "cpu_seconds": 0.036428
+      },
+      "log_sha256": "5f31dc9f78f96b1f8f6dbf049686ac3b762088c65271f7c4c9906c2503048539",
+      "properties": 0,
+      "failed": []
+    },
+    {
+      "case": "outside_formation",
+      "mode": "overflow",
+      "command": [
+        "/opt/homebrew/bin/cbmc",
+        "/private/tmp/probata-cbmc-pointers/outside_formation.c",
+        "--sat-solver",
+        "cadical",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--json-ui"
+      ],
+      "source_sha256": "ac0c7a4f553a690f1dc505629cf9a502ab4f3bbc22974191d199c5b94f252bc0",
+      "result": {
+        "exit_code": 10,
+        "peak_rss_bytes": 19513344,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 0.06647158396663144,
+        "cpu_seconds": 0.033775
+      },
+      "log_sha256": "190be16cc7be65b2aa015f0c0a6b9899e872b6487d69dffebf2a8b7884696e5f",
+      "properties": 2,
+      "failed": [
+        {
+          "property": "main.pointer_arithmetic.2",
+          "description": "pointer arithmetic: pointer outside object bounds in a + (signed long int)3",
+          "status": "FAILURE"
+        }
+      ]
+    },
+    {
+      "case": "outside_formation",
+      "mode": "both",
+      "command": [
+        "/opt/homebrew/bin/cbmc",
+        "/private/tmp/probata-cbmc-pointers/outside_formation.c",
+        "--sat-solver",
+        "cadical",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--pointer-primitive-check",
+        "--json-ui"
+      ],
+      "source_sha256": "ac0c7a4f553a690f1dc505629cf9a502ab4f3bbc22974191d199c5b94f252bc0",
+      "result": {
+        "exit_code": 10,
+        "peak_rss_bytes": 19562496,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 0.13042549998499453,
+        "cpu_seconds": 0.03235
+      },
+      "log_sha256": "190be16cc7be65b2aa015f0c0a6b9899e872b6487d69dffebf2a8b7884696e5f",
+      "properties": 2,
+      "failed": [
+        {
+          "property": "main.pointer_arithmetic.2",
+          "description": "pointer arithmetic: pointer outside object bounds in a + (signed long int)3",
+          "status": "FAILURE"
+        }
+      ]
+    },
+    {
+      "case": "one_past",
+      "mode": "baseline",
+      "command": [
+        "/opt/homebrew/bin/cbmc",
+        "/private/tmp/probata-cbmc-pointers/one_past.c",
+        "--sat-solver",
+        "cadical",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--json-ui"
+      ],
+      "source_sha256": "fd3a6031737e527169fe1d0fa7b161d00904fa06e02f505e0df33f10a437687f",
+      "result": {
+        "exit_code": 0,
+        "peak_rss_bytes": 19529728,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 0.07525366602931172,
+        "cpu_seconds": 0.03428
+      },
+      "log_sha256": "04addc151d7492bd54b697b8f46b97d93cf5a04b585cc8683a80c3d709692f2c",
+      "properties": 0,
+      "failed": []
+    },
+    {
+      "case": "one_past",
+      "mode": "overflow",
+      "command": [
+        "/opt/homebrew/bin/cbmc",
+        "/private/tmp/probata-cbmc-pointers/one_past.c",
+        "--sat-solver",
+        "cadical",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--json-ui"
+      ],
+      "source_sha256": "fd3a6031737e527169fe1d0fa7b161d00904fa06e02f505e0df33f10a437687f",
+      "result": {
+        "exit_code": 0,
+        "peak_rss_bytes": 19546112,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 0.1072382089914754,
+        "cpu_seconds": 0.028884
+      },
+      "log_sha256": "4cac77a61a4c7c95bd32a3cd1fc7c61243a003ce9bc4eb263793acb6ca557f7e",
+      "properties": 1,
+      "failed": []
+    },
+    {
+      "case": "one_past",
+      "mode": "both",
+      "command": [
+        "/opt/homebrew/bin/cbmc",
+        "/private/tmp/probata-cbmc-pointers/one_past.c",
+        "--sat-solver",
+        "cadical",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--pointer-primitive-check",
+        "--json-ui"
+      ],
+      "source_sha256": "fd3a6031737e527169fe1d0fa7b161d00904fa06e02f505e0df33f10a437687f",
+      "result": {
+        "exit_code": 0,
+        "peak_rss_bytes": 19464192,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 0.08683462499175221,
+        "cpu_seconds": 0.03783
+      },
+      "log_sha256": "4cac77a61a4c7c95bd32a3cd1fc7c61243a003ce9bc4eb263793acb6ca557f7e",
+      "properties": 1,
+      "failed": []
+    },
+    {
+      "case": "unrelated_subtraction",
+      "mode": "baseline",
+      "command": [
+        "/opt/homebrew/bin/cbmc",
+        "/private/tmp/probata-cbmc-pointers/unrelated_subtraction.c",
+        "--sat-solver",
+        "cadical",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--json-ui"
+      ],
+      "source_sha256": "c91cb604221ec61e4b081ccaa0ef4f26dd9cdbab6b24a93bfa07b34d674506c4",
+      "result": {
+        "exit_code": 10,
+        "peak_rss_bytes": 19562496,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 0.07560500002000481,
+        "cpu_seconds": 0.032657
+      },
+      "log_sha256": "6c5fd374c57b5c8dc4c20bc88f83fe6c7338f972090d960315b7c6317f329e76",
+      "properties": 4,
+      "failed": [
+        {
+          "property": "main.overflow.1",
+          "description": "arithmetic overflow on signed - in a - b",
+          "status": "FAILURE"
+        },
+        {
+          "property": "main.pointer.1",
+          "description": "same object violation in a - b",
+          "status": "FAILURE"
+        }
+      ]
+    },
+    {
+      "case": "unrelated_subtraction",
+      "mode": "overflow",
+      "command": [
+        "/opt/homebrew/bin/cbmc",
+        "/private/tmp/probata-cbmc-pointers/unrelated_subtraction.c",
+        "--sat-solver",
+        "cadical",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--json-ui"
+      ],
+      "source_sha256": "c91cb604221ec61e4b081ccaa0ef4f26dd9cdbab6b24a93bfa07b34d674506c4",
+      "result": {
+        "exit_code": 10,
+        "peak_rss_bytes": 19464192,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 0.0776384579949081,
+        "cpu_seconds": 0.037618
+      },
+      "log_sha256": "574ab1f54f72361f5c9672abb48f56467e3b94d361c6386a4e34906b01adbd78",
+      "properties": 4,
+      "failed": [
+        {
+          "property": "main.overflow.1",
+          "description": "arithmetic overflow on signed - in a - b",
+          "status": "FAILURE"
+        },
+        {
+          "property": "main.pointer.1",
+          "description": "same object violation in a - b",
+          "status": "FAILURE"
+        }
+      ]
+    },
+    {
+      "case": "unrelated_subtraction",
+      "mode": "both",
+      "command": [
+        "/opt/homebrew/bin/cbmc",
+        "/private/tmp/probata-cbmc-pointers/unrelated_subtraction.c",
+        "--sat-solver",
+        "cadical",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--pointer-primitive-check",
+        "--json-ui"
+      ],
+      "source_sha256": "c91cb604221ec61e4b081ccaa0ef4f26dd9cdbab6b24a93bfa07b34d674506c4",
+      "result": {
+        "exit_code": 10,
+        "peak_rss_bytes": 19447808,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 0.0688529170001857,
+        "cpu_seconds": 0.032658
+      },
+      "log_sha256": "574ab1f54f72361f5c9672abb48f56467e3b94d361c6386a4e34906b01adbd78",
+      "properties": 4,
+      "failed": [
+        {
+          "property": "main.overflow.1",
+          "description": "arithmetic overflow on signed - in a - b",
+          "status": "FAILURE"
+        },
+        {
+          "property": "main.pointer.1",
+          "description": "same object violation in a - b",
+          "status": "FAILURE"
+        }
+      ]
+    },
+    {
+      "case": "same_object_subtraction",
+      "mode": "baseline",
+      "command": [
+        "/opt/homebrew/bin/cbmc",
+        "/private/tmp/probata-cbmc-pointers/same_object_subtraction.c",
+        "--sat-solver",
+        "cadical",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--json-ui"
+      ],
+      "source_sha256": "551e6685544ea2395b31d7a7176bd32400323f1b11736c6b6dd9a2d45eed3dc2",
+      "result": {
+        "exit_code": 0,
+        "peak_rss_bytes": 19464192,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 0.04754808300640434,
+        "cpu_seconds": 0.034152999999999996
+      },
+      "log_sha256": "677e861d68a6b6c43051299bfb1da0b01c276b61736f44385eab6bffd1ddc7b0",
+      "properties": 3,
+      "failed": []
+    },
+    {
+      "case": "same_object_subtraction",
+      "mode": "overflow",
+      "command": [
+        "/opt/homebrew/bin/cbmc",
+        "/private/tmp/probata-cbmc-pointers/same_object_subtraction.c",
+        "--sat-solver",
+        "cadical",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--json-ui"
+      ],
+      "source_sha256": "551e6685544ea2395b31d7a7176bd32400323f1b11736c6b6dd9a2d45eed3dc2",
+      "result": {
+        "exit_code": 0,
+        "peak_rss_bytes": 19431424,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 0.12882858398370445,
+        "cpu_seconds": 0.03715
+      },
+      "log_sha256": "2605526074cfc1db47cbfe4eafda2c2a4c8c8b20143578fc34b6dd66ecd88655",
+      "properties": 3,
+      "failed": []
+    },
+    {
+      "case": "same_object_subtraction",
+      "mode": "both",
+      "command": [
+        "/opt/homebrew/bin/cbmc",
+        "/private/tmp/probata-cbmc-pointers/same_object_subtraction.c",
+        "--sat-solver",
+        "cadical",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--pointer-primitive-check",
+        "--json-ui"
+      ],
+      "source_sha256": "551e6685544ea2395b31d7a7176bd32400323f1b11736c6b6dd9a2d45eed3dc2",
+      "result": {
+        "exit_code": 0,
+        "peak_rss_bytes": 19480576,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 0.05171308299759403,
+        "cpu_seconds": 0.028822
+      },
+      "log_sha256": "2605526074cfc1db47cbfe4eafda2c2a4c8c8b20143578fc34b6dd66ecd88655",
+      "properties": 3,
+      "failed": []
+    },
+    {
+      "case": "outside_unused_expr",
+      "mode": "baseline",
+      "command": [
+        "/opt/homebrew/bin/cbmc",
+        "/private/tmp/probata-cbmc-pointers/outside_unused_expr.c",
+        "--sat-solver",
+        "cadical",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--json-ui"
+      ],
+      "source_sha256": "9763fe2cb57cebc24c6f654a3092ccc02e17b847b7275c46a1704620afe4f893",
+      "result": {
+        "exit_code": 0,
+        "peak_rss_bytes": 19480576,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 0.08716012502554804,
+        "cpu_seconds": 0.037433999999999995
+      },
+      "log_sha256": "01fb737f7dccf15c5207da3617641094007e9fef5085febe1df03ceb7e820bbc",
+      "properties": 0,
+      "failed": []
+    },
+    {
+      "case": "outside_unused_expr",
+      "mode": "overflow",
+      "command": [
+        "/opt/homebrew/bin/cbmc",
+        "/private/tmp/probata-cbmc-pointers/outside_unused_expr.c",
+        "--sat-solver",
+        "cadical",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--json-ui"
+      ],
+      "source_sha256": "9763fe2cb57cebc24c6f654a3092ccc02e17b847b7275c46a1704620afe4f893",
+      "result": {
+        "exit_code": 10,
+        "peak_rss_bytes": 19546112,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 0.07111537497257814,
+        "cpu_seconds": 0.036465
+      },
+      "log_sha256": "f713878925282c60f65b64c5d44ef112c5601c6681b4cc4c4927a3f1f61308e9",
+      "properties": 2,
+      "failed": [
+        {
+          "property": "main.pointer_arithmetic.2",
+          "description": "pointer arithmetic: pointer outside object bounds in a + (signed long int)3",
+          "status": "FAILURE"
+        }
+      ]
+    },
+    {
+      "case": "outside_unused_expr",
+      "mode": "both",
+      "command": [
+        "/opt/homebrew/bin/cbmc",
+        "/private/tmp/probata-cbmc-pointers/outside_unused_expr.c",
+        "--sat-solver",
+        "cadical",
+        "--unwind",
+        "3",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--pointer-primitive-check",
+        "--json-ui"
+      ],
+      "source_sha256": "9763fe2cb57cebc24c6f654a3092ccc02e17b847b7275c46a1704620afe4f893",
+      "result": {
+        "exit_code": 10,
+        "peak_rss_bytes": 19513344,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 0.06828345899702981,
+        "cpu_seconds": 0.034023
+      },
+      "log_sha256": "f713878925282c60f65b64c5d44ef112c5601c6681b4cc4c4927a3f1f61308e9",
+      "properties": 2,
+      "failed": [
+        {
+          "property": "main.pointer_arithmetic.2",
+          "description": "pointer arithmetic: pointer outside object bounds in a + (signed long int)3",
+          "status": "FAILURE"
+        }
+      ]
+    }
+  ],
+  "findings": [
+    "Discarded a+3 past a[2] emitted no baseline property; pointer-overflow-check fails it. One-past formation remains legal.",
+    "Unrelated-object subtraction already fails CBMC6.11 default checks; no subtraction gap claimed.",
+    "2D tile rows share one CBMC object: tile0[3] with TS2,NT2 was PROVEN. Distinct static row objects enforce the selected tile extent without heap-success premises.",
+    "Valid indexed tile loops retain 21 unit pointer obligations and remain PROVEN.",
+    "Modified adapter reader or failure-vocabulary bytes formerly accepted an execution method pin; named dependency hashes now refuse before command invocation."
+  ],
+  "frozen_flags": [
+    "--unwinding-assertions",
+    "--pointer-overflow-check"
+  ],
+  "boundaries": [
+    "Not a general C++ undefined-behavior proof. The initializedness AST subset and exact-capacity distinct nonnull harness buffer domain remain in force.",
+    "WP state.h remains unchanged. Bounded C/native generation uses distinct static tile arrays and an initialized pointer table; model globals/state draws are checked again before invocation.",
+    "Immutable method.probata-draft-2 remains unchanged. New execution requires a new method file with current content hashes. Ticket27 acceptance still blocks ticket36 resolution."
+  ],
+  "validation": {
+    "public_pointer_red": "2 failures/70.62s from incorrectPROVEN",
+    "tile_row_red": "1 failure/39.24s from incorrectPROVEN",
+    "row_green": "12 passed/134.58s",
+    "reader_red": "7 failures/23.92s because stale pins were accepted; initial missing-resource fixture attempts excluded",
+    "final_green": "80 passed/314.19s",
+    "docs_first": "83passed,2failures: memory_domain expectation and newflags applied to historicaldraft2",
+    "docs_recheck": "5passed/0.25s; memory_domain expectation fixed; draft3 assertion pendingrootmethodfreeze",
+    "post_integration_lowerer7": "14passed,35deselected/230.78s: publicproof/equivalence/tile/nativequery plus signedstreamCBMC positive/refuted",
+    "post_integration_resources": {
+      "exit_code": 0,
+      "peak_rss_bytes": 327041024,
+      "out_of_memory": false,
+      "timed_out": false,
+      "wall_seconds": 232.35384104197146,
+      "cpu_seconds": 214.20721600000002
+    }
+  },
+  "hashes": {
+    "checks": {
+      "proof_setup_check": {
+        "version": "1",
+        "sha256": "c8c31e02cfb1126d0730541c3de8d6a03825c10c8ee51db5f03c0453a1cbd968"
+      },
+      "verdict_reading": {
+        "version": "1",
+        "sha256": "c8c31e02cfb1126d0730541c3de8d6a03825c10c8ee51db5f03c0453a1cbd968"
+      }
+    },
+    "lowerer": {
+      "c_lowering": {
+        "id": "swdb-c-lowering-7",
+        "sha256": "361de13d706d2668b00523c0a9d8cc9c7af92c759dd0e22d08b118991ccdf5ba"
+      },
+      "naming_rules": {
+        "id": "kept-names.3",
+        "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+      },
+      "clang": {
+        "id": "clang-22.1.8",
+        "sha256": "305697d3868243dca6e4aabf4f628df7de135d701eb4fd78f6a5d7528fef4395"
+      }
+    },
+    "initializedness": {
+      "id": "swdb-bounded-initialization-1",
+      "sha256": "45f2ae3bc558788c55c17578d61c6913bca69daabec4d96f2d2f8bc691173af9"
+    },
+    "model_c": "88298dbb9176640fd8ec2d0c6e31386dd51849411b08df7cebf7f12eab1d22ce"
+  },
+  "tile_records": [
+    {
+      "record": "/private/var/folders/x0/g9dhnccj0jjbxh_gblp35zvr0000gn/T/pytest-of-yanrujhou/pytest-113/bounded-tile-pointers0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t084629z.67349398.yaml",
+      "sha256": "7e2fef78fff0e00b217bcaaf0537f20aa69d3e31801e48a46d3b569e39ca2827",
+      "verdict": "refuted",
+      "unit_pointer_properties": 21,
+      "failed_unit_properties": [
+        {
+          "goal": "dxf_tile_extent.pointer_arithmetic.5",
+          "property": "pointer arithmetic: pointer outside object bounds in tile + (signed long int)3",
+          "function": "dxf_tile_extent",
+          "status": "failure",
+          "solver": null,
+          "seconds": null
+        },
+        {
+          "goal": "dxf_tile_extent.pointer_arithmetic.11",
+          "property": "pointer arithmetic: pointer outside object bounds in tile + (signed long int)3",
+          "function": "dxf_tile_extent",
+          "status": "failure",
+          "solver": null,
+          "seconds": null
+        },
+        {
+          "goal": "dxf_tile_extent.pointer_arithmetic.17",
+          "property": "pointer arithmetic: pointer outside object bounds in tile + (signed long int)3",
+          "function": "dxf_tile_extent",
+          "status": "failure",
+          "solver": null,
+          "seconds": null
+        },
+        {
+          "goal": "dxf_tile_extent.pointer_dereference.5",
+          "property": "dereference failure: pointer outside object bounds in *(&tile[(signed long int)3])",
+          "function": "dxf_tile_extent",
+          "status": "failure",
+          "solver": null,
+          "seconds": null
+        }
+      ],
+      "model_policy": {
+        "id": "dx100-initialized-inputs-1",
+        "entry": "semantics.dx100_bfs_0_1",
+        "entry_sha256": "cdab85338dd17b7515db394adf1888b57e2c5d14a605fef8c5a977accd2fd9bc",
+        "components": {
+          "ghost": "5fa3f12850eba75ccb254b1c1e8ab5c143488046949fbe0e4c965b55ecdb48e9",
+          "state": "b371131b4a3a7ef21ad654b0eaffac94b4c63252d63397ee8b67a6b017610701",
+          "c": "88298dbb9176640fd8ec2d0c6e31386dd51849411b08df7cebf7f12eab1d22ce"
+        },
+        "generated_sha256": "ae8824c8ac2b2a78f215957b0d552a3459ebe92b94fdf321b3bd6590644b5661",
+        "tile_objects": [
+          {
+            "name": "swdb_dx_tile_row_0",
+            "elements": 2
+          },
+          {
+            "name": "swdb_dx_tile_row_1",
+            "elements": 2
+          }
+        ],
+        "calls": [
+          "add_mem_region",
+          "clear_mem_region",
+          "get_cacheable_tile_pointer",
+          "get_new_reg",
+          "get_new_tile",
+          "get_tile_size",
+          "maa_alu_scalar",
+          "maa_const",
+          "maa_indirect_load",
+          "maa_indirect_store_vector",
+          "maa_range_loop",
+          "maa_stream_load",
+          "swdb_dx_in_footprint",
+          "wait_ready"
+        ]
+      }
+    },
+    {
+      "record": "/private/var/folders/x0/g9dhnccj0jjbxh_gblp35zvr0000gn/T/pytest-of-yanrujhou/pytest-113/bounded-tile-pointers0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t084637z.d390e2e6.yaml",
+      "sha256": "0edae128e9b008e878c04b16379a137c47e489ab0729f56000a6d971de8a6cc7",
+      "verdict": "proven",
+      "unit_pointer_properties": 21,
+      "failed_unit_properties": [],
+      "model_policy": {
+        "id": "dx100-initialized-inputs-1",
+        "entry": "semantics.dx100_bfs_0_1",
+        "entry_sha256": "cdab85338dd17b7515db394adf1888b57e2c5d14a605fef8c5a977accd2fd9bc",
+        "components": {
+          "ghost": "5fa3f12850eba75ccb254b1c1e8ab5c143488046949fbe0e4c965b55ecdb48e9",
+          "state": "b371131b4a3a7ef21ad654b0eaffac94b4c63252d63397ee8b67a6b017610701",
+          "c": "88298dbb9176640fd8ec2d0c6e31386dd51849411b08df7cebf7f12eab1d22ce"
+        },
+        "generated_sha256": "ae8824c8ac2b2a78f215957b0d552a3459ebe92b94fdf321b3bd6590644b5661",
+        "tile_objects": [
+          {
+            "name": "swdb_dx_tile_row_0",
+            "elements": 2
+          },
+          {
+            "name": "swdb_dx_tile_row_1",
+            "elements": 2
+          }
+        ],
+        "calls": [
+          "add_mem_region",
+          "clear_mem_region",
+          "get_cacheable_tile_pointer",
+          "get_new_reg",
+          "get_new_tile",
+          "get_tile_size",
+          "maa_alu_scalar",
+          "maa_const",
+          "maa_indirect_load",
+          "maa_indirect_store_vector",
+          "maa_range_loop",
+          "maa_stream_load",
+          "swdb_dx_in_footprint",
+          "wait_ready"
+        ]
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "/private/tmp/probata-cbmc-pointers/results.json",
+      "sha256": "5f731a23f1526e1bddb312dc0cc16831b8d2abf49c60802530555c0cbe38623f",
+      "bytes": 244094
+    },
+    {
+      "path": "/private/tmp/probata-cbmc-pointers/public-red-corrected.log",
+      "sha256": "d851bdd5fa7af4115106876b293cbb80629f320dd743be074ce55aaa1d993580",
+      "bytes": 1761
+    },
+    {
+      "path": "/private/tmp/probata-cbmc-pointers/public-red-corrected.jsonl",
+      "sha256": "e131e00a44071c816a83ba7eb662ce18ebadc7c88af661207e52adb3e0fb86e2",
+      "bytes": 9385
+    },
+    {
+      "path": "/private/tmp/probata-cbmc-pointers/tile-red.log",
+      "sha256": "ac657e007633fc742db5c306af9784496b65f1ad24afd67b14838fae26b9361a",
+      "bytes": 951
+    },
+    {
+      "path": "/private/tmp/probata-cbmc-pointers/tile-red.jsonl",
+      "sha256": "bfdbca8cb21607556ada684c48ae5ae47ab5ed520652762aa9aab7058cc8f468",
+      "bytes": 4388
+    },
+    {
+      "path": "/private/tmp/probata-cbmc-pointers/rows-green.log",
+      "sha256": "2f43edbb509a920b3fce27096bef7f16183ff71614b5b0265fe137ec1e462c05",
+      "bytes": 194
+    },
+    {
+      "path": "/private/tmp/probata-cbmc-pointers/rows-green.jsonl",
+      "sha256": "9a0f492c5c2fcd4e29400fbb1b18dd94cba0aef2347b75b5c2c9ee57a879b108",
+      "bytes": 25248
+    },
+    {
+      "path": "/private/tmp/probata-cbmc-pointers/identity-red-valid.log",
+      "sha256": "3269619295c98c8d1a91da8b394c7f07546cd6dec2fc8ee64f678eeeb60da106",
+      "bytes": 36105
+    },
+    {
+      "path": "/private/tmp/probata-cbmc-pointers/identity-red-valid.jsonl",
+      "sha256": "d3fbce058970157e600095c8d91b13fc348204e0ce50ef44d4921770c2364086",
+      "bytes": 162570
+    },
+    {
+      "path": "/private/tmp/probata-cbmc-pointers/final-green.log",
+      "sha256": "b9e26d6faf5b5ce83e4d27c5b261416a87acad5e88897495c4dc3cf04bc79663",
+      "bytes": 275
+    },
+    {
+      "path": "/private/tmp/probata-cbmc-pointers/final-green.jsonl",
+      "sha256": "42675f14f7ea644d7e2f3a73f3be313b94874b68c9da524086d0a14d8734c7bc",
+      "bytes": 166617
+    },
+    {
+      "path": "/private/tmp/probata-cbmc-pointers/docs-green.log",
+      "sha256": "f4b789696a4664b853d66dd1534b59222c30075c2fa5fa875d538014e26d9492",
+      "bytes": 1895
+    },
+    {
+      "path": "/private/tmp/probata-cbmc-pointers/docs-recheck.log",
+      "sha256": "cd2d3ad9519b213196f811a3c166bbf9594440b5fe202a9d1535d55909f6b76b",
+      "bytes": 183
+    },
+    {
+      "path": "/private/tmp/probata-cbmc-pointers/subarray.c",
+      "sha256": "2fe31209e1f40e4e696974fffb15b865af9932865058f58d7e23ee4671f4d172",
+      "bytes": 73
+    },
+    {
+      "path": "/private/tmp/probata-cbmc-pointers/subarray.json",
+      "sha256": "68266bddc819e27cf49b123b8d3d8159326d41b532e46088995f61fe30b378b4",
+      "bytes": 3262
+    },
+    {
+      "path": "/private/tmp/probata-cbmc-pointers/subarray_read.c",
+      "sha256": "f235efeeb750cf902bfc6a18d83f934318ed80a37cffc78bc0544028d11d52ab",
+      "bytes": 82
+    },
+    {
+      "path": "/private/tmp/probata-cbmc-pointers/subarray_read.json",
+      "sha256": "7169202b3dba066fd5dc026f713c769b24381c127dbe913934538dd57d840dfe",
+      "bytes": 14535
+    },
+    {
+      "path": "/private/tmp/probata-cbmc-pointers/merged-green.log",
+      "sha256": "a007faaa61a28189257ff74bc4a57fa0b99f677fded2a9d1f6e1db28931be874",
+      "bytes": 211
+    },
+    {
+      "path": "/private/tmp/probata-cbmc-pointers/merged-green.jsonl",
+      "sha256": "01c0d8384c7456253ee8567c52c3e836e3609289a2138c92359bfd06c0b8204c",
+      "bytes": 29667
+    },
+    {
+      "path": "/private/tmp/probata-cbmc-pointers/merged-green.summary.json",
+      "sha256": "55c0574cddb62fc6acfe0acdd5fcbd94a87588c7f86a8ff3515eb51ca44cfa61",
+      "bytes": 174
+    },
+    {
+      "path": "/private/tmp/probata-cbmc-pointers/final-green.summary.json",
+      "sha256": "78f06e9f132fe5ea808ad0ded25812a27a804d5a2b4d8c761eeee69d95d82749",
+      "bytes": 165
+    }
+  ],
+  "source_checkpoint": "7d7edee3"
+}

@@ -1,0 +1,161 @@
+== q4_task_lemmas: frama-c q4_status.c -wp -wp-cache none -wp-fct before_late,dep_lemma -wp-gen -wp-prover alt-ergo -wp-msg-key print-generated
+[kernel] Parsing q4_status.c (with preprocessing)
+[wp] Running WP plugin...
+[wp] Warning: Missing RTE guards
+[wp] 4 goals scheduled
+[wp] [Generated] Goal typed_before_late_assigns (Qed)
+---------------------------------------------
+--- Context 'typed_before_late' Cluster 'A_H' 
+---------------------------------------------
+theory A_H
+  
+  (* use why3.BuiltIn.BuiltIn *)
+  
+  (* use bool.Bool *)
+  
+  (* use int.Int *)
+  
+  (* use int.ComputerDivision *)
+  
+  (* use real.RealInfix *)
+  
+  (* use frama_c_wp.qed.Qed *)
+  
+  (* use map.Map *)
+  
+  function L_h int : int
+  
+  axiom Q_AX : L_h 0 = 10
+  
+end
+---------------------------------------------
+--- Context 'typed_before_late' Cluster 'Axiomatic1' 
+---------------------------------------------
+theory Axiomatic1
+  
+  (* use why3.BuiltIn.BuiltIn *)
+  
+  (* use bool.Bool *)
+  
+  (* use int.Int *)
+  
+  (* use int.ComputerDivision *)
+  
+  (* use real.RealInfix *)
+  
+  (* use frama_c_wp.qed.Qed *)
+  
+  (* use map.Map *)
+  
+  (* use A_H *)
+  
+  axiom Q_ADL : L_h 1 = 11
+  
+  lemma Q_LATE : L_h 3 = 13
+  
+  lemma Q_ULM : L_h 2 = 12
+  
+  lemma Q_ULM2 : L_h 2 = 12
+  
+end
+[wp:print-generated] 
+  theory WP
+    
+    (* use why3.BuiltIn.BuiltIn *)
+    
+    (* use bool.Bool *)
+    
+    (* use int.Int *)
+    
+    (* use int.ComputerDivision *)
+    
+    (* use real.RealInfix *)
+    
+    (* use frama_c_wp.qed.Qed *)
+    
+    (* use map.Map *)
+    
+    (* use Axiomatic1 *)
+    
+    goal wp_goal : L_h 3 = 13
+    
+  end
+[wp] [Generated] Goal typed_dep_lemma_assigns (Qed)
+---------------------------------------------
+--- Context 'typed_dep_lemma' Cluster 'A_H' 
+---------------------------------------------
+theory A_H1
+  
+  (* use why3.BuiltIn.BuiltIn *)
+  
+  (* use bool.Bool1 *)
+  
+  (* use int.Int1 *)
+  
+  (* use int.ComputerDivision1 *)
+  
+  (* use real.RealInfix1 *)
+  
+  (* use frama_c_wp.qed.Qed1 *)
+  
+  (* use map.Map1 *)
+  
+  function L_h1 int : int
+  
+  axiom Q_AX1 : L_h1 0 = 10
+  
+end
+---------------------------------------------
+--- Context 'typed_dep_lemma' Cluster 'Axiomatic1' 
+---------------------------------------------
+theory Axiomatic11
+  
+  (* use why3.BuiltIn.BuiltIn *)
+  
+  (* use bool.Bool1 *)
+  
+  (* use int.Int1 *)
+  
+  (* use int.ComputerDivision1 *)
+  
+  (* use real.RealInfix1 *)
+  
+  (* use frama_c_wp.qed.Qed1 *)
+  
+  (* use map.Map1 *)
+  
+  (* use A_H1 *)
+  
+  axiom Q_ADL1 : L_h1 1 = 11
+  
+  lemma Q_LATE1 : L_h1 3 = 13
+  
+  lemma Q_ULM1 : L_h1 2 = 12
+  
+  lemma Q_ULM21 : L_h1 2 = 12
+  
+end
+[wp:print-generated] 
+  theory WP1
+    
+    (* use why3.BuiltIn.BuiltIn *)
+    
+    (* use bool.Bool1 *)
+    
+    (* use int.Int1 *)
+    
+    (* use int.ComputerDivision1 *)
+    
+    (* use real.RealInfix1 *)
+    
+    (* use frama_c_wp.qed.Qed1 *)
+    
+    (* use map.Map1 *)
+    
+    (* use Axiomatic11 *)
+    
+    goal wp_goal : L_h1 2 = 12
+    
+  end
+[wp] 4 goals generated
+exit=0

@@ -1,0 +1,519 @@
+kind: implementation
+schema_version: '0.4'
+id: gapbs-pr-jacobi-analytic-v1
+status: draft
+deprecated_by: null
+created: '2026-10-06'
+updated: '2026-10-06'
+provenance:
+- id: src-gapbs-pr-spmv
+  kind: source_code
+  description: Pinned upstream PageRankPull from src/pr_spmv.cc, now explicitly bound
+    to the byte-identical application source. Data-only registration on 2026-10-06;
+    no timing or correctness result.
+  uri: https://github.com/sbeamer/gapbs/blob/2972aeb2703165bafd921222f4ed7196f542d3a8/src/pr_spmv.cc#L35-L61
+name: GAPBS Jacobi PageRank with explicit registered analytic source context
+kernel: gapbs-pr
+function: PageRankPull
+origin:
+  kind: upstream_alternative
+  description: gapbs's legacy SpMV-style PageRank, src/pr_spmv.cc at upstream commit
+    2972aeb2703165bafd921222f4ed7196f542d3a8; built as gapbs's pr_spmv binary.
+  derived_from: null
+code:
+- root: application
+  path: src/pr_spmv.cc
+  lines:
+  - 35
+  - 61
+  excerpt: "pvector<ScoreT> PageRankPull(const Graph &g, int max_iters, double epsilon\
+    \ = 0,\n                             bool logging_enabled = false) {\n  const\
+    \ ScoreT init_score = 1.0f / g.num_nodes();\n  const ScoreT base_score = (1.0f\
+    \ - kDamp) / g.num_nodes();\n  pvector<ScoreT> scores(g.num_nodes(), init_score);\n\
+    \  pvector<ScoreT> outgoing_contrib(g.num_nodes());\n  for (int iter=0; iter <\
+    \ max_iters; iter++) {\n    double error = 0;\n    #pragma omp parallel for\n\
+    \    for (NodeID n=0; n < g.num_nodes(); n++)\n      outgoing_contrib[n] = scores[n]\
+    \ / g.out_degree(n);\n    #pragma omp parallel for reduction(+ : error) schedule(dynamic,\
+    \ 16384)\n    for (NodeID u=0; u < g.num_nodes(); u++) {\n      ScoreT incoming_total\
+    \ = 0;\n      for (NodeID v : g.in_neigh(u))\n        incoming_total += outgoing_contrib[v];\n\
+    \      ScoreT old_score = scores[u];\n      scores[u] = base_score + kDamp * incoming_total;\n\
+    \      error += fabs(scores[u] - old_score);\n    }\n    if (logging_enabled)\n\
+    \      PrintStep(iter, error);\n    if (error < epsilon)\n      break;\n  }\n\
+    \  return scores;\n}"
+  sha256: ea1e58b6957b0bcc1e76f4fde54131aa52bdefd2014dae604a9b7d9d1a5dae70
+build:
+  compiler: g++
+  flags: -std=c++11 -O3 -Wall -fopenmp
+  command: '{cxx} {flags} -I{app}/src {source} -o {binary}'
+run:
+  command: '{binary} {input_args} -n {trials}'
+  timer: gapbs_trial_time
+  threads_env: OMP_NUM_THREADS
+  sweep_log_flag: -l
+  kernel_symbols:
+  - PageRankPull
+  index_stream:
+    order: in_neighbors_by_vertex
+    pattern: gather-contrib
+    note: Same gather order as the baseline.
+loops:
+- id: sweep
+  description: Outer PageRank iteration (one sweep)
+  parent: null
+  trip_count:
+    value: null
+    formula: null
+    scope: per_call
+    basis: unknown
+    evidence_refs:
+    - src-gapbs-pr-spmv
+    note: At most max_iters (-i, default 20); stops early once the sweep's L1 change
+      is below -t. Profiles measure it as count sweeps.
+  parallel:
+    construct: serial
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/pr_spmv.cc
+    lines:
+    - 41
+    - 59
+    excerpt: "  for (int iter=0; iter < max_iters; iter++) {\n    double error = 0;\n\
+      \    #pragma omp parallel for\n    for (NodeID n=0; n < g.num_nodes(); n++)\n\
+      \      outgoing_contrib[n] = scores[n] / g.out_degree(n);\n    #pragma omp parallel\
+      \ for reduction(+ : error) schedule(dynamic, 16384)\n    for (NodeID u=0; u\
+      \ < g.num_nodes(); u++) {\n      ScoreT incoming_total = 0;\n      for (NodeID\
+      \ v : g.in_neigh(u))\n        incoming_total += outgoing_contrib[v];\n     \
+      \ ScoreT old_score = scores[u];\n      scores[u] = base_score + kDamp * incoming_total;\n\
+      \      error += fabs(scores[u] - old_score);\n    }\n    if (logging_enabled)\n\
+      \      PrintStep(iter, error);\n    if (error < epsilon)\n      break;\n  }"
+    sha256: null
+- id: contrib
+  description: 'For n over all vertices: outgoing_contrib[n] = scores[n] / out_degree(n)'
+  parent: sweep
+  trip_count:
+    value: null
+    formula: num_nodes
+    scope: per_sweep
+    basis: code_reading
+    evidence_refs:
+    - src-gapbs-pr-spmv
+  parallel:
+    construct: omp_parallel_for
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/pr_spmv.cc
+    lines:
+    - 43
+    - 45
+    excerpt: "    #pragma omp parallel for\n    for (NodeID n=0; n < g.num_nodes();\
+      \ n++)\n      outgoing_contrib[n] = scores[n] / g.out_degree(n);"
+    sha256: null
+- id: vertex
+  description: 'For u over all vertices: gather and update score'
+  parent: sweep
+  trip_count:
+    value: null
+    formula: num_nodes
+    scope: per_sweep
+    basis: code_reading
+    evidence_refs:
+    - src-gapbs-pr-spmv
+  parallel:
+    construct: omp_parallel_for
+    schedule: dynamic, 16384
+    reduction: '+ : error'
+  code:
+    root: application
+    path: src/pr_spmv.cc
+    lines:
+    - 46
+    - 54
+    excerpt: "    #pragma omp parallel for reduction(+ : error) schedule(dynamic,\
+      \ 16384)\n    for (NodeID u=0; u < g.num_nodes(); u++) {\n      ScoreT incoming_total\
+      \ = 0;\n      for (NodeID v : g.in_neigh(u))\n        incoming_total += outgoing_contrib[v];\n\
+      \      ScoreT old_score = scores[u];\n      scores[u] = base_score + kDamp *\
+      \ incoming_total;\n      error += fabs(scores[u] - old_score);\n    }"
+    sha256: null
+- id: edge
+  description: 'For v in g.in_neigh(u): accumulate outgoing_contrib[v]'
+  parent: vertex
+  trip_count:
+    value: null
+    formula: num_edges_directed
+    scope: per_sweep
+    basis: code_reading
+    evidence_refs:
+    - src-gapbs-pr-spmv
+    note: Summed over all u in one sweep.
+  parallel:
+    construct: nested_serial
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/pr_spmv.cc
+    lines:
+    - 49
+    - 50
+    excerpt: "      for (NodeID v : g.in_neigh(u))\n        incoming_total += outgoing_contrib[v];"
+    sha256: null
+access_patterns:
+- id: gather-contrib
+  expression: outgoing_contrib[v] for v in g.in_neigh(u)
+  loop: edge
+  steps:
+  - array:
+      name: g.in_index_
+      role: offsets
+      element_type: NodeID* (pointer into in_neighbors_)
+      element_bytes: 8
+      element_count: num_nodes + 1
+      layout: array_of_pointers
+    address_shape: stream
+    stride: 1
+    note: reads in_index_[u] and in_index_[u+1], the bounds of u's in-neighbor range
+  - array:
+      name: g.in_neighbors_
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+    address_shape: ranged_indirect
+    note: walks in_neighbors_[in_index_[u] .. in_index_[u+1])
+  - array:
+      name: outgoing_contrib
+      role: target
+      element_type: ScoreT (float)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: reads outgoing_contrib[v] for each in-neighbor v
+  update_kind: read
+  update:
+    pseudocode: incoming_total += outgoing_contrib[v]
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+      note: Each vertex v is read once per out-edge in a sweep; any vertex with out-degree
+        above 1 repeats. The profile's duplicate_ratio measures how much, per input.
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+      note: The graph is passed as const Graph&; in_index_ and in_neighbors_ are never
+        written by the kernel.
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+      note: 'Jacobi: outgoing_contrib is written only in the separate contrib loop
+        before the vertex loop, so no iteration of the vertex loop depends on another.'
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+      note: All threads read outgoing_contrib; nobody writes it during this loop.
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+      note: Reads see only the previous sweep's values, so the vertex order does not
+        change the result beyond float summation order.
+    numerical_requirement:
+      value: fp_reassociation_allowed
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+      note: incoming_total is a float sum in neighbor order; any order that passes
+        the verifier tolerance is acceptable.
+  evidence_refs:
+  - src-gapbs-pr-spmv
+- id: score-update
+  expression: scores[u] = base_score + kDamp * incoming_total
+  loop: vertex
+  steps:
+  - array:
+      name: scores
+      role: target
+      element_type: ScoreT (float)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: old_score = scores[u] is read first, then the new score is stored
+  update_kind: write
+  update:
+    pseudocode: old = scores[u]; scores[u] = base + 0.85*incoming_total; error +=
+      |scores[u] - old|
+    side_effects: adds |new - old| to the sweep's error (an OpenMP + reduction)
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+      note: scores[u] is read and written only by iteration u; the gather reads outgoing_contrib,
+        not scores.
+    shared_target_between_threads:
+      value: false
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+    numerical_requirement:
+      value: fp_reassociation_allowed
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+  evidence_refs:
+  - src-gapbs-pr-spmv
+- id: scores-read
+  expression: scores[n] in outgoing_contrib[n] = scores[n] / g.out_degree(n)
+  loop: contrib
+  steps:
+  - array:
+      name: scores
+      role: target
+      element_type: ScoreT (float)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+    shared_target_between_threads:
+      value: false
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+  evidence_refs:
+  - src-gapbs-pr-spmv
+- id: degree-read
+  expression: g.out_degree(n) = out_index_[n+1] - out_index_[n]
+  loop: contrib
+  steps:
+  - array:
+      name: g.out_index_
+      role: target
+      element_type: NodeID* (pointer into out_neighbors_)
+      element_bytes: 8
+      element_count: num_nodes + 1
+      layout: array_of_pointers
+      undirected_alias: g.in_index_
+    address_shape: stream
+    stride: 1
+    note: for a symmetrized (undirected) graph out_index_ is the same array as in_index_
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+    shared_target_between_threads:
+      value: false
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+  evidence_refs:
+  - src-gapbs-pr-spmv
+- id: contrib-update
+  expression: outgoing_contrib[n] = scores[n] / g.out_degree(n)
+  loop: contrib
+  steps:
+  - array:
+      name: outgoing_contrib
+      role: target
+      element_type: ScoreT (float)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  update_kind: write
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+      note: Each n writes only its own element and nothing in this loop reads outgoing_contrib.
+    shared_target_between_threads:
+      value: false
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-pr-spmv
+  evidence_refs:
+  - src-gapbs-pr-spmv
+notes:
+- 'Build uses the application''s headers: -I apps/gapbs/src.'
+- Compared with the baseline, the contribution update moves out of the vertex loop
+  into its own loop, which removes the loop-carried dependency and adds one extra
+  stream pass over scores, out_index_, and outgoing_contrib per sweep.
+- 'Data-only modern context: original Jacobi source, flags, timed lambda, and defaults
+  remain unchanged. Whole timed-call registered-functional ROI has no SourcePicker;
+  trial sources are empty, not fabricated. Include-template spelling is equivalent
+  to the original separated -I path.'
+extensions: {}
+application: gapbs
+source_baseline: gapbs-pr-jacobi-analytic-v1
+evaluator:
+  backend: native
+  command: '{binary} {input_args} -n 1 -v'
+  pass_regex: Verification:\s+PASS
+  verifier:
+    description: 'PRVerifier: from the returned scores, one serial push-direction
+      PageRank iteration; the L1 distance between its result and the scores must be
+      below the tolerance.'
+    code:
+      root: application
+      path: src/pr_spmv.cc
+      lines:
+      - 76
+      - 94
+      excerpt: "// Verifies by asserting a single serial iteration in push direction\
+        \ has\n//   error < target_error\nbool PRVerifier(const Graph &g, const pvector<ScoreT>\
+        \ &scores,\n                        double target_error) {\n  const ScoreT\
+        \ base_score = (1.0f - kDamp) / g.num_nodes();\n  pvector<ScoreT> incoming_sums(g.num_nodes(),\
+        \ 0);\n  double error = 0;\n  for (NodeID u : g.vertices()) {\n    ScoreT\
+        \ outgoing_contrib = scores[u] / g.out_degree(u);\n    for (NodeID v : g.out_neigh(u))\n\
+        \      incoming_sums[v] += outgoing_contrib;\n  }\n  for (NodeID n : g.vertices())\
+        \ {\n    error += fabs(base_score + kDamp * incoming_sums[n] - scores[n]);\n\
+        \    incoming_sums[n] = 0;\n  }\n  PrintTime(\"Total Error\", error);\n  return\
+        \ error < target_error;\n}"
+      sha256: ea1e58b6957b0bcc1e76f4fde54131aa52bdefd2014dae604a9b7d9d1a5dae70
+verification:
+  status: unchecked
+  evidence: []
+  scope: Source-only Jacobi registration; no new workload, target or counted execution
+    is certified.

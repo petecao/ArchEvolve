@@ -1,0 +1,300 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "region_profile",
+  "title": "Execution-bound BFS region and memory diagnostics",
+  "description": "Introduced 2026-09-25. Diagnostic attribution cannot establish a primary ROI gain.",
+  "properties": {
+    "kind": {
+      "const": "region_profile"
+    },
+    "schema_version": {
+      "const": "0.4"
+    },
+    "message_version": {
+      "const": "1.0"
+    },
+    "producer": {
+      "type": "object"
+    },
+    "request": {},
+    "evaluation": {
+      "$ref": "#/$defs/id",
+      "x-ref": "evaluation"
+    },
+    "candidate": {
+      "$ref": "#/$defs/id",
+      "x-ref": "candidate"
+    },
+    "source_snapshot": {
+      "$ref": "#/$defs/id",
+      "x-ref": "source_snapshot"
+    },
+    "implementation": {
+      "$ref": "#/$defs/id",
+      "x-ref": "implementation"
+    },
+    "machine": {
+      "$ref": "#/$defs/id",
+      "x-ref": "machine"
+    },
+    "context": {
+      "type": "object"
+    },
+    "discovery": {
+      "type": "object"
+    },
+    "build": {
+      "type": "object"
+    },
+    "artifacts": {
+      "type": "object"
+    },
+    "outcome": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "enum": [
+            "submitted",
+            "running",
+            "complete",
+            "partial",
+            "failed",
+            "timed_out",
+            "interrupted",
+            "incorrect",
+            "missing_observation",
+            "incompatible",
+            "budget_exhausted"
+          ]
+        },
+        "stage": {
+          "type": "string"
+        },
+        "reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "state",
+        "stage",
+        "reason"
+      ]
+    },
+    "stages": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "regions": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "dynamic_memory": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "executions": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "correspondence": {
+      "type": "object"
+    },
+    "post_collection_audit": {
+      "type": "object"
+    },
+    "raw_artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "reasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "gain_claim": {
+      "const": false
+    },
+    "per_line_memory": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/per_line_row"
+      },
+      "description": "Separate TDStep per-debug-line self costs with independently validated compression and source attribution; simulated, not hardware counters. Updated 2026-10-03."
+    },
+    "statement_memory": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "statement",
+          "path",
+          "lines",
+          "metric",
+          "value",
+          "basis",
+          "unit",
+          "profile",
+          "source_artifact_sha256"
+        ],
+        "properties": {
+          "statement": {
+            "$ref": "#/$defs/id"
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "lines": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "metric": {
+            "const": "last_level_misses"
+          },
+          "value": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "basis": {
+            "const": "simulated"
+          },
+          "unit": {
+            "const": "misses"
+          },
+          "profile": {
+            "type": "string",
+            "x-ref": "region_profile"
+          },
+          "source_artifact_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "message_version",
+    "producer",
+    "request",
+    "outcome",
+    "stages",
+    "regions",
+    "dynamic_memory",
+    "executions",
+    "raw_artifacts",
+    "reasons",
+    "gain_claim"
+  ],
+  "$defs": {
+    "per_line_row": {
+      "type": "object",
+      "required": [
+        "path",
+        "function",
+        "line",
+        "events",
+        "basis",
+        "source_artifact_sha256",
+        "artifact_sha256",
+        "raw_artifact",
+        "raw_sha256",
+        "execution",
+        "counter_validation"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "function": {
+          "type": "string",
+          "minLength": 1
+        },
+        "line": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "events": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9223372036854775807
+          }
+        },
+        "basis": {
+          "const": "simulated"
+        },
+        "source_artifact_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "artifact_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "raw_artifact": {
+          "type": "string",
+          "minLength": 1
+        },
+        "raw_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "execution": {
+          "type": "object",
+          "required": [
+            "source",
+            "source_position",
+            "repetition"
+          ],
+          "oneOf": [
+            {"required": ["tdstep_position"]},
+            {"required": ["dump_position"]}
+          ],
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "counter_validation": {
+          "type": "object",
+          "required": [
+            "state",
+            "method"
+          ],
+          "properties": {
+            "state": {
+              "const": "valid"
+            },
+            "method": {
+              "const": "swdb.callgrind.lines.v1"
+            }
+          }
+        }
+      }
+    }
+  }
+}

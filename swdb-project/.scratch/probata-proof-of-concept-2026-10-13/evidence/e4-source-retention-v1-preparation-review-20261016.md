@@ -1,0 +1,9 @@
+# E4 source retention recipe preparation and static check
+
+2026-10-16 ET. INERT prepared/source-reviewed by merger; root alone executes. Exact script3924639a uses reviewed21edV2/024V3 recovery workflow. Both outer and embedded remote Python parse statically; no SSH/process/removal/tool job was executed.
+
+Target only clean detached `/data1/yanruj/probata-reviewed-e4cd1a6e`, exacte4cd1a6e. Preserve all raw at its distinct stream-v1 path. Require exact completed rootcold audit ledger hash before mutation, full source byte/Git/membership/clean/ignored/submodule/ancestry gates, prewritten source/raw manifests+coldpin+restoration recipe and dedicated retained ref before no-force worktree removal. Exact raw snapshot equality follows removal. Local receipt path is checked absent beforeSSH, correcting historical collision timing.
+
+Unrelated held leases may coexist; active metadata namingE4ref/path refuses. Three finite sameUID cwd/sourceargv/rawargv scans must find no references; only name/PID/birth/hash/Boolean evidence is retained, noargv/env content. Narrow known ownSSHtransport/userPAM unreadable metadata exemptions remain explicit; unknown denials fail closed. This does not establish global idle, universal absence, atomic reader exclusion or hostile-process containment. Root coordination must prevent newE4readers in the window.
+
+8GiBAS cap and60s local transport bound remain. If transport times out after a remote mutation, root must read the remote retention directory/source/ref/raw state before any retry; failure does not imply no removal. Recovery/manifests are ordinary writes, no powerloss durability theorem. Fresh storage/lease/process/source gates precede next actual source admission. No raw/active-source/primarybranch mutation or scientific proof follows from this recipe.

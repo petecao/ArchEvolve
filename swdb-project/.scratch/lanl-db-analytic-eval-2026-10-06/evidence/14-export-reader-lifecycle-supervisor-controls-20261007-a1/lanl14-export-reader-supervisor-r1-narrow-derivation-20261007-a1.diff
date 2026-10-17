@@ -1,0 +1,10 @@
+--- /private/tmp/lanl14_export_reader_administrative_supervisor_20261007_a1.py
++++ /private/tmp/lanl14_export_reader_administrative_supervisor_20261007_a1_r1.py
+@@ -123,6 +123,7 @@
+ 
+ def supervise(context,action,argv,*,timeout_s,receipt,stdout,stderr,fixture=False):
+  require(action in ACTIONS,'only selected exporter/reader metadata actions are admitted')
++ require(action==context.action,'selected context/action identity differs')
+  require(type(timeout_s) in (int,float) and math.isfinite(timeout_s) and timeout_s==CAPS[action],'exact explicit finite selected administrative cap required')
+  argv=list(map(str,argv));require(bool(argv) and len(argv)<=256 and sum(len(v.encode()) for v in argv)<=65536,'bounded child argument vector required')
+  require(type(fixture) is bool,'internal fixture flag must be explicit boolean')

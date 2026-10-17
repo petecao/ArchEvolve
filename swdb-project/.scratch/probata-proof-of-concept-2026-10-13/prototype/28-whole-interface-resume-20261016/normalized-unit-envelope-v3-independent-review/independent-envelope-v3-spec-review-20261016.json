@@ -1,0 +1,90 @@
+{
+  "actual_successor_executed": false,
+  "basis": [
+    {
+      "bytes": 10188,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v3/source-packet-v3.json",
+      "sha256": "d7e90dcdf36edaebd7a9b694ba673ed88ddbb4bca907d29b5ae5ee403d5df0cb"
+    },
+    {
+      "bytes": 8268,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v2/source-packet-v2.json",
+      "sha256": "2243b14b5abbcc3abe0f775ebb1d2cbf98f2f01a65415656bd5f6cfad327822a"
+    },
+    {
+      "bytes": 7664,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/root-launcher-loader-v11-independent-review/independent-source-review-v11.json",
+      "sha256": "5d334bc00d89d713a212165669fd42a3a5663a209bda77a89b0a1432c53f472c"
+    },
+    {
+      "bytes": 19149,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v2-actual/actual-preconsumer-refusal-reconciliation-v2.json",
+      "sha256": "128f8e39368a1d00178d5249fd38821443f594d2258132859af036569d50ae40"
+    }
+  ],
+  "checked": {
+    "all_exact_local_pins_match": true,
+    "all_functions_unchanged_after_namespace_inverse": true,
+    "complete_command_inverse_except_exact_V11_and_unset_pair": true,
+    "entry_text_inverse_to_V2": true,
+    "errors": 0,
+    "failures": 0,
+    "forbidden_child_native_network_events": [],
+    "guard_adaptation_full_hashes_match": true,
+    "independently_executed_no_child_controls": 18,
+    "packet_pin_occurrences": 29,
+    "packet_unique_paths": 26,
+    "policy_and_observer_policy_inverse": true,
+    "skips": 0,
+    "staged_bytes_including_policy": 434627,
+    "staged_files": 27
+  },
+  "command": {
+    "bytes": 16467,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v3/command-v3.json",
+    "sha256": "a0b3da4ff445373c69daffc56edb27fd026d98ebc2751c701810392a919730d1"
+  },
+  "date": "2026-10-16 ET",
+  "entry": {
+    "bytes": 24721,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v3/linux_observation_envelope_v3.py",
+    "sha256": "21995bb68bb673b796696c60b23fac947ca3449142c721608d1cebb5a6c57631"
+  },
+  "findings": [],
+  "independent_control": {
+    "bytes": 5386,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v3-independent-review/review_controls_v3.py",
+    "sha256": "a7603d92511033c3be7a748e623e2bbe20dc6135c586eabed6885053e35a8741"
+  },
+  "policy": {
+    "bytes": 8438,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v3/envelope-policy-v3.json",
+    "sha256": "b720ad903d14e26cceb3d0bea462e5162296dc9ce32e4cd6cb25401bef23ca63"
+  },
+  "preserved_limits": {
+    "entry_seconds": 1180,
+    "flat_controls_limit": 1048576,
+    "observer_output_file_bytes": 4194304,
+    "raw_bytes": 268435456,
+    "raw_mount_floor_bytes": 21474836480,
+    "rss_bytes": 4294967296,
+    "whole_seconds": 1200,
+    "workers": 1
+  },
+  "public_admission": false,
+  "reasoning": [
+    "The V3 entry changes only fresh raw and entry/policy basenames. Complete text inverse reproduces V2, preserving strict environment binding, observer/codec/source/ABI logic, source/runtime before-and-after checks, budgets and settled finalization.",
+    "The representative control consumes all three exact retained shell files, extracts the V11 adaptation and sanitized environment AST, projects the actual watch/execute run expressions with a no-child double, then exercises the real bind_environment and entry-isolated role request. It reconstructs exact G624 shell bytes and trailing-colon refusal before the paired pre-interpreter unset.",
+    "Full hashes of the adapted watch.py and execute.py source match policy; no broad loader allowance or startup-equivalence claim is introduced. Account values and live lane identity remain explicit stand-ins in source controls.",
+    "Unknown loader paths/empty components/preloads and Python selectors still refuse. Prepared is null; source project remains exact immutable 2baf. The root source-review receipt is provenance, not successor actual authority."
+  ],
+  "remaining": [
+    "Root complementary review and exact ancillary dispatch readback.",
+    "Fresh source/runtime/staging/finite-reader, lane, legacy lease and disk checks plus once-only root admission.",
+    "Actual isolated startup/path/origin observation before scientific consumer; source controls are not that observation.",
+    "Complete normalized original-TU/ABI/call observation and owned-context preparation remain unmeasured. No source-call/public/new0.2/full-ticket acceptance."
+  ],
+  "reviewer": "ticket28 lead independent of source author",
+  "schema": "independent-normalized-observer-envelope-v3-spec-review-1",
+  "verdict": "PASS_SOURCE_AND_NO_CHILD_CONTROLS_ONLY"
+}

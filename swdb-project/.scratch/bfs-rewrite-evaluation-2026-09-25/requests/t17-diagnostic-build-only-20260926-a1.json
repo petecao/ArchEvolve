@@ -1,0 +1,19 @@
+{
+  "message_version": "1.0",
+  "id": "bfs-t17-diagnostic-build-only-20260926-a1",
+  "machine": "mbit10",
+  "hardware_target": "dx100-e4fc4af-4c",
+  "model_root": "/data1/yanruj/DX100-bfs-e4fc4af",
+  "build_evaluation": "bfs-dx100-build-20260925-a2",
+  "candidate": "bfs-campaign-preparation-20260925-a1.dx100-instructions.candidate-1",
+  "function": "DOBFS",
+  "accelerated": true,
+  "roi": "bfs.complete_call.v1",
+  "diagnostic_regions": true,
+  "budget": {
+    "total_seconds": 240,
+    "build_seconds": 180,
+    "memory_gib": 16,
+    "storage_gib": 1
+  }
+}

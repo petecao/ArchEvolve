@@ -1,0 +1,105 @@
+{
+ "cmd": [
+  "/opt/homebrew/Cellar/opam/2.6.1/bin/opam",
+  "exec",
+  "--switch=framac-33",
+  "--",
+  "/usr/bin/env",
+  "PYTHONDONTWRITEBYTECODE=1",
+  "SWDB_FRAMA_C=none",
+  "SWDB_CBMC=none",
+  "SWDB_OCAMLFIND=/Users/yanrujhou/.opam/framac-33/bin/ocamlfind",
+  "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+  "-B",
+  "/private/tmp/probata-t07-native-report-compile-v3-20261016/compile.py"
+ ],
+ "exit_code": 0,
+ "wall_s": 0.7447669167304412,
+ "peak_rss_mb": 100.90625,
+ "cap_gb": 8.0,
+ "killed_by_watchdog": false,
+ "timed_out": false,
+ "queue_timed_out": false,
+ "timeout_s": 60.0,
+ "queue_timeout_s": 30.0,
+ "lock_wait_s": 0.00041612499626353383,
+ "runner_pid": 39840,
+ "clock": "continuous_monotonic",
+ "clock_info": {
+  "kind": "continuous_monotonic",
+  "implementation": "mach_continuous_time",
+  "includes_sleep": true,
+  "numer": 125,
+  "denom": 3
+ },
+ "log": "/private/tmp/probata-t07-native-report-compile-v3-20261016/guard.log",
+ "inspection_events": [
+  {
+   "stage": "supervision",
+   "operation": "environ",
+   "requested_operation": "environ",
+   "pid": 39849,
+   "expected_birth": 1792143737.278674,
+   "snapshot_birth": 1792143737.278674,
+   "exception": {
+    "type": "AccessDenied",
+    "module": "psutil",
+    "relation": "raised",
+    "pid": 39849
+   },
+   "exception_chain": [
+    {
+     "type": "AccessDenied",
+     "module": "psutil",
+     "relation": "raised",
+     "pid": 39849
+    },
+    {
+     "type": "PermissionError",
+     "module": "builtins",
+     "relation": "cause",
+     "errno": 13
+    }
+   ],
+   "traceback": [
+    {
+     "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+     "function": "_inspect",
+     "line": 156
+    },
+    {
+     "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/__init__.py",
+     "function": "environ",
+     "line": 921
+    },
+    {
+     "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_psosx.py",
+     "function": "wrapper",
+     "line": 353
+    }
+   ],
+   "known_native_environ_signature": false,
+   "exception_pid": 39849,
+   "observed_birth": 1792143737.278674,
+   "identity_state": "live",
+   "attempt": 1,
+   "retry_elapsed_s": 0.00010458333417773247,
+   "retry_window_s": 0.2,
+   "retry_limit_attempts": 21,
+   "clock_s": 385875.8154772917,
+   "wall_unix_s": 1792143737.475661,
+   "outcome": "denied"
+  }
+ ],
+ "inspection_failure": null,
+ "primary_inspection_failure": null,
+ "cleanup_inspection_failure": null,
+ "cleanup_inspection_failures": [],
+ "inspection_retry_boundary": "AccessDenied uses a 200 ms environ retry admission window and 21-attempt cap, or three attempts for other operations; only the exact proc_environ SystemError raised by the requested environ operation shares that policy; individual OS calls are not forcibly timed; all pauses count and RSS/deadline checks remain mandatory after inspection; only independently confirmed gone/zombie or changed birth is skipped; persistent live or unknown failure fails closed",
+ "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+ "unconfirmed_children": [],
+ "error": null,
+ "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment",
+ "rss_scope": "live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches; sampled, not a kernel quota",
+ "finished": "2026-10-16 05:42:17 EDT"
+}

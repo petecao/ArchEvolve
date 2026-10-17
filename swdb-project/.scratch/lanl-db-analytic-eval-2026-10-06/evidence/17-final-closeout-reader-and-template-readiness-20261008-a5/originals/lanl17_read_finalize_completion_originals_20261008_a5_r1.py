@@ -1,0 +1,174 @@
+"""2026-10-08 ET: FINALIZE completion originals only; read-only, no SWDB/control imports.
+PREPARE completion ancestor retained; stable nine-stat reader inherits exact six reviewed functions.
+Original ER receipt contains its public_report as emitted by helper28; no separate report/YAML bodies returned.
+"""
+import base64,datetime,hashlib,json,os,pwd,re,signal,socket,stat,subprocess,sys,time
+from pathlib import Path
+UID=114316761
+FIELDS=('dev','ino','mode','uid','gid','nlink','size','mtime_ns','ctime_ns')
+END=time.monotonic()+180
+S=Path('/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5')
+RAW=Path('/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5')
+FINALIZE=Path('/data/yanruj/EvolveSWDB_runs/lanl17-metadata-finalize-20261007-a5')
+EF=Path('/data1/yanruj/ArchEvolve-lanl17-freeze-evidence-20261007-a5')
+ER=Path('/data1/yanruj/ArchEvolve-lanl17-actual-report-evidence-20261007-a5')
+EVIDENCE=Path('swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence')
+R='5e12a9796432654d88def24ecea617d16ca605b2'
+F6='f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3'
+M2_SHA='b86d78bac1d0a09e176114d1c23491ede098c4fcf5af5ab96f318ceabc29b8d1'
+M2_ID='66194a7e99716f5b59ddf081dfec752c34b51f1805470a4514171c53323b06c7'
+EF_COMMIT='44652dd359e352480065f0c6281730dd61523ea6'
+H=Path('/data1/yanruj/lanl17-control-cleanup60-20261007-a4.py')
+G=Path('/data1/yanruj/lanl17-metadata-dispatch-guard-cleanup60-20261007-a4.py')
+SUP=Path('/data1/yanruj/lanl17-metadata-supervisor-cleanup60-20261007-a4.py')
+PINS=((H,38195,'28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414'),(G,14577,'9c5d9658b524db94805a6b51453dc9edef7096a27312677896d595d39b94f6c6'),(SUP,8014,'fa703bbd4c71bb4bcf56f47d1e224449f627d5921295e00b9cc105f21e95bde0'))
+CIDS=tuple('extensa-gem5-bfs-20261006-p'+str(n) for n in range(1,5))
+MAX_FILES=96
+ROWS={};BODIES={};RETURN=set()
+class Refused(ValueError):pass
+def need(ok,code):
+    if not ok:raise Refused(code)
+
+def tick():need(time.monotonic()<END,'query_deadline')
+
+def stamp(s):return {k:getattr(s,'st_'+k) for k in FIELDS}
+
+def canonical(p):
+    need(p.is_absolute() and p.resolve(strict=True)==p
+         and not any(q.is_symlink() for q in (p,*p.parents)),'canonical_nonsymlink_route')
+
+def metadata(p,cap):
+    tick();canonical(p);s=p.lstat()
+    need(stat.S_ISREG(s.st_mode) and s.st_uid==UID and s.st_nlink==1
+         and not s.st_mode&0o7000 and 0<=s.st_size<=cap,'metadata_identity_or_cap')
+    fd=os.open(p,os.O_RDONLY|os.O_NOFOLLOW|os.O_CLOEXEC)
+    with os.fdopen(fd,'rb') as f:
+        need(stamp(os.fstat(f.fileno()))==stamp(s),'metadata_open_changed');b=f.read(cap+1)
+        need(len(b)==s.st_size<=cap and stamp(s)==stamp(os.fstat(f.fileno()))==stamp(p.lstat()),
+             'metadata_returned_bytes_or_stat_changed')
+    return b,{'path':str(p),'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest(),'stat':stamp(s)}
+
+def strict(b):
+    def pairs(items):
+        d={}
+        for k,v in items:need(k not in d,'duplicate_JSON_key');d[k]=v
+        return d
+    def bad(value):raise Refused('nonfinite_JSON')
+    v=json.loads(b,object_pairs_hook=pairs,parse_constant=bad)
+    need(type(v) is dict,'metadata_object_required');return v
+
+def sha(b):return hashlib.sha256(b).hexdigest()
+def encode(v,ascii=False):return json.dumps(v,sort_keys=True,separators=(',',':'),ensure_ascii=ascii,allow_nan=False).encode()
+def value(b):return strict(b'{"value":'+b+b'}')['value']
+def take(p,cap,returned=False):
+    need(len(ROWS)<MAX_FILES or str(p) in ROWS,'file_count_bound')
+    b,pin=metadata(p,cap);k=str(p)
+    if k in ROWS:need(ROWS[k]==pin and BODIES[k]==b,'original_race')
+    ROWS[k]=pin;BODIES[k]=b
+    if returned:RETURN.add(k)
+    return b
+
+def sealed(p,cap,fmt,ascii,returned=True):
+    v=strict(take(p,cap,returned));need(v.get('format')==fmt,'original_format')
+    d=v.get('identity_sha256');need(type(d) is str and re.fullmatch('[0-9a-f]{64}',d) is not None and sha(encode({k:x for k,x in v.items() if k!='identity_sha256'},ascii))==d,'original_canonical_seal')
+    return v
+
+def git(root,*args):
+    tick();canonical(root)
+    env={k:v for k,v in os.environ.items() if not k.startswith('GIT_')}
+    env.update(GIT_OPTIONAL_LOCKS='0',GIT_NO_LAZY_FETCH='1',GIT_TERMINAL_PROMPT='0')
+    r=subprocess.run(['/usr/bin/git','--no-replace-objects','-c','core.fsmonitor=false','-C',str(root),*args],env=env,capture_output=True,timeout=min(60,END-time.monotonic()))
+    need(r.returncode==0 and not r.stderr and len(r.stdout)<=1024*1024,'read_only_git_failed')
+    return r.stdout.decode().strip()
+
+def validate(name,records):
+    b=take(RAW/(name+'.argv.json'),32768,True);argv=value(b)
+    need(argv==['python3','-m','swdb','validate','--records',str(records)],'exact_original_validation_argv')
+    exitb=take(RAW/(name+'.exit-code.txt'),64,True);need(exitb==b'0\n','public_integer_zero_exit')
+    out=take(RAW/(name+'.stdout'),4096,True);err=take(RAW/(name+'.stderr'),65536,True)
+    m=re.fullmatch(rb'OK: ([0-9]{1,8}) record\(s\) valid\n',out)
+    need(m is not None and err==b'','closed_public_validation_output')
+    # Counts only; full original inventory and historical validation continuity are later contracts.
+    canonical(records);names=[]
+    for p in records.rglob('*.yaml'):
+        tick();canonical(p);s=p.lstat();need(stat.S_ISREG(s.st_mode) and s.st_uid==UID and s.st_nlink==1,'catalogue_file_identity')
+        names.append(p.relative_to(records).as_posix());need(len(names)<=16384,'catalogue_count_bound')
+    need(int(m[1])==len(names),'full_validation_record_count')
+    return {'name':name,'records':str(records),'validated_count':int(m[1]),'observed_yaml_count':len(names),'original_public_exit_code':0,'stderr_empty':True,'catalogue_continuity_not_policed':True}
+
+def command_metadata(name,expected,stdout_cap):
+    argv=value(take(RAW/(name+'.argv.json'),32768,True));need(argv==expected,'exact_public_argv')
+    need(take(RAW/(name+'.exit-code.txt'),64,True)==b'0\n','public_integer_zero_exit')
+    take(RAW/(name+'.stdout'),stdout_cap,False)
+    need(take(RAW/(name+'.stderr'),65536,True)==b'','public_stderr_not_empty')
+    return argv
+
+def read():
+    need(sys.platform=='linux' and socket.gethostname().split('.')[0]=='mbit10' and os.getuid()==os.geteuid()==UID and pwd.getpwuid(UID).pw_name=='yanruj','native_host_account')
+    need(Path('/proc/self/exe').resolve(strict=True)==Path('/usr/bin/python3.12') and sys.flags.dont_write_bytecode and not sys.flags.optimize,'native_Python_flags')
+    for p,n,d in PINS:need(len(take(p,n))==n and sha(BODIES[str(p)])==d,'unchanged_selected_source')
+    m=sealed(RAW/'manifest.json',2*1024*1024,'swdb.lanl17-parent-population.v1',True,False)
+    need(sha(BODIES[str(RAW/'manifest.json')])==M2_SHA and m['identity_sha256']==M2_ID and m['source']==str(S) and m['raw']==str(RAW) and m['source_commit']==R and m['helper_sha256']==PINS[0][2] and m['estimator_sha256']==F6,'original_M2_scope')
+    pre=sealed(FINALIZE/'preregistration.json',131072,'swdb.lanl17-metadata-dispatch-preregistration.v1',False)
+    need(pre['action']=='finalize' and pre['final_source_commit']==pre['cleanup_source_commit']==R and pre['source']==str(S) and pre['raw']==str(RAW) and pre['project']==str(S/'swdb-project') and pre['source_code_equivalent_F6'] is True,'finalize_preregistration_phase')
+    need((pre['helper_sha256'],pre['guard_sha256'],pre['supervisor_sha256'])==tuple(p[2] for p in PINS) and pre['estimator_sha256']==F6 and pre['processes_sha256']=='bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289','preregistration_source_pins')
+    need(pre['limits']=={'wait':78000,'term':78120,'kill':60,'parent':78300} and pre['parent_envelope']['timeout_s']==78300 and pre['parent_envelope']['kill_after_s']==60,'original_finalize_deadlines')
+    need(pre['leases_before_exec']=={k:'released' for k in ('mbit10-evaluation-node0','mbit10-evaluation-node1','mbit10-evaluation')} and pre['account_HOME_unchanged'] is True and pre['CODEX_HOME_original_verified'] is True and pre['auth_file_exists'] is True and pre['authentication_contents_read'] is False,'original_admission_metadata')
+    need(pre['helper_tail_sha256']==sha(encode(['--manifest',str(RAW/'manifest.json')])),'original_helper_tail')
+    sup=sealed(FINALIZE/'supervisor-receipt.json',131072,'swdb.lanl17-metadata-supervisor.v1',False)
+    need(sup['action']=='finalize' and sup['state']=='child_returned' and type(sup['child_exit']) is int and type(sup['supervisor_exit']) is int and sup['child_exit']==sup['supervisor_exit']==0,'successful_supervisor')
+    need(sup['timeout_s']==78000 and sup['timed_out'] is False and sup['signal_received'] is None and sup['fixture'] is False and sup['error_type'] is None and sup['cleanup_errors']==[] and sup['cleanup']['subreaper'] is True and sup['cleanup']['survivors']=={},'normal_owned_cleanup')
+    need(type(sup['cleanup']) is dict and set(sup['cleanup'])=={'subreaper','terminated_owned_processes','survivors'} and type(sup['cleanup']['terminated_owned_processes']) is list and len(sup['cleanup']['terminated_owned_processes'])<=1024,'closed_supervisor_cleanup')
+    for row in sup['cleanup']['terminated_owned_processes']:
+        need(type(row) is dict and set(row)=={'pid','start_time','signal'} and type(row['pid']) is int and row['pid']>0 and type(row['start_time']) is str and re.fullmatch('[0-9]{1,32}',row['start_time']) is not None and row['signal'] in ('SIGTERM','SIGKILL'),'closed_owned_process_metadata')
+    need(sup['uid']==UID and sup['helper_sha256']==sup['cleanup_implementation_sha256']==PINS[0][2] and sup['supervisor_sha256']==PINS[2][2] and sup['estimator_sha256']==F6 and sup['provider_calls']==sup['application_outcomes']==0,'supervisor_source_scope')
+    take(FINALIZE/'helper.stderr',65536,False)  # Original git worktree/push diagnostics may be nonempty; never return body.
+    result=strict(take(RAW/'final-export.json',65536,True));helper=strict(take(FINALIZE/'helper.stdout',65536,True))
+    need(helper==result and set(result)=={'branch','commit','paths','raw_transferred'} and result['branch']=='codex/lanl17-actual-report-evidence-20261007-a5' and result['raw_transferred'] is False and type(result['commit']) is str and re.fullmatch('[0-9a-f]{40}',result['commit']) is not None,'closed_final_export')
+    paths=result['paths'];need(type(paths) is list and 1<=len(paths)<=16384 and len(set(paths))==len(paths) and all(type(p) is str and len(p)<=4096 and (p.startswith('swdb-project/records/') and p.endswith('.yaml') or p==str(EVIDENCE/'17-actual-report-mbit10-20261007-a5.json')) and '..' not in Path(p).parts for p in paths),'pure_export_paths')
+    receipt=sealed(ER/EVIDENCE/'17-actual-report-mbit10-20261007-a5.json',2*1024*1024,'swdb.lanl17-actual-agreement-compact.v1',True)
+    need(set(receipt)=={'format','checked_utc','manifest','stopped_attempts','public_report','raw_transferred','source_clean','scope','identity_sha256'} and receipt['manifest']==m and receipt['raw_transferred'] is False and receipt['source_clean'] is True,'original_compact_helper_receipt')
+    stops=receipt['stopped_attempts'];need(type(stops) is list and len(stops)==4,'four_original_stops')
+    for cid,stop in zip(CIDS,stops):
+        actual=sealed(RAW/'attempts'/cid/'attempt-1/stopped-receipt.json',65536,'swdb.lanl17-stopped-attempt.v1',True,False)
+        need(stop==actual and stop['campaign']==cid and stop['source_commit']==R and stop['manifest_sha256']==M2_ID and stop['policy']==m['policy'] and stop['infrastructure_error'] is None and type(stop['runner_exit_code']) is int and type(stop['public_exit_code']) is int and stop['runner_exit_code']==stop['public_exit_code']==0 and stop['source_clean_after'] is True and stop['estimator_sha256_after']==F6 and stop['process_cleanup']['survivors']=={},'original_normal_stop_receipt')
+    report=receipt['public_report']
+    need(type(report) is dict and report['kind']=='agreement_report' and report['format']=='swdb.extensa-agreement-report.v1' and report['policy']==m['policy']['id'] and report['policy_sha256']==m['policy']['identity_sha256'] and type(report['id']) is str and re.fullmatch('[a-zA-Z0-9_.-]{1,512}',report['id']) is not None,'original_report_metadata')
+    need(report['gate']['state']=='unsupported' and report['recommendation']=='do_not_switch_to_flow_b' and report['selection_policy']=='unchanged_timing_only' and type(report['counts']['unique_eligible_dx100_pairs']) is int and report['counts']['unique_eligible_dx100_pairs']==0 and type(report['counts']['observed_campaigns']) is int and report['counts']['observed_campaigns']==4,'original_report_scope')
+    validations=[validate('validate-'+cid,RAW/'campaign-runs/extensa'/cid/'records') for cid in CIDS]
+    exports=[]
+    for cid in CIDS:
+        name='export-'+cid;routes=[RAW/(name+x) for x in ('.argv.json','.exit-code.txt','.stdout','.stderr')]
+        exists=[os.path.lexists(p) for p in routes];need(all(exists) or not any(exists),'partial_public_export_originals')
+        if not any(exists):exports.append({'campaign':cid,'original_export_files_present':False});continue
+        argv=value(take(routes[0],32768,True));prefix=['python3','-m','swdb','campaign-export',str(RAW/'configs'/(cid+'.yaml')),'--records',str(RAW/'base/records'),'--runs-root',str(RAW/'campaign-runs'),'--format','json']
+        tail=argv[len(prefix):] if type(argv) is list else []
+        need(type(argv) is list and argv[:len(prefix)]==prefix and len(tail)>0 and len(tail)%2==0 and all(tail[i]=='--candidate' and type(tail[i+1]) is str and re.fullmatch('[a-zA-Z0-9_.-]{1,512}',tail[i+1]) is not None for i in range(0,len(tail),2)),'original_export_argv')
+        need(take(routes[1],64,True)==b'0\n' and take(routes[3],65536,True)==b'','normal_export_exit_stderr')
+        take(routes[2],8*1024*1024,False);exports.append({'campaign':cid,'original_export_files_present':True,'candidate_count':len(tail)//2,'stdout_body_returned':False})
+    argv=['python3','-m','swdb','agreement-report','--policy',m['policy']['id'],'--records',str(RAW/'base/records'),'--mode','extensa','--campaign',CIDS[0],'--format','json']
+    for cid in CIDS:argv+=['--campaign-records',str(RAW/'campaign-runs/extensa'/cid/'records')]
+    command_metadata('final-agreement-report',argv,2*1024*1024)
+    need(strict(BODIES[str(RAW/'final-agreement-report.stdout')])==report,'original_public_report_matches_receipt')
+    validations.append(validate('validate-final-export',RAW/'base/records'))
+    need(git(S,'rev-parse','HEAD')==R and not git(S,'status','--porcelain'),'source_R_clean')
+    modules={}
+    for p in sorted((S/'swdb-project/swdb').rglob('*.py')):modules[p.relative_to(S/'swdb-project/swdb').as_posix()]=sha(metadata(p,2*1024*1024)[0])
+    need(len(modules)==185 and sha(encode(modules))==F6,'physical_source185_F6')
+    ef={'commit':git(EF,'rev-parse','HEAD'),'tree':git(EF,'rev-parse','HEAD^{tree}'),'parents':git(EF,'rev-list','--parents','-n','1','HEAD').split()[1:],'paths':git(EF,'diff','--name-only',R,'HEAD').splitlines()}
+    need(ef['commit']==EF_COMMIT and ef['parents']==[R] and set(ef['paths'])==set(m['freeze_export']['paths']) and not git(EF,'diff','--name-only','--diff-filter=DMRTUXB',R,'HEAD') and not git(EF,'status','--porcelain'),'original_EF_clean_parent')
+    er={'commit':git(ER,'rev-parse','HEAD'),'tree':git(ER,'rev-parse','HEAD^{tree}'),'parents':git(ER,'rev-list','--parents','-n','1','HEAD').split()[1:],'branch':git(ER,'branch','--show-current'),'paths':git(ER,'diff','--name-only',R,'HEAD').splitlines()}
+    need(er['commit']==result['commit'] and er['parents']==[R] and er['branch']==result['branch'] and set(er['paths'])==set(paths) and not git(ER,'diff','--name-only','--diff-filter=DMRTUXB',R,'HEAD') and not git(ER,'status','--porcelain'),'actual_ER_pure_additions_clean')
+    # Re-read every captured original before any allowed body leaves this reader.
+    for k,pin in tuple(ROWS.items()):
+        b,again=metadata(Path(k),pin['bytes']);need(b==BODIES[k] and again==pin,'completion_original_race')
+    facts={'EF':ef,'ER':er,'report_id':report['id'],'report_identity_sha256':report['identity_sha256'],'report_gate_state':'unsupported','recommendation':'do_not_switch_to_flow_b','selection_policy':'unchanged_timing_only','observed_campaigns':4,'unique_eligible_dx100_pairs':0,'source_commit':R,'source185_F6_verified':True,'supervisor_exit':0,'child_exit':0,'cleanup_survivors':{},'validations':validations,'conditional_exports':exports,'historical_full_validation_continuity_not_policed':True,'native_lease_freshness_not_policed':True,'published_ref_not_requeried':True}
+    return {'format':'swdb.lanl17-finalize-completion-originals-readonly.v1','sealed':False,'scientific_admission':False,'completion_metadata_ready':True,'read_only':True,'checked_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'files':{k:{**ROWS[k],'base64':base64.b64encode(BODIES[k]).decode('ascii')} for k in sorted(RETURN)},'metadata_only_original_pins':{k:ROWS[k] for k in sorted(ROWS) if k not in RETURN},'observations':facts}
+
+def interrupted(n,f):raise Refused('completion_query_deadline_or_signal')
+for number in (signal.SIGALRM,signal.SIGTERM,signal.SIGINT,signal.SIGHUP):signal.signal(number,interrupted)
+signal.alarm(180)
+try:
+    result=read();raw=(json.dumps(result,sort_keys=True,allow_nan=False)+'\n').encode();need(len(raw)<=8*1024*1024,'completion_return_cap');sys.stdout.buffer.write(raw)
+except (OSError,ValueError,KeyError,TypeError,IndexError,UnicodeError,subprocess.SubprocessError) as exc:
+    sys.stdout.write(json.dumps({'format':'swdb.lanl17-finalize-completion-originals-readonly.v1','sealed':False,'scientific_admission':False,'completion_metadata_ready':False,'read_only':True,'error_class':type(exc).__name__,'reason_sha256':sha(str(exc).encode()),'checked_utc':datetime.datetime.now(datetime.timezone.utc).isoformat()},sort_keys=True)+'\n')

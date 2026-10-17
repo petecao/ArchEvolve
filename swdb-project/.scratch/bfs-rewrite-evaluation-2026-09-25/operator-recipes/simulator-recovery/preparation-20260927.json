@@ -1,0 +1,102 @@
+{
+  "created": "2026-09-27",
+  "state": "both_admissions_prepared_no_scientific_dispatch_by_worker",
+  "operator_commit": "cd970388aa157601e2e6cbda17d956978f8015ff",
+  "runtime_commit": "6a493a0d489d8d1c76eba8c3431538d6412fd45a",
+  "proof_runtime_commit": "8cbfee600f23416a8e9578fa8d3ce3f0e19fced8",
+  "admissions_readback": {
+    "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/simulator-recovery/admissions-readback-20260927.json",
+    "bytes": 5749,
+    "sha256": "383dd40df760c66c5eb093f7784d6d1e7cdaf2a001bd2b432d8d5fff88632ccb"
+  },
+  "operator_review": {
+    "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/simulator-recovery/operator-independent-review-20260927.json",
+    "bytes": 2521,
+    "sha256": "767cd96f4211ce478d3a1b6f4e13ea9611ac89f2ee61c8c2fa2c411d60cef534"
+  },
+  "proof_readback_review": {
+    "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/simulator-recovery/proof-provenance-actual-independent-20260927.json",
+    "bytes": 1910,
+    "sha256": "cba512417d39d2100ce7057fc5a8d190337331ade328450a238e20000048881d"
+  },
+  "local_tests": {
+    "result": "4 passed in 0.03s",
+    "log": {
+      "path": "/private/tmp/bfs-simulator-operator-tests-20260927-sealed.log",
+      "bytes": 98,
+      "sha256": "988344a7589dd35ded61b8e784dcd5bc43cb64ba0f19a2bda1a7ec44b380abcb"
+    },
+    "bash_syntax": "passed"
+  },
+  "helper_probe_correction": "The first probe incorrectly selected origin HEAD instead of tracked yanrujhou_main and rejected the missing subtree; no helper files were modified.",
+  "standing_transfer_authorization_used": true,
+  "lane_acquired": false,
+  "scientific_dispatches": 0,
+  "files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/simulator-recovery/README.md",
+      "bytes": 6883,
+      "sha256": "c73cb3c68bcfc8f7aa0849ffb4abe2203085471955b5f993756ebbd18c289d4b"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/simulator-recovery/admissions-readback-20260927.json",
+      "bytes": 5749,
+      "sha256": "383dd40df760c66c5eb093f7784d6d1e7cdaf2a001bd2b432d8d5fff88632ccb"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/simulator-recovery/helper-comparison-20260927.json",
+      "bytes": 1109,
+      "sha256": "f6176742dac1e2bc2553c2ba5c8e11c69692eec896ee2c093ee16c6bf28bd85e"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/simulator-recovery/launch.sh",
+      "bytes": 1548,
+      "sha256": "6e495ceba7431f6b37d958dbd707bc985a35e7ef7f332c77acc26508a5bd9bed"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/simulator-recovery/operator-independent-review-20260927.json",
+      "bytes": 2521,
+      "sha256": "767cd96f4211ce478d3a1b6f4e13ea9611ac89f2ee61c8c2fa2c411d60cef534"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/simulator-recovery/operator.py",
+      "bytes": 9117,
+      "sha256": "58be86993f09a70b330bb214eb75e02a8af43584de66a48e53fb87396655797c"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/simulator-recovery/proof-provenance-actual-independent-20260927.json",
+      "bytes": 1910,
+      "sha256": "cba512417d39d2100ce7057fc5a8d190337331ade328450a238e20000048881d"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/simulator-recovery/runtime-manifest.json",
+      "bytes": 136114,
+      "sha256": "01bc110d7600489d51e3c2488e1defaabe88654eaf904b0ef29a096f453856ed"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/simulator-recovery/t15-admission-preparation-20260927.json",
+      "bytes": 200,
+      "sha256": "f211c46b3a0cf2193b667825f1602523d29924b146b6e395ba7cfdca53f885cb"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/simulator-recovery/t15-config.json",
+      "bytes": 2332,
+      "sha256": "7f0260775627a0652d38b406fbab8aa601873a79141127c0c57f18bdb6db2910"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/simulator-recovery/t16-admission-preparation-20260927.json",
+      "bytes": 200,
+      "sha256": "b050e8aaf6e25730291693c4b80444288ff2f9ada64aa8ef1597aefca8414c53"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/simulator-recovery/t16-config.json",
+      "bytes": 2332,
+      "sha256": "c55ff2e24e130d8734f97950293ef9e9e4558abea768f9956a2000817b758493"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/simulator-recovery/test_operator.py",
+      "bytes": 2140,
+      "sha256": "287313954bd2ca44bef5b9e70969b6d563d5afd462f1ad6b1d4aface2c714fa1"
+    }
+  ]
+}

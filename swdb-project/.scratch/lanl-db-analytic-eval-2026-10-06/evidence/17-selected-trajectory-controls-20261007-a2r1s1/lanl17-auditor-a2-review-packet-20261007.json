@@ -1,0 +1,68 @@
+{
+  "format": "swdb.lanl17-auditor-a2-reviewed-source-preparation-manifest.v1",
+  "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "status": "Prepared for parent source review; not approved for use",
+  "auditor_or_collector_executed": false,
+  "actual_campaign_inputs_read": false,
+  "tests_Store_native_provider_SSH": false,
+  "tracked_changes": false,
+  "original_sources_verified_unchanged": {
+    "lanl17_selected_record_trajectory_auditor_20261007.py": "77907ba07636397c55ce38cf337034d3dca5d0217bfaea4678b4b05ffd9dfd2d",
+    "lanl17-selected-record-trajectory-auditor-review-20261007.md": "5505ff68cbdfa3ef66a8b2e8291b021074e59852a257dcee77067cea9d6f669c",
+    "lanl17_selected_record_trajectory_auditor_pure_projection_20261007.json": "39039a8120b2c06fc70b244c5657d3bdcdf832e9b8fe1118bb524b64c62c318f",
+    "lanl17_parent_helpers_cleanup60_a4.py": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+  },
+  "source_preparation_identity": "868100b0139e8b162875e420f006e66e7c45460104ce25b5d21585dd1c3ae081",
+  "exact_AST_preparation_identity": "984f3e90e48532d9a5dde8d8d3ff93ec3d5385aa2d739e77d20b9396ec6fdf41",
+  "exact_AST_projection_count": 42,
+  "entries": [
+    {
+      "path": "/private/tmp/lanl17_selected_record_trajectory_auditor_a2_20261007.py",
+      "bytes": 105674,
+      "sha256": "b15e0e433730b1906c937e2248350278c2b6642d8ff1f909ccf749867f043060"
+    },
+    {
+      "path": "/private/tmp/lanl17_compact_attempt_custody_a2_20261007.py",
+      "bytes": 19050,
+      "sha256": "edb822dc9b69796321e86ed042ad8debda33d00479d25f10fbc856b4d8e65780"
+    },
+    {
+      "path": "/private/tmp/lanl17-selected-record-trajectory-auditor-a2-review-20261007.md",
+      "bytes": 16040,
+      "sha256": "73c5f15cd93dfe49067e80153361600ccc876fcae0acf09faeff366cd4f244ce"
+    },
+    {
+      "path": "/private/tmp/lanl17-auditor-a2-source-preparation-20261007.json",
+      "bytes": 14226,
+      "sha256": "64b60a7914cd1ef4da8ca795ac3ab13c6c5705c93b1d777667d04a66b00b6982"
+    },
+    {
+      "path": "/private/tmp/lanl17-auditor-a2-exact-AST-preparation-20261007.json",
+      "bytes": 5398,
+      "sha256": "376238a8f8b16300ad0d464cd83f546654b97d45371fd23f68573a65d3f2742c"
+    },
+    {
+      "path": "/private/tmp/lanl17_prepare_auditor_a2_source_20261007.py",
+      "bytes": 16812,
+      "sha256": "ae9f8d6d6ffaf999c646537e824b088263e16fa1873d9f11bb84caa5eb036c2f"
+    },
+    {
+      "path": "/private/tmp/lanl17_auditor_a2_exact_AST_projection_check_20261007.py",
+      "bytes": 4047,
+      "sha256": "cffad835a59e5e87b2727e7d87679513f819e9650c92c2994b60febb93dac575"
+    },
+    {
+      "path": "/private/tmp/lanl17_auditor_a2_methods_20261007.txt",
+      "bytes": 26139,
+      "sha256": "37ff892d200beaa4087b191efc89973dafc2f1fcbfe6d2f673b542f6cb2c4117"
+    }
+  ],
+  "remaining_boundaries": [
+    "Concrete final R/EF/ER/M2/policy/dependency/campaign pins absent",
+    "TOCTOU ownership, unsaved step/time/DU administrative facts and concretely unclean resume require explicit parent attestation",
+    "Materialized interrupted/rejected bodies need separately selected original validated closure; not original finalize exports",
+    "Source-only preparation has no runtime or actual-data acceptance"
+  ],
+  "identity_sha256": "d6e731f208959684afcd185656b54befee3d115df6a0002170f9cf15ca87f5ea"
+}

@@ -1,0 +1,68 @@
+{
+  "format": "swdb.cpu-control-runbook-argv-proof.v1",
+  "checks": [
+    {
+      "script": "lanl-dispatch-cpu-model-validation-a3-metadata2400.py",
+      "argv": [
+        "development",
+        "f893fed400347ed23d92e917d8bde21b75e5375d"
+      ],
+      "exact_source_argument_guard_passed": true,
+      "reversed_phase_revision_refused": true,
+      "sha256": "f1ddb874189abb28fecb7ef4431f6382d3c09442ae1a75afd0164f4562f276bc"
+    },
+    {
+      "script": "lanl-dispatch-cpu-model-validation-a3-metadata2400.py",
+      "argv": [
+        "holdout",
+        "f893fed400347ed23d92e917d8bde21b75e5375d"
+      ],
+      "exact_source_argument_guard_passed": true,
+      "reversed_phase_revision_refused": true,
+      "sha256": "f1ddb874189abb28fecb7ef4431f6382d3c09442ae1a75afd0164f4562f276bc"
+    },
+    {
+      "script": "lanl-dispatch-cpu-band-report-a3-metadata2400.py",
+      "argv": [
+        "f893fed400347ed23d92e917d8bde21b75e5375d"
+      ],
+      "exact_source_argument_guard_passed": true,
+      "reversed_phase_revision_refused": null,
+      "sha256": "83b2683b5bb21534d7dbd962555770842b8dd24748ba5119abec9339d53b0ad2"
+    },
+    {
+      "script": "lanl-export-cpu-model-validation-a3.py",
+      "argv": [
+        "development",
+        "f893fed400347ed23d92e917d8bde21b75e5375d"
+      ],
+      "exact_source_argument_guard_passed": true,
+      "reversed_phase_revision_refused": true,
+      "sha256": "2d59a2d5f6ce54d4692fc962dbc9e38dab4f86076f1873ab78a1484522c681f6"
+    },
+    {
+      "script": "lanl-export-cpu-model-validation-a3.py",
+      "argv": [
+        "holdout",
+        "f893fed400347ed23d92e917d8bde21b75e5375d"
+      ],
+      "exact_source_argument_guard_passed": true,
+      "reversed_phase_revision_refused": true,
+      "sha256": "2d59a2d5f6ce54d4692fc962dbc9e38dab4f86076f1873ab78a1484522c681f6"
+    },
+    {
+      "script": "lanl-export-cpu-band-report-a3.py",
+      "argv": [
+        "f893fed400347ed23d92e917d8bde21b75e5375d"
+      ],
+      "exact_source_argument_guard_passed": true,
+      "reversed_phase_revision_refused": null,
+      "sha256": "788c5cfd72433916daac544420de5251eb6d549c56afaeba455a82416f11dbb1"
+    }
+  ],
+  "runbook_sha256": "a0d9ce74743ca78a5a1c2b0336c0f3c22c3eb692351bebbddad56d68b3987b70",
+  "helper_bytes_changed": false,
+  "application_or_remote_execution": false,
+  "scope": "Only source-derived first argument assignment/assert evaluated; no imports, filesystem preflight, native/application/provider/remote commands or dispatch.",
+  "identity_sha256": "37d956125dac425f9116fae3d4bd13dbf5b470aa4e70777c2161f73de72174de"
+}

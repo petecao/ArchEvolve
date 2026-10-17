@@ -1,0 +1,68 @@
+{
+  "added_source_files": [
+    {
+      "path": "swdb/vector_owned_effects.mlw",
+      "sha256": "9db73c9cf698b6db29beabdf1e9b22d1da235971d6a21794a15c4f415cf6a6ce"
+    },
+    {
+      "path": "swdb/vector_owned_source_view.py",
+      "sha256": "c76c45afc64a84f6d1cbe1e23e05c175dc1b612abb5f23679d40e7db6c43f8f2"
+    },
+    {
+      "path": "swdb/vector_owned_state.mlw",
+      "sha256": "a2c295d2c6720a9c8c522f05e19723c2d2d2a32b63f9b198aab03f195269e4b6"
+    },
+    {
+      "path": "swdb/vector_owned_transfer.py",
+      "sha256": "6fa50d3b0ff6610c541bfa787179b37c6c8b50e4155fb2b0605d00e1eaffd085"
+    }
+  ],
+  "all_science_and_resource_entry_functions_unchanged_except_literal_historical_control_binding": true,
+  "changed_existing_source_files": [
+    {
+      "after": "6223247f6d9ee6a806ee32f2a4f5630e5fa41555488a70c3c4646b73f6892802",
+      "before": "d03f89ab3dac0987d011552aeb1edcc212a8589a401ba5bface7102301c48fa2",
+      "path": "swdb/proof.py"
+    },
+    {
+      "after": "bf835eab316a9266e5733c1c1a2c1277ae983e83d496a1068a17490ac31c7fe1",
+      "before": "c5f539209979d01270dfa48c35b7b5475d58b3899dbcef31a13afb65e8c14184",
+      "path": "tests/fixtures/proof/lowering/pair_pointer.cc"
+    }
+  ],
+  "compiler_use_time_and_solver_runtime_boundaries": "Fresh current source/lowering use-time identities are required by the unchanged gates. 2717 declared runtime files/native dependencies are rehashed before/after; loader/dlopen/source-to-binary/between-check behavior remains TCB. Prospective Why3server physical pins do not retroactively close historical helper gaps.",
+  "date": "2026-10-16 ET",
+  "fixture_preparation": {
+    "bytes": 2253,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-mixed-v7-branchfree-repair-preparation-v1-20261016.json",
+    "sha256": "faf1779209113a721b28010729091758e5ce8a507235f588ac7d10e10c21055f"
+  },
+  "fixture_readiness": {
+    "bytes": 2678,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-mixed-pair-branch-free-fixture-independent-readiness-20261016.json",
+    "sha256": "b4727df874bdb43bd645395c47387b5c6ca5312fa3ca31745853fc14cd40aab6"
+  },
+  "fresh_checker_identity": {
+    "proof_setup_check": {
+      "sha256": "e65fbdff00c807e4b7d74b1d4b9493a791d25569350a441e3872c50cc5b9fd0e",
+      "version": "1"
+    },
+    "verdict_reading": {
+      "sha256": "e65fbdff00c807e4b7d74b1d4b9493a791d25569350a441e3872c50cc5b9fd0e",
+      "version": "1"
+    }
+  },
+  "fresh_checker_inputs_changed": [
+    "swdb/proof.py"
+  ],
+  "historical_control_source": "dcdecf317a0e9b34f3ce12d5b914eb823c439fbc",
+  "no_scientific_adoption": true,
+  "normal_8_record_census_unchanged": true,
+  "prior30_actual_receipt_unchanged": {
+    "bytes": 2798,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/mixed-pair-actual-v8/root30-control-admission.json",
+    "sha256": "3ba333bebdd77c6117f4bfeb6981cafda249248a3323d6ab48b02f55ef12a9ae"
+  },
+  "prior30_not_relabelled_current": true,
+  "prospective_evaluation_source": "36266e101e0484f3c2cf5f3fae4322d5de648d85"
+}

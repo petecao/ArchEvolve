@@ -1,0 +1,106 @@
+{
+  "boundaries": {
+    "actual_controller_admitted": false,
+    "actual_original_TU_ABI_observed": false,
+    "compiler_native_verifier_solver_tests_SSH_executed": false,
+    "optional_hardware_body_theorem_required": false,
+    "production_edits_reviewed_or_performed": false,
+    "public_current0_2_full28_admitted": false
+  },
+  "date": "2026-10-16 ET",
+  "decision": "Changes required before admitting this combined recipe/consumer. Preserve V1, review the narrow original-source AST successor, then let root admit a bounded actual capture. Owned MMIO semantics remain an allowed TCB; this finding is a concrete compiler/source correlation requirement.",
+  "design": {
+    "bytes": 173034,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/new-0.2-contract-design-v1.json",
+    "sha256": "a6139eea1e141c68bb351026b7cdb38a2458eb4b8be3a772a8251a7060db6e1c"
+  },
+  "findings": [
+    {
+      "author_response": "Author confirmed the missing map, will preserve V1 and produce V2 with AST phases reading pinned original .cpp sources, retaining preprocessing/depfiles and an explicit reread timing premise.",
+      "consequence": "Locations and offsets belong to the parsed .ii buffer. Local-owner, header and ABI-root gates should refuse; merely renaming the file would not justify slicing original .cpp bytes at those offsets. This is a prospective recipe/consumer correctness blocker, not an observed compiler failure or an accepted unsound public result.",
+      "control_gap": "Synthetic TU and probe fixtures carry original paths/offsets, so the twelve controls do not exercise the emitted .ii location protocol. Add a captured-shape refusal with actual .ii and presumed .cpp coordinates plus a recipe/consumer correlation control.",
+      "file": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler_unit_adapter_v1.py",
+      "id": "parsed_buffer_vs_original_source",
+      "line": 217,
+      "primary_evidence": "Clang JSONNodeDumper obtains the actual buffer name and decomposed byte offset, while presumed file/line diagnostics are emitted separately when line directives differ. Presumed diagnostics do not reconstruct original byte offsets.",
+      "priority": "P1",
+      "problem": "Both AST recipe phases parse component/caller.ii or abi.ii. The consumer instead resolves owners against original source_path and passes original .cpp source_text into the V3 byte-range binder; the ABI reader also requires original probe.cpp locality. resolve_locations propagates actual file/line elision but does not map presumed locations or preprocessed byte offsets to original source.",
+      "related_lines": [
+        72,
+        105,
+        159,
+        165,
+        180
+      ],
+      "required_repair": "Preserve V1. For the narrow first capture, dump one complete TU directly from the exact original caller and filtered ABI literals directly from the exact original probe, with admitted flags/runtime and complete input/dependency checks before and after. Keep preprocessing and depfiles as separate provenance. Alternatively review a complete checked frozen-buffer/source map; never join IDs across parses or merely substitute filenames.",
+      "title": "Make the AST capture buffer agree with the original-source consumer"
+    }
+  ],
+  "fixture": {
+    "bytes": 4524,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source_call_fixture_v2.cpp",
+    "sha256": "3148b662b2fbeaa7a8733569d5ea750bce8a598d4e883f9bc64cb1e27dae67cd"
+  },
+  "mandatory_remaining_production_gates": [
+    "Root-selected actual compiler/source/runtime/resource/recipe admission and retained same-TU evidence within caps",
+    "Original caller macro/pragma configuration versus fixed source/MMIO profile; separate probe is not that evidence",
+    "Scoped expression/descriptor/local initialization and complete CPU-access lowering",
+    "New isolated model/entry and actual positive/negative public source verdicts with independent reconciliation"
+  ],
+  "module": {
+    "bytes": 13496,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler_unit_adapter_v1.py",
+    "sha256": "936216e6aa028f39cee8c16a53465273438e4ba02ac737c4367e55f012529d5b"
+  },
+  "packet": {
+    "bytes": 7129,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-unit-source-packet-v1.json",
+    "sha256": "7f6d24624eabbae569413604c7010a1bac44cba84ce740100a5c298d75b870e1"
+  },
+  "primary_sources": [
+    {
+      "source_lines": "276-303",
+      "title": "Clang JSONNodeDumper.cpp, writeBareSourceLocation",
+      "url": "https://clang.llvm.org/doxygen/JSONNodeDumper_8cpp_source.html",
+      "use": "Actual parsed buffer and byte offset versus separate presumed diagnostics; primary code inspection, not physical LLVM22 attestation."
+    }
+  ],
+  "probe": {
+    "bytes": 1588,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler_abi_probe_v1.cpp",
+    "sha256": "c0f4f37ba62992b3de117f6117b134ad0ba663484c172ffa98081952f769bf34"
+  },
+  "readme": {
+    "bytes": 7418,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/README-compiler-unit-adapter-v1.md",
+    "sha256": "040f8c7b5b30383ef352017e37fb5b6e8d0fae524b32805002973e0bb80462c5"
+  },
+  "recipe": {
+    "bytes": 6304,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-plan-v1.json",
+    "sha256": "9c427853c09a37e83b8c8962fdcf90ba152d1aa2d274f1e8ea5d8374db0ae451"
+  },
+  "reviewer": "/root/lane_coordination",
+  "scope": "Frozen compiler adapter, recipe, ABI probe, fixture and new0.2 contract design. No in-flight repair, actual controller or production edits reviewed. No compiler, native, version, SSH, verifier, solver or test execution. Read-only primary Clang source consulted.",
+  "static_passes": {
+    "ABI_probe": "Exactly 29 unique probe declarations: six type aliases and 23 constants. The reader checks complete local roots, constant shape, byte order, scalar sizes/alignment, radix/precision and the fixed 4-core/32-tile/32-register/16384-word geometry before the reviewed ABI gate. Runtime floating environment remains explicitly unobserved.",
+    "controls": "Read the retained GREEN log 65834dc9: twelve tests, zero failures/errors/skips. The earlier final-named log 5cb2ba70 records the historical missing-INSTR_baseaddr failure and is preserved. Current source includes that guard. Reviewer did not run project functions or tests.",
+    "fixture_and_contracts": "The fixture inverse recovers V1. Its interface/CPU observations are hoisted before assertions. The design contains 26 nonempty call relations, 27 declarations and 132 instances. Concrete CBMC bodies remain reachable; source/domain/undefinedness checks stay ordinary properties, permitted internal choices retain their complete range, and WP summary admission is separate.",
+    "headers_and_stub": "The two original header pins match. The 133-byte declaration-only gem5 stub matches the existing initialized-register test helper literal and introduces no replacement MMIO bodies.",
+    "physical_closure": "All 20 packet rows match regular nonsymlink physical files, sizes and SHA-256. Binder V3 and dispatch V2 retain their reviewed pins; actual/public/current0.2/full28 flags remain false.",
+    "resource_design": "Four prospective Clang-only phases, no linker/native/version/verifier. Limits remain 180 seconds, 4 GiB RSS, 128 MiB per AST file and 256 MiB total. No filtered-ID fallback or silent cap increase. The future root controller must enforce all output sizes, runtime/source closure and time/RSS bounds; this module is not that controller.",
+    "same_TU_design": "The parser requires one complete TranslationUnitDecl for source calls, rejects filtered joins, duplicate JSON keys and nonfinite constants, and binds callees and calls from that one TU. ABI roots provide literal facts only; their IDs are not joined. This is the right design once capture coordinates agree.",
+    "source_and_CPU_boundary": "Physical source/probe and compiler-receipt attribution are explicit. Source-owned private-prefix and direct MMIO references refuse. Call preparation does not prove complete CPU effects, arbitrary unknown calls, pointer escapes or original caller macro/pragma configuration; those remain mandatory producer/lowerer gates."
+  },
+  "status": "CHANGES_REQUIRED_RECIPE_CONSUMER_LOCATION_CORRELATION",
+  "stub": {
+    "bytes": 133,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler_include_v1/gem5/m5ops.h",
+    "sha256": "4caae6752583fd058e911da16305fe5bebec0fa08d3242242af85494b2b90d7a"
+  },
+  "tests": {
+    "bytes": 8563,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/test_compiler_unit_adapter_v1.py",
+    "sha256": "b5fa46ccd80fc4271e2d605e50c7cb4e6a978d28d868e662202ca7e38c22e1f9"
+  }
+}

@@ -1,0 +1,1039 @@
+{
+  "created": "2026-10-15 ET",
+  "source_commit": "b876dcb3a79b2241af5048a95384df14fe312b78",
+  "run_root": "/data/yanruj/EvolveSWDB_runs/probata-owner-20261015-0750-node1",
+  "exit_code": "0",
+  "launch_exit_code": "0",
+  "test_count": 16,
+  "test_statuses": {
+    "passed": 16,
+    "failed": 0
+  },
+  "artifacts_all_exist_and_match": true,
+  "scope": "Closed two-site scalar noescape vector relation only. Source frame preservation is checked structurally, not a WP goal; imported typed allocator/fresh separation remains explicit trusted modeling. Native C/C++ retains malloc/free. Contract-fixture evidence, not immutable production method3 or general vector member/lifetime acceptance.",
+  "smoke_reading": "Raw smoke verdicts timeout mean the attempted contradiction is not proved; strict reader classifies these as smoke passes. Do not count raw timeout smoke rows as ordinary failures.",
+  "ticket": 25,
+  "status": "claimed",
+  "compact_metadata": {
+    "path": "/private/tmp/probata-owner-remote-b876dcb3-compact.json",
+    "sha256": "d6cb366390f826bbe53f5a9d08c348d5a2ccc911d92610f4d311ac95f595ee2d"
+  },
+  "note": "/private/tmp/probata-owner-remote-b876dcb3-audit.md",
+  "actual_records": [
+    {
+      "artifact": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-owner-20261015-0750-node1/pytest/wp-vector-ownership0/records/proofs/proof.contract.fixture_vector_owner_safe.20261015t114946z.7c2663ae.yaml",
+        "sha256": "a3218b1ca932718c4e85af3058d5e63cdcb24a9ee45485f317b7c4fb01c4d005",
+        "bytes": 66014
+      },
+      "id": "proof.contract.fixture_vector_owner_safe.20261015t114946z.7c2663ae",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.fixture_vector_owner_safe"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "evidence_kind": "contract_fixture",
+      "goal_counts": {
+        "total": 130,
+        "ordinary": 119,
+        "ordinary_status": {
+          "valid": 119
+        },
+        "smoke": 11,
+        "smoke_status": {
+          "valid": 11
+        }
+      },
+      "open_goals": [],
+      "pins": {
+        "code": {
+          "id": "contract.fixture_vector_owner_safe",
+          "sha256": "f2a5f9e2e2704604b8f6575c11f5cb32f859f587522cedc34fc51fa7b6da6143"
+        },
+        "contract": {
+          "id": "contract.fixture_vector_owner_safe",
+          "sha256": "f2a5f9e2e2704604b8f6575c11f5cb32f859f587522cedc34fc51fa7b6da6143"
+        },
+        "baseline_function": {
+          "not_applicable": "A library summary is proven on the entry's own code."
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "not_applicable": "No proof-semantics version exists before ticket 27."
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "d231c224f8ec87de085fb9a75bb95a3eb5cfbb89e0f05915ef405a8a2d7c5ce4"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "A library summary has no predecessor."
+        },
+        "build_constants": [],
+        "c_lowering": {
+          "id": "swdb_vector_owner_safe.c",
+          "sha256": "8e52050ae3013f0b31ca02317b4d9d62b261e1e74959f05a035d275130cfaccb"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "std_models": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        },
+        "vector_ownership_check": {
+          "id": "vector-ownership-check-1",
+          "sha256": "ac524d1e7ef1c08646891032a820ac52864639635bcc79d406657ff2ac06b0d7"
+        },
+        "vector_ownership_certificate": {
+          "id": "swdb_vector_owner_safe.vector-private-frame",
+          "sha256": "8e19b1eb8aa2e59b19bf415aee1dfd016902e9c1185d89b9a404b56a25659616"
+        },
+        "vector_ownership_allocator": {
+          "id": "vector-owner-private-allocator-1",
+          "sha256": "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+        }
+      },
+      "verdict_reading": {
+        "check": {
+          "version": "1",
+          "sha256": "a55f80085d15f839ddbe86092c7dddbc1a62d922e9038b5d7058fe1a773d51ec"
+        },
+        "verdict": "proven"
+      },
+      "owner_boundary": {
+        "source_frame": "assigns \\nothing;",
+        "source_frame_preservation": "checked structurally from fresh owned writes and no escape",
+        "wp_frame_scope": "private view only; structural projection is not a WP goal",
+        "source_frame_setting": "assigns \\nothing;",
+        "original_contract_sha256": "3f4cf6c3a8f46d22672dc7fc5715b70e24bfda3f4dcf7b6e470831e96b8d730b",
+        "view_contract_sha256": "4c5b13f2d174531c54a2e7b4a0a46541086860b606206659b4521db6c339f0a0",
+        "origins_complete": true,
+        "origin_check": {
+          "id": "closed-owner-model-domain-1",
+          "sha256": "976a6d1b54d6b8f25850226d339f3650b781890349ef0083eb2bccf9ebc60a1d"
+        },
+        "view_origin_certificate_sha256": "6635ce1f96da79e89a526f1914017034aebdb625f23d912f22fcbf2337446551",
+        "source_origin_check": {
+          "id": "closed-owner-model-domain-1",
+          "sha256": "976a6d1b54d6b8f25850226d339f3650b781890349ef0083eb2bccf9ebc60a1d"
+        },
+        "source_origin_certificate_sha256": "c95d72259a0bc6a66ba68ce2693897534d7e1573bdd54acf141580b9fea0a134",
+        "source_accesses": [
+          {
+            "kind": "alias_read",
+            "begin": 153,
+            "end": 155,
+            "allocation_site": "initial",
+            "relative_offset": 0,
+            "bounds_guard": "owner_alias_before_range",
+            "liveness_guard": "alias_live_before"
+          },
+          {
+            "kind": "owner_index",
+            "begin": 196,
+            "end": 200,
+            "allocation_site": "growth",
+            "bounds_guard": "owner_storage_index_1",
+            "live_prefix_guard": "owner_index_1",
+            "liveness_guard": "owner_current_growth"
+          },
+          {
+            "kind": "owner_index",
+            "begin": 203,
+            "end": 220,
+            "allocation_site": "growth",
+            "bounds_guard": "owner_storage_index_2",
+            "live_prefix_guard": "owner_index_2",
+            "liveness_guard": "owner_current_growth"
+          }
+        ],
+        "view_access_count": 9,
+        "allocation_sites": [
+          {
+            "site": "initial",
+            "element_type": "int",
+            "elements": "\\at((integer)n,Pre)",
+            "live_elements": "\\at((integer)n,Pre)",
+            "executions": 1
+          },
+          {
+            "site": "growth",
+            "element_type": "int",
+            "elements": "(2 * \\at((integer)n,Pre))",
+            "live_elements": "(\\at((integer)n,Pre) + 1)",
+            "executions": 1
+          }
+        ]
+      },
+      "reports": [
+        {
+          "name": "c_lowering",
+          "recorded_sha256": "8e52050ae3013f0b31ca02317b4d9d62b261e1e74959f05a035d275130cfaccb",
+          "exists": true,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-owner-20261015-0750-node1/pytest/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_safe.20261015t114946z.7c2663ae/wp/swdb_vector_owner_safe.c",
+          "sha256": "8e52050ae3013f0b31ca02317b4d9d62b261e1e74959f05a035d275130cfaccb",
+          "bytes": 8476,
+          "hash_matches": true
+        },
+        {
+          "name": "anchors",
+          "recorded_sha256": "c6a12a19626d26608cb9a169437ad91185b24b7f005e2e2b6e595f6c4325cb97",
+          "exists": true,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-owner-20261015-0750-node1/pytest/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_safe.20261015t114946z.7c2663ae/wp/swdb_vector_owner_safe.anchors.json",
+          "sha256": "c6a12a19626d26608cb9a169437ad91185b24b7f005e2e2b6e595f6c4325cb97",
+          "bytes": 16481,
+          "hash_matches": true
+        },
+        {
+          "name": "vector_ownership_view",
+          "recorded_sha256": "ccaface3e2cfb5355471d6403162e7953050bab60bfef6ce8d0c1baace313fc6",
+          "exists": true,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-owner-20261015-0750-node1/pytest/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_safe.20261015t114946z.7c2663ae/wp/vector_ownership_view.c",
+          "sha256": "ccaface3e2cfb5355471d6403162e7953050bab60bfef6ce8d0c1baace313fc6",
+          "bytes": 5295,
+          "hash_matches": true
+        },
+        {
+          "name": "vector_ownership_contracts",
+          "recorded_sha256": "1beb17b72faac16cf561140a9f8d0c761667173e8794ddf8e58ca10a5f45cca3",
+          "exists": true,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-owner-20261015-0750-node1/pytest/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_safe.20261015t114946z.7c2663ae/wp/vector_ownership_contracts.json",
+          "sha256": "1beb17b72faac16cf561140a9f8d0c761667173e8794ddf8e58ca10a5f45cca3",
+          "bytes": 250,
+          "hash_matches": true
+        },
+        {
+          "name": "wp_input",
+          "recorded_sha256": "a17be3c6b0c00b49534cc36dc1e0edfc51e8d6361938d153a1f0c7f738af4277",
+          "exists": true,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-owner-20261015-0750-node1/pytest/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_safe.20261015t114946z.7c2663ae/wp/wp_input.c",
+          "sha256": "a17be3c6b0c00b49534cc36dc1e0edfc51e8d6361938d153a1f0c7f738af4277",
+          "bytes": 5450,
+          "hash_matches": true
+        },
+        {
+          "name": "wp_log",
+          "recorded_sha256": "7c4e8a4b92b918ac7cf7149e33cb7717e73de41c12f906d8fbe50d986065aab6",
+          "exists": true,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-owner-20261015-0750-node1/pytest/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_safe.20261015t114946z.7c2663ae/wp/frama-c.log",
+          "sha256": "7c4e8a4b92b918ac7cf7149e33cb7717e73de41c12f906d8fbe50d986065aab6",
+          "bytes": 12141,
+          "hash_matches": true
+        },
+        {
+          "name": "wp_goals",
+          "recorded_sha256": "df09d6022e7d4bee375f4e6f048996d1c265c6223fbab45d2f1d614855f74258",
+          "exists": true,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-owner-20261015-0750-node1/pytest/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_safe.20261015t114946z.7c2663ae/wp/wp-goals.json",
+          "sha256": "df09d6022e7d4bee375f4e6f048996d1c265c6223fbab45d2f1d614855f74258",
+          "bytes": 74339,
+          "hash_matches": true
+        },
+        {
+          "name": "wp_properties",
+          "recorded_sha256": "9e40358bc9a508d529da235c1512c7988d6d2841cf2e348da06d8f5d13080afe",
+          "exists": true,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-owner-20261015-0750-node1/pytest/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_safe.20261015t114946z.7c2663ae/wp/wp-properties.csv",
+          "sha256": "9e40358bc9a508d529da235c1512c7988d6d2841cf2e348da06d8f5d13080afe",
+          "bytes": 9543,
+          "hash_matches": true
+        },
+        {
+          "name": "wp_inventory",
+          "recorded_sha256": "2115f3fc72c144bfab880d12364316aea4a656113da7d04ae76e7982fc232957",
+          "exists": true,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-owner-20261015-0750-node1/pytest/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_safe.20261015t114946z.7c2663ae/wp/wp-inventory.json",
+          "sha256": "2115f3fc72c144bfab880d12364316aea4a656113da7d04ae76e7982fc232957",
+          "bytes": 175988,
+          "hash_matches": true
+        },
+        {
+          "name": "wp_normalized",
+          "recorded_sha256": "c97c50344d944b9f8b8a5a9ffa71590d728d1752c8f9c2db376d0361e2df8460",
+          "exists": true,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-owner-20261015-0750-node1/pytest/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_safe.20261015t114946z.7c2663ae/wp/wp-normalized.c",
+          "sha256": "c97c50344d944b9f8b8a5a9ffa71590d728d1752c8f9c2db376d0361e2df8460",
+          "bytes": 25090,
+          "hash_matches": true
+        }
+      ],
+      "proof_setup": {
+        "check": {
+          "version": "1",
+          "sha256": "a55f80085d15f839ddbe86092c7dddbc1a62d922e9038b5d7058fe1a773d51ec"
+        },
+        "verdict": "passed",
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "d231c224f8ec87de085fb9a75bb95a3eb5cfbb89e0f05915ef405a8a2d7c5ce4"
+        },
+        "run_count": 1
+      },
+      "fixture_method": {
+        "artifact": {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-owner-20261015-0750-node1/pytest/wp-vector-ownership0/library/methods/wp-tracer-fixture.yaml",
+          "sha256": "d231c224f8ec87de085fb9a75bb95a3eb5cfbb89e0f05915ef405a8a2d7c5ce4",
+          "bytes": 3267
+        },
+        "id": "method.wp-tracer-fixture",
+        "evidence_kind": "contract_fixture",
+        "checks": {
+          "proof_setup_check": {
+            "version": "0"
+          },
+          "proof_hint_check": {
+            "version": "0"
+          },
+          "verdict_reading": {
+            "version": "0"
+          }
+        },
+        "models": {
+          "std_vector": {
+            "id": "swdb-std-models-2",
+            "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+          },
+          "std_pair": {
+            "id": "fixture.std-pair-model",
+            "sha256": "8888888888888888888888888888888888888888888888888888888888888888"
+          }
+        },
+        "translators": null
+      },
+      "raw_goal_audit": {
+        "id": "proof.contract.fixture_vector_owner_safe.20261015t114946z.7c2663ae",
+        "record_sha256": "a3218b1ca932718c4e85af3058d5e63cdcb24a9ee45485f317b7c4fb01c4d005",
+        "sources": {
+          "wp_json": 130
+        },
+        "non_json_rows": [],
+        "raw_reports": {
+          "wp_goals": {
+            "kind": "list",
+            "count": 130,
+            "smoke": 11,
+            "status": {
+              "timeout": 11,
+              "valid": 119
+            }
+          },
+          "wp_inventory": {
+            "kind": "dict",
+            "keys": [
+              "version",
+              "goals",
+              "properties",
+              "complete"
+            ],
+            "version": "1",
+            "complete": true,
+            "goals": 130,
+            "properties": 108,
+            "smoke": 11
+          }
+        },
+        "unproven": null
+      },
+      "assumptions": [
+        {
+          "kind": "trusted_tool",
+          "reference": {
+            "id": "swdb-std-models-2",
+            "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+          },
+          "sentence": "The pinned standard library (libc++ of clang 22.1.8) implements the modeled members of std_vector_int as the C++ standard (ISO/IEC 14882:2017 (C++17)) says, as the model swdb-std-models-2 states them."
+        },
+        {
+          "kind": "trusted_tool",
+          "reference": {
+            "id": "swdb-std-models-2",
+            "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+          },
+          "sentence": "Allocation succeeds: every malloc (std::vector growth, new[]) returns usable memory, never null."
+        },
+        {
+          "kind": "trusted_tool",
+          "reference": {
+            "id": "closed-owner-model-domain-1",
+            "sha256": "976a6d1b54d6b8f25850226d339f3650b781890349ef0083eb2bccf9ebc60a1d"
+          },
+          "sentence": "The exact audited closed vector constructor and growing append carry typed int allocation origins with the entry-frozen extents and live prefixes in the origin certificate. This source allocator/model relation is explicit; WP validity alone supplies no array-object provenance. Each source and view access is tied to its recorded numerical and alias-liveness obligations; spare capacity grants no source read permission."
+        },
+        {
+          "kind": "trusted_tool",
+          "reference": {
+            "id": "vector-ownership-check-1",
+            "sha256": "ac524d1e7ef1c08646891032a820ac52864639635bcc79d406657ff2ac06b0d7"
+          },
+          "sentence": "The checked relational vector lowering preserves scalar observations and the original assigns nothing frame because every source heap write targets fresh owned nonescaping storage; WP checks the separate private-region view frame, functional properties and alias liveness, not that structural projection."
+        },
+        {
+          "kind": "trusted_tool",
+          "reference": {
+            "id": "vector-owner-private-allocator-1",
+            "sha256": "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+          },
+          "sentence": "Under successful ordinary C++ allocation, each of the two unique allocation sites denotes fresh storage separated from every previously live source object. Private-view addresses rename only this storage; the imported allocator contracts explicitly expose required validity, separation and frame names."
+        },
+        {
+          "kind": "assumed_clause",
+          "reference": {
+            "id": "vector-owner-private-allocator-1",
+            "sha256": "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+          },
+          "sentence": "WP treats contract property swdb_owner_allocate_growth_terminates of swdb_owner_allocate_growth as Extern: terminates\n\\true."
+        },
+        {
+          "kind": "assumed_clause",
+          "reference": {
+            "id": "vector-owner-private-allocator-1",
+            "sha256": "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+          },
+          "sentence": "WP treats contract property swdb_owner_allocate_growth_assigns_from of swdb_owner_allocate_growth as Extern: assigns \\result \\from count, n;."
+        },
+        {
+          "kind": "assumed_clause",
+          "reference": {
+            "id": "vector-owner-private-allocator-1",
+            "sha256": "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+          },
+          "sentence": "WP treats contract property swdb_owner_allocate_growth_ensures of swdb_owner_allocate_growth as Extern: ensures\n\\result \u2261 SWDB_OWNER_PRIVATE1(\\old(count), \\old(n))."
+        },
+        {
+          "kind": "assumed_clause",
+          "reference": {
+            "id": "vector-owner-private-allocator-1",
+            "sha256": "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+          },
+          "sentence": "WP treats contract property swdb_owner_allocate_growth_ensures_2 of swdb_owner_allocate_growth as Extern: ensures\n\\valid(\\result + (0 .. \\old(count) - 1))."
+        },
+        {
+          "kind": "assumed_clause",
+          "reference": {
+            "id": "vector-owner-private-allocator-1",
+            "sha256": "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+          },
+          "sentence": "WP treats contract property swdb_owner_allocate_initial_ensures_3 of swdb_owner_allocate_initial as Extern: ensures\n\\separated(\n  \\result + (0 .. \\old(count) - 1), \\old(v), \\old(n), \\old(dst), \\old(k),\n  \\old(bound)\n  )."
+        },
+        {
+          "kind": "assumed_clause",
+          "reference": {
+            "id": "vector-owner-private-allocator-1",
+            "sha256": "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+          },
+          "sentence": "WP treats contract property swdb_owner_allocate_growth_exits of swdb_owner_allocate_growth as Extern: exits\n\\false."
+        },
+        {
+          "kind": "assumed_clause",
+          "reference": {
+            "id": "vector-owner-private-allocator-1",
+            "sha256": "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+          },
+          "sentence": "WP treats contract property swdb_owner_allocate_initial_ensures_2 of swdb_owner_allocate_initial as Extern: ensures\n\\result \u2261 SWDB_OWNER_PRIVATE0(\\old(count), \\old(n))."
+        },
+        {
+          "kind": "assumed_clause",
+          "reference": {
+            "id": "vector-owner-private-allocator-1",
+            "sha256": "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+          },
+          "sentence": "WP treats contract property swdb_owner_allocate_initial_ensures of swdb_owner_allocate_initial as Extern: ensures\n\\valid(\\result + (0 .. \\old(count) - 1))."
+        },
+        {
+          "kind": "assumed_clause",
+          "reference": {
+            "id": "vector-owner-private-allocator-1",
+            "sha256": "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+          },
+          "sentence": "WP treats contract property swdb_owner_allocate_growth_ensures_3 of swdb_owner_allocate_growth as Extern: ensures\n\\separated(\n  \\result + (0 .. \\old(count) - 1), \\old(v), \\old(n), \\old(alias),\n  \\old(old_value), \\old(dst), \\old(k), \\old(bound),\n  \\old(old) + (0 .. \\old(old_size) - 1)\n  )."
+        },
+        {
+          "kind": "assumed_clause",
+          "reference": {
+            "id": "vector-owner-private-allocator-1",
+            "sha256": "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+          },
+          "sentence": "WP treats contract property swdb_owner_allocate_growth_assigns of swdb_owner_allocate_growth as Extern: assigns \\nothing;."
+        },
+        {
+          "kind": "assumed_clause",
+          "reference": {
+            "id": "vector-owner-private-allocator-1",
+            "sha256": "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+          },
+          "sentence": "WP treats contract property swdb_owner_allocate_initial_assigns_from of swdb_owner_allocate_initial as Extern: assigns \\result \\from count, n;."
+        },
+        {
+          "kind": "assumed_clause",
+          "reference": {
+            "id": "vector-owner-private-allocator-1",
+            "sha256": "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+          },
+          "sentence": "WP treats contract property swdb_owner_allocate_initial_assigns of swdb_owner_allocate_initial as Extern: assigns \\nothing;."
+        },
+        {
+          "kind": "assumed_clause",
+          "reference": {
+            "id": "vector-owner-private-allocator-1",
+            "sha256": "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+          },
+          "sentence": "WP treats contract property swdb_owner_allocate_initial_terminates of swdb_owner_allocate_initial as Extern: terminates\n\\true."
+        },
+        {
+          "kind": "assumed_clause",
+          "reference": {
+            "id": "vector-owner-private-allocator-1",
+            "sha256": "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+          },
+          "sentence": "WP treats contract property swdb_owner_allocate_initial_exits of swdb_owner_allocate_initial as Extern: exits\n\\false."
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-owner-20261015-0750-node1/pytest/wp-vector-ownership0/records/proofs/proof.contract.fixture_vector_owner_stale.20261015t115111z.438e2da3.yaml",
+        "sha256": "c45bfee83b6a53c2d2523903e79f864a350d701d8121f63d58bd81e5fd6f2715",
+        "bytes": 60385
+      },
+      "id": "proof.contract.fixture_vector_owner_stale.20261015t115111z.438e2da3",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.fixture_vector_owner_stale"
+      },
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "evidence_kind": "contract_fixture",
+      "goal_counts": {
+        "total": 116,
+        "ordinary": 105,
+        "ordinary_status": {
+          "valid": 104,
+          "timeout": 1
+        },
+        "smoke": 11,
+        "smoke_status": {
+          "valid": 11
+        }
+      },
+      "open_goals": [
+        {
+          "goal": "typed_real_swdb_vector_owner_stale_assert_alias_live_after",
+          "property": "swdb_vector_owner_stale_assert_alias_live_after",
+          "function": "swdb_vector_owner_stale",
+          "status": "timeout",
+          "smoke": false
+        }
+      ],
+      "pins": {
+        "code": {
+          "id": "contract.fixture_vector_owner_stale",
+          "sha256": "d00e78c8ef09649cc5d6204f7aacec5cabba2890340242e1f6a09f77a30c98f4"
+        },
+        "contract": {
+          "id": "contract.fixture_vector_owner_stale",
+          "sha256": "d00e78c8ef09649cc5d6204f7aacec5cabba2890340242e1f6a09f77a30c98f4"
+        },
+        "baseline_function": {
+          "not_applicable": "A library summary is proven on the entry's own code."
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "not_applicable": "No proof-semantics version exists before ticket 27."
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "d231c224f8ec87de085fb9a75bb95a3eb5cfbb89e0f05915ef405a8a2d7c5ce4"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "A library summary has no predecessor."
+        },
+        "build_constants": [],
+        "c_lowering": {
+          "id": "swdb_vector_owner_stale.c",
+          "sha256": "80134baa5cc87dc757a9b79886dffa78e7882dcf07d505975a7fd689c381b98b"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "std_models": {
+          "id": "swdb-std-models-2",
+          "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+        },
+        "vector_ownership_check": {
+          "id": "vector-ownership-check-1",
+          "sha256": "ac524d1e7ef1c08646891032a820ac52864639635bcc79d406657ff2ac06b0d7"
+        },
+        "vector_ownership_certificate": {
+          "id": "swdb_vector_owner_stale.vector-private-frame",
+          "sha256": "c1e949de4f6e7f74deccf743a44802447dff28d6f7113432aa5b0e8f1968d72b"
+        },
+        "vector_ownership_allocator": {
+          "id": "vector-owner-private-allocator-1",
+          "sha256": "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+        }
+      },
+      "verdict_reading": {
+        "check": {
+          "version": "1",
+          "sha256": "a55f80085d15f839ddbe86092c7dddbc1a62d922e9038b5d7058fe1a773d51ec"
+        },
+        "verdict": "not_proven"
+      },
+      "owner_boundary": {
+        "source_frame": "assigns \\nothing;",
+        "source_frame_preservation": "checked structurally from fresh owned writes and no escape",
+        "wp_frame_scope": "private view only; structural projection is not a WP goal",
+        "source_frame_setting": "assigns \\nothing;",
+        "original_contract_sha256": "07b4c56708d7afd86ed8e8e8f24fb59d40ffcda9e6e91b14c5362fabe7c79b44",
+        "view_contract_sha256": "30ff712a52a5739bbac32f61f9bb131b30c95142c1539d5cc0fdc4ad7bb40162",
+        "origins_complete": true,
+        "origin_check": {
+          "id": "closed-owner-model-domain-1",
+          "sha256": "976a6d1b54d6b8f25850226d339f3650b781890349ef0083eb2bccf9ebc60a1d"
+        },
+        "view_origin_certificate_sha256": "73e2a17376154952f589eda8c1f1c123080a158df23640b40cb0d09b4cd0984d",
+        "source_origin_check": {
+          "id": "closed-owner-model-domain-1",
+          "sha256": "976a6d1b54d6b8f25850226d339f3650b781890349ef0083eb2bccf9ebc60a1d"
+        },
+        "source_origin_certificate_sha256": "471e99df6872222848f8371713a43ac905e87b3ab47938f7845b7fa6d9f070b4",
+        "source_accesses": [
+          {
+            "kind": "alias_read",
+            "begin": 350,
+            "end": 352,
+            "allocation_site": "initial",
+            "relative_offset": 0,
+            "bounds_guard": "owner_alias_after_range",
+            "liveness_guard": "alias_live_after"
+          }
+        ],
+        "view_access_count": 7,
+        "allocation_sites": [
+          {
+            "site": "initial",
+            "element_type": "int",
+            "elements": "\\at((integer)n,Pre)",
+            "live_elements": "\\at((integer)n,Pre)",
+            "executions": 1
+          },
+          {
+            "site": "growth",
+            "element_type": "int",
+            "elements": "(2 * \\at((integer)n,Pre))",
+            "live_elements": "(\\at((integer)n,Pre) + 1)",
+            "executions": 1
+          }
+        ]
+      },
+      "reports": [
+        {
+          "name": "c_lowering",
+          "recorded_sha256": "80134baa5cc87dc757a9b79886dffa78e7882dcf07d505975a7fd689c381b98b",
+          "exists": true,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-owner-20261015-0750-node1/pytest/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_stale.20261015t115111z.438e2da3/wp/swdb_vector_owner_stale.c",
+          "sha256": "80134baa5cc87dc757a9b79886dffa78e7882dcf07d505975a7fd689c381b98b",
+          "bytes": 7850,
+          "hash_matches": true
+        },
+        {
+          "name": "anchors",
+          "recorded_sha256": "e85c8275598bc2a5a795b662345076f77e0e4b0fc1c0bfe4a3570f8d29380c11",
+          "exists": true,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-owner-20261015-0750-node1/pytest/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_stale.20261015t115111z.438e2da3/wp/swdb_vector_owner_stale.anchors.json",
+          "sha256": "e85c8275598bc2a5a795b662345076f77e0e4b0fc1c0bfe4a3570f8d29380c11",
+          "bytes": 12888,
+          "hash_matches": true
+        },
+        {
+          "name": "vector_ownership_view",
+          "recorded_sha256": "9d297ee327d5b5b3a49eff7a22f29980a80b8e8fee6a9a380c5a678704fde95e",
+          "exists": true,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-owner-20261015-0750-node1/pytest/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_stale.20261015t115111z.438e2da3/wp/vector_ownership_view.c",
+          "sha256": "9d297ee327d5b5b3a49eff7a22f29980a80b8e8fee6a9a380c5a678704fde95e",
+          "bytes": 4866,
+          "hash_matches": true
+        },
+        {
+          "name": "vector_ownership_contracts",
+          "recorded_sha256": "5d9e8c69d9a9e67abc0c35ddbb957f5cf82645b2cba69a83b1d56fc669b4b017",
+          "exists": true,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-owner-20261015-0750-node1/pytest/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_stale.20261015t115111z.438e2da3/wp/vector_ownership_contracts.json",
+          "sha256": "5d9e8c69d9a9e67abc0c35ddbb957f5cf82645b2cba69a83b1d56fc669b4b017",
+          "bytes": 248,
+          "hash_matches": true
+        },
+        {
+          "name": "wp_input",
+          "recorded_sha256": "6b4df853126f322d05687ec9b3c6ff9545a676609bea8deb23ebc589350ba814",
+          "exists": true,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-owner-20261015-0750-node1/pytest/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_stale.20261015t115111z.438e2da3/wp/wp_input.c",
+          "sha256": "6b4df853126f322d05687ec9b3c6ff9545a676609bea8deb23ebc589350ba814",
+          "bytes": 5020,
+          "hash_matches": true
+        },
+        {
+          "name": "wp_log",
+          "recorded_sha256": "8614d4a1fe5954a90c484da47dcf306e4284cdb99054117459bd50e0fc6e4b77",
+          "exists": true,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-owner-20261015-0750-node1/pytest/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_stale.20261015t115111z.438e2da3/wp/frama-c.log",
+          "sha256": "8614d4a1fe5954a90c484da47dcf306e4284cdb99054117459bd50e0fc6e4b77",
+          "bytes": 11365,
+          "hash_matches": true
+        },
+        {
+          "name": "wp_goals",
+          "recorded_sha256": "c8d236e072113c4ddc662daa0971386298750c77e34a466f29a893cb89590f3f",
+          "exists": true,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-owner-20261015-0750-node1/pytest/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_stale.20261015t115111z.438e2da3/wp/wp-goals.json",
+          "sha256": "c8d236e072113c4ddc662daa0971386298750c77e34a466f29a893cb89590f3f",
+          "bytes": 66020,
+          "hash_matches": true
+        },
+        {
+          "name": "wp_properties",
+          "recorded_sha256": "6901c58ee1bf12f94e9447c5afba2ae03388f03a27c51af7a5def993118e60e4",
+          "exists": true,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-owner-20261015-0750-node1/pytest/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_stale.20261015t115111z.438e2da3/wp/wp-properties.csv",
+          "sha256": "6901c58ee1bf12f94e9447c5afba2ae03388f03a27c51af7a5def993118e60e4",
+          "bytes": 8178,
+          "hash_matches": true
+        },
+        {
+          "name": "wp_inventory",
+          "recorded_sha256": "a6661f65bbc94d46bfc7dd9cedd74d66f7936467698a9975316c7bbd6aeedc0b",
+          "exists": true,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-owner-20261015-0750-node1/pytest/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_stale.20261015t115111z.438e2da3/wp/wp-inventory.json",
+          "sha256": "a6661f65bbc94d46bfc7dd9cedd74d66f7936467698a9975316c7bbd6aeedc0b",
+          "bytes": 129696,
+          "hash_matches": true
+        },
+        {
+          "name": "wp_normalized",
+          "recorded_sha256": "f6fa8f5c3764a0f7cee4e37d78ecf7069b4e52f4ac3cd16b30b24dc2b0887d63",
+          "exists": true,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-owner-20261015-0750-node1/pytest/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_stale.20261015t115111z.438e2da3/wp/wp-normalized.c",
+          "sha256": "f6fa8f5c3764a0f7cee4e37d78ecf7069b4e52f4ac3cd16b30b24dc2b0887d63",
+          "bytes": 21933,
+          "hash_matches": true
+        },
+        {
+          "name": "handler",
+          "recorded_sha256": "37f898f7d9fb2aea78eb70d88c8bd727a4ae761c73a9f983521d9039ab201c1d",
+          "exists": true,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-owner-20261015-0750-node1/pytest/wp-vector-ownership0/runs-outside-repo/proof.contract.fixture_vector_owner_stale.20261015t115111z.438e2da3/wp/handler.json",
+          "sha256": "37f898f7d9fb2aea78eb70d88c8bd727a4ae761c73a9f983521d9039ab201c1d",
+          "bytes": 279,
+          "hash_matches": true
+        }
+      ],
+      "proof_setup": {
+        "check": {
+          "version": "1",
+          "sha256": "a55f80085d15f839ddbe86092c7dddbc1a62d922e9038b5d7058fe1a773d51ec"
+        },
+        "verdict": "passed",
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "d231c224f8ec87de085fb9a75bb95a3eb5cfbb89e0f05915ef405a8a2d7c5ce4"
+        },
+        "run_count": 1
+      },
+      "fixture_method": {
+        "artifact": {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-owner-20261015-0750-node1/pytest/wp-vector-ownership0/library/methods/wp-tracer-fixture.yaml",
+          "sha256": "d231c224f8ec87de085fb9a75bb95a3eb5cfbb89e0f05915ef405a8a2d7c5ce4",
+          "bytes": 3267
+        },
+        "id": "method.wp-tracer-fixture",
+        "evidence_kind": "contract_fixture",
+        "checks": {
+          "proof_setup_check": {
+            "version": "0"
+          },
+          "proof_hint_check": {
+            "version": "0"
+          },
+          "verdict_reading": {
+            "version": "0"
+          }
+        },
+        "models": {
+          "std_vector": {
+            "id": "swdb-std-models-2",
+            "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+          },
+          "std_pair": {
+            "id": "fixture.std-pair-model",
+            "sha256": "8888888888888888888888888888888888888888888888888888888888888888"
+          }
+        },
+        "translators": null
+      },
+      "raw_goal_audit": {
+        "id": "proof.contract.fixture_vector_owner_stale.20261015t115111z.438e2da3",
+        "record_sha256": "c45bfee83b6a53c2d2523903e79f864a350d701d8121f63d58bd81e5fd6f2715",
+        "sources": {
+          "wp_json": 116
+        },
+        "non_json_rows": [],
+        "raw_reports": {
+          "wp_goals": {
+            "kind": "list",
+            "count": 116,
+            "smoke": 11,
+            "status": {
+              "timeout": 12,
+              "valid": 104
+            }
+          },
+          "wp_inventory": {
+            "kind": "dict",
+            "keys": [
+              "version",
+              "goals",
+              "properties",
+              "complete"
+            ],
+            "version": "1",
+            "complete": true,
+            "goals": 116,
+            "properties": 94,
+            "smoke": 11
+          }
+        },
+        "unproven": [
+          {
+            "property": "assigns *(SWDB_OWNER_PRIVATE0(n, &n) + (0 .. n - 1)), *(SWDB_OWNER_PRIVATE1(2 * n, &n) + (0 .. 2 * n - 1));",
+            "kind": "assigns clause",
+            "function": "swdb_vector_owner_stale",
+            "line": 30,
+            "status": "Partially proven",
+            "goal": "typed_real_swdb_vector_owner_stale_assert_alias_live_after",
+            "failure_class": "timeout"
+          },
+          {
+            "property": "\\result \u2261 7",
+            "kind": "postcondition",
+            "function": "swdb_vector_owner_stale",
+            "line": 30,
+            "status": "Partially proven",
+            "goal": "typed_real_swdb_vector_owner_stale_assert_alias_live_after",
+            "failure_class": "timeout"
+          },
+          {
+            "property": "swdb_owner_alias_live \u2261 1",
+            "kind": "user assertion",
+            "function": "swdb_vector_owner_stale",
+            "line": 81,
+            "status": "Unknown",
+            "goal": "typed_real_swdb_vector_owner_stale_assert_alias_live_after",
+            "failure_class": "timeout"
+          },
+          {
+            "property": "\\initialized(&swdb_owner_alias)",
+            "kind": "initialization",
+            "function": "swdb_vector_owner_stale",
+            "line": 82,
+            "status": "Partially proven",
+            "goal": "typed_real_swdb_vector_owner_stale_assert_alias_live_after",
+            "failure_class": "timeout"
+          },
+          {
+            "property": "\\initialized(swdb_owner_alias)",
+            "kind": "initialization",
+            "function": "swdb_vector_owner_stale",
+            "line": 82,
+            "status": "Partially proven",
+            "goal": "typed_real_swdb_vector_owner_stale_assert_alias_live_after",
+            "failure_class": "timeout"
+          },
+          {
+            "property": "\\valid_read(swdb_owner_alias)",
+            "kind": "mem_access",
+            "function": "swdb_vector_owner_stale",
+            "line": 82,
+            "status": "Partially proven",
+            "goal": "typed_real_swdb_vector_owner_stale_assert_alias_live_after",
+            "failure_class": "timeout"
+          },
+          {
+            "property": "swdb_vector_owner_stale_assert_alias_live_after",
+            "goal": "typed_real_swdb_vector_owner_stale_assert_alias_live_after",
+            "status": "timeout",
+            "failure_class": "timeout"
+          }
+        ]
+      },
+      "assumptions": [
+        {
+          "kind": "trusted_tool",
+          "reference": {
+            "id": "swdb-std-models-2",
+            "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+          },
+          "sentence": "The pinned standard library (libc++ of clang 22.1.8) implements the modeled members of std_vector_int as the C++ standard (ISO/IEC 14882:2017 (C++17)) says, as the model swdb-std-models-2 states them."
+        },
+        {
+          "kind": "trusted_tool",
+          "reference": {
+            "id": "swdb-std-models-2",
+            "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+          },
+          "sentence": "Allocation succeeds: every malloc (std::vector growth, new[]) returns usable memory, never null."
+        },
+        {
+          "kind": "trusted_tool",
+          "reference": {
+            "id": "closed-owner-model-domain-1",
+            "sha256": "976a6d1b54d6b8f25850226d339f3650b781890349ef0083eb2bccf9ebc60a1d"
+          },
+          "sentence": "The exact audited closed vector constructor and growing append carry typed int allocation origins with the entry-frozen extents and live prefixes in the origin certificate. This source allocator/model relation is explicit; WP validity alone supplies no array-object provenance. Each source and view access is tied to its recorded numerical and alias-liveness obligations; spare capacity grants no source read permission."
+        },
+        {
+          "kind": "trusted_tool",
+          "reference": {
+            "id": "vector-ownership-check-1",
+            "sha256": "ac524d1e7ef1c08646891032a820ac52864639635bcc79d406657ff2ac06b0d7"
+          },
+          "sentence": "The checked relational vector lowering preserves scalar observations and the original assigns nothing frame because every source heap write targets fresh owned nonescaping storage; WP checks the separate private-region view frame, functional properties and alias liveness, not that structural projection."
+        },
+        {
+          "kind": "trusted_tool",
+          "reference": {
+            "id": "vector-owner-private-allocator-1",
+            "sha256": "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+          },
+          "sentence": "Under successful ordinary C++ allocation, each of the two unique allocation sites denotes fresh storage separated from every previously live source object. Private-view addresses rename only this storage; the imported allocator contracts explicitly expose required validity, separation and frame names."
+        },
+        {
+          "kind": "assumed_clause",
+          "reference": {
+            "id": "vector-owner-private-allocator-1",
+            "sha256": "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+          },
+          "sentence": "WP treats contract property swdb_owner_allocate_growth_terminates of swdb_owner_allocate_growth as Extern: terminates\n\\true."
+        },
+        {
+          "kind": "assumed_clause",
+          "reference": {
+            "id": "vector-owner-private-allocator-1",
+            "sha256": "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+          },
+          "sentence": "WP treats contract property swdb_owner_allocate_growth_assigns_from of swdb_owner_allocate_growth as Extern: assigns \\result \\from count, n;."
+        },
+        {
+          "kind": "assumed_clause",
+          "reference": {
+            "id": "vector-owner-private-allocator-1",
+            "sha256": "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+          },
+          "sentence": "WP treats contract property swdb_owner_allocate_growth_ensures of swdb_owner_allocate_growth as Extern: ensures\n\\result \u2261 SWDB_OWNER_PRIVATE1(\\old(count), \\old(n))."
+        },
+        {
+          "kind": "assumed_clause",
+          "reference": {
+            "id": "vector-owner-private-allocator-1",
+            "sha256": "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+          },
+          "sentence": "WP treats contract property swdb_owner_allocate_growth_ensures_2 of swdb_owner_allocate_growth as Extern: ensures\n\\valid(\\result + (0 .. \\old(count) - 1))."
+        },
+        {
+          "kind": "assumed_clause",
+          "reference": {
+            "id": "vector-owner-private-allocator-1",
+            "sha256": "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+          },
+          "sentence": "WP treats contract property swdb_owner_allocate_initial_ensures_3 of swdb_owner_allocate_initial as Extern: ensures\n\\separated(\n  \\result + (0 .. \\old(count) - 1), \\old(v), \\old(n), \\old(dst), \\old(k),\n  \\old(bound)\n  )."
+        },
+        {
+          "kind": "assumed_clause",
+          "reference": {
+            "id": "vector-owner-private-allocator-1",
+            "sha256": "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+          },
+          "sentence": "WP treats contract property swdb_owner_allocate_growth_exits of swdb_owner_allocate_growth as Extern: exits\n\\false."
+        },
+        {
+          "kind": "assumed_clause",
+          "reference": {
+            "id": "vector-owner-private-allocator-1",
+            "sha256": "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+          },
+          "sentence": "WP treats contract property swdb_owner_allocate_initial_ensures_2 of swdb_owner_allocate_initial as Extern: ensures\n\\result \u2261 SWDB_OWNER_PRIVATE0(\\old(count), \\old(n))."
+        },
+        {
+          "kind": "assumed_clause",
+          "reference": {
+            "id": "vector-owner-private-allocator-1",
+            "sha256": "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+          },
+          "sentence": "WP treats contract property swdb_owner_allocate_initial_ensures of swdb_owner_allocate_initial as Extern: ensures\n\\valid(\\result + (0 .. \\old(count) - 1))."
+        },
+        {
+          "kind": "assumed_clause",
+          "reference": {
+            "id": "vector-owner-private-allocator-1",
+            "sha256": "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+          },
+          "sentence": "WP treats contract property swdb_owner_allocate_growth_ensures_3 of swdb_owner_allocate_growth as Extern: ensures\n\\separated(\n  \\result + (0 .. \\old(count) - 1), \\old(v), \\old(n), \\old(alias),\n  \\old(old_value), \\old(dst), \\old(k), \\old(bound),\n  \\old(old) + (0 .. \\old(old_size) - 1)\n  )."
+        },
+        {
+          "kind": "assumed_clause",
+          "reference": {
+            "id": "vector-owner-private-allocator-1",
+            "sha256": "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+          },
+          "sentence": "WP treats contract property swdb_owner_allocate_growth_assigns of swdb_owner_allocate_growth as Extern: assigns \\nothing;."
+        },
+        {
+          "kind": "assumed_clause",
+          "reference": {
+            "id": "vector-owner-private-allocator-1",
+            "sha256": "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+          },
+          "sentence": "WP treats contract property swdb_owner_allocate_initial_assigns_from of swdb_owner_allocate_initial as Extern: assigns \\result \\from count, n;."
+        },
+        {
+          "kind": "assumed_clause",
+          "reference": {
+            "id": "vector-owner-private-allocator-1",
+            "sha256": "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+          },
+          "sentence": "WP treats contract property swdb_owner_allocate_initial_assigns of swdb_owner_allocate_initial as Extern: assigns \\nothing;."
+        },
+        {
+          "kind": "assumed_clause",
+          "reference": {
+            "id": "vector-owner-private-allocator-1",
+            "sha256": "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+          },
+          "sentence": "WP treats contract property swdb_owner_allocate_initial_terminates of swdb_owner_allocate_initial as Extern: terminates\n\\true."
+        },
+        {
+          "kind": "assumed_clause",
+          "reference": {
+            "id": "vector-owner-private-allocator-1",
+            "sha256": "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+          },
+          "sentence": "WP treats contract property swdb_owner_allocate_initial_exits of swdb_owner_allocate_initial as Extern: exits\n\\false."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "actual_formal_capability": "pending",
+  "blocking_findings": [],
+  "complete_member_body_proof_records": 0,
+  "component_pins": [
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-heap-capability/experiment.py",
+      "sha256": "26486209a7618b59349021af1e48a019c31e91d9828d1e64a77439bf264e285e"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-heap-capability/heap_bridge.mlw",
+      "sha256": "44cd626d07a93d105be791bff82fa201b525e09523a8f6598b92312a6a0b1eac"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-heap-capability/source_vcs.py",
+      "sha256": "5b6353263114ea31bf7ee9408b81a356b10ba1206ee4f21167c67d7d96f1a362"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-heap-capability/packets.py",
+      "sha256": "3299b9eb5f24d37228d26c18dc8a795c812b2410384899d680657d86fbdcead5"
+    }
+  ],
+  "controls": {
+    "exit_code": 0,
+    "out_of_memory": false,
+    "passed": 21,
+    "peak_rss_bytes": 121274368,
+    "pytest_seconds": 3.83,
+    "rerun_by_reviewer": false,
+    "skipped": 0,
+    "timed_out": false,
+    "wall_seconds": 4.283265500038397
+  },
+  "created": "2026-10-15 ET",
+  "evidence_metadata_sha256": "003456f958d4efc10f53c53ff1b908921551d6e995b7d231e39228b9a302425f",
+  "hash_errors": [],
+  "import_task_audit": "pending and mandatory",
+  "integrated_base": "f439edf03d9369c51c5658abe1961af75a52e45f",
+  "inventory": {
+    "actual_numeric_goals": "pending full runtime inventory",
+    "expected_negative_lemmas": 4,
+    "global_check_lemmas": 41,
+    "numeric_kernels": 1,
+    "packets": 42,
+    "prospective_positive_lemmas": 37
+  },
+  "local_hashes_verified": 29,
+  "original_lowering_fixture_diff": [],
+  "production_diff": [],
+  "review": {
+    "path": "/private/tmp/probata-t25-capability-final-review-v5-024db66c.md",
+    "sha256": "1fe4a7f89396f915771f25dedac554a208cf83c84ad661ddf64eb662c51de024"
+  },
+  "reviewed_commit": "024db66c9ec4da43901f6662771a389b4567b334",
+  "scope": "Read-only review; no test/compiler/typechecker/formal/provider/remote jobs or repository edits",
+  "verdict": "passed for root-owned first formal capability admission; no formal success claim"
+}

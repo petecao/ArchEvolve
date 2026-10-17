@@ -1,0 +1,56 @@
+{
+  "format": "swdb.prepared-generality-estimate-requests.v1",
+  "updated": "2026-10-06 ET",
+  "state": "prepared_not_frozen",
+  "final_estimator_sha256": null,
+  "freeze_gates": [
+    "Actual fresh target-thread counts and exact run arguments validated.",
+    "Generic 11/17 and request-integrity source integrated and clean.",
+    "New final DX BFS reference and identical complete Python/module hashes recorded."
+  ],
+  "requests": [
+    {
+      "kernel": "bfs",
+      "target_description": {
+        "id": "maple-isca2022.fpga-reference.t2",
+        "sha256": "74face99dcf178f0c9d7e057b77a840245fff0f2f33e500db677516cbd3ee7e8"
+      },
+      "characterization": "bfs.kron-g16.bfs-maple.t2.characterization.generality.a1",
+      "protocol_request": "14-prepared-maple-requests-20261006/bfs.yaml",
+      "protocol_request_file_sha256": "1a27ac7e0e1cd725bd5e739c19b152b304ac4f9c48183292b6a39d6195cb9232",
+      "estimate_id": "generality.bfs.maple.kron-g16.t2.estimate.final.a1",
+      "state": "prepared_not_frozen",
+      "estimate_only": true,
+      "accuracy_validation": false
+    },
+    {
+      "kernel": "bc",
+      "target_description": {
+        "id": "maple-isca2022.fpga-reference.t2",
+        "sha256": "74face99dcf178f0c9d7e057b77a840245fff0f2f33e500db677516cbd3ee7e8"
+      },
+      "characterization": "bc.kron-g16.bc-maple.t2.characterization.generality.a1",
+      "protocol_request": "14-prepared-maple-requests-20261006/bc.yaml",
+      "protocol_request_file_sha256": "2be4fff1ec68aa5dfd6cc4a47ab53f4d54ef4519d9b2d548d09871ab05919558",
+      "estimate_id": "generality.bc.maple.kron-g16.t2.estimate.final.a1",
+      "state": "prepared_not_frozen",
+      "estimate_only": true,
+      "accuracy_validation": false
+    },
+    {
+      "kernel": "pagerank",
+      "target_description": {
+        "id": "maple-isca2022.fpga-reference.t2",
+        "sha256": "74face99dcf178f0c9d7e057b77a840245fff0f2f33e500db677516cbd3ee7e8"
+      },
+      "characterization": "pagerank.jacobi.kron-g16.maple.t2.characterization.generality.a1",
+      "protocol_request": "14-prepared-maple-requests-20261006/pagerank.yaml",
+      "protocol_request_file_sha256": "2c270b796a4d7ac43b9ee5a65bb666cad817499bec0b21bbf6dcd2922603c265",
+      "estimate_id": "generality.pagerank.maple.kron-g16.t2.estimate.final.a1",
+      "state": "prepared_not_frozen",
+      "estimate_only": true,
+      "accuracy_validation": false
+    }
+  ],
+  "identity_sha256": "cc26ff43dfa016c256cdabf6fac85c0b697015bdb7cb1d8eb90b97c8c87d8cb4"
+}

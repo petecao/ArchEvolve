@@ -1,0 +1,97 @@
+# Created: 2026-10-14 ET (Probata proof of concept ticket 11; list decided in formal-verification map 26
+# item 10 and its Later changes, 11 item 9, S3, 13, 19, 25). The one list of failure classes and skip
+# reasons. A proof record's failure_class must be a failure_class value here and its skip_reason a
+# skip_reason value; an adapter reporting anything else stops the `swdb prove` batch. Handlers are text
+# here; the adapter tickets (21, 22, 46, 47) build them. Updated: 2026-10-15 ET (checked memory_domain).
+# Updated: 2026-10-14 09:43 ET (Probata PoC 18: `words`, each class in plain words for the handoff's
+# certification_level block). Updated: 2026-10-14 02:26 ET (spurious_counterexample added: Yan-Ru's decision of 2026-10-14 02:25 ET,
+# from ticket 05's SAW spike; it replaces ticket 11's nearest-class assumption).
+name: proof_failure_classes
+description: Why a proof job ended "not proven" (role failure_class) or ran no verifier (role skip_reason), each with its handler.
+fields: [role, handler, words]
+values:
+  - value: parse_error
+    role: failure_class
+    meaning: The verifier or its front end could not parse the proof unit or its lowering.
+    handler: Extend the C lowering or the C++ subset, or fix the adapter's input; add the case to the regression corpus.
+    words: the verifier could not parse the code
+  - value: unsupported_construct
+    role: failure_class
+    meaning: The proof unit uses a construct the verifier or the C lowering does not support.
+    handler: Extend the C lowering or the C++ subset; add the case to the regression corpus.
+    words: the code uses a construct the verifier does not support
+  - value: unwinding_bound_too_small
+    role: failure_class
+    meaning: A bounded verifier's loop unwinding did not cover the bounds asked for.
+    handler: Fix the adapter's unwinding bound for the bounds asked for; rerun.
+    words: the loop unwinding did not cover the bounds asked for
+  - value: timeout
+    role: failure_class
+    meaning: The verifier ran out of time on a goal or the job.
+    handler: Send WP goals to the proof-hint loop; for a bounded job, record it and keep the level.
+    words: the verifier ran out of time
+  - value: unknown
+    role: failure_class
+    meaning: The solvers returned unknown on a goal (neither proven nor refuted).
+    handler: Send WP goals to the proof-hint loop.
+    words: the solvers could not decide a goal
+  - value: out_of_memory
+    role: failure_class
+    meaning: The verifier exceeded its memory cap.
+    handler: The watchdog stops the job; rerun with more memory within the host's rules.
+    words: the verifier ran out of memory
+  - value: solver_error
+    role: failure_class
+    meaning: A solver failed with an error instead of a result.
+    handler: Make a minimal reproduction; fix the adapter or pin another solver in a new method version.
+    words: a solver failed with an error
+  - value: tool_crash
+    role: failure_class
+    meaning: The verifier crashed.
+    handler: Make a minimal reproduction; fix the adapter or report the crash upstream.
+    words: the verifier crashed
+  - value: vacuous_pass
+    role: failure_class
+    meaning: The verifier passed, but a smoke test or hazard probe shows the pass proves nothing.
+    handler: Make a minimal reproduction; fix the summary, the assumptions or the adapter.
+    words: the pass proved nothing (a smoke test caught it)
+  - value: ghost_capacity
+    role: failure_class
+    meaning: More uncovered commands than the ghost capacity K, so the proof cannot track them (never a refutation).
+    handler: Raise ghost capacity K in a new method version, or keep the level.
+    words: more pending accelerator commands than the proof can track
+  - value: memory_domain
+    role: failure_class
+    meaning: The checked accelerator memory domain is not established, including overlapping pending memory operations or a store still pending at unit exit. This is a conservative proof restriction, never a program refutation.
+    handler: Establish covering waits or use a new method with checked, more precise memory semantics; keep the current level.
+    words: accelerator memory-domain obligations are not proven
+  - value: hint_budget_spent
+    role: failure_class
+    meaning: The proof-hint loop used its rounds, wall time or the campaign's hint calls without a proof.
+    handler: Keep the level; the evaluation reports the spent budget.
+    words: hint budget spent
+  - value: below_minimum_bounds
+    role: failure_class
+    meaning: The bounded check ran below the contract's minimum bounds, so it gives no level.
+    handler: Rerun at the minimum bounds; the candidate keeps its certification level.
+    words: checked below the contract's minimum bounds
+  - value: spurious_counterexample
+    role: failure_class
+    meaning: The verifier reported a counterexample that does not replay concretely on the compiled code, so the refutation comes from the tool or the spec encoding, not the program. The record holds it in unreplayed_counterexample.
+    handler: Never send to repair; fix the encoding (translator, spec placement or adapter), add the case to the regression corpus, rerun.
+    words: the verifier's counterexample did not replay on the compiled code (a tool or encoding fault)
+  - value: no_contract_proof
+    role: skip_reason
+    meaning: The rewrite contract has no contract proof, so no contract seeds and no bounded rung run.
+    handler: Skip only the steps that need the contract proof; route-1 WP still runs when the proof unit has a unit postcondition (O7).
+    words: 'skipped: the rewrite contract has no contract proof yet'
+  - value: no_minimum_bounds
+    role: skip_reason
+    meaning: The rewrite contract has no approved minimum bounds, so the bounded rung cannot run.
+    handler: Skip only the bounded rung; the candidate keeps its level.
+    words: 'skipped: the rewrite contract has no minimum bounds yet'
+  - value: outside_cpp_subset
+    role: skip_reason
+    meaning: The proof unit uses C++ outside the subset the C lowering and the verifiers accept.
+    handler: Skip the steps that need the subset; extending the subset is a new method version.
+    words: 'skipped: the code uses C++ outside the checked subset'

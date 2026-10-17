@@ -1,0 +1,243 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "machine",
+  "title": "Machine: a host that runs profiles, as captured from the host itself",
+  "type": "object",
+  "properties": {
+    "kind": {
+      "const": "machine"
+    },
+    "hostname": {
+      "type": "string",
+      "minLength": 1
+    },
+    "cpu": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "architecture": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sockets": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "cores_per_socket": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "threads_per_core": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "logical_cpus": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_mhz": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "flags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9_.]+$"
+          },
+          "uniqueItems": true,
+          "description": "The CPU's ISA flags as lscpu prints them on its Flags line (the /proc/cpuinfo names), sorted. Optional at 0.2, required at 0.3."
+        }
+      },
+      "required": [
+        "model",
+        "architecture",
+        "sockets",
+        "cores_per_socket",
+        "threads_per_core",
+        "logical_cpus",
+        "max_mhz"
+      ]
+    },
+    "caches": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "level": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "data",
+              "instruction",
+              "unified"
+            ]
+          },
+          "size_bytes": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "instances": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "shared_by": {
+            "type": "string",
+            "enum": [
+              "core",
+              "socket"
+            ]
+          }
+        },
+        "required": [
+          "level",
+          "type",
+          "size_bytes",
+          "instances",
+          "shared_by"
+        ]
+      }
+    },
+    "memory_bytes": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "numa_nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "node": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "cpus": {
+            "type": "string",
+            "minLength": 1
+          },
+          "memory_bytes": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "node",
+          "cpus",
+          "memory_bytes"
+        ]
+      }
+    },
+    "os": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kernel": {
+          "type": "string",
+          "minLength": 1
+        },
+        "distribution": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "kernel",
+        "distribution"
+      ]
+    },
+    "counters": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "perf_event_paranoid": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "hardware_counters_available": {
+          "$ref": "#/$defs/bool_fact"
+        }
+      },
+      "required": [
+        "perf_event_paranoid",
+        "hardware_counters_available"
+      ]
+    },
+    "capture": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "command": {
+          "type": "string",
+          "minLength": 1
+        },
+        "date": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "command",
+        "date"
+      ]
+    },
+    "lane_required": {
+      "type": "boolean",
+      "description": "Host policy, not captured: when true, swdb profile runs only inside a verified socket lane (MemAcc socket_lane.sh ancestor, affinity equal to one NUMA node)."
+    }
+  },
+  "required": [
+    "hostname",
+    "cpu",
+    "caches",
+    "memory_bytes",
+    "numa_nodes",
+    "os",
+    "counters",
+    "capture"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "schema_version": {
+            "const": "0.3"
+          }
+        },
+        "required": [
+          "schema_version"
+        ]
+      },
+      "then": {
+        "properties": {
+          "cpu": {
+            "required": [
+              "flags"
+            ],
+            "x-required-reasons": {
+              "flags": "a machine record at format 0.3 lists its CPU's ISA flags in cpu.flags (swdb capture-machine reads them from lscpu)"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

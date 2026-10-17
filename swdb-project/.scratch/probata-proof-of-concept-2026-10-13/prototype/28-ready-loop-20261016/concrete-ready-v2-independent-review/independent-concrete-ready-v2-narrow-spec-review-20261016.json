@@ -1,0 +1,60 @@
+{
+  "actual_compiler_native_solver_SSH_execution": false,
+  "closed_source_finding": {
+    "actual_native_controls_executed": 0,
+    "id": "READY-NATIVE-01",
+    "prospective_controls": 47,
+    "readback": "A flushed ready_begin records exact validated mode/count/before/issued before entering the backend. Invalid tokens return64 before any backend entry or begin line.",
+    "reason": "Canonical full-token decimal parsing now validates input before narrowing: nonempty ASCII digits, no leading zero except zero, at most20 characters, and digit<=maximum plus accumulated value<=(maximum-digit)/10 before multiplication/addition. Per-mode count domains are3/1000000/0; payloads are bounded by UINT32_MAX before cast."
+  },
+  "controls": {
+    "all12pins_before_after": true,
+    "all_symbolic_CBMC_backend_WP_caller_fields_unchanged": true,
+    "errors": 0,
+    "external_attempts": 0,
+    "failures": 0,
+    "full_stored_source_delta_exact": true,
+    "generated_C_and_prepared_JSON_exact": true,
+    "skips": 0,
+    "tests": 6
+  },
+  "date": "2026-10-16 Eastern",
+  "decision": "PASS_SOURCE_ONLY",
+  "findings": [],
+  "pins": [
+    {
+      "bytes": 4957,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/concrete-ready-v2/source-packet-v2.json",
+      "sha256": "95c2035f159daa77e553e87479fbe1072c9d5c2fa02df0ab7d36a30796f5638a"
+    },
+    {
+      "bytes": 3552,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/concrete-ready-v2-independent-review/review_controls_v1.py",
+      "sha256": "823241a0fd23e640292ce1f52769def4edb98c4b6d63be10b7d3b1972c663135"
+    },
+    {
+      "bytes": 994,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/concrete-ready-v2-independent-review/fresh-pure-controls-v1.log",
+      "sha256": "ac4954a64edf1051c21f1d635e0f57079c339c50a3df6a472228125d871249fc"
+    },
+    {
+      "bytes": 6042,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/concrete-ready-v1-independent-review/independent-concrete-ready-v1-spec-review-20261016.json",
+      "sha256": "ae0515e013830787a5baa71337bc56336502463186ce71852d080a7554209b9b"
+    },
+    {
+      "bytes": 9288,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-concrete-ready-independent-standards-review-v2-20261016.json",
+      "sha256": "bc23f48356254d999e61bf48eee4316b13a99824a2867268016938bd978298ff"
+    }
+  ],
+  "remaining_gates": [
+    "Exact native selected-tool/argv/readback/result runner and actual47 controls remain pending.",
+    "Complete actual one-step CBMC and ordinary WP/RTE/init/frame/smoke results must precede refinement/public adoption.",
+    "Same-entry typed TraceUnit context and dedicated normal public partial-summary method remain unbound."
+  ],
+  "retained_symbolic_scope": "V1 full constructed-state relation and unbounded partial quotient Spec ae0515e0 remains exact. Neither the native parser nor the47 proposed argv cases supplies a fairness, termination, one-step proof or loop theorem.",
+  "reviewer": "/root/ticket28",
+  "schema": "independent-concrete-ready-v2-narrow-spec-review-1",
+  "shared_source_changed": false
+}

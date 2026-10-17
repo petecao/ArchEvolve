@@ -1,0 +1,113 @@
+{
+  "author": {
+    "bytes": 12543,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-no-growth-20261016/author-public-v1.py",
+    "sha256": "5aabd95a3a31fa0f25d5fa4c716cb423457b98c0c9cf09c42768562563c5a383"
+  },
+  "caller_acceptance": false,
+  "claim": "Complete original-contract projected-C diagnostic only; existing allocator/library TCB and unproved constructor summary explicit. All original source/Typed/lifetime and independent actual task gates remain open.",
+  "controls": {
+    "actual_source_tools_or_tasks_run": false,
+    "controls": [
+      {
+        "all_actual_rows_retained": true,
+        "control": "complete-callee-source-binding",
+        "expected_refusal": false,
+        "passed": true
+      },
+      {
+        "control": "foreign-ordinary-owner",
+        "expected_refusal": true,
+        "passed": true,
+        "reason": "foreign goal lacks exact surviving constructor call/statement/source binding"
+      },
+      {
+        "control": "call-statement-mismatch",
+        "expected_refusal": true,
+        "passed": true,
+        "reason": "foreign goal lacks exact surviving constructor call/statement/source binding"
+      },
+      {
+        "control": "owner-normalized-away",
+        "expected_refusal": true,
+        "passed": true,
+        "reason": "exactly one surviving constructor call smoke is required"
+      },
+      {
+        "control": "missing-property-dependency",
+        "expected_refusal": true,
+        "passed": true,
+        "reason": "complete ordinary/smoke/property origin/dependency closure differs"
+      },
+      {
+        "control": "missing-standard-goal",
+        "expected_refusal": true,
+        "passed": true,
+        "reason": "complete unique original-root native/standard census differs"
+      },
+      {
+        "control": "missing-common-smoke-task",
+        "expected_refusal": true,
+        "passed": true,
+        "reason": "noninternal native obligations have no retained common task"
+      },
+      {
+        "control": "incomplete-common-task",
+        "expected_refusal": true,
+        "passed": true,
+        "reason": "retained common task fragment is incomplete"
+      }
+    ],
+    "created": "2026-10-16 ET",
+    "entry_sha256": "fe38605db3e05034870dff4e12e523607ba4370e79f8f50a064097a93f49e30a",
+    "external_execution_attempts": [],
+    "passed": 8,
+    "scope": "Synthetic public artifact-census positive/refusal controls only; no solver/task semantics or caller proof."
+  },
+  "created": "2026-10-16 ET",
+  "current_constructor_body_record_admitted": false,
+  "entry_helpers_exact": [
+    "sha",
+    "pin",
+    "write",
+    "surface",
+    "linux_admission",
+    "consumer_closure",
+    "initialize_workspace",
+    "guarded_generation",
+    "raw_bytes",
+    "bounded_bytes",
+    "bounded_json"
+  ],
+  "native_runtime_calls": 0,
+  "observer_controls_result": {
+    "bytes": 1861,
+    "path": "/private/tmp/probata-resume-20261016-t25-closed-view-observer-controls-v1/result.json",
+    "sha256": "eeb2c57464c697d47af756b0a8b22a48d1026fc94b0ea19292e7bc0b75a2cfcf"
+  },
+  "observer_controls_script": {
+    "bytes": 5895,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-no-growth-20261016/observer-controls-v1.py",
+    "sha256": "4a3bc2a8664a9410901b902eb9edf6c61635bd587635fb01a970e98b68d0a204"
+  },
+  "packet": {
+    "bytes": 3907,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-no-growth-20261016/inert-615ddf50-public-v1/packet.json",
+    "sha256": "967f120b4329ad12d2dcd0f52f67455b0a18cbc2b656a44c260a15ffca6ed344"
+  },
+  "proof_acceptance": false,
+  "public_proof_record_created": false,
+  "resource_policy": {
+    "cap_bytes": 8589934592,
+    "leaf_timeout_seconds": 300,
+    "metadata_reserve_bytes": 4194304,
+    "output_budget_bytes": 2147483648,
+    "profile_seconds": 600,
+    "root_outer_seconds": 920,
+    "root_whole_seconds": 800,
+    "workers": 1
+  },
+  "source_commit": "615ddf504fed61b9f6c6e4663760d006ecaf255b",
+  "source_typed_bridge_established": false,
+  "status": "INERT / ENTRY REVIEW PENDING / NOT EXECUTED"
+}

@@ -1,0 +1,97 @@
+{
+  "GNU_KILL_s": 60,
+  "GNU_remote_s": 14520,
+  "admission_assessed": false,
+  "execution_not_yet_started": true,
+  "explicit_environment_overrides": {
+    "GIT_OPTIONAL_LOCKS": "0",
+    "GIT_TERMINAL_PROMPT": "0",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "format": "swdb.lanl14-original-parent-reader-SSH-capture.v1",
+  "inherited_environment_or_auth_dumped": false,
+  "metadata_postflight_reserve_s": 600,
+  "metadata_preflight_s": 600,
+  "no_retry": true,
+  "outer_seconds": 16500,
+  "owned_SSH_cleanup_source": {
+    "bytes": 912,
+    "path": "/Users/yanrujhou/.codex/worktrees/lanl-analytic-eval/ArchEvolve/swdb-project/swdb/processes.py",
+    "sha256": "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289",
+    "stat": [
+      16777229,
+      348480678,
+      33188,
+      501,
+      20,
+      1,
+      912,
+      1791317760186024755,
+      1791317760186024755
+    ]
+  },
+  "parent_native": {
+    "bytes": 1584560,
+    "path": "/usr/bin/ssh",
+    "sha256": "c7f9f9779c1dd141b04889c6cb214859d0702687e7fde34511bb5fa7af8951f1",
+    "stat": [
+      16777229,
+      1152921500312608790,
+      33261,
+      0,
+      0,
+      1,
+      1584560,
+      1790233837000000000,
+      1790233837000000000
+    ]
+  },
+  "private_local_stream_max_bytes": 16777216,
+  "public_argv": [
+    "/usr/bin/ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=30",
+    "mbit10",
+    "exec /usr/bin/python3.12 -B -c 'import hashlib,sys; b=sys.stdin.buffer.read(1048577); pin=sys.argv[1]; (len(b)<=1048576 and hashlib.sha256(b).hexdigest()==pin) or sys.exit(2); sys.argv=sys.argv[2:]; exec(compile(b,'\"'\"'<reviewed-reader-stdin-bootstrap>'\"'\"','\"'\"'exec'\"'\"'),{'\"'\"'__name__'\"'\"':'\"'\"'__main__'\"'\"','\"'\"'__file__'\"'\"':'\"'\"'<reviewed-reader-stdin-bootstrap>'\"'\"','\"'\"'__source_sha256__'\"'\"':pin})' 582dda1878722ba56a8fdd44e21e60bc1d077399fbbc47aa1ac9b87cae1ea909 reviewed-reader-bootstrap --expected-primary a9c02e918374070ff2654e3f9696bd550230cbbb --export-commit 43256ee0300a59a03919833075fbb13fb3ba9ab3 --receipt-sha256 02b369f0624964fa4293f563a7b51e142dc369101147ac7fe848503c4b50eb5d --receipt-identity-sha256 ad656b14b958d9ee1b775c22906b0ee30e2d63e395aa165197be0ff4b8e4118a --report-relative .scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-generality-final-final-20261007-a1-report.json --metadata-seconds 600"
+  ],
+  "remote_bootstrap": {
+    "bytes": 17929,
+    "path": "/private/tmp/lanl14_reader_remote_stdin_bootstrap_20261008_a1.py",
+    "sha256": "582dda1878722ba56a8fdd44e21e60bc1d077399fbbc47aa1ac9b87cae1ea909",
+    "stat": [
+      16777229,
+      349833023,
+      33188,
+      501,
+      0,
+      1,
+      17929,
+      1791422562402749051,
+      1791422562402749051
+    ]
+  },
+  "remote_native_initial_startup_pin_is_separate_parent_preflight": true,
+  "scientific_admission": false,
+  "sealed": false,
+  "source": {
+    "bytes": 10756,
+    "path": "/private/tmp/lanl14_capture_reviewed_reader_ssh_20261008_a1_r1.py",
+    "sha256": "44e9fd31130c986ca2b70b39ce269516470ce25adc6d8d188f1238e522a061a4",
+    "stat": [
+      16777229,
+      349834167,
+      33188,
+      501,
+      0,
+      1,
+      10756,
+      1791423092836753043,
+      1791423092836753043
+    ]
+  },
+  "started_utc": "2026-10-08T01:41:48.228410+00:00",
+  "unchanged_reader_wait_s": 14400
+}

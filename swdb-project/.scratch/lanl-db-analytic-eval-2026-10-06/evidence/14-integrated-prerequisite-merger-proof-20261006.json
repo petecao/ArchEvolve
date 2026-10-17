@@ -1,0 +1,85 @@
+{
+  "format": "swdb.lanl14-integrated-prerequisite-merger.v1",
+  "state": "tested_data_count_prerequisite_only",
+  "integration_base": "6539640c65cb9abbebf636410b093353b0021ee2",
+  "merged_tip": "c52237b7bc840081a6c0c87267461f9b186c945e",
+  "merge": "fast_forward_no_conflicts",
+  "all_changes_inside_swdb_project": true,
+  "changed_paths": [
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-count-bfs-bc-20261006.sh",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-count-pagerank-20261006.sh",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-data-source-validation-20261006.txt",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-nine-pair-runbook-20261006.md",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-pagerank-count-runbook-20261006.md",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-prepared-maple-report-requests-20261006.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-prepared-maple-requests-20261006/bc.yaml",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-prepared-maple-requests-20261006/bfs.yaml",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-prepared-maple-requests-20261006/pagerank.yaml",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-source-prerequisite-proof-20261006.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/issues/14-generality-maple-pagerank.md",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/map.md",
+    "swdb-project/records/implementations/gapbs-pr-jacobi-analytic-v1.yaml",
+    "swdb-project/records/target_descriptions/maple-isca2022.fpga-reference.t2.yaml",
+    "swdb-project/tests/test_maple_generality.py",
+    "swdb-project/tests/test_pagerank_generality.py"
+  ],
+  "preserved_prior_blob_count": 1074,
+  "preserved_prior_canonical_yaml_count": 631,
+  "protected_manifest_sha256": "62c8a28be8037092ee2eaa976b5f434d4d401b40e637f6aa982abca49f94eff4",
+  "protected_bytes_preserved": true,
+  "new_canonical_records": [
+    {
+      "id": "gapbs-pr-jacobi-analytic-v1",
+      "kind": "implementation",
+      "path": "swdb-project/records/implementations/gapbs-pr-jacobi-analytic-v1.yaml",
+      "sha256": "ade54caf365f2ed368fbf3bb86cbd86e008c15da25ea8bc5d3d5c11ebb7c69a3"
+    },
+    {
+      "id": "maple-isca2022.fpga-reference.t2",
+      "kind": "target_description",
+      "path": "swdb-project/records/target_descriptions/maple-isca2022.fpga-reference.t2.yaml",
+      "sha256": "74face99dcf178f0c9d7e057b77a840245fff0f2f33e500db677516cbd3ee7e8"
+    }
+  ],
+  "canonical_record_count": 633,
+  "new_record_primary_closure_and_source_hash_verified": true,
+  "generic_source_tree": "91d7f55cfb11e0fff95573cae374881422fa779c",
+  "estimator_sha256": "fec496c6dec0930aada7bc760991c125907fffe739ea2e9d4d3e03e3748faa52",
+  "generic_source_code_unchanged": true,
+  "other_ticket_rows_and_human_gates_preserved": true,
+  "parent_progress_and_single_linux_cleanup_receipt_preserved": true,
+  "reused_public_gate_proof": {
+    "path": "14-source-prerequisite-proof-20261006.json",
+    "identity_sha256": "52d91dace03608d1f5b79870601e3a8aab59a53bcfc72a25a17bdb8e17191177",
+    "public_gates": [
+      {
+        "command": "python3 -m pytest -q tests/test_pagerank_generality.py::test_registered_jacobi_counts_original_source_free_roi",
+        "passed": 1,
+        "scope": "Registered original Jacobi g8/k4 T1 one-trial count fixture; not remote g16 application evidence.",
+        "seconds": 182.73,
+        "source_commit": "728fea38fcc51d2d57a3a4e8677c5f727d4db81c"
+      },
+      {
+        "command": "python3 -m pytest -q tests/test_maple_generality.py",
+        "passed": 2,
+        "scope": "Public target add/freeze and independent contract-fixture unknown-cost estimate; explicit unit basis.",
+        "seconds": 2.22
+      }
+    ],
+    "canonical_validation": {
+      "command": "python3 -m swdb validate --records records",
+      "log_sha256": "d24f71d00085cee3384f25718dc97e2be584784c0565b79afc3c5602a732e51c",
+      "records": 633
+    },
+    "scope": "Source/data bytes match the tested worker tip exactly; identical heavy gates were not repeated."
+  },
+  "ticket14_state": "claimed",
+  "remaining": [
+    "Six parent-owned fresh native target-thread count routes.",
+    "Final generic 11/17 integration.",
+    "Fresh final DX BFS reference and nine exact-bundle per-region public estimates."
+  ],
+  "no_remote_actions": true,
+  "no_main_push": true,
+  "identity_sha256": "8ce9ab4c7c88e6a6457ed8c9dc5f8e4671f37e3e8e30b98aaaecd3c6a0c0a369"
+}

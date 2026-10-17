@@ -1,0 +1,9 @@
+name: bottleneck_classes
+description: What limits a kernel's run time on one input and machine.
+values:
+  - value: memory_bound
+    meaning: Time is dominated by waiting on memory beyond the last-level cache (see memory_limit for bandwidth versus latency).
+  - value: compute_bound
+    meaning: Time is dominated by instruction execution; the working set is cache resident and time falls with threads.
+  - value: parallelism_bound
+    meaning: Time is limited by too little parallel work or load imbalance (more threads do not help), not by memory.

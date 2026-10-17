@@ -1,0 +1,201 @@
+{
+  "classification": "PASSIVE_ORIGINAL_RTE_REPORTER_METADATA_ONLY",
+  "reader_audit_executed": false,
+  "records": [
+    {
+      "CSV_pin": {
+        "bytes": 2405,
+        "sha256": "fba0efa513a24d6b43cdb87370730b35f5bca5480b5e566fa32e69d30f03692b"
+      },
+      "RTE_native_goals": [
+        {
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_assert_rte_initialization",
+          "line": 47,
+          "passed": true,
+          "property": "trust_fixture_assert_rte_initialization",
+          "results": [
+            "valid"
+          ],
+          "smoke": false,
+          "targets": []
+        },
+        {
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_assert_rte_initialization_2",
+          "line": 47,
+          "passed": true,
+          "property": "trust_fixture_assert_rte_initialization_2",
+          "results": [
+            "valid"
+          ],
+          "smoke": false,
+          "targets": []
+        }
+      ],
+      "RTE_properties": [
+        {
+          "call_context": null,
+          "dependencies": [],
+          "description": "assert rte: initialization: \\initialized(&first);",
+          "emitter": "rte",
+          "extern": false,
+          "function": "trust_fixture",
+          "generated_smoke_failure": false,
+          "kind": "other",
+          "line": 47,
+          "origin": null,
+          "property": "trust_fixture_assert_rte_initialization",
+          "property_export_origin": "registered",
+          "property_variant": "IPCodeAnnot",
+          "source_file": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/pytest/test_actual_initialized_u32_or0/runs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194320z.17d8a1e8/scratch/wp_input.c",
+          "status_registered": true
+        },
+        {
+          "call_context": null,
+          "dependencies": [
+            "trust_fixture_assert_rte_initialization"
+          ],
+          "description": "assert rte: initialization: \\initialized(&second);",
+          "emitter": "rte",
+          "extern": false,
+          "function": "trust_fixture",
+          "generated_smoke_failure": false,
+          "kind": "other",
+          "line": 47,
+          "origin": null,
+          "property": "trust_fixture_assert_rte_initialization_2",
+          "property_export_origin": "registered",
+          "property_variant": "IPCodeAnnot",
+          "source_file": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/pytest/test_actual_initialized_u32_or0/runs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194320z.17d8a1e8/scratch/wp_input.c",
+          "status_registered": true
+        }
+      ],
+      "expected_result": 711,
+      "initialization_CSV_rows": [
+        {
+          "directory": ".",
+          "file": "wp_input.c",
+          "function": "trust_fixture",
+          "line": "47",
+          "property": "\\initialized(&first)",
+          "property kind": "initialization",
+          "status": "Valid"
+        },
+        {
+          "directory": ".",
+          "file": "wp_input.c",
+          "function": "trust_fixture",
+          "line": "47",
+          "property": "\\initialized(&second)",
+          "property kind": "initialization",
+          "status": "Valid"
+        }
+      ],
+      "inventory_pin": {
+        "bytes": 36217,
+        "sha256": "40c6b980145dfde1471c549c59e9ccad66982b714385a85419056d1bfce852f6"
+      },
+      "total_native_goals": 33,
+      "total_properties": 41
+    },
+    {
+      "CSV_pin": {
+        "bytes": 2408,
+        "sha256": "a723e62769a9c832fda135cffd4d197fa4ff16498a203416344d053db9ab8242"
+      },
+      "RTE_native_goals": [
+        {
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_assert_rte_initialization",
+          "line": 47,
+          "passed": true,
+          "property": "trust_fixture_assert_rte_initialization",
+          "results": [
+            "valid"
+          ],
+          "smoke": false,
+          "targets": []
+        },
+        {
+          "function": "trust_fixture",
+          "goal": "typed_real_trust_fixture_assert_rte_initialization_2",
+          "line": 47,
+          "passed": true,
+          "property": "trust_fixture_assert_rte_initialization_2",
+          "results": [
+            "valid"
+          ],
+          "smoke": false,
+          "targets": []
+        }
+      ],
+      "RTE_properties": [
+        {
+          "call_context": null,
+          "dependencies": [],
+          "description": "assert rte: initialization: \\initialized(&first);",
+          "emitter": "rte",
+          "extern": false,
+          "function": "trust_fixture",
+          "generated_smoke_failure": false,
+          "kind": "other",
+          "line": 47,
+          "origin": null,
+          "property": "trust_fixture_assert_rte_initialization",
+          "property_export_origin": "registered",
+          "property_variant": "IPCodeAnnot",
+          "source_file": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/pytest/test_actual_initialized_u32_or1/runs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194501z.d4e9fdf7/scratch/wp_input.c",
+          "status_registered": true
+        },
+        {
+          "call_context": null,
+          "dependencies": [
+            "trust_fixture_assert_rte_initialization"
+          ],
+          "description": "assert rte: initialization: \\initialized(&second);",
+          "emitter": "rte",
+          "extern": false,
+          "function": "trust_fixture",
+          "generated_smoke_failure": false,
+          "kind": "other",
+          "line": 47,
+          "origin": null,
+          "property": "trust_fixture_assert_rte_initialization_2",
+          "property_export_origin": "registered",
+          "property_variant": "IPCodeAnnot",
+          "source_file": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-04af74c1-v5/initialized-profile/pytest/test_actual_initialized_u32_or1/runs/proof.contract.dx100_initialized_register_partial_fixture.v1.20261016t194501z.d4e9fdf7/scratch/wp_input.c",
+          "status_registered": true
+        }
+      ],
+      "expected_result": 1107,
+      "initialization_CSV_rows": [
+        {
+          "directory": ".",
+          "file": "wp_input.c",
+          "function": "trust_fixture",
+          "line": "47",
+          "property": "\\initialized(&first)",
+          "property kind": "initialization",
+          "status": "Valid"
+        },
+        {
+          "directory": ".",
+          "file": "wp_input.c",
+          "function": "trust_fixture",
+          "line": "47",
+          "property": "\\initialized(&second)",
+          "property kind": "initialization",
+          "status": "Valid"
+        }
+      ],
+      "inventory_pin": {
+        "bytes": 36156,
+        "sha256": "34023ce81e77abb135d260e59295dbc4487bcb67a4b8dc688369b55b2d3b0495"
+      },
+      "total_native_goals": 33,
+      "total_properties": 41
+    }
+  ],
+  "scientific_reexecution": false
+}

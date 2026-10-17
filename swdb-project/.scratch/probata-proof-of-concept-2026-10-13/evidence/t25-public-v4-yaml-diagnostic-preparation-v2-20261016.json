@@ -1,0 +1,49 @@
+{
+  "command": {
+    "bytes": 990,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/yaml-diagnostic-v2/command.json",
+    "sha256": "7d4df9cde43ca69abbf7d9c97db4bfbf6f751a9b245dc0d25e1dbdc1aa6650ee"
+  },
+  "control_log": {
+    "bytes": 1214,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/yaml-diagnostic-v2/pure-controls-v1.log",
+    "sha256": "6383eba08f4581b56da83c0aae30d44b045230bf5eb839ebff2fa0c10393132f"
+  },
+  "controls": {
+    "bytes": 3657,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/yaml-diagnostic-v2/pure_controls.py",
+    "sha256": "3af9553d6e54398f999d24f48c4a3de93b333887e60d1fc80620fbd59f40bfb0"
+  },
+  "date": "2026-10-16 ET",
+  "delta": {
+    "bytes": 1173,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/yaml-diagnostic-v2/delta-v2.json",
+    "sha256": "0d52f8e5cccd3aeb8a3991c5f91901110423bd49ac0e0ca08b062174e29ec69c"
+  },
+  "entry": {
+    "bytes": 21431,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/yaml-diagnostic-v2/diagnostic-v2.py",
+    "sha256": "18e78f4f471f23dbfed850dae2feb0323be2b6b9bcbf41b78b8c8472e4dc3744"
+  },
+  "next": "After exact syntax diagnosis, run a separately reviewed cheap complete parse-and-independent-JSON comparison for all 15 YAMLs before another full observer.",
+  "predecessor_actual": {
+    "bytes": 18583,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-yaml-diagnostic-actual-v1-20261016.json",
+    "sha256": "d3be36116406c7d9e830f5224856b4be0ea879c69f67463f97170f1f97373b13"
+  },
+  "scope": [
+    "Same frozen original YAML reader and exact 20 inputs; no parser repair or scientific audit.",
+    "Same bounded nofollow content/nine-stat reads, audit/AS/CPU/alarm/output/transport envelope and all final rechecks.",
+    "Only bounded lexical shapes, scalar lengths/hashes, actual integer digit-class booleans and identifier-only map-key labels; no scalar values.",
+    "Failure context replaces old nearby shapes; metadata remains bounded by the same 32 KiB hard output check."
+  ],
+  "status": "FROZEN inert prospective structural syntax diagnostic; parent review and fresh root admission required",
+  "validation": {
+    "child_events": [],
+    "diagnostic_main_executed": false,
+    "errors": 0,
+    "failures": 0,
+    "skips": 0,
+    "tests": 7
+  }
+}

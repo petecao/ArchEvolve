@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-16 ET",
+  "verdict": "PASS narrow static authorized clean source retention/removal recipe",
+  "entry": {
+    "path": "/private/tmp/probata-root-retain-clean-024-source-v3-20261016.py",
+    "sha256": "80ed66c4d3a2b2c01d39a50d3f2c4dc1fdb2c15ff995494a1ce1dd6e27119118"
+  },
+  "execution": "none; no SSH/process scan/removal/native/probe by reviewer",
+  "prior_finding": "V2 wrote restoration recipe only after removal; V3 writes commit/tree/path/ref/restoreargv and full source/raw manifest pins before leases recheck and no-force removal",
+  "boundaries": [
+    "Only exact clean detached024 checkout; complete regular/symlink Git blob equality and membership, no untracked/ignored/submodules, published ancestry",
+    "Dedicated retention ref checked before removal; full source and raw manifests plus restore recipe exist first",
+    "Raw manifest equality checked after; no raw removal/no other source mutation",
+    "Unknown readable-source-cwd matches or unknown inspection denial refuses; exact own-ancestry root-parented sshd and user(sd-pam)/systemd are explicitly trusted OS service exceptions with unreadable cwd retained",
+    "Three finite source-cwd observations and released lease metadata are not universal idle/absence guarantee; no hostile sameUID or atomic process containment claim",
+    "8GiB AS bound; no-force gitworktree remove; storage free-after is an observation, fresh next admission required",
+    "File writes are ordinary filesystem writes, no power-loss durability/fsync theorem"
+  ]
+}

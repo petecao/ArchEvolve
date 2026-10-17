@@ -1,0 +1,68 @@
+{
+  "created": "2026-10-15 ET",
+  "scope": "Independent compiler-only review of220ef337; confirmed atomic admission blocker, no solver/theorem claim.",
+  "reviewed_commit": "220ef3374d6b492c86b832d3611e35f776952bea",
+  "reviewed_source": {
+    "path": "swdb-project/swdb/c_lowering.py",
+    "sha256": "305e3acc57158bd6c57710f57539cfbd0c01a368b20e3fcca8be651cb85ccd26"
+  },
+  "source": {
+    "path": "/private/tmp/probata-t27-enum-probe/enum_shadow.cc",
+    "sha256": "50dfad1eed30a06a7451c185f2a0baef7848f81c13d408479ae69ee579364d7d",
+    "text": "void unrelated() { enum Flag { weak_value = 0 }; }\nenum Flag { weak_value = 1 };\nbool enum_shadow(int *p, int *expected) {\n  return __atomic_compare_exchange_n(p, expected, 9, weak_value, 5, 5);\n}\n"
+  },
+  "lowered": {
+    "path": "/private/tmp/probata-t27-enum-probe/enum_shadow.c",
+    "sha256": "5d6d1b24727b5b132b2ed3f31e196086247790884c755729be3a91d3d61a5c75",
+    "text": "/* C lowering of enum_shadow from enum_shadow.cc (sha256 50dfad1eed30a06a7451c185f2a0baef7848f81c13d408479ae69ee579364d7d) by swdb-c-lowering 9 (kept-names.3), clang 22.1.8. Generated: do not edit. */\n#include <stdbool.h>\n#include <stddef.h>\n#include <stdint.h>\n/* swdb-anchor ghost.globals */\n/*@ requires \\valid(p) && \\valid(e) && \\separated(p, e);\n    requires \\initialized(p) && \\initialized(e);\n    assigns *p, *e;\n    ensures \\initialized(p) && \\initialized(e);\n    ensures \\old(*p) == \\old(*e) ==> *p == d && *e == \\old(*e) && \\result == 1;\n    ensures \\old(*p) != \\old(*e) ==> *p == \\old(*p) && *e == \\old(*p) && \\result == 0; */\nstatic bool swdb_atomic_compare_exchange_n_int(int *p, int *e, int d) {\n  if (*p == *e) { *p = d; return true; }\n  *e = *p;\n  return false;\n}\nbool enum_shadow(int *p, int *expected);\n/* swdb-anchor enum_shadow.contract */\nbool enum_shadow(int *p, int *expected) {\n  /* swdb-anchor enum_shadow.entry */\n  /* swdb-anchor enum_shadow.s1.before */\n  return (swdb_atomic_compare_exchange_n_int(p, expected, 9) + 0);\n  /* swdb-anchor enum_shadow.s1.after */\n}\n",
+    "models": [
+      "swdb_atomic_compare_exchange_n_int"
+    ]
+  },
+  "guard": {
+    "exit_code": 0,
+    "peak_rss_bytes": 44433408,
+    "out_of_memory": false,
+    "timed_out": false,
+    "wall_seconds": 0.27023820800241083,
+    "cpu_seconds": 0.180314
+  },
+  "finding": "An unrelated earlier local enum Flag{weak_value=0} collides with the global enum Flag{weak_value=1}. The proof function uses the global true flag, but _atomic_constant delegates to enum_value, which selects enums[0] and caches by name and qualType. The checker accepts it and emits a strong CAS model with no spurious failure.",
+  "required_repair": "Resolve exact enum declaration identity or refuse ambiguous same-name enum definitions; preserve ordinary supported literal/constant-false fixtures.",
+  "static_review": {
+    "closed_wrappers": "Only integer literal/bool/enum through no-op/integral/boolean wrappers; dynamic reads, calls, effects, volatile values, arithmetic and unsupported casts fail closed.",
+    "order_pairs": "Explicit operation-specific order sets and CAS success/failure partial-order relation checked; load-release/store-acquire/failure-release and stronger failure pairs rejected.",
+    "weak_flag": "Literal true refused, but enum identity collision bypass confirmed by this probe.",
+    "anonymous_enums": "Existing helper requires exactly one matching constant with explicit value; ambiguous matches refuse.",
+    "local_enum_note": "Local EnumDecl in the proof body refuses, but does not protect enum declarations in unrelated uncalled functions."
+  },
+  "partial_comparison": {
+    "scope": "controlled compiler-only comparison stop for higher-priority enum gate review; no suite/proof acceptance",
+    "completed_old_rows": 11,
+    "stopped_at_new_row_boundary": true,
+    "owned_pids": [
+      66225
+    ],
+    "new_revision_started": false,
+    "partial_output": "/private/tmp/probata-t27-lowering-comparison/717",
+    "reason": "Root requested enum collision probe before final source freeze; preserve completed partial rows."
+  },
+  "comparison_resources": [
+    {
+      "revision": "717",
+      "exit_code": -9,
+      "peak_rss_bytes": 4096802816,
+      "out_of_memory": false,
+      "timed_out": false,
+      "wall_seconds": 144.1256902909954,
+      "cpu_seconds": 127.421722
+    }
+  ],
+  "comparison_boundary": "Only11old717 rows completed; new revision never started. No qualifying old/new equality result. Final reviewed source needs a fresh comparison and every actual acceptance profile.",
+  "local_runner_pointers": [
+    "/private/tmp/probata-t27-compare-driver.py",
+    "/private/tmp/probata-t27-compare-one.py",
+    "/private/tmp/probata-t27-comparison-manifest.json"
+  ],
+  "next_owner": "Ticket24 repairs atomic enum admission; root reviews and dispatches final composed-source comparison/actual acceptance. Mac compiler slot explicitly released to explore25."
+}

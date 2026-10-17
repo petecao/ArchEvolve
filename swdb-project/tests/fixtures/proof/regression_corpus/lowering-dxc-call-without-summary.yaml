@@ -1,0 +1,12 @@
+# Created: 2026-10-14 ET (Probata PoC 24). Regression corpus case through `swdb lower` (see wp-hint-syntax-error.yaml).
+id: lowering-dxc-call-without-summary
+adapter: c_lowering
+input:
+  source: tests/fixtures/proof/lowering/summaries.cc
+  function: swdb_dxc_unit
+failure_class: unsupported_construct
+construct: call to __dxc_tile_size with no summary
+cause: >-
+  A __dxc_* or maa_* call goes through a summary (map 16 item 6). With no summary given (`--summary`), the
+  lowering refuses the call instead of lowering a body or leaving an unexplained external call. Real
+  summaries come with tickets 27, 28 and 30.

@@ -1,0 +1,9 @@
+# Trace cold V3 frame diagnostics
+
+2026-10-16 ET. Prepared fresh admission request; no actual reader, staging or scientific execution. Staged V2 remains unexecuted and unchanged; the old false-admission V1 template remains frozen. Root independently reviews/adopts only the final version.
+
+The exact initializedV6 refusal_frame_report_v6 helper is copied byte for byte. Only the top-level refusal print expression changes. Every prior trace audit function, helper, class, assertion, native/CBMC/replay/assumption/goal/source/runtime/workflow criterion and success output is byte unchanged. Complete AST inverse restores the original V1 reader. Refusal JSON emits only exception type and at most16 filename/function/line frames plus omitted count; exception messages, source lines, locals and payload are not accessed or emitted. Exit1 remains unchanged.
+
+The filled policy changes only fresh V3 namespace, reader/policy pins and frame-helper/base/staged-V2 provenance. Its complete inverse recovers filled V2. Original V4 trace root/source04af,25 record pins,12 proven/13 abstract refutations, closed environment and actual-shape/three-file-overlay evidence remain unchanged. The17 proposed control files stay below1MiB; exact argv, full replacement environment and pin/count manifest are provided.
+
+Four no-child controls pass: complete inverse and every prior function byte equality; exact shared helper plus simulated AssertionError through the actual trace refusal expression; policy/control/closed-environment checks; and preserved prior staging/template pins. No audit, record interpretation, compiler, native, verifier, solver, version, project import, Git or remote action ran. Independent source/policy review, final staging and root guard admission remain pending. Scope stays original scalar abstract trace25; no source-call/hardware/whole-interface/current0.2/full28 claim.

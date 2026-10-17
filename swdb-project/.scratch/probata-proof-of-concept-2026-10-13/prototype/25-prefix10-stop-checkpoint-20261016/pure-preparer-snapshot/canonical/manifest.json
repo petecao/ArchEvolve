@@ -1,0 +1,2866 @@
+{
+  "allocation_identities": "unbounded mathematical integers; address reuse never revives a dead ID",
+  "caller_premises_added": [],
+  "coverage_complete": false,
+  "incoming_heap": "arbitrary well-formed incoming heap with issued dead identities and escaped aliases",
+  "logical_obligations": [
+    {
+      "antecedent": "t25_repr(h,r,o,b,bo,s,c) && (s == 0 || r != b) && Heap::bounded_int_values(values,bo,s)",
+      "combination": "AND: representation and all four independent cell conjuncts are required",
+      "component_expansions": [
+        {
+          "antecedent": "t25_repr(h,r,o,b,bo,s,c) && (s == 0 || r != b) && Heap::bounded_int_values(values,bo,s) && 0 <= j < s",
+          "combination": "AND: all four independent definition conjuncts are required",
+          "definition_source": {
+            "begin": 5625,
+            "container_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+            "end": 5806,
+            "path": "heap_reallocation.mlw",
+            "sha256": "b221ae4a0927b535808cbfb05d1f03bbf0ba05d90811b56ba4650318e4bd0a58"
+          },
+          "definition_substitution": {
+            "b": "b",
+            "h": "Heap::project_int_region(h,values,b,bo,s)",
+            "o": "bo+4*j"
+          },
+          "dependencies": [],
+          "equivalence": "A implies (access and initialized and integer-tag/load and signed32-bounds) iff all four A-implies-conjunct duties",
+          "id": "grow.entry.int_projection.cells",
+          "original_statement": "\\forall Heap::heap h; \\forall Heap::int_values values; \\forall integer r,o,b,bo,s,c; \\forall integer j; t25_repr(h,r,o,b,bo,s,c) && (s == 0 || r != b) && Heap::bounded_int_values(values,bo,s) && 0 <= j < s ==> Heap::int32_at(Heap::project_int_region(h,values,b,bo,s),b,bo+4*j)",
+          "outer_antecedent": "t25_repr(h,r,o,b,bo,s,c) && (s == 0 || r != b) && Heap::bounded_int_values(values,bo,s)",
+          "parts": [
+            "grow.entry.int_projection.cells.access",
+            "grow.entry.int_projection.cells.initialization",
+            "grow.entry.int_projection.cells.integer",
+            "grow.entry.int_projection.cells.bounds"
+          ],
+          "premises_added": [],
+          "quantifiers": "\\forall Heap::heap h; \\forall Heap::int_values values; \\forall integer r,o,b,bo,s,c; \\forall integer j; ",
+          "reference": {
+            "path": "references/002b-t25v3_grow_entry_int_projection_cells.c",
+            "sha256": "47e26763183659b00923090094d8a0ae658972e9f64c17c30f2c772309dfdb35"
+          },
+          "reference_role": "original logical cell target only; never imported or launched as a proved result"
+        }
+      ],
+      "definition_sources": [
+        {
+          "begin": 535,
+          "container_sha256": "f2185ad536bca5e8845ff0b718d81fe1787f1d6fedea7e53907dbe75969861e9",
+          "end": 727,
+          "path": "vector_reallocation_vcs.py",
+          "sha256": "0061ac023cb12a5f63f8d72450ebc02caf10467a92a6b703aa40e75ca6b77163"
+        },
+        {
+          "begin": 5809,
+          "container_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+          "end": 5925,
+          "path": "heap_reallocation.mlw",
+          "sha256": "47f35604756dba455af17c5c8f69429cce194dfe546b03a09a56043a39a7c101"
+        }
+      ],
+      "dependencies": [],
+      "equivalence": "A implies (R and forall j: B implies I) iff (A implies R) and all four forall-fresh-j (A and B) implies int32_at-definition-conjunct duties",
+      "fresh_index": "j",
+      "fresh_index_bound_in_outer_quantifiers": false,
+      "fresh_index_free_in_antecedent": false,
+      "id": "grow.entry.int_projection",
+      "original_statement": "\\forall Heap::heap h; \\forall Heap::int_values values; \\forall integer r,o,b,bo,s,c; t25_repr(h,r,o,b,bo,s,c) && (s == 0 || r != b) && Heap::bounded_int_values(values,bo,s) ==> t25v3_repr(Heap::project_int_region(h,values,b,bo,s),r,o,b,bo,s,c)",
+      "parts": [
+        "grow.entry.int_projection.repr",
+        "grow.entry.int_projection.cells.access",
+        "grow.entry.int_projection.cells.initialization",
+        "grow.entry.int_projection.cells.integer",
+        "grow.entry.int_projection.cells.bounds"
+      ],
+      "premises_added": [],
+      "quantifiers": "\\forall Heap::heap h; \\forall Heap::int_values values; \\forall integer r,o,b,bo,s,c; ",
+      "reference": {
+        "path": "references/002-t25v3_grow_entry_int_projection.c",
+        "sha256": "b5dbe9939b460efa5503b1cbba8a891f5cdb940a8d44835f3fd04da307a74b3f"
+      },
+      "reference_role": "original logical target only; never imported or launched as a proved result",
+      "region_substitution": {
+        "b": "b",
+        "count": "s",
+        "h": "Heap::project_int_region(h,values,b,bo,s)",
+        "j": "j",
+        "offset": "bo"
+      }
+    },
+    {
+      "antecedent": "Heap::well_formed(entry) && t25v3_eligible(entry,r,o,b,bo,s,c) && c < cap <= 4611686018427387903 && Heap::available(entry,cap,a)",
+      "capture_avoiding": true,
+      "combination": "AND: all fifteen independent definition conjuncts are required",
+      "definition_conjuncts": [
+        "Heap::well_formed(entry)",
+        "Heap::well_formed(h)",
+        "t25v3_eligible(entry,r,o,b,bo,s,c)",
+        "t25v3_eligible(h,r,o,b,bo,s,c)",
+        "0 <= k <= s <= c < cap <= 4611686018427387903",
+        "f == Heap::fresh_id(entry)",
+        "!Heap::issued(entry,f)",
+        "f != r",
+        "f != b",
+        "Heap::typed_writes(h,f,0,4*cap,4)",
+        "Heap::freeable(h,f,0)",
+        "Heap::bytes(h,f) == 4*cap",
+        "t25v3_copy_frame(entry,h,f)",
+        "Heap::copied_prefix(entry,h,b,bo,f,k)",
+        "(\\forall integer j; k <= j < cap ==> !Heap::initialized_at(h,f,4*j))"
+      ],
+      "definition_source": {
+        "begin": 1587,
+        "container_sha256": "f2185ad536bca5e8845ff0b718d81fe1787f1d6fedea7e53907dbe75969861e9",
+        "end": 2325,
+        "path": "vector_reallocation_vcs.py",
+        "sha256": "ac8e672f38914c8161b9735b1a50e6df3b77b3d133769b09b008193c260cd9dc"
+      },
+      "definition_substitution": {
+        "b": "b",
+        "bo": "bo",
+        "c": "c",
+        "cap": "cap",
+        "entry": "entry",
+        "f": "Heap::fresh_id(entry)",
+        "h": "Heap::allocate(entry,cap,a)",
+        "k": "0",
+        "o": "o",
+        "r": "r",
+        "s": "s"
+      },
+      "dependencies": [],
+      "equivalence": "A implies AND(conjuncts) iff AND(each A implies conjunct); simultaneous capture-free predicate substitution",
+      "formal_parameters": [
+        "entry",
+        "h",
+        "r",
+        "o",
+        "b",
+        "bo",
+        "s",
+        "c",
+        "f",
+        "cap",
+        "k"
+      ],
+      "id": "grow.copy.establish",
+      "nested_bound_variables": [
+        "j"
+      ],
+      "original_statement": "\\forall Heap::heap entry; \\forall integer r,o,b,bo,s,c,cap,a; Heap::well_formed(entry) && t25v3_eligible(entry,r,o,b,bo,s,c) && c < cap <= 4611686018427387903 && Heap::available(entry,cap,a) ==> t25v3_copy_inv(entry,Heap::allocate(entry,cap,a),r,o,b,bo,s,c,Heap::fresh_id(entry),cap,0)",
+      "parts": [
+        "grow.copy.establish.entry_well_formed",
+        "grow.copy.establish.allocated_well_formed",
+        "grow.copy.establish.entry_eligible",
+        "grow.copy.establish.allocated_eligible",
+        "grow.copy.establish.index_size_capacity_bounds",
+        "grow.copy.establish.fresh_identity",
+        "grow.copy.establish.unissued_identity",
+        "grow.copy.establish.receiver_distinct",
+        "grow.copy.establish.old_buffer_distinct",
+        "grow.copy.establish.destination_write_domain",
+        "grow.copy.establish.destination_freeability",
+        "grow.copy.establish.destination_extent",
+        "grow.copy.establish.allocation_frame",
+        "grow.copy.establish.empty_copied_prefix",
+        "grow.copy.establish.uninitialized_tail"
+      ],
+      "predicate": "t25v3_copy_inv",
+      "premises_added": [],
+      "quantifiers": "\\forall Heap::heap entry; \\forall integer r,o,b,bo,s,c,cap,a; ",
+      "reference": {
+        "path": "references/006-t25v3_grow_copy_establish.c",
+        "sha256": "cac2722ab4199a0862b64192b5e91e43fd3a6260593cb32f7cc2312e06e5e435"
+      },
+      "reference_role": "original logical target only; never imported or launched as a proved result",
+      "substituted_conjuncts": [
+        "Heap::well_formed(entry)",
+        "Heap::well_formed(Heap::allocate(entry,cap,a))",
+        "t25v3_eligible(entry,r,o,b,bo,s,c)",
+        "t25v3_eligible(Heap::allocate(entry,cap,a),r,o,b,bo,s,c)",
+        "0 <= 0 <= s <= c < cap <= 4611686018427387903",
+        "Heap::fresh_id(entry) == Heap::fresh_id(entry)",
+        "!Heap::issued(entry,Heap::fresh_id(entry))",
+        "Heap::fresh_id(entry) != r",
+        "Heap::fresh_id(entry) != b",
+        "Heap::typed_writes(Heap::allocate(entry,cap,a),Heap::fresh_id(entry),0,4*cap,4)",
+        "Heap::freeable(Heap::allocate(entry,cap,a),Heap::fresh_id(entry),0)",
+        "Heap::bytes(Heap::allocate(entry,cap,a),Heap::fresh_id(entry)) == 4*cap",
+        "t25v3_copy_frame(entry,Heap::allocate(entry,cap,a),Heap::fresh_id(entry))",
+        "Heap::copied_prefix(entry,Heap::allocate(entry,cap,a),b,bo,Heap::fresh_id(entry),0)",
+        "(\\forall integer j; 0 <= j < cap ==> !Heap::initialized_at(Heap::allocate(entry,cap,a),Heap::fresh_id(entry),4*j))"
+      ]
+    },
+    {
+      "antecedent": "t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s",
+      "capture_avoiding": true,
+      "combination": "AND: fourteen direct definition conjuncts and all ten equivalent prefix case/conjunct duties",
+      "component_expansions": [
+        {
+          "case_partition": [
+            {
+              "guard": "j < k",
+              "id": "prior"
+            },
+            {
+              "guard": "j == k",
+              "id": "written"
+            }
+          ],
+          "combination": "AND: both exhaustive integer cases require all five prefix definition conclusions",
+          "conclusions": {
+            "access": "Heap::typed_reads(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j,4,4)",
+            "bounds": "-2147483648 <= Heap::load_int(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j) <= 2147483647",
+            "initialization": "Heap::initialized_at(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j)",
+            "integer": "Heap::integer_at(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j,Heap::load_int(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j))",
+            "value": "Heap::load_int(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j) == Heap::load_int(entry,b,bo+4*j)"
+          },
+          "definition_sources": [
+            {
+              "begin": 7104,
+              "container_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+              "end": 7335,
+              "path": "heap_reallocation.mlw",
+              "sha256": "ccab9af0570f7363c265230cebdac38a9e33f3a01f56ff5204af1c6031cff371"
+            },
+            {
+              "begin": 5623,
+              "container_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+              "end": 5806,
+              "path": "heap_reallocation.mlw",
+              "sha256": "b659f9be16c81c149591d83d852b03a1c411b0b4444a7818822e36ae9bc69301"
+            }
+          ],
+          "definition_substitution": {
+            "copied_prefix": {
+              "count": "(k+1)",
+              "entry": "entry",
+              "now": "Heap::copy_int(h,b,bo+4*k,f,4*k)",
+              "source": "b",
+              "source_offset": "bo",
+              "target": "f"
+            },
+            "int32_at": {
+              "b": "f",
+              "h": "Heap::copy_int(h,b,bo+4*k,f,4*k)",
+              "o": "4*j"
+            }
+          },
+          "dependencies": [],
+          "equivalence": "Under the original integer range j < k+1, j < k or j == k exhausts all cases; forall and full-A implication distribute over every definition conjunct",
+          "fresh_index": "j",
+          "fresh_index_free_in_antecedent": false,
+          "id": "grow.copy.step.advanced_copied_prefix",
+          "original_statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s ==> Heap::copied_prefix(entry,Heap::copy_int(h,b,bo+4*k,f,4*k),b,bo,f,(k+1))",
+          "outer_antecedent": "t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s",
+          "parts": [
+            "grow.copy.step.advanced_copied_prefix.prior.access",
+            "grow.copy.step.advanced_copied_prefix.prior.initialization",
+            "grow.copy.step.advanced_copied_prefix.prior.integer",
+            "grow.copy.step.advanced_copied_prefix.prior.bounds",
+            "grow.copy.step.advanced_copied_prefix.prior.value",
+            "grow.copy.step.advanced_copied_prefix.written.access",
+            "grow.copy.step.advanced_copied_prefix.written.initialization",
+            "grow.copy.step.advanced_copied_prefix.written.integer",
+            "grow.copy.step.advanced_copied_prefix.written.bounds",
+            "grow.copy.step.advanced_copied_prefix.written.value"
+          ],
+          "premises_added": [],
+          "quantifiers": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; \\forall integer j; ",
+          "range": "0 <= j < (k+1)",
+          "reference": {
+            "path": "references/009s14-t25v3_grow_copy_step_advanced_copied_prefix.c",
+            "sha256": "1839dda1ae013bc884c1fc6492c8839609f9df07769ced542d72330739d63aed"
+          },
+          "reference_role": "original logical prefix target only; never imported or launched as a proved result"
+        }
+      ],
+      "definition_conjuncts": [
+        "Heap::well_formed(entry)",
+        "Heap::well_formed(h)",
+        "t25v3_eligible(entry,r,o,b,bo,s,c)",
+        "t25v3_eligible(h,r,o,b,bo,s,c)",
+        "0 <= k <= s <= c < cap <= 4611686018427387903",
+        "f == Heap::fresh_id(entry)",
+        "!Heap::issued(entry,f)",
+        "f != r",
+        "f != b",
+        "Heap::typed_writes(h,f,0,4*cap,4)",
+        "Heap::freeable(h,f,0)",
+        "Heap::bytes(h,f) == 4*cap",
+        "t25v3_copy_frame(entry,h,f)",
+        "Heap::copied_prefix(entry,h,b,bo,f,k)",
+        "(\\forall integer j; k <= j < cap ==> !Heap::initialized_at(h,f,4*j))"
+      ],
+      "definition_source": {
+        "begin": 1587,
+        "container_sha256": "f2185ad536bca5e8845ff0b718d81fe1787f1d6fedea7e53907dbe75969861e9",
+        "end": 2325,
+        "path": "vector_reallocation_vcs.py",
+        "sha256": "ac8e672f38914c8161b9735b1a50e6df3b77b3d133769b09b008193c260cd9dc"
+      },
+      "definition_substitution": {
+        "b": "b",
+        "bo": "bo",
+        "c": "c",
+        "cap": "cap",
+        "entry": "entry",
+        "f": "f",
+        "h": "Heap::copy_int(h,b,bo+4*k,f,4*k)",
+        "k": "(k+1)",
+        "o": "o",
+        "r": "r",
+        "s": "s"
+      },
+      "dependencies": [],
+      "equivalence": "A implies AND(conjuncts) iff AND(each A implies conjunct); simultaneous capture-free predicate substitution",
+      "formal_parameters": [
+        "entry",
+        "h",
+        "r",
+        "o",
+        "b",
+        "bo",
+        "s",
+        "c",
+        "f",
+        "cap",
+        "k"
+      ],
+      "id": "grow.copy.step",
+      "nested_bound_variables": [
+        "j"
+      ],
+      "original_definition_parts": [
+        "grow.copy.step.entry_well_formed",
+        "grow.copy.step.updated_well_formed",
+        "grow.copy.step.entry_eligible",
+        "grow.copy.step.updated_eligible",
+        "grow.copy.step.advanced_index_size_capacity_bounds",
+        "grow.copy.step.fresh_identity",
+        "grow.copy.step.unissued_identity",
+        "grow.copy.step.receiver_distinct",
+        "grow.copy.step.old_buffer_distinct",
+        "grow.copy.step.destination_write_domain",
+        "grow.copy.step.destination_freeability",
+        "grow.copy.step.destination_extent",
+        "grow.copy.step.allocation_frame",
+        "grow.copy.step.advanced_copied_prefix",
+        "grow.copy.step.uninitialized_tail"
+      ],
+      "original_statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s ==> t25v3_copy_inv(entry,Heap::copy_int(h,b,bo+4*k,f,4*k),r,o,b,bo,s,c,f,cap,k+1)",
+      "parts": [
+        "grow.copy.step.entry_well_formed",
+        "grow.copy.step.updated_well_formed",
+        "grow.copy.step.entry_eligible",
+        "grow.copy.step.updated_eligible",
+        "grow.copy.step.advanced_index_size_capacity_bounds",
+        "grow.copy.step.fresh_identity",
+        "grow.copy.step.unissued_identity",
+        "grow.copy.step.receiver_distinct",
+        "grow.copy.step.old_buffer_distinct",
+        "grow.copy.step.destination_write_domain",
+        "grow.copy.step.destination_freeability",
+        "grow.copy.step.destination_extent",
+        "grow.copy.step.allocation_frame",
+        "grow.copy.step.advanced_copied_prefix.prior.access",
+        "grow.copy.step.advanced_copied_prefix.prior.initialization",
+        "grow.copy.step.advanced_copied_prefix.prior.integer",
+        "grow.copy.step.advanced_copied_prefix.prior.bounds",
+        "grow.copy.step.advanced_copied_prefix.prior.value",
+        "grow.copy.step.advanced_copied_prefix.written.access",
+        "grow.copy.step.advanced_copied_prefix.written.initialization",
+        "grow.copy.step.advanced_copied_prefix.written.integer",
+        "grow.copy.step.advanced_copied_prefix.written.bounds",
+        "grow.copy.step.advanced_copied_prefix.written.value",
+        "grow.copy.step.uninitialized_tail"
+      ],
+      "predicate": "t25v3_copy_inv",
+      "premises_added": [],
+      "quantifiers": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; ",
+      "reference": {
+        "path": "references/009-t25v3_grow_copy_step.c",
+        "sha256": "5e46d1eee055960726f99ab13a172f1f4963270617255d7797c5ae5c79920a0e"
+      },
+      "reference_role": "original logical target only; never imported or launched as a proved result",
+      "substituted_conjuncts": [
+        "Heap::well_formed(entry)",
+        "Heap::well_formed(Heap::copy_int(h,b,bo+4*k,f,4*k))",
+        "t25v3_eligible(entry,r,o,b,bo,s,c)",
+        "t25v3_eligible(Heap::copy_int(h,b,bo+4*k,f,4*k),r,o,b,bo,s,c)",
+        "0 <= (k+1) <= s <= c < cap <= 4611686018427387903",
+        "f == Heap::fresh_id(entry)",
+        "!Heap::issued(entry,f)",
+        "f != r",
+        "f != b",
+        "Heap::typed_writes(Heap::copy_int(h,b,bo+4*k,f,4*k),f,0,4*cap,4)",
+        "Heap::freeable(Heap::copy_int(h,b,bo+4*k,f,4*k),f,0)",
+        "Heap::bytes(Heap::copy_int(h,b,bo+4*k,f,4*k),f) == 4*cap",
+        "t25v3_copy_frame(entry,Heap::copy_int(h,b,bo+4*k,f,4*k),f)",
+        "Heap::copied_prefix(entry,Heap::copy_int(h,b,bo+4*k,f,4*k),b,bo,f,(k+1))",
+        "(\\forall integer j; (k+1) <= j < cap ==> !Heap::initialized_at(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j))"
+      ]
+    }
+  ],
+  "member": "std_vector_int_realloc_v3_grow",
+  "missing": [
+    "complete source/clause/helper binding, frames and feasibility audit",
+    "selected WP Typed/Machine source-image binding and caller discharge",
+    "source-local caller/lifetime and ordinary dependency composition",
+    "independent type/import/task-closure review and fresh normal-reader proof"
+  ],
+  "model": {
+    "id": "vector-reallocation-domain-3",
+    "sha256": "a0ca90f0cd05a1e89b04fc502f078fa253437cfdae4fba35552016d20d7e798c"
+  },
+  "obligations": [
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_control_grow_premises_feasible",
+      "id": "control.grow.premises_feasible",
+      "kind": "check_lemma",
+      "path": "000-t25v3_control_grow_premises_feasible.c",
+      "sha256": "e9912022fad11f1fe2ea45e80ba9909673c287ce41d0114d707ca8e6d1d19579",
+      "source_groups": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "source_spans": [
+        {
+          "begin": 2706,
+          "end": 2752,
+          "sha256": "a3831136732ed8896207cc9c38fbc863ed0ac2071e2f830712d7c0501fe0c042"
+        }
+      ],
+      "statement": "Heap::well_formed(t25_sample(0)) && t25v3_eligible(t25_sample(0),1,0,2,0,1,1) && Heap::available(t25_sample(0),2,128) && t25v3_copy_inv(t25_sample(0),Heap::allocate(t25_sample(0),2,128),1,0,2,0,1,1,3,2,0)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_entry_reads",
+      "id": "grow.entry.reads",
+      "kind": "check_lemma",
+      "path": "001-t25v3_grow_entry_reads.c",
+      "sha256": "18263b731752f297cedcaf3b0a64564b689992dac89a0b382b7acfb70ef4b492",
+      "source_groups": [
+        "G1"
+      ],
+      "source_spans": [
+        {
+          "begin": 2706,
+          "end": 2752,
+          "sha256": "a3831136732ed8896207cc9c38fbc863ed0ac2071e2f830712d7c0501fe0c042"
+        }
+      ],
+      "statement": "\\forall Heap::heap h; \\forall integer r,o,b,bo,s,c; t25v3_eligible(h,r,o,b,bo,s,c) ==> Heap::typed_reads(h,r,o,8,8) && Heap::initialized_at(h,r,o) && Heap::typed_reads(h,r,o+8,8,8) && Heap::initialized_at(h,r,o+8) && Heap::typed_reads(h,r,o+16,8,8) && Heap::initialized_at(h,r,o+16)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_entry_int_projection_repr",
+      "id": "grow.entry.int_projection.repr",
+      "kind": "check_lemma",
+      "path": "002a-t25v3_grow_entry_int_projection_repr.c",
+      "sha256": "1e895aec561e8840764b43c3056ff3eae7e26f4a370cb18b67e08a43437b562d",
+      "source_groups": [
+        "G1"
+      ],
+      "source_spans": [
+        {
+          "begin": 2706,
+          "end": 2752,
+          "sha256": "a3831136732ed8896207cc9c38fbc863ed0ac2071e2f830712d7c0501fe0c042"
+        }
+      ],
+      "statement": "\\forall Heap::heap h; \\forall Heap::int_values values; \\forall integer r,o,b,bo,s,c; t25_repr(h,r,o,b,bo,s,c) && (s == 0 || r != b) && Heap::bounded_int_values(values,bo,s) ==> t25_repr(Heap::project_int_region(h,values,b,bo,s),r,o,b,bo,s,c)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_entry_int_projection_cells_access",
+      "id": "grow.entry.int_projection.cells.access",
+      "kind": "check_lemma",
+      "path": "002b1-t25v3_grow_entry_int_projection_cells_access.c",
+      "sha256": "a934f4850d80b1ea8fb47bb832db8a52ab59a03c70c695b324ac825c92c475b3",
+      "source_groups": [
+        "G1"
+      ],
+      "source_spans": [
+        {
+          "begin": 2706,
+          "end": 2752,
+          "sha256": "a3831136732ed8896207cc9c38fbc863ed0ac2071e2f830712d7c0501fe0c042"
+        }
+      ],
+      "statement": "\\forall Heap::heap h; \\forall Heap::int_values values; \\forall integer r,o,b,bo,s,c; \\forall integer j; t25_repr(h,r,o,b,bo,s,c) && (s == 0 || r != b) && Heap::bounded_int_values(values,bo,s) && 0 <= j < s ==> Heap::typed_reads(Heap::project_int_region(h,values,b,bo,s),b,bo+4*j,4,4)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_entry_int_projection_cells_initialization",
+      "id": "grow.entry.int_projection.cells.initialization",
+      "kind": "check_lemma",
+      "path": "002b2-t25v3_grow_entry_int_projection_cells_initialization.c",
+      "sha256": "a24148fae0db6882aa47b8ec7d7c477d2f061bbe8472ba8b79a3e72c0897fe73",
+      "source_groups": [
+        "G1"
+      ],
+      "source_spans": [
+        {
+          "begin": 2706,
+          "end": 2752,
+          "sha256": "a3831136732ed8896207cc9c38fbc863ed0ac2071e2f830712d7c0501fe0c042"
+        }
+      ],
+      "statement": "\\forall Heap::heap h; \\forall Heap::int_values values; \\forall integer r,o,b,bo,s,c; \\forall integer j; t25_repr(h,r,o,b,bo,s,c) && (s == 0 || r != b) && Heap::bounded_int_values(values,bo,s) && 0 <= j < s ==> Heap::initialized_at(Heap::project_int_region(h,values,b,bo,s),b,bo+4*j)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_entry_int_projection_cells_integer",
+      "id": "grow.entry.int_projection.cells.integer",
+      "kind": "check_lemma",
+      "path": "002b3-t25v3_grow_entry_int_projection_cells_integer.c",
+      "sha256": "fcd63426784f41d2a654ea36073e898f8ceaad498f126715e5580c7d0fa7c0b1",
+      "source_groups": [
+        "G1"
+      ],
+      "source_spans": [
+        {
+          "begin": 2706,
+          "end": 2752,
+          "sha256": "a3831136732ed8896207cc9c38fbc863ed0ac2071e2f830712d7c0501fe0c042"
+        }
+      ],
+      "statement": "\\forall Heap::heap h; \\forall Heap::int_values values; \\forall integer r,o,b,bo,s,c; \\forall integer j; t25_repr(h,r,o,b,bo,s,c) && (s == 0 || r != b) && Heap::bounded_int_values(values,bo,s) && 0 <= j < s ==> Heap::integer_at(Heap::project_int_region(h,values,b,bo,s),b,bo+4*j,Heap::load_int(Heap::project_int_region(h,values,b,bo,s),b,bo+4*j))",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_entry_int_projection_cells_bounds",
+      "id": "grow.entry.int_projection.cells.bounds",
+      "kind": "check_lemma",
+      "path": "002b4-t25v3_grow_entry_int_projection_cells_bounds.c",
+      "sha256": "0bfb29f943335aa6258302949a8f01b5c5b68c9c17d9206e5f8f26c6635aad4e",
+      "source_groups": [
+        "G1"
+      ],
+      "source_spans": [
+        {
+          "begin": 2706,
+          "end": 2752,
+          "sha256": "a3831136732ed8896207cc9c38fbc863ed0ac2071e2f830712d7c0501fe0c042"
+        }
+      ],
+      "statement": "\\forall Heap::heap h; \\forall Heap::int_values values; \\forall integer r,o,b,bo,s,c; \\forall integer j; t25_repr(h,r,o,b,bo,s,c) && (s == 0 || r != b) && Heap::bounded_int_values(values,bo,s) && 0 <= j < s ==> -2147483648 <= Heap::load_int(Heap::project_int_region(h,values,b,bo,s),b,bo+4*j) <= 2147483647",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_alloc_identity",
+      "id": "grow.alloc.identity",
+      "kind": "check_lemma",
+      "path": "003-t25v3_grow_alloc_identity.c",
+      "sha256": "ea3a5a1296e046da142f68541fed405c673537448d46a6324d755285aad21099",
+      "source_groups": [
+        "G2"
+      ],
+      "source_spans": [
+        {
+          "begin": 3395,
+          "end": 3417,
+          "sha256": "26f280269c5a0b9fd3eef7d931b3208ba2ca4501b48c58e01d4da0977d864d14"
+        }
+      ],
+      "statement": "\\forall Heap::heap h; \\forall integer r,o,b,bo,s,c,cap; Heap::well_formed(h) && t25v3_eligible(h,r,o,b,bo,s,c) && c < cap ==> Heap::fresh_id(h) != r && Heap::fresh_id(h) != b && !Heap::issued(h,Heap::fresh_id(h))",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_alloc_output",
+      "id": "grow.alloc.output",
+      "kind": "check_lemma",
+      "path": "004-t25v3_grow_alloc_output.c",
+      "sha256": "1198c24918718565409f8e995a25eb92e9f870a893f901393efbed990f1537cc",
+      "source_groups": [
+        "G2"
+      ],
+      "source_spans": [
+        {
+          "begin": 3395,
+          "end": 3417,
+          "sha256": "26f280269c5a0b9fd3eef7d931b3208ba2ca4501b48c58e01d4da0977d864d14"
+        }
+      ],
+      "statement": "\\forall Heap::heap h; \\forall integer cap,a; Heap::well_formed(h) && Heap::available(h,cap,a) && 0 < cap ==> Heap::well_formed(Heap::allocate(h,cap,a)) && Heap::typed_writes(Heap::allocate(h,cap,a),Heap::fresh_id(h),0,4*cap,4) && Heap::freeable(Heap::allocate(h,cap,a),Heap::fresh_id(h),0) && Heap::bytes(Heap::allocate(h,cap,a),Heap::fresh_id(h)) == 4*cap",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_alloc_frame",
+      "id": "grow.alloc.frame",
+      "kind": "check_lemma",
+      "path": "005-t25v3_grow_alloc_frame.c",
+      "sha256": "ac824da28573588e41ac18d4eac8926d40963cc655a06279e6bc9fba80dabf14",
+      "source_groups": [
+        "G2",
+        "G9"
+      ],
+      "source_spans": [
+        {
+          "begin": 3395,
+          "end": 3417,
+          "sha256": "26f280269c5a0b9fd3eef7d931b3208ba2ca4501b48c58e01d4da0977d864d14"
+        }
+      ],
+      "statement": "\\forall Heap::heap h; \\forall integer cap,a; Heap::well_formed(h) ==> t25v3_copy_frame(h,Heap::allocate(h,cap,a),Heap::fresh_id(h))",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_establish_entry_well_formed",
+      "id": "grow.copy.establish.entry_well_formed",
+      "kind": "check_lemma",
+      "path": "006c01-t25v3_grow_copy_establish_entry_well_formed.c",
+      "sha256": "b7c98e6ef9553909c44a526257e15066c2385835969d1071b782f0ec275a703c",
+      "source_groups": [
+        "G3"
+      ],
+      "source_spans": [
+        {
+          "begin": 3730,
+          "end": 3748,
+          "sha256": "79e0d8dc0bf0585a6910d5a92c0ddff0d76cc633cf1f77ccc8c7bc64540bd10a"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry; \\forall integer r,o,b,bo,s,c,cap,a; Heap::well_formed(entry) && t25v3_eligible(entry,r,o,b,bo,s,c) && c < cap <= 4611686018427387903 && Heap::available(entry,cap,a) ==> Heap::well_formed(entry)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_establish_allocated_well_formed",
+      "id": "grow.copy.establish.allocated_well_formed",
+      "kind": "check_lemma",
+      "path": "006c02-t25v3_grow_copy_establish_allocated_well_formed.c",
+      "sha256": "e6f7f7fea8176f9941b30b595520f35d563b2026997f15bacbcf00a652f42d0c",
+      "source_groups": [
+        "G3"
+      ],
+      "source_spans": [
+        {
+          "begin": 3730,
+          "end": 3748,
+          "sha256": "79e0d8dc0bf0585a6910d5a92c0ddff0d76cc633cf1f77ccc8c7bc64540bd10a"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry; \\forall integer r,o,b,bo,s,c,cap,a; Heap::well_formed(entry) && t25v3_eligible(entry,r,o,b,bo,s,c) && c < cap <= 4611686018427387903 && Heap::available(entry,cap,a) ==> Heap::well_formed(Heap::allocate(entry,cap,a))",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_establish_entry_eligible",
+      "id": "grow.copy.establish.entry_eligible",
+      "kind": "check_lemma",
+      "path": "006c03-t25v3_grow_copy_establish_entry_eligible.c",
+      "sha256": "4a0a1327d5b41d02f05c4af72c04231250d96a09d69d52262d18ce9c6b598a5f",
+      "source_groups": [
+        "G3"
+      ],
+      "source_spans": [
+        {
+          "begin": 3730,
+          "end": 3748,
+          "sha256": "79e0d8dc0bf0585a6910d5a92c0ddff0d76cc633cf1f77ccc8c7bc64540bd10a"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry; \\forall integer r,o,b,bo,s,c,cap,a; Heap::well_formed(entry) && t25v3_eligible(entry,r,o,b,bo,s,c) && c < cap <= 4611686018427387903 && Heap::available(entry,cap,a) ==> t25v3_eligible(entry,r,o,b,bo,s,c)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_establish_allocated_eligible",
+      "id": "grow.copy.establish.allocated_eligible",
+      "kind": "check_lemma",
+      "path": "006c04-t25v3_grow_copy_establish_allocated_eligible.c",
+      "sha256": "722168c20e8c04e3233447eef9b21212461f55b655297978d89a9ac44e6e1fd0",
+      "source_groups": [
+        "G3"
+      ],
+      "source_spans": [
+        {
+          "begin": 3730,
+          "end": 3748,
+          "sha256": "79e0d8dc0bf0585a6910d5a92c0ddff0d76cc633cf1f77ccc8c7bc64540bd10a"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry; \\forall integer r,o,b,bo,s,c,cap,a; Heap::well_formed(entry) && t25v3_eligible(entry,r,o,b,bo,s,c) && c < cap <= 4611686018427387903 && Heap::available(entry,cap,a) ==> t25v3_eligible(Heap::allocate(entry,cap,a),r,o,b,bo,s,c)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_establish_index_size_capacity_bounds",
+      "id": "grow.copy.establish.index_size_capacity_bounds",
+      "kind": "check_lemma",
+      "path": "006c05-t25v3_grow_copy_establish_index_size_capacity_bounds.c",
+      "sha256": "9263de60ab87fe24a64d828604ef01c9d1d530cfe5d6bcffe2f7e9430aac9852",
+      "source_groups": [
+        "G3"
+      ],
+      "source_spans": [
+        {
+          "begin": 3730,
+          "end": 3748,
+          "sha256": "79e0d8dc0bf0585a6910d5a92c0ddff0d76cc633cf1f77ccc8c7bc64540bd10a"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry; \\forall integer r,o,b,bo,s,c,cap,a; Heap::well_formed(entry) && t25v3_eligible(entry,r,o,b,bo,s,c) && c < cap <= 4611686018427387903 && Heap::available(entry,cap,a) ==> 0 <= 0 <= s <= c < cap <= 4611686018427387903",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_establish_fresh_identity",
+      "id": "grow.copy.establish.fresh_identity",
+      "kind": "check_lemma",
+      "path": "006c06-t25v3_grow_copy_establish_fresh_identity.c",
+      "sha256": "870fa4a7d294305adcff56cfa2471960e846bd8f67f4d8392fa496bd9448e953",
+      "source_groups": [
+        "G3"
+      ],
+      "source_spans": [
+        {
+          "begin": 3730,
+          "end": 3748,
+          "sha256": "79e0d8dc0bf0585a6910d5a92c0ddff0d76cc633cf1f77ccc8c7bc64540bd10a"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry; \\forall integer r,o,b,bo,s,c,cap,a; Heap::well_formed(entry) && t25v3_eligible(entry,r,o,b,bo,s,c) && c < cap <= 4611686018427387903 && Heap::available(entry,cap,a) ==> Heap::fresh_id(entry) == Heap::fresh_id(entry)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_establish_unissued_identity",
+      "id": "grow.copy.establish.unissued_identity",
+      "kind": "check_lemma",
+      "path": "006c07-t25v3_grow_copy_establish_unissued_identity.c",
+      "sha256": "04017307900ab4980f62f588a42457a18df5467227bcdbe242dea14081f0b1f4",
+      "source_groups": [
+        "G3"
+      ],
+      "source_spans": [
+        {
+          "begin": 3730,
+          "end": 3748,
+          "sha256": "79e0d8dc0bf0585a6910d5a92c0ddff0d76cc633cf1f77ccc8c7bc64540bd10a"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry; \\forall integer r,o,b,bo,s,c,cap,a; Heap::well_formed(entry) && t25v3_eligible(entry,r,o,b,bo,s,c) && c < cap <= 4611686018427387903 && Heap::available(entry,cap,a) ==> !Heap::issued(entry,Heap::fresh_id(entry))",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_establish_receiver_distinct",
+      "id": "grow.copy.establish.receiver_distinct",
+      "kind": "check_lemma",
+      "path": "006c08-t25v3_grow_copy_establish_receiver_distinct.c",
+      "sha256": "daf3410bdc66826c5f89d15c0dcbc076e31e37a3259e3e116a8087359e58921c",
+      "source_groups": [
+        "G3"
+      ],
+      "source_spans": [
+        {
+          "begin": 3730,
+          "end": 3748,
+          "sha256": "79e0d8dc0bf0585a6910d5a92c0ddff0d76cc633cf1f77ccc8c7bc64540bd10a"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry; \\forall integer r,o,b,bo,s,c,cap,a; Heap::well_formed(entry) && t25v3_eligible(entry,r,o,b,bo,s,c) && c < cap <= 4611686018427387903 && Heap::available(entry,cap,a) ==> Heap::fresh_id(entry) != r",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_establish_old_buffer_distinct",
+      "id": "grow.copy.establish.old_buffer_distinct",
+      "kind": "check_lemma",
+      "path": "006c09-t25v3_grow_copy_establish_old_buffer_distinct.c",
+      "sha256": "8b67a16f7ea331c2ba7e5539f10b67197f0d104422ac04666d9cebfb2ace6079",
+      "source_groups": [
+        "G3"
+      ],
+      "source_spans": [
+        {
+          "begin": 3730,
+          "end": 3748,
+          "sha256": "79e0d8dc0bf0585a6910d5a92c0ddff0d76cc633cf1f77ccc8c7bc64540bd10a"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry; \\forall integer r,o,b,bo,s,c,cap,a; Heap::well_formed(entry) && t25v3_eligible(entry,r,o,b,bo,s,c) && c < cap <= 4611686018427387903 && Heap::available(entry,cap,a) ==> Heap::fresh_id(entry) != b",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_establish_destination_write_domain",
+      "id": "grow.copy.establish.destination_write_domain",
+      "kind": "check_lemma",
+      "path": "006c10-t25v3_grow_copy_establish_destination_write_domain.c",
+      "sha256": "2680b2e30c89fb5b3e13870ff288e1aad59e5a30d5d9b92dd967f1525b3c6702",
+      "source_groups": [
+        "G3"
+      ],
+      "source_spans": [
+        {
+          "begin": 3730,
+          "end": 3748,
+          "sha256": "79e0d8dc0bf0585a6910d5a92c0ddff0d76cc633cf1f77ccc8c7bc64540bd10a"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry; \\forall integer r,o,b,bo,s,c,cap,a; Heap::well_formed(entry) && t25v3_eligible(entry,r,o,b,bo,s,c) && c < cap <= 4611686018427387903 && Heap::available(entry,cap,a) ==> Heap::typed_writes(Heap::allocate(entry,cap,a),Heap::fresh_id(entry),0,4*cap,4)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_establish_destination_freeability",
+      "id": "grow.copy.establish.destination_freeability",
+      "kind": "check_lemma",
+      "path": "006c11-t25v3_grow_copy_establish_destination_freeability.c",
+      "sha256": "cc66a8a8cc16ce3613b2f659a432ceecb087df093158aa1e20cfbb9391c0b985",
+      "source_groups": [
+        "G3"
+      ],
+      "source_spans": [
+        {
+          "begin": 3730,
+          "end": 3748,
+          "sha256": "79e0d8dc0bf0585a6910d5a92c0ddff0d76cc633cf1f77ccc8c7bc64540bd10a"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry; \\forall integer r,o,b,bo,s,c,cap,a; Heap::well_formed(entry) && t25v3_eligible(entry,r,o,b,bo,s,c) && c < cap <= 4611686018427387903 && Heap::available(entry,cap,a) ==> Heap::freeable(Heap::allocate(entry,cap,a),Heap::fresh_id(entry),0)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_establish_destination_extent",
+      "id": "grow.copy.establish.destination_extent",
+      "kind": "check_lemma",
+      "path": "006c12-t25v3_grow_copy_establish_destination_extent.c",
+      "sha256": "c181d573a9da065bd3216885fc1e2a00b634a48e914ec6797bd7eb72ba843334",
+      "source_groups": [
+        "G3"
+      ],
+      "source_spans": [
+        {
+          "begin": 3730,
+          "end": 3748,
+          "sha256": "79e0d8dc0bf0585a6910d5a92c0ddff0d76cc633cf1f77ccc8c7bc64540bd10a"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry; \\forall integer r,o,b,bo,s,c,cap,a; Heap::well_formed(entry) && t25v3_eligible(entry,r,o,b,bo,s,c) && c < cap <= 4611686018427387903 && Heap::available(entry,cap,a) ==> Heap::bytes(Heap::allocate(entry,cap,a),Heap::fresh_id(entry)) == 4*cap",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_establish_allocation_frame",
+      "id": "grow.copy.establish.allocation_frame",
+      "kind": "check_lemma",
+      "path": "006c13-t25v3_grow_copy_establish_allocation_frame.c",
+      "sha256": "e7b0aba1c137a4d3780736d66a112ed92aa96c266f103939546fa4b1db2d8835",
+      "source_groups": [
+        "G3"
+      ],
+      "source_spans": [
+        {
+          "begin": 3730,
+          "end": 3748,
+          "sha256": "79e0d8dc0bf0585a6910d5a92c0ddff0d76cc633cf1f77ccc8c7bc64540bd10a"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry; \\forall integer r,o,b,bo,s,c,cap,a; Heap::well_formed(entry) && t25v3_eligible(entry,r,o,b,bo,s,c) && c < cap <= 4611686018427387903 && Heap::available(entry,cap,a) ==> t25v3_copy_frame(entry,Heap::allocate(entry,cap,a),Heap::fresh_id(entry))",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_establish_empty_copied_prefix",
+      "id": "grow.copy.establish.empty_copied_prefix",
+      "kind": "check_lemma",
+      "path": "006c14-t25v3_grow_copy_establish_empty_copied_prefix.c",
+      "sha256": "e66ddddafe2217516b6b33e04b3d98cac4cb87d7bed70f1885b13b83f9fd59e1",
+      "source_groups": [
+        "G3"
+      ],
+      "source_spans": [
+        {
+          "begin": 3730,
+          "end": 3748,
+          "sha256": "79e0d8dc0bf0585a6910d5a92c0ddff0d76cc633cf1f77ccc8c7bc64540bd10a"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry; \\forall integer r,o,b,bo,s,c,cap,a; Heap::well_formed(entry) && t25v3_eligible(entry,r,o,b,bo,s,c) && c < cap <= 4611686018427387903 && Heap::available(entry,cap,a) ==> Heap::copied_prefix(entry,Heap::allocate(entry,cap,a),b,bo,Heap::fresh_id(entry),0)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_establish_uninitialized_tail",
+      "id": "grow.copy.establish.uninitialized_tail",
+      "kind": "check_lemma",
+      "path": "006c15-t25v3_grow_copy_establish_uninitialized_tail.c",
+      "sha256": "c23e451b34131297aa462858b432a7cabb085b2429d681a0c414867e0ee926fc",
+      "source_groups": [
+        "G3"
+      ],
+      "source_spans": [
+        {
+          "begin": 3730,
+          "end": 3748,
+          "sha256": "79e0d8dc0bf0585a6910d5a92c0ddff0d76cc633cf1f77ccc8c7bc64540bd10a"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry; \\forall integer r,o,b,bo,s,c,cap,a; Heap::well_formed(entry) && t25v3_eligible(entry,r,o,b,bo,s,c) && c < cap <= 4611686018427387903 && Heap::available(entry,cap,a) ==> (\\forall integer j; 0 <= j < cap ==> !Heap::initialized_at(Heap::allocate(entry,cap,a),Heap::fresh_id(entry),4*j))",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_read",
+      "id": "grow.copy.read",
+      "kind": "check_lemma",
+      "path": "007-t25v3_grow_copy_read.c",
+      "sha256": "7c90efa88d04fe2ebd52f63b2d03d26f9fab1028499546b4b8f9079b7e19a359",
+      "source_groups": [
+        "G4"
+      ],
+      "source_spans": [
+        {
+          "begin": 3770,
+          "end": 3795,
+          "sha256": "4707efe06a81fc43cb5c7cd35eef06022b0934d71d583ac51fba85d46e37c11d"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s ==> Heap::int32_at(h,b,bo+4*k) && Heap::load_int(h,b,bo+4*k) == Heap::load_int(entry,b,bo+4*k) && Heap::typed_forms(h,b,bo+4*k,4)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_write",
+      "id": "grow.copy.write",
+      "kind": "check_lemma",
+      "path": "008-t25v3_grow_copy_write.c",
+      "sha256": "8cb31cb0ca397d1af45989a20b86daf800f4917d85f7e7629cbfe20ca5b7643c",
+      "source_groups": [
+        "G5"
+      ],
+      "source_spans": [
+        {
+          "begin": 3770,
+          "end": 3795,
+          "sha256": "4707efe06a81fc43cb5c7cd35eef06022b0934d71d583ac51fba85d46e37c11d"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s ==> Heap::typed_forms(h,f,4*k,4) && Heap::typed_writes(h,f,4*k,4,4)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_step_entry_well_formed",
+      "id": "grow.copy.step.entry_well_formed",
+      "kind": "check_lemma",
+      "path": "009s01-t25v3_grow_copy_step_entry_well_formed.c",
+      "sha256": "12eb0863d3fc37174ed67c9ab63abaac4a21710276740137b3d05f8e1ebf24c9",
+      "source_groups": [
+        "G5",
+        "G6",
+        "G9"
+      ],
+      "source_spans": [
+        {
+          "begin": 3770,
+          "end": 3795,
+          "sha256": "4707efe06a81fc43cb5c7cd35eef06022b0934d71d583ac51fba85d46e37c11d"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s ==> Heap::well_formed(entry)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_step_updated_well_formed",
+      "id": "grow.copy.step.updated_well_formed",
+      "kind": "check_lemma",
+      "path": "009s02-t25v3_grow_copy_step_updated_well_formed.c",
+      "sha256": "8b1b238b28c4d00ebf16c321c8f30d4a41a686dbaefbf89a8a7868f8a0a9cbde",
+      "source_groups": [
+        "G5",
+        "G6",
+        "G9"
+      ],
+      "source_spans": [
+        {
+          "begin": 3770,
+          "end": 3795,
+          "sha256": "4707efe06a81fc43cb5c7cd35eef06022b0934d71d583ac51fba85d46e37c11d"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s ==> Heap::well_formed(Heap::copy_int(h,b,bo+4*k,f,4*k))",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_step_entry_eligible",
+      "id": "grow.copy.step.entry_eligible",
+      "kind": "check_lemma",
+      "path": "009s03-t25v3_grow_copy_step_entry_eligible.c",
+      "sha256": "ec6be998ea102346619e471900faba833872d9b358b2c4529fdac437246cb9a8",
+      "source_groups": [
+        "G5",
+        "G6",
+        "G9"
+      ],
+      "source_spans": [
+        {
+          "begin": 3770,
+          "end": 3795,
+          "sha256": "4707efe06a81fc43cb5c7cd35eef06022b0934d71d583ac51fba85d46e37c11d"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s ==> t25v3_eligible(entry,r,o,b,bo,s,c)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_step_updated_eligible",
+      "id": "grow.copy.step.updated_eligible",
+      "kind": "check_lemma",
+      "path": "009s04-t25v3_grow_copy_step_updated_eligible.c",
+      "sha256": "f78a4afe9eb7c68bc990a5f522b648ed92647b04e9b1068618e6ce8b66b41412",
+      "source_groups": [
+        "G5",
+        "G6",
+        "G9"
+      ],
+      "source_spans": [
+        {
+          "begin": 3770,
+          "end": 3795,
+          "sha256": "4707efe06a81fc43cb5c7cd35eef06022b0934d71d583ac51fba85d46e37c11d"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s ==> t25v3_eligible(Heap::copy_int(h,b,bo+4*k,f,4*k),r,o,b,bo,s,c)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_step_advanced_index_size_capacity_bounds",
+      "id": "grow.copy.step.advanced_index_size_capacity_bounds",
+      "kind": "check_lemma",
+      "path": "009s05-t25v3_grow_copy_step_advanced_index_size_capacity_bounds.c",
+      "sha256": "f45d9eb8f8c87c62151a73ea36926c5b2589daa69e81311ab8b56e67b981b6f7",
+      "source_groups": [
+        "G5",
+        "G6",
+        "G9"
+      ],
+      "source_spans": [
+        {
+          "begin": 3770,
+          "end": 3795,
+          "sha256": "4707efe06a81fc43cb5c7cd35eef06022b0934d71d583ac51fba85d46e37c11d"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s ==> 0 <= (k+1) <= s <= c < cap <= 4611686018427387903",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_step_fresh_identity",
+      "id": "grow.copy.step.fresh_identity",
+      "kind": "check_lemma",
+      "path": "009s06-t25v3_grow_copy_step_fresh_identity.c",
+      "sha256": "d2f46a3b6cc83ae4b034c3adbea352f6752b7de9684fb7deb1180f3c6357a12d",
+      "source_groups": [
+        "G5",
+        "G6",
+        "G9"
+      ],
+      "source_spans": [
+        {
+          "begin": 3770,
+          "end": 3795,
+          "sha256": "4707efe06a81fc43cb5c7cd35eef06022b0934d71d583ac51fba85d46e37c11d"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s ==> f == Heap::fresh_id(entry)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_step_unissued_identity",
+      "id": "grow.copy.step.unissued_identity",
+      "kind": "check_lemma",
+      "path": "009s07-t25v3_grow_copy_step_unissued_identity.c",
+      "sha256": "16ec9b37e3e5b8cfab01f07582e7e29201cc4effd027864e9f350ff92ffd109f",
+      "source_groups": [
+        "G5",
+        "G6",
+        "G9"
+      ],
+      "source_spans": [
+        {
+          "begin": 3770,
+          "end": 3795,
+          "sha256": "4707efe06a81fc43cb5c7cd35eef06022b0934d71d583ac51fba85d46e37c11d"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s ==> !Heap::issued(entry,f)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_step_receiver_distinct",
+      "id": "grow.copy.step.receiver_distinct",
+      "kind": "check_lemma",
+      "path": "009s08-t25v3_grow_copy_step_receiver_distinct.c",
+      "sha256": "4082c9adfde78d3ea435d7d1cb546bf0f2ac21db502f3540245bdb91da82efe3",
+      "source_groups": [
+        "G5",
+        "G6",
+        "G9"
+      ],
+      "source_spans": [
+        {
+          "begin": 3770,
+          "end": 3795,
+          "sha256": "4707efe06a81fc43cb5c7cd35eef06022b0934d71d583ac51fba85d46e37c11d"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s ==> f != r",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_step_old_buffer_distinct",
+      "id": "grow.copy.step.old_buffer_distinct",
+      "kind": "check_lemma",
+      "path": "009s09-t25v3_grow_copy_step_old_buffer_distinct.c",
+      "sha256": "e3befcdda0ecbc028c925145f57e458854f12717b46a4a2238b664cdadc572e9",
+      "source_groups": [
+        "G5",
+        "G6",
+        "G9"
+      ],
+      "source_spans": [
+        {
+          "begin": 3770,
+          "end": 3795,
+          "sha256": "4707efe06a81fc43cb5c7cd35eef06022b0934d71d583ac51fba85d46e37c11d"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s ==> f != b",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_step_destination_write_domain",
+      "id": "grow.copy.step.destination_write_domain",
+      "kind": "check_lemma",
+      "path": "009s10-t25v3_grow_copy_step_destination_write_domain.c",
+      "sha256": "e43050763308b2aec31f63361dca664cf71b7cfa6fb80e08468fb5ae937a9717",
+      "source_groups": [
+        "G5",
+        "G6",
+        "G9"
+      ],
+      "source_spans": [
+        {
+          "begin": 3770,
+          "end": 3795,
+          "sha256": "4707efe06a81fc43cb5c7cd35eef06022b0934d71d583ac51fba85d46e37c11d"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s ==> Heap::typed_writes(Heap::copy_int(h,b,bo+4*k,f,4*k),f,0,4*cap,4)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_step_destination_freeability",
+      "id": "grow.copy.step.destination_freeability",
+      "kind": "check_lemma",
+      "path": "009s11-t25v3_grow_copy_step_destination_freeability.c",
+      "sha256": "cbd40231a7fd77a24f4144e148d4437a4deb7ce21125a4d0acedacb7cc536419",
+      "source_groups": [
+        "G5",
+        "G6",
+        "G9"
+      ],
+      "source_spans": [
+        {
+          "begin": 3770,
+          "end": 3795,
+          "sha256": "4707efe06a81fc43cb5c7cd35eef06022b0934d71d583ac51fba85d46e37c11d"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s ==> Heap::freeable(Heap::copy_int(h,b,bo+4*k,f,4*k),f,0)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_step_destination_extent",
+      "id": "grow.copy.step.destination_extent",
+      "kind": "check_lemma",
+      "path": "009s12-t25v3_grow_copy_step_destination_extent.c",
+      "sha256": "f7ca7039d489eb38094c504987c97dd71077385fd4a20ee97b6eab49c89410f9",
+      "source_groups": [
+        "G5",
+        "G6",
+        "G9"
+      ],
+      "source_spans": [
+        {
+          "begin": 3770,
+          "end": 3795,
+          "sha256": "4707efe06a81fc43cb5c7cd35eef06022b0934d71d583ac51fba85d46e37c11d"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s ==> Heap::bytes(Heap::copy_int(h,b,bo+4*k,f,4*k),f) == 4*cap",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_step_allocation_frame",
+      "id": "grow.copy.step.allocation_frame",
+      "kind": "check_lemma",
+      "path": "009s13-t25v3_grow_copy_step_allocation_frame.c",
+      "sha256": "11aac92ac4019ab9b9ce8524706ca22ca49b1d309818ed65a8ef0657939d462c",
+      "source_groups": [
+        "G5",
+        "G6",
+        "G9"
+      ],
+      "source_spans": [
+        {
+          "begin": 3770,
+          "end": 3795,
+          "sha256": "4707efe06a81fc43cb5c7cd35eef06022b0934d71d583ac51fba85d46e37c11d"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s ==> t25v3_copy_frame(entry,Heap::copy_int(h,b,bo+4*k,f,4*k),f)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_step_advanced_copied_prefix_prior_access",
+      "id": "grow.copy.step.advanced_copied_prefix.prior.access",
+      "kind": "check_lemma",
+      "path": "009s14p01-t25v3_grow_copy_step_advanced_copied_prefix_prior_access.c",
+      "sha256": "972c0e1979d8088656efb3869aa25bb2e6b9fd6acc52d6c242753cdfc73ce62a",
+      "source_groups": [
+        "G5",
+        "G6",
+        "G9"
+      ],
+      "source_spans": [
+        {
+          "begin": 3770,
+          "end": 3795,
+          "sha256": "4707efe06a81fc43cb5c7cd35eef06022b0934d71d583ac51fba85d46e37c11d"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; \\forall integer j; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s && 0 <= j < (k+1) && j < k ==> Heap::typed_reads(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j,4,4)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_step_advanced_copied_prefix_prior_initialization",
+      "id": "grow.copy.step.advanced_copied_prefix.prior.initialization",
+      "kind": "check_lemma",
+      "path": "009s14p02-t25v3_grow_copy_step_advanced_copied_prefix_prior_initialization.c",
+      "sha256": "15137bc7e7021694b4beb9096811010dac1d8e230fe8bb43bab4167a29be6da0",
+      "source_groups": [
+        "G5",
+        "G6",
+        "G9"
+      ],
+      "source_spans": [
+        {
+          "begin": 3770,
+          "end": 3795,
+          "sha256": "4707efe06a81fc43cb5c7cd35eef06022b0934d71d583ac51fba85d46e37c11d"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; \\forall integer j; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s && 0 <= j < (k+1) && j < k ==> Heap::initialized_at(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_step_advanced_copied_prefix_prior_integer",
+      "id": "grow.copy.step.advanced_copied_prefix.prior.integer",
+      "kind": "check_lemma",
+      "path": "009s14p03-t25v3_grow_copy_step_advanced_copied_prefix_prior_integer.c",
+      "sha256": "9e99f45edfa8f18b86b0d56d81d1555ff8d17f076c31e7841181d20eda0506be",
+      "source_groups": [
+        "G5",
+        "G6",
+        "G9"
+      ],
+      "source_spans": [
+        {
+          "begin": 3770,
+          "end": 3795,
+          "sha256": "4707efe06a81fc43cb5c7cd35eef06022b0934d71d583ac51fba85d46e37c11d"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; \\forall integer j; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s && 0 <= j < (k+1) && j < k ==> Heap::integer_at(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j,Heap::load_int(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j))",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_step_advanced_copied_prefix_prior_bounds",
+      "id": "grow.copy.step.advanced_copied_prefix.prior.bounds",
+      "kind": "check_lemma",
+      "path": "009s14p04-t25v3_grow_copy_step_advanced_copied_prefix_prior_bounds.c",
+      "sha256": "4bd0a879b5a3a725e1873fe39c0ee7d8280d35c1e7e596df812db5c75664cefc",
+      "source_groups": [
+        "G5",
+        "G6",
+        "G9"
+      ],
+      "source_spans": [
+        {
+          "begin": 3770,
+          "end": 3795,
+          "sha256": "4707efe06a81fc43cb5c7cd35eef06022b0934d71d583ac51fba85d46e37c11d"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; \\forall integer j; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s && 0 <= j < (k+1) && j < k ==> -2147483648 <= Heap::load_int(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j) <= 2147483647",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_step_advanced_copied_prefix_prior_value",
+      "id": "grow.copy.step.advanced_copied_prefix.prior.value",
+      "kind": "check_lemma",
+      "path": "009s14p05-t25v3_grow_copy_step_advanced_copied_prefix_prior_value.c",
+      "sha256": "527c53cc599a660d5edb94ce06ce6d76088c00f2a7081be06f0f6b05c5ab6e73",
+      "source_groups": [
+        "G5",
+        "G6",
+        "G9"
+      ],
+      "source_spans": [
+        {
+          "begin": 3770,
+          "end": 3795,
+          "sha256": "4707efe06a81fc43cb5c7cd35eef06022b0934d71d583ac51fba85d46e37c11d"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; \\forall integer j; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s && 0 <= j < (k+1) && j < k ==> Heap::load_int(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j) == Heap::load_int(entry,b,bo+4*j)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_step_advanced_copied_prefix_written_access",
+      "id": "grow.copy.step.advanced_copied_prefix.written.access",
+      "kind": "check_lemma",
+      "path": "009s14p06-t25v3_grow_copy_step_advanced_copied_prefix_written_access.c",
+      "sha256": "0fb9f96fcde26b36c6a6c20c3a7d573b07a877450527f184b80157ac49db74f9",
+      "source_groups": [
+        "G5",
+        "G6",
+        "G9"
+      ],
+      "source_spans": [
+        {
+          "begin": 3770,
+          "end": 3795,
+          "sha256": "4707efe06a81fc43cb5c7cd35eef06022b0934d71d583ac51fba85d46e37c11d"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; \\forall integer j; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s && 0 <= j < (k+1) && j == k ==> Heap::typed_reads(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j,4,4)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_step_advanced_copied_prefix_written_initialization",
+      "id": "grow.copy.step.advanced_copied_prefix.written.initialization",
+      "kind": "check_lemma",
+      "path": "009s14p07-t25v3_grow_copy_step_advanced_copied_prefix_written_initialization.c",
+      "sha256": "cd7e9fa8e7838d13ed6da1be0f6e9efe6cd3ac9d772ee7d6077934a87768bf91",
+      "source_groups": [
+        "G5",
+        "G6",
+        "G9"
+      ],
+      "source_spans": [
+        {
+          "begin": 3770,
+          "end": 3795,
+          "sha256": "4707efe06a81fc43cb5c7cd35eef06022b0934d71d583ac51fba85d46e37c11d"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; \\forall integer j; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s && 0 <= j < (k+1) && j == k ==> Heap::initialized_at(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_step_advanced_copied_prefix_written_integer",
+      "id": "grow.copy.step.advanced_copied_prefix.written.integer",
+      "kind": "check_lemma",
+      "path": "009s14p08-t25v3_grow_copy_step_advanced_copied_prefix_written_integer.c",
+      "sha256": "8d162d9ff43224cc3d25c3dd07833043b7867a996f7fc6b8efa11c4a799511fe",
+      "source_groups": [
+        "G5",
+        "G6",
+        "G9"
+      ],
+      "source_spans": [
+        {
+          "begin": 3770,
+          "end": 3795,
+          "sha256": "4707efe06a81fc43cb5c7cd35eef06022b0934d71d583ac51fba85d46e37c11d"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; \\forall integer j; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s && 0 <= j < (k+1) && j == k ==> Heap::integer_at(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j,Heap::load_int(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j))",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_step_advanced_copied_prefix_written_bounds",
+      "id": "grow.copy.step.advanced_copied_prefix.written.bounds",
+      "kind": "check_lemma",
+      "path": "009s14p09-t25v3_grow_copy_step_advanced_copied_prefix_written_bounds.c",
+      "sha256": "e662ab1eddf7782cd5ebb79a1689ade934a363b9b1f13dd69fe5d2248bf68176",
+      "source_groups": [
+        "G5",
+        "G6",
+        "G9"
+      ],
+      "source_spans": [
+        {
+          "begin": 3770,
+          "end": 3795,
+          "sha256": "4707efe06a81fc43cb5c7cd35eef06022b0934d71d583ac51fba85d46e37c11d"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; \\forall integer j; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s && 0 <= j < (k+1) && j == k ==> -2147483648 <= Heap::load_int(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j) <= 2147483647",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_step_advanced_copied_prefix_written_value",
+      "id": "grow.copy.step.advanced_copied_prefix.written.value",
+      "kind": "check_lemma",
+      "path": "009s14p10-t25v3_grow_copy_step_advanced_copied_prefix_written_value.c",
+      "sha256": "f6a2d68de9418b734d7181e7de056e7c3225c34e4c08b81e2426facec422276b",
+      "source_groups": [
+        "G5",
+        "G6",
+        "G9"
+      ],
+      "source_spans": [
+        {
+          "begin": 3770,
+          "end": 3795,
+          "sha256": "4707efe06a81fc43cb5c7cd35eef06022b0934d71d583ac51fba85d46e37c11d"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; \\forall integer j; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s && 0 <= j < (k+1) && j == k ==> Heap::load_int(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j) == Heap::load_int(entry,b,bo+4*j)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_step_uninitialized_tail",
+      "id": "grow.copy.step.uninitialized_tail",
+      "kind": "check_lemma",
+      "path": "009s15-t25v3_grow_copy_step_uninitialized_tail.c",
+      "sha256": "9a653929b0ffd462a61c2f38e1f1102260c125660769e49f9dacbe9104e281ee",
+      "source_groups": [
+        "G5",
+        "G6",
+        "G9"
+      ],
+      "source_spans": [
+        {
+          "begin": 3770,
+          "end": 3795,
+          "sha256": "4707efe06a81fc43cb5c7cd35eef06022b0934d71d583ac51fba85d46e37c11d"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && k < s ==> (\\forall integer j; (k+1) <= j < cap ==> !Heap::initialized_at(Heap::copy_int(h,b,bo+4*k,f,4*k),f,4*j))",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_copy_exit",
+      "id": "grow.copy.exit",
+      "kind": "check_lemma",
+      "path": "010-t25v3_grow_copy_exit.c",
+      "sha256": "a82e1a2d18ce960a19f522f8501d387e3426ef93361101aa84a8c20ae8b64a56",
+      "source_groups": [
+        "G6"
+      ],
+      "source_spans": [
+        {
+          "begin": 3798,
+          "end": 3820,
+          "sha256": "103a45520f31820cfdbc8581b3b63e9b14831b70f6d7a564235d1eb3c453015f"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,k) && !(k < s) ==> k == s && Heap::copied_prefix(entry,h,b,bo,f,s)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_free_argument",
+      "id": "grow.free.argument",
+      "kind": "check_lemma",
+      "path": "011-t25v3_grow_free_argument.c",
+      "sha256": "e34e62929b1883a7e331d607891e0867f67255aa76f13144aa3599db4ce4fcb6",
+      "source_groups": [
+        "G7"
+      ],
+      "source_spans": [
+        {
+          "begin": 3798,
+          "end": 3820,
+          "sha256": "103a45520f31820cfdbc8581b3b63e9b14831b70f6d7a564235d1eb3c453015f"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,s) ==> (b == 0 && bo == 0) || Heap::freeable(h,b,bo)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_free_survival",
+      "id": "grow.free.survival",
+      "kind": "check_lemma",
+      "path": "012-t25v3_grow_free_survival.c",
+      "sha256": "379322038e0f7d2464b40d9d9ecc31820b667ffc535b789d6072ef83fbeba2ab",
+      "source_groups": [
+        "G7",
+        "G8"
+      ],
+      "source_spans": [
+        {
+          "begin": 3798,
+          "end": 3820,
+          "sha256": "103a45520f31820cfdbc8581b3b63e9b14831b70f6d7a564235d1eb3c453015f"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,s) ==> Heap::typed_writes(Heap::release(h,b),r,o,8,8) && Heap::typed_writes(Heap::release(h,b),r,o+16,8,8) && Heap::typed_writes(Heap::release(h,b),f,0,4*cap,4)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_free_aliases",
+      "id": "grow.free.aliases",
+      "kind": "check_lemma",
+      "path": "013-t25v3_grow_free_aliases.c",
+      "sha256": "c8af180b05b93f59898c1c9f70a1d66669a532470e7c1ddf8439ec566cb72fe3",
+      "source_groups": [
+        "G7"
+      ],
+      "source_spans": [
+        {
+          "begin": 3798,
+          "end": 3820,
+          "sha256": "103a45520f31820cfdbc8581b3b63e9b14831b70f6d7a564235d1eb3c453015f"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,s) && c > 0 ==> (\\forall integer p; !Heap::forms(Heap::release(h,b),b,p) && !Heap::can_read(Heap::release(h,b),b,p,4))",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_store_capacity",
+      "id": "grow.store.capacity",
+      "kind": "check_lemma",
+      "path": "014-t25v3_grow_store_capacity.c",
+      "sha256": "58205ae5015b20dfe0ed078b910139e4c02c520fbcdf3890a43d4608d13bce55",
+      "source_groups": [
+        "G8"
+      ],
+      "source_spans": [
+        {
+          "begin": 3845,
+          "end": 3866,
+          "sha256": "e605fa49cbdfb31630a19e6dbb70c115616543360e3ea5794b833d192eae2ba9"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,s) ==> Heap::typed_writes(Heap::put_pointer(Heap::release(h,b),r,o,f,0),r,o+16,8,8)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_post_eligibility",
+      "id": "grow.post.eligibility",
+      "kind": "check_lemma",
+      "path": "015-t25v3_grow_post_eligibility.c",
+      "sha256": "385c5a3abc142bd86609143250fbf1d5c915180a807b714047f1a57b9a3bcb3a",
+      "source_groups": [
+        "G8"
+      ],
+      "source_spans": [
+        {
+          "begin": 3033,
+          "end": 3078,
+          "sha256": "142921c81f2c798e5f5c025895415e90d52be8de487909947dcfbc6454f0b155"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,s) ==> t25v3_eligible(t25v3_grown(h,r,o,b,f,cap),r,o,f,0,s,cap)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_post_values",
+      "id": "grow.post.values",
+      "kind": "check_lemma",
+      "path": "016-t25v3_grow_post_values.c",
+      "sha256": "54bfb0689114aaee966679853bf9315a1efb4a09c9e234bdf3b9ca6693fe662a",
+      "source_groups": [
+        "G8",
+        "G9"
+      ],
+      "source_spans": [
+        {
+          "begin": 3194,
+          "end": 3230,
+          "sha256": "4ea52ea5f08b945588bf5ce48ee2fc9cfba142d9895d03537d7bcbfaa441033f"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,s) ==> Heap::copied_prefix(entry,t25v3_grown(h,r,o,b,f,cap),b,bo,f,s)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_post_old_invalid",
+      "id": "grow.post.old_invalid",
+      "kind": "check_lemma",
+      "path": "017-t25v3_grow_post_old_invalid.c",
+      "sha256": "c837d4ba9dfc151533c52b3bc2c62009aaa414160141fc1708bad65a505412ff",
+      "source_groups": [
+        "G7",
+        "G9"
+      ],
+      "source_spans": [
+        {
+          "begin": 3273,
+          "end": 3298,
+          "sha256": "a0707a82bc1e6da19d27a093758280d02075c5d75bc56d5aae613ed008477d43"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,s) && c > 0 ==> !Heap::can_read(t25v3_grown(h,r,o,b,f,cap),b,bo,4)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_post_frame",
+      "id": "grow.post.frame",
+      "kind": "check_lemma",
+      "path": "018-t25v3_grow_post_frame.c",
+      "sha256": "f893974f292f317c49e2c5b10b8d636e68b53be843e3e3b39ae60115e0042209",
+      "source_groups": [
+        "G9"
+      ],
+      "source_spans": [
+        {
+          "begin": 2966,
+          "end": 2980,
+          "sha256": "2725234737fe297b6011353f6f9939bb6d9ed8f6111928ea350147a19e1f22fd"
+        }
+      ],
+      "statement": "\\forall Heap::heap entry,h; \\forall integer r,o,b,bo,s,c,f,cap,k; t25v3_copy_inv(entry,h,r,o,b,bo,s,c,f,cap,s) ==> t25v3_grow_frame(entry,t25v3_grown(h,r,o,b,f,cap),r,o,b)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_grow_numeric",
+      "id": "grow.numeric",
+      "kind": "c_kernel",
+      "path": "019-t25v3_grow_numeric.c",
+      "sha256": "59d1e899773f54e3bc3b1087bef201b298c52703fcbf5506b3a4f9443b086b70",
+      "source_groups": [
+        "G2",
+        "G6"
+      ],
+      "source_spans": [
+        {
+          "begin": 3730,
+          "end": 3769,
+          "sha256": "eaa5c76fad1a41aa10cb4605abb3ed15855508e73a40f58712443568dd24fef3"
+        }
+      ],
+      "statement": null,
+      "status": "pending"
+    }
+  ],
+  "preparation_only": true,
+  "semantics": {
+    "path": "theory/heap_reallocation.mlw",
+    "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+  },
+  "source_inventory": {
+    "clauses": [
+      {
+        "function": "swdb_alloc_int",
+        "kind": "requires",
+        "obligations": [],
+        "role": "existing allocator policy",
+        "source": {
+          "begin": 2065,
+          "end": 2081,
+          "sha256": "d2d7f5a5f0355ef088764534d0d6f7dbd226646b2cb1d9e1e44b2b03af8b8046"
+        }
+      },
+      {
+        "function": "swdb_alloc_int",
+        "kind": "assigns",
+        "obligations": [],
+        "role": "existing allocator policy",
+        "source": {
+          "begin": 2086,
+          "end": 2103,
+          "sha256": "3ee15b51b9bf75a5533de567157f94ffb5aafc9a30edf5e54cfbbc440e044f82"
+        }
+      },
+      {
+        "function": "swdb_alloc_int",
+        "kind": "allocates",
+        "obligations": [],
+        "role": "existing allocator policy",
+        "source": {
+          "begin": 2108,
+          "end": 2126,
+          "sha256": "5685d37a8eec781773c21b5d9245f98e4b577aa9b3714ee74fb8e72841315b1b"
+        }
+      },
+      {
+        "function": "swdb_alloc_int",
+        "kind": "ensures",
+        "obligations": [],
+        "role": "existing allocator policy",
+        "source": {
+          "begin": 2131,
+          "end": 2206,
+          "sha256": "4bbb7bc2f005adf6e17a1006a9f9d19f878a0aa3de5a53aef639bade4ce167b5"
+        }
+      },
+      {
+        "function": "swdb_free",
+        "kind": "requires",
+        "obligations": [],
+        "role": "existing allocator policy",
+        "source": {
+          "begin": 2427,
+          "end": 2463,
+          "sha256": "9389d132c9676f76e05073475f54b4bba0278da957de952d8a0eb865a3b5e617"
+        }
+      },
+      {
+        "function": "swdb_free",
+        "kind": "assigns",
+        "obligations": [],
+        "role": "existing allocator policy",
+        "source": {
+          "begin": 2468,
+          "end": 2485,
+          "sha256": "3ee15b51b9bf75a5533de567157f94ffb5aafc9a30edf5e54cfbbc440e044f82"
+        }
+      },
+      {
+        "function": "swdb_free",
+        "kind": "frees",
+        "obligations": [],
+        "role": "existing allocator policy",
+        "source": {
+          "begin": 2490,
+          "end": 2498,
+          "sha256": "b3e48dd08f4a7aae7f0b1af1fb4739953041376ef13ba633730f95278fd2aa71"
+        }
+      },
+      {
+        "function": "std_vector_int_grow",
+        "kind": "requires",
+        "obligations": [],
+        "role": "entry domain; caller discharge required",
+        "source": {
+          "begin": 2706,
+          "end": 2902,
+          "sha256": "59116c0e6ad42649a008d41defd251c14d83764a2a7991bd28c486576f9ad23d"
+        }
+      },
+      {
+        "function": "std_vector_int_grow",
+        "kind": "requires",
+        "obligations": [],
+        "role": "entry domain; caller discharge required",
+        "source": {
+          "begin": 2907,
+          "end": 2961,
+          "sha256": "ac50573f19a070e00282b96c70d6702587fb5dad20c76215ac470835f3bc5fbc"
+        }
+      },
+      {
+        "function": "std_vector_int_grow",
+        "kind": "assigns",
+        "obligations": [
+          "grow.alloc.frame",
+          "grow.alloc.identity",
+          "grow.alloc.output",
+          "grow.copy.establish.allocated_eligible",
+          "grow.copy.establish.allocated_well_formed",
+          "grow.copy.establish.allocation_frame",
+          "grow.copy.establish.destination_extent",
+          "grow.copy.establish.destination_freeability",
+          "grow.copy.establish.destination_write_domain",
+          "grow.copy.establish.empty_copied_prefix",
+          "grow.copy.establish.entry_eligible",
+          "grow.copy.establish.entry_well_formed",
+          "grow.copy.establish.fresh_identity",
+          "grow.copy.establish.index_size_capacity_bounds",
+          "grow.copy.establish.old_buffer_distinct",
+          "grow.copy.establish.receiver_distinct",
+          "grow.copy.establish.uninitialized_tail",
+          "grow.copy.establish.unissued_identity",
+          "grow.copy.exit",
+          "grow.copy.read",
+          "grow.copy.step.advanced_copied_prefix.prior.access",
+          "grow.copy.step.advanced_copied_prefix.prior.bounds",
+          "grow.copy.step.advanced_copied_prefix.prior.initialization",
+          "grow.copy.step.advanced_copied_prefix.prior.integer",
+          "grow.copy.step.advanced_copied_prefix.prior.value",
+          "grow.copy.step.advanced_copied_prefix.written.access",
+          "grow.copy.step.advanced_copied_prefix.written.bounds",
+          "grow.copy.step.advanced_copied_prefix.written.initialization",
+          "grow.copy.step.advanced_copied_prefix.written.integer",
+          "grow.copy.step.advanced_copied_prefix.written.value",
+          "grow.copy.step.advanced_index_size_capacity_bounds",
+          "grow.copy.step.allocation_frame",
+          "grow.copy.step.destination_extent",
+          "grow.copy.step.destination_freeability",
+          "grow.copy.step.destination_write_domain",
+          "grow.copy.step.entry_eligible",
+          "grow.copy.step.entry_well_formed",
+          "grow.copy.step.fresh_identity",
+          "grow.copy.step.old_buffer_distinct",
+          "grow.copy.step.receiver_distinct",
+          "grow.copy.step.uninitialized_tail",
+          "grow.copy.step.unissued_identity",
+          "grow.copy.step.updated_eligible",
+          "grow.copy.step.updated_well_formed",
+          "grow.copy.write",
+          "grow.entry.reads",
+          "grow.free.aliases",
+          "grow.free.argument",
+          "grow.free.survival",
+          "grow.numeric",
+          "grow.post.eligibility",
+          "grow.post.frame",
+          "grow.post.old_invalid",
+          "grow.post.values",
+          "grow.store.capacity"
+        ],
+        "role": "pending source-mapped body obligation",
+        "source": {
+          "begin": 2966,
+          "end": 2980,
+          "sha256": "2725234737fe297b6011353f6f9939bb6d9ed8f6111928ea350147a19e1f22fd"
+        }
+      },
+      {
+        "function": "std_vector_int_grow",
+        "kind": "allocates",
+        "obligations": [
+          "grow.alloc.frame",
+          "grow.alloc.identity",
+          "grow.alloc.output",
+          "grow.copy.establish.allocated_eligible",
+          "grow.copy.establish.allocated_well_formed",
+          "grow.copy.establish.allocation_frame",
+          "grow.copy.establish.destination_extent",
+          "grow.copy.establish.destination_freeability",
+          "grow.copy.establish.destination_write_domain",
+          "grow.copy.establish.empty_copied_prefix",
+          "grow.copy.establish.entry_eligible",
+          "grow.copy.establish.entry_well_formed",
+          "grow.copy.establish.fresh_identity",
+          "grow.copy.establish.index_size_capacity_bounds",
+          "grow.copy.establish.old_buffer_distinct",
+          "grow.copy.establish.receiver_distinct",
+          "grow.copy.establish.uninitialized_tail",
+          "grow.copy.establish.unissued_identity",
+          "grow.copy.exit",
+          "grow.copy.read",
+          "grow.copy.step.advanced_copied_prefix.prior.access",
+          "grow.copy.step.advanced_copied_prefix.prior.bounds",
+          "grow.copy.step.advanced_copied_prefix.prior.initialization",
+          "grow.copy.step.advanced_copied_prefix.prior.integer",
+          "grow.copy.step.advanced_copied_prefix.prior.value",
+          "grow.copy.step.advanced_copied_prefix.written.access",
+          "grow.copy.step.advanced_copied_prefix.written.bounds",
+          "grow.copy.step.advanced_copied_prefix.written.initialization",
+          "grow.copy.step.advanced_copied_prefix.written.integer",
+          "grow.copy.step.advanced_copied_prefix.written.value",
+          "grow.copy.step.advanced_index_size_capacity_bounds",
+          "grow.copy.step.allocation_frame",
+          "grow.copy.step.destination_extent",
+          "grow.copy.step.destination_freeability",
+          "grow.copy.step.destination_write_domain",
+          "grow.copy.step.entry_eligible",
+          "grow.copy.step.entry_well_formed",
+          "grow.copy.step.fresh_identity",
+          "grow.copy.step.old_buffer_distinct",
+          "grow.copy.step.receiver_distinct",
+          "grow.copy.step.uninitialized_tail",
+          "grow.copy.step.unissued_identity",
+          "grow.copy.step.updated_eligible",
+          "grow.copy.step.updated_well_formed",
+          "grow.copy.write",
+          "grow.entry.reads",
+          "grow.free.aliases",
+          "grow.free.argument",
+          "grow.free.survival",
+          "grow.numeric",
+          "grow.post.eligibility",
+          "grow.post.frame",
+          "grow.post.old_invalid",
+          "grow.post.values",
+          "grow.store.capacity"
+        ],
+        "role": "pending source-mapped body obligation",
+        "source": {
+          "begin": 2985,
+          "end": 3006,
+          "sha256": "305944b9fd35b0480a5b2a5989ea3d98fc4e037c014cfb90187ba9cf8fc10aa3"
+        }
+      },
+      {
+        "function": "std_vector_int_grow",
+        "kind": "frees",
+        "obligations": [
+          "grow.alloc.frame",
+          "grow.alloc.identity",
+          "grow.alloc.output",
+          "grow.copy.establish.allocated_eligible",
+          "grow.copy.establish.allocated_well_formed",
+          "grow.copy.establish.allocation_frame",
+          "grow.copy.establish.destination_extent",
+          "grow.copy.establish.destination_freeability",
+          "grow.copy.establish.destination_write_domain",
+          "grow.copy.establish.empty_copied_prefix",
+          "grow.copy.establish.entry_eligible",
+          "grow.copy.establish.entry_well_formed",
+          "grow.copy.establish.fresh_identity",
+          "grow.copy.establish.index_size_capacity_bounds",
+          "grow.copy.establish.old_buffer_distinct",
+          "grow.copy.establish.receiver_distinct",
+          "grow.copy.establish.uninitialized_tail",
+          "grow.copy.establish.unissued_identity",
+          "grow.copy.exit",
+          "grow.copy.read",
+          "grow.copy.step.advanced_copied_prefix.prior.access",
+          "grow.copy.step.advanced_copied_prefix.prior.bounds",
+          "grow.copy.step.advanced_copied_prefix.prior.initialization",
+          "grow.copy.step.advanced_copied_prefix.prior.integer",
+          "grow.copy.step.advanced_copied_prefix.prior.value",
+          "grow.copy.step.advanced_copied_prefix.written.access",
+          "grow.copy.step.advanced_copied_prefix.written.bounds",
+          "grow.copy.step.advanced_copied_prefix.written.initialization",
+          "grow.copy.step.advanced_copied_prefix.written.integer",
+          "grow.copy.step.advanced_copied_prefix.written.value",
+          "grow.copy.step.advanced_index_size_capacity_bounds",
+          "grow.copy.step.allocation_frame",
+          "grow.copy.step.destination_extent",
+          "grow.copy.step.destination_freeability",
+          "grow.copy.step.destination_write_domain",
+          "grow.copy.step.entry_eligible",
+          "grow.copy.step.entry_well_formed",
+          "grow.copy.step.fresh_identity",
+          "grow.copy.step.old_buffer_distinct",
+          "grow.copy.step.receiver_distinct",
+          "grow.copy.step.uninitialized_tail",
+          "grow.copy.step.unissued_identity",
+          "grow.copy.step.updated_eligible",
+          "grow.copy.step.updated_well_formed",
+          "grow.copy.write",
+          "grow.entry.reads",
+          "grow.free.aliases",
+          "grow.free.argument",
+          "grow.free.survival",
+          "grow.numeric",
+          "grow.post.eligibility",
+          "grow.post.frame",
+          "grow.post.old_invalid",
+          "grow.post.values",
+          "grow.store.capacity"
+        ],
+        "role": "pending source-mapped body obligation",
+        "source": {
+          "begin": 3011,
+          "end": 3028,
+          "sha256": "8d9b1c0b218adbb60e7f493dd835af61007f22241526136555c5d5e21c6ca3be"
+        }
+      },
+      {
+        "function": "std_vector_int_grow",
+        "kind": "ensures",
+        "obligations": [
+          "grow.alloc.frame",
+          "grow.alloc.identity",
+          "grow.alloc.output",
+          "grow.copy.establish.allocated_eligible",
+          "grow.copy.establish.allocated_well_formed",
+          "grow.copy.establish.allocation_frame",
+          "grow.copy.establish.destination_extent",
+          "grow.copy.establish.destination_freeability",
+          "grow.copy.establish.destination_write_domain",
+          "grow.copy.establish.empty_copied_prefix",
+          "grow.copy.establish.entry_eligible",
+          "grow.copy.establish.entry_well_formed",
+          "grow.copy.establish.fresh_identity",
+          "grow.copy.establish.index_size_capacity_bounds",
+          "grow.copy.establish.old_buffer_distinct",
+          "grow.copy.establish.receiver_distinct",
+          "grow.copy.establish.uninitialized_tail",
+          "grow.copy.establish.unissued_identity",
+          "grow.copy.exit",
+          "grow.copy.read",
+          "grow.copy.step.advanced_copied_prefix.prior.access",
+          "grow.copy.step.advanced_copied_prefix.prior.bounds",
+          "grow.copy.step.advanced_copied_prefix.prior.initialization",
+          "grow.copy.step.advanced_copied_prefix.prior.integer",
+          "grow.copy.step.advanced_copied_prefix.prior.value",
+          "grow.copy.step.advanced_copied_prefix.written.access",
+          "grow.copy.step.advanced_copied_prefix.written.bounds",
+          "grow.copy.step.advanced_copied_prefix.written.initialization",
+          "grow.copy.step.advanced_copied_prefix.written.integer",
+          "grow.copy.step.advanced_copied_prefix.written.value",
+          "grow.copy.step.advanced_index_size_capacity_bounds",
+          "grow.copy.step.allocation_frame",
+          "grow.copy.step.destination_extent",
+          "grow.copy.step.destination_freeability",
+          "grow.copy.step.destination_write_domain",
+          "grow.copy.step.entry_eligible",
+          "grow.copy.step.entry_well_formed",
+          "grow.copy.step.fresh_identity",
+          "grow.copy.step.old_buffer_distinct",
+          "grow.copy.step.receiver_distinct",
+          "grow.copy.step.uninitialized_tail",
+          "grow.copy.step.unissued_identity",
+          "grow.copy.step.updated_eligible",
+          "grow.copy.step.updated_well_formed",
+          "grow.copy.write",
+          "grow.entry.reads",
+          "grow.free.aliases",
+          "grow.free.argument",
+          "grow.free.survival",
+          "grow.numeric",
+          "grow.post.eligibility",
+          "grow.post.frame",
+          "grow.post.old_invalid",
+          "grow.post.values",
+          "grow.store.capacity"
+        ],
+        "role": "pending source-mapped body obligation",
+        "source": {
+          "begin": 3033,
+          "end": 3138,
+          "sha256": "9c156ee3505d263669ba382c3a7e975cd1c602d9e20915e799fa676f457cf746"
+        }
+      },
+      {
+        "function": "std_vector_int_grow",
+        "kind": "ensures",
+        "obligations": [
+          "grow.alloc.frame",
+          "grow.alloc.identity",
+          "grow.alloc.output",
+          "grow.copy.establish.allocated_eligible",
+          "grow.copy.establish.allocated_well_formed",
+          "grow.copy.establish.allocation_frame",
+          "grow.copy.establish.destination_extent",
+          "grow.copy.establish.destination_freeability",
+          "grow.copy.establish.destination_write_domain",
+          "grow.copy.establish.empty_copied_prefix",
+          "grow.copy.establish.entry_eligible",
+          "grow.copy.establish.entry_well_formed",
+          "grow.copy.establish.fresh_identity",
+          "grow.copy.establish.index_size_capacity_bounds",
+          "grow.copy.establish.old_buffer_distinct",
+          "grow.copy.establish.receiver_distinct",
+          "grow.copy.establish.uninitialized_tail",
+          "grow.copy.establish.unissued_identity",
+          "grow.copy.exit",
+          "grow.copy.read",
+          "grow.copy.step.advanced_copied_prefix.prior.access",
+          "grow.copy.step.advanced_copied_prefix.prior.bounds",
+          "grow.copy.step.advanced_copied_prefix.prior.initialization",
+          "grow.copy.step.advanced_copied_prefix.prior.integer",
+          "grow.copy.step.advanced_copied_prefix.prior.value",
+          "grow.copy.step.advanced_copied_prefix.written.access",
+          "grow.copy.step.advanced_copied_prefix.written.bounds",
+          "grow.copy.step.advanced_copied_prefix.written.initialization",
+          "grow.copy.step.advanced_copied_prefix.written.integer",
+          "grow.copy.step.advanced_copied_prefix.written.value",
+          "grow.copy.step.advanced_index_size_capacity_bounds",
+          "grow.copy.step.allocation_frame",
+          "grow.copy.step.destination_extent",
+          "grow.copy.step.destination_freeability",
+          "grow.copy.step.destination_write_domain",
+          "grow.copy.step.entry_eligible",
+          "grow.copy.step.entry_well_formed",
+          "grow.copy.step.fresh_identity",
+          "grow.copy.step.old_buffer_distinct",
+          "grow.copy.step.receiver_distinct",
+          "grow.copy.step.uninitialized_tail",
+          "grow.copy.step.unissued_identity",
+          "grow.copy.step.updated_eligible",
+          "grow.copy.step.updated_well_formed",
+          "grow.copy.write",
+          "grow.entry.reads",
+          "grow.free.aliases",
+          "grow.free.argument",
+          "grow.free.survival",
+          "grow.numeric",
+          "grow.post.eligibility",
+          "grow.post.frame",
+          "grow.post.old_invalid",
+          "grow.post.values",
+          "grow.store.capacity"
+        ],
+        "role": "pending source-mapped body obligation",
+        "source": {
+          "begin": 3143,
+          "end": 3231,
+          "sha256": "0b0ace7d8f69a807d3e9d3fdc2c6774ac2991b37a806ac7d13f40b0e5105cbba"
+        }
+      },
+      {
+        "function": "std_vector_int_grow",
+        "kind": "ensures",
+        "obligations": [
+          "grow.alloc.frame",
+          "grow.alloc.identity",
+          "grow.alloc.output",
+          "grow.copy.establish.allocated_eligible",
+          "grow.copy.establish.allocated_well_formed",
+          "grow.copy.establish.allocation_frame",
+          "grow.copy.establish.destination_extent",
+          "grow.copy.establish.destination_freeability",
+          "grow.copy.establish.destination_write_domain",
+          "grow.copy.establish.empty_copied_prefix",
+          "grow.copy.establish.entry_eligible",
+          "grow.copy.establish.entry_well_formed",
+          "grow.copy.establish.fresh_identity",
+          "grow.copy.establish.index_size_capacity_bounds",
+          "grow.copy.establish.old_buffer_distinct",
+          "grow.copy.establish.receiver_distinct",
+          "grow.copy.establish.uninitialized_tail",
+          "grow.copy.establish.unissued_identity",
+          "grow.copy.exit",
+          "grow.copy.read",
+          "grow.copy.step.advanced_copied_prefix.prior.access",
+          "grow.copy.step.advanced_copied_prefix.prior.bounds",
+          "grow.copy.step.advanced_copied_prefix.prior.initialization",
+          "grow.copy.step.advanced_copied_prefix.prior.integer",
+          "grow.copy.step.advanced_copied_prefix.prior.value",
+          "grow.copy.step.advanced_copied_prefix.written.access",
+          "grow.copy.step.advanced_copied_prefix.written.bounds",
+          "grow.copy.step.advanced_copied_prefix.written.initialization",
+          "grow.copy.step.advanced_copied_prefix.written.integer",
+          "grow.copy.step.advanced_copied_prefix.written.value",
+          "grow.copy.step.advanced_index_size_capacity_bounds",
+          "grow.copy.step.allocation_frame",
+          "grow.copy.step.destination_extent",
+          "grow.copy.step.destination_freeability",
+          "grow.copy.step.destination_write_domain",
+          "grow.copy.step.entry_eligible",
+          "grow.copy.step.entry_well_formed",
+          "grow.copy.step.fresh_identity",
+          "grow.copy.step.old_buffer_distinct",
+          "grow.copy.step.receiver_distinct",
+          "grow.copy.step.uninitialized_tail",
+          "grow.copy.step.unissued_identity",
+          "grow.copy.step.updated_eligible",
+          "grow.copy.step.updated_well_formed",
+          "grow.copy.write",
+          "grow.entry.reads",
+          "grow.free.aliases",
+          "grow.free.argument",
+          "grow.free.survival",
+          "grow.numeric",
+          "grow.post.eligibility",
+          "grow.post.frame",
+          "grow.post.old_invalid",
+          "grow.post.values",
+          "grow.store.capacity"
+        ],
+        "role": "pending source-mapped body obligation",
+        "source": {
+          "begin": 3236,
+          "end": 3299,
+          "sha256": "6fa85a2345ef1cdb7941126df831d65e7de19bb24933cab0c9402a2f6ef8a6f4"
+        }
+      },
+      {
+        "function": "std_vector_int_grow",
+        "kind": "loop invariant",
+        "obligations": [
+          "grow.alloc.frame",
+          "grow.alloc.identity",
+          "grow.alloc.output",
+          "grow.copy.establish.allocated_eligible",
+          "grow.copy.establish.allocated_well_formed",
+          "grow.copy.establish.allocation_frame",
+          "grow.copy.establish.destination_extent",
+          "grow.copy.establish.destination_freeability",
+          "grow.copy.establish.destination_write_domain",
+          "grow.copy.establish.empty_copied_prefix",
+          "grow.copy.establish.entry_eligible",
+          "grow.copy.establish.entry_well_formed",
+          "grow.copy.establish.fresh_identity",
+          "grow.copy.establish.index_size_capacity_bounds",
+          "grow.copy.establish.old_buffer_distinct",
+          "grow.copy.establish.receiver_distinct",
+          "grow.copy.establish.uninitialized_tail",
+          "grow.copy.establish.unissued_identity",
+          "grow.copy.exit",
+          "grow.copy.read",
+          "grow.copy.step.advanced_copied_prefix.prior.access",
+          "grow.copy.step.advanced_copied_prefix.prior.bounds",
+          "grow.copy.step.advanced_copied_prefix.prior.initialization",
+          "grow.copy.step.advanced_copied_prefix.prior.integer",
+          "grow.copy.step.advanced_copied_prefix.prior.value",
+          "grow.copy.step.advanced_copied_prefix.written.access",
+          "grow.copy.step.advanced_copied_prefix.written.bounds",
+          "grow.copy.step.advanced_copied_prefix.written.initialization",
+          "grow.copy.step.advanced_copied_prefix.written.integer",
+          "grow.copy.step.advanced_copied_prefix.written.value",
+          "grow.copy.step.advanced_index_size_capacity_bounds",
+          "grow.copy.step.allocation_frame",
+          "grow.copy.step.destination_extent",
+          "grow.copy.step.destination_freeability",
+          "grow.copy.step.destination_write_domain",
+          "grow.copy.step.entry_eligible",
+          "grow.copy.step.entry_well_formed",
+          "grow.copy.step.fresh_identity",
+          "grow.copy.step.old_buffer_distinct",
+          "grow.copy.step.receiver_distinct",
+          "grow.copy.step.uninitialized_tail",
+          "grow.copy.step.unissued_identity",
+          "grow.copy.step.updated_eligible",
+          "grow.copy.step.updated_well_formed",
+          "grow.copy.write",
+          "grow.entry.reads",
+          "grow.free.aliases",
+          "grow.free.argument",
+          "grow.free.survival",
+          "grow.numeric",
+          "grow.post.eligibility",
+          "grow.post.frame",
+          "grow.post.old_invalid",
+          "grow.post.values",
+          "grow.store.capacity"
+        ],
+        "role": "pending source-mapped body obligation",
+        "source": {
+          "begin": 3471,
+          "end": 3507,
+          "sha256": "2baa01d7e970053553837e4e4f2315eb11307d592b26456f61c8b61278fd0a88"
+        }
+      },
+      {
+        "function": "std_vector_int_grow",
+        "kind": "loop invariant",
+        "obligations": [
+          "grow.alloc.frame",
+          "grow.alloc.identity",
+          "grow.alloc.output",
+          "grow.copy.establish.allocated_eligible",
+          "grow.copy.establish.allocated_well_formed",
+          "grow.copy.establish.allocation_frame",
+          "grow.copy.establish.destination_extent",
+          "grow.copy.establish.destination_freeability",
+          "grow.copy.establish.destination_write_domain",
+          "grow.copy.establish.empty_copied_prefix",
+          "grow.copy.establish.entry_eligible",
+          "grow.copy.establish.entry_well_formed",
+          "grow.copy.establish.fresh_identity",
+          "grow.copy.establish.index_size_capacity_bounds",
+          "grow.copy.establish.old_buffer_distinct",
+          "grow.copy.establish.receiver_distinct",
+          "grow.copy.establish.uninitialized_tail",
+          "grow.copy.establish.unissued_identity",
+          "grow.copy.exit",
+          "grow.copy.read",
+          "grow.copy.step.advanced_copied_prefix.prior.access",
+          "grow.copy.step.advanced_copied_prefix.prior.bounds",
+          "grow.copy.step.advanced_copied_prefix.prior.initialization",
+          "grow.copy.step.advanced_copied_prefix.prior.integer",
+          "grow.copy.step.advanced_copied_prefix.prior.value",
+          "grow.copy.step.advanced_copied_prefix.written.access",
+          "grow.copy.step.advanced_copied_prefix.written.bounds",
+          "grow.copy.step.advanced_copied_prefix.written.initialization",
+          "grow.copy.step.advanced_copied_prefix.written.integer",
+          "grow.copy.step.advanced_copied_prefix.written.value",
+          "grow.copy.step.advanced_index_size_capacity_bounds",
+          "grow.copy.step.allocation_frame",
+          "grow.copy.step.destination_extent",
+          "grow.copy.step.destination_freeability",
+          "grow.copy.step.destination_write_domain",
+          "grow.copy.step.entry_eligible",
+          "grow.copy.step.entry_well_formed",
+          "grow.copy.step.fresh_identity",
+          "grow.copy.step.old_buffer_distinct",
+          "grow.copy.step.receiver_distinct",
+          "grow.copy.step.uninitialized_tail",
+          "grow.copy.step.unissued_identity",
+          "grow.copy.step.updated_eligible",
+          "grow.copy.step.updated_well_formed",
+          "grow.copy.write",
+          "grow.entry.reads",
+          "grow.free.aliases",
+          "grow.free.argument",
+          "grow.free.survival",
+          "grow.numeric",
+          "grow.post.eligibility",
+          "grow.post.frame",
+          "grow.post.old_invalid",
+          "grow.post.values",
+          "grow.store.capacity"
+        ],
+        "role": "pending source-mapped body obligation",
+        "source": {
+          "begin": 3514,
+          "end": 3589,
+          "sha256": "361cc8dc111ae16d51cea707cc867e9be489699a2609bc91976a4333a46b8ea2"
+        }
+      },
+      {
+        "function": "std_vector_int_grow",
+        "kind": "loop invariant",
+        "obligations": [
+          "grow.alloc.frame",
+          "grow.alloc.identity",
+          "grow.alloc.output",
+          "grow.copy.establish.allocated_eligible",
+          "grow.copy.establish.allocated_well_formed",
+          "grow.copy.establish.allocation_frame",
+          "grow.copy.establish.destination_extent",
+          "grow.copy.establish.destination_freeability",
+          "grow.copy.establish.destination_write_domain",
+          "grow.copy.establish.empty_copied_prefix",
+          "grow.copy.establish.entry_eligible",
+          "grow.copy.establish.entry_well_formed",
+          "grow.copy.establish.fresh_identity",
+          "grow.copy.establish.index_size_capacity_bounds",
+          "grow.copy.establish.old_buffer_distinct",
+          "grow.copy.establish.receiver_distinct",
+          "grow.copy.establish.uninitialized_tail",
+          "grow.copy.establish.unissued_identity",
+          "grow.copy.exit",
+          "grow.copy.read",
+          "grow.copy.step.advanced_copied_prefix.prior.access",
+          "grow.copy.step.advanced_copied_prefix.prior.bounds",
+          "grow.copy.step.advanced_copied_prefix.prior.initialization",
+          "grow.copy.step.advanced_copied_prefix.prior.integer",
+          "grow.copy.step.advanced_copied_prefix.prior.value",
+          "grow.copy.step.advanced_copied_prefix.written.access",
+          "grow.copy.step.advanced_copied_prefix.written.bounds",
+          "grow.copy.step.advanced_copied_prefix.written.initialization",
+          "grow.copy.step.advanced_copied_prefix.written.integer",
+          "grow.copy.step.advanced_copied_prefix.written.value",
+          "grow.copy.step.advanced_index_size_capacity_bounds",
+          "grow.copy.step.allocation_frame",
+          "grow.copy.step.destination_extent",
+          "grow.copy.step.destination_freeability",
+          "grow.copy.step.destination_write_domain",
+          "grow.copy.step.entry_eligible",
+          "grow.copy.step.entry_well_formed",
+          "grow.copy.step.fresh_identity",
+          "grow.copy.step.old_buffer_distinct",
+          "grow.copy.step.receiver_distinct",
+          "grow.copy.step.uninitialized_tail",
+          "grow.copy.step.unissued_identity",
+          "grow.copy.step.updated_eligible",
+          "grow.copy.step.updated_well_formed",
+          "grow.copy.write",
+          "grow.entry.reads",
+          "grow.free.aliases",
+          "grow.free.argument",
+          "grow.free.survival",
+          "grow.numeric",
+          "grow.post.eligibility",
+          "grow.post.frame",
+          "grow.post.old_invalid",
+          "grow.post.values",
+          "grow.store.capacity"
+        ],
+        "role": "pending source-mapped body obligation",
+        "source": {
+          "begin": 3596,
+          "end": 3646,
+          "sha256": "d49917e70b16c2327938d56cbc63eff17198616a7719abc0ed43f5d2f1070656"
+        }
+      },
+      {
+        "function": "std_vector_int_grow",
+        "kind": "loop assigns",
+        "obligations": [
+          "grow.alloc.frame",
+          "grow.alloc.identity",
+          "grow.alloc.output",
+          "grow.copy.establish.allocated_eligible",
+          "grow.copy.establish.allocated_well_formed",
+          "grow.copy.establish.allocation_frame",
+          "grow.copy.establish.destination_extent",
+          "grow.copy.establish.destination_freeability",
+          "grow.copy.establish.destination_write_domain",
+          "grow.copy.establish.empty_copied_prefix",
+          "grow.copy.establish.entry_eligible",
+          "grow.copy.establish.entry_well_formed",
+          "grow.copy.establish.fresh_identity",
+          "grow.copy.establish.index_size_capacity_bounds",
+          "grow.copy.establish.old_buffer_distinct",
+          "grow.copy.establish.receiver_distinct",
+          "grow.copy.establish.uninitialized_tail",
+          "grow.copy.establish.unissued_identity",
+          "grow.copy.exit",
+          "grow.copy.read",
+          "grow.copy.step.advanced_copied_prefix.prior.access",
+          "grow.copy.step.advanced_copied_prefix.prior.bounds",
+          "grow.copy.step.advanced_copied_prefix.prior.initialization",
+          "grow.copy.step.advanced_copied_prefix.prior.integer",
+          "grow.copy.step.advanced_copied_prefix.prior.value",
+          "grow.copy.step.advanced_copied_prefix.written.access",
+          "grow.copy.step.advanced_copied_prefix.written.bounds",
+          "grow.copy.step.advanced_copied_prefix.written.initialization",
+          "grow.copy.step.advanced_copied_prefix.written.integer",
+          "grow.copy.step.advanced_copied_prefix.written.value",
+          "grow.copy.step.advanced_index_size_capacity_bounds",
+          "grow.copy.step.allocation_frame",
+          "grow.copy.step.destination_extent",
+          "grow.copy.step.destination_freeability",
+          "grow.copy.step.destination_write_domain",
+          "grow.copy.step.entry_eligible",
+          "grow.copy.step.entry_well_formed",
+          "grow.copy.step.fresh_identity",
+          "grow.copy.step.old_buffer_distinct",
+          "grow.copy.step.receiver_distinct",
+          "grow.copy.step.uninitialized_tail",
+          "grow.copy.step.unissued_identity",
+          "grow.copy.step.updated_eligible",
+          "grow.copy.step.updated_well_formed",
+          "grow.copy.write",
+          "grow.entry.reads",
+          "grow.free.aliases",
+          "grow.free.argument",
+          "grow.free.survival",
+          "grow.numeric",
+          "grow.post.eligibility",
+          "grow.post.frame",
+          "grow.post.old_invalid",
+          "grow.post.values",
+          "grow.store.capacity"
+        ],
+        "role": "pending source-mapped body obligation",
+        "source": {
+          "begin": 3653,
+          "end": 3689,
+          "sha256": "d1fe201c7cdff56b5b42157791c7b408099daa2c8e38770e30a9f58f20813109"
+        }
+      },
+      {
+        "function": "std_vector_int_grow",
+        "kind": "loop variant",
+        "obligations": [
+          "grow.alloc.frame",
+          "grow.alloc.identity",
+          "grow.alloc.output",
+          "grow.copy.establish.allocated_eligible",
+          "grow.copy.establish.allocated_well_formed",
+          "grow.copy.establish.allocation_frame",
+          "grow.copy.establish.destination_extent",
+          "grow.copy.establish.destination_freeability",
+          "grow.copy.establish.destination_write_domain",
+          "grow.copy.establish.empty_copied_prefix",
+          "grow.copy.establish.entry_eligible",
+          "grow.copy.establish.entry_well_formed",
+          "grow.copy.establish.fresh_identity",
+          "grow.copy.establish.index_size_capacity_bounds",
+          "grow.copy.establish.old_buffer_distinct",
+          "grow.copy.establish.receiver_distinct",
+          "grow.copy.establish.uninitialized_tail",
+          "grow.copy.establish.unissued_identity",
+          "grow.copy.exit",
+          "grow.copy.read",
+          "grow.copy.step.advanced_copied_prefix.prior.access",
+          "grow.copy.step.advanced_copied_prefix.prior.bounds",
+          "grow.copy.step.advanced_copied_prefix.prior.initialization",
+          "grow.copy.step.advanced_copied_prefix.prior.integer",
+          "grow.copy.step.advanced_copied_prefix.prior.value",
+          "grow.copy.step.advanced_copied_prefix.written.access",
+          "grow.copy.step.advanced_copied_prefix.written.bounds",
+          "grow.copy.step.advanced_copied_prefix.written.initialization",
+          "grow.copy.step.advanced_copied_prefix.written.integer",
+          "grow.copy.step.advanced_copied_prefix.written.value",
+          "grow.copy.step.advanced_index_size_capacity_bounds",
+          "grow.copy.step.allocation_frame",
+          "grow.copy.step.destination_extent",
+          "grow.copy.step.destination_freeability",
+          "grow.copy.step.destination_write_domain",
+          "grow.copy.step.entry_eligible",
+          "grow.copy.step.entry_well_formed",
+          "grow.copy.step.fresh_identity",
+          "grow.copy.step.old_buffer_distinct",
+          "grow.copy.step.receiver_distinct",
+          "grow.copy.step.uninitialized_tail",
+          "grow.copy.step.unissued_identity",
+          "grow.copy.step.updated_eligible",
+          "grow.copy.step.updated_well_formed",
+          "grow.copy.write",
+          "grow.entry.reads",
+          "grow.free.aliases",
+          "grow.free.argument",
+          "grow.free.survival",
+          "grow.numeric",
+          "grow.post.eligibility",
+          "grow.post.frame",
+          "grow.post.old_invalid",
+          "grow.post.values",
+          "grow.store.capacity"
+        ],
+        "role": "pending source-mapped body obligation",
+        "source": {
+          "begin": 3696,
+          "end": 3724,
+          "sha256": "72f26a7e536d7fb902418d17098ec579cf75fc0f6bd0d1646dc622c2dd18254a"
+        }
+      }
+    ],
+    "events": [
+      {
+        "function": "std_vector_int_grow",
+        "id": "grow.allocate",
+        "obligations": [
+          "grow.alloc.identity",
+          "grow.alloc.output",
+          "grow.alloc.frame",
+          "grow.numeric"
+        ],
+        "source": {
+          "begin": 3384,
+          "end": 3417,
+          "sha256": "15704738d3a960d1f7370700ed414a670bad761d7851256d93b142e311a950eb"
+        }
+      },
+      {
+        "function": "std_vector_int_grow",
+        "id": "grow.loop.init",
+        "obligations": [
+          "grow.copy.establish.entry_well_formed",
+          "grow.copy.establish.allocated_well_formed",
+          "grow.copy.establish.entry_eligible",
+          "grow.copy.establish.allocated_eligible",
+          "grow.copy.establish.index_size_capacity_bounds",
+          "grow.copy.establish.fresh_identity",
+          "grow.copy.establish.unissued_identity",
+          "grow.copy.establish.receiver_distinct",
+          "grow.copy.establish.old_buffer_distinct",
+          "grow.copy.establish.destination_write_domain",
+          "grow.copy.establish.destination_freeability",
+          "grow.copy.establish.destination_extent",
+          "grow.copy.establish.allocation_frame",
+          "grow.copy.establish.empty_copied_prefix",
+          "grow.copy.establish.uninitialized_tail",
+          "grow.numeric"
+        ],
+        "source": {
+          "begin": 3735,
+          "end": 3748,
+          "sha256": "26cb5e6510fb3b0173abf477168bf7ea10f51ac91335efb12c627d1bd35be247"
+        }
+      },
+      {
+        "function": "std_vector_int_grow",
+        "id": "grow.loop.test",
+        "obligations": [
+          "grow.entry.reads",
+          "grow.copy.read",
+          "grow.copy.exit"
+        ],
+        "source": {
+          "begin": 3749,
+          "end": 3764,
+          "sha256": "382aff06e5140261f9134bc28264ee059f2a475c82abccc1ebef9bf86c4a52b7"
+        }
+      },
+      {
+        "function": "std_vector_int_grow",
+        "id": "grow.copy",
+        "obligations": [
+          "grow.entry.reads",
+          "grow.copy.read",
+          "grow.copy.write",
+          "grow.copy.step.entry_well_formed",
+          "grow.copy.step.updated_well_formed",
+          "grow.copy.step.entry_eligible",
+          "grow.copy.step.updated_eligible",
+          "grow.copy.step.advanced_index_size_capacity_bounds",
+          "grow.copy.step.fresh_identity",
+          "grow.copy.step.unissued_identity",
+          "grow.copy.step.receiver_distinct",
+          "grow.copy.step.old_buffer_distinct",
+          "grow.copy.step.destination_write_domain",
+          "grow.copy.step.destination_freeability",
+          "grow.copy.step.destination_extent",
+          "grow.copy.step.allocation_frame",
+          "grow.copy.step.advanced_copied_prefix.prior.access",
+          "grow.copy.step.advanced_copied_prefix.prior.initialization",
+          "grow.copy.step.advanced_copied_prefix.prior.integer",
+          "grow.copy.step.advanced_copied_prefix.prior.bounds",
+          "grow.copy.step.advanced_copied_prefix.prior.value",
+          "grow.copy.step.advanced_copied_prefix.written.access",
+          "grow.copy.step.advanced_copied_prefix.written.initialization",
+          "grow.copy.step.advanced_copied_prefix.written.integer",
+          "grow.copy.step.advanced_copied_prefix.written.bounds",
+          "grow.copy.step.advanced_copied_prefix.written.value",
+          "grow.copy.step.uninitialized_tail"
+        ],
+        "source": {
+          "begin": 3770,
+          "end": 3795,
+          "sha256": "4707efe06a81fc43cb5c7cd35eef06022b0934d71d583ac51fba85d46e37c11d"
+        }
+      },
+      {
+        "function": "std_vector_int_grow",
+        "id": "grow.loop.increment",
+        "obligations": [
+          "grow.numeric",
+          "grow.copy.step.entry_well_formed",
+          "grow.copy.step.updated_well_formed",
+          "grow.copy.step.entry_eligible",
+          "grow.copy.step.updated_eligible",
+          "grow.copy.step.advanced_index_size_capacity_bounds",
+          "grow.copy.step.fresh_identity",
+          "grow.copy.step.unissued_identity",
+          "grow.copy.step.receiver_distinct",
+          "grow.copy.step.old_buffer_distinct",
+          "grow.copy.step.destination_write_domain",
+          "grow.copy.step.destination_freeability",
+          "grow.copy.step.destination_extent",
+          "grow.copy.step.allocation_frame",
+          "grow.copy.step.advanced_copied_prefix.prior.access",
+          "grow.copy.step.advanced_copied_prefix.prior.initialization",
+          "grow.copy.step.advanced_copied_prefix.prior.integer",
+          "grow.copy.step.advanced_copied_prefix.prior.bounds",
+          "grow.copy.step.advanced_copied_prefix.prior.value",
+          "grow.copy.step.advanced_copied_prefix.written.access",
+          "grow.copy.step.advanced_copied_prefix.written.initialization",
+          "grow.copy.step.advanced_copied_prefix.written.integer",
+          "grow.copy.step.advanced_copied_prefix.written.bounds",
+          "grow.copy.step.advanced_copied_prefix.written.value",
+          "grow.copy.step.uninitialized_tail"
+        ],
+        "source": {
+          "begin": 3765,
+          "end": 3769,
+          "sha256": "164d038f44139f62f2a431cd858747884ca6be0adcaaa84fcd84426d61c00697"
+        }
+      },
+      {
+        "function": "std_vector_int_grow",
+        "id": "grow.release",
+        "obligations": [
+          "grow.entry.reads",
+          "grow.free.argument",
+          "grow.free.survival",
+          "grow.free.aliases"
+        ],
+        "source": {
+          "begin": 3798,
+          "end": 3820,
+          "sha256": "103a45520f31820cfdbc8581b3b63e9b14831b70f6d7a564235d1eb3c453015f"
+        }
+      },
+      {
+        "function": "std_vector_int_grow",
+        "id": "grow.data.store",
+        "obligations": [
+          "grow.free.survival",
+          "grow.post.eligibility"
+        ],
+        "source": {
+          "begin": 3823,
+          "end": 3842,
+          "sha256": "b994a74cf5c70b655fb12729f5439480665ef0697181fd6fea859c18d20f24d3"
+        }
+      },
+      {
+        "function": "std_vector_int_grow",
+        "id": "grow.capacity.store",
+        "obligations": [
+          "grow.store.capacity",
+          "grow.post.eligibility",
+          "grow.post.values",
+          "grow.post.old_invalid",
+          "grow.post.frame"
+        ],
+        "source": {
+          "begin": 3845,
+          "end": 3866,
+          "sha256": "e605fa49cbdfb31630a19e6dbb70c115616543360e3ea5794b833d192eae2ba9"
+        }
+      }
+    ],
+    "pending": [
+      "independent completeness review",
+      "selected typed-source image and caller discharge",
+      "fresh complete ordinary/smoke proofs and import/task closure"
+    ],
+    "role": "closed exact-source map; no proof admission",
+    "source_sha256": "abbc59a1e71c9597c00379706f917de26b2ad0edd25d0aa19c8c52f2414e81ba",
+    "trusted_helpers": [
+      {
+        "body_correspondence": {
+          "body_sha256": "86fd9f8970bed2f1ffc305762055e0aeea6f3d3f91623b2bf35ce9506762a292",
+          "inverse_qualified_body_sha256": "86fd9f8970bed2f1ffc305762055e0aeea6f3d3f91623b2bf35ce9506762a292",
+          "original_fragment_sha256": "eb1f5833017762a8d83cc477b6d35e604be6906ebe70b7c0ba56abf032fa03b0",
+          "original_function": "swdb_alloc_int",
+          "qualified_fragment_sha256": "eb1f5833017762a8d83cc477b6d35e604be6906ebe70b7c0ba56abf032fa03b0",
+          "qualified_function": "swdb_alloc_int"
+        },
+        "name": "swdb_alloc_int",
+        "role": "existing allocator policy; not a proved model body",
+        "source": {
+          "begin": 1952,
+          "end": 2340,
+          "sha256": "eb1f5833017762a8d83cc477b6d35e604be6906ebe70b7c0ba56abf032fa03b0"
+        }
+      },
+      {
+        "body_correspondence": {
+          "body_sha256": "90f92e95d590f5c59653ed53a9ec73f7a1561364d39092dcd5911b92afc4cdfc",
+          "inverse_qualified_body_sha256": "90f92e95d590f5c59653ed53a9ec73f7a1561364d39092dcd5911b92afc4cdfc",
+          "original_fragment_sha256": "e301a232920b9439f2db75cccc278276c1e74ba760cbd9ca2ae7958210b401d4",
+          "original_function": "swdb_free",
+          "qualified_fragment_sha256": "e301a232920b9439f2db75cccc278276c1e74ba760cbd9ca2ae7958210b401d4",
+          "qualified_function": "swdb_free"
+        },
+        "name": "swdb_free",
+        "role": "existing allocator policy; not a proved model body",
+        "source": {
+          "begin": 2341,
+          "end": 2590,
+          "sha256": "e301a232920b9439f2db75cccc278276c1e74ba760cbd9ca2ae7958210b401d4"
+        }
+      }
+    ],
+    "unmapped_contract_clauses": [],
+    "unmapped_executable_events": []
+  },
+  "source_parameter_semantics": {
+    "int": "signed32 representation range; part of source typing, not a new requires"
+  },
+  "source_sha256": "abbc59a1e71c9597c00379706f917de26b2ad0edd25d0aa19c8c52f2414e81ba",
+  "sources": {
+    "original.c": {
+      "path": "original.c",
+      "sha256": "dc2049fa6f88a958fb88aee1e0a401f584630e8c302ad2e60b069ced2b587b1b"
+    },
+    "qualified.c": {
+      "path": "qualified.c",
+      "sha256": "abbc59a1e71c9597c00379706f917de26b2ad0edd25d0aa19c8c52f2414e81ba"
+    }
+  },
+  "translation_components": {
+    "heap_model_vcs.py": "f20e0ec130222aeda96b4fbb8e72eef8d922d3f33e84077777203f7e6d159092",
+    "vector_reallocation_inventory.py": "0a0474084a17b84788585a62a9e0b63b88eb43efd858101769db267579af5f07",
+    "vector_reallocation_model.py": "92ad23030531650924a51b0a3bd1abb479afa373a7d1dd2a543b9ae225ab8b89",
+    "vector_reallocation_vcs.py": "f2185ad536bca5e8845ff0b718d81fe1787f1d6fedea7e53907dbe75969861e9"
+  },
+  "typed_memory_role": "explicit typed int source-image domain; source-derived caller discharge required",
+  "typed_source_image": {
+    "applicable": true,
+    "boundary": "old heap repr does not imply int32_region; actual typed-source correspondence is mandatory",
+    "caller_discharge": "source-derived typed int objects; opaque raw storage unsupported",
+    "id": "wp-typed-int32-source-image-1",
+    "projection": "selected WP Typed bounded integer chunk -> Integer(value); pointer chunks are not integer cells",
+    "raw_effective_type_safety_proved": false,
+    "required_source_files": [
+      {
+        "name": "MemTyped.ml",
+        "sha256": "ad0d3c4e8e568a09d47bb658767e5ba476cc9e957f16b14981370642c5e235b5"
+      },
+      {
+        "name": "Cint.ml",
+        "sha256": "3b2a00bb65f4c785265c2295c323459e3dce66bb6c82e3d70ff3a659a3660156"
+      },
+      {
+        "name": "Factory.ml",
+        "sha256": "d2f4da6cb7b2f4a674880f4760680e84fe0a1c58ece95d0f2ff889b7902efcc5"
+      }
+    ],
+    "required_wp_integer_model": "Machine; Natural/NAT is outside this bounded-int projection",
+    "runtime_source_binding": "required selected-tool verification before every launch; not assumed"
+  }
+}

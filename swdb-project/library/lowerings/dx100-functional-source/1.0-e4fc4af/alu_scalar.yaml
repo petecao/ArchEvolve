@@ -1,0 +1,50 @@
+kind: lowering
+id: lowering.dxc_alu_scalar.functional-v1.dx100-functional-source.1.0-e4fc4af
+intrinsic: intrinsic.dxc_alu_scalar.functional-v1
+provenance:
+  origin:
+    source_configuration: Pinned source-only functional view, created 2026-10-06 ET
+  normalized_wrapper:
+    root: library
+    path: dx100/dxc_lowering.hpp
+    sha256: 7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c
+  functional_api:
+    root: project
+    path: apps/dx100/benchmarks/API/MAA_functional.hpp
+    sha256: ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc
+interface:
+  id: dx100-functional-source
+  version: 1.0-e4fc4af
+location:
+  root: library
+  path: dx100/dxc_lowering.hpp
+  symbol: __dxc_alu_scalar
+code_sha256: 7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c
+build_defines:
+  required:
+  - FUNC
+  forbidden:
+  - GEM5
+  - SWDB_STRICT
+  - SWDB_DXC_DIAGNOSTIC
+differential_test:
+  root: library
+  path: dx100/drivers/differential.cc
+  sha256: 5a30fd75e7a23db709eb7e112d9202f46037cadc8b8c9d667ac472fd77f5e976
+clauses:
+- id: source-semantics
+  role: postcondition
+  statement: The FUNC-selected wrapper delegates to the pinned functional API; this
+    entry declares no executed certification or hardware visibility.
+  discharge_mode: open
+  negative_control:
+    id: none
+    reason: This source-only entry has no newly discharged execution claim.
+  formal:
+    language: reference
+    reference:
+      root: library
+      path: dx100/reference.hpp
+      sha256: 75b80bc3d0027b1700e2fc1f075683e617d059ca4bbef761bfeb31839d9fa897
+      symbol: alu_scalar
+  formal_label: stated

@@ -1,0 +1,287 @@
+{
+  "V2_packet_sha256": "e49034a2cacbbc0d5df5b48152ec8701ccc5df12fd70f53b7a21a14a92a239ac",
+  "all_V2_60_pins_unchanged": true,
+  "byte_identical_production_files": [
+    "swdb/_dx100_whole/__init__.py",
+    "swdb/_dx100_whole/basis/compiler_unit_adapter_v2.py.source.txt",
+    "swdb/_dx100_whole/basis/harness/cbmc_translator.py.source.txt",
+    "swdb/_dx100_whole/basis/model-entry-v1/whole_model_v1.py.source.txt",
+    "swdb/_dx100_whole/basis/model-entry-v3/whole_model_v3.py.source.txt",
+    "swdb/_dx100_whole/basis/source-integration-schema-v2.json.source.txt",
+    "swdb/_dx100_whole/basis/source_argument_staging_v2.py.source.txt",
+    "swdb/_dx100_whole/basis/source_dispatch_v3.py.source.txt",
+    "swdb/_dx100_whole/basis/source_program_globals_v1.py.source.txt",
+    "swdb/_dx100_whole/basis/source_statements_v2.py.source.txt",
+    "swdb/_dx100_whole/basis/whole_adapters.h.source.txt",
+    "swdb/_dx100_whole/basis/whole_closed_routes_v1.h.source.txt",
+    "swdb/_dx100_whole/basis/whole_interface_v4.py.source.txt",
+    "swdb/_dx100_whole/basis/whole_value_backend_v1.h.source.txt",
+    "swdb/_dx100_whole/basis/whole_value_builders_v1.h.source.txt",
+    "swdb/_dx100_whole/compiler_unit_adapter_v3.py",
+    "swdb/_dx100_whole/lossless_gzip_v1.py",
+    "swdb/_dx100_whole/model_primitives.py",
+    "swdb/_dx100_whole/receiver-state-draws-v2/receiver_state_draws_v2.py",
+    "swdb/_dx100_whole/receiver_state_draws_v2.py",
+    "swdb/_dx100_whole/runtime_projection_v2.py",
+    "swdb/_dx100_whole/source_argument_staging_v2.py",
+    "swdb/_dx100_whole/source_dispatch_v3.py",
+    "swdb/_dx100_whole/source_program_globals_v1.py",
+    "swdb/_dx100_whole/source_statements_v2.py",
+    "swdb/_dx100_whole/whole_interface_v4.py",
+    "swdb/c_lowering.py",
+    "swdb/cbmc_translator.py",
+    "swdb/dx100_checked_native.py",
+    "swdb/dx100_whole_checked.py",
+    "swdb/formal_frame.py",
+    "swdb/proof_semantics.py"
+  ],
+  "changed_production_files": [
+    "swdb/cbmc_adapter.py",
+    "swdb/dx100_checked_adapter.py",
+    "swdb/dx100_checked_source.py",
+    "swdb/proof_setup.py"
+  ],
+  "inverse": {
+    "swdb/cbmc_adapter.py": {
+      "V2_sha256": "f9a276b3cd3c818dc364194e4d627f0e86e585f7d506d822b1d91d726beff6ce",
+      "V3_sha256": "dc5a73344cb65f670b0f3ab1f554a7aeb76c175e95e74a5879cd995f644d59c5",
+      "exact_line_inverse": [
+        {
+          "after": [
+            "            if inputs and any(Path(path) != Path(job.scratch) / 'job.c' for path,_ in inputs):\n",
+            "                raise AdapterError('whole checked CBMC callback requires its exact job.c input')\n",
+            "            dx100_checked_adapter.check_launch(self,job,context,[('c',path) for path,_ in inputs])\n"
+          ],
+          "before": [
+            "            dx100_checked_adapter.check_launch(self,job,context,inputs)\n"
+          ],
+          "new_begin": 335,
+          "new_end": 338,
+          "old_begin": 335,
+          "old_end": 336
+        },
+        {
+          "after": [
+            "                dx100_checked_adapter.check_launch(self,job,context,[(side,paths_[side])])\n"
+          ],
+          "before": [
+            "                dx100_checked_adapter.check_launch(self,job,context,[(paths_[side],c_text if side == 'c' else cxx_text)])\n"
+          ],
+          "new_begin": 576,
+          "new_end": 577,
+          "old_begin": 574,
+          "old_end": 575
+        },
+        {
+          "after": [
+            "            dx100_checked_adapter.check_launch(self,job,context,[('cxx',replay_cc)])\n"
+          ],
+          "before": [
+            "            dx100_checked_adapter.check_launch(self,job,context,[(replay_cc,replay_cc.read_text())])\n"
+          ],
+          "new_begin": 691,
+          "new_end": 692,
+          "old_begin": 689,
+          "old_end": 690
+        },
+        {
+          "after": [],
+          "before": [
+            "            assumptions += proof_semantics.record_assumptions(self.library, model.entry, model.sha256)\n",
+            "            from swdb import bounded_initialization\n"
+          ],
+          "new_begin": 771,
+          "new_end": 771,
+          "old_begin": 769,
+          "old_end": 771
+        },
+        {
+          "after": [
+            "            else:\n",
+            "                assumptions += proof_semantics.record_assumptions(self.library, model.entry, model.sha256)\n",
+            "            from swdb import bounded_initialization\n",
+            "            if context.get('whole_source_unit') is not None:\n",
+            "                pass  # library-backed context rules were emitted once above\n"
+          ],
+          "before": [],
+          "new_begin": 774,
+          "new_end": 779,
+          "old_begin": 774,
+          "old_end": 774
+        }
+      ]
+    },
+    "swdb/dx100_checked_adapter.py": {
+      "V2_sha256": "c6a6493cad820168dbea335fc916de0750dc70d63d1a41f8902e35fc61eef9b5",
+      "V3_sha256": "7eeb52d964b3bfd3371f64a74972962350ae99339a5e49cb6d9f0752d8282a84",
+      "exact_line_inverse": [
+        {
+          "after": [
+            "    check_role_inputs(texts(context),inputs)\n"
+          ],
+          "before": [
+            "    allowed = set(texts(context).values())\n",
+            "    for path, claimed in inputs:\n",
+            "        source.need(claimed in allowed and Path(path).read_bytes() == claimed.encode('utf-8'),\n",
+            "            'actual generated input is not the freshly checked source/view/harness')\n"
+          ],
+          "new_begin": 118,
+          "new_end": 119,
+          "old_begin": 118,
+          "old_end": 122
+        },
+        {
+          "after": [
+            "\n",
+            "\n",
+            "def check_role_inputs(expected, inputs):\n",
+            "    \"\"\"The caller supplies a fixed role/path; only freshly generated bytes authorize it.\"\"\"\n",
+            "    source.need(type(expected) is dict and set(expected) == {'c','cxx'} and expected['c'] != expected['cxx'],\n",
+            "        'distinct checked C and original-source C++ views required')\n",
+            "    for role,path in inputs:\n",
+            "        source.need(type(role) is str and role in expected, 'exact c/cxx generated-input role required')\n",
+            "        raw=expected[role].encode('utf-8')\n",
+            "        source.receiver.check_file(source.receiver.Pin(str(Path(path)),len(raw),hashlib.sha256(raw).hexdigest()))\n"
+          ],
+          "before": [],
+          "new_begin": 122,
+          "new_end": 132,
+          "old_begin": 125,
+          "old_end": 125
+        },
+        {
+          "after": [
+            "    check_launch(adapter,context['job'],context,[('c',Path(scratch)/'job.c')])\n"
+          ],
+          "before": [
+            "    check_launch(adapter,context['job'],context,[(Path(scratch)/'job.c',texts(context)['c'])])\n"
+          ],
+          "new_begin": 176,
+          "new_end": 177,
+          "old_begin": 169,
+          "old_end": 170
+        },
+        {
+          "after": [
+            "    check_launch(adapter,context['job'],context,[('c',Path(scratch)/'job.c')])\n"
+          ],
+          "before": [
+            "    check_launch(adapter,context['job'],context,[(Path(scratch)/'job.c',texts(context)['c'])])\n"
+          ],
+          "new_begin": 185,
+          "new_end": 186,
+          "old_begin": 178,
+          "old_end": 179
+        }
+      ]
+    },
+    "swdb/dx100_checked_source.py": {
+      "V2_sha256": "c19783eb83e8a73f27fe45c020e18487cd4cd8789e23a9b42ee46fcbe4d425b9",
+      "V3_sha256": "069d07c85b97e6aed9685738375b57923ff65a6b2ca557f04e510edbe793b731",
+      "exact_line_inverse": [
+        {
+          "after": [
+            "    proof_unit = data.get('proof_unit')\n",
+            "    if type(proof_unit) is not dict or proof_unit.get('function') != FUNCTION:\n"
+          ],
+          "before": [
+            "    if (data.get('proof_unit') or {}).get('function') != FUNCTION:\n"
+          ],
+          "new_begin": 220,
+          "new_end": 222,
+          "old_begin": 220,
+          "old_end": 221
+        },
+        {
+          "after": [
+            "    bind_context_rules(entry,json.loads(prepared_receiver.binding_json)['record_assumptions'])\n"
+          ],
+          "before": [],
+          "new_begin": 404,
+          "new_end": 405,
+          "old_begin": 403,
+          "old_end": 403
+        },
+        {
+          "after": [
+            "def bind_context_rules(entry, premises):\n",
+            "    \"\"\"Every owned receiver premise is an exact resolvable library rule.\"\"\"\n",
+            "    need(type(premises) is list and len(premises) == len(receiver.PREMISES)\n",
+            "         and all(type(row) is dict and type(row.get('rule')) is str for row in premises)\n",
+            "         and {row.get('rule') for row in premises} == set(receiver.PREMISES), 'complete owned context premise set required')\n",
+            "    rules=entry.get('rules')\n",
+            "    need(type(rules) is list and all(type(row) is dict for row in rules)\n",
+            "         and all(type(row.get('id')) is str for row in rules)\n",
+            "         and len({row.get('id') for row in rules}) == len(rules), 'unique concrete entry rules required')\n",
+            "    by_id={row['id']:row for row in rules}\n",
+            "    for premise in premises:\n",
+            "        need(set(premise) == {'rule','statement','owner','record_assumption'} and premise['record_assumption'] is True\n",
+            "             and premise['statement'] == receiver.PREMISES[premise['rule']]\n",
+            "             and type(premise['owner']) is str and premise['owner'].strip(), 'exact owned receiver premise required')\n",
+            "        ident='whole_context_'+premise['rule'].replace('-','_')\n",
+            "        statement=premise['statement']+' Owner: '+premise['owner']+'.'\n",
+            "        need(by_id.get(ident) == {'id':ident,'statement':statement,\n",
+            "             'assumed':{'owner':premise['owner']},'record_assumption':True},\n",
+            "             'owned context premise lacks its exact library-backed recorded rule: '+ident)\n",
+            "\n",
+            "\n"
+          ],
+          "before": [],
+          "new_begin": 527,
+          "new_end": 548,
+          "old_begin": 525,
+          "old_end": 525
+        },
+        {
+          "after": [
+            "    \"\"\"Use the unchanged entry#rule producer, never unresolvable free-text clauses.\"\"\"\n",
+            "    need(type(unit) is SourceUnit, 'checked source unit required')\n",
+            "    cert=unit.certificate\n",
+            "    bind_context_rules(unit.selection.library.get(unit.selection.entry_id),cert['recorded_context_assumptions'])\n",
+            "    from swdb import proof_semantics\n",
+            "    return proof_semantics.record_assumptions(unit.selection.library,unit.selection.entry_id,\n",
+            "        cert['semantics_entry_file']['sha256'])\n"
+          ],
+          "before": [
+            "    \"\"\"Owned trace premises remain visible; no hardware refinement is inferred.\"\"\"\n",
+            "    cert = unit.certificate\n",
+            "    reference = {'id': unit.selection.entry_id, 'sha256': cert['semantics_entry_file']['sha256']}\n",
+            "    rows = [{'kind': 'assumed_clause', 'reference': dict(reference,\n",
+            "        clause='owned-context.' + row['rule']), 'sentence': row['statement'] + ' Owner: ' + row['owner'] + '.'}\n",
+            "        for row in cert['recorded_context_assumptions']]\n",
+            "    rows.append({'kind': 'proof_semantics', 'reference': reference,\n",
+            "        'sentence': 'The selected complete original TU and fixed identical-buffer projection bind this scalar source fixture to its checked concrete call model under the recorded compiler, numeric and MMIO premises. The prospective unit frame is assigns everything. Native agreement samples a source-preserving runtime view under the same model premise; it does not independently establish hardware refinement or a precise frame.'})\n",
+            "    return rows\n"
+          ],
+          "new_begin": 549,
+          "new_end": 556,
+          "old_begin": 526,
+          "old_end": 535
+        }
+      ]
+    },
+    "swdb/proof_setup.py": {
+      "V2_sha256": "c343a96e3830535dd6a5b8655bed06dbf0cd52c4f1d3ec48ab05663808c1e9bb",
+      "V3_sha256": "e897b20b03419dd7d140b35406784ce70713172f324708381571d3fa4cb501b4",
+      "exact_line_inverse": [
+        {
+          "after": [
+            "                hashes['whole_source'] = dx100_checked_adapter.check_launch(adapter,job,context,[('c',path) for path,_ in inputs])\n"
+          ],
+          "before": [
+            "                hashes['whole_source'] = dx100_checked_adapter.check_launch(adapter,job,context,inputs)\n"
+          ],
+          "new_begin": 370,
+          "new_end": 371,
+          "old_begin": 370,
+          "old_end": 371
+        }
+      ]
+    }
+  },
+  "semantic_scope": [
+    "role-bound actual generated inputs",
+    "non-dict unit shape refusal",
+    "normal library-backed context assumption fragments/owners"
+  ]
+}

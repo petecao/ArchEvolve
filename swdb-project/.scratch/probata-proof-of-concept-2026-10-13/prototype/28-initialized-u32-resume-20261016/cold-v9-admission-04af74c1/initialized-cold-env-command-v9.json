@@ -1,0 +1,45 @@
+{
+  "argv": [
+    "/usr/bin/env",
+    "-i",
+    "HOME=/data1/yanruj/probata-verifiers/home",
+    "LANG=C",
+    "LC_ALL=C",
+    "PATH=/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "PYTHONPATH=/data1/yanruj/probata-resume-20261016-04af74c1/swdb-project",
+    "PYTHONPYCACHEPREFIX=/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-cold-04af74c1-v9/cache",
+    "/data1/yanruj/venvs/swdb-test/bin/python",
+    "-I",
+    "-B",
+    "-X",
+    "pycache_prefix=/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-cold-04af74c1-v9/reader-source-cache",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-cold-04af74c1-v9/control/initialized_cold_audit_v9.py",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-cold-04af74c1-v9/control/initialized-cold-policy-04af74c1-v9.json",
+    "15f69d6a4a7a09f952bcf020f9619e43f107ae105980ed0cbe7e75ffc97313f3"
+  ],
+  "classification": "PREPARED_PASSIVE_INVOCATION_PENDING_REVIEW_STAGING_AND_ROOT_ADMISSION",
+  "command_packet": {
+    "bytes": 4700,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v9-admission-04af74c1/initialized-cold-command-04af74c1-v9.json",
+    "sha256": "9679ff1d2d01c8fe9171e9b9f962e994b76f6e9d1f8750cc166623c6357e08db"
+  },
+  "command_packet_sha256": "9679ff1d2d01c8fe9171e9b9f962e994b76f6e9d1f8750cc166623c6357e08db",
+  "control_bytes": 238404,
+  "controls": 10,
+  "date": "2026-10-16 ET",
+  "environment": {
+    "HOME": "/data1/yanruj/probata-verifiers/home",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/data1/yanruj/probata-resume-20261016-04af74c1/swdb-project",
+    "PYTHONPYCACHEPREFIX": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-cold-04af74c1-v9/cache"
+  },
+  "original_measurement_raw_untouched": true,
+  "outer_timeout_seconds": 180,
+  "reader_executed": false,
+  "staged": false,
+  "stdout": "Compact metadata only; no raw source/AST/LLVM/C/binary payload transfer."
+}

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="4" skipped="0" tests="10" time="3.399" timestamp="2026-10-03T12:00:28.384777-04:00" hostname="YanRus-Mac-Studio.local"><testcase classname="tests.test_typed_gem5_driver" name="test_protocol_plan_keeps_t17_immutable_and_has_independent_read_only_grid" time="2.683" /><testcase classname="tests.test_typed_gem5_driver" name="test_execution_plan_separates_primary_and_probe_binary_and_preserves_stage_budget" time="0.078" /><testcase classname="tests.test_typed_gem5_driver" name="test_public_driver_refuses_mac_before_creating_any_raw_output" time="0.004" /><testcase classname="tests.test_typed_gem5_driver" name="test_timed_stage_never_dispatches_after_inconclusive_l3" time="0.000" /><testcase classname="tests.test_typed_gem5_driver" name="test_prepare_budget_admits_serial_gcc_without_weakening_gem5_budget" time="0.000" /><testcase classname="tests.test_typed_gem5_driver" name="test_prepare_ignores_a_newer_receipt_without_current_dependencies" time="0.115" /><testcase classname="tests.test_typed_gem5_driver" name="test_post_roi_budget_covers_retained_scale18_completion_for_every_role" time="0.099"><failure message="assert 10000000000 == 100000000000000&#10; +  where 100000000000000 = next(&lt;set_iterator object at 0x107d0b400&gt;)&#10; +    where &lt;set_iterator object at 0x107d0b400&gt; = iter({100000000000000})">source_store = &lt;swdb.store.Store object at 0x10be16780&gt;
+published_first_attempt = (namespace(id='typed-library-bfs-gem5-20261003-a1', memory_gib=36, storage_gib=8), {'protocol': {'kind': 'protocol', '...hema_version': '0.4', 'id': 'typed-library-bfs-gem5-20261003-a1.baseline.primary.build', 'status': 'draft', ...}, ...})
+
+    def test_post_roi_budget_covers_retained_scale18_completion_for_every_role(source_store, published_first_attempt):
+        """Catch a short planner cap before spending another real simulator run."""
+        from swdb.dx100_witness import validate_record_witness
+        args, rows = published_first_attempt
+        historical = []
+        for role in ('baseline', 'candidate'):
+            for workload in ('uniform18', 'kronecker18'):
+                for mode in ('primary', 'diagnostic'):
+                    rid = f'bfs-t17-routes-20260928-a3.{role}.{workload}.s0.r0.{mode}.evaluation'
+                    record = source_store.get(rid, 'evaluation')
+                    assert record['outcome']['state'] == 'complete'
+                    assert record['build']['adapter'] == 'dx100.complete_call.v2'
+                    validate_record_witness(record, source_store)
+                    historical.append(record)
+        ceiling = {record['request']['verification']['max_ticks'] for record in historical}
+        assert ceiling == {10**14}
+        observed = max(record['correctness']['checks'][0]['continuation']['simulated_ticks']
+                       for record in historical)
+        assert observed == 86 * 10**9
+        # Baseline receipts alone already require 57/84 billion ticks; selecting
+        # the established common ceiling does not depend on candidate gain.
+        assert max(record['correctness']['checks'][0]['continuation']['simulated_ticks']
+                   for record in historical if '.baseline.' in record['id']) == 84 * 10**9
+        plans = [driver.execution_request(args, source_store, rows, role, wid,
+                                          f'timed.w{index}.{role}')
+                 for index, wid in enumerate(rows['protocol']['settings']['workloads'])
+                 for role in ('baseline', 'candidate')]
+        plans += [driver.execution_request(args, source_store, rows, 'candidate', driver.COVERAGE,
+                                           'companion.' + role, companion=True, diagnostic=role == 'diagnostic')
+                  for role in ('timed', 'diagnostic')]
+        assert len(plans) == 6
+        for request in plans:
+&gt;           assert request['verification']['max_ticks'] == next(iter(ceiling)) &gt; observed
+E           assert 10000000000 == 100000000000000
+E            +  where 100000000000000 = next(&lt;set_iterator object at 0x107d0b400&gt;)
+E            +    where &lt;set_iterator object at 0x107d0b400&gt; = iter({100000000000000})
+
+tests/test_typed_gem5_driver.py:169: AssertionError</failure></testcase><testcase classname="tests.test_typed_gem5_driver" name="test_post_roi_budget_fix_preserves_every_other_actual_request_field[timed.w0.baseline]" time="0.119"><failure message="AssertionError: assert 10000000000 == (10 ** 14)&#10; +  where 10000000000 = &lt;built-in method pop of dict object at 0x10b87de40&gt;('max_ticks')&#10; +    where &lt;built-in method pop of dict object at 0x10b87de40&gt; = {'checker': 'dx100.bfs.verifier.v2', 'coverage': False, 'post_roi_trace': 'SyscallBase', 'trace_transport': 'gem5-gzip.v1', ...}.pop">source_store = &lt;swdb.store.Store object at 0x1063ffe30&gt;
+published_first_attempt = (namespace(id='typed-library-bfs-gem5-20261003-a1', memory_gib=36, storage_gib=8), {'protocol': {'kind': 'protocol', '...hema_version': '0.4', 'id': 'typed-library-bfs-gem5-20261003-a1.baseline.primary.build', 'status': 'draft', ...}, ...})
+label = 'timed.w0.baseline'
+
+    @pytest.mark.parametrize('label', ['timed.w0.baseline', 'companion.timed', 'companion.diagnostic'])
+    def test_post_roi_budget_fix_preserves_every_other_actual_request_field(source_store, published_first_attempt, label):
+        args, rows = published_first_attempt
+        companion = label.startswith('companion.')
+        role = 'candidate' if companion else 'baseline'
+        wid = driver.COVERAGE if companion else rows['protocol']['settings']['workloads'][0]
+        planned = driver.execution_request(args, source_store, rows, role, wid, label,
+                                            companion=companion, diagnostic=label == 'companion.diagnostic')
+        original = copy.deepcopy(source_store.get(args.id + '.' + label + '.evaluation', 'evaluation')['request'])
+&gt;       assert planned['verification'].pop('max_ticks') == 10**14
+E       AssertionError: assert 10000000000 == (10 ** 14)
+E        +  where 10000000000 = &lt;built-in method pop of dict object at 0x10b87de40&gt;('max_ticks')
+E        +    where &lt;built-in method pop of dict object at 0x10b87de40&gt; = {'checker': 'dx100.bfs.verifier.v2', 'coverage': False, 'post_roi_trace': 'SyscallBase', 'trace_transport': 'gem5-gzip.v1', ...}.pop
+
+tests/test_typed_gem5_driver.py:188: AssertionError</failure></testcase><testcase classname="tests.test_typed_gem5_driver" name="test_post_roi_budget_fix_preserves_every_other_actual_request_field[companion.timed]" time="0.082"><failure message="AssertionError: assert 10000000000 == (10 ** 14)&#10; +  where 10000000000 = &lt;built-in method pop of dict object at 0x10750bac0&gt;('max_ticks')&#10; +    where &lt;built-in method pop of dict object at 0x10750bac0&gt; = {'checker': 'dx100.bfs.verifier.v2', 'coverage': True, 'post_roi_trace': 'SyscallBase', 'trace_transport': 'gem5-gzip.v1', ...}.pop">source_store = &lt;swdb.store.Store object at 0x10b1a7680&gt;
+published_first_attempt = (namespace(id='typed-library-bfs-gem5-20261003-a1', memory_gib=36, storage_gib=8), {'protocol': {'kind': 'protocol', '...hema_version': '0.4', 'id': 'typed-library-bfs-gem5-20261003-a1.baseline.primary.build', 'status': 'draft', ...}, ...})
+label = 'companion.timed'
+
+    @pytest.mark.parametrize('label', ['timed.w0.baseline', 'companion.timed', 'companion.diagnostic'])
+    def test_post_roi_budget_fix_preserves_every_other_actual_request_field(source_store, published_first_attempt, label):
+        args, rows = published_first_attempt
+        companion = label.startswith('companion.')
+        role = 'candidate' if companion else 'baseline'
+        wid = driver.COVERAGE if companion else rows['protocol']['settings']['workloads'][0]
+        planned = driver.execution_request(args, source_store, rows, role, wid, label,
+                                            companion=companion, diagnostic=label == 'companion.diagnostic')
+        original = copy.deepcopy(source_store.get(args.id + '.' + label + '.evaluation', 'evaluation')['request'])
+&gt;       assert planned['verification'].pop('max_ticks') == 10**14
+E       AssertionError: assert 10000000000 == (10 ** 14)
+E        +  where 10000000000 = &lt;built-in method pop of dict object at 0x10750bac0&gt;('max_ticks')
+E        +    where &lt;built-in method pop of dict object at 0x10750bac0&gt; = {'checker': 'dx100.bfs.verifier.v2', 'coverage': True, 'post_roi_trace': 'SyscallBase', 'trace_transport': 'gem5-gzip.v1', ...}.pop
+
+tests/test_typed_gem5_driver.py:188: AssertionError</failure></testcase><testcase classname="tests.test_typed_gem5_driver" name="test_post_roi_budget_fix_preserves_every_other_actual_request_field[companion.diagnostic]" time="0.086"><failure message="AssertionError: assert 10000000000 == (10 ** 14)&#10; +  where 10000000000 = &lt;built-in method pop of dict object at 0x10c465800&gt;('max_ticks')&#10; +    where &lt;built-in method pop of dict object at 0x10c465800&gt; = {'checker': 'dx100.bfs.verifier.v2', 'coverage': True, 'post_roi_trace': 'SyscallBase', 'trace_transport': 'gem5-gzip.v1', ...}.pop">source_store = &lt;swdb.store.Store object at 0x114481260&gt;
+published_first_attempt = (namespace(id='typed-library-bfs-gem5-20261003-a1', memory_gib=36, storage_gib=8), {'protocol': {'kind': 'protocol', '...hema_version': '0.4', 'id': 'typed-library-bfs-gem5-20261003-a1.baseline.primary.build', 'status': 'draft', ...}, ...})
+label = 'companion.diagnostic'
+
+    @pytest.mark.parametrize('label', ['timed.w0.baseline', 'companion.timed', 'companion.diagnostic'])
+    def test_post_roi_budget_fix_preserves_every_other_actual_request_field(source_store, published_first_attempt, label):
+        args, rows = published_first_attempt
+        companion = label.startswith('companion.')
+        role = 'candidate' if companion else 'baseline'
+        wid = driver.COVERAGE if companion else rows['protocol']['settings']['workloads'][0]
+        planned = driver.execution_request(args, source_store, rows, role, wid, label,
+                                            companion=companion, diagnostic=label == 'companion.diagnostic')
+        original = copy.deepcopy(source_store.get(args.id + '.' + label + '.evaluation', 'evaluation')['request'])
+&gt;       assert planned['verification'].pop('max_ticks') == 10**14
+E       AssertionError: assert 10000000000 == (10 ** 14)
+E        +  where 10000000000 = &lt;built-in method pop of dict object at 0x10c465800&gt;('max_ticks')
+E        +    where &lt;built-in method pop of dict object at 0x10c465800&gt; = {'checker': 'dx100.bfs.verifier.v2', 'coverage': True, 'post_roi_trace': 'SyscallBase', 'trace_transport': 'gem5-gzip.v1', ...}.pop
+
+tests/test_typed_gem5_driver.py:188: AssertionError</failure></testcase></testsuite></testsuites>

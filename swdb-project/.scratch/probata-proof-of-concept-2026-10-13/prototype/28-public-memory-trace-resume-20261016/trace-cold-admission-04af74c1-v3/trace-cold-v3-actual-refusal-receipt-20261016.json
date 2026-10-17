@@ -1,0 +1,57 @@
+{
+  "after_checks_completed": false,
+  "classification": "ACTUAL_PASSIVE_TRACE_COLD_V3_REFUSED",
+  "compact_comparison": {
+    "bytes": 8648,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-admission-04af74c1-v3/retained-trace-flags-metadata-20261016.json",
+    "sha256": "157305bff9221f169ff2a103f6bbfe3b06e30900b8babcda746ab29d11f0abb3"
+  },
+  "complete_cold_acceptance": false,
+  "date": "2026-10-16 ET",
+  "exit_code": 1,
+  "failed_predicate": "Exact settings flags/unwind1/array_length0; reader omits producer model-loop --unwindset suffix. All25 retained projections agree.",
+  "local_outer_wall_seconds": 11.341275930404663,
+  "observed_flags": "All25 have identical mandatory prefix with unwind1/array_length0, plus exact35model-function loop selectors at bound5; mandatory unwinding assertions remain.",
+  "original_record_verdicts_remain_provisional_pending_cold": true,
+  "payload_transferred": false,
+  "preflight": {
+    "bytes": 421876,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-admission-04af74c1-v3/preflight-trace-cold-v3-readmission-20261016.json",
+    "sha256": "ac009a415f723e74da148c2cabea9df772d5f925a791044ad297ae95d3b0ce31"
+  },
+  "result": {
+    "classification": "REFUSED",
+    "error_type": "AssertionError",
+    "frames": [
+      {
+        "filename": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v3/control/trace_cold_audit_v3.py",
+        "function": "<module>",
+        "line": 574
+      },
+      {
+        "filename": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v3/control/trace_cold_audit_v3.py",
+        "function": "audit",
+        "line": 531
+      },
+      {
+        "filename": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v3/control/trace_cold_audit_v3.py",
+        "function": "audit_record",
+        "line": 440
+      }
+    ],
+    "frames_omitted": 0,
+    "scientific_acceptance": false
+  },
+  "scientific_reexecution": false,
+  "source_runtime_raw_before_checks_reached": true,
+  "stderr": {
+    "bytes": 0,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-admission-04af74c1-v3/trace-cold-v3-actual-stderr-20261016.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 623,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-admission-04af74c1-v3/trace-cold-v3-actual-stdout-20261016.json",
+    "sha256": "1a57d7340adf5b8cc6dc8d3473f9c99977a27cb543d338142d4706b3d590db8f"
+  }
+}

@@ -1,0 +1,4 @@
+//@ import \wp::why3: heap_reallocation::Heap;
+//@ import \wp::why3: vector_typed_payload::TypedPayload;
+/*@ check lemma t25_typed_payload_class_fill_exit: \forall TypedPayload::state s; \forall TypedPayload::scalar_kind kind; \forall TypedPayload::payload value; \forall integer b,n,k,address; Heap::well_formed(TypedPayload::objects(s)) && 0 < n && 0 <= k <= n && Heap::bytes(TypedPayload::objects(s),b) == TypedPayload::stride(kind)*n && Heap::typed_writes(TypedPayload::objects(s),b,0,TypedPayload::stride(kind)*n,TypedPayload::stride(kind)) && TypedPayload::has_kind(kind,value) && TypedPayload::class_prefix(s,b,k,kind,value) && k == n ==> \forall integer j; 0 <= j < n ==> TypedPayload::value_copy(TypedPayload::read(s,b,TypedPayload::stride(kind)*j),value) && Heap::initialized_at(TypedPayload::objects(s),b,TypedPayload::stride(kind)*j);
+*/

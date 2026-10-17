@@ -1,0 +1,77 @@
+{
+  "B08_de_ec1fc_controls_unchanged": true,
+  "actual_p4_after_identity_sha256": "192a90026afaf78f97f420b02c0962ad7129d0f8324c4a658f55613a979a61c2",
+  "actual_p4_canonical_body_ASCII_only": true,
+  "actual_p4_canonical_true_and_false_digests": {
+    "False": "192a90026afaf78f97f420b02c0962ad7129d0f8324c4a658f55613a979a61c2",
+    "True": "192a90026afaf78f97f420b02c0962ad7129d0f8324c4a658f55613a979a61c2"
+  },
+  "collector_json_dumps_AST": [
+    {
+      "explicit_ensure_ascii": "omitted",
+      "keywords": [],
+      "line": 281
+    },
+    {
+      "explicit_ensure_ascii": "omitted",
+      "keywords": [
+        "indent",
+        "allow_nan"
+      ],
+      "line": 280
+    },
+    {
+      "explicit_ensure_ascii": "omitted",
+      "keywords": [
+        "sort_keys",
+        "separators",
+        "allow_nan"
+      ],
+      "line": 19
+    },
+    {
+      "explicit_ensure_ascii": "omitted",
+      "keywords": [],
+      "line": 285
+    }
+  ],
+  "pins": {
+    "actual_p4_after": {
+      "bytes": 32478,
+      "path": "/private/tmp/lanl17-p4-after-capture-20261008-a5/custody.json",
+      "sha256": "92dc2ba791e4c125523e7d67df76dbc5e5cb6cfd830749630bffe1bdbd36b17d"
+    },
+    "assembler_de": {
+      "bytes": 33584,
+      "path": "/private/tmp/lanl17_assemble_selected_actual_input_pins_r1_20261007.py",
+      "sha256": "de669e4c0928876f9d033f6d9c1fc820ab3a1eb915aba20c5b6755b9866d7e6a"
+    },
+    "collector_b08": {
+      "bytes": 24818,
+      "path": "/private/tmp/lanl17_compact_attempt_custody_a2r1_20261007.py",
+      "sha256": "b08db809b80cbebc6ce98dd8df8fdd4f327b170cdd7a545af0876ad68a832a5c"
+    },
+    "request_author_r2": {
+      "bytes": 18624,
+      "path": "/private/tmp/lanl17_prepare_original32_requests_20261008_a5_r2.py",
+      "sha256": "b2f39f19ddf9bd646e92b2f8b1151928d2cde72acbb0b0f31b132528b5e48c7f"
+    },
+    "template_author_ec1fc": {
+      "bytes": 26682,
+      "path": "/private/tmp/lanl17_author_remote_actual_accepted_input_template_20261008_a5_r1.py",
+      "sha256": "ec1fc0133ef0e8f96a9436d897586f0dfd72f19b6e8fba77e930fe6c0688c01a"
+    }
+  },
+  "raw_state_or_scientific_bodies_read": false,
+  "root_False_guard_finding_withdrawn": true,
+  "selected_request_author_R2_unchanged": true,
+  "state": "SOURCE_AND_RETAINED_COMPACT_RECONCILIATION_NOT_RUNTIME",
+  "stdlib_json_dumps_AST_default_ensure_ascii": true,
+  "stdlib_source_for_default": {
+    "bytes": 14132,
+    "definition_line": 185,
+    "path": "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/__init__.py",
+    "sha256": "2dd10f1bf4c9ea5478e589216805e7f279d0e4bce134a19efa297404fb87407d"
+  },
+  "target_imported_or_main_or_tests_or_SSH": false
+}

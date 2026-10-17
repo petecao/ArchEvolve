@@ -1,0 +1,55 @@
+{
+  "created": "2026-09-26",
+  "evidence_kind": "local_test_results",
+  "root_commit": "e4439cc",
+  "export_commit": "c5f70d77396af0e7562310375333f34791aac3a1",
+  "export_branch": "codex/bfs-simulator-admission-20260926",
+  "remote_tip_verified": true,
+  "source_sha256": "7560cd821aff79a87143306802e64d3fb691e00175fee404e29f85c77f6fa1b6",
+  "test_sha256": "e07943f7dc33e7b79ce1b2f855d3963e8c435e8e7ba2e202de306b4d5e839909",
+  "independent_review": {
+    "result": "No remaining actionable findings",
+    "passed": 24,
+    "seconds": 2.35,
+    "metadata": "/private/tmp/bfs-witness-launch-independent-passed-20260926/metadata.json",
+    "log_sha256": "61a819401cec4bcfbedf79eb7e8bb259cef46edfd7b7665a20dc2eeaa6ef3891",
+    "source_hashes_unchanged_during_run": true
+  },
+  "isolated_export_result": {
+    "passed": 43,
+    "failed": 0,
+    "seconds": 2.47,
+    "exit_code": 0,
+    "scope": "24 launcher tests and 19 observer tests",
+    "log": "/private/tmp/bfs-witness-export-c5f70d7-20260926.log",
+    "sha256": "e1338a9470c0ee053122407be05c999b11c2934269b2ea913bf03f5894bfec03"
+  },
+  "retained_failures": [
+    {
+      "directory": "/private/tmp/bfs-witness-launch-independent-failed-20260926",
+      "passed": 20,
+      "failed": 1,
+      "seconds": 2.15,
+      "reason": "Child exits between poll and process-group lookup; cleanup reported it unreaped",
+      "identity_limit": "Failure metadata records post-run, pre-fix source hashes; copied source snapshots are explicitly not asserted to be failing bytes"
+    },
+    {
+      "log": "/private/tmp/bfs-witness-launch-final-20260926.log",
+      "passed": 39,
+      "failed": 1,
+      "reason": "Same direct-child disappearance/reaping race"
+    }
+  ],
+  "review_fixes": [
+    "Every cleanup wait uses the remaining original shared deadline",
+    "Already-reaped or reused numeric process-group identities are not signaled",
+    "A disappearing direct child receives only a bounded wait/reap",
+    "Separate driver and observer failures produce a nonzero combined exit"
+  ],
+  "limitations": [
+    "Local macOS process fixtures only; no simulator execution or empirical acceptance",
+    "Actual a3 remains pinned to1018432 and its original request/window",
+    "Independent terminal process union and released lease verification remain mandatory",
+    "One a3 dispatch is authorized only after actual native/provider termination and all unchanged admission gates; coverage and simulator batches are not dispatched by this receipt"
+  ]
+}

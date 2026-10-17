@@ -1,0 +1,40 @@
+{
+  "date_ET": "2026-10-16",
+  "at_utc": "2026-10-16T17:16:25.444825+00:00",
+  "decision": "PASS for narrow V4-to-V5 source-storage accounting and stdout repair; actual packet/runtime/lane admission remains root-owned",
+  "previous_launcher": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/launch_reviewed_main_v4.py",
+    "sha256": "26e2833843b0b77a7e5390977bb70cfb499332b942282313cbeb637fa072a30d",
+    "bytes": 9343
+  },
+  "new_launcher": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/launch_reviewed_main_v5.py",
+    "sha256": "d24b6cf69f152425d4f22a3979d239cacf9d29b7c3c512af9c20f6a561c7b71d",
+    "bytes": 9397
+  },
+  "reviewed_exact_change_count": 3,
+  "inverse_three_changes_byte_equal_to_preserved_v4": true,
+  "changes": [
+    "dated docstring describes separate source/raw budgets",
+    "data1 requires10GiB source floor plus2GiB only when new detached source absent; raw always remains on data with24GiB gate unchanged",
+    "git worktree-add stdout redirects to stderr, preserving remote launcher stdout as JSON"
+  ],
+  "rule_basis": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/.claude/rules/remote_server.md",
+    "clause": "Raw run output goes to /data1/yanruj/EvolveSWDB_runs/, or to /data/yanruj/EvolveSWDB_runs/ when /data1 has under20GB free or the planned run would push it there.",
+    "interpretation": "The20GB condition selects the raw-output mount. It does not require20GiB source-mount reserve when raw is already on data. V5 keeps source underdata1 and raw/tmp/cache underdata."
+  },
+  "unchanged_guards": [
+    "isolated nonoptimized metadata interpreter and sole ignored outer PYTHONPATH allowance",
+    "main publication ancestor and exact reviewed production delta/source clean gates",
+    "source/raw/session identities and fresh raw namespace",
+    "latest socket_lane plus hostlock content pins, selected and legacy lease checks",
+    "tmux direct env-i before shell and lane wrapper",
+    "8GiB nested watchdogs, whole timeouts and max4GiB planned raw metadata"
+  ],
+  "capacity_boundary": "10GiB source floor and2GiB source allowance are preflight planning limits, not quotas or an atomic reservation. Source2baf publication/size/live capacity were reported by root and not independently SSH-verified in this static review. Fresh source/packet/runtime/resource and scientific acceptance remain separate.",
+  "outer_and_embedded_ast_parse": true,
+  "no_launcher_or_ssh_or_compiler_or_test_or_guard_execution": true,
+  "no_prior_launcher_or_receipt_modified": true,
+  "formal_or_ticket_acceptance": false
+}

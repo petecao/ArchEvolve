@@ -1,0 +1,121 @@
+{
+  "base": {
+    "base_files": {
+      "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace_cases.py": {
+        "bytes": 8532,
+        "proposed_sha256": "2db304123fc8a35faeac4bbbd9d569907670cfc6f4acbef21ddb84537f4da3ee",
+        "sha256": "a2c0b90f919bcfe01f1941449aad030ec4bcd63f53f7362539e86265df6014c9"
+      },
+      "swdb-project/tests/testkit/dx100_trust.py": {
+        "bytes": 7619,
+        "proposed_sha256": "4d55a093a7a92eeb57c9878760bc48ae71c6d5683bbdbf50760be15997cb0982",
+        "sha256": "a5da4f079d300d2da9a4928c51c2d9713c03810706b8189ba213d8308a041d67"
+      }
+    },
+    "base_source_commit": "069a0ebc22b36813676475b92de89d4198c67478",
+    "date": "2026-10-16 ET",
+    "default_CLI_bounds_unchanged": "{\"threads\": 1, \"input_size\": 1}",
+    "explicit_trace_bounds": {
+      "threads": 1
+    },
+    "no_new_parameters_or_premises": true,
+    "production_bound_validator_changed": false,
+    "production_leaf_origins": {
+      "swdb-project/swdb/cbmc_adapter.py": {
+        "nodes": {
+          "_build": "047dcdad7284ed4286a15da767aa25b5e776e374dbfa6d9ae1178b3e6d26774d",
+          "_sizes": "fc39fbdbda107c890448e080691149d4c118b40db66e4241060b905206d789d1"
+        },
+        "sha256": "2ef59469412c287b174f085e2c08c8a969435ccf1bc129fe34ea89bbb78cac4a"
+      },
+      "swdb-project/swdb/cbmc_translator.py": {
+        "nodes": {
+          "Interface": "85d5ab30df9fc64ac32bf0e76b312223532209c4ea281f43ed5ac4dff1ba538b",
+          "Plan": "832b9fca988929b9c9e6f701adbd62460d79632fd78d91954743ae8fb6031439"
+        },
+        "sha256": "61a25090b66a5bd86a332a600973a048d3f38936dea2c6a088c8456d53d2e4d3"
+      },
+      "swdb-project/swdb/proof.py": {
+        "nodes": {
+          "_bounds_argument": "ff4e07d684a7766dffe284ffb96603a24d09c98ce9bade60138a47505bd9a47f"
+        },
+        "sha256": "d03f89ab3dac0987d011552aeb1edcc212a8589a401ba5bface7102301c48fa2"
+      }
+    },
+    "status": "PROPOSAL ONLY; shared helper and trace caller untouched",
+    "trace_model_files": {
+      "actual-policy.json": "557d24e156e5f4255ebfa171bcc6f35349e9f4826a668360eed954461b3b911a",
+      "ghost.acsl": "a71409828badd1e0cab4e2a73e2c1053caeaebba1dbd0fdb8a66709226231816",
+      "logic.acsl": "cee8b8a666997386cd213c9708ffb78b33e8d521f2859bc3ac853f8bd3db112e",
+      "model.h": "2fe44f7fea203d1f7914db6077b999d03f64a2e43472bd2884eb8e534e775be8",
+      "state.h": "ffddb9894fb78489edc9a97361d2b401c4d3c9a4036af67b115142765dea4bca",
+      "test_public_actual.py": "e5acab8650b8b56b78df1cb7c1cfc22ba34e16c4039e1faf51417f3917a7a63f",
+      "trace_fixture.py": "ec1320ae62ca3a97bdd766cdeb968cf2544eb6c377a2c2ddefd18c8171f2a6cf"
+    }
+  },
+  "compiler_project_import_child_native_verifier_ssh_executed": false,
+  "controls": {
+    "all25_original_trace_sources_equal": true,
+    "cases": 5,
+    "default_argument_bytes_unchanged": true,
+    "empty_invalid_bounds_not_coerced": true,
+    "fixed_inert_harness_calls": 25,
+    "fixed_trace_CALLs_admitted_by_real_bound_guard": 25,
+    "new_helper_old_caller_still_refuses_input_size": true,
+    "old_harness_calls": 0,
+    "old_trace_CALLs_refused": 25,
+    "passed": true
+  },
+  "date": "2026-10-16 ET",
+  "exact_patch_sha256": "8efe4abf66fa3e91eeed06fa8732a2dcaa3f1de59949f3153a397f445be30d22",
+  "files": {
+    "base-dx100_trust.py": {
+      "bytes": 7619,
+      "sha256": "a5da4f079d300d2da9a4928c51c2d9713c03810706b8189ba213d8308a041d67"
+    },
+    "base-trace_cases.py": {
+      "bytes": 8532,
+      "sha256": "a2c0b90f919bcfe01f1941449aad030ec4bcd63f53f7362539e86265df6014c9"
+    },
+    "fixture-bounds.patch": {
+      "bytes": 2051,
+      "sha256": "8efe4abf66fa3e91eeed06fa8732a2dcaa3f1de59949f3153a397f445be30d22"
+    },
+    "production_bounds_leafs.py": {
+      "bytes": 6636,
+      "sha256": "d48eedfd368588bf799160b83a0c954e4d756b7f40e6fa34107678eaacd2f339"
+    },
+    "proposal-base.json": {
+      "bytes": 2589,
+      "sha256": "5c34e2086819fc2f49886c572c50520847a73152afa6b9aeb2a339212cd2099c"
+    },
+    "proposed-dx100_trust.py": {
+      "bytes": 7672,
+      "sha256": "4d55a093a7a92eeb57c9878760bc48ae71c6d5683bbdbf50760be15997cb0982"
+    },
+    "proposed-trace_cases.py": {
+      "bytes": 8555,
+      "sha256": "2db304123fc8a35faeac4bbbd9d569907670cfc6f4acbef21ddb84537f4da3ee"
+    },
+    "query-prototypes.json": {
+      "bytes": 747,
+      "sha256": "7472467f6aff140fd43f842b3da6fd7ddc8c4bea778ac0835ebadea89fdee4e2"
+    },
+    "seam-controls-initial-fixture-order.log": {
+      "bytes": 1843,
+      "sha256": "cb9037643d228821092950c6d08c97e2e3ec66babed254e41f7903991096d157"
+    },
+    "seam-red-green-controls.log": {
+      "bytes": 895,
+      "sha256": "621469ed0649ca9a25776ded26f86c58cf76f31e386c95b21d1c5acaefa40693"
+    },
+    "test_fixture_bounds_seam.py": {
+      "bytes": 11744,
+      "sha256": "77f87773bc1576e2620caa50364d509071bad2d0df611c0d8ae52b08f13cf237"
+    }
+  },
+  "initial_control_fixture_correction": "query-prototype JSON initially sorted keys, changing control-only declaration order; restored original literal order. Initialfailedlogretained. No target source changed.",
+  "integration": "Parent performs fresh physicalbasecheck and applies exact2filepatch; rootownscommit and fresh actual25 admission",
+  "scope": "Actual helper/caller CLI construction to run_swdb stub and exact production bounds parser/_sizes/full_build with realInterface/Plan, inert serialization/lowering/translation/harness doubles only; no proof/native/model acceptance",
+  "status": "PROPOSAL_READY; sharedfilesuntouched"
+}

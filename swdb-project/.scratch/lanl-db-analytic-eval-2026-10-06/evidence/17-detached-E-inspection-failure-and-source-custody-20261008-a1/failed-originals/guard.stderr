@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/data1/yanruj/lanl-storage-admin-selected-source-20261008-a1/lanl14_remove_consumed_export_checkout_20261008_a1_r2_r1.py", line 303, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/data1/yanruj/lanl-storage-admin-selected-source-20261008-a1/lanl14_remove_consumed_export_checkout_20261008_a1_r2_r1.py", line 293, in main
+    require(root.is_dir() and not root.is_symlink(),'original raw root')
+  File "/data1/yanruj/lanl-storage-admin-selected-source-20261008-a1/lanl14_remove_consumed_export_checkout_20261008_a1_r2_r1.py", line 19, in require
+    if not v:raise ValueError(s)
+             ^^^^^^^^^^^^^^^^^^^
+ValueError: original raw root

@@ -1,0 +1,137 @@
+{
+  "created": "2026-10-16 ET",
+  "classification": "LOCAL_PRE_SSH_SOURCE_REVIEW_SHAPE_REFUSAL",
+  "side_effects": "No launcher SSH/staging/source worktree or evaluation dispatch occurred. Separate read-only preflight executed.",
+  "reason": "Root review translator omitted the required stagingname for all14 command inputrows. Two local normalization attempts stopped before dispatch; the corrected translator derives each exact basename without changing any input bytes.",
+  "preserved_source_review_sha256": "616b7816cc666a5518976a5252b8d1d32300fd9d69eb3cc0ae1676f2477fab53",
+  "normalized_source_review_sha256": "1dd2c52d735657a4725553a0f004d21b33dc932ffbafac2136e1dcbce9a35054",
+  "normalization": [
+    {
+      "name": "linux_compiler_capture_v8.py",
+      "original_keys": [
+        "bytes",
+        "path",
+        "sha256"
+      ],
+      "derived_basename": "linux_compiler_capture_v8.py"
+    },
+    {
+      "name": "linux_native86_entry_v4.py",
+      "original_keys": [
+        "bytes",
+        "path",
+        "sha256"
+      ],
+      "derived_basename": "linux_native86_entry_v4.py"
+    },
+    {
+      "name": "compiler_unit_adapter_v3.py",
+      "original_keys": [
+        "bytes",
+        "path",
+        "sha256"
+      ],
+      "derived_basename": "compiler_unit_adapter_v3.py"
+    },
+    {
+      "name": "whole_interface_v4.py",
+      "original_keys": [
+        "bytes",
+        "path",
+        "sha256"
+      ],
+      "derived_basename": "whole_interface_v4.py"
+    },
+    {
+      "name": "source_call_fixture_v2.cpp",
+      "original_keys": [
+        "bytes",
+        "path",
+        "sha256"
+      ],
+      "derived_basename": "source_call_fixture_v2.cpp"
+    },
+    {
+      "name": "compiler_abi_probe_v1.cpp",
+      "original_keys": [
+        "bytes",
+        "path",
+        "sha256"
+      ],
+      "derived_basename": "compiler_abi_probe_v1.cpp"
+    },
+    {
+      "name": "m5ops.h",
+      "original_keys": [
+        "bytes",
+        "path",
+        "sha256"
+      ],
+      "derived_basename": "m5ops.h"
+    },
+    {
+      "name": "closed_python_surface.py",
+      "original_keys": [
+        "bytes",
+        "path",
+        "sha256"
+      ],
+      "derived_basename": "closed_python_surface.py"
+    },
+    {
+      "name": "python_startup_roles_v2.py",
+      "original_keys": [
+        "bytes",
+        "path",
+        "sha256"
+      ],
+      "derived_basename": "python_startup_roles_v2.py"
+    },
+    {
+      "name": "python_role_observer_v2.py",
+      "original_keys": [
+        "bytes",
+        "path",
+        "sha256"
+      ],
+      "derived_basename": "python_role_observer_v2.py"
+    },
+    {
+      "name": "t28-linux-runtime-observer-v2-actual-20261016.json",
+      "original_keys": [
+        "bytes",
+        "path",
+        "sha256"
+      ],
+      "derived_basename": "t28-linux-runtime-observer-v2-actual-20261016.json"
+    },
+    {
+      "name": "lossless_gzip_v1.py",
+      "original_keys": [
+        "bytes",
+        "path",
+        "sha256"
+      ],
+      "derived_basename": "lossless_gzip_v1.py"
+    },
+    {
+      "name": "t28-selected-python-zlib-origin-observation-20261016.json",
+      "original_keys": [
+        "bytes",
+        "path",
+        "sha256"
+      ],
+      "derived_basename": "t28-selected-python-zlib-origin-observation-20261016.json"
+    },
+    {
+      "name": "linux_compiler_capture_policy_v8.json",
+      "original_keys": [
+        "bytes",
+        "path",
+        "sha256"
+      ],
+      "derived_basename": "linux_compiler_capture_policy_v8.json"
+    }
+  ],
+  "content_names_hashes_bytes_guard_command_science_unchanged": true
+}

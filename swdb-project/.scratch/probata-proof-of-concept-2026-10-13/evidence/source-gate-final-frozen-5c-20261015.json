@@ -1,0 +1,424 @@
+{
+  "created": "2026-10-15 ET",
+  "source_commit": "5c2a9bea695526dfadd91cac43be5709e531943d",
+  "scope": "Read-only final frozen checkpoint audit; reports rehashed, no solver or compiler invoked.",
+  "runs": [
+    {
+      "directory": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0",
+      "source_recorded": "5c2a9bea695526dfadd91cac43be5709e531943d",
+      "lane": {
+        "socket_lane": {
+          "aligned_cell_age_s": "",
+          "aligned_to": "no_gapbs_batch_running",
+          "command": [
+            "bash",
+            "-c",
+            "cd /data1/yanruj/probata-t27 && bash swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/27-proof-semantics/run_acceptance.sh 5c2a9bea695526dfadd91cac43be5709e531943d \"$1\" tests/test_standard_header_provenance.py tests/test_allocator_declaration_binding.py tests/test_lowering_attributes.py --maxfail=1 -o \"cache_dir=$PROBATA_OUTPUT/pytest-cache\"",
+            "bash",
+            "native"
+          ],
+          "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+          "ended_utc": "2026-10-15T15:05:57Z",
+          "exit_code": 1,
+          "host": "mbit10",
+          "job": "probata-source-gate-native-20261015-1102",
+          "lease_generation": 557,
+          "lease_name": "mbit10-evaluation-node0",
+          "load1_at_start": 0.09,
+          "load1_max": 32,
+          "node": 0,
+          "numa_memory_policy": "bind:0",
+          "numactl": "--cpunodebind=0 --membind=0",
+          "preregistration_sha256": null,
+          "started_utc": "2026-10-15T15:02:08Z"
+        }
+      },
+      "call_counts": {
+        "passed": 134,
+        "failed": 1
+      },
+      "sessionfinish": [
+        {
+          "exitstatus": 1,
+          "$report_type": "SessionFinish"
+        }
+      ],
+      "failed_calls": [
+        {
+          "nodeid": "tests/test_standard_header_provenance.py::test_a_transitive_header_new_handler_registration_refuses_before_verification[std::set_new_handler(project_handler);]",
+          "message": "assert 'handler registration' in \"full-TU parser rejected the driver context: <cstddef> tried including <stddef.h> but didn't find libc++'s <stddef.h> ...           any C Standard Library, and you are probably using compiler flags that make that           not be the case.\""
+        }
+      ],
+      "record_count": 3,
+      "records": [
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/pytest/test_a_local_standard_header_w1/records/proofs/proof.contract.fixture_vector_owner_data_safe.20261015t150540z.283fe285.yaml",
+          "sha256": "d3ae164d455dcf3b1a21b61fdafb0215420106559310252620d837efa20f4fa3",
+          "id": "proof.contract.fixture_vector_owner_data_safe.20261015t150540z.283fe285",
+          "verdict": "not_proven",
+          "failure_class": "unsupported_construct",
+          "verifier_launched": false,
+          "goals": {},
+          "goal_count": 0
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/pytest/test_a_local_standard_header_w0/records/proofs/proof.contract.fixture_vector_owner_data_safe.20261015t150528z.d970a459.yaml",
+          "sha256": "a232a1ab130b36d1b47c3801440f812f714ce7108541ffadff825719345aedcc",
+          "id": "proof.contract.fixture_vector_owner_data_safe.20261015t150528z.d970a459",
+          "verdict": "not_proven",
+          "failure_class": "unsupported_construct",
+          "verifier_launched": false,
+          "goals": {},
+          "goal_count": 0
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/pytest/test_a_transitive_header_new_h0/records/proofs/proof.contract.fixture_vector_owner_data_safe.20261015t150552z.a3145450.yaml",
+          "sha256": "40762fd25305f9526e6bc1921ea72c2783a35107a56a51174bbf0c40b735e7f7",
+          "id": "proof.contract.fixture_vector_owner_data_safe.20261015t150552z.a3145450",
+          "verdict": "not_proven",
+          "failure_class": "unsupported_construct",
+          "verifier_launched": false,
+          "goals": {},
+          "goal_count": 0
+        }
+      ],
+      "report_references": 3,
+      "unique_report_files": 3,
+      "report_mismatches": [],
+      "declared_absolute_pin_references": 2139,
+      "unique_declared_pin_files": 713,
+      "declared_pin_mismatches": [],
+      "artifact_sha256": {
+        "launch.sh": "5c8d61f92f4ab707fe367e4ff7612e0e3049347f4ed967db859ae86d06baf28d",
+        "lane.json": "216ce7e537229ba43720be8d08227fa71e752e305e7036e7a3b5638bda30f470",
+        "finished-at.txt": "1f65c87f10ed826b7a9fadf7cc639410ef12aa7090986311271b1d5797222459",
+        "source-commit.txt": "a9f53fa0b624ec719a8408e49488b72b9432ec80716ea4c4ce216505ee5ee88a",
+        "report.jsonl": "134a49b9aef3842809302518b639c3a6b816e21ce9d37a74be385981cac9b5a7",
+        "shard.txt": "c54b6fd77bc699a17876ed9b46dcf770b66d0bd01380e25cd620ec82adf9c736",
+        "environment.txt": "dd75d2b9aee1896a289c41222d28f37261a4078af06c5de0118485da2325cd43",
+        "launch-exit-code.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+        "retention.txt": "0a0c557f3f618f544585d31aec6ab3f48c446987c14bad649161ef65291fbf34",
+        "launch.log": "f2c943e6409cf23234a02b4a79f58438fa12e88d3212cb48180937d0c83f8211",
+        "selection.txt": "30eb067eb605fc282450620782f58303830d7f1f1406a0321aba79cb5a2ac0cb",
+        "exit-code.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+        "pytest.log": "839b043dd4f492656568c5e0d32719bcfd51230b578a7939fa602bca6cdb7014"
+      }
+    },
+    {
+      "directory": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-entry-windows-20261015-1102-node1",
+      "source_recorded": "5c2a9bea695526dfadd91cac43be5709e531943d",
+      "lane": {
+        "socket_lane": {
+          "aligned_cell_age_s": "",
+          "aligned_to": "no_gapbs_batch_running",
+          "command": [
+            "bash",
+            "-c",
+            "cd /data1/yanruj/probata-t27 && bash swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/27-proof-semantics/run_acceptance.sh 5c2a9bea695526dfadd91cac43be5709e531943d \"$1\" tests/test_wp_nested_entry_reads.py::test_actual_original_three_reads_with_explicit_windows_proves tests/test_wp_helper_windows.py::test_actual_helper_size_proof_retains_original_source_initializedness tests/test_wp_subset.py::test_models_prove_initialized_read_and_output_obligations[std_copy_int] tests/test_closed_owner_data.py::test_a_current_owner_data_value_read_proves_through_the_actual_wp_seam tests/test_closed_owner_data.py::test_a_fresh_data_value_read_cannot_make_a_stale_alias_prove_in_actual_wp --maxfail=1 -o \"cache_dir=$PROBATA_OUTPUT/pytest-cache\"",
+            "bash",
+            "entry-windows"
+          ],
+          "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+          "ended_utc": "2026-10-15T15:42:27Z",
+          "exit_code": 1,
+          "host": "mbit10",
+          "job": "probata-source-gate-entry-windows-20261015-1102",
+          "lease_generation": 598,
+          "lease_name": "mbit10-evaluation-node1",
+          "load1_at_start": 0.09,
+          "load1_max": 32,
+          "node": 1,
+          "numa_memory_policy": "bind:1",
+          "numactl": "--cpunodebind=1 --membind=1",
+          "preregistration_sha256": null,
+          "started_utc": "2026-10-15T15:02:08Z"
+        }
+      },
+      "call_counts": {
+        "passed": 19,
+        "failed": 1
+      },
+      "sessionfinish": [
+        {
+          "exitstatus": 1,
+          "$report_type": "SessionFinish"
+        }
+      ],
+      "failed_calls": [
+        {
+          "nodeid": "tests/test_closed_owner_data.py::test_a_current_owner_data_value_read_proves_through_the_actual_wp_seam",
+          "message": "AssertionError: {'kind': 'proof', 'schema_version': '0.4', 'id': 'proof.contract.fixture_vector_owner_data_safe.20261015t154222z.b217284c', 'status': 'draft', ...}\nassert 'not_proven' == 'proven'\n  \n  - proven\n  + not_proven\n  ? ++++"
+        }
+      ],
+      "record_count": 20,
+      "records": [
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-entry-windows-20261015-1102-node1/pytest/test_a_current_owner_data_valu0/records/proofs/proof.contract.fixture_vector_owner_data_safe.20261015t154222z.b217284c.yaml",
+          "sha256": "c6ec069d93560c2a32bc885cf6ce8ab5b9751f85849b26c65d48c5004fce0880",
+          "id": "proof.contract.fixture_vector_owner_data_safe.20261015t154222z.b217284c",
+          "verdict": "not_proven",
+          "failure_class": "unsupported_construct",
+          "verifier_launched": false,
+          "goals": {},
+          "goal_count": 0
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-entry-windows-20261015-1102-node1/pytest/test_actual_original_three_rea0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t151632z.29a1f021.yaml",
+          "sha256": "5321b2bbb62b0b0250060e6d3d1966af35ebf81936d05c90b6ded18b30d9be5d",
+          "id": "proof.dx100-fixtures.candidate-1.20261015t151632z.29a1f021",
+          "verdict": "proven",
+          "failure_class": null,
+          "verifier_launched": false,
+          "goals": {
+            "valid": 143
+          },
+          "goal_count": 143
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-entry-windows-20261015-1102-node1/pytest/wp-initialized-models0/records/proofs/proof.model.std_copy_int.20261015t154131z.76f590a5.yaml",
+          "sha256": "b611025ab44785d6aa966f0541386b2a8934af98ce827d91f096758892fb9fb0",
+          "id": "proof.model.std_copy_int.20261015t154131z.76f590a5",
+          "verdict": "proven",
+          "failure_class": null,
+          "verifier_launched": null,
+          "goals": {
+            "valid": 43
+          },
+          "goal_count": 43
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-entry-windows-20261015-1102-node1/pytest/test_actual_helper_size_proof_1/records/proofs/proof.dx100-fixtures.candidate-1.20261015t153137z.f1a65b86.yaml",
+          "sha256": "1c45d83084ec7a0c46c933d40f112c32b374fdc07f10e6bfe4be3b0e4ee5cccf",
+          "id": "proof.dx100-fixtures.candidate-1.20261015t153137z.f1a65b86",
+          "verdict": "not_proven",
+          "failure_class": "timeout",
+          "verifier_launched": false,
+          "goals": {
+            "valid": 52,
+            "timeout": 1
+          },
+          "goal_count": 53
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-entry-windows-20261015-1102-node1/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t150601z.88c64449.yaml",
+          "sha256": "f390661b157712b693928d46009208f9c60d072f74878355ef4e4e8bb2d68d80",
+          "id": "proof.dx100-fixtures.candidate-1.20261015t150601z.88c64449",
+          "verdict": "proven",
+          "failure_class": null,
+          "verifier_launched": false,
+          "goals": {
+            "valid": 7
+          },
+          "goal_count": 7
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-entry-windows-20261015-1102-node1/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t150528z.00cae92e.yaml",
+          "sha256": "d596fe0b194439c251d89e66efd8a17327173f9b040a67e73d48dfe227437990",
+          "id": "proof.dx100-fixtures.candidate-1.20261015t150528z.00cae92e",
+          "verdict": "proven",
+          "failure_class": null,
+          "verifier_launched": false,
+          "goals": {
+            "valid": 9
+          },
+          "goal_count": 9
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-entry-windows-20261015-1102-node1/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t151227z.fe18a992.yaml",
+          "sha256": "2a6a9ebcc1687689382a9c9ff5414829d7e2132f92a7cc054906c93daf1ee714",
+          "id": "proof.dx100-fixtures.candidate-1.20261015t151227z.fe18a992",
+          "verdict": "not_proven",
+          "failure_class": "unsupported_construct",
+          "verifier_launched": false,
+          "goals": {},
+          "goal_count": 0
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-entry-windows-20261015-1102-node1/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t150636z.7baa51d7.yaml",
+          "sha256": "0280aff30b7c79ee557c55c3fc0bc557a1f905af39b2c1a4e1a82733753e47b0",
+          "id": "proof.dx100-fixtures.candidate-1.20261015t150636z.7baa51d7",
+          "verdict": "not_proven",
+          "failure_class": "timeout",
+          "verifier_launched": false,
+          "goals": {
+            "valid": 7,
+            "timeout": 1
+          },
+          "goal_count": 8
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-entry-windows-20261015-1102-node1/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t151503z.fc87a67b.yaml",
+          "sha256": "8fa71d2f881b467d636e0b9de2f1093098d61392cd7be3f903b12546c4dda41c",
+          "id": "proof.dx100-fixtures.candidate-1.20261015t151503z.fc87a67b",
+          "verdict": "not_proven",
+          "failure_class": "unsupported_construct",
+          "verifier_launched": false,
+          "goals": {},
+          "goal_count": 0
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-entry-windows-20261015-1102-node1/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t150420z.e6e1c816.yaml",
+          "sha256": "7da01c3f02105e264d712a1aa3fa2ce6cc47372636f39de3aacc5cbf9ae8b34c",
+          "id": "proof.dx100-fixtures.candidate-1.20261015t150420z.e6e1c816",
+          "verdict": "proven",
+          "failure_class": null,
+          "verifier_launched": false,
+          "goals": {
+            "valid": 9
+          },
+          "goal_count": 9
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-entry-windows-20261015-1102-node1/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t151306z.cb0c6888.yaml",
+          "sha256": "5438dc6b6bb4bc5617bb86cdb61bf03912cbafc675d2371ef54100ecef13031e",
+          "id": "proof.dx100-fixtures.candidate-1.20261015t151306z.cb0c6888",
+          "verdict": "not_proven",
+          "failure_class": "unsupported_construct",
+          "verifier_launched": false,
+          "goals": {},
+          "goal_count": 0
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-entry-windows-20261015-1102-node1/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t151346z.4b8b5e05.yaml",
+          "sha256": "c77454625ed6a3f075a62b0a041b65cdf9d6c69f0300fb3ec3001c5005d14bb5",
+          "id": "proof.dx100-fixtures.candidate-1.20261015t151346z.4b8b5e05",
+          "verdict": "not_proven",
+          "failure_class": "unsupported_construct",
+          "verifier_launched": false,
+          "goals": {},
+          "goal_count": 0
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-entry-windows-20261015-1102-node1/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t150452z.6d7bfa6c.yaml",
+          "sha256": "91253112f0d7107dfea6b31ef2bddcdda4a6c8fbd02b60822a995613b4c6e125",
+          "id": "proof.dx100-fixtures.candidate-1.20261015t150452z.6d7bfa6c",
+          "verdict": "proven",
+          "failure_class": null,
+          "verifier_launched": false,
+          "goals": {
+            "valid": 10
+          },
+          "goal_count": 10
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-entry-windows-20261015-1102-node1/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t151424z.d4b1a891.yaml",
+          "sha256": "b7d2eb4ccb170b19e1c11818f076e7f212773b98c3207ad69c2f94ea0e45295c",
+          "id": "proof.dx100-fixtures.candidate-1.20261015t151424z.d4b1a891",
+          "verdict": "not_proven",
+          "failure_class": "unsupported_construct",
+          "verifier_launched": false,
+          "goals": {},
+          "goal_count": 0
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-entry-windows-20261015-1102-node1/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t151049z.e8ab5090.yaml",
+          "sha256": "32bec3d35f24b96fcc19550d8dd39aa2aedb185f762f85b466406a79c7932b5a",
+          "id": "proof.dx100-fixtures.candidate-1.20261015t151049z.e8ab5090",
+          "verdict": "not_proven",
+          "failure_class": "timeout",
+          "verifier_launched": false,
+          "goals": {
+            "valid": 6,
+            "timeout": 1
+          },
+          "goal_count": 7
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-entry-windows-20261015-1102-node1/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t150740z.745d3528.yaml",
+          "sha256": "9ae6e748b83cfde0d33790a7ec306f4c1bd0e53121acccf9f57b6a8648122b6b",
+          "id": "proof.dx100-fixtures.candidate-1.20261015t150740z.745d3528",
+          "verdict": "not_proven",
+          "failure_class": "timeout",
+          "verifier_launched": false,
+          "goals": {
+            "valid": 8,
+            "timeout": 1
+          },
+          "goal_count": 9
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-entry-windows-20261015-1102-node1/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t150350z.bb19371f.yaml",
+          "sha256": "ed78b15c1febaf9696eafff483428b00cc06e0055cf033f957fce7be05a71366",
+          "id": "proof.dx100-fixtures.candidate-1.20261015t150350z.bb19371f",
+          "verdict": "proven",
+          "failure_class": null,
+          "verifier_launched": false,
+          "goals": {
+            "valid": 7
+          },
+          "goal_count": 7
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-entry-windows-20261015-1102-node1/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t150947z.4fc577b9.yaml",
+          "sha256": "80223e08218518f7c518055feb29665e28f228a33e4110f00a4d3618b81daa65",
+          "id": "proof.dx100-fixtures.candidate-1.20261015t150947z.4fc577b9",
+          "verdict": "not_proven",
+          "failure_class": "timeout",
+          "verifier_launched": false,
+          "goals": {
+            "valid": 6,
+            "timeout": 1
+          },
+          "goal_count": 7
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-entry-windows-20261015-1102-node1/pytest/entry-windows0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t150844z.ef6a1c7f.yaml",
+          "sha256": "cae34d6b014a1d1a64a4d07d04cc9e60fcb93f869524d1a5292d30fde05cadbe",
+          "id": "proof.dx100-fixtures.candidate-1.20261015t150844z.ef6a1c7f",
+          "verdict": "not_proven",
+          "failure_class": "timeout",
+          "verifier_launched": false,
+          "goals": {
+            "valid": 6,
+            "timeout": 1
+          },
+          "goal_count": 7
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-entry-windows-20261015-1102-node1/pytest/test_actual_helper_size_proof_0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t152656z.f9542d70.yaml",
+          "sha256": "fc99fc5feefd0dd963a6f224a80839a6b665cd82a62a5737e004998b3e7914d9",
+          "id": "proof.dx100-fixtures.candidate-1.20261015t152656z.f9542d70",
+          "verdict": "proven",
+          "failure_class": null,
+          "verifier_launched": false,
+          "goals": {
+            "valid": 53
+          },
+          "goal_count": 53
+        }
+      ],
+      "report_references": 152,
+      "unique_report_files": 150,
+      "report_mismatches": [],
+      "declared_absolute_pin_references": 713,
+      "unique_declared_pin_files": 713,
+      "declared_pin_mismatches": [],
+      "artifact_sha256": {
+        "launch.sh": "0e890beb53e98555baa46c6c427e26b70fb8ec10695214e88eb82be1fb595970",
+        "lane.json": "7585e7b0d69d2422f4ba70b023072e91e2a0d46208efd2d4dcd5dfcf1144a8c4",
+        "finished-at.txt": "2f8c78f8a29acd2f3d42eee363a745cfb1c056c7bd4958b14cd094db370230ed",
+        "source-commit.txt": "a9f53fa0b624ec719a8408e49488b72b9432ec80716ea4c4ce216505ee5ee88a",
+        "report.jsonl": "c7db4a9ef8b544f9e306905e953b31e37c10d83ce81074ddd5e8de7d3226432e",
+        "shard.txt": "b9909b3bd4ca8d91d08c28e9b9ea7e4b492b1c49d6478fc059bbeeeb874dbd81",
+        "environment.txt": "7b89d2da9f8f1f008de1b870bc59321ec9b3e0f79a75297ad3a160a699c8fa7b",
+        "launch-exit-code.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+        "retention.txt": "0a0c557f3f618f544585d31aec6ab3f48c446987c14bad649161ef65291fbf34",
+        "launch.log": "8586cce5e8e8be87a36778a1182831fc2a9a6cab197400e3ca6171c579b9e6f6",
+        "selection.txt": "625eab338973837c5fba186c6ae47544c462454ecf1a058b224889640934e5a0",
+        "exit-code.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+        "pytest.log": "0c2e67664530567410b7c21b79a1a4ce9f87b7c79a394677148f73084843972d"
+      }
+    }
+  ],
+  "unique_hashed_files": 916,
+  "diagnosis": {
+    "owner_safe_record": "proof.contract.fixture_vector_owner_data_safe.20261015t154222z.b217284c",
+    "failure_class": "unsupported_construct",
+    "wp_goals": 0,
+    "wp_log_present": false,
+    "source_gate_refusal": "Original full-TU libclang driver-context ordering could not resolve libc++ C compatibility headers; same defect repaired in7e.",
+    "stale_alias": "Selected but not reached because --maxfail=1 stopped at owner-safe prelaunch refusal.",
+    "historical_status": "Native134passed1failed; entry19passed1failed; bothSessionFinish1. No failed owner theorem or combined-source upgrade claimed.",
+    "metadata_limitation": "Several actual positive records retain verifier_launched=false despite WP logs and goals. This audit preserves recorded fields and uses retained artifacts for execution evidence; metadata repair is prospective."
+  }
+}

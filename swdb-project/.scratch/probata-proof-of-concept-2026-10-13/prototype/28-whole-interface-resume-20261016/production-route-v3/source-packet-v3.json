@@ -1,0 +1,392 @@
+{
+  "V2_packet_sha256": "e49034a2cacbbc0d5df5b48152ec8701ccc5df12fd70f53b7a21a14a92a239ac",
+  "actual_scientific_execution": false,
+  "additions": 30,
+  "changed_production_files_from_V2": [
+    "swdb/cbmc_adapter.py",
+    "swdb/dx100_checked_adapter.py",
+    "swdb/dx100_checked_source.py",
+    "swdb/proof_setup.py"
+  ],
+  "controls": {
+    "errors": 0,
+    "failures": 0,
+    "skips": 0,
+    "tests": 27
+  },
+  "date": "2026-10-16 ET",
+  "existing_base_paths": 6,
+  "files": [
+    {
+      "bytes": 2821,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/PLAN.md",
+      "relative": "PLAN.md",
+      "sha256": "ec96644b7e4e43180e9dbc77a52259545613d5407bd6ebf420662e7a498040aa"
+    },
+    {
+      "bytes": 170578,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/base-source/c_lowering.py",
+      "relative": "base-source/c_lowering.py",
+      "sha256": "37201a198250021e3d9912a7fbaafa2b8dd9377db8d87027e51045897a246243"
+    },
+    {
+      "bytes": 73392,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/base-source/cbmc_adapter.py",
+      "relative": "base-source/cbmc_adapter.py",
+      "sha256": "2ef59469412c287b174f085e2c08c8a969435ccf1bc129fe34ea89bbb78cac4a"
+    },
+    {
+      "bytes": 63276,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/base-source/cbmc_translator.py",
+      "relative": "base-source/cbmc_translator.py",
+      "sha256": "61a25090b66a5bd86a332a600973a048d3f38936dea2c6a088c8456d53d2e4d3"
+    },
+    {
+      "bytes": 26237,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/base-source/formal_frame.py",
+      "relative": "base-source/formal_frame.py",
+      "sha256": "394fca77dba50ba42f1d043efd2e940a152b330a8a2e87d178f121052f53e9cf"
+    },
+    {
+      "bytes": 34602,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/base-source/proof_semantics.py",
+      "relative": "base-source/proof_semantics.py",
+      "sha256": "9c3fd649fecd2162a7d8f0b416ea1e5543991bf40cc8f8a0eb115a0e24b66436"
+    },
+    {
+      "bytes": 52371,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/base-source/proof_setup.py",
+      "relative": "base-source/proof_setup.py",
+      "sha256": "08f5e9807522cc2418e59ac9b6ecd43855a6a5ed4693c0295333abf6b8563d16"
+    },
+    {
+      "bytes": 20919,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/build_hooks_v1.py",
+      "relative": "build_hooks_v1.py",
+      "sha256": "346026242f01a99ffbbbe60b22cd92093c62e93b39252d8fdc75ea746cb5ed54"
+    },
+    {
+      "bytes": 6299,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/historical-basis-v1.json",
+      "relative": "historical-basis-v1.json",
+      "sha256": "26dcd8a923ac63dcaca9a76eeb334a7657db980e1883405fe31aa6fe73689e3a"
+    },
+    {
+      "bytes": 1209,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/hook-bases-v1.json",
+      "relative": "hook-bases-v1.json",
+      "sha256": "d221bda4cb5dd2ba28ce9b45a38a99fa2a1df59840e18c6099d09562c2bef30d"
+    },
+    {
+      "bytes": 1842,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/hook-delta-v1.json",
+      "relative": "hook-delta-v1.json",
+      "sha256": "2b25e5327f94f08eeaf5e8de9385bc8cfc987fc107a757f0ac3cc852ccf58be5"
+    },
+    {
+      "bytes": 22578,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/hook-inverse-v1.json",
+      "relative": "hook-inverse-v1.json",
+      "sha256": "4162d244f791ca9709d2ff89240fb3221110cd748d24e17fffb3977916fb38d3"
+    },
+    {
+      "bytes": 674870,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/production-full-v3.patch",
+      "relative": "production-full-v3.patch",
+      "sha256": "06d74a3674e8d4c9de81250409a0d4a2085d77a7bf6aa8cc294125acda4b12f7"
+    },
+    {
+      "bytes": 32651,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/production-hooks-v1.patch",
+      "relative": "production-hooks-v1.patch",
+      "sha256": "b86446a529ec2796c91520ec422d434e19e8051a2a468dafd67f76b84874f078"
+    },
+    {
+      "bytes": 7769,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/promotion-manifest-v1.json",
+      "relative": "promotion-manifest-v1.json",
+      "sha256": "5907d4eac06beb87b91c52bb2d1b6efb134a19cb72351817bd9e74d2f1a674f7"
+    },
+    {
+      "bytes": 98,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/_dx100_whole/__init__.py",
+      "relative": "proposed/swdb/_dx100_whole/__init__.py",
+      "sha256": "f5f61c5460fa264b8d8a5690e3be19e60b592a162eed6b33614276b66853016e"
+    },
+    {
+      "bytes": 14281,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/_dx100_whole/basis/compiler_unit_adapter_v2.py.source.txt",
+      "relative": "proposed/swdb/_dx100_whole/basis/compiler_unit_adapter_v2.py.source.txt",
+      "sha256": "1cf112859f976f77e8381c777c977f5cf5857d6e18f1bd0e24f9689148e80317"
+    },
+    {
+      "bytes": 63276,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/_dx100_whole/basis/harness/cbmc_translator.py.source.txt",
+      "relative": "proposed/swdb/_dx100_whole/basis/harness/cbmc_translator.py.source.txt",
+      "sha256": "61a25090b66a5bd86a332a600973a048d3f38936dea2c6a088c8456d53d2e4d3"
+    },
+    {
+      "bytes": 9623,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/_dx100_whole/basis/model-entry-v1/whole_model_v1.py.source.txt",
+      "relative": "proposed/swdb/_dx100_whole/basis/model-entry-v1/whole_model_v1.py.source.txt",
+      "sha256": "75c99c39664fc9b7b40838622b8fa03835977c7afbf35c5aab2a5704c4f538f4"
+    },
+    {
+      "bytes": 9975,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/_dx100_whole/basis/model-entry-v3/whole_model_v3.py.source.txt",
+      "relative": "proposed/swdb/_dx100_whole/basis/model-entry-v3/whole_model_v3.py.source.txt",
+      "sha256": "2de83f722c439c5a834f9b17549b979e24b3716d79170377bf8cbeafd7b07b50"
+    },
+    {
+      "bytes": 6468,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/_dx100_whole/basis/source-integration-schema-v2.json.source.txt",
+      "relative": "proposed/swdb/_dx100_whole/basis/source-integration-schema-v2.json.source.txt",
+      "sha256": "433e3e6149b0cc3be9f4f7e16db6bfdc3b1dc912115dee88783f5bed1052f792"
+    },
+    {
+      "bytes": 23687,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/_dx100_whole/basis/source_argument_staging_v2.py.source.txt",
+      "relative": "proposed/swdb/_dx100_whole/basis/source_argument_staging_v2.py.source.txt",
+      "sha256": "79bdae72fd7b4de05771776684b5c6af275afb736313ece1df8790ae57ae6178"
+    },
+    {
+      "bytes": 25681,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/_dx100_whole/basis/source_dispatch_v3.py.source.txt",
+      "relative": "proposed/swdb/_dx100_whole/basis/source_dispatch_v3.py.source.txt",
+      "sha256": "d05d3ba716af2d88703636ffbf57bf0834acd5e59ee7ce3aebe0a72648a8b703"
+    },
+    {
+      "bytes": 6179,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/_dx100_whole/basis/source_program_globals_v1.py.source.txt",
+      "relative": "proposed/swdb/_dx100_whole/basis/source_program_globals_v1.py.source.txt",
+      "sha256": "17bc9b0aefc7cadd5762f630b28c3ab97496f3cac17eb40bbd89deda1fe8cc77"
+    },
+    {
+      "bytes": 30246,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/_dx100_whole/basis/source_statements_v2.py.source.txt",
+      "relative": "proposed/swdb/_dx100_whole/basis/source_statements_v2.py.source.txt",
+      "sha256": "49832255fef43afa51078479770d62f01e7e539e4f71f4034e3f2648cb867738"
+    },
+    {
+      "bytes": 15884,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/_dx100_whole/basis/whole_adapters.h.source.txt",
+      "relative": "proposed/swdb/_dx100_whole/basis/whole_adapters.h.source.txt",
+      "sha256": "e8efe60182d7fbd0d7c9f54c8fc6f70c235a91bd613cabd3be6ac893105c4a1a"
+    },
+    {
+      "bytes": 3881,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/_dx100_whole/basis/whole_closed_routes_v1.h.source.txt",
+      "relative": "proposed/swdb/_dx100_whole/basis/whole_closed_routes_v1.h.source.txt",
+      "sha256": "0168b2f78e0d5a6a6d42c8955ba45304533b8a0c63b92bebcabd50fd730969c7"
+    },
+    {
+      "bytes": 34803,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/_dx100_whole/basis/whole_interface_v4.py.source.txt",
+      "relative": "proposed/swdb/_dx100_whole/basis/whole_interface_v4.py.source.txt",
+      "sha256": "217cdda6ca8eaea99526010f2c379dad963ca81c18c79322ce02ab8cc9296ed8"
+    },
+    {
+      "bytes": 69747,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/_dx100_whole/basis/whole_value_backend_v1.h.source.txt",
+      "relative": "proposed/swdb/_dx100_whole/basis/whole_value_backend_v1.h.source.txt",
+      "sha256": "c37481e56517d29729ffc83f2eb538cc5b5cb8ce5ab831babae3287cb332956f"
+    },
+    {
+      "bytes": 13765,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/_dx100_whole/basis/whole_value_builders_v1.h.source.txt",
+      "relative": "proposed/swdb/_dx100_whole/basis/whole_value_builders_v1.h.source.txt",
+      "sha256": "88f6bd0d310e8a2a6ad522ae15fec32b9f32b4ed6d792a314e8a365e0118824e"
+    },
+    {
+      "bytes": 15063,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/_dx100_whole/compiler_unit_adapter_v3.py",
+      "relative": "proposed/swdb/_dx100_whole/compiler_unit_adapter_v3.py",
+      "sha256": "775ab2ecf6068153a6167473129dcd416dc2727c9afe0ef6e0846bab62d3085c"
+    },
+    {
+      "bytes": 5976,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/_dx100_whole/lossless_gzip_v1.py",
+      "relative": "proposed/swdb/_dx100_whole/lossless_gzip_v1.py",
+      "sha256": "f93850883bdab523e59122812fa46877728127e8ba5997c567621347de739193"
+    },
+    {
+      "bytes": 2550,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/_dx100_whole/model_primitives.py",
+      "relative": "proposed/swdb/_dx100_whole/model_primitives.py",
+      "sha256": "56e7ff7f8e9f6317ad3573c1c916891e328a12c1f189b716392a588e12dd5df1"
+    },
+    {
+      "bytes": 34554,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/_dx100_whole/receiver-state-draws-v2/receiver_state_draws_v2.py",
+      "relative": "proposed/swdb/_dx100_whole/receiver-state-draws-v2/receiver_state_draws_v2.py",
+      "sha256": "f6c19464a6587b4fbd4a6278dc66be97f1c4ab16d46b2db8cd6b804d41608a5f"
+    },
+    {
+      "bytes": 34554,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/_dx100_whole/receiver_state_draws_v2.py",
+      "relative": "proposed/swdb/_dx100_whole/receiver_state_draws_v2.py",
+      "sha256": "f6c19464a6587b4fbd4a6278dc66be97f1c4ab16d46b2db8cd6b804d41608a5f"
+    },
+    {
+      "bytes": 23198,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/_dx100_whole/runtime_projection_v2.py",
+      "relative": "proposed/swdb/_dx100_whole/runtime_projection_v2.py",
+      "sha256": "645b34878191a695fb61bd6dbf2dd3bcb0f984199482c9611a19b9f9a3a4e69b"
+    },
+    {
+      "bytes": 23687,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/_dx100_whole/source_argument_staging_v2.py",
+      "relative": "proposed/swdb/_dx100_whole/source_argument_staging_v2.py",
+      "sha256": "79bdae72fd7b4de05771776684b5c6af275afb736313ece1df8790ae57ae6178"
+    },
+    {
+      "bytes": 25681,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/_dx100_whole/source_dispatch_v3.py",
+      "relative": "proposed/swdb/_dx100_whole/source_dispatch_v3.py",
+      "sha256": "d05d3ba716af2d88703636ffbf57bf0834acd5e59ee7ce3aebe0a72648a8b703"
+    },
+    {
+      "bytes": 6179,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/_dx100_whole/source_program_globals_v1.py",
+      "relative": "proposed/swdb/_dx100_whole/source_program_globals_v1.py",
+      "sha256": "17bc9b0aefc7cadd5762f630b28c3ab97496f3cac17eb40bbd89deda1fe8cc77"
+    },
+    {
+      "bytes": 30246,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/_dx100_whole/source_statements_v2.py",
+      "relative": "proposed/swdb/_dx100_whole/source_statements_v2.py",
+      "sha256": "49832255fef43afa51078479770d62f01e7e539e4f71f4034e3f2648cb867738"
+    },
+    {
+      "bytes": 34803,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/_dx100_whole/whole_interface_v4.py",
+      "relative": "proposed/swdb/_dx100_whole/whole_interface_v4.py",
+      "sha256": "217cdda6ca8eaea99526010f2c379dad963ca81c18c79322ce02ab8cc9296ed8"
+    },
+    {
+      "bytes": 171522,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/c_lowering.py",
+      "relative": "proposed/swdb/c_lowering.py",
+      "sha256": "8ede503e30cb6f57ead88ee622362d5a1c05290edcb6b4b157b9ca443f64925e"
+    },
+    {
+      "bytes": 77637,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/cbmc_adapter.py",
+      "relative": "proposed/swdb/cbmc_adapter.py",
+      "sha256": "dc5a73344cb65f670b0f3ab1f554a7aeb76c175e95e74a5879cd995f644d59c5"
+    },
+    {
+      "bytes": 64545,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/cbmc_translator.py",
+      "relative": "proposed/swdb/cbmc_translator.py",
+      "sha256": "9319dea126f186f64aeec28d51ac6732fa50b8ad4b70787a977ab5bb5f9c3fbb"
+    },
+    {
+      "bytes": 12114,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/dx100_checked_adapter.py",
+      "relative": "proposed/swdb/dx100_checked_adapter.py",
+      "sha256": "7eeb52d964b3bfd3371f64a74972962350ae99339a5e49cb6d9f0752d8282a84"
+    },
+    {
+      "bytes": 3076,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/dx100_checked_native.py",
+      "relative": "proposed/swdb/dx100_checked_native.py",
+      "sha256": "fd1ea41d385a3163afc2fb4ae28b2a5d567c0a4f2a311e9d05af7811210d3fc9"
+    },
+    {
+      "bytes": 36530,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/dx100_checked_source.py",
+      "relative": "proposed/swdb/dx100_checked_source.py",
+      "sha256": "069d07c85b97e6aed9685738375b57923ff65a6b2ca557f04e510edbe793b731"
+    },
+    {
+      "bytes": 13395,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/dx100_whole_checked.py",
+      "relative": "proposed/swdb/dx100_whole_checked.py",
+      "sha256": "0c8e0fb429a4a497821d20436d777870bc0608ec3dbe79d42eb5201ad5d23105"
+    },
+    {
+      "bytes": 27108,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/formal_frame.py",
+      "relative": "proposed/swdb/formal_frame.py",
+      "sha256": "bcee46cf9e585f1b7a16e7c8f89e7667a279359bc8db3865f87d04d522d56a98"
+    },
+    {
+      "bytes": 36135,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/proof_semantics.py",
+      "relative": "proposed/swdb/proof_semantics.py",
+      "sha256": "22c2f2bbe14064c5abf14177902c45b9be8a8cc40b5411e7a770465a9feee597"
+    },
+    {
+      "bytes": 52846,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed/swdb/proof_setup.py",
+      "relative": "proposed/swdb/proof_setup.py",
+      "sha256": "e897b20b03419dd7d140b35406784ce70713172f324708381571d3fa4cb501b4"
+    },
+    {
+      "bytes": 16599,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/proposed-production-paths-v3.json",
+      "relative": "proposed-production-paths-v3.json",
+      "sha256": "de31c07839cf999f0ea0d3f7faa16dd8a119659213e8633f6f0e402899adad01"
+    },
+    {
+      "bytes": 260,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/pure-controls-v3.json",
+      "relative": "pure-controls-v3.json",
+      "sha256": "dd60962a3b9d8bc39488b8fd7ce9c3eed80a8da9b04507d3925d5c9d670a5a8b"
+    },
+    {
+      "bytes": 3892,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/pure-controls-v3.log",
+      "relative": "pure-controls-v3.log",
+      "sha256": "79a372bebbb7aa425c26b24edf27774522364e7dd4bc763814b840c2e97f2c45"
+    },
+    {
+      "bytes": 487,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/runtime-projection-origin-v2.json",
+      "relative": "runtime-projection-origin-v2.json",
+      "sha256": "2560e2df5e8e909e31edced4487831f2f7b10717353a99b5f4a4b381ec2a332a"
+    },
+    {
+      "bytes": 12075,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/test_route_seams_v1.py",
+      "relative": "test_route_seams_v1.py",
+      "sha256": "df315daa7d9755f9c91a8c7de021e844cd3edb30f43a324ce4f9bf5ef60b91aa"
+    },
+    {
+      "bytes": 17149,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/test_route_v2.py",
+      "relative": "test_route_v2.py",
+      "sha256": "f59590e09d866be959dfeb621216f8c6fba4d437a5e6cbcf6b30e145b1c85d53"
+    },
+    {
+      "bytes": 9381,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/test_route_v3.py",
+      "relative": "test_route_v3.py",
+      "sha256": "c8db25ba75867a9cc53848f3c4a5a46e1e32c2f68b433c133b3bee691f8754ab"
+    },
+    {
+      "bytes": 225,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/v1-origin.json",
+      "relative": "v1-origin.json",
+      "sha256": "e273c022a9dc8f761638289d9f6860f80349c75c2e0c4ffb0c63c19196892e9b"
+    },
+    {
+      "bytes": 13176,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/v3-inverse-scope.json",
+      "relative": "v3-inverse-scope.json",
+      "sha256": "7f29107d029c5a6facc20a37689a256867e2c56b7e2d6f5f2321bb359bff42b6"
+    },
+    {
+      "bytes": 344,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/production-route-v3/validator-origin-v2.json",
+      "relative": "validator-origin-v2.json",
+      "sha256": "a10388495192e68344ce1462248c479a6b83f2c93180ee8df91dc873e763e40d"
+    }
+  ],
+  "public_admission": false,
+  "remaining": "complete accepted capture/current transport, real full-TU/source/view exercise, fresh method/runtime/root admission and actual public evidence; readiness/two-thread source expansion separate",
+  "schema": "whole-checked-source-route-proposal-3",
+  "shared_production_changed": false,
+  "status": "frozen source-only successor; independent review/actual admission pending"
+}

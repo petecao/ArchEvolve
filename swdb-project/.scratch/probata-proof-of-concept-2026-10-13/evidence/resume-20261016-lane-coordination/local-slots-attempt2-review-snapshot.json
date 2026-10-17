@@ -1,0 +1,99 @@
+{
+  "at_utc": "2026-10-16T16:59:25.382567+00:00",
+  "leases": [
+    {
+      "path": "/private/tmp/claude/swdb-verifier.lock",
+      "exists": true,
+      "owner": "owner=t07f pid=58501 since=2026-10-16 12:49:20 EDT cmd=/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/wp_run.sh wp-smoke /tmp/claude/probata-runs/t07f/s1-nohint-full tdstep_standin.c\n",
+      "pid": 58501,
+      "alive": true,
+      "birth": 1792169360.046397,
+      "name": "python3.12"
+    },
+    {
+      "path": "/private/tmp/claude/swdb-verifier.slot2.lock",
+      "exists": false
+    },
+    {
+      "path": "/private/tmp/claude/swdb-native-b.lock",
+      "exists": false
+    }
+  ],
+  "slots": "2\n",
+  "queue": [],
+  "selected_tools": [
+    {
+      "pid": 58502,
+      "name": "frama-c",
+      "rss": 289226752
+    },
+    {
+      "pid": 58524,
+      "name": "why3server",
+      "rss": 1687552
+    },
+    {
+      "pid": 69009,
+      "name": "alt-ergo",
+      "rss": 192512000
+    },
+    {
+      "pid": 69012,
+      "name": "cvc5",
+      "rss": 55869440
+    },
+    {
+      "pid": 69015,
+      "name": "z3",
+      "rss": 168837120
+    },
+    {
+      "pid": 69016,
+      "name": "alt-ergo",
+      "rss": 227115008
+    },
+    {
+      "pid": 69018,
+      "name": "cvc5",
+      "rss": 72024064
+    },
+    {
+      "pid": 69046,
+      "name": "z3",
+      "rss": 177766400
+    },
+    {
+      "pid": 69073,
+      "name": "alt-ergo",
+      "rss": 209829888
+    },
+    {
+      "pid": 69075,
+      "name": "cvc5",
+      "rss": 51953664
+    },
+    {
+      "pid": 69076,
+      "name": "z3",
+      "rss": 146784256
+    },
+    {
+      "pid": 69077,
+      "name": "alt-ergo",
+      "rss": 173981696
+    },
+    {
+      "pid": 69084,
+      "name": "cvc5",
+      "rss": 45236224
+    },
+    {
+      "pid": 69108,
+      "name": "z3",
+      "rss": 129449984
+    }
+  ],
+  "inspection_denials": [],
+  "available_ram": 6554238976,
+  "no_resource_actions": true
+}

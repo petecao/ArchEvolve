@@ -1,0 +1,198 @@
+{
+  "actual_metadata": {
+    "path": "/private/tmp/probata-t25-ctor30-partial-metadata-root-execution-v1-20261016.json",
+    "sha256": "4a80670357213b2a8d106d84d4690510595ecefd37665e73bff7f8d2dc13441e"
+  },
+  "actual_query_sha256": "3033750a579de5437b7e29b5f6fd0063d7afe60c8fdc5f87b0bf4dfc89a97785",
+  "created": "2026-10-16 ET",
+  "original_positive_post": {
+    "dependencies": [],
+    "expected": "proven",
+    "goal": "t25v3_ctor_qualified_positive_post",
+    "id": "ctor.qualified.positive_post",
+    "kind": "check_lemma",
+    "path": "029-t25v3_ctor_qualified_positive_post.c",
+    "sha256": "2967ac1174f2c7a1f9ade34c8f1f2c16eb0b8c166b354763bdf45eb7db53ea60",
+    "source_groups": [
+      "C8",
+      "QC1",
+      "QC2"
+    ],
+    "source_spans": [
+      {
+        "begin": 3614,
+        "end": 3629,
+        "sha256": "ce0555043b0ed0c37ada58b34440ee609bb19168242fb646b94428987f9705e0"
+      }
+    ],
+    "statement": "\\forall Heap::heap h; \\forall integer r,o,b,n,v; t25v3_ctor_inv(h,r,o,b,n,n,v) ==> t25v3_eligible(Heap::put_integer(h,r,o+8,n),r,o,b,0,n,n)",
+    "status": "pending"
+  },
+  "semantics": {
+    "path": "theory/heap_reallocation.mlw",
+    "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+  },
+  "source_commit": "046f6b9e64d45777a8032951ced04f942fc9c3c2",
+  "sources": {
+    "original.c": {
+      "path": "original.c",
+      "sha256": "57cf2a6f3f9049f8edf41633f9ef60d0bb7c804e5ee937af796217a2a018c594"
+    },
+    "qualified.c": {
+      "path": "qualified.c",
+      "sha256": "a20cb8431cc975b034954666967398d8466745cd0bab9a92f45f60c19a837a1a"
+    }
+  },
+  "targets": [
+    {
+      "id": "control.ctor.premises_feasible",
+      "path": "000-t25v3_control_ctor_premises_feasible.c",
+      "sha256": "b5e411200cea2b718f6d7464d67b16c9704f13da40fb4b5c3d15f8ccc424dad5"
+    },
+    {
+      "id": "ctor.rte.zero_data",
+      "path": "001-t25v3_ctor_rte_zero_data.c",
+      "sha256": "3a64ef32dc04c28baf29bf0432e000405db7e5923e5ee7c40d15a3afd162edee"
+    },
+    {
+      "id": "ctor.rte.zero_size",
+      "path": "002-t25v3_ctor_rte_zero_size.c",
+      "sha256": "524665df08d6df290bc3fa479ba7de698c4929ecb9307065e909c815cea8e651"
+    },
+    {
+      "id": "ctor.rte.zero_capacity",
+      "path": "003-t25v3_ctor_rte_zero_capacity.c",
+      "sha256": "1b503dcb3e5d9ad0c02e7f05c4b961c4e344d05b027d2c922445495b030dd44e"
+    },
+    {
+      "id": "ctor.fields.initialized",
+      "path": "004-t25v3_ctor_fields_initialized.c",
+      "sha256": "7457a3fb08737a445abd553c0b18ecf41782b92e468bbd8a6fc641c64b412080"
+    },
+    {
+      "id": "ctor.zero.post",
+      "path": "005-t25v3_ctor_zero_post.c",
+      "sha256": "67a767b853c35aa675dc2a038b8ce511f72c3b5d283c4b456ed3b9b537504cc0"
+    },
+    {
+      "id": "ctor.zero.frame",
+      "path": "006-t25v3_ctor_zero_frame.c",
+      "sha256": "246cb3285d23c64743a49e27ea7fddca8b0370800f447852782eb09f1dc8490a"
+    },
+    {
+      "id": "ctor.alloc.identity",
+      "path": "007-t25v3_ctor_alloc_identity.c",
+      "sha256": "2c4039918468f64d6186788d62229926ec3de5ed7733deb3f1a37d626e1d3e7f"
+    },
+    {
+      "id": "ctor.alloc.well_formed",
+      "path": "008-t25v3_ctor_alloc_well_formed.c",
+      "sha256": "37fb36cddfa7c04a94b82a42170d5c2e5ca38e32c79bb164d24cdc9de7e37f55"
+    },
+    {
+      "id": "ctor.alloc.separation",
+      "path": "009-t25v3_ctor_alloc_separation.c",
+      "sha256": "15b3e29c013f359fd41166886cf8c87349871c4d6be2f3acf2a42fa2faeef5d7"
+    },
+    {
+      "id": "ctor.alloc.extent",
+      "path": "010-t25v3_ctor_alloc_extent.c",
+      "sha256": "19ba37f46cad8d3c1fb1540232498f75f033e3462e8bd333ef29f6ef5b0d6ebb"
+    },
+    {
+      "id": "ctor.alloc.uninitialized",
+      "path": "011-t25v3_ctor_alloc_uninitialized.c",
+      "sha256": "7e829d37db0bd00afc9da274a2bb64f670f95d8877a85cca91e9968f956b6797"
+    },
+    {
+      "id": "ctor.capacity.entry",
+      "path": "012-t25v3_ctor_capacity_entry.c",
+      "sha256": "7a0e99453d6cbc09801fce66d2387a93175e593cf4152c99f36d21cd50adba42"
+    },
+    {
+      "id": "ctor.rte.allocated_data",
+      "path": "013-t25v3_ctor_rte_allocated_data.c",
+      "sha256": "02ba89b283c54cc344aad9897d86365fc227c0c2b2bc0efcb67f6e49ad0bb96a"
+    },
+    {
+      "id": "ctor.rte.allocated_capacity",
+      "path": "014-t25v3_ctor_rte_allocated_capacity.c",
+      "sha256": "0991127933d1a77bd56ec6c71aa78a2c00754d88fadba9dd91c109a4fa4bf2ec"
+    },
+    {
+      "id": "ctor.prefix.establish",
+      "path": "015-t25v3_ctor_prefix_establish.c",
+      "sha256": "50fb5df4e141d3263dc802457dbd7935be3b0286b17ec43c21bac0e37fc97218"
+    },
+    {
+      "id": "ctor.store.access",
+      "path": "016-t25v3_ctor_store_access.c",
+      "sha256": "83c4d2ad7c3351e04007cfc3a8b4b9ace11774feab2e0eb678e7cb7a663af2ad"
+    },
+    {
+      "id": "ctor.prefix.step",
+      "path": "017-t25v3_ctor_prefix_step.c",
+      "sha256": "aa084a3b18ca0a7abd158071d20b91efb631d797ea0789f8e24c4fb35ccba598"
+    },
+    {
+      "id": "ctor.prefix.exit",
+      "path": "018-t25v3_ctor_prefix_exit.c",
+      "sha256": "63e1d91b2abddf2959a3ed8d35fbccd0f3c4c1679a17e61d5f364e0b9135d123"
+    },
+    {
+      "id": "ctor.final.post",
+      "path": "019-t25v3_ctor_final_post.c",
+      "sha256": "7bdbb392a07ba3d6cf4e6a38d8cb84253a7ffc2f801a29c456a4039c4859f42e"
+    },
+    {
+      "id": "ctor.rte.final_size",
+      "path": "020-t25v3_ctor_rte_final_size.c",
+      "sha256": "2f55d2e1f387cc1e191db7169b89969582c6684a320930868d364d2bd8ddfd3e"
+    },
+    {
+      "id": "ctor.frame.preexisting",
+      "path": "021-t25v3_ctor_frame_preexisting.c",
+      "sha256": "f944af412b583f4a9a60871dd616b8188e64a27fb7cd75eb94a372c4454c2835"
+    },
+    {
+      "id": "ctor.frame.loop_step",
+      "path": "022-t25v3_ctor_frame_loop_step.c",
+      "sha256": "b73c3d72d71d00b1a3db42157634a66fcc2caa20a5a803f12189ee864a0ef98a"
+    },
+    {
+      "id": "ctor.frame.final",
+      "path": "023-t25v3_ctor_frame_final.c",
+      "sha256": "524a1813b0938ef54b0f013c015bf74448488031a6398d934f5ea84f632bcf28"
+    },
+    {
+      "id": "ctor.numeric",
+      "path": "024-t25v3_ctor_numeric.c",
+      "sha256": "95efe1cba1bbc55c5f08d538cd4424ff93a4d3adf6bd5d169ad17664377d5600"
+    },
+    {
+      "id": "control.zero_size.formation",
+      "path": "025-t25v3_control_zero_size_formation.c",
+      "sha256": "20e39f968e9d59dc0d4fd901a6758e976969a3824c3509d3ad5cd21e482cb1dc"
+    },
+    {
+      "id": "control.live_zero_base.not_fresh",
+      "path": "026-t25v3_control_live_zero_base_not_fresh.c",
+      "sha256": "986b457661e64986482e9959757025ca082a0826018dbd372529d0722656b112"
+    },
+    {
+      "id": "control.ctor.qualified_feasible",
+      "path": "027-t25v3_control_ctor_qualified_feasible.c",
+      "sha256": "a60560cd42ab38003711f2bc0815fb0f39a4757888d19bb038bc4c4b4525770d"
+    },
+    {
+      "id": "ctor.qualified.zero_post",
+      "path": "028-t25v3_ctor_qualified_zero_post.c",
+      "sha256": "efbc464b79789d41ce4c4cbbc507e6bd66440c7455291412f6cbe6a2bb3d4871"
+    },
+    {
+      "id": "ctor.qualified.positive_post",
+      "path": "029-t25v3_ctor_qualified_positive_post.c",
+      "sha256": "2967ac1174f2c7a1f9ade34c8f1f2c16eb0b8c166b354763bdf45eb7db53ea60"
+    }
+  ]
+}

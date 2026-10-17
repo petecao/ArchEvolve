@@ -1,0 +1,53 @@
+{
+  "actual_profile_executed_by_reviewer": false,
+  "checked": {
+    "actual_entry": "Source1433/node0/entry0b840d1f/policy6dbe0abc/command0828586d remain exactly pinned in the new receipt.",
+    "control_source": "Only PACKET and expected source commit differ from the reviewed V2 fifteen-case control script. No control condition is removed or weakened.",
+    "delta": "New V3 template-delta-v2.json is byte-identical to preserved V2 exact inverse metadata. It remains local control evidence and is not a staged runtime controller input.",
+    "limits": "These are compiler-free producer admission/result controls. Reviewer did not rerun them. They do not execute or accept the actual public-five-case source profile, scientific proof, caller/Typed/default route or full ticket25.",
+    "receipt_physical_pin_occurrences": 9,
+    "temporal_note": "The earlier source review observed the adapted script while its local delta/receipt artifacts were still being created. The parent reports the exact delta was copied before the successful control run; the complete pinned log now retains all15 passes. The entry review itself remains unchanged."
+  },
+  "date": "2026-10-16 ET",
+  "decision": "PASS for newly retained producer control evidence; no actual profile acceptance",
+  "entry_review": {
+    "bytes": 9604,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-closed-source-public-controller-spec-recheck-v3-20261016.json",
+    "sha256": "a5dd24bf1f09e1b7e2fb878aff8f354341a5f770b953adf47b41dcfe98b8e075"
+  },
+  "findings": [],
+  "independent_cold_acceptance": false,
+  "pins": {
+    "delta": {
+      "bytes": 15736,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v3/template-delta-v2.json",
+      "sha256": "9edace4f87c2e07ba547c4e937d5e44aa105e48339fc5bfd005f344722664954"
+    },
+    "predecessor_delta": {
+      "bytes": 15736,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v2/template-delta-v2.json",
+      "sha256": "9edace4f87c2e07ba547c4e937d5e44aa105e48339fc5bfd005f344722664954"
+    },
+    "receipt": {
+      "bytes": 3612,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v3/pure-controls-v1-receipt.json",
+      "sha256": "d907672555c0c7cbce64bc4ee421bff2112149c3c3fd16a5546479e2af424243"
+    },
+    "script": {
+      "bytes": 17184,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v3/pure_controls.py",
+      "sha256": "76f20ff301243acd886eb274dcfcc9eb02c4ae5bf3dfe29d65e46607edc6700a"
+    }
+  },
+  "retained_control_outcome": {
+    "actual_profile_executed": false,
+    "child_native_network_attempts": [],
+    "date": "2026-10-16 ET",
+    "errors": 0,
+    "failures": 0,
+    "pure_controls": 15
+  },
+  "reviewer": "caller_assess",
+  "schema": "t25-public-source-controller-v3-pure-control-supplement-1",
+  "source_public_five_case_actual_success": false
+}

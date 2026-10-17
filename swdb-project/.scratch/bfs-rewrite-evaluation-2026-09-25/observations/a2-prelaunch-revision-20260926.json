@@ -1,0 +1,86 @@
+{
+  "created": "2026-09-26T18:40:02.569118-04:00",
+  "scope": "Exactly three-path A2 tested prelaunch revision; no commit/export/host activity",
+  "state": "prepared_focused_validation_passed",
+  "base": "67313d9b2a45d9f0fb23d935b56e755a3a19fa7f",
+  "files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_dx100_interruption.py",
+      "bytes": 7467,
+      "sha256": "abfec3c0aa58f3c52506df4f463d1573cef118e8e14547a4298e064d4941aa46"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/requests/dx100-coverage-a2-20260926.json",
+      "bytes": 5778,
+      "sha256": "ffede85845f651322d1149fc04fb1d4d3cd604224d7b10e560b342ff23c4e08d"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_dx100_coverage_a2.py",
+      "bytes": 46202,
+      "sha256": "e9bbbf81733c3b24afa03a516b4c81b18b8e192f214d7f0471ec2424013767f0"
+    }
+  ],
+  "plan_canonical_sha256": "d78c09751d9b56abddcce0a7217983fc1652ef6dc83c09fc55ecf8a9a4d4be5a",
+  "changes": [
+    "Interruption-only test correction independently reviewed by Spec; real mbit10 policy retained, required CLI lane derived from real helper verification.",
+    "Compared exact original673 plan: only required_runtime_sha256[test_dx100_interruption.py] changed.",
+    "Compared exact original673 driver: only PLAN_SHA constant changed to canonical digest, not rawfilehash."
+  ],
+  "invariants": {
+    "run_id": "bfs-dx100-coverage-20260926-a2",
+    "window": {
+      "not_before": "2026-09-26T16:00:00-04:00",
+      "latest_start": "2026-09-26T21:00:00-04:00",
+      "absolute_end": "2026-09-26T22:00:00-04:00"
+    },
+    "bounds": {
+      "outer_seconds": 3600,
+      "cleanup_seconds": 30,
+      "generation_registration_seconds": 120,
+      "compile_seconds": 240,
+      "execute_seconds": 3100,
+      "checkpoint_seconds": 300,
+      "simulation_seconds": 2700,
+      "sampled_rss_bytes": 51539607552,
+      "artifact_bytes": 4294967296,
+      "raw_reserve_bytes": 32212254720,
+      "build_reserve_bytes": 10737418240,
+      "sample_gap_seconds": 30,
+      "work_seconds": 3570,
+      "sample_interval_seconds": 5,
+      "node_available_bytes": 55834574848,
+      "global_available_bytes": 68719476736
+    },
+    "unchanged": "All graph, compile/execution requests, settings, historical records/prerequisites, source/runtime identities except required test hash. No proof equality or production guard relaxation."
+  },
+  "test_repair": {
+    "path": "/private/tmp/bfs-interruption-lane-fixture-repair-20260926.json",
+    "bytes": 4364,
+    "sha256": "09e94f36cc36dab569ba594aa2be82bf6413113d948bdebe71440d779cfae419"
+  },
+  "independent_test_review": {
+    "path": "/private/tmp/bfs-interruption-lane-spec-cross-20260926.json",
+    "bytes": 1319,
+    "sha256": "0b67c017acf254f258f9b018709aae2943b3a75db6cf401b8649ba0f934b32da"
+  },
+  "focused_validation": {
+    "command": "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest tests/test_bfs_dx100_coverage_a2.py -q -k 'fixed_plan or prospective_scope or original_outer_clock or linux_admission_requires or completed_a2_reader' --basetemp /private/tmp/bfs-a2-tested-revision-20260926",
+    "log": {
+      "path": "/private/tmp/bfs-a2-tested-revision-20260926.log",
+      "bytes": 114,
+      "sha256": "b6e56aaa4d14a8a6a5d0e5d66c4cd3ce4342cdb58f9c226134640a710b40bee7"
+    },
+    "result": ".................................                                        [100%]\n33 passed, 30 deselected in 1.76s"
+  },
+  "next_supervisor_minimum": [
+    "Wait for exact newtestedcommit, leave old673checkout/proof unchanged.",
+    "New prospective supervisor revision changes TESTED_COMMIT to that exactcommit and both SELECTIONS rawIDs fromlinux-20260926-a1 toa2; selectors/cases/90s/512MiB unchanged.",
+    "Existing auditor imports that supervisor module and derives TESTED_COMMIT/SELECTIONS; no auditor implementation change is needed for new route identities. Preserve original3f38 for historicala1audit.",
+    "Add a narrow fixedroute/pin regression and dated docs for corrected attempts, then exactsupervisorpin before two newfixtures.",
+    "Both newfullruntimeproofs are mandatory; neither old success nor failure is relabeled. Actual A2 measurement remains unused with same21:00 cutoff/3600outer."
+  ],
+  "limits": [
+    "Focused local tests only; actual corrected Linux fixtures and actual A2 still pending.",
+    "No edits to tickets/map, originalhostcheckouts, records, evidence or oldartifact bytes."
+  ]
+}

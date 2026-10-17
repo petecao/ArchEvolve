@@ -1,0 +1,109 @@
+{
+  "derivations": [
+    {
+      "all_other_definition_method_ASTs_exact": true,
+      "changed_definition_ASTs": [
+        "Guard"
+      ],
+      "changed_method_ASTs": [
+        "receipts_and_raw"
+      ],
+      "complete_diff": {
+        "bytes": 5327,
+        "path": "/private/tmp/lanl-RAW-top-sidecar-R4guard-complete-foundation-derivation-20261008-a1.diff",
+        "sha256": "6daa27da19a6371401dd4ef91ba61655df71c1450902e6a6927757832166091a"
+      },
+      "exact_whole_byte_reverse_to_foundation": true,
+      "original": {
+        "bytes": 84381,
+        "path": "/private/tmp/lanl_consumed_detached_source_guard_r4_20261008_r2.py",
+        "sha256": "78a0c850e515f6ebb589a28f53a2c99d7a6430dcf5da46aea4869368d2cd3df9"
+      },
+      "selected": {
+        "bytes": 88521,
+        "path": "/private/tmp/lanl_consumed_detached_source_guard_r4_20261008_r3.py",
+        "sha256": "96e033426d492fab3be2a07757ab1e89665a7a67d0f06d3941f274b1214dd294"
+      }
+    },
+    {
+      "all_other_definition_method_ASTs_exact": true,
+      "changed_definition_ASTs": [
+        "Observer"
+      ],
+      "changed_method_ASTs": [
+        "acquire"
+      ],
+      "complete_diff": {
+        "bytes": 6541,
+        "path": "/private/tmp/lanl-RAW-top-sidecar-observer-complete-foundation-derivation-20261008-a1.diff",
+        "sha256": "ca35c79582e70e254b5467869c98b90a0c2fb540513635259aac5843befab7ce"
+      },
+      "exact_whole_byte_reverse_to_foundation": true,
+      "original": {
+        "bytes": 54009,
+        "path": "/private/tmp/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r3.py",
+        "sha256": "5a52e36ea84122cd303c540d6c177d014e36d22c70b2d9cdcd210d863e177cc8"
+      },
+      "selected": {
+        "bytes": 58634,
+        "path": "/private/tmp/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r4.py",
+        "sha256": "1c5a39575e66bb1deea654a586e11a4f9c7437e06547144bdb0347375e1542cf"
+      }
+    },
+    {
+      "all_other_definition_method_ASTs_exact": true,
+      "changed_definition_ASTs": [
+        "inputs"
+      ],
+      "changed_method_ASTs": [],
+      "complete_diff": {
+        "bytes": 1226,
+        "path": "/private/tmp/lanl-RAW-top-sidecar-R4wrapper-complete-foundation-derivation-20261008-a1.diff",
+        "sha256": "76c862e134098cdc5f367fff547c5015ef7c8370909553af4c4afaa870f50498"
+      },
+      "exact_whole_byte_reverse_to_foundation": true,
+      "original": {
+        "bytes": 24000,
+        "path": "/private/tmp/lanl17_detach_exact_R4_storage_administration_20261008_a1_r2.py",
+        "sha256": "deb59a340c92892336282f85697158b7b1181a33a288201fe6e2746c15c9a9be"
+      },
+      "selected": {
+        "bytes": 24000,
+        "path": "/private/tmp/lanl17_detach_exact_R4_storage_administration_20261008_a1_r3.py",
+        "sha256": "3f5cc9397c9be47232f0c070ca70def25c55a3c69af404af257da992ad105e01"
+      }
+    },
+    {
+      "all_other_definition_method_ASTs_exact": true,
+      "changed_definition_ASTs": [
+        "inputs"
+      ],
+      "changed_method_ASTs": [],
+      "complete_diff": {
+        "bytes": 1259,
+        "path": "/private/tmp/lanl-RAW-top-sidecar-passivewrapper-complete-foundation-derivation-20261008-a1.diff",
+        "sha256": "efd9393136bbb037f01de47e522d5528433e4ba0e3d09b39e178bbfe422e0054"
+      },
+      "exact_whole_byte_reverse_to_foundation": true,
+      "original": {
+        "bytes": 15359,
+        "path": "/private/tmp/lanl17_detach_passive_observer_administration_20261008_a1_r2.py",
+        "sha256": "f303c3b6a3ef909224d6c693b846b47f5755f587bc105acea0dfac3c9e504405"
+      },
+      "selected": {
+        "bytes": 15359,
+        "path": "/private/tmp/lanl17_detach_passive_observer_administration_20261008_a1_r3.py",
+        "sha256": "f26a2f7790ccf5df117acf19496e7510be778deb44892b4d54b15245efa317b2"
+      }
+    }
+  ],
+  "exact_sidecar_helper_AST_matches_E": true,
+  "exact_sidecar_helper_source_block": {
+    "bytes": 3261,
+    "path": "/private/tmp/lanl-exact-original-top-lane-sidecar-helper-source-20261008-a1.txt",
+    "sha256": "ee59736d54f9ccfbd7eb779689c641fd54e5793f7ee19507101d6072824bba55"
+  },
+  "sealed": false,
+  "state": "SOURCE ONLY / NOT RUN",
+  "target_import_compile_main_tests_SSH_Git_W_actions": false
+}

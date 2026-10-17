@@ -1,0 +1,38 @@
+{
+  "created": "2026-09-26",
+  "source_commit": "a5a63f9223b684d9622d28914c704b175906da7a",
+  "parent": "eb2f51d0a02b7d3d1ca9cc02b022a18f1181a3e2",
+  "runtime_commit": "0dc0d4fecfe2903ff0cc1ba9e6b738a8f5c1a4f1",
+  "branch": "codex/bfs-process-exit-runtime-20260926-a1",
+  "paths": [
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/observations/lease-rss-standards-review-20260926.json",
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/observations/owned-rss-esrch-preparation-20260926.json",
+    "docs/bfs-process-exit-and-lease-closure-repair-20260926.md",
+    "scripts/bfs_linux_fixture_audit.py",
+    "scripts/bfs_owned_rss.py",
+    "tests/test_bfs_linux_fixture_audit.py",
+    "tests/test_bfs_owned_rss.py"
+  ],
+  "scope": "seven exact reviewed blobs; no evaluation result or acceptance claim",
+  "isolated_verification": {
+    "worktree": "/Users/yanrujhou/.codex/worktrees/bfs-dx100-acceptance/EvolveSWDB",
+    "runtime_commit": "0dc0d4fecfe2903ff0cc1ba9e6b738a8f5c1a4f1",
+    "passed": 158,
+    "skipped": 7,
+    "elapsed_seconds": 11.08,
+    "tests": [
+      "tests/test_bfs_owned_rss.py",
+      "tests/test_bfs_owned_execution.py",
+      "tests/test_bfs_linux_fixture_audit.py",
+      "tests/test_bfs_scalar_v2_builds.py"
+    ],
+    "evidence_kind": "local_contract_tests",
+    "linux_execution": false
+  },
+  "push": {
+    "state": "completed",
+    "destination": "private ruchou/EvolveSWDB",
+    "branch": "codex/bfs-process-exit-runtime-20260926-a1",
+    "confirmed_runtime": "0dc0d4fecfe2903ff0cc1ba9e6b738a8f5c1a4f1"
+  }
+}

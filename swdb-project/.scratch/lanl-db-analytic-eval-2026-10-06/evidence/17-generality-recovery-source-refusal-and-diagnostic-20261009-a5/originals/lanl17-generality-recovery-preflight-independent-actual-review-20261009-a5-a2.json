@@ -1,0 +1,236 @@
+{
+  "actual_checked_et": "2026-10-09T01:01:20.306440-04:00",
+  "actual_checked_utc": "2026-10-09T05:01:20.306440+00:00",
+  "actual_result": {
+    "allocated_regular_bytes": 880009216,
+    "backup_eligibility_only": false,
+    "data1_shortfall_bytes": 569032704,
+    "entry_count": 4094,
+    "metadata_observation_completed": true,
+    "owned_consumers_count": 0,
+    "owned_process_unknown_count": 4,
+    "protected_reference_count": 110,
+    "regular_bytes": 871628116,
+    "remote_manifest_original": {
+      "bytes": 1666030,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-generality-worktree-recovery-20261009-a2/preflight-inventory.json",
+      "sha256": "a8a184736327f1c19d010e24bf44d1f39e52a4ac9988c692688809479274ce36",
+      "stat": {
+        "ctime_ns": 1791522080336297135,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 9872170,
+        "mode": 33152,
+        "mtime_ns": 1791522080336297135,
+        "nlink": 1,
+        "size": 1666030,
+        "uid": 114316761
+      }
+    },
+    "snapshot_sha256": "fccb7019bc26471a341c928db2e57be9fe73657f788ff134a1aadb525261e965",
+    "state": "unknown"
+  },
+  "backup_removal_index_or_scientific_admission": false,
+  "checks": [
+    "Exact original source43567/65bd9a90/action44923/0b6f74ad+root/peer source review lineage; actual config identicalselectedR7template",
+    "TransportSSH0/no error/emptyerr/exact streamSHA; inner0/no stderr",
+    "Exact stdin CONFIG+selected64fdBOOT; fixedoutputa2/GNU240K60/180/local360/sourcepinenv lineage",
+    "Exact base642072-byte decoded original and stablelocalnine-stat pins; originalUTCwithin invocation",
+    "Completed return occurs only after two full ignored-inclusive SHA/all9/tree/inode equality walks and selected native/source/HOME/controls/transport continuity under pinned source",
+    "Known exact historical16916-byte provider receipt beforehash originalstat+c4tree/indexblob100644/nativeGit2.48.1 and afterhash exacte706 SHA/provenance equality necessarily passed under source-success path; this is source-derived evidence, not locally returned remote body hash",
+    "Resultstate unknown is proper completed ineligible observation because4processunknowns;110protectedreferences independently preventeligible",
+    "Manifest1666030-byte private0600/nlink1 pin observed and exactreadback according to reviewed source; fullmanifest body notlocallyreturned or recomputed",
+    "Originaldata1floor fails by569032704; source resource checks occurred before metadataoutputcreation, not current index clearance",
+    "All backup/removal/index/scientific flags remainFalse"
+  ],
+  "findings": [],
+  "format": "swdb.lanl17-generality-recovery-preflight-independent-actual-review.v1",
+  "no_SSH_source_import_tests_or_mutations": true,
+  "pins": [
+    {
+      "bytes": 43567,
+      "path": "/private/tmp/lanl17_generality_recovery_candidate_preflight_20261009_a5_r6.py",
+      "sha256": "65bd9a90f477381ba99e9b1894496162da59166b157bf77b084dfce74dcaad6c",
+      "stat": {
+        "ctime_ns": 1791521566370898600,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350678148,
+        "mode": 33152,
+        "mtime_ns": 1791521566370898600,
+        "nlink": 1,
+        "size": 43567,
+        "uid": 501
+      }
+    },
+    {
+      "bytes": 44923,
+      "path": "/private/tmp/lanl17-generality-recovery-preflight-action-actual-20261009-a5-a2.json",
+      "sha256": "0b6f74ad347f37da9c71214c2958c429bba324871f5531a4e8951d07c8b9f527",
+      "stat": {
+        "ctime_ns": 1791521830417078234,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350678766,
+        "mode": 33152,
+        "mtime_ns": 1791521830417078234,
+        "nlink": 1,
+        "size": 44923,
+        "uid": 501
+      }
+    },
+    {
+      "bytes": 7268,
+      "path": "/private/tmp/lanl17_capture_metadata_action_20261008.py",
+      "sha256": "64fd8a4358bfbc5c172b50e02ae3782b286f2302f2beb8907d4abd35b3449c2a",
+      "stat": {
+        "ctime_ns": 1791477240600962419,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350293045,
+        "mode": 33152,
+        "mtime_ns": 1791477240600962419,
+        "nlink": 1,
+        "size": 7268,
+        "uid": 501
+      }
+    },
+    {
+      "bytes": 534,
+      "path": "/private/tmp/lanl17-generality-recovery-preflight-capture-20261009-a5-a2/start.json",
+      "sha256": "97fbbacb659107dfc4ce80e51f2358383d34b50c114f799e7abffc1f9381f26a",
+      "stat": {
+        "ctime_ns": 1791522068009853432,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350679697,
+        "mode": 33152,
+        "mtime_ns": 1791522068009853432,
+        "nlink": 1,
+        "size": 534,
+        "uid": 501
+      }
+    },
+    {
+      "bytes": 419,
+      "path": "/private/tmp/lanl17-generality-recovery-preflight-capture-20261009-a5-a2/transport.json",
+      "sha256": "49fceb528a36c79680cf7c58be7d650ffbe214c0aebdcb9f73cfaf4246386001",
+      "stat": {
+        "ctime_ns": 1791522080438084607,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350679722,
+        "mode": 33152,
+        "mtime_ns": 1791522080438084607,
+        "nlink": 1,
+        "size": 419,
+        "uid": 501
+      }
+    },
+    {
+      "bytes": 47429,
+      "path": "/private/tmp/lanl17-generality-recovery-preflight-capture-20261009-a5-a2/stdout",
+      "sha256": "54b0d95ba7ff191fa4cacb50af56defcdbbd91359fa3e45c7bcda59a2fcd3252",
+      "stat": {
+        "ctime_ns": 1791522080406073945,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350679698,
+        "mode": 33152,
+        "mtime_ns": 1791522080406073945,
+        "nlink": 1,
+        "size": 47429,
+        "uid": 501
+      }
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/lanl17-generality-recovery-preflight-capture-20261009-a5-a2/stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stat": {
+        "ctime_ns": 1791522068010111392,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350679699,
+        "mode": 33152,
+        "mtime_ns": 1791522068010044725,
+        "nlink": 1,
+        "size": 0,
+        "uid": 501
+      }
+    },
+    {
+      "bytes": 50259,
+      "path": "/private/tmp/lanl17-generality-recovery-preflight-capture-20261009-a5-a2/stdin.py",
+      "sha256": "bbc522f46d83d06a4fe1659f4ffd6fba6ccc104a7387cf5e215cd269cd2a2f2c",
+      "stat": {
+        "ctime_ns": 1791522068009418513,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350679696,
+        "mode": 33152,
+        "mtime_ns": 1791522068009418513,
+        "nlink": 1,
+        "size": 50259,
+        "uid": 501
+      }
+    },
+    {
+      "bytes": 2072,
+      "path": "/private/tmp/lanl17-generality-recovery-preflight-capture-20261009-a5-a2/preflight-original.json",
+      "sha256": "065a0c9b5cf8793df594ee5fa31e0e4c6151bf17653d0b316793e1709db1e361",
+      "stat": {
+        "ctime_ns": 1791522085438976120,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350679728,
+        "mode": 33152,
+        "mtime_ns": 1791522085438976120,
+        "nlink": 1,
+        "size": 2072,
+        "uid": 501
+      }
+    },
+    {
+      "bytes": 1668,
+      "path": "/private/tmp/lanl17-generality-preflight-r6-root-source-execution-review-20261009-a5-a2.json",
+      "sha256": "d501695b3616cfd8884eca667a95775166e54cf26fce9aefd787f2b42ba6b564",
+      "stat": {
+        "ctime_ns": 1791521830416812774,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350678765,
+        "mode": 33152,
+        "mtime_ns": 1791521830416812774,
+        "nlink": 1,
+        "size": 1668,
+        "uid": 501
+      }
+    },
+    {
+      "bytes": 16166,
+      "path": "/private/tmp/lanl17-generality-recovery-preflight-independent-source-review-r6-action-r7-20261009-a5.json",
+      "sha256": "60eae6a2145f90cfd05196476d10e69f2c657d878113eb1145ce2009f8159061",
+      "stat": {
+        "ctime_ns": 1791521762958339453,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350678633,
+        "mode": 33152,
+        "mtime_ns": 1791521762958339453,
+        "nlink": 1,
+        "size": 16166,
+        "uid": 501
+      }
+    }
+  ],
+  "reviewed_utc": "2026-10-09T05:02:53.328246+00:00",
+  "unresolved": [
+    "110 literal/external protected-reference observations remain unresolved; compact result contains counts only and supplies no dependency disposition.",
+    "4 ownedprocessunknowns remain unresolved;0 matching consumers is not no-use/clearance.",
+    "Other-user non-use and exclusive parent ownership/history approvals not supplied.",
+    "Actual result is NOT eligible_for_separate_backup_review and cannot satisfy selected writer actual_input positive gate.",
+    "Full remote manifest body and futurelive state are not reviewed by this compact original."
+  ],
+  "verdict": "PASS_CAPTURE_OF_COMPLETED_INELIGIBLE_METADATA_OBSERVATION"
+}

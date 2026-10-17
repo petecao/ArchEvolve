@@ -1,0 +1,113 @@
+{
+  "actual_profile_executed_by_reviewer": false,
+  "controller_basis": {
+    "entry_template.py": {
+      "bytes": 25997,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v3/entry_template.py",
+      "sha256": "b443f44c4729daefa70c55bcfa62da92bf7949e88f7eea838009e98f66e14536"
+    },
+    "prepare.py": {
+      "bytes": 11558,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v3/prepare.py",
+      "sha256": "42f90913f85a49a8169367b5c40acf0082042517cde92f396f901d593eac4994"
+    },
+    "pytest-tmpdir-source-observation.json": {
+      "bytes": 1649,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v3/pytest-tmpdir-source-observation.json",
+      "sha256": "24709dcf0212c84770bf60826a5472072e94862ad3d8a630b335e66c11c0777d"
+    },
+    "reviewed-function-lineage.json": {
+      "bytes": 9100,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v3/reviewed-function-lineage.json",
+      "sha256": "81534a7de64403203b758a008f7557941927eedafad35517141503539b028ec0"
+    },
+    "reviewed_native_gates.py": {
+      "bytes": 3637,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v3/reviewed_native_gates.py",
+      "sha256": "c13376db78d81e351486b3e0d44c295b6f679ee9863f21023639a9893b25d283"
+    },
+    "reviewed_wp_gates.py": {
+      "bytes": 19781,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v3/reviewed_wp_gates.py",
+      "sha256": "76a0dc85050e70de0fbbc29099fa6cc50afa9e9edb085d991127c92f7f059151"
+    },
+    "template-preparation.json": {
+      "bytes": 3581,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v3/template-preparation.json",
+      "sha256": "0fe401e54fc80f641132d721dcbf55fdcda7f93f31d817902107165efc7da950"
+    }
+  },
+  "date": "2026-10-16 ET",
+  "decision": "PASS for exact V3 source/node rebind and published method repair; actual root admission and cold decision remain separate",
+  "findings": [],
+  "full_ticket25": false,
+  "independent_checks": {
+    "aliases_and_finalization": "Exact reviewed V2 alias/finalization functions and metadata: one current alias limited to five physical numbered targets, complete all5/current4, 128MiB files/512MiB total, 64KiB reserve/16KiB result, exclusive fsync and pre/post deadline/extent checks.",
+    "complete_source": "All597 source_files SHA-256 values independently match selected immutable Git blobs; all13 consumer root tree/blob OIDs match the commit. Relative to reviewed V2 files, proof.py alone changes and only the two repair test/observer files are added. All seven prior integration pins and all three explicit repair pins match.",
+    "controls": "All nine controller input rows rehash and total882493 bytes, below1MiB. Complete helper/lineage/pytest source-observation bytes are identical to reviewed V2; inherited 19-helper definition review therefore remains applicable. Entry/policy/command SHA, exact source/raw paths and node0 agree.",
+    "metadata_author": "Version3 author adds a fail-closed Git blob equality check for exactly the reviewed repair preparation three inputs and includes them in source_files; remaining author changes are version/template-receipt namespace and repair receipt metadata.",
+    "node": 0,
+    "public_behavior": "The five public tests remain exact and use the newly corrected explicit method selection. Same one proven source_rule plus four unsupported fixtures, all24 original source obligations/82 historical targets, three schema refusals, zero new WP proof jobs, preserved original/projected native not_proven, sourceTyped=false and no model-record adoption remain required.",
+    "published_delta": "Immutable Git diff from dcdecf31 has only the reviewed two proof.py call-site forwards in production plus the reviewed new method-selection test and terminal fixture observer. No source rule, native adapter, solver, constructor/caller acceptance or schema changes occur in this source rebind.",
+    "resource": "Node0 is a prospective selection. Actual generic live socket-lane ancestor/lease fd9/generation/NUMA and exact root execute/watch checks remain required at dispatch; 8GiB/one worker/1200s whole/1320s outer/1000s pytest caps are unchanged.",
+    "runtime": "Every inherited policy field outside source/raw/schema/source_files/consumer-roots/startup-source/node+entry/alias namespace changes is identical to reviewed V2. Startup roles differ only in source_project; Linux binding differs only node0 and entry SHA. Complete selected runtime/import/compiler/header/config/native closure remains sampled before/after.",
+    "source_commit": "1433b8f58baa63538d1e8aa8a33d9ce566826407",
+    "template": "Exact b443f44c reviewed V2 template bytes. Concrete entry differs only by source/raw/node placeholder substitution; all13 function ASTs equal concrete V2."
+  },
+  "independent_cold_acceptance": false,
+  "limits": [
+    "Root must reconcile current lane/source/runtime/control identity and all actual guard/JUnit/physical record/schema/evidence/final extent outcomes before accepting the producer.",
+    "The separately reviewed method-selection observer controls exercise CLI lifecycle only; their terminal NOT_PROVEN fixture is not a scientific proof.",
+    "Public source-rule results remain conditioned on the explicit source/library/allocator/historical mathematical TCB; no native Typed proof, caller/default adoption, universal source/termination theorem or full ticket25 completion follows."
+  ],
+  "pins": {
+    "command.json": {
+      "bytes": 7147,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v3/inert-1433b8f5-node0/command.json",
+      "sha256": "0828586dbd66bf699760ebde7eb31e7a13842882fb4ba5a500d8f4556071fe43"
+    },
+    "entry.py": {
+      "bytes": 26061,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v3/inert-1433b8f5-node0/entry.py",
+      "sha256": "0b840d1fddfefc6e89b38992711d6931edfe9542d0cfc6f7ac96572c4ff0d270"
+    },
+    "policy.json": {
+      "bytes": 676707,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v3/inert-1433b8f5-node0/policy.json",
+      "sha256": "6dbe0abc6322121d46853f8d74738ee2b4a5819fe136a81d63aed7603b4ec79b"
+    },
+    "preparation.json": {
+      "bytes": 2991,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v3/inert-1433b8f5-node0/preparation.json",
+      "sha256": "bc78da8c14f3dcf33f45a6772872c8f0cc78f88de89d55e1f45738f84d89d7a9"
+    }
+  },
+  "preserved_actual_history": "The actual V2 public five-case pre-record failure is preserved. The reviewed method-forwarding repair addresses its reported selection cause, but this recheck does not assert a new public outcome, source/compiler/runtime observation or successful proof record.",
+  "pure_controller_control_scope": {
+    "current_files": [
+      {
+        "bytes": 17184,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v3/pure_controls.py",
+        "sha256": "76f20ff301243acd886eb274dcfcc9eb02c4ae5bf3dfe29d65e46607edc6700a"
+      }
+    ],
+    "note": "At review time no new V3 pure-control receipt/log was present. Original V2 reported15 controls remain predecessor evidence and are not relabeled V3 execution. This review establishes static source/namespace binding only."
+  },
+  "review_basis": [
+    {
+      "bytes": 11662,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-closed-source-public-controller-spec-review-v2-20261016.json",
+      "sha256": "6d47971b905af5c8db127de32de38f2e5ad2c1ec2235fd0a32584c89f6312d2b"
+    },
+    {
+      "bytes": 6001,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-explicit-method-selection-spec-review-v2-20261016.json",
+      "sha256": "54d1520c2c1e15f4d53e02bb8614794c7cf6e2e2939b43208133906a8712078c"
+    }
+  ],
+  "reviewer": "caller_assess",
+  "schema": "t25-public-source-controller-independent-spec-recheck-3",
+  "scope": "Read-only source/AST/hash/JSON and immutable Git metadata inspection. No entry main, project imports, tests, compiler/native/audit/verifier/solver, SSH or scientific execution.",
+  "source_or_caller_admission": false,
+  "source_public_five_case_actual_success": false
+}

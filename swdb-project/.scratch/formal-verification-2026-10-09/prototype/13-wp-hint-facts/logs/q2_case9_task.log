@@ -1,0 +1,26 @@
+== q2_case9_task: frama-c q2_logic.c -cpp-extra-args=-DCASE=9 -wp -wp-cache none -wp-gen -wp-prover alt-ergo -wp-msg-key print-generated
+[kernel] Parsing q2_logic.c (with preprocessing)
+[wp] Running WP plugin...
+[wp] 1 goal scheduled
+[wp:print-generated] 
+  theory WP
+    
+    (* use why3.BuiltIn.BuiltIn *)
+    
+    (* use bool.Bool *)
+    
+    (* use int.Int *)
+    
+    (* use int.ComputerDivision *)
+    
+    (* use real.RealInfix *)
+    
+    (* use frama_c_wp.qed.Qed *)
+    
+    (* use map.Map *)
+    
+    goal wp_goal : false
+    
+  end
+[wp] 1 goal generated
+exit=0

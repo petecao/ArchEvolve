@@ -1,0 +1,536 @@
+{
+  "created_et": "2026-10-09 14:43 ET",
+  "evidence_boundary": "Exact local metadata originals; original_stat is the local private original nine-stat. No raw diagnostics, catalog YAML or full source/config/transport streams.",
+  "format": "swdb.lanl17-second-full-index-original-inventory.v1",
+  "originals": [
+    {
+      "archive_path": "originals/01-helper-r4-stage.json",
+      "bytes": 4307,
+      "original_path": "/private/tmp/lanl17-helper-r4-git-stage-capture-20261009-a5-a2/stage-original.json",
+      "original_stat": {
+        "ctime_ns": 1791569988034218829,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350891798,
+        "mode": 33152,
+        "mtime_ns": 1791569988034218829,
+        "nlink": 1,
+        "size": 4307,
+        "uid": 501
+      },
+      "role": "helper-r4-stage",
+      "sha256": "bd800ff86eab71715095bcd68d17a09f88dc3f67a7fc8899b0200bec4140d4af"
+    },
+    {
+      "archive_path": "originals/02-host-a1.json",
+      "bytes": 27857,
+      "original_path": "/private/tmp/lanl17-p2-pre-full-index-host-capture-selected-r6-20261009-a5-a1/host-original.json",
+      "original_stat": {
+        "ctime_ns": 1791569922276202682,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350891579,
+        "mode": 33152,
+        "mtime_ns": 1791569922276202682,
+        "nlink": 1,
+        "size": 27857,
+        "uid": 501
+      },
+      "role": "host-a1",
+      "sha256": "3bc05d96f19c73143a143c28759ede08e36aeda86438e7962624fab571bd7608"
+    },
+    {
+      "archive_path": "originals/03-host-a2.json",
+      "bytes": 27546,
+      "original_path": "/private/tmp/lanl17-p2-pre-full-index-host-capture-selected-r6-20261009-a5-a2/host-original.json",
+      "original_stat": {
+        "ctime_ns": 1791570194274675539,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350893382,
+        "mode": 33152,
+        "mtime_ns": 1791570194274675539,
+        "nlink": 1,
+        "size": 27546,
+        "uid": 501
+      },
+      "role": "host-a2",
+      "sha256": "40963990921176447ab4a06cb80e5462994c05ef4e45a25af1c812570bb3399d"
+    },
+    {
+      "archive_path": "originals/04-host-a3.json",
+      "bytes": 27214,
+      "original_path": "/private/tmp/lanl17-p2-pre-full-index-host-capture-selected-r6-20261009-a5-a3/host-original.json",
+      "original_stat": {
+        "ctime_ns": 1791570475273749682,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350902357,
+        "mode": 33152,
+        "mtime_ns": 1791570475273749682,
+        "nlink": 1,
+        "size": 27214,
+        "uid": 501
+      },
+      "role": "host-a3",
+      "sha256": "24bfafb459633c3c24fad425b4d8842a28b37746142238ec7e5baecf96533deb"
+    },
+    {
+      "archive_path": "originals/05-host-a4.json",
+      "bytes": 26911,
+      "original_path": "/private/tmp/lanl17-p2-pre-full-index-host-capture-selected-r6-20261009-a5-a4/host-original.json",
+      "original_stat": {
+        "ctime_ns": 1791570677060311557,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350903891,
+        "mode": 33152,
+        "mtime_ns": 1791570677060311557,
+        "nlink": 1,
+        "size": 26911,
+        "uid": 501
+      },
+      "role": "host-a4",
+      "sha256": "1a095b675b691c68471ff4986d7f9bca71620a69800ea503d57ab3bd0aec7eee"
+    },
+    {
+      "archive_path": "originals/06-host-input-a1.json",
+      "bytes": 17439,
+      "original_path": "/private/tmp/lanl17-p2-pre-full-index-host-input-actual-20261009-a5-a1.json",
+      "original_stat": {
+        "ctime_ns": 1791569808824375256,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350891076,
+        "mode": 33152,
+        "mtime_ns": 1791569808824375256,
+        "nlink": 1,
+        "size": 17439,
+        "uid": 501
+      },
+      "role": "host-input-a1",
+      "sha256": "142aa3ab4a1fb28e719a4602fb524af0f741a4f2cfa94d75b3e83d4b8e80dd32"
+    },
+    {
+      "archive_path": "originals/07-host-input-a4.json",
+      "bytes": 17159,
+      "original_path": "/private/tmp/lanl17-p2-pre-full-index-host-input-actual-20261009-a5-a4.json",
+      "original_stat": {
+        "ctime_ns": 1791570587448371695,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350903011,
+        "mode": 33152,
+        "mtime_ns": 1791570587448371695,
+        "nlink": 1,
+        "size": 17159,
+        "uid": 501
+      },
+      "role": "host-input-a4",
+      "sha256": "dfe41c2c9da419d4ae34263a4cdd971d67df4aaefa84893ac7c2d8fb8c3a3039"
+    },
+    {
+      "archive_path": "originals/08-inventory.json",
+      "bytes": 691,
+      "original_path": "/private/tmp/lanl17-p2-full-catalog-inventory-capture-20261009-a5-a1/inventory-original.json",
+      "original_stat": {
+        "ctime_ns": 1791570024919779031,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350891908,
+        "mode": 33152,
+        "mtime_ns": 1791570024919779031,
+        "nlink": 1,
+        "size": 691,
+        "uid": 501
+      },
+      "role": "inventory",
+      "sha256": "762a016f788a2a1a9a91e9a2b74b7a14eaa84f3ffd2a6bd0236b3badbe9d3d6d"
+    },
+    {
+      "archive_path": "originals/09-inventory-fields.json",
+      "bytes": 2517,
+      "original_path": "/private/tmp/lanl17-p2-inventory-selected-fields-readonly-capture-20261009-a5-a1/fields-original.json",
+      "original_stat": {
+        "ctime_ns": 1791570096207807724,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350892544,
+        "mode": 33152,
+        "mtime_ns": 1791570096207807724,
+        "nlink": 1,
+        "size": 2517,
+        "uid": 501
+      },
+      "role": "inventory-fields",
+      "sha256": "ba9faaf7134fe7e13b6eac41c32a500cd421a17132b16d479e47c2d1f5eab032"
+    },
+    {
+      "archive_path": "originals/10-specification-parent-input.json",
+      "bytes": 4573,
+      "original_path": "/private/tmp/lanl17-p2-full-index-parent-input-specification-actual-20261009-a5-a1.json",
+      "original_stat": {
+        "ctime_ns": 1791570194408583802,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350893384,
+        "mode": 33152,
+        "mtime_ns": 1791570194408583802,
+        "nlink": 1,
+        "size": 4573,
+        "uid": 501
+      },
+      "role": "specification-parent-input",
+      "sha256": "e11b3c31158fb6490d27bd8d01dfb7b282ed5b47891cb854b2aa90d7d17d866a"
+    },
+    {
+      "archive_path": "originals/11-specification-preparation-return.json",
+      "bytes": 706,
+      "original_path": "/private/tmp/lanl17-p2-full-index-parent-specification-capture-20261009-a5-a1/preparation-original.json",
+      "original_stat": {
+        "ctime_ns": 1791570318375165311,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350894232,
+        "mode": 33152,
+        "mtime_ns": 1791570318375165311,
+        "nlink": 1,
+        "size": 706,
+        "uid": 501
+      },
+      "role": "specification-preparation-return",
+      "sha256": "b8b271ae3d43f26f988be11fb28125460891e82fda07758deb25eb27449f1f6a"
+    },
+    {
+      "archive_path": "originals/12-index-author-specification.json",
+      "bytes": 49160,
+      "original_path": "/private/tmp/lanl17-p2-specification-plan-collection-capture-20261009-a5-a1/index-author-specification.json",
+      "original_stat": {
+        "ctime_ns": 1791570387722238358,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350898125,
+        "mode": 33152,
+        "mtime_ns": 1791570387722238358,
+        "nlink": 1,
+        "size": 49160,
+        "uid": 501
+      },
+      "role": "index-author-specification",
+      "sha256": "3c1ffc4d0b3f90d0f1dc29df9e58891826ad2bac226e14812b2f49e423d5309f"
+    },
+    {
+      "archive_path": "originals/13-index-author-action-plan.json",
+      "bytes": 5795,
+      "original_path": "/private/tmp/lanl17-p2-specification-plan-collection-capture-20261009-a5-a1/index-author-action-plan.json",
+      "original_stat": {
+        "ctime_ns": 1791570387721968107,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350898124,
+        "mode": 33152,
+        "mtime_ns": 1791570387721968107,
+        "nlink": 1,
+        "size": 5795,
+        "uid": 501
+      },
+      "role": "index-author-action-plan",
+      "sha256": "d5e34c8e1d83b467ba87a484deeedd6b4cd5d8cad706a9179c32a981287c863c"
+    },
+    {
+      "archive_path": "originals/14-index-author-parent-review.json",
+      "bytes": 714,
+      "original_path": "/private/tmp/lanl17-p2-original-index-author-parent-review-actual-20261009-a5-a1.json",
+      "original_stat": {
+        "ctime_ns": 1791570522446966751,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350902884,
+        "mode": 33152,
+        "mtime_ns": 1791570522446966751,
+        "nlink": 1,
+        "size": 714,
+        "uid": 501
+      },
+      "role": "index-author-parent-review",
+      "sha256": "0a925286d9673fef94bb5638c5f77198eed9c433c296c8de57853ea9aff329c4"
+    },
+    {
+      "archive_path": "originals/15-index-author-return.json",
+      "bytes": 1000,
+      "original_path": "/private/tmp/lanl17-p2-original-index-author-capture-20261009-a5-a1/author-return-original.json",
+      "original_stat": {
+        "ctime_ns": 1791570550777182316,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350902948,
+        "mode": 33152,
+        "mtime_ns": 1791570550777182316,
+        "nlink": 1,
+        "size": 1000,
+        "uid": 501
+      },
+      "role": "index-author-return",
+      "sha256": "1366a98cf68281cf79a075b1d51df78334426c59b14b5a33c9c4870e94adf2d6"
+    },
+    {
+      "archive_path": "originals/16-index-request.json",
+      "bytes": 48246,
+      "original_path": "/private/tmp/lanl17-p2-author-request-collection-capture-20261009-a5-a1/index-request.json",
+      "original_stat": {
+        "ctime_ns": 1791570587185940046,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350903008,
+        "mode": 33152,
+        "mtime_ns": 1791570587185940046,
+        "nlink": 1,
+        "size": 48246,
+        "uid": 501
+      },
+      "role": "index-request",
+      "sha256": "a3e5e9322a329e625cb22bd6066da13309cc86542a5e573673033d566d8e6f7f"
+    },
+    {
+      "archive_path": "originals/17-author-custody.json",
+      "bytes": 8631,
+      "original_path": "/private/tmp/lanl17-p2-author-request-collection-capture-20261009-a5-a1/author-custody.json",
+      "original_stat": {
+        "ctime_ns": 1791570587185380835,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350903007,
+        "mode": 33152,
+        "mtime_ns": 1791570587185380835,
+        "nlink": 1,
+        "size": 8631,
+        "uid": 501
+      },
+      "role": "author-custody",
+      "sha256": "e350ce8cf730ca3975319d83a63ed2a3d011e48c7157329212995e9387b44b21"
+    },
+    {
+      "archive_path": "originals/18-bootstrap-parent-input.json",
+      "bytes": 3598,
+      "original_path": "/private/tmp/lanl17-p2-full-index-parent-input-bootstrap-actual-20261009-a5-a1.json",
+      "original_stat": {
+        "ctime_ns": 1791570677193575850,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350903893,
+        "mode": 33152,
+        "mtime_ns": 1791570677193575850,
+        "nlink": 1,
+        "size": 3598,
+        "uid": 501
+      },
+      "role": "bootstrap-parent-input",
+      "sha256": "7bdbc4ed732361cc6fd3d4afb2699eba2570c0c5a885718291378f7fed0fc2dc"
+    },
+    {
+      "archive_path": "originals/19-bootstrap-preparation-return.json",
+      "bytes": 486,
+      "original_path": "/private/tmp/lanl17-p2-full-index-parent-bootstrap-capture-20261009-a5-a1/preparation-original.json",
+      "original_stat": {
+        "ctime_ns": 1791570803462729482,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350904083,
+        "mode": 33152,
+        "mtime_ns": 1791570803462729482,
+        "nlink": 1,
+        "size": 486,
+        "uid": 501
+      },
+      "role": "bootstrap-preparation-return",
+      "sha256": "a3ceb866b2b5e2b619c0df6ee9cb59f2ee031d9c2bfa5c585e2388cc4a265af6"
+    },
+    {
+      "archive_path": "originals/20-bootstrap-action-plan.json",
+      "bytes": 9891,
+      "original_path": "/private/tmp/lanl17-p2-bootstrap-plan-collection-capture-20261009-a5-a1/index-bootstrap-action-plan.json",
+      "original_stat": {
+        "ctime_ns": 1791570818620610846,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350904138,
+        "mode": 33152,
+        "mtime_ns": 1791570818620610846,
+        "nlink": 1,
+        "size": 9891,
+        "uid": 501
+      },
+      "role": "bootstrap-action-plan",
+      "sha256": "1b44dba7f0a3520d6b8eb653533e5691069e05a87f20edaecaac35fefcc812b9"
+    },
+    {
+      "archive_path": "originals/21-bootstrap-parent-review.json",
+      "bytes": 961,
+      "original_path": "/private/tmp/lanl17-p2-original-full-index-bootstrap-parent-review-actual-20261009-a5-a1.json",
+      "original_stat": {
+        "ctime_ns": 1791570887470851753,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350904267,
+        "mode": 33152,
+        "mtime_ns": 1791570887470851753,
+        "nlink": 1,
+        "size": 961,
+        "uid": 501
+      },
+      "role": "bootstrap-parent-review",
+      "sha256": "9014257f34d4a8029fc23676b5cfc3266ee66a66ce0e9f95420c924524097de1"
+    },
+    {
+      "archive_path": "originals/22-bootstrap-return.json",
+      "bytes": 327,
+      "original_path": "/private/tmp/lanl17-p2-original-full-index-bootstrap-capture-20261009-a5-a1/bootstrap-original.json",
+      "original_stat": {
+        "ctime_ns": 1791570912352404905,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350904292,
+        "mode": 33152,
+        "mtime_ns": 1791570912352404905,
+        "nlink": 1,
+        "size": 327,
+        "uid": 501
+      },
+      "role": "bootstrap-return",
+      "sha256": "3052dc835d9b92a3dfa1852edfa231c9ad74c254a465f5ce7f5134d4b754cb5a"
+    },
+    {
+      "archive_path": "originals/23-bootstrap-result.json",
+      "bytes": 1078,
+      "original_path": "/private/tmp/lanl17-p2-bootstrap-result-collection-capture-20261009-a5-a1/bootstrap-result.json",
+      "original_stat": {
+        "ctime_ns": 1791571054554944080,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350904764,
+        "mode": 33152,
+        "mtime_ns": 1791571054554944080,
+        "nlink": 1,
+        "size": 1078,
+        "uid": 501
+      },
+      "role": "bootstrap-result",
+      "sha256": "5fa4b05f84c21f23d831276f7a16ae1e5b539ea6357a2e3d96ac3dd572afdc39"
+    },
+    {
+      "archive_path": "originals/24-outer-return.json",
+      "bytes": 502,
+      "original_path": "/private/tmp/lanl17-p2-full-index-custody-collection-capture-20261009-a5-a1/outer-return-original.json",
+      "original_stat": {
+        "ctime_ns": 1791570930693235225,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350904308,
+        "mode": 33152,
+        "mtime_ns": 1791570930693235225,
+        "nlink": 1,
+        "size": 502,
+        "uid": 501
+      },
+      "role": "outer-return",
+      "sha256": "05208e717fb3988e03afd1c5d855120563853b485ad11bb075351a69ca664a16"
+    },
+    {
+      "archive_path": "originals/25-outer-receipt.json",
+      "bytes": 5857,
+      "original_path": "/private/tmp/lanl17-p2-full-index-custody-collection-capture-20261009-a5-a1/outer-receipt-original.json",
+      "original_stat": {
+        "ctime_ns": 1791570930693827895,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350904310,
+        "mode": 33152,
+        "mtime_ns": 1791570930693827895,
+        "nlink": 1,
+        "size": 5857,
+        "uid": 501
+      },
+      "role": "outer-receipt",
+      "sha256": "469a7fb47cd9b66d8604cd4bdc1983a08d0d7530c2c1e76b85b8f63f3ce2b764"
+    },
+    {
+      "archive_path": "originals/26-inner-receipt.json",
+      "bytes": 5351,
+      "original_path": "/private/tmp/lanl17-p2-full-index-custody-collection-capture-20261009-a5-a1/inner-receipt-original.json",
+      "original_stat": {
+        "ctime_ns": 1791570930693666352,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350904309,
+        "mode": 33152,
+        "mtime_ns": 1791570930693666352,
+        "nlink": 1,
+        "size": 5351,
+        "uid": 501
+      },
+      "role": "inner-receipt",
+      "sha256": "f13e518344e85c1743f64fb24801a76619358f56e700e9afed356a49f415891c"
+    },
+    {
+      "archive_path": "originals/27-writer-return.json",
+      "bytes": 508,
+      "original_path": "/private/tmp/lanl17-p2-index-and-writer-return-custody-collection-capture-20261009-a5-a1/writer-return-original.json",
+      "original_stat": {
+        "ctime_ns": 1791570987845650614,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350904533,
+        "mode": 33152,
+        "mtime_ns": 1791570987845650614,
+        "nlink": 1,
+        "size": 508,
+        "uid": 501
+      },
+      "role": "writer-return",
+      "sha256": "3fcc8e94894c1eccf0626e9349ff59fb84c39c708e676309928ef9dd79be04f2"
+    },
+    {
+      "archive_path": "originals/28-record-index.json",
+      "bytes": 23194,
+      "original_path": "/private/tmp/lanl17-p2-index-and-writer-return-custody-collection-capture-20261009-a5-a1/record-index.json",
+      "original_stat": {
+        "ctime_ns": 1791570987846076033,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350904534,
+        "mode": 33152,
+        "mtime_ns": 1791570987846076033,
+        "nlink": 1,
+        "size": 23194,
+        "uid": 501
+      },
+      "role": "record-index",
+      "sha256": "a16fc952fb4588d4b0aef2aca81aa81447ed26fb0b017918e0d9be0ead9a29c3"
+    },
+    {
+      "archive_path": "originals/29-writer-custody.json",
+      "bytes": 50568,
+      "original_path": "/private/tmp/lanl17-p2-index-and-writer-return-custody-collection-capture-20261009-a5-a1/writer-custody.json",
+      "original_stat": {
+        "ctime_ns": 1791570987846296868,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350904535,
+        "mode": 33152,
+        "mtime_ns": 1791570987846296868,
+        "nlink": 1,
+        "size": 50568,
+        "uid": 501
+      },
+      "role": "writer-custody",
+      "sha256": "dc56e3b096255e621438b207c2af0467652939e4f7ccf024c363810635201b5e"
+    }
+  ],
+  "readers": [
+    "actual custody and metadata verification",
+    "original32 and final assembly",
+    "unchanged strict6a input and final scientific review"
+  ],
+  "unique_original_bytes": 372787,
+  "unique_original_count": 29
+}

@@ -1,0 +1,22 @@
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+// Ported 2026-10-03 from MaizeHPC/MemAcc af3d6d7f7a69a72facdc3b95b42e78c952f44a76
+// Source: AgenticRefiner/refiner/synthesis/drivers/regroup_cand.cpp.tmpl
+// SWDB changes: the candidate TU drives the library body (RegroupExecutor) instead of a SynthBackend hook (2026-10-03 ET, ticket 51).
+#include "{{BACKEND_HEADER}}"
+#include <cstddef>
+#include <cstdint>
+#include <vector>
+extern "C" void swdb_cand_regroup(double* out, const double* a0, const double* a1, const double* a2,
+                                  std::size_t num_arrays, std::size_t n) {
+  std::vector<double*> arrays;
+  arrays.push_back(const_cast<double*>(a0));
+  arrays.push_back(const_cast<double*>(a1));
+  arrays.push_back(const_cast<double*>(a2));
+  arrays.resize(num_arrays);
+  std::vector<std::int64_t> periods(num_arrays, 1), sizes(num_arrays, (std::int64_t)n);
+  RegroupExecutor<double> ex;
+  ex.regroup(periods, sizes, arrays);
+  for (std::size_t i = 0; i < n; ++i)
+    for (std::size_t a = 0; a < num_arrays; ++a)
+      out[num_arrays * i + a] = ex.getRegroupedValue((std::int64_t)a, (std::int64_t)i);
+}

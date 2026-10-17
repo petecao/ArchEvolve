@@ -1,0 +1,28 @@
+kind: review
+schema_version: '0.4'
+id: review.correction.review.contract.bc_read_offload.30a3747420b3.11a0ec69d6c9
+status: reviewed
+created: '2026-10-05'
+updated: '2026-10-05'
+provenance:
+- id: review
+  kind: agent_run
+  description: 'Attribution correction of review.contract.bc_read_offload.30a3747420b3, recorded by Claude
+    (coding agent), code review of 2026-10-05 under Yan-Ru Jhou''s delegation through swdb correct-review:
+    the review was performed by an agent under delegation, but the record names Yan-Ru Jhou as reviewer
+    with provenance human_report (spec review C1)'
+  uri: null
+target_kind: review
+target:
+  id: review.contract.bc_read_offload.30a3747420b3
+  content_sha256: 0a1d3ad89aa876b16e0b454b64a9df1ab8aef9a24da5808355a30e55fd31ade9
+reviewer: Claude (coding agent), code review of 2026-10-05 under Yan-Ru Jhou's delegation
+reviewed_at: '2026-10-05T21:05:42.206017+00:00'
+evidence:
+- review.contract.bc_read_offload.30a3747420b3
+attribution:
+  performed_by: agent
+  delegated_by: Yan-Ru Jhou
+  delegation: Yan-Ru Jhou's 2026-10-03 delegation ("I approve all actions related to this project"); ticket
+    43, agent-reviewed and promoted
+  review_document: .scratch/typed-library-dx100-bfs-2026-10-03/bc-contract-review-2026-10-03.md

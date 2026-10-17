@@ -1,0 +1,238 @@
+{
+  "kind": "operator_memory_capacity_audit",
+  "schema_version": 1,
+  "date_et": "2026-10-03",
+  "host": "mbit10",
+  "evidence_origin": "tool_output_only",
+  "raw_artifact_receipt": null,
+  "raw_artifact_sha256": null,
+  "tool_output_references": {
+    "snapshot": "a5d103",
+    "inventory": "9cd399"
+  },
+  "snapshot": {
+    "observed_et": "2026-10-03 09:01:45 ET",
+    "observed_utc": "2026-10-03T13:01:45Z",
+    "branch": "yanrujhou_main",
+    "commit": "8506be73d9e44cbd783e50c977b111f171588a1d",
+    "leases": {
+      "node0": "released",
+      "node1": "released",
+      "legacy": "released"
+    },
+    "load_average": [
+      1.08,
+      1.24,
+      1.39
+    ],
+    "disk_free_bytes": {
+      "/data1": 46269820928,
+      "/data": 78837571584
+    },
+    "node0": {
+      "mem_total_bytes": 66951016448,
+      "mem_free_bytes": 32217894912,
+      "active_file_bytes": 1815138304,
+      "inactive_file_bytes": 24379998208,
+      "file_pages_bytes": 26216849408,
+      "slab_bytes": 6218498048,
+      "reclaimable_slab_bytes": 5197352960,
+      "dirty_bytes": 290816,
+      "writeback_bytes": 0,
+      "anon_pages_bytes": 381091840
+    },
+    "node1": {
+      "mem_total_bytes": 67629477888,
+      "mem_free_bytes": 24571703296,
+      "active_file_bytes": 1216909312,
+      "inactive_file_bytes": 14239997952,
+      "file_pages_bytes": 15465390080,
+      "reclaimable_slab_bytes": 24335294464,
+      "dirty_bytes": 143360,
+      "writeback_bytes": 0
+    },
+    "simulator_admission_budget_bytes": 38654705664,
+    "node0_admission_shortfall_bytes": 6436810752,
+    "visible_swdb_measurement_processes": 0
+  },
+  "inventory": {
+    "observed_et": "2026-10-03 09:02:56 ET",
+    "observed_utc": "2026-10-03T13:02:56Z",
+    "discovery_limit_seconds": 90,
+    "elapsed_seconds": 0.665770704858005,
+    "walk_completed": true,
+    "root_count": 76,
+    "roots": [
+      "/data1/yanruj/EvolveSWDB",
+      "/data1/yanruj/EvolveSWDB_bfs_orchestration_20260926_a1",
+      "/data1/yanruj/EvolveSWDB_bfs_reader_20260926_a2",
+      "/data1/yanruj/EvolveSWDB_bfs_supervision_20260926_a1",
+      "/data1/yanruj/EvolveSWDB_bfs_supervision_20260926_a2",
+      "/data1/yanruj/EvolveSWDB_callgrind_probe_20260925_a1",
+      "/data1/yanruj/EvolveSWDB_dx100_20260925_a1",
+      "/data1/yanruj/EvolveSWDB_dx100_acceptance_20260926_a1",
+      "/data1/yanruj/EvolveSWDB_dx100_continuation_20260926_a3",
+      "/data1/yanruj/EvolveSWDB_dx100_coverage_a2_20260926",
+      "/data1/yanruj/EvolveSWDB_dx100_coverage_a2_20260926_v2",
+      "/data1/yanruj/EvolveSWDB_dx100_witness_20260926_a1",
+      "/data1/yanruj/EvolveSWDB_graph_bfs_20260925_uniform18",
+      "/data1/yanruj/EvolveSWDB_instruction_bfs_20260925_a1",
+      "/data1/yanruj/EvolveSWDB_instruction_bfs_20260925_a2",
+      "/data1/yanruj/EvolveSWDB_lease_recovery_operator_20260927_a1",
+      "/data1/yanruj/EvolveSWDB_lease_recovery_runtime_20260927_a1",
+      "/data1/yanruj/EvolveSWDB_lease_simulator_operator_20260927_a1",
+      "/data1/yanruj/EvolveSWDB_native_bfs_20260925_a1",
+      "/data1/yanruj/EvolveSWDB_native_one_thread_20260926_a1",
+      "/data1/yanruj/EvolveSWDB_native_paired_20260926_a1",
+      "/data1/yanruj/EvolveSWDB_native_routes_campaign_runtime_20260927_b2",
+      "/data1/yanruj/EvolveSWDB_native_routes_campaign_runtime_20260927_b3",
+      "/data1/yanruj/EvolveSWDB_native_routes_runtime_20260927_b1",
+      "/data1/yanruj/EvolveSWDB_native_routes_scratch_20260927_b1",
+      "/data1/yanruj/EvolveSWDB_operator_packets",
+      "/data1/yanruj/EvolveSWDB_profile_bfs_20260925_a1",
+      "/data1/yanruj/EvolveSWDB_profile_bfs_20260925_a2",
+      "/data1/yanruj/EvolveSWDB_profile_bfs_20260925_a3",
+      "/data1/yanruj/EvolveSWDB_profile_bfs_20260925_a4",
+      "/data1/yanruj/EvolveSWDB_protocol_proof_operator_20260927_a1",
+      "/data1/yanruj/EvolveSWDB_protocol_recovery_runtime_20260927_a1",
+      "/data1/yanruj/EvolveSWDB_protocol_simulator_operator_20260927_a1",
+      "/data1/yanruj/EvolveSWDB_provider_20260926_a1",
+      "/data1/yanruj/EvolveSWDB_provider_context2_evidence_20260927_a1.git",
+      "/data1/yanruj/EvolveSWDB_provider_context2_operator_20260927_a1",
+      "/data1/yanruj/EvolveSWDB_provider_context3_operator_20260927_a1",
+      "/data1/yanruj/EvolveSWDB_provider_context3_runtime_20260927_a1",
+      "/data1/yanruj/EvolveSWDB_provider_context_runtime_20260926_a1",
+      "/data1/yanruj/EvolveSWDB_recovery_operator_20260927_a1",
+      "/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1",
+      "/data1/yanruj/EvolveSWDB_seal_recovery_operator_20260927_a1",
+      "/data1/yanruj/EvolveSWDB_seal_recovery_runtime_20260927_a1",
+      "/data1/yanruj/EvolveSWDB_seal_simulator_operator_20260927_a1",
+      "/data1/yanruj/EvolveSWDB_simulator_campaign_20260926_a1",
+      "/data1/yanruj/EvolveSWDB_simulator_campaign_20260926_a2",
+      "/data1/yanruj/EvolveSWDB_simulator_operator_20260927_a1",
+      "/data1/yanruj/EvolveSWDB_streamc_20260927_b1",
+      "/data1/yanruj/EvolveSWDB_supervision_recovery_runtime_20260927_a1",
+      "/data1/yanruj/EvolveSWDB_t15_gzip_correction_20260926_a1",
+      "/data1/yanruj/EvolveSWDB_t15_lease_recovery_runtime_20260927_a1",
+      "/data1/yanruj/EvolveSWDB_t15_pilot_runtime_20260927_b1",
+      "/data1/yanruj/EvolveSWDB_t15_pilot_runtime_20260927_b2",
+      "/data1/yanruj/EvolveSWDB_t15_pilot_runtime_20260927_b3",
+      "/data1/yanruj/EvolveSWDB_t15_setup_recovery_20260926_a1",
+      "/data1/yanruj/EvolveSWDB_t15_supervision_recovery_runtime_20260927_a1",
+      "/data1/yanruj/EvolveSWDB_t16_freeze_20260926_a1",
+      "/data1/yanruj/EvolveSWDB_t16_lease_recovery_runtime_20260927_a1",
+      "/data1/yanruj/EvolveSWDB_t16_protocol_recovery_runtime_20260927_a1",
+      "/data1/yanruj/EvolveSWDB_t16_reference_lowstorage_runtime_20260928_b1",
+      "/data1/yanruj/EvolveSWDB_t16_reference_probe_runtime_20260927_b1",
+      "/data1/yanruj/EvolveSWDB_t16_reference_runtime_20260927_b1",
+      "/data1/yanruj/EvolveSWDB_t16_reference_split_runtime_20260928_c1",
+      "/data1/yanruj/EvolveSWDB_t16_reference_split_runtime_20260928_c1b",
+      "/data1/yanruj/EvolveSWDB_t16_reference_split_runtime_20260929_c2",
+      "/data1/yanruj/EvolveSWDB_t16_seal_recovery_runtime_20260927_a1",
+      "/data1/yanruj/EvolveSWDB_t16_supervision_recovery_runtime_20260927_a1",
+      "/data1/yanruj/EvolveSWDB_t1720_v2_prep_20260928",
+      "/data1/yanruj/EvolveSWDB_t17_compare_runtime_20260929_c3",
+      "/data1/yanruj/EvolveSWDB_t17_operator_20260927_a1",
+      "/data1/yanruj/EvolveSWDB_t17_t20_routes_runtime_20260928_a1",
+      "/data1/yanruj/EvolveSWDB_t17_t20_routes_runtime_20260928_a2",
+      "/data1/yanruj/EvolveSWDB_t17_t20_routes_runtime_20260928_a3",
+      "/data1/yanruj/EvolveSWDB_t20_ac10_runtime_20260929_b1",
+      "/data1/yanruj/EvolveSWDB_test_venv_20260929",
+      "/data1/yanruj/EvolveSWDB_toolchains"
+    ],
+    "scope": "Additional owned historical EvolveSWDB checkouts and toolchain roots; excludes published run/build/source roots, pinned DX100 build/ext/benchmarks and LLVM18 roots; no file-content reads.",
+    "minimum_queried_file_bytes": 65536,
+    "counts": {
+      "regular_owned_nlink1": 72364,
+      "queried": 4334,
+      "small_skipped": 68030,
+      "symlinks_skipped": 5,
+      "visible_used_skipped": 0,
+      "recent_skipped": 0,
+      "errors": 0,
+      "stat_changed_skipped": 0
+    },
+    "observed_clean_not_visibly_used_cached_bytes": 609161216,
+    "unqueried_small_file_theoretical_max_cached_bytes": 815493120,
+    "theoretical_scanned_root_cache_upper_bound_bytes": 1424654336,
+    "upper_bound_definition": "Observed clean queried-file cache plus page-rounded full sizes of every unqueried file below 64 KiB; theoretical capacity, not observed cache or guaranteed reclaimable/node0 capacity.",
+    "candidate_listing_threshold_cached_bytes": 8388608,
+    "candidate_inventory": [
+      {
+        "path": "/data1/yanruj/EvolveSWDB_toolchains/codex-0.140.0/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/bin/codex",
+        "device": 2097,
+        "inode": 54943961,
+        "owner_uid": 114316761,
+        "mode": "0o775",
+        "nlink": 1,
+        "size_bytes": 271160560,
+        "mtime_ns": 1790723910613568500,
+        "cached_bytes": 271163392,
+        "dirty_bytes": 0,
+        "writeback_bytes": 0,
+        "visible_owned_fd_or_mapping": false,
+        "numa_placement": "unavailable"
+      }
+    ]
+  },
+  "visibility_limits": {
+    "numa_placement": "cachestat reports global per-file cached pages; placement on node0/node1 was unavailable. Aggregate cache is not a demonstrated node0 MemFree increase.",
+    "other_users": "Other users' fd/maps were not inspected. Absence of visible owned handles does not establish universal idleness.",
+    "owned_process_inaccessible_surfaces": [
+      {
+        "pid": 359656,
+        "comm": "(sd-pam)",
+        "state": "S (sleeping)",
+        "surfaces": [
+          "fd",
+          "maps"
+        ]
+      },
+      {
+        "pid": 1568983,
+        "comm": "bash",
+        "state": "Z (zombie)",
+        "surfaces": [
+          "fd"
+        ]
+      },
+      {
+        "pid": 1570458,
+        "comm": "bash",
+        "state": "Z (zombie)",
+        "surfaces": [
+          "fd"
+        ]
+      },
+      {
+        "pid": 1572652,
+        "comm": "sshd",
+        "state": "S (sleeping)",
+        "surfaces": [
+          "fd",
+          "maps"
+        ]
+      },
+      {
+        "pid": 3570805,
+        "comm": "qs",
+        "state": "Z (zombie)",
+        "surfaces": [
+          "fd"
+        ]
+      }
+    ],
+    "process_limits_note": "PermissionError surfaces are retained explicitly; zombie identities are not characterized as active measurement workloads. No control-process exemption or cache-action authorization is inferred from this read-only inventory."
+  },
+  "actions": {
+    "cache_advice": 0,
+    "deleted_files": 0,
+    "stopped_processes": 0,
+    "measurement_jobs_started": 0,
+    "target_or_admission_changes": 0,
+    "remote_source_or_git_mutations": 0,
+    "raw_files_copied": 0,
+    "note": "Only status/proc/stat/cachestat reads were performed for this diagnosis. This local summary is a later transcription of the completed tool output; no inventory was rerun for it."
+  },
+  "conclusion": "The additional roots do not evidence enough safe clean idle node0 capacity for the observed 6,436,810,752-byte shortfall. Even the theoretical all-small-files-cached upper bound is smaller. Preserve the 16GB guest/MMIO model and 36 GiB admission; fresh actual node0 MemFree must meet admission before any simulator run."
+}

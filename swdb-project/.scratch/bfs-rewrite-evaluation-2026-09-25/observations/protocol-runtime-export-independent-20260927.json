@@ -1,0 +1,105 @@
+{
+  "date": "2026-09-27 ET",
+  "verdict": "pass",
+  "scope": "Exact runtime Git export; host/operator manifest pending",
+  "runtime": "2a64a188f08811baf09ab9c61e69633c3d45a7f2",
+  "sole_parent": "923cf33b955104fdf96705b648933e7d486a3810",
+  "source_commit": "dff4131eacd1d3fca9d6f01f619cd53fe6354a49",
+  "changed_files": [
+    {
+      "path": "scripts/bfs_linux_fixture.py",
+      "mode": "100644",
+      "bytes": 16415,
+      "sha256": "47777b7c3b9470b04404fcfa958af074b5bbfebefbbb5f58423af1871a048dbf"
+    },
+    {
+      "path": "scripts/bfs_supervision_supplement.py",
+      "mode": "100644",
+      "bytes": 10658,
+      "sha256": "d78fc0a6fc056bf1cb4c1c2d6b6a2367932c7d23a9529285b1e204dd09bb74c7"
+    },
+    {
+      "path": "scripts/bfs_simulator_batch.py",
+      "mode": "100644",
+      "bytes": 71801,
+      "sha256": "a97c40af832804d8a8473fb898990133022f9356d977663b82ffbba072210fad"
+    },
+    {
+      "path": "scripts/bfs_simulator_recovery.py",
+      "mode": "100644",
+      "bytes": 43193,
+      "sha256": "f222e40425525df21619be703661e771548fb8f85f2deb7938158596f2135676"
+    },
+    {
+      "path": "tests/test_bfs_linux_fixture.py",
+      "mode": "100644",
+      "bytes": 16881,
+      "sha256": "d7217727208a49394c8fc4e373e0418876823cfdd876256405559ea6a2cc1b8d"
+    },
+    {
+      "path": "tests/test_bfs_simulator_setup_recovery.py",
+      "mode": "100644",
+      "bytes": 15835,
+      "sha256": "e8eeb994f8db257a4901c8b7fda2922f22e6398d61b9a780db8afa97a38a62e6"
+    },
+    {
+      "path": "tests/test_bfs_simulator_storage.py",
+      "mode": "100644",
+      "bytes": 9196,
+      "sha256": "2fca5a8fe1a6dbea72a5ee899b41bd30d95cb381d5bd7d932a7ad895e6812b1e"
+    },
+    {
+      "path": "tests/test_bfs_protocol_recovery.py",
+      "mode": "100644",
+      "bytes": 6891,
+      "sha256": "13c1445874cae3fafc10182ad4bcaf47c47698d866a297ae9914f6fb729a486d"
+    },
+    {
+      "path": "tests/test_bfs_instrumentation_rebinding.py",
+      "mode": "100644",
+      "bytes": 4281,
+      "sha256": "1f895ef5587879cb13d0e0b01b0bfb7b85306b58ca62bffcbd5353d42cb0a3ca"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t16-protocol-recovery-simulator-batch-20260927-a1.json",
+      "mode": "100644",
+      "bytes": 35214,
+      "sha256": "b9634068e923bf3a1ef19e274e7a36ac0ffeb04d4dfabb67c9be921e5d0549e0"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/author-reference-seal-runtime-freeze-20260927-a1.yaml",
+      "mode": "100644",
+      "bytes": 10594,
+      "sha256": "8783bd8c6db1a3f475d052259292e7584fa9a4659811cdcb147a546530651dc6"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/author-matched-control-seal-runtime-freeze-20260927-a1.yaml",
+      "mode": "100644",
+      "bytes": 10664,
+      "sha256": "edcbe6ccbae6f1aa1701e1b00060f45253f69f397fa4c7de674abab11d6cb9d4"
+    },
+    {
+      "path": "records/protocols/author-reference-seal-runtime-20260927-a1.635cf14b1f7a25f7.yaml",
+      "mode": "100644",
+      "bytes": 11014,
+      "sha256": "fc13b3d215017ee920524d23a00e7ea7701d662798657d0ae749b7dfd3f42139"
+    },
+    {
+      "path": "records/protocols/author-matched-control-seal-runtime-20260927-a1.50411a54eafe34cb.yaml",
+      "mode": "100644",
+      "bytes": 11090,
+      "sha256": "d58b2fba98d9c346a6e58b5a24c366e52b43fe0c0090fdf759c1f277c06fa098"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/observations/t16-seal-terminal-independent-20260927.json",
+      "mode": "100644",
+      "bytes": 27192,
+      "sha256": "694c2a268dab15234a9fb87a09c89893a66fb6f736f1a980a418be1b83d3e844"
+    }
+  ],
+  "changed_file_count": 15,
+  "total_changed_bytes": 300919,
+  "all_overlay_bytes_modes_match_source_and_author_receipt": true,
+  "unrelated_query_provider_code_unchanged": true,
+  "production_protocol_gate_and_three_verifier_files_unchanged": true
+}

@@ -1,0 +1,140 @@
+{
+  "scope": "Prospective downstream a2 administrative raw/export/custody paths and metadata caps only; not executed remotely.",
+  "source_commit": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "source_checkout": "ArchEvolve-lanl-cpu-model-validation-20261006-a1",
+  "helpers": [
+    {
+      "path": "/private/tmp/lanl-dispatch-cpu-model-validation-a2.py",
+      "sha256": "c22191c8d118e09f026409fe46eca930544591e9ae07304fe5b796441e5b58ad",
+      "original_sha256": "acdccfd81a0675beb4044a921a6fdb7f4d39ded49f2acbb1c400f55cb211c7b6",
+      "scientific_ast_unchanged_after_path_and_admin_cap_normalization": true,
+      "administrative_cap_changes": [
+        [
+          "deadline=time.monotonic()+3850",
+          "deadline=time.monotonic()+10000"
+        ],
+        [
+          "cap=600",
+          "cap=1400"
+        ],
+        [
+          ",950)",
+          ",2100)"
+        ],
+        [
+          ",'validate',700",
+          ",'validate',1400"
+        ],
+        [
+          "'runner_s':3850",
+          "'runner_s':10000"
+        ],
+        [
+          "'outer_s':3950",
+          "'outer_s':10300"
+        ],
+        [
+          "'public_stage_s':600",
+          "'public_stage_s':1400"
+        ],
+        [
+          "'3950s'",
+          "'10300s'"
+        ],
+        [
+          "'public_stage_s':1400,'native_collector_s':900",
+          "'public_stage_s':1400,'collect_process_s':2100,'validate_s':1400,'native_collector_s':900"
+        ]
+      ]
+    },
+    {
+      "path": "/private/tmp/lanl-export-cpu-model-validation-a2.py",
+      "sha256": "a277f61e0e5781858596499d51cb974e2391f1a81f3266d29ba52a13aeb0e9cd",
+      "original_sha256": "dbdebe03437cd58fed8bdcf224344df79b106870c4d244b6a32a312a978b29ce",
+      "scientific_ast_unchanged_after_path_and_admin_cap_normalization": true,
+      "administrative_cap_changes": []
+    },
+    {
+      "path": "/private/tmp/lanl-dispatch-cpu-band-report-a2.py",
+      "sha256": "f53252a21987117face9272d834da8a81e88ff74619715b0c378dff2ea2c4092",
+      "original_sha256": "f83555b2d8ee1199a8d3582f335de8227f063642d1488f974689470f0a46e895",
+      "scientific_ast_unchanged_after_path_and_admin_cap_normalization": true,
+      "administrative_cap_changes": [
+        [
+          "deadline=time.monotonic()+3300",
+          "deadline=time.monotonic()+8400"
+        ],
+        [
+          "cap=600",
+          "cap=1400"
+        ],
+        [
+          ",'validate',700",
+          ",'validate',1400"
+        ],
+        [
+          "'runner_s':3300",
+          "'runner_s':8400"
+        ],
+        [
+          "'outer_s':3400",
+          "'outer_s':8700"
+        ],
+        [
+          "'public_stage_s':600",
+          "'public_stage_s':1400"
+        ],
+        [
+          "'validate_s':700",
+          "'validate_s':1400"
+        ],
+        [
+          "'3400s'",
+          "'8700s'"
+        ]
+      ]
+    },
+    {
+      "path": "/private/tmp/lanl-export-cpu-band-report-a2.py",
+      "sha256": "8a82b44a7fe4bcf1e8942f93705362840bb8147606604f1785c58829d73c86ab",
+      "original_sha256": "544511da28df91f8a2404deb4f00f9623cd824eeb65f75aa0166a38a6422ef4c",
+      "scientific_ast_unchanged_after_path_and_admin_cap_normalization": true,
+      "administrative_cap_changes": []
+    }
+  ],
+  "science_or_native_budget_changed": false,
+  "administrative_caps": {
+    "metadata_stage_s": 1400,
+    "validate_s": 1400,
+    "collect_public_process_s": 2100,
+    "native_collector_s": 900,
+    "development_holdout_inner_s": 10000,
+    "development_holdout_outer_s": 10300,
+    "report_inner_s": 8400,
+    "report_outer_s": 8700
+  },
+  "separate_kernel_bands_preserved": true,
+  "native_collector_s": 900,
+  "model_phase_refused_by_downstream_dispatcher": true,
+  "remote_execution": false,
+  "collector_deadline_audit": {
+    "source_sha256": "86e6aef4b04142fe87fd4fb68144b2395916b0ea611454153733ddfbe6eb5d2e",
+    "store_preparse_line": 59,
+    "deadline_line": 88,
+    "publication_line": 207,
+    "native_commands_share_remaining_deadline": true,
+    "source_mutated": false,
+    "note": "The C collector starts args.max_wall_s deadline after Store/binding/protocol/lane preflight. Build, separate correctness and timing commands use the unchanged remaining900s deadline. Pure record construction/publication follows; expanded2100s enclosing process covers pre/post metadata and never extends application commands."
+  },
+  "consumed_export_cleanup": {
+    "path": "/private/tmp/lanl-remove-consumed-cpu-export-a2-20261007.py",
+    "sha256": "0cc65f1a8dc5c8311c82e38b89035c1e554aeebd8e1682ea89dbc54bedc6f413",
+    "original_sha256": "445c3c5e0782afc34e50f0fcdf088b15b353dd7b2a9a4380a0e46aa30c941063",
+    "normalized_ast_identical": true,
+    "read_only_default_preserved": true,
+    "exact_a2_branch_checkout_receipt_paths": true,
+    "raw_source_git_refs_and_ancestor_guards_preserved": true
+  },
+  "identity_sha256": "e7294bd5b6c6b6ddffbd9f5c6232539f3cc8fbd83fce378f75d216a06e6e2fab"
+}

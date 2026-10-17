@@ -1,0 +1,39 @@
+{
+  "CPU_limit_set": false,
+  "address_space_bytes": 536870912,
+  "argv_after_fresh_scoped_root_preflight": [
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "120s",
+    "/usr/bin/env",
+    "-i",
+    "HOME=/nonexistent",
+    "LANG=C",
+    "LC_ALL=C",
+    "PATH=/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-"
+  ],
+  "date": "2026-10-16 ET",
+  "expected_complete_metadata_exit_code": 2,
+  "host": "mbit10",
+  "internal_alarm_seconds": 110,
+  "local_timeout_seconds": 130,
+  "max_atom_bytes": 2048,
+  "max_input_bytes": 1048576,
+  "max_term_depth": 160,
+  "outer_timeout_seconds": 120,
+  "scope": "Complete parsed mathematical command metadata only. No actual query, proof/scientific/source admission, project imports or tools. Root must separately admit exact stdin bytes and retain finite pre/postflight.",
+  "status": "INERT_REVIEW_AND_FRESH_ROOT_ADMISSION_REQUIRED",
+  "stderr_cap_bytes": 32768,
+  "stdin": {
+    "bytes": 385230,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-math-ast-v2/entry.py",
+    "sha256": "d3a6e77a50eeed96bad7444cf856fa09d0321a81c0176744239f62f2415ce9b3"
+  },
+  "stdout_cap_bytes": 2097152
+}

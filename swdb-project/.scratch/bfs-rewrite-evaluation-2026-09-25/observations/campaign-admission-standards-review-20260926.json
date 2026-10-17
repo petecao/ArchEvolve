@@ -1,0 +1,117 @@
+{
+  "date": "2026-09-26",
+  "scope": "Local static Git/blob admission and synthetic shell argv review only; no host validation or launch",
+  "input_sha256": "0ba507e3e0a26d608a47a8d567b69fa167927dccc5e76bb5a017b6792f868ef9",
+  "results": {
+    "t15": {
+      "wrapper_sha256": "33eb9d7955600937ef8cacb8f89ea443726b69ce75665d0083ef3b93f653a8ff",
+      "runtime_files": 150,
+      "admission_sha256": "9e1ae65fc7730f203e973b2df8dd46f907e5d419d227749d078f72650ef55362",
+      "rendered": [
+        {
+          "start": "2026-09-26T20:00:00-04:00",
+          "end": "2026-09-27T08:00:00-04:00",
+          "term_seconds": 43167.75,
+          "argv_exact": true,
+          "lane": 1
+        },
+        {
+          "start": "2026-09-26T20:15:00-04:00",
+          "end": "2026-09-27T08:15:00-04:00",
+          "term_seconds": 43167.75,
+          "argv_exact": true,
+          "lane": 1
+        },
+        {
+          "start": "2026-09-26T20:30:00-04:00",
+          "end": "2026-09-27T08:30:00-04:00",
+          "term_seconds": 43167.75,
+          "argv_exact": true,
+          "lane": 1
+        }
+      ],
+      "charged_seconds": 0,
+      "charged_bytes": 0
+    },
+    "t16": {
+      "wrapper_sha256": "53ae93ca502b6db4e1416bf689c3abc26107834eded82cac51c406b4a327ae83",
+      "runtime_files": 150,
+      "admission_sha256": "3565b844692b84d8326acae449f4b10dd75e4170dc3e2d52302766af1b61873e",
+      "rendered": [
+        {
+          "start": "2026-09-26T20:00:00-04:00",
+          "end": "2026-09-27T19:55:47-04:00",
+          "term_seconds": 86114.75,
+          "argv_exact": true,
+          "lane": 0
+        },
+        {
+          "start": "2026-09-26T20:15:00-04:00",
+          "end": "2026-09-27T20:10:47-04:00",
+          "term_seconds": 86114.75,
+          "argv_exact": true,
+          "lane": 0
+        },
+        {
+          "start": "2026-09-26T20:30:00-04:00",
+          "end": "2026-09-27T20:25:47-04:00",
+          "term_seconds": 86114.75,
+          "argv_exact": true,
+          "lane": 0
+        }
+      ],
+      "charged_seconds": 253,
+      "charged_bytes": 1130987520
+    }
+  },
+  "standard_fixture_metadata": {
+    "path": "/private/tmp/bfs-standard-fixtures-actual-20260926.json",
+    "sha256": "8555591ba9f871d6de4e78ecc6dfab03cf9bedf113b48bdcf671f653da45ca82",
+    "results": {
+      "owned_cleanup": {
+        "proof": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-owned-linux-20260926-a1/proof.json",
+          "sha256": "55de0c2858c9109c6963b74458bfe0862beae151b5c4c6cda4cd994b0dc5c645",
+          "bytes": 3307
+        },
+        "pending_preserved": true,
+        "exact_identity_union": 8,
+        "two_released_lease_passes": true,
+        "generation": 407,
+        "settled_cleanup_seconds": 0.2851258544251323,
+        "events": 5,
+        "outer_seconds": 90,
+        "all_reported_exit_codes": 0,
+        "junit": {
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      },
+      "dx100_interruption": {
+        "proof": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-interruption-linux-20260926-a1/proof.json",
+          "sha256": "42d983a8369a4588f89cef288023ed68f48f2efe34172af5a223521c981fbd92",
+          "bytes": 3392
+        },
+        "pending_preserved": true,
+        "exact_identity_union": 6,
+        "two_released_lease_passes": true,
+        "generation": 408,
+        "settled_cleanup_seconds": 0.29234388563781977,
+        "events": 5,
+        "outer_seconds": 90,
+        "all_reported_exit_codes": 0,
+        "junit": {
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      }
+    },
+    "limitation": "Read-only consistency review of Host retained typed metadata; no second remote auditor/test or independent reopening of raw host files."
+  },
+  "conclusion": "No additional inconsistency in supplied admissions, proof metadata, runtime blobs or literal argv. Dispatch remains conditional on resolution of separately identified .dispatch output accounting and ordinary fresh host gates."
+}

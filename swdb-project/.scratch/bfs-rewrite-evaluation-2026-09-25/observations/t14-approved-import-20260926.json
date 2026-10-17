@@ -1,0 +1,187 @@
+{
+  "created": "2026-09-26",
+  "checked_at_et": "2026-09-26 11:03 ET",
+  "kind": "approved_metadata_import_and_fresh_query_audit",
+  "remote_evidence_commit": "ee7af80a16eb92a42f4eef757cf1bdfa988d74d2",
+  "local_import_commit": "332ec960db66e98ba17d641de7e613ae68e5b749",
+  "checked_files": [
+    {
+      "path": "docs/evidence/bfs-native-repeatability-20260926-a1.yaml",
+      "bytes": 25087,
+      "sha256": "b7ceb3266d9c2bcff01e8e73dca21dcd8438f2573cf773c8f1c2ff6480778062"
+    },
+    {
+      "path": "records/evaluations/bfs-native-repeatability-20260926-a1.dx100.kronecker.evaluation.yaml",
+      "bytes": 39741,
+      "sha256": "f5d79fe652842bc7fa204106d52e515fe3c0f44618a0f46a37abe9d938f071bf"
+    },
+    {
+      "path": "records/evaluations/bfs-native-repeatability-20260926-a1.dx100.uniform-random.evaluation.yaml",
+      "bytes": 40179,
+      "sha256": "ed9b33588118cf04f287b129f4d94a54b1e462332c66fc2ede6dae400122ce38"
+    },
+    {
+      "path": "records/evaluations/bfs-native-repeatability-20260926-a1.upstream.kronecker.evaluation.yaml",
+      "bytes": 39670,
+      "sha256": "f0dae564373743ec9ac3c708c65f193bed7197036bf8e96cf01c067cc8e235ce"
+    },
+    {
+      "path": "records/evaluations/bfs-native-repeatability-20260926-a1.upstream.uniform-random.evaluation.yaml",
+      "bytes": 40114,
+      "sha256": "01224898fba05682c4545230d3139dd222a0acd06c2506247b693464c388f967"
+    },
+    {
+      "path": "records/evaluations/bfs-dx100-profile-20260926-a1.diagnostic.yaml",
+      "bytes": 28184,
+      "sha256": "3e95bade512bae6b62ee7ac18ea8b5162f1cb6c83d174ba0d5517e4c5775caf4"
+    },
+    {
+      "path": "records/evaluations/bfs-dx100-profile-20260926-a1.primary.yaml",
+      "bytes": 28695,
+      "sha256": "0cb64c9d9552b020b2e97a0ae1ccd1f44c12a15cc970d08574a8cc3c24650389"
+    },
+    {
+      "path": "records/region_profiles/bfs-dx100-profile-20260926-a1.profile.yaml",
+      "bytes": 156018,
+      "sha256": "66a545211b35390d8c000dfdf7ceb470c1043661b7d7c41aa2d544266503505c"
+    },
+    {
+      "path": "records/profile_packages/bfs-dx100-profile-20260926-a1.package.v1.60c6fe30745432bc.yaml",
+      "bytes": 528195,
+      "sha256": "0b2747e0d2fcbaa570f53821f5f4ed7cf738990e064e7eba8137a40d9d23f99c"
+    },
+    {
+      "path": "records/source_snapshots/bfs-dx100-profile-20260926-a1.package.v1.source.yaml",
+      "bytes": 149576,
+      "sha256": "1b0ecfc1aa6ca6252f81820a6834083f97d42e9f2ae7d6c7c53e57e38e9a519c"
+    },
+    {
+      "path": "records/workloads/bfs-dx100-profile-20260926-a1.uniform64.3904583b5b7c5067.yaml",
+      "bytes": 1874,
+      "sha256": "0cb5fd1dc5aef54b68a51c4507273ee0f74e8d8e2e94fba33770431d4c3c6e70"
+    },
+    {
+      "path": "docs/evidence/dx100-probe-preflight-20260926.json",
+      "bytes": 5339,
+      "sha256": "37590392b93f4a3f0a379d03f5556e3e2f237a23d1f5334dd4956895a97fb44c"
+    },
+    {
+      "path": "docs/evidence/dx100-exit-probe-a1-20260926.json",
+      "bytes": 5558,
+      "sha256": "dbd6b01d9a49ce6b3de8f16516067ee18a429d3a8f3b09eb3dce5e2eda383cc9"
+    },
+    {
+      "path": "records/evaluations/bfs-dx100-exit-probe-20260926-a1.yaml",
+      "bytes": 30039,
+      "sha256": "48b9f90959ddb6250e487b9011f265f4df3d7b4ae349ad9c7a31c057dc8a711c"
+    }
+  ],
+  "queries": [
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "swdb",
+        "get",
+        "bfs-dx100-profile-20260926-a1.package.v1.60c6fe30745432bc",
+        "--chain",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "7e09df1cdc11a8a01479da69386abd5048cafe3eacd49acdc8b71c395c590ebf",
+      "stderr_bytes": 0,
+      "records": [
+        "bfs-dx100-profile-20260926-a1.package.v1.60c6fe30745432bc",
+        "bfs-dx100-compile-20260925-a1.candidate",
+        "bfs-dx100-compile-20260925-a1.source",
+        "dx100-bfs-scalar",
+        "dx100-gapbs",
+        "gapbs-bfs",
+        "gapbs",
+        "bfs-dx100-compile-20260925-a1.diagnostic.build",
+        "mbit10",
+        "dx100-e4fc4af-4c",
+        "bfs-dx100-build-20260925-a2",
+        "bfs-dx100-compile-20260925-a1.primary.build",
+        "bfs-dx100-profile-20260926-a1.diagnostic",
+        "bfs-dx100-profile-20260926-a1.uniform64.3904583b5b7c5067",
+        "bfs-dx100-profile-20260926-a1.primary",
+        "bfs-dx100-profile-20260926-a1.profile",
+        "bfs-dx100-profile-20260926-a1.package.v1.source"
+      ]
+    },
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "swdb",
+        "bfs-hotspots",
+        "bfs-dx100-profile-20260926-a1.profile",
+        "--kind",
+        "function",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "4f53dca66cb541ffcf7d48bba2455323699f040effa90cdfa2520a4600d5f4b9",
+      "stderr_bytes": 0,
+      "ranked_regions": 3,
+      "ranking": {
+        "basis": "simulated",
+        "quantity": "simulated elapsed time",
+        "scope": "accumulated per executing thread within the diagnostic ROI; includes waits and thread overlap",
+        "attribution": "exclusive lexical scope; nested guarded intervals subtracted on the same thread",
+        "metric": "exclusive_simulated_seconds",
+        "unit": "seconds",
+        "unavailable": [],
+        "inclusive": "nested source scopes overlap; do not sum inclusive values",
+        "unexecuted": "discovered but unexecuted scopes remain in the durable record"
+      },
+      "evidence_kind": "execution",
+      "gain_claim": false
+    },
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "swdb",
+        "bfs-hotspots",
+        "bfs-dx100-profile-20260926-a1.profile",
+        "--kind",
+        "loop",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "933aeb55e9fb432370e70700a25ffdbe0fae06627c7a57dfcfc4a9c1bbad13af",
+      "stderr_bytes": 0,
+      "ranked_regions": 5,
+      "ranking": {
+        "basis": "simulated",
+        "quantity": "simulated elapsed time",
+        "scope": "accumulated per executing thread within the diagnostic ROI; includes waits and thread overlap",
+        "attribution": "exclusive lexical scope; nested guarded intervals subtracted on the same thread",
+        "metric": "exclusive_simulated_seconds",
+        "unit": "seconds",
+        "unavailable": [],
+        "inclusive": "nested source scopes overlap; do not sum inclusive values",
+        "unexecuted": "discovered but unexecuted scopes remain in the durable record"
+      },
+      "evidence_kind": "execution",
+      "gain_claim": false
+    }
+  ],
+  "catalog_valid_records": 197,
+  "profile_package": "bfs-dx100-profile-20260926-a1.package.v1.60c6fe30745432bc",
+  "region_count": 31,
+  "available_dynamic_memory_metrics": 39,
+  "primary_roi_seconds": 4.9313463e-05,
+  "correctness": "unverified",
+  "gain_claim": false,
+  "prior_raw_audit": "issues/14-dx100-region-and-memory-profiling.md#independent-actual-observation-audit--2026-09-26",
+  "limits": [
+    "This audit checks imported metadata and public retrieval; it does not reexecute simulations or copy remote raw artifacts.",
+    "Original raw observation audit, failed orchestration, partial discovery and correctness limitations remain retained."
+  ]
+}

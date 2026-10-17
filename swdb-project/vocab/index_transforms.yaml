@@ -1,0 +1,11 @@
+name: index_transforms
+description: What a single-valued indirect step does to the value it reads before using it as an index.
+values:
+  - value: identity
+    meaning: The value read is the index.
+  - value: affine
+    meaning: The index is a*value + b for constants a and b.
+  - value: hash
+    meaning: The index is a hash of the value.
+  - value: divide
+    meaning: The index is value // c for a constant integer c > 1 (for example the 64-bit word v // 64 that holds bit v of a bitmap).

@@ -1,0 +1,7 @@
+# Ticket14 isolated codec batch runner review
+
+Reviewed 2026-10-07 ET. Parent and independent04 FULL source review of the bounded adapter284ba33f found no concrete blocker. It reuses the existing isolated regression runner pattern, whose original17-index runner remains unchanged. Selected3725/928/690 and final preparation/source-review pins are exact; no target main/import/test or actual report ran during this review.
+
+The single prospective native3.12.6 -B3725 subprocess has timeout60s, fresh exclusive0600 original start/stdout/stderr/receipt, no scientific/public/Store/SSH call. It binds actual fully delivered17:09 checkpoint across integration/origins/root and preserves human1487. Parent supplies that actual40SHA only after both approved pushes/root/primary have returned0. The original13-method harness and all production constants are unchanged; only isolated256/4096 fixture namespace is lowered. Failure/partial outputs are preserved with no blind replay, and successful methods/count/OK and all source/native hashes must agree.
+
+Parent source-review9d91's independent04 time21:01:00Z is a minute-granularity reference from the source-review message, not a seconds-level measured timestamp. It does not establish any runtime/scientific order. Original9d91 bytes stay exact; parent reviewed_utc21:02:53.570367+00:00 was machine-generated. Current04 runner review is similarly known only at minute21:04 UTC. No actual checkpoint argument/test result is invented here.

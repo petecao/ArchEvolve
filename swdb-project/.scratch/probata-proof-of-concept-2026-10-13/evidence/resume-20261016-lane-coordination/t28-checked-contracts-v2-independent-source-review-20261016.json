@@ -1,0 +1,100 @@
+{
+  "axis": "Independent checked-contract validator narrow source recheck",
+  "boundaries": {
+    "WP_summary_supported": false,
+    "current0_2_or_public_proof_or_body_or_model_admission": false,
+    "production_patch_applied": false,
+    "source_admission": false
+  },
+  "controls_retained_only": {
+    "canonical_regular_pass_and_file_directory_root_alias_refusals": true,
+    "errors": 0,
+    "failures": 0,
+    "log": {
+      "bytes": 2758,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v2/pure-hook-controls-v2.log",
+      "sha256": "71adea59230f23022cc7ff51943471306f47392e64839afdc9b33a1e3784e84a"
+    },
+    "not_rerun_by_reviewer": true,
+    "oversize_refuses_before_resolver_and_unbounded_pin": true,
+    "real_Library_resolve_method_AST_with_Project_paths_shape": true,
+    "skips": 0,
+    "tests": 16
+  },
+  "date": "2026-10-16 ET",
+  "decision": "PASS_CHECKED_01_PIN_SEAM_REPAIR",
+  "inputs": [
+    {
+      "bytes": 16091,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v2/checked-contracts-proposed-v2.patch",
+      "sha256": "64e370639a01c7f3682d4f8a70e69828d9d9b2e3d01278fa957e5c1f34d15de6"
+    },
+    {
+      "bytes": 13395,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v2/dx100_whole_checked_v2.py",
+      "sha256": "0c8e0fb429a4a497821d20436d777870bc0608ec3dbe79d42eb5201ad5d23105"
+    },
+    {
+      "bytes": 34602,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v2/proof_semantics.base.py",
+      "sha256": "9c3fd649fecd2162a7d8f0b416ea1e5543991bf40cc8f8a0eb115a0e24b66436"
+    },
+    {
+      "bytes": 35096,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v2/proof_semantics.proposed.py",
+      "sha256": "c213b716fcf6a7ef6db42ad09be1620a1f6838be8a8abaf96e32dafd7bd21013"
+    },
+    {
+      "bytes": 2758,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v2/pure-hook-controls-v2.log",
+      "sha256": "71adea59230f23022cc7ff51943471306f47392e64839afdc9b33a1e3784e84a"
+    },
+    {
+      "bytes": 13294,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v2/test_checked_contracts_v2.py",
+      "sha256": "561041369c26a3ab22fab8b4c967d8602f80b550cc054b8b3c2c4d46f2dce8b9"
+    },
+    {
+      "bytes": 3903,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v2/test_proof_semantics_hook_v2.py",
+      "sha256": "4e3b12c157f7f7b02d6c0dfc539fc343276e26652312baa0f5173bb107266be4"
+    },
+    {
+      "bytes": 3057,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v2/validator-v2-v1-inverse.patch",
+      "sha256": "7111bc1e16040932455c5808a01ab0c80b3b9cc0f5e12cf294056ea284cdeba1"
+    }
+  ],
+  "inverse": {
+    "all_design_header_component_TRUST_OWNED_constants_exact_V1": true,
+    "all_functions_except_pinned_exact_bytes": true,
+    "complete_source_inverse": "Remove only one paths import and restore pinned(): entire module equals V1 byte-for-byte.",
+    "proof_semantics_base_and_proposed_exact_V1_bytes": true
+  },
+  "module": {
+    "bytes": 13395,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v2/dx100_whole_checked_v2.py",
+    "sha256": "0c8e0fb429a4a497821d20436d777870bc0608ec3dbe79d42eb5201ad5d23105"
+  },
+  "packet": {
+    "bytes": 4610,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/checked-contracts-v2/checked-contracts-source-packet-v2.json",
+    "sha256": "596ad06617bee5e99c7abe38319362fe46f2176d30c84af59deaa5d9ffe62c50"
+  },
+  "prior_findings": {
+    "bytes": 10248,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-checked-contracts-v1-independent-source-review-20261016.json",
+    "sha256": "6bcd88c1a5877b056c0b155dbc26a418df4b80306b45a5ce6e2db07581dbc3b4"
+  },
+  "resolved_finding": {
+    "id": "CHECKED-01",
+    "oversize_has_no_prior_content_read_or_pin_hash": true,
+    "resolution": "Canonical physical root and every original unresolved portable component are lstat-checked before real Library.resolve. Leaf must be regular, nonempty and<=4MiB before resolver/read/hash. Library._pin is removed; bounded limit+1 read, exact SHA, nine-field leaf and all parent metadata rechecks retain source identity. In-root/root/directory symlink aliases refuse before canonicalization can erase them.",
+    "size_order": "original components+regular+size -> Library.resolve exact path -> bounded read -> leaf/length/hash/parent rechecks"
+  },
+  "reviewer_execution": {
+    "project_import_test_compiler_native_verifier_solver_SSH_or_actual_profile": false,
+    "source_hash_AST_only": true
+  },
+  "scope": "Validator shape/source-pin readiness only. Existing exact26name/27declaration/132instance design, four fixed bodies, two headers, seven recorded owned trust premises, WP refusal and unchanged default forms retain V1 reviewed boundaries. Real source policy/whole-TU/ABI/expression/CPU/receiver/model/draw/runtime producers and route integration require joint review."
+}

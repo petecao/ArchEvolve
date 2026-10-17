@@ -1,0 +1,22 @@
+# Created: 2026-10-14 ET (Probata proof of concept ticket 04; five kinds from formal-verification map 26
+# item 1, plus calibration_program for the public-suite calibration runs of ticket 38, and c_model, ticket 24, 2026-10-14).
+name: proof_subject_kinds
+description: What one proof record proves or refutes.
+values:
+  # 2026-10-16 ET: explicit original-unit policy; never counts as a total library_summary.
+  - value: partial_library_summary
+    meaning: A separately versioned library unit on normal return only; no termination or liveness result, and ineligible as a generic library_summary dependency.
+  - value: candidate_proof_unit
+    meaning: One call of the function that holds a candidate artifact's rewrite site.
+  - value: library_summary
+    meaning: A library entry's summary (reference-definition proofs use this subject too).
+  - value: contract_proof_part
+    meaning: A part of a contract proof (unit postcondition, lifting lemma, negative controls, minimum-bounds derivation).
+  - value: method_part
+    meaning: A part of the method (the parallel composition theorem, the proof-semantics agreement checks).
+  - value: kernel_reproduction
+    meaning: A whole-kernel reproduction of a refutation.
+  - value: calibration_program
+    meaning: A public C-suite program run to calibrate the verifier lineup.
+  - value: c_model
+    meaning: A C model the C lowering emits for a standard-library, atomic or OpenMP-runtime call (ticket 24), proven once against its ACSL contract.

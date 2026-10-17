@@ -1,0 +1,115 @@
+--- /private/tmp/lanl17_write_verified_generality_recovery_archive_SOURCE_ONLY_20261009_a5_r3.py
++++ /private/tmp/lanl17_write_verified_generality_recovery_archive_SOURCE_ONLY_20261009_a5_r4.py
+@@ -497,6 +497,39 @@
+ def archive_parent_continuity(route):
+     s=OUTPUT.lstat();need({'path':str(OUTPUT),'dev':s.st_dev,'ino':s.st_ino,'uid':s.st_uid,'gid':s.st_gid,'mode':s.st_mode}==route,'archive_parent_identity_continuity')
+ 
++def package_existing_metadata(value,input_pin):
++    # Only explicit actual input-pinned direct siblings may exist in this package.
++    existing={Path(input_pin['path']).name:input_pin}
++    descriptors=[value['preflight_manifest'],value['preflight_result'],value['preflight_source'],*value['reviews'].values()]
++    for pin in descriptors:
++        p=Path(pin['path'])
++        if not p.is_relative_to(OUTPUT):continue
++        need(p.parent==OUTPUT and p.name not in existing and p not in (ARCHIVE,RECEIPT),'closed_unique_direct_package_metadata_route')
++        existing[p.name]=pin
++    need('preflight-inventory.json' in existing and 'archive-input.json' in existing and len(existing)<=6,'bounded_explicit_existing_package_metadata_roles')
++    return existing
++
++def package_snapshot(existing,added):
++    need(not set(existing).intersection(added) and len(existing)+len(added)<=8,'closed_package_role_count')
++    expected={**existing,**added};fd=os.open(OUTPUT,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW|os.O_CLOEXEC)
++    try:
++        before=os.fstat(fd);need(stamp(before)==stamp(OUTPUT.lstat()) and stat.S_ISDIR(before.st_mode) and before.st_uid==UID and stat.S_IMODE(before.st_mode)==0o700,'package_directory_identity_before')
++        names=os.listdir(fd);need(set(names)==set(expected) and len(names)==len(expected),'exact_whole_package_names_no_unknown_or_nested_entries')
++        total=0;observed={}
++        for name,pin in expected.items():
++            tick();p=OUTPUT/name;need(pin['path']==str(p),'exact_package_pin_route')
++            st=os.stat(name,dir_fd=fd,follow_symlinks=False)
++            need(stat.S_ISREG(st.st_mode) and st.st_uid==UID and st.st_nlink==1 and stat.S_IMODE(st.st_mode)==0o600 and stamp(st)==pin['stat'],'package_private_regular_pin_no_symlink')
++            if p==ARCHIVE:got=archive_pin()
++            else:
++                need(0<=pin['bytes']<=METADATA_CAP,'bounded_existing_package_metadata_file')
++                _,got=original(p,METADATA_CAP)
++            need(got==pin and stamp(os.stat(name,dir_fd=fd,follow_symlinks=False))==stamp(st),'whole_package_exact_bytes_SHA_nine_stat_continuity')
++            total+=got['bytes'];need(total<=TREE_CAP,'entire_recovery_package_2GiB_cap');observed[name]=got
++        need(set(os.listdir(fd))==set(expected) and stamp(os.fstat(fd))==stamp(before)==stamp(OUTPUT.lstat()),'complete_package_directory_name_nine_stat_closure')
++    finally:os.close(fd)
++    return {'files':observed,'bytes':total}
++
+ def git_recovery_facts(value):
+     closed(value,('path','bytes','sha256','stat','version'),'exact_observed_native_Git_descriptor')
+     need(value['path']=='/usr/bin/git' and type(value['version']) is str and re.fullmatch(r'git version [0-9]+\.[0-9]+\.[0-9]+(?:[.A-Za-z0-9_-]*)',value['version']) is not None,'actual_native_Git_version')
+@@ -522,9 +555,9 @@
+     need(type(value) is int and value>=0,'archive_timestamp_nonnegative_ns');return str(value//10**9)+'.'+str(value%10**9).zfill(9)
+ 
+ class BoundedArchive:
+-    def __init__(self,file):self.file=file;self.bytes=0;self.hasher=hashlib.sha256()
++    def __init__(self,file,cap):self.file=file;self.cap=cap;self.bytes=0;self.hasher=hashlib.sha256()
+     def write(self,data):
+-        tick();need(self.bytes+len(data)<=ARCHIVE_CAP,'archive_total_with_headers_padding_metadata_2GiB_cap')
++        tick();need(self.bytes+len(data)<=self.cap,'entire_package_archive_dynamic_cap_includes_existing_metadata_and_receipt')
+         need(shutil.disk_usage('/data').free-len(data)>=24*1024**3+RECEIPT_CAP,'data_original_24GiB_floor_during_archive')
+         n=self.file.write(data);need(n==len(data),'full_archive_write');self.bytes+=n;self.hasher.update(data);return n
+     def tell(self):return self.bytes
+@@ -555,10 +588,10 @@
+     expected['recovery/restore.md']=({'kind':'regular','bytes':len(RESTORE_NOTE),'sha256':digest(RESTORE_NOTE),'stat':zero},RESTORE_NOTE)
+     need(len(expected)<=ENTRY_CAP+3,'archive_member_count_bound');return expected
+ 
+-def write_archive(expected):
++def write_archive(expected,cap):
+     fd=os.open(ARCHIVE,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW|os.O_CLOEXEC,0o600)
+     with os.fdopen(fd,'wb',buffering=0) as f:
+-        wrapped=BoundedArchive(f)
++        wrapped=BoundedArchive(f,cap)
+         with tarfile.open(fileobj=wrapped,mode='w|',format=tarfile.PAX_FORMAT,encoding='utf-8',errors='surrogateescape') as tar:
+             for name,(row,provided) in expected.items():
+                 tick();info=member_info(name,row)
+@@ -575,7 +608,7 @@
+                 else:
+                     if row['kind']=='symlink':need(os.fsencode(os.readlink(p))==base64.b64decode(row['target_base64'],validate=True),'archive_symlink_target_byte_continuity')
+                     tar.addfile(info);need(stamp(p.lstat())==row['stat'],'archive_nonregular_stat_continuity')
+-        wrapped.flush();os.fsync(f.fileno());need(wrapped.bytes<=ARCHIVE_CAP,'archive_output_bound')
++        wrapped.flush();os.fsync(f.fileno());need(wrapped.bytes<=cap,'archive_dynamic_package_output_bound')
+     directoryfd=os.open(OUTPUT,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW|os.O_CLOEXEC)
+     try:os.fsync(directoryfd)
+     finally:os.close(directoryfd)
+@@ -627,6 +660,8 @@
+     need(sys.platform=='linux' and os.getuid()==os.geteuid()==UID and pwd.getpwuid(UID).pw_name=='yanruj' and socket.gethostname().split('.')[0]=='mbit10','native_owned_account_host')
+     need(Path('/proc/self/exe').resolve(strict=True)==Path('/usr/bin/python3.12') and sys.flags.isolated and sys.flags.dont_write_bytecode and not sys.flags.optimize,'native_isolated_unoptimized_python')
+     route=archive_routes();value,input_pin,input_raw,prior,manifest_raw=actual_input();transport=transport_identity()
++    existing=package_existing_metadata(value,input_pin);package_before=package_snapshot(existing,{})
++    dynamic_archive_cap=TREE_CAP-RECEIPT_CAP-package_before['bytes'];need(0<dynamic_archive_cap<=ARCHIVE_CAP,'existing_metadata_and_receipt_reserved_in_package_cap')
+     resources_before=resources();OBSERVED['resources_before']=resources_before
+     need(resources_before['memory_80GiB_floor_met'] and resources_before['data_after_2GiB_archive_reserve_24GiB_floor_met'],'unchanged_archive_resource_floors')
+     sources=current_sources();home=home_startup();native=native_snapshot();registration=candidate_registration();controls=controls_originals();tools={p:root_tool_pin(p,n,h) for p,(n,h) in NATIVE.items()};gitfacts=git_recovery_facts(value['native_git'])
+@@ -634,7 +669,7 @@
+     native_continuity(prior['native_after']);first,inodes=inventory_tree();need(first==prior['tree'] and payload_digest(first)==prior['snapshot_sha256'],'actual_original_full_tree_preflight_continuity')
+     no_unpreserved_xattrs(first);processes=consumer_inventory(transport,inodes);need(processes['no_live_owned_candidate_SOURCE_RAW_H_consumers'] is True,'fresh_owned_no_use_before_archive')
+     second,inodes2=inventory_tree();need(first==second and inodes==inodes2,'fresh_complete_tree_before_archive');no_unpreserved_xattrs(second);approval_window(value['approval'])
+-    expected=archive_expected(first,input_pin,input_raw,value['preflight_manifest'],manifest_raw);written=write_archive(expected);archive=verify_archive(expected,written)
++    expected=archive_expected(first,input_pin,input_raw,value['preflight_manifest'],manifest_raw);written=write_archive(expected,dynamic_archive_cap);archive=verify_archive(expected,written)
+     final,inodes3=inventory_tree();need(final==first and inodes3==inodes,'complete_source_tree_nine_stat_SHA_after_archive');no_unpreserved_xattrs(final)
+     after_processes=consumer_inventory(transport,inodes3);need(after_processes['no_live_owned_candidate_SOURCE_RAW_H_consumers'] is True,'fresh_owned_no_use_after_archive')
+     need(candidate_registration()==registration and current_sources()==sources and home_startup()==home and controls_originals()==controls,'protected_sources_registration_HOME_controls_after_archive')
+@@ -642,15 +677,17 @@
+     for p,(n,h) in NATIVE.items():need(root_tool_pin(p,n,h)==tools[p],'native_tool_after_archive_continuity')
+     need(actual_input()[1]==input_pin and transport_identity()==transport,'approval_input_source_transport_after_archive');archive_parent_continuity(route);need(archive_pin()==archive,'archive_final_original_SHA_stat')
+     after_resources=resources();OBSERVED['resources_after']=after_resources;need(after_resources['memory_80GiB_floor_met'] and after_resources['free_bytes']['/data']-RECEIPT_CAP>=24*1024**3,'unchanged_actual_after_archive_24GiB_floor');approval_window(value['approval'])
+-    receipt={'format':'swdb.lanl17-generality-verified-private-archive.v1','checked_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'archive_verified':True,'archive_original':archive,'actual_input_original':input_pin,'actual_preflight_manifest_original':value['preflight_manifest'],'selected_preflight_source_SHA':PREFLIGHT_SOURCE_SHA,'writer_source_SHA':ARGS.source_sha256,'source_candidate':str(CANDIDATE),'head':CANDIDATE_HEAD,'tree_snapshot_sha256':prior['snapshot_sha256'],'member_count':len(expected),'source_entry_count':first['entry_count'],'regular_source_bytes':first['regular_bytes'],'all_members_stream_verified_no_extraction':True,'complete_source_nine_stat_SHA_continuity_before_after':True,'ACL_xattr_populations_refused':True,'original_dev_inode_ctime_are_metadata_not_restore_physics':True,'root_peer_review_pins':value['reviews'],'approval_sha256':payload_digest(value['approval']),'native_Git_recovery_facts':gitfacts,'resources':OBSERVED,'fresh_owned_no_use_observed_before_after':True,'other_user_and_exclusive_parent_history_are_reviewed_attestations':True,'raw_archive_record_auth_provider_bodies_returned':False,'removal_performed':False,'removal_admitted':False,'index_admitted':False,'scientific_admission':False,'point_in_time_only_final_fresh_no_use_required_before_separate_removal':True}
+-    blob=metadata_bytes(receipt);need(len(blob)<=RECEIPT_CAP and archive['bytes']+len(blob)<=TREE_CAP,'total_recovery_archive_and_receipt_2GiB_cap')
++    package_with_archive=package_snapshot(existing,{ARCHIVE.name:archive});need(package_with_archive['bytes']==package_before['bytes']+archive['bytes'],'whole_existing_metadata_archive_byte_sum')
++    receipt={'format':'swdb.lanl17-generality-verified-private-archive.v1','checked_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'archive_verified':True,'archive_original':archive,'actual_input_original':input_pin,'actual_preflight_manifest_original':value['preflight_manifest'],'selected_preflight_source_SHA':PREFLIGHT_SOURCE_SHA,'writer_source_SHA':ARGS.source_sha256,'source_candidate':str(CANDIDATE),'head':CANDIDATE_HEAD,'tree_snapshot_sha256':prior['snapshot_sha256'],'member_count':len(expected),'source_entry_count':first['entry_count'],'regular_source_bytes':first['regular_bytes'],'all_members_stream_verified_no_extraction':True,'existing_package_metadata_originals':existing,'existing_package_metadata_bytes':package_before['bytes'],'entire_recovery_package_cap_bytes':TREE_CAP,'package_unknown_or_nonprivate_entries_refused':True,'complete_source_nine_stat_SHA_continuity_before_after':True,'ACL_xattr_populations_refused':True,'original_dev_inode_ctime_are_metadata_not_restore_physics':True,'root_peer_review_pins':value['reviews'],'approval_sha256':payload_digest(value['approval']),'native_Git_recovery_facts':gitfacts,'resources':OBSERVED,'fresh_owned_no_use_observed_before_after':True,'other_user_and_exclusive_parent_history_are_reviewed_attestations':True,'raw_archive_record_auth_provider_bodies_returned':False,'removal_performed':False,'removal_admitted':False,'index_admitted':False,'scientific_admission':False,'point_in_time_only_final_fresh_no_use_required_before_separate_removal':True}
++    blob=metadata_bytes(receipt);need(len(blob)<=RECEIPT_CAP and package_before['bytes']+archive['bytes']+len(blob)<=TREE_CAP,'entire_recovery_metadata_archive_receipt_2GiB_cap')
+     fd=os.open(RECEIPT,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW|os.O_CLOEXEC,0o600)
+     with os.fdopen(fd,'wb') as f:f.write(blob);f.flush();os.fsync(f.fileno())
+     reread,pin=original(RECEIPT,RECEIPT_CAP);need(reread==blob,'compact_receipt_exact_readback');need(shutil.disk_usage('/data').free>=24*1024**3,'final_original_data_floor')
++    package_final=package_snapshot(existing,{ARCHIVE.name:archive,RECEIPT.name:pin});need(package_final['bytes']==package_before['bytes']+archive['bytes']+len(blob)<=TREE_CAP,'complete_final_recovery_package_original_byte_sum')
+     directoryfd=os.open(OUTPUT,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW|os.O_CLOEXEC)
+     try:os.fsync(directoryfd)
+     finally:os.close(directoryfd)
+-    return {'format':receipt['format'],'checked_utc':receipt['checked_utc'],'state':'verified_archive_only','archive_verified':True,'archive_original':archive,'remote_receipt_original':pin,'source_snapshot_sha256':prior['snapshot_sha256'],'member_count':len(expected),'removal_performed':False,'removal_admitted':False,'index_admitted':False,'scientific_admission':False,'raw_bodies_returned':False,'future_removal_requires_separate_fresh_review':True}
++    return {'format':receipt['format'],'checked_utc':receipt['checked_utc'],'state':'verified_archive_only','archive_verified':True,'archive_original':archive,'remote_receipt_original':pin,'source_snapshot_sha256':prior['snapshot_sha256'],'member_count':len(expected),'entire_recovery_package_bytes':package_final['bytes'],'entire_recovery_package_cap_bytes':TREE_CAP,'removal_performed':False,'removal_admitted':False,'index_admitted':False,'scientific_admission':False,'raw_bodies_returned':False,'future_removal_requires_separate_fresh_review':True}
+ 
+ def main():
+     global ARGS

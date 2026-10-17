@@ -1,0 +1,1802 @@
+{
+  "content": {
+    "applicable_strategies": [
+      {
+        "outcomes": {
+          "undetermined": 31
+        },
+        "performance_guarantee": [
+          false
+        ],
+        "regions": 31,
+        "strategy": "loop_tiling"
+      },
+      {
+        "outcomes": {
+          "undetermined": 31
+        },
+        "performance_guarantee": [
+          false
+        ],
+        "regions": 31,
+        "strategy": "packing"
+      },
+      {
+        "outcomes": {
+          "undetermined": 31
+        },
+        "performance_guarantee": [
+          false
+        ],
+        "regions": 31,
+        "strategy": "simd_gather"
+      },
+      {
+        "outcomes": {
+          "undetermined": 31
+        },
+        "performance_guarantee": [
+          false
+        ],
+        "regions": 31,
+        "strategy": "software_prefetch"
+      },
+      {
+        "outcomes": {
+          "undetermined": 31
+        },
+        "performance_guarantee": [
+          false
+        ],
+        "regions": 31,
+        "strategy": "vertex_reordering"
+      }
+    ],
+    "completeness": "complete",
+    "correctness_and_edit_constraints": {
+      "editable_files": [
+        "benchmarks/gapbs/src/bfs.cc"
+      ],
+      "preserve_correctness": true,
+      "preserve_roi": true,
+      "primary_correctness": "passed",
+      "protected_inputs": [
+        {
+          "kind": "verifier",
+          "path": "benchmarks/gapbs/src/bfs.cc"
+        },
+        {
+          "kind": "roi_calls",
+          "path": "benchmarks/API/prefetch_depricated.cpp"
+        },
+        {
+          "kind": "roi_calls",
+          "path": "benchmarks/API/test.cpp"
+        },
+        {
+          "kind": "roi_calls",
+          "path": "benchmarks/API/test_functional.cpp"
+        },
+        {
+          "kind": "roi_calls",
+          "path": "benchmarks/API/test_strided.cpp"
+        },
+        {
+          "kind": "roi_calls",
+          "path": "benchmarks/API/test_tested_parallel.cpp"
+        },
+        {
+          "kind": "roi_calls",
+          "path": "benchmarks/API/test_vectorized.cpp"
+        },
+        {
+          "kind": "roi_calls",
+          "path": "benchmarks/gapbs/src/bc.cc"
+        },
+        {
+          "kind": "file",
+          "path": "benchmarks/gapbs/src/benchmark.h"
+        },
+        {
+          "kind": "roi_calls",
+          "path": "benchmarks/gapbs/src/bfs.cc"
+        },
+        {
+          "kind": "file",
+          "path": "benchmarks/gapbs/src/command_line.h"
+        },
+        {
+          "kind": "roi_calls",
+          "path": "benchmarks/gapbs/src/pr.cc"
+        },
+        {
+          "kind": "roi_calls",
+          "path": "benchmarks/gapbs/src/sssp.cc"
+        },
+        {
+          "kind": "file",
+          "path": "benchmarks/gapbs/src/timer.h"
+        },
+        {
+          "kind": "roi_calls",
+          "path": "include/gem5/m5ops.h"
+        }
+      ]
+    },
+    "dynamic_memory": [
+      {
+        "artifact_sha256": "b01e36df1ced65d3cc5afb43723cda8be2e753364b283dd7e9a639ed0fcd0968",
+        "attribution_granularity": "whole BFS call",
+        "available": true,
+        "basis": "simulated",
+        "collector": {
+          "cache_model": {
+            "D1": "49152,12,64",
+            "I1": "32768,8,64",
+            "LL": "25165824,12,64"
+          },
+          "hardware_counters": false,
+          "initial_state": "instrumentation starts at ROI; caches initially empty",
+          "model_limits": "Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process effects and uses virtual addresses",
+          "name": "Callgrind",
+          "thread_policy": "collection enabled for all threads; instrumentation globally bounded to ROI; combined thread dump",
+          "version": "valgrind-3.22.0"
+        },
+        "counter_validation": {
+          "checks": "bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit client ROI dump",
+          "method": "swdb.callgrind.roi.v1",
+          "state": "valid"
+        },
+        "definition": "executed data read references",
+        "execution": {
+          "repetition": 0,
+          "source": 0,
+          "source_position": 0
+        },
+        "limitations": "instrumented dynamic references and modeled cache misses; not native hardware counters, address traces, per-region metrics, or causal bottleneck proof",
+        "metric": "Dr",
+        "raw_artifact": "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-dx100-patch-b2/bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.profile/callgrind-0-0.out.1",
+        "raw_sha256": "7b046d48d3df8b57486fcda891a6d12e5a8e2b5bd8e98b5f0fd210add8f35661",
+        "scope": "ROI",
+        "source_artifact_sha256": "10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028",
+        "unit": "references",
+        "value": 48848625
+      },
+      {
+        "artifact_sha256": "b01e36df1ced65d3cc5afb43723cda8be2e753364b283dd7e9a639ed0fcd0968",
+        "attribution_granularity": "whole BFS call",
+        "available": true,
+        "basis": "simulated",
+        "collector": {
+          "cache_model": {
+            "D1": "49152,12,64",
+            "I1": "32768,8,64",
+            "LL": "25165824,12,64"
+          },
+          "hardware_counters": false,
+          "initial_state": "instrumentation starts at ROI; caches initially empty",
+          "model_limits": "Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process effects and uses virtual addresses",
+          "name": "Callgrind",
+          "thread_policy": "collection enabled for all threads; instrumentation globally bounded to ROI; combined thread dump",
+          "version": "valgrind-3.22.0"
+        },
+        "counter_validation": {
+          "checks": "bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit client ROI dump",
+          "method": "swdb.callgrind.roi.v1",
+          "state": "valid"
+        },
+        "definition": "executed data write references",
+        "execution": {
+          "repetition": 0,
+          "source": 0,
+          "source_position": 0
+        },
+        "limitations": "instrumented dynamic references and modeled cache misses; not native hardware counters, address traces, per-region metrics, or causal bottleneck proof",
+        "metric": "Dw",
+        "raw_artifact": "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-dx100-patch-b2/bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.profile/callgrind-0-0.out.1",
+        "raw_sha256": "7b046d48d3df8b57486fcda891a6d12e5a8e2b5bd8e98b5f0fd210add8f35661",
+        "scope": "ROI",
+        "source_artifact_sha256": "10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028",
+        "unit": "references",
+        "value": 1646475
+      },
+      {
+        "artifact_sha256": "b01e36df1ced65d3cc5afb43723cda8be2e753364b283dd7e9a639ed0fcd0968",
+        "attribution_granularity": "whole BFS call",
+        "available": true,
+        "basis": "simulated",
+        "collector": {
+          "cache_model": {
+            "D1": "49152,12,64",
+            "I1": "32768,8,64",
+            "LL": "25165824,12,64"
+          },
+          "hardware_counters": false,
+          "initial_state": "instrumentation starts at ROI; caches initially empty",
+          "model_limits": "Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process effects and uses virtual addresses",
+          "name": "Callgrind",
+          "thread_policy": "collection enabled for all threads; instrumentation globally bounded to ROI; combined thread dump",
+          "version": "valgrind-3.22.0"
+        },
+        "counter_validation": {
+          "checks": "bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit client ROI dump",
+          "method": "swdb.callgrind.roi.v1",
+          "state": "valid"
+        },
+        "definition": "simulated first-level data cache read misses",
+        "execution": {
+          "repetition": 0,
+          "source": 0,
+          "source_position": 0
+        },
+        "limitations": "instrumented dynamic references and modeled cache misses; not native hardware counters, address traces, per-region metrics, or causal bottleneck proof",
+        "metric": "D1mr",
+        "raw_artifact": "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-dx100-patch-b2/bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.profile/callgrind-0-0.out.1",
+        "raw_sha256": "7b046d48d3df8b57486fcda891a6d12e5a8e2b5bd8e98b5f0fd210add8f35661",
+        "scope": "ROI",
+        "source_artifact_sha256": "10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028",
+        "unit": "misses",
+        "value": 7480001
+      },
+      {
+        "artifact_sha256": "b01e36df1ced65d3cc5afb43723cda8be2e753364b283dd7e9a639ed0fcd0968",
+        "attribution_granularity": "whole BFS call",
+        "available": true,
+        "basis": "simulated",
+        "collector": {
+          "cache_model": {
+            "D1": "49152,12,64",
+            "I1": "32768,8,64",
+            "LL": "25165824,12,64"
+          },
+          "hardware_counters": false,
+          "initial_state": "instrumentation starts at ROI; caches initially empty",
+          "model_limits": "Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process effects and uses virtual addresses",
+          "name": "Callgrind",
+          "thread_policy": "collection enabled for all threads; instrumentation globally bounded to ROI; combined thread dump",
+          "version": "valgrind-3.22.0"
+        },
+        "counter_validation": {
+          "checks": "bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit client ROI dump",
+          "method": "swdb.callgrind.roi.v1",
+          "state": "valid"
+        },
+        "definition": "simulated first-level data cache write misses",
+        "execution": {
+          "repetition": 0,
+          "source": 0,
+          "source_position": 0
+        },
+        "limitations": "instrumented dynamic references and modeled cache misses; not native hardware counters, address traces, per-region metrics, or causal bottleneck proof",
+        "metric": "D1mw",
+        "raw_artifact": "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-dx100-patch-b2/bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.profile/callgrind-0-0.out.1",
+        "raw_sha256": "7b046d48d3df8b57486fcda891a6d12e5a8e2b5bd8e98b5f0fd210add8f35661",
+        "scope": "ROI",
+        "source_artifact_sha256": "10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028",
+        "unit": "misses",
+        "value": 57921
+      },
+      {
+        "artifact_sha256": "b01e36df1ced65d3cc5afb43723cda8be2e753364b283dd7e9a639ed0fcd0968",
+        "attribution_granularity": "whole BFS call",
+        "available": true,
+        "basis": "simulated",
+        "collector": {
+          "cache_model": {
+            "D1": "49152,12,64",
+            "I1": "32768,8,64",
+            "LL": "25165824,12,64"
+          },
+          "hardware_counters": false,
+          "initial_state": "instrumentation starts at ROI; caches initially empty",
+          "model_limits": "Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process effects and uses virtual addresses",
+          "name": "Callgrind",
+          "thread_policy": "collection enabled for all threads; instrumentation globally bounded to ROI; combined thread dump",
+          "version": "valgrind-3.22.0"
+        },
+        "counter_validation": {
+          "checks": "bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit client ROI dump",
+          "method": "swdb.callgrind.roi.v1",
+          "state": "valid"
+        },
+        "definition": "simulated last-level data cache read misses",
+        "execution": {
+          "repetition": 0,
+          "source": 0,
+          "source_position": 0
+        },
+        "limitations": "instrumented dynamic references and modeled cache misses; not native hardware counters, address traces, per-region metrics, or causal bottleneck proof",
+        "metric": "DLmr",
+        "raw_artifact": "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-dx100-patch-b2/bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.profile/callgrind-0-0.out.1",
+        "raw_sha256": "7b046d48d3df8b57486fcda891a6d12e5a8e2b5bd8e98b5f0fd210add8f35661",
+        "scope": "ROI",
+        "source_artifact_sha256": "10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028",
+        "unit": "misses",
+        "value": 526217
+      },
+      {
+        "artifact_sha256": "b01e36df1ced65d3cc5afb43723cda8be2e753364b283dd7e9a639ed0fcd0968",
+        "attribution_granularity": "whole BFS call",
+        "available": true,
+        "basis": "simulated",
+        "collector": {
+          "cache_model": {
+            "D1": "49152,12,64",
+            "I1": "32768,8,64",
+            "LL": "25165824,12,64"
+          },
+          "hardware_counters": false,
+          "initial_state": "instrumentation starts at ROI; caches initially empty",
+          "model_limits": "Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process effects and uses virtual addresses",
+          "name": "Callgrind",
+          "thread_policy": "collection enabled for all threads; instrumentation globally bounded to ROI; combined thread dump",
+          "version": "valgrind-3.22.0"
+        },
+        "counter_validation": {
+          "checks": "bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit client ROI dump",
+          "method": "swdb.callgrind.roi.v1",
+          "state": "valid"
+        },
+        "definition": "simulated last-level data cache write misses",
+        "execution": {
+          "repetition": 0,
+          "source": 0,
+          "source_position": 0
+        },
+        "limitations": "instrumented dynamic references and modeled cache misses; not native hardware counters, address traces, per-region metrics, or causal bottleneck proof",
+        "metric": "DLmw",
+        "raw_artifact": "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-dx100-patch-b2/bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.profile/callgrind-0-0.out.1",
+        "raw_sha256": "7b046d48d3df8b57486fcda891a6d12e5a8e2b5bd8e98b5f0fd210add8f35661",
+        "scope": "ROI",
+        "source_artifact_sha256": "10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028",
+        "unit": "misses",
+        "value": 45915
+      },
+      {
+        "artifact_sha256": "b01e36df1ced65d3cc5afb43723cda8be2e753364b283dd7e9a639ed0fcd0968",
+        "attribution_granularity": "whole BFS call",
+        "available": true,
+        "basis": "simulated",
+        "collector": {
+          "cache_model": {
+            "D1": "49152,12,64",
+            "I1": "32768,8,64",
+            "LL": "25165824,12,64"
+          },
+          "hardware_counters": false,
+          "initial_state": "instrumentation starts at ROI; caches initially empty",
+          "model_limits": "Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process effects and uses virtual addresses",
+          "name": "Callgrind",
+          "thread_policy": "collection enabled for all threads; instrumentation globally bounded to ROI; combined thread dump",
+          "version": "valgrind-3.22.0"
+        },
+        "counter_validation": {
+          "checks": "bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit client ROI dump",
+          "method": "swdb.callgrind.roi.v1",
+          "state": "valid"
+        },
+        "definition": "executed data read references",
+        "execution": {
+          "repetition": 0,
+          "source": 1234,
+          "source_position": 1
+        },
+        "limitations": "instrumented dynamic references and modeled cache misses; not native hardware counters, address traces, per-region metrics, or causal bottleneck proof",
+        "metric": "Dr",
+        "raw_artifact": "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-dx100-patch-b2/bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.profile/callgrind-0-1.out.1",
+        "raw_sha256": "9bbd4db795e45c5403ad5ed5ea1960fe893a01e86f154ed08f4a35b4f5e20151",
+        "scope": "ROI",
+        "source_artifact_sha256": "10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028",
+        "unit": "references",
+        "value": 48848545
+      },
+      {
+        "artifact_sha256": "b01e36df1ced65d3cc5afb43723cda8be2e753364b283dd7e9a639ed0fcd0968",
+        "attribution_granularity": "whole BFS call",
+        "available": true,
+        "basis": "simulated",
+        "collector": {
+          "cache_model": {
+            "D1": "49152,12,64",
+            "I1": "32768,8,64",
+            "LL": "25165824,12,64"
+          },
+          "hardware_counters": false,
+          "initial_state": "instrumentation starts at ROI; caches initially empty",
+          "model_limits": "Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process effects and uses virtual addresses",
+          "name": "Callgrind",
+          "thread_policy": "collection enabled for all threads; instrumentation globally bounded to ROI; combined thread dump",
+          "version": "valgrind-3.22.0"
+        },
+        "counter_validation": {
+          "checks": "bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit client ROI dump",
+          "method": "swdb.callgrind.roi.v1",
+          "state": "valid"
+        },
+        "definition": "executed data write references",
+        "execution": {
+          "repetition": 0,
+          "source": 1234,
+          "source_position": 1
+        },
+        "limitations": "instrumented dynamic references and modeled cache misses; not native hardware counters, address traces, per-region metrics, or causal bottleneck proof",
+        "metric": "Dw",
+        "raw_artifact": "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-dx100-patch-b2/bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.profile/callgrind-0-1.out.1",
+        "raw_sha256": "9bbd4db795e45c5403ad5ed5ea1960fe893a01e86f154ed08f4a35b4f5e20151",
+        "scope": "ROI",
+        "source_artifact_sha256": "10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028",
+        "unit": "references",
+        "value": 1646561
+      },
+      {
+        "artifact_sha256": "b01e36df1ced65d3cc5afb43723cda8be2e753364b283dd7e9a639ed0fcd0968",
+        "attribution_granularity": "whole BFS call",
+        "available": true,
+        "basis": "simulated",
+        "collector": {
+          "cache_model": {
+            "D1": "49152,12,64",
+            "I1": "32768,8,64",
+            "LL": "25165824,12,64"
+          },
+          "hardware_counters": false,
+          "initial_state": "instrumentation starts at ROI; caches initially empty",
+          "model_limits": "Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process effects and uses virtual addresses",
+          "name": "Callgrind",
+          "thread_policy": "collection enabled for all threads; instrumentation globally bounded to ROI; combined thread dump",
+          "version": "valgrind-3.22.0"
+        },
+        "counter_validation": {
+          "checks": "bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit client ROI dump",
+          "method": "swdb.callgrind.roi.v1",
+          "state": "valid"
+        },
+        "definition": "simulated first-level data cache read misses",
+        "execution": {
+          "repetition": 0,
+          "source": 1234,
+          "source_position": 1
+        },
+        "limitations": "instrumented dynamic references and modeled cache misses; not native hardware counters, address traces, per-region metrics, or causal bottleneck proof",
+        "metric": "D1mr",
+        "raw_artifact": "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-dx100-patch-b2/bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.profile/callgrind-0-1.out.1",
+        "raw_sha256": "9bbd4db795e45c5403ad5ed5ea1960fe893a01e86f154ed08f4a35b4f5e20151",
+        "scope": "ROI",
+        "source_artifact_sha256": "10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028",
+        "unit": "misses",
+        "value": 7479459
+      },
+      {
+        "artifact_sha256": "b01e36df1ced65d3cc5afb43723cda8be2e753364b283dd7e9a639ed0fcd0968",
+        "attribution_granularity": "whole BFS call",
+        "available": true,
+        "basis": "simulated",
+        "collector": {
+          "cache_model": {
+            "D1": "49152,12,64",
+            "I1": "32768,8,64",
+            "LL": "25165824,12,64"
+          },
+          "hardware_counters": false,
+          "initial_state": "instrumentation starts at ROI; caches initially empty",
+          "model_limits": "Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process effects and uses virtual addresses",
+          "name": "Callgrind",
+          "thread_policy": "collection enabled for all threads; instrumentation globally bounded to ROI; combined thread dump",
+          "version": "valgrind-3.22.0"
+        },
+        "counter_validation": {
+          "checks": "bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit client ROI dump",
+          "method": "swdb.callgrind.roi.v1",
+          "state": "valid"
+        },
+        "definition": "simulated first-level data cache write misses",
+        "execution": {
+          "repetition": 0,
+          "source": 1234,
+          "source_position": 1
+        },
+        "limitations": "instrumented dynamic references and modeled cache misses; not native hardware counters, address traces, per-region metrics, or causal bottleneck proof",
+        "metric": "D1mw",
+        "raw_artifact": "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-dx100-patch-b2/bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.profile/callgrind-0-1.out.1",
+        "raw_sha256": "9bbd4db795e45c5403ad5ed5ea1960fe893a01e86f154ed08f4a35b4f5e20151",
+        "scope": "ROI",
+        "source_artifact_sha256": "10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028",
+        "unit": "misses",
+        "value": 58130
+      },
+      {
+        "artifact_sha256": "b01e36df1ced65d3cc5afb43723cda8be2e753364b283dd7e9a639ed0fcd0968",
+        "attribution_granularity": "whole BFS call",
+        "available": true,
+        "basis": "simulated",
+        "collector": {
+          "cache_model": {
+            "D1": "49152,12,64",
+            "I1": "32768,8,64",
+            "LL": "25165824,12,64"
+          },
+          "hardware_counters": false,
+          "initial_state": "instrumentation starts at ROI; caches initially empty",
+          "model_limits": "Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process effects and uses virtual addresses",
+          "name": "Callgrind",
+          "thread_policy": "collection enabled for all threads; instrumentation globally bounded to ROI; combined thread dump",
+          "version": "valgrind-3.22.0"
+        },
+        "counter_validation": {
+          "checks": "bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit client ROI dump",
+          "method": "swdb.callgrind.roi.v1",
+          "state": "valid"
+        },
+        "definition": "simulated last-level data cache read misses",
+        "execution": {
+          "repetition": 0,
+          "source": 1234,
+          "source_position": 1
+        },
+        "limitations": "instrumented dynamic references and modeled cache misses; not native hardware counters, address traces, per-region metrics, or causal bottleneck proof",
+        "metric": "DLmr",
+        "raw_artifact": "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-dx100-patch-b2/bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.profile/callgrind-0-1.out.1",
+        "raw_sha256": "9bbd4db795e45c5403ad5ed5ea1960fe893a01e86f154ed08f4a35b4f5e20151",
+        "scope": "ROI",
+        "source_artifact_sha256": "10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028",
+        "unit": "misses",
+        "value": 525886
+      },
+      {
+        "artifact_sha256": "b01e36df1ced65d3cc5afb43723cda8be2e753364b283dd7e9a639ed0fcd0968",
+        "attribution_granularity": "whole BFS call",
+        "available": true,
+        "basis": "simulated",
+        "collector": {
+          "cache_model": {
+            "D1": "49152,12,64",
+            "I1": "32768,8,64",
+            "LL": "25165824,12,64"
+          },
+          "hardware_counters": false,
+          "initial_state": "instrumentation starts at ROI; caches initially empty",
+          "model_limits": "Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process effects and uses virtual addresses",
+          "name": "Callgrind",
+          "thread_policy": "collection enabled for all threads; instrumentation globally bounded to ROI; combined thread dump",
+          "version": "valgrind-3.22.0"
+        },
+        "counter_validation": {
+          "checks": "bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit client ROI dump",
+          "method": "swdb.callgrind.roi.v1",
+          "state": "valid"
+        },
+        "definition": "simulated last-level data cache write misses",
+        "execution": {
+          "repetition": 0,
+          "source": 1234,
+          "source_position": 1
+        },
+        "limitations": "instrumented dynamic references and modeled cache misses; not native hardware counters, address traces, per-region metrics, or causal bottleneck proof",
+        "metric": "DLmw",
+        "raw_artifact": "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-dx100-patch-b2/bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.profile/callgrind-0-1.out.1",
+        "raw_sha256": "9bbd4db795e45c5403ad5ed5ea1960fe893a01e86f154ed08f4a35b4f5e20151",
+        "scope": "ROI",
+        "source_artifact_sha256": "10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028",
+        "unit": "misses",
+        "value": 45915
+      },
+      {
+        "artifact_sha256": "b01e36df1ced65d3cc5afb43723cda8be2e753364b283dd7e9a639ed0fcd0968",
+        "attribution_granularity": "whole BFS call",
+        "available": true,
+        "basis": "simulated",
+        "collector": {
+          "cache_model": {
+            "D1": "49152,12,64",
+            "I1": "32768,8,64",
+            "LL": "25165824,12,64"
+          },
+          "hardware_counters": false,
+          "initial_state": "instrumentation starts at ROI; caches initially empty",
+          "model_limits": "Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process effects and uses virtual addresses",
+          "name": "Callgrind",
+          "thread_policy": "collection enabled for all threads; instrumentation globally bounded to ROI; combined thread dump",
+          "version": "valgrind-3.22.0"
+        },
+        "counter_validation": {
+          "checks": "bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit client ROI dump",
+          "method": "swdb.callgrind.roi.v1",
+          "state": "valid"
+        },
+        "definition": "executed data read references",
+        "execution": {
+          "repetition": 0,
+          "source": 7777,
+          "source_position": 2
+        },
+        "limitations": "instrumented dynamic references and modeled cache misses; not native hardware counters, address traces, per-region metrics, or causal bottleneck proof",
+        "metric": "Dr",
+        "raw_artifact": "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-dx100-patch-b2/bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.profile/callgrind-0-2.out.1",
+        "raw_sha256": "64e56d011ed64d26a8a8f3aaaff5241bc6fa302a47bb1210353b1b28536c9fec",
+        "scope": "ROI",
+        "source_artifact_sha256": "10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028",
+        "unit": "references",
+        "value": 48855451
+      },
+      {
+        "artifact_sha256": "b01e36df1ced65d3cc5afb43723cda8be2e753364b283dd7e9a639ed0fcd0968",
+        "attribution_granularity": "whole BFS call",
+        "available": true,
+        "basis": "simulated",
+        "collector": {
+          "cache_model": {
+            "D1": "49152,12,64",
+            "I1": "32768,8,64",
+            "LL": "25165824,12,64"
+          },
+          "hardware_counters": false,
+          "initial_state": "instrumentation starts at ROI; caches initially empty",
+          "model_limits": "Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process effects and uses virtual addresses",
+          "name": "Callgrind",
+          "thread_policy": "collection enabled for all threads; instrumentation globally bounded to ROI; combined thread dump",
+          "version": "valgrind-3.22.0"
+        },
+        "counter_validation": {
+          "checks": "bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit client ROI dump",
+          "method": "swdb.callgrind.roi.v1",
+          "state": "valid"
+        },
+        "definition": "executed data write references",
+        "execution": {
+          "repetition": 0,
+          "source": 7777,
+          "source_position": 2
+        },
+        "limitations": "instrumented dynamic references and modeled cache misses; not native hardware counters, address traces, per-region metrics, or causal bottleneck proof",
+        "metric": "Dw",
+        "raw_artifact": "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-dx100-patch-b2/bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.profile/callgrind-0-2.out.1",
+        "raw_sha256": "64e56d011ed64d26a8a8f3aaaff5241bc6fa302a47bb1210353b1b28536c9fec",
+        "scope": "ROI",
+        "source_artifact_sha256": "10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028",
+        "unit": "references",
+        "value": 1653307
+      },
+      {
+        "artifact_sha256": "b01e36df1ced65d3cc5afb43723cda8be2e753364b283dd7e9a639ed0fcd0968",
+        "attribution_granularity": "whole BFS call",
+        "available": true,
+        "basis": "simulated",
+        "collector": {
+          "cache_model": {
+            "D1": "49152,12,64",
+            "I1": "32768,8,64",
+            "LL": "25165824,12,64"
+          },
+          "hardware_counters": false,
+          "initial_state": "instrumentation starts at ROI; caches initially empty",
+          "model_limits": "Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process effects and uses virtual addresses",
+          "name": "Callgrind",
+          "thread_policy": "collection enabled for all threads; instrumentation globally bounded to ROI; combined thread dump",
+          "version": "valgrind-3.22.0"
+        },
+        "counter_validation": {
+          "checks": "bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit client ROI dump",
+          "method": "swdb.callgrind.roi.v1",
+          "state": "valid"
+        },
+        "definition": "simulated first-level data cache read misses",
+        "execution": {
+          "repetition": 0,
+          "source": 7777,
+          "source_position": 2
+        },
+        "limitations": "instrumented dynamic references and modeled cache misses; not native hardware counters, address traces, per-region metrics, or causal bottleneck proof",
+        "metric": "D1mr",
+        "raw_artifact": "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-dx100-patch-b2/bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.profile/callgrind-0-2.out.1",
+        "raw_sha256": "64e56d011ed64d26a8a8f3aaaff5241bc6fa302a47bb1210353b1b28536c9fec",
+        "scope": "ROI",
+        "source_artifact_sha256": "10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028",
+        "unit": "misses",
+        "value": 7478442
+      },
+      {
+        "artifact_sha256": "b01e36df1ced65d3cc5afb43723cda8be2e753364b283dd7e9a639ed0fcd0968",
+        "attribution_granularity": "whole BFS call",
+        "available": true,
+        "basis": "simulated",
+        "collector": {
+          "cache_model": {
+            "D1": "49152,12,64",
+            "I1": "32768,8,64",
+            "LL": "25165824,12,64"
+          },
+          "hardware_counters": false,
+          "initial_state": "instrumentation starts at ROI; caches initially empty",
+          "model_limits": "Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process effects and uses virtual addresses",
+          "name": "Callgrind",
+          "thread_policy": "collection enabled for all threads; instrumentation globally bounded to ROI; combined thread dump",
+          "version": "valgrind-3.22.0"
+        },
+        "counter_validation": {
+          "checks": "bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit client ROI dump",
+          "method": "swdb.callgrind.roi.v1",
+          "state": "valid"
+        },
+        "definition": "simulated first-level data cache write misses",
+        "execution": {
+          "repetition": 0,
+          "source": 7777,
+          "source_position": 2
+        },
+        "limitations": "instrumented dynamic references and modeled cache misses; not native hardware counters, address traces, per-region metrics, or causal bottleneck proof",
+        "metric": "D1mw",
+        "raw_artifact": "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-dx100-patch-b2/bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.profile/callgrind-0-2.out.1",
+        "raw_sha256": "64e56d011ed64d26a8a8f3aaaff5241bc6fa302a47bb1210353b1b28536c9fec",
+        "scope": "ROI",
+        "source_artifact_sha256": "10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028",
+        "unit": "misses",
+        "value": 58103
+      },
+      {
+        "artifact_sha256": "b01e36df1ced65d3cc5afb43723cda8be2e753364b283dd7e9a639ed0fcd0968",
+        "attribution_granularity": "whole BFS call",
+        "available": true,
+        "basis": "simulated",
+        "collector": {
+          "cache_model": {
+            "D1": "49152,12,64",
+            "I1": "32768,8,64",
+            "LL": "25165824,12,64"
+          },
+          "hardware_counters": false,
+          "initial_state": "instrumentation starts at ROI; caches initially empty",
+          "model_limits": "Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process effects and uses virtual addresses",
+          "name": "Callgrind",
+          "thread_policy": "collection enabled for all threads; instrumentation globally bounded to ROI; combined thread dump",
+          "version": "valgrind-3.22.0"
+        },
+        "counter_validation": {
+          "checks": "bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit client ROI dump",
+          "method": "swdb.callgrind.roi.v1",
+          "state": "valid"
+        },
+        "definition": "simulated last-level data cache read misses",
+        "execution": {
+          "repetition": 0,
+          "source": 7777,
+          "source_position": 2
+        },
+        "limitations": "instrumented dynamic references and modeled cache misses; not native hardware counters, address traces, per-region metrics, or causal bottleneck proof",
+        "metric": "DLmr",
+        "raw_artifact": "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-dx100-patch-b2/bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.profile/callgrind-0-2.out.1",
+        "raw_sha256": "64e56d011ed64d26a8a8f3aaaff5241bc6fa302a47bb1210353b1b28536c9fec",
+        "scope": "ROI",
+        "source_artifact_sha256": "10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028",
+        "unit": "misses",
+        "value": 525973
+      },
+      {
+        "artifact_sha256": "b01e36df1ced65d3cc5afb43723cda8be2e753364b283dd7e9a639ed0fcd0968",
+        "attribution_granularity": "whole BFS call",
+        "available": true,
+        "basis": "simulated",
+        "collector": {
+          "cache_model": {
+            "D1": "49152,12,64",
+            "I1": "32768,8,64",
+            "LL": "25165824,12,64"
+          },
+          "hardware_counters": false,
+          "initial_state": "instrumentation starts at ROI; caches initially empty",
+          "model_limits": "Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process effects and uses virtual addresses",
+          "name": "Callgrind",
+          "thread_policy": "collection enabled for all threads; instrumentation globally bounded to ROI; combined thread dump",
+          "version": "valgrind-3.22.0"
+        },
+        "counter_validation": {
+          "checks": "bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit client ROI dump",
+          "method": "swdb.callgrind.roi.v1",
+          "state": "valid"
+        },
+        "definition": "simulated last-level data cache write misses",
+        "execution": {
+          "repetition": 0,
+          "source": 7777,
+          "source_position": 2
+        },
+        "limitations": "instrumented dynamic references and modeled cache misses; not native hardware counters, address traces, per-region metrics, or causal bottleneck proof",
+        "metric": "DLmw",
+        "raw_artifact": "/data/yanruj/EvolveSWDB_runs/bfs-native-acceptance-20260927-dx100-patch-b2/bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.profile/callgrind-0-2.out.1",
+        "raw_sha256": "64e56d011ed64d26a8a8f3aaaff5241bc6fa302a47bb1210353b1b28536c9fec",
+        "scope": "ROI",
+        "source_artifact_sha256": "10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028",
+        "unit": "misses",
+        "value": 45915
+      }
+    ],
+    "gain_claim": false,
+    "hardware_interfaces": {
+      "intrinsic_interfaces": [
+        {
+          "basis": "recorded machine flags; no compilation of this proposed intrinsic",
+          "build_support": "unknown",
+          "header": "immintrin.h",
+          "id": "mm512_i32gather_ps",
+          "isa_extensions": [
+            "avx512f"
+          ],
+          "isa_family": "x86",
+          "machine_support": "supported"
+        },
+        {
+          "basis": "recorded machine flags; no compilation of this proposed intrinsic",
+          "build_support": "unknown",
+          "header": "xmmintrin.h",
+          "id": "mm_prefetch",
+          "isa_extensions": [
+            "sse"
+          ],
+          "isa_family": "x86",
+          "machine_support": "supported"
+        }
+      ],
+      "machine": {
+        "cpu": {
+          "architecture": "x86_64",
+          "cores_per_socket": 16,
+          "flags": [
+            "3dnowprefetch",
+            "abm",
+            "acpi",
+            "adx",
+            "aes",
+            "aperfmperf",
+            "apic",
+            "arat",
+            "arch_capabilities",
+            "arch_perfmon",
+            "art",
+            "avx",
+            "avx2",
+            "avx512_bitalg",
+            "avx512_vbmi2",
+            "avx512_vnni",
+            "avx512_vpopcntdq",
+            "avx512bw",
+            "avx512cd",
+            "avx512dq",
+            "avx512f",
+            "avx512ifma",
+            "avx512vbmi",
+            "avx512vl",
+            "bmi1",
+            "bmi2",
+            "bts",
+            "cat_l3",
+            "clflush",
+            "clflushopt",
+            "clwb",
+            "cmov",
+            "constant_tsc",
+            "cpuid",
+            "cpuid_fault",
+            "cqm",
+            "cqm_llc",
+            "cqm_mbm_local",
+            "cqm_mbm_total",
+            "cqm_occup_llc",
+            "cx16",
+            "cx8",
+            "dca",
+            "de",
+            "ds_cpl",
+            "dtes64",
+            "dtherm",
+            "dts",
+            "epb",
+            "ept",
+            "ept_ad",
+            "erms",
+            "est",
+            "f16c",
+            "flexpriority",
+            "flush_l1d",
+            "fma",
+            "fpu",
+            "fsgsbase",
+            "fsrm",
+            "fxsr",
+            "gfni",
+            "ht",
+            "ibpb",
+            "ibrs",
+            "ibrs_enhanced",
+            "ida",
+            "intel_ppin",
+            "intel_pt",
+            "invpcid",
+            "la57",
+            "lahf_lm",
+            "lm",
+            "mba",
+            "mca",
+            "mce",
+            "md_clear",
+            "mmx",
+            "monitor",
+            "movbe",
+            "msr",
+            "mtrr",
+            "nonstop_tsc",
+            "nopl",
+            "nx",
+            "ospke",
+            "pae",
+            "pat",
+            "pbe",
+            "pcid",
+            "pclmulqdq",
+            "pconfig",
+            "pdcm",
+            "pdpe1gb",
+            "pebs",
+            "pge",
+            "pku",
+            "pln",
+            "pni",
+            "popcnt",
+            "pse",
+            "pse36",
+            "pts",
+            "rdpid",
+            "rdrand",
+            "rdseed",
+            "rdt_a",
+            "rdtscp",
+            "rep_good",
+            "sdbg",
+            "sep",
+            "sha_ni",
+            "smap",
+            "smep",
+            "smx",
+            "split_lock_detect",
+            "ss",
+            "ssbd",
+            "sse",
+            "sse2",
+            "sse4_1",
+            "sse4_2",
+            "ssse3",
+            "stibp",
+            "syscall",
+            "tm",
+            "tm2",
+            "tme",
+            "tpr_shadow",
+            "tsc",
+            "tsc_adjust",
+            "tsc_deadline_timer",
+            "umip",
+            "vaes",
+            "vme",
+            "vmx",
+            "vnmi",
+            "vpclmulqdq",
+            "vpid",
+            "wbnoinvd",
+            "x2apic",
+            "xgetbv1",
+            "xsave",
+            "xsavec",
+            "xsaveopt",
+            "xsaves",
+            "xtopology",
+            "xtpr"
+          ],
+          "logical_cpus": 64,
+          "max_mhz": null,
+          "model": "Intel(R) Xeon(R) Gold 6326 CPU @ 2.90GHz",
+          "sockets": 2,
+          "threads_per_core": 2
+        },
+        "id": "mbit10",
+        "sha256": "fcb0123f0bdb9bc004348eb8c6444f03304b6612e0cb2e26a82e621b07d82a79"
+      },
+      "operations": [],
+      "reason": "No accelerator interface is declared for this target.",
+      "state": "unknown",
+      "target": null
+    },
+    "identity": {
+      "candidate": "bfs-campaign-preparation-20260925-a1.dx100-patch.candidate-1",
+      "evaluation": "bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.evaluation",
+      "implementation": "dx100-bfs-scalar",
+      "source_sha256": "10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028",
+      "source_snapshot": "bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.package.v1.source",
+      "sources": [
+        0,
+        1234,
+        7777
+      ],
+      "target": "mbit10",
+      "target_configuration": {
+        "lane": "mbit10-evaluation-node1"
+      },
+      "threads": 1,
+      "workload": {
+        "canonical_sha256": "cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7",
+        "directed": false,
+        "family": "kronecker",
+        "id": "bfs-20260925-kronecker18.48de8267ac2098d5",
+        "num_directed_edges": 7610898,
+        "num_vertices": 262143
+      }
+    },
+    "ranked_regions": {
+      "correspondence": {
+        "current_unresolved": [
+          "function:bfs.cc:10396:d26a44a368eb08b9",
+          "loop:bfs.cc:11002:2f219774fd6e0e7d",
+          "loop:bfs.cc:11127:896b649457fb9e83",
+          "function:bfs.cc:13287:71949e7157b42ff3",
+          "loop:bfs.cc:14222:9649562f1941ed2b"
+        ],
+        "limits": "changed, split, fused, and ambiguous repeated fragments are unresolved; no timings or semantics are inherited",
+        "previous_profile": "bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline.profile",
+        "region_gain_claim": false,
+        "resolved": 26
+      },
+      "discovery_coverage": {
+        "limitations": [
+          "header-defined, library, virtual/member and compiler-outlined code is not independently attributed",
+          "free function template timing combines instantiations sharing one source extent",
+          "inlined source scopes remain source scopes, not machine-code symbols",
+          "OpenMP-disabled metadata inventory preserves _OPENMP; actual diagnostic execution retains original OpenMP flags",
+          "metadata parser substitutes Clang builtin/OpenMP declarations in the compiler-private header slot while preserving actual system-library search order; execution uses original compiler headers",
+          "metadata uses Clang predefined compiler macros; compiler-identity/feature tokens in the source file are rejected, while header-defined macro conditions and indirect expansions remain outside branch-equivalence guarantees",
+          "transformation-specific OpenMP pragmas and macro-generated loop extents may remain unresolved",
+          "GNU __restrict__ erased for source inventory only; alias semantics are not inferred; actual builds retain original source and qualifiers"
+        ],
+        "scope": "free functions and ordinary loops defined in the BFS translation-unit source file",
+        "unresolved": [
+          {
+            "kind": "loop",
+            "line": 189,
+            "name": "for",
+            "reason": "transformation-specific or continued OpenMP pragma cannot be safely wrapped"
+          }
+        ]
+      },
+      "rankings": [
+        {
+          "coverage": "limited to the explicitly discovered and executed source extents",
+          "inclusive_rule": "nested source extents overlap; do not sum inclusive duration",
+          "kind": "function",
+          "metric": "exclusive_function_thread_cpu_seconds",
+          "regions": [
+            "function:bfs.cc:10396:d26a44a368eb08b9",
+            "function:bfs.cc:13039:a64d92c2d52fcfe5",
+            "function:bfs.cc:13287:71949e7157b42ff3"
+          ]
+        },
+        {
+          "coverage": "limited to the explicitly discovered and executed source extents",
+          "inclusive_rule": "nested source extents overlap; do not sum inclusive duration",
+          "kind": "loop",
+          "metric": "exclusive_thread_cpu_seconds",
+          "regions": [
+            "loop:bfs.cc:11002:2f219774fd6e0e7d",
+            "loop:bfs.cc:11127:896b649457fb9e83",
+            "loop:bfs.cc:13156:7429be52f28ee4f6",
+            "loop:bfs.cc:14625:01da7bd21c1235d7",
+            "loop:bfs.cc:14222:9649562f1941ed2b"
+          ]
+        }
+      ],
+      "regions": [
+        {
+          "basis": "measured",
+          "function": "TDStepMAA",
+          "id": "function:bfs.cc:2157:ba2f8e639d5daef5",
+          "kind": "function",
+          "lines": [
+            66,
+            225
+          ],
+          "metrics": {
+            "exclusive_function_thread_cpu_seconds": 0.0,
+            "exclusive_thread_cpu_seconds": 0.0,
+            "inclusive_thread_cpu_seconds": 0.0,
+            "invocations": 0
+          },
+          "name": "TDStepMAA",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "scope": "accumulated within diagnostic complete-call ROI",
+          "source_association": "verified_current_candidate"
+        },
+        {
+          "basis": "measured",
+          "function": "TDStepMAA",
+          "id": "loop:bfs.cc:3718:555ee7236ddd1e7f",
+          "kind": "loop",
+          "lines": [
+            101,
+            218
+          ],
+          "metrics": {
+            "exclusive_thread_cpu_seconds": 0.0,
+            "inclusive_thread_cpu_seconds": 0.0,
+            "invocations": 0
+          },
+          "name": "while",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "scope": "accumulated within diagnostic complete-call ROI",
+          "source_association": "verified_current_candidate"
+        },
+        {
+          "basis": "measured",
+          "function": "TDStepMAA",
+          "id": "loop:bfs.cc:7062:a164130f692c4691",
+          "kind": "loop",
+          "lines": [
+            156,
+            194
+          ],
+          "metrics": {
+            "exclusive_thread_cpu_seconds": 0.0,
+            "inclusive_thread_cpu_seconds": 0.0,
+            "invocations": 0
+          },
+          "name": "do",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "scope": "accumulated within diagnostic complete-call ROI",
+          "source_association": "verified_current_candidate"
+        },
+        {
+          "basis": "measured",
+          "function": "TDStepMAA",
+          "id": "loop:bfs.cc:9557:d3183c577229b91e",
+          "kind": "loop",
+          "lines": [
+            201,
+            215
+          ],
+          "metrics": {
+            "exclusive_thread_cpu_seconds": 0.0,
+            "inclusive_thread_cpu_seconds": 0.0,
+            "invocations": 0
+          },
+          "name": "for",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "scope": "accumulated within diagnostic complete-call ROI",
+          "source_association": "verified_current_candidate"
+        },
+        {
+          "basis": "measured",
+          "function": "TDStepMAA",
+          "id": "loop:bfs.cc:9659:781ab83e6d1b28c0",
+          "kind": "loop",
+          "lines": [
+            203,
+            214
+          ],
+          "metrics": {
+            "exclusive_thread_cpu_seconds": 0.0,
+            "inclusive_thread_cpu_seconds": 0.0,
+            "invocations": 0
+          },
+          "name": "for",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "scope": "accumulated within diagnostic complete-call ROI",
+          "source_association": "verified_current_candidate"
+        },
+        {
+          "basis": "measured",
+          "function": "TDStep",
+          "id": "function:bfs.cc:10396:d26a44a368eb08b9",
+          "kind": "function",
+          "lines": [
+            227,
+            258
+          ],
+          "metrics": {
+            "exclusive_function_thread_cpu_seconds": 0.536004492,
+            "exclusive_thread_cpu_seconds": 0.11520972400000001,
+            "inclusive_thread_cpu_seconds": 0.536004492,
+            "invocations": 20
+          },
+          "name": "TDStep",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "scope": "accumulated within diagnostic complete-call ROI",
+          "source_association": "verified_current_candidate"
+        },
+        {
+          "basis": "measured",
+          "function": "TDStep",
+          "id": "loop:bfs.cc:11002:2f219774fd6e0e7d",
+          "kind": "loop",
+          "lines": [
+            239,
+            252
+          ],
+          "metrics": {
+            "exclusive_thread_cpu_seconds": 0.226060411,
+            "inclusive_thread_cpu_seconds": 0.420794768,
+            "invocations": 521700
+          },
+          "name": "for",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "scope": "accumulated within diagnostic complete-call ROI",
+          "source_association": "verified_current_candidate"
+        },
+        {
+          "basis": "measured",
+          "function": "TDStep",
+          "id": "loop:bfs.cc:11127:896b649457fb9e83",
+          "kind": "loop",
+          "lines": [
+            241,
+            251
+          ],
+          "metrics": {
+            "exclusive_thread_cpu_seconds": 0.194734357,
+            "inclusive_thread_cpu_seconds": 0.194734357,
+            "invocations": 521700
+          },
+          "name": "for",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "scope": "accumulated within diagnostic complete-call ROI",
+          "source_association": "verified_current_candidate"
+        },
+        {
+          "basis": "measured",
+          "function": "TDStep2",
+          "id": "function:bfs.cc:11677:cd1ef9d28c8c62ca",
+          "kind": "function",
+          "lines": [
+            260,
+            281
+          ],
+          "metrics": {
+            "exclusive_function_thread_cpu_seconds": 0.0,
+            "exclusive_thread_cpu_seconds": 0.0,
+            "inclusive_thread_cpu_seconds": 0.0,
+            "invocations": 0
+          },
+          "name": "TDStep2",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "scope": "accumulated within diagnostic complete-call ROI",
+          "source_association": "verified_current_candidate"
+        },
+        {
+          "basis": "measured",
+          "function": "TDStep2",
+          "id": "loop:bfs.cc:11922:ee8a2407c2e768df",
+          "kind": "loop",
+          "lines": [
+            266,
+            277
+          ],
+          "metrics": {
+            "exclusive_thread_cpu_seconds": 0.0,
+            "inclusive_thread_cpu_seconds": 0.0,
+            "invocations": 0
+          },
+          "name": "for",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "scope": "accumulated within diagnostic complete-call ROI",
+          "source_association": "verified_current_candidate"
+        },
+        {
+          "basis": "measured",
+          "function": "TDStep2",
+          "id": "loop:bfs.cc:12034:d3f90fae3543181f",
+          "kind": "loop",
+          "lines": [
+            268,
+            276
+          ],
+          "metrics": {
+            "exclusive_thread_cpu_seconds": 0.0,
+            "inclusive_thread_cpu_seconds": 0.0,
+            "invocations": 0
+          },
+          "name": "range_for",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "scope": "accumulated within diagnostic complete-call ROI",
+          "source_association": "verified_current_candidate"
+        },
+        {
+          "basis": "measured",
+          "function": "QueueToBitmap",
+          "id": "function:bfs.cc:12433:3e560c996879193b",
+          "kind": "function",
+          "lines": [
+            283,
+            289
+          ],
+          "metrics": {
+            "exclusive_function_thread_cpu_seconds": 0.0,
+            "exclusive_thread_cpu_seconds": 0.0,
+            "inclusive_thread_cpu_seconds": 0.0,
+            "invocations": 0
+          },
+          "name": "QueueToBitmap",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "scope": "accumulated within diagnostic complete-call ROI",
+          "source_association": "verified_current_candidate"
+        },
+        {
+          "basis": "measured",
+          "function": "QueueToBitmap",
+          "id": "loop:bfs.cc:12530:6fce0a8bf1585475",
+          "kind": "loop",
+          "lines": [
+            285,
+            288
+          ],
+          "metrics": {
+            "exclusive_thread_cpu_seconds": 0.0,
+            "inclusive_thread_cpu_seconds": 0.0,
+            "invocations": 0
+          },
+          "name": "for",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "scope": "accumulated within diagnostic complete-call ROI",
+          "source_association": "verified_current_candidate"
+        },
+        {
+          "basis": "measured",
+          "function": "BitmapToQueue",
+          "id": "function:bfs.cc:12665:9ca128eb96d3fcc8",
+          "kind": "function",
+          "lines": [
+            291,
+            303
+          ],
+          "metrics": {
+            "exclusive_function_thread_cpu_seconds": 0.0,
+            "exclusive_thread_cpu_seconds": 0.0,
+            "inclusive_thread_cpu_seconds": 0.0,
+            "invocations": 0
+          },
+          "name": "BitmapToQueue",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "scope": "accumulated within diagnostic complete-call ROI",
+          "source_association": "verified_current_candidate"
+        },
+        {
+          "basis": "measured",
+          "function": "BitmapToQueue",
+          "id": "loop:bfs.cc:12869:ec35536f223b52f4",
+          "kind": "loop",
+          "lines": [
+            297,
+            299
+          ],
+          "metrics": {
+            "exclusive_thread_cpu_seconds": 0.0,
+            "inclusive_thread_cpu_seconds": 0.0,
+            "invocations": 0
+          },
+          "name": "for",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "scope": "accumulated within diagnostic complete-call ROI",
+          "source_association": "verified_current_candidate"
+        },
+        {
+          "basis": "measured",
+          "function": "InitParent",
+          "id": "function:bfs.cc:13039:a64d92c2d52fcfe5",
+          "kind": "function",
+          "lines": [
+            305,
+            311
+          ],
+          "metrics": {
+            "exclusive_function_thread_cpu_seconds": 0.35308618,
+            "exclusive_thread_cpu_seconds": 0.17871609900000002,
+            "inclusive_thread_cpu_seconds": 0.35308618,
+            "invocations": 3
+          },
+          "name": "InitParent",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "scope": "accumulated within diagnostic complete-call ROI",
+          "source_association": "verified_current_candidate"
+        },
+        {
+          "basis": "measured",
+          "function": "InitParent",
+          "id": "loop:bfs.cc:13156:7429be52f28ee4f6",
+          "kind": "loop",
+          "lines": [
+            308,
+            309
+          ],
+          "metrics": {
+            "exclusive_thread_cpu_seconds": 0.174370081,
+            "inclusive_thread_cpu_seconds": 0.174370081,
+            "invocations": 786429
+          },
+          "name": "for",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "scope": "accumulated within diagnostic complete-call ROI",
+          "source_association": "verified_current_candidate"
+        },
+        {
+          "basis": "measured",
+          "function": "DOBFS",
+          "id": "function:bfs.cc:13287:71949e7157b42ff3",
+          "kind": "function",
+          "lines": [
+            313,
+            364
+          ],
+          "metrics": {
+            "exclusive_function_thread_cpu_seconds": 0.330351249,
+            "exclusive_thread_cpu_seconds": 0.168723983,
+            "inclusive_thread_cpu_seconds": 1.219441921,
+            "invocations": 3
+          },
+          "name": "DOBFS",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "scope": "accumulated within diagnostic complete-call ROI",
+          "source_association": "verified_current_candidate"
+        },
+        {
+          "basis": "measured",
+          "function": "DOBFS",
+          "id": "loop:bfs.cc:14222:9649562f1941ed2b",
+          "kind": "loop",
+          "lines": [
+            342,
+            352
+          ],
+          "metrics": {
+            "exclusive_thread_cpu_seconds": 9.444e-06,
+            "inclusive_thread_cpu_seconds": 0.536013936,
+            "invocations": 3
+          },
+          "name": "while",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "scope": "accumulated within diagnostic complete-call ROI",
+          "source_association": "verified_current_candidate"
+        },
+        {
+          "basis": "measured",
+          "function": "DOBFS",
+          "id": "loop:bfs.cc:14625:01da7bd21c1235d7",
+          "kind": "loop",
+          "lines": [
+            354,
+            356
+          ],
+          "metrics": {
+            "exclusive_thread_cpu_seconds": 0.161617822,
+            "inclusive_thread_cpu_seconds": 0.161617822,
+            "invocations": 786429
+          },
+          "name": "for",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "scope": "accumulated within diagnostic complete-call ROI",
+          "source_association": "verified_current_candidate"
+        },
+        {
+          "basis": "measured",
+          "function": "DOBFSMAA",
+          "id": "function:bfs.cc:14873:094895302872aee0",
+          "kind": "function",
+          "lines": [
+            366,
+            443
+          ],
+          "metrics": {
+            "exclusive_function_thread_cpu_seconds": 0.0,
+            "exclusive_thread_cpu_seconds": 0.0,
+            "inclusive_thread_cpu_seconds": 0.0,
+            "invocations": 0
+          },
+          "name": "DOBFSMAA",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "scope": "accumulated within diagnostic complete-call ROI",
+          "source_association": "verified_current_candidate"
+        },
+        {
+          "basis": "measured",
+          "function": "DOBFSMAA",
+          "id": "loop:bfs.cc:16680:d6668c43308db1a5",
+          "kind": "loop",
+          "lines": [
+            418,
+            431
+          ],
+          "metrics": {
+            "exclusive_thread_cpu_seconds": 0.0,
+            "inclusive_thread_cpu_seconds": 0.0,
+            "invocations": 0
+          },
+          "name": "while",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "scope": "accumulated within diagnostic complete-call ROI",
+          "source_association": "verified_current_candidate"
+        },
+        {
+          "basis": "measured",
+          "function": "DOBFSMAA",
+          "id": "loop:bfs.cc:17177:01da7bd21c1235d7",
+          "kind": "loop",
+          "lines": [
+            433,
+            435
+          ],
+          "metrics": {
+            "exclusive_thread_cpu_seconds": 0.0,
+            "inclusive_thread_cpu_seconds": 0.0,
+            "invocations": 0
+          },
+          "name": "for",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "scope": "accumulated within diagnostic complete-call ROI",
+          "source_association": "verified_current_candidate"
+        },
+        {
+          "basis": "measured",
+          "function": "PrintBFSStats",
+          "id": "function:bfs.cc:17425:660ca89daefffcee",
+          "kind": "function",
+          "lines": [
+            445,
+            456
+          ],
+          "metrics": {
+            "exclusive_function_thread_cpu_seconds": 0.0,
+            "exclusive_thread_cpu_seconds": 0.0,
+            "inclusive_thread_cpu_seconds": 0.0,
+            "invocations": 0
+          },
+          "name": "PrintBFSStats",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "scope": "accumulated within diagnostic complete-call ROI",
+          "source_association": "verified_current_candidate"
+        },
+        {
+          "basis": "measured",
+          "function": "PrintBFSStats",
+          "id": "loop:bfs.cc:17551:a8105cce278141c3",
+          "kind": "loop",
+          "lines": [
+            448,
+            453
+          ],
+          "metrics": {
+            "exclusive_thread_cpu_seconds": 0.0,
+            "inclusive_thread_cpu_seconds": 0.0,
+            "invocations": 0
+          },
+          "name": "range_for",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "scope": "accumulated within diagnostic complete-call ROI",
+          "source_association": "verified_current_candidate"
+        },
+        {
+          "basis": "measured",
+          "function": "BFSVerifier",
+          "id": "function:bfs.cc:18063:546ec83dfdeaf3fe",
+          "kind": "function",
+          "lines": [
+            463,
+            509
+          ],
+          "metrics": {
+            "exclusive_function_thread_cpu_seconds": 0.0,
+            "exclusive_thread_cpu_seconds": 0.0,
+            "inclusive_thread_cpu_seconds": 0.0,
+            "invocations": 0
+          },
+          "name": "BFSVerifier",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "scope": "accumulated within diagnostic complete-call ROI",
+          "source_association": "verified_current_candidate"
+        },
+        {
+          "basis": "measured",
+          "function": "BFSVerifier",
+          "id": "loop:bfs.cc:18329:859f5c781239d2af",
+          "kind": "loop",
+          "lines": [
+            470,
+            478
+          ],
+          "metrics": {
+            "exclusive_thread_cpu_seconds": 0.0,
+            "inclusive_thread_cpu_seconds": 0.0,
+            "invocations": 0
+          },
+          "name": "for",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "scope": "accumulated within diagnostic complete-call ROI",
+          "source_association": "verified_current_candidate"
+        },
+        {
+          "basis": "measured",
+          "function": "BFSVerifier",
+          "id": "loop:bfs.cc:18424:696dcb82ce1ee80d",
+          "kind": "loop",
+          "lines": [
+            472,
+            477
+          ],
+          "metrics": {
+            "exclusive_thread_cpu_seconds": 0.0,
+            "inclusive_thread_cpu_seconds": 0.0,
+            "invocations": 0
+          },
+          "name": "range_for",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "scope": "accumulated within diagnostic complete-call ROI",
+          "source_association": "verified_current_candidate"
+        },
+        {
+          "basis": "measured",
+          "function": "BFSVerifier",
+          "id": "loop:bfs.cc:18606:5688108067948590",
+          "kind": "loop",
+          "lines": [
+            479,
+            507
+          ],
+          "metrics": {
+            "exclusive_thread_cpu_seconds": 0.0,
+            "inclusive_thread_cpu_seconds": 0.0,
+            "invocations": 0
+          },
+          "name": "range_for",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "scope": "accumulated within diagnostic complete-call ROI",
+          "source_association": "verified_current_candidate"
+        },
+        {
+          "basis": "measured",
+          "function": "BFSVerifier",
+          "id": "loop:bfs.cc:18979:61928faa9fc30778",
+          "kind": "loop",
+          "lines": [
+            489,
+            498
+          ],
+          "metrics": {
+            "exclusive_thread_cpu_seconds": 0.0,
+            "inclusive_thread_cpu_seconds": 0.0,
+            "invocations": 0
+          },
+          "name": "range_for",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "scope": "accumulated within diagnostic complete-call ROI",
+          "source_association": "verified_current_candidate"
+        },
+        {
+          "basis": "measured",
+          "function": "main",
+          "id": "function:bfs.cc:19666:7a7b5f224b2acf8f",
+          "kind": "function",
+          "lines": [
+            511,
+            536
+          ],
+          "metrics": {
+            "exclusive_function_thread_cpu_seconds": 0.0,
+            "exclusive_thread_cpu_seconds": 0.0,
+            "inclusive_thread_cpu_seconds": 0.0,
+            "invocations": 0
+          },
+          "name": "main",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "scope": "accumulated within diagnostic complete-call ROI",
+          "source_association": "verified_current_candidate"
+        }
+      ]
+    },
+    "roi": {
+      "id": "bfs.complete_call.v1",
+      "primary_binary_sha256": "e65d00dcb476e12adca0cfdcd19e8fbc7ebef0b9c554396ee1fd6dba9a01fddf",
+      "primary_quantity": [
+        [
+          "measured",
+          "native_roi_wall_seconds"
+        ]
+      ],
+      "primary_trials": 30
+    },
+    "source_build_context": {
+      "build": {
+        "binary_sha256": "e65d00dcb476e12adca0cfdcd19e8fbc7ebef0b9c554396ee1fd6dba9a01fddf",
+        "compiler": "/usr/bin/g++",
+        "compiler_version": [
+          "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+          "Copyright (C) 2023 Free Software Foundation, Inc."
+        ],
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp",
+          "-pthread",
+          "-DFUNC"
+        ]
+      },
+      "diagnostic_build": {
+        "compiler": "/usr/bin/g++",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp",
+          "-pthread",
+          "-DFUNC"
+        ],
+        "instrumented_source_sha256": "7ede591047fb89276df68e899a2b3b9577ffbbcc00cc004c8560fc23bfe0d2a2"
+      },
+      "full_application_sha256": "10d4976f94783f7435b8d4faa6497f2693be4ce464b1b51eb6cd79cdc1f26028"
+    }
+  },
+  "format": "swdb.bfs.handoff.profile_package",
+  "format_version": "1.0",
+  "id": "profile_package/bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.package.v1.d612335972200df6",
+  "inputs": [
+    {
+      "id": "bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.package.v1.source",
+      "kind": "source_snapshot",
+      "sha256": "90f9361efc6df90e8b5853825c3fd66122b99d010862641a287123596fa3aaaa",
+      "state": "present"
+    },
+    {
+      "id": "bfs-campaign-preparation-20260925-a1.dx100-patch.candidate-1",
+      "kind": "candidate",
+      "sha256": "822aa2376c6df046b22c3463d8999506f69091a54cc0f518184593de286f6ef4",
+      "state": "present"
+    },
+    {
+      "id": "bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.evaluation",
+      "kind": "evaluation",
+      "sha256": "d4463fd030ccca9d15af8d8ab1ec84ce41e06176746ef10deb44105585c20062",
+      "state": "present"
+    },
+    {
+      "id": "bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.profile",
+      "kind": "region_profile",
+      "sha256": "5068f572d2517eb40bc6587235f826dd2efaf75b91de67d835dc7fa74e566f53",
+      "state": "present"
+    },
+    {
+      "id": "bfs-20260925-kronecker18.48de8267ac2098d5",
+      "kind": "workload",
+      "sha256": "38ecdcb6ed58c15b9dbd3ed1449f18e4ffc69ddc2f2ab6a8192b144c25030199",
+      "state": "present"
+    }
+  ],
+  "producer": {
+    "name": "swdb",
+    "role": "operator",
+    "test_client": false
+  },
+  "provenance": {
+    "live_collaborator_integration": false,
+    "record_provenance": [
+      {
+        "description": "Created through the public SWDB workflow.",
+        "id": "workflow",
+        "kind": "agent_run",
+        "uri": null
+      }
+    ],
+    "statement": "Submitted by a representative test client; not a live collaborator integration.",
+    "submission_producer": {
+      "name": "swdb-representative-dx100-patch",
+      "role": "sw",
+      "test_client": true
+    },
+    "test_client": true
+  },
+  "record": {
+    "id": "bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.package.v1.d612335972200df6",
+    "kind": "profile_package",
+    "schema_version": "0.4",
+    "sha256": "dd180cdf95bc8dc772e03862e7a524b33c795f9feb3ea6205182e92cca894f42"
+  }
+}

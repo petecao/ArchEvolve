@@ -1,0 +1,118 @@
+{
+  "campaign": "extensa-gem5-bfs-20261006-p3",
+  "checks": [
+    "exact_pin:summary-pairing-metadata-original.json",
+    "exact_pin:lanl17_read_p3_public_summary_pairing_metadata_20261008_a5_r1.py",
+    "exact_pin:lanl17-p3-public-summary-pairing-metadata-action-draft-20261008-a5-r1.json",
+    "exact_pin:lanl17-p3-public-summary-pairing-query-peer-source-review-20261008-a5-r1.json",
+    "selected_prior_peer_source_PASS",
+    "selected_exact_query_inline_60_180",
+    "exact_original_config_reviewed_genericcapture_start",
+    "original_stdin_source_pin",
+    "original_bootstrap_exact_reviewed_config",
+    "actual_SSH0_inner0_exact_decoded_metadata",
+    "original_transport_stream_pin_empty_stderr",
+    "actual_public_summary_metadata_ready_bindings",
+    "exact_stop_original_all9stat_earlier_terminal_binding",
+    "actual_summary_reported_file_and_semantic_pin",
+    "actual_zero_pairing_rows_events_flags_application_and_emptylist_digests",
+    "explicit_safe_negative_metadata_not_blindorder_or_scientific_admission",
+    "actual_native_public_yaml_parser_metadata",
+    "actual_query_chronology"
+  ],
+  "files": [
+    {
+      "bytes": 2492,
+      "path": "/private/tmp/lanl17-p3-public-summary-pairing-metadata-capture-20261008-a5-r1/summary-pairing-metadata-original.json",
+      "sha256": "fd598fbd20a291ca85ecf9590866108afa48663fd685f467d1730af1cd981c38"
+    },
+    {
+      "bytes": 10270,
+      "path": "/private/tmp/lanl17_read_p3_public_summary_pairing_metadata_20261008_a5_r1.py",
+      "sha256": "84131cb2c0a8deef84248b36b8922821322bc26b5ccd84d6e79f3b95e2a97082"
+    },
+    {
+      "bytes": 10967,
+      "path": "/private/tmp/lanl17-p3-public-summary-pairing-metadata-action-draft-20261008-a5-r1.json",
+      "sha256": "c8701a51a234c6621d8605c1ffcb1569e6a2140aacbbd1dd3d2b8eeda9df7252"
+    },
+    {
+      "bytes": 2308,
+      "path": "/private/tmp/lanl17-p3-public-summary-pairing-query-peer-source-review-20261008-a5-r1.json",
+      "sha256": "a63ba50e7c9969ab2a21353d080065f16f68a925371973e8c9c390fbe94ff366"
+    },
+    {
+      "bytes": 534,
+      "path": "/private/tmp/lanl17-p3-public-summary-pairing-metadata-capture-20261008-a5-r1/start.json",
+      "sha256": "342c86a6653296cf4849d71fd19a091accab9fed3704768c5966cf5f7a6d9683"
+    },
+    {
+      "bytes": 419,
+      "path": "/private/tmp/lanl17-p3-public-summary-pairing-metadata-capture-20261008-a5-r1/transport.json",
+      "sha256": "913a573eaa0e7d2037cd475015ec4a60e5b24e23a49bd7e498a15fcfa910e6e2"
+    },
+    {
+      "bytes": 14188,
+      "path": "/private/tmp/lanl17-p3-public-summary-pairing-metadata-capture-20261008-a5-r1/stdout",
+      "sha256": "cdb500d8c7c196ab03d84a783d68deb7108acc2ed8baa1df89667e39a0616753"
+    },
+    {
+      "bytes": 14875,
+      "path": "/private/tmp/lanl17-p3-public-summary-pairing-metadata-capture-20261008-a5-r1/stdin.py",
+      "sha256": "8c1a18ba94f98af81b342516ffe866d253dfb25fe30c75d63aad474f453b290c"
+    },
+    {
+      "bytes": 5349,
+      "path": "/private/tmp/lanl17-p3-terminal-originals-capture-20261008-a5/terminal-original.json",
+      "sha256": "5ed969a32ceacda67c47e7ccaec35dd63cc8363cf1ac9789e79be4fe7a1389c0"
+    }
+  ],
+  "format": "swdb.lanl17-peer-p3-summary-pairing-actual-metadata-review.v1",
+  "limits": [
+    "Independent local review of parent-captured query output and exact source/config/transport; raw remote summary body was not transferred or independently reread.",
+    "Recorded factual negative metadata: public summary reports zero paired records and zero outcome-access events at observedUTC. This does not establish complete blind-order evidence or strict scientific trajectory/pair/D30 admission.",
+    "All remaining FINALIZE/public full-report/full-record-index/strict-auditor gates remain separate and cannot be filled by this metadata snapshot."
+  ],
+  "no_remote_actions_or_target_imports_or_tests": true,
+  "observed_public_summary_pairing": {
+    "eligible_application_estimates": 0,
+    "eligible_flags_false": 0,
+    "eligible_flags_true": 0,
+    "enabled": true,
+    "format": "swdb.extensa-pairing-ledger.v1",
+    "outcome_accesses": 0,
+    "outcome_accesses_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "records": 0,
+    "records_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "top_keys": [
+      "eligible_application_estimates",
+      "enabled",
+      "format",
+      "outcome_accesses",
+      "records",
+      "selection_policy"
+    ]
+  },
+  "observed_utc": "2026-10-08T23:53:16.533637+00:00",
+  "result": "PASS",
+  "reviewed_utc": "2026-10-08T23:54:14.602309+00:00",
+  "scientific_admission": false,
+  "strict_auditor_executed": false,
+  "summary_file_pin": {
+    "bytes": 21918,
+    "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p3/records/campaign_summaries/extensa-gem5-bfs-20261006-p3.summary.yaml",
+    "sha256": "8eceb5fd8a43c957108ed97db77b15f29a2d828f4a912ca762b7fc466acf9af7",
+    "stat": {
+      "ctime_ns": 1791501492500803379,
+      "dev": 2065,
+      "gid": 114316761,
+      "ino": 14290230,
+      "mode": 33204,
+      "mtime_ns": 1791501492500803379,
+      "nlink": 1,
+      "size": 21918,
+      "uid": 114316761
+    }
+  },
+  "summary_semantic_sha256": "1883b65c37afb534289f74768185c9aaa045bd0f72ddbe6263f5df7dc8a3e97e"
+}

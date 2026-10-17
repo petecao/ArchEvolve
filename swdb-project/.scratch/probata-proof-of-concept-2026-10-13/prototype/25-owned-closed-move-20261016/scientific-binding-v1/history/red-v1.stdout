@@ -1,0 +1,17 @@
+{
+  "rows": [
+    {
+      "test": "test_closed_move_binds_all59_exact_conditional_targets_without_source_admission",
+      "passed": false,
+      "error": "cannot import name 'vector_owned_move_binding' from 'swdb' (/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/__init__.py)",
+      "traceback": "Traceback (most recent call last):\n  File \"<stdin>\", line 13, in <module>\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_owned_move_binding.py\", line 14, in test_closed_move_binds_all59_exact_conditional_targets_without_source_admission\n    from swdb import vector_owned_move_binding as packets\nImportError: cannot import name 'vector_owned_move_binding' from 'swdb' (/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/__init__.py)\n"
+    },
+    {
+      "test": "test_move_binding_rejects_changed_missing_extra_or_redirected_scientific_evidence",
+      "passed": false,
+      "error": "cannot import name 'vector_owned_move_binding' from 'swdb' (/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/__init__.py)",
+      "traceback": "Traceback (most recent call last):\n  File \"<stdin>\", line 12, in <module>\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_owned_move_binding.py\", line 41, in test_move_binding_rejects_changed_missing_extra_or_redirected_scientific_evidence\n    from swdb import vector_owned_move_binding as packets\nImportError: cannot import name 'vector_owned_move_binding' from 'swdb' (/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/__init__.py)\n"
+    }
+  ],
+  "external_attempts": []
+}

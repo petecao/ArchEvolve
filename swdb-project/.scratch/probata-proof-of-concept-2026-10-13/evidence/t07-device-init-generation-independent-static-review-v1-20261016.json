@@ -1,0 +1,109 @@
+{
+  "acceptance": {
+    "actual_generation": false,
+    "allocator_Init_lifetime": false,
+    "counted": false,
+    "full_TD": false,
+    "helper_proof": false,
+    "source_refinement": false
+  },
+  "author_controls": {
+    "passed": 27,
+    "rerun_by_reviewer": false
+  },
+  "blockers": [],
+  "checks": {
+    "Git_source_blobs": 9,
+    "budget": "120s active generation; 110s shared internal deadline; 8GiB; one worker;256MiB output; root outer/live monitoring/cleanup admission separate.",
+    "complete_source_and_observer_census": "Mandatory full goal/property/source/registration/dependency/origin/target/export closure; no expected goal count, outcome or source filter.",
+    "packet_pins": 9,
+    "runtime_reference_records_previously_passively_reconciled": 1237,
+    "solver_escape": "Private single CVC5 sentinel, -wp-gen, -wp-no-why3-detect, pinned private config; any sentinel marker refuses.",
+    "warning_policy": "Unknown warning families refuse. Explicit unaligned/valid_function capabilities remain conditional/unresolved; no full-RTE claim.",
+    "weak_header": "Exactly one gather produced-prefix initializedness postcondition deleted; other bytes and C bodies unchanged."
+  },
+  "common_function_count_correction": "13 unchanged common top-level functions, not the author prose/test-label claim of 15; main/read_inventory/bind_exports changed and check_output/collect_operation_goals are new. This is a reporting count correction, not a functional source change.",
+  "common_top_level_functions_AST_identical": [
+    "digest",
+    "write",
+    "check_pin",
+    "direct_calls",
+    "scan_normalized",
+    "scan_diagnostics",
+    "check_tree",
+    "verify_runtime",
+    "read_property_closure",
+    "read_native_generation",
+    "exact_universe",
+    "export_segments",
+    "verify_prefix"
+  ],
+  "date_ET": "2026-10-16",
+  "direct_call_census": [
+    36,
+    10
+  ],
+  "gates_remaining": [
+    "Exact bd source fixture preparation must be published after its separate independent source review.",
+    "Root must review outer recipe and freshly admit actual source/runtime/lease/capacity/output boundaries.",
+    "First actual native API/producer families may fail closed; no prospective success assumed.",
+    "Complete generation/export cold audit required before separate proof-only admission; maximum future proof780s and aggregate900s."
+  ],
+  "normal_root_bodies": 5,
+  "packet": {
+    "path": "/private/tmp/probata-t07-device-init-generation-v1-20261016-packet.json",
+    "sha256": "13f11849ef3b9efdd3024c56d92b5133f71e80de883762bab9f4dfb87c98faa0"
+  },
+  "reviewed_files": [
+    {
+      "bytes": 50677,
+      "path": "/private/tmp/probata-t07-device-init-generation-v1-20261016-entry.py",
+      "sha256": "67b89e50decc9357c423770c6d5fdcef49c358685b15affeba6036f9e066f087"
+    },
+    {
+      "bytes": 519878,
+      "path": "/private/tmp/probata-t07-device-init-generation-v1-20261016-expected.json",
+      "sha256": "247daf759b1a409bbe93f8c751d562c09896534c93a238c3ba2275fa21b693cf"
+    },
+    {
+      "bytes": 1705,
+      "path": "/private/tmp/probata-t07-device-init-generation-v1-20261016-command.json",
+      "sha256": "bc46584bd9f472e90a07b889553e6e0ffa25ae29db8024ac9c1131db4727c8e0"
+    },
+    {
+      "bytes": 5379,
+      "path": "/private/tmp/probata-t07-device-init-generation-v1-20261016-plan.md",
+      "sha256": "b804a193808b94714c2bf8e92e3caf9d27f995698fa5d795bf662fc9b2fecaeb"
+    },
+    {
+      "bytes": 5725,
+      "path": "/private/tmp/probata-t07-device-init-generation-controls-v1-20261016.py",
+      "sha256": "9aa2c206901458120606c821c9170cea23a0815df8c3e744546c5d1b392f70b2"
+    },
+    {
+      "bytes": 1302,
+      "path": "/private/tmp/probata-t07-device-init-generation-controls-v1-20261016.json",
+      "sha256": "70dcc585dc2ecc161f40c73ee371c967ff3bb51a2d2e991bb6bf89373206dc7a"
+    },
+    {
+      "bytes": 102,
+      "path": "/private/tmp/probata-t07-device-init-generation-controls-v1-20261016.log",
+      "sha256": "4ffd9c9628e8c7a16e05ee4202930c56abf6d0de2fb3882206031cdf812c057f"
+    },
+    {
+      "bytes": 1938,
+      "path": "/private/tmp/probata-t07-device-init-generation-controls-v1-20261016.log.summary.json",
+      "sha256": "1dd1d575cea2765a28e4503dc4ed946659fb461edcc785973b2ea1da3d2cc813"
+    },
+    {
+      "bytes": 273,
+      "path": "/private/tmp/probata-t07-device-init-generation-controls-v1-20261016.log.wait.json",
+      "sha256": "e49ced205dbea7c40a295d86fd8f0632968666c441919447c7acd3aa03d80ec8"
+    }
+  ],
+  "scope": "Inert two-TU complete device generation/export; no actual entry, compiler, native, prover, reader main or SSH executed by independent reviewer.",
+  "source_blobs": 9,
+  "source_commit": "bd2610b6b7cff511c046206a78088cf693cee874",
+  "verdict": "PASS_STATIC_ONLY",
+  "weak_root_bodies": 1
+}

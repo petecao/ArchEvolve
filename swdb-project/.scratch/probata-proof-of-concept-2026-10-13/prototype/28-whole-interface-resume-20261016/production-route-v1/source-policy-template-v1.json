@@ -1,0 +1,24 @@
+{
+  "schema": "dx100-whole-fixed-source-policy-template-1",
+  "kind": "dx100-whole-interface-source-v1",
+  "admission_status": "inert template; intentionally rejected by source_policy",
+  "function": "whole_interface_source_fixture",
+  "source_sha256": "3148b662b2fbeaa7a8733569d5ea750bce8a598d4e883f9bc64cb1e27dae67cd",
+  "buffer_projection": "fixed-fixture-identical-buffer-with-captured-diagnostic-origin-v1",
+  "defines": ["NUM_CORES=4", "TILE_SIZE=16384"],
+  "thread": 0,
+  "frame": "assigns \\everything;",
+  "source_loop_bound": 1,
+  "helper_loop_bound": 513,
+  "exact_unit_contract": {"result":80,"parameters":[],"requires":[],"frame":"assigns \\everything;"},
+  "pending_selected_bindings": [
+    "caller_mangled", "choice_budget", "proof_source", "unit_contract",
+    "complete accepted capture plus its physical producer/guard/runtime receipt",
+    "receiver_selection with actual owned context/runtime/atlas/allocation bindings",
+    "expected atlas/globals/statements/assembly/receiver identities",
+    "complete producer manifest and fresh matching method",
+    "fixed source-preserving native projection"
+  ],
+  "actual_capture_success": false,
+  "public_proof": false
+}

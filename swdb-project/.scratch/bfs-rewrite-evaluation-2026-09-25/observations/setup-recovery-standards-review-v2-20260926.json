@@ -1,0 +1,159 @@
+{
+  "format": "swdb.bfs.setup-recovery-standards-review.v1",
+  "date": "2026-09-26",
+  "observed_at": "2026-09-26T22:19:15.771671-04:00",
+  "scope": "Independent local Standards/correctness readiness review; no remote execution/export or final task acceptance",
+  "state": "no_actionable_findings",
+  "reviewed_files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_simulator_batch.py",
+      "bytes": 66837,
+      "sha256": "cdb9fefb2925846f7890aac9d4d53734391f969c9adf657753f878854688022b"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_linux_fixture.py",
+      "bytes": 13323,
+      "sha256": "81b4dd01692be4e27685abbe7561b9b40b33d39262589557e0a715fb6db72ee9"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_simulator_setup_recovery.py",
+      "bytes": 15620,
+      "sha256": "b420903cd0423af44908f44575a306c701b17f6733e238930c68769435e21d37"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_owned_execution.py",
+      "bytes": 17237,
+      "sha256": "94d962417a38790b38fe4279ae33ea1d761511851b21358ec44bfc049a6de10f"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_simulator_storage.py",
+      "bytes": 9194,
+      "sha256": "230ee542835c361ec11b2610bd23568ef8f35ba5c5ec74729a89b0de7139dcec"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t15-setup-recovery-simulator-batch-20260926-a1.json",
+      "bytes": 12215,
+      "sha256": "edf0d8e908247b1f8e3a66c471c463c5b7a442237336d37d20c52accf6d987b0"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-t15-setup-recovery-20260926.md",
+      "bytes": 6053,
+      "sha256": "0b1df4cbc337e4b8d8cccc5bab673e56e7fd758eaf1bcc07e4c583156ae2c6b0"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_linux_fixture.py",
+      "bytes": 10156,
+      "sha256": "69a0be09e3b90b7bf3ff45d32dc67d88d646de8109dab2f1d62032b50ac1252c"
+    }
+  ],
+  "unchanged_historical_plan_bytes": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t15-simulator-batch-20260926-a1.json",
+      "bytes": 5275,
+      "sha256": "2163c763fa9d985800ebab24670889c84680ffe76f2c44e7dd692b59f2e1ef99"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t16-simulator-batch-20260926-a1.json",
+      "bytes": 11036,
+      "sha256": "7436deb684d55883c8c8caac9099d021a9c0d6caf5bc00e17943b0e969525a04"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t15-correction-simulator-batch-20260926-a1.json",
+      "bytes": 9414,
+      "sha256": "d93e8c02574e1b2fcf90f8c8b1f79c2c83bd63b81d377e627ede71b7755f7f62"
+    }
+  ],
+  "independent_validation": {
+    "probe": {
+      "path": "/private/tmp/test_setup_recovery_clock_standards_20260926.py",
+      "bytes": 2738,
+      "sha256": "4dea99019d95334c42bdb47c27ae3fcf9cb9502a84988efcd396ecf70222ce9a"
+    },
+    "log": {
+      "path": "/private/tmp/bfs-setup-recovery-standards-v2-20260926.log",
+      "bytes": 99,
+      "sha256": "df96b7969ed22fd675069223e40ddef18c9f9b9d379a1bd7bb807f6bc53549b2"
+    },
+    "result": "54 passed in 0.35s",
+    "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=\"$PWD/tests:$PWD\" /Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest /private/tmp/test_setup_recovery_clock_standards_20260926.py tests/test_bfs_simulator_setup_recovery.py -q -p no:cacheprovider --basetemp=/private/tmp/bfs-setup-recovery-standards-v2-20260926"
+  },
+  "author_affected_validation": {
+    "log": {
+      "path": "/private/tmp/bfs-t15-setup-recovery-final-20260926.log",
+      "bytes": 352,
+      "sha256": "dfcd2b30293703ee77a25692d8c0e340fd875b8c8e64d5a5b767676a3ca3576b"
+    },
+    "result": "266 passed, 8 skipped in 17.77s; author run, not independently rerun"
+  },
+  "retained_actual_metadata": [
+    {
+      "path": "/private/tmp/bfs-t15-correction-failed-terminal-20260926.json",
+      "bytes": 7884,
+      "sha256": "9580bcf546b268e8599abbb61ff91e9d91222bb9cc98b924583f56b2869c1874"
+    },
+    {
+      "path": "/private/tmp/bfs-t15-correction-pre-guest-20260926.json",
+      "bytes": 718,
+      "sha256": "956654c0995bcc058746243ab58bca0c07a2fbf7ba6832bc3d46580858078c3e"
+    }
+  ],
+  "arithmetic": {
+    "charged_seconds": 2997,
+    "charged_bytes": 15322025984,
+    "remaining_seconds": 40203,
+    "remaining_bytes": 27627646976,
+    "original_absolute_end": "2026-09-27T09:14:09.851819-04:00",
+    "latest_mathematical_full_series_start": "2026-09-27T03:13:39.851819-04:00",
+    "next_series_allowance_seconds": 21600,
+    "shared_cleanup_seconds": 30
+  },
+  "checks": [
+    "Fixed new selector and unused IDs; scientific grid/source/build/model/ROI/checker/gzip/profitability unchanged",
+    "Old exact fixed plan/admission/proofs/reservation and final closure reopened; old proof cost plus own failed raw/time returned as flat rows, never old aggregate total",
+    "Exact pre-guest first public evaluation and sole host-observation leaf required; later checkpoint/simulation/timing/other execution rejects",
+    "Original actual driver outer_deadline pinned; usable time clamps both remaining aggregate and absolute end, including startup; second series requires full original allowance",
+    "A4 only simulator routes; fifth actual Linux SQLite journal case required for recovery; historical four-case reader and native a1 route remain",
+    "No production edits or host operations by this reviewer; closed old plan byte equality independently verified against d5e"
+  ],
+  "limitations": [
+    "Retained host facts read from source-free local typed observations; this review did not independently reopen remote artifacts or run Linux",
+    "New helper/runtime Linux proof and prospective admission remain required before execution",
+    "Local fixtures do not establish BFS feasibility, completed samples, scientific qualification, or gain",
+    "The separately rejected T17 export remains held pending payload-specific approval for any superseding combined export"
+  ],
+  "supersedes": {
+    "path": "/private/tmp/bfs-setup-recovery-standards-review-20260926.json",
+    "bytes": 6136,
+    "sha256": "7e97729fc65b989be1b0b36ce82b0d8a6862e00d11298bd94edbba07ac861397"
+  },
+  "initial_independent_validation": {
+    "probe": {
+      "path": "/private/tmp/test_setup_recovery_clock_standards_20260926.py",
+      "bytes": 2738,
+      "sha256": "4dea99019d95334c42bdb47c27ae3fcf9cb9502a84988efcd396ecf70222ce9a"
+    },
+    "log": {
+      "path": "/private/tmp/bfs-setup-recovery-standards-20260926.log",
+      "bytes": 99,
+      "sha256": "78151361177db54838077dfc5c76a08579ddb35d022ea6dd30135fde715d4e39"
+    },
+    "result": "54 passed in 0.40s (five independent clock probes plus 49 author recovery cases)",
+    "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=\"$PWD/tests:$PWD\" /Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest /private/tmp/test_setup_recovery_clock_standards_20260926.py tests/test_bfs_simulator_setup_recovery.py -q -p no:cacheprovider --basetemp=/private/tmp/bfs-setup-recovery-standards-20260926"
+  },
+  "linux_selection_check": {
+    "log": {
+      "path": "/private/tmp/bfs-setup-recovery-linux-collection-20260926.log",
+      "bytes": 505,
+      "sha256": "eb265961201b983b7f4559c1409436ed290d56004fb038ad2356c9bf133196f3"
+    },
+    "result": "5/26 collected, including exact new SQLite case; collection only, no Linux execution",
+    "runtime_pin": "runtime_identity explicitly hashes tests/test_bfs_owned_execution.py; cleanup proof runtime map requires that hash",
+    "scope": "Only SETUP_RECOVERY_ID adds mandatory SQLite JUnit check in validate_preparation_reservation; old validate_cleanup_tests four-case minimum unchanged",
+    "final_test_only_deltas": "Removed unused retained_bytes field from synthetic charge-row helper; owned test trailing blank removed; runner expected-count4->5. No production change after independent run."
+  },
+  "author_preparation": {
+    "path": "/private/tmp/bfs-t15-setup-recovery-preparation-20260926.json",
+    "bytes": 4402,
+    "sha256": "760a4bfef224b2ef1ac1d4be1caf65421998807e6c49bb0b504012953ff9629c"
+  }
+}

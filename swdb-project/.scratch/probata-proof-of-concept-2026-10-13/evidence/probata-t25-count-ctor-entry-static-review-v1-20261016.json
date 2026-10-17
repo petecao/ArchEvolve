@@ -1,0 +1,63 @@
+{
+  "actual_selection": "Exact single node verified in collection; reviewed profile forwards same count-only actual test and selects no accepted first-pair repeat. Record scope27fresh positives/36ordinary+1smoke expected.",
+  "allowlist": {
+    "baseline_exact_runtime_changed_files": 14,
+    "path": "/private/tmp/probata-t25-source-change-review-bb7170ac-20261016.json",
+    "sha256": "b9ae224dd7b62fac93d7afcced899340225908b456c09d4f0ddf007869773498"
+  },
+  "blockers": [],
+  "budgets": "2100-second selected profile/1800-second public remaining deadline,serial targets; external reviewed dispatcher must cover entire bootstrap/profile/native build/process tree under8GiB1worker with finite whole/outer guards. Entry is not a standalone watchdog.",
+  "command": {
+    "path": "/private/tmp/probata-t25-count-ctor-external-command-v1-bb7170ac-20261016.json",
+    "sha256": "1dfc74546d03a6c4b059cd5214487973e03358a2f64ba2173dded93b617c4ce6"
+  },
+  "date_et": "2026-10-16",
+  "entry": {
+    "path": "/private/tmp/probata-t25-count-ctor-entry-v1-bb7170ac-20261016.py",
+    "sha256": "da35f072b08cf884bcdd42d0b93ec1360ed1fcddd6cdef6db2aca2b5d7a1119f"
+  },
+  "intentional_changes": [
+    "expected source commit and four changed source/test/profile digests",
+    "one count model pin",
+    "exact collection of test_actual_public_original_count_model",
+    "--member std_vector_int_ctor_count,2100s profile,1800s public call",
+    "one-record descriptive metadata"
+  ],
+  "model_pins": {
+    "std_vector_int_ctor_count": "bc6c76c9fe74a568bd81973eafba48e24b9f2f42604ad3c9994f742572c11358"
+  },
+  "reviewer_execution": "Text/AST/hash/frozenGit reads only. No entry/project imports/collection/tool probes/compilers/formal/solver/tests/SSH/launch.",
+  "scope": "Static admission only; root physical live preflight and exact-source remote actual dispatch remain separate. No proof, generic caller, production-store adoption, growth or ticket closure accepted.",
+  "source_commit": "bb7170ac09081cd02562b747d7cccb17ba8c6ced",
+  "source_files_verified_against_frozen_git": {
+    "library/methods/probata-draft-1.yaml": "497aa683887094e3217945132134112469e028c2a50a7966838bbebf902d3ae5",
+    "pyproject.toml": "049d720132df2d1091bca29e2705d4552e5fc3ea55e9963cf8faa3133501d7b5",
+    "schemas/proof.schema.json": "c8255f763fc1968c64aff4af53aac04a0dadc5193303f87fcd6c86f530100bfa",
+    "scripts/probata_heap_model_profile.py": "2abc5fe12e0eac1c04f9b3634df5303f37547cea5a960ef6c813db3110ff9c14",
+    "swdb/heap_bridge.mlw": "5186c27f5a7a339352e3f62dc3a0d3efb1c7bd12f8a456cc61b0d7a52566638d",
+    "swdb/heap_model_environment.ml": "ba52941e7ab96a8ebbe4efdb8fde0c1b19daa3d6ccb8804efc87b027a68caf7b",
+    "swdb/heap_model_packets.py": "805b00fe78373102b600506833f86c28fce2cf494baef7a68afd63641c1de185",
+    "swdb/heap_model_vcs.py": "f20e0ec130222aeda96b4fbb8e72eef8d922d3f33e84077777203f7e6d159092",
+    "swdb/heap_model_view.py": "ecb6e1476accaee2b275c9bf078bb14fc4b3c8ad81ed17d97d98b1699d2c1e22",
+    "swdb/proof_setup.py": "b9b5b1eef444be7e6656cbd5d5ce76b7393f28eae1f55a8c47b5e4028154f7ee",
+    "swdb/std_models.py": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2",
+    "swdb/wp_adapter.py": "fe4590b5b9eeaa41701fb4b48d17a0c1d6ade176783f46918de99151cda2faa5",
+    "tests/fixtures/proof/methods/contract-fixture-1.yaml": "a7d5acd7f0f592e7955d2fb424e029330068b3ef29c3936e27519b7b7de92b29",
+    "tests/test_heap_model_view.py": "5e31c9a125ef3b2386ea175dd0199818b04e2515e313dc6dfa7458892771be39",
+    "tests/test_standard_member_contracts.py": "dc62241267367f02f972c64eef397e9513962ee176bd9657df4104aec74b808a",
+    "tests/test_wp_adapter.py": "576ae5c70c6fa48b88b7cc9b18122b23a4574b4559acbf4f3dcfbcd053c61e0e"
+  },
+  "unchanged_CEA_admission_fields": [
+    "9 physical tool paths/digests",
+    "2 native WP artifacts",
+    "57-file Why3 stdlib tree",
+    "Why3 config",
+    "same-switch package/core bindings",
+    "naming rules",
+    "ambient FRAMAC_WP name refusal",
+    "fresh outside-repository output",
+    "exact source before imports/actual probes and before profile",
+    "Linux project-context runtime snapshot, no Mac composite"
+  ],
+  "verdict": "PASS_PROSPECTIVE_COUNT_ENTRY_STATIC_REVIEW"
+}

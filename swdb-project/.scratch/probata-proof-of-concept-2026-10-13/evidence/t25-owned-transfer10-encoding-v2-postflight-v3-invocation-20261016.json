@@ -1,0 +1,40 @@
+{
+  "argv": [
+    "ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=10",
+    "mbit10",
+    "/usr/bin/env",
+    "-i",
+    "HOME=/nonexistent",
+    "PATH=/usr/bin:/bin",
+    "LANG=C",
+    "LC_ALL=C",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "35s",
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-"
+  ],
+  "elapsed_seconds": 0.6486028340000001,
+  "exit_code": 0,
+  "started_utc": "2026-10-16T23:18:07.945208+00:00",
+  "stderr": {
+    "bytes": 0,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-encoding-v2-postflight-v3-stderr-20261016.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdin_sha256": "c19d0da21c83059505d9a8097bf7f4f3b61145580bd7fdbc43dabaeca34bc69e",
+  "stdout": {
+    "bytes": 2544,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-encoding-v2-postflight-v3-stdout-20261016.json",
+    "sha256": "076e22db24c3842e8e4092e84c68e9c606ff11d562918eb4173ed8bbd23fa955"
+  },
+  "within_output_cap": true
+}

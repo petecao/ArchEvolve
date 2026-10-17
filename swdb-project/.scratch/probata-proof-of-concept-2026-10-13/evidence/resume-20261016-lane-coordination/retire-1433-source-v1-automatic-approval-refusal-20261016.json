@@ -1,0 +1,41 @@
+{
+  "SSH_started": false,
+  "any_remote_mutation_by_this_attempt": false,
+  "classification": "AUTOMATIC_APPROVAL_REJECTED_BEFORE_PROCESS_CREATION",
+  "command": {
+    "bytes": 1093,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/retire-1433-source-v1/command.json",
+    "sha256": "3e7c37e45c6f8975fd6d997eed5443903c79dd8f7e3a63de5e2e8d1a16309cb3"
+  },
+  "current_remote_state_reobserved": false,
+  "date": "2026-10-16 ET",
+  "entry": {
+    "bytes": 27350,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/retire-1433-source-v1/retirement.py",
+    "sha256": "80210f84476b23add326c10912ebf84e6fbf3965cb1ab04967b9cad4f40a41b2"
+  },
+  "exclusive_actual_attempt_token_created": false,
+  "invocation": "python3 -B /Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/retire-1433-source-v1/run_once_root_admitted.py",
+  "local_orchestrator": {
+    "bytes": 5626,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/retire-1433-source-v1/run_once_root_admitted.py",
+    "sha256": "2f3790fa8e93677ac15d8f65c2f5b5df79eb11d45803e0f3db9c70da55d1d578"
+  },
+  "local_runner_started": false,
+  "observed_utc": "2026-10-16T23:53:13.813488+00:00",
+  "rejection_reason": "This executes a remote mutation-bearing controller that removes a 1.68GB detached source worktree and unlinks tracked aliases; broad project/remote-operation approval does not clearly authorize this specific destructive retirement.",
+  "requested_action": "Exact root-once-admitted source1433 Git recovery-ref/nonforced worktree removal",
+  "requires_specific_human_authorization_or_new_trusted_authorization_evidence_before_retry": true,
+  "reviewer_instruction": "Do not bypass this rejection through a workaround or indirect execution. Continue with a safer alternative, or carry out checks to prove that the action is authorized or low risk before trying again. Complete unaffected work without asking for confirmation. Report anything that remains blocked, clarify why it was blocked by auto-review, inform the user of the risk and ask for approval.",
+  "root_admission": {
+    "bytes": 2656,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/retire-1433-source-v1-root-admission-20261016.json",
+    "sha256": "c0794e17ed980b34636b818c05eedda5aa7e45ff052777599f837beb2e663938"
+  },
+  "root_ticket25_ticket28_caller_assess_notified": true,
+  "sandbox_permissions_requested": "require_escalated",
+  "source_or_raw_capacity_change_by_this_attempt": false,
+  "unaffected_work": "MixedcoldV2 remains inert and under independent local Spec review; other separately authorized workflows may proceed.",
+  "unused_SSH_window_released": true,
+  "workaround_or_indirect_execution_attempted": false
+}

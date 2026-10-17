@@ -1,0 +1,296 @@
+kind: cpu_native_validation
+schema_version: '0.4'
+id: lanl.cpu.bfs.g17.t1.validation.v1
+status: draft
+created: '2026-10-07'
+updated: '2026-10-07'
+provenance:
+- id: native-validation
+  kind: measurement
+  description: Separate original-driver validation scope; timing does not decide or alter existing CPU
+    evaluation.
+  uri: null
+format: swdb.cpu-native-validation.v1
+backend: native
+evidence_kind: native
+characterization: bfs.kron-g17.t1.characterization.objects.a1
+characterization_sha256: 49b5c58f3551b065c91c49c1fb09f54de2d2d71f08b6a4e1eedf3aad5ec415c5
+implementation: gapbs-bfs-do
+input: kron-g17-k16
+target: mbit10
+threads: 1
+timing_arguments: [-g, '17', -k, '16', -n, '5']
+development_band: lanl.cpu.bfs.t1.development-band.v1
+estimate_protocol:
+  id: lanl.cpu.bfs.t1.native-model.v1.c74c7a1046e0e5f1
+  sha256: e5058d50462a65ede57fdbf219273df46d884fa5d507f4ee84edafbe5734b58a
+  estimator_sha256: f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3
+  target_description_sha256: 9fec46b1ab4c8ac2e8e501e61cf137c075ec40b6eef128a247cf28dd54fca76b
+scope:
+  roi: gapbs.trial_lambda.v1
+  process_policy: five original GAPBS calls in one fresh process; no verification between timed calls
+  source_policy: original deterministic SourcePicker, advancing between kernel invocations
+  trial_count: 5
+  input_sha256: c12b8577876b62c9e94ff3191e0b8bf2471dae73779dec97a96b218fef72a4a2
+  source_root_sha256: d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056
+  translation_unit_sha256: 7c32c3c8dc43bf7be417fc5c530b4578bfe3697d8eb47a161cdb142487823f73
+  timed_wrapper_sha256: a1a477adfee41eddf8fdc9781d776030ca40492f0e875205c23c85ec633d3c9f
+  graph_generation_contract_sha256: 9ff023e6c79ae7aa8e3c7f699e14cb6f4d70921e790d31afba00dc03d1b7060e
+  observed_graph:
+    num_nodes: 131071
+    reported_edges: 1864448
+    directed: false
+  observed_graph_metadata_sha256: 980b131b1ee46ae0eaa311a82d2dcb33af92107de291022be4c0bd33385e20b8
+  graph_content_digest: null
+  graph_identity_note: Deterministic registered source/input/thread generation contract plus observed
+    metadata; no CSR-content checksum is claimed.
+context:
+  host: mbit10
+  architecture: x86_64
+  compiler_version: |-
+    clang version 22.1.8 (https://github.com/llvm/llvm-project ca7933e47d3a3451d81e72ac174dcb5aa28b59d1)
+    Target: x86_64-unknown-linux-gnu
+    Thread model: posix
+    InstalledDir: /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin
+  llvm_version: 22.1.8
+  flags:
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -fopenmp
+  - --gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13
+  run_library_paths:
+  - /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu
+  loaded_libraries:
+    libstdc++.so.6.0.33:
+      path: /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33
+      sha256: 1fd75fe70354a416d75aef22bcae68c47bd25d20e2d0568c30b1a9838cf62f11
+    libm.so.6:
+      path: /usr/lib/x86_64-linux-gnu/libm.so.6
+      sha256: fce00b6f25f459cf4ae0b7fae4257909a1a8a86f9149e7c029a5d617baf1ccd0
+    libomp.so:
+      path: /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu/libomp.so
+      sha256: bed4495bf5821b0acdba90d671512859b381c5d2caa029f6c3b82f1337da614e
+    libgcc_s.so.1:
+      path: /usr/lib/x86_64-linux-gnu/libgcc_s.so.1
+      sha256: d93224d2b0dab4247598be683adca02f5cf00586f99c187579cd7e92058fb7cb
+    libc.so.6:
+      path: /usr/lib/x86_64-linux-gnu/libc.so.6
+      sha256: 3a15d66867d83762c7f2f1e37359cb8f6c5743edb369c65285cb0b1c4f7498bf
+    ld-linux-x86-64.so.2:
+      path: /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+      sha256: c20a2dc8917c755f02b94049356320fe1f62ac7d9f8994731f807d9df39302da
+  binary_sha256: 182438b16ddf3eadc000cc4245c9ccef3ac1ee3a7c616ed3fa7af762e043807f
+  compiler_sha256: 31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113
+  commit: f893fed400347ed23d92e917d8bde21b75e5375d
+  dirty: false
+  instrumented_timer: false
+  native_runtime:
+    DYLD_LIBRARY_PATH: /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu
+    LD_LIBRARY_PATH: /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu
+    OMP_DYNAMIC: 'FALSE'
+    OMP_NUM_THREADS: '1'
+    OMP_PLACES: cores
+    OMP_PROC_BIND: close
+    DYLD_INSERT_LIBRARIES: null
+    LD_PRELOAD: null
+    LD_AUDIT: null
+    GLIBC_TUNABLES: null
+    MALLOC_ARENA_MAX: null
+    MALLOC_ARENA_TEST: null
+    MALLOC_CHECK_: null
+    MALLOC_PERTURB_: null
+    MALLOC_MMAP_THRESHOLD_: null
+    MALLOC_TRIM_THRESHOLD_: null
+    MALLOC_TOP_PAD_: null
+    MALLOC_MMAP_MAX_: null
+  counted_native_runtime_sha256: 8c32cd539d3a502222e2b464f277eb7f94a7c08ac087dfca8923b7b632958871
+  runtime_match: known
+  started_ns: 1791366050253926895
+  timing_started_ns: 1791366050767867879
+  finished_ns: 1791366051225212284
+  end_state:
+    load: [2.0, 1.9296875, 1.73486328125]
+    time_ns: 1791366051713442979
+    available_memory: |-
+      MemTotal:       131426264 kB
+      MemFree:        11060828 kB
+      MemAvailable:   117736096 kB
+      Buffers:        11512308 kB
+      Cached:         66397032 kB
+      SwapCached:            0 kB
+      Active:         11305860 kB
+      Inactive:       73050824 kB
+      Active(anon):    6421424 kB
+      Inactive(anon):    55664 kB
+      Active(file):    4884436 kB
+      Inactive(file): 72995160 kB
+      Unevictable:       39252 kB
+      Mlocked:           36180 kB
+      SwapTotal:             0 kB
+      SwapFree:              0 kB
+      Zswap:                 0 kB
+      Zswapped:              0 kB
+      Dirty:               112 kB
+      Writeback:             0 kB
+      AnonPages:       6487044 kB
+      Mapped:          1132520 kB
+      Shmem:             14900 kB
+      KReclaimable:   30114272 kB
+      Slab:           32659924 kB
+      SReclaimable:   30030440 kB
+      SUnreclaim:      2629484 kB
+      KernelStack:       25440 kB
+      PageTables:        39664 kB
+      SecPageTables:         0 kB
+      NFS_Unstable:          0 kB
+      Bounce:                0 kB
+      WritebackTmp:          0 kB
+      CommitLimit:    65713132 kB
+      Committed_AS:   10534592 kB
+      VmallocTotal:   13743895347199 kB
+      VmallocUsed:      432356 kB
+      VmallocChunk:          0 kB
+      Percpu:           392192 kB
+      HardwareCorrupted:     8 kB
+      AnonHugePages:         0 kB
+      ShmemHugePages:        0 kB
+      ShmemPmdMapped:        0 kB
+      FileHugePages:         0 kB
+      FilePmdMapped:         0 kB
+      Unaccepted:            0 kB
+      HugePages_Total:       0
+      HugePages_Free:        0
+      HugePages_Rsvd:        0
+      HugePages_Surp:        0
+      Hugepagesize:       2048 kB
+      Hugetlb:               0 kB
+      DirectMap4k:    40398820 kB
+      DirectMap2M:    91160576 kB
+      DirectMap1G:     4194304 kB
+    governor: null
+    no_turbo: null
+  lane: 'mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 507)'
+  cpus: [0]
+  machine_sha256: fcb0123f0bdb9bc004348eb8c6444f03304b6612e0cb2e26a82e621b07d82a79
+  system: Linux
+  start_state:
+    load: [2.0, 1.923828125, 1.72900390625]
+    time_ns: 1791366034214112548
+    available_memory: |-
+      MemTotal:       131426264 kB
+      MemFree:        11026620 kB
+      MemAvailable:   117701676 kB
+      Buffers:        11512276 kB
+      Cached:         66396868 kB
+      SwapCached:            0 kB
+      Active:         11391676 kB
+      Inactive:       73050636 kB
+      Active(anon):    6507248 kB
+      Inactive(anon):    55664 kB
+      Active(file):    4884428 kB
+      Inactive(file): 72994972 kB
+      Unevictable:       39252 kB
+      Mlocked:           36180 kB
+      SwapTotal:             0 kB
+      SwapFree:              0 kB
+      Zswap:                 0 kB
+      Zswapped:              0 kB
+      Dirty:               168 kB
+      Writeback:             0 kB
+      AnonPages:       6573332 kB
+      Mapped:          1136076 kB
+      Shmem:             14900 kB
+      KReclaimable:   30114256 kB
+      Slab:           32659848 kB
+      SReclaimable:   30030424 kB
+      SUnreclaim:      2629424 kB
+      KernelStack:       25424 kB
+      PageTables:        39828 kB
+      SecPageTables:         0 kB
+      NFS_Unstable:          0 kB
+      Bounce:                0 kB
+      WritebackTmp:          0 kB
+      CommitLimit:    65713132 kB
+      Committed_AS:   10625800 kB
+      VmallocTotal:   13743895347199 kB
+      VmallocUsed:      432372 kB
+      VmallocChunk:          0 kB
+      Percpu:           392192 kB
+      HardwareCorrupted:     8 kB
+      AnonHugePages:         0 kB
+      ShmemHugePages:        0 kB
+      ShmemPmdMapped:        0 kB
+      FileHugePages:         0 kB
+      FilePmdMapped:         0 kB
+      Unaccepted:            0 kB
+      HugePages_Total:       0
+      HugePages_Free:        0
+      HugePages_Rsvd:        0
+      HugePages_Surp:        0
+      Hugepagesize:       2048 kB
+      Hugetlb:               0 kB
+      DirectMap4k:    40398820 kB
+      DirectMap2M:    91160576 kB
+      DirectMap1G:     4194304 kB
+    governor: null
+    no_turbo: null
+  free_disk_bytes: 50594148352
+correctness:
+  state: passed
+  separate_process: true
+  arguments:
+  - -g
+  - '17'
+  - -k
+  - '16'
+  - -n
+  - '5'
+  - -v
+  checks: [PASS, PASS, PASS, PASS, PASS]
+  stdout_sha256: e0264918e592cfd8ca37e9f12e325f0f8fb7e29c0d14261022f9189f38642a7d
+trials:
+- position: 0
+  source: 87481
+  printed_duration_s: 0.00412
+  printed_text: '0.00412'
+  interval_s: [0.004115000000000001, 0.004125]
+  basis: measured
+- position: 1
+  source: 126356
+  printed_duration_s: 0.00255
+  printed_text: '0.00255'
+  interval_s: [0.0025450000000000004, 0.002555]
+  basis: measured
+- position: 2
+  source: 93651
+  printed_duration_s: 0.00375
+  printed_text: '0.00375'
+  interval_s: [0.003745, 0.0037549999999999997]
+  basis: measured
+- position: 3
+  source: 69653
+  printed_duration_s: 0.00274
+  printed_text: '0.00274'
+  interval_s: [0.002735, 0.0027449999999999996]
+  basis: measured
+- position: 4
+  source: 19254
+  printed_duration_s: 0.0024
+  printed_text: '0.00240'
+  interval_s: [0.002395, 0.0024049999999999996]
+  basis: measured
+summary:
+  median_whole_call_s: 0.00274
+  rounding_half_width_s: 5.0e-06
+  basis: measured
+raw_artifacts:
+- path: /data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3/bfs.g17/timing.stdout
+  sha256: 0bac0bce19a5c4625ca8038367a8b458eb49225880c20241953ab5a2a36b9603
+- path: /data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3/bfs.g17/timing.stderr
+  sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- path: /data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3/bfs.g17/verification.stdout
+  sha256: e0264918e592cfd8ca37e9f12e325f0f8fb7e29c0d14261022f9189f38642a7d
+- path: /data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3/bfs.g17/verification.stderr
+  sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+identity_sha256: ba3fa015005de428a8307e10985aa6d7058e6d023093660420ff8da7cd700aeb

@@ -1,0 +1,161 @@
+{
+  "created": "2026-09-26T21:25:29.065512-04:00",
+  "kind": "independent_scoped_standards_review",
+  "state": "clean",
+  "scope": [
+    "Process-free storage walker, batch/series delegates and scalar cleanup race regression",
+    "Fresh standard proof runtime dependency and final reservation wrapper-exit file binding",
+    "Prospective proof-group literal/schema review only"
+  ],
+  "verification": [
+    {
+      "result": "15 passed in0.17s",
+      "command": "PYTHONPATH=\"$PWD/tests:$PWD\" /Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest /private/tmp/test_storage_parity_standards_v2_20260926.py tests/test_bfs_storage.py -q --basetemp=/private/tmp/bfs-storage-standards-v2-20260926",
+      "coverage": [
+        "Actual local du -sk parity for files/directories/hardlinks within and across roots/seek-written file/symlinks",
+        "Per-root KiB rounding",
+        "Real OS signal cleanup overlap using production Owned.finish with portable identity adapter",
+        "No-follow symlink substitution and different real-directory substitution, descriptor closure",
+        "Missing roots/entries, no subprocess, bounded walk and original callback error"
+      ]
+    },
+    {
+      "result": "5 passed,44 deselected in0.08s",
+      "command": "PYTHONPATH=\"$PWD/tests:$PWD\" /Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest tests/test_bfs_simulator_correction.py -k \"future_proof_reservation or wrapper_exit\" -q --basetemp=/private/tmp/bfs-correction-wrapper-exit-standards-20260926",
+      "coverage": [
+        "Exact group/KIND.audit-wrapper.exit bounded16-byte JSON read",
+        "Integer zero, matching declared zero, safe exact path/hash",
+        "Positive reservation plus wrapper/posthash failures"
+      ]
+    }
+  ],
+  "original_failure_evidence": {
+    "author": "Actual slowed du child was killed by owned-descendant cleanup; original red1failed0.22s and green1passed0.09s retained",
+    "independent_probe_correction": "First independent run1failed13passed0.19s only because macOS allocated the seek-written file. Actual du parity assertions all passed. V2 removes only unsupported sparse-allocation-size assumption and adds real-directory replacement/descriptor check; original probe/log preserved. This is not a production defect."
+  },
+  "semantics": {
+    "allocation": "st_blocks*512; hard-link inode dedup within each root; separate-root upward1024 rounding; count symlink blocks without following links",
+    "missing_metadata": "Fail closed, never zero substitution",
+    "prior_bytes": "Plan preserves failed11014971392B and smoke200704B; actual same-host parity remains prospective proof-group preflight",
+    "proof_runtime": "CLEANUP_RUNTIME includes new scripts/bfs_storage.py; current whole-runtime inventory already includes it",
+    "limits": "Original enclosing work/guard/cleanup deadlines and storage caps remain; blocking filesystem syscall is not guaranteed separately interruptible"
+  },
+  "proof_group": {
+    "state": "prospective recipe coherent",
+    "fixed_seconds": 600,
+    "fixed_bytes": 2147483648,
+    "roots": 5,
+    "actual_fixture_attempts": 0,
+    "semantics": "Same original90-second fixture and60-second audit clocks, no retry; group includes all wrappers/hash reads/final recount; final metadata retained outside five roots"
+  },
+  "function_hashes": {
+    "allocated_bytes": {
+      "start": 84,
+      "end": 86,
+      "sha256": "c5890bd267ec771de6590df796b823e995e6c53a8b22a1fdeb8796b99ec0de73"
+    },
+    "validate_preparation_reservation": {
+      "start": 193,
+      "end": 275,
+      "sha256": "591b5ff2b5b04cf377566976e825bacd742a450f2294b6030a73dfee635318ad"
+    }
+  },
+  "files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_storage.py",
+      "bytes": 2586,
+      "sha256": "485914c80e272b1ab4d05d7866d2ba0d981d0c3ba41cb510c509e4acdb8f4eac"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_simulator_batch.py",
+      "bytes": 56532,
+      "sha256": "46b171a570b606892c54bf63701f70fde74fa3cfe0a438ab2bd73634fb7047b0"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_simulator_series.py",
+      "bytes": 30265,
+      "sha256": "a568e4e6da573ccc281df7deff214abb59d9d87799e274b9abaff1a90ca87b43"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_linux_fixture.py",
+      "bytes": 13247,
+      "sha256": "544971e14f229dffa0945277db7a97e5dcb0ef14c1c78ef319e7e6555b1f5441"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_storage.py",
+      "bytes": 7847,
+      "sha256": "25e1b4b53e555646a3b6bce38486b0c398d68d66def616b5a900f24dd582cb24"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_simulator_series.py",
+      "bytes": 33248,
+      "sha256": "78c219a8bf92d8c38a6400d9d8fdee9f715c8d3fd0c05d843257c8394201a3fc"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_simulator_storage.py",
+      "bytes": 9194,
+      "sha256": "7db4f48df5b5c38f68902eb936251d8aaa80d122f135c249e66bad2b6724d28a"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_simulator_correction.py",
+      "bytes": 16019,
+      "sha256": "9b7de48c088c6bc1dfdc0ede632c23ed65b4d40de08610b7bb3e03a10ba2ec9d"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-scalar-v2-builds-20260926.md",
+      "bytes": 10465,
+      "sha256": "f312e62edd0b76273eca36778a6dc64de98c6ec99018ad67b9b80e422ff085fe"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-t15-gzip-correction-20260926.md",
+      "bytes": 4536,
+      "sha256": "34285b9fd14626aca1d79ec633476aa87f66bcf42739e8098895e31080081140"
+    },
+    {
+      "path": "/private/tmp/bfs-storage-monitor-red-v2-20260926.log",
+      "bytes": 5605,
+      "sha256": "6cceddfffd2ee5e9d5b2a6059bcdff635253d3956984a26f5044a80001580750"
+    },
+    {
+      "path": "/private/tmp/bfs-storage-monitor-green-20260926.log",
+      "bytes": 98,
+      "sha256": "59907462a8d5fd93406cdf4c7d1eb2f7b7a96664ae85c4ec202693d419cd019e"
+    },
+    {
+      "path": "/private/tmp/test_storage_parity_standards_20260926.py",
+      "bytes": 2076,
+      "sha256": "572d9df1a5caac605b1f9de3bf6806f1447fbbf1cb4fee5b3bb821bf3fee4b2c"
+    },
+    {
+      "path": "/private/tmp/test_storage_parity_standards_v2_20260926.py",
+      "bytes": 2692,
+      "sha256": "7a69b756ae66ed54d40c3d6a89a03a0a532f4e88626595ff7af41101bcb373a1"
+    },
+    {
+      "path": "/private/tmp/bfs-storage-standards-20260926.log",
+      "bytes": 2111,
+      "sha256": "b73ee32a3d29bc368c9818315431fced38937d21196f3556e47cf89a954cf316"
+    },
+    {
+      "path": "/private/tmp/bfs-storage-standards-v2-20260926.log",
+      "bytes": 99,
+      "sha256": "bc31b3d529d6284e5e02088cbdc38fb9a86b8f452dcf99dffc3344c140c5f55b"
+    },
+    {
+      "path": "/private/tmp/bfs-correction-wrapper-exit-standards-20260926.log",
+      "bytes": 113,
+      "sha256": "1b0125103c73a51c3aece34a3715b8ca38274d816f6cf4efc28784e581d73734"
+    },
+    {
+      "path": "/private/tmp/bfs-t15-correction-proofgroup-preparation-20260926.md",
+      "bytes": 7447,
+      "sha256": "7eb0bf563a095943b8ff28b6d917e43a9905420bce01bb7cb53d7d574b4e535c"
+    }
+  ],
+  "limitations": [
+    "Local POSIX/macOS contract tests are not actual Linux lifecycle proof.",
+    "No host reads/jobs/measurements/providers/export or production edits performed.",
+    "Shared-root prior bytes must be freshly checked by planned host parity, without changing historical roots.",
+    "This is narrow readiness review, not final all-ticket Standards acceptance."
+  ]
+}

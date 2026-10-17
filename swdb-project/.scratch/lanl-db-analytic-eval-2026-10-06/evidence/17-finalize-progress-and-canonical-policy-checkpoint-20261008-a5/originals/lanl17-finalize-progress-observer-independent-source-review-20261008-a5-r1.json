@@ -1,0 +1,43 @@
+{
+  "format": "swdb.lanl17-finalize-progress-observer-independent-source-review.v1",
+  "checked_utc": "2026-10-09T01:59:57.168130+00:00",
+  "verdict": "PASS_SOURCE_ONLY",
+  "reviewed_pins": [
+    {
+      "path": "/private/tmp/lanl17_observe_finalize_progress_metadata_20261008_a5_r1.py",
+      "bytes": 15507,
+      "sha256": "0aba03d2a6025b51ae58a18f24593f458494c0cecf014d8b546dd994535cf543"
+    },
+    {
+      "path": "/private/tmp/lanl17-finalize-progress-observer-action-draft-r1-20261008-a5.json",
+      "bytes": 17029,
+      "sha256": "5d36451bd5e08b764d2024d0bc248499ef2fe1749d16f0a18dbdcc1a6a7eaece"
+    },
+    {
+      "path": "/private/tmp/lanl17_read_finalize_completion_originals_20261008_a5_r2.py",
+      "bytes": 18085,
+      "sha256": "c00eec76805adbad8316143b5fb02f0cc7dbc1851cbd287662af80bbdad2de23"
+    }
+  ],
+  "checks": [
+    "Full source text and AST read without importing or executing target.",
+    "Six inherited reader function ASTs exactly match selected completion reader R2.",
+    "Inline isolated native Python equals all 15507 source bytes; config source-only wrapper cannot be mistaken for direct capture configuration.",
+    "Fixed H/G/SUP/M2 byte pins rechecked after observation; immutable R checked through read-only Git with optional locks and lazy fetch disabled.",
+    "Only control JSON, bounded public argv and integer exit contents read; diagnostics/public stdout/stderr stat-only; final-export is H compact branch/commit/path descriptor, not exported record body.",
+    "No stdout projection of control JSON, arbitrary process cmdline/comm, logs, records, prompts, auth, provider bodies or environment.",
+    "Exact pinned script token plus separate finalize and M2 tokens anchors controls; copied command descendants retain owned PID/start/inode identity and metadata only.",
+    "Public validate routes restricted to five actual store roots; broad report/export matching remains process diagnostic only, not success or ownership admission.",
+    "Native leases bound by exact lease name, positive actual generation and devmajor/devminor/inode; all matching kernel rows prevent clearance, including waiters.",
+    "Unexpected daemon FD9 target is unknown; expected FD9 compares exact route and lease dev/inode; before/after metadata/stat/lock/daemon identity matches required.",
+    "Any unreadability/race/parse mismatch is unknown and never reports released clearance; absence of anchor or stage-file presence never infers completion.",
+    "45-second alarm and per-read caps, process/descendant bounds, total output cap262144, existing60/180 capture envelope, no stage/collect/lock syscalls or scientific command."
+  ],
+  "findings": [],
+  "limits": [
+    "Source-only review: no live host observation, imports, tests, SSH or control execution.",
+    "Per-file facts and process/native snapshots are diagnostics, not atomic proof of FINALIZE completion or fresh administrative admission.",
+    "Missing or legacy incompatible native schemas fail unknown; no false-clear fallback."
+  ],
+  "scientific_admission": false
+}

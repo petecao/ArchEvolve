@@ -1,0 +1,274 @@
+{
+  "classification": "PASS_SCOPED_ORIGINAL_ABSTRACT_TRACE25",
+  "current_0_2": false,
+  "full_ticket28": false,
+  "hardware_counterexamples": false,
+  "launch": {
+    "lane": {
+      "aligned_cell_age_s": "",
+      "aligned_to": "no_gapbs_batch_running",
+      "command": [
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=60",
+        "1320",
+        "bash",
+        "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v4/run.sh"
+      ],
+      "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+      "ended_utc": "2026-10-16T19:54:40Z",
+      "exit_code": 0,
+      "host": "mbit10",
+      "job": "probata-resume-20261016-04af74c1-t28-memory-trace-v4",
+      "lease_generation": 635,
+      "lease_name": "mbit10-evaluation-node1",
+      "load1_at_start": 0.07,
+      "load1_max": 32,
+      "node": 1,
+      "numa_memory_policy": "bind:1",
+      "numactl": "--cpunodebind=1 --membind=1",
+      "preregistration_sha256": null,
+      "started_utc": "2026-10-16T19:50:35Z"
+    },
+    "resources": {
+      "outer-resources.json": {
+        "cpu_seconds": 296.26370199999997,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 438173696,
+        "timed_out": false,
+        "wall_seconds": 245.01353721134365
+      },
+      "resources.json": {
+        "cpu_seconds": 244.739956,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 379027456,
+        "timed_out": false,
+        "wall_seconds": 242.95745311770588
+      }
+    },
+    "settlement_boundary": "finite process/lease settlement is separately root supplied; no invented final-null or continuing absence"
+  },
+  "physical_checks": 13455,
+  "raw_bytes": 42682114,
+  "raw_files": 1409,
+  "records": [
+    {
+      "case": "same_thread_read_read",
+      "goals": 154,
+      "native_agreement_runs": 625,
+      "record_id": "proof.contract.dx100_trust_fixture.20261016t195110z.2d11ab39",
+      "replayed_abstract_refutation": false,
+      "verdict": "proven"
+    },
+    {
+      "case": "same_thread_write_during_gather",
+      "goals": 154,
+      "native_agreement_runs": 625,
+      "record_id": "proof.contract.dx100_trust_fixture.20261016t195117z.a1ef2d51",
+      "replayed_abstract_refutation": true,
+      "verdict": "refuted"
+    },
+    {
+      "case": "same_thread_read_during_store",
+      "goals": 154,
+      "native_agreement_runs": 625,
+      "record_id": "proof.contract.dx100_trust_fixture.20261016t195126z.3c0a86e5",
+      "replayed_abstract_refutation": true,
+      "verdict": "refuted"
+    },
+    {
+      "case": "other_thread_read_during_store",
+      "goals": 154,
+      "native_agreement_runs": 625,
+      "record_id": "proof.contract.dx100_trust_fixture.20261016t195134z.a617fade",
+      "replayed_abstract_refutation": true,
+      "verdict": "refuted"
+    },
+    {
+      "case": "other_thread_cas_history_union",
+      "goals": 154,
+      "native_agreement_runs": 625,
+      "record_id": "proof.contract.dx100_trust_fixture.20261016t195142z.7e228bec",
+      "replayed_abstract_refutation": false,
+      "verdict": "proven"
+    },
+    {
+      "case": "other_thread_cas_issue_only",
+      "goals": 154,
+      "native_agreement_runs": 625,
+      "record_id": "proof.contract.dx100_trust_fixture.20261016t195149z.e0322b37",
+      "replayed_abstract_refutation": true,
+      "verdict": "refuted"
+    },
+    {
+      "case": "failed_cas_adds_no_history",
+      "goals": 154,
+      "native_agreement_runs": 625,
+      "record_id": "proof.contract.dx100_trust_fixture.20261016t195158z.49ab72d7",
+      "replayed_abstract_refutation": false,
+      "verdict": "proven"
+    },
+    {
+      "case": "preissue_visibility_excludes_older_value",
+      "goals": 154,
+      "native_agreement_runs": 625,
+      "record_id": "proof.contract.dx100_trust_fixture.20261016t195205z.ff7057c3",
+      "replayed_abstract_refutation": false,
+      "verdict": "proven"
+    },
+    {
+      "case": "preissue_visibility_old_value",
+      "goals": 154,
+      "native_agreement_runs": 625,
+      "record_id": "proof.contract.dx100_trust_fixture.20261016t195213z.d2420a0c",
+      "replayed_abstract_refutation": true,
+      "verdict": "refuted"
+    },
+    {
+      "case": "history_result_freezes_at_cover",
+      "goals": 154,
+      "native_agreement_runs": 625,
+      "record_id": "proof.contract.dx100_trust_fixture.20261016t195222z.f95e46b4",
+      "replayed_abstract_refutation": false,
+      "verdict": "proven"
+    },
+    {
+      "case": "region_stall_cross_thread_covers_store",
+      "goals": 154,
+      "native_agreement_runs": 625,
+      "record_id": "proof.contract.dx100_trust_fixture.20261016t195229z.b37a7a73",
+      "replayed_abstract_refutation": false,
+      "verdict": "proven"
+    },
+    {
+      "case": "region_read_read_does_not_cover",
+      "goals": 154,
+      "native_agreement_runs": 625,
+      "record_id": "proof.contract.dx100_trust_fixture.20261016t195236z.84e26fbb",
+      "replayed_abstract_refutation": true,
+      "verdict": "refuted"
+    },
+    {
+      "case": "region_other_write_does_not_cover",
+      "goals": 154,
+      "native_agreement_runs": 625,
+      "record_id": "proof.contract.dx100_trust_fixture.20261016t195244z.fc32e0ab",
+      "replayed_abstract_refutation": true,
+      "verdict": "refuted"
+    },
+    {
+      "case": "other_thread_ownership_command",
+      "goals": 154,
+      "native_agreement_runs": 625,
+      "record_id": "proof.contract.dx100_trust_fixture.20261016t195251z.ad73fe38",
+      "replayed_abstract_refutation": true,
+      "verdict": "refuted"
+    },
+    {
+      "case": "other_thread_ownership_tile_read",
+      "goals": 154,
+      "native_agreement_runs": 625,
+      "record_id": "proof.contract.dx100_trust_fixture.20261016t195300z.ad4d376c",
+      "replayed_abstract_refutation": true,
+      "verdict": "refuted"
+    },
+    {
+      "case": "disjoint_thread_tiles",
+      "goals": 154,
+      "native_agreement_runs": 625,
+      "record_id": "proof.contract.dx100_trust_fixture.20261016t195309z.bf52b242",
+      "replayed_abstract_refutation": false,
+      "verdict": "proven"
+    },
+    {
+      "case": "pair_8byte_second_half_cpu_read",
+      "goals": 154,
+      "native_agreement_runs": 625,
+      "record_id": "proof.contract.dx100_trust_fixture.20261016t195317z.de5a7008",
+      "replayed_abstract_refutation": true,
+      "verdict": "refuted"
+    },
+    {
+      "case": "pair_4byte_other_half_cpu_read",
+      "goals": 154,
+      "native_agreement_runs": 625,
+      "record_id": "proof.contract.dx100_trust_fixture.20261016t195326z.a4b3aa97",
+      "replayed_abstract_refutation": false,
+      "verdict": "proven"
+    },
+    {
+      "case": "pair_8byte_second_half_command",
+      "goals": 154,
+      "native_agreement_runs": 625,
+      "record_id": "proof.contract.dx100_trust_fixture.20261016t195334z.002b91e9",
+      "replayed_abstract_refutation": true,
+      "verdict": "refuted"
+    },
+    {
+      "case": "pair_4byte_other_half_command",
+      "goals": 154,
+      "native_agreement_runs": 625,
+      "record_id": "proof.contract.dx100_trust_fixture.20261016t195342z.d8192b8b",
+      "replayed_abstract_refutation": false,
+      "verdict": "proven"
+    },
+    {
+      "case": "pair_8byte_missing_second_owner",
+      "goals": 154,
+      "native_agreement_runs": 625,
+      "record_id": "proof.contract.dx100_trust_fixture.20261016t195349z.f7a6193d",
+      "replayed_abstract_refutation": true,
+      "verdict": "refuted"
+    },
+    {
+      "case": "pair_4byte_one_owner",
+      "goals": 154,
+      "native_agreement_runs": 625,
+      "record_id": "proof.contract.dx100_trust_fixture.20261016t195358z.f1957419",
+      "replayed_abstract_refutation": false,
+      "verdict": "proven"
+    },
+    {
+      "case": "pair_second_half_wait_covers",
+      "goals": 154,
+      "native_agreement_runs": 625,
+      "record_id": "proof.contract.dx100_trust_fixture.20261016t195405z.372b4696",
+      "replayed_abstract_refutation": false,
+      "verdict": "proven"
+    },
+    {
+      "case": "logical_ready_one_covers_zero_requires_wait",
+      "goals": 154,
+      "native_agreement_runs": 625,
+      "record_id": "proof.contract.dx100_trust_fixture.20261016t195413z.35da28ab",
+      "replayed_abstract_refutation": false,
+      "verdict": "proven"
+    },
+    {
+      "case": "logical_ready_may_not_be_assumed_zero",
+      "goals": 154,
+      "native_agreement_runs": 625,
+      "record_id": "proof.contract.dx100_trust_fixture.20261016t195421z.a580f105",
+      "replayed_abstract_refutation": true,
+      "verdict": "refuted"
+    }
+  ],
+  "root_owns_finite_process_lease_settlement": true,
+  "scope": "exact original scalar abstract traces and their persisted native agreement/replay only",
+  "source": {
+    "boundary": "physical SHA256 and opaque Git blob equality; root separately owns commit/Git readback",
+    "count": 1678
+  },
+  "source_call_refinement": false,
+  "source_commit": "04af74c121a733589fbe1a2087ad602deaef598b",
+  "whole_interface": false,
+  "workflow": {
+    "complete_case_phase_reports": 75,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 25
+  }
+}

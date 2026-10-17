@@ -1,0 +1,665 @@
+{
+  "README_pin": {
+    "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/README.md",
+    "bytes": 6149,
+    "sha256": "f981834b1bf0e249ce2afae52c6c5f7e6508aab6f5755ea907d89687c6fac540"
+  },
+  "actual_a3_disposition": {
+    "failure_code": "special_permission_bits",
+    "global_observation_complete": false,
+    "global_stable": false,
+    "no_liveness_inferred_from_state_label": true,
+    "observer_exit_code": 1,
+    "original_metadata_stdout_bytes": 21616756,
+    "original_metadata_stdout_sha256": "93c08ff387147c8709d53e8cc39569afcaeac2e5cb667602a6859e2eee6e63e5"
+  },
+  "archival_invokes_selected_control_mains": false,
+  "archive_scope": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1",
+  "archive_supplies_cleanup_capacity_plan_or_scientific_admission": false,
+  "base_commit": "176aaa6d64fdb6ea156da030fcbf2efc1c51d7df",
+  "base_tree": "3f2b87edacf22ab2812f3c953f326a206795c3a6",
+  "canonical_ensure_ascii": true,
+  "date_ET": "2026-10-08 02:17 ET",
+  "durable_original_references": [
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-consumed-E-administration-actual-20261008-a2/support-originals/lanl17-all18-receipt-source-file-proof-mapping-20261008-a1.json",
+      "bytes": 324823,
+      "role": "Already durable exact all18/184 source-proof mapping; reference only, not duplicated",
+      "sha256": "0cd4b124d7c93635eb7d699e9fc73b9cb73236c34c143148ff10e62515308444",
+      "source_path": "/private/tmp/lanl17-all18-receipt-source-file-proof-mapping-20261008-a1.json"
+    }
+  ],
+  "excluded_base64_transfer_original_pin": {
+    "binding": "Exact source_packet fields retained in original local-custody.json; bytes not duplicated",
+    "bytes": 28842545,
+    "path": "/private/tmp/lanl-detached-passive-observer-original-transfer-20261008-a3.json",
+    "sha256": "7dba99348dcb7833ee90f4bb9a042dff5a61c2516589cb615b3b8f6fb2075073"
+  },
+  "format": "swdb.lanl17-private-setgid-storage-correction-archive.v1",
+  "identity_sha256": "186a0a2f5825a21682048298128284f430072f195ff02a4be60d5783ff62a26d",
+  "logical_mapping_boundary": {
+    "claims_do_not_establish_global_stability_or_cleanup_admission": true,
+    "logical_claims": 107,
+    "original_path_associations": 158
+  },
+  "new_selected_G5_O6_wrappers_copier_custody_helpers": "SOURCE_ONLY_NOTRUN_creation_history; no new real invocation/copy in this archive",
+  "original_bytes": 22923681,
+  "original_count": 65,
+  "originals": [
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/actual-a3-originals/configuration.json",
+      "bytes": 4648,
+      "custody_seal_disposition": "original_unsealed_no_identity",
+      "original_canonical_ensure_ascii_field": "ABSENT",
+      "original_identity_sha256_field": "ABSENT",
+      "original_json_sealed_field": false,
+      "role": "Original a3 remote administrative byte custody",
+      "sha256": "28483ff0a7c4cde536150b23674a1820cd93188ca9bbc8159311f6b564fcba53",
+      "source_path": "/private/tmp/lanl17-detached-passive-observer-originals-20261008-a3/configuration.json"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/actual-a3-originals/launch-status.json",
+      "bytes": 2096,
+      "custody_seal_disposition": "original_unsealed_no_identity",
+      "original_canonical_ensure_ascii_field": "ABSENT",
+      "original_identity_sha256_field": "ABSENT",
+      "original_json_sealed_field": false,
+      "role": "Original a3 remote administrative byte custody",
+      "sha256": "f26a82ad442dbacee26fa9076088ce2d4014f0e7154071813e99d16bf5dcf0e5",
+      "source_path": "/private/tmp/lanl17-detached-passive-observer-originals-20261008-a3/launch-status.json"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/actual-a3-originals/launch.stderr",
+      "bytes": 0,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original a3 remote administrative byte custody",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_path": "/private/tmp/lanl17-detached-passive-observer-originals-20261008-a3/launch.stderr"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/actual-a3-originals/launch.stdout",
+      "bytes": 0,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original a3 remote administrative byte custody",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_path": "/private/tmp/lanl17-detached-passive-observer-originals-20261008-a3/launch.stdout"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/actual-a3-originals/local-custody.json",
+      "bytes": 7661,
+      "custody_seal_disposition": "original_unsealed_no_identity",
+      "original_canonical_ensure_ascii_field": "ABSENT",
+      "original_identity_sha256_field": "ABSENT",
+      "original_json_sealed_field": false,
+      "role": "Original local UNSEALED byte custody",
+      "sha256": "50288124883dd7b820185d80065cd00a8ca9c87abc10d45d103918be9d72afd4",
+      "source_path": "/private/tmp/lanl17-detached-passive-observer-originals-20261008-a3/local-custody.json"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/actual-a3-originals/observer.stderr",
+      "bytes": 0,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original a3 remote administrative byte custody",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_path": "/private/tmp/lanl17-detached-passive-observer-originals-20261008-a3/observer.stderr"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/actual-a3-originals/observer.stdout",
+      "bytes": 21616756,
+      "custody_seal_disposition": "original_unsealed_no_identity",
+      "original_canonical_ensure_ascii_field": "ABSENT",
+      "original_identity_sha256_field": "ABSENT",
+      "original_json_sealed_field": false,
+      "role": "Original a3 remote administrative byte custody",
+      "sha256": "93c08ff387147c8709d53e8cc39569afcaeac2e5cb667602a6859e2eee6e63e5",
+      "source_path": "/private/tmp/lanl17-detached-passive-observer-originals-20261008-a3/observer.stdout"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/actual-a3-originals/status.json",
+      "bytes": 5430,
+      "custody_seal_disposition": "original_unsealed_no_identity",
+      "original_canonical_ensure_ascii_field": "ABSENT",
+      "original_identity_sha256_field": "ABSENT",
+      "original_json_sealed_field": false,
+      "role": "Original a3 remote administrative byte custody",
+      "sha256": "35082388370a468cd99ddd45dd77bd87aeb06b7fea337ba37bee8f85b0aa7ef2",
+      "source_path": "/private/tmp/lanl17-detached-passive-observer-originals-20261008-a3/status.json"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/actual-a3-originals/tmux.conf",
+      "bytes": 106,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original a3 remote administrative byte custody",
+      "sha256": "a6b69cdfa58f10a0f62697e88a619fffa06b5956bb515ba5200fa2e77c7c31df",
+      "source_path": "/private/tmp/lanl17-detached-passive-observer-originals-20261008-a3/tmux.conf"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/actual-a3-client-and-source-copy/lanl-detached-passive-observer-launch-original-20261008-a3.json",
+      "bytes": 396,
+      "custody_seal_disposition": "original_unsealed_no_identity",
+      "original_canonical_ensure_ascii_field": "ABSENT",
+      "original_identity_sha256_field": "ABSENT",
+      "original_json_sealed_field": "ABSENT",
+      "role": "Original parent administrative source-copy or launch/client custody; no selected admission",
+      "sha256": "d8d00ac148dd59aae5a6cb53dc49849cbde02ed0ffbfc63543e26e6058223ea8",
+      "source_path": "/private/tmp/lanl-detached-passive-observer-launch-original-20261008-a3.json"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/actual-a3-client-and-source-copy/lanl-detached-passive-observer-launch-original-20261008-a3.stderr",
+      "bytes": 0,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original parent administrative source-copy or launch/client custody; no selected admission",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_path": "/private/tmp/lanl-detached-passive-observer-launch-original-20261008-a3.stderr"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/actual-a3-client-and-source-copy/lanl-passive-receipt-scope-source-copy-original-20261008-a1.json",
+      "bytes": 2796,
+      "custody_seal_disposition": "original_unsealed_no_identity",
+      "original_canonical_ensure_ascii_field": "ABSENT",
+      "original_identity_sha256_field": "ABSENT",
+      "original_json_sealed_field": false,
+      "role": "Original parent administrative source-copy or launch/client custody; no selected admission",
+      "sha256": "5e6e21aa6074520744cc6006bd4ad9cf933255ede3f41279b416aa862ebe1b0e",
+      "source_path": "/private/tmp/lanl-passive-receipt-scope-source-copy-original-20261008-a1.json"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/actual-a3-client-and-source-copy/lanl-passive-receipt-scope-source-copy-original-20261008-a1.stderr",
+      "bytes": 271,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original parent administrative source-copy or launch/client custody; no selected admission",
+      "sha256": "1fff935816724822ad4883f8f5323d15bfb766ffe253fd470a223089ebd376ec",
+      "source_path": "/private/tmp/lanl-passive-receipt-scope-source-copy-original-20261008-a1.stderr"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/corrected-source-package/lanl_consumed_detached_source_guard_r5_20261008_a1.py",
+      "bytes": 88872,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Selected source-only correction or pin derivative; control main NOT RUN",
+      "sha256": "a84dc9ca7ccd20e6485cc8e9a2007b3b982fad9c5ae19dacbb1f164d664748cb",
+      "source_path": "/private/tmp/lanl_consumed_detached_source_guard_r5_20261008_a1.py"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/corrected-source-package/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r6.py",
+      "bytes": 58750,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Selected source-only correction or pin derivative; control main NOT RUN",
+      "sha256": "488fb42df44d338204b5cff58b10e7f0ff9c7feaee6490b33ba94201ba4f7665",
+      "source_path": "/private/tmp/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r6.py"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/corrected-source-package/lanl17_detach_exact_R4_storage_administration_20261008_a1_r4.py",
+      "bytes": 24000,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Selected source-only correction or pin derivative; control main NOT RUN",
+      "sha256": "52f379d99721c51677ba44a1e9f3d55138527e26be1073c6267fbe09c8a93853",
+      "source_path": "/private/tmp/lanl17_detach_exact_R4_storage_administration_20261008_a1_r4.py"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/corrected-source-package/lanl17_detach_passive_observer_administration_20261008_a1_r5.py",
+      "bytes": 15359,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Selected source-only correction or pin derivative; control main NOT RUN",
+      "sha256": "fb0a7cf1e6b6a2dbfeb8a91d5d2651a15044d7da51631d42d891d236b8de9da0",
+      "source_path": "/private/tmp/lanl17_detach_passive_observer_administration_20261008_a1_r5.py"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/pin-propagation/lanl17-passive-wrapper-r5-complete-r4-pin-derivation-20261008.diff",
+      "bytes": 1259,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original complete literal pin derivation diff; byte-exact including whitespace",
+      "sha256": "1221b7a21e519f739bc13d2e835fbf95346d9aebbd3fe4d5b4dd37e5bc84496b",
+      "source_path": "/private/tmp/lanl17-passive-wrapper-r5-complete-r4-pin-derivation-20261008.diff"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/pin-propagation/lanl17-R4-wrapper-r4-complete-r3-pin-derivation-20261008.diff",
+      "bytes": 1226,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original complete literal pin derivation diff; byte-exact including whitespace",
+      "sha256": "e448eb0e7a6144fe175023b957a425ad905df79c6ad41384c211cc94b0c06293",
+      "source_path": "/private/tmp/lanl17-R4-wrapper-r4-complete-r3-pin-derivation-20261008.diff"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/pin-propagation/lanl_read_detached_passive_observer_administration_originals_20261008_a4.py",
+      "bytes": 4820,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original selected source-only pin derivative; NOT RUN",
+      "sha256": "08d0fccb8c974baa722a64d8ef916662074d05514f67742d0be41d2ef895d2e7",
+      "source_path": "/private/tmp/lanl_read_detached_passive_observer_administration_originals_20261008_a4.py"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/pin-propagation/lanl17-passive-original-collector-a4-complete-a3-pin-derivation-20261008.diff",
+      "bytes": 2996,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original complete literal pin derivation diff; byte-exact including whitespace",
+      "sha256": "2edc1104a786f347feca9f6806b11d81ad5cd2df87a5f472f44b3bcb5df02f4c",
+      "source_path": "/private/tmp/lanl17-passive-original-collector-a4-complete-a3-pin-derivation-20261008.diff"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/pin-propagation/lanl_decode_detached_passive_observer_original_custody_20261008_a4.py",
+      "bytes": 6361,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original selected source-only pin derivative; NOT RUN",
+      "sha256": "94717bb0a1ab642247395c35b8f9fe91efdb1742dcc97e530e2214cee51a939a",
+      "source_path": "/private/tmp/lanl_decode_detached_passive_observer_original_custody_20261008_a4.py"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/pin-propagation/lanl17-passive-original-decoder-a4-complete-a3-pin-derivation-20261008.diff",
+      "bytes": 3516,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original complete literal pin derivation diff; byte-exact including whitespace",
+      "sha256": "1a2b8b008b36aee52a82fb3c2fede29dd5ec558ec0b7ca8d213cf6e8cc61d67f",
+      "source_path": "/private/tmp/lanl17-passive-original-decoder-a4-complete-a3-pin-derivation-20261008.diff"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/pin-propagation/lanl_read_detached_R4_administration_originals_20261008_a1_r2.py",
+      "bytes": 11461,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original selected source-only pin derivative; NOT RUN",
+      "sha256": "8007afa655675ceed6e816b70ba3bbcb9d6e98ce47fe77d98fe02a5ab2e0111f",
+      "source_path": "/private/tmp/lanl_read_detached_R4_administration_originals_20261008_a1_r2.py"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/pin-propagation/lanl17-R4-original-collector-r2-complete-a1-pin-derivation-20261008.diff",
+      "bytes": 2024,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original complete literal pin derivation diff; byte-exact including whitespace",
+      "sha256": "8acff4d1e3ee6e4dff961a417d61646deb0502a8cdb9404d507fdbab9ffcf362",
+      "source_path": "/private/tmp/lanl17-R4-original-collector-r2-complete-a1-pin-derivation-20261008.diff"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/pin-propagation/lanl_decode_detached_R4_original_custody_20261008_a1_r2.py",
+      "bytes": 13441,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original selected source-only pin derivative; NOT RUN",
+      "sha256": "3ac2bcca1040ff4ec9ec1c6ffaa94f2d4ccd79e9203a9ca6d763d56665fe1372",
+      "source_path": "/private/tmp/lanl_decode_detached_R4_original_custody_20261008_a1_r2.py"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/pin-propagation/lanl17-R4-original-decoder-r2-complete-a1-pin-derivation-20261008.diff",
+      "bytes": 1881,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original complete literal pin derivation diff; byte-exact including whitespace",
+      "sha256": "81a1646427545a5dbffe9b14dca7329ed1f042898eb22398a21ef309c558bfed",
+      "source_path": "/private/tmp/lanl17-R4-original-decoder-r2-complete-a1-pin-derivation-20261008.diff"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/pin-propagation/lanl17-setgid-fix-pin-propagation-exact-reversal-manifest-20261008-a1.json",
+      "bytes": 11320,
+      "custody_seal_disposition": "original_unsealed_no_identity",
+      "original_canonical_ensure_ascii_field": "ABSENT",
+      "original_identity_sha256_field": "ABSENT",
+      "original_json_sealed_field": false,
+      "role": "Original source-only UNSEALED reversal preparation or handoff",
+      "sha256": "c70e2b9ceb018c84616b04bdf4a1481d0a46a2dc9091c1698da8143beada192f",
+      "source_path": "/private/tmp/lanl17-setgid-fix-pin-propagation-exact-reversal-manifest-20261008-a1.json"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/pin-propagation/lanl17-setgid-fix-pin-propagation-source-handoff-20261008-a1.md",
+      "bytes": 4004,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original source-only UNSEALED reversal preparation or handoff",
+      "sha256": "78a64ac633cc7f7a478efbd7af86922bba9c6a2c35991d5f810959381d7d5793",
+      "source_path": "/private/tmp/lanl17-setgid-fix-pin-propagation-source-handoff-20261008-a1.md"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/core-source-preparation/lanl17-setgid-guard-complete-original-derivation-20261008-a1.diff",
+      "bytes": 963,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original source-only correction derivation/preparation; original NOTRUN chronology retained",
+      "sha256": "ae3daf3478ecdda42b726efcbbc4e68fea4c2ce5be66658730b407b2530227f9",
+      "source_path": "/private/tmp/lanl17-setgid-guard-complete-original-derivation-20261008-a1.diff"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/core-source-preparation/lanl17-setgid-observer-complete-original-derivation-20261008-a1.diff",
+      "bytes": 881,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original source-only correction derivation/preparation; original NOTRUN chronology retained",
+      "sha256": "4313e908f3b9be609d9f57911c409f748cc5a3f04edaf265605bbf2720d45c09",
+      "source_path": "/private/tmp/lanl17-setgid-observer-complete-original-derivation-20261008-a1.diff"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/core-source-preparation/lanl17-setgid-root-correction-static-source-comparison-20261008-a1.json",
+      "bytes": 3328,
+      "custody_seal_disposition": "original_unsealed_no_identity",
+      "original_canonical_ensure_ascii_field": "ABSENT",
+      "original_identity_sha256_field": "ABSENT",
+      "original_json_sealed_field": false,
+      "role": "Original source-only correction derivation/preparation; original NOTRUN chronology retained",
+      "sha256": "235b04095abcd3494ec1d42f8370d5490a9e2dc4de1975f95a7638b01c4997d9",
+      "source_path": "/private/tmp/lanl17-setgid-root-correction-static-source-comparison-20261008-a1.json"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/core-source-preparation/lanl17-setgid-root-correction-source-handoff-20261008-a1.md",
+      "bytes": 5531,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original source-only correction derivation/preparation; original NOTRUN chronology retained",
+      "sha256": "ff4969f586ae8ba87ba93deda540c2be682a1954c5a82b8d817ca1194985d435",
+      "source_path": "/private/tmp/lanl17-setgid-root-correction-source-handoff-20261008-a1.md"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/one-local-synthetic-batch/lanl17_setgid_root_virtual_path_regression_source_20261008_a1.py",
+      "bytes": 9064,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original ONE later local 15-case virtual-path batch custody; selected guard/observer main not invoked",
+      "sha256": "1ff994f06bcfb26423137aea89cc415ffcb9e6facacb5dcd4f32fe9b73994e93",
+      "source_path": "/private/tmp/lanl17_setgid_root_virtual_path_regression_source_20261008_a1.py"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/one-local-synthetic-batch/lanl17-setgid-root-virtual-path-regression-actual-20261008-a1.json",
+      "bytes": 1247,
+      "custody_seal_disposition": "original_unsealed_no_identity",
+      "original_canonical_ensure_ascii_field": "ABSENT",
+      "original_identity_sha256_field": "ABSENT",
+      "original_json_sealed_field": false,
+      "role": "Original ONE later local 15-case virtual-path batch custody; selected guard/observer main not invoked",
+      "sha256": "e4e20504d762d713149de3983c4aea70a2995eda09b9451dba607ba21f0a6a76",
+      "source_path": "/private/tmp/lanl17-setgid-root-virtual-path-regression-actual-20261008-a1.json"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/one-local-synthetic-batch/lanl17-setgid-root-virtual-path-regression-actual-20261008-a1.stdout",
+      "bytes": 0,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original ONE later local 15-case virtual-path batch custody; selected guard/observer main not invoked",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_path": "/private/tmp/lanl17-setgid-root-virtual-path-regression-actual-20261008-a1.stdout"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/one-local-synthetic-batch/lanl17-setgid-root-virtual-path-regression-actual-20261008-a1.stderr",
+      "bytes": 1958,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original ONE later local 15-case virtual-path batch custody; selected guard/observer main not invoked",
+      "sha256": "fc49e7bfa08788d10e9bee42e206066f7849ddbfc46aff32504acdef6e59a07b",
+      "source_path": "/private/tmp/lanl17-setgid-root-virtual-path-regression-actual-20261008-a1.stderr"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/logical-mapping-and-source-provenance/lanl17-expanded-original-RAW-digest-route-mapping-20261008-a1-r3.json",
+      "bytes": 280366,
+      "custody_seal_disposition": "original_unsealed_no_identity",
+      "original_canonical_ensure_ascii_field": "ABSENT",
+      "original_identity_sha256_field": "ABSENT",
+      "original_json_sealed_field": false,
+      "role": "Original historical/source/logical route mapping or parent review; not current global stability or clearance",
+      "sha256": "240179a0f7686fde74a388064883ef7e120a55ff338a2d138bc0ca11264fdb68",
+      "source_path": "/private/tmp/lanl17-expanded-original-RAW-digest-route-mapping-20261008-a1-r3.json"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/logical-mapping-and-source-provenance/lanl17-logically-resolved107-original-RAW-claim-mapping-20261008-a1-r4.json",
+      "bytes": 321391,
+      "custody_seal_disposition": "original_unsealed_no_identity",
+      "original_canonical_ensure_ascii_field": "ABSENT",
+      "original_identity_sha256_field": "ABSENT",
+      "original_json_sealed_field": false,
+      "role": "Original historical/source/logical route mapping or parent review; not current global stability or clearance",
+      "sha256": "491cbfbf92c0e0c6368162b6dd1a9d60131e00e6e9337ba2edfb832f3452ac85",
+      "source_path": "/private/tmp/lanl17-logically-resolved107-original-RAW-claim-mapping-20261008-a1-r4.json"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/logical-mapping-and-source-provenance/lanl17-all98-RAW-claims-failed-a3-mechanical-comparison-20261008-a1.json",
+      "bytes": 231390,
+      "custody_seal_disposition": "original_unsealed_no_identity",
+      "original_canonical_ensure_ascii_field": "ABSENT",
+      "original_identity_sha256_field": "ABSENT",
+      "original_json_sealed_field": false,
+      "role": "Original historical/source/logical route mapping or parent review; not current global stability or clearance",
+      "sha256": "9227aa09f8f3cbb0ea8490177880d706b62a800404b116eb99d08724f8eb6855",
+      "source_path": "/private/tmp/lanl17-all98-RAW-claims-failed-a3-mechanical-comparison-20261008-a1.json"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/logical-mapping-and-source-provenance/lanl17-O1-source-provenance-and-historical-reference-taxonomy-20261008-a1.md",
+      "bytes": 3762,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original historical/source/logical route mapping or parent review; not current global stability or clearance",
+      "sha256": "631e75f3ba356ae6de605a114579c460a51b45b1b4ab41c792f13210992034f8",
+      "source_path": "/private/tmp/lanl17-O1-source-provenance-and-historical-reference-taxonomy-20261008-a1.md"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/logical-mapping-and-source-provenance/lanl17-O7-four-input-routes-source-and-failed-a3-metadata-20261008-a1.json",
+      "bytes": 12677,
+      "custody_seal_disposition": "original_unsealed_no_identity",
+      "original_canonical_ensure_ascii_field": "ABSENT",
+      "original_identity_sha256_field": "ABSENT",
+      "original_json_sealed_field": false,
+      "role": "Original historical/source/logical route mapping or parent review; not current global stability or clearance",
+      "sha256": "552137e12fc70be3e6e8af06443e4ea57930865c7db5f1a109a3700bb9a213a9",
+      "source_path": "/private/tmp/lanl17-O7-four-input-routes-source-and-failed-a3-metadata-20261008-a1.json"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/logical-mapping-and-source-provenance/lanl17-resolved107-original-mapping-parent-review-20261008-a1.json",
+      "bytes": 1060,
+      "custody_seal_disposition": "original_unsealed_no_identity",
+      "original_canonical_ensure_ascii_field": "ABSENT",
+      "original_identity_sha256_field": "ABSENT",
+      "original_json_sealed_field": false,
+      "role": "Original historical/source/logical route mapping or parent review; not current global stability or clearance",
+      "sha256": "96e4d5eece331dee576624bedff3ed6914b5cfee8fa95305d4cb5fec7fc96152",
+      "source_path": "/private/tmp/lanl17-resolved107-original-mapping-parent-review-20261008-a1.json"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/original-bounded-readonly-queries/lanl17-readonly-O7-original-input-file-hashes-20261008-a1.py",
+      "bytes": 2559,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original finite administrative query source or passive byte/stat/hash observation; no raw bodies or admission",
+      "sha256": "ddcf60b8aaae4b7bb04558e58168986f7ef024d97f37238b40e3420f0fddc27a",
+      "source_path": "/private/tmp/lanl17-readonly-O7-original-input-file-hashes-20261008-a1.py"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/original-bounded-readonly-queries/lanl17-O7-original-input-file-hash-observation-20261008-a1.json",
+      "bytes": 2437,
+      "custody_seal_disposition": "original_unsealed_no_identity",
+      "original_canonical_ensure_ascii_field": "ABSENT",
+      "original_identity_sha256_field": "ABSENT",
+      "original_json_sealed_field": false,
+      "role": "Original finite administrative query source or passive byte/stat/hash observation; no raw bodies or admission",
+      "sha256": "ae8cde6da0dbfcc5f4366de80227647fa55fc0dfd68462aa831bc23de6ea7ad8",
+      "source_path": "/private/tmp/lanl17-O7-original-input-file-hash-observation-20261008-a1.json"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/original-bounded-readonly-queries/lanl17-O7-original-input-file-hash-observation-20261008-a1.stderr",
+      "bytes": 0,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original finite administrative query source or passive byte/stat/hash observation; no raw bodies or admission",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_path": "/private/tmp/lanl17-O7-original-input-file-hash-observation-20261008-a1.stderr"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/original-bounded-readonly-queries/lanl17-readonly-protected-route-and-staged-alias-metadata-20261008-a1.py",
+      "bytes": 16880,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original finite administrative query source or passive byte/stat/hash observation; no raw bodies or admission",
+      "sha256": "82cf0630a7169906f8c5633c731b43966cc8a3deaf5f8a66c6b8b9ebe534f2a5",
+      "source_path": "/private/tmp/lanl17-readonly-protected-route-and-staged-alias-metadata-20261008-a1.py"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/original-bounded-readonly-queries/lanl17-protected-route-and-staged-alias-metadata-original-20261008-a1.json",
+      "bytes": 74403,
+      "custody_seal_disposition": "original_unsealed_no_identity",
+      "original_canonical_ensure_ascii_field": "ABSENT",
+      "original_identity_sha256_field": "ABSENT",
+      "original_json_sealed_field": false,
+      "role": "Original finite administrative query source or passive byte/stat/hash observation; no raw bodies or admission",
+      "sha256": "d22c7dd7bfad51f30de713d7d848119d11d521934bc8f6addcbea404034b07ef",
+      "source_path": "/private/tmp/lanl17-protected-route-and-staged-alias-metadata-original-20261008-a1.json"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/original-bounded-readonly-queries/lanl17-protected-route-and-staged-alias-metadata-original-20261008-a1.stderr",
+      "bytes": 0,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original finite administrative query source or passive byte/stat/hash observation; no raw bodies or admission",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_path": "/private/tmp/lanl17-protected-route-and-staged-alias-metadata-original-20261008-a1.stderr"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/original-ALL3-and-A40/lanl14-final-report-status-observed-20261008-a3.json",
+      "bytes": 4868,
+      "custody_seal_disposition": "original_unsealed_no_identity",
+      "original_canonical_ensure_ascii_field": "ABSENT",
+      "original_identity_sha256_field": "ABSENT",
+      "original_json_sealed_field": "ABSENT",
+      "role": "Original parent observation/status; historical timestamp, no current-state inference",
+      "sha256": "e1b200c9054c6b1b8f941594c3185df42b83fd51c82be492f300d91e4758e30a",
+      "source_path": "/private/tmp/lanl14-final-report-status-observed-20261008-a3.json"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/original-ALL3-and-A40/lanl14-final-report-status-observed-20261008-a3.stderr",
+      "bytes": 0,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original parent observation/status; historical timestamp, no current-state inference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_path": "/private/tmp/lanl14-final-report-status-observed-20261008-a3.stderr"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/original-ALL3-and-A40/lanl14-owned-final-runtime-tree-observed-20261008-a3.json",
+      "bytes": 282,
+      "custody_seal_disposition": "original_unsealed_no_identity",
+      "original_canonical_ensure_ascii_field": "ABSENT",
+      "original_identity_sha256_field": "ABSENT",
+      "original_json_sealed_field": "ABSENT",
+      "role": "Original parent observation/status; historical timestamp, no current-state inference",
+      "sha256": "4f45b99eeca0990a417a285a1bd0c43d94805cac26c38a625ef1e3681d615166",
+      "source_path": "/private/tmp/lanl14-owned-final-runtime-tree-observed-20261008-a3.json"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/original-ALL3-and-A40/lanl14-owned-final-runtime-tree-observed-20261008-a3.stderr",
+      "bytes": 0,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original parent observation/status; historical timestamp, no current-state inference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_path": "/private/tmp/lanl14-owned-final-runtime-tree-observed-20261008-a3.stderr"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/original-ALL3-and-A40/lanl-cpu-future-status-observed-20261008-a3.json",
+      "bytes": 6372,
+      "custody_seal_disposition": "original_unsealed_no_identity",
+      "original_canonical_ensure_ascii_field": "ABSENT",
+      "original_identity_sha256_field": "ABSENT",
+      "original_json_sealed_field": "ABSENT",
+      "role": "Original parent observation/status; historical timestamp, no current-state inference",
+      "sha256": "74a90b260699a9ac1ca25d2bd7e47535683a927a06d315f70229b7c646f8246a",
+      "source_path": "/private/tmp/lanl-cpu-future-status-observed-20261008-a3.json"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/original-ALL3-and-A40/lanl-cpu-future-status-observed-20261008-a3.stderr",
+      "bytes": 0,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original parent observation/status; historical timestamp, no current-state inference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_path": "/private/tmp/lanl-cpu-future-status-observed-20261008-a3.stderr"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/original-ALL3-and-A40/lanl-progress-parent-status-original-20261008-a40.json",
+      "bytes": 3760,
+      "custody_seal_disposition": "original_unsealed_no_identity",
+      "original_canonical_ensure_ascii_field": "ABSENT",
+      "original_identity_sha256_field": "ABSENT",
+      "original_json_sealed_field": false,
+      "role": "Original parent observation/status; historical timestamp, no current-state inference",
+      "sha256": "c8e9926cf3d931553eb4632909881c7301eaf31a536fcc97835248a2e0ec9594",
+      "source_path": "/private/tmp/lanl-progress-parent-status-original-20261008-a40.json"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/original-C-ref-restoration/lanl_restore_exact_retained_C_ref_20261008_a1.py",
+      "bytes": 9294,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original exact retained-C ref restoration administrative source/custody; no checkout or science change",
+      "sha256": "3fb254135ab6944aa660f93d88bd653e34a177f55f214da173499d8ada76e25b",
+      "source_path": "/private/tmp/lanl_restore_exact_retained_C_ref_20261008_a1.py"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/original-C-ref-restoration/lanl-retained-C-ref-restoration-original-20261008-a1.json",
+      "bytes": 2952,
+      "custody_seal_disposition": "original_unsealed_no_identity",
+      "original_canonical_ensure_ascii_field": "ABSENT",
+      "original_identity_sha256_field": "ABSENT",
+      "original_json_sealed_field": false,
+      "role": "Original exact retained-C ref restoration administrative source/custody; no checkout or science change",
+      "sha256": "aab81e8cb8500665c4f0871d1afcaef460fcfce2f96db6b3bd68bbe729f308b5",
+      "source_path": "/private/tmp/lanl-retained-C-ref-restoration-original-20261008-a1.json"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/original-C-ref-restoration/lanl-retained-C-ref-restoration-original-20261008-a1.stderr",
+      "bytes": 0,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original exact retained-C ref restoration administrative source/custody; no checkout or science change",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_path": "/private/tmp/lanl-retained-C-ref-restoration-original-20261008-a1.stderr"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/original-alias-map/lanl17-original-staged-future-source-alias-map-20261008-a1.json",
+      "bytes": 17357,
+      "custody_seal_disposition": "original_unsealed_no_identity",
+      "original_canonical_ensure_ascii_field": "ABSENT",
+      "original_identity_sha256_field": "ABSENT",
+      "original_json_sealed_field": false,
+      "role": "Original logical 15-alias map; current physical query is separately retained",
+      "sha256": "3580d732064ef55e2f75589f8c9e3d4ca0c70ccddb7d450565b93c4c13b8cb7f",
+      "source_path": "/private/tmp/lanl17-original-staged-future-source-alias-map-20261008-a1.json"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/prospective-Git-only-copy/lanl_copy_reviewed_private_setgid_storage_sources_from_git_20261008_a1.py",
+      "bytes": 6664,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original future source-only Git copier/preparation or parent source acceptance; new copy and selected mains NOT RUN",
+      "sha256": "6de29630735b67cbbd71e5443141af25bdf5dacebd9b968afdbaa1f5f3a36c79",
+      "source_path": "/private/tmp/lanl_copy_reviewed_private_setgid_storage_sources_from_git_20261008_a1.py"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/prospective-Git-only-copy/lanl17-private-setgid-source-copy-complete-original-derivation-20261008-a1.diff",
+      "bytes": 1830,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original future source-only Git copier/preparation or parent source acceptance; new copy and selected mains NOT RUN",
+      "sha256": "992714bf404b8f980c91e7f7ae2af8de595dc7141c72a878842318bb7927b853",
+      "source_path": "/private/tmp/lanl17-private-setgid-source-copy-complete-original-derivation-20261008-a1.diff"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/prospective-Git-only-copy/lanl17-private-setgid-source-copy-static-literal-manifest-20261008-a1.json",
+      "bytes": 2946,
+      "custody_seal_disposition": "original_unsealed_no_identity",
+      "original_canonical_ensure_ascii_field": "ABSENT",
+      "original_identity_sha256_field": "ABSENT",
+      "original_json_sealed_field": false,
+      "role": "Original future source-only Git copier/preparation or parent source acceptance; new copy and selected mains NOT RUN",
+      "sha256": "79b05f3c81c7836ad3fbe1aec986fff218fbf02660c7e542b84964215318bd86",
+      "source_path": "/private/tmp/lanl17-private-setgid-source-copy-static-literal-manifest-20261008-a1.json"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/prospective-Git-only-copy/lanl17-private-setgid-source-copy-source-handoff-20261008-a1.md",
+      "bytes": 3180,
+      "custody_seal_disposition": "original_bytes_no_new_seal",
+      "role": "Original future source-only Git copier/preparation or parent source acceptance; new copy and selected mains NOT RUN",
+      "sha256": "0e8bb3699e69a82264062b120bdc99429bd8fd9db78249a33fc91ec2f410a29d",
+      "source_path": "/private/tmp/lanl17-private-setgid-source-copy-source-handoff-20261008-a1.md"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1/prospective-Git-only-copy/lanl17-private-setgid-correction-parent-source-review-20261008-a1.json",
+      "bytes": 2829,
+      "custody_seal_disposition": "original_unsealed_no_identity",
+      "original_canonical_ensure_ascii_field": "ABSENT",
+      "original_identity_sha256_field": "ABSENT",
+      "original_json_sealed_field": false,
+      "role": "Original future source-only Git copier/preparation or parent source acceptance; new copy and selected mains NOT RUN",
+      "sha256": "8bd26f86f45422983d26ae3f931ee380f60ae87799830794fed8fec3408acc69",
+      "source_path": "/private/tmp/lanl17-private-setgid-correction-parent-source-review-20261008-a1.json"
+    }
+  ],
+  "prior_preservation": {
+    "F6": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+    "Python_files": 185,
+    "SWDB_namespace_equal_immutable_C": true,
+    "SWDB_namespace_files": 223,
+    "SWDB_namespace_mode_kind_oid_inventory_sha256": "2fcfc5394f78da9f347b3b95653d637dbf05af8e6aaa101d3a5f786256494968",
+    "all_prior_issues_map_progress_rootdocs_history_modes_protected": true,
+    "canonical_YAML_count": 704,
+    "canonical_mode_kind_oid_inventory_sha256": "f0350b88722e34e52571981e2ed5e4057fbd8f460ec2b78f090c69be70346d5b",
+    "immutable_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+    "mode_kind_oid_inventory_sha256": "f1bab04fe6f68aa78b4e8ec99db2ed95923e4f695cacc712314590243dc0764b",
+    "tracked_entry_count": 4495
+  },
+  "separate_local_synthetic_actual": {
+    "bodies": 15,
+    "parent_single_batch_return_code": 0,
+    "runtime_originals_unsealed": true,
+    "selected_guard_or_observer_main_ran": false
+  },
+  "staged_whitespace_policy": "Exclude only original *.diff context whitespace; every other added path checked normally"
+}

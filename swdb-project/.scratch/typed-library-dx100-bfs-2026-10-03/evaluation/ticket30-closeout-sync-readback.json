@@ -1,0 +1,129 @@
+{
+  "updated_et": "2026-10-03 19:06 ET",
+  "state": "source_compact_metadata_sync_verified",
+  "actual_readback": {
+    "started_utc": "2026-10-03T23:04:55.932470+00:00",
+    "branch": "yanrujhou_main",
+    "source_before": "9156fac01fc3315d053231eb3b3739300f2348e9",
+    "leases_before": [
+      {
+        "name": "mbit10-evaluation-node0",
+        "kernel_held": false,
+        "metadata_state": "released",
+        "generation": 447
+      },
+      {
+        "name": "mbit10-evaluation-node1",
+        "kernel_held": false,
+        "metadata_state": "released",
+        "generation": 506
+      },
+      {
+        "name": "mbit10-evaluation",
+        "kernel_held": false,
+        "metadata_state": "released",
+        "generation": 77
+      }
+    ],
+    "owned_processes_before": [],
+    "load": "19:04:55 up 64 days, 11:23, 10 users,  load average: 1.16, 1.07, 1.09",
+    "disk": "Filesystem         1B-blocks          Used   Available Use% Mounted on\n/dev/sdd1      1967300780032 1823548919808 43742982144  98% /data1\n/dev/sdb1      1967300780032 1788454330368 78837571584  96% /data",
+    "fetch_output": "not repeated; readonly final readback after preceding actual FF",
+    "leases_immediately_before_ff": [
+      {
+        "name": "mbit10-evaluation-node0",
+        "kernel_held": false,
+        "metadata_state": "released",
+        "generation": 447
+      },
+      {
+        "name": "mbit10-evaluation-node1",
+        "kernel_held": false,
+        "metadata_state": "released",
+        "generation": 506
+      },
+      {
+        "name": "mbit10-evaluation",
+        "kernel_held": false,
+        "metadata_state": "released",
+        "generation": 77
+      }
+    ],
+    "ff_output": "not repeated; preceding FF completed, first readback helper failed at dict .data access",
+    "finished_utc": "2026-10-03T23:05:07.191800+00:00",
+    "source_after": "9156fac01fc3315d053231eb3b3739300f2348e9",
+    "origin_branch": "9156fac01fc3315d053231eb3b3739300f2348e9",
+    "valid_records": 481,
+    "library_state_counts": {
+      "shared/certified": 2,
+      "shared/evaluated_on_target": 19
+    },
+    "comparisons": {
+      "typed-library-bfs-gem5-20261003-a2.recovery.r1.w0.comparison": {
+        "canonical_sha256": "ce26c3453508a6a2b86b5676127477706a31878d6aec516447e77ab546f178c5",
+        "roi_speedup": 1.6000498932475729
+      },
+      "typed-library-bfs-gem5-20261003-a2.recovery.r1.w1.comparison": {
+        "canonical_sha256": "025d9294857b76ebfc2829b60ec5c909251d3b98d6281be9529765d8b82f0c5e",
+        "roi_speedup": 1.4027646957261597
+      }
+    },
+    "prepared_payload_hashes": {
+      "plain_sha256": "fc44da3d68962be6ab29a6cafb4198d174027c0179097d6602006cdff5fd37b2",
+      "html_sha256": "718f5fddd16c196f8f4c3789ff1f386f264e4f31e14e2ba05ad9d53e73002eb4",
+      "payload_file_sha256": "f5410466317f1f9f08fbeedd7590786d78ad61bd41b6677138f8ef485fd59718"
+    },
+    "ticket30_state": "blocked_by_automatic_approval_review",
+    "blocked_receipt_sha256": "979319e1b7ddaf56029a52025a17cb0b9c10b02dc9a3d697f4a92f0fa6928480",
+    "leases_after": [
+      {
+        "name": "mbit10-evaluation-node0",
+        "kernel_held": false,
+        "metadata_state": "released",
+        "generation": 447
+      },
+      {
+        "name": "mbit10-evaluation-node1",
+        "kernel_held": false,
+        "metadata_state": "released",
+        "generation": 506
+      },
+      {
+        "name": "mbit10-evaluation",
+        "kernel_held": false,
+        "metadata_state": "released",
+        "generation": 77
+      }
+    ],
+    "owned_processes_after": [],
+    "tracked_changes": "",
+    "independent_audit_sha256": "49a345080a92b04cbc2396f7bf0ccb58319676f458859e7e276c5f5a6314bcaa",
+    "independent_wrapper_sha256": "ef81ba297c9f3569e0764668c8b7bbe00355c0e9e355509a62652421750cce5a"
+  },
+  "initial_sync_helper": {
+    "state": "failed_after_actual_fast_forward",
+    "actual_result": {
+      "chunk_id": "c0ccae",
+      "wall_time_seconds": 0.000011875,
+      "exit_code": 1,
+      "original_token_count": 69,
+      "output": "From github.com:petecao/ArchEvolve\n * branch            yanrujhou_main -> FETCH_HEAD\n   3e9061b..9156fac  yanrujhou_main -> origin/yanrujhou_main\nTraceback (most recent call last):\n  File \"<stdin>\", line 45, in <module>\nAttributeError: 'dict' object has no attribute 'data'\n"
+    },
+    "reason": "Readonly helper incorrectly used .data on Store.get(), which returns a dict. Actual Git FF had completed. Corrected read-only verification reran no measurement/public command or Git mutation."
+  },
+  "standing_approval": "Related pushes/source synchronization authorized; external ticket30 send rejected and remains unsent.",
+  "ticket_states": {
+    "resolved": 33,
+    "needs_info": [
+      "30"
+    ],
+    "ready_for_human": [
+      "02",
+      "37"
+    ],
+    "wontfix": [
+      "31"
+    ]
+  },
+  "scope": "This receipt verifies exact checkpoint9156fac after actual Git FF. Its compact follow-up publication and final FF are separately verified by root; measured binaries/protocol/raw evidence unchanged. Ticket30 delivery/team claim is incomplete and no retry occurred."
+}

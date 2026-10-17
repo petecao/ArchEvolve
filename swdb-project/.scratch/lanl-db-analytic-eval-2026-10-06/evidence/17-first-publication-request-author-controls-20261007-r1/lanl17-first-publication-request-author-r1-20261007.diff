@@ -1,0 +1,13 @@
+--- /private/tmp/lanl17_author_first_publication_request_20261007.py
++++ /private/tmp/lanl17_author_first_publication_request_r1_20261007.py
+@@ -377,8 +377,8 @@
+     pins = [spec_pin, own_pin]
+     require(isinstance(spec['read_roots'], list) and 0 < len(spec['read_roots']) <= 16, 'bounded_explicit_read_roots_required')
+     roots = [checked_path(root, directory=True) for root in spec['read_roots']]
+-    require(len(set(roots)) == len(roots) and all(root.is_relative_to(Path('/data/yanruj')) or
+-            root.is_relative_to(Path('/data1/yanruj')) for root in roots), 'explicit_owned_external_read_roots_required')
++    require(len(set(roots)) == len(roots) and all(str(root).startswith(('/data/yanruj/',
++            '/data1/yanruj/')) for root in roots), 'explicit_owned_external_read_roots_required')
+     exact(spec['controls'], CONTROL_HASHES, 'exact_original_control_plan_pin_set_required')
+     controls = {}
+     for name, expected in CONTROL_HASHES.items():

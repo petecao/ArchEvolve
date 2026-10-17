@@ -1,0 +1,214 @@
+{
+  "actual_project_or_shared_files_edited": false,
+  "date": "2026-10-16 ET",
+  "files": {
+    "swdb/_dx100_whole/memory_normalized_capture_ingress_v1.py": {
+      "basis": {
+        "bytes": 24921,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-memory-production-v1/proposed/swdb/_dx100_whole/memory_normalized_capture_ingress_v1.py",
+        "sha256": "d0e61c85bcc4f0dc5e6f103f53c402cfd4988237f6ba5ba70c32a14ae50c5fa7"
+      },
+      "replacements": [
+        {
+          "count": 1,
+          "new": "f05980d1cc52fce7026247eea0b625af734ed42526ebcb337c270090071b1a47",
+          "old": "e5b4b27cda6c1ace50bbde3d3118d016db09e4631a7d3e4ac0073fa4deb4c313"
+        },
+        {
+          "count": 4,
+          "new": "source.semantic_compiler",
+          "old": "source.compiler"
+        },
+        {
+          "count": 1,
+          "new": "memory_compiler.CONSUMER_SHA",
+          "old": "memory_compiler.LEGACY_SHA"
+        },
+        {
+          "count": 1,
+          "new": "memory_compiler.consumer",
+          "old": "memory_compiler.legacy"
+        },
+        {
+          "count": 1,
+          "new": "one selected semantic full-TU consumer required",
+          "old": "one unchanged generic full-TU consumer required"
+        }
+      ]
+    },
+    "swdb/_dx100_whole/memory_normalized_compiler_adapter_v1.py": {
+      "basis": {
+        "bytes": 5440,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-memory-production-v1/proposed/swdb/_dx100_whole/memory_normalized_compiler_adapter_v1.py",
+        "sha256": "e5b4b27cda6c1ace50bbde3d3118d016db09e4631a7d3e4ac0073fa4deb4c313"
+      },
+      "replacements": [
+        {
+          "count": 1,
+          "new": "compiler_unit_adapter_v4 as consumer",
+          "old": "compiler_unit_adapter_v3 as legacy"
+        },
+        {
+          "count": 1,
+          "new": "b5bd7293259f69ffe4e5d6094cb6bd46c2d5527ef95cd28d0aaa95d88529e6c6",
+          "old": "775ab2ecf6068153a6167473129dcd416dc2727c9afe0ef6e0846bab62d3085c"
+        },
+        {
+          "count": 3,
+          "new": "CONSUMER_SHA",
+          "old": "LEGACY_SHA"
+        },
+        {
+          "count": 1,
+          "new": "consumer.__file__",
+          "old": "legacy.__file__"
+        },
+        {
+          "count": 1,
+          "new": "consumer.prepare_unit",
+          "old": "legacy.prepare_unit"
+        },
+        {
+          "count": 1,
+          "new": "selected semantic TU consumer",
+          "old": "unchanged TU consumer"
+        },
+        {
+          "count": 1,
+          "new": "selected semantic compiler consumer required",
+          "old": "unchanged generic compiler consumer required"
+        },
+        {
+          "count": 1,
+          "new": "semantic compiler consumer changed",
+          "old": "generic compiler consumer changed"
+        },
+        {
+          "count": 1,
+          "new": "selected semantic ABI reader must identify",
+          "old": "unchanged legacy ABI reader must identify"
+        }
+      ]
+    },
+    "swdb/_dx100_whole/normalized_capture_ingress_v2.py": {
+      "basis": {
+        "bytes": 26112,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-memory-production-v1/proposed/swdb/_dx100_whole/normalized_capture_ingress_v2.py",
+        "sha256": "c19691308f7ae20c8d08627e6f66b14b27898bbddb1f8d07f82dfa9c0d4957f8"
+      },
+      "replacements": [
+        {
+          "count": 1,
+          "new": "4bdeb0b2761fcc9b3721ee770d8eb8b33534ec7df22cc07cc42f1345b5bd285f",
+          "old": "8acf26651a1e682bb6857128f1a0d5e184b52f489cccd32ea60eb471c1a65ff3"
+        },
+        {
+          "count": 4,
+          "new": "source.semantic_compiler",
+          "old": "source.compiler"
+        },
+        {
+          "count": 1,
+          "new": "normalized_compiler.CONSUMER_SHA",
+          "old": "normalized_compiler.LEGACY_SHA"
+        },
+        {
+          "count": 1,
+          "new": "normalized_compiler.consumer",
+          "old": "normalized_compiler.legacy"
+        },
+        {
+          "count": 1,
+          "new": "same selected semantic compiler module",
+          "old": "same unchanged legacy compiler module"
+        }
+      ]
+    },
+    "swdb/_dx100_whole/normalized_compiler_adapter_v1.py": {
+      "basis": {
+        "bytes": 4375,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-memory-production-v1/proposed/swdb/_dx100_whole/normalized_compiler_adapter_v1.py",
+        "sha256": "8acf26651a1e682bb6857128f1a0d5e184b52f489cccd32ea60eb471c1a65ff3"
+      },
+      "replacements": [
+        {
+          "count": 1,
+          "new": "compiler_unit_adapter_v4 as consumer",
+          "old": "compiler_unit_adapter_v3 as legacy"
+        },
+        {
+          "count": 1,
+          "new": "b5bd7293259f69ffe4e5d6094cb6bd46c2d5527ef95cd28d0aaa95d88529e6c6",
+          "old": "775ab2ecf6068153a6167473129dcd416dc2727c9afe0ef6e0846bab62d3085c"
+        },
+        {
+          "count": 3,
+          "new": "CONSUMER_SHA",
+          "old": "LEGACY_SHA"
+        },
+        {
+          "count": 1,
+          "new": "consumer.__file__",
+          "old": "legacy.__file__"
+        },
+        {
+          "count": 1,
+          "new": "consumer.prepare_unit",
+          "old": "legacy.prepare_unit"
+        },
+        {
+          "count": 1,
+          "new": "selected semantic TU consumer",
+          "old": "unchanged TU consumer"
+        },
+        {
+          "count": 1,
+          "new": "selected physical semantic compiler consumer required",
+          "old": "unchanged physical legacy compiler consumer required"
+        },
+        {
+          "count": 1,
+          "new": "semantic compiler consumer changed during preparation",
+          "old": "legacy compiler consumer changed during preparation"
+        },
+        {
+          "count": 1,
+          "new": "selected semantic ABI reader must identify",
+          "old": "unchanged legacy ABI reader must identify"
+        },
+        {
+          "count": 1,
+          "new": "The semantic reader is a separately pinned module; its full-TU\n    consumer function is byte-identical to the original v3 function.",
+          "old": "The\n    legacy function is not modified."
+        }
+      ]
+    },
+    "swdb/dx100_checked_source.py": {
+      "basis": {
+        "bytes": 42493,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-trace-public-v4/proposed/swdb/dx100_checked_source.py",
+        "sha256": "1fceabc02d69ea8774148ede5fdc69be2ea895ed00fac0a9cbc784b06d19f3d9"
+      },
+      "replacements": [
+        {
+          "count": 1,
+          "new": "from swdb._dx100_whole import compiler_unit_adapter_v3 as compiler\nfrom swdb._dx100_whole import compiler_unit_adapter_v4 as semantic_compiler",
+          "old": "from swdb._dx100_whole import compiler_unit_adapter_v3 as compiler"
+        },
+        {
+          "count": 1,
+          "new": "modules = (compiler, semantic_compiler, codec, model, receiver,",
+          "old": "modules = (compiler, codec, model, receiver,"
+        }
+      ]
+    }
+  },
+  "generic_v3_source_file_retained_unchanged": true,
+  "new_reader": {
+    "bytes": 23873,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-enum-repair-v1/proposed/compiler_unit_adapter_v4.py",
+    "sha256": "b5bd7293259f69ffe4e5d6094cb6bd46c2d5527ef95cd28d0aaa95d88529e6c6"
+  },
+  "old_source_complete_capture_function_unchanged": true,
+  "typed_V4_source_scope_retained": true
+}

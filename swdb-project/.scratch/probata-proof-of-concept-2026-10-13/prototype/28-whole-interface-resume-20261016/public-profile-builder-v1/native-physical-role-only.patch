@@ -1,0 +1,15 @@
+--- a/swdb/dx100_checked_native.py
++++ b/swdb/dx100_checked_native.py
+@@ -22,9 +22,10 @@
+         and selected['kind'] == KIND and selected['producer']['sha256'] == PROJECTION_SHA,
+         'fixed reviewed C++ projection selection required')
+     reads = source.Inputs(unit.selection.library)
+-    raw = reads.portable(selected['producer'])
++    raw = reads.absolute(selected['producer'], limit=4 * 1024 * 1024)
+     actual = Path(projection.__file__)
+-    source.need(reads.path(selected['producer']) == actual and hashlib.sha256(raw).hexdigest() == PROJECTION_SHA,
++    source.need(source.receiver.Pin.parse(selected['producer']).path == str(actual)
++        and hashlib.sha256(raw).hexdigest() == PROJECTION_SHA,
+         'actual imported C++ projection producer differs')
+     source.need(selected['assertion_header'] == unit.statement_preparation['assertion_header_pin'],
+         'C++ assertion header selection differs from complete source lowering')

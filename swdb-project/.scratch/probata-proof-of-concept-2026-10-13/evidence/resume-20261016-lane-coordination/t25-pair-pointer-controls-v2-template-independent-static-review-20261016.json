@@ -1,0 +1,102 @@
+{
+  "actual_native_compiler_solver_test_or_SSH_executed_by_reviewer": false,
+  "boundaries": {
+    "actual_admission": false,
+    "proof_or_ticket_acceptance": false,
+    "published_source_rebind_pending": true,
+    "source_or_caller_acceptance": false
+  },
+  "checks": {
+    "exact_inverse": {
+      "reconstructs_predecessor_bytes": true,
+      "remove_only_added_module": true,
+      "restore_scope_and_exact_case_count": true,
+      "substitute_prefix": "18f04e56"
+    },
+    "guarded_behavior": {
+      "SWDB_MIXED_PAIR_ACTUAL": "0",
+      "SWDB_PAIR_ACTUAL": "0",
+      "WP_CBMC_selectors": "none",
+      "entry_isolated_nonoptimized_no_bytecode": true,
+      "exact_basetemp_and_junit": true,
+      "guard_scope": "External reviewed root launcher owns whole-tree/lane admission. This template does not independently assert physical runtime/lane closure.",
+      "immutable_repository_cwd_then_project_chdir": true,
+      "progress_callback_retained": true,
+      "pytest_plugin_autoload_disabled": true,
+      "python_clang_cbmc_physical_hash_checks_unchanged": true,
+      "rss_cap_bytes": 8589934592,
+      "success_requires_zero_skips_failures_errors_and_absent_cache": true,
+      "whole_seconds": 1200,
+      "workers": 1
+    },
+    "new_module_source": {
+      "child_or_native_tool_calls": false,
+      "default_and_identity": true,
+      "public_analyzer_only": true,
+      "refusal_domains": [
+        "dereference",
+        "subscript",
+        "pointer arithmetic",
+        "opaque-call escape",
+        "pointer return",
+        "cast",
+        "unknown-pointer assignment",
+        "unknown or uninitialized local address"
+      ],
+      "single_visit_mutation_regression": true
+    },
+    "selection": {
+      "actual_formal_tests_selected": false,
+      "expected_total": 30,
+      "full_suite_selected": false,
+      "new_expanded_cases": 11,
+      "new_functions": 5,
+      "new_module": "tests/test_pair_pointer_initialization.py",
+      "one_parametrization_cases": 7,
+      "original_expanded_cases": 19,
+      "unchanged_original_selections": [
+        "tests/test_pair_pointer_workflow.py::test_mixed_pair_lowering_and_native_identity_agree_without_pointee_access",
+        "tests/test_pair_pointer_workflow.py::test_unknown_pointer_pair_input_refuses_and_missing_models_do_not_launch",
+        "tests/test_pair_pointer_workflow.py::test_each_mixed_pair_body_reaches_public_parser_with_exact_contract",
+        "tests/test_pair_workflow.py::test_public_pair_lowering_preserves_values_copies_fields_and_self_assignment",
+        "tests/test_pair_workflow.py::test_uninitialized_pair_constructor_input_is_refused_by_public_lowering",
+        "tests/test_pair_workflow.py::test_pair_copy_and_assignment_do_not_initialize_unknown_source_storage",
+        "tests/test_pair_workflow.py::test_wrong_pair_field_has_a_defined_concrete_witness",
+        "tests/test_pair_workflow.py::test_pair_caller_without_current_member_proofs_never_launches_standin",
+        "tests/test_pair_workflow.py::test_changed_initializedness_source_invalidates_frozen_translator_before_standin",
+        "tests/test_pair_workflow.py::test_profile_refuses_output_anywhere_inside_full_checkout_before_creation",
+        "tests/test_pair_workflow.py::test_each_original_pair_body_reaches_public_parser_with_initialization_rte_and_smoke"
+      ]
+    },
+    "source_placeholders": {
+      "context": "docstring and exact immutable source folder; not an admitted commit. Root must substitute a strict published prefix and bind full40-character commit/source/control hashes in final launcher review.",
+      "occurrences": 2
+    }
+  },
+  "date": "2026-10-16 ET",
+  "decision": "PASS_INERT_TEMPLATE_ONLY",
+  "findings": [],
+  "inputs": [
+    {
+      "bytes": 1141,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-pair-pointer-controls-v2-template-preparation-20261016.json",
+      "sha256": "994b3257da8a55d746b50c299f4a5396d635c4b3a415fe37c3e4309763114e3c"
+    },
+    {
+      "bytes": 4835,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/pair_pointer_controls_v2.py.in",
+      "sha256": "6a553356dd22c6e156caf084bb5a5796de8d7571938ee103541ec5c656c611ab"
+    },
+    {
+      "bytes": 4709,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/pair_pointer_controls_v1.py",
+      "sha256": "6f909af7c85898325898e5cfb1a02b5bf1f7702fb61bbe51cad4bccb7ecb5864"
+    },
+    {
+      "bytes": 5181,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_pair_pointer_initialization.py",
+      "sha256": "2b0da40f71a56f892c5344b0defb45f8a312c080b0a8eef2383f11fb0129b06c"
+    }
+  ],
+  "next_step": "Publish reviewed source; bind exact full SHA/control bytes/argv plus fresh root lane/runtime admission, review only the immutable substitution delta, then root may run the bounded30-case compiler/native/parser control profile."
+}

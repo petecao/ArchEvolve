@@ -1,0 +1,49 @@
+{
+  "all_prior_audit_functions_byte_identical": true,
+  "classification": "PASS_INDEPENDENT_FILLED_TRACE_POLICY_AND_ERROR_REPORT_ONLY_SUCCESSOR",
+  "closed_env": {
+    "bytes": 1803,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-admission-04af74c1-v3/trace-cold-env-command-v3.json",
+    "sha256": "47791c82994764dfb6acf66ff7b587e7f792940ba29c0bd8d3f18cc57974ddad"
+  },
+  "command": {
+    "bytes": 11928,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-admission-04af74c1-v3/trace-cold-command-04af74c1-v3.json",
+    "sha256": "bed80b2d67ef90e1059042d3f2bb30fc62301407a3d283d91d4419103afc5f34"
+  },
+  "complete_source_and_policy_inverses": true,
+  "controls": {
+    "actual_metadata_shapes_independently_rerun": 6,
+    "all_exit_codes": 0,
+    "all_skips": 0,
+    "audit_not_executed": true,
+    "error_formatter": 4
+  },
+  "date": "2026-10-16 ET",
+  "original_root_receipt_sha256": "c94420bdb85074be52aa2044158c9ee77cace37f4dbb0fac2274e64973a5e7ff",
+  "packet": {
+    "bytes": 4846,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-admission-04af74c1-v3/trace-cold-frame-source-packet-v3.json",
+    "sha256": "43f58aa76f7bfc73a79999edbcadca92a31b718d210c2efc53ed33773bf8e21e"
+  },
+  "policy": {
+    "bytes": 353644,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-admission-04af74c1-v3/trace-cold-policy-04af74c1-v3.json",
+    "sha256": "e2fe50f515a9eb287d5a559909671f01451dec932c4ec5d6256d9de472c86531"
+  },
+  "public_or_full_ticket_acceptance": false,
+  "reader": {
+    "bytes": 39815,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-admission-04af74c1-v3/trace_cold_audit_v3.py",
+    "sha256": "a323298395677ed638d1e92a53fd0d386f54cab5eb815c266d8cdd1d3aff63aa"
+  },
+  "reviewer": "/root/ticket28",
+  "root_once_only_passive_admission_required": true,
+  "scope": [
+    "Exact04af/source/runtime/1409raw members/25fixed records and original root receipt remain bound",
+    "Only new code is exactly initializedV6 bounded filename/function/line refusal formatter; all scientific checks unchanged",
+    "Original native/replay outputs depend on original producer/runtime binding; deleted executables are not retroactively attested"
+  ],
+  "staged_bytes": 681445,
+  "staged_control_count": 17
+}

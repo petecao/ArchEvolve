@@ -1,0 +1,214 @@
+{
+  "format": "swdb.cpu-report-startup-recovery-archive.v1",
+  "created_et": "2026-10-07 07:14 ET",
+  "base_integration_commit": "f35cf2760d936a3e72dd230672a6be0ca7341894",
+  "source_commit": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "logical_study": "20261006-a3",
+  "actual_report_attempt": "20261007-a4",
+  "actual_failed_startup_identity": "7b67aec7b399c9da63923d66dd5678bcaf5cf516a751c3da94981da4b8b06455",
+  "actual_staging_identity": "e7d7d5e542b00db5c9147d222d9167e250a48095c96a79d0c81ab909fe8aa48c",
+  "actual_retry_dispatch_custody": "Original unsealed two-document JSON stream; not an acceptance receipt.",
+  "parent_retry_handoff": {
+    "authority": "Parent actual task handoff, separate from dispatch stream",
+    "node": 0,
+    "lease_generation": 509,
+    "started_utc": "2026-10-07T11:03:17Z"
+  },
+  "report_acceptance": "pending; not read or inferred",
+  "ticket_status": "claimed",
+  "entries": [
+    {
+      "path": "lanl-dispatch-cpu-band-report-a4-metadata2400-cleanup60-hashlib.py",
+      "source_path": "/private/tmp/lanl-dispatch-cpu-band-report-a4-metadata2400-cleanup60-hashlib.py",
+      "bytes": 17772,
+      "sha256": "543b79ea40a54537ee23b37ec1f44afbc8b135cad3fff25fb82d35db7b5130c7",
+      "custody": "exact_bytes",
+      "evidence_class": "prepared_dispatch_source"
+    },
+    {
+      "path": "lanl-export-cpu-band-report-a4.py",
+      "source_path": "/private/tmp/lanl-export-cpu-band-report-a4.py",
+      "bytes": 12921,
+      "sha256": "1d1251baeba12c65c40a7a616060e5ff236197ce73f77335534d4a4d83fe32a6",
+      "custody": "exact_bytes",
+      "evidence_class": "prepared_export_source"
+    },
+    {
+      "path": "lanl-admit-cpu-future-phase-cleanup60-report-a4-20261007.py",
+      "source_path": "/private/tmp/lanl-admit-cpu-future-phase-cleanup60-report-a4-20261007.py",
+      "bytes": 4378,
+      "sha256": "bfc76a462c551c1358f935038ad4f41374af9ec9fb19ba2488b207bbf4e06ae2",
+      "custody": "exact_bytes",
+      "evidence_class": "prepared_dispatch_guard_source"
+    },
+    {
+      "path": "lanl-export-completed-cpu-phase-guard-report-a4-20261007.py",
+      "source_path": "/private/tmp/lanl-export-completed-cpu-phase-guard-report-a4-20261007.py",
+      "bytes": 2157,
+      "sha256": "26f6b83acced22cf94797dc8066f335f393cfbd63502580b461186bc92485eaf",
+      "custody": "exact_bytes",
+      "evidence_class": "prepared_export_guard_source"
+    },
+    {
+      "path": "lanl-prepare-cpu-band-report-hashlib-a4-20261007.py",
+      "source_path": "/private/tmp/lanl-prepare-cpu-band-report-hashlib-a4-20261007.py",
+      "bytes": 7808,
+      "sha256": "cf068d883aa98850c63b692b494b51125d1b06101bb6db94fa6141ef31b381eb",
+      "custody": "exact_bytes",
+      "evidence_class": "preparation_generator_source"
+    },
+    {
+      "path": "lanl-cpu-band-report-a4-metadata2400-cleanup60-hashlib-runner.py",
+      "source_path": "/private/tmp/lanl-cpu-band-report-a4-metadata2400-cleanup60-hashlib-runner.py",
+      "bytes": 13941,
+      "sha256": "0e84c1b2be4bcd8f2aabd107172fac4c1daa49527d389138ebd1338d00fa9c2f",
+      "custody": "exact_bytes",
+      "evidence_class": "decoded_runner_source"
+    },
+    {
+      "path": "lanl-cpu-band-report-a4-hashlib-exact-diff.txt",
+      "source_path": "/private/tmp/lanl-cpu-band-report-a4-hashlib-exact-diff.txt",
+      "bytes": 5763,
+      "sha256": "fb6673568798a81248aa9e14115e5a4b9f6ba8d76578cd535e26a0ba73cc8db9",
+      "custody": "exact_bytes",
+      "evidence_class": "static_exact_diff"
+    },
+    {
+      "path": "lanl-test-cpu-band-report-a4-hashlib-startup.py",
+      "source_path": "/private/tmp/lanl-test-cpu-band-report-a4-hashlib-startup.py",
+      "bytes": 4786,
+      "sha256": "84e093eb1169667934cd66aaf2acd7adfb4a552250ca73d03afbfc885bcc9f38",
+      "custody": "exact_bytes",
+      "evidence_class": "isolated_portable_regression_source"
+    },
+    {
+      "path": "lanl-cpu-band-report-a4-hashlib-red.json",
+      "source_path": "/private/tmp/lanl-cpu-band-report-a4-hashlib-red.json",
+      "bytes": 702,
+      "sha256": "48ef457116daf12543866bcc647e4d6f7bd9f1ef031dd2b51f1dd7d3d0695a79",
+      "custody": "exact_bytes",
+      "evidence_class": "isolated_portable_RED_result",
+      "original_seal": "absent",
+      "canonical_document_sha256": "d3e5d4cc0d5c8831ddcfba9bbccf12c467da039e672e7ab0e62acc02c1622536"
+    },
+    {
+      "path": "lanl-cpu-band-report-a4-hashlib-green.json",
+      "source_path": "/private/tmp/lanl-cpu-band-report-a4-hashlib-green.json",
+      "bytes": 1363,
+      "sha256": "a28c1be75373ebb0455e04d3a06fa77a8d501d81a744cfc6fba01075ec8c08c6",
+      "custody": "exact_bytes",
+      "evidence_class": "isolated_portable_GREEN_result",
+      "original_seal": "absent",
+      "canonical_document_sha256": "b2f8416bdcc957155bdac0b875c43ac6c5a1d6a1036aa323af08be11812e1014"
+    },
+    {
+      "path": "lanl-cpu-band-report-a4-hashlib-review-20261007.md",
+      "source_path": "/private/tmp/lanl-cpu-band-report-a4-hashlib-review-20261007.md",
+      "bytes": 4718,
+      "sha256": "bc1ee6a37578f44e35350315bde8b2d76b9d6f759b826ec06f0358f55faa572a",
+      "custody": "exact_bytes",
+      "evidence_class": "prospective_static_review"
+    },
+    {
+      "path": "lanl-cpu-band-report-a4-hashlib-preparation.json",
+      "source_path": "/private/tmp/lanl-cpu-band-report-a4-hashlib-preparation.json",
+      "bytes": 5976,
+      "sha256": "dc123979fecddae9c142284f582288b3410fa96e8e800ae21e9ac738ba4fbcd3",
+      "custody": "exact_bytes",
+      "evidence_class": "sealed_preparation",
+      "identity_sha256": "dd160dce6b42271ed5fc524444673eb5a75288c8cdcdcd4a95567dbf6e0423f9"
+    },
+    {
+      "path": "lanl-cpu-band-report-a4-hashlib-portable-readiness.json",
+      "source_path": "/private/tmp/lanl-cpu-band-report-a4-hashlib-portable-readiness.json",
+      "bytes": 3059,
+      "sha256": "e3415ec21e03b3a9db4fa471886a8e1a63aa6e7d51ecf402be459a3c0f714f7d",
+      "custody": "exact_bytes",
+      "evidence_class": "sealed_portable_readiness",
+      "identity_sha256": "48d2c1800c9986b782b92ef26e1e4ee4b444d7939f71edbc6bdcef425a5b4e97"
+    },
+    {
+      "path": "lanl-cpu-band-report-a4-hashlib-original-failure-binding.json",
+      "source_path": "/private/tmp/lanl-cpu-band-report-a4-hashlib-original-failure-binding.json",
+      "bytes": 1716,
+      "sha256": "ce7804ea38eeed01d5a39abbf414b544acd164f6e7090bb3ba7855b5f01511f5",
+      "custody": "exact_bytes",
+      "evidence_class": "sealed_actual_failure_binding",
+      "identity_sha256": "57aba2a60c29c18db84a007d22bbd10d07b1b6da6387d0b1e72a98a2a1f9cdb0"
+    },
+    {
+      "path": "lanl-read-band-report-startup-failure-custody-20261007-a3.py",
+      "source_path": "/private/tmp/lanl-read-band-report-startup-failure-custody-20261007-a3.py",
+      "bytes": 3687,
+      "sha256": "b814c912a16c6f757429c80398123ac5bde17a9758401d8a4826791a28d6ed3f",
+      "custody": "exact_bytes",
+      "evidence_class": "actual_failure_reader_source"
+    },
+    {
+      "path": "lanl-cpu-band-report-startup-failure-custody-actual-20261007-a3.json",
+      "source_path": "/private/tmp/lanl-cpu-band-report-startup-failure-custody-actual-20261007-a3.json",
+      "bytes": 1995,
+      "sha256": "1c67e7273505dd80e636fe2b5557f6003b24309318ec2ff38c76b714aad9e625",
+      "custody": "exact_bytes",
+      "evidence_class": "sealed_actual_failed_startup_custody",
+      "identity_sha256": "7b67aec7b399c9da63923d66dd5678bcaf5cf516a751c3da94981da4b8b06455"
+    },
+    {
+      "path": "lanl-stage-cpu-band-report-a4-static-controls-20261007.py",
+      "source_path": "/private/tmp/lanl-stage-cpu-band-report-a4-static-controls-20261007.py",
+      "bytes": 43906,
+      "sha256": "42c051e75c5db21216a87eab406d18d0e1117f816a95c62a8a0c3d5ba85033ab",
+      "custody": "exact_bytes",
+      "evidence_class": "parent_staging_source"
+    },
+    {
+      "path": "lanl-cpu-band-report-a4-static-controls-staging-actual-20261007.json",
+      "source_path": "/private/tmp/lanl-cpu-band-report-a4-static-controls-staging-actual-20261007.json",
+      "bytes": 1221,
+      "sha256": "e7b77c98e258c41bfeb938af5bf329da2bf1f03f490b25902e8adba31e8b481c",
+      "custody": "exact_bytes",
+      "evidence_class": "sealed_actual_static_staging_custody",
+      "identity_sha256": "e7d7d5e542b00db5c9147d222d9167e250a48095c96a79d0c81ab909fe8aa48c"
+    },
+    {
+      "path": "lanl-cpu-band-report-dispatch-actual-20261007-a4.json",
+      "source_path": "/private/tmp/lanl-cpu-band-report-dispatch-actual-20261007-a4.json",
+      "bytes": 813,
+      "sha256": "8b385cf36c6859eba73919677c0d8bd7597fb8fccb0cd9e69766f90da90425f8",
+      "custody": "exact_bytes",
+      "evidence_class": "unsealed_actual_dispatch_document_stream",
+      "original_seal": "absent",
+      "document_format": "two newline-separated JSON documents",
+      "document_count": 2,
+      "canonical_document_sha256s": [
+        "1bb473fbe70e3bd6a808f79e41f3a932d6b8301cbdf3d1874036be9522e3d043",
+        "b73587b40e323519b509b1e0a5803ea2c66de804b0265be45bc651b20e040799"
+      ]
+    },
+    {
+      "path": "lanl-cpu-future-status-with-report-retry-20261007-a4.py",
+      "source_path": "/private/tmp/lanl-cpu-future-status-with-report-retry-20261007-a4.py",
+      "bytes": 2299,
+      "sha256": "b8dcec92f447a4d988137d413839a608998088b2c8692fdf55a340867316f54b",
+      "custody": "exact_bytes",
+      "evidence_class": "parent_status_source_not_executed_locally"
+    },
+    {
+      "path": "README.md",
+      "bytes": 5658,
+      "sha256": "cea212b155972b8ec7f96cf8d3eaa821f2138e5557491fc883083e8f3ab77d05",
+      "custody": "dated_context",
+      "evidence_class": "archive_context"
+    }
+  ],
+  "evidence_scope": "Preparation/portable regression, actual original failure, static staging and retry dispatch custody only; no scientific result or rate/width/cost change.",
+  "manifest_identity_semantics": "Canonical JSON digest excluding identity_sha256; manifest does not recursively hash itself.",
+  "preserved_whitespace_exception": {
+    "path": "lanl-cpu-band-report-a4-hashlib-exact-diff.txt",
+    "line": 24,
+    "original_bytes_hex": "200a",
+    "reason": "Original unified-diff context blank pinned by preparation SHA; exact-byte archive retains it."
+  },
+  "identity_sha256": "ce2bf97704c7a767bd1cc4b4c67f7d744bff3f2c13e9de4f8ff84e4beb18ad07"
+}

@@ -1,0 +1,204 @@
+{
+  "format": "swdb.cpu-float-memory-count-only.v1",
+  "evidence_kind": "native_count_only",
+  "timings_collected": false,
+  "machine": "mbit10",
+  "threads": 1,
+  "context": {
+    "compiler_version": "clang version 22.1.8 (https://github.com/llvm/llvm-project ca7933e47d3a3451d81e72ac174dcb5aa28b59d1)\nTarget: x86_64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin",
+    "flags": [
+      "-O3",
+      "-std=c++11",
+      "-fopenmp",
+      "--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13"
+    ],
+    "host": "mbit10",
+    "architecture": "x86_64",
+    "source_sha256": {
+      "CpuFloatMemoryWork.h": "577f9d772da4de811b6f779d862ca5735c83cfda8d4c58f5041bb8f7c7f6a6a0",
+      "CpuFloatMemoryTimer.cpp": "647db310646980a1a76d64e6b82080a03f8195cc44e58d5121c936b62c09bd33",
+      "CpuFloatMemoryCount.cpp": "2515a5ddd0d184004eb7ac1588781d11ed24daea75afe54e1b875870076bc297"
+    },
+    "binary_sha256": "0fbe8a6180de44c9152f0160919a4347bb1e1fd3573df517e909f61befbb8e8e",
+    "compiler_sha256": "31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113",
+    "instrumented_timer": false,
+    "optimized_work": {
+      "ir_sha256": "38f8210a207eaff92ded684a14728996ffb3145f1b79726ec2b2e9b7565e89e4",
+      "primitive": {
+        "opcode": "atomicrmw",
+        "value_kind": "floating",
+        "element_bits": 64,
+        "update_opcode": "fadd",
+        "atomic_ordering": "monotonic"
+      }
+    },
+    "control_environment": {
+      "GLIBC_TUNABLES": null,
+      "LD_PRELOAD": null,
+      "LD_AUDIT": null,
+      "LD_LIBRARY_PATH": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu",
+      "DYLD_LIBRARY_PATH": null,
+      "DYLD_INSERT_LIBRARIES": null
+    },
+    "control_environment_scope": {
+      "format": "swdb.service-control-environment.v1",
+      "prefixes": [
+        "MALLOC_"
+      ],
+      "exact_variables": [
+        "GLIBC_TUNABLES",
+        "LD_PRELOAD",
+        "LD_AUDIT",
+        "LD_LIBRARY_PATH",
+        "DYLD_LIBRARY_PATH",
+        "DYLD_INSERT_LIBRARIES"
+      ],
+      "absence_semantics": "null_or_absent_is_unset_under_declared_scope"
+    },
+    "lane": "mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 498)",
+    "cpus": [
+      0
+    ],
+    "machine_sha256": "fcb0123f0bdb9bc004348eb8c6444f03304b6612e0cb2e26a82e621b07d82a79",
+    "system": "Linux",
+    "start_state": {
+      "load": [
+        2.1083984375,
+        1.9970703125,
+        1.97900390625
+      ],
+      "time_ns": 1791343742373887161,
+      "available_memory": "MemTotal:       131426264 kB\nMemFree:        17593520 kB\nMemAvailable:   122540848 kB\nBuffers:        12132932 kB\nCached:         64085576 kB\nSwapCached:            0 kB\nActive:          5979860 kB\nInactive:       71993744 kB\nActive(anon):    1729140 kB\nInactive(anon):    55668 kB\nActive(file):    4250720 kB\nInactive(file): 71938076 kB\nUnevictable:       39252 kB\nMlocked:           36180 kB\nSwapTotal:             0 kB\nSwapFree:              0 kB\nZswap:                 0 kB\nZswapped:              0 kB\nDirty:               536 kB\nWriteback:             0 kB\nAnonPages:       1794600 kB\nMapped:          1129912 kB\nShmem:             14900 kB\nKReclaimable:   30077132 kB\nSlab:           32616332 kB\nSReclaimable:   29993300 kB\nSUnreclaim:      2623032 kB\nKernelStack:       25408 kB\nPageTables:        31840 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:    65713132 kB\nCommitted_AS:    5807096 kB\nVmallocTotal:   13743895347199 kB\nVmallocUsed:      432244 kB\nVmallocChunk:          0 kB\nPercpu:           375808 kB\nHardwareCorrupted:     8 kB\nAnonHugePages:         0 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nUnaccepted:            0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:    40398820 kB\nDirectMap2M:    91160576 kB\nDirectMap1G:     4194304 kB",
+      "governor": null,
+      "no_turbo": null
+    },
+    "free_disk_bytes": 55386365952,
+    "commit": "3006d91e2d076db0104f3b7734131dec5f26caad",
+    "dirty": false,
+    "loaded_libraries": {
+      "libstdc++.so.6.0.33": {
+        "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33",
+        "sha256": "1fd75fe70354a416d75aef22bcae68c47bd25d20e2d0568c30b1a9838cf62f11"
+      },
+      "libm.so.6": {
+        "path": "/usr/lib/x86_64-linux-gnu/libm.so.6",
+        "sha256": "fce00b6f25f459cf4ae0b7fae4257909a1a8a86f9149e7c029a5d617baf1ccd0"
+      },
+      "libomp.so": {
+        "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu/libomp.so",
+        "sha256": "bed4495bf5821b0acdba90d671512859b381c5d2caa029f6c3b82f1337da614e"
+      },
+      "libgcc_s.so.1": {
+        "path": "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1",
+        "sha256": "d93224d2b0dab4247598be683adca02f5cf00586f99c187579cd7e92058fb7cb"
+      },
+      "libc.so.6": {
+        "path": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+        "sha256": "3a15d66867d83762c7f2f1e37359cb8f6c5743edb369c65285cb0b1c4f7498bf"
+      },
+      "ld-linux-x86-64.so.2": {
+        "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+        "sha256": "c20a2dc8917c755f02b94049356320fe1f62ac7d9f8994731f807d9df39302da"
+      }
+    },
+    "end_state": {
+      "load": [
+        2.24755859375,
+        2.04443359375,
+        1.998046875
+      ],
+      "time_ns": 1791343771993197037,
+      "available_memory": "MemTotal:       131426264 kB\nMemFree:        16096640 kB\nMemAvailable:   121050860 kB\nBuffers:        12133028 kB\nCached:         64092104 kB\nSwapCached:            0 kB\nActive:          6228352 kB\nInactive:       72000344 kB\nActive(anon):    1977632 kB\nInactive(anon):    55668 kB\nActive(file):    4250720 kB\nInactive(file): 71944676 kB\nUnevictable:       39252 kB\nMlocked:           36180 kB\nSwapTotal:             0 kB\nSwapFree:              0 kB\nZswap:                 0 kB\nZswapped:              0 kB\nDirty:              4840 kB\nWriteback:             0 kB\nAnonPages:       2043320 kB\nMapped:          1129916 kB\nShmem:             14900 kB\nKReclaimable:   30077424 kB\nSlab:           32616788 kB\nSReclaimable:   29993592 kB\nSUnreclaim:      2623196 kB\nKernelStack:       25616 kB\nPageTables:        32056 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:    65713132 kB\nCommitted_AS:    6056952 kB\nVmallocTotal:   13743895347199 kB\nVmallocUsed:      432388 kB\nVmallocChunk:          0 kB\nPercpu:           375808 kB\nHardwareCorrupted:     8 kB\nAnonHugePages:         0 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nUnaccepted:            0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:    40398820 kB\nDirectMap2M:    91160576 kB\nDirectMap1G:     4194304 kB",
+      "governor": null,
+      "no_turbo": null
+    }
+  },
+  "count_proof": {
+    "format": "swdb.cpu-float-memory-count-proof.v1",
+    "pipeline": {
+      "version": "source-normalized-v2",
+      "passes": [
+        "function(sroa,mem2reg),cgscc(inline),function(loop-simplify)"
+      ]
+    },
+    "points": [
+      {
+        "invoke": true,
+        "events": 3,
+        "requests": 3,
+        "atomic_events": 3,
+        "opaque_events": 0,
+        "primitive": {
+          "opcode": "atomicrmw",
+          "value_kind": "floating",
+          "element_bits": 64,
+          "update_opcode": "fadd",
+          "atomic_ordering": "monotonic"
+        },
+        "active_sites": [
+          "access.0"
+        ],
+        "characterization_sha256": "1cb9bf0acf78ee311c31e2ba087bee9aa69dd6a2162b7fe4b349dcfa6f0140b4"
+      },
+      {
+        "invoke": true,
+        "events": 5,
+        "requests": 5,
+        "atomic_events": 5,
+        "opaque_events": 0,
+        "primitive": {
+          "opcode": "atomicrmw",
+          "value_kind": "floating",
+          "element_bits": 64,
+          "update_opcode": "fadd",
+          "atomic_ordering": "monotonic"
+        },
+        "active_sites": [
+          "access.0"
+        ],
+        "characterization_sha256": "814de1c231c52686752a15a0448c6f8bb6c0ebfa869e38abdb428aa24ddc1f70"
+      },
+      {
+        "invoke": false,
+        "events": 3,
+        "requests": 0,
+        "atomic_events": 0,
+        "opaque_events": 0,
+        "primitive": {
+          "opcode": "atomicrmw",
+          "value_kind": "floating",
+          "element_bits": 64,
+          "update_opcode": "fadd",
+          "atomic_ordering": "monotonic"
+        },
+        "active_sites": [],
+        "characterization_sha256": "3c3f1fba048edeebf44f6fe822b7ffad13a8e5e7926fa7259b4c110b64b8d503"
+      },
+      {
+        "invoke": false,
+        "events": 5,
+        "requests": 0,
+        "atomic_events": 0,
+        "opaque_events": 0,
+        "primitive": {
+          "opcode": "atomicrmw",
+          "value_kind": "floating",
+          "element_bits": 64,
+          "update_opcode": "fadd",
+          "atomic_ordering": "monotonic"
+        },
+        "active_sites": [],
+        "characterization_sha256": "74179b715c2affc19ec48963ca19dc6ab5f70f8d24e3e42087c6f438fc911c60"
+      }
+    ],
+    "source_sha256": "577f9d772da4de811b6f779d862ca5735c83cfda8d4c58f5041bb8f7c7f6a6a0",
+    "count_driver_sha256": "2515a5ddd0d184004eb7ac1588781d11ed24daea75afe54e1b875870076bc297",
+    "plugin_source_sha256": "b461fd7025cfa675d5c191d7d73fee8bd04525c0344cd315dffedb61575b65a0",
+    "runtime_source_sha256": "43762b5079564a7f2fbc930befbdde85a5498ca82b635e82f5cc0476ffa9099e"
+  },
+  "budgets": {
+    "count_build_cap_bytes": 67108864,
+    "timed_data_cap_bytes": 26214400
+  },
+  "identity_sha256": "4faef721c93f856885118154e90525caba75e8defa5a48360ad285370baef8e3"
+}

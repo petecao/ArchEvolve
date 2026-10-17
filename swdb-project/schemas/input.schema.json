@@ -1,0 +1,182 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "input",
+  "title": "Input: data fed to a kernel, generated or from a file, with its properties",
+  "description": "Exactly one of generator or file. Property names come from vocabulary input_properties; numeric ones are the symbols element-count formulas use.",
+  "type": "object",
+  "properties": {
+    "kind": {
+      "const": "input"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "generator": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "application": {
+          "type": "string",
+          "x-ref": "application"
+        },
+        "tool": {
+          "type": "string",
+          "minLength": 1
+        },
+        "arguments": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "application",
+        "tool",
+        "arguments"
+      ]
+    },
+    "file": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "format": {
+          "type": "string",
+          "x-vocab": "input_formats"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "x-reason": "must be a 64-character sha256"
+        },
+        "arguments": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "format",
+        "sha256"
+      ]
+    },
+    "properties": {
+      "type": "object",
+      "propertyNames": {
+        "x-vocab": "input_properties"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/fact"
+      },
+      "properties": {
+        "num_nodes": {
+          "$ref": "#/$defs/int_fact"
+        },
+        "num_edges_undirected": {
+          "$ref": "#/$defs/int_fact"
+        },
+        "num_edges_directed": {
+          "$ref": "#/$defs/int_fact"
+        },
+        "requested_degree": {
+          "$ref": "#/$defs/int_fact"
+        },
+        "scale": {
+          "$ref": "#/$defs/int_fact"
+        },
+        "directed": {
+          "$ref": "#/$defs/bool_fact"
+        },
+        "weighted": {
+          "$ref": "#/$defs/bool_fact"
+        },
+        "degree_distribution": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/fact"
+            },
+            {
+              "properties": {
+                "value": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "x-vocab": "degree_distributions"
+                }
+              }
+            }
+          ]
+        },
+        "index_locality": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/fact"
+            },
+            {
+              "properties": {
+                "value": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "x-vocab": "index_localities"
+                }
+              }
+            }
+          ]
+        },
+        "input_density": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/fact"
+            },
+            {
+              "properties": {
+                "value": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "x-vocab": "input_densities"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "required": [
+    "name",
+    "properties"
+  ],
+  "allOf": [
+    {
+      "x-reason": "an input has a generator or a file, never both",
+      "not": {
+        "required": [
+          "generator",
+          "file"
+        ]
+      }
+    },
+    {
+      "x-reason": "an input needs a generator or a file",
+      "anyOf": [
+        {
+          "required": [
+            "generator"
+          ]
+        },
+        {
+          "required": [
+            "file"
+          ]
+        }
+      ]
+    }
+  ]
+}

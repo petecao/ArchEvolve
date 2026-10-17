@@ -1,0 +1,31 @@
+{
+  "sealed": false,
+  "argv": [
+    "ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "mbit10",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=10",
+    "120",
+    "/usr/bin/python3.12",
+    "-B",
+    "-s",
+    "-P",
+    "/data1/yanruj/lanl-storage-admin-selected-source-20261008-a5/lanl17_detach_passive_observer_administration_20261008_a1_r8.py",
+    "--source-sha256",
+    "0dd699118fd456afe3b0b2b6159fc807a3d4bd05940f0f8b304f3e2657179b82",
+    "--control-directory",
+    "/data1/yanruj/lanl17-detached-observer-a5",
+    "--expected-primary",
+    "5e12a9796432654d88def24ecea617d16ca605b2",
+    "--observer-source",
+    "/data1/yanruj/lanl-storage-admin-selected-source-20261008-a5/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r8.py",
+    "--portal-service-review-sha256",
+    "add69481b9eb0c8a5711308b9942479a0ce639797a4e67a816df082b022cb989"
+  ],
+  "started_utc": "2026-10-08T08:21:43.461555+00:00",
+  "parent_timeout_seconds": 180
+}

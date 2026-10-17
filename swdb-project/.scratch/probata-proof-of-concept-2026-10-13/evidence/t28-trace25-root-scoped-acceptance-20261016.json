@@ -1,0 +1,43 @@
+{
+  "created": "2026-10-16 ET",
+  "decision": "ADOPT_SCOPED_ABSTRACT_TRACE25",
+  "source_commit": "04af74c121a733589fbe1a2087ad602deaef598b",
+  "cold_decision": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-admission-04af74c1-v4/trace-cold-v4-actual-cold-decision-20261016.json",
+    "bytes": 4320,
+    "sha256": "d0c9a6ada88296fa9576a416c6939d97943f160739e9c7705c2404eef5b3b315"
+  },
+  "root_original_execution": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-trace-v4-root-execution-20261016.json",
+    "bytes": 26667,
+    "sha256": "c94420bdb85074be52aa2044158c9ee77cace37f4dbb0fac2274e64973a5e7ff"
+  },
+  "root_reader_admission": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-trace-cold-v4-root-admission-20261016.json",
+    "bytes": 3266,
+    "sha256": "2ad323acf74655e04bacfd81a77eb1362e0d1792aa39731d6ec965e7737aeca9"
+  },
+  "verdict_census": {
+    "proven": 12,
+    "refuted": 13
+  },
+  "records": 25,
+  "ordinary_goals_per_record": 154,
+  "physical_checks": 13455,
+  "persisted_native_agreement_runs": 15625,
+  "persisted_abstract_cpp_refutations": 13,
+  "original_raw_files": 1409,
+  "original_raw_bytes": 42682114,
+  "scientific_reexecution": false,
+  "retained_boundaries": [
+    "The original CBMC --show-loops stdout was not archived; the exact pinned producer/CBMC loop-selector remains an explicit trusted premise. The reader binds the exact 35-loop ID set/order and source-derived bound5, not arbitrary --unwindset flags.",
+    "Original native/replay executables were deleted by the producer. Persisted generated inputs, outputs, original producer logs, witness/oracle and replay sources remain the original replay evidence; private native86 adds no executable or sanitizer attestation to this run.",
+    "Finite selected-process and target/legacy lease observations are separate receipts; no continuing process absence or invented final-null watchdog is asserted.",
+    "Declared runtime inventories were checked as recorded. This CBMC/native trace run makes no observation of a WP helper; the historical omission of Why3server from the common inventory is not retroactively repaired."
+  ],
+  "source_call_refinement": false,
+  "current_0_2": false,
+  "whole_interface": false,
+  "full_ticket28": false,
+  "scope": "Complete independent passive audit accepted only for the exact original25 synthetic abstract trace cases and recorded bounds; no hardware counterexample or source/newversion integration inferred."
+}

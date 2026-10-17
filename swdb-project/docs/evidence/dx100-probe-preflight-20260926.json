@@ -1,0 +1,126 @@
+{
+  "capacity": [
+    {
+      "eligible": false,
+      "estimated_available_kib": 53500528,
+      "global_available_kib": 110298224,
+      "node": 0,
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/health-0010-20260926-capacity-node0.json",
+      "sha256": "b32311d8f92d4017efc2ad8415af4f6f445a15d6efc6e3e0d4f6237aed50a437"
+    },
+    {
+      "eligible": true,
+      "estimated_available_kib": 54967996,
+      "global_available_kib": 110345056,
+      "node": 1,
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/health-0010-20260926-capacity-node1.json",
+      "sha256": "16137f0bddc1c25faf77300d3b36f778bdded77b82550fd2d516f20bea07758e"
+    }
+  ],
+  "health": {
+    "observed": "2026-09-26T00:04:24-0400",
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/health-0010-20260926.json",
+    "sha256": "3327ff0c99757460a35c4069083ee5baec83372adfe55e3ea41283552a86af61"
+  },
+  "inputs": {
+    "checkpoint_artifact_sha256": "a4a0e4a067124961f8c50607fecdef3eb99cf16c59413126f53cdc4704bcaba9",
+    "checkpoint_file_count": 10,
+    "checkpoint_verified": true,
+    "execution_started": false,
+    "files": [
+      {
+        "bytes": 676472872,
+        "path": "/data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt",
+        "role": "simulator",
+        "sha256": "f4038c88318ee09085b6c07f163094a07a31a256f21b652d4f3cfa046feb1f6b"
+      },
+      {
+        "bytes": 1146496,
+        "path": "/data1/yanruj/DX100-bfs-e4fc4af/benchmarks/gapbs/bfs_maa",
+        "role": "guest",
+        "sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d"
+      },
+      {
+        "bytes": 2141,
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-smoke-20260925-a4.driver/uniform64.sg",
+        "role": "graph",
+        "sha256": "00d156b95baa9806c8e7623400e0347770942aee64dbed227309886ee605f78b"
+      },
+      {
+        "bytes": 3392,
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-smoke-20260925-a4/checkpoint-manifest.json",
+        "role": "checkpoint_manifest",
+        "sha256": "e3ddfe24fc06bdf8a5d36fdcfbd2a940c49e8b3500b45fa027e53576c4199601"
+      },
+      {
+        "bytes": 8153,
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-build-20260925-a2/build/build-receipt.json",
+        "role": "model_build_receipt",
+        "sha256": "c465447ddc5cc37faa7cb3127a7f9f00b6b557c326e8319e5d694ee9933f8d6c"
+      },
+      {
+        "bytes": 676472872,
+        "path": "/data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt",
+        "role": "model_build_binary_gem5.opt",
+        "sha256": "f4038c88318ee09085b6c07f163094a07a31a256f21b652d4f3cfa046feb1f6b"
+      },
+      {
+        "bytes": 1146480,
+        "path": "/data1/yanruj/DX100-bfs-e4fc4af/benchmarks/gapbs/bfs",
+        "role": "model_build_binary_bfs",
+        "sha256": "70301ad2e587c2dd55a730da5e0135337cb6b46ddd72999a843f86fd4b070dd1"
+      },
+      {
+        "bytes": 1146496,
+        "path": "/data1/yanruj/DX100-bfs-e4fc4af/benchmarks/gapbs/bfs_maa",
+        "role": "model_build_binary_bfs_maa",
+        "sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d"
+      },
+      {
+        "bytes": 1146416,
+        "path": "/data1/yanruj/DX100-bfs-e4fc4af/benchmarks/gapbs/bfs_maa_1K",
+        "role": "model_build_binary_bfs_maa_1K",
+        "sha256": "aa039418a0534277d9cb4202eec2b5392d4904876d94bc1e4166c1c16c979af8"
+      },
+      {
+        "bytes": 1131784,
+        "path": "/data1/yanruj/DX100-bfs-e4fc4af/benchmarks/gapbs/converter",
+        "role": "model_build_binary_converter",
+        "sha256": "268d35cd10937578e85506ad5f53b636e28fe33e95ca6dc148685fc56878759c"
+      },
+      {
+        "bytes": 177789736,
+        "path": "/data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/libramulator.so",
+        "role": "model_build_binary_libramulator.so",
+        "sha256": "46b5dbd87a77845ebadd1854e990d8e5c04c41253ad76315a766d61b77ca43dd"
+      },
+      {
+        "bytes": 20517,
+        "path": "/data1/yanruj/DX100-bfs-e4fc4af/benchmarks/gapbs/src/bfs.cc",
+        "role": "timed_source",
+        "sha256": "6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465"
+      },
+      {
+        "bytes": 20517,
+        "path": "/data1/yanruj/DX100-bfs-e4fc4af/benchmarks/gapbs/src/bfs.cc",
+        "role": "verifier_source",
+        "sha256": "6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465"
+      },
+      {
+        "bytes": 3565,
+        "path": "/data1/yanruj/DX100-bfs-e4fc4af/benchmarks/gapbs/src/benchmark.h",
+        "role": "verifier_harness",
+        "sha256": "87c20752c8437dd5152d00e7c995bedfab15b8929219f85846f47e0f9a4b339f"
+      }
+    ],
+    "observed": "2026-09-26T00:09:18-0400",
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/exit-probe-a1-input-preflight-20260926.json",
+    "prior": "bfs-dx100-smoke-20260925-a6",
+    "prior_record_sha256": "e7e9b57097a249e7a4c612a863118fc8ad95c3558fae25d4fdccc6e2350969b3",
+    "purpose": "read-only probe retained input preflight",
+    "sha256": "2bf4e481f9dda9c35d609406d025270c4413c897b8aa20f7842b0d6da1f49153"
+  },
+  "probe_execution_started_at_preflight": false,
+  "purpose": "periodic health and pre-dispatch input integrity; no execution results",
+  "updated": "2026-09-26"
+}

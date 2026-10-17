@@ -1,0 +1,29 @@
+--- /private/tmp/lanl14-pr-final-local-runner-20261007-a2.py
++++ /private/tmp/lanl14-pr-final-local-runner-20261007-a3.py
+@@ -125 +125 @@
+-    freeze=run('freeze',[sys.executable,'-m','swdb','freeze-protocol',str(request),'--records',str(raw/'records'),'--format','json'],1400)
++    freeze=run('freeze',[sys.executable,'-m','swdb','freeze-protocol',str(request),'--records',str(raw/'records'),'--format','json'],1800)
+--- /private/tmp/lanl14_final_reports_caps_a2.py
++++ /private/tmp/lanl14_final_reports_freeze_caps_a3.py
+@@ -147 +147 @@
+-  'limits':{'threads_max':4,'thread_limit':16,'provider_calls':0,'application_timings':0,'freeze_s':1400,'estimate_s':1400,'validate_s':1400,'report_s':1000,'outer_s':33000},
++  'limits':{'threads_max':4,'thread_limit':16,'provider_calls':0,'application_timings':0,'freeze_s':1800,'estimate_s':1400,'validate_s':1400,'report_s':1000,'outer_s':36600},
+@@ -159 +159 @@
+- argv=['timeout','--signal=TERM','--kill-after=40s','33000s','bash',m['wrapper']['path'],str(args.node),job,'--record',str(control/'lane.json'),'--lease-timeout-s','30','--no-align','--',*child]
++ argv=['timeout','--signal=TERM','--kill-after=40s','36600s','bash',m['wrapper']['path'],str(args.node),job,'--record',str(control/'lane.json'),'--lease-timeout-s','30','--no-align','--',*child]
+@@ -194 +194 @@
+-   protocol=json.loads(invoke(['python3','-m','swdb','freeze-protocol',request_path,'--records',records,'--format','json'],name+'-freeze',1400))
++   protocol=json.loads(invoke(['python3','-m','swdb','freeze-protocol',request_path,'--records',records,'--format','json'],name+'-freeze',1800))
+--- /private/tmp/lanl14-pr-final-local-envelope-20261007-a2.py
++++ /private/tmp/lanl14-pr-final-local-envelope-20261007-a3.py
+@@ -2 +2 @@
+-"""4500-second local metadata envelope for the explicitly pinned cap-only runner.
++"""4900-second local metadata envelope for the explicitly pinned cap-only runner.
+@@ -11,2 +11,2 @@
+-RUNNER=Path('/private/tmp/lanl14-pr-final-local-runner-20261007-a2.py')
+-RUNNER_SHA='fa99126eb9735e7aac9ab4f8dbfb1adbfabab40be8b6c9067e6904c95d7a806b'
++RUNNER=Path('/private/tmp/lanl14-pr-final-local-runner-20261007-a3.py')
++RUNNER_SHA='0f4bf77738f3df5e39c28308b94dac6fac0f894955f1c7348c1a5f32c42227df'
+@@ -23 +23 @@
+-    signal.setitimer(signal.ITIMER_REAL,4500)
++    signal.setitimer(signal.ITIMER_REAL,4900)

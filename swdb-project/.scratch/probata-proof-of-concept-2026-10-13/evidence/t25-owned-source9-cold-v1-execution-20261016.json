@@ -1,0 +1,82 @@
+{
+  "CPU_limit_set": false,
+  "argv": [
+    "ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=10",
+    "mbit10",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "190s",
+    "/usr/bin/env",
+    "-i",
+    "HOME=/data1/yanruj",
+    "LANG=C",
+    "LC_ALL=C",
+    "PATH=/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "/data1/yanruj/venvs/swdb-test/bin/python",
+    "-I",
+    "-B",
+    "-"
+  ],
+  "child_settled": true,
+  "command": {
+    "bytes": 1036,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-cold/command.json",
+    "sha256": "d6cc2f1479c39b14c5d8a6339401c3064762b5cd4dd1e5e2954812767df7f40c"
+  },
+  "compiler_native_verifier_solver_project_or_scientific_execution": false,
+  "date": "2026-10-16 ET",
+  "ended_utc": "2026-10-16T23:27:10.969793+00:00",
+  "exit_code": 2,
+  "finite_postflight": {
+    "bytes": 3916,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-source9-cold-v1-postflight-20261016.json",
+    "sha256": "c1b53f680b19f0a482892e8340894fb78ef3a634410db8b52cf623c74c0372ce"
+  },
+  "fresh_preflight": {
+    "bytes": 3917,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-source9-cold-v1-preflight-20261016.json",
+    "sha256": "c52bb5ed4ef1f76a93a8445c3183357045b827e4cfc87d034ebf68c35450d25d"
+  },
+  "independent_parent_spec": {
+    "bytes": 3070,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-source9-complete-cold-parent-spec-review-v1-20261016.json",
+    "sha256": "70ee2efd27c95759d1df84fe93d0a2026a76b8fc201554147efac53340e3c0b5"
+  },
+  "input_bytes_expected": 363477,
+  "input_bytes_sent": 363477,
+  "local_refusal": null,
+  "local_seconds": 210,
+  "postflight_exit_code": 0,
+  "root_admission": {
+    "bytes": 2753,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-source9-cold-v1-root-admission-20261016.json",
+    "sha256": "67256c22ce958ea549c487a4e40448e2493d8480b316daf32db210f2b32393e1"
+  },
+  "scientific_or_source_or_caller_acceptance": false,
+  "started_utc": "2026-10-16T23:27:05.625194+00:00",
+  "stderr": {
+    "bytes": 0,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-source9-cold-v1-actual-stderr-20261016.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stderr_cap_bytes": 32768,
+  "stdin": {
+    "bytes": 363477,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-cold/entry.py",
+    "sha256": "9ff176eabd02f4f2396c2b762a25e0f40c21a25d2388d0929efa5fb5df24c6b8"
+  },
+  "stdout": {
+    "bytes": 1657066,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-source9-cold-v1-actual-stdout-20261016.json",
+    "sha256": "2ec440bcc9c282c3dfeec44f98c79a6861c6882c19ad8b2cb8913b8880dc1e9c"
+  },
+  "stdout_cap_bytes": 2097152,
+  "wall_seconds": 5.344268499989994
+}

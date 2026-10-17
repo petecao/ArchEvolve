@@ -1,0 +1,42 @@
+{
+  "constraints": {
+    "editable_files": [
+      "benchmarks/gapbs/src/bfs.cc"
+    ],
+    "preserve_correctness": true,
+    "preserve_roi": true
+  },
+  "id": "bfs-campaign-preparation-20260925-a1.dx100-patch",
+  "implementation": "dx100-bfs-scalar",
+  "intent": "Use dynamic 64-vertex scheduling for scalar TDStep; remove the redundant parent store after successful CAS; emit the per-level diagnostic only when logging is enabled. Preserve the BFS algorithm, parent updates, level barriers, and complete-call ROI.",
+  "message_version": "1.0",
+  "parameters": {
+    "frontier_schedule": {
+      "chunk_vertices": 64,
+      "kind": "dynamic"
+    },
+    "selection": "operator_selected_before_candidate_assessment",
+    "supporting_profile_packages": [
+      "bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.5828ff2030b22718",
+      "bfs-native-pilot-20260925-dx10018-a1.kronecker.package.v1.1d44ec6b44f05000"
+    ]
+  },
+  "payload": {
+    "content": "--- a/benchmarks/gapbs/src/bfs.cc\n+++ b/benchmarks/gapbs/src/bfs.cc\n@@ -235,7 +235,7 @@\n #pragma omp parallel\n     {\n         QueueBuffer<NodeID> lqueue(queue);\n-#pragma omp for nowait\n+#pragma omp for schedule(dynamic, 64) nowait\n         for (size_t i = queue.shared_out_start; i < queue.shared_out_end; i++) {\n             NodeID u = queue.shared[i];\n             for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {\n@@ -245,7 +245,6 @@\n                     // indirect write (parent, v_tile, u_tile)\n                     // core fetch v tile\n                     if (compare_and_swap(parent[v], curr_val, u)) {\n-                        parent[v] = u;\n                         lqueue.push_back(v);\n                     }\n                 }\n@@ -341,7 +340,8 @@\n     m5_reset_stats(0, 0);\n #endif\n     while (!queue.empty()) {\n-        std::cout << \"Starting TDStep: \" << queue.size() << \" elements\" << std::endl;\n+        if (logging_enabled)\n+            std::cout << \"Starting TDStep: \" << queue.size() << \" elements\" << std::endl;\n         t.Start();\n         TDStep(g, VertexOffsetsOut, parent, queue, num_nodes, num_edges);\n         queue.slide_window();\n",
+    "kind": "patch"
+  },
+  "producer": {
+    "name": "swdb-representative-dx100-patch",
+    "role": "sw",
+    "test_client": true
+  },
+  "profile_package": "bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.5828ff2030b22718",
+  "regions": [
+    "function:bfs.cc:10396:92351720b886b03a",
+    "function:bfs.cc:13304:76a956649bfe9705"
+  ],
+  "required_operations": [],
+  "source_sha256": "d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d",
+  "source_snapshot": "bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.source",
+  "strategy": "cpu-frontier-load-balancing-and-redundant-work-elimination"
+}

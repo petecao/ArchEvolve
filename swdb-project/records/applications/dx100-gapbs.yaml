@@ -1,0 +1,30 @@
+kind: application
+schema_version: '0.4'
+id: dx100-gapbs
+status: draft
+deprecated_by: null
+created: '2026-09-25'
+updated: '2026-09-25'
+provenance:
+- id: src-dx100
+  kind: source_code
+  description: Pinned DX100 source read and copied 2026-09-25; no execution evidence.
+  uri: https://github.com/arkhadem/DX100/tree/e4fc4afdf894f295442cef3604667a469fab8e62
+name: DX100 GAPBS source snapshot
+source:
+  origin: upstream
+  uri: https://github.com/arkhadem/DX100
+  commit: e4fc4afdf894f295442cef3604667a469fab8e62
+  local_path: apps/dx100
+license: BSD-3-Clause
+language: C++11
+parallel_model: openmp
+build:
+  command: make -C benchmarks/gapbs GEM5 bfs
+  flags: -std=c++11 -O3 -Wall -g3 -fopenmp -DGEM5
+domain: graph
+notes:
+- Source context is DX100, not upstream GAPBS. The application Makefile describes
+  the artifact GEM5 route; implementation build selects the explicit native scalar
+  route.
+extensions: {}

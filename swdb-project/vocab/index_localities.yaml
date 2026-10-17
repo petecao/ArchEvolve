@@ -1,0 +1,7 @@
+name: index_localities
+description: How neighbor IDs relate to the ID of the vertex that lists them.
+values:
+  - value: random
+    meaning: Neighbor IDs are spread over the whole ID range with no relation to the listing vertex.
+  - value: clustered
+    meaning: Neighbor IDs tend to be near the listing vertex's ID (for example meshes in natural order).

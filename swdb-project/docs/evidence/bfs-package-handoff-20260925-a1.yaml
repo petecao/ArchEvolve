@@ -1,0 +1,139 @@
+date: '2026-09-25'
+scope: Actual diagnostic profile-package and exact-source patch handoff; no remeasurement
+  or performance claim
+checkpoint: 342fcff84b16dae86e42e70169929c2211143bd1
+host: mbit10
+started_et: 2026-09-25 21:29:04 ET
+finished_et: 2026-09-25 21:33:22 ET
+exit_code: 0
+elapsed_seconds: 257.7397582065314
+profile_packages:
+- bfs-package-smoke-20260925-a1.before.package.v1.1187f3a8ca4968d0
+- bfs-package-smoke-20260925-a1.after.package.v1.81772095f055cd8b
+proposal: bfs-package-smoke-20260925-a1.proposal
+candidate: bfs-package-smoke-20260925-a1.proposal.candidate-1
+reference_candidate: bfs-profile-smoke-20260925-a3.proposal.candidate-1
+matching_source_sha256: e6e789e6942776ad88cbc3ba8377d09be8f8b8eee63e511230d7a9957a2490fd
+retrieved_records: 14
+package_completeness:
+- complete
+- complete
+gain_claim: false
+receipt:
+  path: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/receipt.json
+  sha256: c9c00f9c6b9fcbd9920ecf1153f678832f237976bf625ed445882ee390196f73
+public_stages:
+- command: get
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/00-get.json
+  stdout_sha256: 2eede0fb95a2b1ec36742d110ffec59a89dddc4f101783c42546015dff23ce5e
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/00-get.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  returncode: 0
+- command: get
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/01-get.json
+  stdout_sha256: ed6ab42aec6d4550d3194b7e9166e18a0398f7ae53ea78b5c8fd3bcdb7f65556
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/01-get.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  returncode: 0
+- command: get
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/02-get.json
+  stdout_sha256: ff5bec8d50d560fb70fe975b9dbfe96b04ff2aed316f96f3c0eae3734cb1abc0
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/02-get.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  returncode: 0
+- command: get
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/03-get.json
+  stdout_sha256: 2f8a1018ec3e2998735d29c0d433e7b8ccb0463fca80c48caa6146f7183594b1
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/03-get.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  returncode: 0
+- command: get
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/04-get.json
+  stdout_sha256: ba2d7eeef2903cf2c2abe202e7372216e841a9eb1eda2a837902593a098393a2
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/04-get.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  returncode: 0
+- command: get
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/05-get.json
+  stdout_sha256: 4dd662ab994f77a4535982b0dbc11d3bfa55c64efe040e0d017293e947c6dc41
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/05-get.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  returncode: 0
+- command: get
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/06-get.json
+  stdout_sha256: c235f7e547531dcc27d3444a932c97ca8b7f48d513eb2d7d3037d8e865ccc6ff
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/06-get.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  returncode: 0
+- command: profile-package
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/07-profile-package.json
+  stdout_sha256: 1dbb0c5031f0981c09dbf74898bb8fade69157329675683529ae7d894ebb6ab4
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/07-profile-package.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  returncode: 0
+- command: profile-strategies
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/08-profile-strategies.json
+  stdout_sha256: 8791c11e94c033ce69e4efd81879e34ca6a1372d4bf23f11aad67e6b2be7e9b0
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/08-profile-strategies.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  returncode: 0
+- command: strategy-regions
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/09-strategy-regions.json
+  stdout_sha256: dd79e2584369c58a34ea24e97b1a8bdf4152a9acf89da596f78cf5540e36cd43
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/09-strategy-regions.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  returncode: 0
+- command: profile-package
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/10-profile-package.json
+  stdout_sha256: 904426692959e947934b4dc10f5c4773592fca5d9d85e99dd938d8bf88443848
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/10-profile-package.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  returncode: 0
+- command: profile-strategies
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/11-profile-strategies.json
+  stdout_sha256: 5b8e6916ef49ef1077339e026088a79cbf1e871c86659ee7d46077f095607015
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/11-profile-strategies.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  returncode: 0
+- command: strategy-regions
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/12-strategy-regions.json
+  stdout_sha256: 34a66035251a9cf0e735525ba2d641b32eff79cb77e3d2c2cf1db3f18787965e
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/12-strategy-regions.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  returncode: 0
+- command: submit
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/13-submit.json
+  stdout_sha256: 8812fff928ab8ea2417406985a7e5e88d284f5d645f825a80618f1a3383a47ee
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/13-submit.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  returncode: 0
+- command: get
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/14-get.json
+  stdout_sha256: 63e8cfb60ba3ecd53b3139b4deb99247edcbc41e5da14881c89668277a1d25f4
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/14-get.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  returncode: 0
+- command: build
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/15-build.json
+  stdout_sha256: b67545f3ab2ecdfbecdb88d3562165ccbcfebf1e48108587d089ac7d50cf369c
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/15-build.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  returncode: 0
+- command: get
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/16-get.json
+  stdout_sha256: 3bb0c32375dd6c76ef385f093e214cf67041cf99be02c65662173d2cc83693c2
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/16-get.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  returncode: 0
+- command: get
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/17-get.json
+  stdout_sha256: 1dbb0c5031f0981c09dbf74898bb8fade69157329675683529ae7d894ebb6ab4
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/17-get.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  returncode: 0
+- command: get
+  stdout: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/18-get.json
+  stdout_sha256: 904426692959e947934b4dc10f5c4773592fca5d9d85e99dd938d8bf88443848
+  stderr: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.driver/18-get.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  returncode: 0

@@ -1,0 +1,9 @@
+name: strategy_targets
+description: What an optimization strategy acts on.
+values:
+  - value: access_pattern
+    meaning: One access pattern of an implementation; legality is checked against its steps and semantics.
+  - value: loop
+    meaning: One loop of an implementation and its child loops; every access pattern in them must meet the preconditions.
+  - value: input
+    meaning: The data fed to an implementation (for example its vertex numbering); preconditions are prose.

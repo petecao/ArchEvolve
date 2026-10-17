@@ -1,0 +1,218 @@
+{
+  "date_et": "2026-10-16",
+  "scope": "Passive exact Git/files, compact metadata reconciliation and primary source/range hashes only; no compiler/formal/native/SSH",
+  "initializer_packet": "69c5499accf1bb628856495b33b99701adee8845",
+  "initializer_reference_instances": 438,
+  "initializer_unique_file_or_Git_pins": 438,
+  "initializer_exact_Git_pin_count": 2,
+  "initializer_physical_pin_count": 436,
+  "diagnostic_compact_checks_read": 253,
+  "remote_root_checks_attributed": 2732,
+  "remote_physical_files_attributed": 2638,
+  "reviewer_remote_rehash": false,
+  "budget_primary_sources": [
+    {
+      "bytes": 7281,
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/Why3Provers.ml",
+      "ranges": [
+        {
+          "end": 22,
+          "sha256_utf8_lines": "29d77274efe8ce6f5ab517f3aa04d922faf032331d206d24b140a51ff587f216",
+          "start": 17
+        },
+        {
+          "end": 59,
+          "sha256_utf8_lines": "988133eda0a8988d288f4e2686faffb97cbdd7cc3ef165ee8de332b66f919e1b",
+          "start": 47
+        },
+        {
+          "end": 89,
+          "sha256_utf8_lines": "c571bdc0406cbce53f0dd10da2c3624931c8e3ead58ca613754bb298642412e8",
+          "start": 89
+        }
+      ],
+      "release_archive_byte_equal": false,
+      "sha256": "39da8a23d9f1fe8743579f9a15e9421ebcc8c1b699cce0a1a3443dde3bbf3746"
+    },
+    {
+      "bytes": 39279,
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/wp_parameters.ml",
+      "ranges": [
+        {
+          "end": 799,
+          "sha256_utf8_lines": "a13bc7878e753378bd5f806a93d1e3a6903df91fbf46111e152a25b82d039ea1",
+          "start": 789
+        },
+        {
+          "end": 871,
+          "sha256_utf8_lines": "696b4e98aece445910db888d05668f9b8ba3aa5f8d5ff8715bcd537ea9f32355",
+          "start": 861
+        },
+        {
+          "end": 970,
+          "sha256_utf8_lines": "2ab389edacf1a659e8eaa8929d35fc4e7e916507f08c00eef57bab2c0fed42a7",
+          "start": 931
+        }
+      ],
+      "release_archive_byte_equal": false,
+      "sha256": "a4ace79d1262461ea14f73275db17eb332f76b265059fc238a6bc9538a81df2b"
+    },
+    {
+      "bytes": 9406,
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/VCS.ml",
+      "ranges": [
+        {
+          "end": 29,
+          "sha256_utf8_lines": "2083bb32c2ed4fe66764afdab6cd70f4edad08b1dfab58c9406e4d8fdd6ae509",
+          "start": 20
+        },
+        {
+          "end": 52,
+          "sha256_utf8_lines": "ee03795d74258796490ef968da03f0ea9520cfe2619571a36cdf86ab4d030aeb",
+          "start": 50
+        }
+      ],
+      "release_archive_byte_equal": false,
+      "sha256": "95688db279e59b61f7e5068beb07b460778d91c5adf72be06a8e1e19e520b821"
+    },
+    {
+      "bytes": 6233,
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/ProverTask.ml",
+      "ranges": [
+        {
+          "end": 29,
+          "sha256_utf8_lines": "8ee66424dc7e682540a911d51d7ed76301a3663bb5f54234648cbe10688f87b5",
+          "start": 17
+        },
+        {
+          "end": 50,
+          "sha256_utf8_lines": "9396f705e6376a4478e1cd06ba587faf31c26336f4f9855289191d6d338b4da1",
+          "start": 35
+        }
+      ],
+      "release_archive_byte_equal": false,
+      "sha256": "0ae5556785d03a00c3b0caec20da1db43738002fb40fb5d3f15a5eac692730c4"
+    },
+    {
+      "bytes": 63257,
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/ProverWhy3.ml",
+      "ranges": [
+        {
+          "end": 1320,
+          "sha256_utf8_lines": "9606923b2c917f26f06566383888dc49d937191f7fc15d6eab0ba7029a8e048b",
+          "start": 1290
+        },
+        {
+          "end": 1412,
+          "sha256_utf8_lines": "8a45eac92d4557d9f985a6b18b5f83bb16c1fa3e14029741ffd8db679d78b186",
+          "start": 1375
+        }
+      ],
+      "release_archive_byte_equal": false,
+      "sha256": "18413bff579ac1557c0b5060a679d80d55cfce49099b9557a85ea8c66fe88526"
+    },
+    {
+      "bytes": 42359,
+      "path": "/private/tmp/probata-why3-1.8.2-config-source-20261016/src/driver/whyconf.ml",
+      "ranges": [
+        {
+          "end": 50,
+          "sha256_utf8_lines": "3e31697176f8511b7dcf478eed44ddc615d1201ca855c4dc80a6a3a1b894d8c8",
+          "start": 44
+        },
+        {
+          "end": 190,
+          "sha256_utf8_lines": "587ecba476e1dbd307754f854490a01be2eee9d30f0f47e9a1af49f43ed5b1b8",
+          "start": 184
+        },
+        {
+          "end": 703,
+          "sha256_utf8_lines": "a0aaf62f84b26178220dc6df82a8dbe9ee64c14066bafafe30302e1c5acc466d",
+          "start": 685
+        }
+      ],
+      "release_archive_byte_equal": true,
+      "sha256": "7f4ce66ffe696da09c128739b74f7a90a844dce978b5b877da8bd01a874d5546"
+    },
+    {
+      "bytes": 22987,
+      "path": "/private/tmp/probata-why3-1.8.2-config-source-20261016/src/driver/call_provers.ml",
+      "ranges": [
+        {
+          "end": 381,
+          "sha256_utf8_lines": "d1297488342f262f962eb0120f12efbb54748dcbd992a1b1a8f074456f4a0069",
+          "start": 343
+        },
+        {
+          "end": 427,
+          "sha256_utf8_lines": "32a00add3a784edcd5ea0509201f37e59d616e28aee7cabb7746df0d53d90d48",
+          "start": 403
+        },
+        {
+          "end": 530,
+          "sha256_utf8_lines": "f1558c8004f76a4c1968a6d90e07016f612fe5476834e960b790aa8a21bad021",
+          "start": 518
+        }
+      ],
+      "release_archive_byte_equal": true,
+      "sha256": "2c090733b90b8112600ed4d8d0909c26861a4d754f4ae5e39a3f6f31b9c2ead3"
+    },
+    {
+      "bytes": 18431,
+      "path": "/private/tmp/probata-why3-1.8.2-config-source-20261016/src/server/server-unix.c",
+      "ranges": [
+        {
+          "end": 381,
+          "sha256_utf8_lines": "6dff7e930c2c1354b00715f5253e1a618805c8aeef563eb347ccd813e6686ad9",
+          "start": 356
+        }
+      ],
+      "release_archive_byte_equal": true,
+      "sha256": "d555a8c6cb6b3dfca40f61be987f1630782b8e380341a28b8840b43f31236d14"
+    },
+    {
+      "bytes": 83708,
+      "path": "/private/tmp/probata-t28-size-vertical/swdb-project/swdb/wp_adapter.py",
+      "ranges": [
+        {
+          "end": 1186,
+          "sha256_utf8_lines": "7edd8c7c01c224501c831d873aa6bc509c4c25a054caa7d6c4de012b0cfa8f81",
+          "start": 1184
+        }
+      ],
+      "release_archive_byte_equal": false,
+      "sha256": "e58a7cf58a08cbf32067c6b2bb4e09dc24ab85fbcc19793b64bee403aa523d4f"
+    },
+    {
+      "bytes": 101380,
+      "path": "/private/tmp/probata-t28-sizewrong1-debug-entry-v2-20261016.py",
+      "ranges": [
+        {
+          "end": 145,
+          "sha256_utf8_lines": "a04ec3b6c0b6f8018cf20b2d2104fdf6e7c1db1a5af4d9780838fb30a3bea17c",
+          "start": 133
+        }
+      ],
+      "release_archive_byte_equal": false,
+      "sha256": "0528367780772cdc326d4a458b2f1fe5404831746d04097ba1ae52366c53a604"
+    },
+    {
+      "bytes": 26180,
+      "path": "/Users/yanrujhou/.opam/framac-33/share/why3/provers-detection-data.conf",
+      "ranges": [
+        {
+          "end": 10,
+          "sha256_utf8_lines": "c983a8fc74a67364d61a2e29dc7d45222034ef38d4d4c4fafdb2aa2739e36ffb",
+          "start": 1
+        }
+      ],
+      "release_archive_byte_equal": false,
+      "sha256": "1e3a4b966465872b7ebe73084ff1bfdf224ed5ce635b2b163ca3a73eae8c022c"
+    }
+  ],
+  "grow_embedded_file_metadata_reconciled": 21,
+  "grow_remote_raw_manifest_count": 378,
+  "grow_record_accepted_as_proof": false,
+  "ML_native_compile_only": true,
+  "errors": []
+}

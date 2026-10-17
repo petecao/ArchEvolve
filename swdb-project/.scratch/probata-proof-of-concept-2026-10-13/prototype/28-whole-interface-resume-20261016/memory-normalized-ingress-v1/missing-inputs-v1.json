@@ -1,0 +1,26 @@
+{
+  "ABI_transport": {
+    "duplicate_count_or_eligibility_inferred": false,
+    "original_genuine_ABI": {
+      "bytes": 127541,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1/component/abi.ast.json",
+      "sha256": "493764cb6cbb2783db0cdfbbaf1bfd7d3b6efc73ff27df77eb9e5d6e8603b55c"
+    },
+    "owned_by": "parent /root/ticket28; separately reviewed exact-source ABI helper",
+    "state": "required before dispatch; generic strict ABI decoder currently refuses duplicate keys"
+  },
+  "actual_memory_observer": {
+    "new_compiler_or_byte_transform_required": false,
+    "root_admission_receipt": null,
+    "runtime_envelope": null
+  },
+  "body_and_public": {
+    "mapping_receipts": {
+      "whole_same_thread_read_during_gather": null,
+      "whole_same_thread_read_during_store": null,
+      "whole_same_thread_write_during_gather": null
+    },
+    "physical_mapping_alignment_inferred_from_source": false,
+    "runtime_context_receiver_and_fresh_normal_library_method": null
+  }
+}

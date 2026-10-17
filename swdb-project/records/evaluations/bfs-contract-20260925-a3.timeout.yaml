@@ -1,0 +1,199 @@
+kind: evaluation
+schema_version: '0.4'
+id: bfs-contract-20260925-a3.timeout
+status: draft
+created: '2026-09-25'
+updated: '2026-09-25'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  candidate: bfs-contract-20260925-a3.candidate-proposal.candidate-1
+  machine: bfs-contract-20260925-a3.local-host
+  threads: 1
+  sources: [0]
+  repetitions: 1
+  roi: bfs.complete_call.v1
+  fixture: true
+  comparison_baseline: bfs-contract-20260925-a3.independent-reference
+  build:
+    compiler: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/explicit-fixture-compiler
+    flags: [-std=c++11, -O2]
+  workload:
+    id: bfs-contract-20260925-a3.workload.584a833b37d4d8a1
+  budget:
+    build_seconds: 10
+    run_seconds: 0.05
+    total_seconds: 120
+  id: bfs-contract-20260925-a3.timeout
+outcome:
+  state: timed_out
+  stage: execution
+  reason: execution exceeded 0.050 seconds
+stages:
+- stage: source_resolution
+  state: complete
+  started: '2026-09-26T02:00:57.030945+00:00'
+  finished: '2026-09-26T02:00:58.944089+00:00'
+- stage: workload_resolution
+  state: complete
+  started: '2026-09-26T02:01:00.873179+00:00'
+  finished: '2026-09-26T02:01:02.796794+00:00'
+- stage: compiler_identity
+  state: complete
+  started: '2026-09-26T02:01:04.763757+00:00'
+  command:
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/explicit-fixture-compiler
+  - --version
+  timeout_s: 10.0
+  log: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.timeout/002-compiler_identity.log
+  finished: '2026-09-26T02:01:06.708339+00:00'
+  returncode: 0
+  host_wall_s: 0.021099000005051494
+  log_sha256: 59e960c3fab64f5eebb2633af6acc33c9a17d65e46f6ef93099f3827e21208f5
+- stage: build
+  state: complete
+  started: '2026-09-26T02:01:08.660192+00:00'
+  command:
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/explicit-fixture-compiler
+  - -std=c++11
+  - -O2
+  - -I/private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate-proposal/source/src
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.timeout/build/native_driver.cc
+  - -o
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.timeout/build/bfs-native
+  timeout_s: 10.0
+  log: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.timeout/003-build.log
+  finished: '2026-09-26T02:01:10.573572+00:00'
+  returncode: 0
+  host_wall_s: 0.04170316702220589
+  log_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- stage: execution
+  state: timed_out
+  started: '2026-09-26T02:01:14.344522+00:00'
+  command:
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.timeout/build/bfs-native
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.timeout/graph.swdb
+  - '0'
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.timeout/trial-0-0.json
+  timeout_s: 0.05
+  log: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.timeout/004-execution.log
+  repetition: 0
+  source_position: 0
+  source: 0
+  finished: '2026-09-26T02:01:16.282725+00:00'
+  reason: execution exceeded 0.050 seconds
+  host_wall_s: 0.05552758299745619
+  returncode: null
+timing: []
+correctness:
+  state: unverified
+  checks: []
+profiling:
+  state: unavailable
+  reasons:
+  - automatic function attribution not collected
+  - automatic loop attribution not collected
+  - dynamic memory observations not collected
+raw_artifacts:
+- host: YanRus-Mac-Studio
+  path: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.timeout
+  kind: evaluation_run
+- host: YanRus-Mac-Studio
+  path: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.timeout/build
+  kind: evaluation_build
+gain_claim: false
+evidence_kind: contract_fixture
+candidate: bfs-contract-20260925-a3.candidate-proposal.candidate-1
+source_snapshot: bfs-contract-20260925-a3.source
+implementation: gapbs-bfs-do
+proposal: bfs-contract-20260925-a3.candidate-proposal
+profile_package: bfs-contract-20260925-a3.fixture-package
+machine: bfs-contract-20260925-a3.local-host
+comparison_baseline: bfs-contract-20260925-a3.independent-reference
+context:
+  candidate_sha256: b1caf5ac833838d2533ae74c281d0fe155e1eda589b9af16ddbba0a4210c9f8e
+  function: DOBFS
+  source_revision: 2972aeb2703165bafd921222f4ed7196f542d3a8
+  application: gapbs
+  adapter: gapbs_native
+  target: bfs-contract-20260925-a3.local-host
+  machine_sha256: b8e9059c7989f1bac8a02f7a1301d4760b080a36eb646a4f06993cc75593e0f3
+  threads: 1
+  sources: [0]
+  repetitions: 1
+  roi: bfs.complete_call.v1
+  protocol: null
+  basis: measured
+  process_policy: one fresh process per source and repetition; graph construction before ROI
+  verifier: swdb.bfs.structural.v1
+  verifier_sha256: d826f9d4f8ea8c03cce120ecbd1f863623afa149f1f16e68c2767b2f0fa0ee3b
+  backend_configuration: {}
+  instrumentation:
+    template_sha256: 99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95
+    treatment: included
+  host: YanRus-Mac-Studio
+  architecture: arm64
+  lane: null
+  load_average: [11.705078125, 7.90966796875, 6.84326171875]
+  budget:
+    build_seconds: 10.0
+    run_seconds: 0.05
+    total_seconds: 120.0
+  workload:
+    id: bfs-contract-20260925-a3.workload.584a833b37d4d8a1
+    family: contract_fixture
+    generator:
+      name: explicit correctness fixture
+      revision: fixture-v1
+      parameters: {}
+    representation:
+      id: bfs-contract-20260925-a3.json
+      path: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/fixture-graph.json
+      sha256: 2fabd85301bc851142904400e7bb3c5943a3a8c0f1ce28e00d971039d65c5b48
+      format: json_graph
+      application: gapbs
+      canonical_sha256: 18bcb68d4681ac4262bc48199de078bded9620522e521612fdf80dc45d151f85
+      bytes: 80
+      loader: swdb.gapbs-representation.v1
+      adjacency_verified: true
+    normalization: 'simple graph: remove self loops and duplicates; symmetrize if undirected; sort neighbors'
+    canonical_sha256: 18bcb68d4681ac4262bc48199de078bded9620522e521612fdf80dc45d151f85
+    adjacency_order_sha256: 18bcb68d4681ac4262bc48199de078bded9620522e521612fdf80dc45d151f85
+    num_vertices: 5
+    num_directed_edges: 4
+    directed: true
+    sources: [0]
+    canonical_path: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.timeout/graph.swdb
+    canonical_file_sha256: dbbad7018b7c65366ac423f8d505929eb0364e00bff34c20cd4fa2227cb4ea43
+build:
+  directory: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.timeout/build
+  compiler: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/explicit-fixture-compiler
+  flags: [-std=c++11, -O2]
+  command:
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/explicit-fixture-compiler
+  - -std=c++11
+  - -O2
+  - -I/private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.candidate-proposal/source/src
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.timeout/build/native_driver.cc
+  - -o
+  - /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.timeout/build/bfs-native
+  wrapper_sha256: bb454ea348e43f997e9c145fb6014d30bfed431699ee19802d632a0800b26aff
+  template_sha256: 99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95
+  compiler_version:
+  - SWDB explicit contract fixture compiler v1
+  binary: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.timeout/build/bfs-native
+  binary_sha256: 36681f2114d60dea21331820ea6c006dffb509c0c2232a9016b73ee8008e58be
+  execution_environment:
+    OMP_NUM_THREADS: '1'
+    OMP_DYNAMIC: 'FALSE'
+    OMP_PROC_BIND: close
+    OMP_PLACES: cores

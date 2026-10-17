@@ -1,0 +1,49 @@
+--- lanl17_capture_original_strict_audit_metadata_20261009_a1.py
++++ lanl17_capture_original_strict_audit_metadata_20261009_a2.py
+@@ -1,5 +1,5 @@
+ """2026-10-09 ET. Administrative capture of the exact original three-flag6a audit; no original-control edits."""
+-import datetime,hashlib,json,os,stat,subprocess,time
++import datetime,hashlib,json,os,resource,stat,subprocess,time
+ from pathlib import Path
+ UID=114316761;R='5e12a9796432654d88def24ecea617d16ca605b2';S=Path('/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5');P=Path('/data1/yanruj/lanl17-actual-template-author-source-20261008-a5-r1');OUT=P/'actual-strict-audit-capture-20261009-a5-a1'
+ AUD='/data1/yanruj/lanl17-custody-source-20261007-a3/auditor.py';AH='6a91ed1015bcc1caa771348e8bd1f591254ba130e55570ed18bc8121d67a06da';AP=P/'actual-accepted-pins-20261009-a5-a1/accepted-pins.json';PH='c808f38d20a1a607df17d5d04c0dce4d31ac87a564fcae1a2fab9653f098d240';F=('dev','ino','mode','uid','gid','nlink','size','mtime_ns','ctime_ns')
+@@ -13,20 +13,33 @@
+  return {'path':str(p),'bytes':n,'sha256':h,'stat':stamp(s)}
+ def git(*args):
+  env={k:v for k,v in os.environ.items() if not k.startswith('GIT_')};env.update(GIT_NO_LAZY_FETCH='1',GIT_TERMINAL_PROMPT='0',GIT_OPTIONAL_LOCKS='0',GIT_PAGER='cat')
+- x=subprocess.run(['git','-c','protocol.allow=never','-c','core.fsmonitor=false','-C',str(S),*args],env=env,stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=30);assert x.returncode==0 and not x.stderr;return x.stdout
++ x=subprocess.run(['/usr/bin/git','-c','protocol.allow=never','-c','core.fsmonitor=false','-C',str(S),*args],env=env,stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=30);assert x.returncode==0 and not x.stderr;return x.stdout
+ assert os.getuid()==os.geteuid()==UID and os.uname().nodename.split('.')[0]=='mbit10' and Path('/proc/self/exe').resolve()==Path('/usr/bin/python3.12')
+ os.umask(0o077);assert OUT.is_absolute() and not os.path.lexists(OUT) and not any(q.is_symlink() for q in (P,*P.parents));pst=P.stat();assert stat.S_ISDIR(pst.st_mode) and pst.st_uid==UID and stat.S_IMODE(pst.st_mode)==0o700
+ assert git('rev-parse','HEAD').decode().strip()==R and git('status','--porcelain')==b'';source=exact(AUD,115130,AH);accepted=exact(AP,115510,PH)
+ free={str(p):os.statvfs(p).f_bavail*os.statvfs(p).f_frsize for p in (Path('/data'),Path('/data1'))};mem=int(next(x.split()[1] for x in Path('/proc/meminfo').read_text().splitlines() if x.startswith('MemAvailable:')))*1024
+ assert mem>=80*1024**3 and free['/data']>=24*1024**3 and free['/data1']>=21*1024**3
+ argv=['/usr/bin/python3.12','-B',AUD,'--repository',str(S),'--accepted-pins',str(AP),'--accepted-pins-sha256',PH];bounded=['/usr/bin/timeout','--signal=TERM','--kill-after=60s','300s',*argv]
+-started=datetime.datetime.now(datetime.timezone.utc).isoformat();load_before=os.getloadavg();run=subprocess.run(bounded,stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=370);ended=datetime.datetime.now(datetime.timezone.utc).isoformat();load_after=os.getloadavg()
+-assert len(run.stdout)<=8*1024*1024 and len(run.stderr)<=8*1024*1024;assert exact(AUD,115130,AH)==source and exact(AP,115510,PH)==accepted and git('rev-parse','HEAD').decode().strip()==R and git('status','--porcelain')==b'' and P.stat()==pst
++# Enforce each original stream's bound in the kernel, on remote files only.
++OUT.mkdir(mode=0o700);parent_after_own_mkdir=P.stat();fds=[]
++def stream_limit():resource.setrlimit(resource.RLIMIT_FSIZE,(8*1024*1024,8*1024*1024))
++for name in ('audit-original.json','audit-original.stderr'):
++ fds.append(os.open(OUT/name,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600))
++started=datetime.datetime.now(datetime.timezone.utc).isoformat();load_before=os.getloadavg()
++try:
++ run=subprocess.run(bounded,stdout=fds[0],stderr=fds[1],timeout=370,preexec_fn=stream_limit)
++finally:
++ for fd in fds:os.fsync(fd);os.close(fd)
++ended=datetime.datetime.now(datetime.timezone.utc).isoformat();load_after=os.getloadavg()
++stdout=(OUT/'audit-original.json').read_bytes();stderr=(OUT/'audit-original.stderr').read_bytes()
++assert len(stdout)<=8*1024*1024 and len(stderr)<=8*1024*1024;assert exact(AUD,115130,AH)==source and exact(AP,115510,PH)==accepted and git('rev-parse','HEAD').decode().strip()==R and git('status','--porcelain')==b'' and P.stat()==parent_after_own_mkdir
+ # Preserve every actual exit/output, including pending/refused; outer success is capture only.
+-receipt={'format':'swdb.lanl17-original-strict-audit-administrative-capture.v1','started_utc':started,'ended_utc':ended,'original_auditor_exit_code':run.returncode,'original_auditor_argv':argv,'bounded_argv':bounded,'auditor_original_pin':source,'accepted_original_pin':accepted,'original_stdout_pin':{'path':str(OUT/'audit-original.json'),'bytes':len(run.stdout),'sha256':sha(run.stdout)},'original_stderr_pin':{'path':str(OUT/'audit-original.stderr'),'bytes':len(run.stderr),'sha256':sha(run.stderr)},'load_before':load_before,'load_after':load_after,'MemAvailable_before':mem,'free_bytes_before':free,'capture_success_is_not_audit_success':True,'auditor_or_original_input_modified':False,'scientific_admission_inferred':False,'repository_HEAD_R_clean_before_after':True}
+-body=(json.dumps(receipt,sort_keys=True,indent=2,ensure_ascii=True,allow_nan=False)+'\n').encode();OUT.mkdir(mode=0o700)
+-for name,b in (('audit-original.json',run.stdout),('audit-original.stderr',run.stderr),('audit-execution.json',body)):
++receipt={'format':'swdb.lanl17-original-strict-audit-administrative-capture.v1','started_utc':started,'ended_utc':ended,'original_auditor_exit_code':run.returncode,'original_auditor_argv':argv,'bounded_argv':bounded,'auditor_original_pin':source,'accepted_original_pin':accepted,'original_stdout_pin':{'path':str(OUT/'audit-original.json'),'bytes':len(stdout),'sha256':sha(stdout)},'original_stderr_pin':{'path':str(OUT/'audit-original.stderr'),'bytes':len(stderr),'sha256':sha(stderr)},'load_before':load_before,'load_after':load_after,'MemAvailable_before':mem,'free_bytes_before':free,'capture_success_is_not_audit_success':True,'auditor_or_original_input_modified':False,'scientific_admission_inferred':False,'repository_HEAD_R_clean_before_after':True}
++receipt['stream_capture_bound_bytes']=8*1024*1024;receipt['stream_bound_enforced_by_kernel_RLIMIT_FSIZE']=True;receipt['output_directory_created_before_original_auditor']=True
++body=(json.dumps(receipt,sort_keys=True,indent=2,ensure_ascii=True,allow_nan=False)+'\n').encode()
++for name,b in (('audit-execution.json',body),):
+  fd=os.open(OUT/name,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+  with os.fdopen(fd,'wb') as f:f.write(b);f.flush();os.fsync(f.fileno())
+  assert exact(OUT/name,len(b),sha(b))['sha256']==sha(b)
++for name,b in (('audit-original.json',stdout),('audit-original.stderr',stderr)):exact(OUT/name,len(b),sha(b))
+ print(json.dumps({'format':receipt['format'],'original_auditor_exit_code':run.returncode,'original_stdout_pin':receipt['original_stdout_pin'],'original_stderr_pin':receipt['original_stderr_pin'],'execution_pin':{'path':str(OUT/'audit-execution.json'),'bytes':len(body),'sha256':sha(body)},'capture_success_is_not_audit_success':True,'scientific_admission_inferred':False},sort_keys=True))

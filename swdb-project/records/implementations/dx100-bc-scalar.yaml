@@ -1,0 +1,603 @@
+kind: implementation
+schema_version: '0.4'
+status: draft
+deprecated_by: null
+extensions: {}
+id: dx100-bc-scalar
+created: '2026-10-03'
+updated: '2026-10-03'
+provenance:
+- id: src-dx100-bc
+  kind: source_code
+  description: DX100 bc.cc scalar Brandes calls PBFS (forward pass) and a scalar dependency pass; main
+    selects it when MAA is undefined. Read 2026-10-03 for ticket 40.
+  uri: https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/benchmarks/gapbs/src/bc.cc
+name: DX100 scalar Brandes BC
+kernel: gapbs-bc
+application: dx100-gapbs
+source_baseline: dx100-bc-scalar
+function: Brandes
+origin:
+  kind: application_source
+  description: Scalar non-MAA starting implementation in pinned DX100 source.
+  derived_from: null
+code:
+- root: application
+  path: benchmarks/gapbs/src/bc.cc
+  sha256: 9732327b347c5da72526923f44b4250afcd7816c3b0ca1d0c8a43cd1d77f36ea
+build:
+  compiler: g++
+  flags: -std=c++11 -O3 -Wall -fopenmp -pthread -DFUNC -DNUM_CORES=4
+  command: '{cxx} {flags} -I{app}/benchmarks/API -I{app}/benchmarks/gapbs/src {source} -o {binary}'
+run:
+  command: '{binary} {input_args} -n {trials}'
+  timer: gapbs_trial_time
+  threads_env: OMP_NUM_THREADS
+  kernel_symbols: [Brandes, PBFS]
+  index_stream: null
+evaluator:
+  backend: native
+  command: '{binary} {input_args} -n 1 -v'
+  pass_regex: Verification:\s+PASS
+  verifier:
+    description: DX100 BCVerifier recomputes serial Brandes scores from the same source and requires every
+      normalized score within float epsilon. Native FUNC binding; GEM5 post-ROI correctness requires its
+      own evaluator.
+    code:
+      root: application
+      path: benchmarks/gapbs/src/bc.cc
+      sha256: 9732327b347c5da72526923f44b4250afcd7816c3b0ca1d0c8a43cd1d77f36ea
+      lines: [654, 720]
+verification:
+  status: unchecked
+  evidence: []
+  scope: Imported source only; no native or simulated target/workload has been checked by this record.
+loops:
+- id: pbfs-frontier
+  description: PBFS visits each vertex of the current queue window (forward pass).
+  parent: null
+  trip_count:
+    value: null
+    formula: null
+    scope: per_sweep
+    basis: unknown
+    evidence_refs: [src-dx100-bc]
+  parallel:
+    construct: omp_for_in_parallel_region
+    schedule: dynamic, 64
+    reduction: null
+- id: pbfs-neighbors
+  description: PBFS iterates the outgoing CSR range of each frontier vertex.
+  parent: pbfs-frontier
+  trip_count:
+    value: null
+    formula: null
+    scope: per_sweep
+    basis: unknown
+    evidence_refs: [src-dx100-bc]
+  parallel:
+    construct: nested_serial
+    schedule: null
+    reduction: null
+access_patterns:
+- id: pbfs-frontier-read
+  expression: NodeID u = *q_iter
+  loop: pbfs-frontier
+  steps:
+  - array:
+      name: queue.shared
+      role: target
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    ordering:
+      value: level_synchronous
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+  evidence_refs: [src-dx100-bc]
+- id: pbfs-row-bounds-read
+  expression: VertexOffsetsData[u]
+  loop: pbfs-frontier
+  steps:
+  - array:
+      name: queue.shared
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  - array:
+      name: VertexOffsetsData
+      role: target
+      element_type: SGOffset (int32_t)
+      element_bytes: 4
+      element_count: num_nodes + 1
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: Reads the row start indexed by the frontier vertex u.
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    ordering:
+      value: level_synchronous
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+  evidence_refs: [src-dx100-bc]
+- id: pbfs-row-end-read
+  expression: VertexOffsetsData[u + 1]
+  loop: pbfs-frontier
+  steps:
+  - array:
+      name: queue.shared
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  - array:
+      name: VertexOffsetsData
+      role: target
+      element_type: SGOffset (int32_t)
+      element_bytes: 4
+      element_count: num_nodes + 1
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: affine
+    note: Reads the row end using u + 1; the +1 is affine index arithmetic on the loaded vertex ID.
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    ordering:
+      value: level_synchronous
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+  evidence_refs: [src-dx100-bc]
+- id: pbfs-neighbor-read
+  expression: NodeID &v = g.out_neighbors_[vidx]
+  loop: pbfs-neighbors
+  steps:
+  - array:
+      name: queue.shared
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  - array:
+      name: VertexOffsetsData
+      role: offsets
+      element_type: SGOffset (int32_t)
+      element_bytes: 4
+      element_count: num_nodes + 1
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: Reads row start VertexOffsetsData[u] and row end VertexOffsetsData[u + 1]; +1 is affine index
+      arithmetic.
+  - array:
+      name: g.out_neighbors_
+      role: target
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+    address_shape: ranged_indirect
+    note: Iterates j from VertexOffsetsData[u] (inclusive) to VertexOffsetsData[u + 1] (exclusive).
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    ordering:
+      value: level_synchronous
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+  evidence_refs: [src-dx100-bc]
+- id: pbfs-depth-read
+  expression: depths[v] == -1; depths[v] == depth
+  loop: pbfs-neighbors
+  steps:
+  - array:
+      name: queue.shared
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  - array:
+      name: VertexOffsetsData
+      role: offsets
+      element_type: SGOffset (int32_t)
+      element_bytes: 4
+      element_count: num_nodes + 1
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: Reads row start VertexOffsetsData[u] and row end VertexOffsetsData[u + 1]; +1 is affine index
+      arithmetic.
+  - array:
+      name: g.out_neighbors_
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+    address_shape: ranged_indirect
+    note: Iterates j from VertexOffsetsData[u] (inclusive) to VertexOffsetsData[u + 1] (exclusive).
+  - array:
+      name: depths
+      role: target
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    loop_carried_dependencies:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    ordering:
+      value: schedule_dependent
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+  evidence_refs: [src-dx100-bc]
+- id: pbfs-depth-cas
+  expression: compare_and_swap(depths[v], -1, depth)
+  loop: pbfs-neighbors
+  steps:
+  - array:
+      name: queue.shared
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  - array:
+      name: VertexOffsetsData
+      role: offsets
+      element_type: SGOffset (int32_t)
+      element_bytes: 4
+      element_count: num_nodes + 1
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: Reads row start VertexOffsetsData[u] and row end VertexOffsetsData[u + 1]; +1 is affine index
+      arithmetic.
+  - array:
+      name: g.out_neighbors_
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+    address_shape: ranged_indirect
+    note: Iterates j from VertexOffsetsData[u] (inclusive) to VertexOffsetsData[u + 1] (exclusive).
+  - array:
+      name: depths
+      role: target
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+  update_kind: compare_and_swap
+  update:
+    pseudocode: if depths[v] == -1, atomically set depths[v] = depth
+    side_effects: On success lqueue.push_back(v) follows; the depth is reread afterwards for the path-count
+      test.
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    loop_carried_dependencies:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    atomic_updates_required:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    ordering:
+      value: schedule_dependent
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+  evidence_refs: [src-dx100-bc]
+  condition: curr_val < 0
+- id: pbfs-path-count-add
+  expression: path_counts[v] += path_counts[u]
+  loop: pbfs-neighbors
+  steps:
+  - array:
+      name: queue.shared
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  - array:
+      name: VertexOffsetsData
+      role: offsets
+      element_type: SGOffset (int32_t)
+      element_bytes: 4
+      element_count: num_nodes + 1
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: Reads row start VertexOffsetsData[u] and row end VertexOffsetsData[u + 1]; +1 is affine index
+      arithmetic.
+  - array:
+      name: g.out_neighbors_
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+    address_shape: ranged_indirect
+    note: Iterates j from VertexOffsetsData[u] (inclusive) to VertexOffsetsData[u + 1] (exclusive).
+  - array:
+      name: path_counts
+      role: target
+      element_type: CountT (float in the DX100 source)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+  update_kind: add_update
+  update:
+    pseudocode: 'if depths[v] == depth: path_counts[v] += path_counts[u] (omp atomic)'
+    side_effects: Also sets the successor bit of edge vidx.
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    loop_carried_dependencies:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    atomic_updates_required:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    ordering:
+      value: schedule_dependent
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    numerical_requirement:
+      value: fp_reassociation_allowed
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+  evidence_refs: [src-dx100-bc]
+  condition: curr_val < 0
+- id: pbfs-queue-append
+  expression: lqueue.push_back(v)
+  loop: pbfs-neighbors
+  steps:
+  - array:
+      name: lqueue.local_queue
+      role: target
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: '16384'
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: One position per successful discovery within this thread-local QueueBuffer; resets on flush.
+      Append is controlled by CAS success, not indexed by parent values. Buffer slots may be reused after
+      a flush in the same frontier.
+  update_kind: write
+  update:
+    pseudocode: if local buffer is full, flush; local_queue[in++] = v
+    side_effects: QueueBuffer.flush reserves a shared queue range using fetch_and_add and copies the local
+      buffer before the level ends.
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    loop_carried_dependencies:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    shared_target_between_threads:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    ordering:
+      value: level_synchronous
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-dx100-bc]
+  evidence_refs: [src-dx100-bc]
+  condition: compare_and_swap(parent[v], curr_val, u) succeeds
+notes:
+- PBFS (forward pass, lines 69-128) is the region the derived BC read-offload contract targets; the dependency
+  pass stays scalar.
+- The DX100 source declares CountT as float (upstream GAPBS uses double); its own BCVerifier uses the
+  same types.
+- The full source needs -DNUM_CORES for the authors tile/register arrays; the scalar-only snapshot removes
+  them.
+- No -DMAA flag is passed; native functional API setup is not accelerated performance evidence.
+- Duplicate depth destinations may occur across frontier vertices; the depth read/CAS and path-count patterns
+  record this possibility, not a measured rate.

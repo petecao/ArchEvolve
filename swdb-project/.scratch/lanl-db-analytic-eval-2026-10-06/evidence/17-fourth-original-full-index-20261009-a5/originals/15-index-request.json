@@ -1,0 +1,1506 @@
+{
+  "format": "swdb.lanl17-parent-record-index-request.v1",
+  "context": {
+    "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+    "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+    "final_R": {
+      "commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+      "tree": "1ab2c8ab147251391a4af75e637114bdd5b0ff27"
+    },
+    "account": {
+      "host": "mbit10",
+      "platform": "linux",
+      "uid": 114316761,
+      "user": "yanruj"
+    },
+    "campaign": "extensa-gem5-bfs-20261006-p4",
+    "source_path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5",
+    "project": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project",
+    "records_directory": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p4/records",
+    "manifest_identity_sha256": "66194a7e99716f5b59ddf081dfec752c34b51f1805470a4514171c53323b06c7"
+  },
+  "originals": {
+    "manifest_M2": {
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/manifest.json",
+      "bytes": 292401,
+      "sha256": "b86d78bac1d0a09e176114d1c23491ede098c4fcf5af5ab96f318ceabc29b8d1",
+      "identity_sha256": "66194a7e99716f5b59ddf081dfec752c34b51f1805470a4514171c53323b06c7",
+      "canonical_ensure_ascii": true
+    },
+    "helper_source": {
+      "path": "/data1/yanruj/lanl17-control-cleanup60-20261007-a4.py",
+      "bytes": 38195,
+      "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+    },
+    "auditor_source": {
+      "path": "/data1/yanruj/lanl17-custody-source-20261007-a3/auditor.py",
+      "bytes": 115130,
+      "sha256": "6a91ed1015bcc1caa771348e8bd1f591254ba130e55570ed18bc8121d67a06da"
+    },
+    "collector_source": {
+      "path": "/data1/yanruj/lanl17-custody-source-20261007-a2r1/collector.py",
+      "bytes": 24818,
+      "sha256": "b08db809b80cbebc6ce98dd8df8fdd4f327b170cdd7a545af0876ad68a832a5c"
+    },
+    "validation_argv": {
+      "bytes": 192,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-extensa-gem5-bfs-20261006-p4.argv.json",
+      "sha256": "b3766a64344f162a0860c7e463f1fd5589b9b9e39e5fc6c3013f882f60a9f731"
+    },
+    "validation_exit": {
+      "bytes": 2,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-extensa-gem5-bfs-20261006-p4.exit-code.txt",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "validation_stderr": {
+      "bytes": 0,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-extensa-gem5-bfs-20261006-p4.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "validation_stdout": {
+      "bytes": 24,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-extensa-gem5-bfs-20261006-p4.stdout",
+      "sha256": "824bf2ba02fb5053d4e31c06019216ff5d4a86e92ff829bc78131e501671b2e6"
+    }
+  },
+  "catalog_inventory": [
+    {
+      "path": "applications/dx100-gapbs.yaml",
+      "bytes": 906,
+      "sha256": "3a7d5da7fa082c845aa29c700d3d50cdba8db65e4a45320d5f7c365d91c2b6bf",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290292,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 906,
+        "mtime_ns": 1791505096631557746,
+        "ctime_ns": 1791505096631557746
+      }
+    },
+    {
+      "path": "applications/gapbs.yaml",
+      "bytes": 909,
+      "sha256": "0c6df6d1d938da1369fcae0be209967f7e970eaa7d9e081df4237a9e7d623620",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290314,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 909,
+        "mtime_ns": 1791505096640557840,
+        "ctime_ns": 1791505096640557840
+      }
+    },
+    {
+      "path": "campaign_summaries/extensa-gem5-bfs-20261006-p4.summary.yaml",
+      "bytes": 24173,
+      "sha256": "0dc55ef5ff35d4e70359130d67c0e54426411cdba2f6b3a11e0ed23e472be386",
+      "stat": {
+        "dev": 2065,
+        "ino": 14291024,
+        "mode": 33204,
+        "uid": 114316761,
+        "size": 24173,
+        "mtime_ns": 1791509269211276098,
+        "ctime_ns": 1791509269211276098
+      }
+    },
+    {
+      "path": "candidates/bfs-campaign-preparation-20260925-a1.dx100-instructions.candidate-1.yaml",
+      "bytes": 66369,
+      "sha256": "2a4691b9036c7ecbbae4be956ece6d602e55a2a0f296f45a958f7e91c2ce9ac4",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290261,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 66369,
+        "mtime_ns": 1791505096627557704,
+        "ctime_ns": 1791505096627557704
+      }
+    },
+    {
+      "path": "candidates/bfs-dx100-compile-20260925-a1.candidate.yaml",
+      "bytes": 22538,
+      "sha256": "7e679b119e45b3bcf33472f865ff21290f448c2beff9d1fe524762a620833f11",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290264,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 22538,
+        "mtime_ns": 1791505096627557704,
+        "ctime_ns": 1791505096627557704
+      }
+    },
+    {
+      "path": "candidates/bfs-native-pilot-20260925-dx10018-a1.baseline.yaml",
+      "bytes": 22557,
+      "sha256": "d67f43fd80f7c0ff6eed74c654c2b659e076c17ceb04378e9a3adfca149884e2",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290269,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 22557,
+        "mtime_ns": 1791505096628557715,
+        "ctime_ns": 1791505096628557715
+      }
+    },
+    {
+      "path": "candidates/extensa-gem5-bfs-20261006-p4.it1.kronecker.a0.yaml",
+      "bytes": 18131,
+      "sha256": "a4d0c72c6257b805660293948e0a521eeb4281e787fc427f43d9a5033e8d3602",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290523,
+        "mode": 33204,
+        "uid": 114316761,
+        "size": 18131,
+        "mtime_ns": 1791505723351122281,
+        "ctime_ns": 1791505723351122281
+      }
+    },
+    {
+      "path": "candidates/extensa-gem5-bfs-20261006-p4.it1.uniform_random.a0.yaml",
+      "bytes": 18146,
+      "sha256": "70b2f957771e0567ea721b152e65e141552008b51e60b97c03b5308be31e6fec",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290564,
+        "mode": 33204,
+        "uid": 114316761,
+        "size": 18146,
+        "mtime_ns": 1791506022288256320,
+        "ctime_ns": 1791506022288256320
+      }
+    },
+    {
+      "path": "candidates/extensa-gem5-bfs-20261006-p4.it2.kronecker.a0.yaml",
+      "bytes": 18528,
+      "sha256": "c8a8542c93c5579b5ad8ff55f6e554d8b9eb31915fc4ee4a2e27002566101e96",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290660,
+        "mode": 33204,
+        "uid": 114316761,
+        "size": 18528,
+        "mtime_ns": 1791506669513041708,
+        "ctime_ns": 1791506669513041708
+      }
+    },
+    {
+      "path": "candidates/extensa-gem5-bfs-20261006-p4.it2.kronecker.a1.yaml",
+      "bytes": 19035,
+      "sha256": "4ec850f9f48d9ac1f3f88c14a0620c5f72b6761e11f20b82a59c40a33a798c40",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290759,
+        "mode": 33204,
+        "uid": 114316761,
+        "size": 19035,
+        "mtime_ns": 1791506886786318209,
+        "ctime_ns": 1791506886786318209
+      }
+    },
+    {
+      "path": "candidates/extensa-gem5-bfs-20261006-p4.it2.kronecker.a2.yaml",
+      "bytes": 19056,
+      "sha256": "e28ed15eb310e3d0edb47794802881fe0789ae96db4929eb25e2abee0900ef2d",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290856,
+        "mode": 33204,
+        "uid": 114316761,
+        "size": 19056,
+        "mtime_ns": 1791507084748391398,
+        "ctime_ns": 1791507084748391398
+      }
+    },
+    {
+      "path": "candidates/extensa-gem5-bfs-20261006-p4.it2.uniform_random.a0.yaml",
+      "bytes": 18543,
+      "sha256": "fa54b517b380977ecda323328ad21368cb72ac34b700abdc4458418c130a674e",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290895,
+        "mode": 33204,
+        "uid": 114316761,
+        "size": 18543,
+        "mtime_ns": 1791507384890534717,
+        "ctime_ns": 1791507384890534717
+      }
+    },
+    {
+      "path": "candidates/extensa-gem5-bfs-20261006-p4.it4.kronecker.a0.yaml",
+      "bytes": 17492,
+      "sha256": "c92f5da743e649d1ec4082d1f43ed8f41b3c51b69a4838007077cef7d49e5890",
+      "stat": {
+        "dev": 2065,
+        "ino": 14291118,
+        "mode": 33204,
+        "uid": 114316761,
+        "size": 17492,
+        "mtime_ns": 1791508967533112716,
+        "ctime_ns": 1791508967533112716
+      }
+    },
+    {
+      "path": "candidates/extensa-gem5-bfs-20261006-p4.it4.uniform_random.a0.yaml",
+      "bytes": 17507,
+      "sha256": "ce3983b758d9738bac72ac375e33798e497aa04baf54705c8828532278bde173",
+      "stat": {
+        "dev": 2065,
+        "ino": 14291157,
+        "mode": 33204,
+        "uid": 114316761,
+        "size": 17507,
+        "mtime_ns": 1791509268290266441,
+        "ctime_ns": 1791509268290266441
+      }
+    },
+    {
+      "path": "candidates/typed-library-bfs-gem5-20261003-a2.baseline.yaml",
+      "bytes": 22563,
+      "sha256": "2f568da8a4d8a484b9f65619178c38619b8aa75babd9b4da48bc7504ac2499ed",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290336,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 22563,
+        "mtime_ns": 1791505096643557872,
+        "ctime_ns": 1791505096643557872
+      }
+    },
+    {
+      "path": "candidates/typed-library-bfs-gem5-20261003-a2.proposal.candidate-1.yaml",
+      "bytes": 28290,
+      "sha256": "7129a55682c9d782d22292518d2257667a60556d586b7c2f0b1d0202d2b5ee07",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290341,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 28290,
+        "mtime_ns": 1791505096644557882,
+        "ctime_ns": 1791505096644557882
+      }
+    },
+    {
+      "path": "candidates/typed-library-bfs-scalar-profile-20261003-a2.baseline.yaml",
+      "bytes": 10016,
+      "sha256": "895dff593ee9c1677568cd57dcbc5b44c18a37f5d4bd55ae735fef329cc11b49",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290343,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 10016,
+        "mtime_ns": 1791505096644557882,
+        "ctime_ns": 1791505096644557882
+      }
+    },
+    {
+      "path": "evaluations/bfs-dx100-build-20260925-a2.yaml",
+      "bytes": 11533,
+      "sha256": "e61de36a9c80a5f2c272c08bf12f0050c3ba9c25c7243432e2ea6cb4e29cecaf",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290263,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 11533,
+        "mtime_ns": 1791505096627557704,
+        "ctime_ns": 1791505096627557704
+      }
+    },
+    {
+      "path": "evaluations/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation.yaml",
+      "bytes": 38574,
+      "sha256": "002dfc573622d03308f1c7355ba50149ac5e8160e45de286abe492ade450f19d",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290270,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 38574,
+        "mtime_ns": 1791505096628557715,
+        "ctime_ns": 1791505096628557715
+      }
+    },
+    {
+      "path": "evaluations/bfs-native-pilot-20260925-dx10018-a1.uniform-random.evaluation.yaml",
+      "bytes": 39014,
+      "sha256": "ba34943bace4633b25caad9d5e60bbb818627b0a2a36da0f6f50b87c2c7da856",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290277,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 39014,
+        "mtime_ns": 1791505096629557725,
+        "ctime_ns": 1791505096629557725
+      }
+    },
+    {
+      "path": "evaluations/bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build.yaml",
+      "bytes": 89174,
+      "sha256": "132a0c310c337f1d035713fe3de74f077cf5d9ac37b112077f5ff6733ad3de39",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290281,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 89174,
+        "mtime_ns": 1791505096630557736,
+        "ctime_ns": 1791505096630557736
+      }
+    },
+    {
+      "path": "evaluations/bfs-scalar-v2-preparation-20260926-a1.dx100.primary.build.yaml",
+      "bytes": 17520,
+      "sha256": "09e0abd048169282ce5b8511294c6d7a34e6c0ecea32734aa17c45f13145df29",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290282,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 17520,
+        "mtime_ns": 1791505096630557736,
+        "ctime_ns": 1791505096630557736
+      }
+    },
+    {
+      "path": "evaluations/bfs-t17-build-only-20260926-a1.yaml",
+      "bytes": 17230,
+      "sha256": "d5ed1ec5b43665379a2b8d59cc2b4cbc582502beb62f5184041079e606229215",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290283,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 17230,
+        "mtime_ns": 1791505096630557736,
+        "ctime_ns": 1791505096630557736
+      }
+    },
+    {
+      "path": "evaluations/bfs-t17-diagnostic-build-only-20260927-a2.yaml",
+      "bytes": 90093,
+      "sha256": "62fdb6ddb306aa2679b9cdf4192df46f58d2f0f5d3361cb2a504d38c2ea2a727",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290286,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 90093,
+        "mtime_ns": 1791505096631557746,
+        "ctime_ns": 1791505096631557746
+      }
+    },
+    {
+      "path": "evaluations/typed-library-bfs-gem5-20261003-a2.baseline.primary.build.yaml",
+      "bytes": 18302,
+      "sha256": "5fc4ea1f3e445a9ca69faf2df7f8214f6b7632144063b202db286fc6ef0bcae0",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290337,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 18302,
+        "mtime_ns": 1791505096643557872,
+        "ctime_ns": 1791505096643557872
+      }
+    },
+    {
+      "path": "evaluations/typed-library-bfs-gem5-20261003-a2.candidate.diagnostic.build.yaml",
+      "bytes": 14369,
+      "sha256": "4fb7f47c4c887711d7b6d7fa5cad37d7be10f4cb6719e2863af4050c82ce311b",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290338,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 14369,
+        "mtime_ns": 1791505096643557872,
+        "ctime_ns": 1791505096643557872
+      }
+    },
+    {
+      "path": "evaluations/typed-library-bfs-gem5-20261003-a2.candidate.primary.build.yaml",
+      "bytes": 14046,
+      "sha256": "d68c2f2f7b066d988b29c7dfc7a64d947ed5cea013bb22d8b77dfc6be0c46f83",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290339,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 14046,
+        "mtime_ns": 1791505096643557872,
+        "ctime_ns": 1791505096643557872
+      }
+    },
+    {
+      "path": "evaluations/typed-library-bfs-scalar-profile-20261003-a2.native.yaml",
+      "bytes": 10986,
+      "sha256": "12943cf131bb0ca0a01e52b82c2b44d76b341a369e228874097e1e63abc7ae5d",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290344,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 10986,
+        "mtime_ns": 1791505096644557882,
+        "ctime_ns": 1791505096644557882
+      }
+    },
+    {
+      "path": "hardware_targets/dx100-e4fc4af-4c.yaml",
+      "bytes": 2302,
+      "sha256": "66e9458534e293b63b81cb813d4d268d7bb599f2862073adc74e5c86d1aa755f",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290290,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 2302,
+        "mtime_ns": 1791505096631557746,
+        "ctime_ns": 1791505096631557746
+      }
+    },
+    {
+      "path": "implementations/dx100-bfs-scalar.yaml",
+      "bytes": 64525,
+      "sha256": "16d2b66647da0b440d67df486cfbb8d2f954696e8496a6178101939242cc4562",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290288,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 64525,
+        "mtime_ns": 1791505096631557746,
+        "ctime_ns": 1791505096631557746
+      }
+    },
+    {
+      "path": "implementations/gapbs-bfs-do.yaml",
+      "bytes": 42994,
+      "sha256": "133435ae7e732ec6a1407be3544649d1c4fe5db21a1248f3ab438464502d9fbb",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290317,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 42994,
+        "mtime_ns": 1791505096640557840,
+        "ctime_ns": 1791505096640557840
+      }
+    },
+    {
+      "path": "inputs/kron-g16-k16.yaml",
+      "bytes": 3323,
+      "sha256": "a134f404c5817a7fbdc269f50dc19c1cac0853f010d8b5e829bdb2cc0dd6f569",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290324,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 3323,
+        "mtime_ns": 1791505096641557851,
+        "ctime_ns": 1791505096641557851
+      }
+    },
+    {
+      "path": "inputs/kron-g22-k16.yaml",
+      "bytes": 3112,
+      "sha256": "fa95cf41c0bb7c49b7bd2470be71f27e193ac7fe344884e730a0d28e09296663",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290325,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 3112,
+        "mtime_ns": 1791505096641557851,
+        "ctime_ns": 1791505096641557851
+      }
+    },
+    {
+      "path": "inputs/urand-u16-k16.yaml",
+      "bytes": 3247,
+      "sha256": "99e451592ed4c6d4188a06e30043de157803043361e74f631896c1777922aefa",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290348,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 3247,
+        "mtime_ns": 1791505096645557893,
+        "ctime_ns": 1791505096645557893
+      }
+    },
+    {
+      "path": "inputs/urand-u22-k16.yaml",
+      "bytes": 3036,
+      "sha256": "eb276813611072d969e0780c7aa4e2795ec86b6b129ed045c0d660b2c48cfac4",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290349,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 3036,
+        "mtime_ns": 1791505096645557893,
+        "ctime_ns": 1791505096645557893
+      }
+    },
+    {
+      "path": "intrinsics/dxc_alu_scalar.yaml",
+      "bytes": 764,
+      "sha256": "5a8de88a2b2b8e55205a2ed9a1078d639ab1c9bb8cce7cb5a7293c1aa6bf57a4",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290304,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 764,
+        "mtime_ns": 1791505096639557830,
+        "ctime_ns": 1791505096639557830
+      }
+    },
+    {
+      "path": "intrinsics/dxc_const_i32.yaml",
+      "bytes": 752,
+      "sha256": "ad56177ada953490b7f57fc4e74021466d830c47ead10b583c0052d7bd1dc4d8",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290305,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 752,
+        "mtime_ns": 1791505096639557830,
+        "ctime_ns": 1791505096639557830
+      }
+    },
+    {
+      "path": "intrinsics/dxc_gather.yaml",
+      "bytes": 766,
+      "sha256": "ca75c560f7b9f30bccde16bc824a1805c11b896ef579ea48239efadc211bf584",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290306,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 766,
+        "mtime_ns": 1791505096639557830,
+        "ctime_ns": 1791505096639557830
+      }
+    },
+    {
+      "path": "intrinsics/dxc_range_loop.yaml",
+      "bytes": 761,
+      "sha256": "4998bd61e7c162066e03a65dc28687b7e26bd8b13728fcf7da8d2f590f405b1f",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290307,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 761,
+        "mtime_ns": 1791505096639557830,
+        "ctime_ns": 1791505096639557830
+      }
+    },
+    {
+      "path": "intrinsics/dxc_session_begin.yaml",
+      "bytes": 745,
+      "sha256": "d010c52e6313453f473fbe183e68766e87b4bcb7b56a5fa67375b70933781b0e",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290308,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 745,
+        "mtime_ns": 1791505096639557830,
+        "ctime_ns": 1791505096639557830
+      }
+    },
+    {
+      "path": "intrinsics/dxc_stream_load.yaml",
+      "bytes": 766,
+      "sha256": "e798513264346dc3604813195268d844e3549c44e2b8ae2781d0ed07147a853d",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290309,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 766,
+        "mtime_ns": 1791505096639557830,
+        "ctime_ns": 1791505096639557830
+      }
+    },
+    {
+      "path": "intrinsics/dxc_thread_context.yaml",
+      "bytes": 749,
+      "sha256": "6e029280fed0d6fc01ee82157bdb15feb7b06883f8c7a75e9d4b5ca2563fd2df",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290310,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 749,
+        "mtime_ns": 1791505096639557830,
+        "ctime_ns": 1791505096639557830
+      }
+    },
+    {
+      "path": "intrinsics/dxc_tile_pointer.yaml",
+      "bytes": 741,
+      "sha256": "fba2a803ef2e285cee638c2ca8f726f2ee1bee4d66af3d3c025c963013a87096",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290311,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 741,
+        "mtime_ns": 1791505096639557830,
+        "ctime_ns": 1791505096639557830
+      }
+    },
+    {
+      "path": "intrinsics/dxc_tile_size.yaml",
+      "bytes": 729,
+      "sha256": "41fd0ed11357f73184011ef5267e35c5a56f7e47054d9de46a5f2cafbd99842d",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290312,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 729,
+        "mtime_ns": 1791505096639557830,
+        "ctime_ns": 1791505096639557830
+      }
+    },
+    {
+      "path": "intrinsics/dxc_wait.yaml",
+      "bytes": 733,
+      "sha256": "4b2b1e0e37ccb03ba54decea0a0744f6d32035d0f2968b314b6bc131bde8ae98",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290313,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 733,
+        "mtime_ns": 1791505096640557840,
+        "ctime_ns": 1791505096640557840
+      }
+    },
+    {
+      "path": "intrinsics/mm512_i32gather_ps.yaml",
+      "bytes": 1834,
+      "sha256": "98f7ea6758dbbe2590dc24ba2d6b8936a2ae1f8f3a497d10382ea25a88fe8e9e",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290331,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 1834,
+        "mtime_ns": 1791505096642557861,
+        "ctime_ns": 1791505096642557861
+      }
+    },
+    {
+      "path": "intrinsics/mm_prefetch.yaml",
+      "bytes": 1698,
+      "sha256": "ebb6d3a8cbff5c7b82e92bd1cb8b55f927b657be03ba7f50aba78e04be8d204a",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290332,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 1698,
+        "mtime_ns": 1791505096642557861,
+        "ctime_ns": 1791505096642557861
+      }
+    },
+    {
+      "path": "kernels/gapbs-bfs.yaml",
+      "bytes": 4510,
+      "sha256": "a55b3138867204d228d531859892aed05d4d4ab621cdc463a324349397675180",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290316,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 4510,
+        "mtime_ns": 1791505096640557840,
+        "ctime_ns": 1791505096640557840
+      }
+    },
+    {
+      "path": "machines/mbit10.yaml",
+      "bytes": 3740,
+      "sha256": "87f35682542df1d875a4544c7593aca4be57d3e2791e4bbcba1b926a223c6d7b",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290330,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 3740,
+        "mtime_ns": 1791505096642557861,
+        "ctime_ns": 1791505096642557861
+      }
+    },
+    {
+      "path": "operations/dx100.mmio.v1.alu-scalar-lt.i32.yaml",
+      "bytes": 3034,
+      "sha256": "95179507479243d3009da735427535ed09225445a214528f429cb0ffd8c09eaa",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290294,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 3034,
+        "mtime_ns": 1791505096635557788,
+        "ctime_ns": 1791505096636557799
+      }
+    },
+    {
+      "path": "operations/dx100.mmio.v1.const.i32.yaml",
+      "bytes": 2617,
+      "sha256": "dce0e790f9de3f8a2756f88c8f4e6e7ed940fc924902f2b64306b70f7679cbf8",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290295,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 2617,
+        "mtime_ns": 1791505096636557799,
+        "ctime_ns": 1791505096636557799
+      }
+    },
+    {
+      "path": "operations/dx100.mmio.v1.indirect-load.i32.yaml",
+      "bytes": 3079,
+      "sha256": "f14eb3de1537f26267a0c9cbc551025b13091bec7624b1a7b81f74614b83e47b",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290296,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 3079,
+        "mtime_ns": 1791505096637557809,
+        "ctime_ns": 1791505096637557809
+      }
+    },
+    {
+      "path": "operations/dx100.mmio.v1.indirect-store-vector.i32.yaml",
+      "bytes": 3621,
+      "sha256": "f5b70742384df7de1a1779c7068896045795df7a40d69c87d7ba26215d1a2e0e",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290297,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 3621,
+        "mtime_ns": 1791505096637557809,
+        "ctime_ns": 1791505096637557809
+      }
+    },
+    {
+      "path": "operations/dx100.mmio.v1.range-loop.i32.yaml",
+      "bytes": 3057,
+      "sha256": "aa20186bad23e0fc07919b05a2f9d0d6aec2ce8dd67b2d5c0b1771d1cb0b61f1",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290298,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 3057,
+        "mtime_ns": 1791505096637557809,
+        "ctime_ns": 1791505096637557809
+      }
+    },
+    {
+      "path": "operations/dx100.mmio.v1.stream-load.i32.yaml",
+      "bytes": 2960,
+      "sha256": "11d5c413b12c28d01558fb8cee98a95a7871e49d10be3a512d382cb01b425d78",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290299,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 2960,
+        "mtime_ns": 1791505096638557820,
+        "ctime_ns": 1791505096638557820
+      }
+    },
+    {
+      "path": "operations/dx100.mmio.v1.wait-ready.yaml",
+      "bytes": 2774,
+      "sha256": "14b1522c63c9b4466ddfb34e85f41f6be250fb9261e9b8ad440345b7c75e9816",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290300,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 2774,
+        "mtime_ns": 1791505096638557820,
+        "ctime_ns": 1791505096638557820
+      }
+    },
+    {
+      "path": "profile_packages/bfs-native-pilot-20260925-dx10018-a1.kronecker.package.v1.1d44ec6b44f05000.yaml",
+      "bytes": 471131,
+      "sha256": "e81854a247deb63f9855bb385341c0c60498cf33ed6c18c5c2848592c87ee52b",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290272,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 471131,
+        "mtime_ns": 1791505096628557715,
+        "ctime_ns": 1791505096628557715
+      }
+    },
+    {
+      "path": "profile_packages/bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.5828ff2030b22718.yaml",
+      "bytes": 471402,
+      "sha256": "03cd06d181c3e20f1e704821d3706b0efc7f1ca6e570cbb84df8192c7e17edbb",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290278,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 471402,
+        "mtime_ns": 1791505096629557725,
+        "ctime_ns": 1791505096629557725
+      }
+    },
+    {
+      "path": "profile_packages/typed-library-bfs-scalar-profile-20261003-a2.package.v1.619546ae9c6f60fe.yaml",
+      "bytes": 327564,
+      "sha256": "c7471c401c9593278ef3a4d73c178362da91eac1de2b13b7731222c2a1cbc42e",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290345,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 327564,
+        "mtime_ns": 1791505096644557882,
+        "ctime_ns": 1791505096644557882
+      }
+    },
+    {
+      "path": "profiles/gapbs-bfs-do.kron-g16-k16.mbit10.20260922t221109z.yaml",
+      "bytes": 19132,
+      "sha256": "91ea3fdfb2d3ef40f910e221a577c50e123f0f5109ce647f984e9977907ae87f",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290319,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 19132,
+        "mtime_ns": 1791505096640557840,
+        "ctime_ns": 1791505096640557840
+      }
+    },
+    {
+      "path": "profiles/gapbs-bfs-do.kron-g22-k16.mbit10.20260922t221513z.yaml",
+      "bytes": 19222,
+      "sha256": "797ffe7ae178bdfe5e38d8c357c4a23a9484a178e72cd494e6a5ed3e7308703e",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290320,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 19222,
+        "mtime_ns": 1791505096640557840,
+        "ctime_ns": 1791505096640557840
+      }
+    },
+    {
+      "path": "profiles/gapbs-bfs-do.urand-u16-k16.mbit10.20260922t221125z.yaml",
+      "bytes": 19156,
+      "sha256": "9dcaf06ca4afa4aa3590f5be5f8bb1df1844c843132363b8b74dfddc8dfdd90b",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290321,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 19156,
+        "mtime_ns": 1791505096640557840,
+        "ctime_ns": 1791505096640557840
+      }
+    },
+    {
+      "path": "profiles/gapbs-bfs-do.urand-u22-k16.mbit10.20260922t221934z.yaml",
+      "bytes": 19238,
+      "sha256": "e4bcdf0c96f54d1d0aac52e8889e395da57cfb4b867ac29d544534184f560dcd",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290322,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 19238,
+        "mtime_ns": 1791505096641557851,
+        "ctime_ns": 1791505096641557851
+      }
+    },
+    {
+      "path": "proposals/bfs-campaign-preparation-20260925-a1.dx100-instructions.yaml",
+      "bytes": 10454,
+      "sha256": "a556d0ca47c2f04661eaa9af35c6c86b5fff0afd22a76ebcd9f6d5df5b1551f6",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290259,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 10454,
+        "mtime_ns": 1791505096627557704,
+        "ctime_ns": 1791505096627557704
+      }
+    },
+    {
+      "path": "proposals/extensa-gem5-bfs-20261006-p4.it1.kronecker.a0.proposal.yaml",
+      "bytes": 1410,
+      "sha256": "7e7138acb81613f2ef62d5c01770ae96f396c8718c13291af9d43c85575fce2f",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290522,
+        "mode": 33204,
+        "uid": 114316761,
+        "size": 1410,
+        "mtime_ns": 1791505723339122155,
+        "ctime_ns": 1791505723339122155
+      }
+    },
+    {
+      "path": "proposals/extensa-gem5-bfs-20261006-p4.it1.uniform_random.a0.proposal.yaml",
+      "bytes": 1435,
+      "sha256": "d1997d83f3f977144ccd1ea5bb00341ac642cf0d720ad2e52e01ac3e16100f0a",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290563,
+        "mode": 33204,
+        "uid": 114316761,
+        "size": 1435,
+        "mtime_ns": 1791506022276256194,
+        "ctime_ns": 1791506022276256194
+      }
+    },
+    {
+      "path": "proposals/extensa-gem5-bfs-20261006-p4.it2.kronecker.a0.proposal.yaml",
+      "bytes": 1410,
+      "sha256": "ea4dcdf134a647531e4cc1b9cd4e7045db68607a004d345e02244d28d6c908bb",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290659,
+        "mode": 33204,
+        "uid": 114316761,
+        "size": 1410,
+        "mtime_ns": 1791506669501041582,
+        "ctime_ns": 1791506669501041582
+      }
+    },
+    {
+      "path": "proposals/extensa-gem5-bfs-20261006-p4.it2.kronecker.a1.proposal.yaml",
+      "bytes": 1410,
+      "sha256": "5b98e06edbd66e4f1c04d0bb6165cf4a25b958cd60154f5d68b61a1ba64e9e77",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290758,
+        "mode": 33204,
+        "uid": 114316761,
+        "size": 1410,
+        "mtime_ns": 1791506886771318052,
+        "ctime_ns": 1791506886771318052
+      }
+    },
+    {
+      "path": "proposals/extensa-gem5-bfs-20261006-p4.it2.kronecker.a2.proposal.yaml",
+      "bytes": 1410,
+      "sha256": "169e22a28d5ab921ced8a8389cc1fe4a09c91e7a916e0cc8973de26aa207fcce",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290855,
+        "mode": 33204,
+        "uid": 114316761,
+        "size": 1410,
+        "mtime_ns": 1791507084733391241,
+        "ctime_ns": 1791507084733391241
+      }
+    },
+    {
+      "path": "proposals/extensa-gem5-bfs-20261006-p4.it2.uniform_random.a0.proposal.yaml",
+      "bytes": 1435,
+      "sha256": "fba339a8615d59f6f7f63866e07b306674da53eb885afcc7985eeba7a141a691",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290894,
+        "mode": 33204,
+        "uid": 114316761,
+        "size": 1435,
+        "mtime_ns": 1791507384878534591,
+        "ctime_ns": 1791507384878534591
+      }
+    },
+    {
+      "path": "proposals/extensa-gem5-bfs-20261006-p4.it4.kronecker.a0.proposal.yaml",
+      "bytes": 1410,
+      "sha256": "0af3027b1a00a77284f270671c00ea3cc049198f0899b70c4cf659114403e58b",
+      "stat": {
+        "dev": 2065,
+        "ino": 14291117,
+        "mode": 33204,
+        "uid": 114316761,
+        "size": 1410,
+        "mtime_ns": 1791508967521112590,
+        "ctime_ns": 1791508967521112590
+      }
+    },
+    {
+      "path": "proposals/extensa-gem5-bfs-20261006-p4.it4.uniform_random.a0.proposal.yaml",
+      "bytes": 1435,
+      "sha256": "1af916e44865f2e9c3346dc0b0ce12eba7102a5cb6a497b4d3ad34d5fdf0595a",
+      "stat": {
+        "dev": 2065,
+        "ino": 14291156,
+        "mode": 33204,
+        "uid": 114316761,
+        "size": 1435,
+        "mtime_ns": 1791509268278266315,
+        "ctime_ns": 1791509268278266315
+      }
+    },
+    {
+      "path": "proposals/typed-library-bfs-gem5-20261003-a2.proposal.yaml",
+      "bytes": 14851,
+      "sha256": "c16b3975261e777a42e4155d798582cdf2b605eede3b672afac554d836af42ef",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290340,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 14851,
+        "mtime_ns": 1791505096643557872,
+        "ctime_ns": 1791505096643557872
+      }
+    },
+    {
+      "path": "protocols/bfs-t17-controlled-simulator-20260928.feee73bcca275c56.yaml",
+      "bytes": 14208,
+      "sha256": "9868b39dfd2e8c318ec103cbbca21958764fad592c5e5391f1206df5bb1079bb",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290285,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 14208,
+        "mtime_ns": 1791505096630557736,
+        "ctime_ns": 1791505096630557736
+      }
+    },
+    {
+      "path": "protocols/extensa-gem5-bfs-20261006-p4.protocol.520342968eb62099.yaml",
+      "bytes": 12971,
+      "sha256": "824517330ce9d11bfb496a7047c34784d2b14ba4f28efc81e1b955b88015d822",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290355,
+        "mode": 33204,
+        "uid": 114316761,
+        "size": 12971,
+        "mtime_ns": 1791505100700600369,
+        "ctime_ns": 1791505100700600369
+      }
+    },
+    {
+      "path": "protocols/typed-library-bfs-gem5-20261003-a2.protocol.84229924369fc6b0.yaml",
+      "bytes": 13077,
+      "sha256": "fd91b10f7d9400eb862c8148475996e6265ad14243413c80d5a9a84454d40444",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290342,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 13077,
+        "mtime_ns": 1791505096644557882,
+        "ctime_ns": 1791505096644557882
+      }
+    },
+    {
+      "path": "region_profiles/bfs-native-pilot-20260925-dx10018-a1.kronecker.profile.yaml",
+      "bytes": 123781,
+      "sha256": "da733cc37d56c54627ad1236d89dc620ee32d9fab33af75a8b3fac8059aa1e6a",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290275,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 123781,
+        "mtime_ns": 1791505096629557725,
+        "ctime_ns": 1791505096629557725
+      }
+    },
+    {
+      "path": "region_profiles/bfs-native-pilot-20260925-dx10018-a1.uniform-random.profile.yaml",
+      "bytes": 124178,
+      "sha256": "07e6fb3b57e72dd8080abb81486d61ea467cff16bb9703acc547cddc6156c364",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290280,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 124178,
+        "mtime_ns": 1791505096630557736,
+        "ctime_ns": 1791505096630557736
+      }
+    },
+    {
+      "path": "region_profiles/typed-library-bfs-scalar-profile-20261003-a2.profile.yaml",
+      "bytes": 135558,
+      "sha256": "565ae3d4cda455e198f98f79b19cafb7d792a5de7bb87459261dd96ec748fccd",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290347,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 135558,
+        "mtime_ns": 1791505096645557893,
+        "ctime_ns": 1791505096645557893
+      }
+    },
+    {
+      "path": "source_snapshots/bfs-dx100-compile-20260925-a1.source.yaml",
+      "bytes": 45318,
+      "sha256": "79453b2a9a7af40991fe3cd4ab0039911e650f2335496cccaae9a9cb44b4cf9d",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290266,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 45318,
+        "mtime_ns": 1791505096627557704,
+        "ctime_ns": 1791505096627557704
+      }
+    },
+    {
+      "path": "source_snapshots/bfs-dx100-scalar-only-20260929-a1.source.yaml",
+      "bytes": 20754,
+      "sha256": "738fd3d0b266bc09df6d9b2bf0ed22cccdad8cd56b82b9a5e32654fa25506668",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290268,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 20754,
+        "mtime_ns": 1791505096628557715,
+        "ctime_ns": 1791505096628557715
+      }
+    },
+    {
+      "path": "source_snapshots/bfs-native-pilot-20260925-dx10018-a1.kronecker.package.v1.source.yaml",
+      "bytes": 135104,
+      "sha256": "66c2ffe1bff42902700c8b35ea39968ba72a0c25ec5b2824f87ccc7fc11b9fc7",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290273,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 135104,
+        "mtime_ns": 1791505096629557725,
+        "ctime_ns": 1791505096629557725
+      }
+    },
+    {
+      "path": "source_snapshots/bfs-native-pilot-20260925-dx10018-a1.source.yaml",
+      "bytes": 45332,
+      "sha256": "1c5b6025d39086fa89c4e44c0781456b72a5db834521b230bc50c26bf93bdc54",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290276,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 45332,
+        "mtime_ns": 1791505096629557725,
+        "ctime_ns": 1791505096629557725
+      }
+    },
+    {
+      "path": "source_snapshots/bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.source.yaml",
+      "bytes": 135096,
+      "sha256": "9197acdaf7fb101b9c19aed50def7553042e6ee7c93b650e23af0fc0a71734e5",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290279,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 135096,
+        "mtime_ns": 1791505096630557736,
+        "ctime_ns": 1791505096630557736
+      }
+    },
+    {
+      "path": "source_snapshots/typed-library-bfs-scalar-profile-20261003-a2.package.v1.source.yaml",
+      "bytes": 64797,
+      "sha256": "dfc985f1c5fba51c0c225a4f2ba431d71249c3288bce363fa8d0484331859b86",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290346,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 64797,
+        "mtime_ns": 1791505096644557882,
+        "ctime_ns": 1791505096644557882
+      }
+    },
+    {
+      "path": "strategies/dx100_read_offload.yaml",
+      "bytes": 841,
+      "sha256": "a6b22dd68dae168740aebe8da1b2ada1d8b464b5c58b95e2933890b5f1efccb4",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290302,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 841,
+        "mtime_ns": 1791505096638557820,
+        "ctime_ns": 1791505096638557820
+      }
+    },
+    {
+      "path": "strategies/loop_tiling.yaml",
+      "bytes": 1712,
+      "sha256": "6e47de9f5e5e4ec3511bd78439a92b66ed999f15fca00071a610545da6989a71",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290328,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 1712,
+        "mtime_ns": 1791505096642557861,
+        "ctime_ns": 1791505096642557861
+      }
+    },
+    {
+      "path": "strategies/packing.yaml",
+      "bytes": 2993,
+      "sha256": "e472d4d203dbc0e3632ccbe7bf6fe69f967954700fc10aef8707ccd7ef0d5754",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290333,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 2993,
+        "mtime_ns": 1791505096642557861,
+        "ctime_ns": 1791505096642557861
+      }
+    },
+    {
+      "path": "strategies/simd_gather.yaml",
+      "bytes": 1873,
+      "sha256": "8f3a8fc1ec050565e2c43ee6a72cc9ccb3dec74efbec9bfcaa09123b08aca1cf",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290334,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 1873,
+        "mtime_ns": 1791505096643557872,
+        "ctime_ns": 1791505096643557872
+      }
+    },
+    {
+      "path": "strategies/software_prefetch.yaml",
+      "bytes": 2509,
+      "sha256": "15a01de975f8aa02ee94ec9d075075b3e30368ca66e0813132b17f4373f6a967",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290335,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 2509,
+        "mtime_ns": 1791505096643557872,
+        "ctime_ns": 1791505096643557872
+      }
+    },
+    {
+      "path": "strategies/vertex_reordering.yaml",
+      "bytes": 2504,
+      "sha256": "c417faaf7c81a4da4f2ac0971d77134b6694bd3272837d252175238e5455e278",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290350,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 2504,
+        "mtime_ns": 1791505096645557893,
+        "ctime_ns": 1791505096645557893
+      }
+    },
+    {
+      "path": "workloads/bfs-20260925-kronecker18.48de8267ac2098d5.yaml",
+      "bytes": 3242,
+      "sha256": "c4da974337abf8a5be68c7c7f055c649aecc803ed1e1c910a32c02e4081c65ed",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290252,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 3242,
+        "mtime_ns": 1791505096626557694,
+        "ctime_ns": 1791505096626557694
+      }
+    },
+    {
+      "path": "workloads/bfs-20260925-kronecker18.7c1e520d3db5a1bc.yaml",
+      "bytes": 2916,
+      "sha256": "b7797f9554d59a143b2261f598ee9be098db04a5e623acefe609cdb1a189b4be",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290253,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 2916,
+        "mtime_ns": 1791505096626557694,
+        "ctime_ns": 1791505096626557694
+      }
+    },
+    {
+      "path": "workloads/bfs-20260925-uniform18.176feafe5d830058.yaml",
+      "bytes": 2902,
+      "sha256": "0655e4db4a63921205f89bd8e47728042575bdc79b39eeb88d893c232b277b3e",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290254,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 2902,
+        "mtime_ns": 1791505096626557694,
+        "ctime_ns": 1791505096626557694
+      }
+    },
+    {
+      "path": "workloads/bfs-20260925-uniform18.cd2169a5c421baf7.yaml",
+      "bytes": 3222,
+      "sha256": "b4dd2afe61f0dddda20b3b7880373d8934f2dcf40149257f9eba76d89eab06e0",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290255,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 3222,
+        "mtime_ns": 1791505096626557694,
+        "ctime_ns": 1791505096626557694
+      }
+    },
+    {
+      "path": "workloads/bfs-20260928-kronecker18-s0.cf4283236c5cb50c.yaml",
+      "bytes": 3199,
+      "sha256": "be7845e625e6422456c21130632265208b056a649c5b8d77985500803ccd264e",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290256,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 3199,
+        "mtime_ns": 1791505096627557704,
+        "ctime_ns": 1791505096627557704
+      }
+    },
+    {
+      "path": "workloads/bfs-20260928-uniform18-s0.8c7e69dfa516e53c.yaml",
+      "bytes": 3181,
+      "sha256": "736e43b260f0af50a7ce3e4243c2ff95ce9d7330d8e8899750de061af8b21cc5",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290257,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 3181,
+        "mtime_ns": 1791505096627557704,
+        "ctime_ns": 1791505096627557704
+      }
+    },
+    {
+      "path": "workloads/bfs-dx100-coverage-20260926-a2.workload.6b1e2f2dc16f6a0e.yaml",
+      "bytes": 1851,
+      "sha256": "00c99c6804b4353472a1d6604b620d1374e6b5f05ba250789a0ec8419a971662",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290267,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 1851,
+        "mtime_ns": 1791505096628557715,
+        "ctime_ns": 1791505096628557715
+      }
+    },
+    {
+      "path": "workloads/lanl17-prospective-20261006-a2-kronecker.g18.k18.feb23b36a57d4c05.yaml",
+      "bytes": 3665,
+      "sha256": "5230414e5be2a326b1767a0980ec00edefb4cbfabecb279923fbecc91114c76c",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290326,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 3665,
+        "mtime_ns": 1791505096641557851,
+        "ctime_ns": 1791505096641557851
+      }
+    },
+    {
+      "path": "workloads/lanl17-prospective-20261006-a2-uniform_random.g18.k18.c0396050e37ceed6.yaml",
+      "bytes": 3699,
+      "sha256": "4c4ed8cec59848d9c744576a78cbbc286ead39c0a244bcfdf4020b88774a5c40",
+      "stat": {
+        "dev": 2065,
+        "ino": 14290327,
+        "mode": 33152,
+        "uid": 114316761,
+        "size": 3699,
+        "mtime_ns": 1791505096641557851,
+        "ctime_ns": 1791505096642557861
+      }
+    }
+  ],
+  "summary_binding": {
+    "id": "extensa-gem5-bfs-20261006-p4.summary",
+    "path": "campaign_summaries/extensa-gem5-bfs-20261006-p4.summary.yaml",
+    "record_sha256": "d31fc644a0f7cb75adb17850c9c18298e78f0edc6ca3ca641a53bdbc0b44a9e2",
+    "state": "present"
+  },
+  "limits": {
+    "catalog_record_count": 100,
+    "catalog_total_bytes": 3162557,
+    "max_catalog_file_bytes": 134217728,
+    "max_catalog_total_bytes": 2147483648,
+    "max_output_metadata_bytes": 8388608,
+    "metadata_deadline_seconds": 900
+  },
+  "parent_review": {
+    "basis": "explicit_parent_review_of_real_quiescent_catalog_and_original_prior_full_validation",
+    "writer_sha256": "7a67d46f8ad7d453fe07bd458a21f663bd4dc7ec12e71de83ad8b5caaf28894b",
+    "reviewed_request_payload_sha256": "f22be1a27dd158ef1d3e2cd9cbd8cb236aacbd0e26bd29bd8d38dc3b66b91587",
+    "actual_inputs_parent_approved": true,
+    "fixtures_or_replays_allowed": false,
+    "validated_snapshot": {
+      "campaign": "extensa-gem5-bfs-20261006-p4",
+      "records_directory": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p4/records",
+      "catalog_inventory_sha256": "c9b4c6cbe4b6811e1519d19dba76473a20a2776948b83716de121d09c6fd2c57",
+      "validation_files_sha256": {
+        "validation_argv": "b3766a64344f162a0860c7e463f1fd5589b9b9e39e5fc6c3013f882f60a9f731",
+        "validation_exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "validation_stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "validation_stdout": "824bf2ba02fb5053d4e31c06019216ff5d4a86e92ff829bc78131e501671b2e6"
+      },
+      "prior_validation_full_catalogue": true,
+      "catalog_unchanged_since_original_validation": true,
+      "all_campaign_processes_stopped": true,
+      "exclusive_snapshot_ownership_confirmed": true,
+      "observed_utc": "2026-10-09T19:14:50.646612+00:00"
+    }
+  },
+  "output_directory": "/data1/yanruj/lanl17-p4-full-index-writer-20261009-a5-a1"
+}

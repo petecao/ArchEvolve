@@ -1,0 +1,158 @@
+{
+  "author": {
+    "full_inverse_exact": true,
+    "output": {
+      "bytes": 13481,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/public3-v1/prepare.py",
+      "sha256": "19935f3ef38527e50978579b911a3760eb92152229b50d063475ec4d71e5c4a3"
+    },
+    "predecessor": {
+      "bytes": 13134,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-cases-20261016/public3-v1/prepare.py",
+      "sha256": "5c71694f44f2631b5e24252506dc68ae36d35b18eea72f51f81ef72804eb9a34"
+    },
+    "replacements": [
+      {
+        "after": "Materialize inert witness3 entry and sparse source from a separately published Git source.",
+        "before": "Author inert Header3 entry and sparse source using Git/stdlib.",
+        "count": 1
+      },
+      {
+        "after": "SOURCE = sys.argv[1] if len(sys.argv) == 2 else None\nif SOURCE is None or len(SOURCE) != 40 or set(SOURCE) - set('0123456789abcdef'):\n    raise ValueError('a separately published exact forty-hex source commit is required before materialization')",
+        "before": "SOURCE = sys.argv[1]\nassert len(SOURCE) == 40 and set(SOURCE) <= set('0123456789abcdef')",
+        "count": 1
+      },
+      {
+        "after": "PREVIOUS = POC/'prototype/25-owned-swap-header-cases-20261016/public3-v1/inert-abb598a4-public3-v1'",
+        "before": "PREVIOUS = POC/'prototype/25-owned-swap-parts-20261016/public13-v1/inert-a102e275-public13-v1'",
+        "count": 1
+      },
+      {
+        "after": "owned-swap-header-witness3",
+        "before": "owned-swap-header3",
+        "count": 4
+      },
+      {
+        "after": "source_packet['source_inputs']",
+        "before": "source_packet['inputs']",
+        "count": 1
+      },
+      {
+        "after": "len(physical) == 48",
+        "before": "len(physical) == 45",
+        "count": 1
+      },
+      {
+        "after": "Three stronger explicit-witness owner cases sufficient for the unchanged universal ready-header duty under its complete original antecedent; all existential recovery and source binding remain separately pending.",
+        "before": "Three exhaustive owner cases of the unchanged universal ready-header duty under its complete original antecedent.",
+        "count": 1
+      },
+      {
+        "after": "complete_canonical_files=48",
+        "before": "complete_canonical_files=45",
+        "count": 1
+      },
+      {
+        "after": "('owned-swap-header3-public-root-early-preflight.json', 'owned-swap-header-witness3-public-root-early-preflight.json')",
+        "before": "('owned-swap13-public-root-early-preflight.json', 'owned-swap-header-witness3-public-root-early-preflight.json')",
+        "count": 1
+      },
+      {
+        "after": "('owned-swap-header3-public-v1', 'owned-swap-header-witness3-public-v1')",
+        "before": "('owned-swap13-public-v1', 'owned-swap-header-witness3-public-v1')",
+        "count": 1
+      },
+      {
+        "after": "isolated-shared-sparse-header-witness3-v1",
+        "before": "isolated-shared-sparse-header3-v1",
+        "count": 1
+      },
+      {
+        "after": "'canonical_files': 48",
+        "before": "'canonical_files': 45",
+        "count": 1
+      }
+    ]
+  },
+  "changed_entry_function_asts": [
+    "canonical_check",
+    "main"
+  ],
+  "date": "2026-10-16 ET",
+  "entry": {
+    "full_inverse_exact": true,
+    "output": {
+      "bytes": 45204,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-witness-20261016/public3-v1/entry_template.py",
+      "sha256": "52135c95a3368b962ec44a39ca2d86dbe9727070fbb1ab2ba167112afbb0609a"
+    },
+    "predecessor": {
+      "bytes": 44342,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-header-cases-20261016/public3-v1/entry_template.py",
+      "sha256": "344e37baafa2ef152fa50d3cfd958cd154cb5855b4eb3c9a86d1b0fc8fb09cbb"
+    },
+    "replacements": [
+      {
+        "after": "Inert standalone constructive-witness swap ready-header mathematical normal-WP profile",
+        "before": "Inert standalone three-case swap ready-header mathematical normal-WP profile",
+        "count": 1
+      },
+      {
+        "after": "owned-swap-header-witness",
+        "before": "owned-swap-header-cases",
+        "count": 3
+      },
+      {
+        "after": "reviewed constructive-witness swap header source expectation bytes differ",
+        "before": "reviewed three-case swap header source expectation bytes differ",
+        "count": 1
+      },
+      {
+        "after": "vector_owned_swap_header_witness as packets",
+        "before": "vector_owned_swap_header_cases as packets",
+        "count": 1
+      },
+      {
+        "after": "Standalone conditional constructive-witness swap ready-header native mathematical profile.",
+        "before": "Standalone conditional swap ready-header three-case native mathematical profile.",
+        "count": 1
+      },
+      {
+        "after": "wp-owned-swap-header-witness3-v1.yaml",
+        "before": "wp-owned-swap-header3-v1.yaml",
+        "count": 1
+      },
+      {
+        "after": "Three fresh stronger-witness producer outcomes retained.",
+        "before": "Three fresh producer outcomes retained.",
+        "count": 1
+      },
+      {
+        "after": "    reconstruction = manifest['reconstruction']\n    if reconstruction['all_three_stronger_proofs_required'] is not True or \\\n            reconstruction['reverse_implication_claimed'] or reconstruction['self_swap_excluded'] or \\\n            reconstruction['added_premises'] or reconstruction['axioms_added']:\n        raise ValueError('complete stronger-witness sufficient-rule boundary differs')\n    for row in rows:\n        recovery = row['existential_introduction']\n        if recovery['bound_variable_capture'] or not recovery['full_statement_inverse_checked'] or \\\n                not recovery['witness_sorts_checked_against_bound_source'] or \\\n                not recovery['instance_to_existential_is_sufficient']:\n            raise ValueError('typed capture-free existential recovery differs')\n    return manifest\n\n\ndef normal_task_census",
+        "before": "    return manifest\n\n\ndef normal_task_census",
+        "count": 1
+      }
+    ]
+  },
+  "identical_entry_function_asts": [
+    "sha",
+    "pin",
+    "write",
+    "surface",
+    "linux_admission",
+    "consumer_closure",
+    "guarded_generation",
+    "need",
+    "physical_ancestors",
+    "active_ipc_path",
+    "raw_bytes",
+    "bounded_bytes",
+    "bounded_json",
+    "why3_dependency_check",
+    "preserve_primary_error",
+    "root_sibling_census",
+    "why3_runtime_check",
+    "normal_task_census"
+  ],
+  "no_shared_source_theory_or_actual_dispatch_change": true
+}

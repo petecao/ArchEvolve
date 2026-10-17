@@ -1,0 +1,40 @@
+{
+  "format": "swdb.lanl17-parent-input-specification-writer-custody.v1",
+  "written_utc": "2026-10-09T20:18:23.980863+00:00",
+  "canonical_ensure_ascii": true,
+  "state": "parent_reviewed_metadata_only_not_actual_campaign_admission",
+  "actual_campaign_admission": false,
+  "writer_source_pin": {
+    "path": "/data1/yanruj/lanl17-custody-source-20261007-a3/spec-writer.py",
+    "bytes": 11868,
+    "sha256": "339ea0dc1abb6778f0f016e9c03f2b29c5f1916154b668f5416747b2768a9231"
+  },
+  "original_unsealed_template_pin": {
+    "path": "/data1/yanruj/lanl17-actual-template-author-source-20261008-a5-r1/actual-parent-template-20261009-a5-a1/parent-template.json",
+    "bytes": 166784,
+    "sha256": "ffd54634c5e8ae4a02d6f152a966a5efa8caa5bfe79d4c5dbaa59d082bde584b"
+  },
+  "template_author_source_pin": {
+    "path": "/data1/yanruj/lanl17-actual-template-author-source-20261008-a5-r1/author.py",
+    "bytes": 26682,
+    "sha256": "ec1fc0133ef0e8f96a9436d897586f0dfd72f19b6e8fba77e930fe6c0688c01a"
+  },
+  "template_parent_review_sha256": "01eb14dd7c3a9e28fd96d98cbf3152182a9e55db1587c874fdec9a2de36bd4f1",
+  "assembler_source_pin": {
+    "path": "/data1/yanruj/lanl17-custody-source-20261007-a3/assembler.py",
+    "bytes": 33584,
+    "sha256": "de669e4c0928876f9d033f6d9c1fc820ab3a1eb915aba20c5b6755b9866d7e6a"
+  },
+  "new_specification_pin": {
+    "path": "/data1/yanruj/lanl17-actual-template-author-source-20261008-a5-r1/actual-input-spec-20261009-a5-a1/input-specification.json",
+    "bytes": 166873,
+    "sha256": "ae525738d6333aec54e20c5be9a33bb91cc93ded4c3372920c80b0e64a1feacc",
+    "identity_sha256": "4bfd27c56fe6ab5c5fa2e83ae7bf13799cf788ecb779ecbd96dd974570ae85cd",
+    "canonical_ensure_ascii": true
+  },
+  "facts_generated_or_template_original_rewritten": false,
+  "original_receipt_record_or_campaign_state_files_read": 0,
+  "SWDB_Store_collector_auditor_reader_native_provider_campaign_remote_actions": 0,
+  "admission_boundary": "Exact parent-reviewed metadata bytes and original source pins only; no live observations, original document checks, scientific or trajectory admission is performed.",
+  "identity_sha256": "b4b2c1dc2a10be5600afbcead6b105e83df8bf013f586cea134e45ccbf148a1e"
+}

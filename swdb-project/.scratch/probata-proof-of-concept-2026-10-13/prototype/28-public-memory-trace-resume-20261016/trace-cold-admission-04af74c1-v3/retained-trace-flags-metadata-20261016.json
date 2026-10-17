@@ -1,0 +1,182 @@
+{
+  "cases": [
+    {
+      "case": "same_thread_read_read",
+      "projection_sha256": "a56ed859fb31cf9169b598d114ae842293fbfdacb380e23f51872d1e6a09c960",
+      "record_sha256": "a3d8b4905ffcc6edad3d3757cb030be7cf9122b07ae833bc622cf096c68f68b5"
+    },
+    {
+      "case": "same_thread_write_during_gather",
+      "projection_sha256": "a56ed859fb31cf9169b598d114ae842293fbfdacb380e23f51872d1e6a09c960",
+      "record_sha256": "6a6c1b053ff7be19728739980c734a8491e7156cd6d480a0c98dfd41ae02f09f"
+    },
+    {
+      "case": "same_thread_read_during_store",
+      "projection_sha256": "a56ed859fb31cf9169b598d114ae842293fbfdacb380e23f51872d1e6a09c960",
+      "record_sha256": "8f4e5456fe0f36ec77fc95b4d7b2114bc730f7eb5685de2e69e985ff72533176"
+    },
+    {
+      "case": "other_thread_read_during_store",
+      "projection_sha256": "a56ed859fb31cf9169b598d114ae842293fbfdacb380e23f51872d1e6a09c960",
+      "record_sha256": "a461eaaa2e3abb57eaf694380941a1119367ad030d0ea9f52af2d3ef602bb26e"
+    },
+    {
+      "case": "other_thread_cas_history_union",
+      "projection_sha256": "a56ed859fb31cf9169b598d114ae842293fbfdacb380e23f51872d1e6a09c960",
+      "record_sha256": "da7652aa429181c72e2a1d10bd480a41295e5f6743e2e3d31f1edf56b67b63a6"
+    },
+    {
+      "case": "other_thread_cas_issue_only",
+      "projection_sha256": "a56ed859fb31cf9169b598d114ae842293fbfdacb380e23f51872d1e6a09c960",
+      "record_sha256": "ed61cf6633fab42ed25226aff6c5456e15dc232cf26815b13f0f620024510b87"
+    },
+    {
+      "case": "failed_cas_adds_no_history",
+      "projection_sha256": "a56ed859fb31cf9169b598d114ae842293fbfdacb380e23f51872d1e6a09c960",
+      "record_sha256": "29b3fa462b6dae3af7a195dfc539d0348d5223f20d50b61adaf39b0764851a0c"
+    },
+    {
+      "case": "preissue_visibility_excludes_older_value",
+      "projection_sha256": "a56ed859fb31cf9169b598d114ae842293fbfdacb380e23f51872d1e6a09c960",
+      "record_sha256": "97acfb18697f5acdca4a190212659262ef65b043430b641a7ed8c39bd96e5c77"
+    },
+    {
+      "case": "preissue_visibility_old_value",
+      "projection_sha256": "a56ed859fb31cf9169b598d114ae842293fbfdacb380e23f51872d1e6a09c960",
+      "record_sha256": "b4a171dba201bc5d4d305c664fb9eb2ebdd2dbacd79061c1f0a47254cf6a191b"
+    },
+    {
+      "case": "history_result_freezes_at_cover",
+      "projection_sha256": "a56ed859fb31cf9169b598d114ae842293fbfdacb380e23f51872d1e6a09c960",
+      "record_sha256": "57fcd41724f33ab2382912c43267d737fd8e60c19d3eba34db5519af3ee3c634"
+    },
+    {
+      "case": "region_stall_cross_thread_covers_store",
+      "projection_sha256": "a56ed859fb31cf9169b598d114ae842293fbfdacb380e23f51872d1e6a09c960",
+      "record_sha256": "0aa20777d9da9f4e3635c2f8cafbaf16451e444190512bfbb98242b6d290249d"
+    },
+    {
+      "case": "region_read_read_does_not_cover",
+      "projection_sha256": "a56ed859fb31cf9169b598d114ae842293fbfdacb380e23f51872d1e6a09c960",
+      "record_sha256": "b42f03dc99e65d207023add93d0587bc02cbd4f19404b8eb5433472d9207a6eb"
+    },
+    {
+      "case": "region_other_write_does_not_cover",
+      "projection_sha256": "a56ed859fb31cf9169b598d114ae842293fbfdacb380e23f51872d1e6a09c960",
+      "record_sha256": "b3a821bf66629273355398390ef47037cfbd97678b9b27ced7bb2af3afa783d5"
+    },
+    {
+      "case": "other_thread_ownership_command",
+      "projection_sha256": "a56ed859fb31cf9169b598d114ae842293fbfdacb380e23f51872d1e6a09c960",
+      "record_sha256": "1dec9316be11ada3a14e89eb1a386ef3749166ec9fad31c67f703e67f6dc83c6"
+    },
+    {
+      "case": "other_thread_ownership_tile_read",
+      "projection_sha256": "a56ed859fb31cf9169b598d114ae842293fbfdacb380e23f51872d1e6a09c960",
+      "record_sha256": "ac0ab980bc72047cf7479d4a028532904d9306a1c7f579aff874ecb1c1271088"
+    },
+    {
+      "case": "disjoint_thread_tiles",
+      "projection_sha256": "a56ed859fb31cf9169b598d114ae842293fbfdacb380e23f51872d1e6a09c960",
+      "record_sha256": "f756c00f54c3f920cff34f5467e3938090626bea3bb1afef9169753e4501ec84"
+    },
+    {
+      "case": "pair_8byte_second_half_cpu_read",
+      "projection_sha256": "a56ed859fb31cf9169b598d114ae842293fbfdacb380e23f51872d1e6a09c960",
+      "record_sha256": "73f5d8f91eddb370c47eddec5ba44145f07801bf97e70d4e3941158be05fde48"
+    },
+    {
+      "case": "pair_4byte_other_half_cpu_read",
+      "projection_sha256": "a56ed859fb31cf9169b598d114ae842293fbfdacb380e23f51872d1e6a09c960",
+      "record_sha256": "e7c3ee9f0f1dabb0c8041d5338f92931df62b0df18397f909873661234f8655c"
+    },
+    {
+      "case": "pair_8byte_second_half_command",
+      "projection_sha256": "a56ed859fb31cf9169b598d114ae842293fbfdacb380e23f51872d1e6a09c960",
+      "record_sha256": "c648337c079cf754f04cf1ca08d7639778eebdc5803873bff740cd181f2ac6ee"
+    },
+    {
+      "case": "pair_4byte_other_half_command",
+      "projection_sha256": "a56ed859fb31cf9169b598d114ae842293fbfdacb380e23f51872d1e6a09c960",
+      "record_sha256": "e5ead61e6198134171ac8c8067c9003dcd292d38bc1c2736292b7adf713206e0"
+    },
+    {
+      "case": "pair_8byte_missing_second_owner",
+      "projection_sha256": "a56ed859fb31cf9169b598d114ae842293fbfdacb380e23f51872d1e6a09c960",
+      "record_sha256": "c8676ce8780f626f195ebff663524c5962f0f4e6b1b9eca219e8adf3d6432972"
+    },
+    {
+      "case": "pair_4byte_one_owner",
+      "projection_sha256": "a56ed859fb31cf9169b598d114ae842293fbfdacb380e23f51872d1e6a09c960",
+      "record_sha256": "098c82d6d8147445a6aa9313b2ac7ddcb570698ea9d5c889dd26486ae214aa61"
+    },
+    {
+      "case": "pair_second_half_wait_covers",
+      "projection_sha256": "a56ed859fb31cf9169b598d114ae842293fbfdacb380e23f51872d1e6a09c960",
+      "record_sha256": "fb8c77d61aeeed0a6bff9865c6d6f09a79742b9119bf4fbc8bfd8a60db5689c9"
+    },
+    {
+      "case": "logical_ready_one_covers_zero_requires_wait",
+      "projection_sha256": "a56ed859fb31cf9169b598d114ae842293fbfdacb380e23f51872d1e6a09c960",
+      "record_sha256": "7efc123e4350609d7a1b0dddc65aca8d0e7ae2f369da530d2be098673fdcc332"
+    },
+    {
+      "case": "logical_ready_may_not_be_assumed_zero",
+      "projection_sha256": "a56ed859fb31cf9169b598d114ae842293fbfdacb380e23f51872d1e6a09c960",
+      "record_sha256": "906f920011644e411329434c3884a519214542ff67e7289dd4ae2ff535f0d4ed"
+    }
+  ],
+  "classification": "PASSIVE_TRACE_FLAGS_SCALARS_METADATA_ONLY",
+  "groups": {
+    "a56ed859fb31cf9169b598d114ae842293fbfdacb380e23f51872d1e6a09c960": {
+      "cases": [
+        "same_thread_read_read",
+        "same_thread_write_during_gather",
+        "same_thread_read_during_store",
+        "other_thread_read_during_store",
+        "other_thread_cas_history_union",
+        "other_thread_cas_issue_only",
+        "failed_cas_adds_no_history",
+        "preissue_visibility_excludes_older_value",
+        "preissue_visibility_old_value",
+        "history_result_freezes_at_cover",
+        "region_stall_cross_thread_covers_store",
+        "region_read_read_does_not_cover",
+        "region_other_write_does_not_cover",
+        "other_thread_ownership_command",
+        "other_thread_ownership_tile_read",
+        "disjoint_thread_tiles",
+        "pair_8byte_second_half_cpu_read",
+        "pair_4byte_other_half_cpu_read",
+        "pair_8byte_second_half_command",
+        "pair_4byte_other_half_command",
+        "pair_8byte_missing_second_owner",
+        "pair_4byte_one_owner",
+        "pair_second_half_wait_covers",
+        "logical_ready_one_covers_zero_requires_wait",
+        "logical_ready_may_not_be_assumed_zero"
+      ],
+      "projection": {
+        "actual_array_length": 0,
+        "actual_settings_flags": [
+          "-DSWDB_CBMC",
+          "--unwind",
+          "1",
+          "--unwinding-assertions",
+          "--pointer-overflow-check",
+          "--unwindset",
+          "tr_thread.0:5,tr_cell.0:5,tr_value.0:5,tr_mask.0:5,tr_mask.1:5,tr_mask.2:5,tr_owned.0:5,tr_owned.1:5,tr_owned.2:5,tr_owned.3:5,tr_pick.0:5,swdb_dx_check_exit.0:5,swdb_t28_claim.0:5,swdb_t28_claim.1:5,swdb_t28_claim.2:5,swdb_t28_claim.3:5,tr_cpu_access.0:5,tr_cpu_access.1:5,tr_cpu_access.2:5,tr_cpu_access.3:5,swdb_t28_cpu_write.0:5,swdb_t28_cpu_write.1:5,swdb_t28_issue.0:5,swdb_t28_issue.1:5,swdb_t28_issue.2:5,swdb_t28_issue.3:5,swdb_t28_issue.4:5,swdb_t28_issue.5:5,swdb_t28_issue.6:5,swdb_t28_tile_read.0:5,swdb_t28_tile_read.1:5,swdb_t28_pending.0:5,swdb_t28_result.0:5,swdb_t28_result.1:5,swdb_t28_result.2:5"
+        ],
+        "actual_unwind": 1,
+        "method_flags": [
+          "--unwinding-assertions",
+          "--pointer-overflow-check"
+        ],
+        "method_sha256": "e46d1aa445d013f284de0189066e4571223b7ba25bfc7581e63d465ebc17609b"
+      }
+    }
+  },
+  "physical_checks": 55,
+  "reader_audit_executed": false,
+  "scientific_reexecution": false
+}

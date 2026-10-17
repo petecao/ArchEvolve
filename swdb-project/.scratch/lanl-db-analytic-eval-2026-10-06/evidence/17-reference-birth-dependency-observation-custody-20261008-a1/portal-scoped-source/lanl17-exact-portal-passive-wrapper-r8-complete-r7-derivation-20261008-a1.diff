@@ -1,0 +1,20 @@
+--- /private/tmp/lanl17_detach_passive_observer_administration_20261008_a1_r7.py
++++ /private/tmp/lanl17_detach_passive_observer_administration_20261008_a1_r8.py
+@@ -7,7 +7,7 @@
+ E = BASE/'ArchEvolve-lanl-generality-final-export-20261007-a1'
+ R = BASE/'ArchEvolve-lanl-generality-final-20261007-a1'
+ C = BASE/'ArchEvolve-lanl-cpu-model-validation-20261006-a1'
+-OBSERVER_SHA = '83e3d4dbac5d2215d591e09c8dd01aa441c1b6b0151ff18ee8a494ed9826c524'
++OBSERVER_SHA = '1188ea21138260a11c1b016b5080f509ece225338d98af1689e053306305ce1c'
+ REVIEW = BASE/'lanl-account-pam-service-identification-20261008-a1/parent-review.json'
+ REVIEW_SHA = 'fcf92eee1c4b8bdfaed979dc8bedab004c6c4b7e2b1410c7614bc92d60349f4a'
+ NATIVE = {
+@@ -115,7 +115,7 @@
+  need(own.is_relative_to(BASE) and observer.is_relative_to(BASE)
+       and own!=observer and not any(p.is_relative_to(q) for p in (own,observer) for q in (PRIMARY,E,R,C)),'private_sources_outside_projects')
+  own_raw,own_pin=file_bytes(own,256*1024,UID,own_sha)
+- unused,observer_pin=file_bytes(observer,87833,UID,OBSERVER_SHA,87833)
++ unused,observer_pin=file_bytes(observer,88535,UID,OBSERVER_SHA,88535)
+  unused,review_pin=file_bytes(REVIEW,256*1024,UID,REVIEW_SHA,3258)
+  need(re.fullmatch('[a-f0-9]{64}',portal_review_sha or ''),'explicit_future_portal_review_file_pin')
+  unused,portal_review_pin=file_bytes(BASE/'lanl-portal-helper-inode-review-20261008-a1/parent-review.json',256*1024,UID,portal_review_sha)

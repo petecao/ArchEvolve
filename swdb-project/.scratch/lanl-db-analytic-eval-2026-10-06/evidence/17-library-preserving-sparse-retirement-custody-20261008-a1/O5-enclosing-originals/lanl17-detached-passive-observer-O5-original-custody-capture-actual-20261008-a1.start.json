@@ -1,0 +1,30 @@
+{
+  "argv": [
+    "ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "mbit10",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=10",
+    "90",
+    "/usr/bin/python3.12",
+    "-B",
+    "-s",
+    "-P",
+    "-",
+    "--control-directory",
+    "/data1/yanruj/lanl17-detached-observer-a5"
+  ],
+  "format": "swdb.parent-original-observer-custody-capture-start.v1",
+  "quiet_end_original_utc": "2026-10-08T08:44:59.215985+00:00",
+  "sealed": false,
+  "source": {
+    "bytes": 4820,
+    "path": "/private/tmp/lanl_read_detached_passive_observer_administration_originals_20261008_a5_r2.py",
+    "sha256": "dee4d37d7abd2071d9ab9a536d9aa24bad075ebc96beedb44ffcf984347ea91d"
+  },
+  "source_stdin_not_imported_locally": true,
+  "started_utc": "2026-10-08T08:45:13.356010+00:00"
+}

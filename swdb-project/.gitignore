@@ -1,0 +1,20 @@
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+build/
+dist/
+.venv/
+.DS_Store
+# generated from records/ (ADR 0002); never committed
+*.sqlite
+*.sqlite3
+*.db
+# swdb add / profile write lock
+.swdb.lock
+.swdb-rewrite.*.lock
+.idea/
+# 2026-10-06 ET: persistent ID/version mutexes for frozen parameter fills
+.estimation-*.lock
+# 2026-10-08 ET: explicitly checked per-invocation source deployment binding
+/apps/dx100

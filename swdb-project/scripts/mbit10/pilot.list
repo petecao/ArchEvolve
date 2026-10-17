@@ -1,0 +1,10 @@
+# Pilot (ticket 10), created 2026-09-22: 2 PageRank implementations x 4 inputs.
+# <implementation> <input> [swdb profile options]
+gapbs-pr-gs     kron-g16-k16  --cachegrind yes
+gapbs-pr-jacobi kron-g16-k16  --cachegrind yes
+gapbs-pr-gs     urand-u16-k16 --cachegrind yes
+gapbs-pr-jacobi urand-u16-k16 --cachegrind yes
+gapbs-pr-gs     kron-g22-k16  --cachegrind yes --cachegrind-timeout 7200
+gapbs-pr-jacobi kron-g22-k16  --cachegrind yes --cachegrind-timeout 7200
+gapbs-pr-gs     urand-u22-k16 --cachegrind yes --cachegrind-timeout 7200
+gapbs-pr-jacobi urand-u22-k16 --cachegrind yes --cachegrind-timeout 7200

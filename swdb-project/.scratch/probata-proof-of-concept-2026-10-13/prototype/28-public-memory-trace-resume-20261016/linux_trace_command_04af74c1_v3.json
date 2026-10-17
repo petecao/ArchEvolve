@@ -1,0 +1,165 @@
+{
+  "actual_launched": false,
+  "argv": [
+    "/data1/yanruj/probata-verifiers/opam-2.6.1/opam",
+    "exec",
+    "--switch=framac-33",
+    "--",
+    "/data1/yanruj/venvs/swdb-test/bin/python",
+    "-I",
+    "-B",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v3/control/linux_trace_entry_v2.py",
+    "/data1/yanruj/probata-resume-20261016-04af74c1/swdb-project",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v3",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v3/control/linux_trace_policy_04af74c1_v3.json",
+    "47629d9c974d9352f208764a2c93186da119b810b8750980461ac6de1600e214"
+  ],
+  "control_total_bytes": 741903,
+  "controller_inputs": [
+    {
+      "bytes": 35681,
+      "name": "linux_trace_entry_v2.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/linux_trace_entry_v2.py",
+      "sha256": "d319185131bd708c57229fe16e269da6e6298d1afba3c057a8fcc0f89aa43c93"
+    },
+    {
+      "bytes": 542216,
+      "name": "linux_trace_policy_04af74c1_v3.json",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/linux_trace_policy_04af74c1_v3.json",
+      "sha256": "47629d9c974d9352f208764a2c93186da119b810b8750980461ac6de1600e214"
+    },
+    {
+      "bytes": 1905,
+      "name": "cbmc_release_gate.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/cbmc_release_gate.py",
+      "sha256": "681ad7be43312e224529a03d42b939305010795becd2fc203724a59c63db3dfc"
+    },
+    {
+      "bytes": 18385,
+      "name": "closed_python_surface.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/closed_python_surface.py",
+      "sha256": "748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af"
+    },
+    {
+      "bytes": 9416,
+      "name": "python-physical-metadata-v2.json",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python-physical-metadata-v2.json",
+      "sha256": "9d90835f12dfb89a43ac0e0661681159ec8ab563e9cf664548162a7357299eda"
+    },
+    {
+      "bytes": 2709,
+      "name": "python_role_observer_v2.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python_role_observer_v2.py",
+      "sha256": "9b100cbe2fdef3e7d429ccdf05d6489d44855a84328e2dd8532eb547beeaf43b"
+    },
+    {
+      "bytes": 9610,
+      "name": "python_startup_roles_v2.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python_startup_roles_v2.py",
+      "sha256": "5e9d2e6dfa2aaa7999f4670a979d3cc32736b852a612f77d4e2f7c71bc229618"
+    },
+    {
+      "bytes": 116503,
+      "name": "t28-linux-runtime-observer-v2-actual-20261016.json",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-linux-runtime-observer-v2-actual-20261016.json",
+      "sha256": "092397608fe3a08c42d85e9c8e121ed139f0d94e345a12ae3aaa57ad6e93a5f0"
+    },
+    {
+      "bytes": 5478,
+      "name": "trace_pytest_child_v2.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace_pytest_child_v2.py",
+      "sha256": "e3957b2f358b7e446a6a61e80d3d761539e14a9fd1fae5323c2abfd7937f3493"
+    }
+  ],
+  "date": "2026-10-16 ET",
+  "independent_review_pending": true,
+  "junit": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 25
+  },
+  "node": 1,
+  "proof_acceptance": false,
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v3",
+  "root_creates_fresh_raw_root": true,
+  "root_guard": {
+    "external_timeout_seconds": 1320,
+    "raw_budget_bytes": 268435456,
+    "rss_cap_bytes": 8589934592,
+    "whole_tree_seconds": 1200,
+    "workers": 1
+  },
+  "root_places_exact_controller_metadata": {
+    "entry_remote": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v3/control/linux_trace_entry_v2.py",
+    "policy_remote": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v3/control/linux_trace_policy_04af74c1_v3.json"
+  },
+  "root_socket_lane_only": true,
+  "scope": "25 synthetic fixed-order abstract scalar event traces; no actual API/header/hardware/current0.2/full28 promotion",
+  "selected_source_count": 609,
+  "selection": [
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[same_thread_read_read]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[same_thread_write_during_gather]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[same_thread_read_during_store]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[other_thread_read_during_store]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[other_thread_cas_history_union]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[other_thread_cas_issue_only]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[failed_cas_adds_no_history]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[preissue_visibility_excludes_older_value]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[preissue_visibility_old_value]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[history_result_freezes_at_cover]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[region_stall_cross_thread_covers_store]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[region_read_read_does_not_cover]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[region_other_write_does_not_cover]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[other_thread_ownership_command]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[other_thread_ownership_tile_read]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[disjoint_thread_tiles]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[pair_8byte_second_half_cpu_read]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[pair_4byte_other_half_cpu_read]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[pair_8byte_second_half_command]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[pair_4byte_other_half_command]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[pair_8byte_missing_second_owner]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[pair_4byte_one_owner]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[pair_second_half_wait_covers]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[logical_ready_one_covers_zero_requires_wait]",
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_public_actual.py::test_actual_public_abstract_memory_trace[logical_ready_may_not_be_assumed_zero]"
+  ],
+  "source": "/data1/yanruj/probata-resume-20261016-04af74c1/swdb-project",
+  "source_commit": "04af74c121a733589fbe1a2087ad602deaef598b",
+  "source_consumer_trees": {
+    ".scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016": {
+      "oid": "8da63deaf4eecb17d31c67a75966c902d9aa8d54"
+    },
+    "apps/dx100/benchmarks/API": {
+      "oid": "737ac6eaf0a51804715f0a26b3aa73a74689fb44"
+    },
+    "library": {
+      "oid": "2a499122a756b457333d6619d28f8893a38e839d"
+    },
+    "pyproject.toml": {
+      "oid": "b8cacc5b150c2364224e0168e149cd0bc1791f99"
+    },
+    "records": {
+      "oid": "f2158ba461f694c93f39b782b76981b52de08471"
+    },
+    "schemas": {
+      "oid": "ae703dc49a3cb939fbe493b1b991b7bc0d52a731"
+    },
+    "swdb": {
+      "oid": "c4e64eef5f888c724483b3b63d74df253c756166"
+    },
+    "tests/conftest.py": {
+      "oid": "291b55cb406443fc19e7dc16beac445429b3409d"
+    },
+    "tests/fixtures": {
+      "oid": "ac1c300d1c7e6093e66a3e84516a2bb2e4e7ae79"
+    },
+    "tests/testkit": {
+      "oid": "110a82c7532cd89e508566f1c6f724956412c61c"
+    },
+    "vocab": {
+      "oid": "4534a8a7d09e9b500caad1e6a13a3fe17823ce41"
+    }
+  },
+  "status": "INERT source-binding V3; reviewed V2 runtime and all25 verdict criteria unchanged; root admission pending"
+}

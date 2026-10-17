@@ -1,0 +1,24 @@
+{
+  "format": "swdb.paper-sanity-closeout.v1",
+  "updated": "2026-10-06 ET",
+  "base_commit": "0e4ac9b76de4146bcd58e7652e352dc84f689559",
+  "public_tests": {
+    "passed": 9,
+    "seconds": 3.86,
+    "command": "python3 -m pytest -q tests/test_paper_sanity_check.py"
+  },
+  "report_identity_sha256": "8d23f9b59f49ae261849c7c11f644f92c8af1b2f91e9a7c7e2fb215e51c3d324",
+  "reported_ratios": {
+    "BFS": 2.9,
+    "BC": 2.2,
+    "PageRank": 1.2
+  },
+  "reading_resolution_ratio": 0.1,
+  "actual_estimated_bfs_ratio": null,
+  "accuracy_validation": false,
+  "estimator_and_canonical_sources_unchanged": true,
+  "prior_protected_blob_count": 1059,
+  "paper_read_after_parameter_fill": true,
+  "no_provider_or_remote_execution": true,
+  "identity_sha256": "b7c0ef429bb78b4513c890df8db0aaf39bedb29af4a674b1673c8b45d20c0357"
+}

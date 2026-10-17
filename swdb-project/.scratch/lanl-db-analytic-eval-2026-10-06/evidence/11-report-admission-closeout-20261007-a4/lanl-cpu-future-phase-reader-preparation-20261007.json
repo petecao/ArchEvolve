@@ -1,0 +1,25 @@
+{
+  "format": "swdb.cpu-future-phase-reader-preparation.v1",
+  "updated": "2026-10-07 ET",
+  "reader_path": "/private/tmp/lanl-readonly-cpu-future-phase-admission-20261007.py",
+  "reader_sha256": "8b85e34287a4dc67e5ff0c9a535aefd46a6c2ecf6051a934607f853074f90016",
+  "bytes": 24241,
+  "source_commit": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "syntax_checked": true,
+  "reader_executed": false,
+  "actual_future_receipts_inspected": false,
+  "source_or_remote_changes": false,
+  "checks": [
+    "parent-supplied actual export identity and clean same-F6 integrated checkout",
+    "strict additive export over C and exact current selected-byte hashes",
+    "exact model receipt ea12 and prior once-only fe289 admission",
+    "two separately scoped native five-sample medians, original quantization intervals and runtime/ABI/source pins",
+    "model protocol and model acceptance before native timings; both development widths before either heldout timing",
+    "rounding-aware per-kernel development width recomputation; unchanged heldout width, failed-state preservation",
+    "public report seconds/per-region equality and exact band/protocol/dependency pins; D25 verdict retained",
+    "no full Store/writer/index/test/native/provider/SSH invocations"
+  ],
+  "limits": "Parent complete-export/cleanup handoff is prerequisite; reader verifies retained canonical/receipt scope and does not assert current remote lane/process/disk state. AST/source checks are preparation only, not actual phase admission.",
+  "identity_sha256": "52507715d35c812472b9879c32f6ff781d4c6c378a09cecd9a8765dfd89f1ee5"
+}

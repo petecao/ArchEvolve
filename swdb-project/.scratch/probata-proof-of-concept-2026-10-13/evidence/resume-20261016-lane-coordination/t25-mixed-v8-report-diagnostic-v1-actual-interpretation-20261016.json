@@ -1,0 +1,1733 @@
+{
+  "CBMC_matrix": [
+    {
+      "actual_status_counts": {
+        "FAILURE": 1,
+        "SUCCESS": 69
+      },
+      "agreement": {
+        "c_output_sha256": "d0820b9d60246c9abb7e6988eab8d617f8a757345cb425e848fd4c2e395f8b97",
+        "cxx_output_sha256": "d0820b9d60246c9abb7e6988eab8d617f8a757345cb425e848fd4c2e395f8b97",
+        "runs": 49,
+        "sampled": false,
+        "schema": {
+          "items": 6,
+          "keys": [
+            "c_output_sha256",
+            "cxx_output_sha256",
+            "domain",
+            "runs",
+            "sampled",
+            "verdict"
+          ],
+          "type": "dict"
+        },
+        "verdict": "agree"
+      },
+      "all_original_remaining_predicates_true": true,
+      "normal_forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "physical_artifact_pins": [
+        {
+          "bytes": 587430,
+          "name": "cbmc.json",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_values.20261016t221103z.bb5ec3b2/cbmc/cbmc.json",
+          "sha256": "d235beb20f4e41e59e471a9c53ddfc1223a838e0b30d9b8437073ceae3b20db4"
+        },
+        {
+          "bytes": 9392,
+          "name": "differential_c.c",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_values.20261016t221103z.bb5ec3b2/cbmc/differential_c.c",
+          "sha256": "21aa02eec9ba668ca09f4593a92246df0bc86e8c81248b9e21a19bf32053f4ad"
+        },
+        {
+          "bytes": 1192,
+          "name": "differential_c.out",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_values.20261016t221103z.bb5ec3b2/cbmc/differential_c.out",
+          "sha256": "d0820b9d60246c9abb7e6988eab8d617f8a757345cb425e848fd4c2e395f8b97"
+        },
+        {
+          "bytes": 6396,
+          "name": "differential_cxx.cc",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_values.20261016t221103z.bb5ec3b2/cbmc/differential_cxx.cc",
+          "sha256": "84cf8eedc393abf47a00c0c85a0bc65b7fded3019c5fc354e6496ba984e12ee7"
+        },
+        {
+          "bytes": 1192,
+          "name": "differential_cxx.out",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_values.20261016t221103z.bb5ec3b2/cbmc/differential_cxx.out",
+          "sha256": "d0820b9d60246c9abb7e6988eab8d617f8a757345cb425e848fd4c2e395f8b97"
+        },
+        {
+          "bytes": 9392,
+          "name": "job.c",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_values.20261016t221103z.bb5ec3b2/cbmc/job.c",
+          "sha256": "21aa02eec9ba668ca09f4593a92246df0bc86e8c81248b9e21a19bf32053f4ad"
+        },
+        {
+          "bytes": 237037,
+          "name": "stdlib_provenance_unit.json",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_values.20261016t221103z.bb5ec3b2/cbmc/stdlib_provenance_unit.json",
+          "sha256": "2f9db70a017c47869bc0717830d072228624be7b27c8ccaee9e5b2a97697cc36"
+        }
+      ],
+      "predicates": [
+        {
+          "predicate": "complete CBMC structured output array",
+          "value": true
+        },
+        {
+          "predicate": "complete unique CBMC property IDs",
+          "value": true
+        },
+        {
+          "predicate": "every actual CBMC property is retained in normal record",
+          "value": true
+        },
+        {
+          "predicate": "actual CBMC status/record agreement",
+          "value": true
+        },
+        {
+          "predicate": "exact reachability plus intended negative postcondition failures",
+          "value": true
+        },
+        {
+          "predicate": "no failed unwind property hidden by result",
+          "value": true
+        },
+        {
+          "predicate": "exact bounded49 independent C/C++ draws",
+          "value": true
+        },
+        {
+          "predicate": "physical bounded native output pins",
+          "value": true
+        }
+      ],
+      "properties": 70,
+      "record": "proof.contract.fixture_pair_pointer_values.20261016t221103z.bb5ec3b2",
+      "replay_metadata": {
+        "schema": {
+          "items": 0,
+          "keys": [],
+          "type": "dict"
+        }
+      },
+      "subject": {
+        "id": "contract.fixture_pair_pointer_values",
+        "kind": "library_summary"
+      }
+    },
+    {
+      "actual_status_counts": {
+        "FAILURE": 2,
+        "SUCCESS": 68
+      },
+      "agreement": {
+        "c_output_sha256": "7f41213d492b8a9c61b5019d0998dab0f05175a1e0088be23b75ce9cd155a3a0",
+        "cxx_output_sha256": "7f41213d492b8a9c61b5019d0998dab0f05175a1e0088be23b75ce9cd155a3a0",
+        "runs": 49,
+        "sampled": false,
+        "schema": {
+          "items": 6,
+          "keys": [
+            "c_output_sha256",
+            "cxx_output_sha256",
+            "domain",
+            "runs",
+            "sampled",
+            "verdict"
+          ],
+          "type": "dict"
+        },
+        "verdict": "agree"
+      },
+      "all_original_remaining_predicates_true": true,
+      "normal_forms": {
+        "c_lowering": "refuted",
+        "cxx": "refuted (counterexample replayed)"
+      },
+      "physical_artifact_pins": [
+        {
+          "bytes": 1087119,
+          "name": "cbmc.json",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_wrong_identity.20261016t221128z.bb05f168/cbmc/cbmc.json",
+          "sha256": "331444ff10962bb774197393b6862e836a74863da892756d9b8cb786e6f094ca"
+        },
+        {
+          "bytes": 9601,
+          "name": "differential_c.c",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_wrong_identity.20261016t221128z.bb05f168/cbmc/differential_c.c",
+          "sha256": "c64bbe3ad5aec8d0d62ce10f5ecc0749ac51aadacfe746925cc1fa4c2eda13a3"
+        },
+        {
+          "bytes": 2802,
+          "name": "differential_c.out",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_wrong_identity.20261016t221128z.bb05f168/cbmc/differential_c.out",
+          "sha256": "7f41213d492b8a9c61b5019d0998dab0f05175a1e0088be23b75ce9cd155a3a0"
+        },
+        {
+          "bytes": 6461,
+          "name": "differential_cxx.cc",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_wrong_identity.20261016t221128z.bb05f168/cbmc/differential_cxx.cc",
+          "sha256": "db5e218ac5aed4bce287e274c523da4b91375e86555f8fb7856886330c080b68"
+        },
+        {
+          "bytes": 2802,
+          "name": "differential_cxx.out",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_wrong_identity.20261016t221128z.bb05f168/cbmc/differential_cxx.out",
+          "sha256": "7f41213d492b8a9c61b5019d0998dab0f05175a1e0088be23b75ce9cd155a3a0"
+        },
+        {
+          "bytes": 9601,
+          "name": "job.c",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_wrong_identity.20261016t221128z.bb05f168/cbmc/job.c",
+          "sha256": "c64bbe3ad5aec8d0d62ce10f5ecc0749ac51aadacfe746925cc1fa4c2eda13a3"
+        },
+        {
+          "bytes": 6461,
+          "name": "replay_cxx.cc",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_wrong_identity.20261016t221128z.bb05f168/cbmc/replay_cxx.cc",
+          "sha256": "db5e218ac5aed4bce287e274c523da4b91375e86555f8fb7856886330c080b68"
+        },
+        {
+          "bytes": 237037,
+          "name": "stdlib_provenance_unit.json",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_wrong_identity.20261016t221128z.bb05f168/cbmc/stdlib_provenance_unit.json",
+          "sha256": "2f9db70a017c47869bc0717830d072228624be7b27c8ccaee9e5b2a97697cc36"
+        }
+      ],
+      "predicates": [
+        {
+          "predicate": "complete CBMC structured output array",
+          "value": true
+        },
+        {
+          "predicate": "complete unique CBMC property IDs",
+          "value": true
+        },
+        {
+          "predicate": "every actual CBMC property is retained in normal record",
+          "value": true
+        },
+        {
+          "predicate": "actual CBMC status/record agreement",
+          "value": true
+        },
+        {
+          "predicate": "exact reachability plus intended negative postcondition failures",
+          "value": true
+        },
+        {
+          "predicate": "no failed unwind property hidden by result",
+          "value": true
+        },
+        {
+          "predicate": "exact bounded49 independent C/C++ draws",
+          "value": true
+        },
+        {
+          "predicate": "physical bounded native output pins",
+          "value": true
+        },
+        {
+          "predicate": "original C++ counterexample replay artifact",
+          "value": true
+        }
+      ],
+      "properties": 70,
+      "record": "proof.contract.fixture_pair_pointer_wrong_identity.20261016t221128z.bb05f168",
+      "replay_metadata": {
+        "replayed": true,
+        "schema": {
+          "items": 6,
+          "keys": [
+            "end",
+            "failed",
+            "form",
+            "replayed",
+            "sanitizer",
+            "sanitizer_matches_check"
+          ],
+          "type": "dict"
+        }
+      },
+      "subject": {
+        "id": "contract.fixture_pair_pointer_wrong_identity",
+        "kind": "library_summary"
+      }
+    }
+  ],
+  "WP_caller_matrix": [
+    {
+      "CSV_rows": 41,
+      "exact_dual_owner_labels": [
+        {
+          "goal": "typed_real_std_pair_int_int_ptr_ctor_default_wp_smoke_dead_call_s18",
+          "line": 45,
+          "native_callee_owner": "std_pair_int_int_ptr_ctor_default",
+          "normal_record": {
+            "function": "swdb_pair_pointer_values",
+            "goal": "typed_real_std_pair_int_int_ptr_ctor_default_wp_smoke_dead_call_s18",
+            "property": "std_pair_int_int_ptr_ctor_default_wp_smoke_dead_call_s18",
+            "schema": {
+              "items": 8,
+              "keys": [
+                "function",
+                "goal",
+                "property",
+                "seconds",
+                "smoke",
+                "solver",
+                "source",
+                "status"
+              ],
+              "type": "dict"
+            },
+            "seconds": 0.0,
+            "smoke": true,
+            "solver": "alt-ergo",
+            "status": "valid"
+          },
+          "other_compared_fields_exact": true,
+          "standard_caller_owner": "swdb_pair_pointer_values",
+          "statement_id": 18
+        },
+        {
+          "goal": "typed_real_std_pair_int_int_ptr_ctor_wp_smoke_dead_call_s19",
+          "line": 49,
+          "native_callee_owner": "std_pair_int_int_ptr_ctor",
+          "normal_record": {
+            "function": "swdb_pair_pointer_values",
+            "goal": "typed_real_std_pair_int_int_ptr_ctor_wp_smoke_dead_call_s19",
+            "property": "std_pair_int_int_ptr_ctor_wp_smoke_dead_call_s19",
+            "schema": {
+              "items": 8,
+              "keys": [
+                "function",
+                "goal",
+                "property",
+                "seconds",
+                "smoke",
+                "solver",
+                "source",
+                "status"
+              ],
+              "type": "dict"
+            },
+            "seconds": 0.0,
+            "smoke": true,
+            "solver": "alt-ergo",
+            "status": "valid"
+          },
+          "other_compared_fields_exact": true,
+          "standard_caller_owner": "swdb_pair_pointer_values",
+          "statement_id": 19
+        },
+        {
+          "goal": "typed_real_std_pair_int_int_ptr_copy_ctor_wp_smoke_dead_call_s20",
+          "line": 53,
+          "native_callee_owner": "std_pair_int_int_ptr_copy_ctor",
+          "normal_record": {
+            "function": "swdb_pair_pointer_values",
+            "goal": "typed_real_std_pair_int_int_ptr_copy_ctor_wp_smoke_dead_call_s20",
+            "property": "std_pair_int_int_ptr_copy_ctor_wp_smoke_dead_call_s20",
+            "schema": {
+              "items": 8,
+              "keys": [
+                "function",
+                "goal",
+                "property",
+                "seconds",
+                "smoke",
+                "solver",
+                "source",
+                "status"
+              ],
+              "type": "dict"
+            },
+            "seconds": 0.0,
+            "smoke": true,
+            "solver": "alt-ergo",
+            "status": "valid"
+          },
+          "other_compared_fields_exact": true,
+          "standard_caller_owner": "swdb_pair_pointer_values",
+          "statement_id": 20
+        },
+        {
+          "goal": "typed_real_std_pair_int_int_ptr_operator_assign_wp_smoke_dead_call_s21",
+          "line": 56,
+          "native_callee_owner": "std_pair_int_int_ptr_operator_assign",
+          "normal_record": {
+            "function": "swdb_pair_pointer_values",
+            "goal": "typed_real_std_pair_int_int_ptr_operator_assign_wp_smoke_dead_call_s21",
+            "property": "std_pair_int_int_ptr_operator_assign_wp_smoke_dead_call_s21",
+            "schema": {
+              "items": 8,
+              "keys": [
+                "function",
+                "goal",
+                "property",
+                "seconds",
+                "smoke",
+                "solver",
+                "source",
+                "status"
+              ],
+              "type": "dict"
+            },
+            "seconds": 0.0,
+            "smoke": true,
+            "solver": "alt-ergo",
+            "status": "valid"
+          },
+          "other_compared_fields_exact": true,
+          "standard_caller_owner": "swdb_pair_pointer_values",
+          "statement_id": 21
+        }
+      ],
+      "missing_dependency_IDs": [],
+      "native_goals": 34,
+      "native_normal_record_IDs_exact": true,
+      "normal_record_goals": 34,
+      "observed_predicates": [
+        {
+          "predicate": "complete native WP report",
+          "value": true
+        },
+        {
+          "predicate": "native goals unique",
+          "value": true
+        },
+        {
+          "predicate": "standard goals unique",
+          "value": true
+        },
+        {
+          "predicate": "complete native/standard WP goal identity",
+          "value": true
+        },
+        {
+          "predicate": "native/standard property owner",
+          "value": false
+        },
+        {
+          "predicate": "unique complete native property inventory",
+          "value": true
+        },
+        {
+          "predicate": "retained full WP query input",
+          "value": true
+        }
+      ],
+      "properties": 55,
+      "record": "proof.contract.fixture_pair_pointer_values.20261016t220647z.7ab10e81",
+      "report_pins": [
+        {
+          "bytes": 49005,
+          "name": "wp-inventory.json",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_values.20261016t220647z.7ab10e81/wp/wp-inventory.json",
+          "sha256": "e0aa054a25ed1caddb120887db6e6ddacdb75e0c775ffc8420e1c6b239b367b3"
+        },
+        {
+          "bytes": 20905,
+          "name": "wp-goals.json",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_values.20261016t220647z.7ab10e81/wp/wp-goals.json",
+          "sha256": "451ee2a0d6ff166681db5d587f900cffe962d9dd2df23be71fcb3e89dbb223f4"
+        },
+        {
+          "bytes": 4265,
+          "name": "wp-properties.csv",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_values.20261016t220647z.7ab10e81/wp/wp-properties.csv",
+          "sha256": "f39e1e20bab1125ba8bafdcf9a6ead3578b233ec3e403f2bafee6d064c5c12c0"
+        },
+        {
+          "bytes": 6923,
+          "name": "frama-c.log",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_values.20261016t220647z.7ab10e81/wp/frama-c.log",
+          "sha256": "0c884beba028d6e0fac446e319bff3472a77036513999c95c100c56a72ad1630"
+        },
+        {
+          "bytes": 3634,
+          "name": "wp_input.c",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_values.20261016t220647z.7ab10e81/wp/wp_input.c",
+          "sha256": "820ee4aeb9cd55b8ef5d4112aa9d85cc94f27d02bcfe6c66e64ee5df74005ef6"
+        }
+      ],
+      "standard_goals": 34,
+      "standard_only_IDs": [],
+      "subject": {
+        "id": "contract.fixture_pair_pointer_values",
+        "kind": "library_summary"
+      },
+      "unbound_origin_IDs": []
+    },
+    {
+      "CSV_rows": 41,
+      "exact_dual_owner_labels": [
+        {
+          "goal": "typed_real_std_pair_int_int_ptr_ctor_default_wp_smoke_dead_call_s18",
+          "line": 45,
+          "native_callee_owner": "std_pair_int_int_ptr_ctor_default",
+          "normal_record": {
+            "function": "swdb_pair_pointer_wrong_identity",
+            "goal": "typed_real_std_pair_int_int_ptr_ctor_default_wp_smoke_dead_call_s18",
+            "property": "std_pair_int_int_ptr_ctor_default_wp_smoke_dead_call_s18",
+            "schema": {
+              "items": 8,
+              "keys": [
+                "function",
+                "goal",
+                "property",
+                "seconds",
+                "smoke",
+                "solver",
+                "source",
+                "status"
+              ],
+              "type": "dict"
+            },
+            "seconds": 0.0,
+            "smoke": true,
+            "solver": "alt-ergo",
+            "status": "valid"
+          },
+          "other_compared_fields_exact": true,
+          "standard_caller_owner": "swdb_pair_pointer_wrong_identity",
+          "statement_id": 18
+        },
+        {
+          "goal": "typed_real_std_pair_int_int_ptr_ctor_wp_smoke_dead_call_s19",
+          "line": 49,
+          "native_callee_owner": "std_pair_int_int_ptr_ctor",
+          "normal_record": {
+            "function": "swdb_pair_pointer_wrong_identity",
+            "goal": "typed_real_std_pair_int_int_ptr_ctor_wp_smoke_dead_call_s19",
+            "property": "std_pair_int_int_ptr_ctor_wp_smoke_dead_call_s19",
+            "schema": {
+              "items": 8,
+              "keys": [
+                "function",
+                "goal",
+                "property",
+                "seconds",
+                "smoke",
+                "solver",
+                "source",
+                "status"
+              ],
+              "type": "dict"
+            },
+            "seconds": 0.0,
+            "smoke": true,
+            "solver": "alt-ergo",
+            "status": "valid"
+          },
+          "other_compared_fields_exact": true,
+          "standard_caller_owner": "swdb_pair_pointer_wrong_identity",
+          "statement_id": 19
+        },
+        {
+          "goal": "typed_real_std_pair_int_int_ptr_copy_ctor_wp_smoke_dead_call_s20",
+          "line": 53,
+          "native_callee_owner": "std_pair_int_int_ptr_copy_ctor",
+          "normal_record": {
+            "function": "swdb_pair_pointer_wrong_identity",
+            "goal": "typed_real_std_pair_int_int_ptr_copy_ctor_wp_smoke_dead_call_s20",
+            "property": "std_pair_int_int_ptr_copy_ctor_wp_smoke_dead_call_s20",
+            "schema": {
+              "items": 8,
+              "keys": [
+                "function",
+                "goal",
+                "property",
+                "seconds",
+                "smoke",
+                "solver",
+                "source",
+                "status"
+              ],
+              "type": "dict"
+            },
+            "seconds": 0.0,
+            "smoke": true,
+            "solver": "alt-ergo",
+            "status": "valid"
+          },
+          "other_compared_fields_exact": true,
+          "standard_caller_owner": "swdb_pair_pointer_wrong_identity",
+          "statement_id": 20
+        },
+        {
+          "goal": "typed_real_std_pair_int_int_ptr_operator_assign_wp_smoke_dead_call_s21",
+          "line": 56,
+          "native_callee_owner": "std_pair_int_int_ptr_operator_assign",
+          "normal_record": {
+            "function": "swdb_pair_pointer_wrong_identity",
+            "goal": "typed_real_std_pair_int_int_ptr_operator_assign_wp_smoke_dead_call_s21",
+            "property": "std_pair_int_int_ptr_operator_assign_wp_smoke_dead_call_s21",
+            "schema": {
+              "items": 8,
+              "keys": [
+                "function",
+                "goal",
+                "property",
+                "seconds",
+                "smoke",
+                "solver",
+                "source",
+                "status"
+              ],
+              "type": "dict"
+            },
+            "seconds": 0.0,
+            "smoke": true,
+            "solver": "alt-ergo",
+            "status": "valid"
+          },
+          "other_compared_fields_exact": true,
+          "standard_caller_owner": "swdb_pair_pointer_wrong_identity",
+          "statement_id": 21
+        }
+      ],
+      "missing_dependency_IDs": [],
+      "native_goals": 34,
+      "native_normal_record_IDs_exact": true,
+      "normal_record_goals": 34,
+      "observed_predicates": [
+        {
+          "predicate": "complete native WP report",
+          "value": true
+        },
+        {
+          "predicate": "native goals unique",
+          "value": true
+        },
+        {
+          "predicate": "standard goals unique",
+          "value": true
+        },
+        {
+          "predicate": "complete native/standard WP goal identity",
+          "value": true
+        },
+        {
+          "predicate": "native/standard property owner",
+          "value": false
+        },
+        {
+          "predicate": "unique complete native property inventory",
+          "value": true
+        },
+        {
+          "predicate": "retained full WP query input",
+          "value": true
+        }
+      ],
+      "properties": 55,
+      "record": "proof.contract.fixture_pair_pointer_wrong_identity.20261016t220809z.820de8b5",
+      "report_pins": [
+        {
+          "bytes": 50420,
+          "name": "wp-inventory.json",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_wrong_identity.20261016t220809z.820de8b5/wp/wp-inventory.json",
+          "sha256": "e43c97bf4bd4db217fc40cf05882d96f3519cb1c8d93b21e76fff840bc68790b"
+        },
+        {
+          "bytes": 21812,
+          "name": "wp-goals.json",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_wrong_identity.20261016t220809z.820de8b5/wp/wp-goals.json",
+          "sha256": "fb084f8ca992f1ce00c119987543c8fcea7d4a8e2ae37eecf21a7345aecd77af"
+        },
+        {
+          "bytes": 4399,
+          "name": "wp-properties.csv",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_wrong_identity.20261016t220809z.820de8b5/wp/wp-properties.csv",
+          "sha256": "1f474494eb9f1056c313881cc70c8b88a4510c7a7d85984e225348598f3c899b"
+        },
+        {
+          "bytes": 7066,
+          "name": "frama-c.log",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_wrong_identity.20261016t220809z.820de8b5/wp/frama-c.log",
+          "sha256": "fb8ad4adeea85af98198bcc750d5ce02012571df037a2a63684fad20251791a4"
+        },
+        {
+          "bytes": 3803,
+          "name": "wp_input.c",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_wrong_identity.20261016t220809z.820de8b5/wp/wp_input.c",
+          "sha256": "8cba72b8ff707a4da2b1bbbdfda4e9f2485496fb1b0e19637105ad37f5969c74"
+        }
+      ],
+      "standard_goals": 34,
+      "standard_only_IDs": [],
+      "subject": {
+        "id": "contract.fixture_pair_pointer_wrong_identity",
+        "kind": "library_summary"
+      },
+      "unbound_origin_IDs": []
+    }
+  ],
+  "WP_model_matrix": [
+    {
+      "CSV_rows": 8,
+      "exact_native_only_rows": [
+        {
+          "native": {
+            "function": "std_pair_int_int_ptr_ctor_default",
+            "goal": "typed_real_std_pair_int_int_ptr_ctor_default_exits",
+            "line": 11,
+            "passed": true,
+            "property": "std_pair_int_int_ptr_ctor_default_exits",
+            "schema": {
+              "items": 8,
+              "keys": [
+                "function",
+                "goal",
+                "line",
+                "passed",
+                "property",
+                "results",
+                "smoke",
+                "targets"
+              ],
+              "type": "dict"
+            },
+            "smoke": false
+          },
+          "normal_record": {
+            "function": "std_pair_int_int_ptr_ctor_default",
+            "goal": "typed_real_std_pair_int_int_ptr_ctor_default_exits",
+            "property": "std_pair_int_int_ptr_ctor_default_exits",
+            "schema": {
+              "items": 8,
+              "keys": [
+                "function",
+                "goal",
+                "property",
+                "seconds",
+                "smoke",
+                "solver",
+                "source",
+                "status"
+              ],
+              "type": "dict"
+            },
+            "seconds": null,
+            "smoke": false,
+            "solver": null,
+            "status": "valid"
+          },
+          "property_metadata": {
+            "call_context_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "dependencies": [],
+            "description_sha256": "b443ca2aeb2981dce7b1186d949f0f5f4272ba02cb8b9008a8283ce39a490285",
+            "extern": false,
+            "function": "std_pair_int_int_ptr_ctor_default",
+            "line": 11,
+            "origin": null,
+            "property": "std_pair_int_int_ptr_ctor_default_exits",
+            "schema": {
+              "items": 15,
+              "keys": [
+                "call_context",
+                "dependencies",
+                "description",
+                "emitter",
+                "extern",
+                "function",
+                "generated_smoke_failure",
+                "kind",
+                "line",
+                "origin",
+                "property",
+                "property_export_origin",
+                "property_variant",
+                "source_file",
+                "status_registered"
+              ],
+              "type": "dict"
+            }
+          }
+        },
+        {
+          "native": {
+            "function": "std_pair_int_int_ptr_ctor_default",
+            "goal": "typed_real_std_pair_int_int_ptr_ctor_default_terminates",
+            "line": 11,
+            "passed": true,
+            "property": "std_pair_int_int_ptr_ctor_default_terminates",
+            "schema": {
+              "items": 8,
+              "keys": [
+                "function",
+                "goal",
+                "line",
+                "passed",
+                "property",
+                "results",
+                "smoke",
+                "targets"
+              ],
+              "type": "dict"
+            },
+            "smoke": false
+          },
+          "normal_record": {
+            "function": "std_pair_int_int_ptr_ctor_default",
+            "goal": "typed_real_std_pair_int_int_ptr_ctor_default_terminates",
+            "property": "std_pair_int_int_ptr_ctor_default_terminates",
+            "schema": {
+              "items": 8,
+              "keys": [
+                "function",
+                "goal",
+                "property",
+                "seconds",
+                "smoke",
+                "solver",
+                "source",
+                "status"
+              ],
+              "type": "dict"
+            },
+            "seconds": null,
+            "smoke": false,
+            "solver": null,
+            "status": "valid"
+          },
+          "property_metadata": {
+            "call_context_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "dependencies": [],
+            "description_sha256": "f412070e9f5aa448a76cd044961ecac58b6a5a6dd659a222b6116fa472262074",
+            "extern": false,
+            "function": "std_pair_int_int_ptr_ctor_default",
+            "line": 11,
+            "origin": null,
+            "property": "std_pair_int_int_ptr_ctor_default_terminates",
+            "schema": {
+              "items": 15,
+              "keys": [
+                "call_context",
+                "dependencies",
+                "description",
+                "emitter",
+                "extern",
+                "function",
+                "generated_smoke_failure",
+                "kind",
+                "line",
+                "origin",
+                "property",
+                "property_export_origin",
+                "property_variant",
+                "source_file",
+                "status_registered"
+              ],
+              "type": "dict"
+            }
+          }
+        }
+      ],
+      "missing_dependency_IDs": [],
+      "native_goals": 9,
+      "native_normal_record_IDs_exact": true,
+      "normal_record_goals": 9,
+      "observed_predicates": [
+        {
+          "predicate": "complete native WP report",
+          "value": true
+        },
+        {
+          "predicate": "native goals unique",
+          "value": true
+        },
+        {
+          "predicate": "standard goals unique",
+          "value": true
+        },
+        {
+          "predicate": "complete native/standard WP goal identity",
+          "value": false
+        },
+        {
+          "exception": "KeyError",
+          "predicate": "native/standard property owner",
+          "reason": "'typed_real_std_pair_int_int_ptr_ctor_default_terminates'",
+          "value": null
+        },
+        {
+          "predicate": "unique complete native property inventory",
+          "value": true
+        },
+        {
+          "predicate": "retained full WP query input",
+          "value": true
+        }
+      ],
+      "properties": 10,
+      "record": "proof.model.std_pair_int_int_ptr_ctor_default.20261016t220530z.47341640",
+      "report_pins": [
+        {
+          "bytes": 9676,
+          "name": "wp-inventory.json",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_ctor_default.20261016t220530z.47341640/wp/wp-inventory.json",
+          "sha256": "e3f52ab20885fc10f90ff144efcec7002088d78c406a95a2e839e4ca05baa6d0"
+        },
+        {
+          "bytes": 4549,
+          "name": "wp-goals.json",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_ctor_default.20261016t220530z.47341640/wp/wp-goals.json",
+          "sha256": "2482ed39a0b78ae3b89cf708f9a84199aa05e9b02985631f1d76623978f4e30e"
+        },
+        {
+          "bytes": 786,
+          "name": "wp-properties.csv",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_ctor_default.20261016t220530z.47341640/wp/wp-properties.csv",
+          "sha256": "06b04deb9b18d3a81f2d67bccc3d33619e347aa194d0fa6e69827752a710c93a"
+        },
+        {
+          "bytes": 2028,
+          "name": "frama-c.log",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_ctor_default.20261016t220530z.47341640/wp/frama-c.log",
+          "sha256": "8d913e6343bd9471745778584fcf02b656ba00862aa166030028f29bfbbebe15"
+        },
+        {
+          "bytes": 503,
+          "name": "wp_input.c",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_ctor_default.20261016t220530z.47341640/wp/wp_input.c",
+          "sha256": "720762600742e15743c74aab15602f34f13b3ac1b8374ea428bf32f914eca364"
+        }
+      ],
+      "standard_goals": 7,
+      "standard_only_IDs": [],
+      "subject": {
+        "id": "std_pair_int_int_ptr_ctor_default",
+        "kind": "c_model"
+      },
+      "unbound_origin_IDs": []
+    },
+    {
+      "CSV_rows": 8,
+      "exact_native_only_rows": [
+        {
+          "native": {
+            "function": "std_pair_int_int_ptr_ctor",
+            "goal": "typed_real_std_pair_int_int_ptr_ctor_exits",
+            "line": 11,
+            "passed": true,
+            "property": "std_pair_int_int_ptr_ctor_exits",
+            "schema": {
+              "items": 8,
+              "keys": [
+                "function",
+                "goal",
+                "line",
+                "passed",
+                "property",
+                "results",
+                "smoke",
+                "targets"
+              ],
+              "type": "dict"
+            },
+            "smoke": false
+          },
+          "normal_record": {
+            "function": "std_pair_int_int_ptr_ctor",
+            "goal": "typed_real_std_pair_int_int_ptr_ctor_exits",
+            "property": "std_pair_int_int_ptr_ctor_exits",
+            "schema": {
+              "items": 8,
+              "keys": [
+                "function",
+                "goal",
+                "property",
+                "seconds",
+                "smoke",
+                "solver",
+                "source",
+                "status"
+              ],
+              "type": "dict"
+            },
+            "seconds": null,
+            "smoke": false,
+            "solver": null,
+            "status": "valid"
+          },
+          "property_metadata": {
+            "call_context_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "dependencies": [],
+            "description_sha256": "b443ca2aeb2981dce7b1186d949f0f5f4272ba02cb8b9008a8283ce39a490285",
+            "extern": false,
+            "function": "std_pair_int_int_ptr_ctor",
+            "line": 11,
+            "origin": null,
+            "property": "std_pair_int_int_ptr_ctor_exits",
+            "schema": {
+              "items": 15,
+              "keys": [
+                "call_context",
+                "dependencies",
+                "description",
+                "emitter",
+                "extern",
+                "function",
+                "generated_smoke_failure",
+                "kind",
+                "line",
+                "origin",
+                "property",
+                "property_export_origin",
+                "property_variant",
+                "source_file",
+                "status_registered"
+              ],
+              "type": "dict"
+            }
+          }
+        },
+        {
+          "native": {
+            "function": "std_pair_int_int_ptr_ctor",
+            "goal": "typed_real_std_pair_int_int_ptr_ctor_terminates",
+            "line": 11,
+            "passed": true,
+            "property": "std_pair_int_int_ptr_ctor_terminates",
+            "schema": {
+              "items": 8,
+              "keys": [
+                "function",
+                "goal",
+                "line",
+                "passed",
+                "property",
+                "results",
+                "smoke",
+                "targets"
+              ],
+              "type": "dict"
+            },
+            "smoke": false
+          },
+          "normal_record": {
+            "function": "std_pair_int_int_ptr_ctor",
+            "goal": "typed_real_std_pair_int_int_ptr_ctor_terminates",
+            "property": "std_pair_int_int_ptr_ctor_terminates",
+            "schema": {
+              "items": 8,
+              "keys": [
+                "function",
+                "goal",
+                "property",
+                "seconds",
+                "smoke",
+                "solver",
+                "source",
+                "status"
+              ],
+              "type": "dict"
+            },
+            "seconds": null,
+            "smoke": false,
+            "solver": null,
+            "status": "valid"
+          },
+          "property_metadata": {
+            "call_context_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "dependencies": [],
+            "description_sha256": "f412070e9f5aa448a76cd044961ecac58b6a5a6dd659a222b6116fa472262074",
+            "extern": false,
+            "function": "std_pair_int_int_ptr_ctor",
+            "line": 11,
+            "origin": null,
+            "property": "std_pair_int_int_ptr_ctor_terminates",
+            "schema": {
+              "items": 15,
+              "keys": [
+                "call_context",
+                "dependencies",
+                "description",
+                "emitter",
+                "extern",
+                "function",
+                "generated_smoke_failure",
+                "kind",
+                "line",
+                "origin",
+                "property",
+                "property_export_origin",
+                "property_variant",
+                "source_file",
+                "status_registered"
+              ],
+              "type": "dict"
+            }
+          }
+        }
+      ],
+      "missing_dependency_IDs": [],
+      "native_goals": 9,
+      "native_normal_record_IDs_exact": true,
+      "normal_record_goals": 9,
+      "observed_predicates": [
+        {
+          "predicate": "complete native WP report",
+          "value": true
+        },
+        {
+          "predicate": "native goals unique",
+          "value": true
+        },
+        {
+          "predicate": "standard goals unique",
+          "value": true
+        },
+        {
+          "predicate": "complete native/standard WP goal identity",
+          "value": false
+        },
+        {
+          "exception": "KeyError",
+          "predicate": "native/standard property owner",
+          "reason": "'typed_real_std_pair_int_int_ptr_ctor_terminates'",
+          "value": null
+        },
+        {
+          "predicate": "unique complete native property inventory",
+          "value": true
+        },
+        {
+          "predicate": "retained full WP query input",
+          "value": true
+        }
+      ],
+      "properties": 10,
+      "record": "proof.model.std_pair_int_int_ptr_ctor.20261016t220550z.3d1e3981",
+      "report_pins": [
+        {
+          "bytes": 9131,
+          "name": "wp-inventory.json",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_ctor.20261016t220550z.3d1e3981/wp/wp-inventory.json",
+          "sha256": "b6f18c48262473da6a9308a2f1c0dd8f318cbc121f35cd934eeaee82a642c5de"
+        },
+        {
+          "bytes": 4323,
+          "name": "wp-goals.json",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_ctor.20261016t220550z.3d1e3981/wp/wp-goals.json",
+          "sha256": "70e0821a38ccd7f0242ec3580552c150a54ba60918acf012b75b6c26dda69e45"
+        },
+        {
+          "bytes": 727,
+          "name": "wp-properties.csv",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_ctor.20261016t220550z.3d1e3981/wp/wp-properties.csv",
+          "sha256": "cb22f329488eda43964fcef0d6e7e0b2b9b0b874969f43199369785cc410861c"
+        },
+        {
+          "bytes": 2009,
+          "name": "frama-c.log",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_ctor.20261016t220550z.3d1e3981/wp/frama-c.log",
+          "sha256": "e7c2ec39163e993e62582d15605403fbd1b9aca9c901931ed2946f059a1ab1e5"
+        },
+        {
+          "bytes": 511,
+          "name": "wp_input.c",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_ctor.20261016t220550z.3d1e3981/wp/wp_input.c",
+          "sha256": "89fb167980c9d5a5998e0058c9ccb7173b316042e668b1fec4b6aa1f9796cdb4"
+        }
+      ],
+      "standard_goals": 7,
+      "standard_only_IDs": [],
+      "subject": {
+        "id": "std_pair_int_int_ptr_ctor",
+        "kind": "c_model"
+      },
+      "unbound_origin_IDs": []
+    },
+    {
+      "CSV_rows": 8,
+      "exact_native_only_rows": [
+        {
+          "native": {
+            "function": "std_pair_int_int_ptr_copy_ctor",
+            "goal": "typed_real_std_pair_int_int_ptr_copy_ctor_exits",
+            "line": 11,
+            "passed": true,
+            "property": "std_pair_int_int_ptr_copy_ctor_exits",
+            "schema": {
+              "items": 8,
+              "keys": [
+                "function",
+                "goal",
+                "line",
+                "passed",
+                "property",
+                "results",
+                "smoke",
+                "targets"
+              ],
+              "type": "dict"
+            },
+            "smoke": false
+          },
+          "normal_record": {
+            "function": "std_pair_int_int_ptr_copy_ctor",
+            "goal": "typed_real_std_pair_int_int_ptr_copy_ctor_exits",
+            "property": "std_pair_int_int_ptr_copy_ctor_exits",
+            "schema": {
+              "items": 8,
+              "keys": [
+                "function",
+                "goal",
+                "property",
+                "seconds",
+                "smoke",
+                "solver",
+                "source",
+                "status"
+              ],
+              "type": "dict"
+            },
+            "seconds": null,
+            "smoke": false,
+            "solver": null,
+            "status": "valid"
+          },
+          "property_metadata": {
+            "call_context_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "dependencies": [],
+            "description_sha256": "b443ca2aeb2981dce7b1186d949f0f5f4272ba02cb8b9008a8283ce39a490285",
+            "extern": false,
+            "function": "std_pair_int_int_ptr_copy_ctor",
+            "line": 11,
+            "origin": null,
+            "property": "std_pair_int_int_ptr_copy_ctor_exits",
+            "schema": {
+              "items": 15,
+              "keys": [
+                "call_context",
+                "dependencies",
+                "description",
+                "emitter",
+                "extern",
+                "function",
+                "generated_smoke_failure",
+                "kind",
+                "line",
+                "origin",
+                "property",
+                "property_export_origin",
+                "property_variant",
+                "source_file",
+                "status_registered"
+              ],
+              "type": "dict"
+            }
+          }
+        },
+        {
+          "native": {
+            "function": "std_pair_int_int_ptr_copy_ctor",
+            "goal": "typed_real_std_pair_int_int_ptr_copy_ctor_terminates",
+            "line": 11,
+            "passed": true,
+            "property": "std_pair_int_int_ptr_copy_ctor_terminates",
+            "schema": {
+              "items": 8,
+              "keys": [
+                "function",
+                "goal",
+                "line",
+                "passed",
+                "property",
+                "results",
+                "smoke",
+                "targets"
+              ],
+              "type": "dict"
+            },
+            "smoke": false
+          },
+          "normal_record": {
+            "function": "std_pair_int_int_ptr_copy_ctor",
+            "goal": "typed_real_std_pair_int_int_ptr_copy_ctor_terminates",
+            "property": "std_pair_int_int_ptr_copy_ctor_terminates",
+            "schema": {
+              "items": 8,
+              "keys": [
+                "function",
+                "goal",
+                "property",
+                "seconds",
+                "smoke",
+                "solver",
+                "source",
+                "status"
+              ],
+              "type": "dict"
+            },
+            "seconds": null,
+            "smoke": false,
+            "solver": null,
+            "status": "valid"
+          },
+          "property_metadata": {
+            "call_context_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "dependencies": [],
+            "description_sha256": "f412070e9f5aa448a76cd044961ecac58b6a5a6dd659a222b6116fa472262074",
+            "extern": false,
+            "function": "std_pair_int_int_ptr_copy_ctor",
+            "line": 11,
+            "origin": null,
+            "property": "std_pair_int_int_ptr_copy_ctor_terminates",
+            "schema": {
+              "items": 15,
+              "keys": [
+                "call_context",
+                "dependencies",
+                "description",
+                "emitter",
+                "extern",
+                "function",
+                "generated_smoke_failure",
+                "kind",
+                "line",
+                "origin",
+                "property",
+                "property_export_origin",
+                "property_variant",
+                "source_file",
+                "status_registered"
+              ],
+              "type": "dict"
+            }
+          }
+        }
+      ],
+      "missing_dependency_IDs": [],
+      "native_goals": 8,
+      "native_normal_record_IDs_exact": true,
+      "normal_record_goals": 8,
+      "observed_predicates": [
+        {
+          "predicate": "complete native WP report",
+          "value": true
+        },
+        {
+          "predicate": "native goals unique",
+          "value": true
+        },
+        {
+          "predicate": "standard goals unique",
+          "value": true
+        },
+        {
+          "predicate": "complete native/standard WP goal identity",
+          "value": false
+        },
+        {
+          "exception": "KeyError",
+          "predicate": "native/standard property owner",
+          "reason": "'typed_real_std_pair_int_int_ptr_copy_ctor_terminates'",
+          "value": null
+        },
+        {
+          "predicate": "unique complete native property inventory",
+          "value": true
+        },
+        {
+          "predicate": "retained full WP query input",
+          "value": true
+        }
+      ],
+      "properties": 10,
+      "record": "proof.model.std_pair_int_int_ptr_copy_ctor.20261016t220611z.3ba534ec",
+      "report_pins": [
+        {
+          "bytes": 9299,
+          "name": "wp-inventory.json",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_copy_ctor.20261016t220611z.3ba534ec/wp/wp-inventory.json",
+          "sha256": "ea383b47b729292bd952078f0f1b3e14e0df4ec4419354b905cfa61357c5eb51"
+        },
+        {
+          "bytes": 3793,
+          "name": "wp-goals.json",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_copy_ctor.20261016t220611z.3ba534ec/wp/wp-goals.json",
+          "sha256": "5de3f36be525f2a72a67a392e06263e6a4a6242b5569e85d98d85245499a5e6b"
+        },
+        {
+          "bytes": 826,
+          "name": "wp-properties.csv",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_copy_ctor.20261016t220611z.3ba534ec/wp/wp-properties.csv",
+          "sha256": "53afd59b85c845f089480bbacccd09ce92b5bc76840aace742559a7cc6f9210b"
+        },
+        {
+          "bytes": 2019,
+          "name": "frama-c.log",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_copy_ctor.20261016t220611z.3ba534ec/wp/frama-c.log",
+          "sha256": "341f03b8043829599e673985f7a0022e50cd6dda82e9a53c79cc5c07f1a9015f"
+        },
+        {
+          "bytes": 592,
+          "name": "wp_input.c",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_copy_ctor.20261016t220611z.3ba534ec/wp/wp_input.c",
+          "sha256": "1ec8c54c65a50a2ade9b7105a4fc56ea74863cf066786a3948f6e66b696ceb79"
+        }
+      ],
+      "standard_goals": 6,
+      "standard_only_IDs": [],
+      "subject": {
+        "id": "std_pair_int_int_ptr_copy_ctor",
+        "kind": "c_model"
+      },
+      "unbound_origin_IDs": []
+    },
+    {
+      "CSV_rows": 9,
+      "exact_native_only_rows": [
+        {
+          "native": {
+            "function": "std_pair_int_int_ptr_operator_assign",
+            "goal": "typed_real_std_pair_int_int_ptr_operator_assign_exits",
+            "line": 13,
+            "passed": true,
+            "property": "std_pair_int_int_ptr_operator_assign_exits",
+            "schema": {
+              "items": 8,
+              "keys": [
+                "function",
+                "goal",
+                "line",
+                "passed",
+                "property",
+                "results",
+                "smoke",
+                "targets"
+              ],
+              "type": "dict"
+            },
+            "smoke": false
+          },
+          "normal_record": {
+            "function": "std_pair_int_int_ptr_operator_assign",
+            "goal": "typed_real_std_pair_int_int_ptr_operator_assign_exits",
+            "property": "std_pair_int_int_ptr_operator_assign_exits",
+            "schema": {
+              "items": 8,
+              "keys": [
+                "function",
+                "goal",
+                "property",
+                "seconds",
+                "smoke",
+                "solver",
+                "source",
+                "status"
+              ],
+              "type": "dict"
+            },
+            "seconds": null,
+            "smoke": false,
+            "solver": null,
+            "status": "valid"
+          },
+          "property_metadata": {
+            "call_context_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "dependencies": [],
+            "description_sha256": "b443ca2aeb2981dce7b1186d949f0f5f4272ba02cb8b9008a8283ce39a490285",
+            "extern": false,
+            "function": "std_pair_int_int_ptr_operator_assign",
+            "line": 13,
+            "origin": null,
+            "property": "std_pair_int_int_ptr_operator_assign_exits",
+            "schema": {
+              "items": 15,
+              "keys": [
+                "call_context",
+                "dependencies",
+                "description",
+                "emitter",
+                "extern",
+                "function",
+                "generated_smoke_failure",
+                "kind",
+                "line",
+                "origin",
+                "property",
+                "property_export_origin",
+                "property_variant",
+                "source_file",
+                "status_registered"
+              ],
+              "type": "dict"
+            }
+          }
+        },
+        {
+          "native": {
+            "function": "std_pair_int_int_ptr_operator_assign",
+            "goal": "typed_real_std_pair_int_int_ptr_operator_assign_terminates",
+            "line": 13,
+            "passed": true,
+            "property": "std_pair_int_int_ptr_operator_assign_terminates",
+            "schema": {
+              "items": 8,
+              "keys": [
+                "function",
+                "goal",
+                "line",
+                "passed",
+                "property",
+                "results",
+                "smoke",
+                "targets"
+              ],
+              "type": "dict"
+            },
+            "smoke": false
+          },
+          "normal_record": {
+            "function": "std_pair_int_int_ptr_operator_assign",
+            "goal": "typed_real_std_pair_int_int_ptr_operator_assign_terminates",
+            "property": "std_pair_int_int_ptr_operator_assign_terminates",
+            "schema": {
+              "items": 8,
+              "keys": [
+                "function",
+                "goal",
+                "property",
+                "seconds",
+                "smoke",
+                "solver",
+                "source",
+                "status"
+              ],
+              "type": "dict"
+            },
+            "seconds": null,
+            "smoke": false,
+            "solver": null,
+            "status": "valid"
+          },
+          "property_metadata": {
+            "call_context_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "dependencies": [],
+            "description_sha256": "f412070e9f5aa448a76cd044961ecac58b6a5a6dd659a222b6116fa472262074",
+            "extern": false,
+            "function": "std_pair_int_int_ptr_operator_assign",
+            "line": 13,
+            "origin": null,
+            "property": "std_pair_int_int_ptr_operator_assign_terminates",
+            "schema": {
+              "items": 15,
+              "keys": [
+                "call_context",
+                "dependencies",
+                "description",
+                "emitter",
+                "extern",
+                "function",
+                "generated_smoke_failure",
+                "kind",
+                "line",
+                "origin",
+                "property",
+                "property_export_origin",
+                "property_variant",
+                "source_file",
+                "status_registered"
+              ],
+              "type": "dict"
+            }
+          }
+        }
+      ],
+      "missing_dependency_IDs": [],
+      "native_goals": 9,
+      "native_normal_record_IDs_exact": true,
+      "normal_record_goals": 9,
+      "observed_predicates": [
+        {
+          "predicate": "complete native WP report",
+          "value": true
+        },
+        {
+          "predicate": "native goals unique",
+          "value": true
+        },
+        {
+          "predicate": "standard goals unique",
+          "value": true
+        },
+        {
+          "predicate": "complete native/standard WP goal identity",
+          "value": false
+        },
+        {
+          "exception": "KeyError",
+          "predicate": "native/standard property owner",
+          "reason": "'typed_real_std_pair_int_int_ptr_operator_assign_terminates'",
+          "value": null
+        },
+        {
+          "predicate": "unique complete native property inventory",
+          "value": true
+        },
+        {
+          "predicate": "retained full WP query input",
+          "value": true
+        }
+      ],
+      "properties": 11,
+      "record": "proof.model.std_pair_int_int_ptr_operator_assign.20261016t220629z.d0aadf56",
+      "report_pins": [
+        {
+          "bytes": 10764,
+          "name": "wp-inventory.json",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_operator_assign.20261016t220629z.d0aadf56/wp/wp-inventory.json",
+          "sha256": "9b61072f886ed80b5531d26442212c953b3de640b31bfed70f1dabc394b303ae"
+        },
+        {
+          "bytes": 4530,
+          "name": "wp-goals.json",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_operator_assign.20261016t220629z.d0aadf56/wp/wp-goals.json",
+          "sha256": "aae7d02dbf790d7bc94481b78c6bae6ce3c3b2c714d84e07f21c79481064f3ab"
+        },
+        {
+          "bytes": 971,
+          "name": "wp-properties.csv",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_operator_assign.20261016t220629z.d0aadf56/wp/wp-properties.csv",
+          "sha256": "e0d79a45859a96fe65c38f5402e1223e77480c7e4c22f219832e09180fcd7b25"
+        },
+        {
+          "bytes": 2330,
+          "name": "frama-c.log",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_operator_assign.20261016t220629z.d0aadf56/wp/frama-c.log",
+          "sha256": "f3c2c159b31923c1be5f09d9281c134df2103c0a3e4339e5f984740af00cb3f0"
+        },
+        {
+          "bytes": 699,
+          "name": "wp_input.c",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_operator_assign.20261016t220629z.d0aadf56/wp/wp_input.c",
+          "sha256": "b2f88dcc5ebeb64c8ab36a514f02f682a19920b4762c60f96d28ad958985d990"
+        }
+      ],
+      "standard_goals": 7,
+      "standard_only_IDs": [],
+      "subject": {
+        "id": "std_pair_int_int_ptr_operator_assign",
+        "kind": "c_model"
+      },
+      "unbound_origin_IDs": []
+    }
+  ],
+  "actual_command": {
+    "bytes": 1074,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/mixed-v8-report-diagnostic-v1/command.json",
+    "sha256": "c1b770b5e49e9c21386a6d31ec554173da8d717cbbfc608c87a6fc6c829a9f9e"
+  },
+  "actual_entry": {
+    "bytes": 79487,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/mixed-v8-report-diagnostic-v1/entry.py",
+    "sha256": "96322858040ce28b027ab00ad03d4135940a171a491cddac90863e0931d7d128"
+  },
+  "classification": "COMPLETE_EIGHT_CONTEXT_METADATA_DIAGNOSIS_ONLY",
+  "date": "2026-10-16 ET",
+  "diagnostic_stdout": {
+    "bytes": 495726,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-mixed-v8-report-diagnostic-v1-actual-stdout-20261016.json",
+    "sha256": "d91cea36637b708ecd535685e8a2e00fc9cce868832b2f656b6abca656cb4446"
+  },
+  "execution_receipt": {
+    "bytes": 6879,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-mixed-v8-report-diagnostic-v1-actual-execution-20261016.json",
+    "sha256": "eaae1cff3bdad48e9d3217ded2291d0f0c922ad210baa6f447e0d149aa1fdddf"
+  },
+  "full_task_hypothesis_import_or_trace_reconstruction_accepted": false,
+  "original_cold_refusal_preserved": {
+    "execution": {
+      "bytes": 2456,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-mixed-v8-cold-root-execution-v1-20261016.json",
+      "sha256": "2c4f18d4cd0292bc514046114a5cfa3d6b73ee160233df734f0a67a7c468a0ce"
+    },
+    "pin": {
+      "bytes": 180,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-mixed-v8-cold-root-actual-v1-stdout-20261016.json",
+      "sha256": "77545f563426800de30c7f670ec0b9308256c0a6351c080597e0d1e17a1ed8d5"
+    },
+    "record": {
+      "checks": 144996,
+      "classification": "REFUSED_MIXED_V8_PASSIVE_COLD",
+      "error": "complete native/standard WP goal identity",
+      "error_type": "ValueError",
+      "scientific_cold_acceptance": false
+    }
+  },
+  "remaining_boundaries": [
+    "The diagnostic omits native results/targets arrays and actual property_variant values; schema keys alone cannot establish internal Qed classification, smoke health, complete graph or hypotheses. A reviewed reader can inspect the full fixed reports remotely.",
+    "The fixed raw retains no standalone original SMT/Why3 proof-task files; no successor can recover full hypothesis/import/ordinary term closure by report normalization.",
+    "CBMC structured labels/statuses,49-draw artifacts and reported wrong C++ replay are reconciled metadata; independent trace-to-original-expression/ABI/UB interpretation remains pending.",
+    "Current declared runtime/source pins and retained before/after snapshots do not establish historical continuous identity, full dynamic loader closure or retroactive Why3server byte identity.",
+    "No raw C/AST/SMT/trace/binary transferred; no native, compiler, verifier, solver, version probe or proof rerun."
+  ],
+  "root_admission": {
+    "bytes": 2801,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-mixed-v8-report-diagnostic-root-admission-v1-20261016.json",
+    "sha256": "464112021831450d90a165cc73a1b6c61d5ddb5ba4a46620f4a86aa7d96604f9"
+  },
+  "scientific_or_semantic_cold_acceptance": false,
+  "settlement": {
+    "SSH_window_closed": true,
+    "checks": 52931,
+    "elapsed_seconds": 1.9463424159999998,
+    "exit_code": 2,
+    "postflight_exit_code": 0,
+    "preflight_exit_code": 0,
+    "raw_pre_post_equal": true,
+    "stderr_bytes": 0
+  },
+  "source_attribution": {
+    "exact_evaluated_source_blobs": [
+      {
+        "bytes": 52371,
+        "path": "swdb-project/swdb/proof_setup.py",
+        "reviewed_line_ranges": [
+          [
+            646,
+            651
+          ],
+          [
+            693,
+            745
+          ]
+        ],
+        "sha256": "08f5e9807522cc2418e59ac9b6ecd43855a6a5ed4693c0295333abf6b8563d16",
+        "source_commit": "36266e101e0484f3c2cf5f3fae4322d5de648d85"
+      },
+      {
+        "bytes": 12925,
+        "path": "swdb-project/swdb/proof_report.ml",
+        "reviewed_line_ranges": [
+          [
+            19,
+            21
+          ],
+          [
+            75,
+            91
+          ]
+        ],
+        "sha256": "8b84bec6a12669d877205ec60d46d149f41fa921d08b6640161b4896b9c4df16",
+        "source_commit": "36266e101e0484f3c2cf5f3fae4322d5de648d85"
+      }
+    ],
+    "future_repair_scope": "Require complete unique native IDs equal the full normal record IDs; four models allow exactly their observed terminates/exits native-only rows and exact normal status/property/owner bindings. Shared rows must remain exact, except four explicit caller/callee smoke pairs requiring source/callsite correlation. No general function-label waiver.",
+    "generated_inventory_rule": "Native reporter serializes every Wpo goal, naming function from its Property.get_kf. The evaluated normal reader admits standard as a subset, rejects standard-only goals, and fills native-only records only with direct observed Valid results (or healthy smoke observations). It uses the standard function label on shared rows and never requires it to equal the native property owner. This explains the mechanical reader mismatch; it does not independently prove any omitted goal.",
+    "standard_extra_goals_must_be_refused": true
+  },
+  "source_body_Heap_Typed_caller_default_public_record_or_ticket_acceptance": false
+}

@@ -1,0 +1,28 @@
+# Certification profile (ticket 51). Created 2026-10-03 ET.
+format: swdb.certification-profile.v1
+id: profile.update_binning_executor
+entry: operation.update_binning_executor
+date: '2026-10-03'
+matrix:
+  builds:
+  - sanitized
+  - openmp
+  threads: 4
+  n_cases: 8
+  sizes:
+    n: 1021
+    n_target: 127
+controls:
+- id: dropped_last_record
+  category: dropped_operand
+  expected_check: differential_mismatch
+- id: double_drain
+  category: double_claim
+  expected_check: differential_mismatch
+- id: aliasing_write
+  category: aliasing
+  expected_check: frame_violation
+required_categories:
+- aliasing
+- double_claim
+- dropped_operand

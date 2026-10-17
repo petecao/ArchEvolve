@@ -1,0 +1,167 @@
+{
+  "date": "2026-10-16 ET",
+  "status": "prospective preparation only; root actual/API compilation and independent review required",
+  "observer": {
+    "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/helper_backend_bindings.ml",
+    "resolved": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/helper_backend_bindings.ml",
+    "sha256": "15d0a5807fb6e492c2f80b34badbf969006b877ba58d479946078c00579f50f7",
+    "bytes": 3843
+  },
+  "scope_note": {
+    "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/BACKEND-BINDINGS-20261016.md",
+    "resolved": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/BACKEND-BINDINGS-20261016.md",
+    "sha256": "8b1829c74e740a0b5b0ce700b2371dc82043d843d3c0dc1f3a34c94d457a506b",
+    "bytes": 2774
+  },
+  "primary_API_and_scheduler_sources": [
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/Wpo.ml",
+      "resolved": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/Wpo.ml",
+      "sha256": "37f3cdbe80caeca6de7dae787e4eb06e3b548a8c6191d81ceda5420c923869d3",
+      "bytes": 27317
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/Wpo.mli",
+      "resolved": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/Wpo.mli",
+      "sha256": "c3cea32dc89b84d58c6834557239d0e989bd1a0e96a059fefe91b27e1e9bfe9f",
+      "bytes": 7502
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/Pcond.ml",
+      "resolved": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/Pcond.ml",
+      "sha256": "e214dc6bddc4924d887ced77b8154a311a16e50e7a50e2a334c410d25329d6b6",
+      "bytes": 16861
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/Pcond.mli",
+      "resolved": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/Pcond.mli",
+      "sha256": "69ceee01cf5c83d4cec483755316ffd8217171e371eed9ce4e6960f9c4eefd3b",
+      "bytes": 4458
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/WpPropId.ml",
+      "resolved": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/WpPropId.ml",
+      "sha256": "eb637a45864b07030a826d3a5657634fad3db07304bd5eb2a9d30f7dd3fcb0b5",
+      "bytes": 39344
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/WpPropId.mli",
+      "resolved": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/WpPropId.mli",
+      "sha256": "5f0f5e89d47e946f3d8c3e94001bfe808e61e1eae45bd863bec77b652e3bd12f",
+      "bytes": 10429
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/WpContext.mli",
+      "resolved": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/WpContext.mli",
+      "sha256": "21caf1f1b34f8957a9b71a56e943af78ba4103ccd527881c6e9346abe8471b64",
+      "bytes": 4735
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/Prover.ml",
+      "resolved": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/Prover.ml",
+      "sha256": "652dacad801969a6867a7ed3d49930f4eccabf765070df041af5b49bfa9c3f88",
+      "bytes": 10749
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/Prover.mli",
+      "resolved": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/Prover.mli",
+      "sha256": "4cd3310c8f7edb083162e1146190f5a14072676e0f03ebc49356e275e7f51362",
+      "bytes": 4030
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/ProverTask.ml",
+      "resolved": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/ProverTask.ml",
+      "sha256": "0ae5556785d03a00c3b0caec20da1db43738002fb40fb5d3f15a5eac692730c4",
+      "bytes": 6233
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/ProverWhy3.ml",
+      "resolved": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/ProverWhy3.ml",
+      "sha256": "18413bff579ac1557c0b5060a679d80d55cfce49099b9557a85ea8c66fe88526",
+      "bytes": 63257
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/register.ml",
+      "resolved": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/register.ml",
+      "sha256": "e4e0b524e4364f475f33fd618c542d4ddc86c2c35f8b6ba223ea704896bc019e",
+      "bytes": 36565
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/CfgInfos.ml",
+      "resolved": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/CfgInfos.ml",
+      "sha256": "e4fd3d9e6b833ec768a913b57c2ec832467436aecb1ee67259451ace22d7a17c",
+      "bytes": 20165
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/MemTyped.ml",
+      "resolved": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/MemTyped.ml",
+      "sha256": "ad0d3c4e8e568a09d47bb658767e5ba476cc9e957f16b14981370642c5e235b5",
+      "bytes": 40201
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/MemVar.ml",
+      "resolved": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/MemVar.ml",
+      "sha256": "43b8979a169ccfb7c6e7183970a8d3022d27d410487f139b397073f06a7476f6",
+      "bytes": 48928
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/Cvalues.ml",
+      "resolved": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/Cvalues.ml",
+      "sha256": "c04b39f6a15932715d694b9679a4fcae88c4b8ae45979ee60977efebf9fb6b80",
+      "bytes": 31893
+    }
+  ],
+  "controls": [
+    {
+      "path": "/private/tmp/probata-t07-backend-export-reader-controls-v1-20261016.py",
+      "resolved": "/private/tmp/probata-t07-backend-export-reader-controls-v1-20261016.py",
+      "sha256": "dc70993fec643d5ae034725249598a504f8f190b397a3afd9f4ffdff4cc4d62a",
+      "bytes": 9534
+    },
+    {
+      "path": "/private/tmp/probata-t07-backend-export-reader-controls-v1-final-20261016/summary.json",
+      "resolved": "/private/tmp/probata-t07-backend-export-reader-controls-v1-final-20261016/summary.json",
+      "sha256": "af7cb10c72ef6a375bc08c40527e3e8a2fc9410f8477b7f410f579e35644ca3e",
+      "bytes": 411
+    },
+    {
+      "path": "/private/tmp/probata-t07-backend-export-reader-controls-v1-final-20261016.log.summary.json",
+      "resolved": "/private/tmp/probata-t07-backend-export-reader-controls-v1-final-20261016.log.summary.json",
+      "sha256": "e18106d0a01c7c14e794850b6eb71784ec082b9000d5ab8fa2a6bc1229407630",
+      "bytes": 1993
+    },
+    {
+      "path": "/private/tmp/probata-t07-backend-export-reader-controls-v1-20261016/summary.json",
+      "resolved": "/private/tmp/probata-t07-backend-export-reader-controls-v1-20261016/summary.json",
+      "sha256": "978541b8a29ec7edbdf4791e6c6e57beb44321d63540c2933461720b8434ed69",
+      "bytes": 411
+    },
+    {
+      "path": "/private/tmp/probata-t07-backend-export-reader-controls-v1-20261016.log.summary.json",
+      "resolved": "/private/tmp/probata-t07-backend-export-reader-controls-v1-20261016.log.summary.json",
+      "sha256": "65f0415fcb9ecddea179a39d2c0a956944b3e710c3240e3449ac253f40507376",
+      "bytes": 1979
+    },
+    {
+      "path": "/private/tmp/probata-t07-all-ten-status-clarification-20261016.json",
+      "resolved": "/private/tmp/probata-t07-all-ten-status-clarification-20261016.json",
+      "sha256": "de469054f8320acdcc2b4eaa7f576189bae67571a007715052c0ce03d6c62ee0",
+      "bytes": 4200
+    },
+    {
+      "path": "/private/tmp/probata-t07-all-ten-status-clarification-20261016.md",
+      "resolved": "/private/tmp/probata-t07-all-ten-status-clarification-20261016.md",
+      "sha256": "34b83c7ccd44d8c7fcabcc2f221042dc41c3d1450c1ffcb67a5ceca838927601",
+      "bytes": 612
+    }
+  ],
+  "control_scope": "9 pure methods plus retained-source/log mutation subcases; constructed observer schema fixture is reader-policy-only, never native observer or memory qualification",
+  "guard_seconds": 0.4212497500120662,
+  "guard_peak_MiB": 28.65625,
+  "source_C_commit": "b9b96fb85573c0292d2f7171b984cd2ee4076443",
+  "source_C_blobs_changed": false,
+  "actual_compile_or_formal_by_author": false,
+  "proof_acceptance": false,
+  "Typed_init_or_lifetime_qualified": false,
+  "TD_or_counted_acceptance": false
+}

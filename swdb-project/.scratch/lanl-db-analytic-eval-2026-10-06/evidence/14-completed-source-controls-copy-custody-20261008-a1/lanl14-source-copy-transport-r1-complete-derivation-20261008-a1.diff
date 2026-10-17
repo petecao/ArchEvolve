@@ -1,0 +1,11 @@
+--- /private/tmp/lanl14-stage-and-run-source-copy-producer-20261008-a1.py
++++ /private/tmp/lanl14-stage-and-run-source-copy-producer-20261008-a1-r1.py
+@@ -35,7 +35,7 @@
+  child=subprocess.run(argv,stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=210,check=False)
+  require(len(child.stdout)<=65536 and len(child.stderr)<=65536)
+  require(stamp(TARGET.lstat())==stamp(s) and TARGET.read_bytes()==raw)
+- print(json.dumps({'format':'swdb.lanl14-completed-source-controls-copy-transport.v1','sealed':False,'started_utc':started,'ended_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'actual_public_argv':argv,'producer':{'path':str(TARGET),'bytes':len(raw),'sha256':DIGEST,'stat':stamp(s)},'child_returncode':child.returncode,'child_stdout_bytes':len(child.stdout),'child_stdout_sha256':hashlib.sha256(child.stdout).hexdigest(),'child_stderr_bytes':len(child.stderr),'child_stderr_sha256':hashlib.sha256(child.stderr).hexdigest(),'original_unsealed_child_metadata':json.loads(child.stdout) if child.returncode==0 else None,'scientific_admission':False,'target_controls_executed':False},sort_keys=True))
++ print(json.dumps({'format':'swdb.lanl14-completed-source-controls-copy-transport.v1','sealed':False,'started_utc':started,'ended_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'actual_public_argv':argv,'producer':{'path':str(TARGET),'bytes':len(raw),'sha256':DIGEST,'stat':stamp(s)},'child_returncode':child.returncode,'child_stdout_bytes':len(child.stdout),'child_stdout_sha256':hashlib.sha256(child.stdout).hexdigest(),'child_stderr_bytes':len(child.stderr),'child_stderr_sha256':hashlib.sha256(child.stderr).hexdigest(),'original_child_stdout_utf8':child.stdout.decode('utf-8'),'original_child_stderr_base64':base64.b64encode(child.stderr).decode('ascii'),'original_unsealed_child_metadata':json.loads(child.stdout) if child.returncode==0 else None,'scientific_admission':False,'target_controls_executed':False},sort_keys=True))
+  return child.returncode
+ try:raise SystemExit(run())
+ except Exception as e:

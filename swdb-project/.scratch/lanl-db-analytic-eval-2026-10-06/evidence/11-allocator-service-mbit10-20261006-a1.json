@@ -1,0 +1,473 @@
+{
+  "completed_at": "2026-10-06T23:49:21Z",
+  "environment": {
+    "cpu": "Architecture:                            x86_64\nCPU op-mode(s):                          32-bit, 64-bit\nAddress sizes:                           46 bits physical, 57 bits virtual\nByte Order:                              Little Endian\nCPU(s):                                  64\nOn-line CPU(s) list:                     0-63\nVendor ID:                               GenuineIntel\nModel name:                              Intel(R) Xeon(R) Gold 6326 CPU @ 2.90GHz\nCPU family:                              6\nModel:                                   106\nThread(s) per core:                      2\nCore(s) per socket:                      16\nSocket(s):                               2\nStepping:                                6\nBogoMIPS:                                5800.00\nFlags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid dca sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb cat_l3 intel_ppin ssbd mba ibrs ibpb stibp ibrs_enhanced tpr_shadow flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid cqm rdt_a avx512f avx512dq rdseed adx smap avx512ifma clflushopt clwb intel_pt avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local split_lock_detect wbnoinvd dtherm ida arat pln pts vnmi avx512vbmi umip pku ospke avx512_vbmi2 gfni vaes vpclmulqdq avx512_vnni avx512_bitalg tme avx512_vpopcntdq la57 rdpid fsrm md_clear pconfig flush_l1d arch_capabilities\nVirtualization:                          VT-x\nL1d cache:                               1.5 MiB (32 instances)\nL1i cache:                               1 MiB (32 instances)\nL2 cache:                                40 MiB (32 instances)\nL3 cache:                                48 MiB (2 instances)\nNUMA node(s):                            2\nNUMA node0 CPU(s):                       0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62\nNUMA node1 CPU(s):                       1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63\nVulnerability Gather data sampling:      Mitigation; Microcode\nVulnerability Indirect target selection: Mitigation; Aligned branch/return thunks\nVulnerability Itlb multihit:             Not affected\nVulnerability L1tf:                      Not affected\nVulnerability Mds:                       Not affected\nVulnerability Meltdown:                  Not affected\nVulnerability Mmio stale data:           Mitigation; Clear CPU buffers; SMT vulnerable\nVulnerability Reg file data sampling:    Not affected\nVulnerability Retbleed:                  Not affected\nVulnerability Spec rstack overflow:      Not affected\nVulnerability Spec store bypass:         Mitigation; Speculative Store Bypass disabled via prctl\nVulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization\nVulnerability Spectre v2:                Mitigation; Enhanced / Automatic IBRS; IBPB conditional; PBRSB-eIBRS SW sequence; BHI SW loop, KVM SW loop\nVulnerability Srbds:                     Not affected\nVulnerability Tsa:                       Not affected\nVulnerability Tsx async abort:           Not affected\nVulnerability Vmscape:                   Not affected\n",
+    "created": "2026-10-06 19:40 ET",
+    "disk_free_bytes": {
+      "/data": 60480708608,
+      "/data1": 27573059584
+    },
+    "environment": {
+      "GLIBC_TUNABLES": null,
+      "LD_LIBRARY_PATH": null,
+      "LD_PRELOAD": null,
+      "OMP_DYNAMIC": "FALSE",
+      "OMP_NUM_THREADS": "1",
+      "OMP_PLACES": "cores",
+      "OMP_PROC_BIND": "close"
+    },
+    "evidence_scope": "Independent constructed allocator service calibration; no application performance or accuracy evidence.",
+    "governor": null,
+    "host": "mbit10",
+    "load": [
+      1.42724609375,
+      1.626953125,
+      1.70263671875
+    ],
+    "no_turbo": null,
+    "numa": "available: 2 nodes (0-1)\nnode 0 cpus: 0 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62\nnode 0 size: 63849 MB\nnode 0 free: 20746 MB\nnode 1 cpus: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29 31 33 35 37 39 41 43 45 47 49 51 53 55 57 59 61 63\nnode 1 size: 64496 MB\nnode 1 free: 2070 MB\nnode distances:\nnode   0   1 \n  0:  10  20 \n  1:  20  10 \n",
+    "perf_event_paranoid": "4",
+    "source_commit": "b9dabf361b429f0c07717f1891573f5d5f31b1ab",
+    "system": "Linux mbit10 6.8.0-136-generic #136-Ubuntu SMP PREEMPT_DYNAMIC Wed Jul  1 21:53:05 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux",
+    "threads": 1,
+    "users": "yanruj   pts/0        2026-10-06 19:40 (tmux(359742).%694)\n"
+  },
+  "evidence_scope": "Independent constructed serial allocator costs; transfer is inferred, no payload touch, physical residency or application accuracy claim.",
+  "exit_code": 0,
+  "export_policy": "Only typed record and compact context/cost metadata. Raw IR, binaries, pilots, count streams and logs remain on mbit10.",
+  "format": "swdb.allocator-service-export.v1",
+  "identity_sha256": "7eea7766f0cff27987e4bfbe5393b275ce797131a2c800987bb7b647ed790dfc",
+  "lane": {
+    "socket_lane": {
+      "aligned_cell_age_s": "",
+      "aligned_to": "no_gapbs_batch_running",
+      "command": [
+        "bash",
+        "/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-elapsed-20261006-a1/run.sh"
+      ],
+      "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+      "ended_utc": "2026-10-06T23:49:21Z",
+      "exit_code": 0,
+      "host": "mbit10",
+      "job": "lanl-analytic-allocator-elapsed-20261006-a1",
+      "lease_generation": 480,
+      "lease_name": "mbit10-evaluation-node0",
+      "load1_at_start": 1.43,
+      "load1_max": 32,
+      "node": 0,
+      "numa_memory_policy": "bind:0",
+      "numactl": "--cpunodebind=0 --membind=0",
+      "preregistration_sha256": null,
+      "started_utc": "2026-10-06T23:40:39Z"
+    }
+  },
+  "lease_release": {
+    "active_session": null,
+    "attempt_pid": null,
+    "attempt_start_token": null,
+    "heartbeat_at": "2026-10-06T23:49:21Z",
+    "lease": {
+      "acquired_at": "2026-10-06T23:40:39Z",
+      "daemon_pid": 2024950,
+      "daemon_start_token": "sh2024950-1791330039",
+      "generation": 480,
+      "host": "mbit10",
+      "lease_name": "mbit10-evaluation-node0",
+      "mode": "measure",
+      "session_id": null
+    },
+    "recovered_from_generation": null,
+    "released_at": "2026-10-06T23:49:21Z",
+    "session_note": null,
+    "session_state": "none",
+    "state": "released",
+    "writer": "hostlock.sh"
+  },
+  "preregistered_input": {
+    "application_timings_collected": false,
+    "count_build_budget_mib": 64,
+    "date": "2026-10-06 ET",
+    "matrix_unchanged": true,
+    "min_gross_trial_seconds": 0.05,
+    "prior_count_only_identity": "ea0254781364e735b0bdf9f98a1ba27da050bbd3cf1adf63d87c7583dcdba6b3",
+    "prior_count_only_receipt": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-counts-20261006-a2/proof/count-proof.json",
+    "repetitions": 7,
+    "service_cells": 20,
+    "source_commit": "b9dabf361b429f0c07717f1891573f5d5f31b1ab",
+    "timed_data_budget_mib": 25
+  },
+  "raw_directory": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-elapsed-20261006-a1",
+  "receipt": {
+    "bytes": 353071,
+    "file_sha256": "e02db16ec9f6c227deca72fc63bd3a635ef5cf0e76cfb4aec8d31ba4d7a9fc34",
+    "format": "swdb.cpu-service-calibration.v1",
+    "identity_sha256": "35e3802e6f8d28f958379f3e709b057ed59af092bec5c66c51cc4decda8f41bd",
+    "raw_path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-elapsed-20261006-a1/measurement/receipt.json"
+  },
+  "record": {
+    "bytes": 254533,
+    "file_sha256": "55981bcf596fdf22e29c0e160b511eee4c7631aae5c602702575db5e408bfe9f",
+    "id": "mbit10.cpu.lanl20261006.service.allocator.a1",
+    "identity_sha256": "f564a776deaeb147698f8fd423e2d603ef426053d2a6f6a082e2a52debb09fac",
+    "relative_path": "cpu_service_calibrations/mbit10.cpu.lanl20261006.service.allocator.a1.yaml"
+  },
+  "repeated_count_proof": {
+    "identity_source_commit": "b9dabf361b429f0c07717f1891573f5d5f31b1ab",
+    "points": 32,
+    "prior_count_only_identity": "ea0254781364e735b0bdf9f98a1ba27da050bbd3cf1adf63d87c7583dcdba6b3",
+    "proof_sha256": "37854b9b8e450555586b33c16295f4ed993300be845a8bd1b3acb568c161e0ca"
+  },
+  "run_id": "lanl-analytic-allocator-elapsed-20261006-a1",
+  "services": [
+    {
+      "driver_min_s": 3.1607e-05,
+      "event_abi": "_Znam",
+      "gross_min_s": 0.09570988500000001,
+      "id": "allocator.new_array.8192",
+      "operation": "new_array",
+      "relative_residual_range": 0.005273000624750312,
+      "repetitions": 7,
+      "seconds_per_event": 1.4620337371826172e-06,
+      "size_bytes": 8192,
+      "transfer_basis": "inferred"
+    },
+    {
+      "driver_min_s": 3.3029e-05,
+      "event_abi": "_Znam",
+      "gross_min_s": 0.092447265,
+      "id": "allocator.new_array.65536",
+      "operation": "new_array",
+      "relative_residual_range": 0.0037724163356471284,
+      "repetitions": 7,
+      "seconds_per_event": 1.4134300231933595e-06,
+      "size_bytes": 65536,
+      "transfer_basis": "inferred"
+    },
+    {
+      "driver_min_s": 1.7849999999999997e-05,
+      "event_abi": "_Znam",
+      "gross_min_s": 0.05598805600000001,
+      "id": "allocator.new_array.227416",
+      "operation": "new_array",
+      "relative_residual_range": 0.1669705992481185,
+      "repetitions": 7,
+      "seconds_per_event": 1.7759052701271188e-06,
+      "size_bytes": 227416,
+      "transfer_basis": "inferred"
+    },
+    {
+      "driver_min_s": 3.135899999999998e-05,
+      "event_abi": "_Znam",
+      "gross_min_s": 0.09593874900000005,
+      "id": "allocator.new_array.262144",
+      "operation": "new_array",
+      "relative_residual_range": 0.013326311570616596,
+      "repetitions": 7,
+      "seconds_per_event": 1.4780939331054704e-06,
+      "size_bytes": 262144,
+      "transfer_basis": "inferred"
+    },
+    {
+      "driver_min_s": 3.308500000000011e-05,
+      "event_abi": "_Znam",
+      "gross_min_s": 0.09576710600000007,
+      "id": "allocator.new_array.524288",
+      "operation": "new_array",
+      "relative_residual_range": 0.004415196259266674,
+      "repetitions": 7,
+      "seconds_per_event": 1.465767044067382e-06,
+      "size_bytes": 524288,
+      "transfer_basis": "inferred"
+    },
+    {
+      "driver_min_s": 0.000250387,
+      "event_abi": "_ZdaPv",
+      "gross_min_s": 0.078081891,
+      "id": "allocator.delete_array.8192",
+      "operation": "delete_array",
+      "relative_residual_range": 0.044823243656293546,
+      "repetitions": 7,
+      "seconds_per_event": 1.5161830711364745e-07,
+      "size_bytes": 8192,
+      "transfer_basis": "inferred"
+    },
+    {
+      "driver_min_s": 0.00025222199999999997,
+      "event_abi": "_ZdaPv",
+      "gross_min_s": 0.08737676400000002,
+      "id": "allocator.delete_array.65536",
+      "operation": "delete_array",
+      "relative_residual_range": 0.008154788528018774,
+      "repetitions": 7,
+      "seconds_per_event": 1.6708409690856938e-07,
+      "size_bytes": 65536,
+      "transfer_basis": "inferred"
+    },
+    {
+      "driver_min_s": 0.00031773100000000013,
+      "event_abi": "_ZdaPv",
+      "gross_min_s": 0.12230400200000001,
+      "id": "allocator.delete_array.227416",
+      "operation": "delete_array",
+      "relative_residual_range": 0.013022641580541101,
+      "repetitions": 7,
+      "seconds_per_event": 2.0387418730137716e-07,
+      "size_bytes": 227416,
+      "transfer_basis": "inferred"
+    },
+    {
+      "driver_min_s": 0.00027886499999999896,
+      "event_abi": "_ZdaPv",
+      "gross_min_s": 0.10843698300000014,
+      "id": "allocator.delete_array.262144",
+      "operation": "delete_array",
+      "relative_residual_range": 0.011569374441756874,
+      "repetitions": 7,
+      "seconds_per_event": 2.0757097816467273e-07,
+      "size_bytes": 262144,
+      "transfer_basis": "inferred"
+    },
+    {
+      "driver_min_s": 0.0001451210000000004,
+      "event_abi": "_ZdaPv",
+      "gross_min_s": 0.07560698100000005,
+      "id": "allocator.delete_array.524288",
+      "operation": "delete_array",
+      "relative_residual_range": 0.02590403666833448,
+      "repetitions": 7,
+      "seconds_per_event": 2.918052253723145e-07,
+      "size_bytes": 524288,
+      "transfer_basis": "inferred"
+    },
+    {
+      "driver_min_s": 0.00664422,
+      "event_abi": "_Znwm",
+      "gross_min_s": 0.11142157899999999,
+      "id": "allocator.new_scalar.8",
+      "operation": "new_scalar",
+      "relative_residual_range": 0.031650374763717216,
+      "repetitions": 7,
+      "seconds_per_event": 6.28279942274093e-09,
+      "size_bytes": 8,
+      "transfer_basis": "inferred"
+    },
+    {
+      "driver_min_s": 0.003324688999999999,
+      "event_abi": "_Znwm",
+      "gross_min_s": 0.06389467200000003,
+      "id": "allocator.new_scalar.16",
+      "operation": "new_scalar",
+      "relative_residual_range": 0.05864272852441343,
+      "repetitions": 7,
+      "seconds_per_event": 7.317900300025941e-09,
+      "size_bytes": 16,
+      "transfer_basis": "inferred"
+    },
+    {
+      "driver_min_s": 0.0033232940000000014,
+      "event_abi": "_Znwm",
+      "gross_min_s": 0.06661157200000001,
+      "id": "allocator.new_scalar.32",
+      "operation": "new_scalar",
+      "relative_residual_range": 0.03527533815553577,
+      "repetitions": 7,
+      "seconds_per_event": 7.57111132144928e-09,
+      "size_bytes": 32,
+      "transfer_basis": "inferred"
+    },
+    {
+      "driver_min_s": 0.003324462,
+      "event_abi": "_Znwm",
+      "gross_min_s": 0.07601539499999997,
+      "id": "allocator.new_scalar.64",
+      "operation": "new_scalar",
+      "relative_residual_range": 0.009935177472783335,
+      "repetitions": 7,
+      "seconds_per_event": 8.672569870948793e-09,
+      "size_bytes": 64,
+      "transfer_basis": "inferred"
+    },
+    {
+      "driver_min_s": 0.0008323629999999999,
+      "event_abi": "_Znwm",
+      "gross_min_s": 0.10243352700000001,
+      "id": "allocator.new_scalar.128",
+      "operation": "new_scalar",
+      "relative_residual_range": 0.0053765011440399255,
+      "repetitions": 7,
+      "seconds_per_event": 4.84789810180664e-08,
+      "size_bytes": 128,
+      "transfer_basis": "inferred"
+    },
+    {
+      "driver_min_s": 0.0035335120000000012,
+      "event_abi": "_ZdlPv",
+      "gross_min_s": 0.062143129000000026,
+      "id": "allocator.delete_scalar.8",
+      "operation": "delete_scalar",
+      "relative_residual_range": 0.04645609389642617,
+      "repetitions": 7,
+      "seconds_per_event": 7.0505316257476775e-09,
+      "size_bytes": 8,
+      "transfer_basis": "inferred"
+    },
+    {
+      "driver_min_s": 0.0035285500000000014,
+      "event_abi": "_ZdlPv",
+      "gross_min_s": 0.06231706099999999,
+      "id": "allocator.delete_scalar.16",
+      "operation": "delete_scalar",
+      "relative_residual_range": 0.04173674151765775,
+      "repetitions": 7,
+      "seconds_per_event": 7.066238164901736e-09,
+      "size_bytes": 16,
+      "transfer_basis": "inferred"
+    },
+    {
+      "driver_min_s": 0.003546319,
+      "event_abi": "_ZdlPv",
+      "gross_min_s": 0.06281424499999999,
+      "id": "allocator.delete_scalar.32",
+      "operation": "delete_scalar",
+      "relative_residual_range": 0.030794387232904688,
+      "repetitions": 7,
+      "seconds_per_event": 7.105227947235103e-09,
+      "size_bytes": 32,
+      "transfer_basis": "inferred"
+    },
+    {
+      "driver_min_s": 0.0035425319999999993,
+      "event_abi": "_ZdlPv",
+      "gross_min_s": 0.064595739,
+      "id": "allocator.delete_scalar.64",
+      "operation": "delete_scalar",
+      "relative_residual_range": 0.02342276392745073,
+      "repetitions": 7,
+      "seconds_per_event": 7.341713190078738e-09,
+      "size_bytes": 64,
+      "transfer_basis": "inferred"
+    },
+    {
+      "driver_min_s": 0.001771417,
+      "event_abi": "_ZdlPv",
+      "gross_min_s": 0.07937785300000001,
+      "id": "allocator.delete_scalar.128",
+      "operation": "delete_scalar",
+      "relative_residual_range": 0.013083075608675903,
+      "repetitions": 7,
+      "seconds_per_event": 1.8587685108184818e-08,
+      "size_bytes": 128,
+      "transfer_basis": "inferred"
+    }
+  ],
+  "settings": {
+    "batch_event_cap": 65536,
+    "cells": [
+      {
+        "operation": "new_array",
+        "size_bytes": 8192
+      },
+      {
+        "operation": "new_array",
+        "size_bytes": 65536
+      },
+      {
+        "operation": "new_array",
+        "size_bytes": 227416
+      },
+      {
+        "operation": "new_array",
+        "size_bytes": 262144
+      },
+      {
+        "operation": "new_array",
+        "size_bytes": 524288
+      },
+      {
+        "operation": "delete_array",
+        "size_bytes": 8192
+      },
+      {
+        "operation": "delete_array",
+        "size_bytes": 65536
+      },
+      {
+        "operation": "delete_array",
+        "size_bytes": 227416
+      },
+      {
+        "operation": "delete_array",
+        "size_bytes": 262144
+      },
+      {
+        "operation": "delete_array",
+        "size_bytes": 524288
+      },
+      {
+        "operation": "new_scalar",
+        "size_bytes": 8
+      },
+      {
+        "operation": "new_scalar",
+        "size_bytes": 16
+      },
+      {
+        "operation": "new_scalar",
+        "size_bytes": 32
+      },
+      {
+        "operation": "new_scalar",
+        "size_bytes": 64
+      },
+      {
+        "operation": "new_scalar",
+        "size_bytes": 128
+      },
+      {
+        "operation": "delete_scalar",
+        "size_bytes": 8
+      },
+      {
+        "operation": "delete_scalar",
+        "size_bytes": 16
+      },
+      {
+        "operation": "delete_scalar",
+        "size_bytes": 32
+      },
+      {
+        "operation": "delete_scalar",
+        "size_bytes": 64
+      },
+      {
+        "operation": "delete_scalar",
+        "size_bytes": 128
+      }
+    ],
+    "count_build_cap_bytes": 67108864,
+    "event_cap": 16777216,
+    "group": "allocator_v1",
+    "live_payload_cap_bytes": 67108864,
+    "max_wall_s": 900.0,
+    "min_trial_s": 0.05,
+    "repetitions": 7,
+    "sizes": [
+      8,
+      16,
+      32,
+      64,
+      128,
+      8192,
+      65536,
+      227416,
+      262144,
+      524288
+    ],
+    "timed_data_cap_bytes": 26214400,
+    "trial_resolution_scope": "gross_aggregate_only; paired driver retained"
+  },
+  "source_clean": true,
+  "source_commit": "b9dabf361b429f0c07717f1891573f5d5f31b1ab",
+  "started_at": "2026-10-06T23:40:39.530274+00:00",
+  "validation": "OK: 588 record(s) valid"
+}

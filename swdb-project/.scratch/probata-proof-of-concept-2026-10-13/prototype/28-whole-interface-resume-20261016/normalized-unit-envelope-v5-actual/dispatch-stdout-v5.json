@@ -1,0 +1,46 @@
+{
+  "launch": {
+    "created_utc": "2026-10-17T02:01:51.343631+00:00",
+    "source": "/data1/yanruj/probata-resume-20261016-2baf722f",
+    "source_commit": "2baf722fdaa6cba24b859eae3172a6f597417d72",
+    "node": 0,
+    "command": [
+      "/data1/yanruj/venvs/swdb-test/bin/python",
+      "-I",
+      "-B",
+      "-X",
+      "pycache_prefix=/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-unit-observation-2baf722f-v5/entry-source-cache",
+      "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-unit-observation-2baf722f-v5/control/linux_observation_envelope_v5.py",
+      "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-unit-observation-2baf722f-v5",
+      "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-unit-observation-2baf722f-v5/control/envelope-policy-v5.json",
+      "0c2ecf757113f0c125376214cc783489fca94a812fad2512d574af397dd78489"
+    ],
+    "timeout_seconds": 1200,
+    "rss_cap_bytes": 4294967296,
+    "workers": 1,
+    "rss_scope": "outer watchdog covers worker bootstrap, compiler provenance probes, inner monitor and proof process tree; trusted outer monitor excluded",
+    "planned_raw_budget_bytes": 268435456,
+    "raw_budget_enforcement": "coordinator monitors; not a filesystem quota",
+    "readers": [
+      "root",
+      "ticket28",
+      "lane_coordination"
+    ],
+    "log_name": "acceptance.log",
+    "reviewed_wrapper_reuse": {
+      "execute.py": "8442533f911e2ba7f10757a5b16ba451d4ece7d9d5dc292ce5b9d8c29eabdcbf",
+      "watch.py": "49be8a36d6e04b50e1ab599dad8b00f78a1c639132c3079c523c2c0c9177c5f0"
+    },
+    "reviewed_wrapper_originals": {
+      "execute.py": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612",
+      "watch.py": "4485ae66aa50c65f2b579f84836576aa67b54431978da71cac6eea6a68ecd07c"
+    }
+  },
+  "output": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-unit-observation-2baf722f-v5",
+  "session": "probata-resume-20261016-2baf722f-t28-unit-observation-v5",
+  "wrapper": {
+    "sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8",
+    "fetched_commit": "41f22f0ba765adcd4f4188aca91009ea0fe5a22b"
+  }
+}
+

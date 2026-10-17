@@ -1,0 +1,49 @@
+{
+  "created_at": "2026-09-26T14:58:23.403846-04:00",
+  "role": "local_contract_implementation_not_empirical",
+  "head": "a593bd9248af752d200b38c0e9132324dcfb7c2d",
+  "files": {
+    "scripts/bfs_native_campaign.py": {
+      "sha256": "e917ce23d7767e934a09abed73378da810511f76231f664071f302c898619d75",
+      "bytes": 50463
+    },
+    "tests/test_bfs_native_reassessment.py": {
+      "sha256": "151fb76d2d65a29ee3769ab3000218d4199e09c71169b5a748480c0ac283ff19",
+      "bytes": 15977
+    },
+    "docs/bfs-native-reassessment-20260926.md": {
+      "sha256": "58cdaedc70ca8962b64bb6a9ba1a23535f706877650b356da840b95b0dee9c88",
+      "bytes": 6822
+    }
+  },
+  "validation": {
+    "command": "python3 -m pytest tests/test_bfs_native_reassessment.py tests/test_bfs_native_campaign.py tests/test_bfs_campaign_reuse.py tests/test_bfs_native_region_comparison.py -q -k 'reassessment or campaign or reuse'",
+    "result": "88 passed, 25 deselected in 38.53s",
+    "log": {
+      "path": "/private/tmp/bfs-native-reassessment-stable-20260926.log",
+      "sha256": "ac3f6426defca96c9d32252428eb83c5e8f704219e202f6f51e2b3446870fe83"
+    },
+    "py_compile": "passed",
+    "diff_check": "passed"
+  },
+  "prior_logs": [
+    "/private/tmp/bfs-native-reassessment-initial-20260926.log",
+    "/private/tmp/bfs-native-reassessment-focused-20260926.log",
+    "/private/tmp/bfs-native-reassessment-final-20260926.log"
+  ],
+  "independent_review": {
+    "reviewer": "root",
+    "source_review": "No remaining actionable finding in the reviewed origin/fresh binding, runtime, preserved payload, exact acquisition, and no-provider/no-repair scope.",
+    "passed": 45,
+    "seconds": 10.66,
+    "log": {
+      "path": "/private/tmp/bfs-native-reassessment-independent-20260926.log",
+      "bytes": 100,
+      "sha256": "10d6bdeeba8048363c54e39e99f6296faf46627a848623ca47fcfe4dfc0903d1"
+    }
+  },
+  "remote_execution": false,
+  "provider_calls": false,
+  "commit": false,
+  "export": false
+}

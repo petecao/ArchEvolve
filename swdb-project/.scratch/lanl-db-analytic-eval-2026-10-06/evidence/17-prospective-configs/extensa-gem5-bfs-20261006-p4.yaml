@@ -1,0 +1,55 @@
+format: swdb.extensa-campaign.v1
+id: extensa-gem5-bfs-20261006-p4
+created: '2026-10-06'
+mode: extensa
+kernel: gapbs-bfs
+target: dx100_gem5
+machine: mbit10
+base_source: fork_scalar_tdstep
+baselines:
+- role: fork_scalar_tdstep
+  candidate: typed-library-bfs-gem5-20261003-a2.baseline
+protocol:
+  roi: bfs.complete_call.v1
+  threads: 4
+  repetitions: 1
+  sources:
+  - 0
+  region_pairs: false
+  differences: 'Prospective LANL17 source-only draft: K/uniform g18 k18, exact registered
+    SG, source0, whole-call ROI. Extensa flow-A timing selection and plateau unchanged.
+    All real forecasts structurally unknown unless a verified frozen bridge is supplied
+    before outcomes.'
+workload_classes:
+- class: kronecker
+  workload: lanl17-prospective-20261006-a2-kronecker.g18.k18.feb23b36a57d4c05
+- class: uniform_random
+  workload: lanl17-prospective-20261006-a2-uniform_random.g18.k18.c0396050e37ceed6
+label: single graph per class
+library:
+  allowed_tiers:
+  - shared
+  - experimental
+  contracts:
+  - contract.bfs_read_offload
+regions: query
+provider:
+  name: codex
+  model: gpt-5.6-sol
+  effort: xhigh
+budgets:
+  max_iterations: 8
+  plateau_iterations: 4
+  lane_hours: 24
+  provider_calls_per_iteration: 3
+  provider_calls_setup: 1
+  disk_gb: 20
+  lanes: 1
+runs_root: /data/yanruj/EvolveSWDB_runs
+approval:
+  by: Yan-Ru Jhou
+  date: '2026-10-06'
+  scope: Standing user approval for mbit10 evaluations. Parent-owned prospective policy
+    freeze and lease dispatch remain required; this is an unexecuted draft.
+paired_estimates:
+  enabled: true

@@ -1,0 +1,71 @@
+{
+  "actual_retained_ABI_transport_replay": false,
+  "controls": 10,
+  "date": "2026-10-16 ET",
+  "files": [
+    {
+      "bytes": 7892,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-role-transport-v2/abi_role_transport_v1.py",
+      "sha256": "ea2e7e26ae154ccb9bd40204f75571ddca8fe50591a862d36abb140ec0893f8e"
+    },
+    {
+      "bytes": 4375,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-role-transport-v2/normalized_compiler_adapter_v2.py",
+      "sha256": "8acf26651a1e682bb6857128f1a0d5e184b52f489cccd32ea60eb471c1a65ff3"
+    },
+    {
+      "bytes": 2420,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-role-transport-v2/adapter-inverse-v1.json",
+      "sha256": "20ded9d0de5eac30b8fdecf6271954c27d18c5e105b85f3ec0fbabd9d8418cff"
+    },
+    {
+      "bytes": 1181,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-role-transport-v2/helper-inverse-v2.json",
+      "sha256": "983139b7d35084e6d4abf267a1956052a1302efd0d7398f0cffdcc0c5477f8e3"
+    },
+    {
+      "bytes": 9347,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-role-transport-v2/test_abi_transport_v1.py",
+      "sha256": "d014fa77beb9204a43e17d849e12a30889f3ee4ecb80f262fb5fa08110938a25"
+    },
+    {
+      "bytes": 2438,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-role-transport-v2/test_prehash_v2.py",
+      "sha256": "6bd203cca423e5e0ac9432c72895d2b51c3bae34f0027256856f6561753de02f"
+    },
+    {
+      "bytes": 1921,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-role-transport-v2/pure-controls-v2.log",
+      "sha256": "d1f2a92b552e58782e7c3739ea929aa3226a5a71efcd68e4483ddb3d5b770df1"
+    },
+    {
+      "bytes": 3495,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-role-transport-v2/combined-controls-before-isolation-fix-v2.log",
+      "sha256": "41c98ced64584821efc877156706f655db0a5ecd556ccde9893347865534f6f2"
+    },
+    {
+      "bytes": 1921,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-role-transport-v2/pre-semantic-receipt-delta-controls-v2.log",
+      "sha256": "9b9cb7f549bda3675aff2416f0ab6e9ca4cfc05f999fea84ce8e33a8b3e4b766"
+    },
+    {
+      "bytes": 3613,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-role-transport-v2/PLAN.md",
+      "sha256": "9975c00958e83169ffe0b4283517a780c8ee385421c36600ed38d92916c96cdb"
+    }
+  ],
+  "fixed_observer_and_normal_producer_path_pins_still_required": true,
+  "held_V1_findings": [
+    "Argument hashed before resource bound, and twice.",
+    "Semantic receipt primitive module paths differ between private observer and normal producer."
+  ],
+  "predecessor": {
+    "bytes": 5159,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-role-transport-v1/source-packet-v1.json",
+    "sha256": "20c625470b5b508d9396cd7bd2c683c87827d4bdb92f00c9318db020066c763e"
+  },
+  "production_delta_from_V1": "Only normalize_abi prehash extent/single digest and stable explicit primitive role identity. Complete helper text inverse retained; all other helper functions/classes, adapter and legacy parser bytes exact.",
+  "schema": "closed-ABI-role-transport-source-packet-2",
+  "shared_or_frozen_predecessor_modified": false,
+  "source_ABI_public_or_ticket_acceptance": false
+}

@@ -1,0 +1,32 @@
+{
+  "abs_definition_source_and_body_addition": true,
+  "actual_execution": false,
+  "builtin_no_shadow_guard": true,
+  "canonicalizer_after": "    if head == \"=\" and len(args) == 2:\n        args.sort(key=lambda x: json.dumps(x, sort_keys=True))\n    if head == \"+\":\n        # Standard mathematical SMT '+' only: preserve each complete operand.\n        # No FP/BV/custom operator or association/tree shape is changed.\n        args.sort(key=lambda x: json.dumps(x, sort_keys=True))\n    if head == \"=>\" and len(args) == 2:\n        antecedents = [args[0]]\n        conclusion = args[1]\n        while isinstance(conclusion, list) and len(conclusion) == 3 and conclusion[0] == \"=>\":\n            antecedents.append(conclusion[1])\n            conclusion = conclusion[2]\n        if len(antecedents) > 1:\n            complete = []\n            for premise in antecedents:\n                complete.extend(premise[1:] if isinstance(premise, list) and premise and premise[0] == \"and\" else [premise])\n            complete.sort(key=lambda x: json.dumps(x, sort_keys=True))\n            return [\"=>\", [\"and\", *complete], conclusion]\n    return [env.get(head, head) if isinstance(head, str) else head, *args]",
+  "canonicalizer_before": "    if head == \"=\" and len(args) == 2:\n        args.sort(key=lambda x: json.dumps(x, sort_keys=True))\n    return [env.get(head, head) if isinstance(head, str) else head, *args]",
+  "date": "2026-10-16 ET",
+  "encoding_probe_before_append_sha256": "586df60ae0444fd4ab2fdd6c2670134fb0e93cb33f6f589af7c2b62d0b185d15",
+  "observer_edits": [
+    {
+      "after": "ALLOWED_PATHS = set(selected+[CONTEXT['source_theory']['path'],CONTEXT['standard_abs_source']['path']])",
+      "before": "ALLOWED_PATHS = set(selected+[CONTEXT['source_theory']['path']])"
+    },
+    {
+      "after": "    standard_abs = physical_read(CONTEXT['standard_abs_source']['path'], CONTEXT['standard_abs_source'])\n    need(b'let function abs (x:int) : int = if x >= 0 then x else -x' in standard_abs, 'exact selected int.Abs total source definition')\n    module_begin, module_end = CONTEXT['standard_abs_source']['module_byte_range']\n    need(hashlib.sha256(standard_abs[module_begin:module_end]).hexdigest() == CONTEXT['standard_abs_source']['module_body_sha256'],\n         'exact complete selected int.Abs module slice')\n    theory = physical_read(CONTEXT['source_theory']['path'], CONTEXT['source_theory'])",
+      "before": "    theory = physical_read(CONTEXT['source_theory']['path'], CONTEXT['source_theory'])"
+    },
+    {
+      "after": "'source_theory_sha256': CONTEXT['source_theory']['sha256'],\n              'standard_abs_source': CONTEXT['standard_abs_source'],",
+      "before": "'source_theory_sha256': CONTEXT['source_theory']['sha256'],"
+    },
+    {
+      "after": "    physical_read(CONTEXT['source_theory']['path'],CONTEXT['source_theory'])\n    physical_read(CONTEXT['standard_abs_source']['path'],CONTEXT['standard_abs_source'])",
+      "before": "    physical_read(CONTEXT['source_theory']['path'],CONTEXT['source_theory'])"
+    },
+    {
+      "after": "full_semantic_adoption=False, unrecognized_terms_pending=True, all22_selected_inputs_pre_post_equal=True)",
+      "before": "full_semantic_adoption=False, unrecognized_terms_pending=True)"
+    }
+  ],
+  "only_canon_function_changed": true
+}

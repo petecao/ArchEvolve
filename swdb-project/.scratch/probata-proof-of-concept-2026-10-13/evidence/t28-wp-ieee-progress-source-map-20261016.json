@@ -1,0 +1,115 @@
+{
+  "created": "2026-10-16 ET",
+  "scope": "Read-only installed source/theory mapping; no execution/prover/parser admission, remote source equivalence or formal success claimed.",
+  "installed_switch": "/Users/yanrujhou/.opam/framac-33",
+  "sources": [
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/Cfloat.ml",
+      "bytes": 16404,
+      "sha256": "fe077203e3ba53a06c8cc620c133f610cb391c0966e928a9bee766db0143ad38"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/Factory.ml",
+      "bytes": 12706,
+      "sha256": "d2f4da6cb7b2f4a674880f4760680e84fe0a1c58ece95d0f2ff889b7902efcc5"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/wp_parameters.ml",
+      "bytes": 39279,
+      "sha256": "a4ace79d1262461ea14f73275db17eb332f76b265059fc238a6bc9538a81df2b"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/LogicSemantics.ml",
+      "bytes": 41615,
+      "sha256": "7612c77530d4fe9bb89ec0b28460685f801b10e9b32fc9bfa479548d1b6e9e03"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/RefUsage.ml",
+      "bytes": 31749,
+      "sha256": "b3b881dde39be5e08b2b5ff635f50a3670c7f6d2cf3fd19e7bdc380efe9361a9"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c/kernel/kernel_services/ast_queries/logic_typing.ml",
+      "bytes": 190280,
+      "sha256": "5fd962e6211e36336c3c59586ee81092f42ce4b250c412db9a1374d27f84b310"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/cfloat.mlw",
+      "bytes": 6729,
+      "sha256": "c885fef3fda7754a95f44d5ef8480cf278dc8fe35c6797866713c820697654de"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/membytes_le.mlw",
+      "bytes": 103466,
+      "sha256": "c051bb399e0fec6435d3cf7a57369e4f679fe3026055725d1c7001b6fca4a073"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/ieee_float.mlw",
+      "bytes": 35187,
+      "sha256": "57a096bcb20309ab323405fabfeb67699037289dc0223368526adab32fa9d6a7"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-floats.gen",
+      "bytes": 6279,
+      "sha256": "0a920898ee2dc742538bfa47cdd06aa0abb68541591a6bc2bc3b502ab0540317"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/why3/META",
+      "bytes": 213,
+      "sha256": "6624b93b8ac94d35235e51ac2cd245151ef144511ea5efd218be14f8a9577be8"
+    }
+  ],
+  "findings": [
+    {
+      "claim": "Factory/Cfloat default Float selects IEEE32/64 theory, while +real explicitly selects real arithmetic. The method must retain explicit typed/IEEE selection and exact source pins.",
+      "locations": [
+        "Cfloat.ml:54-58",
+        "Factory.ml:346-359",
+        "wp_parameters.ml:190-199"
+      ]
+    },
+    {
+      "claim": "cfloat.mlw maps add/sub/mul/div, comparisons and negation to Why3 ieee_float Float32/64 operators under RNE. Pure typed float operations have a primary-source route without adding desired-result axioms.",
+      "locations": [
+        "cfloat.mlw:15-20",
+        "cfloat.mlw:96-158"
+      ]
+    },
+    {
+      "claim": "Why3 IEEE min/max are not a substitute for pinned ALU std::min/max and indirect ternaries: their NaN/tied-zero rules differ. Encode actual branch comparisons and chosen operand identity.",
+      "locations": [
+        "ieee_float.mlw:99-115",
+        "ALU.cc pinned numeric matrix",
+        "IndirectAccess.cc pinned numeric matrix"
+      ]
+    },
+    {
+      "claim": "Float*_BV_Converter performs numerical signed/unsigned integer conversion, not arbitrary binary reinterpretation. GenericFloat comments explicitly restrict from_binary to literals. This does not certify raw tile-byte memcpy/bitcast coherence.",
+      "locations": [
+        "ieee_float.mlw:155-169",
+        "ieee_float.mlw:814-880",
+        "ieee_float.mlw:993-1020"
+      ]
+    },
+    {
+      "claim": "WP explicitly rejects ACSL model fields in accesses/updates and references. An unbounded mutable model integer rank field cannot be assumed supported merely because ACSL logic has mathematical integers.",
+      "locations": [
+        "LogicSemantics.ml:114",
+        "LogicSemantics.ml:129",
+        "LogicSemantics.ml:147",
+        "RefUsage.ml:472"
+      ]
+    },
+    {
+      "claim": "Finite C integer delays are useful native controls but silently bound the environment premise. No representable unbounded progress state or checked source-loop summary has yet been implemented/admitted.",
+      "locations": [
+        "coordinator finite-progress decision20261016"
+      ]
+    }
+  ],
+  "next_steps": [
+    "First admit one representative current-method typed scalar gate before a full matrix; parent owns actual verifier scheduling.",
+    "Use typed Float32/64 operations for IEEE numerical semantics, with separate checked bit-image coherence. Do not treat native finite float controls or unused IEEE imports as proof of that bridge.",
+    "For unbounded progress, investigate a separately checked mathematical/temporal progress lemma plus exact empty-poll-loop summary. Preserve original source, zero-side-effects and absent-premise total refusal; do not silently insert a wait or C-bounded delay. No such transformation is implemented by this note."
+  ]
+}

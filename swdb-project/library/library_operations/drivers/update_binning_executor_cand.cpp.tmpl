@@ -1,0 +1,17 @@
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+// Ported 2026-10-03 from MaizeHPC/MemAcc af3d6d7f7a69a72facdc3b95b42e78c952f44a76
+// Source: AgenticRefiner/refiner/synthesis/drivers/bin_drain_cand.cpp.tmpl
+// SWDB changes: the candidate TU drives the library body (UpdateBinningExecutor) instead of a SynthBackend hook (2026-10-03 ET, ticket 51).
+#include "{{BACKEND_HEADER}}"
+#include <cstddef>
+#include <cstdint>
+extern "C" void swdb_cand_bin_drain(double* target, const std::int32_t* dests, const double* vals, std::size_t n) {
+  std::size_t num_dest = 0;
+  for (std::size_t k = 0; k < n; ++k)
+    if ((std::size_t)dests[k] + 1 > num_dest) num_dest = (std::size_t)dests[k] + 1;
+  BinPlan<std::int32_t> plan;
+  plan.build(num_dest, sizeof(double) + sizeof(std::int32_t), 64);   // small bins: many drains
+  UpdateBinningExecutor<double, std::int32_t> ex;
+  ex.initialize(plan);
+  ex.scatter_add(n, dests, vals, target);
+}

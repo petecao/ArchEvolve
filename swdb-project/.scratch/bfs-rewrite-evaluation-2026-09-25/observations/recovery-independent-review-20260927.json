@@ -1,0 +1,27 @@
+{
+  "observed_at": "2026-09-27T00:14:49.915401-04:00",
+  "scope": "Independent scoped Standards/correctness review; not whole-task final review",
+  "state": "scoped_pass",
+  "files": {
+    "scripts/bfs_simulator_recovery.py": "7d036d6b242274c3b4c33022046df2b02227c8c67c303656f1b175071329e08e",
+    "scripts/bfs_linux_fixture.py": "277e0827a079eed032cc8f7cdedcbc2867f8880e247ea20b9e5dbe7096f48c3a",
+    "scripts/bfs_simulator_batch.py": "b08335b912e5e83e58f366ed5294c32c2de06073600c8faf4fe2cb370918b4e6",
+    "tests/test_bfs_simulator_recovery.py": "69bb72fa608f750a0a16a7c31edea1e53febffeb93c7d798ada8d7ea899ff534",
+    "tests/test_bfs_linux_fixture.py": "95221714be8b97a2fb9288a86adedc3d3688b838e01fd56a8975612f2da13da6",
+    "tests/test_bfs_simulator_setup_recovery.py": "e4eee9b891f0284af86ab1e8b623e5e9c0415c1c2b4880c40e99dd4f043641a0",
+    "docs/bfs-supervision-recovery-20260926.md": "18f6bd531e9aa6226456d2ac92f54c2c39799005daf8d919c5865e75e52193a8",
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t15-supervision-recovery-simulator-batch-20260926-a1.json": "b25650774e11a3975ba7c7d63e8453886e0ebe77d5f79514f57fbd7214768fb5",
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t16-supervision-recovery-simulator-batch-20260926-a1.json": "a99d3c9e787881d7e04a01b714bd1bf07e4b045cdbbe3efb5cb8da11e50eba16"
+  },
+  "validation": {
+    "log": "/private/tmp/bfs-recovery-independent-20260927.log",
+    "sha256": "873cca488cbc35483c474dce030556118158b3627d3614da6b2193db25bcff27",
+    "result": "154 passed in 1.83s",
+    "includes": "Prior independent ancestry and missing-lease-observation reproductions; recovery, fixture supervisor, setup recovery suites"
+  },
+  "limitations": [
+    "Mac local tests with explicit synthetic procfs/host seams; no Linux proof or measured evaluation",
+    "Supplement Git operator and terminal producer not present at review time; host/path/Python/pytest admission, RLIMIT, signal context, monotonic deadline conversion, and post-exit producer need review before dispatch",
+    "No final whole-task Standards/Spec review"
+  ]
+}

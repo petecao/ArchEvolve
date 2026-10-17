@@ -1,0 +1,159 @@
+{
+  "actual_driver_selected_or_executed": false,
+  "canonical": {
+    "bytes": 4477,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-vector-float-mode-20261016/canonical-manifest-v1.json",
+    "sha256": "7341eea3a2eabbde2975c57aff71615c097a642a4c238d21389278ffbdabc23d"
+  },
+  "canonical_bytes": 27668,
+  "canonical_files": 13,
+  "classification": "ISOLATED_SYMBOLIC_FLOAT_MODE_PREPARATION_ONLY",
+  "compiler_native_prover_or_SSH_execution": false,
+  "controls": {
+    "external_attempts_after_audit": [],
+    "green_failed": 0,
+    "green_passed": 5,
+    "red_failures": 5
+  },
+  "date": "2026-10-16 ET",
+  "harness": {
+    "bytes": 2155,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-vector-float-mode-20261016/run_pure.py",
+    "sha256": "ef34aef1a15458084bdee2f5928e2633cff8bfc8aa4a5aa5e34f7ce4632ebb3e"
+  },
+  "history": [
+    {
+      "bytes": 5122,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-vector-float-mode-20261016/history/red-v1/result.json",
+      "sha256": "6f11013547c169cba13be97270f3eb817d5a9b5ab914853a8e85a989ccd60728"
+    },
+    {
+      "bytes": 1314,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-vector-float-mode-20261016/history/green-v1/result.json",
+      "sha256": "fa877f251dbc1a9e748ac51398b686811444e952349887893da4adde958c3fe4"
+    }
+  ],
+  "parent_model": {
+    "bytes": 29179,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/std_models.py",
+    "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+  },
+  "primary_manual": {
+    "printed_pages": [
+      19,
+      20
+    ],
+    "section": "2.2.5",
+    "url": "https://www.frama-c.com/download/frama-c-acsl-implementation.pdf",
+    "version": "ACSL 1.24, Frama-C 33"
+  },
+  "primary_source_pins": [
+    {
+      "bytes": 12706,
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/Factory.ml",
+      "sha256": "d2f4da6cb7b2f4a674880f4760680e84fe0a1c58ece95d0f2ff889b7902efcc5"
+    },
+    {
+      "bytes": 16404,
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/Cfloat.ml",
+      "sha256": "fe077203e3ba53a06c8cc620c133f610cb391c0966e928a9bee766db0143ad38"
+    },
+    {
+      "bytes": 25072,
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/CodeSemantics.ml",
+      "sha256": "433e507b252ce54eaded3f801b5fdd9aa21d8c781aff7eb4ecf6275d6d8ba728"
+    },
+    {
+      "bytes": 40201,
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/MemTyped.ml",
+      "sha256": "ad0d3c4e8e568a09d47bb658767e5ba476cc9e957f16b14981370642c5e235b5"
+    },
+    {
+      "bytes": 31893,
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/Cvalues.ml",
+      "sha256": "c04b39f6a15932715d694b9679a4fcae88c4b8ae45979ee60977efebf9fb6b80"
+    },
+    {
+      "bytes": 41615,
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/LogicSemantics.ml",
+      "sha256": "7612c77530d4fe9bb89ec0b28460685f801b10e9b32fc9bfa479548d1b6e9e03"
+    },
+    {
+      "bytes": 39279,
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/wp_parameters.ml",
+      "sha256": "a4ace79d1262461ea14f73275db17eb332f76b265059fc238a6bc9538a81df2b"
+    },
+    {
+      "bytes": 190280,
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c/kernel/kernel_services/ast_queries/logic_typing.ml",
+      "sha256": "5fd962e6211e36336c3c59586ee81092f42ce4b250c412db9a1374d27f84b310"
+    },
+    {
+      "bytes": 6729,
+      "path": "/Users/yanrujhou/.opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/cfloat.mlw",
+      "sha256": "c885fef3fda7754a95f44d5ef8480cf278dc8fe35c6797866713c820697654de"
+    },
+    {
+      "bytes": 35187,
+      "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib/ieee_float.mlw",
+      "sha256": "57a096bcb20309ab323405fabfeb67699037289dc0223368526adab32fa9d6a7"
+    },
+    {
+      "bytes": 2715,
+      "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/cvc5.drv",
+      "sha256": "ba50713ad3d438933602e3edbfa79e847e5c05a4e14bbed519dee42f515c127f"
+    },
+    {
+      "bytes": 4400,
+      "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/z3_487.drv",
+      "sha256": "597e853cdee99896af59f14a30b7e02dcb0089a0c7f4b34ad193777eb39d79a1"
+    },
+    {
+      "bytes": 6279,
+      "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/smt-libv2-floats.gen",
+      "sha256": "0a920898ee2dc742538bfa47cdd06aa0abb68541591a6bc2bc3b502ab0540317"
+    },
+    {
+      "bytes": 1200,
+      "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers/alt_ergo_26.drv",
+      "sha256": "7fd78be6af0d3255123559825cf8d7aea87c0754b41b118dadd1092a4bae0578"
+    },
+    {
+      "bytes": 26180,
+      "path": "/Users/yanrujhou/.opam/framac-33/share/why3/provers-detection-data.conf",
+      "sha256": "1e3a4b966465872b7ebe73084ff1bfdf224ed5ce635b2b163ca3a73eae8c022c"
+    }
+  ],
+  "readme": {
+    "bytes": 3160,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-vector-float-mode-20261016/README.md",
+    "sha256": "de566279d8919c840853603e329a9094c39dd5857e24a3d235224c910b3b5555"
+  },
+  "research": {
+    "bytes": 3683,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/floating-semantics-research-v1/primary-source-observation-v1.json",
+    "sha256": "ad89871f767e4eaf60b9f1abbc08cba98f9fe30b31db3aa2c37a0350ab38a7d3"
+  },
+  "shared_setup_or_adapter_changed": false,
+  "source_IEEE_payload_allocator_lifetime_or_caller_admission": false,
+  "source_and_test": [
+    {
+      "bytes": 6079,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_float_mode.py",
+      "sha256": "b48124bf057279c5018abfe65b8b2065173e4fcced27c83d33abf269fc2d3867"
+    },
+    {
+      "bytes": 5543,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_float_mode.py",
+      "sha256": "1f11f677f8dddfac0099b464765ffe931387868586d57eebb19562c8ad637add"
+    }
+  ],
+  "source_names": [
+    "std_vector_float_ctor_count",
+    "std_vector_float_ctor_count_value",
+    "std_vector_float_copy_ctor",
+    "std_vector_double_ctor_count",
+    "std_vector_double_ctor_count_value",
+    "std_vector_double_copy_ctor"
+  ]
+}

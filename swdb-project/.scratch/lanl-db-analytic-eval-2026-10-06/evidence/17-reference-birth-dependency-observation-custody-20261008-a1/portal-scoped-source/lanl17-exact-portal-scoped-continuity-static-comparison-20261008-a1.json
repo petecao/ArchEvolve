@@ -1,0 +1,74 @@
+{
+  "bookkeeping_first_span_check_added_one_extra_newline_then_corrected_no_target_execution": true,
+  "exact_two_per_removal_scope_name_calls": true,
+  "format": "swdb.exact-portal-scoped-continuity-static-comparison.v1",
+  "initial_and_final_default_all_remaining_calls_unchanged": true,
+  "no_selected_definitions_imports_compile_lifts_mains_tests_Git_SSH_or_mutation": true,
+  "rows": [
+    {
+      "changed_existing_constants": [
+        [
+          "PORTAL_HELPER_SHA"
+        ]
+      ],
+      "changed_existing_definitions": [
+        "exact_portal_autounmount_identification",
+        "Guard.process_references",
+        "Guard.pre_remove_gate",
+        "Guard.perform"
+      ],
+      "imports_AST_exact": true,
+      "original": {
+        "bytes": 116443,
+        "path": "/private/tmp/lanl_consumed_detached_source_guard_r6_20261008_a1.py",
+        "sha256": "6118592610fbff77a7da3ea8196c772331066d3188ded29627218486c106b326"
+      },
+      "original_limits_all_other_constants_AST_exact": true,
+      "selected": {
+        "bytes": 117232,
+        "path": "/private/tmp/lanl_consumed_detached_source_guard_r7_20261008_a1.py",
+        "sha256": "97219cdb326edf76e6d341aab4a2a8d58a4750e3da8d2e24a5f9e1097f4a69be"
+      },
+      "shared_two_function_source_exact": true,
+      "unchanged_PAM_f6_helper_sha256": "f6c4076013eaa487c0e810ba4329512657bef9b1b74a0c074a7231bcc0466883",
+      "unchanged_existing_definition_count": 38
+    },
+    {
+      "changed_existing_constants": [
+        [
+          "R3"
+        ],
+        [
+          "R3_BYTES"
+        ],
+        [
+          "R3_SHA"
+        ],
+        [
+          "PORTAL_HELPER_SHA"
+        ]
+      ],
+      "changed_existing_definitions": [
+        "exact_portal_autounmount_identification"
+      ],
+      "imports_AST_exact": true,
+      "original": {
+        "bytes": 87833,
+        "path": "/private/tmp/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r7_r1.py",
+        "sha256": "83e3d4dbac5d2215d591e09c8dd01aa441c1b6b0151ff18ee8a494ed9826c524"
+      },
+      "original_limits_all_other_constants_AST_exact": true,
+      "selected": {
+        "bytes": 88535,
+        "path": "/private/tmp/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r8.py",
+        "sha256": "1188ea21138260a11c1b016b5080f509ece225338d98af1689e053306305ce1c"
+      },
+      "shared_two_function_source_exact": true,
+      "unchanged_PAM_f6_helper_sha256": "f6c4076013eaa487c0e810ba4329512657bef9b1b74a0c074a7231bcc0466883",
+      "unchanged_existing_definition_count": 34
+    }
+  ],
+  "sealed": false,
+  "selected_test_method_count": 16,
+  "test_bodies_all_NOTRUN": true
+}

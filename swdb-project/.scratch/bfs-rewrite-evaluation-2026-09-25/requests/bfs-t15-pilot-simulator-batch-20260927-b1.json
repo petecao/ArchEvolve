@@ -1,0 +1,173 @@
+{
+ "format": "swdb.bfs.simulator-batch-plan.v1",
+ "automatic_retry_allowed": false,
+ "gain_claim": false,
+ "model_build": "bfs-dx100-build-20260925-a2",
+ "target": "dx100-e4fc4af-4c",
+ "verifier": "dx100.bfs.verifier.v2",
+ "roi": "bfs.dx100.traversal.v1",
+ "threads": 4,
+ "repetitions": 2,
+ "warmups": 0,
+ "verification_ticks": 100000000000000,
+ "profitability": {
+  "minimum_speedup": 1.05,
+  "maximum_relative_spread": 0.1,
+  "confidence": 0.95,
+  "bootstrap_resamples": 2000,
+  "bootstrap_seed": 20260925
+ },
+ "historical_failure": {
+  "id": "bfs-dx100-witness-20260926-a1",
+  "file_sha256": "9a941cdff315e283b13563bf81ef2f45ba0712bbcf6d31b92f6232488efa3b42"
+ },
+ "required_a3": "bfs-dx100-witness-20260926-a3",
+ "record_sha256": {
+  "bfs-20260925-kronecker18.48de8267ac2098d5": "38ecdcb6ed58c15b9dbd3ed1449f18e4ffc69ddc2f2ab6a8192b144c25030199",
+  "bfs-20260925-uniform18.cd2169a5c421baf7": "e345524d8c91f4363292c47e81510c3fe34e3f80284ed9945ce4fa0e4e63afdd",
+  "bfs-author-maa-compile-20260925-a1.candidate": "1018e9002c86a2e0ef7850be0bc66dbec9849d388cced45542c61a18cd619fff",
+  "bfs-author-maa-compile-20260925-a1.diagnostic.build": "de0c71b6f0fe54a88be05ca5fb93bb5980d44fc787294964a63568c70d785beb",
+  "bfs-author-maa-compile-20260925-a1.source": "f1b53e83398c74871f0cf46dc8f98b728254992a8ee63aaf7419732680b42fb6",
+  "bfs-dx100-build-20260925-a2": "13d277a961e44fe0ee254b4685126572fb06394fea455e3e1d450626cc535cea",
+  "bfs-dx100-witness-20260926-a1": "c5ec9b7ca044728d61fb01be67616ea66e6364bd1c160569ab5dad9382570b8e",
+  "dx100-bfs-maa-reference": "3f8646f57df66f2db9f8236240c82fcdf2d610f47d28b7814e749333bceb9ae0",
+  "dx100-e4fc4af-4c": "94cf9373c255c1c36d4b6f622124aec90e8bd485d66fa2af996d6e46c91e04e1",
+  "mbit10": "fcb0123f0bdb9bc004348eb8c6444f03304b6612e0cb2e26a82e621b07d82a79"
+ },
+ "protocol_requests": {},
+ "required_coverage": "bfs-dx100-coverage-20260926-a2.execute",
+ "historical_coverage_failure": {
+  "id": "bfs-dx100-coverage-20260926-a1.execute",
+  "state": "interrupted_public_marker_retained",
+  "sha256": "f64b604d10bf579c832145b07d6b6cee39d81833d23711375a6625f59fbc57f9",
+  "file_sha256": "dfa28a3bbe8170fe2e3dff6b140a41b4bfc7873c3e903fc39d73cc258acac26e"
+ },
+ "supervision": {
+  "format": "swdb.bfs.simulator-supervision.v1",
+  "cleanup": "shared_atomic_reservations_total_30_seconds",
+  "rss_source": "linux.proc_pid_stat.field24.v1",
+  "hard_memory_quota": false,
+  "outer_helper_preflight_included": true,
+  "required_linux_cases": [
+   "detached_success",
+   "detached_failure",
+   "nested_interruption",
+   "nested_term_resistant",
+   "public_dx100_interruption",
+   "sqlite_journal_unlink"
+  ],
+  "final_kill_and_persistence_reserve_seconds": 10
+ },
+ "trace_transport": "gem5-gzip.v1",
+ "created": "2026-09-27",
+ "updated": "2026-09-27",
+ "id": "bfs-t15-pilot-simulator-batch-20260927-b1",
+ "role": "shared_size_calibration",
+ "raw_root": "/data/yanruj/EvolveSWDB_runs",
+ "lane": {
+  "node": 0,
+  "assigned_by": "root 2026-09-27 (R4 lane change)"
+ },
+ "clock": "Fresh incremental allocation: absolute end = admission preparation + 172,800 s; latest start = preparation + 3,600 s.",
+ "budget_authority": "Direct user approval of the reviewed incremental T15 48-hour / 96-GiB allocation (resume.md; t15-prospective-allocation-decision-20260927.md), applied under resume decisions R1-R3 and R9. Historical T15/T16 charges (T15 cumulative 14,433 s / 22,482,972,672 bytes before this allocation) remain retained separately and are not deducted or refunded. No resume of any failed ID, no automatic retry.",
+ "allocation": {
+  "policy": "t15_incremental_allocation.v1",
+  "total_seconds": 172800,
+  "partition_seconds": {
+   "preparation": 3600,
+   "uniform18_series": 82800,
+   "kronecker18_series": 82800,
+   "finalization": 3570,
+   "scientific_cleanup": 30
+  },
+  "storage_gib": 96,
+  "overhead_reserve_gib": 4,
+  "shared_series_gib": 92,
+  "per_series_cap_gib": 60,
+  "free_space_required_at_admission_gib": 126,
+  "notes": [
+   "The two family series run concurrently (R3); each 82,800-second series allowance is a ceiling inside the same 48-hour envelope, not additive time.",
+   "Each family driver has its own 30-second shared cleanup ledger (two drivers)."
+  ]
+ },
+ "concurrency": {
+  "mode": "family_drivers_in_one_lane_job.v1",
+  "drivers": 2,
+  "gem5_slots": 1,
+  "basis": "Measured 2026-09-27 on mbit10: one uniform18 primary gem5 (16 GB guest) held 29.5-33.5 GiB sampled RSS for its 35-minute simulation (T15 lease-recovery owned-resources.jsonl); witness a3 peaked at 34.7 GB. Under the 52-GiB lane-tree sampled cap only one gem5 fits; the other family's Python postprocessing, profile and package stages overlap it.",
+  "lane_tree_sampled_rss_gib": 52
+ },
+ "bounds": {
+  "batch_seconds": 172800,
+  "series_seconds": 82800,
+  "cleanup_seconds": 30,
+  "checkpoint_seconds": 3600,
+  "run_seconds": 7200,
+  "diagnostic_seconds": 10800,
+  "profile_seconds": 120,
+  "memory_gib": 48,
+  "storage_gib": 10,
+  "batch_storage_gib": 96,
+  "raw_reserve_gib": 30,
+  "build_reserve_gib": 10,
+  "monitor_interval_seconds": 5,
+  "sampled_tree_memory_gib": 52,
+  "maximum_telemetry_gap_seconds": 30
+ },
+ "bound_changes": {
+  "run_seconds": "raised 3,600 -> 7,200: measured uniform18 simulation 2,031 s; Kronecker unmeasured; bound only",
+  "diagnostic_seconds": "raised 600 -> 10,800: the diagnostic runs the same O3 guest traversal with coverage tracing, so the old 270-second restored-run share cannot fit a scale-18 traversal measured at 2,031 s for the primary; bound only",
+  "profile_seconds": "unchanged 120 (first-pair gate); now an explicit series parameter, public cap 600"
+ },
+ "accounting": {
+  "preparation": [],
+  "preparation_reservation": {
+   "id": "bfs-t15-pilot-preparation-20260927-b1",
+   "elapsed_seconds": 3600,
+   "raw_bytes": 4294967296
+  },
+  "excluded": "All earlier T15/T16 attempts, proofs and failures remain charged in their own records."
+ },
+ "series": [
+  {
+   "id": "bfs-t15-pilot-simulator-batch-20260927-b1.uniform18",
+   "candidate": "bfs-author-maa-compile-20260925-a1.candidate",
+   "diagnostic_build": "bfs-author-maa-compile-20260925-a1.diagnostic.build",
+   "workload": "bfs-20260925-uniform18.cd2169a5c421baf7",
+   "sources": [
+    0,
+    1234,
+    7777
+   ],
+   "configuration": {
+    "mode": "MAA",
+    "l3_size_mb": 8,
+    "l3_assoc": 16,
+    "tile_elements": 16384
+   },
+   "accelerated": true,
+   "protocol_key": null,
+   "protocol_role": null
+  },
+  {
+   "id": "bfs-t15-pilot-simulator-batch-20260927-b1.kronecker18",
+   "candidate": "bfs-author-maa-compile-20260925-a1.candidate",
+   "diagnostic_build": "bfs-author-maa-compile-20260925-a1.diagnostic.build",
+   "workload": "bfs-20260925-kronecker18.48de8267ac2098d5",
+   "sources": [
+    0,
+    1234,
+    7777
+   ],
+   "configuration": {
+    "mode": "MAA",
+    "l3_size_mb": 8,
+    "l3_assoc": 16,
+    "tile_elements": 16384
+   },
+   "accelerated": true,
+   "protocol_key": null,
+   "protocol_role": null
+  }
+ ]
+}

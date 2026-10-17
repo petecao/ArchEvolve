@@ -1,0 +1,244 @@
+FFFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+_ test_public_summary_and_model_preserve_explicit_method_selection[summary-named] _
+
+tmp_path = PosixPath('/private/tmp/probata-t25-explicit-method-selection-red-v3/test_public_summary_and_model_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x107561350>
+route = 'summary', selection = 'named'
+
+    @pytest.mark.parametrize('route, selection', [('summary', 'named'), ('summary', 'default'), ('summary', 'missing'),
+                                                 ('model', 'named'), ('model', 'default'), ('model', 'missing')])
+    def test_public_summary_and_model_preserve_explicit_method_selection(tmp_path, monkeypatch, route, selection):
+        # The observer never consults installed tools. These are explicit fixture
+        # method values only, supplied to the shared builder's no-discovery input.
+        template = yaml.safe_load((FIXTURES/'proof/methods/contract-fixture-1.yaml').read_bytes())
+        fixture_lineup = {row['tool']: row['version'] for row in template['lineup']
+                          if row['tool'] in {'frama-c-wp', 'alt-ergo', 'cvc5', 'z3'}}
+        monkeypatch.setenv('SWDB_DX100_SELECTOR_ACTUAL_LINEUP', json.dumps(fixture_lineup))
+        records, named = build_closed_source_fixture(tmp_path)
+        method = {'named': named, 'default': 'method.contract-fixture-1', 'missing': 'method.never-written'}[selection]
+        argv = ['prove', '--records', records, '--adapter', 'wp', '--runs-dir', tmp_path/'runs', '--format', 'json']
+        argv += ['--summary', CONTRACT_ID] if route == 'summary' else ['--model', 'std_vector_int_size']
+        if selection != 'default':
+            argv += ['--method-version', method]
+        environment = {**os.environ, 'PYTHONDONTWRITEBYTECODE': '1', 'SWDB_CLANG': 'none', 'SWDB_FRAMA_C': 'none',
+                       'SWDB_CBMC': 'none', 'SWDB_CRUX_LLVM': 'none'}
+        done = subprocess.run([sys.executable, '-B', str(FIXTURES/'proof/method_selection_observer.py'), *map(str, argv)],
+            cwd=REPO, env=environment, capture_output=True, text=True, timeout=60)
+        if selection == 'missing':
+            assert done.returncode == 1 and 'no method-version file' in done.stderr and method in done.stderr, done.stdout+done.stderr
+            assert not list((records/'proofs').glob('*.yaml'))
+            assert not (tmp_path/'runs').exists()
+            return
+>       assert done.returncode == 0, done.stdout+done.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/fixtures/proof/method_selection_observer.py", line 24, in <module>
+E             from swdb.wp_adapter import WPAdapter
+E         ImportError: cannot import name 'WPAdapter' from 'swdb.wp_adapter' (/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/wp_adapter.py). Did you mean: 'wp_adapter'?
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.venv/bin/python', '-B', '/Users/yanruj...dapter\' (/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/wp_adapter.py). Did you mean: \'wp_adapter\'?\n').returncode
+
+tests/test_summary_model_method_selection.py:40: AssertionError
+_ test_public_summary_and_model_preserve_explicit_method_selection[summary-default] _
+
+tmp_path = PosixPath('/private/tmp/probata-t25-explicit-method-selection-red-v3/test_public_summary_and_model_1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1074629f0>
+route = 'summary', selection = 'default'
+
+    @pytest.mark.parametrize('route, selection', [('summary', 'named'), ('summary', 'default'), ('summary', 'missing'),
+                                                 ('model', 'named'), ('model', 'default'), ('model', 'missing')])
+    def test_public_summary_and_model_preserve_explicit_method_selection(tmp_path, monkeypatch, route, selection):
+        # The observer never consults installed tools. These are explicit fixture
+        # method values only, supplied to the shared builder's no-discovery input.
+        template = yaml.safe_load((FIXTURES/'proof/methods/contract-fixture-1.yaml').read_bytes())
+        fixture_lineup = {row['tool']: row['version'] for row in template['lineup']
+                          if row['tool'] in {'frama-c-wp', 'alt-ergo', 'cvc5', 'z3'}}
+        monkeypatch.setenv('SWDB_DX100_SELECTOR_ACTUAL_LINEUP', json.dumps(fixture_lineup))
+        records, named = build_closed_source_fixture(tmp_path)
+        method = {'named': named, 'default': 'method.contract-fixture-1', 'missing': 'method.never-written'}[selection]
+        argv = ['prove', '--records', records, '--adapter', 'wp', '--runs-dir', tmp_path/'runs', '--format', 'json']
+        argv += ['--summary', CONTRACT_ID] if route == 'summary' else ['--model', 'std_vector_int_size']
+        if selection != 'default':
+            argv += ['--method-version', method]
+        environment = {**os.environ, 'PYTHONDONTWRITEBYTECODE': '1', 'SWDB_CLANG': 'none', 'SWDB_FRAMA_C': 'none',
+                       'SWDB_CBMC': 'none', 'SWDB_CRUX_LLVM': 'none'}
+        done = subprocess.run([sys.executable, '-B', str(FIXTURES/'proof/method_selection_observer.py'), *map(str, argv)],
+            cwd=REPO, env=environment, capture_output=True, text=True, timeout=60)
+        if selection == 'missing':
+            assert done.returncode == 1 and 'no method-version file' in done.stderr and method in done.stderr, done.stdout+done.stderr
+            assert not list((records/'proofs').glob('*.yaml'))
+            assert not (tmp_path/'runs').exists()
+            return
+>       assert done.returncode == 0, done.stdout+done.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/fixtures/proof/method_selection_observer.py", line 24, in <module>
+E             from swdb.wp_adapter import WPAdapter
+E         ImportError: cannot import name 'WPAdapter' from 'swdb.wp_adapter' (/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/wp_adapter.py). Did you mean: 'wp_adapter'?
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.venv/bin/python', '-B', '/Users/yanruj...dapter\' (/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/wp_adapter.py). Did you mean: \'wp_adapter\'?\n').returncode
+
+tests/test_summary_model_method_selection.py:40: AssertionError
+_ test_public_summary_and_model_preserve_explicit_method_selection[summary-missing] _
+
+tmp_path = PosixPath('/private/tmp/probata-t25-explicit-method-selection-red-v3/test_public_summary_and_model_2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x107459480>
+route = 'summary', selection = 'missing'
+
+    @pytest.mark.parametrize('route, selection', [('summary', 'named'), ('summary', 'default'), ('summary', 'missing'),
+                                                 ('model', 'named'), ('model', 'default'), ('model', 'missing')])
+    def test_public_summary_and_model_preserve_explicit_method_selection(tmp_path, monkeypatch, route, selection):
+        # The observer never consults installed tools. These are explicit fixture
+        # method values only, supplied to the shared builder's no-discovery input.
+        template = yaml.safe_load((FIXTURES/'proof/methods/contract-fixture-1.yaml').read_bytes())
+        fixture_lineup = {row['tool']: row['version'] for row in template['lineup']
+                          if row['tool'] in {'frama-c-wp', 'alt-ergo', 'cvc5', 'z3'}}
+        monkeypatch.setenv('SWDB_DX100_SELECTOR_ACTUAL_LINEUP', json.dumps(fixture_lineup))
+        records, named = build_closed_source_fixture(tmp_path)
+        method = {'named': named, 'default': 'method.contract-fixture-1', 'missing': 'method.never-written'}[selection]
+        argv = ['prove', '--records', records, '--adapter', 'wp', '--runs-dir', tmp_path/'runs', '--format', 'json']
+        argv += ['--summary', CONTRACT_ID] if route == 'summary' else ['--model', 'std_vector_int_size']
+        if selection != 'default':
+            argv += ['--method-version', method]
+        environment = {**os.environ, 'PYTHONDONTWRITEBYTECODE': '1', 'SWDB_CLANG': 'none', 'SWDB_FRAMA_C': 'none',
+                       'SWDB_CBMC': 'none', 'SWDB_CRUX_LLVM': 'none'}
+        done = subprocess.run([sys.executable, '-B', str(FIXTURES/'proof/method_selection_observer.py'), *map(str, argv)],
+            cwd=REPO, env=environment, capture_output=True, text=True, timeout=60)
+        if selection == 'missing':
+>           assert done.returncode == 1 and 'no method-version file' in done.stderr and method in done.stderr, done.stdout+done.stderr
+E           AssertionError: Traceback (most recent call last):
+E               File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/fixtures/proof/method_selection_observer.py", line 24, in <module>
+E                 from swdb.wp_adapter import WPAdapter
+E             ImportError: cannot import name 'WPAdapter' from 'swdb.wp_adapter' (/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/wp_adapter.py). Did you mean: 'wp_adapter'?
+E             
+E           assert (1 == 1 and 'no method-version file' in 'Traceback (most recent call last):\n  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/fixtures/pro...adapter\' (/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/wp_adapter.py). Did you mean: \'wp_adapter\'?\n')
+E            +  where 1 = CompletedProcess(args=['/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.venv/bin/python', '-B', '/Users/yanruj...dapter\' (/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/wp_adapter.py). Did you mean: \'wp_adapter\'?\n').returncode
+E            +  and   'Traceback (most recent call last):\n  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/fixtures/pro...adapter\' (/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/wp_adapter.py). Did you mean: \'wp_adapter\'?\n' = CompletedProcess(args=['/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.venv/bin/python', '-B', '/Users/yanruj...dapter\' (/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/wp_adapter.py). Did you mean: \'wp_adapter\'?\n').stderr
+
+tests/test_summary_model_method_selection.py:36: AssertionError
+_ test_public_summary_and_model_preserve_explicit_method_selection[model-named] _
+
+tmp_path = PosixPath('/private/tmp/probata-t25-explicit-method-selection-red-v3/test_public_summary_and_model_3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10792e250>
+route = 'model', selection = 'named'
+
+    @pytest.mark.parametrize('route, selection', [('summary', 'named'), ('summary', 'default'), ('summary', 'missing'),
+                                                 ('model', 'named'), ('model', 'default'), ('model', 'missing')])
+    def test_public_summary_and_model_preserve_explicit_method_selection(tmp_path, monkeypatch, route, selection):
+        # The observer never consults installed tools. These are explicit fixture
+        # method values only, supplied to the shared builder's no-discovery input.
+        template = yaml.safe_load((FIXTURES/'proof/methods/contract-fixture-1.yaml').read_bytes())
+        fixture_lineup = {row['tool']: row['version'] for row in template['lineup']
+                          if row['tool'] in {'frama-c-wp', 'alt-ergo', 'cvc5', 'z3'}}
+        monkeypatch.setenv('SWDB_DX100_SELECTOR_ACTUAL_LINEUP', json.dumps(fixture_lineup))
+        records, named = build_closed_source_fixture(tmp_path)
+        method = {'named': named, 'default': 'method.contract-fixture-1', 'missing': 'method.never-written'}[selection]
+        argv = ['prove', '--records', records, '--adapter', 'wp', '--runs-dir', tmp_path/'runs', '--format', 'json']
+        argv += ['--summary', CONTRACT_ID] if route == 'summary' else ['--model', 'std_vector_int_size']
+        if selection != 'default':
+            argv += ['--method-version', method]
+        environment = {**os.environ, 'PYTHONDONTWRITEBYTECODE': '1', 'SWDB_CLANG': 'none', 'SWDB_FRAMA_C': 'none',
+                       'SWDB_CBMC': 'none', 'SWDB_CRUX_LLVM': 'none'}
+        done = subprocess.run([sys.executable, '-B', str(FIXTURES/'proof/method_selection_observer.py'), *map(str, argv)],
+            cwd=REPO, env=environment, capture_output=True, text=True, timeout=60)
+        if selection == 'missing':
+            assert done.returncode == 1 and 'no method-version file' in done.stderr and method in done.stderr, done.stdout+done.stderr
+            assert not list((records/'proofs').glob('*.yaml'))
+            assert not (tmp_path/'runs').exists()
+            return
+>       assert done.returncode == 0, done.stdout+done.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/fixtures/proof/method_selection_observer.py", line 24, in <module>
+E             from swdb.wp_adapter import WPAdapter
+E         ImportError: cannot import name 'WPAdapter' from 'swdb.wp_adapter' (/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/wp_adapter.py). Did you mean: 'wp_adapter'?
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.venv/bin/python', '-B', '/Users/yanruj...dapter\' (/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/wp_adapter.py). Did you mean: \'wp_adapter\'?\n').returncode
+
+tests/test_summary_model_method_selection.py:40: AssertionError
+_ test_public_summary_and_model_preserve_explicit_method_selection[model-default] _
+
+tmp_path = PosixPath('/private/tmp/probata-t25-explicit-method-selection-red-v3/test_public_summary_and_model_4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1078d6250>
+route = 'model', selection = 'default'
+
+    @pytest.mark.parametrize('route, selection', [('summary', 'named'), ('summary', 'default'), ('summary', 'missing'),
+                                                 ('model', 'named'), ('model', 'default'), ('model', 'missing')])
+    def test_public_summary_and_model_preserve_explicit_method_selection(tmp_path, monkeypatch, route, selection):
+        # The observer never consults installed tools. These are explicit fixture
+        # method values only, supplied to the shared builder's no-discovery input.
+        template = yaml.safe_load((FIXTURES/'proof/methods/contract-fixture-1.yaml').read_bytes())
+        fixture_lineup = {row['tool']: row['version'] for row in template['lineup']
+                          if row['tool'] in {'frama-c-wp', 'alt-ergo', 'cvc5', 'z3'}}
+        monkeypatch.setenv('SWDB_DX100_SELECTOR_ACTUAL_LINEUP', json.dumps(fixture_lineup))
+        records, named = build_closed_source_fixture(tmp_path)
+        method = {'named': named, 'default': 'method.contract-fixture-1', 'missing': 'method.never-written'}[selection]
+        argv = ['prove', '--records', records, '--adapter', 'wp', '--runs-dir', tmp_path/'runs', '--format', 'json']
+        argv += ['--summary', CONTRACT_ID] if route == 'summary' else ['--model', 'std_vector_int_size']
+        if selection != 'default':
+            argv += ['--method-version', method]
+        environment = {**os.environ, 'PYTHONDONTWRITEBYTECODE': '1', 'SWDB_CLANG': 'none', 'SWDB_FRAMA_C': 'none',
+                       'SWDB_CBMC': 'none', 'SWDB_CRUX_LLVM': 'none'}
+        done = subprocess.run([sys.executable, '-B', str(FIXTURES/'proof/method_selection_observer.py'), *map(str, argv)],
+            cwd=REPO, env=environment, capture_output=True, text=True, timeout=60)
+        if selection == 'missing':
+            assert done.returncode == 1 and 'no method-version file' in done.stderr and method in done.stderr, done.stdout+done.stderr
+            assert not list((records/'proofs').glob('*.yaml'))
+            assert not (tmp_path/'runs').exists()
+            return
+>       assert done.returncode == 0, done.stdout+done.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/fixtures/proof/method_selection_observer.py", line 24, in <module>
+E             from swdb.wp_adapter import WPAdapter
+E         ImportError: cannot import name 'WPAdapter' from 'swdb.wp_adapter' (/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/wp_adapter.py). Did you mean: 'wp_adapter'?
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.venv/bin/python', '-B', '/Users/yanruj...dapter\' (/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/wp_adapter.py). Did you mean: \'wp_adapter\'?\n').returncode
+
+tests/test_summary_model_method_selection.py:40: AssertionError
+_ test_public_summary_and_model_preserve_explicit_method_selection[model-missing] _
+
+tmp_path = PosixPath('/private/tmp/probata-t25-explicit-method-selection-red-v3/test_public_summary_and_model_5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1078d6650>
+route = 'model', selection = 'missing'
+
+    @pytest.mark.parametrize('route, selection', [('summary', 'named'), ('summary', 'default'), ('summary', 'missing'),
+                                                 ('model', 'named'), ('model', 'default'), ('model', 'missing')])
+    def test_public_summary_and_model_preserve_explicit_method_selection(tmp_path, monkeypatch, route, selection):
+        # The observer never consults installed tools. These are explicit fixture
+        # method values only, supplied to the shared builder's no-discovery input.
+        template = yaml.safe_load((FIXTURES/'proof/methods/contract-fixture-1.yaml').read_bytes())
+        fixture_lineup = {row['tool']: row['version'] for row in template['lineup']
+                          if row['tool'] in {'frama-c-wp', 'alt-ergo', 'cvc5', 'z3'}}
+        monkeypatch.setenv('SWDB_DX100_SELECTOR_ACTUAL_LINEUP', json.dumps(fixture_lineup))
+        records, named = build_closed_source_fixture(tmp_path)
+        method = {'named': named, 'default': 'method.contract-fixture-1', 'missing': 'method.never-written'}[selection]
+        argv = ['prove', '--records', records, '--adapter', 'wp', '--runs-dir', tmp_path/'runs', '--format', 'json']
+        argv += ['--summary', CONTRACT_ID] if route == 'summary' else ['--model', 'std_vector_int_size']
+        if selection != 'default':
+            argv += ['--method-version', method]
+        environment = {**os.environ, 'PYTHONDONTWRITEBYTECODE': '1', 'SWDB_CLANG': 'none', 'SWDB_FRAMA_C': 'none',
+                       'SWDB_CBMC': 'none', 'SWDB_CRUX_LLVM': 'none'}
+        done = subprocess.run([sys.executable, '-B', str(FIXTURES/'proof/method_selection_observer.py'), *map(str, argv)],
+            cwd=REPO, env=environment, capture_output=True, text=True, timeout=60)
+        if selection == 'missing':
+>           assert done.returncode == 1 and 'no method-version file' in done.stderr and method in done.stderr, done.stdout+done.stderr
+E           AssertionError: Traceback (most recent call last):
+E               File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/fixtures/proof/method_selection_observer.py", line 24, in <module>
+E                 from swdb.wp_adapter import WPAdapter
+E             ImportError: cannot import name 'WPAdapter' from 'swdb.wp_adapter' (/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/wp_adapter.py). Did you mean: 'wp_adapter'?
+E             
+E           assert (1 == 1 and 'no method-version file' in 'Traceback (most recent call last):\n  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/fixtures/pro...adapter\' (/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/wp_adapter.py). Did you mean: \'wp_adapter\'?\n')
+E            +  where 1 = CompletedProcess(args=['/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.venv/bin/python', '-B', '/Users/yanruj...dapter\' (/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/wp_adapter.py). Did you mean: \'wp_adapter\'?\n').returncode
+E            +  and   'Traceback (most recent call last):\n  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/fixtures/pro...adapter\' (/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/wp_adapter.py). Did you mean: \'wp_adapter\'?\n' = CompletedProcess(args=['/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.venv/bin/python', '-B', '/Users/yanruj...dapter\' (/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/wp_adapter.py). Did you mean: \'wp_adapter\'?\n').stderr
+
+tests/test_summary_model_method_selection.py:36: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_summary_model_method_selection.py::test_public_summary_and_model_preserve_explicit_method_selection[summary-named]
+FAILED tests/test_summary_model_method_selection.py::test_public_summary_and_model_preserve_explicit_method_selection[summary-default]
+FAILED tests/test_summary_model_method_selection.py::test_public_summary_and_model_preserve_explicit_method_selection[summary-missing]
+FAILED tests/test_summary_model_method_selection.py::test_public_summary_and_model_preserve_explicit_method_selection[model-named]
+FAILED tests/test_summary_model_method_selection.py::test_public_summary_and_model_preserve_explicit_method_selection[model-default]
+FAILED tests/test_summary_model_method_selection.py::test_public_summary_and_model_preserve_explicit_method_selection[model-missing]
+6 failed in 2.80s

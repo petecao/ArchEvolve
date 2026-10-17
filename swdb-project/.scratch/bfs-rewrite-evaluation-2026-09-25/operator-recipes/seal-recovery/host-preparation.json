@@ -1,0 +1,183 @@
+{
+  "observed_at": "2026-09-27T08:51:46.099012+00:00",
+  "state": "readiness_verified_no_dispatch",
+  "runtime_commit": "923cf33b955104fdf96705b648933e7d486a3810",
+  "files": 809,
+  "runtime_clean": true,
+  "helper": {
+    "head": "42ce8dce1ecfb949d6e5d4ee3c98c078bc7ddc65",
+    "upstream": "9b8bd526601017b4f7a58f5480875e47b1b9541b",
+    "subtree_equal": true,
+    "sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8",
+    "hostlock_sha256": "50745f827bac2a3db4fc56fdedc95f6fb57fb4b39cf9b269796c77c0274dc996"
+  },
+  "leases": {
+    "mbit10-evaluation-node0": {
+      "state": "released",
+      "generation": 352,
+      "kernel": "unlocked"
+    },
+    "mbit10-evaluation-node1": {
+      "state": "held",
+      "generation": 447,
+      "kernel": "held"
+    },
+    "mbit10-evaluation": {
+      "state": "released",
+      "generation": 77,
+      "kernel": "unlocked"
+    }
+  },
+  "disks": {
+    "/data1": 16932761600,
+    "/data": 157721255936
+  },
+  "memory_estimate": {
+    "node": 0,
+    "page_size_bytes": 4096,
+    "node_fields_kib": {
+      "MemTotal": 65381852,
+      "MemFree": 16844544,
+      "MemUsed": 48537308,
+      "SwapCached": 0,
+      "Active": 12866768,
+      "Inactive": 28407240,
+      "Active(anon)": 356116,
+      "Inactive(anon)": 616368,
+      "Active(file)": 12510652,
+      "Inactive(file)": 27790872,
+      "Unevictable": 38916,
+      "Mlocked": 35844,
+      "Dirty": 16004,
+      "Writeback": 0,
+      "FilePages": 40322008,
+      "Mapped": 903572,
+      "AnonPages": 991084,
+      "Shmem": 5764,
+      "KernelStack": 13800,
+      "PageTables": 19344,
+      "SecPageTables": 0,
+      "NFS_Unstable": 0,
+      "Bounce": 0,
+      "WritebackTmp": 0,
+      "KReclaimable": 4538004,
+      "Slab": 5395904,
+      "SReclaimable": 4482676,
+      "SUnreclaim": 913228,
+      "AnonHugePages": 0,
+      "ShmemHugePages": 0,
+      "ShmemPmdMapped": 0,
+      "FileHugePages": 0,
+      "FilePmdMapped": 0,
+      "Unaccepted": 0
+    },
+    "zones": [
+      {
+        "name": "DMA",
+        "low": 5,
+        "high": 8,
+        "managed": 3840,
+        "protection": [
+          0,
+          1418,
+          63834,
+          63834,
+          63834
+        ],
+        "reserved_pages": 3840
+      },
+      {
+        "name": "DMA32",
+        "low": 577,
+        "high": 919,
+        "managed": 363200,
+        "protection": [
+          0,
+          0,
+          62415,
+          62415,
+          62415
+        ],
+        "reserved_pages": 63334
+      },
+      {
+        "name": "Normal",
+        "low": 91306,
+        "high": 107282,
+        "managed": 15978423,
+        "protection": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "reserved_pages": 107282
+      },
+      {
+        "name": "Movable",
+        "low": 32,
+        "high": 32,
+        "managed": 0,
+        "protection": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "reserved_pages": 0
+      },
+      {
+        "name": "Device",
+        "low": 0,
+        "high": 0,
+        "managed": 0,
+        "protection": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "reserved_pages": 0
+      }
+    ],
+    "low_watermarks_kib": 367680,
+    "reserved_kib": 697824,
+    "clean_file_lru_kib": 40285520,
+    "reclaimable_slab_kib": 4482676,
+    "before_uncertainty_discount_kib": 60179556,
+    "uncertainty_discount_kib": 1048576,
+    "estimated_available_kib": 59130980,
+    "global_available_kib": 118111792,
+    "required_node_kib": 54525952,
+    "required_global_kib": 67108864,
+    "eligible": true,
+    "definition": "Linux v6.8 MemAvailable node analogue; subtract dirty/writeback; exclude miscellaneous reclaimable memory; extra 1 GiB discount",
+    "estimate_is_guarantee": false
+  },
+  "fresh_roots": {
+    "/data/yanruj/EvolveSWDB_runs/bfs-seal-recovery-linux-20260927-a1.dispatch": true,
+    "/data/yanruj/EvolveSWDB_runs/bfs-seal-recovery-linux-20260927-a1.final.json": true,
+    "/data/yanruj/EvolveSWDB_runs/bfs-simulator-owned-linux-20260927-a7": true,
+    "/data/yanruj/EvolveSWDB_runs/bfs-simulator-owned-linux-20260927-a7.dispatch": true,
+    "/data/yanruj/EvolveSWDB_runs/bfs-simulator-interruption-linux-20260927-a7": true,
+    "/data/yanruj/EvolveSWDB_runs/bfs-simulator-interruption-linux-20260927-a7.dispatch": true
+  },
+  "python": {
+    "path": "/data1/yanruj/venvs/evolveswdb-test/bin/python3",
+    "canonical": "/usr/bin/python3.12",
+    "sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f"
+  },
+  "pytest": {
+    "version": "9.1.1",
+    "path": "/data1/yanruj/venvs/evolveswdb-test/lib/python3.12/site-packages/pytest/__init__.py",
+    "sha256": "ee37885c9583f843390684dfb496907f87a0905128e7a3cf4ad227f49ff34c2d"
+  },
+  "raw_readiness_receipt": "/private/tmp/bfs-seal-runtime-host-readiness-20260927.json",
+  "raw_readiness_sha256": "3b60ee6747bafc5b29f1f5d5851d5da55f47f62905ca9c570e548531025966be",
+  "sealed_config_sha256": "828101409274ba2087fbec622f12a9df434d894bdbf34bc596c8873c047e1797",
+  "provider_calls": 0,
+  "lane_claims": 0
+}

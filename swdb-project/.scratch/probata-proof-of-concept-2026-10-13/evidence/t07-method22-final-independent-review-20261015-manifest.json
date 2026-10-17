@@ -1,0 +1,452 @@
+{
+  "created": "2026-10-15T19:53:17.818695-04:00",
+  "verdict": "PASS for reviewed METHOD22 prelaunch protocol",
+  "unresolved_material_findings": [],
+  "commit": "6ba8a7710a08bd53fb67ff1275daabe0be741b88",
+  "worktree": "/private/tmp/probata-resume-t07-method22",
+  "initial_review_commit": "3c3472f82dde6c4085f3298849dcc85685f1df01",
+  "full_union_commit": "c603c2ec81f479f07cf6a8f9a18b1c3bb7a41e40",
+  "final_narrow_fix_commit": "e5161349",
+  "method": "codex-only-paged-terminal30-v1",
+  "source_files": [
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+      "sha256": "fe11e786ce3449178177208fe9291b135bf98e9c7ff511ac4644bcf9a64073c9",
+      "bytes": 19506,
+      "disk_matches_commit": true
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/edit_core.py",
+      "sha256": "3474b00db4ac40a9ca3eb08a9323902243798eef538552176e07095ab9ab95be",
+      "bytes": 20179,
+      "disk_matches_commit": true
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/edit_loop.py",
+      "sha256": "c484a5b7e63b4f453a75c87a22e0c783118c3fee32d6cda438bf2ff044050ba6",
+      "bytes": 53917,
+      "disk_matches_commit": true
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/edit_tool_mcp.py",
+      "sha256": "2bc9c0790f0330397f8bf6fa91af3c15a2e1e2d0a7c06fe09857b233f3792d84",
+      "bytes": 15239,
+      "disk_matches_commit": true
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/focused_probe.py",
+      "sha256": "9ad86e2c61530a19f95ebb4d5aff639d489ef5a0788a6a1e00ddbdf0bd7c05db",
+      "bytes": 7894,
+      "disk_matches_commit": true
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/frame_seeds.py",
+      "sha256": "7c8bec31b2be840218545a3370cafde8431ddd4699a363ebe3e391fb56c519c2",
+      "bytes": 12227,
+      "disk_matches_commit": true
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/goal_print.py",
+      "sha256": "04ed28d1afedb63b5f6622e8c256b78377384cc7fdef3d572f2ed05909d2dd89",
+      "bytes": 14134,
+      "disk_matches_commit": true
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/hint_tool_mcp.py",
+      "sha256": "a112d77899c122bd8e42c60abd8857b154047258230035c1dd2f58f2fe452211",
+      "bytes": 8105,
+      "disk_matches_commit": true
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/hints.py",
+      "sha256": "48bafc2eab6caf40bb921e773212dff3efbbbc652aa2d120d87da4704b021bca",
+      "bytes": 16853,
+      "disk_matches_commit": true
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/loop.py",
+      "sha256": "cb84fdca2b0d8dd0c77b286037513a4642835cd631ad9f87c74f0d736982d350",
+      "bytes": 45113,
+      "disk_matches_commit": true
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/make_negctl.py",
+      "sha256": "d619ebd21ea62bb99ef1f3a089a2c9281067fb77c739d3de5e9c5e0dc76b1c78",
+      "bytes": 637,
+      "disk_matches_commit": true
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/per_goal.py",
+      "sha256": "3a134524f8f0bad7d4e0a62c5f3dc3e6f7e7da909d77d14c12086698aa12e1d4",
+      "bytes": 1045,
+      "disk_matches_commit": true
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/staged_search.py",
+      "sha256": "125e2562342e6ba684d1189ca29fb48476b73bee30d0fd368f7f7c6b4c6b2419",
+      "bytes": 8284,
+      "disk_matches_commit": true
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_counted_verifier.py",
+      "sha256": "b5dbd068d40320738fe6f9b4a7a76e013ba402cb42376f3f1483f2aa8d1e676a",
+      "bytes": 22058,
+      "disk_matches_commit": true
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_debt.py",
+      "sha256": "8bf8ccd58625ae289e082c0bb217543ebb34d8920ec7b94467a75fed36373721",
+      "bytes": 13009,
+      "disk_matches_commit": true
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_edit_loop.py",
+      "sha256": "a764a499a35896c2172f719f134bc8b9c8746903102631e08ec94b19b730412b",
+      "bytes": 11166,
+      "disk_matches_commit": true
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_focused_probe.py",
+      "sha256": "0d01e57483b02a8480c1084e2b26783acc6ca4587964fa8a28cc2aa8ac60ded6",
+      "bytes": 12246,
+      "disk_matches_commit": true
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_hints.py",
+      "sha256": "3d055135a94e8d559729fb7e3e3d47262b4352b1948a9287f4c1c36b28d02369",
+      "bytes": 12608,
+      "disk_matches_commit": true
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_loop_tool.py",
+      "sha256": "0f72c59bba2e20e8ef8b0aaf32d0df3c7fa72bffa1b19ddd26a8c9373aa276ff",
+      "bytes": 3231,
+      "disk_matches_commit": true
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_staged_search.py",
+      "sha256": "db1cef2a96c7bf2c0d29a21476886b994ed6c11874a217feae707fb3da93b4b1",
+      "bytes": 17757,
+      "disk_matches_commit": true
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/wp_run.sh",
+      "sha256": "d7f9af83205c9510b366565976e2041830455c2c83232279c38b6a60aa147d6a",
+      "bytes": 6702,
+      "disk_matches_commit": true
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/bfs_unit.h",
+      "sha256": "1bcbf4dac683d6a46269fcd5f896fefc2571adc49d059b46f93fb25eb0f7b235",
+      "bytes": 1941,
+      "disk_matches_commit": true
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/dxc_summaries.h",
+      "sha256": "d708c0ef974e5ede1aaadd2b5e66dd785affa5e1dc6ef37419bf9e72517ae0d2",
+      "bytes": 10789,
+      "disk_matches_commit": true
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/gapbs_models.h",
+      "sha256": "401d8ccfa8fdc1ef3734c97563a1c110d003d8847508aaa24ec3f300a33eed3e",
+      "bytes": 10157,
+      "disk_matches_commit": true
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/tdstep_standin.c",
+      "sha256": "b4a820bd20b197eee293616af17da884bbc63ed92f9252e77f261092387024de",
+      "bytes": 11987,
+      "disk_matches_commit": true
+    },
+    {
+      "path": "swdb-project/library/dx100/bfs_read_offload.inc",
+      "sha256": "3c5867a2b8919806f681603836bd0cff448f21634485abf84e49ed71f25515ef",
+      "bytes": 3157,
+      "disk_matches_commit": true
+    },
+    {
+      "path": "swdb-project/swdb/provider_adapters.py",
+      "sha256": "5bf97c5bc4170e9a36cc853147bdc9f5c1ba43b22e51f6c11b8405101d26d5b8",
+      "bytes": 19362,
+      "disk_matches_commit": true
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/run_report.py",
+      "sha256": "78b75cacbb7132e74c46e0a0011506f471ea4eddbfb250c615c072c9dd17687f",
+      "bytes": 1818,
+      "disk_matches_commit": true
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_baseline_plan.py",
+      "sha256": "2e4a3a8395cd81d6a790206b7d231e60246f26a9076892f60e89fcf3f716b280",
+      "bytes": 8411,
+      "disk_matches_commit": true
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/METHOD21.md",
+      "sha256": "e3a1bf9f9791167264f1cfd2aa0cb8d916eb084c3cbfa90797ad0e942899a1cd",
+      "bytes": 5236,
+      "disk_matches_commit": true
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/terminal_plan.py",
+      "sha256": "93248b5e629d1019b5ef00fca2e67f1c59ceb85277a9a28af45ebf15a08f2a05",
+      "bytes": 9310,
+      "disk_matches_commit": true
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/provider_origin.py",
+      "sha256": "0ce713a440bd96b973b0a7c61a65d105073002bd27e8d6866a321273cb600d17",
+      "bytes": 13184,
+      "disk_matches_commit": true
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_terminal_plan.py",
+      "sha256": "056e4762c7a6d1194caee819d152be5f0da97baf5f3b3cd47abe16cdbcd8fbab",
+      "bytes": 25031,
+      "disk_matches_commit": true
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/METHOD22.md",
+      "sha256": "161d1efe432b408b9c8c3f7585352083d87649ed9af99f40ea000d4d0405adfd",
+      "bytes": 8535,
+      "disk_matches_commit": true
+    }
+  ],
+  "source_sha256": {
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py": "fe11e786ce3449178177208fe9291b135bf98e9c7ff511ac4644bcf9a64073c9",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/edit_core.py": "3474b00db4ac40a9ca3eb08a9323902243798eef538552176e07095ab9ab95be",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/edit_loop.py": "c484a5b7e63b4f453a75c87a22e0c783118c3fee32d6cda438bf2ff044050ba6",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/edit_tool_mcp.py": "2bc9c0790f0330397f8bf6fa91af3c15a2e1e2d0a7c06fe09857b233f3792d84",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/focused_probe.py": "9ad86e2c61530a19f95ebb4d5aff639d489ef5a0788a6a1e00ddbdf0bd7c05db",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/frame_seeds.py": "7c8bec31b2be840218545a3370cafde8431ddd4699a363ebe3e391fb56c519c2",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/goal_print.py": "04ed28d1afedb63b5f6622e8c256b78377384cc7fdef3d572f2ed05909d2dd89",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/hint_tool_mcp.py": "a112d77899c122bd8e42c60abd8857b154047258230035c1dd2f58f2fe452211",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/hints.py": "48bafc2eab6caf40bb921e773212dff3efbbbc652aa2d120d87da4704b021bca",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/loop.py": "cb84fdca2b0d8dd0c77b286037513a4642835cd631ad9f87c74f0d736982d350",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/make_negctl.py": "d619ebd21ea62bb99ef1f3a089a2c9281067fb77c739d3de5e9c5e0dc76b1c78",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/per_goal.py": "3a134524f8f0bad7d4e0a62c5f3dc3e6f7e7da909d77d14c12086698aa12e1d4",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/staged_search.py": "125e2562342e6ba684d1189ca29fb48476b73bee30d0fd368f7f7c6b4c6b2419",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_counted_verifier.py": "b5dbd068d40320738fe6f9b4a7a76e013ba402cb42376f3f1483f2aa8d1e676a",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_debt.py": "8bf8ccd58625ae289e082c0bb217543ebb34d8920ec7b94467a75fed36373721",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_edit_loop.py": "a764a499a35896c2172f719f134bc8b9c8746903102631e08ec94b19b730412b",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_focused_probe.py": "0d01e57483b02a8480c1084e2b26783acc6ca4587964fa8a28cc2aa8ac60ded6",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_hints.py": "3d055135a94e8d559729fb7e3e3d47262b4352b1948a9287f4c1c36b28d02369",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_loop_tool.py": "0f72c59bba2e20e8ef8b0aaf32d0df3c7fa72bffa1b19ddd26a8c9373aa276ff",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_staged_search.py": "db1cef2a96c7bf2c0d29a21476886b994ed6c11874a217feae707fb3da93b4b1",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/wp_run.sh": "d7f9af83205c9510b366565976e2041830455c2c83232279c38b6a60aa147d6a",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/bfs_unit.h": "1bcbf4dac683d6a46269fcd5f896fefc2571adc49d059b46f93fb25eb0f7b235",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/dxc_summaries.h": "d708c0ef974e5ede1aaadd2b5e66dd785affa5e1dc6ef37419bf9e72517ae0d2",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/gapbs_models.h": "401d8ccfa8fdc1ef3734c97563a1c110d003d8847508aaa24ec3f300a33eed3e",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/tdstep_standin.c": "b4a820bd20b197eee293616af17da884bbc63ed92f9252e77f261092387024de",
+    "swdb-project/library/dx100/bfs_read_offload.inc": "3c5867a2b8919806f681603836bd0cff448f21634485abf84e49ed71f25515ef",
+    "swdb-project/swdb/provider_adapters.py": "5bf97c5bc4170e9a36cc853147bdc9f5c1ba43b22e51f6c11b8405101d26d5b8",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/run_report.py": "78b75cacbb7132e74c46e0a0011506f471ea4eddbfb250c615c072c9dd17687f",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_baseline_plan.py": "2e4a3a8395cd81d6a790206b7d231e60246f26a9076892f60e89fcf3f716b280",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/METHOD21.md": "e3a1bf9f9791167264f1cfd2aa0cb8d916eb084c3cbfa90797ad0e942899a1cd",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/terminal_plan.py": "93248b5e629d1019b5ef00fca2e67f1c59ceb85277a9a28af45ebf15a08f2a05",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/provider_origin.py": "0ce713a440bd96b973b0a7c61a65d105073002bd27e8d6866a321273cb600d17",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_terminal_plan.py": "056e4762c7a6d1194caee819d152be5f0da97baf5f3b3cd47abe16cdbcd8fbab",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/METHOD22.md": "161d1efe432b408b9c8c3f7585352083d87649ed9af99f40ea000d4d0405adfd"
+  },
+  "source_count": 34,
+  "source_disk_commit_errors": 0,
+  "reviewed_support_files": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "4411e7dbf49f83ac2ad9a718c4750b32f3889eb06911885b56498b9f1fac4f94",
+      "bytes": 1258
+    },
+    {
+      "path": "swdb-project/AGENTS.md",
+      "sha256": "788e488166eb05f4d604a2c44a51d273db3a5d269f0f5f87bb67bf4f86a29383",
+      "bytes": 1273
+    },
+    {
+      "path": ".claude/rules/timezone.md",
+      "sha256": "fcab4d9b5ea2559ce30412e962bbd17c0b6e9c22d49bc4ae942cd38c34038390",
+      "bytes": 455
+    },
+    {
+      "path": ".claude/rules/remote_server.md",
+      "sha256": "bc99c93df5fcbef79fb8a6acf3e711c21e0c012cdcda8029211f8a565bd88df9",
+      "bytes": 3455
+    },
+    {
+      "path": ".claude/rules/learned-workflow.md",
+      "sha256": "7b8dba20372f9239830ba475532e833c80c75042f19351cbff8644feea76ad66",
+      "bytes": 3453
+    },
+    {
+      "path": ".claude/rules/miscellaneous.md",
+      "sha256": "4a92565cf268b168836dbf3dc1c4f075bd7270242ece655c9202744bae589f8e",
+      "bytes": 979
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/issues/07-spike-wp-agent-hints.md",
+      "sha256": "0d08ce35705b8e17ecc8057c9aa2bed73337469d7f9246c4b86ab8561ed070ac",
+      "bytes": 100461
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/METHOD20.md",
+      "sha256": "a9bf008843802ee21efa6fe8e41c6c6dc219683b989b0aaf490dad44bd3200d0",
+      "bytes": 16427
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t07-seed-provenance-acceptance-review-20261015.md",
+      "sha256": "e6a138b4f3211d9f785f29870cc75a0c0fba8752ca617b1eb93a1e224750037a",
+      "bytes": 4725
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t07-token-accounting-acceptance-addendum-20261015.md",
+      "sha256": "a0356917f93f184ba9cdbef8cb2940b3df5f2a8f4b6518d1d1e77f570455e1a5",
+      "bytes": 4340
+    }
+  ],
+  "reviewed_changed_paths": [
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/issues/07-spike-wp-agent-hints.md",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/METHOD22.md",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/edit_core.py",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/edit_loop.py",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/edit_tool_mcp.py",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/goal_print.py",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/provider_origin.py",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/terminal_plan.py",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_terminal_plan.py"
+  ],
+  "narrow_delta_after_full_union": [
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/goal_print.py",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_terminal_plan.py"
+  ],
+  "tests": [
+    {
+      "commit": "c603c2ec81f479f07cf6a8f9a18b1c3bb7a41e40",
+      "passed": 221,
+      "wall_s": 66.03,
+      "composition": "216 repository + cleanupCLI1 + independent origin2 + independent paging2",
+      "cwd": "/private/tmp/probata-resume-t07-method22/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints",
+      "command": "PYTHONDONTWRITEBYTECODE=1 PROBATA_REVIEW_HERE=/private/tmp/probata-resume-t07-method22/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints PYTHONPATH=/private/tmp/probata-resume-t07-method22/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints /Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest -q -p no:cacheprovider test_hints.py test_edit_loop.py test_loop_tool.py test_debt.py test_staged_search.py test_counted_verifier.py test_focused_probe.py test_baseline_plan.py test_terminal_plan.py /private/tmp/test_probata_method20_cleanup_cli.py /private/tmp/test_probata_method22_independent.py::test_whole_staged_attempt_drop_cannot_admit_terminal /private/tmp/test_probata_method22_independent.py::test_materialized_set_cannot_omit_raw_addition /private/tmp/test_probata_method22_paging_independent.py::test_paged_task_must_refuse_missing_requested_identity --junitxml=/private/tmp/probata-t07-method22-final-independent-tests.xml > /private/tmp/probata-t07-method22-final-independent-tests.txt 2>&1"
+    },
+    {
+      "commit": "6ba8a7710a08bd53fb67ff1275daabe0be741b88",
+      "passed": 17,
+      "wall_s": 7.26,
+      "scope": "affected paging/publication and all independent task-identity controls",
+      "cwd": "/private/tmp/probata-resume-t07-method22/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints",
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/private/tmp/probata-resume-t07-method22/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints /Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest -q -p no:cacheprovider test_terminal_plan.py::test_scoped_goal_paging_exposes_omitted_premises_without_regeneration test_terminal_plan.py::test_paged_task_must_refuse_missing_requested_identity test_terminal_plan.py::test_report_publication_counts_required_receipts_before_timed_admission /private/tmp/test_probata_method22_named_task_independent.py /private/tmp/test_probata_method22_paging_independent.py::test_paged_task_must_refuse_missing_requested_identity --junitxml=/private/tmp/probata-t07-method22-final-affected-tests.xml > /private/tmp/probata-t07-method22-final-affected-tests.txt 2>&1"
+    }
+  ],
+  "clean_checkout": true,
+  "diff_check": true,
+  "source_mutation_by_reviewer": false,
+  "actual_provider_solver_jobs": false,
+  "scientific_success_claim": false,
+  "launch_remaining_gates": [
+    "coordinator freeze and actual live resource/tool preflight",
+    "fresh actual provider prompt/argv provenance",
+    "actual complete positive plus same-hints complete negative reports and original60minute publication",
+    "natural complete provider usage for every call",
+    "poststop resource/lease audit"
+  ],
+  "artifacts": [
+    {
+      "path": "/private/tmp/probata-t07-method22-final-independent-review.md",
+      "sha256": "33423e3f3fc49e6bde89cda194ab166a79c5ca59bb4019f9552a2c6402f721dc",
+      "bytes": 3644
+    },
+    {
+      "path": "/private/tmp/probata-t07-method22-initial-independent-review.md",
+      "sha256": "d74b336b5799f0397803effa1f9cb368ce7943ee3223be8aff09a7fdd357dd6b",
+      "bytes": 2111
+    },
+    {
+      "path": "/private/tmp/probata-t07-method22-initial-independent-review-manifest.json",
+      "sha256": "35ef247ceaea50aeee17d23ec62bab03d7e90757cad1607a49c1c9e5e2736e2e",
+      "bytes": 10657
+    },
+    {
+      "path": "/private/tmp/probata-t07-method22-additional-static-findings.json",
+      "sha256": "0cf9c916e97752dfeece449a7eb761b7979b27fc2b5bae1dba9a9a88643dd8f1",
+      "bytes": 1023
+    },
+    {
+      "path": "/private/tmp/probata-t07-method22-final-independent-tests.xml",
+      "sha256": "a50d5c7cdf7b8e8756d8becc2db79b92602c3888a09e842daf4f2caa3182aed4",
+      "bytes": 44875
+    },
+    {
+      "path": "/private/tmp/probata-t07-method22-final-independent-tests.txt",
+      "sha256": "1591c1f8f2b31dcbcb9ffe280e1abfcaa0089b87f9b9623d9787ef423c93b586",
+      "bytes": 351
+    },
+    {
+      "path": "/private/tmp/probata-t07-method22-final-affected-tests.xml",
+      "sha256": "30cb58e4173e690c5d6ac9afb205223e6aa82035144b7d9775d4de848aec39ae",
+      "bytes": 3430
+    },
+    {
+      "path": "/private/tmp/probata-t07-method22-final-affected-tests.txt",
+      "sha256": "b3568aaa903d992a7cce9e4f1e1af100ea51ee4f5ffc93841e33de62eb9db244",
+      "bytes": 99
+    },
+    {
+      "path": "/private/tmp/probata-t07-method22-whole-attempt-drop-red.xml",
+      "sha256": "0b3de16df589741a0500cf6ac007b27b5c662d3f85ea1e6887e758ac376a4e84",
+      "bytes": 7893
+    },
+    {
+      "path": "/private/tmp/probata-t07-method22-materialized-drop-red.xml",
+      "sha256": "4dcfdb661edabccbb6c37883cd92db9e81d23bcb76472e7e27cf37b685ea82ff",
+      "bytes": 8457
+    },
+    {
+      "path": "/private/tmp/probata-t07-method22-paging-identity-red.xml",
+      "sha256": "dd0417a2e24dc83cd11b59319b83fae07a5005ba9f2b4cc8c40f19861d5d4ad9",
+      "bytes": 10130
+    },
+    {
+      "path": "/private/tmp/probata-t07-method22-named-task-red.xml",
+      "sha256": "b4f953b5fef5af24b4432c2024e39f9f93a9848c97da2f7f7c1e5703a1691765",
+      "bytes": 6024
+    },
+    {
+      "path": "/private/tmp/probata-t07-method22-named-task-red.txt",
+      "sha256": "897c0a9ff117f87773a758c2946c55dc49ccb92b7033a1f1ac9e603c464f6838",
+      "bytes": 4720
+    },
+    {
+      "path": "/private/tmp/probata-t07-method22-named-task-finding.json",
+      "sha256": "660554dd1560376692a03ef1c97d9078fcc38beaacbbdf1f8074dbcf2c75641a",
+      "bytes": 1802
+    },
+    {
+      "path": "/private/tmp/test_probata_method20_cleanup_cli.py",
+      "sha256": "e50184dd41f972111cb2bb6e3d61ed4f0527e395e27895fc4f35e9193fe7b452",
+      "bytes": 3934
+    },
+    {
+      "path": "/private/tmp/test_probata_method22_independent.py",
+      "sha256": "195a9b5ae8d78cc6fece24ed39779ae153c472f1a12c86097d1f58796611cf81",
+      "bytes": 19915
+    },
+    {
+      "path": "/private/tmp/test_probata_method22_paging_independent.py",
+      "sha256": "5ef7a1b6a5e9474401340c1ee39b574b1c6573efa371e77f04233242ddcdf1e1",
+      "bytes": 21919
+    },
+    {
+      "path": "/private/tmp/test_probata_method22_named_task_independent.py",
+      "sha256": "395f007dda438bd979e80b201d05b462aa1cd1e6b8c5da5ca3eb0e7b92811709",
+      "bytes": 3134
+    }
+  ],
+  "full_union_byte_identity": {
+    "unchanged_source_files": 32,
+    "changed_source_files": [
+      "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/goal_print.py",
+      "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/test_terminal_plan.py"
+    ],
+    "all_other_source_bytes_identical": true
+  }
+}

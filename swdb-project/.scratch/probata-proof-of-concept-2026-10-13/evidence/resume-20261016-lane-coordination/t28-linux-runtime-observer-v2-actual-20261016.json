@@ -1,0 +1,1992 @@
+{
+  "observation": {
+    "base_prefix": "/usr",
+    "cache_absent_before_after": true,
+    "cbmc_version_observation": {
+      "argv": [
+        "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/cbmc",
+        "--version"
+      ],
+      "exit_code": 0,
+      "path": "/data1/yanruj/probata-verifiers/cbmc-6.11.0/usr/bin/cbmc",
+      "proof_requested": false,
+      "sha256": "a62af25d27425610608221d79c202f993efe1d5a85cece186119bec196382995",
+      "stderr": "",
+      "stdout": "6.11.0 (cbmc-6.11.0)\n"
+    },
+    "dont_write_bytecode": true,
+    "executable": "/data1/yanruj/venvs/swdb-test/bin/python",
+    "isolated": true,
+    "loaded_module_origins": {
+      "__future__": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/__future__.py",
+        "sha256": "981d4c398849f9ebcab72300d9c1fe288fd6d7f28957b3b3fa3a493a5836d95c",
+        "spec_origin": "/usr/lib/python3.12/__future__.py"
+      },
+      "_bz2": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/lib-dynload/_bz2.cpython-312-x86_64-linux-gnu.so",
+        "sha256": "eff8df23cdc54d38ce9ca600d07c21ccfd7f22bd52a0720e599e6828d3e2eb76",
+        "spec_origin": "/usr/lib/python3.12/lib-dynload/_bz2.cpython-312-x86_64-linux-gnu.so"
+      },
+      "_collections_abc": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/_collections_abc.py",
+        "sha256": "90324ee3e1c4ca5319f7242d4b7c1e90eb8418b3f999d07c853aa488356282e6",
+        "spec_origin": "frozen"
+      },
+      "_compression": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/_compression.py",
+        "sha256": "3ad5d60627477a60939ee44fc1bb3a05dbe8fb52f0f75039b8f5d8f1a278b981",
+        "spec_origin": "/usr/lib/python3.12/_compression.py"
+      },
+      "_decimal": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/lib-dynload/_decimal.cpython-312-x86_64-linux-gnu.so",
+        "sha256": "20326fc4d39abff46814b64bf5304f8898d180ae58a66b5d60c0177ae317887d",
+        "spec_origin": "/usr/lib/python3.12/lib-dynload/_decimal.cpython-312-x86_64-linux-gnu.so"
+      },
+      "_distutils_hack": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/_distutils_hack/__init__.py",
+        "sha256": "46849a60a7cc85189cf6b5ac62b3f135004862ce6a96540a81c95ef6fbc4dc3e",
+        "spec_origin": "/usr/lib/python3/dist-packages/_distutils_hack/__init__.py"
+      },
+      "_frozen_importlib": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/importlib/_bootstrap.py",
+        "sha256": "9653944363a4773cc32bbb34426024597a9d2ee4cd42e7912b4daf8cadfb53ed",
+        "spec_origin": "frozen"
+      },
+      "_frozen_importlib_external": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/importlib/_bootstrap_external.py",
+        "sha256": "97c6211750d63067712ad2cd74d50be33337f1fb1cd2c769022ced9b401edd92",
+        "spec_origin": "frozen"
+      },
+      "_hashlib": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/lib-dynload/_hashlib.cpython-312-x86_64-linux-gnu.so",
+        "sha256": "8dc6cda6dd9495b95a2bfb5b26e8cf06b72f36dc0213d958b9277a958287f0fe",
+        "spec_origin": "/usr/lib/python3.12/lib-dynload/_hashlib.cpython-312-x86_64-linux-gnu.so"
+      },
+      "_json": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/lib-dynload/_json.cpython-312-x86_64-linux-gnu.so",
+        "sha256": "ca8e35c58f7bc8e27258c4af43651c941413bc6318903621253485b0395758a3",
+        "spec_origin": "/usr/lib/python3.12/lib-dynload/_json.cpython-312-x86_64-linux-gnu.so"
+      },
+      "_lzma": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/lib-dynload/_lzma.cpython-312-x86_64-linux-gnu.so",
+        "sha256": "cb298120e40f064dc047e638d911f8b3b0abf625bf1d6bd07902b46efd820fd7",
+        "spec_origin": "/usr/lib/python3.12/lib-dynload/_lzma.cpython-312-x86_64-linux-gnu.so"
+      },
+      "_pytest": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/__init__.py",
+        "sha256": "e087512619d6e571b62a568990ec67e7f4c2f56790e6d5c3485eed6dbe2f12ca",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/__init__.py"
+      },
+      "_pytest._code": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/_code/__init__.py",
+        "sha256": "04a6e8c286100032a300999359d43c49240b6c106c874f9d663dd31a3b67eb23",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/_code/__init__.py"
+      },
+      "_pytest._code.code": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/_code/code.py",
+        "sha256": "63ec03d20e61d3ac2a0e9954be71a619dd742d009c2409b1e3168e2a6fad9096",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/_code/code.py"
+      },
+      "_pytest._code.source": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/_code/source.py",
+        "sha256": "46f3d07f3144e3e05da5aa6c51cb1d2f89ac81e1e737e5a7a863e4032acf6c01",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/_code/source.py"
+      },
+      "_pytest._io": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/_io/__init__.py",
+        "sha256": "a642c5dbd54416be8396bdde3ad24bf2c7f8ed12c5b7525fe17d436413e56267",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/_io/__init__.py"
+      },
+      "_pytest._io.pprint": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/_io/pprint.py",
+        "sha256": "87fcb9cd098dda72f3d5458f868242bea60d53f1c8d88e2ab499827da80bf4e4",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/_io/pprint.py"
+      },
+      "_pytest._io.saferepr": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/_io/saferepr.py",
+        "sha256": "c4634e463e01eb613fc52d909f6f44e4aa682e0c3ad2ad3d6fe0286d6f1c7aa8",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/_io/saferepr.py"
+      },
+      "_pytest._io.terminalwriter": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/_io/terminalwriter.py",
+        "sha256": "2b4a41d697c0beb281585011292a1b438c168b4a5d9a205a19bddafeffc00234",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/_io/terminalwriter.py"
+      },
+      "_pytest._io.wcwidth": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/_io/wcwidth.py",
+        "sha256": "714109ef8521c1e202c1b2af536aba9e865c3600f442504407d09f6a41986aa0",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/_io/wcwidth.py"
+      },
+      "_pytest._py": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/_py/__init__.py",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/_py/__init__.py"
+      },
+      "_pytest._py.error": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/_py/error.py",
+        "sha256": "90643b17cfdf67a615061031faef669134014f1d2a231c6754c0b40a088e77bd",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/_py/error.py"
+      },
+      "_pytest._py.path": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/_py/path.py",
+        "sha256": "72a0a7d1a9b32a1a92aa25b55b3b782aabc52369dc281cc69f011152c5a90bfd",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/_py/path.py"
+      },
+      "_pytest._version": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/_version.py",
+        "sha256": "a92165fd7b0e147d0e1b873f42ebe87f108f1f3d56b1b53fe4ad352a27adec4a",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/_version.py"
+      },
+      "_pytest.assertion": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/assertion/__init__.py",
+        "sha256": "2a69087174fab92dd88352b60b546d879fb93411a6c0996384a0f84a07071ac7",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/assertion/__init__.py"
+      },
+      "_pytest.assertion._compare_any": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/assertion/_compare_any.py",
+        "sha256": "96db744e2023ecb555cf3f03d7e9a6eafc8cfe250f28eff55cd8239793d894c2",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/assertion/_compare_any.py"
+      },
+      "_pytest.assertion._compare_mapping": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/assertion/_compare_mapping.py",
+        "sha256": "74a33986faa3645f96334887c04ee51e3ea689568b4edeeed1e429ae9d86f690",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/assertion/_compare_mapping.py"
+      },
+      "_pytest.assertion._compare_sequence": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/assertion/_compare_sequence.py",
+        "sha256": "6a7c68748e05632a8c9a784a4a099cfc0b4afe86eb1d4a0e0c16c13723a58681",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/assertion/_compare_sequence.py"
+      },
+      "_pytest.assertion._compare_set": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/assertion/_compare_set.py",
+        "sha256": "251a73d7d113fdb8ba784f59fee5b14bf073ac423222d1b68725d096ce889c94",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/assertion/_compare_set.py"
+      },
+      "_pytest.assertion._guards": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/assertion/_guards.py",
+        "sha256": "1fa6a11bfe490b06614e0e65224f03eaf82151074a7e8399194c2c4f7390085e",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/assertion/_guards.py"
+      },
+      "_pytest.assertion._typing": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/assertion/_typing.py",
+        "sha256": "f62ce7a05b0aa7ce3b818d62aad74bfd3848519ad80403daf0def63b774da568",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/assertion/_typing.py"
+      },
+      "_pytest.assertion.compare_text": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/assertion/compare_text.py",
+        "sha256": "e10edb296d8df5dd2eee4480e68bda9ae1ba2ccbc55faf22c4cc8e453a4808c7",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/assertion/compare_text.py"
+      },
+      "_pytest.assertion.highlight": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/assertion/highlight.py",
+        "sha256": "015a92e17eb83e0d5a7a45e73984687898a02000d6c0075b76d1bff5b93fdfe7",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/assertion/highlight.py"
+      },
+      "_pytest.assertion.rewrite": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/assertion/rewrite.py",
+        "sha256": "17f1eefbd1c2fe5326cb7592ff3af92a773582cf9d01727b09d3ab864906ee50",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/assertion/rewrite.py"
+      },
+      "_pytest.assertion.truncate": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/assertion/truncate.py",
+        "sha256": "ee48bcb41d2bc23ed9efe6020000d046e077468d7d3bcdf2ed75777938de2f5c",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/assertion/truncate.py"
+      },
+      "_pytest.assertion.util": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/assertion/util.py",
+        "sha256": "f2ede44368c40674cc9943833a56342539747e9242094191cfe24b7eeaf13d33",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/assertion/util.py"
+      },
+      "_pytest.cacheprovider": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/cacheprovider.py",
+        "sha256": "bd9bfb0437645da5d042792f30ba379d28ff4c1fffac6806f5543305a3073579",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/cacheprovider.py"
+      },
+      "_pytest.capture": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/capture.py",
+        "sha256": "12004dbff0ab7b34141ff53e33e616db2e857c695f64e640631f5abe30619145",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/capture.py"
+      },
+      "_pytest.compat": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/compat.py",
+        "sha256": "41f703ee4606232e1fc6eaa2136f360700c90824503491221a435861c3f2161e",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/compat.py"
+      },
+      "_pytest.config": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/config/__init__.py",
+        "sha256": "98b05c2c37d09e1d5c05975efc2d9af98d4aff6ea47de410a8e93956420873c1",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/config/__init__.py"
+      },
+      "_pytest.config.argparsing": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/config/argparsing.py",
+        "sha256": "a30373a110ac568e752b5cc5c4eb66cfa8595f2c1eaa1bf950b1fc5070a0d098",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/config/argparsing.py"
+      },
+      "_pytest.config.exceptions": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/config/exceptions.py",
+        "sha256": "e959bdcb3c143b12469b5ed93066f0ebdbff8b4ee64f52a607010d336b1c2a19",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/config/exceptions.py"
+      },
+      "_pytest.config.findpaths": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/config/findpaths.py",
+        "sha256": "535d149e6f3962e44260b6645bb354976e19531f5dd248e14ee7d7fff61c8848",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/config/findpaths.py"
+      },
+      "_pytest.debugging": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/debugging.py",
+        "sha256": "fde26a89f0ca1311423afe098601610680d7627b30b301c6d5d7192026538e0f",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/debugging.py"
+      },
+      "_pytest.deprecated": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/deprecated.py",
+        "sha256": "7f24f0a94f9fb68a09f0fbbc8b2db84cba965d5894a59415d6a4ab2490ea4e2a",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/deprecated.py"
+      },
+      "_pytest.doctest": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/doctest.py",
+        "sha256": "04261f5b3ddce0c36584f2be42e2938d5a0dbe914414502533a93e8c142dacf9",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/doctest.py"
+      },
+      "_pytest.fixtures": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/fixtures.py",
+        "sha256": "f5d4d3f848d97411e456d50400d3aaecc19a9b0c90def9151e395ee8952042b7",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/fixtures.py"
+      },
+      "_pytest.freeze_support": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/freeze_support.py",
+        "sha256": "5fde08c62a6a79b780fc7833261f1d6e3a869ebb44405b8c202e612bb486597c",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/freeze_support.py"
+      },
+      "_pytest.hookspec": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/hookspec.py",
+        "sha256": "12098571044671c24ed0011e2bb7d94976380265e5734c30f856479482e6f88d",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/hookspec.py"
+      },
+      "_pytest.legacypath": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/legacypath.py",
+        "sha256": "fe5eaff1a90d31f4dce53023bdb73a33efedd79ee9f5013afb5d7c58cd0346df",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/legacypath.py"
+      },
+      "_pytest.logging": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/logging.py",
+        "sha256": "9ad4c3e583c205a97c37264bf479503e74e027cf68ba818996e923062380cac2",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/logging.py"
+      },
+      "_pytest.main": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/main.py",
+        "sha256": "8ee2725057ff1811e2ae9ebdf1befb7518195f8f333f9f8ca024d76a4b80780e",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/main.py"
+      },
+      "_pytest.mark": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/mark/__init__.py",
+        "sha256": "1a649c9ecb24f1e7092d62c86b6d5b38648dc4bf43dac992f061f6876acde051",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/mark/__init__.py"
+      },
+      "_pytest.mark.expression": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/mark/expression.py",
+        "sha256": "edae43a0bfb44f6ae09747551f6c139cdbd985b8a66e2af33352c4c57ac1f27d",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/mark/expression.py"
+      },
+      "_pytest.mark.structures": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/mark/structures.py",
+        "sha256": "598ff2b44193f1e98868257ff55f4fff39276fc5d5ae8427fe4de7176ea1bc96",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/mark/structures.py"
+      },
+      "_pytest.monkeypatch": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/monkeypatch.py",
+        "sha256": "b5c405ed57dbd58adfb7f0fae44f84d62402993c50058e07f03387285c03df33",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/monkeypatch.py"
+      },
+      "_pytest.nodes": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/nodes.py",
+        "sha256": "4701f2fa74e292b2551ae790d26fe421bb25e5e459022026107bd024177cd129",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/nodes.py"
+      },
+      "_pytest.outcomes": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/outcomes.py",
+        "sha256": "aa02dbf351cd1101a795e3fef683ab2fd7a2c04eb96188689663f51ece80c081",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/outcomes.py"
+      },
+      "_pytest.pathlib": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/pathlib.py",
+        "sha256": "c9fe77dccbf52afa1196ff92870ed919e09f254c082710a86ed417fd3ca90329",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/pathlib.py"
+      },
+      "_pytest.pytester": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/pytester.py",
+        "sha256": "9e791d0a3446b04324e70bb939712f8d490005ad13eb46ab3249592baa08ff17",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/pytester.py"
+      },
+      "_pytest.python": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/python.py",
+        "sha256": "b04488f5e46bf1ffe2e8344f81756e10b970dbfaf2f7f2f4d312becd6404df76",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/python.py"
+      },
+      "_pytest.python_api": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/python_api.py",
+        "sha256": "cba22d17b5dedccb39be71ca946b765b998c4c3055ae1adad453fefbd843497d",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/python_api.py"
+      },
+      "_pytest.raises": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/raises.py",
+        "sha256": "dc28805f1e1c2db835f1a5290218efee5d510d190ad333d61663d59bd6d1362c",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/raises.py"
+      },
+      "_pytest.recwarn": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/recwarn.py",
+        "sha256": "0e3ab27f6b7313d89eff1136c4cd60913e591fe5b32961c87e7711778f2dc906",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/recwarn.py"
+      },
+      "_pytest.reports": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/reports.py",
+        "sha256": "2e9272a67cde38b925eba24a288b2ef77f741c0daa22da6fbce53ee6e58fa41d",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/reports.py"
+      },
+      "_pytest.runner": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/runner.py",
+        "sha256": "c8d7fd553c0516f7884502ee0e7954eb5a5b1542f21fcb5c4357500ed2fe1570",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/runner.py"
+      },
+      "_pytest.scope": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/scope.py",
+        "sha256": "78499126f474ba3787fd1ca9524dcf8583b2b505f5632af491ea1c458a72ae2a",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/scope.py"
+      },
+      "_pytest.stash": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/stash.py",
+        "sha256": "e69137903c78abce794d6f5a56f61376b9242a530353afb1897e25b8aa491202",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/stash.py"
+      },
+      "_pytest.subtests": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/subtests.py",
+        "sha256": "f514883bad06a84cec0d7ddc1dd8ce8c16e5680597f9fc5a9bd8836b878f92a4",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/subtests.py"
+      },
+      "_pytest.terminal": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/terminal.py",
+        "sha256": "28c4a9ebca0243385b154f47ecb83b18a1df415e0b912ebd97079c5ea0036459",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/terminal.py"
+      },
+      "_pytest.timing": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/timing.py",
+        "sha256": "62de28571e5296350624bc18fe2096f2feb064a55f33e1cc8d1e223c047db9d4",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/timing.py"
+      },
+      "_pytest.tmpdir": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/tmpdir.py",
+        "sha256": "5099f71d89413191c9e7515c9d4fe9fc7083bb73306f2cf1f73a9f89c862ed90",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/tmpdir.py"
+      },
+      "_pytest.warning_types": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/warning_types.py",
+        "sha256": "8e27be526f030b2798164fd8511132a2f447b6f5ef6958363228bf978998edb5",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/warning_types.py"
+      },
+      "_sitebuiltins": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/_sitebuiltins.py",
+        "sha256": "b9388bc1d6d12ed6be12da420ab1feca40f99c0e33ec315d92b1e01cb69b25bc",
+        "spec_origin": "frozen"
+      },
+      "_ssl": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/lib-dynload/_ssl.cpython-312-x86_64-linux-gnu.so",
+        "sha256": "80c755c80688b92e0f32af9168a605f1283256077f35d30f6cf518252f2a6660",
+        "spec_origin": "/usr/lib/python3.12/lib-dynload/_ssl.cpython-312-x86_64-linux-gnu.so"
+      },
+      "_weakrefset": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/_weakrefset.py",
+        "sha256": "91895a451d06e9f521a1171b31b9b19bc9740f35af00d4fa106338ab7167c9ac",
+        "spec_origin": "/usr/lib/python3.12/_weakrefset.py"
+      },
+      "abc": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/abc.py",
+        "sha256": "e558702a95cdce3febd289da021715d2b92bc43995b8a1bc58dfa1c3d8010287",
+        "spec_origin": "frozen"
+      },
+      "apport_python_hook": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/apport_python_hook.py",
+        "sha256": "2aac4de740babcc6038483cccc7fa71f7f06405da9b9d102aafe8ac55f509c4b",
+        "spec_origin": "/usr/lib/python3/dist-packages/apport_python_hook.py"
+      },
+      "argparse": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/argparse.py",
+        "sha256": "29395feb61bc376ca4ff9d44069af8d914ec2a1f25a4bd7978f6e2afef5bc07f",
+        "spec_origin": "/usr/lib/python3.12/argparse.py"
+      },
+      "ast": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/ast.py",
+        "sha256": "d16626aa5c054bcc45221e56f84e55051b046caf0f8be1fe4902ea71534fb735",
+        "spec_origin": "/usr/lib/python3.12/ast.py"
+      },
+      "attr": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/attr/__init__.py",
+        "sha256": "5a55c937a20207463f1d9d259ae4d48226b492e49d9f6a7aedde0de9c6313593",
+        "spec_origin": "/usr/lib/python3/dist-packages/attr/__init__.py"
+      },
+      "attr._cmp": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/attr/_cmp.py",
+        "sha256": "39066559d157ef8cf5f1a746114a78d0e8ea9b434dbb5165aa7bf6244f01da78",
+        "spec_origin": "/usr/lib/python3/dist-packages/attr/_cmp.py"
+      },
+      "attr._compat": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/attr/_compat.py",
+        "sha256": "426472c628b6f79c1c41f6ae816ab1b88ba600fb0d436f91505f364193ea30ac",
+        "spec_origin": "/usr/lib/python3/dist-packages/attr/_compat.py"
+      },
+      "attr._config": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/attr/_config.py",
+        "sha256": "cfcd55b7e19e4ffdad6b1b355d97e61f1f535a54b18cf6fa7991f52d31ac4b9e",
+        "spec_origin": "/usr/lib/python3/dist-packages/attr/_config.py"
+      },
+      "attr._funcs": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/attr/_funcs.py",
+        "sha256": "5414d414a2e496c9aac72b37a964932bf01cf59e2cd260095b0816f6703b2e59",
+        "spec_origin": "/usr/lib/python3/dist-packages/attr/_funcs.py"
+      },
+      "attr._make": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/attr/_make.py",
+        "sha256": "2e7572d9ed07ca0a2a699927842d7dcfb2663adeea1a401a75fd8b6605952562",
+        "spec_origin": "/usr/lib/python3/dist-packages/attr/_make.py"
+      },
+      "attr._next_gen": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/attr/_next_gen.py",
+        "sha256": "6acd6fa22f2c88023fa363901bc608899be69f41bbf92dff8ffefbe2b9e867f8",
+        "spec_origin": "/usr/lib/python3/dist-packages/attr/_next_gen.py"
+      },
+      "attr._version_info": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/attr/_version_info.py",
+        "sha256": "7b14aa6f76f913e7cc4ac819025130f5770ba448286cf391099a5c68482500ce",
+        "spec_origin": "/usr/lib/python3/dist-packages/attr/_version_info.py"
+      },
+      "attr.converters": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/attr/converters.py",
+        "sha256": "2b2c39318d327e7511fd1c0dd55c9d7f412213efbe86d0f13a049cffe3582fa0",
+        "spec_origin": "/usr/lib/python3/dist-packages/attr/converters.py"
+      },
+      "attr.exceptions": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/attr/exceptions.py",
+        "sha256": "1d116ae22c9b9afefe0dc670ca397a3357ae33661e2552bf845c6e6811809e02",
+        "spec_origin": "/usr/lib/python3/dist-packages/attr/exceptions.py"
+      },
+      "attr.filters": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/attr/filters.py",
+        "sha256": "f6962f5ea760ea6b4bbca2086f9ea800b44ca0716741370608ee045d3735ab23",
+        "spec_origin": "/usr/lib/python3/dist-packages/attr/filters.py"
+      },
+      "attr.setters": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/attr/setters.py",
+        "sha256": "a5b09943ea44e99c630ea65f59652150579f5eda5e908538a92fd80cc2cf439d",
+        "spec_origin": "/usr/lib/python3/dist-packages/attr/setters.py"
+      },
+      "attr.validators": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/attr/validators.py",
+        "sha256": "2c65696e2360fca1b362b2940f924f899931f1331fca70d91a84282c934220ca",
+        "spec_origin": "/usr/lib/python3/dist-packages/attr/validators.py"
+      },
+      "base64": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/base64.py",
+        "sha256": "65c70b5b6361c6f7a71ecc2df0f55315474b669221dd8d81d7c1ae8d56748ada",
+        "spec_origin": "/usr/lib/python3.12/base64.py"
+      },
+      "bdb": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/bdb.py",
+        "sha256": "314d8bf11b4824d47471ad25dab64bda895e39673fb744e88e7f622a3dd374f2",
+        "spec_origin": "/usr/lib/python3.12/bdb.py"
+      },
+      "bisect": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/bisect.py",
+        "sha256": "f1cf7b85fc36b5da249813fc5ab97d9464f8cc1bc817f7146206fa2713e35999",
+        "spec_origin": "/usr/lib/python3.12/bisect.py"
+      },
+      "bz2": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/bz2.py",
+        "sha256": "76ab3252924e71e859d7d90e8d3db13b6554975cfcac0fdadced4de7f8779330",
+        "spec_origin": "/usr/lib/python3.12/bz2.py"
+      },
+      "calendar": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/calendar.py",
+        "sha256": "fb3fbcc0a0c8f33941153c425e5c39aedae687c86fcb001bf3a9526a9584459c",
+        "spec_origin": "/usr/lib/python3.12/calendar.py"
+      },
+      "codecs": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/codecs.py",
+        "sha256": "7b7839e53a77961153240aecfe11edc8054d05b1dedd83894450dae21ec05785",
+        "spec_origin": "frozen"
+      },
+      "collections": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/collections/__init__.py",
+        "sha256": "0af967cd58036507b3d0fbc33b7a996c61dbb52a94b0b738c8bef12cd4cc7dd4",
+        "spec_origin": "/usr/lib/python3.12/collections/__init__.py"
+      },
+      "collections.abc": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/collections/abc.py",
+        "sha256": "9cb4208f99128a0489b6c8e6c61637617dd7d4250c59e065491957eda084dd10",
+        "spec_origin": "/usr/lib/python3.12/collections/abc.py"
+      },
+      "contextlib": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/contextlib.py",
+        "sha256": "8b7a477f978a8532852fd81e241c78182516bc4975d672d580a5848a76e11eb6",
+        "spec_origin": "/usr/lib/python3.12/contextlib.py"
+      },
+      "copy": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/copy.py",
+        "sha256": "cbd25547933176fcf6bb05c2adc9f4796d15ac20b9b82dcf890daea7203daeab",
+        "spec_origin": "/usr/lib/python3.12/copy.py"
+      },
+      "copyreg": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/copyreg.py",
+        "sha256": "c8eda41f05c6bf95a4da4726a530409d2485ae060b8d019b3a8034389a15d3e9",
+        "spec_origin": "/usr/lib/python3.12/copyreg.py"
+      },
+      "csv": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/csv.py",
+        "sha256": "46004923196e98a67f87d30da64d070027c81f144f5ac91242fbfae33507dda8",
+        "spec_origin": "/usr/lib/python3.12/csv.py"
+      },
+      "dataclasses": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/dataclasses.py",
+        "sha256": "0e449d55d6206b0022f541ba32be88fafc934ff71d9aa65f31f101ca6147f2ae",
+        "spec_origin": "/usr/lib/python3.12/dataclasses.py"
+      },
+      "datetime": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/datetime.py",
+        "sha256": "ef20dc6b3554cd585dddffdc573f1f9a7a54c522f2a3fb4576c44edbb1e14238",
+        "spec_origin": "/usr/lib/python3.12/datetime.py"
+      },
+      "decimal": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/decimal.py",
+        "sha256": "000c00bad31d126b054c6ec7f3e02b27c0f9a4d579f987d3c4f879cee1bacb81",
+        "spec_origin": "/usr/lib/python3.12/decimal.py"
+      },
+      "dis": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/dis.py",
+        "sha256": "f6f02f5966fed0b1ce95768dc59d7905c64f60f454d79eed67fbeaa724069031",
+        "spec_origin": "/usr/lib/python3.12/dis.py"
+      },
+      "email": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/email/__init__.py",
+        "sha256": "e4f46e3414c4602c9abb8b404a45e84412fc49dbe38a3d163f9575132dc7c93e",
+        "spec_origin": "/usr/lib/python3.12/email/__init__.py"
+      },
+      "email._encoded_words": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/email/_encoded_words.py",
+        "sha256": "4178321600c0a19ca04cfe8542ce44487f339d15d89a473b58cea63c0b230217",
+        "spec_origin": "/usr/lib/python3.12/email/_encoded_words.py"
+      },
+      "email._parseaddr": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/email/_parseaddr.py",
+        "sha256": "4308932872acbf4a674312a45a49b870e48026e3dfedc878ee2f512ddf2f30ba",
+        "spec_origin": "/usr/lib/python3.12/email/_parseaddr.py"
+      },
+      "email._policybase": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/email/_policybase.py",
+        "sha256": "3db4bf3be5bdba13ab9a78ce30784c330d6dbc657b4e9142210dc8b264cfd424",
+        "spec_origin": "/usr/lib/python3.12/email/_policybase.py"
+      },
+      "email.base64mime": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/email/base64mime.py",
+        "sha256": "e2b4b87a5f42a8c5780e343f675513bbcc6abdd23fa14f8f1a7d4f7d72304770",
+        "spec_origin": "/usr/lib/python3.12/email/base64mime.py"
+      },
+      "email.charset": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/email/charset.py",
+        "sha256": "a90653f13a4dc5eb3205079dda1d62561a8bf9a7b45585f5dbf90aa31a966680",
+        "spec_origin": "/usr/lib/python3.12/email/charset.py"
+      },
+      "email.encoders": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/email/encoders.py",
+        "sha256": "690b275529788cc48e8f541a2aef321dc31e92f75764ac7924896db72d8a9555",
+        "spec_origin": "/usr/lib/python3.12/email/encoders.py"
+      },
+      "email.errors": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/email/errors.py",
+        "sha256": "dbfb4bbfc85e9d556d3385dc6356518846d8a122bc643b171ea61b6e8dc42c8b",
+        "spec_origin": "/usr/lib/python3.12/email/errors.py"
+      },
+      "email.feedparser": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/email/feedparser.py",
+        "sha256": "6046239fcdd6977d1c25841581cabedaeec8046cc5fedcb8ff2d6450a36442bd",
+        "spec_origin": "/usr/lib/python3.12/email/feedparser.py"
+      },
+      "email.header": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/email/header.py",
+        "sha256": "4d9baa908ad5288dd8fad8cf20b3802ffac77ba1642727804a633b201c56e5ca",
+        "spec_origin": "/usr/lib/python3.12/email/header.py"
+      },
+      "email.iterators": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/email/iterators.py",
+        "sha256": "1080a2d03779176d6d45f6ecd976dbe69f5579f7e4e83b75224c3f92fd258102",
+        "spec_origin": "/usr/lib/python3.12/email/iterators.py"
+      },
+      "email.message": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/email/message.py",
+        "sha256": "5dca7305c5218c06527d699e6b526eaf0c34bb6c2dda155d4e7f0815429e677c",
+        "spec_origin": "/usr/lib/python3.12/email/message.py"
+      },
+      "email.parser": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/email/parser.py",
+        "sha256": "88890ea9994c55ff7d6c1fd570fece2785f51ed407ee95df4aff946e250bcd66",
+        "spec_origin": "/usr/lib/python3.12/email/parser.py"
+      },
+      "email.quoprimime": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/email/quoprimime.py",
+        "sha256": "77b454bd3ba3b5e3776be28ae3a0fd8de5d1e50d5b8ee10dd539c37c2bd68082",
+        "spec_origin": "/usr/lib/python3.12/email/quoprimime.py"
+      },
+      "email.utils": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/email/utils.py",
+        "sha256": "3952883e261b8d7b6873001047f838c88cee6dfbba10df537a9c07eb2e7d66ad",
+        "spec_origin": "/usr/lib/python3.12/email/utils.py"
+      },
+      "encodings": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/encodings/__init__.py",
+        "sha256": "78c4744d407690f321565488710b5aaf6486b5afa8d185637aa1e7633ab59cd8",
+        "spec_origin": "/usr/lib/python3.12/encodings/__init__.py"
+      },
+      "encodings.aliases": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/encodings/aliases.py",
+        "sha256": "6fdcc49ba23a0203ae6cf28e608f8e6297d7c4d77d52e651db3cb49b9564c6d2",
+        "spec_origin": "/usr/lib/python3.12/encodings/aliases.py"
+      },
+      "encodings.ascii": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/encodings/ascii.py",
+        "sha256": "578aa1173f7cc60dad2895071287fe6182bd14787b3fbf47a6c7983dfe3675e3",
+        "spec_origin": "/usr/lib/python3.12/encodings/ascii.py"
+      },
+      "encodings.utf_8": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/encodings/utf_8.py",
+        "sha256": "ba0cac060269583523ca9506473a755203037c57d466a11aa89a30a5f6756f3d",
+        "spec_origin": "/usr/lib/python3.12/encodings/utf_8.py"
+      },
+      "enum": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/enum.py",
+        "sha256": "c8ead615c159598370295649eb296819ad4b40d50b200c4fec2d4269bf7af9ae",
+        "spec_origin": "/usr/lib/python3.12/enum.py"
+      },
+      "fnmatch": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/fnmatch.py",
+        "sha256": "6683da36e47af523f3f41e18ad244d837783e19e98911cc0b7415dea81494ebc",
+        "spec_origin": "/usr/lib/python3.12/fnmatch.py"
+      },
+      "fractions": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/fractions.py",
+        "sha256": "cf33568f7b767f66896995a7a81cc662e8be226f2e58efb61d2028f64eb5d231",
+        "spec_origin": "/usr/lib/python3.12/fractions.py"
+      },
+      "functools": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/functools.py",
+        "sha256": "cca971c456e1bec8b751aecdf41466f34dbf72321ee0840627280ba2ccf9d033",
+        "spec_origin": "/usr/lib/python3.12/functools.py"
+      },
+      "genericpath": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/genericpath.py",
+        "sha256": "2b0b35d2206778af4081cf81dd9b513876e72c35a55bec941402e1fa62b1f1aa",
+        "spec_origin": "frozen"
+      },
+      "gettext": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/gettext.py",
+        "sha256": "1cc6fd33bdce3bb29c0c37ec9a2f5bf15a315e9776b329247e6675c028a8af39",
+        "spec_origin": "/usr/lib/python3.12/gettext.py"
+      },
+      "glob": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/glob.py",
+        "sha256": "c9e5f9ae0752660ede63328a456f58f87c29500b31f58c1b813458b00fceb6d5",
+        "spec_origin": "/usr/lib/python3.12/glob.py"
+      },
+      "hashlib": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/hashlib.py",
+        "sha256": "6dbdebf270868b391080e21dc9687eddfaf321c965ad979f68d3f5c423c613ab",
+        "spec_origin": "/usr/lib/python3.12/hashlib.py"
+      },
+      "heapq": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/heapq.py",
+        "sha256": "6d43277e5c76fc0f073cd388fcff852d14d068f6bb6d4886c340f8b75a1229a9",
+        "spec_origin": "/usr/lib/python3.12/heapq.py"
+      },
+      "http": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/http/__init__.py",
+        "sha256": "17f4f6832cfc84b5b9600414bab80b77e67ccb611bdfed10a3f2beca9d0d568b",
+        "spec_origin": "/usr/lib/python3.12/http/__init__.py"
+      },
+      "http.client": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/http/client.py",
+        "sha256": "0242200eed2aa47dc2723c99605055c9b792dc197ab36884db0a193772ba99d1",
+        "spec_origin": "/usr/lib/python3.12/http/client.py"
+      },
+      "idna": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/idna/__init__.py",
+        "sha256": "28940dd5e401afc8882b948aac9e3b957bf11b4049ecb9b7f16e334f4bfff259",
+        "spec_origin": "/usr/lib/python3/dist-packages/idna/__init__.py"
+      },
+      "idna.core": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/idna/core.py",
+        "sha256": "8e01c4fa84e30b436f2fce2b2419378ce25b23c28d1271f9ff87e6e2149aea23",
+        "spec_origin": "/usr/lib/python3/dist-packages/idna/core.py"
+      },
+      "idna.idnadata": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/idna/idnadata.py",
+        "sha256": "76a470cadce48c81cc05ad91d6562f1c3c0009e9d93edf1e195bb563c50113e1",
+        "spec_origin": "/usr/lib/python3/dist-packages/idna/idnadata.py"
+      },
+      "idna.intranges": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/idna/intranges.py",
+        "sha256": "601af87d162e587ee44ca4b6b579458ccdb8645d4f76f722afe6b2c278889ea8",
+        "spec_origin": "/usr/lib/python3/dist-packages/idna/intranges.py"
+      },
+      "idna.package_data": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/idna/package_data.py",
+        "sha256": "cbe8affaa25d987b16551e45b33630b0ca3501083caa9754d9a5399d3f92da84",
+        "spec_origin": "/usr/lib/python3/dist-packages/idna/package_data.py"
+      },
+      "importlib": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/importlib/__init__.py",
+        "sha256": "c9e1b3dbc619ac31e7017ac43668a20200872c1c0e79ae379c0dab6ed399b730",
+        "spec_origin": "/usr/lib/python3.12/importlib/__init__.py"
+      },
+      "importlib._abc": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/importlib/_abc.py",
+        "sha256": "80aab7931dc999dee581c8b8b56fcd973fe156335a96ceeaf6acfc03cebf10e8",
+        "spec_origin": "/usr/lib/python3.12/importlib/_abc.py"
+      },
+      "importlib._bootstrap": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/importlib/_bootstrap.py",
+        "sha256": "9653944363a4773cc32bbb34426024597a9d2ee4cd42e7912b4daf8cadfb53ed",
+        "spec_origin": "frozen"
+      },
+      "importlib._bootstrap_external": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/importlib/_bootstrap_external.py",
+        "sha256": "97c6211750d63067712ad2cd74d50be33337f1fb1cd2c769022ced9b401edd92",
+        "spec_origin": "frozen"
+      },
+      "importlib.abc": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/importlib/abc.py",
+        "sha256": "5f9cb36ca1bce9d5df00bc8d4d7f46b7ea2353dfa99292ad7f099affddfb5d03",
+        "spec_origin": "/usr/lib/python3.12/importlib/abc.py"
+      },
+      "importlib.machinery": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/importlib/machinery.py",
+        "sha256": "d045cd7ecf2a12b6ecbfbef79eb114e87ef2ebd756f5b705f73e6f3266e3dede",
+        "spec_origin": "frozen"
+      },
+      "importlib.metadata": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/importlib/metadata/__init__.py",
+        "sha256": "873ff461b8e216bc55ad9956d13dabfe35ff2ba13701ede97837884994dbc9fa",
+        "spec_origin": "/usr/lib/python3.12/importlib/metadata/__init__.py"
+      },
+      "importlib.metadata._adapters": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/importlib/metadata/_adapters.py",
+        "sha256": "de9a880abc4513af1b69ce150cd5a5093201c39131717cdc2ba6b19f4364c163",
+        "spec_origin": "/usr/lib/python3.12/importlib/metadata/_adapters.py"
+      },
+      "importlib.metadata._collections": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/importlib/metadata/_collections.py",
+        "sha256": "089d0e4c21c88d6034648552e2fa0e440b27d91e11d9c40112d3ec6442690126",
+        "spec_origin": "/usr/lib/python3.12/importlib/metadata/_collections.py"
+      },
+      "importlib.metadata._functools": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/importlib/metadata/_functools.py",
+        "sha256": "3ec636fb8aeb297e1155e442d681a9d65075a660bd78a37cf3f7fe6c3f6e3a80",
+        "spec_origin": "/usr/lib/python3.12/importlib/metadata/_functools.py"
+      },
+      "importlib.metadata._itertools": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/importlib/metadata/_itertools.py",
+        "sha256": "72faffdaff0145bc5c225e71e6575fa9d1e3848f188bcb3cca4e741bf9e6ea34",
+        "spec_origin": "/usr/lib/python3.12/importlib/metadata/_itertools.py"
+      },
+      "importlib.metadata._meta": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/importlib/metadata/_meta.py",
+        "sha256": "bd3504040497cd049e6b529bde0b461f63cd2be3070f2d0815d4dd7609b266c8",
+        "spec_origin": "/usr/lib/python3.12/importlib/metadata/_meta.py"
+      },
+      "importlib.metadata._text": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/importlib/metadata/_text.py",
+        "sha256": "1c2b0592c66924b7933f734493f9e0ac079755146d4ebb7287d78e001a113f80",
+        "spec_origin": "/usr/lib/python3.12/importlib/metadata/_text.py"
+      },
+      "importlib.readers": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/importlib/readers.py",
+        "sha256": "d0d57d118d64916f7e6edb04f8bd1a760a1abb879125899ef50a36d09ef54df4",
+        "spec_origin": "/usr/lib/python3.12/importlib/readers.py"
+      },
+      "importlib.resources": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/importlib/resources/__init__.py",
+        "sha256": "7af3e6d7690b818a939bea5bce6eb46cebae9ae993f08a41356169d2e332af31",
+        "spec_origin": "/usr/lib/python3.12/importlib/resources/__init__.py"
+      },
+      "importlib.resources._adapters": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/importlib/resources/_adapters.py",
+        "sha256": "be9ac919b51e1db6a35fa5c2b8c3fa27794caea0a2f8ffcc4e5ce225447b8df9",
+        "spec_origin": "/usr/lib/python3.12/importlib/resources/_adapters.py"
+      },
+      "importlib.resources._common": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/importlib/resources/_common.py",
+        "sha256": "9bfef8de14579936e96c0e921e934a3f4f56b4e32d3cfacc12f3e24436fc37b4",
+        "spec_origin": "/usr/lib/python3.12/importlib/resources/_common.py"
+      },
+      "importlib.resources._itertools": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/importlib/resources/_itertools.py",
+        "sha256": "7838ac57a46a88d64ea202d25dfe8b3861ce61cefd14680faca34bcc52e60ab5",
+        "spec_origin": "/usr/lib/python3.12/importlib/resources/_itertools.py"
+      },
+      "importlib.resources._legacy": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/importlib/resources/_legacy.py",
+        "sha256": "d1329d662c712d603ec70b40670e07729a899a3e17a6bc7566472dcb48134596",
+        "spec_origin": "/usr/lib/python3.12/importlib/resources/_legacy.py"
+      },
+      "importlib.resources.abc": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/importlib/resources/abc.py",
+        "sha256": "a726c48590b21ba5532f0c654735991571bc0ecafe88145cb8891d82cd364e5e",
+        "spec_origin": "/usr/lib/python3.12/importlib/resources/abc.py"
+      },
+      "importlib.resources.readers": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/importlib/resources/readers.py",
+        "sha256": "231e0c485123729f26b706e54b1810d4294d3bd7182a2355b14b8318bd4ecf8e",
+        "spec_origin": "/usr/lib/python3.12/importlib/resources/readers.py"
+      },
+      "importlib.util": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/importlib/util.py",
+        "sha256": "ca54e6458dbe521d591e5b8d9bb651ef929bfae946706c98470cdd569041a64f",
+        "spec_origin": "frozen"
+      },
+      "iniconfig": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/iniconfig/__init__.py",
+        "sha256": "bb1c9017eea0053a104bd0703f3d8d13e7b9a854e4a364ee765ad64da7220819",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/iniconfig/__init__.py"
+      },
+      "iniconfig._parse": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/iniconfig/_parse.py",
+        "sha256": "15824a78105b52aa9ed414ce6ad073967c73be7ea5ae9d991a0df97a6e0cc2e1",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/iniconfig/_parse.py"
+      },
+      "iniconfig.exceptions": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/iniconfig/exceptions.py",
+        "sha256": "9a2a50fda3310fd0af4af156375a135d8e10b919ca00c6757f7b027668c34d4d",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/iniconfig/exceptions.py"
+      },
+      "inspect": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/inspect.py",
+        "sha256": "13945f061d93cf7b8f812d2afc279ff0b3aea799c7146b1c0c58c6e644bbc3e1",
+        "spec_origin": "/usr/lib/python3.12/inspect.py"
+      },
+      "io": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/io.py",
+        "sha256": "7cec3cb8ac004058dd0a5af246e6d950fb59c7ddd0058fda48bcb3fcb98d8822",
+        "spec_origin": "frozen"
+      },
+      "ipaddress": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/ipaddress.py",
+        "sha256": "cc9831e239bd81c1480a12733bded744002d93815fd0d083c77aea348c956e67",
+        "spec_origin": "/usr/lib/python3.12/ipaddress.py"
+      },
+      "json": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/json/__init__.py",
+        "sha256": "d5d41e2c29049515d295d81a6d40b4890fbec8d8482cfb401630f8ef2f77e4d5",
+        "spec_origin": "/usr/lib/python3.12/json/__init__.py"
+      },
+      "json.decoder": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/json/decoder.py",
+        "sha256": "9f02654649816145bc76f8c210a5fe3ba1de142d4d97a1c93105732e747c285b",
+        "spec_origin": "/usr/lib/python3.12/json/decoder.py"
+      },
+      "json.encoder": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/json/encoder.py",
+        "sha256": "af7bd40a0d0d0a3e726a9b4b3a2a543019f6ab97a340d0162a9c29ca9da97869",
+        "spec_origin": "/usr/lib/python3.12/json/encoder.py"
+      },
+      "json.scanner": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/json/scanner.py",
+        "sha256": "8604d9d03786d0d509abb49e9f069337278ea988c244069ae8ca2c89acc2cb08",
+        "spec_origin": "/usr/lib/python3.12/json/scanner.py"
+      },
+      "jsonpointer": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/jsonpointer.py",
+        "sha256": "14187499e7185459f1b6f411bea34a925678c47b90e3388f4494dea74ba2d23f",
+        "spec_origin": "/usr/lib/python3/dist-packages/jsonpointer.py"
+      },
+      "jsonschema": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/jsonschema/__init__.py",
+        "sha256": "87497644f54cf648a653bfa34d22a812782e577406bebad0be59c937717a50f9",
+        "spec_origin": "/usr/lib/python3/dist-packages/jsonschema/__init__.py"
+      },
+      "jsonschema._format": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/jsonschema/_format.py",
+        "sha256": "c5830e1f86396fdc6d515f8e977e1076d0f8d768877ad4d82698acc083fe1d8e",
+        "spec_origin": "/usr/lib/python3/dist-packages/jsonschema/_format.py"
+      },
+      "jsonschema._legacy_validators": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/jsonschema/_legacy_validators.py",
+        "sha256": "be9c4cf914862e2106501710abaf3aedb38bd98a47076a1c31000db85ce29d46",
+        "spec_origin": "/usr/lib/python3/dist-packages/jsonschema/_legacy_validators.py"
+      },
+      "jsonschema._types": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/jsonschema/_types.py",
+        "sha256": "fcd0e6dcec5d3cf580a814a97e8e1054403fa2a7ca3000a0d50b25571d12f74d",
+        "spec_origin": "/usr/lib/python3/dist-packages/jsonschema/_types.py"
+      },
+      "jsonschema._utils": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/jsonschema/_utils.py",
+        "sha256": "c6b76b85b7fad750a992ff86295b58fe55df0f0c2e2a0f850ecc226ef45521e8",
+        "spec_origin": "/usr/lib/python3/dist-packages/jsonschema/_utils.py"
+      },
+      "jsonschema._validators": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/jsonschema/_validators.py",
+        "sha256": "aa6a2e6ee24a460b989c9a06fbf1beb385a713507c285bf189a72798b0084c23",
+        "spec_origin": "/usr/lib/python3/dist-packages/jsonschema/_validators.py"
+      },
+      "jsonschema.exceptions": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/jsonschema/exceptions.py",
+        "sha256": "3011bd6ee3f40bff19e9f219da86f729d80fecdc78b4857d717f52e527d1d3a6",
+        "spec_origin": "/usr/lib/python3/dist-packages/jsonschema/exceptions.py"
+      },
+      "jsonschema.protocols": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/jsonschema/protocols.py",
+        "sha256": "5a0cf33af9b4567bb7f451cf4318e112ce1dd9cb6af94def14c9c072143755b8",
+        "spec_origin": "/usr/lib/python3/dist-packages/jsonschema/protocols.py"
+      },
+      "jsonschema.validators": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/jsonschema/validators.py",
+        "sha256": "d7843cbdb95581c0d4c9a10a29643d9e667ba597c50a05e656c30070a1793502",
+        "spec_origin": "/usr/lib/python3/dist-packages/jsonschema/validators.py"
+      },
+      "keyword": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/keyword.py",
+        "sha256": "18c2be738c04ad20ad375f6a71db34b3823c7f40b0340f5294d0e89f3c9b093b",
+        "spec_origin": "/usr/lib/python3.12/keyword.py"
+      },
+      "linecache": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/linecache.py",
+        "sha256": "c985113d9219c02950916e75090158bccf44cacac09014741b1c59b07968d111",
+        "spec_origin": "/usr/lib/python3.12/linecache.py"
+      },
+      "locale": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/locale.py",
+        "sha256": "d1134b7212bad37b7b81339061dc37a19a194aa183ec2cb60412cf365993b151",
+        "spec_origin": "/usr/lib/python3.12/locale.py"
+      },
+      "logging": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/logging/__init__.py",
+        "sha256": "43f86bbc08fdd5c7b6e697abffe1381f534a92bb32e1f1aee8360d6a142592a1",
+        "spec_origin": "/usr/lib/python3.12/logging/__init__.py"
+      },
+      "lzma": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/lzma.py",
+        "sha256": "58fb9d2fdc8a8af7b25e218f17ea3b51bdfa53bdf40f440ab33c605974ca5c2e",
+        "spec_origin": "/usr/lib/python3.12/lzma.py"
+      },
+      "ntpath": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/ntpath.py",
+        "sha256": "c4dd79bf103677daaad873952b89fc1f973425e7b250006cc35af4c164181da8",
+        "spec_origin": "frozen"
+      },
+      "numbers": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/numbers.py",
+        "sha256": "ac381960a3dc1db0498b0bd43d8ef278d6599713121a186b153ff09d9552e0db",
+        "spec_origin": "/usr/lib/python3.12/numbers.py"
+      },
+      "opcode": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/opcode.py",
+        "sha256": "192f6008508f28d3273bff42eaea9b01c8394dab1607cd36aea778bdd166c3a6",
+        "spec_origin": "/usr/lib/python3.12/opcode.py"
+      },
+      "operator": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/operator.py",
+        "sha256": "b2af20f67667203c1730e686cc5d0427becc94db4c97f1d3efe3ed2158473f6a",
+        "spec_origin": "/usr/lib/python3.12/operator.py"
+      },
+      "os": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/os.py",
+        "sha256": "316d1b7307fd851bded3423c9d437e0a383c725d993f0fcff2e8b749fe560b62",
+        "spec_origin": "frozen"
+      },
+      "os.path": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/posixpath.py",
+        "sha256": "c443d7b8afad1717e7060ce49b3e04423058de56cd4246ee6bcc1ac962eb5c2b",
+        "spec_origin": "frozen"
+      },
+      "pathlib": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/pathlib.py",
+        "sha256": "b43e134bf7479759838b4ecec3d78e0e67fdfde2d671c5c2d7886a47da93885d",
+        "spec_origin": "/usr/lib/python3.12/pathlib.py"
+      },
+      "platform": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/platform.py",
+        "sha256": "ed0defe8ff7c116710493ffd099b566d3de686ab1b431a3d5401056798e59341",
+        "spec_origin": "/usr/lib/python3.12/platform.py"
+      },
+      "pluggy": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/pluggy/__init__.py",
+        "sha256": "0fa769d609840e3b43a7c840c1073eaab81aba59cbe2296daea90b0ddfa0f6d8",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/pluggy/__init__.py"
+      },
+      "pluggy._callers": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/pluggy/_callers.py",
+        "sha256": "804665946692615b2c676526a4d7e6602d1b755821da361b0057982afb913236",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/pluggy/_callers.py"
+      },
+      "pluggy._hooks": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/pluggy/_hooks.py",
+        "sha256": "13a7f79d8708e9d6c4b8ed069b2eb5a3380653fe7dfdeebd902d3c6b4e8406ea",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/pluggy/_hooks.py"
+      },
+      "pluggy._manager": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/pluggy/_manager.py",
+        "sha256": "2b8229fe99048ef4f6a0e21f40fa7c0b0016a1756710d81045ccbdb651a28b4a",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/pluggy/_manager.py"
+      },
+      "pluggy._result": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/pluggy/_result.py",
+        "sha256": "dd77f2ec3ae35db61bee9b91aaec98d956e274858daba3e9ed09ee12531d8fc4",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/pluggy/_result.py"
+      },
+      "pluggy._tracing": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/pluggy/_tracing.py",
+        "sha256": "9d777604298381ff2327157e1cedcfab147e595e777969c5f01e001759c91a0a",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/pluggy/_tracing.py"
+      },
+      "pluggy._version": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/pluggy/_version.py",
+        "sha256": "e45189369f4b924f6e3b17828d7a68086045efd02be8b18f391efe6ad06a6ffe",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/pluggy/_version.py"
+      },
+      "pluggy._warnings": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/pluggy/_warnings.py",
+        "sha256": "b5dd00bd90697da9ab8820b73aab0bc31321f92cc03237e399ce7c4f9bcfde5c",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/pluggy/_warnings.py"
+      },
+      "posixpath": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/posixpath.py",
+        "sha256": "c443d7b8afad1717e7060ce49b3e04423058de56cd4246ee6bcc1ac962eb5c2b",
+        "spec_origin": "frozen"
+      },
+      "pprint": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/pprint.py",
+        "sha256": "1585c8d74d7f485590db2af46680ae0a73737ca9fb66022b2bcbbc4c4925e203",
+        "spec_origin": "/usr/lib/python3.12/pprint.py"
+      },
+      "psutil": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/psutil/__init__.py",
+        "sha256": "6167ff8b6663b89a842d17cd97a9d7d2766ea22d3d197a8c64f255b0c24c0904",
+        "spec_origin": "/usr/lib/python3/dist-packages/psutil/__init__.py"
+      },
+      "psutil._common": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/psutil/_common.py",
+        "sha256": "053c07c5d6094329eb9f98bc20eb3a5c5c4ba3d2f5120e5c8030aae986b2a6bd",
+        "spec_origin": "/usr/lib/python3/dist-packages/psutil/_common.py"
+      },
+      "psutil._compat": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/psutil/_compat.py",
+        "sha256": "00e174bd209695efec6c9d46c3e086c7468423dca4e6eef46213d838f837287b",
+        "spec_origin": "/usr/lib/python3/dist-packages/psutil/_compat.py"
+      },
+      "psutil._pslinux": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/psutil/_pslinux.py",
+        "sha256": "41823ac874ef44c619955c41d3af3154010c10018645253d13bfac243df5eb9a",
+        "spec_origin": "/usr/lib/python3/dist-packages/psutil/_pslinux.py"
+      },
+      "psutil._psposix": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/psutil/_psposix.py",
+        "sha256": "5fdadded61ca43a994027da285bd373029f3ac1b50b2b3d1902a2e1319ae6a04",
+        "spec_origin": "/usr/lib/python3/dist-packages/psutil/_psposix.py"
+      },
+      "psutil._psutil_linux": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/psutil/_psutil_linux.abi3.so",
+        "sha256": "bdcc1380029cb54df83e358ed31f8593fc0c02eccf6d60f4ec9d1830e89f4858",
+        "spec_origin": "/usr/lib/python3/dist-packages/psutil/_psutil_linux.abi3.so"
+      },
+      "psutil._psutil_posix": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/psutil/_psutil_posix.abi3.so",
+        "sha256": "36e7b4e166d4f3f3d5b7ff05effc09745cd6c972fe8a1005da195e1a86bc1147",
+        "spec_origin": "/usr/lib/python3/dist-packages/psutil/_psutil_posix.abi3.so"
+      },
+      "pvectorc": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pvectorc.cpython-312-x86_64-linux-gnu.so",
+        "sha256": "61cf9173c68bcd8bc71ad46ea9bbbf34ff825db7487891e66a91151f5b420fe8",
+        "spec_origin": "/usr/lib/python3/dist-packages/pvectorc.cpython-312-x86_64-linux-gnu.so"
+      },
+      "py": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/py.py",
+        "sha256": "b71675b5d9845ba0814e9e88767f88dac3b3cc0d3128da028bd45edbb523e871",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/py.py"
+      },
+      "py.error": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/_py/error.py",
+        "sha256": "90643b17cfdf67a615061031faef669134014f1d2a231c6754c0b40a088e77bd",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/_py/error.py"
+      },
+      "py.path": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/_py/path.py",
+        "sha256": "72a0a7d1a9b32a1a92aa25b55b3b782aabc52369dc281cc69f011152c5a90bfd",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/_pytest/_py/path.py"
+      },
+      "pygments": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pygments/__init__.py",
+        "sha256": "84e562dc5c16bab7350a3e7b689432af5b42899e9d54cf7ce367985e414f9989",
+        "spec_origin": "/usr/lib/python3/dist-packages/pygments/__init__.py"
+      },
+      "pygments.console": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pygments/console.py",
+        "sha256": "db06795be53a4ee7490f5fcd2d4c237253296e898533dd6536fd75ffad2c7c66",
+        "spec_origin": "/usr/lib/python3/dist-packages/pygments/console.py"
+      },
+      "pygments.filter": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pygments/filter.py",
+        "sha256": "8f968b33d6bdc12c7a787d68cb8ef7a12909d3684658da6d065568e2cd60ff7d",
+        "spec_origin": "/usr/lib/python3/dist-packages/pygments/filter.py"
+      },
+      "pygments.filters": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pygments/filters/__init__.py",
+        "sha256": "abcafc19f2b774ed36d5348725da7037087a44729b00bedc782ce885abd668dd",
+        "spec_origin": "/usr/lib/python3/dist-packages/pygments/filters/__init__.py"
+      },
+      "pygments.formatter": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pygments/formatter.py",
+        "sha256": "633d35c93d4d4905d317c1afb0bc494a67b3ec4ad354eb319b733a1953ee1fec",
+        "spec_origin": "/usr/lib/python3/dist-packages/pygments/formatter.py"
+      },
+      "pygments.formatters": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pygments/formatters/__init__.py",
+        "sha256": "d60005db5b7c1460290d7a43a71e5ba94d0caea23bc653c59cf320dae5e7d109",
+        "spec_origin": "/usr/lib/python3/dist-packages/pygments/formatters/__init__.py"
+      },
+      "pygments.formatters._mapping": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pygments/formatters/_mapping.py",
+        "sha256": "d42c37ec5b9094d69c9f144a9ad94f5f89f22e85fdfedb64a39670b1c354659e",
+        "spec_origin": "/usr/lib/python3/dist-packages/pygments/formatters/_mapping.py"
+      },
+      "pygments.formatters.terminal": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pygments/formatters/terminal.py",
+        "sha256": "3ff76bec62f245320a83c2c471e08eaf9079786cc640110b03725038cbd9f150",
+        "spec_origin": "/usr/lib/python3/dist-packages/pygments/formatters/terminal.py"
+      },
+      "pygments.lexer": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pygments/lexer.py",
+        "sha256": "72eec89179bfb2129d7e65d7ae52f26f14594bf451049a1a6cec1066a2cf50ee",
+        "spec_origin": "/usr/lib/python3/dist-packages/pygments/lexer.py"
+      },
+      "pygments.lexers": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pygments/lexers/__init__.py",
+        "sha256": "b9db095dd79fca1c1451f8ac0b71366e35a1ddc00d4c4d195de5c188ab64f037",
+        "spec_origin": "/usr/lib/python3/dist-packages/pygments/lexers/__init__.py"
+      },
+      "pygments.lexers._mapping": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pygments/lexers/_mapping.py",
+        "sha256": "d820659686ca07d0eca3d91b91aabf2164ef0f767624eab1fc7b09ead04b0d76",
+        "spec_origin": "/usr/lib/python3/dist-packages/pygments/lexers/_mapping.py"
+      },
+      "pygments.lexers.diff": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pygments/lexers/diff.py",
+        "sha256": "540c80151166c8c1fceb9ac4277ec8dd3a72ae92d4a04314f7976eaf0e872d17",
+        "spec_origin": "/usr/lib/python3/dist-packages/pygments/lexers/diff.py"
+      },
+      "pygments.lexers.python": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pygments/lexers/python.py",
+        "sha256": "7e9fa972f4bb29027bfe9c586e7e2cd0e34f14e15c584451c381767be08ffc0d",
+        "spec_origin": "/usr/lib/python3/dist-packages/pygments/lexers/python.py"
+      },
+      "pygments.modeline": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pygments/modeline.py",
+        "sha256": "785daf3b82e9386a0fbc828a91b3df9f2badf214f852279b64fa5bf8160641d2",
+        "spec_origin": "/usr/lib/python3/dist-packages/pygments/modeline.py"
+      },
+      "pygments.plugin": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pygments/plugin.py",
+        "sha256": "93f82d24706b8830d688d8a743e87faa70d49bb1273cbb97693187dc2779a59c",
+        "spec_origin": "/usr/lib/python3/dist-packages/pygments/plugin.py"
+      },
+      "pygments.regexopt": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pygments/regexopt.py",
+        "sha256": "8e0d402e881c60653de93412f62b0197a742aefc39cb9fbe04ffcafae164ffcb",
+        "spec_origin": "/usr/lib/python3/dist-packages/pygments/regexopt.py"
+      },
+      "pygments.styles": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pygments/styles/__init__.py",
+        "sha256": "fef0f7922c5630656e050ac0d56cffac912d924f3dd56d040f9e62f044018420",
+        "spec_origin": "/usr/lib/python3/dist-packages/pygments/styles/__init__.py"
+      },
+      "pygments.styles._mapping": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pygments/styles/_mapping.py",
+        "sha256": "f2763d6dc105d59c3d5eed1b9aa7dfa981071db359bc24078add8e5652561f29",
+        "spec_origin": "/usr/lib/python3/dist-packages/pygments/styles/_mapping.py"
+      },
+      "pygments.token": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pygments/token.py",
+        "sha256": "0d755070b50b567d392c6eb76da822a89776147dd4ce179550199d41e5e7d54f",
+        "spec_origin": "/usr/lib/python3/dist-packages/pygments/token.py"
+      },
+      "pygments.unistring": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pygments/unistring.py",
+        "sha256": "15a51f1b5e0d04910a2d0a18f6a8fa258797ae961c2e62ae96085dc4e18568e7",
+        "spec_origin": "/usr/lib/python3/dist-packages/pygments/unistring.py"
+      },
+      "pygments.util": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pygments/util.py",
+        "sha256": "004558d2aa27cb210c82fe03a3674836baea500c149365d84aa1cceb9d2ecde9",
+        "spec_origin": "/usr/lib/python3/dist-packages/pygments/util.py"
+      },
+      "pyrsistent": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pyrsistent/__init__.py",
+        "sha256": "d5c38d2c20f36f20e867f75e7a4f048bf8aa38b238a0db1e44f2c5df3be61280",
+        "spec_origin": "/usr/lib/python3/dist-packages/pyrsistent/__init__.py"
+      },
+      "pyrsistent._checked_types": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pyrsistent/_checked_types.py",
+        "sha256": "fe406764b1f815d4b28445865c3914efdef896e8fe0bf9891e219531f094cd7a",
+        "spec_origin": "/usr/lib/python3/dist-packages/pyrsistent/_checked_types.py"
+      },
+      "pyrsistent._field_common": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pyrsistent/_field_common.py",
+        "sha256": "801ccba50d1da8623850aed8f840fa876d25e839f4424044caba86c1b5ff856b",
+        "spec_origin": "/usr/lib/python3/dist-packages/pyrsistent/_field_common.py"
+      },
+      "pyrsistent._helpers": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pyrsistent/_helpers.py",
+        "sha256": "434f2d65e68333578ac71da321bd4109400905fde15a78b7282d430ad079c864",
+        "spec_origin": "/usr/lib/python3/dist-packages/pyrsistent/_helpers.py"
+      },
+      "pyrsistent._immutable": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pyrsistent/_immutable.py",
+        "sha256": "3e48ef82171b0755cd5e06a6e47f96f6e11a1297d9af511cdaffeaccad440faa",
+        "spec_origin": "/usr/lib/python3/dist-packages/pyrsistent/_immutable.py"
+      },
+      "pyrsistent._pbag": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pyrsistent/_pbag.py",
+        "sha256": "d04de2b4a12cbf6dd87428658b0658bec014a576377d87a0706ad26a40ac6f63",
+        "spec_origin": "/usr/lib/python3/dist-packages/pyrsistent/_pbag.py"
+      },
+      "pyrsistent._pclass": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pyrsistent/_pclass.py",
+        "sha256": "da6ab3e7b3a377b06947b9c92eb6cccf7e60e35e295bf75d9c811fdf13d344ae",
+        "spec_origin": "/usr/lib/python3/dist-packages/pyrsistent/_pclass.py"
+      },
+      "pyrsistent._pdeque": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pyrsistent/_pdeque.py",
+        "sha256": "7c1bb1c24b735b68805d400b213d63efe73078497be56a143ed1ba2e11d20bb7",
+        "spec_origin": "/usr/lib/python3/dist-packages/pyrsistent/_pdeque.py"
+      },
+      "pyrsistent._plist": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pyrsistent/_plist.py",
+        "sha256": "e7a1c6cc61e058efc3ae40a5375b6932968790d7f2965323fbbf3ff908f1f904",
+        "spec_origin": "/usr/lib/python3/dist-packages/pyrsistent/_plist.py"
+      },
+      "pyrsistent._pmap": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pyrsistent/_pmap.py",
+        "sha256": "d23daf7258ca8a22494a367797fae06d3d0d292d1e1adad849edcf6987ff9e3a",
+        "spec_origin": "/usr/lib/python3/dist-packages/pyrsistent/_pmap.py"
+      },
+      "pyrsistent._precord": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pyrsistent/_precord.py",
+        "sha256": "73c3537237520dd957482a78d27a0cb0b2be671f2c3c05a5f1d59f6ccbb2cdd0",
+        "spec_origin": "/usr/lib/python3/dist-packages/pyrsistent/_precord.py"
+      },
+      "pyrsistent._pset": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pyrsistent/_pset.py",
+        "sha256": "dfe366c0e48e3e19825bdb3fefba609f9edf017babbb802ec6e85c5843dbc41a",
+        "spec_origin": "/usr/lib/python3/dist-packages/pyrsistent/_pset.py"
+      },
+      "pyrsistent._pvector": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pyrsistent/_pvector.py",
+        "sha256": "5f469b1a44b2923900bb662f945d43bf50f4e25a3c0b5c9a49213d9cd982b5ac",
+        "spec_origin": "/usr/lib/python3/dist-packages/pyrsistent/_pvector.py"
+      },
+      "pyrsistent._toolz": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pyrsistent/_toolz.py",
+        "sha256": "d772d3b2b666fe07ead47de866ac697b3f8fe4f422d6cdf685435798eecd3649",
+        "spec_origin": "/usr/lib/python3/dist-packages/pyrsistent/_toolz.py"
+      },
+      "pyrsistent._transformations": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/pyrsistent/_transformations.py",
+        "sha256": "1262fa6a0a8ea14d5652e544df935ce07b81ff86cf6dc27d0f86e32523190a66",
+        "spec_origin": "/usr/lib/python3/dist-packages/pyrsistent/_transformations.py"
+      },
+      "pytest": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/pytest/__init__.py",
+        "sha256": "ee37885c9583f843390684dfb496907f87a0905128e7a3cf4ad227f49ff34c2d",
+        "spec_origin": "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages/pytest/__init__.py"
+      },
+      "quopri": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/quopri.py",
+        "sha256": "e808f1327b86800e6fcabf98bc194733dbd4348c06d92e8fc9c39829ed477c3b",
+        "spec_origin": "/usr/lib/python3.12/quopri.py"
+      },
+      "random": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/random.py",
+        "sha256": "0693d4ded36916f5b07d6c395cc331dbf1011bb70e90daaa29eaa32490a09425",
+        "spec_origin": "/usr/lib/python3.12/random.py"
+      },
+      "re": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/re/__init__.py",
+        "sha256": "8ff3c37c63b917fcf8dc8d50993a502292a3dc159e41de4f4018c72a53d1c07b",
+        "spec_origin": "/usr/lib/python3.12/re/__init__.py"
+      },
+      "re._casefix": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/re/_casefix.py",
+        "sha256": "41572ac50cf96b04496e676d8a6708898bb8e752e06dad34ed4c50c5d8f1fe40",
+        "spec_origin": "/usr/lib/python3.12/re/_casefix.py"
+      },
+      "re._compiler": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/re/_compiler.py",
+        "sha256": "c05067f8bfa4c13cbbf1eedc4d5cafc9b621bcb6ebc5771ba0518a18095af15a",
+        "spec_origin": "/usr/lib/python3.12/re/_compiler.py"
+      },
+      "re._constants": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/re/_constants.py",
+        "sha256": "fa4fdb200f238f9e7817b63892b0d69833d8165134801e775e10cc113348a375",
+        "spec_origin": "/usr/lib/python3.12/re/_constants.py"
+      },
+      "re._parser": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/re/_parser.py",
+        "sha256": "a51a85b37cf3f44ba7ff25754da5f31306e4ccfa6eb3c017f9d37bdf4e770840",
+        "spec_origin": "/usr/lib/python3.12/re/_parser.py"
+      },
+      "reprlib": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/reprlib.py",
+        "sha256": "8da31054076803065758311f54b18b8a616824941977d907dc3ee729228e9015",
+        "spec_origin": "/usr/lib/python3.12/reprlib.py"
+      },
+      "resource": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/lib-dynload/resource.cpython-312-x86_64-linux-gnu.so",
+        "sha256": "c8cc35580b497bf128cf8bb0e25efc36573a4f21a1c6877a91737fcd52e24907",
+        "spec_origin": "/usr/lib/python3.12/lib-dynload/resource.cpython-312-x86_64-linux-gnu.so"
+      },
+      "selectors": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/selectors.py",
+        "sha256": "1eeb102373e18c96311203f30c516e785bd8642275aa0bd66e43a284c9692385",
+        "spec_origin": "/usr/lib/python3.12/selectors.py"
+      },
+      "shlex": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/shlex.py",
+        "sha256": "f927227de5ba5b1b2bdd75e3d9c8cb72b602b3bba3cc8edbf8fb554de0dc1fd7",
+        "spec_origin": "/usr/lib/python3.12/shlex.py"
+      },
+      "shutil": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/shutil.py",
+        "sha256": "819e518cb7a539d09b2526138015541b34d2646afb9c2f6ae4ffd476d6a0fcf4",
+        "spec_origin": "/usr/lib/python3.12/shutil.py"
+      },
+      "signal": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/signal.py",
+        "sha256": "0363c964c90ac0b3e515de5749205e6e6454051a1211058375d84d91eab6071a",
+        "spec_origin": "/usr/lib/python3.12/signal.py"
+      },
+      "site": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/site.py",
+        "sha256": "619436355cbe91c3b29681ab486ee63f5f2e0a7d6274dfae747bdb94e60bca55",
+        "spec_origin": "frozen"
+      },
+      "sitecustomize": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/etc/python3.12/sitecustomize.py",
+        "sha256": "43d81125d92376b1a69d53a71126a041cc9a18d8080e92dea0a2ae23be138b1e",
+        "spec_origin": "/usr/lib/python3.12/sitecustomize.py"
+      },
+      "socket": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/socket.py",
+        "sha256": "b59366f7c35583a274c8031351c146d9c64c4e680adf45d99a3335536a20a6cc",
+        "spec_origin": "/usr/lib/python3.12/socket.py"
+      },
+      "ssl": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/ssl.py",
+        "sha256": "ca7dd38c7d39af5112b9669abffcef3f1bb374fb8fa0a2cd071aea09fce203da",
+        "spec_origin": "/usr/lib/python3.12/ssl.py"
+      },
+      "stat": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/stat.py",
+        "sha256": "052af0327eae6941b69b05c088b3e748f79995635f80ac4cc7125eb333eb4c77",
+        "spec_origin": "frozen"
+      },
+      "string": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/string.py",
+        "sha256": "24aeae1f0526250f442022022bf98df9a823b1cb330543ee79e70e44907462e9",
+        "spec_origin": "/usr/lib/python3.12/string.py"
+      },
+      "struct": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/struct.py",
+        "sha256": "9c231f9497caf513a22dee8f790b07f969b0e45854a0bdd6dd84b492e08c2856",
+        "spec_origin": "/usr/lib/python3.12/struct.py"
+      },
+      "subprocess": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/subprocess.py",
+        "sha256": "baa9f9138d8d20df6284f67e7d2e790f847f65e2c5370de322d54cccd737f2d9",
+        "spec_origin": "/usr/lib/python3.12/subprocess.py"
+      },
+      "tempfile": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/tempfile.py",
+        "sha256": "8c8033ed1426ace79e07a6608887d2a1694d817d63d61b04c3d59339f24b4269",
+        "spec_origin": "/usr/lib/python3.12/tempfile.py"
+      },
+      "textwrap": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/textwrap.py",
+        "sha256": "62867e40cdea6669b361f72af4d7daf0359f207c92cbeddfc7c7506397c1f31c",
+        "spec_origin": "/usr/lib/python3.12/textwrap.py"
+      },
+      "threading": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/threading.py",
+        "sha256": "8273b4cf5b6f274b4993f5cae08634dd272c6952af9867ff9aa13ed446f1549b",
+        "spec_origin": "/usr/lib/python3.12/threading.py"
+      },
+      "token": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/token.py",
+        "sha256": "fc76ed1a1cbdb2c961d27cd67acee766abcfcdab06661701db4d9524efb5bd41",
+        "spec_origin": "/usr/lib/python3.12/token.py"
+      },
+      "tokenize": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/tokenize.py",
+        "sha256": "a39cd5ee895abc085117448fba78ccc18bea3faf073ac18c5365b26e0dd1fe7c",
+        "spec_origin": "/usr/lib/python3.12/tokenize.py"
+      },
+      "traceback": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/traceback.py",
+        "sha256": "a96b7d5bfe46a8be9b90613b1555dbd795d51f46aec6b769af06cec465bee39e",
+        "spec_origin": "/usr/lib/python3.12/traceback.py"
+      },
+      "types": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/types.py",
+        "sha256": "345474ef027a1273f353da9bdc1f7c18f65335e72e681bcc0376774cc51f2405",
+        "spec_origin": "/usr/lib/python3.12/types.py"
+      },
+      "typing": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/typing.py",
+        "sha256": "c45d935c17234b1d6ae42d2d5499d3e03b4e2548fae0c4fce15477e23502214d",
+        "spec_origin": "/usr/lib/python3.12/typing.py"
+      },
+      "urllib": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/urllib/__init__.py",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "spec_origin": "/usr/lib/python3.12/urllib/__init__.py"
+      },
+      "urllib.error": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/urllib/error.py",
+        "sha256": "d12b3cc66af3f42a8ebe63e1c91d24f92c6237b6a93a3702938dffabd812d77b",
+        "spec_origin": "/usr/lib/python3.12/urllib/error.py"
+      },
+      "urllib.parse": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/urllib/parse.py",
+        "sha256": "a67b5694763137dbac085adbf0c22821d435ec8ca22d3bd3786d2c9f4ee748d5",
+        "spec_origin": "/usr/lib/python3.12/urllib/parse.py"
+      },
+      "urllib.request": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/urllib/request.py",
+        "sha256": "96ae4b051b87eb7694da24f5fa75bf3931486b49b755699934bf15ab0ca5829d",
+        "spec_origin": "/usr/lib/python3.12/urllib/request.py"
+      },
+      "urllib.response": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/urllib/response.py",
+        "sha256": "7e6c3b6d7a95f0d74f5968f51a87adae8a51bf42390cdfec98c7a99203e7bb76",
+        "spec_origin": "/usr/lib/python3.12/urllib/response.py"
+      },
+      "uuid": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/uuid.py",
+        "sha256": "fe357bff7241e9fd6f86ee81567fd20aeec2e17460428ea9b7924bebf57301fc",
+        "spec_origin": "/usr/lib/python3.12/uuid.py"
+      },
+      "warnings": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/warnings.py",
+        "sha256": "8eb1bb88d0beb82ebecfe7ee5cf54ed9b77b4a7acee1989e392a65de42017c49",
+        "spec_origin": "/usr/lib/python3.12/warnings.py"
+      },
+      "weakref": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/weakref.py",
+        "sha256": "56f8d313fb74019e53eb9287400702fbce788b7fe30e097b0b6e06296f3f080c",
+        "spec_origin": "/usr/lib/python3.12/weakref.py"
+      },
+      "yaml": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/yaml/__init__.py",
+        "sha256": "6e1974e6a49e3bed59c654918c6aef9769bd9eb5dbd67f7e1906ad4cdd0caea7",
+        "spec_origin": "/usr/lib/python3/dist-packages/yaml/__init__.py"
+      },
+      "yaml._yaml": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/yaml/_yaml.cpython-312-x86_64-linux-gnu.so",
+        "sha256": "43b3b0036fab5c1385d5dc2a5bc1a070f276a317a4d5aee42deac884f8ea57eb",
+        "spec_origin": "/usr/lib/python3/dist-packages/yaml/_yaml.cpython-312-x86_64-linux-gnu.so"
+      },
+      "yaml.composer": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/yaml/composer.py",
+        "sha256": "fcaa37d16afa783594794a5ab94193dcb720f503c19ce3d59539c8311189f453",
+        "spec_origin": "/usr/lib/python3/dist-packages/yaml/composer.py"
+      },
+      "yaml.constructor": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/yaml/constructor.py",
+        "sha256": "90d8247da78b524c10618fd0e857f54f3d97570fe91b5c5513d024ef3faf88b0",
+        "spec_origin": "/usr/lib/python3/dist-packages/yaml/constructor.py"
+      },
+      "yaml.cyaml": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/yaml/cyaml.py",
+        "sha256": "e99ac01bd7c062f7557b614aff0d21997a06ed962ca185306a91bc0a20bbd87d",
+        "spec_origin": "/usr/lib/python3/dist-packages/yaml/cyaml.py"
+      },
+      "yaml.dumper": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/yaml/dumper.py",
+        "sha256": "3cb72d66563064ba7b5e679477046ebf89d8399d940670c8532f3e94a7cb17ea",
+        "spec_origin": "/usr/lib/python3/dist-packages/yaml/dumper.py"
+      },
+      "yaml.emitter": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/yaml/emitter.py",
+        "sha256": "8e086d694ede170837d5b1b407b45979aff6f40762f422a65eafd08e04290a44",
+        "spec_origin": "/usr/lib/python3/dist-packages/yaml/emitter.py"
+      },
+      "yaml.error": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/yaml/error.py",
+        "sha256": "021f73fada072546c4f63f8cf18a7181244ce4280b09cc15cc980b2d1176171a",
+        "spec_origin": "/usr/lib/python3/dist-packages/yaml/error.py"
+      },
+      "yaml.events": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/yaml/events.py",
+        "sha256": "e74fd392c810884e2ea7e94aa3f57e9c1cbeb402319083d0c58e6a0e1282787c",
+        "spec_origin": "/usr/lib/python3/dist-packages/yaml/events.py"
+      },
+      "yaml.loader": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/yaml/loader.py",
+        "sha256": "5156becc8aa6905482218abf3e04869b835226db4763645fff3438fdbd5f1cdd",
+        "spec_origin": "/usr/lib/python3/dist-packages/yaml/loader.py"
+      },
+      "yaml.nodes": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/yaml/nodes.py",
+        "sha256": "80f28d8fca4a09d87677882bde021820d9cf39a3b11a12405226211919cf13ce",
+        "spec_origin": "/usr/lib/python3/dist-packages/yaml/nodes.py"
+      },
+      "yaml.parser": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/yaml/parser.py",
+        "sha256": "8a55a9e6fbe0a07146cef3990c8b45a068c3e83e369e1959ad9ca30306b4a09a",
+        "spec_origin": "/usr/lib/python3/dist-packages/yaml/parser.py"
+      },
+      "yaml.reader": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/yaml/reader.py",
+        "sha256": "d1d9b38ab3a20c6e17a38d519ee412ecaf6b918df18c78956ac7c330d4ea08dc",
+        "spec_origin": "/usr/lib/python3/dist-packages/yaml/reader.py"
+      },
+      "yaml.representer": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/yaml/representer.py",
+        "sha256": "22e58ff9c016f6c1ca1274b4802a926bcf78935060e1c813c5a0f021c6d143e6",
+        "spec_origin": "/usr/lib/python3/dist-packages/yaml/representer.py"
+      },
+      "yaml.resolver": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/yaml/resolver.py",
+        "sha256": "f4bf9561f9b89961f1503d558385fbae30d12bfed565de9bf76c33abb63620a6",
+        "spec_origin": "/usr/lib/python3/dist-packages/yaml/resolver.py"
+      },
+      "yaml.scanner": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/yaml/scanner.py",
+        "sha256": "60433788b652690c17710460da5d91e0c753d3318fd85f5e1e42862a71f25906",
+        "spec_origin": "/usr/lib/python3/dist-packages/yaml/scanner.py"
+      },
+      "yaml.serializer": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/yaml/serializer.py",
+        "sha256": "0a1b85826854d35863e31808f0668abfabdf33606e8f06bd8bb7761401e3edc0",
+        "spec_origin": "/usr/lib/python3/dist-packages/yaml/serializer.py"
+      },
+      "yaml.tokens": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3/dist-packages/yaml/tokens.py",
+        "sha256": "953408cd2570f0c83dc2fe39f7e4e388e41eeb05738aa69196a5f6ffcf6ba79e",
+        "spec_origin": "/usr/lib/python3/dist-packages/yaml/tokens.py"
+      },
+      "zipfile": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/zipfile/__init__.py",
+        "sha256": "fa12220ba68d58a75767133c93af70d968a4be79da05ef3d67fb32ad5f518f84",
+        "spec_origin": "/usr/lib/python3.12/zipfile/__init__.py"
+      },
+      "zipfile._path": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/zipfile/_path/__init__.py",
+        "sha256": "be1a1a534b92d4f597b7fde633a5ff847fa9e6725c0dd6867839e735d39f31c2",
+        "spec_origin": "/usr/lib/python3.12/zipfile/_path/__init__.py"
+      },
+      "zipfile._path.glob": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/zipfile/_path/glob.py",
+        "sha256": "7020d375669c257879b5b1278e7649ef51cbfe16e9aef967e5aca51cca11f893",
+        "spec_origin": "/usr/lib/python3.12/zipfile/_path/glob.py"
+      },
+      "zipimport": {
+        "boundary": "__file__ physical pin; frozen/builtin code remains interpreter TCB",
+        "path": "/usr/lib/python3.12/zipimport.py",
+        "sha256": "4ac94d92219c2e1c0d67ad3fff3753ec3a3756af62a36a2f696f02cd12d518f0",
+        "spec_origin": "frozen"
+      }
+    },
+    "prefix": "/data1/yanruj/venvs/swdb-test",
+    "pycache_prefix": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t28-linux-runtime-observation-v2/python-source-cache",
+    "python_version": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "schema": "guarded-linux-python-observation-1",
+    "scope": "Actual selected interpreter startup/import paths only; no project test/compiler/solver, no proof or hardware result",
+    "selected_packages": [
+      "pytest",
+      "yaml",
+      "jsonschema",
+      "psutil"
+    ],
+    "source_or_proof_acceptance": false,
+    "sys_path": [
+      "/usr/lib/python312.zip",
+      "/usr/lib/python3.12",
+      "/usr/lib/python3.12/lib-dynload",
+      "/data1/yanruj/venvs/swdb-test/lib/python3.12/site-packages",
+      "/usr/local/lib/python3.12/dist-packages",
+      "/usr/lib/python3/dist-packages",
+      "/usr/lib/python3.12/dist-packages"
+    ],
+    "user_site_enabled": false
+  },
+  "resources": {
+    "resources.json": {
+      "cpu_seconds": 1.184209,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 62136320,
+      "timed_out": false,
+      "wall_seconds": 1.195666960440576
+    },
+    "outer-resources.json": {
+      "exit_code": 0,
+      "peak_rss_bytes": 106094592,
+      "out_of_memory": false,
+      "timed_out": false,
+      "wall_seconds": 3.2683020895347,
+      "cpu_seconds": 3.6364099999999997
+    },
+    "source-after.json": {
+      "commit": "c978393b119a3614229a37f0f2c8ca2a097c750b",
+      "source_unchanged": true,
+      "tracked_changes": ""
+    },
+    "lane.json": {
+      "socket_lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "command": [
+          "timeout",
+          "--signal=TERM",
+          "--kill-after=60",
+          "180",
+          "bash",
+          "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-c978393b-t28-linux-runtime-observation-v2/run.sh"
+        ],
+        "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+        "ended_utc": "2026-10-16T18:13:57Z",
+        "exit_code": 0,
+        "host": "mbit10",
+        "job": "probata-resume-20261016-c978393b-t28-linux-runtime-observation-v2",
+        "lease_generation": 607,
+        "lease_name": "mbit10-evaluation-node0",
+        "load1_at_start": 0.02,
+        "load1_max": 32,
+        "node": 0,
+        "numa_memory_policy": "bind:0",
+        "numactl": "--cpunodebind=0 --membind=0",
+        "preregistration_sha256": null,
+        "started_utc": "2026-10-16T18:13:53Z"
+      }
+    }
+  }
+}

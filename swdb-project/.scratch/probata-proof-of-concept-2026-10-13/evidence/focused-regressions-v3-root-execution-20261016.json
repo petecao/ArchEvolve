@@ -1,0 +1,658 @@
+{
+  "created": "2026-10-16 ET",
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-615ddf50-focused-regressions-v3",
+  "scope": "80 focused public regression cases; not the full default suite, full catalog or ticket/scientific acceptance",
+  "focus-result.json": {
+    "exit_code": 0,
+    "cases": 80,
+    "failures": [],
+    "errors": [],
+    "skips": [],
+    "cache_absent": true,
+    "source": "/data1/yanruj/probata-resume-20261016-615ddf50/swdb-project",
+    "scope": "Focused regressions only; not complete ticket or scientific proof acceptance"
+  },
+  "resources.json": {
+    "cpu_seconds": 681.600938,
+    "exit_code": 0,
+    "out_of_memory": false,
+    "peak_rss_bytes": 517455872,
+    "timed_out": false,
+    "wall_seconds": 682.0690533649176
+  },
+  "outer-resources.json": {
+    "exit_code": 0,
+    "peak_rss_bytes": 570933248,
+    "out_of_memory": false,
+    "timed_out": false,
+    "wall_seconds": 684.1281603490934,
+    "cpu_seconds": 819.654376
+  },
+  "source-after.json": {
+    "commit": "615ddf504fed61b9f6c6e4663760d006ecaf255b",
+    "source_unchanged": true,
+    "tracked_changes": ""
+  },
+  "lane.json": {
+    "socket_lane": {
+      "aligned_cell_age_s": "",
+      "aligned_to": "no_gapbs_batch_running",
+      "command": [
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=60",
+        "1020",
+        "bash",
+        "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-615ddf50-focused-regressions-v3/run.sh"
+      ],
+      "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+      "ended_utc": "2026-10-16T18:49:14Z",
+      "exit_code": 0,
+      "host": "mbit10",
+      "job": "probata-resume-20261016-615ddf50-focused-regressions-v3",
+      "lease_generation": 631,
+      "lease_name": "mbit10-evaluation-node1",
+      "load1_at_start": 0.77,
+      "load1_max": 32,
+      "node": 1,
+      "numa_memory_policy": "bind:1",
+      "numactl": "--cpunodebind=1 --membind=1",
+      "preregistration_sha256": null,
+      "started_utc": "2026-10-16T18:37:50Z"
+    }
+  },
+  "pytest_arguments": [
+    "-q",
+    "--tb=short",
+    "-p",
+    "no:cacheprovider",
+    "--rootdir",
+    "/data1/yanruj/probata-resume-20261016-615ddf50/swdb-project",
+    "--basetemp",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-615ddf50-focused-regressions-v3/pytest",
+    "--junitxml",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-615ddf50-focused-regressions-v3/junit.xml",
+    "tests/test_vector_reallocation_caller_view.py",
+    "tests/test_vector_reallocation_private_frame.py",
+    "tests/test_vector_reallocation_closed_view.py",
+    "tests/test_vector_reallocation_reserve_application.py",
+    "tests/test_vector_reallocation_caller_packets.py",
+    "tests/test_vector_reallocation_copy_prefix_cases.py",
+    "tests/test_bounded_initialization.py",
+    "tests/test_cbmc_adapter.py::test_the_safe_fixture_is_proven_within_its_bounds_on_both_forms"
+  ],
+  "junit": {
+    "sha256": "242459b533e9d12bf18d61db566cf5739df58d81e8561448dc8727cea906d51c",
+    "bytes": 13892,
+    "cases": 80,
+    "names": [
+      {
+        "classname": "tests.test_vector_reallocation_caller_view",
+        "name": "test_no_growth_source_view_retains_construction_alias_scalar_and_cleanup",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_view",
+        "name": "test_source_view_checks_typed_cells_and_byte_layout_as_distinct_coordinates",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_view",
+        "name": "test_source_view_refuses_altered_scope_request_source_or_contract",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_view",
+        "name": "test_source_view_never_enables_launch_from_hashes_or_a_forged_bridge_label",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_view",
+        "name": "test_source_view_refuses_a_new_reserve_effect_around_the_familiar_branch",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_private_frame",
+        "name": "test_private_frame_packet_retains_release_and_the_complete_incoming_observation",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_private_frame",
+        "name": "test_private_frame_packet_refuses_transition_or_frame_tampering[release]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_private_frame",
+        "name": "test_private_frame_packet_refuses_transition_or_frame_tampering[observation]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_private_frame",
+        "name": "test_private_frame_packet_refuses_transition_or_frame_tampering[metadata]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_private_frame",
+        "name": "test_private_frame_packet_refuses_transition_or_frame_tampering[extra]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_closed_view",
+        "name": "test_closed_view_preserves_original_contract_capture_and_explicit_lifetime_duties",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_closed_view",
+        "name": "test_closed_view_rejects_altered_source_cfg_cleanup_or_allocator_binding[text]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_closed_view",
+        "name": "test_closed_view_rejects_altered_source_cfg_cleanup_or_allocator_binding[cfg]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_closed_view",
+        "name": "test_closed_view_rejects_altered_source_cfg_cleanup_or_allocator_binding[lifetime]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_closed_view",
+        "name": "test_closed_view_rejects_altered_source_cfg_cleanup_or_allocator_binding[provenance]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_reserve_application",
+        "name": "test_growing_reserve_entry_derives_request_bound_and_branch_from_pending_constructor_capacity",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_reserve_application",
+        "name": "test_no_growth_reserve_application_preserves_the_same_source_state_without_importing_a_summary",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_reserve_application",
+        "name": "test_reserve_entry_refuses_unknown_request_type_or_missing_capacity_predecessor",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_reserve_application",
+        "name": "test_growing_current_and_stale_observation_receive_no_liveness_or_value_fact",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_reserve_entry_application_is_canonical_and_never_grants_a_poststate",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_canonical_caller_preparation_binds_existing_contract_without_enabling_proof",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_caller_contract_is_explicit_and_never_completed_from_source_samples[contract0]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_caller_contract_is_explicit_and_never_completed_from_source_samples[contract1]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_caller_contract_is_explicit_and_never_completed_from_source_samples[contract2]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_caller_contract_is_explicit_and_never_completed_from_source_samples[contract3]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_caller_contract_is_explicit_and_never_completed_from_source_samples[contract4]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_caller_contract_is_explicit_and_never_completed_from_source_samples[contract5]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_caller_contract_is_explicit_and_never_completed_from_source_samples[contract6]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_caller_contract_is_explicit_and_never_completed_from_source_samples[contract7]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_caller_packet_check_reconstructs_source_and_contract_after_self_consistent_tampering[target]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_caller_packet_check_reconstructs_source_and_contract_after_self_consistent_tampering[body_step]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_caller_packet_check_reconstructs_source_and_contract_after_self_consistent_tampering[contract]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_caller_packet_check_reconstructs_source_and_contract_after_self_consistent_tampering[original]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_caller_packet_check_reconstructs_source_and_contract_after_self_consistent_tampering[extra_import]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_caller_packet_check_reconstructs_source_and_contract_after_self_consistent_tampering[symlink]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_caller_packet_check_reconstructs_source_and_contract_after_self_consistent_tampering[reserve_application]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_caller_packet_check_reconstructs_source_and_contract_after_self_consistent_tampering[reserve_receipt]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_caller_contract_does_not_join_malformed_keyword_tokens",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_whitespace_and_annotation_boundaries_never_create_different_clause_tokens[contract0]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_whitespace_and_annotation_boundaries_never_create_different_clause_tokens[contract1]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_whitespace_and_annotation_boundaries_never_create_different_clause_tokens[contract2]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_whitespace_and_annotation_boundaries_never_create_different_clause_tokens[contract3]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_whitespace_and_annotation_boundaries_never_create_different_clause_tokens[contract4]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_whitespace_and_annotation_boundaries_never_create_different_clause_tokens[contract5]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_whitespace_and_annotation_boundaries_never_create_different_clause_tokens[contract6]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_whitespace_and_annotation_boundaries_never_create_different_clause_tokens[contract7]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_whole_clauses_may_share_one_actual_annotation_without_splitting_tokens",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_constructor_entry_application_maps_source_storage_and_existing_count_clause",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_zero_constructor_application_retains_empty_buffer_and_actual_store_path",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_positive_constructor_application_binds_actual_allocation_and_zero_prefix",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_positive_constructor_application_cannot_launder_normal_return_or_source_state[entry_premise]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_positive_constructor_application_cannot_launder_normal_return_or_source_state[initialized_buffer]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_positive_constructor_application_cannot_launder_normal_return_or_source_state[receiver_alias]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_positive_constructor_application_cannot_launder_normal_return_or_source_state[sibling_result]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_caller_packets",
+        "name": "test_positive_constructor_application_cannot_launder_normal_return_or_source_state[prefix_rebinding]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_copy_prefix_cases",
+        "name": "test_public_prefix_requires_exact_ten_reviewed_full_A_cases_and_other_fifty_one_inputs",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_copy_prefix_cases",
+        "name": "test_prefix_expansion_refuses_any_changed_original_guard_range_heap_or_new_index",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_copy_prefix_cases",
+        "name": "test_prefix_definitions_and_both_integer_cases_are_source_bound_and_jointly_complete",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_copy_prefix_cases",
+        "name": "test_prefix_canonical_check_refuses_coherently_dropped_or_altered_case_and_definition",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_copy_prefix_cases",
+        "name": "test_prefix_definition_mutation_refuses_and_other_member_target_censuses_remain_scoped",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_vector_reallocation_copy_prefix_cases",
+        "name": "test_caller_count_literals_follow_current_body_packets_without_running_caller_lowering",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_bounded_initialization",
+        "name": "test_uncertain_initializedness_is_unsupported_before_execution[LOCAL]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_bounded_initialization",
+        "name": "test_uncertain_initializedness_is_unsupported_before_execution[SELF]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_bounded_initialization",
+        "name": "test_uncertain_initializedness_is_unsupported_before_execution[ALIAS]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_bounded_initialization",
+        "name": "test_uncertain_initializedness_is_unsupported_before_execution[HEAP]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_bounded_initialization",
+        "name": "test_uncertain_initializedness_is_unsupported_before_execution[PARTIAL]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_bounded_initialization",
+        "name": "test_uncertain_initializedness_is_unsupported_before_execution[AGGREGATE]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_bounded_initialization",
+        "name": "test_uncertain_initializedness_is_unsupported_before_execution[CALLEE]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_bounded_initialization",
+        "name": "test_uncertain_initializedness_is_unsupported_before_execution[INITIALIZER_CALL]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_bounded_initialization",
+        "name": "test_uncertain_initializedness_is_unsupported_before_execution[GOOD_ALIAS]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_bounded_initialization",
+        "name": "test_uncertain_initializedness_is_unsupported_before_execution[POINTER_REASSIGN]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_bounded_initialization",
+        "name": "test_uncertain_initializedness_is_unsupported_before_execution[DEFAULT_ARGUMENT]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_bounded_initialization",
+        "name": "test_initialized_scalars_and_harness_buffers_remain_admitted",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_bounded_initialization",
+        "name": "test_cap_zero_does_not_treat_dummy_pointer_storage_as_initialized",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_bounded_initialization",
+        "name": "test_whole_function_checks_initializedness_on_both_sides[bounded_direct-candidate]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_bounded_initialization",
+        "name": "test_whole_function_checks_initializedness_on_both_sides[bounded_direct-baseline]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_bounded_initialization",
+        "name": "test_whole_function_checks_initializedness_on_both_sides[no_contract_baseline-candidate]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_bounded_initialization",
+        "name": "test_whole_function_checks_initializedness_on_both_sides[no_contract_baseline-baseline]",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_bounded_initialization",
+        "name": "test_changed_model_body_does_not_inherit_the_known_models_initialization_policy",
+        "failure": false,
+        "error": false,
+        "skip": false
+      },
+      {
+        "classname": "tests.test_cbmc_adapter",
+        "name": "test_the_safe_fixture_is_proven_within_its_bounds_on_both_forms",
+        "failure": false,
+        "error": false,
+        "skip": false
+      }
+    ]
+  },
+  "progress_counts": {
+    "passed": 80,
+    "failed": 0,
+    "skipped": 0
+  },
+  "raw_files": 6268,
+  "raw_bytes": 66721324
+}

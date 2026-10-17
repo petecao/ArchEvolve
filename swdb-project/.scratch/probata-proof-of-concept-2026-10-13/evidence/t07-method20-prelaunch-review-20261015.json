@@ -1,0 +1,65 @@
+{
+  "created": "2026-10-15 ET",
+  "status": "independent prelaunch review PASS; fresh clean freeze and actual counted run still required",
+  "counted_run_started": false,
+  "provider_called": false,
+  "source_review": {
+    "date": "2026-10-15 ET",
+    "base_head": "be4ee50d",
+    "reviewed_uncommitted_source_sha256": {
+      "edit_loop.py": "29c7aa2b1279c8e0d76253e20c2de33bcc715f8b3cce95db9c8f35bdb8fb20d8",
+      "edit_core.py": "d4168260e3eb866e8bd127b4de56d8070e5806b74d39b4910d52e16379800d4e",
+      "edit_tool_mcp.py": "7ee77c0238f687fec845042a10a1e862f561726f1975703980644c95a203034f",
+      "focused_probe.py": "9ad86e2c61530a19f95ebb4d5aff639d489ef5a0788a6a1e00ddbdf0bd7c05db",
+      "staged_search.py": "125e2562342e6ba684d1189ca29fb48476b73bee30d0fd368f7f7c6b4c6b2419",
+      "counted_verifier.py": "d7ff53714d29e4b6723f3a2028cb892761eaff1b3d5caa69ad911c72a59682a6",
+      "loop.py": "cb84fdca2b0d8dd0c77b286037513a4642835cd631ad9f87c74f0d736982d350",
+      "wp_run.sh": "69e952e3b65b18887a428fe964fec993f70aa3388024e56c675780cbe80b38b6",
+      "test_counted_verifier.py": "8eb7a115efe99b442407d32772faafb210a817b28cb3a7d88b4086c6b7e1cae1",
+      "METHOD20.md": "73951665e87e68fa3e119c6c393ec09b564e57d6bf338d5e13431175e601c579"
+    },
+    "test_result": "163 passed in 4.77s",
+    "test_output_sha256": "d0df851ce02563be2b19a1da2ac23e37ed53f9db52e3c44b55cfc1254c19bd8f",
+    "independent_env_check_sha256": "49bb4016d0ad990a1022391ecf2a714f1e6c22082706f6f2e5f6f7da2595eb47",
+    "verdict": "PASS within explicit trusted-toolchain inherited-marker boundary; clean committed freeze and runtime preflight still required"
+  },
+  "artifacts": [
+    {
+      "path": "/private/tmp/probata-t07-method20-independent-review.md",
+      "sha256": "c25e1ec768a12cfbd46ac40fd64e3ae96dd8702da28719509dc3ab3e8f2a97dd"
+    },
+    {
+      "path": "/private/tmp/probata-t07-method20-independent-review-manifest.json",
+      "sha256": "08b96efd00cdb68218ea6ecf25c94d8bd13624c9109258293b00c69de22c5e86"
+    },
+    {
+      "path": "/private/tmp/probata-t07-method20-independent-token-retry-tests.txt",
+      "sha256": "d0df851ce02563be2b19a1da2ac23e37ed53f9db52e3c44b55cfc1254c19bd8f"
+    },
+    {
+      "path": "/private/tmp/probata-t07-method20-independent-env-check.json",
+      "sha256": "49bb4016d0ad990a1022391ecf2a714f1e6c22082706f6f2e5f6f7da2595eb47"
+    },
+    {
+      "path": "/private/tmp/probata-t07-method20-cleanup-red.xml",
+      "sha256": "60362a2fb176d2ba0fdcc3935d46ee605ac6f5e26d1e9a085d04de497ed099d8"
+    },
+    {
+      "path": "/private/tmp/probata-t07-method20-env-red.xml",
+      "sha256": "e8d8e0e845dcf5f001dc91837c18eb01454416052986971b52efc28f9d9a0eb7"
+    },
+    {
+      "path": "/private/tmp/probata-t07-method20-token-transient-red.xml",
+      "sha256": "2de32322a263bc21086493968cb2095c024842abb6a05c17ff56a4669da2acb2"
+    },
+    {
+      "path": "/private/tmp/probata-t07-method20-token-guard-v3.xml",
+      "sha256": "93f0e276f3aa165391e9f70778660d05c289a25c2ef4291774c2f2a196c7e7de"
+    }
+  ],
+  "fix": "Inherited unique marker identifies unsampled reparented/new-session descendants at cleanup; every env-i preserves marker. Persistent inspection denial quarantines. Only bounded inspection retries allowed.",
+  "platform": "Darwin NOTE_TRACK registration errno45; installed Apple SDK declares unsupported since10.5.",
+  "boundary": "Trusted toolchain must preserve marker; no hostile environment scrubbing containment or kernel RSS quota. No unrelated process environment values printed or retained.",
+  "scientific_acceptance": "Unchanged full all-goal/fresh-cache/smoke plus separate covering-wait negative; no production UB/init claim.",
+  "workspace": "Fresh provider with no examples, prior hints, counterstates, tests, evaluator, workload inputs or control fragments."
+}

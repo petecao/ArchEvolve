@@ -1,0 +1,121 @@
+{
+  "format": "swdb.lanl17-original-public-candidate-selection-custody.v1",
+  "accepted": true,
+  "basis": "explicit_parent_check_of_original_28d_non_rejected_completed_selection",
+  "candidate_ids": [
+    "extensa-gem5-bfs-20261006-p2.it1.kronecker.a0",
+    "extensa-gem5-bfs-20261006-p2.it1.uniform_random.a0",
+    "extensa-gem5-bfs-20261006-p2.it2.kronecker.a2",
+    "extensa-gem5-bfs-20261006-p2.it2.uniform_random.a0",
+    "extensa-gem5-bfs-20261006-p2.it3.kronecker.a0",
+    "extensa-gem5-bfs-20261006-p2.it3.uniform_random.a0",
+    "extensa-gem5-bfs-20261006-p2.it4.kronecker.a0",
+    "extensa-gem5-bfs-20261006-p2.it4.uniform_random.a0"
+  ],
+  "checked_utc": "2026-10-09T19:51:51.490759+00:00",
+  "completed_materialized_candidate_ids": [
+    "extensa-gem5-bfs-20261006-p2.it1.kronecker.a0",
+    "extensa-gem5-bfs-20261006-p2.it1.uniform_random.a0",
+    "extensa-gem5-bfs-20261006-p2.it2.kronecker.a2",
+    "extensa-gem5-bfs-20261006-p2.it2.uniform_random.a0",
+    "extensa-gem5-bfs-20261006-p2.it3.kronecker.a0",
+    "extensa-gem5-bfs-20261006-p2.it3.uniform_random.a0",
+    "extensa-gem5-bfs-20261006-p2.it4.kronecker.a0",
+    "extensa-gem5-bfs-20261006-p2.it4.uniform_random.a0"
+  ],
+  "original_named_candidate_ids": [
+    "extensa-gem5-bfs-20261006-p2.it1.kronecker.a0",
+    "extensa-gem5-bfs-20261006-p2.it1.uniform_random.a0",
+    "extensa-gem5-bfs-20261006-p2.it2.kronecker.a2",
+    "extensa-gem5-bfs-20261006-p2.it2.uniform_random.a0",
+    "extensa-gem5-bfs-20261006-p2.it3.kronecker.a0",
+    "extensa-gem5-bfs-20261006-p2.it3.uniform_random.a0",
+    "extensa-gem5-bfs-20261006-p2.it4.kronecker.a0",
+    "extensa-gem5-bfs-20261006-p2.it4.uniform_random.a0"
+  ],
+  "selection_completeness_independently_derived_by_auditor": false,
+  "source_commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+  "helper_sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414",
+  "campaign": "extensa-gem5-bfs-20261006-p2",
+  "summary_sha256": "da423adf211ea0ff532f84d784c2d9923264d54a99b84a56376a1c139b808d93",
+  "parent_capture_provenance": {
+    "producer_sha256": "32bead204337aa66d0a732b6f143216946abafc5d2eb752577b0d90f7190b7b6",
+    "capture_request_file_sha256": "a58399d3aa653ea97d235cb0d9fbc2c85a3a9a74790cd9277a93a4fd8833f5ff",
+    "capture_request_identity_sha256": "e9fd6da2de1d7f04e4e26da296a7bafb8930114ea7646fa367b434440efb0d76",
+    "canonical_ensure_ascii": true,
+    "context_pins": {
+      "source_commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+      "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+      "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+      "helper_sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414",
+      "manifest_identity_sha256": "66194a7e99716f5b59ddf081dfec752c34b51f1805470a4514171c53323b06c7",
+      "policy": {
+        "id": "extensa-gem5-bfs-20261006-p1.agreement.5bae2f42d9078864",
+        "identity_sha256": "5bae2f42d9078864caad73e81a16007edb6458f0b101628ded04a7ef3aedbf7d",
+        "frozen_at": "2026-10-08T16:05:25.347884+00:00"
+      }
+    },
+    "output_exclusion_roots": [
+      "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5",
+      "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5",
+      "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p1",
+      "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p2",
+      "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p3",
+      "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p4"
+    ],
+    "output_exclusion_basis": "Exact original sealed M2.source/M2.raw plus immutable helper28d and collectorb08 four-campaign routing",
+    "original_inputs": {
+      "manifest_M2": {
+        "bytes": 292401,
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          {
+            "bytes": 38195,
+            "path": "/data1/yanruj/lanl17-control-cleanup60-20261007-a4.py",
+            "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+          }
+        ],
+        "encoding": "json",
+        "identity_sha256": "66194a7e99716f5b59ddf081dfec752c34b51f1805470a4514171c53323b06c7",
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/manifest.json",
+        "sealed": true,
+        "sha256": "b86d78bac1d0a09e176114d1c23491ede098c4fcf5af5ab96f318ceabc29b8d1",
+        "writer_source": {
+          "bytes": 38195,
+          "path": "/data1/yanruj/lanl17-control-cleanup60-20261007-a4.py",
+          "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+        }
+      },
+      "summary": {
+        "bytes": 24877,
+        "encoding": "yaml",
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p2/records/campaign_summaries/extensa-gem5-bfs-20261006-p2.summary.yaml",
+        "sealed": false,
+        "sha256": "c1b78a5175e66a5e4c4a158e51a1554d50dfb8563ea617db1d799d76de19c37f",
+        "writer_source": {
+          "bytes": 79456,
+          "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/swdb/campaign.py",
+          "sha256": "13e3e66a469c3934dee2f0f372a5c17812f5a680cb451f63766ad889d13c3d1d"
+        }
+      },
+      "public_candidate_export:original28": {
+        "bytes": 13746,
+        "encoding": "json",
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/export-extensa-gem5-bfs-20261006-p2.stdout",
+        "sealed": false,
+        "sha256": "22cebf3effc7ada75b6fc7c8b507dfb5875e273c4d5dd21fbe578f0bdafa2084",
+        "writer_source": {
+          "bytes": 38195,
+          "path": "/data1/yanruj/lanl17-control-cleanup60-20261007-a4.py",
+          "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+        }
+      }
+    },
+    "source_plan_sha256": "e3420b334ce05f7268699b0079987d1d2afc98fe5cb5503e6069a89038b59170",
+    "auditor_sha256": "6a91ed1015bcc1caa771348e8bd1f591254ba130e55570ed18bc8121d67a06da",
+    "collector_sha256": "b08db809b80cbebc6ce98dd8df8fdd4f327b170cdd7a545af0876ad68a832a5c",
+    "observations_sha256": "8ed004306ac268d5a4b2ac1bfbb2c33c74cf9c057e8a85e2e2eefa56c89014dc",
+    "scope": "Separate parent capture; original inputs unchanged/unsealed where original. Explicit source enforcement and selection completeness are inherited, never independently manufactured. No normal/substantive trajectory status is inferred."
+  },
+  "identity_sha256": "ab4a08e1bbba46564c5e24a33ae276583412ee921b4fd631bf5b753b4e0f7ccc"
+}

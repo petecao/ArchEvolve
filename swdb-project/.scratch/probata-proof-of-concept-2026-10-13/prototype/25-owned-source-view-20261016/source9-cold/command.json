@@ -1,0 +1,39 @@
+{
+  "actual_execution": false,
+  "argv": [
+    "ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=10",
+    "mbit10",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "190s",
+    "/usr/bin/env",
+    "-i",
+    "HOME=/data1/yanruj",
+    "LANG=C",
+    "LC_ALL=C",
+    "PATH=/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "/data1/yanruj/venvs/swdb-test/bin/python",
+    "-I",
+    "-B",
+    "-"
+  ],
+  "date": "2026-10-16 ET",
+  "local_transport_deadline_seconds": 210,
+  "no_compiler_native_solver_or_project_imports": true,
+  "scientific_source_or_caller_acceptance": false,
+  "status": "INERT fresh root admission required",
+  "stderr_cap_bytes": 32768,
+  "stdin": {
+    "bytes": 363477,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-cold/entry.py",
+    "sha256": "9ff176eabd02f4f2396c2b762a25e0f40c21a25d2388d0929efa5fb5df24c6b8"
+  },
+  "stdout_cap_bytes": 2097152
+}

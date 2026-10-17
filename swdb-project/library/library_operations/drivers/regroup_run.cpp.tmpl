@@ -1,0 +1,56 @@
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+// Ported 2026-10-03 from MaizeHPC/MemAcc af3d6d7f7a69a72facdc3b95b42e78c952f44a76
+// Source: AgenticRefiner/refiner/synthesis/drivers/regroup_{ref,cand,run}.cpp.tmpl
+// SWDB changes: reference TU calls SWDB's plain C++ reference header (swdb_ref::) instead of DataLayoutAPI; run TU drops all timing and adds an input frame check (2026-10-03 ET)
+// Two-binary certification RUN TU for family regroup. It links EXACTLY ONE of the
+// reference or candidate extern symbols ({{RUN_SYMBOL}}), so no candidate object
+// code ever shares a link step with the reference. The output is seeded with a
+// nonzero canary before the call (an accumulate-instead-of-assign candidate then
+// diverges), the inputs are compared with their pre-call copies afterwards (a
+// write into an input is a named frame violation), and nothing is timed: SWDB's
+// evaluator supplies every performance number.
+#include <cstddef>
+#include <cstdint>
+#include <cstdio>
+#include <cstdlib>
+#include <string>
+#include <vector>
+
+extern "C" void {{RUN_SYMBOL}}(double*, const double*, const double*, const double*, std::size_t, std::size_t);
+
+template <typename T>
+static std::vector<T> slurp_as(const std::string& p) {
+  FILE* f = std::fopen(p.c_str(), "rb");
+  if (!f) { std::fprintf(stderr, "cannot open %s\n", p.c_str()); std::exit(2); }
+  std::fseek(f, 0, SEEK_END); long sz = std::ftell(f); std::fseek(f, 0, SEEK_SET);
+  std::vector<T> buf((std::size_t)sz / sizeof(T));
+  if (sz > 0 && std::fread(&buf[0], 1, (std::size_t)sz, f) != (std::size_t)sz) std::exit(2);
+  std::fclose(f); return buf;
+}
+static void dump(const std::string& p, const void* d, std::size_t bytes) {
+  FILE* f = std::fopen(p.c_str(), "wb");
+  if (!f) std::exit(2);
+  std::fwrite(d, 1, bytes, f); std::fclose(f);
+}
+
+int main(int argc, char** argv) {
+  if (argc != 4) { std::fprintf(stderr, "usage: n k case_dir\n"); return 2; }
+  const std::size_t n = std::strtoull(argv[1], nullptr, 10);
+  const std::size_t k = std::strtoull(argv[2], nullptr, 10);
+  const std::string dir = argv[3];
+  if (k != 3) { std::fprintf(stderr, "regroup driver supports k == 3\n"); return 2; }
+  std::vector<double> a0 = slurp_as<double>(dir + "/arr0.bin");
+  std::vector<double> a1 = slurp_as<double>(dir + "/arr1.bin");
+  std::vector<double> a2 = slurp_as<double>(dir + "/arr2.bin");
+  const std::vector<double> b0 = a0, b1 = a1, b2 = a2;
+  std::vector<double> out(k * n);
+  for (std::size_t i = 0; i < out.size(); ++i) out[i] = 1.0 + (double)(i % 7);  // canary
+  {{RUN_SYMBOL}}(out.data(), a0.data(), a1.data(), a2.data(), k, n);
+  if (a0 != b0 || a1 != b1 || a2 != b2) {
+    std::fprintf(stderr, "SWDB_PRESERVATION_FAIL:frame_violation\n");
+    return 3;
+  }
+  dump(dir + "/{{OUT_FILE}}", out.data(), (k * n) * sizeof(double));
+  std::printf("SWDB_RUN_DONE:{{NS_LABEL}}\n");
+  return 0;
+}

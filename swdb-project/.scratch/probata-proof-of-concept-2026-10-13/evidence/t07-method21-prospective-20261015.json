@@ -1,0 +1,102 @@
+{
+  "created": "2026-10-15 ET",
+  "status": "prospective implementation; independent review pending; not a counted proof",
+  "run23_source_preserved": "df19ff8a6342d24ca853624f1e97a6c6833cabcb",
+  "plan": "diagnostic-baseline10-v1",
+  "baseline": {
+    "per_solver_s": 10,
+    "all_functions": true,
+    "all_smoke_checks": true,
+    "complete_scheduled_inventory_required": true,
+    "cache": "none",
+    "diagnostic_only": true,
+    "no_hints_and_fresh_counted_clock": true,
+    "fresh_observed_pass_set_only": true
+  },
+  "final_acceptance": {
+    "per_solver_s": 30,
+    "all_functions": true,
+    "all_original_and_hint_obligations_mandatory": true,
+    "smoke_required": true,
+    "cache": "none",
+    "same_hints_covering_wait_negative_required": true,
+    "wait_negative_per_solver_s": 30,
+    "total_counted_minutes": 60,
+    "final_reserve_minutes": 8
+  },
+  "contract_departure": "Map13 item11 permits changed run plans by evaluation; ticket07 Notes adopt30second starting default. Method21 explicitly changes only fresh diagnostic baseline timeout.",
+  "confounds": [
+    "Shorter baseline can change statuses and fresh regression pass set.",
+    "Projected9\u201310minutes recovered search time has not been measured.",
+    "Full baseline inventory differs from TDStep+lemmas diagnostic hint-round inventory."
+  ],
+  "controls": [
+    {
+      "path": "/private/tmp/probata-t07-method21-shell-red.xml",
+      "sha256": "a189b86ff0bdcf828de3649938b3a627ad0bfb4f47c14ec3d0ff608ec7bc49b7",
+      "tests": 1,
+      "failures": 1,
+      "errors": 0,
+      "seconds": 0.257
+    },
+    {
+      "path": "/private/tmp/probata-t07-method21-shell-green.xml",
+      "sha256": "4cf0f1e35c320a3117034edbf15e06657a1039c8d99646c19c6ae463f4f1ad7b",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "seconds": 0.213
+    },
+    {
+      "path": "/private/tmp/probata-t07-method21-driver-red.xml",
+      "sha256": "ad82c10523d50b033d7c9a03a4e37437a65aa18ccbbcd6e081df9f33f0c89a05",
+      "tests": 2,
+      "failures": 2,
+      "errors": 0,
+      "seconds": 0.161
+    },
+    {
+      "path": "/private/tmp/probata-t07-method21-driver-green.xml",
+      "sha256": "5a017c9f1fed182593f7faacb343b35e7a569d22a702c711ca64cba214693d7e",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "seconds": 5.711
+    },
+    {
+      "path": "/private/tmp/probata-t07-method21-counters-red.xml",
+      "sha256": "db879af6a16494564818e5df7e987ff631d0ade9572d7b1245ffd1ec1f017a3f",
+      "tests": 1,
+      "failures": 1,
+      "errors": 0,
+      "seconds": 0.03
+    },
+    {
+      "path": "/private/tmp/probata-t07-method21-counters-green.xml",
+      "sha256": "aa85b516741049f3ac3a61724da3be00eaea990e06444f529e55b149c7f84061",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "seconds": 0.026
+    },
+    {
+      "path": "/private/tmp/probata-t07-method21-full-green.xml",
+      "sha256": "4b0dcc64eb8da37e0a398a965cedbacd91c9f67f10b466d3055cd8a24972145d",
+      "tests": 187,
+      "failures": 0,
+      "errors": 0,
+      "seconds": 16.06
+    },
+    {
+      "path": "/private/tmp/probata-t07-method21-seams-green.xml",
+      "sha256": "1e156945983ce455947be7c0a0c92ee630bd2839bec95c008168fb31c47793f2",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "seconds": 6.436
+    }
+  ],
+  "real_provider_or_prover_called_by_new_controls": false,
+  "scientific_success": false,
+  "raw_hint_or_control_text_export_to_future_provider": false
+}

@@ -1,0 +1,99 @@
+{
+  "at_utc": "2026-10-16T16:56:01.779292+00:00",
+  "leases": [
+    {
+      "path": "/private/tmp/claude/swdb-verifier.lock",
+      "exists": true,
+      "owner": "owner=t07f pid=58501 since=2026-10-16 12:49:20 EDT cmd=/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/wp_run.sh wp-smoke /tmp/claude/probata-runs/t07f/s1-nohint-full tdstep_standin.c\n",
+      "pid": 58501,
+      "alive": true,
+      "birth": 1792169360.046397,
+      "name": "python3.12"
+    },
+    {
+      "path": "/private/tmp/claude/swdb-verifier.slot2.lock",
+      "exists": false
+    },
+    {
+      "path": "/private/tmp/claude/swdb-native-b.lock",
+      "exists": false
+    }
+  ],
+  "slots": "2\n",
+  "queue": [],
+  "selected_tools": [
+    {
+      "pid": 58502,
+      "name": "frama-c",
+      "rss": 2089402368
+    },
+    {
+      "pid": 58524,
+      "name": "why3server",
+      "rss": 1933312
+    },
+    {
+      "pid": 66061,
+      "name": "alt-ergo",
+      "rss": 181993472
+    },
+    {
+      "pid": 66062,
+      "name": "cvc5",
+      "rss": 95879168
+    },
+    {
+      "pid": 66065,
+      "name": "z3",
+      "rss": 217366528
+    },
+    {
+      "pid": 66066,
+      "name": "alt-ergo",
+      "rss": 166117376
+    },
+    {
+      "pid": 66067,
+      "name": "cvc5",
+      "rss": 93569024
+    },
+    {
+      "pid": 66069,
+      "name": "z3",
+      "rss": 218415104
+    },
+    {
+      "pid": 66070,
+      "name": "alt-ergo",
+      "rss": 165691392
+    },
+    {
+      "pid": 66074,
+      "name": "cvc5",
+      "rss": 97189888
+    },
+    {
+      "pid": 66075,
+      "name": "z3",
+      "rss": 224706560
+    },
+    {
+      "pid": 66076,
+      "name": "alt-ergo",
+      "rss": 157155328
+    },
+    {
+      "pid": 66081,
+      "name": "cvc5",
+      "rss": 96026624
+    },
+    {
+      "pid": 66082,
+      "name": "z3",
+      "rss": 203784192
+    }
+  ],
+  "inspection_denials": [],
+  "available_ram": 11727667200,
+  "no_resource_actions": true
+}

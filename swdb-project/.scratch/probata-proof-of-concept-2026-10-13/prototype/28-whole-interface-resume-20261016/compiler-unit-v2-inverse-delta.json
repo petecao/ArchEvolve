@@ -1,0 +1,31 @@
+{
+  "actual_compiler_executed": false,
+  "change": "AST parses exact original .cpp files with separate dependency census and source/header pre/post rechecks; frozen .ii remains provenance",
+  "criteria_unchanged": [
+    "one complete caller TU, no cross-TU declaration-ID joins",
+    "literal independent ABI roots only",
+    "180 s / 4 GiB / 128 MiB per file / 256 MiB total",
+    "all consumer parser, source/probe, binder, geometry and bypass gates"
+  ],
+  "date": "2026-10-16 ET",
+  "edits": [
+    {
+      "new": "    \"\"\"Prospective four-phase original-buffer Clang-only recipe.\n",
+      "old": "    \"\"\"Prospective four-phase original/frozen-source Clang-only recipe.\n"
+    },
+    {
+      "new": "        result.append({\"phase\": label + \"-ast\", \"argv\": [*flags, \"-x\", \"c++\", \"-fsyntax-only\", \"-MD\", \"-MF\",\n            str(out / (label + \".ast.d\")), \"-MT\", label + \"-ast\", \"-Xclang\", \"-ast-dump=json\", *ast_flags, str(original)], \"cwd\": str(out),\n            \"stdout\": str(out / (label + \".ast.json\")), \"source_coordinate_space\": \"original physical source buffers\",\n            \"same_parse_id_scope\": \"original caller full TU\" if not filtered else \"ABI literals only, IDs never joined\"})",
+      "old": "        result.append({\"phase\": label + \"-ast\", \"argv\": [*flags, \"-x\", \"c++-cpp-output\", \"-fsyntax-only\", \"-Xclang\",\n            \"-ast-dump=json\", *ast_flags, str(frozen)], \"cwd\": str(out),\n            \"stdout\": str(out / (label + \".ast.json\")), \"same_parse_id_scope\": \"original caller full TU\" if not filtered else \"ABI literals only, IDs never joined\"})"
+    },
+    {
+      "new": "        \"dependency_membership_policy\": \"AST and preprocessing depfiles must have identical independently parsed physical input membership; new/missing/rebound inputs refuse\",\n        \"required_capture_rechecks\": [\"before each AST: source/probe, used dependencies, compiler/runtime/control pins\",\n            \"after each AST: same physical bytes and dependency membership\", \"final capture: all source/runtime/control/dependency pins\"],\n        \"dependency_timing_tcb\": \"First used-header pins only after original preprocessing. AST rereads original source/headers, not frozen .ii; exact original physical coordinates are required, with no invented .ii-to-.cpp mapping. Recheck known input bytes before and after captures, compare both depfiles, and retain frozen preprocessing only as provenance. Between-check transient filesystem changes remain timing TCB.\"}",
+      "old": "        \"dependency_timing_tcb\": \"First used-header pins only after original preprocessing; frozen sources/dependencies and all known source/runtime inputs must be rechecked before and after captures.\"}"
+    }
+  ],
+  "new_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler_unit_adapter_v2.py",
+  "new_sha256": "1cf112859f976f77e8381c777c977f5cf5857d6e18f1bd0e24f9689148e80317",
+  "old_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler_unit_adapter_v1.py",
+  "old_sha256": "936216e6aa028f39cee8c16a53465273438e4ba02ac737c4367e55f012529d5b",
+  "public_admission": false,
+  "status": "SOURCE ONLY: original-buffer AST recipe correction; V1 untouched/unexecuted"
+}

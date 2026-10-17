@@ -1,0 +1,91 @@
+{
+  "README": {
+    "bytes": 5232,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/scientific-bundle-v3-README.md",
+    "sha256": "b67f83b5011d3255102e6f7fe98b5a53f86f2592f79ef0a74c7fe83bd8569033"
+  },
+  "SSH": 0,
+  "aggregate_bytes": 9378545,
+  "author": {
+    "bytes": 25914,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/author-scientific-bundle-v3.py",
+    "sha256": "c8c8821c3317560a7c2fff2064d66229786635acb80f269ad7d615f2c98cd738"
+  },
+  "catalog": {
+    "bytes": 256695,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/scientific-bundle-v3/catalog.json",
+    "sha256": "42100d4ecb63de8718f6d16071f179ba3fb173cd94511730b195106426a1cb60"
+  },
+  "classification": "FROZEN normalized historical conditional scientific evidence; ready for independent production-binder validation",
+  "compiler_native_verifier_solver_calls": 0,
+  "components": [
+    {
+      "id": "constructor",
+      "method_id": "method.wp-qualified-ctor35-v1",
+      "source_commit": "6216fc9440897bebc16a09eeb124ce76f202f185",
+      "targets": 35
+    },
+    {
+      "id": "destructor",
+      "method_id": "method.wp-qualified-dtor11-v1",
+      "source_commit": "2e01d27d0aea7f3c2056d3abb06600b4cefa29be",
+      "targets": 11
+    },
+    {
+      "id": "private_frame",
+      "method_id": "method.wp-private-frame9-v1",
+      "source_commit": "f918f5d52035fd99499280a0a8058efd0ed4ef55",
+      "targets": 9
+    },
+    {
+      "id": "gluing",
+      "method_id": "method.wp-closed-lifetime6-v1",
+      "source_commit": "fb197c5ddd173065ca781766886c6a797684a838",
+      "targets": 4
+    },
+    {
+      "id": "positive",
+      "method_id": "method.wp-closed-lifetime23-v1",
+      "source_commit": "04af74c121a733589fbe1a2087ad602deaef598b",
+      "targets": 23
+    }
+  ],
+  "created": "2026-10-16 ET",
+  "gaps": [],
+  "historical_scope": "Exact root scoped conditional constructor35/destructor11/private9/gluing4/positive23 evidence only; source/Typed/allocator/body/caller and public/ticket acceptance remain separate gates.",
+  "new_proof_record": false,
+  "normalization_controls": {
+    "bytes": 2995,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-closed-scientific-bundle-v3-normalization-controls-20261016.json",
+    "sha256": "1f3d23483886ce63f95c1c45dfc9622034c21140a93b1957a99a387354ac0a6f"
+  },
+  "object_count": 91,
+  "preserved_author_history": {
+    "v1": {
+      "bytes": 256249,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/scientific-bundle-v1/catalog.json",
+      "sha256": "6a3cd65dc15c5473c2c16350a599f544c637c25cf77da584ef8cda87a9b5bb8e"
+    },
+    "v2": {
+      "bytes": 256540,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/scientific-bundle-v2/catalog.json",
+      "sha256": "d72228d929864fcebc806f85f2e57d43a675db84e6564be55aa4323b072f74fc"
+    }
+  },
+  "project_imports": 0,
+  "remaining_scientific_gates": "The bundle preserves already accepted mathematical evidence. It does not itself bind an actual source execution or establish a source/Typed memory interpretation, allocator library effects, original body postcondition/assigns, current proof record, or caller admission.",
+  "review_pending": "Independent Spec review of the production pure binder after parent implementation; this author receipt does not validate that code.",
+  "schema_excerpt": {
+    "bytes": 11298,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/scientific-bundle-v3-component-example.json",
+    "sha256": "2410f8d715e8746c7d2e3f1f3f2a3b07ca6c698283a186df6b6bb4a770d72bf5"
+  },
+  "scientific_execution": false,
+  "source_or_caller_admission": false,
+  "subprocesses": 0,
+  "verifier": {
+    "bytes": 15491,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/verify-scientific-bundle-v3.py",
+    "sha256": "40894a00964e996395bfe55f2478e9435d3cbf3797ebbb3ec0891c2a60ca0c32"
+  }
+}

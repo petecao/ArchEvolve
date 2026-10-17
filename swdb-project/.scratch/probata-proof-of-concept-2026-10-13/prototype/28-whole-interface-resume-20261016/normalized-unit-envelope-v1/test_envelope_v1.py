@@ -1,0 +1,188 @@
+"""No-child stdlib controls; never execute the envelope or scientific observer."""
+import ast
+import copy
+import hashlib
+import json
+import os
+from pathlib import Path
+import stat
+import sys
+import tempfile
+import time
+import types
+import unittest
+
+HERE = Path(__file__).resolve().parent
+SOURCE = HERE / 'linux_observation_envelope_v1.py'
+EVENTS = []
+
+
+def audit(event, args):
+    if event.startswith(('subprocess.', 'os.exec', 'os.spawn', 'os.posix_spawn', 'os.fork', 'socket.')) or event in {'os.system', 'ctypes.dlopen'}:
+        EVENTS.append(event)
+        raise RuntimeError('no child/native/network in envelope controls')
+
+
+sys.addaudithook(audit)
+
+
+def namespace():
+    tree = ast.parse(SOURCE.read_bytes())
+    wanted = [node for node in tree.body if isinstance(node, (ast.Assign, ast.FunctionDef))]
+    result = {'Path': Path, 'hashlib': hashlib, 'json': json, 'os': os, 'stat': stat, 'sys': sys,
+              'ast': ast, 'types': types}
+    exec(compile(ast.Module(body=wanted, type_ignores=[]), '<exact-envelope-pure-controls>', 'exec'), result)
+    return result
+
+
+def fixture(ns, root):
+    raw = root / ns['RAW_NAME']; (raw / 'control').mkdir(parents=True)
+    controls = {}
+    for name in ns['OBSERVER_CONTROLS']:
+        path = raw / 'control' / name; path.write_bytes(('inert stand-in for ' + name).encode())
+        controls[name] = ns['pin'](path)
+    source = raw / 'control/source_call_fixture_v2.cpp'; source.write_bytes(b'inert proof-buffer stand-in')
+    controls[source.name] = ns['pin'](source)
+    observer = {'output_root': str(raw / 'observer'), 'library_root': str(raw / 'library_fixture'),
+        'controls': {name: {**row, 'path': str(raw / 'observer/control' / name)} for name, row in controls.items()
+                     if name in ns['OBSERVER_CONTROLS']}}
+    policy_path = raw / 'control/observation-policy-v1.json'
+    policy_path.write_text(json.dumps(observer)); controls[policy_path.name] = ns['pin'](policy_path)
+    policy = {'controls': controls, 'observer_policy': {**ns['pin'](policy_path), 'path': str(raw / 'observer/control' / policy_path.name)},
+              'library_source': {**ns['pin'](source), 'path': str(raw / 'library_fixture/proof_units/source.cpp')}}
+    return raw, policy
+
+
+class Controls(unittest.TestCase):
+    def test_reviewed_observer_and_eleven_modules_unchanged(self):
+        original = HERE.parent / 'normalized-unit-observation-v1'
+        fixed = json.loads((original / 'fixed-modules-v1.json').read_bytes())
+        self.assertEqual(len(fixed['modules']), 11)
+        self.assertEqual(hashlib.sha256((original / 'observe_entry_v1.py').read_bytes()).hexdigest(), namespace()['OBSERVER_SHA'])
+        for row in fixed['modules']:
+            raw = (original / 'modules' / row['file']).read_bytes()
+            self.assertEqual((len(raw), hashlib.sha256(raw).hexdigest()), (row['bytes'], row['sha256']))
+
+    def test_actual_copy_stage_and_complete_thirteen_control_membership(self):
+        ns = namespace()
+        with tempfile.TemporaryDirectory() as directory:
+            raw, policy = fixture(ns, Path(directory).resolve()); ns['stage_layout'](raw, policy)
+            self.assertEqual({p.name for p in (raw / 'observer/control').iterdir()}, set(ns['OBSERVER_CONTROLS']) | {'observation-policy-v1.json'})
+            for name in ns['OBSERVER_CONTROLS']:
+                self.assertEqual((raw / 'control' / name).read_bytes(), (raw / 'observer/control' / name).read_bytes())
+            self.assertEqual((raw / 'library_fixture/proof_units/source.cpp').read_bytes(), (raw / 'control/source_call_fixture_v2.cpp').read_bytes())
+            with self.assertRaises(ValueError): ns['stage_layout'](raw, policy)
+
+    def test_copy_stage_refuses_changed_hash_wrong_role_and_extra_control(self):
+        ns = namespace()
+        for mutation in ('hash', 'role', 'extra'):
+            with tempfile.TemporaryDirectory() as directory:
+                raw, policy = fixture(ns, Path(directory).resolve())
+                if mutation == 'hash': policy['controls']['whole_interface_v4.py']['sha256'] = '0' * 64
+                elif mutation == 'role': policy['library_source']['path'] = str(raw / 'escape.cpp')
+                else:
+                    file = raw / 'control/observation-policy-v1.json'; value = json.loads(file.read_bytes())
+                    value['controls']['extra.py'] = value['controls']['whole_interface_v4.py']; file.write_text(json.dumps(value))
+                    policy['controls'][file.name] = ns['pin'](file)
+                    policy['observer_policy'] = {**ns['pin'](file), 'path': str(raw / 'observer/control' / file.name)}
+                with self.assertRaises(ValueError): ns['stage_layout'](raw, policy)
+                self.assertFalse((raw / 'observer').exists())
+
+    def test_physical_reader_atime_pass_and_alias_hash_extent_refusal(self):
+        ns = namespace()
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory).resolve() / 'data'; path.write_bytes(b'closed bytes'); row = ns['pin'](path)
+            before = path.stat(); os.utime(path, ns=(before.st_atime_ns + 1000000, before.st_mtime_ns))
+            self.assertEqual(ns['read'](row), b'closed bytes')
+            link = Path(directory).resolve() / 'alias'; link.symlink_to(path)
+            with self.assertRaises(ValueError): ns['read']({**row, 'path': str(link)})
+            with self.assertRaises(ValueError): ns['read']({**row, 'sha256': '0' * 64})
+            with self.assertRaises(ValueError): ns['read']({**row, 'bytes': 1})
+
+    def test_root_metadata_is_literal_five_pin_closed_selection(self):
+        source = (HERE / 'prepare_envelope_v1.py').read_text(); tree = ast.parse(source)
+        wanted = [node for node in tree.body if isinstance(node, (ast.FunctionDef, ast.Assign)) and
+                  (isinstance(node, ast.FunctionDef) and node.name == 'checked_metadata' or isinstance(node, ast.Assign) and
+                   any(isinstance(target, ast.Name) and target.id in ('ORIGINAL', 'RAW', 'MISSING') for target in node.targets))]
+        ns = {'Path': Path}; exec(compile(ast.Module(body=wanted, type_ignores=[]), '<exact-root-metadata-guard>', 'exec'), ns)
+        value = {'retained_pins': {name: {'path': ns['ORIGINAL'] + '/' + name, 'bytes': 1, 'sha256': 'a' * 64} for name in ns['MISSING']},
+            'guard_files': {'execute.py': 'b' * 64, 'watch.py': 'c' * 64}, 'node': 0,
+            'root_admission_receipt': {'path': '/exact/root-owned-receipt.json', 'bytes': 1, 'sha256': 'd' * 64}}
+        self.assertEqual(ns['checked_metadata'](value), value)
+        for mutation in ('missing', 'wrong-path', 'unknown', 'node', 'receipt-inside-observer'):
+            bad = copy.deepcopy(value)
+            if mutation == 'missing': bad['retained_pins'].pop(ns['MISSING'][0])
+            elif mutation == 'wrong-path': bad['retained_pins'][ns['MISSING'][0]]['path'] = '/different/observation.json'
+            elif mutation == 'unknown': bad['allow'] = True
+            elif mutation == 'node': bad['node'] = True
+            else: bad['root_admission_receipt']['path'] = ns['RAW'] + '/observer/control/receipt.json'
+            with self.assertRaises(ValueError): ns['checked_metadata'](bad)
+
+    def test_actual_launch_guard_seam_and_inverses(self):
+        ns = namespace(); ns['PYTHON'] = '/selected/python'
+        with tempfile.TemporaryDirectory() as directory:
+            raw = Path(directory).resolve(); digest = 'd' * 64
+            for name in ('execute.py', 'watch.py'): (raw / name).write_bytes(name.encode())
+            guards = {name: ns['pin'](raw / name)['sha256'] for name in ('execute.py', 'watch.py')}
+            argv = ['entry', str(raw), 'policy', digest]
+            launch = {'command': [ns['PYTHON'], '-I', '-B', '-X', 'pycache_prefix=' + str(raw / 'entry-source-cache'),
+                str(raw / 'control/linux_observation_envelope_v1.py'), str(raw), str(raw / 'control/envelope-policy-v1.json'), digest],
+                'source': str(Path(ns['PROJECT']).parent), 'source_commit': ns['SOURCE_COMMIT'], 'rss_cap_bytes': 4294967296,
+                'workers': 1, 'timeout_seconds': 1200, 'node': 0, 'reviewed_wrapper_reuse': guards}
+            def selected(node): self.assertEqual(node, 0); return {'fixed-live-stand-in': True}
+            path = raw / 'launch.json'; path.write_text(json.dumps(launch))
+            policy = {'node': 0, 'guard_files': guards}
+            self.assertFalse(ns['check_launch'](raw, policy, argv, selected)['Mac_counted_claim'])
+            for key, value in [('rss_cap_bytes', 8589934592), ('workers', 2), ('timeout_seconds', 180), ('source_commit', '0' * 40), ('node', 1)]:
+                bad = {**launch, key: value}; path.write_text(json.dumps(bad))
+                with self.assertRaises(ValueError): ns['check_launch'](raw, policy, argv, selected)
+
+    def test_exact_inherited_runtime_nodes_and_stable_guard_preserved(self):
+        ns = namespace(); old = HERE.parent / 'linux_native86_entry_v4.py'
+        real = ns['runtime_helpers'](old.read_bytes())
+        for name in ('verified_linux_lane', 'physical_runtime'): self.assertTrue(callable(real[name]))
+        with self.assertRaises(ValueError): ns['runtime_helpers'](old.read_bytes() + b'\n')
+        source = SOURCE.read_text()
+        self.assertIn('signal.setitimer(signal.ITIMER_REAL, ENTRY_SECONDS)', source)
+        self.assertIn("module.main([policy['observer_policy']['path'], policy['observer_policy']['sha256']])", source)
+        self.assertIn("before is not None and after == before", source)
+        self.assertNotIn('subprocess', ''.join(ast.unparse(node) for node in ast.parse(source).body if isinstance(node, (ast.Import, ast.ImportFrom))))
+
+    def test_outputs_and_bounded_refusal_frames(self):
+        ns = namespace()
+        with tempfile.TemporaryDirectory() as directory:
+            raw = Path(directory).resolve(); (raw / 'observer/control').mkdir(parents=True)
+            ns['check_outputs'](raw)
+            (raw / 'observer/unknown').write_bytes(b'bad')
+            with self.assertRaises(ValueError): ns['check_outputs'](raw)
+        try: raise AssertionError('must not be emitted')
+        except AssertionError as error:
+            value = ns['frames'](error)
+        self.assertEqual(set(value), {'type', 'frames'})
+        self.assertEqual(set(value['frames'][0]), {'filename', 'function', 'line'})
+        self.assertNotIn('must not be emitted', json.dumps(value))
+
+    def test_exact_known_root_environment_projection_and_unknown_selector_refusal(self):
+        ns = namespace(); runtime = {'path': '/usr/bin:/bin', 'home': '/pinned/home',
+            'native_runtime': {'loader_environment': {'LD_LIBRARY_PATH': '/pinned/llvm/lib'}}}
+        raw = Path('/fixed/raw')
+        base = {'PATH': '/root/known/tool-path', 'HOME': '/root/home', 'PYTHONPATH': ns['PROJECT'],
+                'LD_LIBRARY_PATH': '/pinned/llvm/lib', 'LACT_SOCKET_LANE_PID': '42'}
+        environment = dict(base); result = ns['bind_environment'](raw, runtime, environment)
+        self.assertEqual(environment['PATH'], runtime['path']); self.assertEqual(environment['HOME'], runtime['home'])
+        self.assertNotIn('PYTHONPATH', environment); self.assertNotIn('LD_LIBRARY_PATH', environment)
+        self.assertEqual(environment['LACT_SOCKET_LANE_PID'], '42')
+        self.assertEqual(result['known_root_environment_before']['PYTHONPATH'], ns['PROJECT'])
+        for name, value in [('PYTHONPATH', '/unadmitted/project'), ('PYTHONOPTIMIZE', '1'), ('PYTHONHOME', '/evil'),
+                            ('LD_PRELOAD', '/evil.so'), ('LIBRARY_PATH', '/evil'), ('LD_LIBRARY_PATH', '/evil'),
+                            ('__PYVENV_LAUNCHER__', '/evil')]:
+            with self.assertRaises(ValueError): ns['bind_environment'](raw, runtime, {**base, name: value})
+
+    def test_closed_metadata_and_no_project_child_native_actions(self):
+        ns = namespace()
+        with self.assertRaises(ValueError): ns['document'](b'{"x":1,"x":2}')
+        with self.assertRaises(ValueError): ns['document'](b'{"x":NaN}')
+        self.assertEqual(EVENTS, [])
+
+
+if __name__ == '__main__': unittest.main(verbosity=2)

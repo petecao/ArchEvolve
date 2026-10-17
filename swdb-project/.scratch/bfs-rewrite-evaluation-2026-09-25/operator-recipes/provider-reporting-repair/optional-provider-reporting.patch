@@ -1,0 +1,40 @@
+--- a/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context2/bfs-provider-context2-20260927.py
++++ b/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context2/bfs-provider-context2-20260927.py
+@@ -141,6 +141,27 @@
+         except BaseException as secondary:exc.add_note(f'guard persistence: {secondary}')
+         raise
+     return main()
++
++
++def provider_reporting(meta, stdout):
++    """Optional usage telemetry cannot replace the canonical proposal outcome."""
++    unavailable = {'reported_cost_usd': None, 'usage': None,
++                   'provider_output_reporting': {'state': 'unavailable', 'provider_state': meta.get('state')}}
++    if meta.get('state') != 'completed':
++        return unavailable
++    try:
++        with stdout.open('rb') as stream:
++            raw = stream.read(10 * 1024**2 + 1)
++        if len(raw) > 10 * 1024**2:
++            raise ValueError('provider telemetry exceeds retained output bound')
++        value = json.loads(raw)
++        if not isinstance(value, dict):
++            raise ValueError('provider telemetry is not a JSON object')
++    except (OSError, ValueError) as exc:
++        unavailable['provider_output_reporting']['reason'] = type(exc).__name__
++        return unavailable
++    return {'reported_cost_usd': value.get('total_cost_usd'), 'usage': value.get('usage'),
++            'provider_output_reporting': {'state': 'available', 'provider_state': meta['state']}}
+ 
+ 
+ def debit(seconds):
+@@ -333,8 +354,7 @@
+         if meta_path.is_file():
+             meta=json.loads(meta_path.read_text());require(meta['prompt_sha256']==PROMPT_SHA and sha(meta_path.parent/'prompt.txt')==PROMPT_SHA,'actual sent prompt changed')
+             receipt['provider_calls']=1;receipt['provider_receipt']=ref(meta_path);receipt['budget_debit']=debit(meta['host_wall_s'])
+-            provider_result=json.loads((meta_path.parent/'stdout.txt').read_text())
+-            receipt['reported_cost_usd']=provider_result.get('total_cost_usd');receipt['usage']=provider_result.get('usage')
++            receipt.update(provider_reporting(meta, meta_path.parent/'stdout.txt'))
+         fresh=public('supplement-after','get',RID);require(json.loads(fresh.read_text())==result,'public result differs from fresh retained proposal')
+         predecessor=public('predecessor-after','get',PREVIOUS_ID);require(json.loads(predecessor.read_text())==json.loads(before.read_text()),'predecessor changed')
+         public('supplement-chain','get',RID,'--chain')

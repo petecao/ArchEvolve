@@ -1,0 +1,77 @@
+{
+  "format": "swdb.lanl17-original32-request-author-independent-source-review.v1",
+  "checked_utc": "2026-10-09T02:01:29.209342+00:00",
+  "verdict": "R2_NOT_SELECTED_ONE_CONFIRMED_COMPATIBILITY_FINDING",
+  "reviewed_pins": [
+    {
+      "path": "/private/tmp/lanl17_prepare_original32_requests_20261008_a5_r2.py",
+      "bytes": 18624,
+      "sha256": "b2f39f19ddf9bd646e92b2f8b1151928d2cde72acbb0b0f31b132528b5e48c7f"
+    },
+    {
+      "path": "/private/tmp/lanl17_parent_capture_projection_producer_a3_20261007.py",
+      "bytes": 46165,
+      "sha256": "32bead204337aa66d0a732b6f143216946abafc5d2eb752577b0d90f7190b7b6"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-metadata-controls-20261007-a4/lanl17_parent_helpers_cleanup60_a4.py",
+      "bytes": 38195,
+      "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+    },
+    {
+      "path": "/private/tmp/lanl17-original32-request-author-handoff-20261008-a5-r2.md",
+      "bytes": 3028,
+      "sha256": "ff0036540517d83625b66df4f0ee896f8dfaf03534a40fd3d070f2edfc54f5cd"
+    },
+    {
+      "path": "/private/tmp/lanl17-original32-request-author-input-FUTURE-p1-20261008-a5-r2.json",
+      "bytes": 13985,
+      "sha256": "c3c96e2f913cb1cd252064d75f83bfc6127e1fec1b01b9c168ccb7c50b0b32cd"
+    },
+    {
+      "path": "/private/tmp/lanl17-original32-request-author-input-FUTURE-p2-20261008-a5-r2.json",
+      "bytes": 13985,
+      "sha256": "cf7536d0adda4b7f2173a72a9e307de016555b6267676ba194aced91b1155f8d"
+    },
+    {
+      "path": "/private/tmp/lanl17-original32-request-author-input-FUTURE-p3-20261008-a5-r2.json",
+      "bytes": 13985,
+      "sha256": "648a4bc03d21e5b1ee14c21d054f75f45a44011f8bd1537a12fea7a5ed62454f"
+    },
+    {
+      "path": "/private/tmp/lanl17-original32-request-author-input-FUTURE-p4-20261008-a5-r2.json",
+      "bytes": 13985,
+      "sha256": "d3bf26f05a9d8b46e057fde45e7ca70320a81cf365906647c92a56a6955768dc"
+    }
+  ],
+  "findings": [
+    {
+      "file": "/private/tmp/lanl17_prepare_original32_requests_20261008_a5_r2.py",
+      "line": 127,
+      "issue": "AFTER descriptor incorrectly requires canonical_ensure_ascii True.",
+      "evidence": "Original B08 writer and every genuine AFTER custody use canonical ensure_ascii False; original32 accepts exact per-writer Boolean policy.",
+      "impact": "Genuine AFTER descriptors fail authoring; substituting True would be false metadata and producer seal refusal. No author executed.",
+      "resolution": "Fresh R3 require False and change each FUTURE AFTER descriptor/identity basis to original False seal; preserve R2. M2/new source32 request seals remain True."
+    }
+  ],
+  "other_checks": [
+    "Full source AST/text and original32 trajectory/candidate_selection/input/output contracts independently read, with no target imports.",
+    "Local own0600 explicit metadata input and own source only; bounded stable nine-stat O_NOFOLLOW single-link original reads; duplicate/nonfinite/typedfuture refusal;45-second author deadline.",
+    "Closed top-level metadata and original32 request field sets; frozen R/C/F6/H/B/A/P/plan/campaign/search/index/M2/shared-p1policy fixed; four actual CID routes only.",
+    "H28 run_cli owns persisted validation argv/stdout/stderr/exit and public export files; proper H28 writer-source descriptors, not CLI implementation confused with persisted writer.",
+    "Original32 remotely validates exact originals, canonical writer policies, writer bytes, roots, source/commit/context, hashes and finish rehash; local author never claims to open descriptor bodies.",
+    "Full completed materialized IDs contain every summary iteration candidate with nonnull ID including rejected rows; null rows cannot become invented IDs. Named original public exports remain a separate subset.",
+    "Accepted observations explicitly Boolean and not defaulted True; original32 exact summary/state/row comparison enforces actual parent-supplied population/source/terminal fields.",
+    "Original unsaved provider/step events and time/disk accounting never independently reconstructed. Normal infrastructure partition None explicit; interrupted evidence requires separate genuine inputs rather than normal author defaults.",
+    "Conditional missing-component rows require separate sealed original refusal descriptor per event hash; unchanged32 checks actual event/component/control source/stage/boundary/custody class. No manufactured outcome events.",
+    "All actual custody/FINALIZE/full-index/selection/refusal/route review flags explicit True only with canonical metadata payload/source hash and chronological actual UTC; FUTURE wrapper remains nonexecutable.",
+    "External request/output routes distinct/nonancestor and outside whole S/RAW; source32 outputs correctly under /data/yanruj afterR2; no declared original-input overwrite.",
+    "Fresh owned private local output directory0700 and O_EXCL0600 files, fsync/readback, explicit NOTRUN plan, final input/source rehash. Original source32/assembler/auditor unchanged; no scientific-admission claim."
+  ],
+  "limits": [
+    "No author/control/import/test/SSH/remote execution.",
+    "Source-only review does not establish genuine FINALIZE completion, full-index validation continuity, actual selection, output freshness or strict scientific admission.",
+    "AcceptedFalse values intentionally retained as honest incomplete evidence for downstream original guards; local author is not a scientific validator."
+  ],
+  "scientific_admission": false
+}

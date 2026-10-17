@@ -1,0 +1,11 @@
+name: run_outcomes
+description: How one part of a profile run ended.
+values:
+  - value: complete
+    meaning: Finished and its results are recorded.
+  - value: timed_out
+    meaning: Stopped by its timeout; its results are missing and the profile is incomplete.
+  - value: failed
+    meaning: Exited with an error; the note says how.
+  - value: skipped
+    meaning: Not run, on purpose; the note says why.

@@ -1,0 +1,13 @@
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+// Ported 2026-10-03 from MaizeHPC/MemAcc af3d6d7f7a69a72facdc3b95b42e78c952f44a76
+// Source: AgenticRefiner/refiner/synthesis/drivers/pack_{ref,cand,run}.cpp.tmpl
+// SWDB changes: reference TU calls SWDB's plain C++ reference header (swdb_ref::) instead of DataLayoutAPI; run TU drops all timing and adds an input frame check (2026-10-03 ET); the chain depth is a runtime argument (1 or 2)
+// Two-binary certification REFERENCE TU for family pack: compiled from SWDB's
+// plain C++ reference semantics only; the candidate header is never included.
+#include "{{REFERENCE_HEADER}}"
+#include <cstddef>
+#include <cstdint>
+extern "C" void swdb_ref_pack(double* packed, const double* src, const std::int32_t* chain0, const std::int32_t* chain1, std::size_t depth, std::size_t n, std::int64_t coeff, std::int64_t offset, std::size_t n_src) {
+  const std::int32_t* chain[2] = {chain0, chain1};
+  swdb_ref::pack_gather<double, std::int32_t>(packed, src, chain, depth, n, coeff, offset, n_src);
+}

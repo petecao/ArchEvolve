@@ -1,0 +1,128 @@
+{
+  "created": "2026-10-16 ET",
+  "observed_utc": "2026-10-16T20:57:21.449730+00:00",
+  "classification": "PUBLIC_FIVE_CASE_METHOD_SELECTION_FAILURE",
+  "source_commit": "dcdecf317a0e9b34f3ce12d5b914eb823c439fbc",
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-dcdecf31-t25-closed-source-public-v2",
+  "actual": {
+    "lane.json": {
+      "socket_lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "command": [
+          "timeout",
+          "--signal=TERM",
+          "--kill-after=60",
+          "1320",
+          "bash",
+          "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-dcdecf31-t25-closed-source-public-v2/run.sh"
+        ],
+        "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+        "ended_utc": "2026-10-16T20:50:32Z",
+        "exit_code": 1,
+        "host": "mbit10",
+        "job": "probata-resume-20261016-dcdecf31-t25-closed-source-public-v2",
+        "lease_generation": 636,
+        "lease_name": "mbit10-evaluation-node1",
+        "load1_at_start": 0.33,
+        "load1_max": 32,
+        "node": 1,
+        "numa_memory_policy": "bind:1",
+        "numactl": "--cpunodebind=1 --membind=1",
+        "preregistration_sha256": null,
+        "started_utc": "2026-10-16T20:48:25Z"
+      }
+    },
+    "outer-resources.json": {
+      "exit_code": 1,
+      "peak_rss_bytes": 518492160,
+      "out_of_memory": false,
+      "timed_out": false,
+      "wall_seconds": 127.42559201922268,
+      "cpu_seconds": 159.719948
+    },
+    "resources.json": {
+      "cpu_seconds": 133.24833,
+      "exit_code": 1,
+      "out_of_memory": false,
+      "peak_rss_bytes": 465014784,
+      "timed_out": false,
+      "wall_seconds": 125.37592493183911
+    },
+    "source-after.json": {
+      "commit": "dcdecf317a0e9b34f3ce12d5b914eb823c439fbc",
+      "source_unchanged": true,
+      "tracked_changes": ""
+    },
+    "closed-result.json": {
+      "error": "ValueError",
+      "finalization": {
+        "before": {
+          "aliases": [
+            {
+              "literal_target": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-dcdecf31-t25-closed-source-public-v2/closed-source-profile/pytest/test_public_closed_source_proo4",
+              "relative": "closed-source-profile/pytest/test_public_closed_source_proocurrent",
+              "target_relative": "closed-source-profile/pytest/test_public_closed_source_proo4"
+            }
+          ],
+          "bytes": 42375050,
+          "regular_files": 436
+        },
+        "controller_exit_zero_requires_post_fsync_extent_and_time_checks": true,
+        "elapsed_seconds_before": 125.225744,
+        "margin_seconds": 1.0,
+        "projected_total_bytes": 42376150,
+        "remaining_reserve_covers_bounded_stdout_and_root_guard_metadata": true,
+        "reserve_bytes": 65536,
+        "result_byte_cap": 16384,
+        "result_bytes": 1100,
+        "whole_seconds": 1200
+      },
+      "independent_cold_acceptance": false,
+      "reason": "closed-source public pytest failed",
+      "source_commit": "dcdecf317a0e9b34f3ce12d5b914eb823c439fbc",
+      "status": "REFUSED_OR_FAILED"
+    }
+  },
+  "junit": {
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-dcdecf31-t25-closed-source-public-v2/closed-source-profile/junit.xml",
+    "sha256": "137031c283708564366680015e141bbb92879d1820e4097e64b0f5de978b8e11",
+    "cases": 5,
+    "failures": 5,
+    "errors": 0,
+    "skips": 0
+  },
+  "failures": [
+    {
+      "name": "test_public_closed_source_proof_and_exact_opt_in_controls[safe]",
+      "failure": "explicit requested method dropped; old method.contract-fixture-1 selected",
+      "message_prefix": "AssertionError: swdb prove: adapter wp: z3 5.1.0 is installed but method version method.contract-fixture-1 pins 4.8.14; alt-ergo 2.6.4 is installed but method version method.contract-fixture-1 pins 2.6.0; the C lowering tool swdb-c-lowering-9 (sha256 9a1662c2f7cd...) is not a translator of method version method.contract-fixture-1; method version method.contract-fixture-1 does not freeze -rte-initialized @all for frama-c-wp; method version method.contract-fixture-1: requires exactly -wp-no-filter-init without -wp-filter-init or boolean =value overrides for frama-c-wp."
+    },
+    {
+      "name": "test_public_closed_source_proof_and_exact_opt_in_controls[missing_bundle]",
+      "failure": "explicit requested method dropped; old method.contract-fixture-1 selected",
+      "message_prefix": "AssertionError: swdb prove: adapter wp: z3 5.1.0 is installed but method version method.contract-fixture-1 pins 4.8.14; alt-ergo 2.6.4 is installed but method version method.contract-fixture-1 pins 2.6.0; the C lowering tool swdb-c-lowering-9 (sha256 9a1662c2f7cd...) is not a translator of method version method.contract-fixture-1; method version method.contract-fixture-1 does not freeze -rte-initialized @all for frama-c-wp; method version method.contract-fixture-1: requires exactly -wp-no-filter-init without -wp-filter-init or boolean =value overrides for frama-c-wp."
+    },
+    {
+      "name": "test_public_closed_source_proof_and_exact_opt_in_controls[stale_method]",
+      "failure": "explicit requested method dropped; old method.contract-fixture-1 selected",
+      "message_prefix": "AssertionError: swdb prove: adapter wp: z3 5.1.0 is installed but method version method.contract-fixture-1 pins 4.8.14; alt-ergo 2.6.4 is installed but method version method.contract-fixture-1 pins 2.6.0; the C lowering tool swdb-c-lowering-9 (sha256 9a1662c2f7cd...) is not a translator of method version method.contract-fixture-1; method version method.contract-fixture-1 does not freeze -rte-initialized @all for frama-c-wp; method version method.contract-fixture-1: requires exactly -wp-no-filter-init without -wp-filter-init or boolean =value overrides for frama-c-wp."
+    },
+    {
+      "name": "test_public_closed_source_proof_and_exact_opt_in_controls[wrong_result]",
+      "failure": "explicit requested method dropped; old method.contract-fixture-1 selected",
+      "message_prefix": "AssertionError: swdb prove: adapter wp: z3 5.1.0 is installed but method version method.contract-fixture-1 pins 4.8.14; alt-ergo 2.6.4 is installed but method version method.contract-fixture-1 pins 2.6.0; the C lowering tool swdb-c-lowering-9 (sha256 9a1662c2f7cd...) is not a translator of method version method.contract-fixture-1; method version method.contract-fixture-1 does not freeze -rte-initialized @all for frama-c-wp; method version method.contract-fixture-1: requires exactly -wp-no-filter-init without -wp-filter-init or boolean =value overrides for frama-c-wp."
+    },
+    {
+      "name": "test_public_closed_source_proof_and_exact_opt_in_controls[default_method]",
+      "failure": "explicit requested method dropped; old method.contract-fixture-1 selected",
+      "message_prefix": "AssertionError: swdb prove: adapter wp: z3 5.1.0 is installed but method version method.contract-fixture-1 pins 4.8.14; alt-ergo 2.6.4 is installed but method version method.contract-fixture-1 pins 2.6.0; the C lowering tool swdb-c-lowering-9 (sha256 9a1662c2f7cd...) is not a translator of method version method.contract-fixture-1; method version method.contract-fixture-1 does not freeze -rte-initialized @all for frama-c-wp; method version method.contract-fixture-1: requires exactly -wp-no-filter-init without -wp-filter-init or boolean =value overrides for frama-c-wp."
+    }
+  ],
+  "retained_public_records": 0,
+  "raw_files": 440,
+  "raw_bytes": 42378289,
+  "root_diagnosis": "proof._prove_summary and _prove_model drop args.method_version when calling _current_method; candidate path already forwards it. A separate source/test review is required for the narrow fix.",
+  "source_rule_record_or_scientific_acceptance": false,
+  "raw_payload_transferred": false
+}

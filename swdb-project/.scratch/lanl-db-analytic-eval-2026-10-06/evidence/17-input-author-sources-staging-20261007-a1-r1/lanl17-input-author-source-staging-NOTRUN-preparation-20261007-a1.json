@@ -1,0 +1,129 @@
+{
+  "format": "swdb.lanl17-input-author-source-staging-NOTRUN-preparation.v1",
+  "created_utc": "2026-10-07T18:29:40.547598+00:00",
+  "canonical_ensure_ascii": true,
+  "state": "NOTRUN_source_only_preparation",
+  "driver": {
+    "path": "/private/tmp/lanl-stage-reviewed17-input-author-sources-from-git-20261007-a1.py",
+    "bytes": 23483,
+    "sha256": "304a16b59f1110c745188c0ce671047cf3415dbd6d2baa80b5a1aaf7d7ef4bf5"
+  },
+  "handoff": {
+    "path": "/private/tmp/lanl17-input-author-source-staging-source-handoff-20261007-a1.md",
+    "bytes": 5629,
+    "sha256": "3d3c71ce64cfecfe50592ad4d61b53483dc4cfc02ca00423dcffe289fabeff9a"
+  },
+  "original_shape_driver": {
+    "path": "/private/tmp/lanl-stage-reviewed17-full-record-index-writer-from-git-20261007-a1.py",
+    "bytes": 11950,
+    "sha256": "23b67b7aeced87297b19348efe2921cfcc7dc530563c2869705f0dcc4ed9207e"
+  },
+  "construction_pin_metadata": {
+    "path": "/private/tmp/lanl17-input-author-source-staging-construction-pins-20261007-a1.json",
+    "bytes": 3944,
+    "sha256": "585fb4c10b945a359f2fb3cfcb6f758d7849b64dc3bd2ade630f89f40ba7a6e5"
+  },
+  "construction_readonly_git_refs": [
+    "b249cd606fe3b688484bed1b1c56f627875692ec",
+    "f20e6fb326107f5c1a4a7517106966cd03e39c26"
+  ],
+  "future_delivered_revision": null,
+  "future_revision_rule": "parent-supplied exact lowercase40hex required; no default or selected future tip",
+  "source_and_original_review_manifest_pins": [
+    {
+      "target": "publication_author.py",
+      "source": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-first-publication-request-author-controls-20261007-r1/lanl17_author_first_publication_request_r1_20261007.py",
+        "bytes": 28419,
+        "sha256": "791f95b5f53c23740ce8b2bdd72fc8dcd625494a60f5399f30b5ed704347fb1a"
+      },
+      "review": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-first-publication-request-author-controls-20261007-r1/lanl17-first-publication-request-author-parent-review-20261007.json",
+        "bytes": 5706,
+        "sha256": "a6f4574017f8b3879448319630691fb61b7a7476c09bf4d216c4bd9c187d9a4b",
+        "format": "swdb.lanl17-first-publication-request-author-parent-source-review.v1",
+        "identity_sha256": "55d73e22fe4eb42a68a8582bc2bfb7e5630ef0168c89c57ff81c428377f64e28"
+      },
+      "manifest": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-first-publication-request-author-controls-20261007-r1/manifest.json",
+        "bytes": 6332,
+        "sha256": "1f6548fae8020b98ed64d0ba05c630e381ab1f432cbfc8137d857ade3d2d5915",
+        "format": "swdb.lanl17-first-publication-request-author-controls-archival-custody.v1",
+        "identity_sha256": "fde1fa2af039149728ffb593395c3792096fc7ad56d095e90ec8409a714c4b65"
+      }
+    },
+    {
+      "target": "index_request_author.py",
+      "source": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-parent-index-request-author-controls-20261007-r1/lanl17_author_parent_full_record_index_request_r1_20261007.py",
+        "bytes": 38266,
+        "sha256": "a2e69aef10deb6186ac49401516ffba9a165b2f3cc94c8001646b6ac9a5b701d"
+      },
+      "review": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-parent-index-request-author-controls-20261007-r1/lanl17-index-request-author-r1-parent-review-20261007.json",
+        "bytes": 4493,
+        "sha256": "dfeb44d5380b39ccb429f2069482ef9b11ff1f48614d590439781d2133cfc22e",
+        "format": "swdb.lanl17-index-request-author-r1-parent-source-review.v1",
+        "identity_sha256": "8ee0b630581889aacca633bd0f067cad03410095fac88978c9c4a5e81fca2cf3"
+      },
+      "manifest": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-parent-index-request-author-controls-20261007-r1/manifest.json",
+        "bytes": 10452,
+        "sha256": "0e2bb2ddbb94be542bf172ba03230649f25bb6c405ceaf0be02273541e8cc52d",
+        "format": "swdb.lanl17-parent-index-request-author-controls-retention.v1",
+        "identity_sha256": "8043407506aa0d65107f37e2a9d95a3c9abcc077a0738c3efeccc076f8140f84"
+      }
+    },
+    {
+      "target": "passive_inventory.py",
+      "source": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-passive-one-catalog-inventory-controls-20261007/lanl17_read_passive_one_catalog_inventory_20261007.py",
+        "bytes": 29653,
+        "sha256": "76b86959ceca7a162a34b7a2d1e633ee9523d0b9cc7f629e9fbeeb4e101aa176"
+      },
+      "review": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-passive-one-catalog-inventory-controls-20261007/lanl17-passive-inventory-parent-review-20261007.json",
+        "bytes": 5062,
+        "sha256": "44bc9076f5cc1451112c5b01dccd467fcdfde0d2dfe01525c04e56f25d97058f",
+        "format": "swdb.lanl17-passive-inventory-parent-source-review.v1",
+        "identity_sha256": "2845ba8c4d085c6d03b41bb5332fd144eb930b25f6bfd08801c16301de80dc21"
+      },
+      "manifest": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-passive-one-catalog-inventory-controls-20261007/manifest.json",
+        "bytes": 8931,
+        "sha256": "58602bce973ef6b7c9162128e4d288a5f36b257454bfae84ab683f4d30745e47",
+        "format": "swdb.lanl17-passive-one-catalog-inventory-archive.v1",
+        "identity_sha256": "3494b0fa965fc6bfc1f0425f5b3630f76f1723d72e7a979a4e90ac83824f143e"
+      }
+    }
+  ],
+  "destination": "/data1/yanruj/lanl17-input-author-source-20261007-a1/",
+  "future_destination_only_three_source_files": true,
+  "remote_receipt_file_created": false,
+  "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "estimator_F6_from_original_reviewed_custody": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "preparation_checks": {
+    "local_source_syntax_AST_parse": true,
+    "decoded_remote_source_syntax_AST_parse": true,
+    "immutable_configuration_and_shape_source_byte_pins": true,
+    "runtime_or_synthetic_checks": false
+  },
+  "remote_seconds_limit": 60,
+  "local_SSH_seconds_limit": 120,
+  "receipt_byte_limit": 16384,
+  "current_actions": {
+    "SSH": false,
+    "source_staging": false,
+    "selected_source_import_or_main": false,
+    "actual_input_or_catalog": false,
+    "Store_or_public_validation": false,
+    "tests": false,
+    "native_provider_campaign_science": false,
+    "Git_mutation_or_worktree_edit": false
+  },
+  "original_NOTRUN_and_later_synthetic_chronology_preserved": true,
+  "earlier_stages_and_original7a_staged_writer_opened_or_modified": false,
+  "parent_full_source_review_and_separate_actual_staging_authorization_required": true,
+  "scope": "Preparation only. Future copies are custody, not actual inputs, main execution, validation, trajectory admission or science.",
+  "identity_sha256": "edee658791559fe3321a301e23aa508190e84fd490f999086649d463e46ff789"
+}

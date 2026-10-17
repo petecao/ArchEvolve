@@ -1,0 +1,45 @@
+{
+  "format": "swdb.independent-service-compact-receipt.v1",
+  "updated": "2026-10-06 ET",
+  "kind": "float-memory",
+  "phase": "count",
+  "source_commit": "3006d91e2d076db0104f3b7734131dec5f26caad",
+  "source_clean": true,
+  "raw_directory": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-float-memory-count-20261006-a1",
+  "raw_transferred": false,
+  "lane": {
+    "aligned_cell_age_s": "",
+    "aligned_to": "no_gapbs_batch_running",
+    "command": [
+      "python3",
+      "/data/yanruj/EvolveSWDB_runs/lanl-analytic-float-memory-count-20261006-a1/runner.py"
+    ],
+    "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+    "ended_utc": "2026-10-07T03:32:16Z",
+    "exit_code": 0,
+    "host": "mbit10",
+    "job": "swdb-lanl-float-memory-count-20261006-a1",
+    "lease_generation": 498,
+    "lease_name": "mbit10-evaluation-node0",
+    "load1_at_start": 2.32,
+    "load1_max": 32,
+    "node": 0,
+    "numa_memory_policy": "bind:0",
+    "numactl": "--cpunodebind=0 --membind=0",
+    "preregistration_sha256": null,
+    "started_utc": "2026-10-07T03:27:18Z"
+  },
+  "new_records": [],
+  "preregistration_sha256": "08c836cebac7ea69c1290b1f47f57c9baba4ccba4450bb20d0e33bb6d30ce9c6",
+  "validation": "OK: 629 record(s) valid",
+  "completed_utc": "2026-10-07T03:32:16.610977+00:00",
+  "prior_record_bytes_preserved": true,
+  "scope": "Exact independent service construction; no application accuracy or physical latency claim.",
+  "count_proof": {
+    "identity_sha256": "4faef721c93f856885118154e90525caba75e8defa5a48360ad285370baef8e3",
+    "file_sha256": "d1fbf19e4f2ac02d31fac17c7be1181da83d162313ebfbd8d625c704525dee45",
+    "bytes": 10121,
+    "timings_collected": false
+  },
+  "identity_sha256": "209bf197adfc29ee19e9a080e22d01d231c09c7e320579c44bb63ef8cce133f4"
+}

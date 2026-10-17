@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "workload",
+  "title": "Workload",
+  "description": "Content-addressed BFS protocol/workload record. Introduced 2026-09-25.",
+  "properties": {
+    "schema_version": {
+      "const": "0.4"
+    },
+    "message_version": {
+      "const": "1.0"
+    },
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "enum": [
+            "sw",
+            "hw",
+            "operator",
+            "worker"
+          ]
+        },
+        "test_client": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name",
+        "role",
+        "test_client"
+      ]
+    },
+    "kind": {
+      "const": "workload"
+    },
+    "requested_id": {
+      "$ref": "#/$defs/id"
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "supersedes": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "x-ref": "workload"
+    },
+    "invalidated_comparisons": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "x-ref": "comparison_result"
+      }
+    },
+    "identity_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "definition": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema_version",
+    "message_version",
+    "producer",
+    "kind",
+    "requested_id",
+    "version",
+    "supersedes",
+    "invalidated_comparisons",
+    "identity_sha256",
+    "definition"
+  ]
+}

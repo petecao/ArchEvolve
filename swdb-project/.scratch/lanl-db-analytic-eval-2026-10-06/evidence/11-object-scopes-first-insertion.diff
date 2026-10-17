@@ -1,0 +1,66 @@
+diff --git a/swdb-project/swdb/analytic.py b/swdb-project/swdb/analytic.py
+index 4fb8866..f211200 100644
+--- a/swdb-project/swdb/analytic.py
++++ b/swdb-project/swdb/analytic.py
+@@ -53,6 +53,7 @@ def register_cli(commands):
+     sub.add_argument('--output', type=Path, help='new folder for compiled pass, IR, counts and run output (default a temporary folder)')
+     sub.add_argument('--timeout-s', type=float, default=600)
+     sub.add_argument('--fixture', action='store_true', help='label a hand-counted contract fixture, never application evidence')
++    sub.add_argument('--object-scopes', action='store_true', help='observe bounded source objects and function-scoped ABI referent views; no residency claim')
+     sub.add_argument('--state-budget', type=int, default=524288, help='maximum transient logical observation entries; overflow preserves named unknowns')
+     sub.add_argument('--target-description', help='frozen description for generic functional-command and allocation-relative logical window counts')
+     sub.add_argument('--format', choices=['yaml', 'json'], default='yaml')
+@@ -356,6 +357,7 @@ def characterize(args):
+     env['SWDB_REGION_MAP'] = str(args.region_map.resolve()) if args.region_map else ''
+     env['SWDB_ANALYSIS_OUTPUT'] = str(output / 'optimized.json')
+     env['SWDB_INSTRUMENT'] = '0'
++    if args.object_scopes:env['SWDB_OBJECT_SCOPES']='1'
+     _run([llvm / 'opt', '-load-pass-plugin=' + str(plugin), '-passes=swdb-characterize', optimized, '-disable-output'], env=env, timeout=args.timeout_s)
+     env['SWDB_ANALYSIS_OUTPUT'] = str(output / 'source.json')
+     env['SWDB_INSTRUMENT'] = '1'
+@@ -465,6 +467,13 @@ def characterize(args):
+             'observer_isolation':'thread_local_reentrancy_guard',
+             'runtime_bundle_sha256':artifacts.digest({name:_sha(llvm_src/name)
+                 for name in ('CountingRuntime.cpp','LiveObjects.hpp','LogicalCommands.hpp')})}
++    if args.object_scopes:
++        record['observation_contract']['object_scope_contract']={
++            'format':'swdb.object-scopes.v1','abi':'swdb.object-scope.v1',
++            'full_objects':['heap','source_alloca'],'bounded_views':[],
++            'retirement':'frame_exit',
++            'observer_sha256':_sha(llvm_src/'ObjectScopes.hpp'),
++            'runtime_sha256':_sha(llvm_src/'ObjectScopeRuntime.hpp')}
+     if live_contract:
+         command_specs=live_contract['functional_observation']['commands']
+         observed_descriptors={site['descriptor'] for site in static.get('semantic_sites',[])}
+diff --git a/swdb-project/swdb/llvm/Characterize.cpp b/swdb-project/swdb/llvm/Characterize.cpp
+index 8b13b78..8ce661e 100644
+--- a/swdb-project/swdb/llvm/Characterize.cpp
++++ b/swdb-project/swdb/llvm/Characterize.cpp
+@@ -148,6 +148,7 @@ struct Op { Instruction *inst; unsigned region, category, amount; };
+ struct Call { Instruction *inst; unsigned site; Value *size=nullptr; bool known=false; unsigned region=0; Value *factor=nullptr,*pointer=nullptr; unsigned action=0; bool semantic_body=false; };
+ 
+ #include "SemanticCommands.hpp"
++#include "ObjectScopes.hpp"
+ 
+ class BindROI : public PassInfoMixin<BindROI> {
+ public:
+@@ -368,6 +369,7 @@ PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
+   auto opFn=semantic?M.getOrInsertFunction("__swdb_domain_op",Type::getVoidTy(C),u32,u32,u64,u32):M.getOrInsertFunction("__swdb_op",Type::getVoidTy(C),u32,u32,u64);
+   auto callFn=semantic?M.getOrInsertFunction("__swdb_domain_call",Type::getVoidTy(C),u32,u64,u32,u32,u64,u32,u32,u32):M.getOrInsertFunction("__swdb_call_v2",Type::getVoidTy(C),u32,u64,u32,u32,u64,u32);
+   auto accessFn=semantic?M.getOrInsertFunction("__swdb_domain_access",Type::getVoidTy(C),u32,u32,u64,u64,u64,u32,u32,u64,u64):M.getOrInsertFunction("__swdb_access_v2",Type::getVoidTy(C),u32,u32,u64,u64,u64,u32);
++  instrumentObjectScopes(M);
+   for (unsigned i=0;i<regions.size();++i) if (auto *L=regions[i].loop) {
+     auto *term=L->getHeader()->getTerminator(); IRBuilder<> B(term); Value *n=B.getInt64(1);
+     if (auto *br=dyn_cast<BranchInst>(term); br && br->isConditional()) {
+diff --git a/swdb-project/swdb/llvm/CountingRuntime.cpp b/swdb-project/swdb/llvm/CountingRuntime.cpp
+index f5d4d38..5095d78 100644
+--- a/swdb-project/swdb/llvm/CountingRuntime.cpp
++++ b/swdb-project/swdb/llvm/CountingRuntime.cpp
+@@ -137,6 +137,7 @@ struct Counts {
+   }
+ };
+ Counts &counts(){static Counts value;return value;}
++#include "ObjectScopeRuntime.hpp"
+ extern "C" void __swdb_begin(){if(observerEntered)return;ObserverScope isolation;auto &c=counts();std::lock_guard<std::mutex> lock(c.mutex);c.clear();c.active=true;}
+ extern "C" void __swdb_end(){if(observerEntered)return;ObserverScope isolation;auto &c=counts();c.active=false;std::lock_guard<std::mutex> lock(c.mutex);if(c.command_depth)c.semantic_missing.insert("command_crosses_roi");c.trials.push_back(c.snapshot());}
+ extern "C" void __swdb_source(uint64_t source){if(observerEntered)return;ObserverScope isolation;auto &c=counts();if(!c.active)return;std::lock_guard<std::mutex> lock(c.mutex);c.sources.push_back(source);}

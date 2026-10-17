@@ -1,0 +1,23 @@
+# callgrind format
+version: 1
+positions: instr line
+events: Ir Dr Dw D1mr D1mw DLmr DLmw
+summary: 200 90 25 60 10 40 5
+totals: 200 90 25 60 10 40 5
+fl=(1) /tmp/scalar/src/bfs.cc
+fn=(1) TDStep(Graph const&, pvector<int>&, SlidingQueue<int>&)
+0x1000 77 10 8 0 3 0 2 0
++4 * 5 2 0 1 0 1
++4 +1 10 8 0 4 0 3
+cfi=(2) /tmp/scalar/src/sliding_queue.h
+cfn=(2) QueueBuffer<int>::push_back(int)
+calls=1 42
++4 +6 100 50 10 30 5 15 2
++4 -1 10 2 4 1 2 1 1
+fl=(2)
+fn=(2)
+0x2000 42 100 50 10 30 5 15 2
+fl=(1)
+fn=(3) TDStep(Graph const&, pvector<int>&, SlidingQueue<int>&) [clone ._omp_fn.0]
+0x3000 77 10 8 0 3 0 2
++4 +2 10 8 0 4 0 3

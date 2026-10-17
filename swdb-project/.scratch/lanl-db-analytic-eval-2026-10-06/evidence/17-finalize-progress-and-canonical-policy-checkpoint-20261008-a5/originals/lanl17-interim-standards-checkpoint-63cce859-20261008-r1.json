@@ -1,0 +1,656 @@
+{
+  "actionable_judgment_findings": [],
+  "axis": "Standards",
+  "base": "5d07313e2fdd9bf5bcdf84e51f028c381a97f0e6",
+  "bounds": [
+    "Interim checkpoint Standards only; no final all-feature review or Spec result is asserted.",
+    "Historical exact source/control originals were assessed as provenance; not refactored or treated as current runtime results.",
+    "Metadata provenance and hashes do not establish strict scientific admission or future clearance.",
+    "No SSH, target/control main, imports, tests or repository edits."
+  ],
+  "changed_blob_pins": [
+    {
+      "bytes": 7546,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/README.md",
+      "sha256": "10f815d2f38515cbbf30f823e0b28c5753a2d67e78cdb103e109d8a969c7ab47"
+    },
+    {
+      "bytes": 1182,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/checklist-correction-inventory.json",
+      "sha256": "f947358d9f1741554d28753840d6ef0eb6434419ef108f758d8e89bc2a3ae007"
+    },
+    {
+      "bytes": 8303,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/interim-review-and-live-progress-inventory.json",
+      "sha256": "80bafd17a801f3f241973722dbc55c640c021289170bd0d426af477bd21b80c8"
+    },
+    {
+      "bytes": 5417,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/live-2245-and-archive-verification-inventory.json",
+      "sha256": "1f4492c6902bf8d130ee87ee9c1c59056b53f777a274d95a8ed053117def6343"
+    },
+    {
+      "bytes": 5434,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-checkpoint-108-originals-independent-byte-verification-20261008-a5.json",
+      "sha256": "c8b539eea93e77ff07676a8b91abc343987a9fc292c5b7c99adcab882d8689bd"
+    },
+    {
+      "bytes": 470,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-primary-source-check-capture-20261008-2234-a5/source-original.json",
+      "sha256": "7d2d94a060b76db32b635cb56f3aae1de8f75898287057187bb2738aaeda1628"
+    },
+    {
+      "bytes": 534,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-primary-source-check-capture-20261008-2234-a5/start.json",
+      "sha256": "5ed64e803b88b5742f8ce9f511665390c98631311ac5396a09cebfeb6b53ae02"
+    },
+    {
+      "bytes": 0,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-primary-source-check-capture-20261008-2234-a5/stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 5046,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-primary-source-check-capture-20261008-2234-a5/stdin.py",
+      "sha256": "a2df0fcbf2b9de4a88c3145fcdec69f3f314bde2f2efb2d0538bcb944fc385f9"
+    },
+    {
+      "bytes": 2110,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-primary-source-check-capture-20261008-2234-a5/stdout",
+      "sha256": "d3bac1c098349b9335b6375232f52ddb1bd245aacd656cb4dde94d0dbeacc8dc"
+    },
+    {
+      "bytes": 418,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-primary-source-check-capture-20261008-2234-a5/transport.json",
+      "sha256": "b351a4fcab4e307406804041fef717b39e7dec3df656e445c17632484fd934e2"
+    },
+    {
+      "bytes": 3151,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-progress-2219-independent-actual-metadata-review-r1-20261008-a5.json",
+      "sha256": "370c9edb60c470c754356a93f1d703f652375368e96e66821b1d34001e0afed8"
+    },
+    {
+      "bytes": 19203,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-progress-capture-r3-20261008-2219-a5/progress-original.json",
+      "sha256": "dc965d49e6e5a0fd046065fd05c2fe0abdbdbc671d5d289d9d42f3c6b5fcca5c"
+    },
+    {
+      "bytes": 534,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-progress-capture-r3-20261008-2219-a5/start.json",
+      "sha256": "2afcf77c4c724500a5fd403799c43c82543e334aa25f1cc3c89116317bcd1bfd"
+    },
+    {
+      "bytes": 0,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-progress-capture-r3-20261008-2219-a5/stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 23477,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-progress-capture-r3-20261008-2219-a5/stdin.py",
+      "sha256": "315384579e636b2cd4370c67fc5feb3ad82714ce59d90353d5f97d10f451e2d3"
+    },
+    {
+      "bytes": 44457,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-progress-capture-r3-20261008-2219-a5/stdout",
+      "sha256": "b7c043bebba491b31195f0c3bea6260b738d7c9afa39835f48b0233d12d03ebb"
+    },
+    {
+      "bytes": 419,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-progress-capture-r3-20261008-2219-a5/transport.json",
+      "sha256": "dd9beddf47dec673943e81d2d6b6b170b3287c7e52d13db204d884c8986d698e"
+    },
+    {
+      "bytes": 21415,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-progress-capture-r3-20261008-2230-a5/progress-original.json",
+      "sha256": "2fd7cec9ce2e5810ecfa674652676d1f5fe7e0d6dc1dc7e038d15fcde9b60f9e"
+    },
+    {
+      "bytes": 534,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-progress-capture-r3-20261008-2230-a5/start.json",
+      "sha256": "d8128f459b9cd26027899db66a2b34ea520761e308af11d9f56888f914cdd7d9"
+    },
+    {
+      "bytes": 0,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-progress-capture-r3-20261008-2230-a5/stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 23477,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-progress-capture-r3-20261008-2230-a5/stdin.py",
+      "sha256": "315384579e636b2cd4370c67fc5feb3ad82714ce59d90353d5f97d10f451e2d3"
+    },
+    {
+      "bytes": 47409,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-progress-capture-r3-20261008-2230-a5/stdout",
+      "sha256": "bffb69224ebef884b6264da884e508e4587e7921d0528123ab8dd21380b89d3e"
+    },
+    {
+      "bytes": 419,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-progress-capture-r3-20261008-2230-a5/transport.json",
+      "sha256": "016c5b4121b0e63eafd5e1794c47584b85efd6e1034e35a718b54234998b5e4c"
+    },
+    {
+      "bytes": 21415,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-progress-capture-r3-20261008-2235-a5/progress-original.json",
+      "sha256": "9ff4681c171c7d32f5b9b675540ab06debbbafe17b185852e69e5170508cc65f"
+    },
+    {
+      "bytes": 534,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-progress-capture-r3-20261008-2235-a5/start.json",
+      "sha256": "40b179467f40291be7875a1c4551c4c6e604f14e7c5cac124ac6ebb49326fa12"
+    },
+    {
+      "bytes": 0,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-progress-capture-r3-20261008-2235-a5/stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 23477,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-progress-capture-r3-20261008-2235-a5/stdin.py",
+      "sha256": "315384579e636b2cd4370c67fc5feb3ad82714ce59d90353d5f97d10f451e2d3"
+    },
+    {
+      "bytes": 47409,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-progress-capture-r3-20261008-2235-a5/stdout",
+      "sha256": "ed91744a4eab13688f7af5cc3415d1468ccd3c1cba4a5354d7d90297b2c1d25d"
+    },
+    {
+      "bytes": 419,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-progress-capture-r3-20261008-2235-a5/transport.json",
+      "sha256": "a7eca97d513b2bcc754522fbeca0c11f00d4e21febb2f69c45dd3634b2ef4ceb"
+    },
+    {
+      "bytes": 23626,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-progress-capture-r3-20261008-2246-a5/progress-original.json",
+      "sha256": "1cc6de73265bc67e788b0d386fc3be22db09a74d410255898728f3658985e6ed"
+    },
+    {
+      "bytes": 534,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-progress-capture-r3-20261008-2246-a5/start.json",
+      "sha256": "ac0670b5e171629aedb65113937bf94a150cb8ffd561be3d71c9718b9b5dfa67"
+    },
+    {
+      "bytes": 0,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-progress-capture-r3-20261008-2246-a5/stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 23477,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-progress-capture-r3-20261008-2246-a5/stdin.py",
+      "sha256": "315384579e636b2cd4370c67fc5feb3ad82714ce59d90353d5f97d10f451e2d3"
+    },
+    {
+      "bytes": 50357,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-progress-capture-r3-20261008-2246-a5/stdout",
+      "sha256": "9dc3fa58122536a9f05811d23075c1914d739715397c7362ff65f93c0988d751"
+    },
+    {
+      "bytes": 419,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-progress-capture-r3-20261008-2246-a5/transport.json",
+      "sha256": "f7d08e58637299027cc82dada0c6ea1667e266662cc41fa94af8e1af1de044bf"
+    },
+    {
+      "bytes": 12721,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-progress-independent-actual-review-r3-20261008-2229-a5.json",
+      "sha256": "8f66164ed8aa517258442405eacedc43b23559aa4c71072c775540b71b772bc1"
+    },
+    {
+      "bytes": 12503,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-progress-independent-actual-review-r3-20261008-2245-a5.json",
+      "sha256": "eff6f3d092c67eb025781d7dae2a9a9be3ed38c4f62ac12ca6b330d7680e479e"
+    },
+    {
+      "bytes": 2410,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-terminal-checklist-r3-source-only-review-20261008-a5.json",
+      "sha256": "2620f97017cb1eaaa81a0ef776fece083a85fb6210abc9dd8923f89b80bfeb49"
+    },
+    {
+      "bytes": 2079,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-terminal-checklist-r4-independent-spec-fix-review-20261008-a5.json",
+      "sha256": "aa6a0062abfcb76fbe0fd88ab5d3f3033f41135d46dcfd4d959801b9260bdc37"
+    },
+    {
+      "bytes": 6836,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-terminal-checklist-r4-timezone-independent-standards-review-20261008-a5.json",
+      "sha256": "c1e389ba3a06248fab3d8d4553184973c72c64ba9ae460186d27c7950511b61e"
+    },
+    {
+      "bytes": 1637,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-terminal-checklist-r4-timezone-source-only-review-20261008-a5.json",
+      "sha256": "c17a781fe55d9aa8dc6918681bcd2b96ac1c28621b036c536446379b123774ed"
+    },
+    {
+      "bytes": 3511,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-terminal-review-checklist-r3-complete-r2-derivation-20261008-a5.diff",
+      "sha256": "f03273ed9685de0e266d7d6df733e29d03707c2eba234c436a6459f21d7187ca"
+    },
+    {
+      "bytes": 3489,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-terminal-review-checklist-r4-complete-r3-derivation-20261008-a5.diff",
+      "sha256": "8c9d3e7465784d388ff98d3d3ead33f05498b9463d69ad02d985b378b36bcdd7"
+    },
+    {
+      "bytes": 10514,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-terminal-review-parent-checklist-20261008-a5-r3.md",
+      "sha256": "4032acb6522938cb716f9d371d2ff674cf0511dac0fbda8dc96edf4ccf5a69ae"
+    },
+    {
+      "bytes": 10871,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-finalize-terminal-review-parent-checklist-20261008-a5-r4.md",
+      "sha256": "a2d7d58ee79bff735679f634aa4537492b8b4799c38b1c2507d9e2f97fd2993f"
+    },
+    {
+      "bytes": 3778,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-interim-spec-axis-checkpoint-review-r1-20261008-5d07313e.json",
+      "sha256": "31cc0ab14787173efa8c75af00923296fc2f098d73d6a77052c3dfb83bf2e652"
+    },
+    {
+      "bytes": 2121,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-interim-spec-axis-checkpoint-review-r1-20261008-5d07313e.md",
+      "sha256": "c029aac569325c74c86f8cd99d803bcea73af27a5b498ecc24b67c3ac5a44889"
+    },
+    {
+      "bytes": 51835,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-interim-standards-checkpoint-5d07313e-20261008-r1.json",
+      "sha256": "0087f65774398559e0a65ee453ddf3b4451e2169f9f0b48ccb809e4d81e41125"
+    },
+    {
+      "bytes": 1737,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-interim-standards-checkpoint-5d07313e-20261008-r1.md",
+      "sha256": "6ecc8921792586b27deee87341f7b24bf7741f241733d4cac6e97fd8f2da8c26"
+    },
+    {
+      "bytes": 68917,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-p1-pre-full-index-host-input-SOURCE-ONLY-draft-r4-20261008-a5.json",
+      "sha256": "3395adc692372be3d08c3535a46ce01401cf65d40f9de6bef3c0d93a291e6d3e"
+    },
+    {
+      "bytes": 69047,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-p1-pre-full-index-host-input-SOURCE-ONLY-draft-r5-20261008-a5.json",
+      "sha256": "58c3e03184c8239f6d8e016821bf6b8f061327c62f6080b03ed7cca4cffc56fc"
+    },
+    {
+      "bytes": 68917,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-p2-pre-full-index-host-input-SOURCE-ONLY-draft-r4-20261008-a5.json",
+      "sha256": "60219c35baa3073d472e421a83a6d4bda4a9aebe29a34408f20059bc772e52de"
+    },
+    {
+      "bytes": 69047,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-p2-pre-full-index-host-input-SOURCE-ONLY-draft-r5-20261008-a5.json",
+      "sha256": "260e17b329b67e20f90ceda6784db6a4bd2e7dbc30463d8a66a71ccb6bfa36e0"
+    },
+    {
+      "bytes": 68917,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-p3-pre-full-index-host-input-SOURCE-ONLY-draft-r4-20261008-a5.json",
+      "sha256": "2595a2cafc46cd4c204f1f378cd981030711d52e8741a6d8f501aafd5456c962"
+    },
+    {
+      "bytes": 69047,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-p3-pre-full-index-host-input-SOURCE-ONLY-draft-r5-20261008-a5.json",
+      "sha256": "b64ceb713a8a20841b6464a4864874efc122d7b31ef19f2d5638498a47795451"
+    },
+    {
+      "bytes": 68917,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-p4-pre-full-index-host-input-SOURCE-ONLY-draft-r4-20261008-a5.json",
+      "sha256": "a47e26bc1791b5bd2b515821c92a08bf960ef65de9f601934b176e5decd4d6ff"
+    },
+    {
+      "bytes": 69047,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-p4-pre-full-index-host-input-SOURCE-ONLY-draft-r5-20261008-a5.json",
+      "sha256": "4a7567d5c3d72b2b6be1c98b45c4550a788eb15902d7574a7ba62d3a08438083"
+    },
+    {
+      "bytes": 2676,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-pre-full-index-closed-refusal-source-static-review-r5-20261008-a5.json",
+      "sha256": "8618fe3398977f4c9d67086811c8938285edaf4f74b04979dccc0d9a8b776e5b"
+    },
+    {
+      "bytes": 38070,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-pre-full-index-host-action-SOURCE-ONLY-draft-r4-20261008-a5.json",
+      "sha256": "adfd915457872f0f8e935c472914aa329708fcbcb898e096e4bc3fc350d7e81c"
+    },
+    {
+      "bytes": 38388,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-pre-full-index-host-action-SOURCE-ONLY-draft-r5-20261008-a5.json",
+      "sha256": "5b84bee411589f261c9fbbe73bae8d2302cca7bfbd977bc26c982384d4d30846"
+    },
+    {
+      "bytes": 37963,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-pre-full-index-host-action-SOURCE-ONLY-draft-r6-20261008-a5.json",
+      "sha256": "b716e99114556c36124b3ead8b7fd72138dfedd967b2000e58fb1898c7a26aa2"
+    },
+    {
+      "bytes": 38106,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-pre-full-index-host-action-SOURCE-ONLY-draft-r7-20261008-a5.json",
+      "sha256": "3ebd67b8b1691c45fa40739d95f9d913d30a77b34f750eabb18a628f5ce3dfd7"
+    },
+    {
+      "bytes": 1289,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-pre-full-index-host-action-contract-correction-r5-20261008-a5.json",
+      "sha256": "e4b25a764547cb6ae97e8ea8843033bd6263f518f0490863d6b0d0f2abfd0182"
+    },
+    {
+      "bytes": 1009,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-pre-full-index-host-action-r5-complete-r4-derivation-20261008-a5.diff",
+      "sha256": "2510b9d1636dddaf728df6ad0f387b25fb17143626f6933824b2bc2ac34b896d"
+    },
+    {
+      "bytes": 1347,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-pre-full-index-host-action-r6-complete-r5-derivation-20261008-a5.diff",
+      "sha256": "b497a65c53e166b960a7fea5bbc8ea631dfdbe53c2273354fc97d8959f209a59"
+    },
+    {
+      "bytes": 7584,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-pre-full-index-host-attestation-minimal-source-plan-20261008-a5-r1.md",
+      "sha256": "2f4471ff29b27cde2e502fb008eacaa69e036713568adec9f1c1f0827ff91f70"
+    },
+    {
+      "bytes": 7777,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-pre-full-index-host-attestation-minimal-source-plan-20261008-a5-r2.md",
+      "sha256": "12d13b6afa0b1749d8c621b809f881303d2bf58c353f9635603f571c91171028"
+    },
+    {
+      "bytes": 6345,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-pre-full-index-host-independent-source-review-r5-action-r7-20261008-a5.json",
+      "sha256": "c98b67c9c0e171f98a994d869a8126ca6f07facc92b040847adb47ae5f0a81b6"
+    },
+    {
+      "bytes": 35716,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-pre-full-index-host-observation-r1-complete-host-r2-derivation-20261008-a5.diff",
+      "sha256": "5fda47032a74ccba05a285d19f147aa47ff7fe79b0c4056f90bdeb91a591aae7"
+    },
+    {
+      "bytes": 36816,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-pre-full-index-host-observation-r2-complete-host-r2-derivation-20261008-a5.diff",
+      "sha256": "2d953f938d5a8c7725f0403b5b5a249720d64f59811339d124bc3327a537be40"
+    },
+    {
+      "bytes": 5705,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-pre-full-index-host-observation-r2-complete-r1-derivation-20261008-a5.diff",
+      "sha256": "5bd3ace6c47c6280aa56fcf413cd200ab1c24507dc4e78069affb5daf69cfb9e"
+    },
+    {
+      "bytes": 37929,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-pre-full-index-host-observation-r3-complete-host-r2-derivation-20261008-a5.diff",
+      "sha256": "8151fa70ee57e6e4960e0e18744452e81624b699a857169cf3ecd7304cdbbe44"
+    },
+    {
+      "bytes": 3785,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-pre-full-index-host-observation-r3-complete-r2-derivation-20261008-a5.diff",
+      "sha256": "7557ebe9313ba2cf767f0d9f9fe232cad113f1381c33ccafab70a9d47f058572"
+    },
+    {
+      "bytes": 38364,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-pre-full-index-host-observation-r4-complete-host-r2-derivation-20261008-a5.diff",
+      "sha256": "18123821f8ff07c9abb8818e3ed5f99386b7199e0f4d3539a016556e0d7255de"
+    },
+    {
+      "bytes": 6053,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-pre-full-index-host-observation-r4-complete-r3-derivation-20261008-a5.diff",
+      "sha256": "33a32918665d381c1e16b28f02cba67598d2cb88d1479f1caa92266a956a1dbd"
+    },
+    {
+      "bytes": 38507,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-pre-full-index-host-observation-r5-complete-host-r2-derivation-20261008-a5.diff",
+      "sha256": "331af9ad11d72137da54335b4268424ffcb7a86f035b04b9a63595ea76c9b4ee"
+    },
+    {
+      "bytes": 3132,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-pre-full-index-host-observation-r5-complete-r4-derivation-20261008-a5.diff",
+      "sha256": "942420c4d004098f138119a4a97044a594a8b19fcb514133cb905642ef6bf67d"
+    },
+    {
+      "bytes": 4320,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-pre-full-index-host-source-handoff-r4-20261008-a5.md",
+      "sha256": "635679b0d15e60db37a908736cbac70e5dfb0e5eda555cdd8c00bce0801740f8"
+    },
+    {
+      "bytes": 3368,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-pre-full-index-host-source-static-checks-r4-20261008-a5.json",
+      "sha256": "0f5ba50632d17f7c7ea9c81bf2d1f8cb474ddd81833ef7e7cf1e529db11ca431"
+    },
+    {
+      "bytes": 1784,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-pre-full-index-root-selected-source-review-r5-action-r7-20261008-a5.json",
+      "sha256": "221cb1f9c5a2f5be1f5cf3f69f50aaa12d6e29cceb72229884b79ac2d2ebf5ef"
+    },
+    {
+      "bytes": 1608,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-pre-full-index-selected-source-action-handoff-r6-20261008-a5.md",
+      "sha256": "2f5f8bb9a321ecc0e4fb98e60676de18f4dbbd195f5bc839aee9e3fd12ab68f4"
+    },
+    {
+      "bytes": 2674,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-pre-full-index-selected-source-action-handoff-r7-20261008-a5.md",
+      "sha256": "df3e1cb0b3c6668b5fa48bad91a65ee187e87ccb29c4bd8a339fd12c3d75554b"
+    },
+    {
+      "bytes": 1740,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-pre-full-index-selected-source-action-static-review-r6-20261008-a5.json",
+      "sha256": "55df655bb7d923badfe9398ee4a95977807646b03281d6f47e18f01e311c94b0"
+    },
+    {
+      "bytes": 30746,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17-pre-full-index-source-package-46-and-combined-153-independent-byte-verification-20261008-a5.json",
+      "sha256": "11a1bd27e28b2b3900cd982a68c5a1095ef9148e918d87602452be6c84acd806"
+    },
+    {
+      "bytes": 26611,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17_build_pre_full_index_host_reader_sourceonly_20261008_a5_r1.py",
+      "sha256": "180565f0cb75b3f123950006b9cb4219e94f072ce566254d6ed96f9380740252"
+    },
+    {
+      "bytes": 4706,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17_derive_pre_full_index_host_closed_refusal_sourceonly_20261008_a5_r5.py",
+      "sha256": "7fbe12bbaa30c0a79a9cf793caca0793bc6d09688d70e2674b5717ecfc180a8c"
+    },
+    {
+      "bytes": 4958,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17_derive_pre_full_index_host_reader_sourceonly_20261008_a5_r2.py",
+      "sha256": "aedc80ef6f5fe8d8329f35ce9e4affeb65dfee1b79bdae32ee079f4bf7661b8b"
+    },
+    {
+      "bytes": 3231,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17_derive_pre_full_index_host_reader_sourceonly_20261008_a5_r3.py",
+      "sha256": "0678f461c301b4e23c2fd5b5927ef3a92b2d8ac44177a7af2ec2406bf9d2efc8"
+    },
+    {
+      "bytes": 11582,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17_derive_pre_full_index_host_reader_sourceonly_20261008_a5_r4.py",
+      "sha256": "c17cd55ca0dd2f5d7d0395a4dca962198d7f117c3730d38ddf48eb648c0ca8a7"
+    },
+    {
+      "bytes": 17019,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17_finalize_parent_host_readonly_20261008_a5_r2.py",
+      "sha256": "229909573e4952ee2e21f9a64ccbc6bc886ee114e346f6c4304481763666d87f"
+    },
+    {
+      "bytes": 33397,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17_pre_full_index_host_observation_20261008_a5_r1.py",
+      "sha256": "5f9062fdd83e849d5cc64905e4b340df9070c012bb71e93ac592b06490b6a0a5"
+    },
+    {
+      "bytes": 34479,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17_pre_full_index_host_observation_20261008_a5_r2.py",
+      "sha256": "74e15563ebaa850b84db2018fb33ebe21829d006eb6e63c3176ea8f83c54e018"
+    },
+    {
+      "bytes": 35475,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17_pre_full_index_host_observation_20261008_a5_r3.py",
+      "sha256": "a83803d1098e9d43d85119fc4c242a3cba696cedfa7a44420c2711c003c2a3da"
+    },
+    {
+      "bytes": 35909,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17_pre_full_index_host_observation_20261008_a5_r4.py",
+      "sha256": "fdc5376fc6838081806f1a48b236eaea3dba280f4ac6726bf4fe4f3db58f8c2f"
+    },
+    {
+      "bytes": 36052,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17_pre_full_index_host_observation_20261008_a5_r5.py",
+      "sha256": "be2f68c21a72b4de5deee05f17f48a8cd09342cf3a6e7e17280ff72414dc3fd4"
+    },
+    {
+      "bytes": 28658,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/originals/lanl17_prepare_four_full_index_metadata_20261008_a5_r3.py",
+      "sha256": "b27ca6f053fbad92347cd045fe6144168ae011a045a96a37343c81716bc92ca8"
+    },
+    {
+      "bytes": 53353,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/pre-full-index-source-package-inventory.json",
+      "sha256": "06c0bb79f322ea2614b2c3a62a13f2d0d8a28dbd5e63ec77d44dceead2b069d8"
+    },
+    {
+      "bytes": 1084,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/resolved-findings-and-index-plan-inventory.json",
+      "sha256": "a31542250bac49c92f30b40d0e04e5242be5ad33c2e56ab5c3c52f9587fa4336"
+    },
+    {
+      "bytes": 11179,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/scheduled-2235-progress-inventory.json",
+      "sha256": "7000e4ef5a9127e08927b9658be82f2441ad80c82d3aa9ecdd5ad3aa3a293b7e"
+    },
+    {
+      "bytes": 216892,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/progress.md",
+      "sha256": "c90b23e6c82296eac2404fe687ef8e01187993f35f1c1067bcb463d0f0085b77"
+    },
+    {
+      "bytes": 57778,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/resume.md",
+      "sha256": "314ff78d82eb9a64b71a9cc98cf7c7061a0bffbbda8e532e9ed8145f34c360f2"
+    }
+  ],
+  "changed_path_count": 102,
+  "checks": {
+    "actual_input_drafts_NONEXECUTABLE_typed_FUTURE": true,
+    "all_changes_inside_authorized_SWDB_feature_checkpoint": true,
+    "all_eight_inventory_references_match_committed_blob_size_SHA": true,
+    "current_FINALIZE_completion_and_scientific_admission_pending": true,
+    "exact_fixed_base_is_merge_base": true,
+    "historical_UTC_only_checklist_preserved_and_superseded_by_selected_R4": true,
+    "human_current_prose_ET_dated": true,
+    "no_false_new_approval_or_observer_index_execution_claim": true,
+    "no_product_schema_record_library_or_vendor_changes": true,
+    "source_preservation_overrides_ordinary_duplication_refactor_judgment": true,
+    "source_variants_and_builders_not_run_as_target_controls": true,
+    "unique_archived_original_bytes": 2328931,
+    "unique_archived_original_count": 162,
+    "unknown_process_inventory_does_not_prove_absence": true
+  },
+  "commits": [
+    "63cce859 Preserve reviewed FINALIZE progress and full-index source readiness"
+  ],
+  "diff_bytes": 1975664,
+  "diff_command": "git diff 5d07313e2fdd9bf5bcdf84e51f028c381a97f0e6...63cce85969b72462865ec51fce185dc3f19b9523 -- swdb-project/",
+  "diff_sha256": "2be5f7ab5ad4008e0be5a1dab8778fb7b683d6ff89f7d11864fd0d4a782909fa",
+  "documented_standard_findings": [],
+  "finding_count": 0,
+  "format": "swdb.lanl17-interim-standards-axis-review.v1",
+  "judgment_baseline_considered": [
+    "Mysterious Name",
+    "Duplicated Code",
+    "Feature Envy",
+    "Data Clumps",
+    "Primitive Obsession",
+    "Repeated Switches",
+    "Shotgun Surgery",
+    "Divergent Change",
+    "Speculative Generality",
+    "Message Chains",
+    "Middle Man",
+    "Refused Bequest"
+  ],
+  "merge_base": "5d07313e2fdd9bf5bcdf84e51f028c381a97f0e6",
+  "prepared_ET": "2026-10-08 22:53 ET",
+  "prepared_utc": "2026-10-09T02:53:56.121690+00:00",
+  "report": {
+    "bytes": 1777,
+    "path": "/private/tmp/lanl17-interim-standards-checkpoint-63cce859-20261008-r1.md",
+    "sha256": "81cbf65b0fc461850d747c2606f3031bf1f764135b0dcf098b4035ba231a77ac"
+  },
+  "result": "PASS_INTERIM_STANDARDS_SOURCE_ONLY",
+  "rule_quotes": {
+    "human_dates": {
+      "file": ".claude/rules/timezone.md",
+      "quote": "All dates and times an agent writes are Eastern Time (America/New_York): YYYY-MM-DD HH:MM ET."
+    },
+    "immutable_evidence": {
+      "file": "swdb-project/docs/adr/0011-raw-output-retention.md",
+      "quote": "evaluation records remain immutable"
+    },
+    "raw_preservation": {
+      "file": ".claude/rules/remote_server.md",
+      "quote": "Raw run output never goes into the git repo and is never copied to the Mac."
+    },
+    "scope": {
+      "file": "AGENTS.md",
+      "quote": "Scope: work only inside swdb-project/"
+    }
+  },
+  "scientific_admission": false,
+  "source_only": true,
+  "standards_sources": [
+    {
+      "bytes": 949,
+      "path": "AGENTS.md",
+      "sha256": "55846d4341e38a78e3514c7a151bb8da9783bc666e67d2e3394d5e442563dce4"
+    },
+    {
+      "bytes": 1273,
+      "path": "swdb-project/AGENTS.md",
+      "sha256": "788e488166eb05f4d604a2c44a51d273db3a5d269f0f5f87bb67bf4f86a29383"
+    },
+    {
+      "bytes": 11,
+      "path": "swdb-project/CLAUDE.md",
+      "sha256": "336cc4fbf19beaada7ccf9986414fa91851a8d7a07dfb3ccbe800a69eed0ab49"
+    },
+    {
+      "bytes": 23649,
+      "path": "swdb-project/GLOSSARY.md",
+      "sha256": "854680fecdc679fd2ffdf49a6ae042e0fbe3977e8ae8113d48dd5d8ccbc3b7c7"
+    },
+    {
+      "bytes": 455,
+      "path": ".claude/rules/timezone.md",
+      "sha256": "fcab4d9b5ea2559ce30412e962bbd17c0b6e9c22d49bc4ae942cd38c34038390"
+    },
+    {
+      "bytes": 3350,
+      "path": ".claude/rules/remote_server.md",
+      "sha256": "3b5ecefb62832dadbc03be2f4f1f6200c4df54e8cb98d7ae39260f9a3d2d060c"
+    },
+    {
+      "bytes": 879,
+      "path": ".claude/rules/miscellaneous.md",
+      "sha256": "dced09a31edf6808ecf7de853dea2fb50602751eacbb39430afef65adb367e84"
+    },
+    {
+      "bytes": 2225,
+      "path": "swdb-project/docs/agents/domain.md",
+      "sha256": "87fc3308a354cc62a25e8b41b717b8b1473b8cd5eb5702f31d1fa318abf6bbf3"
+    },
+    {
+      "bytes": 2353,
+      "path": "swdb-project/docs/agents/issue-tracker.md",
+      "sha256": "4a60b02af5645342768aa1622799addef7526bdd0d98f478df7d8ab14f3cef96"
+    },
+    {
+      "bytes": 1186,
+      "path": "swdb-project/docs/agents/triage-labels.md",
+      "sha256": "2aa660406668dac1bfc31d1c3dc29052aa9156b99c181172b64c0b4b4dd6c76c"
+    },
+    {
+      "bytes": 990,
+      "path": "swdb-project/apps/gapbs/CONTRIBUTING.md",
+      "sha256": "6417e50a419e1e1e078e1756a47b9f48584e591f5ee386c4ac6856b8f297c3c1"
+    },
+    {
+      "bytes": 1178,
+      "path": "swdb-project/docs/adr/0011-raw-output-retention.md",
+      "sha256": "8a1ee5eb451038a1b8bf271813a080188edbcbdd30f70b246a6d65a760035e8e"
+    }
+  ],
+  "target": "63cce85969b72462865ec51fce185dc3f19b9523",
+  "worst_severity": null
+}

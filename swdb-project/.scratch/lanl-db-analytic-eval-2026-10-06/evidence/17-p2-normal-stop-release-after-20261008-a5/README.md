@@ -1,0 +1,26 @@
+# P2 normal stop, release and AFTER custody
+
+Updated: 2026-10-08 17:39 ET.
+
+P2 attempt1 completed normally at17:03 ET with plateau4,4 completed iterations,8 candidate rows and7 completed counted provider calls. All four original exits are0; no infrastructure error or owned survivor, source clean. Original release32 and B08 AFTER succeeded once; node0 remained released at actualgeneration512 with no matching kernel lock or daemonFD9 before32, beforeAFTER and afterAFTER. Root and independent terminal/request/release/AFTER interim custody reviews pass. This is2/4 normal trajectories with original custody, pending final strict scientific audit. P3 fresh BEFORE and full serial admission passed; one dispatch is submitted and awaits original lane/preregistration. P4 remains queued. Ticket17 remains claimed/all acceptance unchecked.
+
+| Original | Bytes | SHA256 |
+|---|---:|---|
+| Stop |1355|`11f034467fc5dc44187cb9a88774193eef9e60555de91361ea17cbcc2c63cba2`|
+| Final lane |1084|`260a6ec9be286d41a40a636d1661777a7830c3f44e9ee6f3b816b0e7b59b1f30`|
+| Release32 |9431|`59d2b2059cf433f658ebef50251762e6e93de80fe3be20147b2dedf262cda3ad`|
+| B08 AFTER |32770|`975b7ba8242eafd4d52f219626d04eb149e13f2c90620f9fbb6e3bc5d5d73710`|
+
+Stop seal6cbbabf35f56e22d41f4845946464b2a9e0e3b4abd33a7c72d688c607b88a794, release32 seal31b35052c632e0eb0eb3e7303d2663b19271fbc1afb70c0b4a3b4ef2bd573d70 and AFTER seal446dffff826ad6da1bc652d50e15d93ae910e0b59f8e9ce84f0317ae5b61f936 match original links. BEFORE766efc49, dispatchc0c35fa2 and dispatch-state109b5599 remain separately retained in the earlier [dispatch archive](../17-actual-p2-dispatch-and-release-readiness-20261008-a5/README.md). FIRST/M2/global p1 policy and R/C/185-moduleF6/source/catalog/budgets stay exact.
+
+Selected p2 authorR5 ran locally once0 using reviewed draftR2, exact ready native1730snapshot5403B/fde2a13b and later terminal reader5349B/1cf7a6cc. Four terminal files agree byte-for-byte and all-nine stats with the native snapshot. Parent source check verifies PRIMARY+originR and sourceS Rclean; original PRIMARY retention lock is preserved. Nativewrapper10510B/00c269 physical metadata/mode0777 is unchanged. Generic source pins omit writable nativewrapper; producer request retains its exact writer pin and parent verifies physical bytes. Original fractional stop21:03:30.423400UTC fits unchanged native whole-second21:03:30Z bin. No original time/receipt was rewritten.
+
+Fresh native afterAFTER21:35:11.535930UTC shows released512/no lock/noFD9; originalSHA4ef2a8d404cd303568cd7958078ea52a5f723258e525e69d22cbfbff98d6020a. The source-only request interval21:32:23–21:37:23UTC was unexpired at actual producer invocation. BEFORE/dispatch/stop<=release<=AFTER links are checked; node0 is reserved until independent interim custody review.
+
+AFTER projected state is stoppedtrue/plateau4,4 ledger+iteration rows/8candidate rows/7 distinct completed counted calls. No pauses, prepared or baselines. Provider bodies are excluded. State35953B/3eee3bce54bba0ea558ed9eb7d906651c0ad26cdbafd3b4182867c566ad2bd91 stays remote; approved closed metadata projection is retained here. No eligible numerical pair or D30 admission follows. Full catalogs and final report/index/audit remain required. Never resume this stopped state or repeat completed p1/p2 controls.
+
+This unsealed inventory verifies every exact copied compact metadata/project source original. Raw state/provider/prompt/auth/log/database/build output stays remote. No external message, native mode change, catalog narrowing or scientific budget change occurred. Required17:39 table and agent-health check completed; agents responsive, no stranded worker. Next18:00 ET. Heartbeat remains ACTIVE until all assigned work/final review/fixes/ticket and Git sync complete. Remote primary remainsR until original custody/finalize guards finish.
+
+Independent actual custody review9075B/SHA5bd43bbc20d9d1fb2fc6306929e5751277ed34fa6353a03d19e1aa53654e2f3c passed all original bindings/seals,4 normal iteration/8 candidate/7 counted-call correspondence and native no-reuse chain. P3 query2516B/d9627351 and config2830B/e697ff77 passed root/peer source review with exact narrow inverse; a local overly broad inverse check also touched the top35 label, corrected with no source change or remote retry.
+
+P3 BEFORE3148B/SHA85e2c9f6262a627e0f6007699e1762e6806420bd8ae870d6dd102823e9ee6f8b sealb06e4ec30f4491c67f20b5b8a9e3dd5e7053441584e692e4d808e24479c2c0a5 shows absent state/no provider directories. Fresh host21:37:42.451330UTC has all3leases released, p3 routes absent, S Rclean and PRIMARY+originR, original retention lock preserved, MemAvailable 125,576,863,744 B, /data1 free 23,213,268,992 B, /data free 38,761,537,536 B, load1.014/GPU0%. Original80/21/24GiB serial floors pass;44GiB concurrent floor fails, serialnode0 only. QuicksilverPID3570800 is preserved. Selected p3argv1893B/9fd92eea75d597c243ece514fa5bc748db6ba4374d3b2d35cffaa0ca8d06116d binds fresh checked/expiry<=300s/originalBEFORE/R/current parent exclusiveflag; unchanged76de dispatcher submitted once at17:38 ET. Scientific caps/source/full catalogs/policy are unchanged; acquired later generation is not guessed. Original dispatcher transport/lane/preregistration and dispatch-state custody remain pending.

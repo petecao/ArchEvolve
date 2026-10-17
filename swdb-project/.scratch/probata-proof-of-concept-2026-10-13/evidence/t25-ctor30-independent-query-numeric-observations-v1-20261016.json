@@ -1,0 +1,493 @@
+{
+  "created": "2026-10-16 ET",
+  "status": "PASS_BOUNDED_PASSIVE_QUERY_NUMERIC_METADATA_ONLY",
+  "references": [
+    {
+      "path": "/private/tmp/probata-t25-ctor30-partial-metadata-root-execution-v1-20261016.json",
+      "sha256": "4a80670357213b2a8d106d84d4690510595ecefd37665e73bff7f8d2dc13441e",
+      "bytes": 2082296
+    },
+    {
+      "path": "/private/tmp/probata-t25-ctor30-parent-query-numeric-dag-observations-v1-20261016.json",
+      "sha256": "e5d64f8f8ca44a2f8eb6982db155cf185e03f7fbbc2eb73bd3d97dabe4ed4d1d",
+      "bytes": 2640
+    }
+  ],
+  "frozen_source_pins": [
+    {
+      "path": "swdb-project/swdb/vector_reallocation_vcs.py",
+      "sha256": "ea7c743519cef009637b3aee8691233cfd316d86088402cd6a889ca1f29fa4ca",
+      "source_commit": "046f6b9e64d45777a8032951ced04f942fc9c3c2"
+    },
+    {
+      "path": "swdb-project/swdb/heap_model_vcs.py",
+      "sha256": "f20e0ec130222aeda96b4fbb8e72eef8d922d3f33e84077777203f7e6d159092",
+      "source_commit": "046f6b9e64d45777a8032951ced04f942fc9c3c2"
+    }
+  ],
+  "source_commit": "046f6b9e64d45777a8032951ced04f942fc9c3c2",
+  "last_target": {
+    "id": "ctor.qualified.positive_post",
+    "input": {
+      "bytes": 4754,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-qualified-ctor30-public-v2/qualified-ctor30-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_ctor_count_value.20261016t113842z.a60c9f0b/wp/heap-job-ctor.qualified.positive_post/wp_input.c",
+      "sha256": "2967ac1174f2c7a1f9ade34c8f1f2c16eb0b8c166b354763bdf45eb7db53ea60"
+    },
+    "source_formula": "\\forall Heap::heap h; \\forall integer r,o,b,n,v; t25v3_ctor_inv(h,r,o,b,n,n,v) ==> t25v3_eligible(Heap::put_integer(h,r,o+8,n),r,o,b,0,n,n)",
+    "printed_query": {
+      "canonical_whitespace_formula": "forall i:int, heap:heap, i1:int, i2:int, i3:int, i4:int. P_t25v3_ctor_inv heap i3 i2 i i1 i1 i4 -> P_t25v3_eligible (put_integer heap i3 (8 + i2) i1) i3 i2 i 0 i1 i1",
+      "name": "wp_goal",
+      "sha256": "3033750a579de5437b7e29b5f6fd0063d7afe60c8fdc5f87b0bf4dfc89a97785"
+    },
+    "log": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-qualified-ctor30-public-v2/qualified-ctor30-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_ctor_count_value.20261016t113842z.a60c9f0b/wp/heap-job-ctor.qualified.positive_post/frama-c.log",
+      "sha256": "e7781a6516148006a38775c5bdb751a51b1fe05956815a43d814b8b874b9afff",
+      "query_count": 1
+    },
+    "source_to_actual_variables": {
+      "b": "i",
+      "h": "heap",
+      "n": "i1",
+      "o": "i2",
+      "r": "i3",
+      "v": "i4"
+    },
+    "full_A_retained": true,
+    "normalizations": [
+      "permutation of universal binders",
+      "ACSL predicate names use P_ prefix and curried arguments",
+      "integer o+8 represented as8+o"
+    ],
+    "verdict": "not_proven",
+    "failure_class": "timeout",
+    "ordinary_result_vector": [
+      "timeout",
+      "unknown",
+      "timeout"
+    ]
+  },
+  "numeric": {
+    "input": {
+      "bytes": 1559,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-qualified-ctor30-public-v2/qualified-ctor30-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_ctor_count_value.20261016t113842z.a60c9f0b/wp/heap-job-ctor.numeric/wp_input.c",
+      "sha256": "95efe1cba1bbc55c5f08d538cd4424ff93a4d3adf6bd5d169ad17664377d5600"
+    },
+    "native_inventory": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-qualified-ctor30-public-v2/qualified-ctor30-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_ctor_count_value.20261016t113842z.a60c9f0b/wp/heap-job-ctor.numeric/wp-inventory.json",
+      "sha256": "a08bd42e401d54810823b5f312bd3bd2cd9c0e401b2e452cd4e3e8d0e8729295",
+      "bytes": 12332
+    },
+    "ordinary_report": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-qualified-ctor30-public-v2/qualified-ctor30-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_ctor_count_value.20261016t113842z.a60c9f0b/wp/heap-job-ctor.numeric/wp-goals.json",
+      "sha256": "73fc31e1787c6eeb78c68e6e98dd0c066fa4fec9d1e6a96269f4f897b26ea599",
+      "bytes": 5649
+    },
+    "properties_CSV": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-qualified-ctor30-public-v2/qualified-ctor30-profile/workspace/runs-outside-repo/proof.model.std_vector_int_realloc_v3_ctor_count_value.20261016t113842z.a60c9f0b/wp/heap-job-ctor.numeric/wp-properties.csv",
+      "sha256": "dc043e3d489785252c4b6287ba2e7d209a66c53c41a9541b8e57e3a2fb784148",
+      "bytes": 914
+    },
+    "registered_property_nodes": 13,
+    "nodes_with_nonempty_dependencies": 7,
+    "dependency_edges": 24,
+    "all_dependencies_origins_goals_targets_local": true,
+    "all_origins_null": true,
+    "extern_nodes": 0,
+    "DAG_acyclic": true,
+    "dependency_first_order": [
+      "t25v3_ctor_numeric_assert_allocation_size_no_wrap",
+      "t25v3_ctor_numeric_assert_allocation_size_exact",
+      "t25v3_ctor_numeric_assert_scaled_index_in_range",
+      "t25v3_ctor_numeric_requires",
+      "t25v3_ctor_numeric_terminates",
+      "t25v3_ctor_numeric_exits",
+      "t25v3_ctor_numeric_assigns",
+      "t25v3_ctor_numeric_assert_variant_nonnegative",
+      "t25v3_ctor_numeric_wp_smoke_default_requires",
+      "t25v3_ctor_numeric_assert_variant_decreases",
+      "t25v3_ctor_numeric_assert_rte_initialization",
+      "t25v3_ctor_numeric_ensures",
+      "t25v3_ctor_numeric"
+    ],
+    "property_nodes": [
+      {
+        "property": "t25v3_ctor_numeric_assert_scaled_index_in_range",
+        "dependencies": [
+          "t25v3_ctor_numeric_assert_allocation_size_exact",
+          "t25v3_ctor_numeric_assert_allocation_size_no_wrap"
+        ],
+        "origin": null,
+        "extern": false,
+        "status_registered": true,
+        "property_export_origin": "registered",
+        "property_variant": "IPCodeAnnot",
+        "line": 25,
+        "function": "t25v3_ctor_numeric"
+      },
+      {
+        "property": "t25v3_ctor_numeric_assert_allocation_size_no_wrap",
+        "dependencies": [],
+        "origin": null,
+        "extern": false,
+        "status_registered": true,
+        "property_export_origin": "registered",
+        "property_variant": "IPCodeAnnot",
+        "line": 23,
+        "function": "t25v3_ctor_numeric"
+      },
+      {
+        "property": "t25v3_ctor_numeric_requires",
+        "dependencies": [],
+        "origin": null,
+        "extern": false,
+        "status_registered": true,
+        "property_export_origin": "registered",
+        "property_variant": "IPPredicate",
+        "line": 16,
+        "function": "t25v3_ctor_numeric"
+      },
+      {
+        "property": "t25v3_ctor_numeric_terminates",
+        "dependencies": [],
+        "origin": null,
+        "extern": false,
+        "status_registered": true,
+        "property_export_origin": "registered",
+        "property_variant": "IPPredicate",
+        "line": 20,
+        "function": "t25v3_ctor_numeric"
+      },
+      {
+        "property": "t25v3_ctor_numeric_exits",
+        "dependencies": [],
+        "origin": null,
+        "extern": false,
+        "status_registered": true,
+        "property_export_origin": "registered",
+        "property_variant": "IPPredicate",
+        "line": 20,
+        "function": "t25v3_ctor_numeric"
+      },
+      {
+        "property": "t25v3_ctor_numeric_assigns",
+        "dependencies": [],
+        "origin": null,
+        "extern": false,
+        "status_registered": true,
+        "property_export_origin": "registered",
+        "property_variant": "IPAssigns",
+        "line": 20,
+        "function": "t25v3_ctor_numeric"
+      },
+      {
+        "property": "t25v3_ctor_numeric_assert_variant_nonnegative",
+        "dependencies": [
+          "t25v3_ctor_numeric_assert_allocation_size_exact",
+          "t25v3_ctor_numeric_assert_allocation_size_no_wrap",
+          "t25v3_ctor_numeric_assert_scaled_index_in_range"
+        ],
+        "origin": null,
+        "extern": false,
+        "status_registered": true,
+        "property_export_origin": "registered",
+        "property_variant": "IPCodeAnnot",
+        "line": 26,
+        "function": "t25v3_ctor_numeric"
+      },
+      {
+        "property": "t25v3_ctor_numeric_wp_smoke_default_requires",
+        "dependencies": [],
+        "origin": null,
+        "extern": false,
+        "status_registered": true,
+        "property_export_origin": "registered",
+        "property_variant": "IPOther",
+        "line": 20,
+        "function": "t25v3_ctor_numeric"
+      },
+      {
+        "property": "t25v3_ctor_numeric",
+        "dependencies": [
+          "t25v3_ctor_numeric_assigns",
+          "t25v3_ctor_numeric_ensures",
+          "t25v3_ctor_numeric_exits"
+        ],
+        "origin": null,
+        "extern": false,
+        "status_registered": true,
+        "property_export_origin": "registered",
+        "property_variant": "IPBehavior",
+        "line": 20,
+        "function": "t25v3_ctor_numeric"
+      },
+      {
+        "property": "t25v3_ctor_numeric_assert_variant_decreases",
+        "dependencies": [
+          "t25v3_ctor_numeric_assert_allocation_size_exact",
+          "t25v3_ctor_numeric_assert_allocation_size_no_wrap",
+          "t25v3_ctor_numeric_assert_scaled_index_in_range",
+          "t25v3_ctor_numeric_assert_variant_nonnegative"
+        ],
+        "origin": null,
+        "extern": false,
+        "status_registered": true,
+        "property_export_origin": "registered",
+        "property_variant": "IPCodeAnnot",
+        "line": 27,
+        "function": "t25v3_ctor_numeric"
+      },
+      {
+        "property": "t25v3_ctor_numeric_assert_rte_initialization",
+        "dependencies": [
+          "t25v3_ctor_numeric_assert_allocation_size_exact",
+          "t25v3_ctor_numeric_assert_allocation_size_no_wrap",
+          "t25v3_ctor_numeric_assert_scaled_index_in_range",
+          "t25v3_ctor_numeric_assert_variant_decreases",
+          "t25v3_ctor_numeric_assert_variant_nonnegative"
+        ],
+        "origin": null,
+        "extern": false,
+        "status_registered": true,
+        "property_export_origin": "registered",
+        "property_variant": "IPCodeAnnot",
+        "line": 28,
+        "function": "t25v3_ctor_numeric"
+      },
+      {
+        "property": "t25v3_ctor_numeric_assert_allocation_size_exact",
+        "dependencies": [
+          "t25v3_ctor_numeric_assert_allocation_size_no_wrap"
+        ],
+        "origin": null,
+        "extern": false,
+        "status_registered": true,
+        "property_export_origin": "registered",
+        "property_variant": "IPCodeAnnot",
+        "line": 24,
+        "function": "t25v3_ctor_numeric"
+      },
+      {
+        "property": "t25v3_ctor_numeric_ensures",
+        "dependencies": [
+          "t25v3_ctor_numeric_assert_allocation_size_exact",
+          "t25v3_ctor_numeric_assert_allocation_size_no_wrap",
+          "t25v3_ctor_numeric_assert_rte_initialization",
+          "t25v3_ctor_numeric_assert_scaled_index_in_range",
+          "t25v3_ctor_numeric_assert_variant_decreases",
+          "t25v3_ctor_numeric_assert_variant_nonnegative"
+        ],
+        "origin": null,
+        "extern": false,
+        "status_registered": true,
+        "property_export_origin": "registered",
+        "property_variant": "IPPredicate",
+        "line": 18,
+        "function": "t25v3_ctor_numeric"
+      }
+    ],
+    "registration_closure": {
+      "exported_count": 13,
+      "initial_registered_snapshot_count": 13,
+      "registered_snapshot_count": 13,
+      "registration_membership_refreshed_after_consolidation": true,
+      "unregistered_status_lookup_performed": false,
+      "unregistered_wp_call_instances": [],
+      "unregistered_wp_smoke_properties": []
+    },
+    "native_goals": [
+      {
+        "function": "t25v3_ctor_numeric",
+        "goal": "typed_real_t25v3_ctor_numeric_wp_smoke_default_requires",
+        "line": 20,
+        "passed": true,
+        "property": "t25v3_ctor_numeric_wp_smoke_default_requires",
+        "results": [
+          "timeout",
+          "unknown",
+          "timeout"
+        ],
+        "smoke": true,
+        "targets": [
+          "t25v3_ctor_numeric_requires"
+        ]
+      },
+      {
+        "function": "t25v3_ctor_numeric",
+        "goal": "typed_real_t25v3_ctor_numeric_terminates",
+        "line": 20,
+        "passed": true,
+        "property": "t25v3_ctor_numeric_terminates",
+        "results": [
+          "valid"
+        ],
+        "smoke": false,
+        "targets": []
+      },
+      {
+        "function": "t25v3_ctor_numeric",
+        "goal": "typed_real_t25v3_ctor_numeric_ensures",
+        "line": 18,
+        "passed": true,
+        "property": "t25v3_ctor_numeric_ensures",
+        "results": [
+          "valid"
+        ],
+        "smoke": false,
+        "targets": []
+      },
+      {
+        "function": "t25v3_ctor_numeric",
+        "goal": "typed_real_t25v3_ctor_numeric_exits",
+        "line": 20,
+        "passed": true,
+        "property": "t25v3_ctor_numeric_exits",
+        "results": [
+          "valid"
+        ],
+        "smoke": false,
+        "targets": []
+      },
+      {
+        "function": "t25v3_ctor_numeric",
+        "goal": "typed_real_t25v3_ctor_numeric_assert_allocation_size_no_wrap",
+        "line": 23,
+        "passed": true,
+        "property": "t25v3_ctor_numeric_assert_allocation_size_no_wrap",
+        "results": [
+          "valid"
+        ],
+        "smoke": false,
+        "targets": []
+      },
+      {
+        "function": "t25v3_ctor_numeric",
+        "goal": "typed_real_t25v3_ctor_numeric_assert_allocation_size_exact",
+        "line": 24,
+        "passed": true,
+        "property": "t25v3_ctor_numeric_assert_allocation_size_exact",
+        "results": [
+          "valid"
+        ],
+        "smoke": false,
+        "targets": []
+      },
+      {
+        "function": "t25v3_ctor_numeric",
+        "goal": "typed_real_t25v3_ctor_numeric_assert_scaled_index_in_range",
+        "line": 25,
+        "passed": true,
+        "property": "t25v3_ctor_numeric_assert_scaled_index_in_range",
+        "results": [
+          "valid"
+        ],
+        "smoke": false,
+        "targets": []
+      },
+      {
+        "function": "t25v3_ctor_numeric",
+        "goal": "typed_real_t25v3_ctor_numeric_assert_variant_nonnegative",
+        "line": 26,
+        "passed": true,
+        "property": "t25v3_ctor_numeric_assert_variant_nonnegative",
+        "results": [
+          "valid"
+        ],
+        "smoke": false,
+        "targets": []
+      },
+      {
+        "function": "t25v3_ctor_numeric",
+        "goal": "typed_real_t25v3_ctor_numeric_assert_variant_decreases",
+        "line": 27,
+        "passed": true,
+        "property": "t25v3_ctor_numeric_assert_variant_decreases",
+        "results": [
+          "valid"
+        ],
+        "smoke": false,
+        "targets": []
+      },
+      {
+        "function": "t25v3_ctor_numeric",
+        "goal": "typed_real_t25v3_ctor_numeric_assert_rte_initialization",
+        "line": 28,
+        "passed": true,
+        "property": "t25v3_ctor_numeric_assert_rte_initialization",
+        "results": [
+          "valid"
+        ],
+        "smoke": false,
+        "targets": []
+      },
+      {
+        "function": "t25v3_ctor_numeric",
+        "goal": "typed_real_t25v3_ctor_numeric_assigns",
+        "line": 20,
+        "passed": true,
+        "property": "t25v3_ctor_numeric_assigns",
+        "results": [
+          "valid"
+        ],
+        "smoke": false,
+        "targets": []
+      }
+    ],
+    "ordinary_Valid": 10,
+    "smoke": {
+      "passed": true,
+      "results": [
+        "timeout",
+        "unknown",
+        "timeout"
+      ],
+      "targets": [
+        "t25v3_ctor_numeric_requires"
+      ],
+      "meaning": "Healthy non-Valid false smoke under frozen reporter policy; not ordinary theorem Valid or independent satisfiability proof"
+    },
+    "raw_JSON_goal_rows": 9,
+    "native_only_Valid_goals": [
+      "typed_real_t25v3_ctor_numeric_terminates",
+      "typed_real_t25v3_ctor_numeric_exits"
+    ],
+    "normalized_numeric_goal_count": 11,
+    "native_only_normalized_source": "wp_inventory",
+    "CSV_statuses": {
+      "Ignored": 1,
+      "Valid": 10
+    },
+    "source_entry_requires": {
+      "status_in_CSV": "Ignored",
+      "role": "Original conditional numeric-kernel contract and source loop-state facts; not a newly discharged caller premise"
+    }
+  },
+  "frontier": {
+    "all_attempted": 30,
+    "producer_proven_prefix": 29,
+    "last_open": "ctor.qualified.positive_post",
+    "unexecuted": 0,
+    "native_ordinary_generated": 39,
+    "native_smoke_generated": 1,
+    "materialized_files_only": 94,
+    "original_root_exit": 1,
+    "original_outer_exit": 1
+  },
+  "printed_project_named_axiom_or_lemma_declarations_in_exported_metadata": [],
+  "limits": [
+    "Bounded retained metadata observations only; no complete materialized/submitted SMT/hypothesis/foundation support closure or source-C++ soundness theorem.94materialized artifacts are not actual submission count/bytes.",
+    "Ten numeric ordinary goals are Valid; the passed timeout/unknown/timeout smoke remains non-Valid. The Ignored entry requires is an assumption of this conditional numeric kernel, not a proved caller contract.",
+    "Full constructor model remains not_proven/timeout. No whole body/model, original-v2, caller or ticket acceptance and no original exit upgrade."
+  ],
+  "reviewer_actions": {
+    "project_import_function_generator_test": false,
+    "compiler_native_formal_actual_collector": false,
+    "SSH": false,
+    "source_mutation": false
+  },
+  "proof_acceptance": false,
+  "complete_model_acceptance": false,
+  "original_v2_acceptance": false,
+  "caller_acceptance": false,
+  "ticket_closure": false,
+  "original_exit_upgraded": false
+}

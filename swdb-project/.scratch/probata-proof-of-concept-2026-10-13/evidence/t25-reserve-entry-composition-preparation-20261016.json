@@ -1,0 +1,162 @@
+{
+  "actual_current_parser_or_formal_validation": false,
+  "all_rows_pending_and_independent": true,
+  "assumed_authorized_seams": [
+    "reserve_entry(candidate) returns a source-bound pending mathematical duty/receipt",
+    "caller_packets.prepare/check through retained genuine parser-output replay; actual parser/source-runtime verification explicitly excluded",
+    "existing AST-only current caller-count control"
+  ],
+  "baseline_commit": "c978393b119a3614229a37f0f2c8ca2a097c750b",
+  "body_counts": {
+    "ctor_count_value": 35,
+    "dtor": 11,
+    "reserve": 67
+  },
+  "caller_acceptance": false,
+  "caller_premises_added": [],
+  "caller_targets": 128,
+  "created": "2026-10-16 ET",
+  "current_manifest": {
+    "bytes": 212218,
+    "path": "/private/tmp/probata-resume-20261016-t25-caller-reserve-green-v4/case1/caller/manifest.json",
+    "sha256": "3e8a0bdf6d3a2e2bff1a752d13036d1ed9b28deb2c3c960ba8966fb37786bdb7"
+  },
+  "current_records_admitted": [],
+  "full_model_body_inputs_changed": false,
+  "independent_spec_review": "PASS source/mathematical scope; see t25-reserve-entry-composition-spec-review-c978393b-20261016.md",
+  "independent_standards_review": "pending root capacity; no spawn slot available",
+  "initial_harness_error": "Two original replay receipts stopped at missing source-identity module files before meaningful assertions; they are not RED/GREEN acceptance. The repaired v2 closure produces genuine missing-application/assertion RED against frozen c978 caller_packets and current tests, then current implementation GREEN.",
+  "model_acceptance": false,
+  "numeric_and_local_count": 11,
+  "ordinary_proof_admission": "unsupported: complete caller composition remains pending",
+  "pending_application_ids": [
+    "apply.ctor.entry",
+    "apply.ctor.zero",
+    "apply.ctor.positive_entry",
+    "apply.reserve.entry"
+  ],
+  "remaining": [
+    "completed constructor state/typed image/capacity application",
+    "actual source-runtime bridge and lowered model layout",
+    "reserve/grow application with arbitrary index-specific values",
+    "guarded observation/stale alias liveness",
+    "destruction/automatic end/retained scalar/final incoming frame"
+  ],
+  "runs": {
+    "harness_green_failure": {
+      "errors": [
+        "FileNotFoundError: [Errno 2] No such file or directory: '/private/tmp/probata-resume-20261016-t25-caller-reserve-green/swdb/vector_reallocation_calls.py'",
+        "FileNotFoundError: [Errno 2] No such file or directory: '/private/tmp/probata-resume-20261016-t25-caller-reserve-green/swdb/vector_reallocation_calls.py'"
+      ],
+      "external_native_attempts": [],
+      "failed": 2,
+      "passed": 0,
+      "receipt": {
+        "bytes": 7148,
+        "path": "/private/tmp/probata-resume-20261016-t25-caller-reserve-green/result.json",
+        "sha256": "71f2094cb5869595950ca81c7ed08a83ea5b52dff923c85b5cd1ffa2f843255a"
+      }
+    },
+    "harness_red_failure": {
+      "errors": [
+        "FileNotFoundError: [Errno 2] No such file or directory: '/private/tmp/probata-resume-20261016-t25-caller-reserve-red/swdb/vector_reallocation_calls.py'",
+        "FileNotFoundError: [Errno 2] No such file or directory: '/private/tmp/probata-resume-20261016-t25-caller-reserve-red/swdb/vector_reallocation_calls.py'"
+      ],
+      "external_native_attempts": [],
+      "failed": 2,
+      "passed": 0,
+      "receipt": {
+        "bytes": 7122,
+        "path": "/private/tmp/probata-resume-20261016-t25-caller-reserve-red/result.json",
+        "sha256": "7765c566cc587fb31fc4d56380f3ffbba907cd8cbd7e8308f60193ecbe1d64c7"
+      }
+    },
+    "orchestration_green": {
+      "errors": [],
+      "external_native_attempts": [],
+      "failed": 0,
+      "passed": 5,
+      "receipt": {
+        "bytes": 4344,
+        "path": "/private/tmp/probata-resume-20261016-t25-caller-reserve-green-v4/result.json",
+        "sha256": "8b429a703b06ea3e22bb1da4377244c7c2c90ec4797a3be6a2c29a1befe7bc09"
+      }
+    },
+    "orchestration_red": {
+      "errors": [
+        "AssertionError: the caller requires a source-bound reserve precondition/branch application",
+        "AssertionError: "
+      ],
+      "external_native_attempts": [],
+      "failed": 2,
+      "passed": 0,
+      "receipt": {
+        "bytes": 4936,
+        "path": "/private/tmp/probata-resume-20261016-t25-caller-reserve-red-v2/result.json",
+        "sha256": "d14d0b7009b5a99ce8e41820230d5982996355eb25e06714f7aef9438e0dfb55"
+      }
+    },
+    "unit_green": {
+      "errors": [],
+      "external_native_attempts": [],
+      "failed": 0,
+      "passed": 4,
+      "receipt": {
+        "bytes": 1927,
+        "path": "/private/tmp/probata-resume-20261016-t25-reserve-entry-green-v2/result.json",
+        "sha256": "03949e3cd7594623e41d1840140323d688ddb7dd38771a5242dac2bd51401bae"
+      }
+    },
+    "unit_red": {
+      "errors": [
+        "AttributeError: module 'swdb.vector_reallocation_composition' has no attribute 'reserve_entry'",
+        "AttributeError: module 'swdb.vector_reallocation_composition' has no attribute 'reserve_entry'",
+        "AttributeError: module 'swdb.vector_reallocation_composition' has no attribute 'reserve_entry'",
+        "AttributeError: module 'swdb.vector_reallocation_composition' has no attribute 'reserve_entry'"
+      ],
+      "external_native_attempts": [],
+      "failed": 4,
+      "passed": 0,
+      "receipt": {
+        "bytes": 5048,
+        "path": "/private/tmp/probata-resume-20261016-t25-reserve-entry-red/result.json",
+        "sha256": "3f9fdfc4319615706b961986973ea02298e88fd3d30630d5253b8a65e780c459"
+      }
+    }
+  },
+  "scope": "Pending source-local reserve entry/branch application; no reserve poststate or caller theorem granted.",
+  "source_files": [
+    {
+      "bytes": 13396,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_reallocation_composition.py",
+      "relative": "swdb/vector_reallocation_composition.py",
+      "sha256": "fbce29f010d92be33b09a0f31c440f8db97c7f0dfd0769a41a59e71bdfe6e108"
+    },
+    {
+      "bytes": 10906,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_reallocation_caller_packets.py",
+      "relative": "swdb/vector_reallocation_caller_packets.py",
+      "sha256": "a30b633404723d99c84ee3473eb0a352fe6641274e036524451826940abc59f0"
+    },
+    {
+      "bytes": 5052,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_reallocation_reserve_application.py",
+      "relative": "tests/test_vector_reallocation_reserve_application.py",
+      "sha256": "3a35e5eeb9529c48e0954078ff0932a60aff93ce5dfea1d3fa219b314242bf3c"
+    },
+    {
+      "bytes": 17548,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_reallocation_caller_packets.py",
+      "relative": "tests/test_vector_reallocation_caller_packets.py",
+      "sha256": "65d81ff24c0a59d315ee9a34e90ac744da20d0d8be674f78a858516efe19e95e"
+    },
+    {
+      "bytes": 7912,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_reallocation_copy_prefix_cases.py",
+      "relative": "tests/test_vector_reallocation_copy_prefix_cases.py",
+      "sha256": "723baac37d99a2370f8f06b447f4b7d1199c98808ae98b6f2ab6342439e8ce2d"
+    }
+  ],
+  "source_runtime_bridge": "Pending actual WP Typed-object/chunk, automatic placement and model-layout relation; hashes alone do not prove it.",
+  "ticket_closure": false
+}

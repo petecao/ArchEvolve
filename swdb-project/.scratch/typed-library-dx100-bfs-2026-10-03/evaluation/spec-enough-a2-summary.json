@@ -1,0 +1,32 @@
+{
+  "format": "swdb.spec-enough-attempt-summary.v1",
+  "created": "2026-10-04 07:05 ET",
+  "ticket": 58,
+  "campaign": "extensa-gem5-bfs-20261004-s1",
+  "mode": "extensa",
+  "attempt": "a2",
+  "host": "mbit10",
+  "checkout": {"path": "/data1/yanruj/ArchEvolve-spec58", "branch": "se58-run", "commit": "0775f7d33dc844d259ced3bb21a5b506ec8c3d29"},
+  "lane": {"node": 1, "lease": "mbit10-evaluation-node1", "generation": 509, "aligned_to": "no_gapbs_batch_running",
+           "load1_at_start": 1.21, "started_utc": "2026-10-04T05:40:07Z", "ended_utc": "2026-10-04T06:22:35Z", "lane_exit": 0},
+  "reference_positive_control": {"certification": "certification.30f80f0305084c748ee44cd90a068579", "verdict": "certified",
+                                 "matrix": "10/10", "controls_rejected": "16/16"},
+  "samples": {
+    "opened": 6, "recorded_counted": 5, "completed": 0, "certified": 0, "scored": 0,
+    "rows": [
+      {"sample": "spec-s1", "outcome": "failed", "counted": true, "audit": "refused: shell body with dynamic syntax; reads of a/ and b/ diff paths; wildcard root outside the workspace"},
+      {"sample": "spec_draft-s1", "outcome": "failed", "counted": true, "audit": "refused: awk program; dynamic shell syntax"},
+      {"sample": "spec_draft_contract-s1", "outcome": "failed", "counted": true, "audit": "refused: git filesystem selectors (git apply/diff); a/ b/ paths"},
+      {"sample": "spec-s2", "outcome": "failed", "counted": true, "audit": "refused: awk program; non-literal sed program"},
+      {"sample": "spec_draft-s2", "outcome": "failed", "counted": true, "audit": "refused: a/ b/ diff paths; dynamic shell syntax"},
+      {"sample": "spec_draft_contract-s2", "outcome": "driver_crash", "counted": "spent, not in ledger",
+       "audit": "the audit raised OSError ENAMETOOLONG on an awk program parsed as a path; the provider stage exited 1 (fixed in db49d5d: an unstat-able path is an audit refusal)"},
+      {"samples": ["spec-s3", "spec_draft-s3", "spec_draft_contract-s3"], "outcome": "not opened"}
+    ]
+  },
+  "finding": "Every completed a2 session tried to edit or test the patch with shell tooling (heredocs, awk, non-literal sed, git apply/diff). The strict audit refused those commands, so no sample could be scored. a3 keeps the audit strict and tells the provider to read files with plain commands only and to write the diff by hand.",
+  "remote_summary": {"path": "/data1/yanruj/EvolveSWDB_runs/extensa/extensa-gem5-bfs-20261004-s1/summary-a2.json",
+                     "sha256": "32171040e8ccd106d6d841318566b2d3b91801222c76098d3353cfaa2e904504"},
+  "evidence_basis": "simulated",
+  "gain_claim": false
+}

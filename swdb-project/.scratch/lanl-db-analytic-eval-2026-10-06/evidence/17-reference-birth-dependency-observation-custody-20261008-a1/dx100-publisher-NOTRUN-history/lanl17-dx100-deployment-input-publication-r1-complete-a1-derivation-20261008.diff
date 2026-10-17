@@ -1,0 +1,76 @@
+--- /private/tmp/lanl17_publish_checked_dx100_deployment_inputs_20261008_a1.py
++++ /private/tmp/lanl17_publish_checked_dx100_deployment_inputs_20261008_a1_r1.py
+@@ -31,6 +31,8 @@
+ REVIEW_SHA = '5072c3025b0c372d6d4455d213d1e57d8ba6dda3f0b087883b447026828c4d07'
+ QUERY_SHA = '6d40fa3a6091abf01e88ee85c04636fed1ef051cc17729255a6485855596a4c1'
+ PACKAGE_QUERY_SHA = 'b9ac7235b76496925d7bca8609dfb03b94fc0f13f9015525816d6633ff33ef75'
++PACKAGE_FACTS_SHA = 'bf5f733f184049264ba1ee45a7db09c64c2096a37216f4a153fa64a91b0be6b1'
++PACKAGE_REVIEW_SHA = 'c53e8e57c1118065be79bf1b5efbdfca636c1ed2c6a484c89f55e0b3998c4e9d'
+ MANIFEST = 'd5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d'
+ TARGET = BASE / 'EvolveSWDB_sources/bfs-dx100-compile-20260925-a1.source/source'
+ SECOND_TARGET = BASE / 'EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-gem5-20261003-a2.baseline/source'
+@@ -229,7 +231,11 @@
+ def verify_package(facts):
+     require(facts['format'] == 'swdb.lanl17-native-system-pyyaml-package-facts-original.v1'
+             and facts['sealed'] is False and facts['query_source']['sha256'] == PACKAGE_QUERY_SHA
+-            and isinstance(facts['yaml_version'], str) and len(facts['yaml_version']) <= 64,
++            and facts['yaml_version'] == '6.0.1' and len(facts['imported_modules']) == 18
++            and facts['preimport_and_postimport_existing_package_file_count'] == 35
++            and facts['yaml_init']['path'] == '/usr/lib/python3/dist-packages/yaml/__init__.py'
++            and facts['yaml_init']['bytes'] == 12311
++            and facts['yaml_init']['sha256'] == '6e1974e6a49e3bed59c654918c6aef9769bd9eb5dbd67f7e1906ad4cdd0caea7',
+             'reviewed_package_query_identity')
+     require(facts['native_python'] == FACTS['native_pins'][str(PYTHON)], 'package_native_differs')
+     initial = facts['yaml_init']
+@@ -283,13 +289,13 @@
+     global FACTS, ROOTS
+     p = argparse.ArgumentParser()
+     for key in ('final-source40', 'publisher-source-sha256', 'facts-file', 'facts-parent-review-file',
+-                'package-facts-file', 'package-facts-sha256', 'source', 'raw', 'original-metadata-control',
++                'package-facts-file', 'package-facts-sha256', 'package-parent-review-file', 'source', 'raw', 'original-metadata-control',
+                 'hooks-directory', 'deployment-control', 'prepare-path'):
+         p.add_argument('--' + key, required=True)
+     a = p.parse_args()
+     require(re.fullmatch('[0-9a-f]{40}', a.final_source40)
+             and re.fullmatch('[0-9a-f]{64}', a.publisher_source_sha256)
+-            and re.fullmatch('[0-9a-f]{64}', a.package_facts_sha256), 'explicit_actual_pins_required')
++            and a.package_facts_sha256 == PACKAGE_FACTS_SHA, 'explicit_actual_pins_required')
+     require(sys.platform == 'linux' and socket.gethostname().split('.')[0] == 'mbit10'
+             and os.getuid() == os.geteuid() == UID and os.getgid() == os.getegid() == CREATOR_GID
+             and pwd.getpwuid(UID).pw_name == 'yanruj' and Path(sys.executable).resolve() == PYTHON
+@@ -301,7 +307,14 @@
+     facts_file, review_file, package_file = map(Path, (a.facts_file, a.facts_parent_review_file, a.package_facts_file))
+     FACTS, facts_raw, facts_stat = original_json(facts_file, FACTS_SHA, 60682)
+     review, review_raw, review_stat = original_json(review_file, REVIEW_SHA, 1132)
+-    package, package_raw, package_stat = original_json(package_file, a.package_facts_sha256)
++    package, package_raw, package_stat = original_json(package_file, PACKAGE_FACTS_SHA, 14870)
++    package_review_file = Path(a.package_parent_review_file)
++    package_review, package_review_raw, package_review_stat = original_json(package_review_file, PACKAGE_REVIEW_SHA, 1164)
++    require(package_review['format'] == 'swdb.native-pyyaml-original-parent-semantic-review.v1'
++            and package_review['sealed'] is False and package_review['original']['sha256'] == PACKAGE_FACTS_SHA
++            and package_review['original']['bytes'] == 14870 and package_review['yaml_version'] == package['yaml_version']
++            and package_review['package_init'] == package['yaml_init']
++            and package_review['unique_original_system_package_file_pins'] == 35, 'parent_package_facts_review')
+     require(FACTS['format'] == 'swdb.lanl17-original-dx100-deployment-prerequisites-observed.v1'
+             and FACTS['sealed'] is False and FACTS['query_source_sha256'] == QUERY_SHA
+             and FACTS['original_C'] == CORE and FACTS['core_module_count'] == 185
+@@ -399,7 +412,8 @@
+     require(commands(a.prepare_path) == runtime_commands, 'runtime_command_postflight_changed')
+     require(read(own, 128 * 1024, UID) == (own_raw, own_stat), 'publisher_source_changed')
+     for path, raw_body, original_stat in ((facts_file, facts_raw, facts_stat), (review_file, review_raw, review_stat),
+-                                           (package_file, package_raw, package_stat)):
++                                           (package_file, package_raw, package_stat),
++                                           (package_review_file, package_review_raw, package_review_stat)):
+         require(read(path, 128 * 1024, UID) == (raw_body, original_stat), 'original_metadata_changed')
+     require(all(native(x, FACTS['native_pins'][str(x)]) == original for x, original in native_originals.items())
+             and read(retention_path, 0, UID) == retention, 'native_or_empty_retention_changed')
+@@ -422,7 +436,8 @@
+                'checked_utc': datetime.now(timezone.utc).isoformat(), 'publisher_sha256': sha(own_raw),
+                'final_source_commit': a.final_source40, 'core_C': CORE, 'core_module_count': 185,
+                'unchanged_core_git_tree_sha256': CORE_TREE_SHA, 'original_facts_sha256': FACTS_SHA,
+-               'parent_facts_review_sha256': REVIEW_SHA, 'package_facts_sha256': a.package_facts_sha256,
++               'parent_facts_review_sha256': REVIEW_SHA, 'package_facts_sha256': PACKAGE_FACTS_SHA,
++               'parent_package_review_sha256': PACKAGE_REVIEW_SHA,
+                'hooks': {'path': str(hooks), 'identity': hooks_identity},
+                'hook': {'path': str(hook_path), 'bytes': len(hook), 'sha256': HOOK_SHA, 'stat': hook_stat},
+                'deployment_control': {'path': str(control), 'identity': control_identity},

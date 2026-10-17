@@ -1,0 +1,90 @@
+{
+  "created": "2026-10-16 ET",
+  "source_commit": "1433b8f58baa63538d1e8aa8a33d9ce566826407",
+  "baseline": "c978393b119a3614229a37f0f2c8ca2a097c750b",
+  "files_after": {
+    "swdb-project/swdb/bounded_initialization.py": "d6586a771548f46423595eb971a63bffb00f23e559cfe576adee5a2abeb6b3cc",
+    "swdb-project/swdb/bounded_std_initialization.py": "7f4417d4d8ea8bcd8ef795259212e55052e333aa8ae320b4b7d06511cbab40ea",
+    "swdb-project/swdb/cbmc_adapter.py": "2ef59469412c287b174f085e2c08c8a969435ccf1bc129fe34ea89bbb78cac4a",
+    "swdb-project/swdb/dx100_initialized_register_source.py": "01c043e544e50c30fc3d92b6be5a8b097f4dfef0606f53c29068a2ba008ac145",
+    "swdb-project/swdb/proof.py": "6223247f6d9ee6a806ee32f2a4f5630e5fa41555488a70c3c4646b73f6892802",
+    "swdb-project/swdb/proof_setup.py": "08f5e9807522cc2418e59ac9b6ecd43855a6a5ed4693c0295333abf6b8563d16",
+    "swdb-project/swdb/vector_reallocation_caller_packets.py": "a30b633404723d99c84ee3473eb0a352fe6641274e036524451826940abc59f0",
+    "swdb-project/swdb/vector_reallocation_caller_view.py": "47c286034927b11db471c45ebce061856c4bc73008f0baf2cbdae255a2293413",
+    "swdb-project/swdb/vector_reallocation_closed_binding.py": "075f557a22a34b03fcebe2699d3a21c4ebe44ff3b8afddf9cb585d6ff090d0b2",
+    "swdb-project/swdb/vector_reallocation_closed_evidence.py": "5d997dfbb1f2bef48ca07126d3a98697756254af1fc26d8f18a94aef009fc77f",
+    "swdb-project/swdb/vector_reallocation_closed_lifetime.py": "ac631823afe598629032482b9383a4bfb8f6673ca71f1f7795a55c6d905361ee",
+    "swdb-project/swdb/vector_reallocation_closed_lifetime_parts.py": "ce98fdba6a2439a72997cbc956daa1854a722cab3d8681897557384122f229f9",
+    "swdb-project/swdb/vector_reallocation_closed_route.py": "429895c2a7b9bedaaa14f0dc8bdd5a76cede173f6a9a5a82d33713c988881d81",
+    "swdb-project/swdb/vector_reallocation_closed_view.py": "758092d5997274b29e22f2196c46af361b7cfdfd5c9eb83ee328ae6a877eb757",
+    "swdb-project/swdb/vector_reallocation_composition.py": "fbce29f010d92be33b09a0f31c440f8db97c7f0dfd0769a41a59e71bdfe6e108",
+    "swdb-project/swdb/vector_reallocation_private_frame.py": "062c68a138b4aeb0887f50490d405f3b1fdd50284e6e8404e096df02568982da",
+    "swdb-project/swdb/wp_adapter.py": "e30ac5b1b05666db401bce03726f78a336926b47807d729ec1d11a080a5389af"
+  },
+  "readers": [
+    "root",
+    "ticket25"
+  ],
+  "planned_raw_budget_bytes": 536870912,
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-1433b8f5-t25-closed-source-public-v4",
+  "review_evidence": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-closed-source-public-v4-root-admission-20261016.json",
+    "sha256": "d2fa6ea2f885380e77a1c3074943de3f3012f26e452915e58dd956868b8b7c05"
+  },
+  "control_files": [
+    {
+      "bytes": 18385,
+      "name": "closed_python_surface.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/closed_python_surface.py",
+      "sha256": "748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af"
+    },
+    {
+      "bytes": 9610,
+      "name": "python_startup_roles_v2.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python_startup_roles_v2.py",
+      "sha256": "5e9d2e6dfa2aaa7999f4670a979d3cc32736b852a612f77d4e2f7c71bc229618"
+    },
+    {
+      "bytes": 2709,
+      "name": "python_role_observer_v2.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python_role_observer_v2.py",
+      "sha256": "9b100cbe2fdef3e7d429ccdf05d6489d44855a84328e2dd8532eb547beeaf43b"
+    },
+    {
+      "bytes": 116503,
+      "name": "t28-linux-runtime-observer-v2-actual-20261016.json",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-linux-runtime-observer-v2-actual-20261016.json",
+      "sha256": "092397608fe3a08c42d85e9c8e121ed139f0d94e345a12ae3aaa57ad6e93a5f0"
+    },
+    {
+      "bytes": 19781,
+      "name": "reviewed_wp_gates.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v4/reviewed_wp_gates.py",
+      "sha256": "76a0dc85050e70de0fbbc29099fa6cc50afa9e9edb085d991127c92f7f059151"
+    },
+    {
+      "bytes": 3637,
+      "name": "reviewed_native_gates.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v4/reviewed_native_gates.py",
+      "sha256": "c13376db78d81e351486b3e0d44c295b6f679ee9863f21023639a9893b25d283"
+    },
+    {
+      "bytes": 9100,
+      "name": "reviewed-function-lineage.json",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v4/reviewed-function-lineage.json",
+      "sha256": "81534a7de64403203b758a008f7557941927eedafad35517141503539b028ec0"
+    },
+    {
+      "bytes": 29360,
+      "name": "entry.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v4/inert-1433b8f5-node0/entry.py",
+      "sha256": "77b4c2cedc85f3325bbd14d7b5a436e48b7d00940355c4fe93aa59bdac52ae01"
+    },
+    {
+      "bytes": 677005,
+      "name": "policy.json",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v4/inert-1433b8f5-node0/policy.json",
+      "sha256": "e84f56859b73e1237d9c8b40b9ea50917e23e98de74202a0ed858eb39bfd9cce"
+    }
+  ]
+}

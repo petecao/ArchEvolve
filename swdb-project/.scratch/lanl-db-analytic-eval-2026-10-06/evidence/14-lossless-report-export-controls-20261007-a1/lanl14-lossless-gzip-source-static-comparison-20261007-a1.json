@@ -1,0 +1,252 @@
+{
+  "format": "swdb.lanl14-lossless-gzip-source-static-derivation.v1",
+  "state": "SOURCE_ONLY_NOT_RUN_UNSEALED_STATIC_COMPARISON",
+  "derivations": [
+    {
+      "role": "exporter",
+      "original": {
+        "path": "/private/tmp/lanl14_final_export_catalog_caps_a4.py",
+        "bytes": 9036,
+        "sha256": "bf5add9eb35daa5402a0359f6ace5c542a289f9b60b14cbd00aa763097a9645d"
+      },
+      "selected_derivative": {
+        "path": "/private/tmp/lanl14_final_export_lossless_gzip_20261007_a1.py",
+        "bytes": 22967,
+        "sha256": "928af82facd9f36dfdbca6595d2c2e9d1091dd0064c9fe53fc41c163879e026e"
+      },
+      "complete_unsealed_diff": {
+        "path": "/private/tmp/lanl14-lossless-gzip-exporter-complete-derivation-20261007-a1.diff",
+        "bytes": 21755,
+        "sha256": "0386b6ef3fec0d24959a168bfb6b35e90de22f48de0be64d1fc2d166cefecb83"
+      },
+      "hunks": 5,
+      "whole_byte_forward": true,
+      "whole_byte_reverse": true,
+      "unchanged_original_top_level_function_ASTs": [
+        "load"
+      ],
+      "unchanged_original_constant_AST_names": [],
+      "full_public_validation_timeout3600_and_owned_cleanup_Try_AST_equal": true
+    },
+    {
+      "role": "reader",
+      "original": {
+        "path": "/private/tmp/lanl14-readonly-nine-export-admission-20261007-a1.py",
+        "bytes": 25308,
+        "sha256": "3a0f1c59e63b8ff96ef42b84d0c4ce8e36e8059b49bc9c0bd17f2d95fa3e1101"
+      },
+      "selected_derivative": {
+        "path": "/private/tmp/lanl14_readonly_nine_export_admission_lossless_gzip_20261007_a1.py",
+        "bytes": 37647,
+        "sha256": "6909c422990a071b1a8d08c634c1c086f0218c5851d38996b6f4798759499570"
+      },
+      "complete_unsealed_diff": {
+        "path": "/private/tmp/lanl14-lossless-gzip-reader-complete-derivation-20261007-a1.diff",
+        "bytes": 19738,
+        "sha256": "76aaff7d80b9adca39f7606e074fc44f4e6a71ae3371e54646fa3f8e4c7a2310"
+      },
+      "hunks": 5,
+      "whole_byte_forward": true,
+      "whole_byte_reverse": true,
+      "unchanged_original_top_level_function_ASTs": [
+        "require",
+        "sha",
+        "relative",
+        "missing",
+        "same_regions"
+      ],
+      "unchanged_original_constant_AST_names": [
+        "F6",
+        "C",
+        "HELPER",
+        "REPORTER",
+        "CHARS",
+        "OLD_FILES",
+        "THREADS",
+        "TARGETS",
+        "ALLOWED",
+        "MISSING",
+        "JACOBI"
+      ],
+      "all_original_main_require_calls_AST_preserved_except_honest_exporter_pin_change": {
+        "preserved": 80,
+        "original_lines": [
+          72,
+          73,
+          75,
+          77,
+          78,
+          79,
+          82,
+          83,
+          86,
+          90,
+          91,
+          93,
+          94,
+          95,
+          96,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          108,
+          109,
+          113,
+          114,
+          115,
+          116,
+          195,
+          69,
+          70,
+          71,
+          74,
+          88,
+          139,
+          144,
+          145,
+          149,
+          150,
+          151,
+          152,
+          155,
+          156,
+          157,
+          158,
+          159,
+          160,
+          161,
+          164,
+          165,
+          166,
+          167,
+          170,
+          173,
+          174,
+          175,
+          127,
+          128,
+          135,
+          141,
+          141,
+          146,
+          147,
+          153,
+          171,
+          172,
+          178,
+          180,
+          182,
+          187,
+          189,
+          191,
+          123,
+          169,
+          183,
+          185
+        ],
+        "only_changed_original_line": 92
+      },
+      "entire_nine_pair_trial_scope_source_and_null_loop_AST_equal": true,
+      "SelectedRecords_class_AST_equal": true
+    }
+  ],
+  "copied_codec_named_function_class_AST_count": 12,
+  "copied_codec_named_function_class_AST_names": [
+    "_report_require",
+    "_report_deadline",
+    "_report_remaining",
+    "_report_stamp",
+    "_report_chunks",
+    "_report_file_pin",
+    "_ReportCappedWriter",
+    "_report_transfer_contract",
+    "_report_decoded_chunks",
+    "read_report_transfer",
+    "_report_compare_original",
+    "prepare_report_transfer"
+  ],
+  "copied_codec_constant_Assign_AST_count": 5,
+  "copied_codec_constant_Assign_AST_names": [
+    "MAX_GIT_REPORT_BYTES",
+    "MAX_ORIGINAL_REPORT_BYTES",
+    "REPORT_CODEC_SECONDS",
+    "REPORT_TRANSFER_POLICY",
+    "REPORT_STAT_KEYS"
+  ],
+  "codec_AST_equal_between_derivatives": true,
+  "isolated_test_source": {
+    "path": "/private/tmp/lanl14_lossless_report_codec_isolated_test_source_20261007_a1.py",
+    "bytes": 9421,
+    "sha256": "0488a233b41c2a78c835f46aaa5e9189851696c56b7a031a7a6a85a9a8b8a48a"
+  },
+  "test_methods_NOT_RUN": [
+    {
+      "name": "test_small_report_keeps_exact_original_bytes_and_no_gzip_output",
+      "line": 70
+    },
+    {
+      "name": "test_conditional_gzip_is_deterministic_and_preserves_every_original_byte",
+      "line": 74
+    },
+    {
+      "name": "test_crc_corruption_is_refused_with_explicit_matching_transfer_pin",
+      "line": 82
+    },
+    {
+      "name": "test_trailing_bytes_are_refused",
+      "line": 86
+    },
+    {
+      "name": "test_concatenated_second_gzip_member_is_refused",
+      "line": 89
+    },
+    {
+      "name": "test_truncated_footer_is_refused",
+      "line": 92
+    },
+    {
+      "name": "test_malformed_header_is_refused",
+      "line": 95
+    },
+    {
+      "name": "test_decoded_size_overflow_is_refused_before_accepting_output",
+      "line": 99
+    },
+    {
+      "name": "test_wrong_original_hash_is_refused_after_lossless_decode",
+      "line": 102
+    },
+    {
+      "name": "test_incompressible_git_overflow_retains_original_and_bounded_partial",
+      "line": 105
+    },
+    {
+      "name": "test_original_administrative_overflow_refuses_before_open_or_gzip_creation",
+      "line": 109
+    },
+    {
+      "name": "test_same_size_inode_swap_during_read_is_refused",
+      "line": 114
+    },
+    {
+      "name": "test_symlink_input_and_existing_partial_output_are_not_replayed",
+      "line": 124
+    }
+  ],
+  "test_lift_pins_match_exact_derivatives": true,
+  "synthetic_namespace_only_caps": {
+    "Git_bytes": 256,
+    "original_report_bytes": 4096,
+    "production_constant_ASTs_lifted_first_and_checked": true
+  },
+  "no_import_compile_lifted_callable_main_test_body_actual_artifact_Git_SSH_Store_or_worktree_action": true,
+  "static_method": "Stdlib source bytes/AST/literal assignments and full reversible unified-diff comparison only; no target function evaluated."
+}

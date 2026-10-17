@@ -1,0 +1,277 @@
+kind: candidate
+schema_version: '0.4'
+id: bc-native-20261003-a1.baseline
+status: draft
+created: '2026-10-03'
+updated: '2026-10-03'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+artifact_role: source_baseline
+implementation: dx100-bc-scalar
+source_snapshot: bc-dx100-scalar-only-20261003-a1.source
+artifact:
+  path: /data1/yanruj/EvolveSWDB_sources/a8bc962faa3fa5af/bc-native-20261003-a1.baseline/source
+  sha256: 946d5398e3354c014ebe3309c2627951a5cf43d166bbb7c726adefb330a2d123
+  files:
+  - path: LICENSE
+    sha256: b8c77da160595e378d8fa7635b1c777c7a84c56c79a24efbbbcd9203375231c2
+    bytes: 1208
+    executable: false
+  - path: PROVENANCE.md
+    sha256: 966954ae2cc8639c88f1ebc7107a2d8a9f327f574548c66f2de38bc5bb69fa3f
+    bytes: 644
+    executable: false
+  - path: benchmarks/API/MAA.hpp
+    sha256: 4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd
+    bytes: 1323
+    executable: false
+  - path: benchmarks/API/MAA_atomics.hpp
+    sha256: 896459489ded4a790a2b52da62b337f00b7310a4bafc6d3ceaa9d8c4f1eb026a
+    bytes: 845
+    executable: false
+  - path: benchmarks/API/MAA_functional.hpp
+    sha256: ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc
+    bytes: 25345
+    executable: false
+  - path: benchmarks/API/MAA_gem5.hpp
+    sha256: 5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174
+    bytes: 27473
+    executable: false
+  - path: benchmarks/API/MAA_gem5_magic.hpp
+    sha256: e3353661cce76167a2f986385e448c2a6aef471fc8424762183bae11ba769c32
+    bytes: 9802
+    executable: false
+  - path: benchmarks/API/MAA_utility.hpp
+    sha256: 3fb818fff3a37e14d77ea009a2246788213c1e938a05515b361aceb010a2b10e
+    bytes: 786
+    executable: false
+  - path: benchmarks/gapbs/LICENSE
+    sha256: bc33e6a6a2571d48fde7fc7d30be3aa11fb0558edd46173861274ac7a1f74fc3
+    bytes: 1499
+    executable: false
+  - path: benchmarks/gapbs/src/bc.cc
+    sha256: d5999e06ba88d279bcb0d5d936fb6ee2bfdbd9e5f2699460feaf8546cf069b98
+    bytes: 12090
+    executable: false
+  - path: benchmarks/gapbs/src/benchmark.h
+    sha256: 87c20752c8437dd5152d00e7c995bedfab15b8929219f85846f47e0f9a4b339f
+    bytes: 3565
+    executable: false
+  - path: benchmarks/gapbs/src/bitmap.h
+    sha256: 6f6e444c82b0e7d797cc9218ba85be7f5f702e95d4c134715c90e6a5b1288465
+    bytes: 1706
+    executable: false
+  - path: benchmarks/gapbs/src/builder.h
+    sha256: 2d3646e12dc2ae9776cfa429aaec699d031b4826c79a356983cf109753f1eb01
+    bytes: 16778
+    executable: false
+  - path: benchmarks/gapbs/src/command_line.h
+    sha256: de1415dfe29eb6ba436d57523b2dee8fa3268a0785ae690bde9e94e9444172b2
+    bytes: 8511
+    executable: false
+  - path: benchmarks/gapbs/src/generator.h
+    sha256: 24bfdab312afdf6e552ef9a23d124332984761cdb94f109bb15009710d1dbafe
+    bytes: 6418
+    executable: false
+  - path: benchmarks/gapbs/src/graph.h
+    sha256: 79a271a3e3b01d6f02750b2b828ad94b3696eff080eb068bc3fcf80bc81139e0
+    bytes: 8276
+    executable: false
+  - path: benchmarks/gapbs/src/platform_atomics.h
+    sha256: 9c8dbe6419b34d850af33ef14ea724c1c64de369d052a8f3c6e20038dcabe9cd
+    bytes: 4198
+    executable: false
+  - path: benchmarks/gapbs/src/pvector.h
+    sha256: b3280b03eb774fdd27bbc1967c4f274e46d42179f149275e1b2c394986ebe03d
+    bytes: 4265
+    executable: false
+  - path: benchmarks/gapbs/src/reader.h
+    sha256: 951fb6e82df079389b953f35363e8a502d79da4f3c56b8ce6eab7faac38800e1
+    bytes: 9268
+    executable: false
+  - path: benchmarks/gapbs/src/sliding_queue.h
+    sha256: 3d5a1d3cff924737c2fc7c6b4fcbb859270f1fcc626c25aac4c780b7b6f4c02c
+    bytes: 2502
+    executable: false
+  - path: benchmarks/gapbs/src/timer.h
+    sha256: 3337a59a57341585d296ed01b3eb64ca7f5e02d8c0871f4920ab9d1cd7e63bcb
+    bytes: 1161
+    executable: false
+  - path: benchmarks/gapbs/src/util.h
+    sha256: a103e6c5767d724adc9b6b421ecade4b2d2c4351e5ea0da5d2c9bf16a9fcecf6
+    bytes: 1953
+    executable: false
+  - path: benchmarks/gapbs/src/writer.h
+    sha256: 3fd16ac75a8c069c7cf09d540ca35b66ec51813406b5fd2f8149253bebd9ebea
+    bytes: 2898
+    executable: false
+  - path: include/gem5/asm/generic/m5ops.h
+    sha256: 28efe83deb0cd19d5d15b73d3544c7f45238c2744531657f5aa881da643e868d
+    bytes: 5479
+    executable: false
+  - path: include/gem5/m5ops.h
+    sha256: bbef6be56e1fb63a820da56fe4306fbce67ee7bedbb43b6e72e0281c947f07e8
+    bytes: 3937
+    executable: false
+state: unverified
+protections:
+- path: benchmarks/gapbs/src/bc.cc
+  kind: verifier
+  text: |
+    // Still uses Brandes algorithm, but has the following differences:
+    // - serial (no need for atomics or dynamic scheduling)
+    // - uses vector for BFS queue
+    // - regenerates farthest to closest traversal order from depths
+    // - regenerates successors from depths
+    bool BCVerifier(const Graph &g, SourcePicker<Graph> &sp, NodeID num_iters,
+                    const pvector<ScoreT> &scores_to_test) {
+        pvector<ScoreT> scores(g.num_nodes(), 0);
+        for (int iter = 0; iter < num_iters; iter++) {
+            NodeID source = sp.PickNext();
+            // BFS phase, only records depth & path_counts
+            pvector<int> depths(g.num_nodes(), -1);
+            depths[source] = 0;
+            vector<CountT> path_counts(g.num_nodes(), 0);
+            path_counts[source] = 1;
+            vector<NodeID> to_visit;
+            to_visit.reserve(g.num_nodes());
+            to_visit.push_back(source);
+            for (auto it = to_visit.begin(); it != to_visit.end(); it++) {
+                NodeID u = *it;
+                for (NodeID v : g.out_neigh(u)) {
+                    if (depths[v] == -1) {
+                        depths[v] = depths[u] + 1;
+                        to_visit.push_back(v);
+                    }
+                    if (depths[v] == depths[u] + 1)
+                        path_counts[v] += path_counts[u];
+                }
+            }
+            // Get lists of vertices at each depth
+            vector<vector<NodeID>> verts_at_depth;
+            for (NodeID n : g.vertices()) {
+                if (depths[n] != -1) {
+                    if (depths[n] >= static_cast<int>(verts_at_depth.size()))
+                        verts_at_depth.resize(depths[n] + 1);
+                    verts_at_depth[depths[n]].push_back(n);
+                }
+            }
+            // Going from farthest to closest, compute "dependencies" (deltas)
+            pvector<ScoreT> deltas(g.num_nodes(), 0);
+            for (int depth = verts_at_depth.size() - 1; depth >= 0; depth--) {
+                for (NodeID u : verts_at_depth[depth]) {
+                    for (NodeID v : g.out_neigh(u)) {
+                        if (depths[v] == depths[u] + 1) {
+                            deltas[u] += (path_counts[u] / path_counts[v]) * (1 + deltas[v]);
+                        }
+                    }
+                    scores[u] += deltas[u];
+                }
+            }
+        }
+        // Normalize scores
+        ScoreT biggest_score = *max_element(scores.begin(), scores.end());
+        for (NodeID n : g.vertices())
+            scores[n] = scores[n] / biggest_score;
+        // Compare scores
+        bool all_ok = true;
+        for (NodeID n : g.vertices()) {
+            ScoreT delta = abs(scores_to_test[n] - scores[n]);
+            if (delta > std::numeric_limits<ScoreT>::epsilon()) {
+                cout << n << ": " << scores[n] << " != " << scores_to_test[n];
+                cout << "(" << delta << ")" << endl;
+                all_ok = false;
+            }
+        }
+        return all_ok;
+    }
+- path: benchmarks/gapbs/src/bc.cc
+  kind: roi_calls
+  calls: ['m5_work_begin(0, 0);', 'm5_reset_stats(0, 0);', 'm5_dump_stats(0, 0);', 'm5_work_end(0, 0);',
+    m5_exit(0);]
+- path: benchmarks/gapbs/src/benchmark.h
+  kind: file
+  sha256: 87c20752c8437dd5152d00e7c995bedfab15b8929219f85846f47e0f9a4b339f
+- path: benchmarks/gapbs/src/command_line.h
+  kind: file
+  sha256: de1415dfe29eb6ba436d57523b2dee8fa3268a0785ae690bde9e94e9444172b2
+- path: benchmarks/gapbs/src/timer.h
+  kind: file
+  sha256: 3337a59a57341585d296ed01b3eb64ca7f5e02d8c0871f4920ab9d1cd7e63bcb
+- path: include/gem5/m5ops.h
+  kind: roi_calls
+  calls:
+  - m5_exit(uint64_t ns_delay);
+  - m5_reset_stats(uint64_t ns_delay, uint64_t ns_period);
+  - m5_dump_stats(uint64_t ns_delay, uint64_t ns_period);
+  - m5_work_begin(uint64_t workid, uint64_t threadid);
+  - m5_work_end(uint64_t workid, uint64_t threadid);
+context:
+  application: dx100-gapbs
+  source:
+    origin: upstream
+    uri: https://github.com/arkhadem/DX100
+    commit: e4fc4afdf894f295442cef3604667a469fab8e62
+    local_path: apps/dx100
+  code:
+  - root: application
+    path: benchmarks/gapbs/src/bc.cc
+    sha256: d5999e06ba88d279bcb0d5d936fb6ee2bfdbd9e5f2699460feaf8546cf069b98
+  function: Brandes
+  build:
+    compiler: g++
+    flags: -std=c++11 -O3 -Wall -fopenmp -pthread -DFUNC
+    command: '{cxx} {flags} -I{app}/benchmarks/API -I{app}/benchmarks/gapbs/src {source} -o {binary}'
+  run:
+    command: '{binary} {input_args} -n {trials}'
+    timer: gapbs_trial_time
+    threads_env: OMP_NUM_THREADS
+    kernel_symbols: [Brandes, PBFS]
+    index_stream: null
+  evaluator:
+    backend: native
+    command: '{binary} {input_args} -n 1 -v'
+    pass_regex: Verification:\s+PASS
+    verifier:
+      description: DX100 BCVerifier recomputes serial Brandes scores from the same source and requires
+        every normalized score within float epsilon. Native FUNC binding; GEM5 post-ROI correctness requires
+        its own evaluator.
+      code:
+        root: application
+        path: benchmarks/gapbs/src/bc.cc
+        sha256: d5999e06ba88d279bcb0d5d936fb6ee2bfdbd9e5f2699460feaf8546cf069b98
+        lines: [232, 298]
+  source_ancestor: null
+  source_baseline: dx100-bc-scalar
+  comparison_baseline: null
+  verification:
+    status: passed
+    evidence:
+    - path: /data1/yanruj/EvolveSWDB_runs/bc-native-20261003-a1/bc-dx100-scalar-only-20261003-a1.source/correctness.json
+      sha256: 7aef00fefa319da6a2ac913954b5572da459b174bf062432ee1ad54eb87deea8
+      classification: native_correctness_smoke
+    scope: 'Native FUNC smoke only: one random source, scale-10 Kronecker and uniform-random graphs, four
+      threads; no performance or accelerator claim.'
+  context_resolution: explicit
+  source_derivation:
+    date: '2026-10-03'
+    decision: docs/adr/0006-rewrite-providers-work-in-a-guarded-workspace.md
+    upstream_bc_sha256: 9732327b347c5da72526923f44b4250afcd7816c3b0ca1d0c8a43cd1d77f36ea
+    removed_functions: [PBFSMAA, BrandesMaa]
+    removed_pinned_line_ranges:
+    - [66, 67]
+    - [130, 331]
+    - [426, 643]
+    removed_main_selection: MAA branch calling BrandesMaa
+    excluded_material: Other benchmark translation units, API examples/scripts, and old manifests.
+    purpose: From-scratch proposals cannot read the authors' accelerator BC answer key.
+    full_source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+    script: scripts/prepare_dx100_bc_scalar_snapshot.py

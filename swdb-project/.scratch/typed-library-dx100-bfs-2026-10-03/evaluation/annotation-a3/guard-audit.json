@@ -1,0 +1,64 @@
+{
+  "passed": true,
+  "reasons": [],
+  "trace": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.annotation-a3/network.trace",
+  "process_cleanup": {
+    "passed": true,
+    "tracer_pid": 1573273,
+    "processes_observed": [
+      {
+        "pid": 1573273,
+        "start_time_ticks": 553471295,
+        "pidfd": false
+      },
+      {
+        "pid": 1573278,
+        "start_time_ticks": 553471301,
+        "pidfd": false
+      }
+    ],
+    "survivors": [],
+    "errors": [],
+    "wall_s": 0.06783738266676664
+  },
+  "supervisor_protection": {
+    "architecture": "x86_64",
+    "supervisors": [
+      {
+        "pid": 1573230,
+        "start_time_ticks": 553470349,
+        "tids": [
+          1573230
+        ],
+        "process_group": 1573230,
+        "session": 1573230
+      },
+      {
+        "pid": 1573273,
+        "start_time_ticks": 553471295,
+        "tids": [
+          1573273
+        ],
+        "process_group": 1573273,
+        "session": 1573273
+      }
+    ],
+    "provider_session": 1573278,
+    "filtered_syscalls": [
+      "kill",
+      "tkill",
+      "tgkill",
+      "rt_sigqueueinfo",
+      "rt_tgsigqueueinfo",
+      "pidfd_open"
+    ],
+    "compat_abi_allowed": false,
+    "kill_all_allowed": false,
+    "untraced_network_filter": true,
+    "enforced": true
+  },
+  "original_provider": {
+    "pid": 1573278,
+    "start_time_ticks": 553471301
+  }
+}

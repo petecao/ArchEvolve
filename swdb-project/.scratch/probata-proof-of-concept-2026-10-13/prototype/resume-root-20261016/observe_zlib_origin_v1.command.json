@@ -1,0 +1,23 @@
+{
+  "created": "2026-10-16 ET",
+  "argv": [
+    "ssh",
+    "mbit10",
+    "env",
+    "-i",
+    "HOME=/data1/yanruj/probata-verifiers/home",
+    "PATH=/usr/bin:/bin",
+    "LANG=C",
+    "LC_ALL=C",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=2",
+    "15",
+    "/data1/yanruj/venvs/swdb-test/bin/python",
+    "-I",
+    "-B",
+    "-"
+  ],
+  "stdin_source_path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/observe_zlib_origin_v1.py",
+  "stdin_source_sha256": "e91bb40d169616dc89f1c811fceb5ec0fb409f5d0701588041ff3d882fc808da"
+}

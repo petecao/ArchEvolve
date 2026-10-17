@@ -1,0 +1,104 @@
+{
+  "base_sha256": "c023a4a6298fab7a34f4213f888b6c0fb4fe5c405e5a53741942e3e2accb81cb",
+  "date": "2026-10-16 ET",
+  "extraction": {
+    "changed_production_definitions": [
+      "new _assert_source_location_diagnostics",
+      "_assertion narrow diagnostic allowance",
+      "_bodies passes actual frozen tokens"
+    ],
+    "class": "Refused",
+    "functions": [
+      "_assert_function_diagnostic",
+      "_assert_source_location_diagnostics",
+      "_assertion",
+      "_callee",
+      "_children",
+      "_clean",
+      "_expression",
+      "_slice",
+      "_string",
+      "_strip_expr",
+      "_walk"
+    ],
+    "imports": "No project imports; only selected real function/class AST nodes compiled into stdlib namespace."
+  },
+  "files": {
+    "base-source.py": {
+      "bytes": 47822,
+      "sha256": "c023a4a6298fab7a34f4213f888b6c0fb4fe5c405e5a53741942e3e2accb81cb"
+    },
+    "build_source_location_fixture.py": {
+      "bytes": 3715,
+      "sha256": "11e01e92c2af390f8a4fbcaacf76ead121cfc7fe441fb8fe74163b1f1ffb8ba0"
+    },
+    "proposal-base.json": {
+      "bytes": 670,
+      "sha256": "c6eef19635c8cb446844337fd2ed5118d8c5154a0e83a6f05da5541566b16048"
+    },
+    "proposed-source.py": {
+      "bytes": 50236,
+      "sha256": "63d8fff0599d409b7cd89af28d5a52ddc4fd38972057645abc5ede5b9a50237c"
+    },
+    "pure-control-output.txt": {
+      "bytes": 1716,
+      "sha256": "54694aa93ba420addd7986109e6c5e2d31bec9fd545bca180730ae6db1006539"
+    },
+    "pure-control-receipt.json": {
+      "bytes": 1950,
+      "sha256": "1bb2671eb471b715dce6b9d737226c862792cd071f2639c25b79fb8763615af2"
+    },
+    "record_source_location_controls.py": {
+      "bytes": 2248,
+      "sha256": "d37bb65ef216aa83806a9045760e845dc3a37d47e964f1a8fc0384c1cde17163"
+    },
+    "retained-diagnostic-metadata.json": {
+      "bytes": 936,
+      "sha256": "75ec7c4ad4c919702082649c2ea9cd0c64087b420dedcff9107a237d47040136"
+    },
+    "source-location.patch": {
+      "bytes": 5415,
+      "sha256": "bca162ea0f5a40a34033005d83cb966b523e18c9560373768f48d1627631c205"
+    },
+    "synthetic-source-location-fixture.json": {
+      "bytes": 20728,
+      "sha256": "b2be65f196be3fd69cd7cc4ad0804ffe7637524f5e94ac6f4593b181d8a5e129"
+    },
+    "test_source_location_assertions.py": {
+      "bytes": 17459,
+      "sha256": "fa0837130fb3df90b9b04b9543e92f4ae271243f3788e501a3cb8a6a81025185"
+    }
+  },
+  "production_before": {
+    "path": "swdb-project/swdb/dx100_initialized_register_source.py",
+    "pin": {
+      "bytes": 47822,
+      "sha256": "c023a4a6298fab7a34f4213f888b6c0fb4fe5c405e5a53741942e3e2accb81cb"
+    }
+  },
+  "proposed_sha256": "63d8fff0599d409b7cd89af28d5a52ddc4fd38972057645abc5ede5b9a50237c",
+  "provenance_boundary": "Normalized local allocator entries 6/7 adapted to synthetic arity1-u32 diagnostics and reconstructed direct source ranges. Remote retained initialized AST not read; compact parent metadata separately bound. No compiler/proof/native/hardware result and no independent self-certification.",
+  "replay": [
+    "python3",
+    "-I",
+    "-B",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/source-location-repair-proposal-v1/record_source_location_controls.py"
+  ],
+  "review_request": "Independently rerun exact 11 controls, inspect exact proposed diff plus physical live-production base, and review closed source-location semantics before root integration.",
+  "status": "PROPOSAL CONTROLS PASS; independent source/inverse review and production integration owned by parent/root",
+  "test_contract": {
+    "candidate_green_cases": [
+      "width",
+      "bound"
+    ],
+    "child_native_audit_events": [],
+    "literal_legacy_success_and_failure_comparison": true,
+    "old_red_cases": [
+      "width",
+      "bound"
+    ],
+    "pure_unittest_count": 11,
+    "skips": 0,
+    "source_location_negative_mutations": 90
+  }
+}

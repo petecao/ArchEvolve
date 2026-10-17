@@ -1,0 +1,110 @@
+{
+  "date_et": "2026-10-15",
+  "status": "launched; no outcome asserted",
+  "source_commit": "798e9bb3bf95118e7eb6d4688227f6014fdffd60",
+  "published_integration_commit": "7c6b11b862266e62b83d11e40b0577838edeffab",
+  "method": "codex-only-paged-terminal30-v1",
+  "launch": {
+    "started": "2026-10-15T19:59:01.224248-04:00",
+    "pid": 29946,
+    "birth": 1792108741.223215,
+    "launcher_pid": 29908,
+    "source_commit": "798e9bb3bf95118e7eb6d4688227f6014fdffd60",
+    "source_manifest_sha256": "a2e5fa88d148bfee60e3a7daf6a4973a005a6df3b4382686e7177f2b97819012",
+    "argv": [
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+      "-u",
+      "/private/tmp/probata-resume-t07-method22/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/edit_loop.py",
+      "--out",
+      "/private/tmp/probata-t07-20261015-run25/counted-25",
+      "--monotone",
+      "--staged-induction",
+      "--design-probes",
+      "--diagnostic-baseline10",
+      "--terminal-full30",
+      "--strategies",
+      "--budget-deadline",
+      "--show-goal",
+      "--tool-timeout-s",
+      "14400",
+      "--rounds",
+      "10",
+      "--budget-min",
+      "60",
+      "--final-reserve-min",
+      "24",
+      "--round-timeout",
+      "10",
+      "--owner",
+      "probata-t07-method22-codex-only"
+    ],
+    "driver_log": "/private/tmp/probata-t07-20261015-run25/driver.log",
+    "acceptance_not_asserted": true
+  },
+  "reviewed_source_files": 34,
+  "preflight": {
+    "free_bytes": 96019623936,
+    "minimum_free_bytes": 53687091200,
+    "output_budget_bytes": 2147483648,
+    "active_verifiers": [],
+    "inspected_same_uid_processes": 545,
+    "inspection_denials": 0,
+    "both_leases_absent": true,
+    "memory_pressure": "The system has 38654705664 (2359296 pages with a page size of 16384).\nSystem-wide memory free percentage: 55%\n"
+  },
+  "phase_plan": {
+    "total_min": 60,
+    "proof_stop_min": 33,
+    "provider_natural_return_hard_min": 36,
+    "terminal_allocation_min": 24,
+    "minimum_negative_reserve_min": 8,
+    "diagnostic_baseline_timeout_s": 10,
+    "round_timeout_s": 10,
+    "positive_and_negative_timeout_s": 30,
+    "all_obligations_and_smoke_mandatory": true,
+    "timing_sufficiency_claim": false,
+    "fresh_baseline_pass_set_only": true
+  },
+  "origin": {
+    "initial_hints": [],
+    "frame_generation": false,
+    "frame_filter_insertion": false,
+    "every_attempt_requires_exact_scoped_raw_provider_operation_trace": true,
+    "provider_may_independently_author_loop_assigns": true,
+    "no_old_hints_baseline_results_conversations_telemetry": true
+  },
+  "accounting_admission": "Every scoped provider call needs natural exit0 and valid complete turn.completed.usage before deadline; partial/unknown/late cannot qualify",
+  "final_admission": "Full positive+identical-hints covering-wait-negative complete before original60; source/header/erasure checks, original hazard non-refuted and unproven; matching completion/summary/publication log plus clean driver exit0",
+  "raw_output": "/private/tmp/probata-t07-20261015-run25",
+  "remaining_readers": [
+    "ticket07 outcome and resource audit",
+    "independent provenance/accounting review",
+    "coordinator ticket closure"
+  ],
+  "artifacts": [
+    {
+      "path": "/private/tmp/probata-t07-20261015-run25/launch.json",
+      "sha256": "9c32196ec1ff2237c0a0ebf99b0274f0c5ba4efe3b96056650bf01e139eec39a"
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run25/source-manifest.json",
+      "sha256": "a2e5fa88d148bfee60e3a7daf6a4973a005a6df3b4382686e7177f2b97819012"
+    },
+    {
+      "path": "/private/tmp/probata-t07-launch25.py",
+      "sha256": "69ae998debe55ecfe62a0642bbd1ceddefe38857554012a945b0d76507d813a5"
+    },
+    {
+      "path": "/private/tmp/probata-t07-freeze25.py",
+      "sha256": "798cc3d54ff15f1a360be83406c641c65005e427507ae2a3f6b20a0f7e55537c"
+    },
+    {
+      "path": "/private/tmp/probata-t07-run25-launcher-independent-review.json",
+      "sha256": "0037c81e529cfd0fd4e4614af0e7df5779c6c17954285ba31185f0e8691cbfb2"
+    },
+    {
+      "path": "/private/tmp/probata-t07-run25-freeze-independent-review.json",
+      "sha256": "b2ebf224c783a02a000b0318a4d55147aa8b64568a27cea3403f0909d2808e43"
+    }
+  ]
+}

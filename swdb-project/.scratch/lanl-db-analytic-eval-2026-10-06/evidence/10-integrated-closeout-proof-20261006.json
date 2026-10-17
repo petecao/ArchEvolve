@@ -1,0 +1,94 @@
+{
+  "format": "swdb.ticket10-integrated-closeout-proof.v1",
+  "updated": "2026-10-06 ET",
+  "integration_base": "97ca4dfdb0af4c709a35b04b5855a5f9c42d1a84",
+  "source_tip_before_docs": "b4a5579ff325c278511c88218096e88de60c9561",
+  "actual_source_commit": "a7a9b9e8b9d52245490b7dfd372f3be05f67ce27",
+  "actual_estimator_sha256": "b238c61ba9abc5bd1a370164316ea87a994d9079f803bc69630e58a15dd0f952",
+  "integrated_estimator_sha256": "e32169828a1e259010fc5449f23bbe2fd86b2c05a46f27b71646e7749d7a7283",
+  "actual_acceptance_identity_sha256": "69b796811ac54dd223784041a9244a3ee87caaec376e514d1c45eeb37e151f7e",
+  "compact_wrapper_identity_sha256": "615286249893f22fc275660097cfa6be93e0ad7d370ce8e996d6f67a874c3afb",
+  "a2_custody_identity_sha256": "700699b0fc01ad2d7380e828b624ca84b6a4401b77ebe6a964227c1a1278d22e",
+  "a1_failure_identity_sha256": "f26fdb135032db0cf5989b783bb8fde1406c68e3e44be6a5450d0da5fc8e63d3",
+  "public_checks": [
+    {
+      "selection": "stub fill, known override, sanitized workspace, full-trial sensitivity, structural gaps, CPU compatibility refusal, frozen-bundle historical validation",
+      "passed": 7,
+      "batch_seconds": 185.66
+    },
+    {
+      "selection": "strict functional evaluation/handoff with complete copied fixture dependency closure",
+      "passed": 1,
+      "seconds": 61.08
+    }
+  ],
+  "public_fixture_red": "Copied zero-work fixture removed the stored count but retained its sealed filled target and protocol; public freeze correctly refused both missing dependencies.",
+  "fixture_fix": "Exclude parameter-filled targets and protocols with their snapshot receipts from the copied zero-work fixture. Canonical records remain unchanged.",
+  "canonical_validation": {
+    "result": "OK: 631 record(s) valid",
+    "before_fixture_only_repair": true,
+    "swdb_python_bundle_unchanged_by_repair": true
+  },
+  "preservation": {
+    "prior_protected_record_library_app_blobs": 876,
+    "prior_yaml_files": 628,
+    "prior_blob_manifest_sha256": "3da164499583f5160a8837ce47df94644f7d57734e4026e99185f0fa7f2d2fb1",
+    "all_prior_bytes_identical": true,
+    "only_three_canonical_additions": true,
+    "other_issue_and_map_rows_preserved": true,
+    "swdb_only_diff": true
+  },
+  "new_records": [
+    {
+      "path": "target_descriptions/dx100-e4fc4af-functional-analytic-v1.t4.estimated.a2.yaml",
+      "kind": "target_description",
+      "id": "dx100-e4fc4af-functional-analytic-v1.t4.estimated.a2",
+      "sha256": "f436047a21f77eda649f99aa5ceb5b5c8cb13e4ab7eed770441e7faad07aaf02",
+      "file_sha256": "76dbeff490496220f126f6d3a643e34512c104b34657dcff39daa24817c9b06f",
+      "bytes": 186854
+    },
+    {
+      "path": "protocols/bfs.functional.kron-g16.t4.estimated.protocol.llm.a2.postfill.a1.3fef19dcd9d39c07.yaml",
+      "kind": "protocol",
+      "id": "bfs.functional.kron-g16.t4.estimated.protocol.llm.a2.postfill.a1.3fef19dcd9d39c07",
+      "sha256": "a6907015b979755c78ff6d016cb22b390891e24e5b45d32122e58878729e1053",
+      "file_sha256": "8a6ad86566d38aa22116462f8495f0e2675e3e74e0405e038d6a8d5039f12a59",
+      "bytes": 227378
+    },
+    {
+      "path": "estimates/bfs.functional.kron-g16.t4.estimate.llm.a2.postfill.a1.yaml",
+      "kind": "estimate",
+      "id": "bfs.functional.kron-g16.t4.estimate.llm.a2.postfill.a1",
+      "sha256": "36e826f2fe0c8a6fce30a8e235d76feb4aaba328c6338fe46fd9afc1135c4e44",
+      "file_sha256": "f608f43325192071584f18196207b0b90196f958657b80d51cb7cad86b46da2f",
+      "bytes": 9201596
+    }
+  ],
+  "three_sanitized_inputs": {
+    "files": [
+      "characterization.json",
+      "parameters.json",
+      "profile.json"
+    ],
+    "bytes": 101164,
+    "sha256s": {
+      "characterization.json": "77d7e4101368ab29252695e4f8c6cdd52629f3dbe0d9be858862d5096b89ec00",
+      "profile.json": "0430c35f7a4c0d96f6c71db73f07810e55a19edd6053084d042767871ae9843a",
+      "parameters.json": "b16f04ce73ad69fb25695e571ecff181129ae167bff9be236c0c1dbb1e600ebb"
+    }
+  },
+  "estimated_parameters": 7,
+  "unresolved_parameters": 2,
+  "whole_call_seconds": null,
+  "ratio": null,
+  "error_band": null,
+  "all_five_trial_totals_null": true,
+  "all_seven_half_base_double_impacts_and_ranks_null": true,
+  "provider_repeated": false,
+  "original_a2_runner_exit_code": 1,
+  "postfill_runner_exit_code": 0,
+  "source_policy_and_known_facts_unchanged": true,
+  "raw_transferred": false,
+  "historical_execution_boundary": "Actual a7 bundle remains frozen. Integrated generic implementation differs; future execution must freeze a fresh protocol. Historical validation preserves receipt identities.",
+  "identity_sha256": "dec68cc863a1e8f9af615cc7840119cdb0447fb46c5b0e6dbb6c2c0892038aa8"
+}

@@ -1,0 +1,36 @@
+{
+  "actual_exit_code": 1,
+  "actual_initialized_V5_verdicts_unchanged": true,
+  "captures": {
+    "initialized-cold-v3-actual-stderr-20261016.log": {
+      "bytes": 0,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v3-admission-04af74c1/initialized-cold-v3-actual-stderr-20261016.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "initialized-cold-v3-actual-stdout-20261016.json": {
+      "bytes": 112,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v3-admission-04af74c1/initialized-cold-v3-actual-stdout-20261016.json",
+      "sha256": "76ae49712d1366fd827c7d23a888f5d6b65fccd36054db08c36aae445eb7fcdc"
+    },
+    "preflight-settlement-v3-actual-20261016.json": {
+      "bytes": 420111,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v3-admission-04af74c1/preflight-settlement-v3-actual-20261016.json",
+      "sha256": "9751867fa55982dcc0609e1693e827098f4931607bd7a9ff5e21905488124de1"
+    }
+  },
+  "classification": "REFUSED_PASSIVE_COLD_METADATA_SCHEMA",
+  "command_sha256": "94012e41396e55d22b17f7261b1bf89d0a83dbe5c5f638fa6936dd94f9b77cdd",
+  "date": "2026-10-16 ET",
+  "failure": {
+    "classification": "REFUSED",
+    "error_type": "KeyError",
+    "failure": "'version'",
+    "scientific_acceptance": false
+  },
+  "no_acceptance_inferred": true,
+  "original_raw_untouched": true,
+  "outer_timeout_seconds": 180,
+  "policy_sha256": "c8cd61f44915ea4f24bbc9572469cc7be89776a383af9d7c742f2613342bda7d",
+  "reader_sha256": "620e922c24f45c82ce7e7d1888a6acbe6091991702796c71f32dc8d9c86c1e44",
+  "scientific_reexecution": false
+}

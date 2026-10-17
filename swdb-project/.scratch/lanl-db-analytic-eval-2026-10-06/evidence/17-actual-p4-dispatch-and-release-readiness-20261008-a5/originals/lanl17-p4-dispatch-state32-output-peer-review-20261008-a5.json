@@ -1,0 +1,70 @@
+{
+  "actual_acquired_generation": 514,
+  "attempt": 1,
+  "campaign": "extensa-gem5-bfs-20261006-p4",
+  "checks": [
+    "exact_pin:lanl17-p4-dispatch-state-custody-20261008-a5.json",
+    "exact_pin:lanl17-p4-dispatch-state-request-finalized-20261008-a5.json",
+    "exact_pin:lanl17-p4-dispatch-state-action-config-finalized-20261008-a5.json",
+    "exact_pin:lanl17-p4-dispatch-state32-request-peer-review-20261008-a5.json",
+    "canonicalTrue_seal:request",
+    "canonicalTrue_seal:output",
+    "prior_actual_request_peer_pass_link",
+    "output_actual_context_original_BEFORE_dispatch_links",
+    "output_exact_actual_parent_observations",
+    "output_exact_request_custody_provenance_inputs_context",
+    "output_fixed_controls_and_obs_digest",
+    "actual_original32_transport_inner0_exact_decoded_output",
+    "actual_output_original_size_SHA_route",
+    "actual_start_selected_action_generic_capture_source",
+    "actual_transport_original_stream_pin"
+  ],
+  "files": [
+    {
+      "bytes": 6971,
+      "path": "/private/tmp/lanl17-p4-dispatch-state32-capture-20261008-a5/lanl17-p4-dispatch-state-custody-20261008-a5.json",
+      "sha256": "8e2ecfb7f0f03ebca68d610df63cc0dafcdbd0838a923e0d27163c94aaa1a19f"
+    },
+    {
+      "bytes": 5584,
+      "path": "/private/tmp/lanl17-p4-dispatch-state-request-finalized-20261008-a5.json",
+      "sha256": "05840c6cc5a3cffe4eb8f3ceb72bc6461c5f24d769271d1768d2c346ae4f6f36"
+    },
+    {
+      "bytes": 8510,
+      "path": "/private/tmp/lanl17-p4-dispatch-state-action-config-finalized-20261008-a5.json",
+      "sha256": "44335018ac8e672a3555a34123d8377362ff7f33a7fcfd912dafb49530a29303"
+    },
+    {
+      "bytes": 7301,
+      "path": "/private/tmp/lanl17-p4-dispatch-state32-request-peer-review-20261008-a5.json",
+      "sha256": "c21ec6af502f92db041b465699e6fb84d39b4176ea837d7c6ad589ae5cfb9aae"
+    },
+    {
+      "bytes": 419,
+      "path": "/private/tmp/lanl17-p4-dispatch-state32-capture-20261008-a5/transport.json",
+      "sha256": "7e74af385415991893fd58de1384488035ca6d0cfc40fd1695359e75c388d461"
+    },
+    {
+      "bytes": 11059,
+      "path": "/private/tmp/lanl17-p4-dispatch-state32-capture-20261008-a5/stdout",
+      "sha256": "fb70d4e150e9c5bf4061f17655560e8756993a49c81be40a6e3ea3882b695a95"
+    },
+    {
+      "bytes": 534,
+      "path": "/private/tmp/lanl17-p4-dispatch-state32-capture-20261008-a5/start.json",
+      "sha256": "687336a59340be0633ef83c49dca5ab06e9a2f3ef8cf3e2e91dd953833c84441"
+    }
+  ],
+  "format": "swdb.lanl17-peer-dispatch-state32-output-review.v1",
+  "limits": [
+    "Actual original32 dispatch-state corroboration only; no trajectory completion, native release, validated pairs or D30 admission.",
+    "Independent local original capture review, not independent remote observation."
+  ],
+  "native_state_at_acquisition": "held",
+  "no_remote_actions_or_imports_or_tests": true,
+  "receipt_identity_sha256": "377ec478ab343a4e863166cecaa4eedd84700cd40539f239ca4aaede18766596",
+  "result": "PASS",
+  "reviewed_utc": "2026-10-08T23:57:40.414440+00:00",
+  "scientific_admission": false
+}

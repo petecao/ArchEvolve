@@ -1,0 +1,98 @@
+{
+  "format": "swdb.cpu-cleanup60-verified-controls.v1",
+  "source_commit": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "actual_model_admission_identity": "fe2890f8e7d8c95d6841ddd78b61762667e07c02688567676aca5d8fc4f4e3bd",
+  "helpers": [
+    {
+      "predecessor": "lanl-dispatch-cpu-model-validation-a3-metadata2400.py",
+      "predecessor_sha256": "f1ddb874189abb28fecb7ef4431f6382d3c09442ae1a75afd0164f4562f276bc",
+      "helper": "lanl-dispatch-cpu-model-validation-a3-metadata2400-cleanup60.py",
+      "helper_sha256": "804fb08298bf1469c6098dfcd1a50710f2cc941f9478895482c1fe7d901e6ecb",
+      "runner": "lanl-cpu-model-validation-a3-metadata2400-cleanup60-runner.py",
+      "runner_sha256": "32ece041d91b51a83d7d682da3825e2eb0fe0f3acba9d325a415029e4a889eb4",
+      "exact_single_literal_reversal": true,
+      "decoded_runner_bytes_unchanged": true,
+      "normalized_outer_ast_unchanged": true,
+      "argv_hard_kill_after_s": 60
+    },
+    {
+      "predecessor": "lanl-dispatch-cpu-band-report-a3-metadata2400.py",
+      "predecessor_sha256": "83b2683b5bb21534d7dbd962555770842b8dd24748ba5119abec9339d53b0ad2",
+      "helper": "lanl-dispatch-cpu-band-report-a3-metadata2400-cleanup60.py",
+      "helper_sha256": "dd74dbbe238c1d0c8222d894acd94ef1d344049da257d2a0d744afefb3d2b120",
+      "runner": "lanl-cpu-band-report-a3-metadata2400-cleanup60-runner.py",
+      "runner_sha256": "38d75a7b4a89a20d5978ca860729fa4352506b085e8f91faa9af19595d0dcb47",
+      "exact_single_literal_reversal": true,
+      "decoded_runner_bytes_unchanged": true,
+      "normalized_outer_ast_unchanged": true,
+      "argv_hard_kill_after_s": 60
+    }
+  ],
+  "guard": {
+    "predecessor": "lanl-admit-cpu-future-phase-20261007.py",
+    "predecessor_sha256": "f461d5c36065ee4b31e6cb137a763ea95811940746117813fff4c0760ba1b3ac",
+    "helper": "lanl-admit-cpu-future-phase-cleanup60-20261007.py",
+    "helper_sha256": "b406d3d06b3bddb2cd433cf8f3c47fa80f03314b23795a4b40c045a9120a1e93",
+    "exact_path_and_expected_hash_reversal": true
+  },
+  "proofs": {
+    "lanl-cpu-cleanup60-preparation-proof-20261007.json": {
+      "identity_sha256": "e5558f00a9c82400d65c6a15c5e732b4003380b1652e3f14e8770b1bce4997cf",
+      "file_sha256": "75368a6993ca5ec245fa3283e2728237feae06c33c6fa52cd5a944cd7c28af6a",
+      "bytes": 3524
+    },
+    "lanl-cpu-model-dispatch-a3-metadata2400-cleanup60-mocked-proof.json": {
+      "identity_sha256": "cc081b056178f11af5474c680127e96b088acc4af085e0cab5e2cc8bba29ee5e",
+      "file_sha256": "830a7c5335d2a8b6ec5b3b6121f5e277c7d95648a4c8d74e652887bf021869f9",
+      "bytes": 1282
+    },
+    "lanl-cpu-band-report-a3-metadata2400-cleanup60-mocked-proof.json": {
+      "identity_sha256": "e26dbc9086201a3bb65bfec042d3502041c62de51cb847e90dfb5d086c6eb8ac",
+      "file_sha256": "9613fa4900a8a5c46b5a4123fa32d6aebe9d8e3d24dbab90bdf0d687984e0021",
+      "bytes": 3856
+    },
+    "lanl-cpu-cleanup60-admission-guard-portable-proof-20261007.json": {
+      "identity_sha256": "202fb34efa7cbbf55c6705c73285ea2c86bc1921bdbf7fa9c6de5174a50aba5f",
+      "file_sha256": "ef1a9b01323d420a1077e122cced34fd96efb8c63dc925167ef5e03f29b63a5a",
+      "bytes": 4369
+    }
+  },
+  "execution_results": {
+    "production_model_development_holdout_mock": {
+      "exit_code": 0,
+      "elapsed_s": 0.043611083
+    },
+    "production_band_report_export_and_SIGTERM_mock": {
+      "exit_code": 0,
+      "elapsed_s": 0.270849167
+    },
+    "production_parent_admission_guard_mock": {
+      "exit_code": 0,
+      "elapsed_s": 0.174223375,
+      "cases_passed": 29
+    }
+  },
+  "finite_cleanup_margin_check": {
+    "original_external20_s_rejected": true,
+    "sequential_declared_cleanup_wait_s": 40,
+    "new_external60_s_accepted": true,
+    "nominal_remaining_margin_s": 20,
+    "actual_old_Linux_cleanup_primitive_reused_without_reexecution": {
+      "path": ".scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-linux-cleanup-smoke-mbit10-20261006-a1.json",
+      "file_sha256": "50b4b0bc44af1a8991227e00c8050ba472226dc0f6b562cd8a8eb2ffa9661613",
+      "receipt_helper_sha256": "31e1d71bc6e9ef4a5a5f1d5fbff136ceef249935f8f00601edf45277fce249ec",
+      "processes_py_sha256": "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289",
+      "passed": true,
+      "reuse_scope": "Unchanged cleanup primitives only; no new Linux execution and no claim that the old20s outer margin covered both sequential cleanup steps."
+    }
+  },
+  "only_launcher_literal_and_guard_path_hash_changes": true,
+  "decoded_runner_science_bytes_unchanged": true,
+  "native_deadline_s": 900,
+  "source_clean_after_portable_checks": true,
+  "future_dispatch_executed": false,
+  "application_performance_timings_collected": false,
+  "scope": "Administrative hard-kill margin verification. Portable fixtures/mocks prove argv, pins/refusals and unchanged science; they do not measure Linux cleanup duration or native application accuracy.",
+  "identity_sha256": "9fbc8101ad1ea27a61528ee39296a741539ea7362cd8a5b3773c418e061ef9c0"
+}

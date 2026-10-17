@@ -1,0 +1,154 @@
+{
+  "created": "2026-09-26",
+  "observed_at_et": "2026-09-26 12:33:28 ET",
+  "actual_timestamp_note": "Full host check and supplemental kernel lease audit completed 12:33:28\u201312:33:54 ET.",
+  "source_receipt": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-paired-pilot-20260926-a1.dispatch/health-20260926-1233.json",
+    "bytes": 19533,
+    "sha256": "15f2a86fffcfb9c02e610ff4f2066bc2dab08039489ce55fbed56ff3782f6b29"
+  },
+  "tickets": {
+    "resolved": 13,
+    "claimed": 8,
+    "final_cells_accepted": 0,
+    "final_cells_required": 8,
+    "qualified_gain": false,
+    "empirical_freeze": false
+  },
+  "leases": {
+    "socket0": {
+      "state": "released",
+      "generation": 318
+    },
+    "socket1": {
+      "state": "held",
+      "generation": 400
+    },
+    "legacy": {
+      "state": "released",
+      "generation": 77
+    }
+  },
+  "paired": {
+    "state": "running",
+    "cell": "dx100.kronecker",
+    "observations": 146,
+    "cell_required": 60,
+    "all_required": 240,
+    "remaining_cells": [
+      "upstream.kronecker"
+    ],
+    "driver_pid": 3034830,
+    "driver_start_ticks": 493754313,
+    "evaluator_pid": 3041112,
+    "evaluator_start_ticks": 494144408,
+    "helper_pid": 3034761,
+    "started_at_et": "2026-09-26 11:13:30 ET",
+    "active_code": "98b5f50e93f531ce0395fe7e161f812a406d6d9d",
+    "sampled_rss_gib_latest": 0.949,
+    "sampled_rss_gib_peak": 1.049,
+    "resource_samples": 952,
+    "max_guard_seconds": 2.522,
+    "stderr_or_failure_observed": false,
+    "cell_observations": 26,
+    "completed_cells": [
+      "dx100.uniform-random",
+      "upstream.uniform-random"
+    ],
+    "helper_start_ticks": 493754292,
+    "qualification": "Failed fixed upstream uniform spread gate; remaining observations continue unchanged."
+  },
+  "host": {
+    "load": [
+      1.15,
+      1.14,
+      1.1
+    ],
+    "estimated_node_available_gib": [
+      57.3,
+      57.51
+    ],
+    "global_available_gib": 116.71,
+    "data1_free_gib": 16.44,
+    "data_free_gib": 182.9
+  },
+  "helper": {
+    "commit": "42ce8dce1ecfb949d6e5d4ee3c98c078bc7ddc65",
+    "script_sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8",
+    "active_checkout_unchanged": true
+  },
+  "history": "Native/T14/a1/provider and both cell-analysis hashes unchanged. Historical checkouts unchanged. Expired a2 absent, a3 unused; a3 client1018432 unchanged; new idle acceptance checkout01e5fc1 clean.",
+  "workers": "All three workers responsive; no dead or stranded worker. Witness launcher implementation and independent review are active; no new dispatch.",
+  "next_full_health_due_et": "2026-09-26 13:03 ET",
+  "first_cell_control": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-paired-pilot-20260926-a1.dispatch/first-cell-fixed-policy-analysis.json",
+    "sha256": "86afd75a4cc7c44a89201053a5945190f13f4b45ab5d608ec81168ed3eb73171",
+    "observations": 60,
+    "passed_checks": 60,
+    "baseline_over_candidate": {
+      "ratio": 0.997256,
+      "confidence_interval_95": [
+        0.984188,
+        1.00963
+      ]
+    },
+    "candidate_over_baseline": {
+      "ratio": 1.002752,
+      "confidence_interval_95": [
+        0.990353,
+        1.016063
+      ]
+    },
+    "maximum_relative_spread": 0.081338,
+    "ceiling": 0.1,
+    "whole_study_state": "unqualified_incomplete",
+    "gain_claim": false
+  },
+  "regression": {
+    "commit": "83125b42cd470a7c0348583cec8c9324251fccdf",
+    "passed": 1300,
+    "skipped": 3,
+    "exit_code": 0,
+    "receipt": "full-regression-83125b4-20260926.json"
+  },
+  "kernel_lease_receipt": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-paired-pilot-20260926-a1.dispatch/health-20260926-1233-kernel-leases.json",
+    "bytes": 524,
+    "sha256": "56969bcd422faeef820baa4fa8ec8e8c572c4d8abbd9a3aa5e122e610e85ee2b",
+    "all_three_match_metadata": true
+  },
+  "second_cell_control": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-paired-pilot-20260926-a1.dispatch/second-cell-fixed-policy-analysis.json",
+    "sha256": "920189ff3c8abebafac60c00639497a90c4e07a3d70844b83cbe6302ab336a79",
+    "bytes": 6902,
+    "observations": 60,
+    "passed_checks": 60,
+    "baseline_over_candidate": {
+      "ratio": 1.0062486,
+      "confidence_interval_95": [
+        0.9954416,
+        1.0165401
+      ]
+    },
+    "candidate_over_baseline": {
+      "ratio": 0.9937902,
+      "confidence_interval_95": [
+        0.9836343,
+        1.0043927
+      ]
+    },
+    "failed_source": 0,
+    "failed_role": "candidate",
+    "relative_spread": 0.1591826,
+    "ceiling": 0.1,
+    "spread_gate_passed": false,
+    "gain_claim": false
+  },
+  "focused_preparation": {
+    "receipt": "simulator-admission-tests-20260926.json",
+    "passed": 183,
+    "skipped": 2,
+    "isolated_commit": "01e5fc13cf25b56549cdd285c6a2e197e2190bbf",
+    "limitation": "Linux tests unexecuted; later launcher not covered."
+  }
+}

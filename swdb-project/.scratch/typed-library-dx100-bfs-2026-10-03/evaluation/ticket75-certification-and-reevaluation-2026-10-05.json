@@ -1,0 +1,193 @@
+{
+ "created": "2026-10-05 15:05 ET",
+ "ticket": 75,
+ "decision": "agent-decided under Yan-Ru's 2026-10-05 delegation; revisable",
+ "candidate": {
+  "id": "extensa-native-bfs-20261005-a8.it1.kronecker.a0",
+  "artifact_sha256": "7acca955a1f85a8563280d57b3d4e594bd0312393aeff946eda92f1577ad6ea3",
+  "provider_patch_sha256": "be754a79d466c57df20b08d870d1bfc3cfe98b36b34d3e0c000be57731e61562",
+  "reference_patch": "library/native/bfs-tdstep-frontier-staging.patch"
+ },
+ "contract": {
+  "id": "contract.bfs_tdstep_frontier_staging",
+  "content_sha256": "f0919f00a623b3da50681a7f14c5d0ec2bd06e75266d6ce3709e7200dc68ef6d",
+  "tier": "shared",
+  "status": "certified",
+  "review": "review.contract.bfs_tdstep_frontier_staging.92527fd3e03f",
+  "superseded_review": {
+   "id": "review.contract.bfs_tdstep_frontier_staging.a8452cbb68ab",
+   "content_sha256": "dcaf63ecb46ea1cbd76871f2045e4381f4d74d02e77088db5f7c81c5b0ab46d4",
+   "note": "content before the certify 1.4 port; no longer current"
+  }
+ },
+ "certifications": [
+  {
+   "id": "certification.f5b8f6a732714abfad544aaa65982438",
+   "command_version": "1.3",
+   "verdict": "certified",
+   "matrix": "22/22",
+   "controls_rejected": "8/8",
+   "scan_findings": 0
+  },
+  {
+   "id": "certification.7f15786592134bdabbc921f16c806ce1",
+   "command_version": "1.4",
+   "verdict": "certified",
+   "matrix": "22/22",
+   "controls_rejected": "8/8",
+   "attributed": "8/8",
+   "binaries_per_build": 1,
+   "seam_witness_problems": 0,
+   "scan_findings": 0
+  },
+  {
+   "id": "certification.b7954f4df9dd4e228fb12437b845f190",
+   "command_version": "1.4 (label; 1.3-isolation native path before the ticket 76 merge)",
+   "verdict": "certified",
+   "matrix": "20/20",
+   "controls_rejected": "8/8",
+   "note": "earlier contract content dcaf63ec...; cited by the candidate review"
+  }
+ ],
+ "controls": [
+  {
+   "control": "claim_without_write",
+   "clause": "C2",
+   "check": "verifier",
+   "rejected_1_3": true,
+   "rejected_1_4": true,
+   "attribution_1_4": "lost_claim_left_unset"
+  },
+  {
+   "control": "partial_batch_dropped",
+   "clause": "S1, frontier_size_equality",
+   "check": "frontier_size_equality",
+   "rejected_1_3": true,
+   "rejected_1_4": true,
+   "attribution_1_4": "missing_child_of_hidden_vertex"
+  },
+  {
+   "control": "stale_row_offset",
+   "clause": "S2",
+   "check": "verifier",
+   "rejected_1_3": true,
+   "rejected_1_4": true,
+   "attribution_1_4": "parent_without_edge_from_stale_vertex"
+  },
+  {
+   "control": "forged_frontier",
+   "clause": "C1, once_enqueue",
+   "check": "duplicate_frontier",
+   "rejected_1_3": true,
+   "rejected_1_4": true,
+   "attribution_1_4": "duplicate_is_forged_push"
+  }
+ ],
+ "reevaluation": {
+  "preregistration": "issues/75-certify-a8-frontier-staging.md (commit 6e1fe61, before the run)",
+  "team_protocol": "bfs-native-scale22-ci-team-20261005.9f1ed533a09ae832",
+  "derived_protocol": "bfs-native-scale22-ci-team-20261005-reeval-uniform-random-bb0f642780c4.2e33442a1cf31c02",
+  "candidate_review": "review.extensa-native-bfs-20261005-a8.it1.kronecker.a0.95a37f742399",
+  "workload": "bfs-20261004-uniform22.2f83a134a6bef789",
+  "commit": "6e1fe6167ad08d0c2d87d2b38756d00998614c81",
+  "lane": {
+   "host": "mbit10",
+   "lease_name": "mbit10-evaluation-node1",
+   "lease_generation": 527,
+   "started_utc": "2026-10-05T16:30:44Z",
+   "ended_utc": "2026-10-05T18:51:39Z",
+   "exit_code": 0,
+   "numactl": "--cpunodebind=1 --membind=1",
+   "load1_at_start": 1.57
+  },
+  "memacc_lane_checkout": "/data1/yanruj/Memacc-evolveswdb-lane 76cca35 (equal to its origin after fetch)",
+  "runs_root": "/data1/yanruj/EvolveSWDB_runs/t75-reeval-20261005 (/data1 had 40 GB free; about 0.24 GB used)",
+  "governor_and_turbo_files": "absent",
+  "aa_passed": true,
+  "verdict": "gain",
+  "blocks": [
+   {
+    "tag": "t75-reeval-20261005.aa.uniform_random",
+    "comparison": "t75-reeval-20261005.aa.uniform_random.comparison",
+    "ratio": 0.9962054325957355,
+    "lower": 0.9887970428721774,
+    "upper": 1.0012892630738721,
+    "relative_width": 0.012539803330669159,
+    "decision": {
+     "state": "no_gain",
+     "reasons": []
+    },
+    "start": {
+     "time_utc": "2026-10-05T16:30:44Z",
+     "load_average": [
+      1.568359375,
+      1.2314453125,
+      1.10595703125
+     ],
+     "users": [
+      "yanruj"
+     ],
+     "node0_held": false,
+     "legacy_held": false,
+     "node1_held": true,
+     "waited_s": 0
+    },
+    "end": {
+     "time_utc": "2026-10-05T17:41:06Z",
+     "load_average": [
+      2.0068359375,
+      2.05078125,
+      2.03173828125
+     ],
+     "users": [
+      "yanruj"
+     ],
+     "node0_held": false,
+     "legacy_held": false,
+     "node1_held": true
+    }
+   },
+   {
+    "tag": "t75-reeval-20261005.candidate.uniform_random",
+    "comparison": "t75-reeval-20261005.candidate.uniform_random.comparison",
+    "ratio": 1.4543843322070038,
+    "lower": 1.4421624264180435,
+    "upper": 1.4641359745985474,
+    "relative_width": 0.015108487965598067,
+    "decision": {
+     "state": "gain",
+     "reasons": []
+    },
+    "start": {
+     "time_utc": "2026-10-05T17:41:06Z",
+     "load_average": [
+      2.0068359375,
+      2.05078125,
+      2.03173828125
+     ],
+     "users": [
+      "yanruj"
+     ],
+     "node0_held": false,
+     "legacy_held": false,
+     "node1_held": true,
+     "waited_s": 0
+    },
+    "end": {
+     "time_utc": "2026-10-05T18:51:39Z",
+     "load_average": [
+      2.00048828125,
+      2.01220703125,
+      2.0
+     ],
+     "users": [
+      "yanruj"
+     ],
+     "node0_held": false,
+     "legacy_held": false,
+     "node1_held": true
+    }
+   }
+  ]
+ }
+}

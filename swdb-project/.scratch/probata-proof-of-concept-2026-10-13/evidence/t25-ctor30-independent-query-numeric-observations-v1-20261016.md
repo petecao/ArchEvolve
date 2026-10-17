@@ -1,0 +1,11 @@
+# G621 constructor query/numeric observations — bounded independent audit
+
+**PASS for these retained metadata observations only.** Root capture4a806703 and parent observatione5d64f8f were independently rehashed. No collector, project function/test, compiler/native/formal tool or SSH ran.
+
+The last actual query3033750a…97785 has the full source antecedent `t25v3_ctor_inv(h,r,o,b,n,n,v)` and concludes eligibility after only the final size store. Its variable map is b=i,h=heap,n=i1,o=i2,r=i3,v=i4; the binder permutation, P_ predicate naming/curried form and integer o+8→8+o account for the printed normalization. Independent frozen046 source-literal reconstruction matches actual input2967ac11…ea60. It remains not_proven/timeout with timeout/unknown/timeout, not a counterexample or theorem.
+
+The numeric source input95efe1cb…5600 also matches frozen source. Its inventory contains13unique registered/nonextern property nodes,7with nonempty dependency lists and24edges. All dependency/origin/goal/smoke-target references resolve locally; the graph is acyclic. Origins are null, registration/export counts agree at13, post-consolidation membership is refreshed, and no unregistered lookup/call/smoke property is reported.
+
+All10ordinary numeric goals report Valid. The one false smoke targets the registered entry requires and passes with timeout/unknown/timeout; it is a healthy non-Valid smoke observation under the frozen policy, not ordinary Valid or an independent satisfiability theorem. The WP-goals JSON has9rows: exits and terminates are native-inventory-only Valid and appear in the normalized11-goal set with source wp_inventory. TSV preserves10Valid rows plus the entry requires Ignored; that conditional kernel premise is not a newly proved caller discharge.
+
+All30targets were attempted,29producer-positive, with the final qualified positive post open; none remain unexecuted. Actual native totals derive to39ordinary and1smoke. The94materialized files do not attest submitted task count/bytes. No project-named axiom/lemma is visible in the exported declaration metadata, which is not a complete import/hypothesis closure claim. Original root/outerexit1 and not_proven remain unchanged. Whole SMT/foundation/body/model, original-v2, caller and ticket acceptance are outside this bounded audit.

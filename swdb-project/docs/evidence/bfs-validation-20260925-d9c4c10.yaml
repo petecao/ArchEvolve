@@ -1,0 +1,37 @@
+date: '2026-09-25'
+timezone: America/New_York
+classification: local_automated_tests
+repository_commit: d9c4c104a6f5782227a765f823fc840e401139e2
+checkout: /Users/yanrujhou/.codex/worktrees/bfs-validation/EvolveSWDB
+checkout_clean_before_and_after: true
+source_edits_during_run: false
+command: /Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest -q
+python: '3.12.6'
+started: '2026-09-25T23:15:16-04:00'
+finished: '2026-09-25T23:42:57-04:00'
+returncode: 0
+passed: 765
+skipped: 3
+failed: 0
+pytest_seconds: 1660.57
+log:
+  path: /Users/yanrujhou/CLionProjects/EvolveSWDB_runs/bfs-validation/bfs-full-suite-20260925-2318-d9c4c10.log
+  sha256: bc6bd49fbd653b12f1dd5c7cf0b06112dd26ba138050221166ca43511399459f
+  bytes: 924
+setup_failure:
+  started: '2026-09-25T23:14:41-04:00'
+  command: python3 -m pytest -q
+  python: /opt/homebrew/opt/python@3.14/bin/python3.14
+  returncode: 1
+  reason: The isolated shell selected Python 3.14 without pytest installed.
+  tests_started: false
+  correction: Used the repository's existing Python 3.12 test installation explicitly.
+  log:
+    path: /Users/yanrujhou/CLionProjects/EvolveSWDB_runs/bfs-validation/bfs-full-suite-20260925-2316-d9c4c10.log
+    sha256: c99d342a1664b93a03868ad56a22451965948da811503ce3b0d29ae5123b9dbb
+    bytes: 69
+limits:
+  - This result covers the exact commit above, not later working changes.
+  - Later profiling, driver, coverage and repair fixes have separate focused verification.
+  - Test fixtures do not establish simulator acceptance, matrix coverage or a gain.
+  - Log filenames are operator labels; the recorded filesystem timestamps give actual run times.

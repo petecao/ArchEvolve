@@ -1,0 +1,13 @@
+--- receiver_state_draws_v2.py
++++ receiver_memory_v1.py
+@@ -16,8 +16,8 @@
+ SOURCE_KIND = 'dx100-whole-interface-source-v1'
+ MODEL_KIND = 'dx100-whole-interface-checked-body-1'
+ PROFILE = 'fresh-program-exclusive-quiescent-modeled-trace-v1'
+-SOURCE_SHA = '3148b662b2fbeaa7a8733569d5ea750bce8a598d4e883f9bc64cb1e27dae67cd'
+-SOURCE_BYTES = 4524
++SOURCE_SHA = '55b9fe4033e80c4c151a743744ccf745082ada5e408aaa782d6ccbb30d88d887'
++SOURCE_BYTES = 3258
+ HEADER_SHAS = {'MAA.hpp': '4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd',
+     'MAA_gem5.hpp': '5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174'}
+ INPUT_NAMES = frozenset({'source', 'full_tu', 'abi_observation', 'capture_receipt',

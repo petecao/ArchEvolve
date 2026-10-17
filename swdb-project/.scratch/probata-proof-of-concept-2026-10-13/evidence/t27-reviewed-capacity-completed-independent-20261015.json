@@ -1,0 +1,776 @@
+{
+  "created": "2026-10-15 ET",
+  "scope": "retained fixture outcomes and physical-byte audit only",
+  "run": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-b9a34bbb-t27-capacity",
+  "source_commit": "b9a34bbbcaa1670a7e4653f78e220da94af01a08",
+  "shard": "capacity",
+  "selection": "/data1/yanruj/venvs/swdb-test/bin/python -m pytest tests/test_proof_semantics.py::test_wp_capacity_agrees_at_32_and_leaves_33_not_proven tests/test_proof_semantics.py::test_32_uncovered_commands_prove_and_33_end_not_proven_ghost_capacity --maxfail=1 --junitxml=/data/yanruj/EvolveSWDB_runs/probata-reviewed-b9a34bbb-t27-capacity/junit.xml",
+  "exit_code": "0",
+  "pytest_call_outcomes": {
+    "passed": 3
+  },
+  "records": [
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-b9a34bbb-t27-capacity/pytest/test_32_uncovered_commands_pro0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t222106z.ef1e31b1.yaml",
+      "sha256": "38d9075b0eb33801aee816ae6c582d7c9e4c03f95a8c0d8d28ac5aee15a02cae",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t222106z.ef1e31b1",
+      "test": "test_32_uncovered_commands_pro0",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_capacity"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 32
+      },
+      "adapter": "cbmc",
+      "verdict": "proven",
+      "failure_class": null,
+      "evidence_kind": "contract_fixture",
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "verdict_reading": null,
+      "pins": {
+        "code": {
+          "id": "dx100-fixtures.candidate-1",
+          "sha256": "8a1f26596a62c9aa392745237ccf16359765f996ed790e2502806df4021d2c1a"
+        },
+        "contract": {
+          "id": "contract.fixture_dx_capacity",
+          "sha256": "71d9b01cadfaccc945cced5a79842ac68a535b10041d69dee95fa638d8441b34"
+        },
+        "baseline_function": {
+          "id": "test-source",
+          "function": "dxf_capacity",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "id": "semantics.dx100_bfs_0_1",
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "dc6ff76cba59f5112d308c99c6ad7194c0500fe5c63bd1eaf596a3b7c7929380"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "build_constants": [
+          {
+            "name": "DX_NT",
+            "value": "40"
+          },
+          {
+            "name": "DX_TS",
+            "value": "1"
+          }
+        ],
+        "c_lowering": {
+          "id": "dxf_capacity.c",
+          "sha256": "fd4cbebf3ff30f6cc3b5657efd6bc87c5410264353f9b1b5f70d1ae185f01330"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "translator": {
+          "id": "swdb-cbmc-translator-4",
+          "sha256": "b67a4fc23c70a1d39269de563ade63a3d655665d3ba3394dd12d5eb4650eff63"
+        }
+      },
+      "tools": [
+        "swdb-c-lowering-9",
+        "clang-22.1.8",
+        "swdb-cbmc-translator-4",
+        "cbmc-6.11.0",
+        "cadical-in-cbmc-6.11.0"
+      ],
+      "initialized_goals": 0,
+      "rte_goals": 0,
+      "assumption_kinds": [
+        "assumed_clause",
+        "proof_semantics",
+        "reduction",
+        "trusted_tool"
+      ],
+      "flags": [
+        "-DSWDB_CBMC",
+        "--unwind",
+        "33",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--sat-solver",
+        "cadical",
+        "--unwindset",
+        "swdb_dx_init.0:41,swdb_dx_init.1:41,swdb_dx_init.2:41,swdb_dx_check_exit.0:41,swdb_dx_check_exit.1:41,dx_counted.0:41,dx_naming.0:41,dx_reg_users.0:41,dx_closure.0:41,dx_closure.1:41,dx_cover.0:41,dx_cover.1:41,dx_cover.2:41,dx_dispatch.0:41,dx_dispatch.1:41,dx_dispatch.2:41,dx_dispatch.3:41,dx_dispatch.4:41,dx_dispatch.5:41,get_new_tile.0:41,get_new_reg.0:41,add_mem_region.0:41,maa_const.0:41,wait_ready.0:41,get_tile_size.0:41,get_tile_size.1:41,get_cacheable_tile_pointer.0:41,maa_stream_load.0:41,maa_stream_load.1:41,maa_stream_load.2:41,maa_indirect_load.0:41,maa_indirect_load.1:41,maa_range_loop.0:41,maa_range_loop.1:41,maa_range_loop.2:41,maa_range_loop.3:41,maa_range_loop.4:41,maa_alu_scalar.0:41,maa_alu_scalar.1:41,maa_indirect_store_vector.0:41,maa_indirect_store_vector.1:41,maa_indirect_store_vector.2:41,swdb_dx_in_footprint.0:41,swdb_dx_in_footprint.1:41"
+      ],
+      "verifier_launched": true,
+      "build_constants": [
+        "DX_NT=40",
+        "DX_TS=1"
+      ],
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "counterexample": null,
+      "job": {
+        "adapter": "cbmc",
+        "host": "swdb-fixture-host",
+        "worker_core": "unpinned",
+        "wall_seconds": 12.828076,
+        "cpu_seconds": 14.175515,
+        "batch_load": {
+          "start": 2.511,
+          "end": 2.692
+        },
+        "peak_rss_bytes": 242970624,
+        "batch": "batch.proof.dx100-fixtures.candidate-1.20261015t222106z.ef1e31b1",
+        "position": 1
+      },
+      "artifacts": 6,
+      "semantic_failed_goals": [],
+      "errors": []
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-b9a34bbb-t27-capacity/pytest/test_32_uncovered_commands_pro0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t222126z.20083c2b.yaml",
+      "sha256": "008e8a42f2b93270ce78b570afb2543b4ee89e7d86889e973d54617cb66d4492",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t222126z.20083c2b",
+      "test": "test_32_uncovered_commands_pro0",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_capacity"
+      },
+      "bounds": {
+        "threads": 1,
+        "n": 33
+      },
+      "adapter": "cbmc",
+      "verdict": "not_proven",
+      "failure_class": "ghost_capacity",
+      "evidence_kind": "contract_fixture",
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "verdict_reading": null,
+      "pins": {
+        "code": {
+          "id": "dx100-fixtures.candidate-1",
+          "sha256": "8a1f26596a62c9aa392745237ccf16359765f996ed790e2502806df4021d2c1a"
+        },
+        "contract": {
+          "id": "contract.fixture_dx_capacity",
+          "sha256": "71d9b01cadfaccc945cced5a79842ac68a535b10041d69dee95fa638d8441b34"
+        },
+        "baseline_function": {
+          "id": "test-source",
+          "function": "dxf_capacity",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "id": "semantics.dx100_bfs_0_1",
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "dc6ff76cba59f5112d308c99c6ad7194c0500fe5c63bd1eaf596a3b7c7929380"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "build_constants": [
+          {
+            "name": "DX_NT",
+            "value": "40"
+          },
+          {
+            "name": "DX_TS",
+            "value": "1"
+          }
+        ],
+        "c_lowering": {
+          "id": "dxf_capacity.c",
+          "sha256": "fd4cbebf3ff30f6cc3b5657efd6bc87c5410264353f9b1b5f70d1ae185f01330"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "translator": {
+          "id": "swdb-cbmc-translator-4",
+          "sha256": "b67a4fc23c70a1d39269de563ade63a3d655665d3ba3394dd12d5eb4650eff63"
+        }
+      },
+      "tools": [
+        "swdb-c-lowering-9",
+        "clang-22.1.8",
+        "swdb-cbmc-translator-4",
+        "cbmc-6.11.0",
+        "cadical-in-cbmc-6.11.0"
+      ],
+      "initialized_goals": 0,
+      "rte_goals": 0,
+      "assumption_kinds": [
+        "assumed_clause",
+        "proof_semantics",
+        "reduction",
+        "trusted_tool"
+      ],
+      "flags": [
+        "-DSWDB_CBMC",
+        "--unwind",
+        "34",
+        "--unwinding-assertions",
+        "--pointer-overflow-check",
+        "--sat-solver",
+        "cadical",
+        "--unwindset",
+        "swdb_dx_init.0:41,swdb_dx_init.1:41,swdb_dx_init.2:41,swdb_dx_check_exit.0:41,swdb_dx_check_exit.1:41,dx_counted.0:41,dx_naming.0:41,dx_reg_users.0:41,dx_closure.0:41,dx_closure.1:41,dx_cover.0:41,dx_cover.1:41,dx_cover.2:41,dx_dispatch.0:41,dx_dispatch.1:41,dx_dispatch.2:41,dx_dispatch.3:41,dx_dispatch.4:41,dx_dispatch.5:41,get_new_tile.0:41,get_new_reg.0:41,add_mem_region.0:41,maa_const.0:41,wait_ready.0:41,get_tile_size.0:41,get_tile_size.1:41,get_cacheable_tile_pointer.0:41,maa_stream_load.0:41,maa_stream_load.1:41,maa_stream_load.2:41,maa_indirect_load.0:41,maa_indirect_load.1:41,maa_range_loop.0:41,maa_range_loop.1:41,maa_range_loop.2:41,maa_range_loop.3:41,maa_range_loop.4:41,maa_alu_scalar.0:41,maa_alu_scalar.1:41,maa_indirect_store_vector.0:41,maa_indirect_store_vector.1:41,maa_indirect_store_vector.2:41,swdb_dx_in_footprint.0:41,swdb_dx_in_footprint.1:41"
+      ],
+      "verifier_launched": true,
+      "build_constants": [
+        "DX_NT=40",
+        "DX_TS=1"
+      ],
+      "forms": null,
+      "counterexample": null,
+      "job": {
+        "adapter": "cbmc",
+        "host": "swdb-fixture-host",
+        "worker_core": "unpinned",
+        "wall_seconds": 14.475765,
+        "cpu_seconds": 15.99198,
+        "batch_load": {
+          "start": 2.636,
+          "end": 3.203
+        },
+        "peak_rss_bytes": 250916864,
+        "batch": "batch.proof.dx100-fixtures.candidate-1.20261015t222126z.20083c2b",
+        "position": 1
+      },
+      "artifacts": 7,
+      "semantic_failed_goals": [
+        {
+          "goal": "dx_dispatch.assertion.3",
+          "property": "swdb.ghost_capacity",
+          "function": "dx_dispatch",
+          "status": "failure",
+          "solver": null,
+          "seconds": null
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-b9a34bbb-t27-capacity/pytest/test_wp_capacity_agrees_at_32_0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t221253z.6747adbb.yaml",
+      "sha256": "355d276ff15debb3f4fddcc2f40f6403e423e4993ca18ead37f84fb4d8180eb6",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t221253z.6747adbb",
+      "test": "test_wp_capacity_agrees_at_32_0",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_capacity"
+      },
+      "bounds": {
+        "threads": 1,
+        "input_size": "unbounded"
+      },
+      "adapter": "wp",
+      "verdict": "proven",
+      "failure_class": null,
+      "evidence_kind": "contract_fixture",
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "verdict_reading": {
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "verdict": "proven"
+      },
+      "ordinary": {
+        "valid": 49,
+        "total": 49
+      },
+      "smoke": {
+        "valid": 11,
+        "total": 11
+      },
+      "open": [],
+      "pins": {
+        "code": {
+          "id": "dx100-fixtures.candidate-1",
+          "sha256": "8a1f26596a62c9aa392745237ccf16359765f996ed790e2502806df4021d2c1a"
+        },
+        "contract": {
+          "id": "contract.fixture_dx_capacity",
+          "sha256": "f42d53d5d4f8fa77047a658d44789ace7c6adab352a24b5f8cfe6b2e4d7fb2cb"
+        },
+        "baseline_function": {
+          "id": "test-source",
+          "function": "dxf_capacity",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "id": "semantics.dx100_bfs_0_1",
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "dc6ff76cba59f5112d308c99c6ad7194c0500fe5c63bd1eaf596a3b7c7929380"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "build_constants": [
+          {
+            "name": "DX_NT",
+            "value": "40"
+          },
+          {
+            "name": "DX_TS",
+            "value": "1"
+          }
+        ],
+        "c_lowering": {
+          "id": "dxf_capacity.c",
+          "sha256": "fd4cbebf3ff30f6cc3b5657efd6bc87c5410264353f9b1b5f70d1ae185f01330"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        }
+      },
+      "tools": [
+        "swdb-c-lowering-9",
+        "clang-22.1.8",
+        "frama-c-wp-33.0",
+        "z3-5.1.0",
+        "cvc5-1.2.1",
+        "alt-ergo-2.6.4"
+      ],
+      "initialized_goals": 5,
+      "rte_goals": 4,
+      "assumption_kinds": [
+        "assumed_clause",
+        "proof_semantics",
+        "reduction",
+        "trusted_tool"
+      ],
+      "flags": [
+        "-wp",
+        "-wp-rte",
+        "-wp-cache",
+        "none",
+        "-wp-model",
+        "+real",
+        "-wp-par",
+        "1",
+        "-machdep",
+        "x86_64",
+        "-rte-initialized",
+        "@all",
+        "-wp-no-filter-init",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-machdep",
+        "x86_64",
+        "-wp-timeout",
+        "30",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-fct=dxf_capacity"
+      ],
+      "verifier_launched": true,
+      "build_constants": [
+        "DX_NT=40",
+        "DX_TS=1"
+      ],
+      "forms": null,
+      "counterexample": null,
+      "job": {
+        "adapter": "wp",
+        "host": "swdb-fixture-host",
+        "worker_core": "unpinned",
+        "wall_seconds": 141.602833,
+        "cpu_seconds": 147.606907,
+        "batch_load": {
+          "start": 3.008,
+          "end": 2.711
+        },
+        "peak_rss_bytes": 1335164928,
+        "batch": "batch.proof.dx100-fixtures.candidate-1.20261015t221253z.6747adbb",
+        "position": 1
+      },
+      "artifacts": 11,
+      "writer_history_goals": [
+        {
+          "goal": "typed_real_dxf_capacity_loop_invariant_5_established",
+          "property": "dxf_capacity_loop_invariant_5",
+          "function": "dxf_capacity",
+          "status": "valid",
+          "solver": "alt-ergo",
+          "seconds": 1.23,
+          "smoke": false,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_dxf_capacity_loop_invariant_5_preserved",
+          "property": "dxf_capacity_loop_invariant_5",
+          "function": "dxf_capacity",
+          "status": "valid",
+          "solver": "alt-ergo",
+          "seconds": 3.13,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-b9a34bbb-t27-capacity/pytest/test_wp_capacity_agrees_at_32_1/records/proofs/proof.dx100-fixtures.candidate-1.20261015t221534z.3aa0a5ed.yaml",
+      "sha256": "bea871f5c094518eaf0824781565237b81f97d1e59d65e33c80c9d95cf2c8dc1",
+      "id": "proof.dx100-fixtures.candidate-1.20261015t221534z.3aa0a5ed",
+      "test": "test_wp_capacity_agrees_at_32_1",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_capacity"
+      },
+      "bounds": {
+        "threads": 1,
+        "input_size": "unbounded"
+      },
+      "adapter": "wp",
+      "verdict": "not_proven",
+      "failure_class": "ghost_capacity",
+      "evidence_kind": "contract_fixture",
+      "setup": {
+        "verdict": "passed",
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "runs": 1
+      },
+      "verdict_reading": {
+        "check": {
+          "version": "1",
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833"
+        },
+        "verdict": "not_proven"
+      },
+      "ordinary": {
+        "valid": 47,
+        "total": 49
+      },
+      "smoke": {
+        "valid": 11,
+        "total": 11
+      },
+      "open": [
+        {
+          "goal": "typed_real_dxf_capacity_call_maa_stream_load_requires_ghost_capacity",
+          "property": "maa_stream_load_requires_ghost_capacity_2",
+          "function": "dxf_capacity",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_dxf_capacity_call_maa_stream_load_requires_4",
+          "property": "maa_stream_load_requires_9",
+          "function": "dxf_capacity",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "pins": {
+        "code": {
+          "id": "dx100-fixtures.candidate-1",
+          "sha256": "8a1f26596a62c9aa392745237ccf16359765f996ed790e2502806df4021d2c1a"
+        },
+        "contract": {
+          "id": "contract.fixture_dx_capacity",
+          "sha256": "792ec713b31f28b5e2bc9432ac70ad4b3c304dacff8e2749dc3cb8e87ffc2898"
+        },
+        "baseline_function": {
+          "id": "test-source",
+          "function": "dxf_capacity",
+          "sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056"
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "id": "semantics.dx100_bfs_0_1",
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        "method_version": {
+          "id": "method.cbmc-fixture",
+          "sha256": "dc6ff76cba59f5112d308c99c6ad7194c0500fe5c63bd1eaf596a3b7c7929380"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "This proof unit has no proven predecessor."
+        },
+        "build_constants": [
+          {
+            "name": "DX_NT",
+            "value": "40"
+          },
+          {
+            "name": "DX_TS",
+            "value": "1"
+          }
+        ],
+        "c_lowering": {
+          "id": "dxf_capacity.c",
+          "sha256": "fd4cbebf3ff30f6cc3b5657efd6bc87c5410264353f9b1b5f70d1ae185f01330"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        }
+      },
+      "tools": [
+        "swdb-c-lowering-9",
+        "clang-22.1.8",
+        "frama-c-wp-33.0",
+        "z3-5.1.0",
+        "cvc5-1.2.1",
+        "alt-ergo-2.6.4"
+      ],
+      "initialized_goals": 5,
+      "rte_goals": 4,
+      "assumption_kinds": [
+        "assumed_clause",
+        "proof_semantics",
+        "reduction",
+        "trusted_tool"
+      ],
+      "flags": [
+        "-wp",
+        "-wp-rte",
+        "-wp-cache",
+        "none",
+        "-wp-model",
+        "+real",
+        "-wp-par",
+        "1",
+        "-machdep",
+        "x86_64",
+        "-rte-initialized",
+        "@all",
+        "-wp-no-filter-init",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-machdep",
+        "x86_64",
+        "-wp-timeout",
+        "30",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-fct=dxf_capacity"
+      ],
+      "verifier_launched": true,
+      "build_constants": [
+        "DX_NT=40",
+        "DX_TS=1"
+      ],
+      "forms": null,
+      "counterexample": null,
+      "job": {
+        "adapter": "wp",
+        "host": "swdb-fixture-host",
+        "worker_core": "unpinned",
+        "wall_seconds": 324.686656,
+        "cpu_seconds": 363.201957,
+        "batch_load": {
+          "start": 3.031,
+          "end": 2.381
+        },
+        "peak_rss_bytes": 1334751232,
+        "batch": "batch.proof.dx100-fixtures.candidate-1.20261015t221534z.3aa0a5ed",
+        "position": 1
+      },
+      "artifacts": 12,
+      "writer_history_goals": [
+        {
+          "goal": "typed_real_dxf_capacity_loop_invariant_5_established",
+          "property": "dxf_capacity_loop_invariant_5",
+          "function": "dxf_capacity",
+          "status": "valid",
+          "solver": "alt-ergo",
+          "seconds": 1.23,
+          "smoke": false,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_dxf_capacity_loop_invariant_5_preserved",
+          "property": "dxf_capacity_loop_invariant_5",
+          "function": "dxf_capacity",
+          "status": "valid",
+          "solver": "alt-ergo",
+          "seconds": 3.04,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "physical_pins": {
+    "references": 40,
+    "unique_files": 44,
+    "mismatches": []
+  },
+  "metadata_audit": "passed",
+  "at_utc": "2026-10-15T22:22:48.594373+00:00",
+  "retained_files": {
+    "lane.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-b9a34bbb-t27-capacity/lane.json",
+      "sha256": "04b26bfed42038b980ad1142e8fb1a9134eb616807703242553cd1ac7edad2a9",
+      "content": {
+        "socket_lane": {
+          "aligned_cell_age_s": "",
+          "aligned_to": "no_gapbs_batch_running",
+          "command": [
+            "timeout",
+            "--signal=TERM",
+            "--kill-after=60",
+            "1920",
+            "bash",
+            "/data/yanruj/EvolveSWDB_runs/probata-reviewed-b9a34bbb-t27-capacity/run.sh"
+          ],
+          "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+          "ended_utc": "2026-10-15T22:21:42Z",
+          "exit_code": 0,
+          "host": "mbit10",
+          "job": "probata-reviewed-b9a34bbb-t27-capacity",
+          "lease_generation": 575,
+          "lease_name": "mbit10-evaluation-node0",
+          "load1_at_start": 2.0,
+          "load1_max": 32,
+          "node": 0,
+          "numa_memory_policy": "bind:0",
+          "numactl": "--cpunodebind=0 --membind=0",
+          "preregistration_sha256": null,
+          "started_utc": "2026-10-15T22:11:29Z"
+        }
+      }
+    },
+    "resources.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-b9a34bbb-t27-capacity/resources.json",
+      "sha256": "db77b5763a92bcf4b430811a650d735020ce2f2d640a094b27e0ef0c846b3abb",
+      "content": {
+        "cpu_seconds": 657.495492,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 2934345728,
+        "timed_out": false,
+        "wall_seconds": 610.1651063030586
+      }
+    },
+    "outer-resources.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-b9a34bbb-t27-capacity/outer-resources.json",
+      "sha256": "c43fc82a17e5138e66da3a46a8573005afe4559100627e4bec1a5530461e98ea",
+      "content": {
+        "exit_code": 0,
+        "peak_rss_bytes": 2984677376,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 612.0734767233953,
+        "cpu_seconds": 780.983725
+      }
+    },
+    "junit.xml": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-b9a34bbb-t27-capacity/junit.xml",
+      "sha256": "8ed579d3e031eaf114d7ba76a4051b2e3c733c9a5626d5eb81c7e35b0c8ac86b"
+    },
+    "source-after.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-b9a34bbb-t27-capacity/source-after.json",
+      "sha256": "1864ef2d6759215a200373a480439ca3dd231688a14e2a408640285cce2a5c69",
+      "content": {
+        "commit": "b9a34bbbcaa1670a7e4653f78e220da94af01a08",
+        "source_unchanged": true,
+        "tracked_changes": ""
+      }
+    }
+  },
+  "errors": [],
+  "boundary": "Completed3/3capacity acceptance at exactb9a source and explicit original contracts/bounds; WP32proven,WP33not_proven/ghost_capacity,CBMC32proven/33not_proven/ghost_capacity. No33source counterexample or refutation. Fresh safe and remaining negative profile still required for ticket27.",
+  "failed32_vs_repaired32_pins_equal": {
+    "code": true,
+    "contract": true,
+    "baseline_function": true,
+    "proof_semantics": true,
+    "method_version": true,
+    "build_constants": true,
+    "c_lowering": true,
+    "naming_rules": true
+  },
+  "wp33_second_open_goal": {
+    "goal": "typed_real_dxf_capacity_call_maa_stream_load_requires_4",
+    "clause": "requires dx_issuable(min_reg, max_reg, stride_reg, -1, -1);",
+    "explanation": "dx_issuable includes the same 0 <= dx_count < DX_K capacity bound (logic.acsl206-208). Both this ordinary obligation and named ghost_capacity timeout; all other47ordinary and11smoke goals Valid.",
+    "wp_input": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-b9a34bbb-t27-capacity/pytest/test_wp_capacity_agrees_at_32_1/runs-outside-repo/proof.dx100-fixtures.candidate-1.20261015t221534z.3aa0a5ed/wp/wp_input.c",
+      "sha256": "22d0da20e5875598d777e0ef9f2b234e0e042553dad50844fef9ff95ac0f5daa"
+    }
+  },
+  "audit_script": {
+    "path": "/private/tmp/probata-t27-audit-reviewed-capacity.py",
+    "sha256": "de69a1b8cdbb988a78dcd107787f052427d547e8d87310491a9a5caacb44a596"
+  }
+}

@@ -1,0 +1,134 @@
+{
+  "observed_utc": "2026-10-16T21:30:21.581147+00:00",
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-1433b8f5-t25-closed-source-public-v4",
+  "actual": {
+    "lane.json": {
+      "socket_lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "command": [
+          "timeout",
+          "--signal=TERM",
+          "--kill-after=60",
+          "1320",
+          "bash",
+          "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-1433b8f5-t25-closed-source-public-v4/run.sh"
+        ],
+        "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+        "ended_utc": "2026-10-16T21:28:57Z",
+        "exit_code": 0,
+        "host": "mbit10",
+        "job": "probata-resume-20261016-1433b8f5-t25-closed-source-public-v4",
+        "lease_generation": 619,
+        "lease_name": "mbit10-evaluation-node0",
+        "load1_at_start": 0.02,
+        "load1_max": 32,
+        "node": 0,
+        "numa_memory_policy": "bind:0",
+        "numactl": "--cpunodebind=0 --membind=0",
+        "preregistration_sha256": null,
+        "started_utc": "2026-10-16T21:24:52Z"
+      }
+    },
+    "resources.json": {
+      "cpu_seconds": 265.665114,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 521080832,
+      "timed_out": false,
+      "wall_seconds": 243.58932752441615
+    },
+    "outer-resources.json": {
+      "exit_code": 0,
+      "peak_rss_bytes": 574033920,
+      "out_of_memory": false,
+      "timed_out": false,
+      "wall_seconds": 245.68500847183168,
+      "cpu_seconds": 314.815715
+    },
+    "closed-record-census.json": {
+      "independent_cold_acceptance": false,
+      "junit": {
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0,
+        "tests": 5
+      },
+      "original_native_results_preserved": true,
+      "physical_records": [
+        {
+          "path": "closed-source-profile/pytest/test_public_closed_source_proo0/retained-public-record.json",
+          "sha256": "9e101791094b95f18a615e31511a0dd31efe85e0ae1be82ed0ca20891bee259a"
+        },
+        {
+          "path": "closed-source-profile/pytest/test_public_closed_source_proo1/retained-public-record.json",
+          "sha256": "d2b42832b76cb9a0e510e967bcd91dde7dc854902073dd8d3ecb6be05ce38f19"
+        },
+        {
+          "path": "closed-source-profile/pytest/test_public_closed_source_proo2/retained-public-record.json",
+          "sha256": "198338478006dbf39620a940602d9f7aae3b2f356da40d6ae06b65ec98ae08c5"
+        },
+        {
+          "path": "closed-source-profile/pytest/test_public_closed_source_proo3/retained-public-record.json",
+          "sha256": "9ab66d98c5ea2f91388f4e73b0b489e8a2d74cf37cc15c0ddd4c5b78bb4088a4"
+        },
+        {
+          "path": "closed-source-profile/pytest/test_public_closed_source_proo4/retained-public-record.json",
+          "sha256": "aade3e0c90700375de38ce3da6a019da2d9f4e2b0e2f445891cda6b45407a19e"
+        }
+      ],
+      "records": 5,
+      "source_rule_proven": 1,
+      "unsupported_controls": 4
+    },
+    "closed-transient-lock-races.json": {
+      "active_poll_only": true,
+      "disappearances": {},
+      "settled_census_is_strict": true,
+      "source_sha256": "35329946b838d80edd842d235ad477b6727d08eeebd66f28a0adc47ecb8bbeb8"
+    },
+    "acceptance.log": {
+      "bytes": 1092,
+      "tail": "{\"exit_code\": 0, \"finalization\": {\"before\": {\"aliases\": [{\"literal_target\": \"/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-1433b8f5-t25-closed-source-public-v4/closed-source-profile/pytest/test_public_closed_source_proo4\", \"relative\": \"closed-source-profile/pytest/test_public_closed_source_proocurrent\", \"target_relative\": \"closed-source-profile/pytest/test_public_closed_source_proo4\"}], \"bytes\": 48832222, \"regular_files\": 474, \"transient_lock_disappearances\": []}, \"controller_exit_zero_requires_post_fsync_extent_and_time_checks\": true, \"elapsed_seconds_before\": 243.449121, \"margin_seconds\": 1.0, \"projected_total_bytes\": 48833462, \"remaining_reserve_covers_bounded_stdout_and_root_guard_metadata\": true, \"reserve_bytes\": 65536, \"result_byte_cap\": 16384, \"result_bytes\": 1240, \"whole_seconds\": 1200}, \"independent_cold_acceptance\": false, \"records\": 5, \"scope\": \"Original closed-source public fixture workflow only; no source/caller/universal or ticket acceptance\", \"source_commit\": \"1433b8f58baa63538d1e8aa8a33d9ce566826407\", \"status\": \"PRODUCER_WORKFLOW_COMPLETE\", \"tests\": 5}\n"
+    },
+    "worker.log": {
+      "bytes": 0,
+      "tail": ""
+    },
+    "closed-source-profile/pytest.log": {
+      "bytes": 110,
+      "tail": ".....                                                                    [100%]\n5 passed in 188.51s (0:03:08)\n"
+    },
+    "closed-source-profile/progress-observer.jsonl": {
+      "bytes": 1536,
+      "tail": "{\"observed\": [], \"records\": 0}\n{\"observed\": [[\"proof.contract.fixture_vector_closed_no_growth.20261016t212538z.8ab29ea0\", \"proven\"]], \"records\": 1}\n{\"observed\": [[\"proof.contract.fixture_vector_closed_no_growth.20261016t212538z.8ab29ea0\", \"proven\"], [\"proof.contract.fixture_vector_closed_no_growth.20261016t212703z.d62bfe85\", \"not_proven\"]], \"records\": 2}\n{\"observed\": [[\"proof.contract.fixture_vector_closed_no_growth.20261016t212538z.8ab29ea0\", \"proven\"], [\"proof.contract.fixture_vector_closed_no_growth.20261016t212703z.d62bfe85\", \"not_proven\"], [\"proof.contract.fixture_vector_closed_no_growth.20261016t212730z.e72a35ce\", \"not_proven\"]], \"records\": 3}\n{\"observed\": [[\"proof.contract.fixture_vector_closed_no_growth.20261016t212538z.8ab29ea0\", \"proven\"], [\"proof.contract.fixture_vector_closed_no_growth.20261016t212703z.d62bfe85\", \"not_proven\"], [\"proof.contract.fixture_vector_closed_no_growth.20261016t212730z.e72a35ce\", \"not_proven\"], [\"proof.contract.fixture_vector_closed_no_growth.20261016t212755z.fc231ae9\", \"not_proven\"]], \"records\": 4}\n{\"observed\": [[\"proof.contract.fixture_vector_closed_no_growth.20261016t212538z.8ab29ea0\", \"proven\"], [\"proof.contract.fixture_vector_closed_no_growth.20261016t212703z.d62bfe85\", \"not_proven\"], [\"proof.contract.fixture_vector_closed_no_growth.20261016t212730z.e72a35ce\", \"not_proven\"], [\"proof.contract.fixture_vector_closed_no_growth.20261016t212755z.fc231ae9\", \"not_proven\"], [\"proof.contract.fixture_vector_closed_no_growth.20261016t212821z.e1e11303\", \"not_proven\"]], \"records\": 5}\n"
+    }
+  },
+  "metadata_pins": [
+    {
+      "relative": "lane.json",
+      "bytes": 842,
+      "sha256": "53104a2029fdbd5b1c8b4d9a21443ec4c69910feca470d2bbcd011349b01d0d4"
+    },
+    {
+      "relative": "resources.json",
+      "bytes": 167,
+      "sha256": "d6462ea32fa50df36e1196ab86b12e0d939b6d085fd86669f2785c816fbb4a8c"
+    },
+    {
+      "relative": "outer-resources.json",
+      "bytes": 167,
+      "sha256": "1710a0ecafd4a0e2ea03bbe036c691b0a2e64a70439760e1d781fb18086b5a2b"
+    },
+    {
+      "relative": "closed-record-census.json",
+      "bytes": 1285,
+      "sha256": "41588fa2fdef5392b5d9b229f1d4bb8cf81aa7b4a4a4eda71d31777aa42b9870"
+    },
+    {
+      "relative": "closed-transient-lock-races.json",
+      "bytes": 178,
+      "sha256": "deb98b7496a160224675021ae2c31b41785fd86b861df88f516131fadd223a62"
+    }
+  ]
+}

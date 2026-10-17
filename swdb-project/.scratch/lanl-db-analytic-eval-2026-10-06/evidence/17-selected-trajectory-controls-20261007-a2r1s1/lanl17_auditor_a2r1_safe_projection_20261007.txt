@@ -1,0 +1,73 @@
+CALL_KEYS=('role','invocation','outcome','counted','model','effort')
+CANDIDATE_KEYS=('id','class','artifact_sha256','patch_sha256','level')
+ITERATION_KEYS=('index','started','ended','improved_classes')
+STATE_KEYS=('campaign','campaign_sha256','started','stopped','stop_reason','clean_exit','setup_done','resumes','lane_hours','provider_wait_hours','disk_bytes_peak')
+PROJECTION_CONTRACT='swdb.lanl17-safe-control-projection.v1'
+
+def public_token(value,nullable=False):
+    if value is None and nullable:return None
+    require(isinstance(value,str) and len(value)<=256 and re.fullmatch('[A-Za-z0-9_.:/+-]+',value),'bounded public scalar token required')
+    return value
+
+def public_scalar(value):
+    require(value is None or type(value) in (int,float,bool,str),'public scalar required')
+    if isinstance(value,str):return public_token(value)
+    if type(value) is float:require(value==value and abs(value)!=float('inf'),'finite public scalar required')
+    return value
+
+def public_fields(row,keys):
+    require(isinstance(row,dict),'public field mapping required')
+    return {k:public_scalar(row[k]) for k in keys if k in row}
+
+def excluded_fields(row,keys):
+    # Hash the entire excluded values; do not copy their nested content or text.
+    return {k:{'json_type':type(row[k]).__name__,'semantic_sha256':digest(row[k]),'values_exported':False} for k in keys if k in row}
+
+def calls(rows):
+    require(isinstance(rows,list) and len(rows)<=500,'bounded public call rows required')
+    return [{**public_fields(r,CALL_KEYS),'excluded_metadata':excluded_fields(r,('classification',))} for r in rows]
+
+def candidate(row):
+    result=public_fields(row,CANDIDATE_KEYS)
+    result['excluded_provider_values']=excluded_fields(row,('knobs','contracts'))
+    certification=row.get('certification')
+    result['certification']=None if certification is None else {
+        **public_fields(certification,('record','outcome','level_at_summary')),
+        'excluded_metadata':excluded_fields(certification,('failed_checks',))}
+    comparisons=row.get('comparisons',[])
+    require(isinstance(comparisons,list) and len(comparisons)<=32,'bounded comparison rows required')
+    result['comparisons']=[{**public_fields(r,('baseline_role','comparison','baseline_evaluation','ratio','lower','upper','relative_ci_width','spread','verdict')),'excluded_metadata':excluded_fields(r,('level_mix',))} for r in comparisons]
+    selection=row.get('selection')
+    result['selection']=None if selection is None else public_fields(selection,('lower','verdict','ratio'))
+    return result
+
+def iteration(row):
+    result=public_fields(row,('index','started','ended'))
+    improved=row.get('improved_classes',[])
+    require(isinstance(improved,list) and len(improved)<=32,'bounded improved class IDs required')
+    result.update(improved_classes=[public_token(x) for x in improved],provider_calls=calls(row.get('provider_calls',[])),
+        candidates=[candidate(r) for r in row.get('candidates',[])],source_row_sha256=digest(row))
+    return result
+
+def project_state(state):
+    result=public_fields(state,STATE_KEYS)
+    result['projection_contract']=PROJECTION_CONTRACT
+    result['ledger']={k:state['ledger'][k] for k in ('iteration','iterations_completed','plateau','calls','iterations','terminal','iteration_calls','setup_calls')}
+    result['ledger']['calls']=[public_fields(r,('index','iteration','role','invocation','outcome','counted')) for r in state['ledger']['calls']]
+    result['ledger']['iterations']=[public_fields(r,('index','outcome','advanced_plateau','plateau_counter')) for r in state['ledger']['iterations']]
+    require(result['ledger']==state['ledger'],'unexpected private/unknown ledger field')
+    result['ledger_sha256']=digest(state['ledger'])
+    result['iterations']=[iteration(r) for r in state['iterations']]
+    result['setup_calls']=calls(state.get('setup_calls',[]))
+    result['pauses']=[{**public_fields(r,('at','resumed_at','iteration')),
+        'reason':safe_code(r['reason']),'provider_calls':calls(r.get('provider_calls',[])),
+        'source_row_sha256':digest(r)} for r in state['pauses']]
+    if state.get('interrupted_iteration'):result['interrupted_iteration']=iteration(state['interrupted_iteration'])
+    result['prepared']=[public_token(x) for x in state.get('prepared',[])]
+    result['preflights']=[public_fields(r,('step','state')) for r in state.get('preflights',[])]
+    result['baselines']={public_token(k):public_token(v) for k,v in state.get('baselines',{}).items()}
+    result['protocol_id']=public_token(state.get('protocol',{}).get('id'),nullable=True)
+    result['protocol_identity_sha256']=public_token(state.get('protocol',{}).get('identity_sha256'),nullable=True)
+    result['stop_detail_sha256']=digest(state.get('stop_detail'))
+    result['source_state_semantic_sha256']=digest(state)
+    return result

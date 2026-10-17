@@ -1,0 +1,19 @@
+--- /private/tmp/lanl_copy_reviewed_passive_receipt_scope_sources_from_git_20261008_a1.py
++++ /private/tmp/lanl_copy_reviewed_private_setgid_storage_sources_from_git_20261008_a1.py
+@@ -1,10 +1,12 @@
+ import argparse,pathlib,os,stat,hashlib,json,subprocess,datetime,re
+ P=pathlib.Path;BASE=P('/data1/yanruj');PRIMARY=BASE/'ArchEvolve';C=BASE/'ArchEvolve-lanl-cpu-model-validation-20261006-a1';UID=114316761
+-REL=P('swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-passive-receipt-scope-correction-20261008-a1')
+-DEST=BASE/'lanl-storage-admin-selected-source-20261008-a3'
++REL=P('swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1')
++DEST=BASE/'lanl-storage-admin-selected-source-20261008-a4'
+ EXPECTED={
+- 'lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r5.py':(58755,'50ad9bf511f90429a040bf5c25cc9a4bd15b12cb28419ad414d586269e5cdc99'),
+- 'lanl17_detach_passive_observer_administration_20261008_a1_r4.py':(15359,'6453bfc0d74259d497569eb018e91ff7972b8812d39a3eacc6fe51324cf9709f')}
++ 'lanl_consumed_detached_source_guard_r5_20261008_a1.py':(88872,'a84dc9ca7ccd20e6485cc8e9a2007b3b982fad9c5ae19dacbb1f164d664748cb'),
++ 'lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r6.py':(58750,'488fb42df44d338204b5cff58b10e7f0ff9c7feaee6490b33ba94201ba4f7665'),
++ 'lanl17_detach_exact_R4_storage_administration_20261008_a1_r4.py':(24000,'52f379d99721c51677ba44a1e9f3d55138527e26be1073c6267fbe09c8a93853'),
++ 'lanl17_detach_passive_observer_administration_20261008_a1_r5.py':(15359,'fb0a7cf1e6b6a2dbfeb8a91d5d2651a15044d7da51631d42d891d236b8de9da0')}
+ def sha(b):return hashlib.sha256(b).hexdigest()
+ def stamp(s):return {k:getattr(s,'st_'+k) for k in ('dev','ino','mode','uid','gid','nlink','size','mtime_ns','ctime_ns')}
+ def private(p):

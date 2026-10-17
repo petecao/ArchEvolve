@@ -1,0 +1,35 @@
+{
+  "classification": "PASS_PRIVATE_NATIVE86_COLD_METADATA",
+  "cleanup": "Root finite observation: target/legacy leases released, selected process scan empty and no scan read failures after this run. No continuing absence guarantee.",
+  "compiler_native_verifier_or_child_reexecuted": false,
+  "current_0_2": false,
+  "date": "2026-10-16 ET",
+  "full_ticket28": false,
+  "guard_state": "Retained successful resource results under exact reviewed guard bytes; no separate raw final-null watchdog field is inferred.",
+  "observations": {
+    "header_timing": "first full discovered dependency pins after preprocessing; cold hashes and recorded compile/runtime success do not remove that capture premise",
+    "languages": 2,
+    "private_controls_per_language": 86,
+    "used_headers": {
+      "c11": 70,
+      "cpp17": 238
+    }
+  },
+  "physical_checks": 16861,
+  "public_proof": false,
+  "raw": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-whole-native86-2baf722f-v4",
+  "raw_bytes": 9587978,
+  "raw_files": 62,
+  "raw_payload_transferred": false,
+  "reader_sha256": "df92bf4d8a87386d1714945db87a99a4b47210eab9bac648aaffcbf129ec9799",
+  "root_receipt_sha256": "67241250320da121d467688a89308db60831e6dea0c324329e7029a62373e26b",
+  "runtime_boundary": "Physical source/runtime identity and retained private ASan/UBSan behavior only; loader/dlopen and compiler capture timing remain explicit TCB.",
+  "source": {
+    "commit_boundary": "Root pinned Git readback/unchanged observation; reader hashes the exact 220-file Python bootstrap closure and five staged compilation sources without executing Git or claiming a whole-repository Git implementation.",
+    "root_manifest_python_files": 220,
+    "staged_compiled_sources": 5
+  },
+  "source_body_proof": false,
+  "source_call_admission": false,
+  "source_commit": "2baf722fdaa6cba24b859eae3172a6f597417d72"
+}

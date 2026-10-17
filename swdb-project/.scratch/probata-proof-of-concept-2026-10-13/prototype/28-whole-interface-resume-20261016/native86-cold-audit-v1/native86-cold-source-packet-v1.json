@@ -1,0 +1,90 @@
+{
+  "controls": {
+    "audit_events": [],
+    "errors": 0,
+    "failures": 0,
+    "fixtures": "Tiny synthetic JSON/files; one temporary zero-filled62file census has the exact byte count but no scientific artifact content. Full audit never called.",
+    "skips": 0,
+    "tests_run": 9
+  },
+  "date": "2026-10-16 ET",
+  "files": {
+    "collect_compact_metadata.py": {
+      "bytes": 3478,
+      "sha256": "903811259c9fc49e5b668e01eff5a4fa0f94364aa3b4676385639dc8f9155434"
+    },
+    "native86-cold-policy-template.json": {
+      "bytes": 12794,
+      "sha256": "0c12c241239d5ded8d77c5c1d49bb369090f872f87c0216f572be3b0457ccc44"
+    },
+    "native86_cold_audit.py": {
+      "bytes": 26929,
+      "sha256": "df92bf4d8a87386d1714945db87a99a4b47210eab9bac648aaffcbf129ec9799"
+    },
+    "passive-native86-v4-metadata.json": {
+      "bytes": 133152,
+      "sha256": "d301e0774fa0e1d6f3ff3cc0be03430c6cb424042f30a5ffdebb392b6294af30"
+    },
+    "passive-native86-v4-root-metadata.json": {
+      "bytes": 49228,
+      "sha256": "b46026637e8097e63afb67363ac5eca32ceeac2aa4d751c81dde4957e901bacf"
+    },
+    "prepare_policy_template.py": {
+      "bytes": 3347,
+      "sha256": "997fa4aa12bf15ee49ab39fa100f0c1a3cdb6628543d9fff3b7684eee1a770fa"
+    },
+    "pure-controls.log": {
+      "bytes": 1537,
+      "sha256": "6fb48f0d5ac9694d984b849e996b8f06409f7bd1b92fe0257857c018db1220cb"
+    },
+    "test_native86_cold_audit.py": {
+      "bytes": 10285,
+      "sha256": "81972dbffbb2b8f656430a399857b66c415ceb061efed58bfad5eddd2abfcb61"
+    }
+  },
+  "native_source_commit": "2baf722fdaa6cba24b859eae3172a6f597417d72",
+  "passive_metadata_collection": {
+    "actual_reader_run": false,
+    "authorized": true,
+    "complete_streamed_raw_census": true,
+    "scientific_compiler_native_verifier_version_solver_reexecution": false,
+    "scope": "SSH stdlib filesystem/JSON/hash reads only; no remote filesystem writes.",
+    "source_frozen_object_binary_payload_transferred": false
+  },
+  "pinned_context": {
+    "native_command": {
+      "bytes": 7927,
+      "sha256": "fe518dfcdb0f5910f25d6678b5faa5500140d61a775b5c4873a10f8fc9324f70"
+    },
+    "native_entry": {
+      "bytes": 23441,
+      "sha256": "9f63dbe826ca70f2ceacd37b56753a5f212811a5a377c7baed59da4de60b7721"
+    },
+    "native_policy": {
+      "bytes": 657687,
+      "sha256": "14be0baf2dece709210abb6039b0ab7ede41c5e8d5d1dfbe08ed47b6f3ba9f5b"
+    },
+    "root_guard_review": {
+      "bytes": 4167,
+      "sha256": "ad31177bce794e960107439ac2080f2f1af5eb71fa83007264edc6c1a4274682"
+    },
+    "root_observation": {
+      "bytes": 26664,
+      "sha256": "67241250320da121d467688a89308db60831e6dea0c324329e7029a62373e26b"
+    }
+  },
+  "raw_bytes": 9587978,
+  "raw_files": 62,
+  "reader_contract": {
+    "current_physical_closure": "Fresh checked physical native/runtime/Python/header surfaces before/after, exact aliases/absences,220Python bootstrap sources and5staged compiled sources, complete raw/reader/policy/context rehash.",
+    "input_timing": "Complete discovered system-header pins first taken after preprocessing; no earlier temporal guarantee inferred.",
+    "no_project_import_or_child_or_fs_write": true,
+    "original_cold_evidence_closure": "Complete62files/29component rows; source/frozen/object/binary and dependency/link-stream pins; exact8command recipes and2x86censuses; original/root/reader runtime and exact adapted guards/lane/resource/finite cleanup provenance.",
+    "private_only": true,
+    "public_source_call_current0_2_full_ticket_acceptance": false,
+    "settlement_boundary": "Root finite process scan and released target/legacy leases after the run; no continuing process absence guarantee. Resource results expose success/OOM/timeout under reviewed guard code; no separate raw final-null watcher field invented."
+  },
+  "review_request": "Parent independent source/AST/hash/pure controls only. Do not execute reader against actual raw until root explicitly admits reviewed source/policy/runtime.",
+  "root_supplies_later": "Canonical staged policy/context/reader paths, exact reader startup environment/selected Python/runtime admission, and guarded actual passive invocation outside original raw. Both template admission switches remain false.",
+  "status": "AUTHOR SOURCE CONTROLS PASS; independent reader source review and actual root policy/runtime admission pending"
+}

@@ -1,0 +1,184 @@
+{
+ "format": "cpud01.projection-check.v1",
+ "rules": "swdb.cpu_openmp_binding.binding per-document admission",
+ "sides": {
+  "baseline": {
+   "characterization": "fga03.t75-baseline.uniform22.t1.characterization.a2",
+   "characterization_sha256": "ad4fa3cbbfbb2f5f67bf386285b00da85f9ca04bba271fd8983f3f443f0ddd4c",
+   "identity_sha256": "3de0c61d6b497514af6f5f22f292ce734a2a5eee6681f87b3fbec7242c342ea5",
+   "checks": {
+    "format": true,
+    "identity_sha256": true,
+    "all_source_json_sites_cross_checked": true,
+    "characterization_id_and_sha256": true,
+    "source_ir_sha256": true,
+    "executed_site_union": true,
+    "compiler_sha256": true,
+    "inputs_byte_identical_after_projection": true,
+    "application_execution_false": true
+   },
+   "admitted": true,
+   "sites": [
+    {
+     "site": 84,
+     "name": "__kmpc_for_static_init_8u",
+     "llvm_function": "_Z6TDStepRK8CSRGraphIiiLb1EER7pvectorIiES5_R12SlidingQueueIiEii.omp_outlined",
+     "profile_indexes": []
+    },
+    {
+     "site": 85,
+     "name": "__kmpc_for_static_fini",
+     "llvm_function": "_Z6TDStepRK8CSRGraphIiiLb1EER7pvectorIiES5_R12SlidingQueueIiEii.omp_outlined",
+     "profile_indexes": [
+      10
+     ]
+    },
+    {
+     "site": 128,
+     "name": "__kmpc_for_static_init_4",
+     "llvm_function": "_Z10InitParentRK8CSRGraphIiiLb1EE.omp_outlined",
+     "profile_indexes": [
+      8
+     ]
+    },
+    {
+     "site": 129,
+     "name": "__kmpc_for_static_fini",
+     "llvm_function": "_Z10InitParentRK8CSRGraphIiiLb1EE.omp_outlined",
+     "profile_indexes": [
+      10
+     ]
+    },
+    {
+     "site": 151,
+     "name": "__kmpc_fork_call",
+     "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+     "profile_indexes": [
+      0
+     ]
+    },
+    {
+     "site": 178,
+     "name": "__kmpc_fork_call",
+     "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+     "profile_indexes": [
+      2
+     ]
+    },
+    {
+     "site": 187,
+     "name": "__kmpc_fork_call",
+     "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+     "profile_indexes": [
+      0
+     ]
+    },
+    {
+     "site": 199,
+     "name": "__kmpc_for_static_init_4",
+     "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii.omp_outlined",
+     "profile_indexes": [
+      8
+     ]
+    },
+    {
+     "site": 200,
+     "name": "__kmpc_for_static_fini",
+     "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii.omp_outlined",
+     "profile_indexes": [
+      10
+     ]
+    }
+   ]
+  },
+  "candidate": {
+   "characterization": "fga03.t75-candidate.uniform22.t1.characterization.a2",
+   "characterization_sha256": "e9defe7093d5c4d4a73e5f4dc4bf8b27b27a20a5e75caa7b6439e498d3eae837",
+   "identity_sha256": "dd58595c4fc7c5817d47f720099147f526378221be84b320f3acbeb9c675fd78",
+   "checks": {
+    "format": true,
+    "identity_sha256": true,
+    "all_source_json_sites_cross_checked": true,
+    "characterization_id_and_sha256": true,
+    "source_ir_sha256": true,
+    "executed_site_union": true,
+    "compiler_sha256": true,
+    "inputs_byte_identical_after_projection": true,
+    "application_execution_false": true
+   },
+   "admitted": true,
+   "sites": [
+    {
+     "site": 84,
+     "name": "__kmpc_for_static_init_8u",
+     "llvm_function": "_Z6TDStepRK8CSRGraphIiiLb1EER7pvectorIiES5_R12SlidingQueueIiEii.omp_outlined",
+     "profile_indexes": []
+    },
+    {
+     "site": 85,
+     "name": "__kmpc_for_static_fini",
+     "llvm_function": "_Z6TDStepRK8CSRGraphIiiLb1EER7pvectorIiES5_R12SlidingQueueIiEii.omp_outlined",
+     "profile_indexes": [
+      10
+     ]
+    },
+    {
+     "site": 128,
+     "name": "__kmpc_for_static_init_4",
+     "llvm_function": "_Z10InitParentRK8CSRGraphIiiLb1EE.omp_outlined",
+     "profile_indexes": [
+      8
+     ]
+    },
+    {
+     "site": 129,
+     "name": "__kmpc_for_static_fini",
+     "llvm_function": "_Z10InitParentRK8CSRGraphIiiLb1EE.omp_outlined",
+     "profile_indexes": [
+      10
+     ]
+    },
+    {
+     "site": 151,
+     "name": "__kmpc_fork_call",
+     "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+     "profile_indexes": [
+      0
+     ]
+    },
+    {
+     "site": 178,
+     "name": "__kmpc_fork_call",
+     "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+     "profile_indexes": [
+      4
+     ]
+    },
+    {
+     "site": 187,
+     "name": "__kmpc_fork_call",
+     "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+     "profile_indexes": [
+      0
+     ]
+    },
+    {
+     "site": 199,
+     "name": "__kmpc_for_static_init_4",
+     "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii.omp_outlined",
+     "profile_indexes": [
+      8
+     ]
+    },
+    {
+     "site": 200,
+     "name": "__kmpc_for_static_fini",
+     "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii.omp_outlined",
+     "profile_indexes": [
+      10
+     ]
+    }
+   ]
+  }
+ }
+}

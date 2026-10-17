@@ -1,0 +1,79 @@
+kind: strategy
+schema_version: '0.3'
+id: packing
+status: draft
+deprecated_by: null
+created: '2026-09-23'
+updated: '2026-09-23'
+provenance:
+- id: goto-2008
+  kind: paper
+  description: 'K. Goto and R. A. van de Geijn, "Anatomy of high-performance matrix multiplication,"
+    ACM Transactions on Mathematical Software 34(3), pp. 1-25, 2008. Section 4.2.3: a block that
+    "is not contiguous in memory" needs "many more than the minimal number of TLB entries"; "the
+    solution is to pack A in a contiguous work array", sized so the packed block fits in the L2 cache
+    and is addressable by the TLB; packing is "amortized over 2mc x kc x n computation", and a
+    panel with "no reuse" is "not packed" (Section 5.2).'
+  uri: https://doi.org/10.1145/1356052.1356053
+- id: grilling-2026-09-23
+  kind: human_report
+  description: Grilling session of 2026-09-23 (spec Q1-Q16), which chose packing as the first seed
+    strategy and its effect (an indirect step becomes a stream, plus a packing pass).
+  uri: null
+name: Packing
+target: access_pattern
+effect:
+- kind: reshape
+  step: -1
+  shape_before: single_valued_indirect
+  shape_after: stream
+  note: The loop reads the packed copy in order instead of gathering from the target array.
+- kind: add_pattern
+  address_shapes:
+  - stream
+  - single_valued_indirect
+  update_kind: read
+  note: The packing pass gathers each element once, in the order the loop will use it.
+- kind: add_pattern
+  address_shapes:
+  - stream
+  update_kind: write
+  note: The packing pass writes the contiguous copy.
+parameters: []
+preconditions:
+  requires_shapes:
+  - single_valued_indirect
+  requires_update_kinds:
+  - read
+  requires_semantics:
+  - field: index_modified_during_loop
+    value: false
+  - field: loop_carried_dependencies
+    value: false
+  unchecked:
+  - The gathered values do not change between the packing pass and the reads it replaces (no other
+    loop or thread writes the target array in between).
+  - The packed copy is read often enough to pay for the packing pass and its extra memory.
+benefits_when:
+- condition: The packed data fits in the L2 cache (Goto and van de Geijn size packed blocks to
+    fit in the L2 cache and to be addressable by the TLB).
+  terms:
+  - l2_bytes
+  basis: reported
+  source: goto-2008
+- condition: The unpacked accesses are not consecutive in memory, so they need many more TLB entries
+    than a contiguous copy (few consecutive accesses in the index stream).
+  terms:
+  - sequential_fraction
+  basis: reported
+  source: goto-2008
+- condition: Each packed element is used many times after it is packed; a block with no reuse is
+    not worth packing.
+  terms:
+  - duplicate_ratio
+  basis: reported
+  source: goto-2008
+notes:
+- Goto and van de Geijn pack blocks of dense matrices for GEMM; the effect recorded here is the same
+  change applied to one indirect step (gather the values once into a contiguous array, then stream
+  it), which is how the SW Ensemble Agent applies it to sparse and graph kernels.

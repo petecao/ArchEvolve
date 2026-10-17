@@ -1,0 +1,61 @@
+{
+  "actual_execution": false,
+  "all_original_identity_scan_function_ASTs_exact": true,
+  "basis": {
+    "bytes": 22117,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v3-dispatch/root-derived-scoped-preflight-v3.py",
+    "sha256": "80e96defa9514600be03a2f52ec4cef604370cab4683dc3fa8bbd179e98cfd93"
+  },
+  "before_after_finite_selected_reader_checks": true,
+  "date": "2026-10-16 ET",
+  "no_decoder_weakening_or_normalization": true,
+  "original_ABI": {
+    "bytes": 127394,
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component/abi.ast.json",
+    "sha256": "0416fecb76bfec1cd375b8d0940de7b1306e9d9b3d591fd0683f544c080ddf15"
+  },
+  "original_V10_G639_and_observer_V3_G625_must_stay_refused": true,
+  "output": "Bounded strict error and ordered duplicate-role context names/counts/hashes only; no AST payload",
+  "reader": {
+    "bytes": 28191,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-role-diagnostic-v1/read_abi_census_v1.py",
+    "sha256": "dda8d74a9fd02c6d193e99f4947aa830b11f5e1461ac13cb5fcfda6d6d909787"
+  },
+  "remote_argv": [
+    "ssh",
+    "mbit10",
+    "/usr/bin/timeout --signal=TERM --kill-after=5s 35s /usr/bin/python3 -I -B -"
+  ],
+  "replacements": [
+    {
+      "new": "if OUTPUT.resolve(strict=True)!=OUTPUT or not stat.S_ISDIR(OUTPUT.lstat().st_mode):raise ValueError('original observer raw must remain physical')\nobserver_lane=json.loads(read(OUTPUT/'lane.json'))['socket_lane']\nobserver_resources=[json.loads(read(OUTPUT/name))for name in ('resources.json','outer-resources.json')]\nobserver_result=json.loads(read(OUTPUT/'envelope-result.json'))\nif observer_lane['lease_generation']!=625 or observer_lane['exit_code']!=1 or not observer_lane.get('ended_utc'):raise ValueError('exact refused observer G625 must be settled')\nif any(r['exit_code']!=1 or r['timed_out']or r['out_of_memory']for r in observer_resources):raise ValueError('original observer guard differs')\nif observer_result['observation_complete']is not False or observer_result['after_input_errors']!=[]:raise ValueError('original observer refusal boundary differs')\nif json.loads(read(OUTPUT/'source-after.json'))!={'commit':head,'source_unchanged':True,'tracked_changes':''}:raise ValueError('original observer source-after differs')",
+      "old": "if os.path.lexists(OUTPUT):raise ValueError('fresh observer output already exists')"
+    },
+    {
+      "new": "original_observer_settled=True",
+      "old": "fresh_output_absent=True"
+    },
+    {
+      "new_prefix": "if not result['scoped_preflight_pass']:raise ValueError('finite original reader preflight refused')\n",
+      "old": "encoded=json.dumps(result,sort_keys=True).encode()\nif len(encoded)>65536:raise ValueError('preflight metadata cap')\nprint(encoded.decode())\nraise SystemExit(0 if result['scoped_preflight_pass']else 1)\n",
+      "tail": {
+        "bytes": 5220,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-role-diagnostic-v1/census_tail_v1.py.txt",
+        "sha256": "fffdebe19d2ff01553cd97c8cd4a8160a4a5b372ca0431d3617a4b0b1e15c197"
+      }
+    }
+  ],
+  "schema": "diagnostic-original-ABI-census-source-packet-1",
+  "source_ABI_public_acceptance": false,
+  "source_refusal": {
+    "bytes": 17226,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v3-actual/status-stdout-v3.json",
+    "sha256": "aaed3898b7e2d033961edd04fd0e72c193a2357a94fa6b38fa0ea4453aecfce4"
+  },
+  "strict_decoder_lineage": "Exact selected Refused/need/strict_decoder ASTs from pinned retained compiler_unit_adapter_v3.py; no project import",
+  "tail": {
+    "bytes": 5220,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-role-diagnostic-v1/census_tail_v1.py.txt",
+    "sha256": "fffdebe19d2ff01553cd97c8cd4a8160a4a5b372ca0431d3617a4b0b1e15c197"
+  }
+}

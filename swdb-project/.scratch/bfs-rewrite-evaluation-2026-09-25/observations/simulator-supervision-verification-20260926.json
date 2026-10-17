@@ -1,0 +1,274 @@
+{
+  "created": "2026-09-26",
+  "started": "2026-09-26T16:05:23.169211-04:00",
+  "classification": "local_contract_tests_not_host_evidence",
+  "command": [
+    "python3",
+    "-m",
+    "pytest",
+    "tests/test_bfs_owned_execution.py",
+    "tests/test_bfs_simulator_batch.py",
+    "tests/test_bfs_simulator_series.py",
+    "tests/test_bfs_simulator_batch_admission.py",
+    "tests/test_owned_process_cleanup.py",
+    "-q"
+  ],
+  "returncode": 0,
+  "elapsed_seconds": 82.49402775010094,
+  "finished": "2026-09-26T16:06:45.681179-04:00",
+  "log": {
+    "path": "/private/tmp/bfs-batch-final-stable-20260926.log",
+    "sha256": "608642ef6e86437594bf7a438219decec63d91df6d8f16398b6b7d4c30bcb1f6"
+  },
+  "selected_files_unchanged": true,
+  "runtime_changed": [],
+  "runtime_verified": {
+    "swdb/__init__.py": "bcbd2c199a6b63c92302a8daf37c26909a76332b89452797351082ddba66b743",
+    "swdb/__main__.py": "e3ee21171d56ed9ce3e04e6ff22689ca43bc23cb5743fefcd69675c0484faba0",
+    "swdb/artifacts.py": "6368cc18061ee3ddc6256b96a76bf2cfaad3fae283104291723939b725c2dccd",
+    "swdb/bfs_coverage.py": "c659948a1735f8ddc6e62aae3907b56e1ea978e449e0ace6345266bf79b31538",
+    "swdb/bfs_discovery.py": "6f5414eb9844688dfe5f651cb030d5885f6b70ad6c7e10b4ddf1d7cd04e60021",
+    "swdb/bfs_native.py": "e385e50961b9c96ea7c6018aaa09a30df4c49f3286e56500e7ed3f1376a6e942",
+    "swdb/bfs_native_pair.py": "83c2d68000da99e252603b22f90bd0c43f1ddea5899306476016ddfd3c4325d9",
+    "swdb/bfs_profiling.py": "b622f49ee228f6ff63cdd112f61cf965187f39ed4aed1fe3d6ebd90880a87443",
+    "swdb/bfs_protocol.py": "cb75a06225e090abdb4bffc88352b2fdefdcecc418d74911806b523f969cb88f",
+    "swdb/bfs_region_comparison.py": "dc047b2893bbd65b5b4354a749af5580fbacd1f392b5e5892b9f21c85d152b94",
+    "swdb/capabilities.py": "ef3d859dd05b2e505c9dcdf96faf4354b066963a6b1735fdba30c8b5c82f06d2",
+    "swdb/cli.py": "d613805c26fb22edb3f8b3eb8553d7cb39ec9669443f2319538e025391d9e738",
+    "swdb/comparison.py": "770b159704745ee7f3a1bf70337c18605d62619c8f9253339bd7b45b8d131ad8",
+    "swdb/db.py": "819103fafbc0eb6efff880b820d1ce477c2a2ae38684f1d9e36931d1fecd019b",
+    "swdb/dx100.py": "f4e82d3163d3c2d3d4764aace07da952b0ca67c0aaf480c3738ccd9f0641deec",
+    "swdb/dx100_author.py": "acf9d66f129d22922d582fcf4f4df3b91936311ba463e951dee72913dff657a1",
+    "swdb/dx100_candidate.py": "d75202db0cfdd7a1d30867c253b93a68b23d333f22c20184cb9ce9616068e613",
+    "swdb/dx100_checkpoint.py": "006dd1bbe8c993323ad61cba0cf570f64bd5c1048af694e801ab54161ef30dd0",
+    "swdb/dx100_coverage.py": "d5b17c6b6d6ee19bbe04a1d0e91c602e1b773a2d94ba751dbd097e1371acda3b",
+    "swdb/dx100_diagnostic.py": "e736c8e037a4af2d8dfb7958b32382e03e9eecda5f59c09a5a4560f9ea7d202c",
+    "swdb/dx100_inputs.py": "5ad5e17249e0b681ffd901520de87332ef04edf20479bc680df51ff2e08eb493",
+    "swdb/dx100_profile.py": "e6a4fac247ba760c00f30eaeccc8182723cbf0d3b1600ff2420a83e9ab01ca22",
+    "swdb/dx100_resources.py": "a94c8a3c5f92c520e11999ac05ff87943d9ec656f93956388bc6614ed57c0eb2",
+    "swdb/dx100_witness.py": "2d589162b6595fee0abf4f1db54aa5b1a0964dab3f51aa408ac06505b6014091",
+    "swdb/formula.py": "cdeaffb72042173c1cac2f33522644bd5201082082b36705706ff0f85c652f99",
+    "swdb/host_observation.py": "80dc7df5bfb801c64ccd3e11494f2e88ed2b38b32f5ab440146ce5349cf96842",
+    "swdb/isa.py": "e6ed6002b073f722f6540fe9d17a6aab52f617b22b06e030f744703063be8444",
+    "swdb/machine.py": "258259e5765ae18f44f327a80d71860b3dbe2921114b3ea894e84bc73426b32e",
+    "swdb/paths.py": "40261506405f1d59a516c96a77f8c46b952012b09a022fb02106ecb2fcac02d6",
+    "swdb/problems.py": "ecc53c60073324d03f975b0025221d877bf7226c07879f64ee45da2facec9c95",
+    "swdb/processes.py": "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289",
+    "swdb/profile.py": "bab20cccf3d48628eec5819f3852cbf4cf0ce2813f1872e4080ead0e874ed31b",
+    "swdb/profile_package.py": "c2479b4d646ecfb06f57ab1ef1fe2d0c400758ae9b4a4ffc8a33e9e01ade164a",
+    "swdb/rewrite.py": "a0284a56d898c8d7b3100f00bbfb5aff4a1ce418d8dddbe14a1ad86294783d45",
+    "swdb/rules.py": "61c07e5fdc3b349ed0daf2880e7a027c15bd17d15346b29c6940bf10c38e7742",
+    "swdb/schemas.py": "b82250032870f927bb60f80757c458fa73ff3fb8d3e1f852ad75947782f4ced7",
+    "swdb/sg_stream.py": "f86b7e30a6edf56ca03728a86f52d11469c6504a3c8510578131100c0752ed52",
+    "swdb/store.py": "f02a48c55c76517c9de656c270de9b85e440bc59f12dbe38bab4e1c01cd4b920",
+    "swdb/strategy.py": "319b17cc8cda39d47a67d2ef64a4f23b903112de5fbb311d04a04ec49eb8aeed",
+    "swdb/validate.py": "85710a483892a6d0182f00e05737f724d3846e75f2dd874b793907eb150c8866",
+    "swdb/view.py": "fbe999703f2de942925130537aabbb6042f298c2aeb00ad6ca6ea726a4906f41",
+    "swdb/vocab.py": "c554826daf3cdcf215dee0ebfb71b09f52774c5c42ab3b61cbec0b3cf6679e43",
+    "swdb/workflow.py": "37aa80bb4adc947fdfe0ff4556d3205f000fd1ef98774c84317d79098441607f",
+    "swdb/writer.py": "b512a63920c6397fe7604fc1b19581eb1a4077c03ef9bf4da685a108a39f0712",
+    "swdb/yamlio.py": "8c92d644f5abca0f7031ce52e1577892cf1b7c79bc730484112eedb3e39439c0",
+    "scripts/__init__.py": "81b543e7da97826b8b55c0b888961650a241c0904014d5b57557bceb530d066b",
+    "scripts/bfs_callgrind_roi_probe.py": "7655a34c795436483df05fb07ce36499fb41bb5b7d18b844c88d832bf14e926d",
+    "scripts/bfs_campaign_proposal.py": "d1ed0d5adbce777919c7e549ae559b97ea388e9e7c9b4528ff11e8a925f27d38",
+    "scripts/bfs_contract_demonstrations.py": "2e33ea2db85a173b9911dcd26f4f4ccc153162a370a47eac8d72c02e34e4c9a7",
+    "scripts/bfs_diagnostic_driver.py": "62d6574f821fe11196e0b27e8e04b4180fa5a22b511e75f2becbc87ae5328d7c",
+    "scripts/bfs_dx100_coverage_a2.py": "ebe4843361b4d751e57ffcd85e52945caace1a6c1e294945a3ad5917e88fa703",
+    "scripts/bfs_dx100_coverage_execution.py": "b2a4c7daee6f96c16ffcd1e757ce278c93e49665708123b42450d7f6a412e524",
+    "scripts/bfs_dx100_coverage_graph.py": "c4527c65266284f594709bfc7be1d829d40111f339198bd866d7a3348dfadb5f",
+    "scripts/bfs_freeze_pilot.py": "6607a22eaae8d10e8f31c7dd53b80aa3fe4944935c3a1edc4f72514e015be5c6",
+    "scripts/bfs_generate_workload.py": "2155318708d6785e472b163dd36eb48db7be155e6fd317f13c0797c9721e773f",
+    "scripts/bfs_instruction_smoke.py": "12d7d6c0d059195e0de7b8723c7bad8930ea47729d092c91b64f8b830a09929b",
+    "scripts/bfs_native_campaign.py": "2cd7de6ec91b5181373e8a235f568b0a308e0c04962ce04bea38050559fa1043",
+    "scripts/bfs_native_one_thread_pilot.py": "5b0dd95f73a5166bad3b602b07274af4915e8c08070769e9e989ddf00e27ab0a",
+    "scripts/bfs_native_paired_pilot.py": "821f341d3b6e23e761084c9feb8fa926ce3bb78a1621ec69106ad111eeb745e9",
+    "scripts/bfs_native_pilot.py": "8c1b03de2b9a591a0fdb802b6fe1c5caeff9ea837605289e9208b7b87d92556f",
+    "scripts/bfs_native_repeatability.py": "d3ee6523fdaaa8711ee5b8a76312db63f4fad44b25601f2e1435186b13f3dcb2",
+    "scripts/bfs_native_smoke.py": "3727c739b243c98f7d418d11051a9c1a1a0f10b2605c16b737c73d9e6ffb9614",
+    "scripts/bfs_one_thread_calibration.py": "89a7cb836d964308b50cd1b23b3c1f160d3c0cbffe5cd43987635a6fa766affc",
+    "scripts/bfs_owned_execution.py": "58b36373160d8ae95352251786cce5fa84297afcee29ce4818f3580dd0d991a6",
+    "scripts/bfs_owned_observer.py": "02e630abd2df9558c13a988cbc47a2211f0203029c670eeb041637b88d57e6e5",
+    "scripts/bfs_owned_rss.py": "e9e48a661ed1cb68eee64711090d83e0bd1be7524f012c19d48b21da99475cb3",
+    "scripts/bfs_package_handoff.py": "b5f1224b84c20f6677f5283037e3860a5db659c4d1c78c4e5cc013cba95bcad5",
+    "scripts/bfs_paired_calibration.py": "8d62f50639c1b97cd77c2b17d6b2ccc4b917ec2bae6a363c27013a6a2ee3fe06",
+    "scripts/bfs_process.py": "099d70e7332c5a25f4ba96d0b6f6ee9c70931d6ecae0c664ed46787c0775f284",
+    "scripts/bfs_profile_recollect.py": "232580c289ea74e16a7250aa3e18746b482429db01d631fb9aec3d00d7c54876",
+    "scripts/bfs_profile_smoke.py": "5a0e8e95ca18b516f16367864aec0a3a0be903f78a943615526e629098a707c4",
+    "scripts/bfs_simulator_batch.py": "b96298f173be5cbd6607cad3e2c92dcea0f3998616237aae9cac4182031075a5",
+    "scripts/bfs_simulator_batch_terminal.py": "5effde6def4b3ef140edd909121c96bb46a28a23b9af909fe3f5060f84bdcc45",
+    "scripts/bfs_simulator_series.py": "cef3f52187478750fcb2799279b43e29d44ac0bdc62c9f891eb17e1ccbbf33db",
+    "scripts/bfs_t17_build_only.py": "4f602d03daf3763b22c82c5d6ff43522dbf1fc2a2e91cbe10a2091d83f8c8920",
+    "scripts/bfs_witness_launch.py": "7560cd821aff79a87143306802e64d3fb691e00175fee404e29f85c77f6fa1b6",
+    "scripts/dx100_build.py": "4fee6459b38e6c27a0a28120e96bb38c7f8d5e7ad11d8ddf5c12f53ca08f49a1",
+    "scripts/dx100_candidate_smoke.py": "a164549ae251ef4587bc13cc7971381d76f2254bb9227d2ab687be2ee18b6908",
+    "scripts/dx100_capacity.py": "e6683d783abe3b7cf2116064fa7bf6496a492fc89270a552f441cf60bdd32b52",
+    "scripts/dx100_compile_smoke.py": "ca5df8b7161d1b9ff08e054e55e790c462463cab5856d84c9e7d4ddf6e5641cf",
+    "scripts/dx100_host_memory.py": "655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd",
+    "scripts/dx100_profile_smoke.py": "2fa2b107cd8ed12e2dc762d85f2536990a821998cb34f661af309c84a4b204ce",
+    "scripts/dx100_smoke.py": "a6b15d6138639f8928836cbf6df7a1707e81ee22835723458f18e1595a3c1efb",
+    "scripts/dx100_trace_probe.py": "c02244b66f611e214c65f64c007c9161eec157a174a4d93554dd7ff1003f5834",
+    "scripts/dx100_verify.py": "371657977d56816a37f4885f19923f37175331d2d15b5d7f6e6049d3fa8c1395",
+    "scripts/dx100_witness_continuation.py": "5673c4e35653e6804784e376c9832a2c73654f384ad7c2deffc4d30f2d0a2711",
+    "scripts/dx100_witness_corrected_probe.py": "7331a0405738d99b718daaf1b176619e8ac0a9be59b539ecf6609c7944a9bde1",
+    "scripts/dx100_witness_probe.py": "9b9db8d25ed8f3b1921908be9b85feff9a8cfc8cc50d468c27fcad721b2413c6",
+    "scripts/mbit10/profile_batch.sh": "eb2ddb2b6eaa85fb678c071437e4d549187f376ec6a599b628f4e938f14ff69b",
+    "scripts/mbit10/profile_in_lane.sh": "d361b6c1ffd3fd8f6b553e0df4b77bd3b1559fcdb577c9261badb2bab9980496",
+    "schemas/application.schema.json": "a8ab12d489d35f6d7fc5314915d55660439a71b443e35847075f8611a47f2874",
+    "schemas/candidate.schema.json": "c79e9f594d12d2e397721b688282043e18a08832ade874d2b1ee46d09cee8ef1",
+    "schemas/comparison_result.schema.json": "0eaa93761415515710a8a82c479d1ed552dd66beabcb2581d5cf2968657ddbf4",
+    "schemas/envelope.schema.json": "f3b602a6c4aba7b93200c74266acbd0fd94587672368d0e85c84cf6b7292d87c",
+    "schemas/evaluation.schema.json": "a4286638867def108662dc4a8d68506505f7b78f3c1f8d4d7b6acefc6b34fe1e",
+    "schemas/evaluation_pair.schema.json": "13927d3dde1892d86627e5966364f36c12861f2effb9516b2d9321496c5a5184",
+    "schemas/hardware_target.schema.json": "654f54a75b531dea81ae17d37b6903d6b0239624f1126f668fe45aad368253c6",
+    "schemas/implementation.schema.json": "a5a1569075de93bd68707e2e647eb6ce616c0f0d932422f447958e959f693334",
+    "schemas/input.schema.json": "28c804418132abc550266cf7c0b9d024a9a240e89d3cd87450db7ce41ba7bc1c",
+    "schemas/intrinsic.schema.json": "67f1a708bce8f115dee6458e2b64eda6ed8dde897c40646f971de2cd16efc557",
+    "schemas/kernel.schema.json": "f6512751cd3c2ffc2e5da9eefdb720bb02bd91d5d2037242362bd365928a9416",
+    "schemas/machine.schema.json": "604cb91b7b2d4211ff71f43d99d5d6c795bb1ba38bae9f0452fb4abcc409d6cd",
+    "schemas/messages/rewrite-proposal.schema.json": "31495cd0df3763a8ebba915dfdaf3ba5b2c77d0b6b8a3558773875e1f48d5c8c",
+    "schemas/operation.schema.json": "9ba2178eb7e93a3fe70df5ce4d7499386a2f6bc0bf94caab43a596c373eb2da4",
+    "schemas/profile.schema.json": "196fd9beb8f86238a5db01d80a7eaf768109765955ad4635d7daa648936e85f3",
+    "schemas/profile_package.schema.json": "5dc1a8e1ff301e47e74d017b1142db2dc55034607ab9add76784bd891f62adf7",
+    "schemas/proposal.schema.json": "432af23bde67e8db7d90a69907c3fd656d91f8ad8c93f942309f1e3832e339fe",
+    "schemas/protocol.schema.json": "1f6746df0d7cfed5f1ad4f5c2f2391de18ae409d27b621760472f14b0142825b",
+    "schemas/region_profile.schema.json": "f24a7700f3629ef5bbf9b441748d81abc13e1bfa29852ab759a9b44bd2b604d0",
+    "schemas/source_snapshot.schema.json": "8f47f3d40bcab6f104c91e1a8aa4c4d789527cbb5b0435c40c2e703001fda766",
+    "schemas/strategy.schema.json": "0654a1741b5c44a5b3fd3f258fbc2bfb4a2d10312eefd79a848fb96d90d9bf03",
+    "schemas/workload.schema.json": "0e28a3c702355288e859144487d59bdc799e433f0cc2963f14fec8e0d7a3dfdd",
+    "vocab/address_shapes.yaml": "cdcb602c3accb8ae8875460e96e9765c0644a58ab05770b5185db88bb3484ae6",
+    "vocab/array_roles.yaml": "b88a7f30149dc95db2eb03a19e09a1db411496be71bd689ff844ee5cfd53eb88",
+    "vocab/basis.yaml": "0efad7a802cf78cfd3a50008e2643acb3102c727618e87e8b015a0728bcc17c7",
+    "vocab/bottleneck_classes.yaml": "f6ce03cc887e40d3dece1c1cb0cfd3ed9df69a64c3e42e492a768db231e19509",
+    "vocab/count_scopes.yaml": "ac77bf69d50eb4c71d760d20e46b2d0f0dfcbf1a1e68802584258c9dbc87f915",
+    "vocab/degree_distributions.yaml": "402eb97cfc5817780b03a8cc9cbbc2deab2f6da0e10bf80966424be559bdfc62",
+    "vocab/domains.yaml": "74bace9433c38e27bc69a4c3e85bd320c6337a390a4016e5f10772a326aeb0ee",
+    "vocab/effect_kinds.yaml": "7ca3a4b08759a50ab6e5844089c35c315c71eff667e5487ccd71d9f8523b7380",
+    "vocab/implementation_origins.yaml": "05fc65309cbc94a30dac58f9f064c886833a5d8ea532c1067a686a850f34f3a6",
+    "vocab/index_localities.yaml": "93755d7241b3c1c02b6fb2457a04ff9897d51453863744f579e9c975e3748d47",
+    "vocab/index_transforms.yaml": "5198ca1f4d2d972a4093d409fa76dfd23ca48debb15c09f6a2f4b03ccb2609ec",
+    "vocab/input_densities.yaml": "57911d673c048d9edf2a3cc200f35e2f559a8340a757700dc3d95c0f08aadf7e",
+    "vocab/input_formats.yaml": "e4483a3bdf95db1ff463504c3326d786bb2d54c2e6c9c0aeafb5841b51564110",
+    "vocab/input_properties.yaml": "44e2b7c56aaea7c124dd2ba3d3a9aca62d79c86316930022a8866f913dd36034",
+    "vocab/intrinsic_memory_kinds.yaml": "4dba7ed860cd967c4394ffa96b89179d0bb8168c2ad671655bec11d69c1fd4c3",
+    "vocab/isa_extensions.yaml": "afdce05adadec55b8ca277adb5f39dcb7784946b3be22633d80d0f4276a7c28e",
+    "vocab/isa_families.yaml": "85a184ada5ec37e5b0f0e3f2d4f9dd221c669b1a7a0a815b30cdad55d3043cf0",
+    "vocab/layouts.yaml": "cba510d68e36af47a0cfafe2745a64452c78b975fc11e6831678fa3099b1dc9e",
+    "vocab/loop_restructures.yaml": "1025be6dc902699d0d46e6827ca6e6b15f7a0a995dbe13d2c86a2c3dbd84cfcb",
+    "vocab/memory_limits.yaml": "0c9484f2533f70ff64aa8f9935dfa60d3f9f1367ac1be68aaf935ad66c135255",
+    "vocab/metrics.yaml": "4d0ce198e90a75844775710ed13892f864cc8dbcf41cd3438e084c53ffa679d1",
+    "vocab/numerical_requirements.yaml": "6fcdf6eb2ed6c583891282da851a594bc535504979837ea7f76a471c87bf5177",
+    "vocab/orderings.yaml": "504ee1c2596ef0f809c430832d11233f5cf650fe35b4e8cca38d239eb59a2880",
+    "vocab/parallel_constructs.yaml": "8154d0c5fe995386984aa9a4b682e771f6837cf97cb5c7393e6691ca42b2ebfa",
+    "vocab/parallel_models.yaml": "1631d376f2a8320c8af0f3ba6777789660b23d03e47d007a2e89f546e329d826",
+    "vocab/provenance_kinds.yaml": "ff2939677f4a312bd722fe4953c0b9a402594c990a7e6da17dda06cd89d28d5d",
+    "vocab/record_kinds.yaml": "8eac4386f39a4d586d13d36a3e06ed53945fd31e94a4459cf652c2d246ac9317",
+    "vocab/run_outcomes.yaml": "1fe70da6d640d6f5fb3181063137e3be705a4872fcd22ef05d37fee627a56975",
+    "vocab/run_parts.yaml": "28bbfac9db67090be6ea3838d1acb7cc81e2e74879cc4f019ed03e5947a7e119",
+    "vocab/source_origins.yaml": "0545800494fe485b0120e7c816a8bd18349dfd914dcf8f9872b4c13fc58facda",
+    "vocab/strategy_targets.yaml": "627e7316535fcb5d39a66d7dd276715a56c0f2d97a0d97bbe6cd7a2d500ff9db",
+    "vocab/timer_formats.yaml": "92c682cf11adfb56deca21fe7d12ba3ff7dedab853e2de2e08d3cce2c2f8bce3",
+    "vocab/update_kinds.yaml": "c2ec38c48b74e040f97acbc509cd40342244dc879bc4cb7d19f1b52d43fd87ba",
+    "tests/test_bfs_owned_execution.py": "729f4bc27d5d82a4601ad588bfb14158ad70911994b775090c690184abad48fe",
+    "tests/test_dx100_interruption.py": "4aa6c6090ec0e755303b5d62c87071b4908b1c2da0e71f2ed86b06fa07d90e73"
+  },
+  "files": {
+    "scripts/bfs_owned_execution.py": {
+      "bytes": 22576,
+      "sha256": "58b36373160d8ae95352251786cce5fa84297afcee29ce4818f3580dd0d991a6"
+    },
+    "scripts/bfs_simulator_batch.py": {
+      "bytes": 43371,
+      "sha256": "b96298f173be5cbd6607cad3e2c92dcea0f3998616237aae9cac4182031075a5"
+    },
+    "scripts/bfs_simulator_series.py": {
+      "bytes": 28186,
+      "sha256": "cef3f52187478750fcb2799279b43e29d44ac0bdc62c9f891eb17e1ccbbf33db"
+    },
+    "scripts/bfs_simulator_batch_terminal.py": {
+      "bytes": 7859,
+      "sha256": "5effde6def4b3ef140edd909121c96bb46a28a23b9af909fe3f5060f84bdcc45"
+    },
+    "scripts/bfs_process.py": {
+      "bytes": 6350,
+      "sha256": "099d70e7332c5a25f4ba96d0b6f6ee9c70931d6ecae0c664ed46787c0775f284"
+    },
+    "tests/test_bfs_owned_execution.py": {
+      "bytes": 15171,
+      "sha256": "729f4bc27d5d82a4601ad588bfb14158ad70911994b775090c690184abad48fe"
+    },
+    "tests/test_bfs_simulator_batch.py": {
+      "bytes": 32355,
+      "sha256": "13ab0443888588d8c6ee8fb644aed91c6dac2f1b07570fff039bcfcffc0f6358"
+    },
+    "tests/test_bfs_simulator_series.py": {
+      "bytes": 21360,
+      "sha256": "ea51fc216b9ebd91dedc9e13b8aeb8612e3e7eb7144685cc5833340944767002"
+    },
+    "tests/test_bfs_simulator_batch_admission.py": {
+      "bytes": 19219,
+      "sha256": "1df1a7c71d78fecc28117799d98a8ec31fe1a6cf3f35336390ecee7b8ff311ed"
+    },
+    "tests/test_owned_process_cleanup.py": {
+      "bytes": 7462,
+      "sha256": "25a8e1c4dc3137a9f5a3f64757442160ee036f834d4a24de95d2d2de9643d173"
+    },
+    "docs/bfs-simulator-batches-20260926.md": {
+      "bytes": 16071,
+      "sha256": "54d0c45faf753de6c91311926ea372bb50c20fa0c4727a90d16c2acfab8583eb"
+    },
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t15-simulator-batch-20260926-a1.json": {
+      "bytes": 5275,
+      "sha256": "2163c763fa9d985800ebab24670889c84680ffe76f2c44e7dd692b59f2e1ef99"
+    },
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t16-simulator-batch-20260926-a1.json": {
+      "bytes": 11036,
+      "sha256": "7436deb684d55883c8c8caac9099d021a9c0d6caf5bc00e17943b0e969525a04"
+    }
+  },
+  "result": {
+    "passed": 182,
+    "linux_only_skips": 6,
+    "seconds": 82.24
+  },
+  "independent_reviews": [
+    {
+      "path": "/private/tmp/bfs-batch-result-terminal-repair-20260926-v2.json",
+      "bytes": 2876,
+      "sha256": "31764555b78a691c374410726eb391d8273e842707dd009f9731c2700db5150b"
+    },
+    {
+      "path": "/private/tmp/bfs-readiness-finalizer-native-review-20260926-final.json",
+      "bytes": 3077,
+      "sha256": "5002b6f6e438af5b86eb68653373faa49238c1c9dc9563bc72e368c5074f84de"
+    }
+  ],
+  "root_independent_group": {
+    "path": "/private/tmp/bfs-batch-admission-lifecycle-independent-20260926.log",
+    "bytes": 190,
+    "sha256": "1b0c88fc2e138d77e91ebee041b31a4d87fad082ebe611facb0bc1494a5f52dd",
+    "result": "75 passed,4 Linux-only skips in0.92s; before final fixture and finalizer additions"
+  },
+  "preserved_failure_logs": [
+    {
+      "path": "/private/tmp/bfs-batch-aggregate-review-20260926.log",
+      "bytes": 2991,
+      "sha256": "1f9df1c676338192e7ebfd7fdd2dc087dc1ce980332ff8f48a7783627131d19b"
+    },
+    {
+      "path": "/private/tmp/bfs-batch-finalization-red-retained-body-20260926.log",
+      "bytes": 25960,
+      "sha256": "15da99d1d240def3070ffda91f72e9c662bd4050ecdccd2f8090f2c374cb3fbd"
+    }
+  ],
+  "limitations": [
+    "Contract fixtures only; exact prospective Linux checks and independent terminal closure remain required.",
+    "No host dispatch, frozen protocol, accepted BFS coverage or gain follows from these checks.",
+    "Embedded cleanup snapshots are nonfinal; terminal ledger readback is a separate check after process/lane closure."
+  ],
+  "source_preparation_receipt": {
+    "path": "/private/tmp/bfs-batch-final-stable-20260926.json",
+    "bytes": 34948,
+    "sha256": "41bdd6d6a12263d8f3d315950d0d408dadb611b88e57a1191abebeddedfeef06"
+  },
+  "root_verification": "All named file/log hashes reopened locally on2026-09-26; execution and acceptance remain pending."
+}

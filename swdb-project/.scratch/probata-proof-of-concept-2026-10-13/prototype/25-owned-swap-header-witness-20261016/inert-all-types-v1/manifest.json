@@ -1,0 +1,1341 @@
+{
+  "caller_premises_added": [],
+  "checker": {
+    "id": "vector-owned-swap-header-witness-1",
+    "sha256": "7b783e382e789857db89b8127348198dc505e7b03018cdc89c9ca2f58976b65c"
+  },
+  "cleanup": {
+    "actual_vector_destruction": "Existing real release and automatic end required for each actual source owner; no omitted feasible cleanup",
+    "retire_replaces_release": false,
+    "source_cleanup_established": false,
+    "swap_temporary": "fresh automatic trivial C struct temporary; no second owning vector"
+  },
+  "complete_source_antecedent": "OwnedEffects::world(h,owners,ready) && Owners::active_owner(owners,l) && Owners::active_owner(owners,r) && OwnedEffects::is_ready(ready,l) && OwnedEffects::is_ready(ready,r) && OwnedEffects::header(h,l,bl,nl,cl) && OwnedEffects::header(h,r,br,nr,cr) && Heap::automatic_available(h,24,8,a)",
+  "created": "2026-10-16 ET",
+  "current_model_records_admitted": [],
+  "elements": [
+    "int",
+    "float",
+    "double",
+    "int *"
+  ],
+  "frame": {
+    "buffer_payload_interpreted": false,
+    "incoming_issued_object_metadata_preserved": true,
+    "physical_field_and_padding_projection_established": false,
+    "receiver_padding_unchanged_claimed": false,
+    "written_receiver_entire_footprint_excluded": true
+  },
+  "kernel_bindings": {
+    "Heap.automatic_available": {
+      "begin": 7657,
+      "container_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+      "end": 8381,
+      "path": "theory/heap_reallocation.mlw",
+      "sha256": "1239a6d2b87ed15971fe909848b065ca748b64e95197a5c2ab8113f56a8d2659"
+    },
+    "Heap.begin_automatic": {
+      "begin": 7909,
+      "container_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+      "end": 8381,
+      "path": "theory/heap_reallocation.mlw",
+      "sha256": "1beecef686b833125897d482c5bd5cc752695ebd1898d0b50eadbb3b0228c78f"
+    },
+    "Heap.contents": {
+      "begin": 2711,
+      "container_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+      "end": 3755,
+      "path": "theory/heap_reallocation.mlw",
+      "sha256": "8a1df13235051ce34bd3bf21aee23412f2476925f158e8cc7fa96a643632d3c1"
+    },
+    "Heap.end_automatic": {
+      "begin": 8319,
+      "container_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+      "end": 8381,
+      "path": "theory/heap_reallocation.mlw",
+      "sha256": "766655965c8b6ec6406d9c89ba22d31ed7b34496de79e684f0f63db054878a24"
+    },
+    "Heap.integer_at": {
+      "begin": 2849,
+      "container_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+      "end": 3755,
+      "path": "theory/heap_reallocation.mlw",
+      "sha256": "4de755af64c2b346b67bb03700c34280017d6f9ff78ea7745b434f4e53a3678a"
+    },
+    "Heap.load_int": {
+      "begin": 5493,
+      "container_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+      "end": 5621,
+      "path": "theory/heap_reallocation.mlw",
+      "sha256": "cb8fe61c7868b96265b69961f04264a54a515b3aff07a28493b9619089a57158"
+    },
+    "Heap.put_integer": {
+      "begin": 4451,
+      "container_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+      "end": 4864,
+      "path": "theory/heap_reallocation.mlw",
+      "sha256": "5fa99d604a15cfdf754b7702096442022390fd706dbdee1246ca7c18d36dd681"
+    },
+    "Heap.put_pointer": {
+      "begin": 4646,
+      "container_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+      "end": 4864,
+      "path": "theory/heap_reallocation.mlw",
+      "sha256": "0dbd31c67496c94f92f9c46edcb305e47924fc7fd0aa19c64695a2b5c190f542"
+    },
+    "OwnedEffects.capacity": {
+      "begin": 706,
+      "container_sha256": "6bfc13341d2faceb5a3fb64bd2d5bff22dd03c52a1fa3d5c4cb39b6e9c83f7f5",
+      "end": 770,
+      "path": "theory/vector_owned_effects.mlw",
+      "sha256": "9049b282b0b88b9efa1b05aaf6b4741132be8b148bd1d8834e2f990fef6d669b"
+    },
+    "OwnedEffects.copy_header": {
+      "begin": 1950,
+      "container_sha256": "6bfc13341d2faceb5a3fb64bd2d5bff22dd03c52a1fa3d5c4cb39b6e9c83f7f5",
+      "end": 2356,
+      "path": "theory/vector_owned_effects.mlw",
+      "sha256": "a2cb755d935da7840f0935935feca225851d9b09edd759c878c4044ad0fabd38"
+    },
+    "OwnedEffects.header": {
+      "begin": 904,
+      "container_sha256": "6bfc13341d2faceb5a3fb64bd2d5bff22dd03c52a1fa3d5c4cb39b6e9c83f7f5",
+      "end": 1171,
+      "path": "theory/vector_owned_effects.mlw",
+      "sha256": "86724268be96eca96c1e64b46a76f09378bda83b24993d4f687b70520d287e1a"
+    },
+    "OwnedEffects.is_ready": {
+      "begin": 451,
+      "container_sha256": "6bfc13341d2faceb5a3fb64bd2d5bff22dd03c52a1fa3d5c4cb39b6e9c83f7f5",
+      "end": 770,
+      "path": "theory/vector_owned_effects.mlw",
+      "sha256": "d9ee3e7d27aff496aa7e6eb077e132570898d2e2c35dba79177838b7c467b0d5"
+    },
+    "OwnedEffects.size": {
+      "begin": 646,
+      "container_sha256": "6bfc13341d2faceb5a3fb64bd2d5bff22dd03c52a1fa3d5c4cb39b6e9c83f7f5",
+      "end": 770,
+      "path": "theory/vector_owned_effects.mlw",
+      "sha256": "95172caf8df1187cf56f3a9acc9f0b5ee7063e4f6bca850724f5ea1045d9661e"
+    },
+    "OwnedEffects.store_header": {
+      "begin": 1817,
+      "container_sha256": "6bfc13341d2faceb5a3fb64bd2d5bff22dd03c52a1fa3d5c4cb39b6e9c83f7f5",
+      "end": 2356,
+      "path": "theory/vector_owned_effects.mlw",
+      "sha256": "275eedc8b7e7f306b6c7e8a5205447456f290b45102b8f7f3f3ea2fb1920419c"
+    },
+    "OwnedEffects.swap": {
+      "begin": 2502,
+      "container_sha256": "6bfc13341d2faceb5a3fb64bd2d5bff22dd03c52a1fa3d5c4cb39b6e9c83f7f5",
+      "end": 2803,
+      "path": "theory/vector_owned_effects.mlw",
+      "sha256": "bea7716c633b48409bf4bb4554a7ee9fde2c05b81fa1a944b9eb491133fe89f2"
+    },
+    "OwnedEffects.world": {
+      "begin": 1469,
+      "container_sha256": "6bfc13341d2faceb5a3fb64bd2d5bff22dd03c52a1fa3d5c4cb39b6e9c83f7f5",
+      "end": 1815,
+      "path": "theory/vector_owned_effects.mlw",
+      "sha256": "68f179a1aebc4df777ba5c5d8d3b227c286343184c658a438ed6e469897b8c54"
+    },
+    "Owners.active_owner": {
+      "begin": 536,
+      "container_sha256": "a2c295d2c6720a9c8c522f05e19723c2d2d2a32b63f9b198aab03f195269e4b6",
+      "end": 656,
+      "path": "theory/vector_owned_state.mlw",
+      "sha256": "30f4d632599cb0d3d314128f98fc2ec8cf23802aa0bf65aed8ea7a930c5a04a5"
+    },
+    "Owners.buffer": {
+      "begin": 600,
+      "container_sha256": "a2c295d2c6720a9c8c522f05e19723c2d2d2a32b63f9b198aab03f195269e4b6",
+      "end": 656,
+      "path": "theory/vector_owned_state.mlw",
+      "sha256": "2326ef19933b4c525e158c3e40d8243fe7347660d63689f565a9671ffd01ca42"
+    },
+    "Owners.swap": {
+      "begin": 1935,
+      "container_sha256": "a2c295d2c6720a9c8c522f05e19723c2d2d2a32b63f9b198aab03f195269e4b6",
+      "end": 2110,
+      "path": "theory/vector_owned_state.mlw",
+      "sha256": "3dfb92a0bcad428a0eef5123a2703ca191ba2cac3b919804e65c0e60b359914e"
+    }
+  },
+  "logical_target": "swap.owner_correspondence.header.ready",
+  "obligations": [
+    {
+      "case": "left",
+      "condition": "observed == l",
+      "dependencies": [],
+      "existential_introduction": {
+        "binders": [
+          {
+            "name": "size",
+            "type": "integer",
+            "witness": "nr"
+          },
+          {
+            "name": "capacity",
+            "type": "integer",
+            "witness": "cr"
+          }
+        ],
+        "bound_variable_capture": false,
+        "full_statement_inverse_checked": true,
+        "instance": "OwnedEffects::header(OwnedEffects::swap(h,l,r,a),observed,Owners::buffer(Owners::swap(owners,l,r),observed),nr,cr)",
+        "instance_to_existential_is_sufficient": true,
+        "original_existential": "(\\exists integer size,capacity; OwnedEffects::header(OwnedEffects::swap(h,l,r,a),observed,Owners::buffer(Owners::swap(owners,l,r),observed),size,capacity))",
+        "outer_universal_variables": [
+          "h",
+          "owners",
+          "ready",
+          "l",
+          "r",
+          "a",
+          "bl",
+          "nl",
+          "cl",
+          "br",
+          "nr",
+          "cr",
+          "observed"
+        ],
+        "rule": "capture-free integer existential introduction",
+        "witness_free_variables": [
+          "cr",
+          "nr"
+        ],
+        "witness_sorts_checked_against_bound_source": true
+      },
+      "existential_reference": {
+        "path": "reference-cases/obligations/000-t25_owned_swap_header_left.c",
+        "role": "unproved original case; never a theorem premise",
+        "sha256": "cef14f6d5c847bdaaf22509f1b43c17ee9aed1c30a021809fb72aa4bbd8ff3ed",
+        "statement": "\\forall Heap::heap h; \\forall Owners::state owners; \\forall OwnedEffects::phases ready; \\forall integer l,r,a,bl,nl,cl,br,nr,cr; \\forall integer observed; OwnedEffects::world(h,owners,ready) && Owners::active_owner(owners,l) && Owners::active_owner(owners,r) && OwnedEffects::is_ready(ready,l) && OwnedEffects::is_ready(ready,r) && OwnedEffects::header(h,l,bl,nl,cl) && OwnedEffects::header(h,r,br,nr,cr) && Heap::automatic_available(h,24,8,a) ==> (observed == l ==> (Owners::active_owner(Owners::swap(owners,l,r),observed) && OwnedEffects::is_ready(ready,observed) ==> (\\exists integer size,capacity; OwnedEffects::header(OwnedEffects::swap(h,l,r,a),observed,Owners::buffer(Owners::swap(owners,l,r),observed),size,capacity))))"
+      },
+      "explicit_header": "OwnedEffects::header(OwnedEffects::swap(h,l,r,a),observed,Owners::buffer(Owners::swap(owners,l,r),observed),nr,cr)",
+      "fresh_universal_indices": [
+        "observed"
+      ],
+      "goal": "t25_owned_swap_header_witness_left",
+      "id": "swap.owner_correspondence.header.ready.left.witness",
+      "kind": "check_lemma",
+      "path": "obligations/000-t25_owned_swap_header_witness_left.c",
+      "sha256": "21750fb2bf3128d673b50afbe4d55fc6d87da5a15dcd2f9fc3750b970b0b1779",
+      "source_antecedent": "OwnedEffects::world(h,owners,ready) && Owners::active_owner(owners,l) && Owners::active_owner(owners,r) && OwnedEffects::is_ready(ready,l) && OwnedEffects::is_ready(ready,r) && OwnedEffects::header(h,l,bl,nl,cl) && OwnedEffects::header(h,r,br,nr,cr) && Heap::automatic_available(h,24,8,a)",
+      "statement": "\\forall Heap::heap h; \\forall Owners::state owners; \\forall OwnedEffects::phases ready; \\forall integer l,r,a,bl,nl,cl,br,nr,cr; \\forall integer observed; OwnedEffects::world(h,owners,ready) && Owners::active_owner(owners,l) && Owners::active_owner(owners,r) && OwnedEffects::is_ready(ready,l) && OwnedEffects::is_ready(ready,r) && OwnedEffects::header(h,l,bl,nl,cl) && OwnedEffects::header(h,r,br,nr,cr) && Heap::automatic_available(h,24,8,a) ==> (observed == l ==> (Owners::active_owner(Owners::swap(owners,l,r),observed) && OwnedEffects::is_ready(ready,observed) ==> OwnedEffects::header(OwnedEffects::swap(h,l,r,a),observed,Owners::buffer(Owners::swap(owners,l,r),observed),nr,cr)))",
+      "status": "pending",
+      "witness": {
+        "capacity": "cr",
+        "size": "nr"
+      }
+    },
+    {
+      "case": "right",
+      "condition": "observed == r",
+      "dependencies": [],
+      "existential_introduction": {
+        "binders": [
+          {
+            "name": "size",
+            "type": "integer",
+            "witness": "nl"
+          },
+          {
+            "name": "capacity",
+            "type": "integer",
+            "witness": "cl"
+          }
+        ],
+        "bound_variable_capture": false,
+        "full_statement_inverse_checked": true,
+        "instance": "OwnedEffects::header(OwnedEffects::swap(h,l,r,a),observed,Owners::buffer(Owners::swap(owners,l,r),observed),nl,cl)",
+        "instance_to_existential_is_sufficient": true,
+        "original_existential": "(\\exists integer size,capacity; OwnedEffects::header(OwnedEffects::swap(h,l,r,a),observed,Owners::buffer(Owners::swap(owners,l,r),observed),size,capacity))",
+        "outer_universal_variables": [
+          "h",
+          "owners",
+          "ready",
+          "l",
+          "r",
+          "a",
+          "bl",
+          "nl",
+          "cl",
+          "br",
+          "nr",
+          "cr",
+          "observed"
+        ],
+        "rule": "capture-free integer existential introduction",
+        "witness_free_variables": [
+          "cl",
+          "nl"
+        ],
+        "witness_sorts_checked_against_bound_source": true
+      },
+      "existential_reference": {
+        "path": "reference-cases/obligations/001-t25_owned_swap_header_right.c",
+        "role": "unproved original case; never a theorem premise",
+        "sha256": "1b3544efb2d536b4daea8a2dac4dcb50a9b9ec6393ab595c4561471ea3ffaa2f",
+        "statement": "\\forall Heap::heap h; \\forall Owners::state owners; \\forall OwnedEffects::phases ready; \\forall integer l,r,a,bl,nl,cl,br,nr,cr; \\forall integer observed; OwnedEffects::world(h,owners,ready) && Owners::active_owner(owners,l) && Owners::active_owner(owners,r) && OwnedEffects::is_ready(ready,l) && OwnedEffects::is_ready(ready,r) && OwnedEffects::header(h,l,bl,nl,cl) && OwnedEffects::header(h,r,br,nr,cr) && Heap::automatic_available(h,24,8,a) ==> (observed == r ==> (Owners::active_owner(Owners::swap(owners,l,r),observed) && OwnedEffects::is_ready(ready,observed) ==> (\\exists integer size,capacity; OwnedEffects::header(OwnedEffects::swap(h,l,r,a),observed,Owners::buffer(Owners::swap(owners,l,r),observed),size,capacity))))"
+      },
+      "explicit_header": "OwnedEffects::header(OwnedEffects::swap(h,l,r,a),observed,Owners::buffer(Owners::swap(owners,l,r),observed),nl,cl)",
+      "fresh_universal_indices": [
+        "observed"
+      ],
+      "goal": "t25_owned_swap_header_witness_right",
+      "id": "swap.owner_correspondence.header.ready.right.witness",
+      "kind": "check_lemma",
+      "path": "obligations/001-t25_owned_swap_header_witness_right.c",
+      "sha256": "f694cde4cdb50df6471b433aa4581f5668197fefe17b2b3b02b7e6218cea8e4f",
+      "source_antecedent": "OwnedEffects::world(h,owners,ready) && Owners::active_owner(owners,l) && Owners::active_owner(owners,r) && OwnedEffects::is_ready(ready,l) && OwnedEffects::is_ready(ready,r) && OwnedEffects::header(h,l,bl,nl,cl) && OwnedEffects::header(h,r,br,nr,cr) && Heap::automatic_available(h,24,8,a)",
+      "statement": "\\forall Heap::heap h; \\forall Owners::state owners; \\forall OwnedEffects::phases ready; \\forall integer l,r,a,bl,nl,cl,br,nr,cr; \\forall integer observed; OwnedEffects::world(h,owners,ready) && Owners::active_owner(owners,l) && Owners::active_owner(owners,r) && OwnedEffects::is_ready(ready,l) && OwnedEffects::is_ready(ready,r) && OwnedEffects::header(h,l,bl,nl,cl) && OwnedEffects::header(h,r,br,nr,cr) && Heap::automatic_available(h,24,8,a) ==> (observed == r ==> (Owners::active_owner(Owners::swap(owners,l,r),observed) && OwnedEffects::is_ready(ready,observed) ==> OwnedEffects::header(OwnedEffects::swap(h,l,r,a),observed,Owners::buffer(Owners::swap(owners,l,r),observed),nl,cl)))",
+      "status": "pending",
+      "witness": {
+        "capacity": "cl",
+        "size": "nl"
+      }
+    },
+    {
+      "case": "other",
+      "condition": "observed != l && observed != r",
+      "dependencies": [],
+      "existential_introduction": {
+        "binders": [
+          {
+            "name": "size",
+            "type": "integer",
+            "witness": "OwnedEffects::size(h,observed)"
+          },
+          {
+            "name": "capacity",
+            "type": "integer",
+            "witness": "OwnedEffects::capacity(h,observed)"
+          }
+        ],
+        "bound_variable_capture": false,
+        "full_statement_inverse_checked": true,
+        "instance": "OwnedEffects::header(OwnedEffects::swap(h,l,r,a),observed,Owners::buffer(Owners::swap(owners,l,r),observed),OwnedEffects::size(h,observed),OwnedEffects::capacity(h,observed))",
+        "instance_to_existential_is_sufficient": true,
+        "original_existential": "(\\exists integer size,capacity; OwnedEffects::header(OwnedEffects::swap(h,l,r,a),observed,Owners::buffer(Owners::swap(owners,l,r),observed),size,capacity))",
+        "outer_universal_variables": [
+          "h",
+          "owners",
+          "ready",
+          "l",
+          "r",
+          "a",
+          "bl",
+          "nl",
+          "cl",
+          "br",
+          "nr",
+          "cr",
+          "observed"
+        ],
+        "rule": "capture-free integer existential introduction",
+        "witness_free_variables": [
+          "h",
+          "observed"
+        ],
+        "witness_sorts_checked_against_bound_source": true
+      },
+      "existential_reference": {
+        "path": "reference-cases/obligations/002-t25_owned_swap_header_other.c",
+        "role": "unproved original case; never a theorem premise",
+        "sha256": "735edf01ca2e8bc0bea2b1ec910292e3a3d510c57489cfa88d51beedaf6320e7",
+        "statement": "\\forall Heap::heap h; \\forall Owners::state owners; \\forall OwnedEffects::phases ready; \\forall integer l,r,a,bl,nl,cl,br,nr,cr; \\forall integer observed; OwnedEffects::world(h,owners,ready) && Owners::active_owner(owners,l) && Owners::active_owner(owners,r) && OwnedEffects::is_ready(ready,l) && OwnedEffects::is_ready(ready,r) && OwnedEffects::header(h,l,bl,nl,cl) && OwnedEffects::header(h,r,br,nr,cr) && Heap::automatic_available(h,24,8,a) ==> (observed != l && observed != r ==> (Owners::active_owner(Owners::swap(owners,l,r),observed) && OwnedEffects::is_ready(ready,observed) ==> (\\exists integer size,capacity; OwnedEffects::header(OwnedEffects::swap(h,l,r,a),observed,Owners::buffer(Owners::swap(owners,l,r),observed),size,capacity))))"
+      },
+      "explicit_header": "OwnedEffects::header(OwnedEffects::swap(h,l,r,a),observed,Owners::buffer(Owners::swap(owners,l,r),observed),OwnedEffects::size(h,observed),OwnedEffects::capacity(h,observed))",
+      "fresh_universal_indices": [
+        "observed"
+      ],
+      "goal": "t25_owned_swap_header_witness_other",
+      "id": "swap.owner_correspondence.header.ready.other.witness",
+      "kind": "check_lemma",
+      "path": "obligations/002-t25_owned_swap_header_witness_other.c",
+      "sha256": "c4a48786de4a10d30f2fcd780486cf992ba8a1e204c45e1d2e3187f759a77ee1",
+      "source_antecedent": "OwnedEffects::world(h,owners,ready) && Owners::active_owner(owners,l) && Owners::active_owner(owners,r) && OwnedEffects::is_ready(ready,l) && OwnedEffects::is_ready(ready,r) && OwnedEffects::header(h,l,bl,nl,cl) && OwnedEffects::header(h,r,br,nr,cr) && Heap::automatic_available(h,24,8,a)",
+      "statement": "\\forall Heap::heap h; \\forall Owners::state owners; \\forall OwnedEffects::phases ready; \\forall integer l,r,a,bl,nl,cl,br,nr,cr; \\forall integer observed; OwnedEffects::world(h,owners,ready) && Owners::active_owner(owners,l) && Owners::active_owner(owners,r) && OwnedEffects::is_ready(ready,l) && OwnedEffects::is_ready(ready,r) && OwnedEffects::header(h,l,bl,nl,cl) && OwnedEffects::header(h,r,br,nr,cr) && Heap::automatic_available(h,24,8,a) ==> (observed != l && observed != r ==> (Owners::active_owner(Owners::swap(owners,l,r),observed) && OwnedEffects::is_ready(ready,observed) ==> OwnedEffects::header(OwnedEffects::swap(h,l,r,a),observed,Owners::buffer(Owners::swap(owners,l,r),observed),OwnedEffects::size(h,observed),OwnedEffects::capacity(h,observed))))",
+      "status": "pending",
+      "witness": {
+        "capacity": "OwnedEffects::capacity(h,observed)",
+        "size": "OwnedEffects::size(h,observed)"
+      }
+    }
+  ],
+  "original_checker": {
+    "id": "vector-owned-source-view-1",
+    "sha256": "5639308d3b8db1a93071cd9d40cfa1aa025fe11c5435a303fff9fe783885a3cb"
+  },
+  "original_compound_reference": {
+    "path": "reference-obligations/008-t25_owned_effect_swap_owner_correspondence.c",
+    "sha256": "f59232cf9139d28b313913dadeb9c0455aec0a022359dd2c67148d3e66f1b2a3"
+  },
+  "original_compound_statement": "\\forall Heap::heap h; \\forall Owners::state owners; \\forall OwnedEffects::phases ready; \\forall integer l,r,a,bl,nl,cl,br,nr,cr; OwnedEffects::world(h,owners,ready) && Owners::active_owner(owners,l) && Owners::active_owner(owners,r) && OwnedEffects::is_ready(ready,l) && OwnedEffects::is_ready(ready,r) && OwnedEffects::header(h,l,bl,nl,cl) && OwnedEffects::header(h,r,br,nr,cr) && Heap::automatic_available(h,24,8,a) ==> OwnedEffects::world(OwnedEffects::swap(h,l,r,a),Owners::swap(owners,l,r),ready)",
+  "original_source_dependencies": [
+    {
+      "goal": "t25_owned_effect_move_destination_header",
+      "id": "move.destination_header",
+      "path": "reference-obligations/000-t25_owned_effect_move_destination_header.c",
+      "role": "unchanged original conditional duty; exact scientific evidence required separately",
+      "sha256": "60240fa742a147d78bc54c512420d9a85e4e6ecd790711562db8bc985d9da689"
+    },
+    {
+      "goal": "t25_owned_effect_move_source_empty",
+      "id": "move.source_empty",
+      "path": "reference-obligations/001-t25_owned_effect_move_source_empty.c",
+      "role": "unchanged original conditional duty; exact scientific evidence required separately",
+      "sha256": "9b1806c057f87725d1978aef31a8d25e0dd37bd9d14d3b9a2d924032629bc941"
+    },
+    {
+      "goal": "t25_owned_effect_move_incoming_frame",
+      "id": "move.incoming_frame",
+      "path": "reference-obligations/002-t25_owned_effect_move_incoming_frame.c",
+      "role": "unchanged original conditional duty; exact scientific evidence required separately",
+      "sha256": "55331d638d52fd11561b52cb9d88dfa8f6f3e20890462c10e7a462ed6bc0b2ad"
+    },
+    {
+      "goal": "t25_owned_effect_move_owner_correspondence",
+      "id": "move.owner_correspondence",
+      "path": "reference-obligations/003-t25_owned_effect_move_owner_correspondence.c",
+      "role": "unchanged original conditional duty; exact scientific evidence required separately",
+      "sha256": "3340e52d4ed852b8c8a69d14be4692d6d6245b093f8bb31c5bf4a292bcf90d9d"
+    },
+    {
+      "goal": "t25_owned_effect_swap_left_header",
+      "id": "swap.left_header",
+      "path": "reference-obligations/004-t25_owned_effect_swap_left_header.c",
+      "role": "unchanged original conditional duty; exact scientific evidence required separately",
+      "sha256": "3fab57b9196b55b86cf20cc0ea6181a38e0bdbbe8ecf6f06865dd59d0935d3fa"
+    },
+    {
+      "goal": "t25_owned_effect_swap_right_header",
+      "id": "swap.right_header",
+      "path": "reference-obligations/005-t25_owned_effect_swap_right_header.c",
+      "role": "unchanged original conditional duty; exact scientific evidence required separately",
+      "sha256": "9e6d0dda572705cdf5b4c2469a4dd0d66015ccefe102b49a87bf32ff0a1fde11"
+    },
+    {
+      "goal": "t25_owned_effect_swap_temporary_lifetime",
+      "id": "swap.temporary_lifetime",
+      "path": "reference-obligations/006-t25_owned_effect_swap_temporary_lifetime.c",
+      "role": "unchanged original conditional duty; exact scientific evidence required separately",
+      "sha256": "bff552ceb0d7b09b213e6585683c7e7c3c3b5140b14f3b31697257574cfaf20f"
+    },
+    {
+      "goal": "t25_owned_effect_swap_incoming_frame",
+      "id": "swap.incoming_frame",
+      "path": "reference-obligations/007-t25_owned_effect_swap_incoming_frame.c",
+      "role": "unchanged original conditional duty; exact scientific evidence required separately",
+      "sha256": "8d4f8ec024986bc2c12f8a10f152ac9a0ab87abb248b957e7d74b8ffe1a1ad6b"
+    }
+  ],
+  "original_statement": "\\forall Heap::heap h; \\forall Owners::state owners; \\forall OwnedEffects::phases ready; \\forall integer l,r,a,bl,nl,cl,br,nr,cr; \\forall integer observed; OwnedEffects::world(h,owners,ready) && Owners::active_owner(owners,l) && Owners::active_owner(owners,r) && OwnedEffects::is_ready(ready,l) && OwnedEffects::is_ready(ready,r) && OwnedEffects::header(h,l,bl,nl,cl) && OwnedEffects::header(h,r,br,nr,cr) && Heap::automatic_available(h,24,8,a) ==> (Owners::active_owner(Owners::swap(owners,l,r),observed) && OwnedEffects::is_ready(ready,observed) ==> (\\exists integer size,capacity; OwnedEffects::header(OwnedEffects::swap(h,l,r,a),observed,Owners::buffer(Owners::swap(owners,l,r),observed),size,capacity)))",
+  "original_timeout_evidence_preserved": true,
+  "ownership": {
+    "complete_source_owner_set_required": true,
+    "frontier": "Heap.next; never-issued allocation identity, not live-owner count",
+    "raw_aliases_are_owners": false,
+    "registry_validity_does_not_establish_heap_ownership": true
+  },
+  "parent_model": {
+    "id": "swdb-std-models-2",
+    "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+  },
+  "pending": [
+    "fresh full native task/hypothesis/import proofs for all nine conditional duties",
+    "actual emitted C layout/assertion and full original source/contract/event inverse audit",
+    "source-to-Heap typed field and arbitrary receiver padding correspondence",
+    "source-created complete ownership, phase, fresh receiver and temporary lifetime derivation",
+    "actual original scalar/assigns/cleanup and incoming allocated observation preservation",
+    "default library/allocator freshness, valid results, freeability, framing, release and replacement-effects TCB"
+  ],
+  "phases": {
+    "live": {
+      "initialized_header_required": true,
+      "source_constructed_object_required": true
+    },
+    "reserved": {
+      "physical_field_values_established": false,
+      "source_fresh_automatic_placement_required": true
+    }
+  },
+  "physical_context": {
+    "heap_reallocation.mlw": {
+      "bytes": 8386,
+      "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+    },
+    "vector_owned_effects.mlw": {
+      "bytes": 3128,
+      "sha256": "6bfc13341d2faceb5a3fb64bd2d5bff22dd03c52a1fa3d5c4cb39b6e9c83f7f5"
+    },
+    "vector_owned_source_view.py": {
+      "bytes": 10583,
+      "sha256": "c76c45afc64a84f6d1cbe1e23e05c175dc1b612abb5f23679d40e7db6c43f8f2"
+    },
+    "vector_owned_state.mlw": {
+      "bytes": 2389,
+      "sha256": "a2c295d2c6720a9c8c522f05e19723c2d2d2a32b63f9b198aab03f195269e4b6"
+    },
+    "vector_owned_swap_header_cases.py": {
+      "bytes": 7014,
+      "sha256": "daa2ff0ec0c854fa28b534792bbdc099ae28a810671226d43494cec863148e03"
+    },
+    "vector_owned_swap_parts.py": {
+      "bytes": 11992,
+      "sha256": "99783303b973a29b55d9f6f9e562295a41248699062982c105ac0a97e18a4f6b"
+    },
+    "vector_owned_transfer.py": {
+      "bytes": 14594,
+      "sha256": "6fa50d3b0ff6610c541bfa787179b37c6c8b50e4155fb2b0605d00e1eaffd085"
+    }
+  },
+  "previous_checker": {
+    "id": "vector-owned-swap-header-cases-1",
+    "sha256": "42aabbbf9063230e43be5f1cffc09be014dbc5dab4c136a1617fd963aa9b3002"
+  },
+  "reconstruction": {
+    "added_premises": [],
+    "all_three_stronger_proofs_required": true,
+    "axioms_added": [],
+    "direction": "three stronger cases imply the unchanged original universal by existential introduction and exhaustive original guards",
+    "previous_partition": {
+      "added_premises": [],
+      "axioms_added": [],
+      "case_disjunction": "observed == l || observed == r || (observed != l && observed != r)",
+      "equivalence": "conjunction of three guarded copies of the identical conclusion under the identical full antecedent",
+      "full_quantifier_prefix": "\\forall Heap::heap h; \\forall Owners::state owners; \\forall OwnedEffects::phases ready; \\forall integer l,r,a,bl,nl,cl,br,nr,cr; \\forall integer observed; ",
+      "previous_world_reconstruction": {
+        "added_premises": [],
+        "axioms_added": [],
+        "equivalence": "exact definition unfolding and conjunction/universal distribution",
+        "freeable": "the exact complete active positive-backing obligation is retained",
+        "groups": {
+          "freeable": [
+            "swap.owner_correspondence.freeable.buffer"
+          ],
+          "header": [
+            "swap.owner_correspondence.header.ready"
+          ],
+          "heap": [
+            "swap.owner_correspondence.heap.frontier",
+            "swap.owner_correspondence.heap.issued",
+            "swap.owner_correspondence.heap.live",
+            "swap.owner_correspondence.heap.separated"
+          ],
+          "owners": [
+            "swap.owner_correspondence.owners.frontier",
+            "swap.owner_correspondence.owners.exclusive",
+            "swap.owner_correspondence.owners.ranges",
+            "swap.owner_correspondence.owners.disjoint"
+          ],
+          "receiver": [
+            "swap.owner_correspondence.receiver.0",
+            "swap.owner_correspondence.receiver.8",
+            "swap.owner_correspondence.receiver.16"
+          ]
+        },
+        "header": "the unchanged existential remains under each active ready owner; no witness or premise is invented",
+        "heap": "four clauses reconstruct Heap.well_formed using exact fresh_id/bytes/numerical_address aliases",
+        "owners": "four clauses reconstruct Owners.valid; exclusive/active_owner/buffer are exact source definitions",
+        "receiver": "three offsets reconstruct receiver for every active owner",
+        "world": "the five groups reconstruct every conjunct of the exact original world definition"
+      },
+      "self_swap": "when l == r the two equality cases overlap; every observed owner is still covered",
+      "self_swap_excluded": false,
+      "unchanged_conclusion": "(Owners::active_owner(Owners::swap(owners,l,r),observed) && OwnedEffects::is_ready(ready,observed) ==> (\\exists integer size,capacity; OwnedEffects::header(OwnedEffects::swap(h,l,r,a),observed,Owners::buffer(Owners::swap(owners,l,r),observed),size,capacity)))"
+    },
+    "recovery_case_priority": [
+      "left",
+      "right",
+      "other"
+    ],
+    "reverse_implication_claimed": false,
+    "self_swap": "original left/right guards overlap; recovery may choose left first, but all three independent stronger targets remain required. Both source headers in fullA fix equal size/capacity fields for l==r; no separation premise is added.",
+    "self_swap_excluded": false
+  },
+  "reference_path": "reference-parts/obligations/011-t25_owned_swap_parts_header_ready.c",
+  "reference_role": "original unproved universal header duty, never a theorem premise or launched target",
+  "reference_sha256": "9f45f81235e57d8332a430c2256327234dbddbc2cb5dff8adabf00d385486bb3",
+  "source_admission": "unsupported: all three stronger proofs, complete cold interpretation and source/lifetime correspondence remain required",
+  "source_definition_bindings": {
+    "active_owner": {
+      "begin": 536,
+      "container_sha256": "a2c295d2c6720a9c8c522f05e19723c2d2d2a32b63f9b198aab03f195269e4b6",
+      "end": 599,
+      "path": "theory/vector_owned_state.mlw",
+      "sha256": "7ef2243d2746cd357fd3a196e2c7113834f124ee4107e9bac1baa3a1f09b45d9"
+    },
+    "buffer": {
+      "begin": 600,
+      "container_sha256": "a2c295d2c6720a9c8c522f05e19723c2d2d2a32b63f9b198aab03f195269e4b6",
+      "end": 656,
+      "path": "theory/vector_owned_state.mlw",
+      "sha256": "2326ef19933b4c525e158c3e40d8243fe7347660d63689f565a9671ffd01ca42"
+    },
+    "bytes": {
+      "begin": 2275,
+      "container_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+      "end": 2328,
+      "path": "theory/heap_reallocation.mlw",
+      "sha256": "860fd281e045019dc1a9556b0d0e6f7dfcbbe27c611325303bcb670bf711a19d"
+    },
+    "exclusive": {
+      "begin": 658,
+      "container_sha256": "a2c295d2c6720a9c8c522f05e19723c2d2d2a32b63f9b198aab03f195269e4b6",
+      "end": 819,
+      "path": "theory/vector_owned_state.mlw",
+      "sha256": "eb108459f9e5477050ac2ebd6b707c439f54020dfa50710b01659bdd7bd78da7"
+    },
+    "fresh_id": {
+      "begin": 2231,
+      "container_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+      "end": 2274,
+      "path": "theory/heap_reallocation.mlw",
+      "sha256": "3091155bae169cf65bae3d99bac07dd220aaf3470bceb391a4aded69c66a99b9"
+    },
+    "is_ready": {
+      "begin": 451,
+      "container_sha256": "6bfc13341d2faceb5a3fb64bd2d5bff22dd03c52a1fa3d5c4cb39b6e9c83f7f5",
+      "end": 512,
+      "path": "theory/vector_owned_effects.mlw",
+      "sha256": "62d9aea6680bf74ac8452ec9528ef624281e1c43654e53f37068a990641c1a83"
+    },
+    "numerical_address": {
+      "begin": 2329,
+      "container_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+      "end": 2395,
+      "path": "theory/heap_reallocation.mlw",
+      "sha256": "e9bbfb6093f6baedae96b56f2d5552fe4d891e66362879eecf28393b9d8ccb21"
+    },
+    "receiver": {
+      "begin": 772,
+      "container_sha256": "6bfc13341d2faceb5a3fb64bd2d5bff22dd03c52a1fa3d5c4cb39b6e9c83f7f5",
+      "end": 903,
+      "path": "theory/vector_owned_effects.mlw",
+      "sha256": "0c60adc4b6f25069e79eac95fe015ffd89e2542a1485e2756745a67f95e3d194"
+    },
+    "valid": {
+      "begin": 821,
+      "container_sha256": "a2c295d2c6720a9c8c522f05e19723c2d2d2a32b63f9b198aab03f195269e4b6",
+      "end": 1111,
+      "path": "theory/vector_owned_state.mlw",
+      "sha256": "73733aa1224ce1f3f1d7871245fb62df9d65666880bcfc4352bb5249e654e7e2"
+    },
+    "well_formed": {
+      "begin": 1485,
+      "container_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+      "end": 1791,
+      "path": "theory/heap_reallocation.mlw",
+      "sha256": "289cfb2e3308fbb6fa989a743ae8876273e926c4d428fd12dd094715fa7ea720"
+    },
+    "world": {
+      "begin": 1469,
+      "container_sha256": "6bfc13341d2faceb5a3fb64bd2d5bff22dd03c52a1fa3d5c4cb39b6e9c83f7f5",
+      "end": 1815,
+      "path": "theory/vector_owned_effects.mlw",
+      "sha256": "68f179a1aebc4df777ba5c5d8d3b227c286343184c658a438ed6e469897b8c54"
+    }
+  },
+  "source_heap_bridge_established": false,
+  "source_members": [
+    {
+      "body_changed": false,
+      "element": "int",
+      "element_memory_accessed": false,
+      "events": [
+        {
+          "destination": "this",
+          "operation": "header_copy",
+          "snapshot_before_destination_write": true,
+          "source": "other"
+        },
+        {
+          "field": "data",
+          "operation": "zero_field",
+          "receiver": "other",
+          "value": "NULL"
+        },
+        {
+          "field": "size",
+          "operation": "zero_field",
+          "receiver": "other",
+          "value": "0"
+        },
+        {
+          "field": "capacity",
+          "operation": "zero_field",
+          "receiver": "other",
+          "value": "0"
+        }
+      ],
+      "function": "std_vector_int_move_ctor",
+      "layout_assertions_executed": false,
+      "member": "move_ctor",
+      "old_contract_proved": false,
+      "original_body": "{\n  *this = *other;\n  other->data = NULL; other->size = 0; other->capacity = 0;\n}",
+      "original_body_sha256": "87cc56223ff37c6d47784fed03b310fb4c7645fa9c7ede45c5badd78991117e7",
+      "original_fragment_sha256": "1983b78caabd455cb70b1ae71a4bb55c66c38185cabb68b468e42f39ec56c856",
+      "original_path": "original/std_vector_int_move_ctor.c",
+      "original_range": [
+        40,
+        1674
+      ],
+      "original_sha256": "2275b2a0533c16643f1ea7ae324aae852c9e2509e4e05085107636e172e3e676",
+      "path": "source/std_vector_int_move_ctor.c",
+      "physical_padding_observation": "not established by the registry; full source layout/effect rule required",
+      "self_swap_old_contract_relaxed": false,
+      "self_swap_registry_identity": false,
+      "sha256": "2275b2a0533c16643f1ea7ae324aae852c9e2509e4e05085107636e172e3e676",
+      "source_body_changed": false,
+      "source_read_effects": [
+        "source/destination vector struct values; no buffer element load"
+      ],
+      "source_relation_requires": [
+        "distinct source/destination receiver identities",
+        "source established active owners",
+        "fresh empty destination ownership binding"
+      ],
+      "source_write_effects": [
+        "destination receiver fields",
+        "source receiver fields"
+      ],
+      "view_path": "views/std_vector_int_move_ctor.c",
+      "view_sha256": "2d6e21a0fcf10945cfb84debd6483a926060acdb54d907c4362561ad2cf48278"
+    },
+    {
+      "body_changed": false,
+      "element": "int",
+      "element_memory_accessed": false,
+      "events": [
+        {
+          "fresh_identity": "Heap.next",
+          "operation": "begin_automatic",
+          "receiver": "t",
+          "vector_owner": false
+        },
+        {
+          "destination": "t",
+          "operation": "header_copy",
+          "snapshot_before_destination_write": true,
+          "source": "this"
+        },
+        {
+          "destination": "this",
+          "operation": "header_copy",
+          "snapshot_before_destination_write": true,
+          "source": "other"
+        },
+        {
+          "destination": "other",
+          "operation": "header_copy",
+          "snapshot_before_destination_write": true,
+          "source": "t"
+        },
+        {
+          "operation": "end_automatic",
+          "primitive": "Heap.end_automatic",
+          "receiver": "t",
+          "registry_retire_is_substitute": false
+        }
+      ],
+      "function": "std_vector_int_swap",
+      "layout_assertions_executed": false,
+      "member": "swap",
+      "old_contract_proved": false,
+      "original_body": "{ std_vector_int t = *this; *this = *other; *other = t; }",
+      "original_body_sha256": "386f081a4c601dd03b94038db1924edab625561cb8719c8044348f565a4d8609",
+      "original_fragment_sha256": "838d74e732a416b040cf367111786616824d843a211092d8fbbd105d0b61186e",
+      "original_path": "original/std_vector_int_swap.c",
+      "original_range": [
+        40,
+        1771
+      ],
+      "original_sha256": "0bb1a1ee04c3643ff68edac876d827c1429326f24bdd01890bf35b4a2b64d83d",
+      "path": "source/std_vector_int_swap.c",
+      "physical_padding_observation": "not established by the registry; full source layout/effect rule required",
+      "self_swap_old_contract_relaxed": false,
+      "self_swap_registry_identity": true,
+      "sha256": "0bb1a1ee04c3643ff68edac876d827c1429326f24bdd01890bf35b4a2b64d83d",
+      "source_body_changed": false,
+      "source_read_effects": [
+        "source/destination vector struct values; no buffer element load"
+      ],
+      "source_relation_requires": [
+        "source established active owners"
+      ],
+      "source_write_effects": [
+        "destination receiver fields",
+        "source receiver fields"
+      ],
+      "view_path": "views/std_vector_int_swap.c",
+      "view_sha256": "3d115e18d34d416019f05283463f33b2b80274599fb080064a83eb57d8f6398a"
+    },
+    {
+      "body_changed": false,
+      "element": "float",
+      "element_memory_accessed": false,
+      "events": [
+        {
+          "destination": "this",
+          "operation": "header_copy",
+          "snapshot_before_destination_write": true,
+          "source": "other"
+        },
+        {
+          "field": "data",
+          "operation": "zero_field",
+          "receiver": "other",
+          "value": "NULL"
+        },
+        {
+          "field": "size",
+          "operation": "zero_field",
+          "receiver": "other",
+          "value": "0"
+        },
+        {
+          "field": "capacity",
+          "operation": "zero_field",
+          "receiver": "other",
+          "value": "0"
+        }
+      ],
+      "function": "std_vector_float_move_ctor",
+      "layout_assertions_executed": false,
+      "member": "move_ctor",
+      "old_contract_proved": false,
+      "original_body": "{\n  *this = *other;\n  other->data = NULL; other->size = 0; other->capacity = 0;\n}",
+      "original_body_sha256": "87cc56223ff37c6d47784fed03b310fb4c7645fa9c7ede45c5badd78991117e7",
+      "original_fragment_sha256": "020c3cb64b93674e7346c132e96345ca0ef5205c0f598f5b9429d328d5ebcb5f",
+      "original_path": "original/std_vector_float_move_ctor.c",
+      "original_range": [
+        40,
+        1708
+      ],
+      "original_sha256": "1299df3bee8f039786fb55413f26c4b11209ce610cbf7e38b2bb6dbee8a247d0",
+      "path": "source/std_vector_float_move_ctor.c",
+      "physical_padding_observation": "not established by the registry; full source layout/effect rule required",
+      "self_swap_old_contract_relaxed": false,
+      "self_swap_registry_identity": false,
+      "sha256": "1299df3bee8f039786fb55413f26c4b11209ce610cbf7e38b2bb6dbee8a247d0",
+      "source_body_changed": false,
+      "source_read_effects": [
+        "source/destination vector struct values; no buffer element load"
+      ],
+      "source_relation_requires": [
+        "distinct source/destination receiver identities",
+        "source established active owners",
+        "fresh empty destination ownership binding"
+      ],
+      "source_write_effects": [
+        "destination receiver fields",
+        "source receiver fields"
+      ],
+      "view_path": "views/std_vector_float_move_ctor.c",
+      "view_sha256": "67f0078944d65d0dc6ec013226fe868ac5a37d1be589fab2a2343c17d1254eba"
+    },
+    {
+      "body_changed": false,
+      "element": "float",
+      "element_memory_accessed": false,
+      "events": [
+        {
+          "fresh_identity": "Heap.next",
+          "operation": "begin_automatic",
+          "receiver": "t",
+          "vector_owner": false
+        },
+        {
+          "destination": "t",
+          "operation": "header_copy",
+          "snapshot_before_destination_write": true,
+          "source": "this"
+        },
+        {
+          "destination": "this",
+          "operation": "header_copy",
+          "snapshot_before_destination_write": true,
+          "source": "other"
+        },
+        {
+          "destination": "other",
+          "operation": "header_copy",
+          "snapshot_before_destination_write": true,
+          "source": "t"
+        },
+        {
+          "operation": "end_automatic",
+          "primitive": "Heap.end_automatic",
+          "receiver": "t",
+          "registry_retire_is_substitute": false
+        }
+      ],
+      "function": "std_vector_float_swap",
+      "layout_assertions_executed": false,
+      "member": "swap",
+      "old_contract_proved": false,
+      "original_body": "{ std_vector_float t = *this; *this = *other; *other = t; }",
+      "original_body_sha256": "922afc6c66b2c9e146706992c07efccf27728d0ce104198487de32c839dcad52",
+      "original_fragment_sha256": "35c834619111645915b1ade46b9a138014e1ed502fa7dd45e7841e2bcbc29b4b",
+      "original_path": "original/std_vector_float_swap.c",
+      "original_range": [
+        40,
+        1809
+      ],
+      "original_sha256": "7dcb086471a30e8cea6fe36e108a80f1f0e04506500b0f1687474f6064a220f3",
+      "path": "source/std_vector_float_swap.c",
+      "physical_padding_observation": "not established by the registry; full source layout/effect rule required",
+      "self_swap_old_contract_relaxed": false,
+      "self_swap_registry_identity": true,
+      "sha256": "7dcb086471a30e8cea6fe36e108a80f1f0e04506500b0f1687474f6064a220f3",
+      "source_body_changed": false,
+      "source_read_effects": [
+        "source/destination vector struct values; no buffer element load"
+      ],
+      "source_relation_requires": [
+        "source established active owners"
+      ],
+      "source_write_effects": [
+        "destination receiver fields",
+        "source receiver fields"
+      ],
+      "view_path": "views/std_vector_float_swap.c",
+      "view_sha256": "d3c9b081d9f6fc1eef5d9b5cdd9fe1c2e87a7dbe8b6394cea95c22e1d5a44a42"
+    },
+    {
+      "body_changed": false,
+      "element": "double",
+      "element_memory_accessed": false,
+      "events": [
+        {
+          "destination": "this",
+          "operation": "header_copy",
+          "snapshot_before_destination_write": true,
+          "source": "other"
+        },
+        {
+          "field": "data",
+          "operation": "zero_field",
+          "receiver": "other",
+          "value": "NULL"
+        },
+        {
+          "field": "size",
+          "operation": "zero_field",
+          "receiver": "other",
+          "value": "0"
+        },
+        {
+          "field": "capacity",
+          "operation": "zero_field",
+          "receiver": "other",
+          "value": "0"
+        }
+      ],
+      "function": "std_vector_double_move_ctor",
+      "layout_assertions_executed": false,
+      "member": "move_ctor",
+      "old_contract_proved": false,
+      "original_body": "{\n  *this = *other;\n  other->data = NULL; other->size = 0; other->capacity = 0;\n}",
+      "original_body_sha256": "87cc56223ff37c6d47784fed03b310fb4c7645fa9c7ede45c5badd78991117e7",
+      "original_fragment_sha256": "c48a72d1c5c82707a7d3039161661a8334834ef3604c8f6477c08e3b7794c62a",
+      "original_path": "original/std_vector_double_move_ctor.c",
+      "original_range": [
+        40,
+        1725
+      ],
+      "original_sha256": "977e6275f008c2469b59efc0f72b79d4ba39d7f7c8919cbd9e7151f4a9291b24",
+      "path": "source/std_vector_double_move_ctor.c",
+      "physical_padding_observation": "not established by the registry; full source layout/effect rule required",
+      "self_swap_old_contract_relaxed": false,
+      "self_swap_registry_identity": false,
+      "sha256": "977e6275f008c2469b59efc0f72b79d4ba39d7f7c8919cbd9e7151f4a9291b24",
+      "source_body_changed": false,
+      "source_read_effects": [
+        "source/destination vector struct values; no buffer element load"
+      ],
+      "source_relation_requires": [
+        "distinct source/destination receiver identities",
+        "source established active owners",
+        "fresh empty destination ownership binding"
+      ],
+      "source_write_effects": [
+        "destination receiver fields",
+        "source receiver fields"
+      ],
+      "view_path": "views/std_vector_double_move_ctor.c",
+      "view_sha256": "85a02f1c4bdd4c3d678b9e68811cc86e01f3e0c20040965fa336b2a69d4e72fc"
+    },
+    {
+      "body_changed": false,
+      "element": "double",
+      "element_memory_accessed": false,
+      "events": [
+        {
+          "fresh_identity": "Heap.next",
+          "operation": "begin_automatic",
+          "receiver": "t",
+          "vector_owner": false
+        },
+        {
+          "destination": "t",
+          "operation": "header_copy",
+          "snapshot_before_destination_write": true,
+          "source": "this"
+        },
+        {
+          "destination": "this",
+          "operation": "header_copy",
+          "snapshot_before_destination_write": true,
+          "source": "other"
+        },
+        {
+          "destination": "other",
+          "operation": "header_copy",
+          "snapshot_before_destination_write": true,
+          "source": "t"
+        },
+        {
+          "operation": "end_automatic",
+          "primitive": "Heap.end_automatic",
+          "receiver": "t",
+          "registry_retire_is_substitute": false
+        }
+      ],
+      "function": "std_vector_double_swap",
+      "layout_assertions_executed": false,
+      "member": "swap",
+      "old_contract_proved": false,
+      "original_body": "{ std_vector_double t = *this; *this = *other; *other = t; }",
+      "original_body_sha256": "58d3a681a819c3359e9099f507d92d8e49bb0ed9eb61dbd1ec8cbfe9210979c5",
+      "original_fragment_sha256": "ebc82e895c9214bc8be57cf4550158c6c254d4ee975ef687a986e4fb32aa96db",
+      "original_path": "original/std_vector_double_swap.c",
+      "original_range": [
+        40,
+        1828
+      ],
+      "original_sha256": "4a8527cbf4937fd2b47823b9d22c9274b7c2319a1af088d50f32a5d7e743a4eb",
+      "path": "source/std_vector_double_swap.c",
+      "physical_padding_observation": "not established by the registry; full source layout/effect rule required",
+      "self_swap_old_contract_relaxed": false,
+      "self_swap_registry_identity": true,
+      "sha256": "4a8527cbf4937fd2b47823b9d22c9274b7c2319a1af088d50f32a5d7e743a4eb",
+      "source_body_changed": false,
+      "source_read_effects": [
+        "source/destination vector struct values; no buffer element load"
+      ],
+      "source_relation_requires": [
+        "source established active owners"
+      ],
+      "source_write_effects": [
+        "destination receiver fields",
+        "source receiver fields"
+      ],
+      "view_path": "views/std_vector_double_swap.c",
+      "view_sha256": "f9b1de63f63ca58083aee5cb013553cc187171e639a3d9c43ae26c9ff9af6587"
+    },
+    {
+      "body_changed": false,
+      "element": "int *",
+      "element_memory_accessed": false,
+      "events": [
+        {
+          "destination": "this",
+          "operation": "header_copy",
+          "snapshot_before_destination_write": true,
+          "source": "other"
+        },
+        {
+          "field": "data",
+          "operation": "zero_field",
+          "receiver": "other",
+          "value": "NULL"
+        },
+        {
+          "field": "size",
+          "operation": "zero_field",
+          "receiver": "other",
+          "value": "0"
+        },
+        {
+          "field": "capacity",
+          "operation": "zero_field",
+          "receiver": "other",
+          "value": "0"
+        }
+      ],
+      "function": "std_vector_int_ptr_move_ctor",
+      "layout_assertions_executed": false,
+      "member": "move_ctor",
+      "old_contract_proved": false,
+      "original_body": "{\n  *this = *other;\n  other->data = NULL; other->size = 0; other->capacity = 0;\n}",
+      "original_body_sha256": "87cc56223ff37c6d47784fed03b310fb4c7645fa9c7ede45c5badd78991117e7",
+      "original_fragment_sha256": "4f6b8d445120020b53c3120165bb9a737c419230901c2123dd3c6c81dc4f42be",
+      "original_path": "original/std_vector_int_ptr_move_ctor.c",
+      "original_range": [
+        40,
+        1736
+      ],
+      "original_sha256": "0fe29734b41543041a896eb9483add235ae0c37c97e34f389fca7823a16268af",
+      "path": "source/std_vector_int_ptr_move_ctor.c",
+      "physical_padding_observation": "not established by the registry; full source layout/effect rule required",
+      "self_swap_old_contract_relaxed": false,
+      "self_swap_registry_identity": false,
+      "sha256": "0fe29734b41543041a896eb9483add235ae0c37c97e34f389fca7823a16268af",
+      "source_body_changed": false,
+      "source_read_effects": [
+        "source/destination vector struct values; no buffer element load"
+      ],
+      "source_relation_requires": [
+        "distinct source/destination receiver identities",
+        "source established active owners",
+        "fresh empty destination ownership binding"
+      ],
+      "source_write_effects": [
+        "destination receiver fields",
+        "source receiver fields"
+      ],
+      "view_path": "views/std_vector_int_ptr_move_ctor.c",
+      "view_sha256": "2ef113564e37137ce8a7e47ba098b8225d37cd4cc425b1e8beef8e08e6116cf0"
+    },
+    {
+      "body_changed": false,
+      "element": "int *",
+      "element_memory_accessed": false,
+      "events": [
+        {
+          "fresh_identity": "Heap.next",
+          "operation": "begin_automatic",
+          "receiver": "t",
+          "vector_owner": false
+        },
+        {
+          "destination": "t",
+          "operation": "header_copy",
+          "snapshot_before_destination_write": true,
+          "source": "this"
+        },
+        {
+          "destination": "this",
+          "operation": "header_copy",
+          "snapshot_before_destination_write": true,
+          "source": "other"
+        },
+        {
+          "destination": "other",
+          "operation": "header_copy",
+          "snapshot_before_destination_write": true,
+          "source": "t"
+        },
+        {
+          "operation": "end_automatic",
+          "primitive": "Heap.end_automatic",
+          "receiver": "t",
+          "registry_retire_is_substitute": false
+        }
+      ],
+      "function": "std_vector_int_ptr_swap",
+      "layout_assertions_executed": false,
+      "member": "swap",
+      "old_contract_proved": false,
+      "original_body": "{ std_vector_int_ptr t = *this; *this = *other; *other = t; }",
+      "original_body_sha256": "57f7f984d96ac4dc48e7a719b0901617b95489f263baeb468ac7cfa75108a93f",
+      "original_fragment_sha256": "3d5e1262e1478042d9dade741d240aa893dfb88df93cafec736fefb96c1984b2",
+      "original_path": "original/std_vector_int_ptr_swap.c",
+      "original_range": [
+        40,
+        1841
+      ],
+      "original_sha256": "01f06406a2b174bbe84db6c7c1232d80f1ef0c51aae52fbfd1aed1c9237b7931",
+      "path": "source/std_vector_int_ptr_swap.c",
+      "physical_padding_observation": "not established by the registry; full source layout/effect rule required",
+      "self_swap_old_contract_relaxed": false,
+      "self_swap_registry_identity": true,
+      "sha256": "01f06406a2b174bbe84db6c7c1232d80f1ef0c51aae52fbfd1aed1c9237b7931",
+      "source_body_changed": false,
+      "source_read_effects": [
+        "source/destination vector struct values; no buffer element load"
+      ],
+      "source_relation_requires": [
+        "source established active owners"
+      ],
+      "source_write_effects": [
+        "destination receiver fields",
+        "source receiver fields"
+      ],
+      "view_path": "views/std_vector_int_ptr_swap.c",
+      "view_sha256": "6b976113b22ba6372b252ebd2dc4d3c4dbb7612fc7d657caf7f234d7e952d7d7"
+    }
+  ],
+  "source_typed_bridge_established": false,
+  "transfer": {
+    "id": "vector-owned-transfer-1",
+    "sha256": "53c06e10f6d175ccfd98fbf3e087a76283a8b2a36db4bf5634835d5997a6e559"
+  },
+  "type_registry": {
+    "canonical_sha256": "b1486dbee9273423bdf17af34339ca17b1111b7e2ec31f71c2aafdf4515ec1f6",
+    "canonical_values": {
+      "FLOAT_TYPES": [
+        "double",
+        "float"
+      ],
+      "INTEGER_TYPES": [
+        "bool",
+        "char",
+        "int",
+        "int16_t",
+        "int32_t",
+        "int64_t",
+        "int8_t",
+        "intptr_t",
+        "long",
+        "long int",
+        "long long",
+        "long long int",
+        "ptrdiff_t",
+        "short",
+        "short int",
+        "signed",
+        "signed char",
+        "signed int",
+        "size_t",
+        "uint16_t",
+        "uint32_t",
+        "uint64_t",
+        "uint8_t",
+        "uintptr_t",
+        "unsigned",
+        "unsigned char",
+        "unsigned int",
+        "unsigned long",
+        "unsigned long int",
+        "unsigned long long",
+        "unsigned long long int",
+        "unsigned short",
+        "unsigned short int"
+      ],
+      "INTERNAL_TYPES": {
+        "__ptrdiff_t": "ptrdiff_t",
+        "__size_t": "size_t"
+      }
+    },
+    "container_sha256": "8ede503e30cb6f57ead88ee622362d5a1c05290edcb6b4b157b9ca443f64925e",
+    "declarations": [
+      {
+        "bytes": 33,
+        "name": "FLOAT_TYPES",
+        "sha256": "2fdad9ce385d4872e749009de43d16dc405d04b484edf398198a92f1fd268e17"
+      },
+      {
+        "bytes": 527,
+        "name": "INTEGER_TYPES",
+        "sha256": "6da62218bbcfb5e1019f3995d31ac06a2d91419fe487a4e05ba9f242272ea810"
+      },
+      {
+        "bytes": 67,
+        "name": "INTERNAL_TYPES",
+        "sha256": "ba13f1dadd03b49ffdc0cd29fdba10a1f1bb653b064cda2b0c413e3823b6cf70"
+      }
+    ],
+    "source_module": "c_lowering.py"
+  },
+  "unchanged_dependencies": [
+    {
+      "goal": "t25_owned_swap_parts_heap_frontier",
+      "id": "swap.owner_correspondence.heap.frontier",
+      "path": "reference-parts/obligations/000-t25_owned_swap_parts_heap_frontier.c",
+      "role": "unchanged conditional part; exact independent scientific evidence required separately",
+      "sha256": "de7506a9928a31a9290695b14c6244b3758ffe5a10b8334e1799e42072c6ee37"
+    },
+    {
+      "goal": "t25_owned_swap_parts_heap_issued",
+      "id": "swap.owner_correspondence.heap.issued",
+      "path": "reference-parts/obligations/001-t25_owned_swap_parts_heap_issued.c",
+      "role": "unchanged conditional part; exact independent scientific evidence required separately",
+      "sha256": "577021bbdc5bce95e7861daaa2d80e72bd822c4431997a101cd79cf616bb42ca"
+    },
+    {
+      "goal": "t25_owned_swap_parts_heap_live",
+      "id": "swap.owner_correspondence.heap.live",
+      "path": "reference-parts/obligations/002-t25_owned_swap_parts_heap_live.c",
+      "role": "unchanged conditional part; exact independent scientific evidence required separately",
+      "sha256": "806766b3af5538e84ae61799caad3f42f3819104436737965a6b2687f10b1f59"
+    },
+    {
+      "goal": "t25_owned_swap_parts_heap_separated",
+      "id": "swap.owner_correspondence.heap.separated",
+      "path": "reference-parts/obligations/003-t25_owned_swap_parts_heap_separated.c",
+      "role": "unchanged conditional part; exact independent scientific evidence required separately",
+      "sha256": "0be5ee6a9366980694a0d3cb3a4c6380114a6767742bec2a4787c5d3dc36485c"
+    },
+    {
+      "goal": "t25_owned_swap_parts_owners_frontier",
+      "id": "swap.owner_correspondence.owners.frontier",
+      "path": "reference-parts/obligations/004-t25_owned_swap_parts_owners_frontier.c",
+      "role": "unchanged conditional part; exact independent scientific evidence required separately",
+      "sha256": "80565a0bf3742b825898da1622becf44d36d5afb4ff3f76a8a619a59f7916cfa"
+    },
+    {
+      "goal": "t25_owned_swap_parts_owners_exclusive",
+      "id": "swap.owner_correspondence.owners.exclusive",
+      "path": "reference-parts/obligations/005-t25_owned_swap_parts_owners_exclusive.c",
+      "role": "unchanged conditional part; exact independent scientific evidence required separately",
+      "sha256": "d1d52a61951853876e90ae0f102505874762c35b37cfcdddea8c701603956e5e"
+    },
+    {
+      "goal": "t25_owned_swap_parts_owners_ranges",
+      "id": "swap.owner_correspondence.owners.ranges",
+      "path": "reference-parts/obligations/006-t25_owned_swap_parts_owners_ranges.c",
+      "role": "unchanged conditional part; exact independent scientific evidence required separately",
+      "sha256": "272b0399efb6111291e45b7676bfd67a9bc59047ead196f7821a07442a5c95a2"
+    },
+    {
+      "goal": "t25_owned_swap_parts_owners_disjoint",
+      "id": "swap.owner_correspondence.owners.disjoint",
+      "path": "reference-parts/obligations/007-t25_owned_swap_parts_owners_disjoint.c",
+      "role": "unchanged conditional part; exact independent scientific evidence required separately",
+      "sha256": "a574c9ce37a28084f810ff6873af317d7da540108e6e3ce759e217af02843ede"
+    },
+    {
+      "goal": "t25_owned_swap_parts_receiver_0",
+      "id": "swap.owner_correspondence.receiver.0",
+      "path": "reference-parts/obligations/008-t25_owned_swap_parts_receiver_0.c",
+      "role": "unchanged conditional part; exact independent scientific evidence required separately",
+      "sha256": "8a067f5a46397ea59dc26e9c78b180aab6f9c42972a79d7a0fd730fc15637ea3"
+    },
+    {
+      "goal": "t25_owned_swap_parts_receiver_8",
+      "id": "swap.owner_correspondence.receiver.8",
+      "path": "reference-parts/obligations/009-t25_owned_swap_parts_receiver_8.c",
+      "role": "unchanged conditional part; exact independent scientific evidence required separately",
+      "sha256": "d84cf02c807d5939732a6bcb84847c32434ea426b3bc7c2d980e9d35e258b97c"
+    },
+    {
+      "goal": "t25_owned_swap_parts_receiver_16",
+      "id": "swap.owner_correspondence.receiver.16",
+      "path": "reference-parts/obligations/010-t25_owned_swap_parts_receiver_16.c",
+      "role": "unchanged conditional part; exact independent scientific evidence required separately",
+      "sha256": "517271da87f5f3baa7c105b1ae2638474583181c86d63745883c8b3364893938"
+    },
+    {
+      "goal": "t25_owned_swap_parts_freeable_buffer",
+      "id": "swap.owner_correspondence.freeable.buffer",
+      "path": "reference-parts/obligations/012-t25_owned_swap_parts_freeable_buffer.c",
+      "role": "unchanged conditional part; exact independent scientific evidence required separately",
+      "sha256": "8386dd2b7892338b5ff76efe9a4ce1ac4d3138dab13f1465efe6e4ad9b575891"
+    }
+  ],
+  "unsupported": [
+    "old universal version2 contract adoption",
+    "generic incoming owners from unary validity",
+    "shared backing owners",
+    "self move",
+    "nonfresh destination move construction",
+    "old separated swap contract widened to self swap",
+    "element payload type/value proof from header transfer alone"
+  ],
+  "version": 1
+}

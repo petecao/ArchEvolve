@@ -1,0 +1,133 @@
+{
+  "abstract25_reused_or_relabelled": false,
+  "acceptance": "fresh public swdb prove: exact predicted verdict, no skip/frontend refusal, native agreement and reachability; both hazard failures must replay their exact rule on source-preserving C++ under new0.2 pins/assumptions",
+  "bounds": {
+    "threads": 1
+  },
+  "capture_mode": "one complete original TU for all three callers; ABI probe separate with no declaration-ID joins",
+  "cases": [
+    {
+      "contract": {
+        "assigns": "\\everything",
+        "ensures": "\\result == 7"
+      },
+      "expected_call_basis": "complete original 26-name/27-declaration interface; actual same-TU binding pending",
+      "expected_source_range": [
+        201,
+        1138
+      ],
+      "function": "whole_same_thread_read_during_store",
+      "ordinary_allocation_request": {
+        "alignment_is_not_inferred_from_source": true,
+        "bytes": 64,
+        "dtype": 0,
+        "extent": 16,
+        "physical_alignment": 64,
+        "requires_separately_owned_mapping": true,
+        "source_name": "data"
+      },
+      "predicted_failure_rule": "store-footprint-cpu-access",
+      "predicted_verdict": "refuted",
+      "prospective_mangled_name": "_Z35whole_same_thread_read_during_storev",
+      "source_order_offsets": {
+        "CPU_access": 1057,
+        "covering_wait": 1095,
+        "issue": 827
+      },
+      "thread": 0
+    },
+    {
+      "contract": {
+        "assigns": "\\everything",
+        "ensures": "\\result == 9"
+      },
+      "expected_call_basis": "complete original 26-name/27-declaration interface; actual same-TU binding pending",
+      "expected_source_range": [
+        1140,
+        2189
+      ],
+      "function": "whole_same_thread_write_during_gather",
+      "ordinary_allocation_request": {
+        "alignment_is_not_inferred_from_source": true,
+        "bytes": 64,
+        "dtype": 0,
+        "extent": 16,
+        "physical_alignment": 64,
+        "requires_separately_owned_mapping": true,
+        "source_name": "data"
+      },
+      "predicted_failure_rule": "same-thread-read-footprint-write",
+      "predicted_verdict": "refuted",
+      "prospective_mangled_name": "_Z37whole_same_thread_write_during_gatherv",
+      "source_order_offsets": {
+        "CPU_access": 2131,
+        "covering_wait": 2148,
+        "issue": 1915
+      },
+      "thread": 0
+    },
+    {
+      "contract": {
+        "assigns": "\\everything",
+        "ensures": "\\result == 7"
+      },
+      "expected_call_basis": "complete original 26-name/27-declaration interface; actual same-TU binding pending",
+      "expected_source_range": [
+        2191,
+        3257
+      ],
+      "function": "whole_same_thread_read_during_gather",
+      "ordinary_allocation_request": {
+        "alignment_is_not_inferred_from_source": true,
+        "bytes": 64,
+        "dtype": 0,
+        "extent": 16,
+        "physical_alignment": 64,
+        "requires_separately_owned_mapping": true,
+        "source_name": "data"
+      },
+      "predicted_failure_rule": null,
+      "predicted_verdict": "proven",
+      "prospective_mangled_name": "_Z36whole_same_thread_read_during_gatherv",
+      "source_order_offsets": {
+        "CPU_access": 3177,
+        "covering_wait": 3215,
+        "issue": 2965
+      },
+      "thread": 0
+    }
+  ],
+  "choice_budget": 256,
+  "compiler_observed": false,
+  "defines": [
+    "NUM_CORES=4",
+    "TILE_SIZE=16384"
+  ],
+  "headers": [
+    {
+      "bytes": 1323,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API/MAA.hpp",
+      "sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd"
+    },
+    {
+      "bytes": 27473,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API/MAA_gem5.hpp",
+      "sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174"
+    }
+  ],
+  "inventory": {
+    "bytes": 5481,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/fixtures/proof/dx100/interface-declarations-e4fc4af.json",
+    "sha256": "d48a3971f2e9421e736d72ff160074f22e9cbbb7c9c756ef52457a5c4314b3b6"
+  },
+  "old_fixed79_80_changed": false,
+  "original_header_project": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project",
+  "receiver_context_granted": false,
+  "schema": "prospective-same-thread-original-source-profile-set-1",
+  "source": {
+    "bytes": 3258,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source-memory-fixtures-v1/same_thread_memory_v1.cpp",
+    "sha256": "55b9fe4033e80c4c151a743744ccf745082ada5e408aaa782d6ccbb30d88d887"
+  },
+  "source_admission_granted": false
+}

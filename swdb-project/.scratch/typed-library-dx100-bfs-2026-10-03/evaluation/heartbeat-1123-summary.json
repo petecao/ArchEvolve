@@ -1,0 +1,48 @@
+{
+  "format": "swdb.heartbeat-progress.v1",
+  "observed_utc": "2026-10-03T15:23:18.116557+00:00",
+  "observed_et": "2026-10-03 11:23 ET",
+  "source_commit": "982d19b23eb0303ecacc938c5334e6479b861197",
+  "driver_state": "running",
+  "public_stage": "timed.w0.baseline",
+  "owned_simulator_pid": 1584571,
+  "owned_simulator_state": "running",
+  "owned_simulator_rss_kib": 14596860,
+  "leases": {
+    "node0": "held kernel and metadata",
+    "node1": "free kernel, released metadata",
+    "legacy": "free kernel, released metadata"
+  },
+  "load1": 1.94384765625,
+  "disk_free_bytes": {
+    "/data1": 46128984064,
+    "/data": 78837571584
+  },
+  "worker_health": "cpp running; two review agents completed normally; no stalled owned worker",
+  "test_review_evidence": "Both independent reviews pass; unchanged200-case JUnit hash, no unresolved case",
+  "timed_completed_results": 0,
+  "point_ratios": "not yet available",
+  "policy": "No duplicate dispatch or Git synchronization during active measurements; raw stays remote.",
+  "evidence_origin": "Live root operator SSH tool readback, no raw file copied",
+  "latest_refresh": {
+    "observed_utc": "2026-10-03T15:29:43.653923+00:00",
+    "observed_et": "2026-10-03 11:29 ET",
+    "source_commit": "982d19b23eb0303ecacc938c5334e6479b861197",
+    "driver_state": "running",
+    "public_stage": "timed.w0.baseline",
+    "simulator_pid": 1584571,
+    "simulator_state": "running",
+    "simulator_rss_kib": 28864016,
+    "lease_metadata": {
+      "node0": "held",
+      "node1": "released",
+      "legacy": "released"
+    },
+    "completed_sample_outcomes": "none observed"
+  },
+  "workload_label_correction": {
+    "updated_at_et": "2026-10-03 12:13 ET",
+    "actual_first_workload": "uniform18",
+    "reason": "w0 follows the actual frozen protocol workload order; earlier operator prose incorrectly labeled it Kronecker18. Historical running observations retain their original timestamp."
+  }
+}

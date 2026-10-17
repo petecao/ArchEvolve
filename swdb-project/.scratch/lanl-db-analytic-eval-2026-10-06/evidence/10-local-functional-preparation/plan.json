@@ -1,0 +1,390 @@
+{
+  "format": "swdb.estimation-preparation.v1",
+  "state": "prepared",
+  "provider_launched": false,
+  "total_input_bytes": 101164,
+  "base_sha256": "6351828a0ba1536f6862d428a2522ae36ea5a39753879abdb5b637b26d8ce211",
+  "input_sha256s": {
+    "characterization.json": "77d7e4101368ab29252695e4f8c6cdd52629f3dbe0d9be858862d5096b89ec00",
+    "profile.json": "0430c35f7a4c0d96f6c71db73f07810e55a19edd6053084d042767871ae9843a",
+    "parameters.json": "b16f04ce73ad69fb25695e571ecff181129ae167bff9be236c0c1dbb1e600ebb"
+  },
+  "unknown_parameters": [
+    {
+      "parameter": "mechanisms[0].parameters.atomic_ops_per_s",
+      "model": "compute_throughput",
+      "unit": "operations/s",
+      "domain": "positive"
+    },
+    {
+      "parameter": "mechanisms[0].parameters.branch_ops_per_s",
+      "model": "compute_throughput",
+      "unit": "operations/s",
+      "domain": "positive"
+    },
+    {
+      "parameter": "mechanisms[0].parameters.floating_point_ops_per_s",
+      "model": "compute_throughput",
+      "unit": "operations/s",
+      "domain": "positive"
+    },
+    {
+      "parameter": "mechanisms[0].parameters.integer_ops_per_s",
+      "model": "compute_throughput",
+      "unit": "operations/s",
+      "domain": "positive"
+    },
+    {
+      "parameter": "mechanisms[1].parameters.effective_memory_parallelism",
+      "model": "reorder_window_rows",
+      "unit": "requests",
+      "domain": "positive"
+    },
+    {
+      "parameter": "mechanisms[2].parameters.admission_requests_per_s",
+      "model": "fetch_queue",
+      "unit": "requests/s",
+      "domain": "positive"
+    },
+    {
+      "parameter": "mechanisms[2].parameters.fetch_latency_s",
+      "model": "fetch_queue",
+      "unit": "seconds/request",
+      "domain": "positive"
+    },
+    {
+      "parameter": "mechanisms[3].parameters.staging_bytes_per_s",
+      "model": "tile_staging",
+      "unit": "bytes/s",
+      "domain": "positive"
+    },
+    {
+      "parameter": "mechanisms[4].parameters.seconds_per_event",
+      "model": "offload_setup",
+      "unit": "seconds/event",
+      "domain": "positive"
+    }
+  ],
+  "projection": {
+    "format": "swdb.estimation-projection.v1",
+    "policy": "typed_native_counts_and_profile_structure_only",
+    "source_sha256s": {
+      "builder": "65856c39dd48e3d72c77d2c1d69ca82e8e5b234c3ab0d3db973b94f5fa5a11b9",
+      "contract": "6dfd028eb52fae2c0a3c0072011a512debf4f01c433fcab580b41d656053391f"
+    },
+    "files": [
+      {
+        "name": "characterization.json",
+        "bytes": 99178,
+        "sha256": "77d7e4101368ab29252695e4f8c6cdd52629f3dbe0d9be858862d5096b89ec00"
+      },
+      {
+        "name": "profile.json",
+        "bytes": 236,
+        "sha256": "0430c35f7a4c0d96f6c71db73f07810e55a19edd6053084d042767871ae9843a"
+      },
+      {
+        "name": "parameters.json",
+        "bytes": 1750,
+        "sha256": "b16f04ce73ad69fb25695e571ecff181129ae167bff9be236c0c1dbb1e600ebb"
+      }
+    ],
+    "omitted_raw_fields": [
+      {
+        "input": "characterization",
+        "field": "binding",
+        "sha256": "e366818b9751e1fc1cf292540db621953983e659345662ad52f4fdf5671af0c8"
+      },
+      {
+        "input": "characterization",
+        "field": "counting",
+        "sha256": "1a6b8f7ffca408ef469c806009f5452f153a9f9cd7529bf3e6dd8fa5abc2bdfe"
+      },
+      {
+        "input": "characterization",
+        "field": "coverage",
+        "sha256": "40d8365bf27906207b7bb699e37ff2eecd1f34e67cb9b730a21ddafceb9d7f2f"
+      },
+      {
+        "input": "characterization",
+        "field": "created",
+        "sha256": "60e44b095b242681a6bf189848348a558dc307a5e8df1aab516d8e06e7faef04"
+      },
+      {
+        "input": "characterization",
+        "field": "evidence_kind",
+        "sha256": "5f17e83816561dbd8d659774e55f931ac528524973c72ac559daac58cd23f74f"
+      },
+      {
+        "input": "characterization",
+        "field": "format",
+        "sha256": "04072a170b9d25d3edd840a492dbf11751e14a0c2cad79aa712c2458ea30e77f"
+      },
+      {
+        "input": "characterization",
+        "field": "host",
+        "sha256": "6aa7601f6953a5f1f67acecf16a90d07a99d645dee76b522593e74c7f08abb63"
+      },
+      {
+        "input": "characterization",
+        "field": "id",
+        "sha256": "13d17a7555ea0e392d0ec6b022fe7da11150f156d45299857c1af12ecf329d33"
+      },
+      {
+        "input": "characterization",
+        "field": "identity_sha256",
+        "sha256": "7d1675fa70e3392b2773335d2281725ecf2c16d79f9325d85794edb327d8f770"
+      },
+      {
+        "input": "characterization",
+        "field": "input",
+        "sha256": "b9b30a325006b45b9926d144a71835dd283f7fc5c969c314d6678c1b0bd71844"
+      },
+      {
+        "input": "characterization",
+        "field": "kind",
+        "sha256": "e6e0bb94386cdb50ce4dc35d228c1200e433033ea3b4ac2051450fe9fcb9c928"
+      },
+      {
+        "input": "characterization",
+        "field": "observation_contract",
+        "sha256": "aad220f4c603ebe39666ff9899659156c341d670eb27f97b037a5393f873b9e7"
+      },
+      {
+        "input": "characterization",
+        "field": "pattern_comparison",
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "input": "characterization",
+        "field": "provenance",
+        "sha256": "00987da92575a88d3d843a1705aadb3215824b6199b1e21b9296d5672a100806"
+      },
+      {
+        "input": "characterization",
+        "field": "regions",
+        "sha256": "972fed7f93ffe0c28bd5a659548668dcfa395d89a3cacd8dee130090db1b788c"
+      },
+      {
+        "input": "characterization",
+        "field": "schema_version",
+        "sha256": "1e60280e9d1e3e84a118af5a47f16099aa25216a20da1e12c3f70f723938e320"
+      },
+      {
+        "input": "characterization",
+        "field": "source",
+        "sha256": "f11908e8fb4e36fef49e48c1936f4e7d79ede596a1b5e9fa6494323bc812f231"
+      },
+      {
+        "input": "characterization",
+        "field": "static_analysis",
+        "sha256": "d654b6a74bf9e9d81e6f4f23666d2cd8f1bb8706219c2682b6b9e846b8a2b37f"
+      },
+      {
+        "input": "characterization",
+        "field": "status",
+        "sha256": "6ae048f08fcab44bfbc8463f074bfdb40f94c6bdf56d3aad9a7e1c05e5d5b5c1"
+      },
+      {
+        "input": "characterization",
+        "field": "subject",
+        "sha256": "c5a34b062a767f6ccf0c4e026a749e430e55c49cc95cb4d83a8f92f10eaf96e0"
+      },
+      {
+        "input": "characterization",
+        "field": "toolchain",
+        "sha256": "9ff1020eb4d851475fa622972e93fb81974fca08d2eedcaf2a0dedadf42a3288"
+      },
+      {
+        "input": "characterization",
+        "field": "trials",
+        "sha256": "fd0e96f78c38d33a27d7308f89a8f0bec723fea5d955e92004294cb178a9a15e"
+      },
+      {
+        "input": "characterization",
+        "field": "unmapped_loops",
+        "sha256": "f28c98f1bff00a0ddcc3d086be68a07151e2007774a8e906e9caf8b299950c12"
+      },
+      {
+        "input": "characterization",
+        "field": "unmodeled_calls",
+        "sha256": "c5f3f3a7e79c177936bbc1d37249aec225ea145a570eb7c7c3f4d4ab29393192"
+      },
+      {
+        "input": "characterization",
+        "field": "updated",
+        "sha256": "60e44b095b242681a6bf189848348a558dc307a5e8df1aab516d8e06e7faef04"
+      },
+      {
+        "input": "profile",
+        "field": "completeness",
+        "sha256": "b086de7b32510701e873f3d4ae742917ca1cc1141ffe4a8387d604ef474ef9e4"
+      },
+      {
+        "input": "profile",
+        "field": "constraints",
+        "sha256": "0d86ec98d5513ea0e0c568737ecc861bc8fd8508bb8e8c8e2c1cbf2f32d0d5c4"
+      },
+      {
+        "input": "profile",
+        "field": "context",
+        "sha256": "df0b017b6e39f7a1cc3f78dc17635ac700537ac64611401db81ba8e42ebb87fd"
+      },
+      {
+        "input": "profile",
+        "field": "created",
+        "sha256": "60e44b095b242681a6bf189848348a558dc307a5e8df1aab516d8e06e7faef04"
+      },
+      {
+        "input": "profile",
+        "field": "dynamic_memory",
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "input": "profile",
+        "field": "evidence",
+        "sha256": "402a970ee7952c2e3586c45aa6d73ae36120c39619b23017da3d4e81a1d2d8b4"
+      },
+      {
+        "input": "profile",
+        "field": "id",
+        "sha256": "698bbe33198633fce0b8d425d1fc599b066f744d2fa7f3b285f7f920cde0949f"
+      },
+      {
+        "input": "profile",
+        "field": "implementation",
+        "sha256": "c7f87100b498d66b39c301e1384f4afc4e15a60f4105d902d3c9670293a4db5d"
+      },
+      {
+        "input": "profile",
+        "field": "kind",
+        "sha256": "163d6d0ba3c77b1c0917787b20d01d2b2afdee770158c23276546082d0055f05"
+      },
+      {
+        "input": "profile",
+        "field": "message_version",
+        "sha256": "a51162aeeb057ca4e3df627977231de20b581f0d0d418ca3a111bc0e408ac6cc"
+      },
+      {
+        "input": "profile",
+        "field": "producer",
+        "sha256": "2ffa32855b4055741dd390b3dd814fce306ab36fe01714e0dfd26dd721a3a82c"
+      },
+      {
+        "input": "profile",
+        "field": "provenance",
+        "sha256": "0c30f301226e9a07d3ddf735a392fce69d81d9e60e15f43998413b55342da046"
+      },
+      {
+        "input": "profile",
+        "field": "reasons",
+        "sha256": "b4e09bd3548c9384daabd1785d0325f465d088e112319f95b104fdd37af8c225"
+      },
+      {
+        "input": "profile",
+        "field": "regions",
+        "sha256": "e3ae71a62b09528c6b157b8f420beda23b88f536414400b19da2019937863e38"
+      },
+      {
+        "input": "profile",
+        "field": "schema_version",
+        "sha256": "1e60280e9d1e3e84a118af5a47f16099aa25216a20da1e12c3f70f723938e320"
+      },
+      {
+        "input": "profile",
+        "field": "source_snapshot",
+        "sha256": "3d2ee64d7033914e83506ffccf3bcb691a7378fc3167819482a941c902dc5f0b"
+      },
+      {
+        "input": "profile",
+        "field": "status",
+        "sha256": "6ae048f08fcab44bfbc8463f074bfdb40f94c6bdf56d3aad9a7e1c05e5d5b5c1"
+      },
+      {
+        "input": "profile",
+        "field": "updated",
+        "sha256": "60e44b095b242681a6bf189848348a558dc307a5e8df1aab516d8e06e7faef04"
+      },
+      {
+        "input": "target",
+        "field": "calibration_sources",
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "input": "target",
+        "field": "created",
+        "sha256": "60e44b095b242681a6bf189848348a558dc307a5e8df1aab516d8e06e7faef04"
+      },
+      {
+        "input": "target",
+        "field": "dram_address_layout",
+        "sha256": "7a34884d7ef003d6e2bbb4a0f8058519ce4503b40b44d8c3904c242b10aa63ff"
+      },
+      {
+        "input": "target",
+        "field": "estimator_variant",
+        "sha256": "e201fbda57ea961b5eb3f19c12e9cc618d7f321e6cd095ab85641e9ede86ee8e"
+      },
+      {
+        "input": "target",
+        "field": "format",
+        "sha256": "a7a2bb05c29feffdfcc11abc468f8fe9e2b0e33b2285f6558c8ce61c5adb1eb0"
+      },
+      {
+        "input": "target",
+        "field": "functional_observation",
+        "sha256": "9b5660ddb0933cfceb7107a270a50d6cf7b8aea273fd451fb189fde04419f4ec"
+      },
+      {
+        "input": "target",
+        "field": "id",
+        "sha256": "794526d35b1370d22f15c90510eee45b8d3c60ba10424a7403bf61a8f84fb952"
+      },
+      {
+        "input": "target",
+        "field": "kind",
+        "sha256": "51e5e2172d4ea9a0711425cc1410537952740c9dd5df1342125e13109c4e871b"
+      },
+      {
+        "input": "target",
+        "field": "mechanisms",
+        "sha256": "055cacbdc9313ddb37afd2c77fc8c150dff472dced1d2b42c5989101ad212a2c"
+      },
+      {
+        "input": "target",
+        "field": "provenance",
+        "sha256": "c3c708144d0e3133a45b82e3b48ea70f72d6dbf98f58cd23fbfcb71b8cf3c8c9"
+      },
+      {
+        "input": "target",
+        "field": "schema_version",
+        "sha256": "1e60280e9d1e3e84a118af5a47f16099aa25216a20da1e12c3f70f723938e320"
+      },
+      {
+        "input": "target",
+        "field": "status",
+        "sha256": "6ae048f08fcab44bfbc8463f074bfdb40f94c6bdf56d3aad9a7e1c05e5d5b5c1"
+      },
+      {
+        "input": "target",
+        "field": "target",
+        "sha256": "c685bf5b8097369054a3f26cd07dd63b21764d8c014049154889e764374fb929"
+      },
+      {
+        "input": "target",
+        "field": "threads",
+        "sha256": "4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a"
+      },
+      {
+        "input": "target",
+        "field": "updated",
+        "sha256": "60e44b095b242681a6bf189848348a558dc307a5e8df1aab516d8e06e7faef04"
+      },
+      {
+        "input": "target",
+        "field": "version",
+        "sha256": "391552c099c101b131feaf24c5795a6a15bc8ec82015424e0d2b4274a369a0bf"
+      }
+    ]
+  }
+}

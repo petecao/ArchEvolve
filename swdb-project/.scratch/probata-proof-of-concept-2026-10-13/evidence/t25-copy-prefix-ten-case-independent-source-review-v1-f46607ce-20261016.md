@@ -1,0 +1,9 @@
+# Ten-case copied-prefix implementation source review — 2026-10-16 ET
+
+Decision: **REQUEST_CHANGES (test only); production source preparation passes** for9936e7ac composed at cleanf46607cedf2dcce5db5d8fc7aedfdd947a2eb900, relative to188a478e. No production soundness blocker was found.
+
+The only production delta is the new closed prefix expansion and its declaration wiring. Existing function ASTs are unchanged except declaration. All ten formulas match the independently approved design: full originalA/range, freshj, copy at oldk, prefix countk+1, five conclusions in both exhaustive integer cases. Both exact source definitions are pinned. Parent24parts replaces only the old prefix component and maps all ten children to the copy/increment events; the original1839input stays reference-only. Baseline52hashes match actual3a capture;51other C inputs and unchanged body/theory/contracts are checked by the retained pure controls and static generator inspection. No sibling result, caller premise or new axiom is added.
+
+**T1 (P2):** tests/test_vector_reallocation_caller_packets.py:28 retains reserve body_count58 while requiring total127. The new source reserve count is67. This literal assertion and residual arithmetic fail; the nearby fixture comment also needs correction. The retained34affected pure controls exclude this module. Repair the expectation/comment and retain the compiler-free canonical caller control before handoff.
+
+The5genuine RED failures, initial4pass/1span-digest failure, corrected5GREEN and34affected GREEN receipts are preserved. All26direct evidence pins match; all unchanged body/theory/inventory Git blobs match. No reviewer project tests, compiler/native/formal execution or SSH occurred. Complete61/67andcaller127 public/native acceptance remains pending; actual earlier prefix timeout is not upgraded.

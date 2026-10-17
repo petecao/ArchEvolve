@@ -1,0 +1,9 @@
+name: array_roles
+description: The part an array plays in an access pattern's chain of steps.
+values:
+  - value: index
+    meaning: Its values are used as element indices by the next step.
+  - value: offsets
+    meaning: Its values are range bounds for the next (ranged indirect) step, for example CSR row offsets.
+  - value: target
+    meaning: The array the chain ends at, which the pattern reads or updates.

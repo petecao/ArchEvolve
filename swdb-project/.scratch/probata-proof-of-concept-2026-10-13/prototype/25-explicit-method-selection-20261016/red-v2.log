@@ -1,0 +1,358 @@
+FFFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+_ test_public_summary_and_model_preserve_explicit_method_selection[summary-named] _
+
+environment = environ({'BROWSER_USE_ACCESS_VERIFYING_IDENTITY': 'MCowBQYDK2VwAyEA6Vtfm1tD2l6jtZCM/x+VXkjQlMWQW/pKvzHIsUJ+UeI=', 'COD...summary_and_model_preserve_explicit_method_selection[summary-named] (call)', 'SWDB_FIXTURE_HOST': 'swdb-fixture-host'})
+
+    def read_actual_lineup(environment=None):
+        """Only explicit coordinator input: no discovery, probes or default actual pins."""
+        environment = os.environ if environment is None else environment
+        def unique(pairs):
+            value = {}
+            for name, version in pairs:
+                if name in value:
+                    raise ValueError('actual selector lineup contains duplicate keys')
+                value[name] = version
+            return value
+        try:
+>           value = json.loads(environment[ACTUAL_LINEUP_ENV], object_pairs_hook=unique)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'SWDB_DX100_SELECTOR_ACTUAL_LINEUP'
+
+tests/testkit/dx100_selector.py:91: KeyError
+
+The above exception was the direct cause of the following exception:
+
+tmp_path = PosixPath('/private/tmp/probata-t25-explicit-method-selection-red-v2/test_public_summary_and_model_0')
+route = 'summary', selection = 'named'
+
+    @pytest.mark.parametrize('route, selection', [('summary', 'named'), ('summary', 'default'), ('summary', 'missing'),
+                                                 ('model', 'named'), ('model', 'default'), ('model', 'missing')])
+    def test_public_summary_and_model_preserve_explicit_method_selection(tmp_path, route, selection):
+>       records, named = build_closed_source_fixture(tmp_path)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_summary_model_method_selection.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/testkit/vector_closed_workflow.py:31: in build_closed_source_fixture
+    bind_actual_lineup(method, read_actual_lineup())
+                               ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+environment = environ({'BROWSER_USE_ACCESS_VERIFYING_IDENTITY': 'MCowBQYDK2VwAyEA6Vtfm1tD2l6jtZCM/x+VXkjQlMWQW/pKvzHIsUJ+UeI=', 'COD...summary_and_model_preserve_explicit_method_selection[summary-named] (call)', 'SWDB_FIXTURE_HOST': 'swdb-fixture-host'})
+
+    def read_actual_lineup(environment=None):
+        """Only explicit coordinator input: no discovery, probes or default actual pins."""
+        environment = os.environ if environment is None else environment
+        def unique(pairs):
+            value = {}
+            for name, version in pairs:
+                if name in value:
+                    raise ValueError('actual selector lineup contains duplicate keys')
+                value[name] = version
+            return value
+        try:
+            value = json.loads(environment[ACTUAL_LINEUP_ENV], object_pairs_hook=unique)
+        except (KeyError, TypeError, json.JSONDecodeError) as error:
+>           raise ValueError('actual selector lineup must be explicit JSON') from error
+E           ValueError: actual selector lineup must be explicit JSON
+
+tests/testkit/dx100_selector.py:93: ValueError
+_ test_public_summary_and_model_preserve_explicit_method_selection[summary-default] _
+
+environment = environ({'BROWSER_USE_ACCESS_VERIFYING_IDENTITY': 'MCowBQYDK2VwAyEA6Vtfm1tD2l6jtZCM/x+VXkjQlMWQW/pKvzHIsUJ+UeI=', 'COD..._model_method_selection.py::test_public_summary_and_model_preserve_explicit_method_selection[summary-default] (call)'})
+
+    def read_actual_lineup(environment=None):
+        """Only explicit coordinator input: no discovery, probes or default actual pins."""
+        environment = os.environ if environment is None else environment
+        def unique(pairs):
+            value = {}
+            for name, version in pairs:
+                if name in value:
+                    raise ValueError('actual selector lineup contains duplicate keys')
+                value[name] = version
+            return value
+        try:
+>           value = json.loads(environment[ACTUAL_LINEUP_ENV], object_pairs_hook=unique)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'SWDB_DX100_SELECTOR_ACTUAL_LINEUP'
+
+tests/testkit/dx100_selector.py:91: KeyError
+
+The above exception was the direct cause of the following exception:
+
+tmp_path = PosixPath('/private/tmp/probata-t25-explicit-method-selection-red-v2/test_public_summary_and_model_1')
+route = 'summary', selection = 'default'
+
+    @pytest.mark.parametrize('route, selection', [('summary', 'named'), ('summary', 'default'), ('summary', 'missing'),
+                                                 ('model', 'named'), ('model', 'default'), ('model', 'missing')])
+    def test_public_summary_and_model_preserve_explicit_method_selection(tmp_path, route, selection):
+>       records, named = build_closed_source_fixture(tmp_path)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_summary_model_method_selection.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/testkit/vector_closed_workflow.py:31: in build_closed_source_fixture
+    bind_actual_lineup(method, read_actual_lineup())
+                               ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+environment = environ({'BROWSER_USE_ACCESS_VERIFYING_IDENTITY': 'MCowBQYDK2VwAyEA6Vtfm1tD2l6jtZCM/x+VXkjQlMWQW/pKvzHIsUJ+UeI=', 'COD..._model_method_selection.py::test_public_summary_and_model_preserve_explicit_method_selection[summary-default] (call)'})
+
+    def read_actual_lineup(environment=None):
+        """Only explicit coordinator input: no discovery, probes or default actual pins."""
+        environment = os.environ if environment is None else environment
+        def unique(pairs):
+            value = {}
+            for name, version in pairs:
+                if name in value:
+                    raise ValueError('actual selector lineup contains duplicate keys')
+                value[name] = version
+            return value
+        try:
+            value = json.loads(environment[ACTUAL_LINEUP_ENV], object_pairs_hook=unique)
+        except (KeyError, TypeError, json.JSONDecodeError) as error:
+>           raise ValueError('actual selector lineup must be explicit JSON') from error
+E           ValueError: actual selector lineup must be explicit JSON
+
+tests/testkit/dx100_selector.py:93: ValueError
+_ test_public_summary_and_model_preserve_explicit_method_selection[summary-missing] _
+
+environment = environ({'BROWSER_USE_ACCESS_VERIFYING_IDENTITY': 'MCowBQYDK2VwAyEA6Vtfm1tD2l6jtZCM/x+VXkjQlMWQW/pKvzHIsUJ+UeI=', 'COD..._model_method_selection.py::test_public_summary_and_model_preserve_explicit_method_selection[summary-missing] (call)'})
+
+    def read_actual_lineup(environment=None):
+        """Only explicit coordinator input: no discovery, probes or default actual pins."""
+        environment = os.environ if environment is None else environment
+        def unique(pairs):
+            value = {}
+            for name, version in pairs:
+                if name in value:
+                    raise ValueError('actual selector lineup contains duplicate keys')
+                value[name] = version
+            return value
+        try:
+>           value = json.loads(environment[ACTUAL_LINEUP_ENV], object_pairs_hook=unique)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'SWDB_DX100_SELECTOR_ACTUAL_LINEUP'
+
+tests/testkit/dx100_selector.py:91: KeyError
+
+The above exception was the direct cause of the following exception:
+
+tmp_path = PosixPath('/private/tmp/probata-t25-explicit-method-selection-red-v2/test_public_summary_and_model_2')
+route = 'summary', selection = 'missing'
+
+    @pytest.mark.parametrize('route, selection', [('summary', 'named'), ('summary', 'default'), ('summary', 'missing'),
+                                                 ('model', 'named'), ('model', 'default'), ('model', 'missing')])
+    def test_public_summary_and_model_preserve_explicit_method_selection(tmp_path, route, selection):
+>       records, named = build_closed_source_fixture(tmp_path)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_summary_model_method_selection.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/testkit/vector_closed_workflow.py:31: in build_closed_source_fixture
+    bind_actual_lineup(method, read_actual_lineup())
+                               ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+environment = environ({'BROWSER_USE_ACCESS_VERIFYING_IDENTITY': 'MCowBQYDK2VwAyEA6Vtfm1tD2l6jtZCM/x+VXkjQlMWQW/pKvzHIsUJ+UeI=', 'COD..._model_method_selection.py::test_public_summary_and_model_preserve_explicit_method_selection[summary-missing] (call)'})
+
+    def read_actual_lineup(environment=None):
+        """Only explicit coordinator input: no discovery, probes or default actual pins."""
+        environment = os.environ if environment is None else environment
+        def unique(pairs):
+            value = {}
+            for name, version in pairs:
+                if name in value:
+                    raise ValueError('actual selector lineup contains duplicate keys')
+                value[name] = version
+            return value
+        try:
+            value = json.loads(environment[ACTUAL_LINEUP_ENV], object_pairs_hook=unique)
+        except (KeyError, TypeError, json.JSONDecodeError) as error:
+>           raise ValueError('actual selector lineup must be explicit JSON') from error
+E           ValueError: actual selector lineup must be explicit JSON
+
+tests/testkit/dx100_selector.py:93: ValueError
+_ test_public_summary_and_model_preserve_explicit_method_selection[model-named] _
+
+environment = environ({'BROWSER_USE_ACCESS_VERIFYING_IDENTITY': 'MCowBQYDK2VwAyEA6Vtfm1tD2l6jtZCM/x+VXkjQlMWQW/pKvzHIsUJ+UeI=', 'COD...mary_model_method_selection.py::test_public_summary_and_model_preserve_explicit_method_selection[model-named] (call)'})
+
+    def read_actual_lineup(environment=None):
+        """Only explicit coordinator input: no discovery, probes or default actual pins."""
+        environment = os.environ if environment is None else environment
+        def unique(pairs):
+            value = {}
+            for name, version in pairs:
+                if name in value:
+                    raise ValueError('actual selector lineup contains duplicate keys')
+                value[name] = version
+            return value
+        try:
+>           value = json.loads(environment[ACTUAL_LINEUP_ENV], object_pairs_hook=unique)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'SWDB_DX100_SELECTOR_ACTUAL_LINEUP'
+
+tests/testkit/dx100_selector.py:91: KeyError
+
+The above exception was the direct cause of the following exception:
+
+tmp_path = PosixPath('/private/tmp/probata-t25-explicit-method-selection-red-v2/test_public_summary_and_model_3')
+route = 'model', selection = 'named'
+
+    @pytest.mark.parametrize('route, selection', [('summary', 'named'), ('summary', 'default'), ('summary', 'missing'),
+                                                 ('model', 'named'), ('model', 'default'), ('model', 'missing')])
+    def test_public_summary_and_model_preserve_explicit_method_selection(tmp_path, route, selection):
+>       records, named = build_closed_source_fixture(tmp_path)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_summary_model_method_selection.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/testkit/vector_closed_workflow.py:31: in build_closed_source_fixture
+    bind_actual_lineup(method, read_actual_lineup())
+                               ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+environment = environ({'BROWSER_USE_ACCESS_VERIFYING_IDENTITY': 'MCowBQYDK2VwAyEA6Vtfm1tD2l6jtZCM/x+VXkjQlMWQW/pKvzHIsUJ+UeI=', 'COD...mary_model_method_selection.py::test_public_summary_and_model_preserve_explicit_method_selection[model-named] (call)'})
+
+    def read_actual_lineup(environment=None):
+        """Only explicit coordinator input: no discovery, probes or default actual pins."""
+        environment = os.environ if environment is None else environment
+        def unique(pairs):
+            value = {}
+            for name, version in pairs:
+                if name in value:
+                    raise ValueError('actual selector lineup contains duplicate keys')
+                value[name] = version
+            return value
+        try:
+            value = json.loads(environment[ACTUAL_LINEUP_ENV], object_pairs_hook=unique)
+        except (KeyError, TypeError, json.JSONDecodeError) as error:
+>           raise ValueError('actual selector lineup must be explicit JSON') from error
+E           ValueError: actual selector lineup must be explicit JSON
+
+tests/testkit/dx100_selector.py:93: ValueError
+_ test_public_summary_and_model_preserve_explicit_method_selection[model-default] _
+
+environment = environ({'BROWSER_USE_ACCESS_VERIFYING_IDENTITY': 'MCowBQYDK2VwAyEA6Vtfm1tD2l6jtZCM/x+VXkjQlMWQW/pKvzHIsUJ+UeI=', 'COD...ry_model_method_selection.py::test_public_summary_and_model_preserve_explicit_method_selection[model-default] (call)'})
+
+    def read_actual_lineup(environment=None):
+        """Only explicit coordinator input: no discovery, probes or default actual pins."""
+        environment = os.environ if environment is None else environment
+        def unique(pairs):
+            value = {}
+            for name, version in pairs:
+                if name in value:
+                    raise ValueError('actual selector lineup contains duplicate keys')
+                value[name] = version
+            return value
+        try:
+>           value = json.loads(environment[ACTUAL_LINEUP_ENV], object_pairs_hook=unique)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'SWDB_DX100_SELECTOR_ACTUAL_LINEUP'
+
+tests/testkit/dx100_selector.py:91: KeyError
+
+The above exception was the direct cause of the following exception:
+
+tmp_path = PosixPath('/private/tmp/probata-t25-explicit-method-selection-red-v2/test_public_summary_and_model_4')
+route = 'model', selection = 'default'
+
+    @pytest.mark.parametrize('route, selection', [('summary', 'named'), ('summary', 'default'), ('summary', 'missing'),
+                                                 ('model', 'named'), ('model', 'default'), ('model', 'missing')])
+    def test_public_summary_and_model_preserve_explicit_method_selection(tmp_path, route, selection):
+>       records, named = build_closed_source_fixture(tmp_path)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_summary_model_method_selection.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/testkit/vector_closed_workflow.py:31: in build_closed_source_fixture
+    bind_actual_lineup(method, read_actual_lineup())
+                               ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+environment = environ({'BROWSER_USE_ACCESS_VERIFYING_IDENTITY': 'MCowBQYDK2VwAyEA6Vtfm1tD2l6jtZCM/x+VXkjQlMWQW/pKvzHIsUJ+UeI=', 'COD...ry_model_method_selection.py::test_public_summary_and_model_preserve_explicit_method_selection[model-default] (call)'})
+
+    def read_actual_lineup(environment=None):
+        """Only explicit coordinator input: no discovery, probes or default actual pins."""
+        environment = os.environ if environment is None else environment
+        def unique(pairs):
+            value = {}
+            for name, version in pairs:
+                if name in value:
+                    raise ValueError('actual selector lineup contains duplicate keys')
+                value[name] = version
+            return value
+        try:
+            value = json.loads(environment[ACTUAL_LINEUP_ENV], object_pairs_hook=unique)
+        except (KeyError, TypeError, json.JSONDecodeError) as error:
+>           raise ValueError('actual selector lineup must be explicit JSON') from error
+E           ValueError: actual selector lineup must be explicit JSON
+
+tests/testkit/dx100_selector.py:93: ValueError
+_ test_public_summary_and_model_preserve_explicit_method_selection[model-missing] _
+
+environment = environ({'BROWSER_USE_ACCESS_VERIFYING_IDENTITY': 'MCowBQYDK2VwAyEA6Vtfm1tD2l6jtZCM/x+VXkjQlMWQW/pKvzHIsUJ+UeI=', 'COD...ry_model_method_selection.py::test_public_summary_and_model_preserve_explicit_method_selection[model-missing] (call)'})
+
+    def read_actual_lineup(environment=None):
+        """Only explicit coordinator input: no discovery, probes or default actual pins."""
+        environment = os.environ if environment is None else environment
+        def unique(pairs):
+            value = {}
+            for name, version in pairs:
+                if name in value:
+                    raise ValueError('actual selector lineup contains duplicate keys')
+                value[name] = version
+            return value
+        try:
+>           value = json.loads(environment[ACTUAL_LINEUP_ENV], object_pairs_hook=unique)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'SWDB_DX100_SELECTOR_ACTUAL_LINEUP'
+
+tests/testkit/dx100_selector.py:91: KeyError
+
+The above exception was the direct cause of the following exception:
+
+tmp_path = PosixPath('/private/tmp/probata-t25-explicit-method-selection-red-v2/test_public_summary_and_model_5')
+route = 'model', selection = 'missing'
+
+    @pytest.mark.parametrize('route, selection', [('summary', 'named'), ('summary', 'default'), ('summary', 'missing'),
+                                                 ('model', 'named'), ('model', 'default'), ('model', 'missing')])
+    def test_public_summary_and_model_preserve_explicit_method_selection(tmp_path, route, selection):
+>       records, named = build_closed_source_fixture(tmp_path)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_summary_model_method_selection.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/testkit/vector_closed_workflow.py:31: in build_closed_source_fixture
+    bind_actual_lineup(method, read_actual_lineup())
+                               ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+environment = environ({'BROWSER_USE_ACCESS_VERIFYING_IDENTITY': 'MCowBQYDK2VwAyEA6Vtfm1tD2l6jtZCM/x+VXkjQlMWQW/pKvzHIsUJ+UeI=', 'COD...ry_model_method_selection.py::test_public_summary_and_model_preserve_explicit_method_selection[model-missing] (call)'})
+
+    def read_actual_lineup(environment=None):
+        """Only explicit coordinator input: no discovery, probes or default actual pins."""
+        environment = os.environ if environment is None else environment
+        def unique(pairs):
+            value = {}
+            for name, version in pairs:
+                if name in value:
+                    raise ValueError('actual selector lineup contains duplicate keys')
+                value[name] = version
+            return value
+        try:
+            value = json.loads(environment[ACTUAL_LINEUP_ENV], object_pairs_hook=unique)
+        except (KeyError, TypeError, json.JSONDecodeError) as error:
+>           raise ValueError('actual selector lineup must be explicit JSON') from error
+E           ValueError: actual selector lineup must be explicit JSON
+
+tests/testkit/dx100_selector.py:93: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_summary_model_method_selection.py::test_public_summary_and_model_preserve_explicit_method_selection[summary-named]
+FAILED tests/test_summary_model_method_selection.py::test_public_summary_and_model_preserve_explicit_method_selection[summary-default]
+FAILED tests/test_summary_model_method_selection.py::test_public_summary_and_model_preserve_explicit_method_selection[summary-missing]
+FAILED tests/test_summary_model_method_selection.py::test_public_summary_and_model_preserve_explicit_method_selection[model-named]
+FAILED tests/test_summary_model_method_selection.py::test_public_summary_and_model_preserve_explicit_method_selection[model-default]
+FAILED tests/test_summary_model_method_selection.py::test_public_summary_and_model_preserve_explicit_method_selection[model-missing]
+6 failed in 0.29s

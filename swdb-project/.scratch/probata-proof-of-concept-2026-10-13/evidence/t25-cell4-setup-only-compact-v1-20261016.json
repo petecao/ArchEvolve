@@ -1,0 +1,405 @@
+{
+  "actual_launch": {
+    "boundary": "Actual root V2 bootstrap includes early compiler/ambient selector checks; distinct from inert unmodified command35986a8e. Entry and expected hashes are identical to reviewed setup-onlyv1.",
+    "command_sha256": "6b497843ec0c55d4771074623b715f6258b4f9e7ced895e061e9aa912cddc786",
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-cell4-setup-only-v1/launch.json",
+    "sha256": "ee957e8b6e6dc45a355ae1ffa6fd8a262d0ce8e31520f1cb1624d3cf4e2a478e"
+  },
+  "caller_acceptance": false,
+  "created": "2026-10-16 ET",
+  "diagnostic_spelling_repair": {
+    "bytes": 21120,
+    "path": "/private/tmp/probata-t25-cell4-diagnostic-entry-v5-046f6b9e-20261016.py",
+    "sha256": "9d395bd15aac3f9a81e18ce3e87b62fd4a18e03b8862f5229401453d5968f0ee"
+  },
+  "entry_result_raw_bytes_before_final_receipts": 22221109,
+  "errors": [],
+  "formal_four_leaves_unexecuted": [
+    "grow.entry.int_projection.cells.access",
+    "grow.entry.int_projection.cells.initialization",
+    "grow.entry.int_projection.cells.integer",
+    "grow.entry.int_projection.cells.bounds"
+  ],
+  "full24_model_targets_unexecuted": [
+    "control.grow.premises_feasible",
+    "grow.entry.reads",
+    "grow.entry.int_projection.repr",
+    "grow.entry.int_projection.cells.access",
+    "grow.entry.int_projection.cells.initialization",
+    "grow.entry.int_projection.cells.integer",
+    "grow.entry.int_projection.cells.bounds",
+    "grow.alloc.identity",
+    "grow.alloc.output",
+    "grow.alloc.frame",
+    "grow.copy.establish",
+    "grow.copy.read",
+    "grow.copy.write",
+    "grow.copy.step",
+    "grow.copy.exit",
+    "grow.free.argument",
+    "grow.free.survival",
+    "grow.free.aliases",
+    "grow.store.capacity",
+    "grow.post.eligibility",
+    "grow.post.values",
+    "grow.post.old_invalid",
+    "grow.post.frame",
+    "grow.numeric"
+  ],
+  "lease_snapshot": {
+    "mbit10-evaluation-node0.meta.json": {
+      "active_session": null,
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "heartbeat_at": "2026-10-16T10:49:58Z",
+      "lease": {
+        "acquired_at": "2026-10-16T10:49:30Z",
+        "daemon_pid": 3858666,
+        "daemon_start_token": "sh3858666-1792147770",
+        "generation": 594,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node0",
+        "mode": "measure",
+        "session_id": null
+      },
+      "recovered_from_generation": null,
+      "released_at": "2026-10-16T10:49:58Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation-node1.meta.json": {
+      "active_session": null,
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "heartbeat_at": "2026-10-16T10:40:39Z",
+      "lease": {
+        "acquired_at": "2026-10-16T10:38:40Z",
+        "daemon_pid": 3857436,
+        "daemon_start_token": "sh3857436-1792147120",
+        "generation": 620,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node1",
+        "mode": "measure",
+        "session_id": null
+      },
+      "recovered_from_generation": null,
+      "released_at": "2026-10-16T10:40:39Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation.meta.json": {
+      "active_session": null,
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "heartbeat_at": "2026-09-12T04:49:11Z",
+      "lease": {
+        "acquired_at": "2026-09-12T01:35:42Z",
+        "daemon_pid": 209457,
+        "daemon_start_token": "sh209457-1789176942",
+        "generation": 77,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation",
+        "mode": "measure",
+        "session_id": null
+      },
+      "recovered_from_generation": null,
+      "released_at": "2026-09-12T04:49:11Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    }
+  },
+  "metadata_serialization_checks": [
+    {
+      "bytes": 18024,
+      "relative": "cell4-setup-only-profile/result.json",
+      "retained_content_serialization_matches_raw_pin": true,
+      "sha256": "983e1537b85eac21b3df1a0b729a42886ee638b248ca5f6f295005319789358e"
+    },
+    {
+      "bytes": 5970,
+      "relative": "cell4-setup-only-profile/setup.json",
+      "retained_content_serialization_matches_raw_pin": true,
+      "sha256": "3e313f20b5b1cf1129e2d91017f274963d5ac4726d3db524d7f0d3cc19cd5d1c"
+    },
+    {
+      "bytes": 8845,
+      "relative": "cell4-setup-only-profile/canonical-precheck.json",
+      "retained_content_serialization_matches_raw_pin": true,
+      "sha256": "0d4db991c77b01933543a9dbfee4461b37ca87fc39509cba2cff77b5a7af705a"
+    },
+    {
+      "bytes": 2499,
+      "relative": "cell4-setup-only-profile/foundation.json",
+      "retained_content_serialization_matches_raw_pin": true,
+      "sha256": "bffb3b65278f1fc471d2dcce72245bcb26af4b72d304ea0283482d1d9f3340d1"
+    },
+    {
+      "bytes": 7807,
+      "relative": "cell4-setup-only-profile/method.json",
+      "retained_content_serialization_matches_raw_pin": true,
+      "sha256": "71aad55e3dcffd74ee8fb22b7b81d7416a646a229f86c4d235da4c4ebe6e2c8f"
+    },
+    {
+      "bytes": 803,
+      "relative": "cell4-setup-only-profile/typed-runtime.json",
+      "retained_content_serialization_matches_raw_pin": true,
+      "sha256": "2ce4dd39da15a84ddb0e41b46b910fea5ae4e65ae36efd47d0287d999ba18286"
+    }
+  ],
+  "model_acceptance": false,
+  "native_foundation": {
+    "bytes": 2499,
+    "content": {
+      "frama_share": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share",
+      "metadata_executable": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-cell4-setup-only-v1/cell4-setup-only-profile/foundation/heap_model_environment",
+      "metadata_executable_sha256": "7652227a87937cf8ff442b6d76dfc9e716a3fe448f4a9a6c2bd165d594ded5a9",
+      "metadata_source_sha256": "ba52941e7ab96a8ebbe4efdb8fde0c1b19daa3d6ccb8804efc87b027a68caf7b",
+      "ocaml_package_paths": {
+        "why3": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/why3",
+        "wp_core": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core"
+      },
+      "ocamlfind_command": [
+        "/data1/yanruj/probata-verifiers/opam/framac-33/bin/ocamlfind"
+      ],
+      "scope": "explicit trusted Why3/Frama-C arithmetic/map/datatype support; no project desired theorem",
+      "sources": [
+        {
+          "path": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/algebra.mlw",
+          "sha256": "39d64b3f351a3a08a391d6d26467e427d9ad61799a0ea93ad9cf85d0acbc4fb4"
+        },
+        {
+          "path": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/bool.mlw",
+          "sha256": "b7072fdd8dd5004d0627b82a66b054518ee54eb4dd66f0883988e363bed251fa"
+        },
+        {
+          "path": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/int.mlw",
+          "sha256": "eb5bc9d4a46e1b6a298d24fd36dcf9dfb8f35cbc75b2f44007cfe1a24550ce8d"
+        },
+        {
+          "path": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/map.mlw",
+          "sha256": "c4cd7b90e39f8407fd714d0e46ce4c6496a98afd32bd69c71237b35a4b7c08a0"
+        },
+        {
+          "path": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/real.mlw",
+          "sha256": "50940038bba54f6bd57501e5af6439af8c4f081274eb79a19d888a4cd419b8a2"
+        },
+        {
+          "path": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/relations.mlw",
+          "sha256": "0a367aecd2cd627de87d5f4011ddbf930bf49283e0b94b792a338faf921b2cae"
+        },
+        {
+          "path": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/cint.mlw",
+          "sha256": "34165df36963929dc7fc2d06e7609434fddc43924af5a9979e78d89b9c5b989e"
+        },
+        {
+          "path": "/data1/yanruj/probata-verifiers/opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/qed.mlw",
+          "sha256": "54d50c3e40ea87b2bb0fd7195341c6c8bfc5ebcf300cb7b18752fae28e622efe"
+        }
+      ],
+      "why3_loadpath": [
+        "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib"
+      ]
+    },
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-cell4-setup-only-v1/cell4-setup-only-profile/foundation.json",
+    "sha256": "bffb3b65278f1fc471d2dcce72245bcb26af4b72d304ea0283482d1d9f3340d1"
+  },
+  "no_api_mocks_used": true,
+  "original_v2_acceptance": false,
+  "outer_resources": {
+    "bytes": 166,
+    "content": {
+      "cpu_seconds": 33.640151,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 342884352,
+      "timed_out": false,
+      "wall_seconds": 28.274620649404824
+    },
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-cell4-setup-only-v1/outer-resources.json",
+    "sha256": "5533fb1ce94d7c96ef06b4b4a75aa1b08afdccabee1f169d75900ca1caf33514"
+  },
+  "prior_actual_g593": {
+    "classification": "Coordinator-reported pre-solver AttributeError for nonexistent WPAdapter; all4 leaves unexecuted; no report compile reached",
+    "scope": "Prior raw and root failure receipt remain immutable; this setup pass does not repair/relabel predecessor output."
+  },
+  "proof_acceptance": false,
+  "resources": {
+    "bytes": 166,
+    "content": {
+      "cpu_seconds": 26.335407,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 289931264,
+      "timed_out": false,
+      "wall_seconds": 26.162629193626344
+    },
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-cell4-setup-only-v1/resources.json",
+    "sha256": "ace5225afb16f874c0f75350a015ebd6764259b34a6f697fcdb0d18a4c38d7da"
+  },
+  "root_producer_metadata": {
+    "bytes": 198677,
+    "path": "/private/tmp/probata-t25-cell4-setup-only-metadata-v1-20261016.json",
+    "sha256": "4161bd70151a4d49ddb8ac282466bfec2311d81c55163932c441d4c141f661aa"
+  },
+  "root_raw": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-cell4-setup-only-v1",
+  "root_raw_bytes_at_capture": 22583705,
+  "root_raw_files_at_capture": 303,
+  "scope": "Passive local retained-metadata consistency audit of root actual Linux native/setup-only gate. No author remote physical reread or formal/tool execution.",
+  "selected_heap_integer_model": {
+    "heap_model": "Typed",
+    "integer_model": "Machine",
+    "raw_effective_type_safety_proved": false,
+    "source_image_role": "explicit qualified typed-int domain; caller construction discharge remains required",
+    "sources": [
+      {
+        "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/MemTyped.ml",
+        "sha256": "ad0d3c4e8e568a09d47bb658767e5ba476cc9e957f16b14981370642c5e235b5"
+      },
+      {
+        "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/Cint.ml",
+        "sha256": "3b2a00bb65f4c785265c2295c323459e3dce66bb6c82e3d70ff3a659a3660156"
+      },
+      {
+        "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/Factory.ml",
+        "sha256": "d2f4da6cb7b2f4a674880f4760680e84fe0a1c58ece95d0f2ff889b7902efcc5"
+      }
+    ]
+  },
+  "setup_checks": [
+    {
+      "id": "grow.entry.int_projection.cells.access",
+      "input": {
+        "bytes": 4908,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-cell4-setup-only-v1/cell4-setup-only-profile/leaf-grow.entry.int_projection.cells.access/wp_input.c",
+        "sha256": "a934f4850d80b1ea8fb47bb832db8a52ab59a03c70c695b324ac825c92c475b3"
+      },
+      "setup_check": {
+        "hashes": {
+          "compiler_runtime": "a9f7135c1ee1e46ecbefe267254f1e950e6fac0f792847d751b246b5aadadb03",
+          "dx100_size_source": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "dx100_source_selector": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "dx100_stream_source": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "heap-model-view.json": "a36677762a094a321168d1d5866e8d2d9d308d983411a15428ac1c5afbfd6924",
+          "heap_model_view": "5e48b037d2daa5bca96924cf9e5c285f58a31e4651413add2c01a076bd239a0e",
+          "stdlib_provenance": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "wp_input.c": "a934f4850d80b1ea8fb47bb832db8a52ab59a03c70c695b324ac825c92c475b3"
+        },
+        "run_plan_sha256": "c99a6b1cda3d276dfe4c3695a7ca0a4ac941cd01898211898f703284bb28b7aa",
+        "tool": "wp",
+        "verdict": "passed"
+      },
+      "solver_dispatched": false
+    },
+    {
+      "id": "grow.entry.int_projection.cells.initialization",
+      "input": {
+        "bytes": 4915,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-cell4-setup-only-v1/cell4-setup-only-profile/leaf-grow.entry.int_projection.cells.initialization/wp_input.c",
+        "sha256": "a24148fae0db6882aa47b8ec7d7c477d2f061bbe8472ba8b79a3e72c0897fe73"
+      },
+      "setup_check": {
+        "hashes": {
+          "compiler_runtime": "a9f7135c1ee1e46ecbefe267254f1e950e6fac0f792847d751b246b5aadadb03",
+          "dx100_size_source": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "dx100_source_selector": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "dx100_stream_source": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "heap-model-view.json": "a36677762a094a321168d1d5866e8d2d9d308d983411a15428ac1c5afbfd6924",
+          "heap_model_view": "5e48b037d2daa5bca96924cf9e5c285f58a31e4651413add2c01a076bd239a0e",
+          "stdlib_provenance": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "wp_input.c": "a24148fae0db6882aa47b8ec7d7c477d2f061bbe8472ba8b79a3e72c0897fe73"
+        },
+        "run_plan_sha256": "06afc28fbb783dbc51d3af0e522931c7c947e5aee0e8bbb976a509cc094ed1c2",
+        "tool": "wp",
+        "verdict": "passed"
+      },
+      "solver_dispatched": false
+    },
+    {
+      "id": "grow.entry.int_projection.cells.integer",
+      "input": {
+        "bytes": 4971,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-cell4-setup-only-v1/cell4-setup-only-profile/leaf-grow.entry.int_projection.cells.integer/wp_input.c",
+        "sha256": "fcd63426784f41d2a654ea36073e898f8ceaad498f126715e5580c7d0fa7c0b1"
+      },
+      "setup_check": {
+        "hashes": {
+          "compiler_runtime": "a9f7135c1ee1e46ecbefe267254f1e950e6fac0f792847d751b246b5aadadb03",
+          "dx100_size_source": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "dx100_source_selector": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "dx100_stream_source": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "heap-model-view.json": "a36677762a094a321168d1d5866e8d2d9d308d983411a15428ac1c5afbfd6924",
+          "heap_model_view": "5e48b037d2daa5bca96924cf9e5c285f58a31e4651413add2c01a076bd239a0e",
+          "stdlib_provenance": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "wp_input.c": "fcd63426784f41d2a654ea36073e898f8ceaad498f126715e5580c7d0fa7c0b1"
+        },
+        "run_plan_sha256": "81618ae8aa65e30cd63e1b6f3897ad515f2baa60545e9054e3c0f3569db5d804",
+        "tool": "wp",
+        "verdict": "passed"
+      },
+      "solver_dispatched": false
+    },
+    {
+      "id": "grow.entry.int_projection.cells.bounds",
+      "input": {
+        "bytes": 4930,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-cell4-setup-only-v1/cell4-setup-only-profile/leaf-grow.entry.int_projection.cells.bounds/wp_input.c",
+        "sha256": "0bfb29f943335aa6258302949a8f01b5c5b68c9c17d9206e5f8f26c6635aad4e"
+      },
+      "setup_check": {
+        "hashes": {
+          "compiler_runtime": "a9f7135c1ee1e46ecbefe267254f1e950e6fac0f792847d751b246b5aadadb03",
+          "dx100_size_source": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "dx100_source_selector": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "dx100_stream_source": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "heap-model-view.json": "a36677762a094a321168d1d5866e8d2d9d308d983411a15428ac1c5afbfd6924",
+          "heap_model_view": "5e48b037d2daa5bca96924cf9e5c285f58a31e4651413add2c01a076bd239a0e",
+          "stdlib_provenance": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "wp_input.c": "0bfb29f943335aa6258302949a8f01b5c5b68c9c17d9206e5f8f26c6635aad4e"
+        },
+        "run_plan_sha256": "c2f1d416c4d3a41063e68f332f3fc4af3db46d543045435c9ea12710192ecf65",
+        "tool": "wp",
+        "verdict": "passed"
+      },
+      "solver_dispatched": false
+    }
+  ],
+  "setup_native_actual_pass": true,
+  "source_after": {
+    "bytes": 112,
+    "content": {
+      "commit": "046f6b9e64d45777a8032951ced04f942fc9c3c2",
+      "source_unchanged": true,
+      "tracked_changes": ""
+    },
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-cell4-setup-only-v1/source-after.json",
+    "sha256": "05a6e404b4bbf39d0fb225f2ec064f3aa408e43a7b808fb4af78b2e3825def77"
+  },
+  "source_commit": "046f6b9e64d45777a8032951ced04f942fc9c3c2",
+  "source_consumer_pre_post": [
+    {
+      "bytes": 614463,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-cell4-setup-only-v1/cell4-setup-only-profile/source-consumers-0.json",
+      "sha256": "021f8a2d20bf5db4733fe89bf9f85c32cef5bc05fafa51a301a87732cd25c770"
+    },
+    {
+      "bytes": 614463,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-046f6b9e-t25-cell4-setup-only-v1/cell4-setup-only-profile/source-consumers-1.json",
+      "sha256": "021f8a2d20bf5db4733fe89bf9f85c32cef5bc05fafa51a301a87732cd25c770"
+    }
+  ],
+  "ticket_closure": false
+}

@@ -1,0 +1,1418 @@
+[
+  {
+    "path": "scripts/bfs_one_thread_calibration.py",
+    "blob": "708fe15873573cf291f8e992c943f004205edcc2",
+    "refs": [
+      "refs/heads/codex/bfs-a2-fixture-correction-20260926-a2",
+      "refs/heads/codex/bfs-native-readback-20260926-a1",
+      "refs/heads/codex/bfs-supervision-20260926-a1",
+      "refs/heads/codex/bfs-supervision-checkpoint-20260926-c0df79e",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a2",
+      "refs/remotes/origin/codex/bfs-native-one-thread-evidence-20260926-a1",
+      "refs/remotes/origin/codex/bfs-t16-protocol-evidence-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_one_thread_freeze.py",
+    "blob": "fc44e43ccb9c9a40b30ecfb5bfe7d69a482db61d",
+    "refs": [
+      "refs/heads/codex/bfs-a2-fixture-correction-20260926-a2",
+      "refs/heads/codex/bfs-native-readback-20260926-a1",
+      "refs/heads/codex/bfs-supervision-20260926-a1",
+      "refs/heads/codex/bfs-supervision-checkpoint-20260926-c0df79e",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a2",
+      "refs/remotes/origin/codex/bfs-native-one-thread-evidence-20260926-a1",
+      "refs/remotes/origin/codex/bfs-t16-protocol-evidence-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_simulator_series.py",
+    "blob": "126587c36b71caf07bc1892f58376c2ded88cd90",
+    "refs": [
+      "refs/heads/codex/bfs-a2-fixture-correction-20260926-a2",
+      "refs/heads/codex/bfs-native-readback-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a2",
+      "refs/heads/codex/bfs-reader-correction-20260926-a2",
+      "refs/heads/codex/bfs-supervision-20260926-a1",
+      "refs/heads/codex/bfs-supervision-checkpoint-20260926-c0df79e",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a2",
+      "refs/remotes/origin/codex/bfs-native-one-thread-evidence-20260926-a1",
+      "refs/remotes/origin/codex/bfs-t16-protocol-evidence-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_simulator_series.py",
+    "blob": "fc2f8d116e87e972363e0b4b65f0406d8bb72ebc",
+    "refs": [
+      "refs/heads/codex/bfs-dx100-coverage-20260926-a2",
+      "refs/heads/codex/bfs-native-one-thread-20260926",
+      "refs/heads/codex/bfs-owned-rss-20260926",
+      "refs/heads/codex/bfs-simulator-admission-20260926",
+      "refs/heads/codex/bfs-t17-build-client-20260926",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_simulator_series.py",
+    "blob": "8be4e39b95c4e95f2183405cdb9b6a70bc52c1b6",
+    "refs": [
+      "refs/heads/codex/bfs-gem5-gzip-transport-20260926-a1",
+      "refs/heads/codex/bfs-scalar-v2-preparation-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a2"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_simulator_series.py",
+    "blob": "95d7c851f60ef97c37c9fdad051115e14b23bc2d",
+    "refs": [
+      "refs/heads/codex/bfs-t15-gzip-correction-20260926-a1",
+      "refs/heads/codex/bfs-t17-diagnostic-build-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_dx100_interruption.py",
+    "blob": "5772b9f8807cf81094171a026a54e642f9ec8cbb",
+    "refs": [
+      "refs/heads/codex/bfs-a2-fixture-correction-20260926-a2",
+      "refs/heads/codex/bfs-native-readback-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a2",
+      "refs/heads/codex/bfs-reader-correction-20260926-a2",
+      "refs/heads/codex/bfs-supervision-20260926-a1",
+      "refs/heads/codex/bfs-supervision-checkpoint-20260926-c0df79e",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a2",
+      "refs/remotes/origin/codex/bfs-native-one-thread-evidence-20260926-a1",
+      "refs/remotes/origin/codex/bfs-t16-protocol-evidence-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "swdb/profile_package.py",
+    "blob": "a1f178584b471783985a456bdf1195b14a38b2ff",
+    "refs": [
+      "refs/heads/codex/bfs-a2-fixture-correction-20260926-a2",
+      "refs/heads/codex/bfs-gem5-gzip-transport-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a2",
+      "refs/heads/codex/bfs-reader-correction-20260926-a2",
+      "refs/heads/codex/bfs-scalar-v2-preparation-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a2",
+      "refs/heads/codex/bfs-supervision-20260926-a1",
+      "refs/heads/codex/bfs-supervision-checkpoint-20260926-c0df79e",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a2",
+      "refs/remotes/origin/codex/bfs-native-one-thread-evidence-20260926-a1",
+      "refs/remotes/origin/codex/bfs-t16-protocol-evidence-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "swdb/profile_package.py",
+    "blob": "59374d915cda501de097d6fcf585cb1adb286b94",
+    "refs": [
+      "refs/heads/codex/bfs-dx100-coverage-20260926-a2",
+      "refs/heads/codex/bfs-native-one-thread-20260926"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "swdb/profile_package.py",
+    "blob": "e224d10f8ddd5905a59473a4e7d89d1935fcf6d0",
+    "refs": [
+      "refs/heads/codex/bfs-lease-recovery-operator-20260927-a1",
+      "refs/heads/codex/bfs-lease-recovery-runtime-20260927-a1",
+      "refs/heads/codex/bfs-process-exit-runtime-20260926-a1",
+      "refs/heads/codex/bfs-protocol-recovery-runtime-20260927-a1",
+      "refs/heads/codex/bfs-provider-context2-node0-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context2-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context3-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context3-runtime-20260927-a1",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a1",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a2",
+      "refs/heads/codex/bfs-seal-recovery-operator-20260927-a1",
+      "refs/heads/codex/bfs-seal-recovery-runtime-20260927-a1",
+      "refs/heads/codex/bfs-supervision-recovery-runtime-20260927-a1",
+      "refs/heads/codex/bfs-supervision-recovery-runtime-20260927-a2",
+      "refs/heads/codex/bfs-t15-gzip-correction-20260926-a1",
+      "refs/heads/codex/bfs-t17-diagnostic-build-20260926-a1",
+      "refs/remotes/origin/codex/bfs-lease-simulator-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-lease-simulator-operator-20260927-a2",
+      "refs/remotes/origin/codex/bfs-protocol-proof-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-protocol-simulator-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-seal-simulator-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-simulator-recovery-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-t17-diagnostic-operator-20260927-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_dx100_coverage_execution.py",
+    "blob": "d8e1eace861e783f0bfd0d69f3deb9178a2ddd02",
+    "refs": [
+      "refs/heads/codex/bfs-a2-fixture-correction-20260926-a2",
+      "refs/heads/codex/bfs-dx100-coverage-20260926-a2",
+      "refs/heads/codex/bfs-gem5-gzip-transport-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a2",
+      "refs/heads/codex/bfs-reader-correction-20260926-a2",
+      "refs/heads/codex/bfs-scalar-v2-preparation-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a2",
+      "refs/heads/codex/bfs-supervision-20260926-a1",
+      "refs/heads/codex/bfs-supervision-checkpoint-20260926-c0df79e",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a2",
+      "refs/remotes/origin/codex/bfs-native-one-thread-evidence-20260926-a1",
+      "refs/remotes/origin/codex/bfs-t16-protocol-evidence-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_dx100_coverage_execution.py",
+    "blob": "b15c2a88096a819b2206f2884ce8bb61d234d1f5",
+    "refs": [
+      "refs/heads/codex/bfs-native-one-thread-20260926",
+      "refs/heads/codex/bfs-owned-rss-20260926",
+      "refs/heads/codex/bfs-simulator-admission-20260926",
+      "refs/heads/codex/bfs-t17-build-client-20260926",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_simulator_series.py",
+    "blob": "d71c4704c6d30e5ac7b267078c07a50b5e2ef4c3",
+    "refs": [
+      "refs/heads/codex/bfs-a2-fixture-correction-20260926-a2",
+      "refs/heads/codex/bfs-gem5-gzip-transport-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a2",
+      "refs/heads/codex/bfs-reader-correction-20260926-a2",
+      "refs/heads/codex/bfs-scalar-v2-preparation-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a2",
+      "refs/heads/codex/bfs-supervision-20260926-a1",
+      "refs/heads/codex/bfs-supervision-checkpoint-20260926-c0df79e",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a2",
+      "refs/remotes/origin/codex/bfs-native-one-thread-evidence-20260926-a1",
+      "refs/remotes/origin/codex/bfs-t16-protocol-evidence-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_simulator_series.py",
+    "blob": "36a0b3347cf2864ab1187dbc60123090f8ca0b73",
+    "refs": [
+      "refs/heads/codex/bfs-dx100-coverage-20260926-a2",
+      "refs/heads/codex/bfs-native-one-thread-20260926",
+      "refs/heads/codex/bfs-owned-rss-20260926",
+      "refs/heads/codex/bfs-simulator-admission-20260926",
+      "refs/heads/codex/bfs-t17-build-client-20260926",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_simulator_series.py",
+    "blob": "a022f112e9776710192a9cded6a0b10c8479f59c",
+    "refs": [
+      "refs/heads/codex/bfs-t15-gzip-correction-20260926-a1",
+      "refs/heads/codex/bfs-t17-diagnostic-build-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_owned_execution.py",
+    "blob": "9640b97eb9176c6596cd375bdc7784769f48fe32",
+    "refs": [
+      "refs/heads/codex/bfs-a2-fixture-correction-20260926-a2",
+      "refs/heads/codex/bfs-gem5-gzip-transport-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a2",
+      "refs/heads/codex/bfs-process-exit-runtime-20260926-a1",
+      "refs/heads/codex/bfs-reader-correction-20260926-a2",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a1",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a2",
+      "refs/heads/codex/bfs-scalar-v2-preparation-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a2",
+      "refs/heads/codex/bfs-supervision-20260926-a1",
+      "refs/heads/codex/bfs-supervision-checkpoint-20260926-c0df79e",
+      "refs/heads/codex/bfs-t15-gzip-correction-20260926-a1",
+      "refs/heads/codex/bfs-t17-diagnostic-build-20260926-a1",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a2",
+      "refs/remotes/origin/codex/bfs-native-one-thread-evidence-20260926-a1",
+      "refs/remotes/origin/codex/bfs-t16-protocol-evidence-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_freeze_pilot.py",
+    "blob": "a1f8c8148d4cb8ac528881b88e704a7bbd13d910",
+    "refs": [
+      "refs/heads/codex/bfs-a2-fixture-correction-20260926-a2",
+      "refs/heads/codex/bfs-native-readback-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a2",
+      "refs/heads/codex/bfs-reader-correction-20260926-a2",
+      "refs/heads/codex/bfs-supervision-20260926-a1",
+      "refs/heads/codex/bfs-supervision-checkpoint-20260926-c0df79e",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a2",
+      "refs/remotes/origin/codex/bfs-native-one-thread-evidence-20260926-a1",
+      "refs/remotes/origin/codex/bfs-t16-protocol-evidence-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_freeze_pilot.py",
+    "blob": "fb084ed75a8d8709e663a4d1e7dca844c5643ce4",
+    "refs": [
+      "refs/heads/codex/bfs-dx100-coverage-20260926-a2",
+      "refs/heads/codex/bfs-native-one-thread-20260926"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_freeze_pilot.py",
+    "blob": "d8c663f3e70053f24ddff193e4c19748cae6edd2",
+    "refs": [
+      "refs/heads/codex/bfs-gem5-gzip-transport-20260926-a1",
+      "refs/heads/codex/bfs-scalar-v2-preparation-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a2"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_simulator_batch.py",
+    "blob": "84c27744f9fd24a33f6726b02ca4873fbca044e7",
+    "refs": [
+      "refs/heads/codex/bfs-a2-fixture-correction-20260926-a2",
+      "refs/heads/codex/bfs-native-readback-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a2",
+      "refs/heads/codex/bfs-reader-correction-20260926-a2",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a1",
+      "refs/heads/codex/bfs-supervision-20260926-a1",
+      "refs/heads/codex/bfs-supervision-checkpoint-20260926-c0df79e",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a2",
+      "refs/remotes/origin/codex/bfs-native-one-thread-evidence-20260926-a1",
+      "refs/remotes/origin/codex/bfs-t16-protocol-evidence-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_simulator_batch.py",
+    "blob": "8b308e428f091e1f708c72fe4a6bf09521edf131",
+    "refs": [
+      "refs/heads/codex/bfs-dx100-coverage-20260926-a2",
+      "refs/heads/codex/bfs-native-one-thread-20260926",
+      "refs/heads/codex/bfs-owned-rss-20260926",
+      "refs/heads/codex/bfs-simulator-admission-20260926",
+      "refs/heads/codex/bfs-t17-build-client-20260926",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_simulator_batch.py",
+    "blob": "5bc22172d79eb893e6ef4d7281eb636f707d8ae4",
+    "refs": [
+      "refs/heads/codex/bfs-gem5-gzip-transport-20260926-a1",
+      "refs/heads/codex/bfs-process-exit-runtime-20260926-a1",
+      "refs/heads/codex/bfs-provider-context2-node0-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context2-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context3-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context3-runtime-20260927-a1",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a1",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a2",
+      "refs/heads/codex/bfs-scalar-v2-preparation-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a2",
+      "refs/heads/codex/bfs-supervision-recovery-runtime-20260927-a1",
+      "refs/heads/codex/bfs-supervision-recovery-runtime-20260927-a2",
+      "refs/heads/codex/bfs-t15-gzip-correction-20260926-a1",
+      "refs/heads/codex/bfs-t17-diagnostic-build-20260926-a1",
+      "refs/remotes/origin/codex/bfs-simulator-recovery-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-t17-diagnostic-operator-20260927-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_dx100_coverage_a2.py",
+    "blob": "6df065e7de47091b61a50cefe1a2901972e5df3e",
+    "refs": [
+      "refs/heads/codex/bfs-a2-fixture-correction-20260926-a2",
+      "refs/heads/codex/bfs-native-readback-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a2",
+      "refs/heads/codex/bfs-reader-correction-20260926-a2",
+      "refs/heads/codex/bfs-supervision-20260926-a1",
+      "refs/heads/codex/bfs-supervision-checkpoint-20260926-c0df79e",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a2",
+      "refs/remotes/origin/codex/bfs-native-one-thread-evidence-20260926-a1",
+      "refs/remotes/origin/codex/bfs-t16-protocol-evidence-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "swdb/bfs_coverage.py",
+    "blob": "4864e2852e32e5a63d7784e3cf4e277abe1d7bd1",
+    "refs": [
+      "refs/heads/codex/bfs-a2-fixture-correction-20260926-a2",
+      "refs/heads/codex/bfs-gem5-gzip-transport-20260926-a1",
+      "refs/heads/codex/bfs-lease-recovery-operator-20260927-a1",
+      "refs/heads/codex/bfs-lease-recovery-runtime-20260927-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a2",
+      "refs/heads/codex/bfs-process-exit-runtime-20260926-a1",
+      "refs/heads/codex/bfs-protocol-recovery-runtime-20260927-a1",
+      "refs/heads/codex/bfs-provider-context2-node0-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context2-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context3-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context3-runtime-20260927-a1",
+      "refs/heads/codex/bfs-reader-correction-20260926-a2",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a1",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a2",
+      "refs/heads/codex/bfs-scalar-v2-preparation-20260926-a1",
+      "refs/heads/codex/bfs-seal-recovery-operator-20260927-a1",
+      "refs/heads/codex/bfs-seal-recovery-runtime-20260927-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a2",
+      "refs/heads/codex/bfs-supervision-20260926-a1",
+      "refs/heads/codex/bfs-supervision-checkpoint-20260926-c0df79e",
+      "refs/heads/codex/bfs-supervision-recovery-runtime-20260927-a1",
+      "refs/heads/codex/bfs-supervision-recovery-runtime-20260927-a2",
+      "refs/heads/codex/bfs-t15-gzip-correction-20260926-a1",
+      "refs/heads/codex/bfs-t17-diagnostic-build-20260926-a1",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a2",
+      "refs/remotes/origin/codex/bfs-lease-simulator-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-lease-simulator-operator-20260927-a2",
+      "refs/remotes/origin/codex/bfs-native-one-thread-evidence-20260926-a1",
+      "refs/remotes/origin/codex/bfs-protocol-proof-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-protocol-simulator-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-seal-simulator-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-simulator-recovery-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-t16-protocol-evidence-20260926-a1",
+      "refs/remotes/origin/codex/bfs-t17-diagnostic-operator-20260927-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "swdb/bfs_profiling.py",
+    "blob": "0920005e3c4809cd18685064aec2b9b6f2e8d2bc",
+    "refs": [
+      "refs/heads/codex/bfs-a2-fixture-correction-20260926-a2",
+      "refs/heads/codex/bfs-dx100-coverage-20260926-a2",
+      "refs/heads/codex/bfs-gem5-gzip-transport-20260926-a1",
+      "refs/heads/codex/bfs-lease-recovery-operator-20260927-a1",
+      "refs/heads/codex/bfs-lease-recovery-runtime-20260927-a1",
+      "refs/heads/codex/bfs-native-one-thread-20260926",
+      "refs/heads/codex/bfs-native-readback-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a2",
+      "refs/heads/codex/bfs-process-exit-runtime-20260926-a1",
+      "refs/heads/codex/bfs-protocol-recovery-runtime-20260927-a1",
+      "refs/heads/codex/bfs-provider-context2-node0-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context2-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context3-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context3-runtime-20260927-a1",
+      "refs/heads/codex/bfs-reader-correction-20260926-a2",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a1",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a2",
+      "refs/heads/codex/bfs-scalar-v2-preparation-20260926-a1",
+      "refs/heads/codex/bfs-seal-recovery-operator-20260927-a1",
+      "refs/heads/codex/bfs-seal-recovery-runtime-20260927-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a2",
+      "refs/heads/codex/bfs-supervision-20260926-a1",
+      "refs/heads/codex/bfs-supervision-checkpoint-20260926-c0df79e",
+      "refs/heads/codex/bfs-supervision-recovery-runtime-20260927-a1",
+      "refs/heads/codex/bfs-supervision-recovery-runtime-20260927-a2",
+      "refs/heads/codex/bfs-t15-gzip-correction-20260926-a1",
+      "refs/heads/codex/bfs-t17-diagnostic-build-20260926-a1",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a2",
+      "refs/remotes/origin/codex/bfs-lease-simulator-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-lease-simulator-operator-20260927-a2",
+      "refs/remotes/origin/codex/bfs-native-one-thread-evidence-20260926-a1",
+      "refs/remotes/origin/codex/bfs-protocol-proof-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-protocol-simulator-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-seal-simulator-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-simulator-recovery-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-t16-protocol-evidence-20260926-a1",
+      "refs/remotes/origin/codex/bfs-t17-diagnostic-operator-20260927-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_linux_fixture.py",
+    "blob": "6f5778bd0cdc004f86e160ef5b12ced709b29c07",
+    "refs": [
+      "refs/heads/codex/bfs-a2-fixture-correction-20260926-a2",
+      "refs/heads/codex/bfs-gem5-gzip-transport-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a2",
+      "refs/heads/codex/bfs-reader-correction-20260926-a2",
+      "refs/heads/codex/bfs-scalar-v2-preparation-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a2",
+      "refs/heads/codex/bfs-supervision-20260926-a1",
+      "refs/heads/codex/bfs-supervision-checkpoint-20260926-c0df79e",
+      "refs/heads/codex/bfs-t15-gzip-correction-20260926-a1",
+      "refs/heads/codex/bfs-t17-diagnostic-build-20260926-a1",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a2",
+      "refs/remotes/origin/codex/bfs-native-one-thread-evidence-20260926-a1",
+      "refs/remotes/origin/codex/bfs-t16-protocol-evidence-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_linux_fixture.py",
+    "blob": "3a3b51da420a5f083a2d4675d58b982bef54650e",
+    "refs": [
+      "refs/heads/codex/bfs-lease-recovery-operator-20260927-a1",
+      "refs/heads/codex/bfs-lease-recovery-runtime-20260927-a1",
+      "refs/remotes/origin/codex/bfs-lease-simulator-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-lease-simulator-operator-20260927-a2"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_linux_fixture.py",
+    "blob": "c06d9b051f794d7c47b9028fd61d0dc2c4e0172a",
+    "refs": [
+      "refs/heads/codex/bfs-process-exit-runtime-20260926-a1",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a1",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a2"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_linux_fixture.py",
+    "blob": "19af6db837751660f51e4e76de714f0e5f822a06",
+    "refs": [
+      "refs/heads/codex/bfs-provider-context2-node0-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context2-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context3-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context3-runtime-20260927-a1",
+      "refs/heads/codex/bfs-supervision-recovery-runtime-20260927-a1",
+      "refs/heads/codex/bfs-supervision-recovery-runtime-20260927-a2",
+      "refs/remotes/origin/codex/bfs-simulator-recovery-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-t17-diagnostic-operator-20260927-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_linux_fixture.py",
+    "blob": "10b6b0c2933b3c51e9ee7249b0e9c7febbec2b23",
+    "refs": [
+      "refs/heads/codex/bfs-seal-recovery-operator-20260927-a1",
+      "refs/heads/codex/bfs-seal-recovery-runtime-20260927-a1",
+      "refs/remotes/origin/codex/bfs-seal-simulator-operator-20260927-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_linux_fixture_audit.py",
+    "blob": "b6827364e8c043003f9aff6faf6e5486c8c3405f",
+    "refs": [
+      "refs/heads/codex/bfs-a2-fixture-correction-20260926-a2",
+      "refs/heads/codex/bfs-gem5-gzip-transport-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a2",
+      "refs/heads/codex/bfs-reader-correction-20260926-a2",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a1",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a2",
+      "refs/heads/codex/bfs-scalar-v2-preparation-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a2",
+      "refs/heads/codex/bfs-supervision-20260926-a1",
+      "refs/heads/codex/bfs-supervision-checkpoint-20260926-c0df79e",
+      "refs/heads/codex/bfs-t15-gzip-correction-20260926-a1",
+      "refs/heads/codex/bfs-t17-diagnostic-build-20260926-a1",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a2",
+      "refs/remotes/origin/codex/bfs-native-one-thread-evidence-20260926-a1",
+      "refs/remotes/origin/codex/bfs-t16-protocol-evidence-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_native_execution.py",
+    "blob": "fcaea98e8d9c075c4be9775ce257ba405b90195a",
+    "refs": [
+      "refs/heads/codex/bfs-a2-fixture-correction-20260926-a2",
+      "refs/heads/codex/bfs-native-readback-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a2",
+      "refs/heads/codex/bfs-reader-correction-20260926-a2",
+      "refs/heads/codex/bfs-supervision-20260926-a1",
+      "refs/heads/codex/bfs-supervision-checkpoint-20260926-c0df79e",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a2",
+      "refs/remotes/origin/codex/bfs-native-one-thread-evidence-20260926-a1",
+      "refs/remotes/origin/codex/bfs-t16-protocol-evidence-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_native_execution.py",
+    "blob": "f0c2d41459efc06f67b32e33408cb8ce7ad1836e",
+    "refs": [
+      "refs/heads/codex/bfs-gem5-gzip-transport-20260926-a1",
+      "refs/heads/codex/bfs-scalar-v2-preparation-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a2",
+      "refs/heads/codex/bfs-t15-gzip-correction-20260926-a1",
+      "refs/heads/codex/bfs-t17-diagnostic-build-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_native_campaign.py",
+    "blob": "63ed2a24864c01e62d2d91fd9e9a6904a51c43f9",
+    "refs": [
+      "refs/heads/codex/bfs-a2-fixture-correction-20260926-a2",
+      "refs/heads/codex/bfs-native-readback-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a2",
+      "refs/heads/codex/bfs-reader-correction-20260926-a2",
+      "refs/heads/codex/bfs-supervision-20260926-a1",
+      "refs/heads/codex/bfs-supervision-checkpoint-20260926-c0df79e",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a2",
+      "refs/remotes/origin/codex/bfs-native-one-thread-evidence-20260926-a1",
+      "refs/remotes/origin/codex/bfs-t16-protocol-evidence-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_native_campaign.py",
+    "blob": "1aede1a0dfba2f59337c10184a52352f0d2f7511",
+    "refs": [
+      "refs/heads/codex/bfs-dx100-coverage-20260926-a2",
+      "refs/heads/codex/bfs-native-one-thread-20260926"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_native_campaign.py",
+    "blob": "2fa861001fbc61ac46131827f04a060f341feb2b",
+    "refs": [
+      "refs/heads/codex/bfs-gem5-gzip-transport-20260926-a1",
+      "refs/heads/codex/bfs-scalar-v2-preparation-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a2",
+      "refs/heads/codex/bfs-t15-gzip-correction-20260926-a1",
+      "refs/heads/codex/bfs-t17-diagnostic-build-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_linux_fixture.py",
+    "blob": "e6daa24c3893d8fe817dd166613ff23524fe433d",
+    "refs": [
+      "refs/heads/codex/bfs-a2-fixture-correction-20260926-a2",
+      "refs/heads/codex/bfs-native-readback-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a2",
+      "refs/heads/codex/bfs-reader-correction-20260926-a2",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a1",
+      "refs/heads/codex/bfs-supervision-20260926-a1",
+      "refs/heads/codex/bfs-supervision-checkpoint-20260926-c0df79e",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a2",
+      "refs/remotes/origin/codex/bfs-native-one-thread-evidence-20260926-a1",
+      "refs/remotes/origin/codex/bfs-t16-protocol-evidence-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_linux_fixture.py",
+    "blob": "7d9ce15bfdf4ac6810e2781b2b2fd4a9ef3f3f38",
+    "refs": [
+      "refs/heads/codex/bfs-gem5-gzip-transport-20260926-a1",
+      "refs/heads/codex/bfs-scalar-v2-preparation-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a2"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_linux_fixture.py",
+    "blob": "997d489421a34a84ac01c271542e93c15034b1ca",
+    "refs": [
+      "refs/heads/codex/bfs-lease-recovery-operator-20260927-a1",
+      "refs/heads/codex/bfs-lease-recovery-runtime-20260927-a1",
+      "refs/remotes/origin/codex/bfs-lease-simulator-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-lease-simulator-operator-20260927-a2"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_linux_fixture.py",
+    "blob": "8fb8b1ec4742e7a8f23cfbefc55d309ea77fb880",
+    "refs": [
+      "refs/heads/codex/bfs-process-exit-runtime-20260926-a1",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a1",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a2"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_linux_fixture.py",
+    "blob": "978ed1edefead24291baa71b44c36a8dd7b5b8f9",
+    "refs": [
+      "refs/heads/codex/bfs-provider-context2-node0-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context2-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context3-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context3-runtime-20260927-a1",
+      "refs/heads/codex/bfs-supervision-recovery-runtime-20260927-a1",
+      "refs/heads/codex/bfs-supervision-recovery-runtime-20260927-a2",
+      "refs/remotes/origin/codex/bfs-simulator-recovery-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-t17-diagnostic-operator-20260927-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_linux_fixture.py",
+    "blob": "df0535e8241a15975173ca02187ab975d585d440",
+    "refs": [
+      "refs/heads/codex/bfs-seal-recovery-operator-20260927-a1",
+      "refs/heads/codex/bfs-seal-recovery-runtime-20260927-a1",
+      "refs/remotes/origin/codex/bfs-seal-simulator-operator-20260927-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_linux_fixture.py",
+    "blob": "d0684670a406b0fa2e19147ae802124d738dbbfa",
+    "refs": [
+      "refs/heads/codex/bfs-t15-gzip-correction-20260926-a1",
+      "refs/heads/codex/bfs-t17-diagnostic-build-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_owned_execution.py",
+    "blob": "a8aeb0f9b133fed51302b424782409281fbdb471",
+    "refs": [
+      "refs/heads/codex/bfs-a2-fixture-correction-20260926-a2",
+      "refs/heads/codex/bfs-gem5-gzip-transport-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a2",
+      "refs/heads/codex/bfs-reader-correction-20260926-a2",
+      "refs/heads/codex/bfs-scalar-v2-preparation-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a2",
+      "refs/heads/codex/bfs-supervision-20260926-a1",
+      "refs/heads/codex/bfs-supervision-checkpoint-20260926-c0df79e",
+      "refs/heads/codex/bfs-t15-gzip-correction-20260926-a1",
+      "refs/heads/codex/bfs-t17-diagnostic-build-20260926-a1",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a2",
+      "refs/remotes/origin/codex/bfs-native-one-thread-evidence-20260926-a1",
+      "refs/remotes/origin/codex/bfs-t16-protocol-evidence-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_owned_execution.py",
+    "blob": "7ebfa80064c77909004a65f232d59f381639574f",
+    "refs": [
+      "refs/heads/codex/bfs-process-exit-runtime-20260926-a1",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a1",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a2"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "swdb/dx100.py",
+    "blob": "478c3b42c895b851c6df9456583d0304478ba468",
+    "refs": [
+      "refs/heads/codex/bfs-a2-fixture-correction-20260926-a2",
+      "refs/heads/codex/bfs-dx100-coverage-20260926-a2",
+      "refs/heads/codex/bfs-gem5-gzip-transport-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a2",
+      "refs/heads/codex/bfs-reader-correction-20260926-a2",
+      "refs/heads/codex/bfs-scalar-v2-preparation-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a2",
+      "refs/heads/codex/bfs-supervision-20260926-a1",
+      "refs/heads/codex/bfs-supervision-checkpoint-20260926-c0df79e",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a2",
+      "refs/remotes/origin/codex/bfs-native-one-thread-evidence-20260926-a1",
+      "refs/remotes/origin/codex/bfs-t16-protocol-evidence-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_t17_build_only.py",
+    "blob": "e10aa2b6e9daf7a3f08e61c29f967b7d727f5ddc",
+    "refs": [
+      "refs/heads/codex/bfs-a2-fixture-correction-20260926-a2",
+      "refs/heads/codex/bfs-dx100-coverage-20260926-a2",
+      "refs/heads/codex/bfs-native-one-thread-20260926",
+      "refs/heads/codex/bfs-native-readback-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a2",
+      "refs/heads/codex/bfs-reader-correction-20260926-a2",
+      "refs/heads/codex/bfs-supervision-20260926-a1",
+      "refs/heads/codex/bfs-supervision-checkpoint-20260926-c0df79e",
+      "refs/heads/codex/bfs-t17-build-client-20260926",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a2",
+      "refs/remotes/origin/codex/bfs-native-one-thread-evidence-20260926-a1",
+      "refs/remotes/origin/codex/bfs-t16-protocol-evidence-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_simulator_batch_terminal.py",
+    "blob": "4100a61ead30e84b1b85d10b95623bbe5aeb9234",
+    "refs": [
+      "refs/heads/codex/bfs-a2-fixture-correction-20260926-a2",
+      "refs/heads/codex/bfs-native-readback-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a2",
+      "refs/heads/codex/bfs-reader-correction-20260926-a2",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a1",
+      "refs/heads/codex/bfs-supervision-20260926-a1",
+      "refs/heads/codex/bfs-supervision-checkpoint-20260926-c0df79e",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a2",
+      "refs/remotes/origin/codex/bfs-native-one-thread-evidence-20260926-a1",
+      "refs/remotes/origin/codex/bfs-t16-protocol-evidence-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_linux_fixture_audit.py",
+    "blob": "c622c9cc32b8b8fa44f0018a0b5178fd00092bdf",
+    "refs": [
+      "refs/heads/codex/bfs-a2-fixture-correction-20260926-a2",
+      "refs/heads/codex/bfs-gem5-gzip-transport-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a2",
+      "refs/heads/codex/bfs-reader-correction-20260926-a2",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a1",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a2",
+      "refs/heads/codex/bfs-scalar-v2-preparation-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a2",
+      "refs/heads/codex/bfs-supervision-20260926-a1",
+      "refs/heads/codex/bfs-supervision-checkpoint-20260926-c0df79e",
+      "refs/heads/codex/bfs-t15-gzip-correction-20260926-a1",
+      "refs/heads/codex/bfs-t17-diagnostic-build-20260926-a1",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a2",
+      "refs/remotes/origin/codex/bfs-native-one-thread-evidence-20260926-a1",
+      "refs/remotes/origin/codex/bfs-t16-protocol-evidence-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_owned_rss.py",
+    "blob": "36da42bf173b67faaa86118c87b478c0b37ac3dd",
+    "refs": [
+      "refs/heads/codex/bfs-a2-fixture-correction-20260926-a2",
+      "refs/heads/codex/bfs-dx100-coverage-20260926-a2",
+      "refs/heads/codex/bfs-gem5-gzip-transport-20260926-a1",
+      "refs/heads/codex/bfs-native-one-thread-20260926",
+      "refs/heads/codex/bfs-native-readback-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a2",
+      "refs/heads/codex/bfs-owned-rss-20260926",
+      "refs/heads/codex/bfs-reader-correction-20260926-a2",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a1",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a2",
+      "refs/heads/codex/bfs-scalar-v2-preparation-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a2",
+      "refs/heads/codex/bfs-supervision-20260926-a1",
+      "refs/heads/codex/bfs-supervision-checkpoint-20260926-c0df79e",
+      "refs/heads/codex/bfs-t15-gzip-correction-20260926-a1",
+      "refs/heads/codex/bfs-t17-build-client-20260926",
+      "refs/heads/codex/bfs-t17-diagnostic-build-20260926-a1",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a2",
+      "refs/remotes/origin/codex/bfs-native-one-thread-evidence-20260926-a1",
+      "refs/remotes/origin/codex/bfs-t16-protocol-evidence-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_simulator_batch.py",
+    "blob": "4dbfb96c122029e03842d2c3ebf32bae7c5bb806",
+    "refs": [
+      "refs/heads/codex/bfs-a2-fixture-correction-20260926-a2",
+      "refs/heads/codex/bfs-native-readback-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a2",
+      "refs/heads/codex/bfs-reader-correction-20260926-a2",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a1",
+      "refs/heads/codex/bfs-supervision-20260926-a1",
+      "refs/heads/codex/bfs-supervision-checkpoint-20260926-c0df79e",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a2",
+      "refs/remotes/origin/codex/bfs-native-one-thread-evidence-20260926-a1",
+      "refs/remotes/origin/codex/bfs-t16-protocol-evidence-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_simulator_batch.py",
+    "blob": "976613fe086f028cd3f61812db368a66e2cf557e",
+    "refs": [
+      "refs/heads/codex/bfs-dx100-coverage-20260926-a2",
+      "refs/heads/codex/bfs-native-one-thread-20260926",
+      "refs/heads/codex/bfs-owned-rss-20260926",
+      "refs/heads/codex/bfs-simulator-admission-20260926",
+      "refs/heads/codex/bfs-t17-build-client-20260926",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_simulator_batch.py",
+    "blob": "367a9d4d9fc9d652c23e872f9340479426f0b9f9",
+    "refs": [
+      "refs/heads/codex/bfs-gem5-gzip-transport-20260926-a1",
+      "refs/heads/codex/bfs-scalar-v2-preparation-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a2"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_simulator_batch.py",
+    "blob": "0acf71355cb69924848d29686c6795d3b3c25853",
+    "refs": [
+      "refs/heads/codex/bfs-lease-recovery-operator-20260927-a1",
+      "refs/heads/codex/bfs-lease-recovery-runtime-20260927-a1",
+      "refs/remotes/origin/codex/bfs-lease-simulator-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-lease-simulator-operator-20260927-a2"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_simulator_batch.py",
+    "blob": "50c7158205a93d1b37f9319cf4ee9157714f2d46",
+    "refs": [
+      "refs/heads/codex/bfs-process-exit-runtime-20260926-a1",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a1",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a2"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_simulator_batch.py",
+    "blob": "1729b7144f4ccbf698c1850f55e162ea2901b1e8",
+    "refs": [
+      "refs/heads/codex/bfs-provider-context2-node0-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context2-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context3-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context3-runtime-20260927-a1",
+      "refs/heads/codex/bfs-supervision-recovery-runtime-20260927-a1",
+      "refs/remotes/origin/codex/bfs-t17-diagnostic-operator-20260927-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_simulator_batch.py",
+    "blob": "c3d57dd3c1fc3910fe7e9d4a8eeddce52b5ddd9d",
+    "refs": [
+      "refs/heads/codex/bfs-seal-recovery-operator-20260927-a1",
+      "refs/heads/codex/bfs-seal-recovery-runtime-20260927-a1",
+      "refs/remotes/origin/codex/bfs-seal-simulator-operator-20260927-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_simulator_batch.py",
+    "blob": "a6d89bcba96566427d7e0efba863457b44e77ab1",
+    "refs": [
+      "refs/heads/codex/bfs-supervision-recovery-runtime-20260927-a2",
+      "refs/remotes/origin/codex/bfs-simulator-recovery-operator-20260927-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_simulator_batch.py",
+    "blob": "07e00d4a6663782423f9a9ea7413b7c93b70dd8d",
+    "refs": [
+      "refs/heads/codex/bfs-t15-gzip-correction-20260926-a1",
+      "refs/heads/codex/bfs-t17-diagnostic-build-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_owned_rss.py",
+    "blob": "c4ff7a5e0daac883d0c9d684e122c9a94315216a",
+    "refs": [
+      "refs/heads/codex/bfs-a2-fixture-correction-20260926-a2",
+      "refs/heads/codex/bfs-dx100-coverage-20260926-a2",
+      "refs/heads/codex/bfs-gem5-gzip-transport-20260926-a1",
+      "refs/heads/codex/bfs-native-one-thread-20260926",
+      "refs/heads/codex/bfs-native-readback-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a2",
+      "refs/heads/codex/bfs-owned-rss-20260926",
+      "refs/heads/codex/bfs-reader-correction-20260926-a2",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a1",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a2",
+      "refs/heads/codex/bfs-scalar-v2-preparation-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a2",
+      "refs/heads/codex/bfs-supervision-20260926-a1",
+      "refs/heads/codex/bfs-supervision-checkpoint-20260926-c0df79e",
+      "refs/heads/codex/bfs-t15-gzip-correction-20260926-a1",
+      "refs/heads/codex/bfs-t17-build-client-20260926",
+      "refs/heads/codex/bfs-t17-diagnostic-build-20260926-a1",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a2",
+      "refs/remotes/origin/codex/bfs-native-one-thread-evidence-20260926-a1",
+      "refs/remotes/origin/codex/bfs-t16-protocol-evidence-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "swdb/bfs_protocol.py",
+    "blob": "b65607d0aeb4d45232c7252cb48f3006ff92b56c",
+    "refs": [
+      "refs/heads/codex/bfs-a2-fixture-correction-20260926-a2",
+      "refs/heads/codex/bfs-dx100-coverage-20260926-a2",
+      "refs/heads/codex/bfs-gem5-gzip-transport-20260926-a1",
+      "refs/heads/codex/bfs-native-one-thread-20260926",
+      "refs/heads/codex/bfs-native-readback-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a2",
+      "refs/heads/codex/bfs-reader-correction-20260926-a2",
+      "refs/heads/codex/bfs-scalar-v2-preparation-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a2",
+      "refs/heads/codex/bfs-supervision-20260926-a1",
+      "refs/heads/codex/bfs-supervision-checkpoint-20260926-c0df79e",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a2",
+      "refs/remotes/origin/codex/bfs-native-one-thread-evidence-20260926-a1",
+      "refs/remotes/origin/codex/bfs-t16-protocol-evidence-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_dx100_witness_continuation.py",
+    "blob": "4bb3733aaf706a557e53300cb7ab20aea19c252e",
+    "refs": [
+      "refs/heads/codex/bfs-dx100-acceptance-prep-20260926",
+      "refs/heads/codex/bfs-dx100-coverage-20260926-a2",
+      "refs/heads/codex/bfs-native-one-thread-20260926",
+      "refs/heads/codex/bfs-owned-rss-20260926",
+      "refs/heads/codex/bfs-simulator-admission-20260926",
+      "refs/heads/codex/bfs-t17-build-client-20260926",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a1",
+      "refs/remotes/origin/codex/bfs-dx100-witness-a3-evidence-20260926"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_native_campaign.py",
+    "blob": "f874d8451d08d0b8a93e6d7b63221278afacfcfc",
+    "refs": [
+      "refs/heads/codex/bfs-dx100-coverage-20260926-a2",
+      "refs/heads/codex/bfs-native-one-thread-20260926",
+      "refs/heads/codex/bfs-supervision-checkpoint-20260926-c0df79e"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_simulator_storage.py",
+    "blob": "fd445597866a00de176c9ee9bb127431655cd0e0",
+    "refs": [
+      "refs/heads/codex/bfs-gem5-gzip-transport-20260926-a1",
+      "refs/heads/codex/bfs-scalar-v2-preparation-20260926-a1",
+      "refs/heads/codex/bfs-simulator-campaign-20260926-a2"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_simulator_storage.py",
+    "blob": "477f826b3a755ad5911ac322b0da7934b2c3cb86",
+    "refs": [
+      "refs/heads/codex/bfs-lease-recovery-operator-20260927-a1",
+      "refs/heads/codex/bfs-lease-recovery-runtime-20260927-a1",
+      "refs/heads/codex/bfs-process-exit-runtime-20260926-a1",
+      "refs/heads/codex/bfs-provider-context2-node0-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context2-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context3-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context3-runtime-20260927-a1",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a1",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a2",
+      "refs/heads/codex/bfs-supervision-recovery-runtime-20260927-a1",
+      "refs/heads/codex/bfs-supervision-recovery-runtime-20260927-a2",
+      "refs/remotes/origin/codex/bfs-lease-simulator-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-lease-simulator-operator-20260927-a2",
+      "refs/remotes/origin/codex/bfs-simulator-recovery-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-t17-diagnostic-operator-20260927-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_simulator_storage.py",
+    "blob": "e7d2bad39bfce6df19d463e3da712079e51df11f",
+    "refs": [
+      "refs/heads/codex/bfs-seal-recovery-operator-20260927-a1",
+      "refs/heads/codex/bfs-seal-recovery-runtime-20260927-a1",
+      "refs/remotes/origin/codex/bfs-seal-simulator-operator-20260927-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_simulator_storage.py",
+    "blob": "4f37a2883ce903284344e5d83145cc5062016ffb",
+    "refs": [
+      "refs/heads/codex/bfs-t15-gzip-correction-20260926-a1",
+      "refs/heads/codex/bfs-t17-diagnostic-build-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_simulator_recovery.py",
+    "blob": "f5b8d89e0dabe71f9244276032d73ff6d992b1e0",
+    "refs": [
+      "refs/heads/codex/bfs-lease-recovery-operator-20260927-a1",
+      "refs/heads/codex/bfs-lease-recovery-runtime-20260927-a1",
+      "refs/remotes/origin/codex/bfs-lease-simulator-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-lease-simulator-operator-20260927-a2"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_simulator_recovery.py",
+    "blob": "bb563bf836e104799650b9b4566050e14a50f19f",
+    "refs": [
+      "refs/heads/codex/bfs-provider-context2-node0-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context2-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context3-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context3-runtime-20260927-a1",
+      "refs/heads/codex/bfs-supervision-recovery-runtime-20260927-a1",
+      "refs/remotes/origin/codex/bfs-t17-diagnostic-operator-20260927-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_simulator_recovery.py",
+    "blob": "b7805f21ba740d8f3aff65be56c50a7952833f93",
+    "refs": [
+      "refs/heads/codex/bfs-supervision-recovery-runtime-20260927-a2",
+      "refs/remotes/origin/codex/bfs-simulator-recovery-operator-20260927-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_simulator_setup_recovery.py",
+    "blob": "158abb88d9ac49319c01cc04f3276521eb70eb8a",
+    "refs": [
+      "refs/heads/codex/bfs-lease-recovery-operator-20260927-a1",
+      "refs/heads/codex/bfs-lease-recovery-runtime-20260927-a1",
+      "refs/heads/codex/bfs-provider-context2-node0-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context2-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context3-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context3-runtime-20260927-a1",
+      "refs/heads/codex/bfs-supervision-recovery-runtime-20260927-a1",
+      "refs/heads/codex/bfs-supervision-recovery-runtime-20260927-a2",
+      "refs/remotes/origin/codex/bfs-lease-simulator-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-lease-simulator-operator-20260927-a2",
+      "refs/remotes/origin/codex/bfs-simulator-recovery-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-t17-diagnostic-operator-20260927-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_simulator_setup_recovery.py",
+    "blob": "3a9e8695b8184ae31348b89cd1111e2394aca35b",
+    "refs": [
+      "refs/heads/codex/bfs-process-exit-runtime-20260926-a1",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a1",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a2"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_simulator_setup_recovery.py",
+    "blob": "1bbc7c806558d3d56d98f4767622d046d4be90dd",
+    "refs": [
+      "refs/heads/codex/bfs-seal-recovery-operator-20260927-a1",
+      "refs/heads/codex/bfs-seal-recovery-runtime-20260927-a1",
+      "refs/remotes/origin/codex/bfs-seal-simulator-operator-20260927-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "swdb/dx100_coverage.py",
+    "blob": "82e360b03011fd6006eab984c12373630926e69a",
+    "refs": [
+      "refs/heads/codex/bfs-lease-recovery-operator-20260927-a1",
+      "refs/heads/codex/bfs-lease-recovery-runtime-20260927-a1",
+      "refs/heads/codex/bfs-process-exit-runtime-20260926-a1",
+      "refs/heads/codex/bfs-provider-context2-node0-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context2-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context3-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context3-runtime-20260927-a1",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a1",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a2",
+      "refs/heads/codex/bfs-supervision-recovery-runtime-20260927-a1",
+      "refs/heads/codex/bfs-supervision-recovery-runtime-20260927-a2",
+      "refs/heads/codex/bfs-t15-gzip-correction-20260926-a1",
+      "refs/heads/codex/bfs-t17-diagnostic-build-20260926-a1",
+      "refs/remotes/origin/codex/bfs-lease-simulator-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-lease-simulator-operator-20260927-a2",
+      "refs/remotes/origin/codex/bfs-simulator-recovery-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-t17-diagnostic-operator-20260927-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_simulator_recovery.py",
+    "blob": "99de91f3d3dfb782060a2309f635203cfa5e7482",
+    "refs": [
+      "refs/heads/codex/bfs-lease-recovery-operator-20260927-a1",
+      "refs/heads/codex/bfs-lease-recovery-runtime-20260927-a1",
+      "refs/remotes/origin/codex/bfs-lease-simulator-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-lease-simulator-operator-20260927-a2"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_simulator_recovery.py",
+    "blob": "3eebf4a2b28809778439a3f2fa67b7a74634b95a",
+    "refs": [
+      "refs/heads/codex/bfs-provider-context2-node0-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context2-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context3-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context3-runtime-20260927-a1",
+      "refs/heads/codex/bfs-supervision-recovery-runtime-20260927-a1",
+      "refs/remotes/origin/codex/bfs-t17-diagnostic-operator-20260927-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_simulator_recovery.py",
+    "blob": "8b3b3cc2d872efe381bf21190191ac96a9a6235d",
+    "refs": [
+      "refs/heads/codex/bfs-seal-recovery-operator-20260927-a1",
+      "refs/heads/codex/bfs-seal-recovery-runtime-20260927-a1",
+      "refs/remotes/origin/codex/bfs-seal-simulator-operator-20260927-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_simulator_recovery.py",
+    "blob": "40308daa4a4841ee81eecdfd18212df5848d5f33",
+    "refs": [
+      "refs/heads/codex/bfs-supervision-recovery-runtime-20260927-a2",
+      "refs/remotes/origin/codex/bfs-simulator-recovery-operator-20260927-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_t17_diagnostic_build.py",
+    "blob": "ede851bba1a25a3313939d43e19418dd306e87a4",
+    "refs": [
+      "refs/heads/codex/bfs-lease-recovery-operator-20260927-a1",
+      "refs/heads/codex/bfs-lease-recovery-runtime-20260927-a1",
+      "refs/heads/codex/bfs-process-exit-runtime-20260926-a1",
+      "refs/heads/codex/bfs-protocol-recovery-runtime-20260927-a1",
+      "refs/heads/codex/bfs-provider-context2-node0-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context2-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context3-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context3-runtime-20260927-a1",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a2",
+      "refs/heads/codex/bfs-seal-recovery-operator-20260927-a1",
+      "refs/heads/codex/bfs-seal-recovery-runtime-20260927-a1",
+      "refs/heads/codex/bfs-supervision-recovery-runtime-20260927-a1",
+      "refs/heads/codex/bfs-supervision-recovery-runtime-20260927-a2",
+      "refs/remotes/origin/codex/bfs-lease-simulator-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-lease-simulator-operator-20260927-a2",
+      "refs/remotes/origin/codex/bfs-protocol-proof-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-protocol-simulator-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-seal-simulator-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-simulator-recovery-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-t17-diagnostic-operator-20260927-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_t17_diagnostic_build.py",
+    "blob": "a745ec9a0673addb256d9cfdfea102a15b2809ee",
+    "refs": [
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a1",
+      "refs/heads/codex/bfs-t17-diagnostic-build-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "swdb/dx100_profile.py",
+    "blob": "1ac7e314d7da2c97fe20e9d9ffc60ce4454302f0",
+    "refs": [
+      "refs/heads/codex/bfs-lease-recovery-operator-20260927-a1",
+      "refs/heads/codex/bfs-lease-recovery-runtime-20260927-a1",
+      "refs/heads/codex/bfs-process-exit-runtime-20260926-a1",
+      "refs/heads/codex/bfs-provider-context2-node0-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context2-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context3-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context3-runtime-20260927-a1",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a1",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a2",
+      "refs/heads/codex/bfs-supervision-recovery-runtime-20260927-a1",
+      "refs/heads/codex/bfs-supervision-recovery-runtime-20260927-a2",
+      "refs/heads/codex/bfs-t15-gzip-correction-20260926-a1",
+      "refs/heads/codex/bfs-t17-diagnostic-build-20260926-a1",
+      "refs/remotes/origin/codex/bfs-lease-simulator-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-lease-simulator-operator-20260927-a2",
+      "refs/remotes/origin/codex/bfs-simulator-recovery-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-t17-diagnostic-operator-20260927-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_t17_diagnostic_build.py",
+    "blob": "de73e69a18dca793de9578c435c666d56ade6671",
+    "refs": [
+      "refs/heads/codex/bfs-lease-recovery-operator-20260927-a1",
+      "refs/heads/codex/bfs-lease-recovery-runtime-20260927-a1",
+      "refs/heads/codex/bfs-process-exit-runtime-20260926-a1",
+      "refs/heads/codex/bfs-protocol-recovery-runtime-20260927-a1",
+      "refs/heads/codex/bfs-provider-context2-node0-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context2-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context3-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context3-runtime-20260927-a1",
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a2",
+      "refs/heads/codex/bfs-seal-recovery-operator-20260927-a1",
+      "refs/heads/codex/bfs-seal-recovery-runtime-20260927-a1",
+      "refs/heads/codex/bfs-supervision-recovery-runtime-20260927-a1",
+      "refs/heads/codex/bfs-supervision-recovery-runtime-20260927-a2",
+      "refs/remotes/origin/codex/bfs-lease-simulator-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-lease-simulator-operator-20260927-a2",
+      "refs/remotes/origin/codex/bfs-protocol-proof-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-protocol-simulator-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-seal-simulator-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-simulator-recovery-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-t17-diagnostic-operator-20260927-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_t17_diagnostic_build.py",
+    "blob": "6e1cfe9c8187782e346ef389c57834ad476cb876",
+    "refs": [
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a1",
+      "refs/heads/codex/bfs-t17-diagnostic-build-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_supervision_supplement.py",
+    "blob": "4abc7cb53c16abd16584cd17973f59acadb4bc62",
+    "refs": [
+      "refs/heads/codex/bfs-lease-recovery-operator-20260927-a1",
+      "refs/heads/codex/bfs-lease-recovery-runtime-20260927-a1",
+      "refs/remotes/origin/codex/bfs-lease-simulator-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-lease-simulator-operator-20260927-a2"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_supervision_supplement.py",
+    "blob": "8924b9a6c30e85538ef71581b01adece177fa551",
+    "refs": [
+      "refs/heads/codex/bfs-provider-context2-node0-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context2-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context3-operator-20260927-a1",
+      "refs/heads/codex/bfs-provider-context3-runtime-20260927-a1",
+      "refs/heads/codex/bfs-supervision-recovery-runtime-20260927-a1",
+      "refs/heads/codex/bfs-supervision-recovery-runtime-20260927-a2",
+      "refs/remotes/origin/codex/bfs-simulator-recovery-operator-20260927-a1",
+      "refs/remotes/origin/codex/bfs-t17-diagnostic-operator-20260927-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_supervision_supplement.py",
+    "blob": "239a2625a1c30f6753a112469f9d4728f6e74220",
+    "refs": [
+      "refs/heads/codex/bfs-seal-recovery-operator-20260927-a1",
+      "refs/heads/codex/bfs-seal-recovery-runtime-20260927-a1",
+      "refs/remotes/origin/codex/bfs-seal-simulator-operator-20260927-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_dx100_coverage_execution.py",
+    "blob": "0d22ad52eb6d1362ff07046ca0b2cf2abc5c2190",
+    "refs": [
+      "refs/heads/codex/bfs-native-one-thread-20260926",
+      "refs/heads/codex/bfs-owned-rss-20260926",
+      "refs/heads/codex/bfs-simulator-admission-20260926",
+      "refs/heads/codex/bfs-t17-build-client-20260926",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_a2_linux_fixture.py",
+    "blob": "97de03127415eb18b87bdd080442266c4f85fdf7",
+    "refs": [
+      "refs/heads/codex/bfs-native-readback-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a2",
+      "refs/heads/codex/bfs-reader-correction-20260926-a2",
+      "refs/heads/codex/bfs-supervision-20260926-a1",
+      "refs/heads/codex/bfs-supervision-checkpoint-20260926-c0df79e",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a2",
+      "refs/remotes/origin/codex/bfs-native-one-thread-evidence-20260926-a1",
+      "refs/remotes/origin/codex/bfs-t16-protocol-evidence-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_a2_linux_fixture.py",
+    "blob": "4168a551eefcccd62466193141a9cbac1b49202c",
+    "refs": [
+      "refs/heads/codex/bfs-native-readback-20260926-a1",
+      "refs/heads/codex/bfs-native-readback-20260926-a2",
+      "refs/heads/codex/bfs-reader-correction-20260926-a2",
+      "refs/heads/codex/bfs-supervision-20260926-a1",
+      "refs/heads/codex/bfs-supervision-checkpoint-20260926-c0df79e",
+      "refs/remotes/origin/codex/bfs-dx100-coverage-evidence-20260926-a2",
+      "refs/remotes/origin/codex/bfs-native-one-thread-evidence-20260926-a1",
+      "refs/remotes/origin/codex/bfs-t16-protocol-evidence-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_scalar_v2_builds.py",
+    "blob": "b6c3d3827a8f30a79444dd2eeff1642cefc2c336",
+    "refs": [
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a1",
+      "refs/heads/codex/bfs-scalar-v2-preparation-20260926-a1",
+      "refs/heads/codex/bfs-t15-gzip-correction-20260926-a1",
+      "refs/heads/codex/bfs-t17-diagnostic-build-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_scalar_v2_builds.py",
+    "blob": "9277359b42f655a4f6a8cace4ee7b40664b2db4a",
+    "refs": [
+      "refs/heads/codex/bfs-recovery-runtime-20260926-a1",
+      "refs/heads/codex/bfs-scalar-v2-preparation-20260926-a1",
+      "refs/heads/codex/bfs-t15-gzip-correction-20260926-a1",
+      "refs/heads/codex/bfs-t17-diagnostic-build-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_native_reassessment.py",
+    "blob": "de0e37331c873b4eaaa0cc6979ef1bceb3e36d36",
+    "refs": [
+      "refs/heads/codex/bfs-supervision-checkpoint-20260926-c0df79e"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "scripts/bfs_storage.py",
+    "blob": "3dd579835ca81e91a596fa97d01e309342baa1cf",
+    "refs": [
+      "refs/heads/codex/bfs-t15-gzip-correction-20260926-a1",
+      "refs/heads/codex/bfs-t17-diagnostic-build-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  },
+  {
+    "path": "tests/test_bfs_storage.py",
+    "blob": "9cbd02f4ec6c8b81bf7b07d0ebee244a62f587b5",
+    "refs": [
+      "refs/heads/codex/bfs-t15-gzip-correction-20260926-a1",
+      "refs/heads/codex/bfs-t17-diagnostic-build-20260926-a1"
+    ],
+    "existed_in_current_history": true
+  }
+]

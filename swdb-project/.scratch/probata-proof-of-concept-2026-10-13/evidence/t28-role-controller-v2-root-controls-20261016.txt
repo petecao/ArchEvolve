@@ -1,0 +1,24 @@
+test_delayed_final_close_and_pin_refuse_settled_success (__main__.Controls) ... ok
+test_early_audit_and_resource_setters_are_closed_before_imports (__main__.Controls) ... ok
+test_embedded_policy_sources_and_all_input_bindings_agree (__main__.Controls) ... ok
+test_exact_template_substitution_and_closed_command_profile (__main__.Controls) ... ok
+test_no_existing_root_failure_write_and_no_main_or_children (__main__.Controls) ... ok
+test_primitive_bytes_checked_before_exec (__main__.Controls) ... ok
+test_projected_write_gate_uses_next_bytes_and_preserves_reserve (__main__.Controls) ... ok
+test_settled_publication_has_checks_before_and_after_flush (__main__.Controls) ... ok
+test_topology_alias_and_special_inputs_refuse (__main__.Controls) ... ERROR
+
+======================================================================
+ERROR: test_topology_alias_and_special_inputs_refuse (__main__.Controls)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/role-normalization-controller-v2/test_controller_v2.py", line 60, in test_topology_alias_and_special_inputs_refuse
+    self.assertEqual(ns['pin'](actual)['sha256'],hashlib.sha256(b'abc').hexdigest())
+  File "inert_projected_controller", line 43, in pin
+AttributeError: module 'hashlib' has no attribute 'file_digest'
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.005s
+
+FAILED (errors=1)
+{"tests": 9, "failures": 0, "errors": 1, "skips": 0, "child_events": [], "entry_sha256": "e37e893b31b9b0be5f1cd2a5953998393d6040ed2c0c2d45434012727673aa54", "actual_controller_bootstrap_or_resource_limits_executed": false}

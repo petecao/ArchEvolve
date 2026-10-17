@@ -1,0 +1,638 @@
+{
+  "F6": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "GNU_KILL_s": 60,
+  "GNU_outer_s": 14520,
+  "R14_source_identity": {
+    "commit": "c4ab2fdbb0b0c57ee9f515522835897f24466d6b",
+    "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+    "modules": 185
+  },
+  "actual_export_receipt": {
+    "bytes": 32840,
+    "path": "/data1/yanruj/ArchEvolve-lanl-generality-final-export-20261007-a1/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-generality-final-final-20261007-a1-export.json",
+    "sha256": "02b369f0624964fa4293f563a7b51e142dc369101147ac7fe848503c4b50eb5d",
+    "stat": {
+      "st_ctime_ns": 1791423204415262954,
+      "st_dev": 2097,
+      "st_gid": 114316761,
+      "st_ino": 55745020,
+      "st_mode": 33152,
+      "st_mtime_ns": 1791423204415262954,
+      "st_nlink": 1,
+      "st_size": 32840,
+      "st_uid": 114316761
+    }
+  },
+  "actual_receipt_and_cleanup_checks_required_after_execution": true,
+  "count_receipt_file_pin": {
+    "bytes": 2913189,
+    "path": "/data1/yanruj/ArchEvolve-lanl-generality-final-export-20261007-a1/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-generality-counts-mbit10-20261006-a1.json",
+    "sha256": "3679c37e531aea944e0e7efb227f460c72e63bdd6f5577251db9ac972660c3e1",
+    "stat": {
+      "st_ctime_ns": 1791422453043432692,
+      "st_dev": 2097,
+      "st_gid": 114316761,
+      "st_ino": 55714641,
+      "st_mode": 33152,
+      "st_mtime_ns": 1791422453043432692,
+      "st_nlink": 1,
+      "st_size": 2913189,
+      "st_uid": 114316761
+    }
+  },
+  "created_utc": "2026-10-08T01:41:49.692938+00:00",
+  "cwd": "/data1/yanruj/ArchEvolve-lanl-generality-final-export-20261007-a1/swdb-project",
+  "execution_not_yet_started": true,
+  "expected_primary": "a9c02e918374070ff2654e3f9696bd550230cbbb",
+  "explicit_environment_overrides": {
+    "GIT_OPTIONAL_LOCKS": "0",
+    "GIT_TERMINAL_PROMPT": "0",
+    "LC_ALL": "C",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "OMP_DYNAMIC": "FALSE",
+    "OMP_NUM_THREADS": "1",
+    "OMP_THREAD_LIMIT": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/data1/yanruj/ArchEvolve-lanl-generality-final-export-20261007-a1/swdb-project",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "export_commit": "43256ee0300a59a03919833075fbb13fb3ba9ab3",
+  "format": "swdb.lanl14-original-reader-invocation-preregistration.v1",
+  "inherited_environment_or_auth_dumped": false,
+  "manifest_identity_sha256": "e452b68e7d98cf949ad1be24b1471ee265f0f9811e0f8735f91f38a517cfea8b",
+  "metadata_preflight_s": 600,
+  "modules": 185,
+  "native": {
+    "/usr/bin/git": {
+      "bytes": 4019024,
+      "path": "/usr/bin/git",
+      "sha256": "06b2aa74919b1993f9fd7e47060ea98d98c27206f16ccc2d35f51ced7e7877eb",
+      "stat": {
+        "st_ctime_ns": 1741394138954914934,
+        "st_dev": 2050,
+        "st_gid": 0,
+        "st_ino": 4237243,
+        "st_mode": 33261,
+        "st_mtime_ns": 1736888817000000000,
+        "st_nlink": 1,
+        "st_size": 4019024,
+        "st_uid": 0
+      }
+    },
+    "/usr/bin/python3.12": {
+      "bytes": 8020928,
+      "path": "/usr/bin/python3.12",
+      "sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+      "stat": {
+        "st_ctime_ns": 1789207399944696918,
+        "st_dev": 2050,
+        "st_gid": 0,
+        "st_ino": 4194446,
+        "st_mode": 33261,
+        "st_mtime_ns": 1788171506000000000,
+        "st_nlink": 1,
+        "st_size": 8020928,
+        "st_uid": 0
+      }
+    },
+    "/usr/bin/timeout": {
+      "bytes": 39880,
+      "path": "/usr/bin/timeout",
+      "sha256": "12690a043dfd555a6c14ccc1564f5649c18f1762c0d6ff66729948130898ec52",
+      "stat": {
+        "st_ctime_ns": 1788257214047248448,
+        "st_dev": 2050,
+        "st_gid": 0,
+        "st_ino": 4204127,
+        "st_mode": 33261,
+        "st_mtime_ns": 1787670543000000000,
+        "st_nlink": 1,
+        "st_size": 39880,
+        "st_uid": 0
+      }
+    }
+  },
+  "new_canonical_byte_pins": {
+    "generality.bc.cpu.kron-g16.t1.estimate.final-20261007-a1": {
+      "bytes": 70540205,
+      "path": "/data1/yanruj/ArchEvolve-lanl-generality-final-export-20261007-a1/swdb-project/records/estimates/generality.bc.cpu.kron-g16.t1.estimate.final-20261007-a1.yaml",
+      "sha256": "a93f431beae805949cb423e4f8497229dd0813134eb95bbd9e29f3f7fb23e3d8",
+      "stat": {
+        "st_ctime_ns": 1791422454901452022,
+        "st_dev": 2097,
+        "st_gid": 114316761,
+        "st_ino": 55744978,
+        "st_mode": 33152,
+        "st_mtime_ns": 1791422454901452022,
+        "st_nlink": 1,
+        "st_size": 70540205,
+        "st_uid": 114316761
+      }
+    },
+    "generality.bc.cpu.kron-g16.t1.protocol.final-20261007-a1.d69a3f63a21ec882": {
+      "bytes": 692110,
+      "path": "/data1/yanruj/ArchEvolve-lanl-generality-final-export-20261007-a1/swdb-project/records/protocols/generality.bc.cpu.kron-g16.t1.protocol.final-20261007-a1.d69a3f63a21ec882.yaml",
+      "sha256": "b53765ee55c739a922358f94d88e006237bad295ab3a502430f75f7994c2d343",
+      "stat": {
+        "st_ctime_ns": 1791422456025463717,
+        "st_dev": 2097,
+        "st_gid": 114316761,
+        "st_ino": 55744987,
+        "st_mode": 33152,
+        "st_mtime_ns": 1791422456025463717,
+        "st_nlink": 1,
+        "st_size": 692110,
+        "st_uid": 114316761
+      }
+    },
+    "generality.bc.dx100.kron-g16.t4.estimate.final-20261007-a1": {
+      "bytes": 10504695,
+      "path": "/data1/yanruj/ArchEvolve-lanl-generality-final-export-20261007-a1/swdb-project/records/estimates/generality.bc.dx100.kron-g16.t4.estimate.final-20261007-a1.yaml",
+      "sha256": "48e76f9ac816aa8cd7a09cab375c31905171a5b24b6d80ca1e1d5875fce7895b",
+      "stat": {
+        "st_ctime_ns": 1791422455231455456,
+        "st_dev": 2097,
+        "st_gid": 114316761,
+        "st_ino": 55744979,
+        "st_mode": 33152,
+        "st_mtime_ns": 1791422455231455456,
+        "st_nlink": 1,
+        "st_size": 10504695,
+        "st_uid": 114316761
+      }
+    },
+    "generality.bc.dx100.kron-g16.t4.protocol.final-20261007-a1.a9db91ca386a566b": {
+      "bytes": 227648,
+      "path": "/data1/yanruj/ArchEvolve-lanl-generality-final-export-20261007-a1/swdb-project/records/protocols/generality.bc.dx100.kron-g16.t4.protocol.final-20261007-a1.a9db91ca386a566b.yaml",
+      "sha256": "c8c375a5dbdd0028aaa975bdbce845590e9b92d78f3eb19fdbf07a413b2969ac",
+      "stat": {
+        "st_ctime_ns": 1791422456029463758,
+        "st_dev": 2097,
+        "st_gid": 114316761,
+        "st_ino": 55744988,
+        "st_mode": 33152,
+        "st_mtime_ns": 1791422456029463758,
+        "st_nlink": 1,
+        "st_size": 227648,
+        "st_uid": 114316761
+      }
+    },
+    "generality.bc.maple.kron-g16.t2.estimate.final-20261007-a1": {
+      "bytes": 5439583,
+      "path": "/data1/yanruj/ArchEvolve-lanl-generality-final-export-20261007-a1/swdb-project/records/estimates/generality.bc.maple.kron-g16.t2.estimate.final-20261007-a1.yaml",
+      "sha256": "802163ca7a8a23b4b9091445a199e282718b19bd7b9218fe38c80f50d21cbb53",
+      "stat": {
+        "st_ctime_ns": 1791422455279455955,
+        "st_dev": 2097,
+        "st_gid": 114316761,
+        "st_ino": 55744980,
+        "st_mode": 33152,
+        "st_mtime_ns": 1791422455279455955,
+        "st_nlink": 1,
+        "st_size": 5439583,
+        "st_uid": 114316761
+      }
+    },
+    "generality.bc.maple.kron-g16.t2.protocol.final-20261007-a1.3a5a92be01adff67": {
+      "bytes": 12571,
+      "path": "/data1/yanruj/ArchEvolve-lanl-generality-final-export-20261007-a1/swdb-project/records/protocols/generality.bc.maple.kron-g16.t2.protocol.final-20261007-a1.3a5a92be01adff67.yaml",
+      "sha256": "f6ed84eaca1710aadd265c1cb9a940607a10abf138ddd8ee86034fbeef6fc93c",
+      "stat": {
+        "st_ctime_ns": 1791422456031463779,
+        "st_dev": 2097,
+        "st_gid": 114316761,
+        "st_ino": 55744990,
+        "st_mode": 33152,
+        "st_mtime_ns": 1791422456031463779,
+        "st_nlink": 1,
+        "st_size": 12571,
+        "st_uid": 114316761
+      }
+    },
+    "generality.bfs.cpu.kron-g16.t1.estimate.final-20261007-a1": {
+      "bytes": 53583493,
+      "path": "/data1/yanruj/ArchEvolve-lanl-generality-final-export-20261007-a1/swdb-project/records/estimates/generality.bfs.cpu.kron-g16.t1.estimate.final-20261007-a1.yaml",
+      "sha256": "41b68583d97570372776da3037db2cc895fee7107b271a2a35976508e31027f0",
+      "stat": {
+        "st_ctime_ns": 1791422455330456486,
+        "st_dev": 2097,
+        "st_gid": 114316761,
+        "st_ino": 55744981,
+        "st_mode": 33152,
+        "st_mtime_ns": 1791422455330456486,
+        "st_nlink": 1,
+        "st_size": 53583493,
+        "st_uid": 114316761
+      }
+    },
+    "generality.bfs.cpu.kron-g16.t1.protocol.final-20261007-a1.6bafb63ffddb2984": {
+      "bytes": 692056,
+      "path": "/data1/yanruj/ArchEvolve-lanl-generality-final-export-20261007-a1/swdb-project/records/protocols/generality.bfs.cpu.kron-g16.t1.protocol.final-20261007-a1.6bafb63ffddb2984.yaml",
+      "sha256": "3de2c55caff706a138de66219f67a3df5844b2b852ba6900970102e14cbff8fd",
+      "stat": {
+        "st_ctime_ns": 1791422456032463789,
+        "st_dev": 2097,
+        "st_gid": 114316761,
+        "st_ino": 55744991,
+        "st_mode": 33152,
+        "st_mtime_ns": 1791422456032463789,
+        "st_nlink": 1,
+        "st_size": 692056,
+        "st_uid": 114316761
+      }
+    },
+    "generality.bfs.dx100.kron-g16.t4.estimate.final-20261007-a1": {
+      "bytes": 9259119,
+      "path": "/data1/yanruj/ArchEvolve-lanl-generality-final-export-20261007-a1/swdb-project/records/estimates/generality.bfs.dx100.kron-g16.t4.estimate.final-20261007-a1.yaml",
+      "sha256": "8f76ca8949b8461b5e95c9eff5c419dfdbd6f089bf6441133f654c6dd3f06873",
+      "stat": {
+        "st_ctime_ns": 1791422455581459097,
+        "st_dev": 2097,
+        "st_gid": 114316761,
+        "st_ino": 55744982,
+        "st_mode": 33152,
+        "st_mtime_ns": 1791422455581459097,
+        "st_nlink": 1,
+        "st_size": 9259119,
+        "st_uid": 114316761
+      }
+    },
+    "generality.bfs.dx100.kron-g16.t4.protocol.final-20261007-a1.52dfffe9a9104dd6": {
+      "bytes": 227736,
+      "path": "/data1/yanruj/ArchEvolve-lanl-generality-final-export-20261007-a1/swdb-project/records/protocols/generality.bfs.dx100.kron-g16.t4.protocol.final-20261007-a1.52dfffe9a9104dd6.yaml",
+      "sha256": "fe19253e60e943f1e338fc22f0c17a285b1a317fa195115e7d60b60f474c7c1e",
+      "stat": {
+        "st_ctime_ns": 1791422456036463831,
+        "st_dev": 2097,
+        "st_gid": 114316761,
+        "st_ino": 55745012,
+        "st_mode": 33152,
+        "st_mtime_ns": 1791422456036463831,
+        "st_nlink": 1,
+        "st_size": 227736,
+        "st_uid": 114316761
+      }
+    },
+    "generality.bfs.maple.kron-g16.t2.estimate.final-20261007-a1": {
+      "bytes": 4498137,
+      "path": "/data1/yanruj/ArchEvolve-lanl-generality-final-export-20261007-a1/swdb-project/records/estimates/generality.bfs.maple.kron-g16.t2.estimate.final-20261007-a1.yaml",
+      "sha256": "45466017119539b60ed58a9ef5e363cd8cc91eed10dd1ba294925e429610763b",
+      "stat": {
+        "st_ctime_ns": 1791422455624459544,
+        "st_dev": 2097,
+        "st_gid": 114316761,
+        "st_ino": 55744983,
+        "st_mode": 33152,
+        "st_mtime_ns": 1791422455624459544,
+        "st_nlink": 1,
+        "st_size": 4498137,
+        "st_uid": 114316761
+      }
+    },
+    "generality.bfs.maple.kron-g16.t2.protocol.final-20261007-a1.f8a5a1dc25ff2a2c": {
+      "bytes": 12517,
+      "path": "/data1/yanruj/ArchEvolve-lanl-generality-final-export-20261007-a1/swdb-project/records/protocols/generality.bfs.maple.kron-g16.t2.protocol.final-20261007-a1.f8a5a1dc25ff2a2c.yaml",
+      "sha256": "da354d9f088c640c71cc822907c684dbecee2a878b752b35d59d36a857de9d07",
+      "stat": {
+        "st_ctime_ns": 1791422456038463852,
+        "st_dev": 2097,
+        "st_gid": 114316761,
+        "st_ino": 55745013,
+        "st_mode": 33152,
+        "st_mtime_ns": 1791422456038463852,
+        "st_nlink": 1,
+        "st_size": 12517,
+        "st_uid": 114316761
+      }
+    },
+    "generality.pagerank.cpu.kron-g16.t1.estimate.final-20261007-a1": {
+      "bytes": 64833237,
+      "path": "/data1/yanruj/ArchEvolve-lanl-generality-final-export-20261007-a1/swdb-project/records/estimates/generality.pagerank.cpu.kron-g16.t1.estimate.final-20261007-a1.yaml",
+      "sha256": "f67e0d27cf96650e06844fb299924e40cf7d2f378c7fb953519b2ea59c499ec4",
+      "stat": {
+        "st_ctime_ns": 1791422455678460106,
+        "st_dev": 2097,
+        "st_gid": 114316761,
+        "st_ino": 55744984,
+        "st_mode": 33152,
+        "st_mtime_ns": 1791422455678460106,
+        "st_nlink": 1,
+        "st_size": 64833237,
+        "st_uid": 114316761
+      }
+    },
+    "generality.pagerank.cpu.kron-g16.t1.protocol.final-20261007-a1.0e004982f7de2cb1": {
+      "bytes": 692265,
+      "path": "/data1/yanruj/ArchEvolve-lanl-generality-final-export-20261007-a1/swdb-project/records/protocols/generality.pagerank.cpu.kron-g16.t1.protocol.final-20261007-a1.0e004982f7de2cb1.yaml",
+      "sha256": "41672cf77a91e831e0e0880d2f3064bde35f233efd44718cf0f5e4890585ba75",
+      "stat": {
+        "st_ctime_ns": 1791422456039463862,
+        "st_dev": 2097,
+        "st_gid": 114316761,
+        "st_ino": 55745014,
+        "st_mode": 33152,
+        "st_mtime_ns": 1791422456039463862,
+        "st_nlink": 1,
+        "st_size": 692265,
+        "st_uid": 114316761
+      }
+    },
+    "generality.pagerank.dx100.kron-g16.t4.estimate.final-20261007-a1": {
+      "bytes": 6799766,
+      "path": "/data1/yanruj/ArchEvolve-lanl-generality-final-export-20261007-a1/swdb-project/records/estimates/generality.pagerank.dx100.kron-g16.t4.estimate.final-20261007-a1.yaml",
+      "sha256": "a2e35ca50d60db2178437f7d415936c5b5e90dfb5ecd18f2bd706bbaf0be900b",
+      "stat": {
+        "st_ctime_ns": 1791422455977463217,
+        "st_dev": 2097,
+        "st_gid": 114316761,
+        "st_ino": 55744985,
+        "st_mode": 33152,
+        "st_mtime_ns": 1791422455977463217,
+        "st_nlink": 1,
+        "st_size": 6799766,
+        "st_uid": 114316761
+      }
+    },
+    "generality.pagerank.dx100.kron-g16.t4.protocol.final-20261007-a1.e73f8ab682b7c779": {
+      "bytes": 227623,
+      "path": "/data1/yanruj/ArchEvolve-lanl-generality-final-export-20261007-a1/swdb-project/records/protocols/generality.pagerank.dx100.kron-g16.t4.protocol.final-20261007-a1.e73f8ab682b7c779.yaml",
+      "sha256": "21650afd13cec2116b177f54f2ade6b25837a3dc050f2233fda436d42b1c7403",
+      "stat": {
+        "st_ctime_ns": 1791422456043463904,
+        "st_dev": 2097,
+        "st_gid": 114316761,
+        "st_ino": 55745015,
+        "st_mode": 33152,
+        "st_mtime_ns": 1791422456043463904,
+        "st_nlink": 1,
+        "st_size": 227623,
+        "st_uid": 114316761
+      }
+    },
+    "generality.pagerank.maple.kron-g16.t2.estimate.final-20261007-a1": {
+      "bytes": 3643475,
+      "path": "/data1/yanruj/ArchEvolve-lanl-generality-final-export-20261007-a1/swdb-project/records/estimates/generality.pagerank.maple.kron-g16.t2.estimate.final-20261007-a1.yaml",
+      "sha256": "149867d31a34491c7f5768a7178bc3d63df14bba4b3865b8d691a842a4522314",
+      "stat": {
+        "st_ctime_ns": 1791422456008463540,
+        "st_dev": 2097,
+        "st_gid": 114316761,
+        "st_ino": 55744986,
+        "st_mode": 33152,
+        "st_mtime_ns": 1791422456008463540,
+        "st_nlink": 1,
+        "st_size": 3643475,
+        "st_uid": 114316761
+      }
+    },
+    "generality.pagerank.maple.kron-g16.t2.protocol.final-20261007-a1.cf35b54d65d924d9": {
+      "bytes": 12730,
+      "path": "/data1/yanruj/ArchEvolve-lanl-generality-final-export-20261007-a1/swdb-project/records/protocols/generality.pagerank.maple.kron-g16.t2.protocol.final-20261007-a1.cf35b54d65d924d9.yaml",
+      "sha256": "698754443318797aea8ba2ed566adea14eadcb82d1696102a7b62945d82707c4",
+      "stat": {
+        "st_ctime_ns": 1791422456044463914,
+        "st_dev": 2097,
+        "st_gid": 114316761,
+        "st_ino": 55745016,
+        "st_mode": 33152,
+        "st_mtime_ns": 1791422456044463914,
+        "st_nlink": 1,
+        "st_size": 12730,
+        "st_uid": 114316761
+      }
+    }
+  },
+  "no_admitted_flag_invented": true,
+  "no_retry": true,
+  "original_child_stdout_stderr_remain_remote": true,
+  "postflight_is_separate_parent_metadata": true,
+  "public_argv": [
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=60s",
+    "14520s",
+    "/usr/bin/python3.12",
+    "-B",
+    "/data1/yanruj/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-export-reader-lifecycle-supervisor-controls-20261007-a1/lanl14_export_reader_administrative_supervisor_20261007_a1_r1.py",
+    "--cleanup-helper",
+    "/data1/yanruj/lanl17-control-20261006.py",
+    "--project",
+    "/data1/yanruj/ArchEvolve-lanl-cpu-model-validation-20261006-a1/swdb-project",
+    "--selected-source",
+    "/data1/yanruj/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-lossless-report-export-controls-20261007-a1/lanl14_readonly_nine_export_admission_lossless_gzip_20261007_a1.py",
+    "--action",
+    "reader",
+    "--timeout-s",
+    "14400",
+    "--python",
+    "/usr/bin/python3.12",
+    "--python-sha256",
+    "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+    "--supervisor-sha256",
+    "503fc5defcf96a5177599185a9895c00ae64b3e1b0058128b9e283ef3bd39f3f",
+    "--cwd",
+    "/data1/yanruj/ArchEvolve-lanl-generality-final-export-20261007-a1/swdb-project",
+    "--control-directory",
+    "/data/yanruj/EvolveSWDB_runs/lanl14-export-reader-administration-20261007-a1/lanl14-export-reader-control-reader-a1",
+    "--",
+    "--checkout",
+    "/data1/yanruj/ArchEvolve-lanl-generality-final-export-20261007-a1",
+    "--export-commit",
+    "43256ee0300a59a03919833075fbb13fb3ba9ab3",
+    "--source-commit",
+    "c4ab2fdbb0b0c57ee9f515522835897f24466d6b",
+    "--manifest-sha256",
+    "e452b68e7d98cf949ad1be24b1471ee265f0f9811e0f8735f91f38a517cfea8b",
+    "--receipt-sha256",
+    "02b369f0624964fa4293f563a7b51e142dc369101147ac7fe848503c4b50eb5d",
+    "--receipt-identity-sha256",
+    "ad656b14b958d9ee1b775c22906b0ee30e2d63e395aa165197be0ff4b8e4118a",
+    "--tag",
+    "final-20261007-a1",
+    "--receipt",
+    ".scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-generality-final-final-20261007-a1-export.json",
+    "--report",
+    ".scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-generality-final-final-20261007-a1-report.json",
+    "--request",
+    ".scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-generality-final-final-20261007-a1-request.json",
+    "--markdown",
+    ".scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-generality-final-final-20261007-a1-report.md",
+    "--count-receipt",
+    ".scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-generality-counts-mbit10-20261006-a1.json",
+    "--count-receipt-sha256",
+    "3679c37e531aea944e0e7efb227f460c72e63bdd6f5577251db9ac972660c3e1",
+    "--target-pins",
+    "{\"cpu\":{\"id\":\"mbit10.cpu.lanl20261006.t1.services.v1\",\"sha256\":\"9fec46b1ab4c8ac2e8e501e61cf137c075ec40b6eef128a247cf28dd54fca76b\"},\"dx100\":{\"id\":\"dx100-e4fc4af-functional-analytic-v1.t4.estimated.a2\",\"sha256\":\"f436047a21f77eda649f99aa5ceb5b5c8cb13e4ab7eed770441e7faad07aaf02\"},\"maple\":{\"id\":\"maple-isca2022.fpga-reference.t2\",\"sha256\":\"74face99dcf178f0c9d7e057b77a840245fff0f2f33e500db677516cbd3ee7e8\"}}"
+  ],
+  "receipt_identity_sha256": "ad656b14b958d9ee1b775c22906b0ee30e2d63e395aa165197be0ff4b8e4118a",
+  "released_leases": {
+    "mbit10-evaluation": {
+      "bytes": 473,
+      "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation.meta.json",
+      "sha256": "7c553f8a9743bad52659e93651d454ea9758d8b9c8f0268f8b3d260c8b3f72a0",
+      "stat": {
+        "st_ctime_ns": 1789188551508179403,
+        "st_dev": 2097,
+        "st_gid": 0,
+        "st_ino": 55199381,
+        "st_mode": 33206,
+        "st_mtime_ns": 1789188551505179372,
+        "st_nlink": 1,
+        "st_size": 473,
+        "st_uid": 114316761
+      }
+    },
+    "mbit10-evaluation-node0": {
+      "bytes": 482,
+      "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation-node0.meta.json",
+      "sha256": "6d3843763718de02df41c461f67d199f18a028ecfd5240bd6946e0997e2772dc",
+      "stat": {
+        "st_ctime_ns": 1791421367061957728,
+        "st_dev": 2097,
+        "st_gid": 0,
+        "st_ino": 55218333,
+        "st_mode": 33206,
+        "st_mtime_ns": 1791421367057957686,
+        "st_nlink": 1,
+        "st_size": 482,
+        "st_uid": 114316761
+      }
+    },
+    "mbit10-evaluation-node1": {
+      "bytes": 482,
+      "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation-node1.meta.json",
+      "sha256": "43a6732256d53c78e39842157839ab8b8635eabcf39cd0e5e5e44ac95991914e",
+      "stat": {
+        "st_ctime_ns": 1791416635843148460,
+        "st_dev": 2097,
+        "st_gid": 0,
+        "st_ino": 55217990,
+        "st_mode": 33206,
+        "st_mtime_ns": 1791416635842148449,
+        "st_nlink": 1,
+        "st_size": 482,
+        "st_uid": 114316761
+      }
+    }
+  },
+  "report_transfer_file_pin": {
+    "bytes": 68324111,
+    "path": "/data1/yanruj/ArchEvolve-lanl-generality-final-export-20261007-a1/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-generality-final-final-20261007-a1-report.json",
+    "sha256": "c340d66bce2d968aa5ef70b2bc0b4042484af2a7fc711a639e9d4af9b32f04e2",
+    "stat": {
+      "st_ctime_ns": 1791423204061259265,
+      "st_dev": 2097,
+      "st_gid": 114316761,
+      "st_ino": 55745017,
+      "st_mode": 33152,
+      "st_mtime_ns": 1791423204061259265,
+      "st_nlink": 1,
+      "st_size": 68324111,
+      "st_uid": 114316761
+    }
+  },
+  "retention_original_stat": [
+    2097,
+    54947305,
+    33206,
+    114316761,
+    0,
+    1,
+    0,
+    1791030933805697274,
+    1791030933805697274
+  ],
+  "scientific_admission": false,
+  "sealed": false,
+  "selected_reader_format": "swdb.lanl14-selected-nine-export-admission.v1",
+  "source_commit": "c4ab2fdbb0b0c57ee9f515522835897f24466d6b",
+  "source_pins": {
+    "/data1/yanruj/ArchEvolve-lanl-cpu-model-validation-20261006-a1/swdb-project/swdb/processes.py": {
+      "bytes": 912,
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-model-validation-20261006-a1/swdb-project/swdb/processes.py",
+      "sha256": "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289",
+      "stat": {
+        "st_ctime_ns": 1791416551990241176,
+        "st_dev": 2097,
+        "st_gid": 114316761,
+        "st_ino": 65051206,
+        "st_mode": 33188,
+        "st_mtime_ns": 1791349306106233470,
+        "st_nlink": 1,
+        "st_size": 912,
+        "st_uid": 114316761
+      }
+    },
+    "/data1/yanruj/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-completed-report-transfer-mode-controls-20261008-a1/lanl14_correct_completed_report_transfer_modes_20261008_a1.py": {
+      "bytes": 29985,
+      "path": "/data1/yanruj/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-completed-report-transfer-mode-controls-20261008-a1/lanl14_correct_completed_report_transfer_modes_20261008_a1.py",
+      "sha256": "ee12a535ea2c3e6976c920f483c72e8367cd36ec311bf26585137023a2d29ec7",
+      "stat": {
+        "st_ctime_ns": 1791419407876047954,
+        "st_dev": 2097,
+        "st_gid": 0,
+        "st_ino": 55713005,
+        "st_mode": 33188,
+        "st_mtime_ns": 1791419353146459553,
+        "st_nlink": 1,
+        "st_size": 29985,
+        "st_uid": 114316761
+      }
+    },
+    "/data1/yanruj/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-export-reader-lifecycle-supervisor-controls-20261007-a1/lanl14_export_reader_administrative_supervisor_20261007_a1_r1.py": {
+      "bytes": 14547,
+      "path": "/data1/yanruj/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-export-reader-lifecycle-supervisor-controls-20261007-a1/lanl14_export_reader_administrative_supervisor_20261007_a1_r1.py",
+      "sha256": "503fc5defcf96a5177599185a9895c00ae64b3e1b0058128b9e283ef3bd39f3f",
+      "stat": {
+        "st_ctime_ns": 1791416332350864613,
+        "st_dev": 2097,
+        "st_gid": 0,
+        "st_ino": 55712914,
+        "st_mode": 33188,
+        "st_mtime_ns": 1791415423436990803,
+        "st_nlink": 1,
+        "st_size": 14547,
+        "st_uid": 114316761
+      }
+    },
+    "/data1/yanruj/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-lossless-report-export-controls-20261007-a1/lanl14_readonly_nine_export_admission_lossless_gzip_20261007_a1.py": {
+      "bytes": 37647,
+      "path": "/data1/yanruj/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-lossless-report-export-controls-20261007-a1/lanl14_readonly_nine_export_admission_lossless_gzip_20261007_a1.py",
+      "sha256": "6909c422990a071b1a8d08c634c1c086f0218c5851d38996b6f4798759499570",
+      "stat": {
+        "st_ctime_ns": 1791417504706548628,
+        "st_dev": 2097,
+        "st_gid": 0,
+        "st_ino": 55712859,
+        "st_mode": 33188,
+        "st_mtime_ns": 1791408210155801337,
+        "st_nlink": 1,
+        "st_size": 37647,
+        "st_uid": 114316761
+      }
+    },
+    "/data1/yanruj/lanl17-control-20261006.py": {
+      "bytes": 38190,
+      "path": "/data1/yanruj/lanl17-control-20261006.py",
+      "sha256": "31e1d71bc6e9ef4a5a5f1d5fbff136ceef249935f8f00601edf45277fce249ec",
+      "stat": {
+        "st_ctime_ns": 1791344079074095743,
+        "st_dev": 2097,
+        "st_gid": 114316761,
+        "st_ino": 54172032,
+        "st_mode": 33188,
+        "st_mtime_ns": 1791344079074095743,
+        "st_nlink": 1,
+        "st_size": 38190,
+        "st_uid": 114316761
+      }
+    }
+  },
+  "stdin_bootstrap_hash_verified_by_parent_loader": true,
+  "stdin_bootstrap_sha256": "582dda1878722ba56a8fdd44e21e60bc1d077399fbbc47aa1ac9b87cae1ea909",
+  "uid": 114316761,
+  "unchanged_reader_wait_s": 14400
+}

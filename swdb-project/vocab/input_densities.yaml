@@ -1,0 +1,9 @@
+name: input_densities
+description: How full the data fed to a kernel is, independent of the storage format.
+values:
+  - value: sparse_scattered
+    meaning: Mostly zeros (few entries per row) and the nonzeros are spread over the whole range.
+  - value: sparse_clustered
+    meaning: Mostly zeros and the nonzeros are clustered (for example banded matrices, meshes).
+  - value: dense
+    meaning: Mostly nonzero.

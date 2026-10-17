@@ -1,0 +1,762 @@
+{
+  "caller_premises_added": [],
+  "checker": {
+    "id": "vector-owned-source-view-1",
+    "sha256": "0382237d65071740c30424fa8fbf7bb53848e0ef6421aebfc4e9de861bffc983"
+  },
+  "cleanup": {
+    "actual_vector_destruction": "Existing real release and automatic end required for each actual source owner; no omitted feasible cleanup",
+    "retire_replaces_release": false,
+    "source_cleanup_established": false,
+    "swap_temporary": "fresh automatic trivial C struct temporary; no second owning vector"
+  },
+  "created": "2026-10-16 ET",
+  "current_model_records_admitted": [],
+  "elements": [
+    "int",
+    "float",
+    "double",
+    "int *"
+  ],
+  "frame": {
+    "buffer_payload_interpreted": false,
+    "incoming_issued_object_metadata_preserved": true,
+    "physical_field_and_padding_projection_established": false,
+    "receiver_padding_unchanged_claimed": false,
+    "written_receiver_entire_footprint_excluded": true
+  },
+  "obligations": [
+    {
+      "dependencies": [],
+      "goal": "t25_owned_effect_move_destination_header",
+      "id": "move.destination_header",
+      "kind": "check_lemma",
+      "path": "obligations/000-t25_owned_effect_move_destination_header.c",
+      "sha256": "60240fa742a147d78bc54c512420d9a85e4e6ecd790711562db8bc985d9da689",
+      "statement": "\\forall Heap::heap h; \\forall Owners::state owners; \\forall OwnedEffects::phases ready; \\forall integer d,s,b,n,c; OwnedEffects::world(h,owners,ready) && OwnedEffects::reserved(h,owners,ready,d) && Owners::active_owner(owners,s) && OwnedEffects::is_ready(ready,s) && d != s && OwnedEffects::header(h,s,b,n,c) ==> OwnedEffects::header(OwnedEffects::move(h,d,s),d,b,n,c)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_owned_effect_move_source_empty",
+      "id": "move.source_empty",
+      "kind": "check_lemma",
+      "path": "obligations/001-t25_owned_effect_move_source_empty.c",
+      "sha256": "9b1806c057f87725d1978aef31a8d25e0dd37bd9d14d3b9a2d924032629bc941",
+      "statement": "\\forall Heap::heap h; \\forall Owners::state owners; \\forall OwnedEffects::phases ready; \\forall integer d,s,b,n,c; OwnedEffects::world(h,owners,ready) && OwnedEffects::reserved(h,owners,ready,d) && Owners::active_owner(owners,s) && OwnedEffects::is_ready(ready,s) && d != s && OwnedEffects::header(h,s,b,n,c) ==> OwnedEffects::header(OwnedEffects::move(h,d,s),s,0,0,0)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_owned_effect_move_incoming_frame",
+      "id": "move.incoming_frame",
+      "kind": "check_lemma",
+      "path": "obligations/002-t25_owned_effect_move_incoming_frame.c",
+      "sha256": "55331d638d52fd11561b52cb9d88dfa8f6f3e20890462c10e7a462ed6bc0b2ad",
+      "statement": "\\forall Heap::heap h; \\forall Owners::state owners; \\forall OwnedEffects::phases ready; \\forall integer d,s,b,n,c; OwnedEffects::world(h,owners,ready) && OwnedEffects::reserved(h,owners,ready,d) && Owners::active_owner(owners,s) && OwnedEffects::is_ready(ready,s) && d != s && OwnedEffects::header(h,s,b,n,c) ==> OwnedEffects::incoming_frame(h,OwnedEffects::move(h,d,s),d,s)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_owned_effect_move_owner_correspondence",
+      "id": "move.owner_correspondence",
+      "kind": "check_lemma",
+      "path": "obligations/003-t25_owned_effect_move_owner_correspondence.c",
+      "sha256": "3340e52d4ed852b8c8a69d14be4692d6d6245b093f8bb31c5bf4a292bcf90d9d",
+      "statement": "\\forall Heap::heap h; \\forall Owners::state owners; \\forall OwnedEffects::phases ready; \\forall integer d,s,b,n,c; OwnedEffects::world(h,owners,ready) && OwnedEffects::reserved(h,owners,ready,d) && Owners::active_owner(owners,s) && OwnedEffects::is_ready(ready,s) && d != s && OwnedEffects::header(h,s,b,n,c) ==> OwnedEffects::world(OwnedEffects::move(h,d,s),Owners::move(owners,d,s),OwnedEffects::moved_phases(ready,d,s))",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_owned_effect_swap_left_header",
+      "id": "swap.left_header",
+      "kind": "check_lemma",
+      "path": "obligations/004-t25_owned_effect_swap_left_header.c",
+      "sha256": "3fab57b9196b55b86cf20cc0ea6181a38e0bdbbe8ecf6f06865dd59d0935d3fa",
+      "statement": "\\forall Heap::heap h; \\forall Owners::state owners; \\forall OwnedEffects::phases ready; \\forall integer l,r,a,bl,nl,cl,br,nr,cr; OwnedEffects::world(h,owners,ready) && Owners::active_owner(owners,l) && Owners::active_owner(owners,r) && OwnedEffects::is_ready(ready,l) && OwnedEffects::is_ready(ready,r) && OwnedEffects::header(h,l,bl,nl,cl) && OwnedEffects::header(h,r,br,nr,cr) && Heap::automatic_available(h,24,8,a) ==> OwnedEffects::header(OwnedEffects::swap(h,l,r,a),l,br,nr,cr)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_owned_effect_swap_right_header",
+      "id": "swap.right_header",
+      "kind": "check_lemma",
+      "path": "obligations/005-t25_owned_effect_swap_right_header.c",
+      "sha256": "9e6d0dda572705cdf5b4c2469a4dd0d66015ccefe102b49a87bf32ff0a1fde11",
+      "statement": "\\forall Heap::heap h; \\forall Owners::state owners; \\forall OwnedEffects::phases ready; \\forall integer l,r,a,bl,nl,cl,br,nr,cr; OwnedEffects::world(h,owners,ready) && Owners::active_owner(owners,l) && Owners::active_owner(owners,r) && OwnedEffects::is_ready(ready,l) && OwnedEffects::is_ready(ready,r) && OwnedEffects::header(h,l,bl,nl,cl) && OwnedEffects::header(h,r,br,nr,cr) && Heap::automatic_available(h,24,8,a) ==> OwnedEffects::header(OwnedEffects::swap(h,l,r,a),r,bl,nl,cl)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_owned_effect_swap_temporary_lifetime",
+      "id": "swap.temporary_lifetime",
+      "kind": "check_lemma",
+      "path": "obligations/006-t25_owned_effect_swap_temporary_lifetime.c",
+      "sha256": "bff552ceb0d7b09b213e6585683c7e7c3c3b5140b14f3b31697257574cfaf20f",
+      "statement": "\\forall Heap::heap h; \\forall Owners::state owners; \\forall OwnedEffects::phases ready; \\forall integer l,r,a,bl,nl,cl,br,nr,cr; OwnedEffects::world(h,owners,ready) && Owners::active_owner(owners,l) && Owners::active_owner(owners,r) && OwnedEffects::is_ready(ready,l) && OwnedEffects::is_ready(ready,r) && OwnedEffects::header(h,l,bl,nl,cl) && OwnedEffects::header(h,r,br,nr,cr) && Heap::automatic_available(h,24,8,a) ==> !Heap::live(OwnedEffects::swap(h,l,r,a),Heap::fresh_id(h)) && Heap::issued(OwnedEffects::swap(h,l,r,a),Heap::fresh_id(h))",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_owned_effect_swap_incoming_frame",
+      "id": "swap.incoming_frame",
+      "kind": "check_lemma",
+      "path": "obligations/007-t25_owned_effect_swap_incoming_frame.c",
+      "sha256": "8d4f8ec024986bc2c12f8a10f152ac9a0ab87abb248b957e7d74b8ffe1a1ad6b",
+      "statement": "\\forall Heap::heap h; \\forall Owners::state owners; \\forall OwnedEffects::phases ready; \\forall integer l,r,a,bl,nl,cl,br,nr,cr; OwnedEffects::world(h,owners,ready) && Owners::active_owner(owners,l) && Owners::active_owner(owners,r) && OwnedEffects::is_ready(ready,l) && OwnedEffects::is_ready(ready,r) && OwnedEffects::header(h,l,bl,nl,cl) && OwnedEffects::header(h,r,br,nr,cr) && Heap::automatic_available(h,24,8,a) ==> OwnedEffects::incoming_frame(h,OwnedEffects::swap(h,l,r,a),l,r)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "goal": "t25_owned_effect_swap_owner_correspondence",
+      "id": "swap.owner_correspondence",
+      "kind": "check_lemma",
+      "path": "obligations/008-t25_owned_effect_swap_owner_correspondence.c",
+      "sha256": "f59232cf9139d28b313913dadeb9c0455aec0a022359dd2c67148d3e66f1b2a3",
+      "statement": "\\forall Heap::heap h; \\forall Owners::state owners; \\forall OwnedEffects::phases ready; \\forall integer l,r,a,bl,nl,cl,br,nr,cr; OwnedEffects::world(h,owners,ready) && Owners::active_owner(owners,l) && Owners::active_owner(owners,r) && OwnedEffects::is_ready(ready,l) && OwnedEffects::is_ready(ready,r) && OwnedEffects::header(h,l,bl,nl,cl) && OwnedEffects::header(h,r,br,nr,cr) && Heap::automatic_available(h,24,8,a) ==> OwnedEffects::world(OwnedEffects::swap(h,l,r,a),Owners::swap(owners,l,r),ready)",
+      "status": "pending"
+    }
+  ],
+  "ownership": {
+    "complete_source_owner_set_required": true,
+    "frontier": "Heap.next; never-issued allocation identity, not live-owner count",
+    "raw_aliases_are_owners": false,
+    "registry_validity_does_not_establish_heap_ownership": true
+  },
+  "parent_model": {
+    "id": "swdb-std-models-2",
+    "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+  },
+  "pending": [
+    "fresh full native task/hypothesis/import proofs for all nine conditional duties",
+    "actual emitted C layout/assertion and full original source/contract/event inverse audit",
+    "source-to-Heap typed field and arbitrary receiver padding correspondence",
+    "source-created complete ownership, phase, fresh receiver and temporary lifetime derivation",
+    "actual original scalar/assigns/cleanup and incoming allocated observation preservation",
+    "default library/allocator freshness, valid results, freeability, framing, release and replacement-effects TCB"
+  ],
+  "phases": {
+    "live": {
+      "initialized_header_required": true,
+      "source_constructed_object_required": true
+    },
+    "reserved": {
+      "physical_field_values_established": false,
+      "source_fresh_automatic_placement_required": true
+    }
+  },
+  "source_admission": "unsupported: original source/Heap layout, phase, padding, complete ownership and cleanup correspondence is not established",
+  "source_heap_bridge_established": false,
+  "source_members": [
+    {
+      "body_changed": false,
+      "element": "int",
+      "element_memory_accessed": false,
+      "events": [
+        {
+          "destination": "this",
+          "operation": "header_copy",
+          "snapshot_before_destination_write": true,
+          "source": "other"
+        },
+        {
+          "field": "data",
+          "operation": "zero_field",
+          "receiver": "other",
+          "value": "NULL"
+        },
+        {
+          "field": "size",
+          "operation": "zero_field",
+          "receiver": "other",
+          "value": "0"
+        },
+        {
+          "field": "capacity",
+          "operation": "zero_field",
+          "receiver": "other",
+          "value": "0"
+        }
+      ],
+      "function": "std_vector_int_move_ctor",
+      "layout_assertions_executed": false,
+      "member": "move_ctor",
+      "old_contract_proved": false,
+      "original_body": "{\n  *this = *other;\n  other->data = NULL; other->size = 0; other->capacity = 0;\n}",
+      "original_body_sha256": "87cc56223ff37c6d47784fed03b310fb4c7645fa9c7ede45c5badd78991117e7",
+      "original_fragment_sha256": "1983b78caabd455cb70b1ae71a4bb55c66c38185cabb68b468e42f39ec56c856",
+      "original_path": "original/std_vector_int_move_ctor.c",
+      "original_range": [
+        40,
+        1674
+      ],
+      "original_sha256": "2275b2a0533c16643f1ea7ae324aae852c9e2509e4e05085107636e172e3e676",
+      "path": "source/std_vector_int_move_ctor.c",
+      "physical_padding_observation": "not established by the registry; full source layout/effect rule required",
+      "self_swap_old_contract_relaxed": false,
+      "self_swap_registry_identity": false,
+      "sha256": "2275b2a0533c16643f1ea7ae324aae852c9e2509e4e05085107636e172e3e676",
+      "source_body_changed": false,
+      "source_read_effects": [
+        "source/destination vector struct values; no buffer element load"
+      ],
+      "source_relation_requires": [
+        "distinct source/destination receiver identities",
+        "source established active owners",
+        "fresh empty destination ownership binding"
+      ],
+      "source_write_effects": [
+        "destination receiver fields",
+        "source receiver fields"
+      ],
+      "view_path": "views/std_vector_int_move_ctor.c",
+      "view_sha256": "2d6e21a0fcf10945cfb84debd6483a926060acdb54d907c4362561ad2cf48278"
+    },
+    {
+      "body_changed": false,
+      "element": "int",
+      "element_memory_accessed": false,
+      "events": [
+        {
+          "fresh_identity": "Heap.next",
+          "operation": "begin_automatic",
+          "receiver": "t",
+          "vector_owner": false
+        },
+        {
+          "destination": "t",
+          "operation": "header_copy",
+          "snapshot_before_destination_write": true,
+          "source": "this"
+        },
+        {
+          "destination": "this",
+          "operation": "header_copy",
+          "snapshot_before_destination_write": true,
+          "source": "other"
+        },
+        {
+          "destination": "other",
+          "operation": "header_copy",
+          "snapshot_before_destination_write": true,
+          "source": "t"
+        },
+        {
+          "operation": "end_automatic",
+          "primitive": "Heap.end_automatic",
+          "receiver": "t",
+          "registry_retire_is_substitute": false
+        }
+      ],
+      "function": "std_vector_int_swap",
+      "layout_assertions_executed": false,
+      "member": "swap",
+      "old_contract_proved": false,
+      "original_body": "{ std_vector_int t = *this; *this = *other; *other = t; }",
+      "original_body_sha256": "386f081a4c601dd03b94038db1924edab625561cb8719c8044348f565a4d8609",
+      "original_fragment_sha256": "838d74e732a416b040cf367111786616824d843a211092d8fbbd105d0b61186e",
+      "original_path": "original/std_vector_int_swap.c",
+      "original_range": [
+        40,
+        1771
+      ],
+      "original_sha256": "0bb1a1ee04c3643ff68edac876d827c1429326f24bdd01890bf35b4a2b64d83d",
+      "path": "source/std_vector_int_swap.c",
+      "physical_padding_observation": "not established by the registry; full source layout/effect rule required",
+      "self_swap_old_contract_relaxed": false,
+      "self_swap_registry_identity": true,
+      "sha256": "0bb1a1ee04c3643ff68edac876d827c1429326f24bdd01890bf35b4a2b64d83d",
+      "source_body_changed": false,
+      "source_read_effects": [
+        "source/destination vector struct values; no buffer element load"
+      ],
+      "source_relation_requires": [
+        "source established active owners"
+      ],
+      "source_write_effects": [
+        "destination receiver fields",
+        "source receiver fields"
+      ],
+      "view_path": "views/std_vector_int_swap.c",
+      "view_sha256": "3d115e18d34d416019f05283463f33b2b80274599fb080064a83eb57d8f6398a"
+    },
+    {
+      "body_changed": false,
+      "element": "float",
+      "element_memory_accessed": false,
+      "events": [
+        {
+          "destination": "this",
+          "operation": "header_copy",
+          "snapshot_before_destination_write": true,
+          "source": "other"
+        },
+        {
+          "field": "data",
+          "operation": "zero_field",
+          "receiver": "other",
+          "value": "NULL"
+        },
+        {
+          "field": "size",
+          "operation": "zero_field",
+          "receiver": "other",
+          "value": "0"
+        },
+        {
+          "field": "capacity",
+          "operation": "zero_field",
+          "receiver": "other",
+          "value": "0"
+        }
+      ],
+      "function": "std_vector_float_move_ctor",
+      "layout_assertions_executed": false,
+      "member": "move_ctor",
+      "old_contract_proved": false,
+      "original_body": "{\n  *this = *other;\n  other->data = NULL; other->size = 0; other->capacity = 0;\n}",
+      "original_body_sha256": "87cc56223ff37c6d47784fed03b310fb4c7645fa9c7ede45c5badd78991117e7",
+      "original_fragment_sha256": "020c3cb64b93674e7346c132e96345ca0ef5205c0f598f5b9429d328d5ebcb5f",
+      "original_path": "original/std_vector_float_move_ctor.c",
+      "original_range": [
+        40,
+        1708
+      ],
+      "original_sha256": "1299df3bee8f039786fb55413f26c4b11209ce610cbf7e38b2bb6dbee8a247d0",
+      "path": "source/std_vector_float_move_ctor.c",
+      "physical_padding_observation": "not established by the registry; full source layout/effect rule required",
+      "self_swap_old_contract_relaxed": false,
+      "self_swap_registry_identity": false,
+      "sha256": "1299df3bee8f039786fb55413f26c4b11209ce610cbf7e38b2bb6dbee8a247d0",
+      "source_body_changed": false,
+      "source_read_effects": [
+        "source/destination vector struct values; no buffer element load"
+      ],
+      "source_relation_requires": [
+        "distinct source/destination receiver identities",
+        "source established active owners",
+        "fresh empty destination ownership binding"
+      ],
+      "source_write_effects": [
+        "destination receiver fields",
+        "source receiver fields"
+      ],
+      "view_path": "views/std_vector_float_move_ctor.c",
+      "view_sha256": "67f0078944d65d0dc6ec013226fe868ac5a37d1be589fab2a2343c17d1254eba"
+    },
+    {
+      "body_changed": false,
+      "element": "float",
+      "element_memory_accessed": false,
+      "events": [
+        {
+          "fresh_identity": "Heap.next",
+          "operation": "begin_automatic",
+          "receiver": "t",
+          "vector_owner": false
+        },
+        {
+          "destination": "t",
+          "operation": "header_copy",
+          "snapshot_before_destination_write": true,
+          "source": "this"
+        },
+        {
+          "destination": "this",
+          "operation": "header_copy",
+          "snapshot_before_destination_write": true,
+          "source": "other"
+        },
+        {
+          "destination": "other",
+          "operation": "header_copy",
+          "snapshot_before_destination_write": true,
+          "source": "t"
+        },
+        {
+          "operation": "end_automatic",
+          "primitive": "Heap.end_automatic",
+          "receiver": "t",
+          "registry_retire_is_substitute": false
+        }
+      ],
+      "function": "std_vector_float_swap",
+      "layout_assertions_executed": false,
+      "member": "swap",
+      "old_contract_proved": false,
+      "original_body": "{ std_vector_float t = *this; *this = *other; *other = t; }",
+      "original_body_sha256": "922afc6c66b2c9e146706992c07efccf27728d0ce104198487de32c839dcad52",
+      "original_fragment_sha256": "35c834619111645915b1ade46b9a138014e1ed502fa7dd45e7841e2bcbc29b4b",
+      "original_path": "original/std_vector_float_swap.c",
+      "original_range": [
+        40,
+        1809
+      ],
+      "original_sha256": "7dcb086471a30e8cea6fe36e108a80f1f0e04506500b0f1687474f6064a220f3",
+      "path": "source/std_vector_float_swap.c",
+      "physical_padding_observation": "not established by the registry; full source layout/effect rule required",
+      "self_swap_old_contract_relaxed": false,
+      "self_swap_registry_identity": true,
+      "sha256": "7dcb086471a30e8cea6fe36e108a80f1f0e04506500b0f1687474f6064a220f3",
+      "source_body_changed": false,
+      "source_read_effects": [
+        "source/destination vector struct values; no buffer element load"
+      ],
+      "source_relation_requires": [
+        "source established active owners"
+      ],
+      "source_write_effects": [
+        "destination receiver fields",
+        "source receiver fields"
+      ],
+      "view_path": "views/std_vector_float_swap.c",
+      "view_sha256": "d3c9b081d9f6fc1eef5d9b5cdd9fe1c2e87a7dbe8b6394cea95c22e1d5a44a42"
+    },
+    {
+      "body_changed": false,
+      "element": "double",
+      "element_memory_accessed": false,
+      "events": [
+        {
+          "destination": "this",
+          "operation": "header_copy",
+          "snapshot_before_destination_write": true,
+          "source": "other"
+        },
+        {
+          "field": "data",
+          "operation": "zero_field",
+          "receiver": "other",
+          "value": "NULL"
+        },
+        {
+          "field": "size",
+          "operation": "zero_field",
+          "receiver": "other",
+          "value": "0"
+        },
+        {
+          "field": "capacity",
+          "operation": "zero_field",
+          "receiver": "other",
+          "value": "0"
+        }
+      ],
+      "function": "std_vector_double_move_ctor",
+      "layout_assertions_executed": false,
+      "member": "move_ctor",
+      "old_contract_proved": false,
+      "original_body": "{\n  *this = *other;\n  other->data = NULL; other->size = 0; other->capacity = 0;\n}",
+      "original_body_sha256": "87cc56223ff37c6d47784fed03b310fb4c7645fa9c7ede45c5badd78991117e7",
+      "original_fragment_sha256": "c48a72d1c5c82707a7d3039161661a8334834ef3604c8f6477c08e3b7794c62a",
+      "original_path": "original/std_vector_double_move_ctor.c",
+      "original_range": [
+        40,
+        1725
+      ],
+      "original_sha256": "977e6275f008c2469b59efc0f72b79d4ba39d7f7c8919cbd9e7151f4a9291b24",
+      "path": "source/std_vector_double_move_ctor.c",
+      "physical_padding_observation": "not established by the registry; full source layout/effect rule required",
+      "self_swap_old_contract_relaxed": false,
+      "self_swap_registry_identity": false,
+      "sha256": "977e6275f008c2469b59efc0f72b79d4ba39d7f7c8919cbd9e7151f4a9291b24",
+      "source_body_changed": false,
+      "source_read_effects": [
+        "source/destination vector struct values; no buffer element load"
+      ],
+      "source_relation_requires": [
+        "distinct source/destination receiver identities",
+        "source established active owners",
+        "fresh empty destination ownership binding"
+      ],
+      "source_write_effects": [
+        "destination receiver fields",
+        "source receiver fields"
+      ],
+      "view_path": "views/std_vector_double_move_ctor.c",
+      "view_sha256": "85a02f1c4bdd4c3d678b9e68811cc86e01f3e0c20040965fa336b2a69d4e72fc"
+    },
+    {
+      "body_changed": false,
+      "element": "double",
+      "element_memory_accessed": false,
+      "events": [
+        {
+          "fresh_identity": "Heap.next",
+          "operation": "begin_automatic",
+          "receiver": "t",
+          "vector_owner": false
+        },
+        {
+          "destination": "t",
+          "operation": "header_copy",
+          "snapshot_before_destination_write": true,
+          "source": "this"
+        },
+        {
+          "destination": "this",
+          "operation": "header_copy",
+          "snapshot_before_destination_write": true,
+          "source": "other"
+        },
+        {
+          "destination": "other",
+          "operation": "header_copy",
+          "snapshot_before_destination_write": true,
+          "source": "t"
+        },
+        {
+          "operation": "end_automatic",
+          "primitive": "Heap.end_automatic",
+          "receiver": "t",
+          "registry_retire_is_substitute": false
+        }
+      ],
+      "function": "std_vector_double_swap",
+      "layout_assertions_executed": false,
+      "member": "swap",
+      "old_contract_proved": false,
+      "original_body": "{ std_vector_double t = *this; *this = *other; *other = t; }",
+      "original_body_sha256": "58d3a681a819c3359e9099f507d92d8e49bb0ed9eb61dbd1ec8cbfe9210979c5",
+      "original_fragment_sha256": "ebc82e895c9214bc8be57cf4550158c6c254d4ee975ef687a986e4fb32aa96db",
+      "original_path": "original/std_vector_double_swap.c",
+      "original_range": [
+        40,
+        1828
+      ],
+      "original_sha256": "4a8527cbf4937fd2b47823b9d22c9274b7c2319a1af088d50f32a5d7e743a4eb",
+      "path": "source/std_vector_double_swap.c",
+      "physical_padding_observation": "not established by the registry; full source layout/effect rule required",
+      "self_swap_old_contract_relaxed": false,
+      "self_swap_registry_identity": true,
+      "sha256": "4a8527cbf4937fd2b47823b9d22c9274b7c2319a1af088d50f32a5d7e743a4eb",
+      "source_body_changed": false,
+      "source_read_effects": [
+        "source/destination vector struct values; no buffer element load"
+      ],
+      "source_relation_requires": [
+        "source established active owners"
+      ],
+      "source_write_effects": [
+        "destination receiver fields",
+        "source receiver fields"
+      ],
+      "view_path": "views/std_vector_double_swap.c",
+      "view_sha256": "f9b1de63f63ca58083aee5cb013553cc187171e639a3d9c43ae26c9ff9af6587"
+    },
+    {
+      "body_changed": false,
+      "element": "int *",
+      "element_memory_accessed": false,
+      "events": [
+        {
+          "destination": "this",
+          "operation": "header_copy",
+          "snapshot_before_destination_write": true,
+          "source": "other"
+        },
+        {
+          "field": "data",
+          "operation": "zero_field",
+          "receiver": "other",
+          "value": "NULL"
+        },
+        {
+          "field": "size",
+          "operation": "zero_field",
+          "receiver": "other",
+          "value": "0"
+        },
+        {
+          "field": "capacity",
+          "operation": "zero_field",
+          "receiver": "other",
+          "value": "0"
+        }
+      ],
+      "function": "std_vector_int_ptr_move_ctor",
+      "layout_assertions_executed": false,
+      "member": "move_ctor",
+      "old_contract_proved": false,
+      "original_body": "{\n  *this = *other;\n  other->data = NULL; other->size = 0; other->capacity = 0;\n}",
+      "original_body_sha256": "87cc56223ff37c6d47784fed03b310fb4c7645fa9c7ede45c5badd78991117e7",
+      "original_fragment_sha256": "4f6b8d445120020b53c3120165bb9a737c419230901c2123dd3c6c81dc4f42be",
+      "original_path": "original/std_vector_int_ptr_move_ctor.c",
+      "original_range": [
+        40,
+        1736
+      ],
+      "original_sha256": "0fe29734b41543041a896eb9483add235ae0c37c97e34f389fca7823a16268af",
+      "path": "source/std_vector_int_ptr_move_ctor.c",
+      "physical_padding_observation": "not established by the registry; full source layout/effect rule required",
+      "self_swap_old_contract_relaxed": false,
+      "self_swap_registry_identity": false,
+      "sha256": "0fe29734b41543041a896eb9483add235ae0c37c97e34f389fca7823a16268af",
+      "source_body_changed": false,
+      "source_read_effects": [
+        "source/destination vector struct values; no buffer element load"
+      ],
+      "source_relation_requires": [
+        "distinct source/destination receiver identities",
+        "source established active owners",
+        "fresh empty destination ownership binding"
+      ],
+      "source_write_effects": [
+        "destination receiver fields",
+        "source receiver fields"
+      ],
+      "view_path": "views/std_vector_int_ptr_move_ctor.c",
+      "view_sha256": "2ef113564e37137ce8a7e47ba098b8225d37cd4cc425b1e8beef8e08e6116cf0"
+    },
+    {
+      "body_changed": false,
+      "element": "int *",
+      "element_memory_accessed": false,
+      "events": [
+        {
+          "fresh_identity": "Heap.next",
+          "operation": "begin_automatic",
+          "receiver": "t",
+          "vector_owner": false
+        },
+        {
+          "destination": "t",
+          "operation": "header_copy",
+          "snapshot_before_destination_write": true,
+          "source": "this"
+        },
+        {
+          "destination": "this",
+          "operation": "header_copy",
+          "snapshot_before_destination_write": true,
+          "source": "other"
+        },
+        {
+          "destination": "other",
+          "operation": "header_copy",
+          "snapshot_before_destination_write": true,
+          "source": "t"
+        },
+        {
+          "operation": "end_automatic",
+          "primitive": "Heap.end_automatic",
+          "receiver": "t",
+          "registry_retire_is_substitute": false
+        }
+      ],
+      "function": "std_vector_int_ptr_swap",
+      "layout_assertions_executed": false,
+      "member": "swap",
+      "old_contract_proved": false,
+      "original_body": "{ std_vector_int_ptr t = *this; *this = *other; *other = t; }",
+      "original_body_sha256": "57f7f984d96ac4dc48e7a719b0901617b95489f263baeb468ac7cfa75108a93f",
+      "original_fragment_sha256": "3d5e1262e1478042d9dade741d240aa893dfb88df93cafec736fefb96c1984b2",
+      "original_path": "original/std_vector_int_ptr_swap.c",
+      "original_range": [
+        40,
+        1841
+      ],
+      "original_sha256": "01f06406a2b174bbe84db6c7c1232d80f1ef0c51aae52fbfd1aed1c9237b7931",
+      "path": "source/std_vector_int_ptr_swap.c",
+      "physical_padding_observation": "not established by the registry; full source layout/effect rule required",
+      "self_swap_old_contract_relaxed": false,
+      "self_swap_registry_identity": true,
+      "sha256": "01f06406a2b174bbe84db6c7c1232d80f1ef0c51aae52fbfd1aed1c9237b7931",
+      "source_body_changed": false,
+      "source_read_effects": [
+        "source/destination vector struct values; no buffer element load"
+      ],
+      "source_relation_requires": [
+        "source established active owners"
+      ],
+      "source_write_effects": [
+        "destination receiver fields",
+        "source receiver fields"
+      ],
+      "view_path": "views/std_vector_int_ptr_swap.c",
+      "view_sha256": "6b976113b22ba6372b252ebd2dc4d3c4dbb7612fc7d657caf7f234d7e952d7d7"
+    }
+  ],
+  "source_typed_bridge_established": false,
+  "transfer": {
+    "id": "vector-owned-transfer-1",
+    "sha256": "53c06e10f6d175ccfd98fbf3e087a76283a8b2a36db4bf5634835d5997a6e559"
+  },
+  "type_registry": {
+    "canonical_sha256": "b1486dbee9273423bdf17af34339ca17b1111b7e2ec31f71c2aafdf4515ec1f6",
+    "canonical_values": {
+      "FLOAT_TYPES": [
+        "double",
+        "float"
+      ],
+      "INTEGER_TYPES": [
+        "bool",
+        "char",
+        "int",
+        "int16_t",
+        "int32_t",
+        "int64_t",
+        "int8_t",
+        "intptr_t",
+        "long",
+        "long int",
+        "long long",
+        "long long int",
+        "ptrdiff_t",
+        "short",
+        "short int",
+        "signed",
+        "signed char",
+        "signed int",
+        "size_t",
+        "uint16_t",
+        "uint32_t",
+        "uint64_t",
+        "uint8_t",
+        "uintptr_t",
+        "unsigned",
+        "unsigned char",
+        "unsigned int",
+        "unsigned long",
+        "unsigned long int",
+        "unsigned long long",
+        "unsigned long long int",
+        "unsigned short",
+        "unsigned short int"
+      ],
+      "INTERNAL_TYPES": {
+        "__ptrdiff_t": "ptrdiff_t",
+        "__size_t": "size_t"
+      }
+    },
+    "container_sha256": "37201a198250021e3d9912a7fbaafa2b8dd9377db8d87027e51045897a246243",
+    "declarations": [
+      {
+        "bytes": 33,
+        "name": "FLOAT_TYPES",
+        "sha256": "2fdad9ce385d4872e749009de43d16dc405d04b484edf398198a92f1fd268e17"
+      },
+      {
+        "bytes": 527,
+        "name": "INTEGER_TYPES",
+        "sha256": "6da62218bbcfb5e1019f3995d31ac06a2d91419fe487a4e05ba9f242272ea810"
+      },
+      {
+        "bytes": 67,
+        "name": "INTERNAL_TYPES",
+        "sha256": "ba13f1dadd03b49ffdc0cd29fdba10a1f1bb653b064cda2b0c413e3823b6cf70"
+      }
+    ],
+    "source_module": "c_lowering.py"
+  },
+  "unsupported": [
+    "old universal version2 contract adoption",
+    "generic incoming owners from unary validity",
+    "shared backing owners",
+    "self move",
+    "nonfresh destination move construction",
+    "old separated swap contract widened to self swap",
+    "element payload type/value proof from header transfer alone"
+  ],
+  "version": 1
+}

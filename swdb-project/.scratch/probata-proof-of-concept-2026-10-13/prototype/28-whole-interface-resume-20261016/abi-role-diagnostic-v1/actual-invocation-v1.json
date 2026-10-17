@@ -1,0 +1,25 @@
+{
+  "argv": [
+    "ssh",
+    "mbit10",
+    "/usr/bin/timeout --signal=TERM --kill-after=5s 35s /usr/bin/python3 -I -B -"
+  ],
+  "at_utc": "2026-10-17T00:40:42.665784+00:00",
+  "once_only": true,
+  "packet": {
+    "bytes": 4361,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-role-diagnostic-v1/source-packet-v1.json",
+    "sha256": "9e1f02e95481d2e08d38234d169010a5ca8a50d4d47c9716ad9ac4a6d65ce797"
+  },
+  "reader": {
+    "bytes": 28191,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-role-diagnostic-v1/read_abi_census_v1.py",
+    "sha256": "dda8d74a9fd02c6d193e99f4947aa830b11f5e1461ac13cb5fcfda6d6d909787"
+  },
+  "root_admission": {
+    "bytes": 2619,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-original-ABI-census-v1-root-once-admission-20261016.json",
+    "sha256": "cac905b7e1a8b20c022f7ba561a2f375573a8e6bcc3c126c231a34c336f399a6"
+  },
+  "schema": "once-admitted-ABI-census-actual-invocation-1"
+}

@@ -1,0 +1,26 @@
+{
+  "checks": [
+    "Exact two return-expression substitutions inverse-restore HEAD fixture. bool converts to0or1 exactly once; 9-6bool yields9or3 asoriginal; copy/localpointeridentity/negativecaller remain.",
+    "Public fixture precondition in tests/testkit/pair_workflow.py requires -1000<=x,y<=1000. New intermediate x+9 is defined throughout this domain. No all-int equivalence claim; modelC/lowerer/contracts/standardvacuityreader unchanged.",
+    "ActualV7 ordinarygoals valid but unreachablebranchsmoke valid was correctly vacuity-refused. Sourcefixture removes that dead branch without accepting its vacuity or changingtheproofpolicy. Newsource actualWP/CBMC+native/C++replay mustrun."
+  ],
+  "created": "2026-10-16 ET",
+  "decision": "ROOT_STANDARDS_PASS_BOUNDED_FIXTURE",
+  "fixture": {
+    "bytes": 1165,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/fixtures/proof/lowering/pair_pointer.cc",
+    "sha256": "bf835eab316a9266e5733c1c1a2c1277ae983e83d496a1068a17490ac31c7fe1"
+  },
+  "full_ticket25": false,
+  "independent_review": {
+    "bytes": 2678,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-mixed-pair-branch-free-fixture-independent-readiness-20261016.json",
+    "sha256": "b4727df874bdb43bd645395c47387b5c6ca5312fa3ca31745853fc14cd40aab6"
+  },
+  "preparation": {
+    "bytes": 2253,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-mixed-v7-branchfree-repair-preparation-v1-20261016.json",
+    "sha256": "faf1779209113a721b28010729091758e5ce8a507235f588ac7d10e10c21055f"
+  },
+  "scientific_rerun": false
+}

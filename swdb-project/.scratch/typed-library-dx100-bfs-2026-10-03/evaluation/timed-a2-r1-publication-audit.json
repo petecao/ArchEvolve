@@ -1,0 +1,215 @@
+{
+  "format": "swdb.typed-library-final-publication-audit.v1",
+  "observed_at": "2026-10-03T22:44:04.854469+00:00",
+  "publication": "3e9061b2aa9e6ea81c95cd1e9a5145b3c3e7e5d6",
+  "parent": "6cfcd245ba34c8df5947307aad2cf2353400b281",
+  "files": [
+    {
+      "path": "swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/first-result-a2-r1.md",
+      "bytes": 1278,
+      "sha256": "22b00db1cb9485f0c103ccf562256671a4b9e8594bbbdc43c3fc9b8b2f753882",
+      "git_blob_match": true
+    },
+    {
+      "path": "swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/timed-a2-r1-result-summary.json",
+      "bytes": 17659,
+      "sha256": "a76dea9ebf63579403aba26cfdea889267a8a024ad5072c2da1095ed1addcabf",
+      "git_blob_match": true
+    },
+    {
+      "path": "swdb-project/records/comparison_results/typed-library-bfs-gem5-20261003-a2.recovery.r1.w0.comparison.yaml",
+      "bytes": 4797,
+      "sha256": "2fb8fedd339ec08ee6a45cd66b9ff9196f061a3d858a5cca2991edefe35723aa",
+      "git_blob_match": true
+    },
+    {
+      "path": "swdb-project/records/comparison_results/typed-library-bfs-gem5-20261003-a2.recovery.r1.w1.comparison.yaml",
+      "bytes": 4835,
+      "sha256": "d061ca6a1e97c37289b12988c2d36623d4e20177deeff4c22be01db3b8c6b524",
+      "git_blob_match": true
+    },
+    {
+      "path": "swdb-project/records/evaluations/typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w0.candidate.aggregate.yaml",
+      "bytes": 291997,
+      "sha256": "891532014607191983e08a2687c7cef8a9c39be701b992e754cd329159a709cb",
+      "git_blob_match": true
+    },
+    {
+      "path": "swdb-project/records/evaluations/typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w1.baseline.aggregate.yaml",
+      "bytes": 214531,
+      "sha256": "fa09c5e8be52720e0b40ed204b841c918e663a54257e67137c015398948f4a97",
+      "git_blob_match": true
+    },
+    {
+      "path": "swdb-project/records/evaluations/typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w1.baseline.evaluation.yaml",
+      "bytes": 135658,
+      "sha256": "4e739b5b708a4a751ffa221963e953758ccefc8c04c3dc8a2e8d2281c15e4411",
+      "git_blob_match": true
+    },
+    {
+      "path": "swdb-project/records/evaluations/typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w1.candidate.aggregate.yaml",
+      "bytes": 224724,
+      "sha256": "0f3eed3ebc15ee11f223468e3c930323a143cafaace20b6e25bc4314b2c17332",
+      "git_blob_match": true
+    },
+    {
+      "path": "swdb-project/records/evaluations/typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w1.candidate.evaluation.yaml",
+      "bytes": 142738,
+      "sha256": "3ff31c8768b8005be2ff98167de2cc2aaa18c8f9a360df85bd06e1ffb375008f",
+      "git_blob_match": true
+    },
+    {
+      "path": "swdb-project/records/retentions/prune-intent-3d8d7cfc65f84e44ab9f4d893eed951b.yaml",
+      "bytes": 1089,
+      "sha256": "0b43d0e6d7d19db50745f2b2165aab93bb6aa7ed906e87f512183335a3dcff96",
+      "git_blob_match": true
+    },
+    {
+      "path": "swdb-project/records/retentions/prune-intent-e53753f906724419a929a535f7808ec3.yaml",
+      "bytes": 1086,
+      "sha256": "b1755325a4b0e618a91ad1fad72dc77391b2bcfc51f2fd809654d294641a2635",
+      "git_blob_match": true
+    },
+    {
+      "path": "swdb-project/records/retentions/retention-cf0a7f49f26b4cd3bcb534a11d86d7bd.yaml",
+      "bytes": 1118,
+      "sha256": "94bfc87d604802f00d1d331d5265dc8c4197c49812529f663f6e83b6b58cae53",
+      "git_blob_match": true
+    },
+    {
+      "path": "swdb-project/records/retentions/retention-d17c7eba0d50473ea47e122cdf020a9d.yaml",
+      "bytes": 1121,
+      "sha256": "8628b2ab190f06e9babbad99445370d3eda2bcda408ec34a0a2576fc8b106c9f",
+      "git_blob_match": true
+    }
+  ],
+  "canonical_records": [
+    {
+      "id": "typed-library-bfs-gem5-20261003-a2.recovery.r1.w0.comparison",
+      "kind": "comparison_result",
+      "canonical_sha256": "ce26c3453508a6a2b86b5676127477706a31878d6aec516447e77ab546f178c5"
+    },
+    {
+      "id": "typed-library-bfs-gem5-20261003-a2.recovery.r1.w1.comparison",
+      "kind": "comparison_result",
+      "canonical_sha256": "025d9294857b76ebfc2829b60ec5c909251d3b98d6281be9529765d8b82f0c5e"
+    },
+    {
+      "id": "typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w0.candidate.aggregate",
+      "kind": "evaluation",
+      "canonical_sha256": "bd5e492dfab837a02c37f0da0e46e9e30218dd7ee58ea9e84bcdb64f82d7b306"
+    },
+    {
+      "id": "typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w1.baseline.aggregate",
+      "kind": "evaluation",
+      "canonical_sha256": "b010bd6fe018a42099cf62b3481fa6f8bcc2edc1a5a0ed89fd39aa0b376470a3"
+    },
+    {
+      "id": "typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w1.baseline.evaluation",
+      "kind": "evaluation",
+      "canonical_sha256": "327f32429b4df884dcf58bab2a0d31000b88f78b88a297742d0cb19044110f17"
+    },
+    {
+      "id": "typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w1.candidate.aggregate",
+      "kind": "evaluation",
+      "canonical_sha256": "170eda1b522cf46b1fbcbe7e21485ef0f55954ebd6d87e38988751e994a7ba5d"
+    },
+    {
+      "id": "typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w1.candidate.evaluation",
+      "kind": "evaluation",
+      "canonical_sha256": "ad0ef15a35137836149c44c4ac65d9e6750d92eeef81cb94482b01e0ba506c87"
+    },
+    {
+      "id": "prune-intent-3d8d7cfc65f84e44ab9f4d893eed951b",
+      "kind": "retention",
+      "canonical_sha256": "f6afe1d5a13d37efe2ad9824a00faa286cbddfbba41ffa534906854a1252b6e2"
+    },
+    {
+      "id": "prune-intent-e53753f906724419a929a535f7808ec3",
+      "kind": "retention",
+      "canonical_sha256": "b0fc94c8996ffd15b121051ea663c005ecb18546357e5f4b21c958e6ff5cb3b8"
+    },
+    {
+      "id": "retention-cf0a7f49f26b4cd3bcb534a11d86d7bd",
+      "kind": "retention",
+      "canonical_sha256": "4901e7e4977591ac908e8c6cb1f6354a7fb0aaf02b89960c89bea95305650dae"
+    },
+    {
+      "id": "retention-d17c7eba0d50473ea47e122cdf020a9d",
+      "kind": "retention",
+      "canonical_sha256": "44161b4dbeec49ed03f5a8b22108952972605befab3bef77dd91c29f1ff1357b"
+    }
+  ],
+  "validated_records": 481,
+  "limitations": "Local Git/file/schema/canonical replay; actual remote fullraw and custody proof is separate pinned independent audit; no localraw or test rerun claimed.",
+  "remote_pre_sync": {
+    "observed_at": "2026-10-03T22:42:28.669773+00:00",
+    "source": "3e9061b2aa9e6ea81c95cd1e9a5145b3c3e7e5d6",
+    "tracked_changes": "",
+    "leases": [
+      {
+        "name": "mbit10-evaluation-node0",
+        "kernel_held": false,
+        "metadata_state": "released",
+        "generation": 447
+      },
+      {
+        "name": "mbit10-evaluation-node1",
+        "kernel_held": false,
+        "metadata_state": "released",
+        "generation": 506
+      },
+      {
+        "name": "mbit10-evaluation",
+        "kernel_held": false,
+        "metadata_state": "released",
+        "generation": 77
+      }
+    ],
+    "audit": {
+      "state": "complete",
+      "started": "2026-10-03T22:33:35.780910+00:00",
+      "finished": "2026-10-03T22:33:54.141055+00:00",
+      "source": "6cfcd245ba34c8df5947307aad2cf2353400b281",
+      "records_count": 481
+    },
+    "audit_file_sha256": "49a345080a92b04cbc2396f7bf0ccb58319676f458859e7e276c5f5a6314bcaa",
+    "wrapper_file_sha256": "ef81ba297c9f3569e0764668c8b7bbe00355c0e9e355509a62652421750cce5a",
+    "witnesses_verified": 6,
+    "comparisons_requalified": 2,
+    "progress": null,
+    "wrapper": {
+      "started": "2026-10-03T22:33:35.440148+00:00",
+      "command": [
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=90s",
+        "900s",
+        "bash",
+        "/data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh",
+        "0",
+        "typed-library-bfs-gem5-20261003-a2-final-audit-custody-r2",
+        "--record",
+        "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.final-audit-custody-r2/lane.json",
+        "--no-align",
+        "--load1-max",
+        "8",
+        "--lease-timeout-s",
+        "30",
+        "--",
+        "/usr/bin/python3",
+        "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.final-audit-custody-r2/operator-audit.py"
+      ],
+      "state": "complete",
+      "finished": "2026-10-03T22:33:54.460802+00:00",
+      "returncode": 0
+    },
+    "owned_processes": [],
+    "uptime": "18:42:28 up 64 days, 11:01, 10 users,  load average: 1.00, 1.03, 1.30",
+    "disk": "Filesystem         1B-blocks          Used   Available Use% Mounted on\n/dev/sdd1      1967300780032 1823548243968 43743657984  98% /data1\n/dev/sdb1      1967300780032 1788454330368 78837571584  96% /data",
+    "pressure": {
+      "memory": "some avg10=0.00 avg60=0.00 avg300=0.00 total=1174183816\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=1146991602",
+      "io": "some avg10=0.00 avg60=0.00 avg300=0.00 total=1875696381\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=1837852524"
+    }
+  }
+}

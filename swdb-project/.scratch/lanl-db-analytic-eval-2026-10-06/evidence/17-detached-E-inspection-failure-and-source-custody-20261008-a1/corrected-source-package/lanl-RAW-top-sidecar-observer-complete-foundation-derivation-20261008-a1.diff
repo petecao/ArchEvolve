@@ -1,0 +1,98 @@
+--- /private/tmp/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r3.py
++++ /private/tmp/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r4.py
+@@ -261,6 +261,61 @@
+             'other_consumers_parent_and_descendants_exempted':False,
+             'signal_blocked_mask_zero_or_nonzero_is_not_predicated':True}
+ 
++
++RAW_TOP_LANE_SIDECAR_PIN={'path': '/data/yanruj/EvolveSWDB_runs/lanl17-cleanup-smoke-20261006-a1.lane.json', 'bytes': 988, 'sha256': '83ba263a56756047716a2e550c3acc7a9d73eadefbbc9e245cdb697092369c1c', 'stat': {'ctime_ns': 1791344103814358923, 'dev': 2065, 'gid': 114316761, 'ino': 9345428, 'mode': 33204, 'mtime_ns': 1791344103814358923, 'nlink': 1, 'size': 988, 'uid': 114316761}}
++
++def exact_original_raw_lane_sidecar(check_deadline, selected_paths):
++    """One exact original regular RAW sibling; no generic regular-file waiver."""
++    check_deadline()
++    pin=RAW_TOP_LANE_SIDECAR_PIN;path=P(pin['path'])
++    require(path.parent==RAW and path.name=='lanl17-cleanup-smoke-20261006-a1.lane.json'
++            and path.resolve(strict=True)==path
++            and not any(p.is_symlink() for p in (path,*path.parents)),
++            'exact_original_top_sidecar_route')
++    before=path.lstat()
++    require(stat.S_ISREG(before.st_mode) and before.st_uid==UID and before.st_nlink==1
++            and stamp(before)==pin['stat'] and before.st_size==988,
++            'exact_original_top_sidecar_stat')
++    fd=os.open(path,os.O_RDONLY|os.O_NOFOLLOW|os.O_CLOEXEC)
++    try:
++        require(stamp(os.fstat(fd))==stamp(before),'exact_original_top_sidecar_open')
++        parts=[];count=0
++        while True:
++            check_deadline()
++            part=os.read(fd,min(988-count+1,988))
++            if not part:break
++            count+=len(part);require(count<=988,'exact_original_top_sidecar_read_bound');parts.append(part)
++        raw=b''.join(parts)
++        require(count==988 and sha(raw)==pin['sha256']
++                and stamp(os.fstat(fd))==stamp(before)==stamp(path.lstat()),
++                'exact_original_top_sidecar_returned_bytes')
++    finally:os.close(fd)
++    def unique(pairs):
++        result={}
++        for key,value in pairs:
++            require(key not in result,'original_top_sidecar_duplicate_key');result[key]=value
++        return result
++    def bad(value):raise ValueError('original_top_sidecar_nonfinite_JSON')
++    value=json.loads(raw,object_pairs_hook=unique,parse_constant=bad)
++    require(type(value) is dict and set(value)=={'socket_lane'},'original_top_sidecar_JSON_shape')
++    refs=[]
++    def visit(item,location):
++        if type(item) is dict:
++            for key,child in item.items():visit(child,location+[key])
++        elif type(item) is list:
++            for index,child in enumerate(item):visit(child,location+[index])
++        elif type(item) is str and item.startswith('/'):
++            require(not any(item==str(p) or item.startswith(str(p)+'/') for p in selected_paths),
++                    'original_top_sidecar_JSON_selected_reference')
++            refs.append({'JSON_location':location,'path':item})
++    visit(value,[])
++    require(not any(str(p).encode() in raw for p in selected_paths),
++            'original_top_sidecar_literal_selected_reference')
++    return {'path':str(path),'bytes':988,'sha256':pin['sha256'],'stat':stamp(before),
++            'original_policy':'original_UNSEALED_socket_lane_metadata_no_reseal',
++            'original_absolute_JSON_references':refs,
++            'literal_and_original_JSON_selected_reference_checks':True,
++            'unchanged_historical_mode0664_beneath_existing_private_RAW_ancestor':True}
+ 
+ class Observer:
+     def __init__(self,args,module,guard,own_pin,guard_pin,native_pin):
+@@ -687,9 +742,22 @@
+         self.output['observations']['raw_namespace_names']=namespace
+         self.output['observations']['receipt_declared_and_observed_RAW_roots']=sorted(roots)
+         self.output['observations']['raw_trees_and_control_sibling_candidates']={}
++        sidecar=exact_original_raw_lane_sidecar(self.left,[P(row['path']) for row in self.m.ROWS.values()])
++        self.g.read_bytes+=sidecar['bytes']
++        require(self.g.read_bytes<=LIMITS['total_file_bytes'],'cumulative_original_top_sidecar_read_limit')
++        require(P(sidecar['path']).name in namespace,'original_top_sidecar_namespace_retained')
++        require(not any(str(RAW/name)==sidecar['path'] for row in self.m.RECEIPTS.values() for name in row['raw_names']),
++                'declared_receipt_roots_remain_directories')
++        self.pins[sidecar['path']]={**sidecar,'candidate_reference_rows':[],
++                                  'reference_classification':'exact_original_literal_and_JSON_reference_check_no_selected_rows'}
++        self.output['observations']['original_top_regular_sidecars']=[sidecar]
++        self.charge(sidecar)
+         # Every LANL namespace sibling is observed; only the parent classifies controls.
+         for name in namespace:
+             root=RAW/name
++            if root==P(sidecar['path']):
++                require(stamp(root.lstat())==sidecar['stat'],'original_top_sidecar_still_exact')
++                continue
+             require(not root.is_symlink() and root.is_dir(),'raw_namespace_root_redirect')
+             inv=self.file_inventory(root,True,True)
+             inv['declared_or_referenced_by_original_receipts']=str(root) in roots
+@@ -714,6 +782,10 @@
+         self.output['observations']['fresh_statvfs_free_bytes']={str(p):os.statvfs(p).f_bavail*os.statvfs(p).f_frsize for p in (P('/data1'),P('/data'))}
+         self.output['observations']['owned_process_coverage']=self.owned_processes()
+         require(sorted(p.name for p in RAW.iterdir() if p.name.startswith(('lanl-','lanl17-')))==namespace,'raw_namespace_changed')
++        require(exact_original_raw_lane_sidecar(self.left,[P(row['path']) for row in self.m.ROWS.values()])==sidecar,
++                'original_top_sidecar_final_bytes_stat_and_references')
++        self.g.read_bytes+=sidecar['bytes']
++        require(self.g.read_bytes<=LIMITS['total_file_bytes'],'final_cumulative_original_top_sidecar_read_limit')
+         for path,pin in self.pins.items():require(stamp(P(path).lstat())==pin['stat'],'observed_file_stat_changed')
+         for path,s in self.dir_stamps.items():require(stamp(P(path).lstat())==s,'observed_directory_changed')
+         for path,row in self.links.items():require(stamp(P(path).lstat())==row['stat'] and os.readlink(path)==row['link'],'observed_symlink_changed')

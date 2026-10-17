@@ -1,0 +1,74 @@
+{
+  "TD_source_count_admission": false,
+  "actual_proof_acceptance": false,
+  "actual_tools_or_generator_executed_by_reviewer": false,
+  "allocator_correspondence_accepted": false,
+  "artifact_instances_checked": 128,
+  "closed_findings": [
+    "B1"
+  ],
+  "date_et": "2026-10-16",
+  "evidence_sha256": "3cd2c72c5935ef217d4ad2eeb356d7eba1e1f7557a6e1645e5bd9ad75bf23c5a",
+  "green_controls": 44,
+  "guard": {
+    "cap_gb": 8.0,
+    "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment",
+    "cleanup_inspection_failure": null,
+    "cleanup_inspection_failures": [],
+    "clock": "continuous_monotonic",
+    "clock_info": {
+      "denom": 3,
+      "implementation": "mach_continuous_time",
+      "includes_sleep": true,
+      "kind": "continuous_monotonic",
+      "numer": 125
+    },
+    "cmd": [
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+      "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/checks/outslot/run_controls.py",
+      "--output",
+      "/private/tmp/probata-t07-outslot-byte-pins-green-20261016"
+    ],
+    "error": null,
+    "exit_code": 0,
+    "finished": "2026-10-16 02:08:53 EDT",
+    "inspection_events": [],
+    "inspection_failure": null,
+    "inspection_retry_boundary": "AccessDenied uses a 200 ms environ retry admission window and 21-attempt cap, or three attempts for other operations; only the exact proc_environ SystemError raised by the requested environ operation shares that policy; individual OS calls are not forcibly timed; all pauses count and RSS/deadline checks remain mandatory after inspection; only independently confirmed gone/zombie or changed birth is skipped; persistent live or unknown failure fails closed",
+    "killed_by_watchdog": false,
+    "lock_wait_s": 0.0003097917069680989,
+    "log": "/private/tmp/probata-t07-outslot-byte-pins-green-20261016.log",
+    "log_sha256": "ceebbcc58447edcce05f2f85e14d870a49cf116fbf36090c07d681fec5577b9d",
+    "peak_rss_mb": 68.046875,
+    "primary_inspection_failure": null,
+    "queue_timed_out": false,
+    "queue_timeout_s": 60.0,
+    "rss_scope": "live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches; sampled, not a kernel quota",
+    "runner_pid": 76721,
+    "timed_out": false,
+    "timeout_s": 120.0,
+    "unconfirmed_children": [],
+    "wall_s": 1.7120547499507666
+  },
+  "hash_errors": [],
+  "implementation": "ce451a53",
+  "manifest_sha256": "fc381de5dfecbe8ce238f0f2d157afd7de99077374e54d1be4c02688b6430b07",
+  "prior_freeze_preserved": "1c018f1162cdef8fa97d70908a44f1a9bd2f7d5b",
+  "prior_review": "/private/tmp/probata-t07-outslot-independent-review-1c018f11-20261016.md",
+  "repository_edits": false,
+  "review_md_sha256": "4a4fa9b90de07a3352c4182f11b683bade6f2d4ff73053a32f191411c1fb7fc0",
+  "source": "971ad6324299ebe40a5146eed0de5172a9384137",
+  "source_pins": {
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/OUTSLOT-BYTE-PINS-20261016.md": "36f40c5b79fcd40c1896dc51894fd7a738762a72ff67fbae82b3bf7f93b5ab9f",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/checks/outslot/run_controls.py": "d5b6e8df720c822f0b11afc854abc771171168855c21d6d3f98ead823404d0c2",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/outslot_lowering.py": "72b4c02c544f2a3c49239b52c0086a14f44a172434731cf03f71b80b36825212"
+  },
+  "unchanged_outputs": {
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot/abi-map.json": "5c280a18d4efdeb8fbf3b7b833c7f550bc74121a54838a9b02a78556254ad578",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot/bfs_unit.h": "52d40d00b0a7462eed164deec3a8958a855de5763e7f20fefb8e2f257f09bd34",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot/dxc_summaries.h": "6b109e09239be71e252ee25e4cfa720c1cf37b651a8f586423f0c8d43f2b37e5",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot/gapbs_models.h": "7fcafa5498481b4ecce20c36ba167a00b9c5f9231b460c162268b814f14f19ec",
+    "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin_outslot/tdstep_standin.c": "3af025040802b2c018a7a192738c276863f7c489e4c3ce238443b9f2a3f6bcfa"
+  },
+  "verdict": "PASS_NARROW_BYTE_REPAIR_PARTIAL_PREPARATION_ONLY"
+}

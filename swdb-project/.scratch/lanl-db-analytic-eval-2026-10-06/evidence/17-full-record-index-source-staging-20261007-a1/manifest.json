@@ -1,0 +1,81 @@
+{
+  "format": "swdb.lanl17-full-record-index-source-staging-archival-custody.v1",
+  "archived_utc": "2026-10-07T16:21:55.301012+00:00",
+  "canonical_ensure_ascii": true,
+  "base": "f8ef24f61063e52f3f41402e5babdfcdf218a09e",
+  "base_tree": "93817c78ddd9d5bcf632aa4a5c2267a3c9a51778",
+  "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-full-record-index-source-staging-20261007-a1/",
+  "entries": [
+    {
+      "role": "reviewed_source_copy_driver",
+      "origin": "/private/tmp/lanl-stage-reviewed17-full-record-index-writer-from-git-20261007-a1.py",
+      "snapshot": "lanl-stage-reviewed17-full-record-index-writer-from-git-20261007-a1.py",
+      "bytes": 11950,
+      "sha256": "23b67b7aeced87297b19348efe2921cfcc7dc530563c2869705f0dcc4ed9207e",
+      "original_bytes_preserved": true
+    },
+    {
+      "role": "original_NOTRUN_source_only_handoff",
+      "origin": "/private/tmp/lanl17-full-record-index-source-staging-handoff-20261007-a1.md",
+      "snapshot": "lanl17-full-record-index-source-staging-handoff-20261007-a1.md",
+      "bytes": 4690,
+      "sha256": "fbdc54771c20fb8852919edcd1a0462b6da24532aeae1265798a626062b75ea6",
+      "original_bytes_preserved": true
+    },
+    {
+      "role": "actual_source_copy_only_staging_receipt",
+      "origin": "/private/tmp/lanl17-reviewed-full-record-index-source-staging-actual-20261007-a1.json",
+      "snapshot": "lanl17-reviewed-full-record-index-source-staging-actual-20261007-a1.json",
+      "bytes": 2593,
+      "sha256": "63fcd285a1f8eea5e491c27cf5d458ff2ecf7ae9002fcf83f4f1079b835616bd",
+      "original_bytes_preserved": true,
+      "original_format": "swdb.lanl17-reviewed-full-record-index-writer-source-staging.v1",
+      "identity_sha256": "c525e0b2e0667e284dacb1225e22ee7a01faa7ec30432e86893919602d2a8530",
+      "original_canonical_ensure_ascii": true,
+      "original_seal_recomputed": true
+    }
+  ],
+  "exact_external_snapshot_count": 3,
+  "exact_external_snapshot_bytes": 19233,
+  "verified_original_sealed_JSON_count": 1,
+  "readme": {
+    "snapshot": "README.md",
+    "bytes": 2391,
+    "sha256": "96878882cc0fabaf09f8ba5e46021259b5a5b067d829b8167237ece53d838a9f"
+  },
+  "actual_source_copy_staging": {
+    "parent_invocations": 1,
+    "checked_utc": "2026-10-07T16:19:59.241718+00:00",
+    "parent_exit_code": 0,
+    "original_identity_sha256": "c525e0b2e0667e284dacb1225e22ee7a01faa7ec30432e86893919602d2a8530",
+    "destination": "/data1/yanruj/lanl17-index-source-20261007-a1",
+    "writer": {
+      "path": "/data1/yanruj/lanl17-index-source-20261007-a1/writer.py",
+      "origin_git_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-parent-full-record-index-controls-20261007/lanl17_write_parent_full_record_index_20261007.py",
+      "bytes": 33445,
+      "sha256": "7a67d46f8ad7d453fe07bd458a21f663bd4dc7ec12e71de83ad8b5caaf28894b",
+      "mode": "0600"
+    },
+    "earlier_a2r1_a3_opened_or_modified": false
+  },
+  "chronology": {
+    "original_NOTRUN_preparation_labels_preserved": true,
+    "separate_later_actual_source_staging_preserved": true,
+    "staging_or_tests_repeated_for_archive": false
+  },
+  "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "retained_source_checkpoint_ref": "codex/lanl-ticket11-source-c",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "Python_modules_exact_C": 185,
+  "canonical_YAML_unchanged": 686,
+  "preservation": {
+    "all_base_blobs_modes_except_claimed_17_issue_append": true,
+    "prior_controls_source_records_maps_progress_docs_root_library_unchanged": true,
+    "ignored_history_untouched": true
+  },
+  "actual_writer_main_inputs_catalog_index_Store_validate_tests_campaign_or_scientific_execution_for_archive": false,
+  "SSH_staging_rerun_for_archive": false,
+  "actual_17_admission_or_ticket_resolution": false,
+  "issue_status": "claimed",
+  "identity_sha256": "664a53738ec3492664c751e4cebd08736cc58d1ae0bc295ae798866f36bcfa89"
+}

@@ -1,0 +1,28 @@
+{
+  "arbitrary_numeric_coercion_allowed": false,
+  "date": "2026-10-16 ET",
+  "exact_job_budget_expression": "None if budget_minutes is None else budget_minutes * 60",
+  "exact_job_plan_function": "def _job_plan(job, adapter):\n    return {\"bounds\": job.bounds, \"budget_seconds\": job.budget_seconds,\n            \"defines\": list(getattr(adapter, \"defines\", ())), \"function\": job.unit.function,\n            \"contract\": job.unit.contract, \"contract_sha256\": job.unit.contract_sha256}",
+  "exact_source_budget_argument": "gate.add_argument(\"--budget-minutes\", type=float, help=\"the job's wall budget in minutes\")",
+  "frozen_public_argument": "--budget-minutes 5",
+  "source_commit": "1433b8f58baa63538d1e8aa8a33d9ce566826407",
+  "source_inputs": [
+    {
+      "bytes": 51186,
+      "relative": "swdb/proof.py",
+      "sha256": "6223247f6d9ee6a806ee32f2a4f5630e5fa41555488a70c3c4646b73f6892802"
+    },
+    {
+      "bytes": 52371,
+      "relative": "swdb/proof_setup.py",
+      "sha256": "08f5e9807522cc2418e59ac9b6ecd43855a6a5ed4693c0295333abf6b8563d16"
+    },
+    {
+      "bytes": 4382,
+      "relative": "tests/test_vector_reallocation_closed_public_workflow.py",
+      "sha256": "bdc7720b3ea32379494e102dd0785332aa94a544b4367309ea39296a09bbcd2b"
+    }
+  ],
+  "source_python_type": "float",
+  "source_python_value": 300.0
+}

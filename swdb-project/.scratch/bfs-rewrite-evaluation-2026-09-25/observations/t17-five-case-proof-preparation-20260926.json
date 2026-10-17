@@ -1,0 +1,83 @@
+{
+  "format": "swdb.bfs.ownership-proof-variant-repair.v1",
+  "date": "2026-09-26",
+  "state": "local_contract_validated_pending_independent_review",
+  "head": "99005ee11272115dd2275ea078beb478d03738bf",
+  "files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_scalar_v2_builds.py",
+      "bytes": 26321,
+      "sha256": "9b5e55b3e39cf2f92be6be9387b6b5d8759319f626e936808ed21cf0e70a2370"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_t17_diagnostic_build.py",
+      "bytes": 19946,
+      "sha256": "2093d855242fca21ee1b978b504384048fe417f6facf5a031ec047ca6d776aea"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_scalar_v2_builds.py",
+      "bytes": 25458,
+      "sha256": "013d285383d5ab2ba09fe9acb984ab448464f999e165e84b678153bb6167bd57"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_t17_diagnostic_build.py",
+      "bytes": 14946,
+      "sha256": "187da941ace32270a7126a1e4e6d16b9071f4d5b13f1650035cbd56adddbfabf"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-t17-diagnostic-build-20260926.md",
+      "bytes": 5695,
+      "sha256": "dd036f603a3d09f23d25b5dcb778a595a20b3e9cc2a8de7aef60b758c47bffbc"
+    }
+  ],
+  "interface": "validate_proof(ref,runtime,prepared_at,*,require_storage_case=False); exact four or five distinct passed cases only; fifth additionally binds bfs_storage.py; T17 requires fifth before public calls",
+  "checks": [
+    {
+      "command": "python3 -m pytest tests/test_bfs_scalar_v2_builds.py tests/test_bfs_t17_diagnostic_build.py -k \"five_case or required_storage_case or full_admitted_collection\" -q",
+      "result": "5 failed, 13 passed, 72 deselected in 0.24s (pre-fix)",
+      "log": {
+        "path": "/private/tmp/bfs-t17-five-case-proof-red-20260926.log",
+        "bytes": 14108,
+        "sha256": "846037c0b4f5fe35693bc8432f69716861805d6c71777034c445ad370f1f9d61"
+      }
+    },
+    {
+      "command": "python3 -m pytest tests/test_bfs_scalar_v2_builds.py tests/test_bfs_t17_diagnostic_build.py -q",
+      "result": "90 passed in 12.55s",
+      "log": {
+        "path": "/private/tmp/bfs-t17-five-case-proof-green-20260926.log",
+        "bytes": 180,
+        "sha256": "9d50e99651c262aba9cb75bc7e0b9b7e344dfa51af29debe909c00d6e1ff2698"
+      }
+    },
+    {
+      "command": "python3 -m pytest tests/test_bfs_scalar_v2_builds.py tests/test_bfs_t17_diagnostic_build.py -k \"proof or full_admitted_collection\" -q",
+      "result": "28 passed, 63 deselected in 0.33s (final null-hash guard included)",
+      "log": {
+        "path": "/private/tmp/bfs-t17-five-case-proof-final-20260926.log",
+        "bytes": 114,
+        "sha256": "c4bea26423a7e263c9f8da47718d0d9332f428963e54b664d9fe53cd78ba6300"
+      }
+    }
+  ],
+  "original_independent_style_probe": {
+    "path": "/private/tmp/test_t17_fifth_linux_proof_readiness_20260926.py",
+    "bytes": 1119,
+    "sha256": "5225c31645be9acba8b35b3334d4211bcd411dc9d07b2c4cfb6f502180bc0338"
+  },
+  "original_probe_log": {
+    "path": "/private/tmp/bfs-t17-fifth-linux-proof-readiness-red-20260926.log",
+    "bytes": 2048,
+    "sha256": "4715211f3d9b3c0c41c4cb14798d4b6df5fcd7aa4c64320583e23bff8f3a7fc3"
+  },
+  "original_probe_limit": "Original adds fifth JUnit case but not the newly required storage dependency. Preserved untouched; durable fixed tests add and verify that dependency rather than calling the now-incomplete original input valid.",
+  "boundaries": {
+    "historical_scalar_four_compatible": true,
+    "t17_four_refused": true,
+    "prior_records_or_plans_modified": false,
+    "host_work": false,
+    "retry": false,
+    "new_budget": false,
+    "linux_proof_claim": false
+  }
+}

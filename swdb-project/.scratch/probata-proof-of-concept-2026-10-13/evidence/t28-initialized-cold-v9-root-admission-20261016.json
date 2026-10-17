@@ -1,0 +1,53 @@
+{
+  "created": "2026-10-16 ET",
+  "status": "ADMIT_ONCE_PASSIVE_180S_AFTER_FRESH_EXACT_ORIGINAL_PREFLIGHT",
+  "packet": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v9-admission-04af74c1/initialized-cold-v9-source-packet.json",
+    "bytes": 6584,
+    "sha256": "f34010a91e2ad1f1b07ef72d8eba55255060744d7464554fc13a95f6cd5ef50d"
+  },
+  "reader": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v9-admission-04af74c1/initialized_cold_audit_v9.py",
+    "bytes": 52208,
+    "sha256": "5f84cb78e8ff220e4738ee4d33a94ff125b1dce64fc61b7d96d2ec090149dfcf"
+  },
+  "obligations": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v9-admission-04af74c1/initialized_cold_obligations_v4.py",
+    "bytes": 25257,
+    "sha256": "8c12e04de82ef4d3698b4bda133616a070d6202c0d56d1a5dd4c5a5ca86ec3af"
+  },
+  "policy": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v9-admission-04af74c1/initialized-cold-policy-04af74c1-v9.json",
+    "bytes": 54842,
+    "sha256": "15f69d6a4a7a09f952bcf020f9619e43f107ae105980ed0cbe7e75ffc97313f3"
+  },
+  "command": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v9-admission-04af74c1/initialized-cold-command-04af74c1-v9.json",
+    "bytes": 4700,
+    "sha256": "9679ff1d2d01c8fe9171e9b9f962e994b76f6e9d1f8750cc166623c6357e08db"
+  },
+  "exact_env": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v9-admission-04af74c1/initialized-cold-env-command-v9.json",
+    "bytes": 2142,
+    "sha256": "daaab9570ccdc6698ac3a20aedb9934603da64871c9ff2d319652f18cd6dfe78"
+  },
+  "independent_review": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-initialized-cold-v9-independent-static-review-20261016.json",
+    "bytes": 11210,
+    "sha256": "b91ceb9d755a483a76734e698fabe8220652862bb5e07e062189537e6f5b0887"
+  },
+  "staging_payloads_rehashed": 10,
+  "local_packet_pin_occurrences_checked": 15,
+  "checks": [
+    "Root read exact RTE/termination delta and replacementenv-i invocation; all10literal staged payloads match commandhash/count.",
+    "Both distinct first/second initialized reads at source47 retain exact RTE/site/dependency/unique direct-Valid native ordinary goal; no init omitted/assumed.",
+    "init_MAA termination stays registeredUnknown/nonExtern/no native goal/no active origin/dependency; no liveness proof granted.",
+    "Existing unusedarity0/complete source/goal/native/saved/CSV/Extern/smoke/failedensure/source/runtime conditions retained.",
+    "Both711/1107 complete cheap goal/CSV/DAG pipelines and mutation controls pass before fullaudit."
+  ],
+  "TCB": [
+    "Original producer/Why3 runtime includes historically unpinned helper behavior; no retroactive before/after identity.",
+    "Unproved termination and unusedstub remain excluded from implementation/normal-return truth claims."
+  ],
+  "scope": "One passive audit of exact original partial-normal-return711/1107 pair, no scientific rerun/current0.2/fullticket acceptance."
+}

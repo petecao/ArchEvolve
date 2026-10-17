@@ -1,0 +1,20 @@
+message_version: '1.0'
+id: fga03.t75-candidate.uniform22.t1.estimate.protocol.a3
+version: 1
+settings:
+  mode: estimated
+  estimator_version: swdb.analytic.v1
+  target_description: mbit10.cpu.lanl20261006.t1.services.v2
+  threads: 1
+  roi: bfs.complete_call.v1
+  sources:
+  - extensa-native-bfs-20261005-a8.it1.kronecker.a0
+  inputs:
+  - bfs-20261004-uniform22.2f83a134a6bef789
+  input_run_arguments:
+    bfs-20261004-uniform22.2f83a134a6bef789:
+    - /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-uniform22/graph-dx100.sg
+    - '4'
+    - '0'
+    - /data/yanruj/EvolveSWDB_runs/fga03-real-pair-20261011-a1/a2/swdb-protected-cpu-wrapper-bjvc5lh_/counted-result.json
+    - /data/yanruj/EvolveSWDB_runs/fga03-real-pair-20261011-a1/a2/swdb-protected-cpu-wrapper-bjvc5lh_/counted.parents.i32

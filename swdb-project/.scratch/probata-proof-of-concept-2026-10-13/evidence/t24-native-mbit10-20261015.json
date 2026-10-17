@@ -1,0 +1,185 @@
+{
+  "created": "2026-10-15 ET",
+  "scope": "Frozen compiler/native differential checkpoints; not final WP or whole-subset proof acceptance",
+  "runs": [
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-native-20261015-0710-node0",
+      "source_commit": "2b4198db9451093a21feef76b758bf84d08bbcbc",
+      "launch_exit": 1,
+      "test_outcomes": {
+        "passed": 112,
+        "failed": 21
+      },
+      "session_finish": [
+        {
+          "exitstatus": 1,
+          "$report_type": "SessionFinish"
+        }
+      ],
+      "lane": {
+        "socket_lane": {
+          "aligned_cell_age_s": "",
+          "aligned_to": "no_gapbs_batch_running",
+          "command": [
+            "bash",
+            "-c",
+            "cd /data1/yanruj/probata-t27 && bash swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/27-proof-semantics/run_acceptance.sh 2b4198db9451093a21feef76b758bf84d08bbcbc native -n 2"
+          ],
+          "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+          "ended_utc": "2026-10-15T11:10:00Z",
+          "exit_code": 1,
+          "host": "mbit10",
+          "job": "probata-native-20261015-0710",
+          "lease_generation": 549,
+          "lease_name": "mbit10-evaluation-node0",
+          "load1_at_start": 0.03,
+          "load1_max": 32,
+          "node": 0,
+          "numa_memory_policy": "bind:0",
+          "numactl": "--cpunodebind=0 --membind=0",
+          "preregistration_sha256": null,
+          "started_utc": "2026-10-15T11:09:14Z"
+        }
+      },
+      "artifacts": [
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-native-20261015-0710-node0/report.jsonl",
+          "sha256": "9c67d0c92a34f70cbde1c1d22f36f4bdca1100e7685c76cb23d3c98f4b9e067c",
+          "bytes": 418807
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-native-20261015-0710-node0/pytest.log",
+          "sha256": "27dbe6688e35f4f12bb1c40b4b548ca7114bf92ef5a54091e397fd725814d670",
+          "bytes": 22913
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-native-20261015-0710-node0/environment.txt",
+          "sha256": "af56a103f28c5b7f0938b272a789742e19608d424bd4cfea74ff56721812b196",
+          "bytes": 6075
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-native-20261015-0710-node0/selection.txt",
+          "sha256": "5372b552c1842ce71704585788a4b13d2b23ec531252a42a2baa8dee1058ee6f",
+          "bytes": 178
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-native-20261015-0710-node0/lane.json",
+          "sha256": "adcdab0a41184ef81259d721adff56998c4164071185d7895f8ff6b01dc44f37",
+          "bytes": 850
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-native-20261015-0710-node0/launch.sh",
+          "sha256": "4a7a9e0ca75f85834ace098c2ca101648741f731abcd85ba6515ea88279cc14f",
+          "bytes": 1159
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-native-20261015-0710-node0/retention.txt",
+          "sha256": "b8b6d21b44aeb47e0de3134a58dced4fc13670798ff1ebce236e646f58edcc0e",
+          "bytes": 151
+        }
+      ]
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-native-20261015-0715-node0",
+      "source_commit": "aa7be61c2da4521580ccc76922dc67294d4e2872",
+      "launch_exit": 0,
+      "test_outcomes": {
+        "passed": 132
+      },
+      "session_finish": [
+        {
+          "exitstatus": 0,
+          "$report_type": "SessionFinish"
+        }
+      ],
+      "lane": {
+        "socket_lane": {
+          "aligned_cell_age_s": "",
+          "aligned_to": "no_gapbs_batch_running",
+          "command": [
+            "bash",
+            "-c",
+            "cd /data1/yanruj/probata-t27 && bash swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/27-proof-semantics/run_acceptance.sh \"$1\" native -n 2",
+            "bash",
+            "aa7be61c2da4521580ccc76922dc67294d4e2872"
+          ],
+          "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+          "ended_utc": "2026-10-15T11:16:05Z",
+          "exit_code": 0,
+          "host": "mbit10",
+          "job": "probata-native-20261015-0715",
+          "lease_generation": 550,
+          "lease_name": "mbit10-evaluation-node0",
+          "load1_at_start": 0.18,
+          "load1_max": 32,
+          "node": 0,
+          "numa_memory_policy": "bind:0",
+          "numactl": "--cpunodebind=0 --membind=0",
+          "preregistration_sha256": null,
+          "started_utc": "2026-10-15T11:14:55Z"
+        }
+      },
+      "artifacts": [
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-native-20261015-0715-node0/report.jsonl",
+          "sha256": "b077dc53f812bbb19dec0bd0a113ae1363b6a5a8f4a590aadb9a540676058d24",
+          "bytes": 343071
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-native-20261015-0715-node0/pytest.log",
+          "sha256": "fac06a23dec7f2b1f28c607a963a98764d07876a5ec5c9779d24be18e35607be",
+          "bytes": 342
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-native-20261015-0715-node0/environment.txt",
+          "sha256": "6b8ba12109a3a6ed37335ba3db92384adb5529e700b54ff70853e81f5bdb0d3a",
+          "bytes": 6075
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-native-20261015-0715-node0/selection.txt",
+          "sha256": "0b679a735cd063eae8600bfa8c3cdfb66e905516eac1638b07f286360daf46d3",
+          "bytes": 191
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-native-20261015-0715-node0/lane.json",
+          "sha256": "aaa33cf4d0e713ee77d7291579c347f416b2f4a1ef7dfc601619a284930e14dc",
+          "bytes": 874
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-native-20261015-0715-node0/launch.sh",
+          "sha256": "abb06ca8f4b06c5103ea02ad86846b811916265e1fe3b81698a959c64c4e35c8",
+          "bytes": 1317
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-native-20261015-0715-node0/retention.txt",
+          "sha256": "94af4a476e3001e2b002dde22f2d6abe0521fca878847e188959d8f0f3087804",
+          "bytes": 134
+        }
+      ],
+      "compiler_wrappers": [
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-native-20261015-0715-node0/compiler-bin/clang",
+          "sha256": "cb1253820eb3815c92a98f20e384f1dc8350eb90839588cd567f4b3963ba0d78",
+          "bytes": 128
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-native-20261015-0715-node0/compiler-bin/clang++",
+          "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4",
+          "bytes": 145
+        }
+      ]
+    }
+  ],
+  "diagnosis": {
+    "first_run": "112 passed,21 failed;14 driver/GCC14 selection errors,6 vector/model mismatched standard library errors,1 stale raw std-copy endpoint expectation. Included one CBMC footprint query despite original native label; corrected shard excludes it.",
+    "correction": "GCC13 selected in direct Clang/Clang++ wrappers; matching LLVM22.1.8 libc++ for C++; normalized C++ null-plus-zero endpoint expectation; warnings and guards retained.",
+    "replay": "132 native/compiler/domain validation checks passed, no CBMC query selected."
+  },
+  "output_budget_bytes_each": 1073741824,
+  "readers": [
+    "coordinator",
+    "ticket24",
+    "ticket27"
+  ],
+  "retention": "Raw logs remain on mbit10 pending remaining readers; only this compact metadata is transferred."
+}

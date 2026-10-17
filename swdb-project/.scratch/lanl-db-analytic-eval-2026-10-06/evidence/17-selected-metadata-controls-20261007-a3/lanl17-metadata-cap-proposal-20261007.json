@@ -1,0 +1,144 @@
+{
+  "format": "swdb.lanl17-metadata-cap-proposal.v1",
+  "updated": "2026-10-07 ET",
+  "state": "parent_review_pending_not_selected",
+  "helper_09136_sha256": "09136ee553984b2c0cf929a6746f037aa4e1874f863aa2e83e0e0842a8b65ed9",
+  "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "completed_model_evidence": {
+    "origin": "Parent verified completed actual a3 CLI/public-validation/lane receipts; Git compact export pending at proposal creation.",
+    "administrative_only": true,
+    "bc_freeze_s": 1266.086,
+    "forecast_stages_s": [
+      729.741,
+      773.625,
+      796.94,
+      834.88
+    ],
+    "public_validate_s": 326.655,
+    "catalog_records": 672,
+    "catalog_yaml_bytes": 574754793,
+    "application_outcomes_opened": false,
+    "meaning": "Past metadata-stage observations, not latency models or predictions for future stores."
+  },
+  "sites": [
+    {
+      "action": "prepare",
+      "line": 336,
+      "selector": "validate-before-freeze",
+      "multiplicity": 1,
+      "current_child_cap_s": 1400,
+      "proposed_child_cap_s": 3600
+    },
+    {
+      "action": "prepare",
+      "line": 342,
+      "selector": "population-freeze",
+      "multiplicity": 1,
+      "current_child_cap_s": 1400,
+      "proposed_child_cap_s": 6000
+    },
+    {
+      "action": "finalize",
+      "line": 609,
+      "selector": "validate-<campaign>",
+      "multiplicity": 4,
+      "current_child_cap_s": 1400,
+      "proposed_child_cap_s": 3600
+    },
+    {
+      "action": "finalize",
+      "line": 621,
+      "selector": "export-<campaign>",
+      "multiplicity": 4,
+      "current_child_cap_s": 900,
+      "proposed_child_cap_s": 6000
+    },
+    {
+      "action": "finalize",
+      "line": 626,
+      "selector": "final-agreement-report",
+      "multiplicity": 1,
+      "current_child_cap_s": 1200,
+      "proposed_child_cap_s": 14400
+    },
+    {
+      "action": "finalize",
+      "line": 630,
+      "selector": "validate-final-export",
+      "multiplicity": 1,
+      "current_child_cap_s": 1400,
+      "proposed_child_cap_s": 3600
+    }
+  ],
+  "whole_actions": {
+    "prepare": {
+      "current_public_cli_cap_sum_s": 2800,
+      "current_direct_bounded_command_count_120s": 19,
+      "direct_bounded_commands_sum_s": 2290,
+      "direct_command_accounting": "120s commands plus official --version cap10; includes nested final Git export.",
+      "current_full_bounded_command_sum_s": 5090,
+      "proposed_public_cli_cap_sum_s": 9600,
+      "proposed_full_bounded_command_sum_s": 11890,
+      "proposed_supervisor_metadata_wait_s": 18000,
+      "uncapped_work_reserve_s": 6110,
+      "proposed_enclosing_term_deadline_s": 18120,
+      "proposed_enclosing_kill_after_s": 60,
+      "proposed_parent_envelope_s": 18300,
+      "reserve_scope": "Direct full Store/certification/library work, live graph/model/source pins, YAML/JSON/copies/hashes and Git file publication/owned cleanup. Administrative allowance, no elapsed guarantee."
+    },
+    "finalize": {
+      "current_public_cli_cap_sum_s": 11800,
+      "current_direct_bounded_command_count_120s": 13,
+      "direct_bounded_commands_sum_s": 1570,
+      "direct_command_accounting": "120s commands plus official --version cap10; includes nested final Git export.",
+      "current_full_bounded_command_sum_s": 13370,
+      "proposed_public_cli_cap_sum_s": 56400,
+      "proposed_full_bounded_command_sum_s": 57970,
+      "proposed_supervisor_metadata_wait_s": 78000,
+      "uncapped_work_reserve_s": 20030,
+      "proposed_enclosing_term_deadline_s": 78120,
+      "proposed_enclosing_kill_after_s": 60,
+      "proposed_parent_envelope_s": 78300,
+      "reserve_scope": "Direct full Store/certification/library work, live graph/model/source pins, YAML/JSON/copies/hashes and Git file publication/owned cleanup. Administrative allowance, no elapsed guarantee."
+    }
+  },
+  "source_counts": {
+    "prepare_full_stores": 5,
+    "prepare_full_validations": 3,
+    "prepare_indexes": 1,
+    "finalize_full_stores": "22+M+3k",
+    "finalize_full_validations": "11+k+q",
+    "finalize_indexes": 1,
+    "all_four_new_exports_stores": "34+M",
+    "all_four_new_exports_validations": 19,
+    "candidate_filter_rows": "At most16 final candidate ID rows per successful two-class/eight-completed-iteration summary; at most64 across four. No unique-content/eligible-pair claim."
+  },
+  "preserved_budgets": {
+    "campaign_lane_hours": 24,
+    "disk_gb": 20,
+    "max_iterations": 8,
+    "plateau_iterations": 4,
+    "provider_calls_per_iteration": 3,
+    "provider_calls_setup": 1,
+    "simultaneous_campaign_lanes": 2
+  },
+  "no_runtime_scaling_or_upper_bound_proof": true,
+  "caps_are_administrative_choices": true,
+  "current_helper_original_proofs_unchanged": true,
+  "new_helper_created": false,
+  "new_supervisor_created": false,
+  "actual_17_metadata_actions": 0,
+  "actual_17_campaigns": 0,
+  "provider_calls": 0,
+  "cli_or_ssh_execution": false,
+  "required_before_any_new_helper_prepare": [
+    "Parent selection and exact six literal-call edit proof, all other helper bytes unchanged.",
+    "Fresh actual original4d Linux cleanup receipt pins selected new helper/hash and existing processes.py.",
+    "Distinct supervisor variant changes only HELPER_SHA; actual revised a848 fixture pins that supervisor/helper, no science action.",
+    "Retain all091/31e/4d/a1/a2/current supervisor receipts and failed preparation history.",
+    "Final enriched sourceW/F6 and actual complete catalog/stage evidence pinned before prospective population freeze."
+  ],
+  "scope": "Source-only proposal. Finite caps may still stop unknown future direct work; metadata failure preserves partial canonical chronology and never triggers scientific replay/padding.",
+  "identity_sha256": "83c0b4f1ba1c1fe66fe80a0151452358db95a54b99b8e2b1d1cf01c8eb0fcb39"
+}

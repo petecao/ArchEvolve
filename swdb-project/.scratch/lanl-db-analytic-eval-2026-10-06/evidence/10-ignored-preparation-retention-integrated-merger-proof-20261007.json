@@ -1,0 +1,53 @@
+{
+  "format": "swdb.lanl10-ignored-retention-integrated-merger.v1",
+  "updated_utc": "2026-10-07T11:16:33.083198+00:00",
+  "base_commit": "f35cf2760d936a3e72dd230672a6be0ca7341894",
+  "incoming_commit": "4363f125b85eb2b8a903c1a7f8542004f1011986",
+  "ordinary_merge_commit": "032fc62f6e9acbb6e191329186de42a12b9829be",
+  "ordinary_merge_tree": "396e1e8143c37218c94c624a2aaa708261139ae2",
+  "merge_parents": [
+    "f35cf2760d936a3e72dd230672a6be0ca7341894",
+    "4363f125b85eb2b8a903c1a7f8542004f1011986"
+  ],
+  "precheck_identity_sha256": "7c1b277c325fb73fed30f2dbcb4d0384d3f8e1d7cc0ddbcdc9ef3dd95f4a50c9",
+  "prior_tracked_blobs_preserved": 3714,
+  "no_prior_blob_mode_modification_or_deletion": true,
+  "exact_incoming_additions": [
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/10-ignored-preparation-retention-20261007/README.md",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/10-ignored-preparation-retention-20261007/manifest.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/10-ignored-preparation-retention-20261007/original-unsealed-inventory.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/10-ignored-preparation-retention-20261007/ticket10-compatible-preparation-a1/plan.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/10-ignored-preparation-retention-20261007/ticket10-compatible-preparation-receipt-a1.json"
+  ],
+  "exact_external_sources": 3,
+  "original_ignored_files_and_temporary_copies_untouched": true,
+  "original_unsealed_inventory_bytes_and_canonical_digest_verified": true,
+  "manifest": {
+    "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/10-ignored-preparation-retention-20261007/manifest.json",
+    "identity_sha256": "281c951ce2e3f889deae2ed5ff8e40755783463775b9ccb15002345c67164852",
+    "file_sha256": "5fcf0494d57f5c5e0276775680cf05283481157cab2d5f551fa1b6c05d505c6c"
+  },
+  "historical_postfill_reference_preserved": {
+    "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/10-estimation-role-postfill-custody-mbit10-20261006-a2.json",
+    "file_sha256": "371fd88f9aad6a889ee37fa28d93cf5ef1365f2249f07294be16be9defd7d24d",
+    "preparation_receipt_sha256": "4a0a53660222552a9e164114a5e09d5471a6ff0e135be310ba23dad4116aa16e",
+    "matching_document_paths": [
+      [
+        "preserved_artifact_sha256s",
+        "prepare.stdout"
+      ]
+    ],
+    "scope": "Existing historical actual success pin; local retained preparation remains unlaunched"
+  },
+  "canonical_yaml_preserved": 682,
+  "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "python_modules": 185,
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "library_blobs_preserved": 147,
+  "root_blobs_preserved": 450,
+  "maps_issues_progress_controls_all_archives_preserved": true,
+  "preparation_state": "prepared; provider_launched false; no promotion",
+  "no_tests_Store_provider_native_compiler_cleanup_acceptance_or_ssh_repeat": true,
+  "scope": "Durable byte retention of two local ignored ticket10 preparation objects and original unsealed inventory only. Historical actual provider success remains separate; no new run or acceptance.",
+  "identity_sha256": "0d071ea1cfbf2e564bc907cfd23a06849fb5406c3ed18e5782446145d316c9e5"
+}

@@ -1,0 +1,57 @@
+{
+  "actual_causes_not_inferred": true,
+  "format": "swdb.lanl17-proc-ownership-inactivity-source-inference.v1",
+  "kernel_bytes_and_inactive_owned_identity_AST_exact_R6_R5": true,
+  "no_UID_exemption_existing_guard_relaxation_or_process_action": true,
+  "note": {
+    "bytes": 4305,
+    "path": "/private/tmp/lanl17-proc-ownership-and-inactivity-source-inference-20261009-a5-r1.md",
+    "sha256": "802d8f2ae90cc4e3a168bb96de8897c8ce9991f74737c965ff6e5d02499b12cc"
+  },
+  "prepared_ET": "2026-10-09 01:12:40 ET",
+  "prepared_utc": "2026-10-09T05:12:40.197644+00:00",
+  "primary_sources": [
+    "https://code.googlesource.com/linux/torvalds/linux/+/18ded910b589839e38a51623a179837ab4cc3789/fs/proc/base.c",
+    "https://man7.org/linux/man-pages/man5/proc_pid.5.html",
+    "https://man7.org/linux/man-pages/man5/proc_pid_cmdline.5.html",
+    "https://docs.kernel.org/filesystems/proc.html",
+    "https://man7.org/linux/man-pages/man2/wait.2.html"
+  ],
+  "scientific_admission": false,
+  "source_pins": {
+    "lanl17_generality_recovery_candidate_preflight_20261009_a5_r6.py": {
+      "bytes": 43567,
+      "path": "/private/tmp/lanl17_generality_recovery_candidate_preflight_20261009_a5_r6.py",
+      "sha256": "65bd9a90f477381ba99e9b1894496162da59166b157bf77b084dfce74dcaad6c",
+      "stat": {
+        "ctime_ns": 1791521566370898600,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350678148,
+        "mode": 33152,
+        "mtime_ns": 1791521566370898600,
+        "nlink": 1,
+        "size": 43567,
+        "uid": 501
+      }
+    },
+    "lanl17_pre_full_index_host_observation_20261008_a5_r5.py": {
+      "bytes": 36052,
+      "path": "/private/tmp/lanl17_pre_full_index_host_observation_20261008_a5_r5.py",
+      "sha256": "be2f68c21a72b4de5deee05f17f48a8cd09342cf3a6e7e17280ff72414dc3fd4",
+      "stat": {
+        "ctime_ns": 1791513620426637826,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350629091,
+        "mode": 33152,
+        "mtime_ns": 1791513620426637826,
+        "nlink": 1,
+        "size": 36052,
+        "uid": 501
+      }
+    }
+  },
+  "upstream_kernel_not_verified_host_version": true,
+  "verdict": "SOURCE_INFERENCE_ONLY_ACTUAL_CAUSES_UNPROVEN"
+}

@@ -1,0 +1,28 @@
+import base64,datetime,hashlib,json,os,pathlib,stat,sys,time
+P=pathlib.Path
+UID=114316761
+START=time.monotonic()
+FIELDS=('dev','ino','mode','uid','gid','nlink','size','mtime_ns','ctime_ns')
+def stamp(s):return {k:getattr(s,'st_'+k) for k in FIELDS}
+def read(pin,body=False):
+ p=P(pin['path']);assert p.is_absolute() and p.resolve(strict=True)==p and not any(q.is_symlink() for q in (p,*p.parents))
+ s=p.lstat();assert stat.S_ISREG(s.st_mode) and s.st_uid==UID and s.st_nlink==1 and s.st_size==pin['bytes']<=262144
+ fd=os.open(p,os.O_RDONLY|os.O_NOFOLLOW)
+ with os.fdopen(fd,'rb') as f:
+  b=f.read(262145);assert len(b)==s.st_size and stamp(s)==stamp(os.fstat(f.fileno()))==stamp(p.lstat())
+ assert hashlib.sha256(b).hexdigest()==pin['sha256'] and time.monotonic()-START<60
+ v={'path':str(p),'bytes':len(b),'sha256':pin['sha256'],'stat':stamp(s)}
+ if body:v['original_bytes_base64']=base64.b64encode(b).decode()
+ return v
+assert os.uname().nodename.split('.')[0]=='mbit10' and os.getuid()==os.geteuid()==UID and sys.flags.dont_write_bytecode and not sys.flags.optimize
+assert not any(k.startswith('GIT_') for k in os.environ)
+base=P('/data1/yanruj');assert base.resolve(strict=True)==base and stat.S_IMODE(base.stat().st_mode)==0o700 and base.stat().st_uid==UID
+ORIGINAL_SOURCE_PINS=[{'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-counts-20261006-a2/runner.py', 'bytes': 3066, 'sha256': '0c27e8a413eeed578e3172415c483a3e317d0fbf3d9a9c608ba42c2524a514f4'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-elapsed-20261006-a1/runner.py', 'bytes': 3777, 'sha256': '176800f45b63ed6b57feb750181299cce50a9f9442a49def41169774720beb82'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-object-counts-20261006-a1/runner.py', 'bytes': 4419, 'sha256': 'f7b0297720088df2d21bed067254932a782ed492c2713fab0e0e4ce604dd0605'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-service-byte-read-20261006-a1/runner.py', 'bytes': 3963, 'sha256': '9f77a504326c9b8647b29a1159328b161a57fcd17c184766e2d2b241da60a1c4'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-service-clock-20261006-a2/runner.py', 'bytes': 3865, 'sha256': '86fe58d56cc1dfea35e2d041e8952c01adb117087ebc6efad3ec08b203f2f104'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-service-memory-20261006-a1/runner.py', 'bytes': 3885, 'sha256': '529cc86c298c21315f2499fc6b992d4888a9a35efcca4fcd0d1446b022c4033b'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-estimation-role-20261006-a2-postfill-a1-control/exporter.py', 'bytes': 23528, 'sha256': '7f38c1e58c770fbd586ea3454fd36d89da2798c59ab12b883820bcddc8887a40'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-functional-bfs-strict-20261006-a2/runner.py', 'bytes': 4496, 'sha256': '9c293a9ba3baa4cabe92f76ef4d0e39eeae927b0431f7fdd58de9a2c0c832cb7'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-functional-dx-object-counts-20261006-a1/runner.py', 'bytes': 4155, 'sha256': 'ee64b13c24e47e2afe73e15f5c5767afd4e48c6626d5479ef594673d4d386a6a'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-functional-dx-object-counts-20261006-a2/runner.py', 'bytes': 4159, 'sha256': 'ce7e3ce4481a42b6b8fad456801c161f0c7817aadebc4e0b261c6be967d05cd3'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-native-root-projection-20261006-a1/runner.py', 'bytes': 3766, 'sha256': '62d92f79431761eba267ddf496699e57e87d94a4e535f39670afd0944c7c7b58'}]
+COPIES=[{'path': '/data1/yanruj/lanl17-sparse-retirement-source-20261008-a1/lanl_sparse_retire_consumed_source_guard_20261008_a1_r2.py', 'bytes': 166145, 'sha256': '4956a7453ae569d7ccf6e1a9ed98a1a933bee2e35cca1774932afbfba819bd26'}, {'path': '/data1/yanruj/lanl17-sparse-retirement-source-20261008-a1/lanl17_detach_library_preserving_sparse_administration_20261008_a1_r1.py', 'bytes': 24115, 'sha256': '1127d1fba8e004153cf086cace7d19ccd901e85902f9ad91924407922c85c6ca'}]
+ABSENT=['/data1/yanruj/ArchEvolve-lanl17-source-20261007-a4', '/data1/yanruj/ArchEvolve-lanl17-freeze-evidence-20261007-a4', '/data1/yanruj/ArchEvolve-lanl17-actual-report-evidence-20261007-a4', '/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a4', '/data/yanruj/EvolveSWDB_runs/lanl17-metadata-prepare-20261007-a4', '/data/yanruj/EvolveSWDB_runs/lanl17-metadata-finalize-20261007-a4']
+copies=[read(p) for p in COPIES]
+leases={n:json.loads((base/'lact-host-lease'/(n+'.meta.json')).read_bytes())['state'] for n in ('mbit10-evaluation-node0','mbit10-evaluation-node1','mbit10-evaluation')}
+assert all(v=='released' for v in leases.values())
+assert all(not os.path.lexists(p) for p in ABSENT)
+free={p:os.statvfs(p).f_bavail*os.statvfs(p).f_frsize for p in ('/data1','/data')}
+print(json.dumps({'format':'swdb.sparse-parent-fresh-capacity-original.v1','sealed':False,'checked_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'private_control_copies':copies,'released_leases':leases,'reserved_paths_still_absent':ABSENT,'actual_free_bytes':free,'memory_available_bytes':int(next(l.split()[1] for l in P('/proc/meminfo').read_text().splitlines() if l.startswith('MemAvailable:')))*1024,'load':os.getloadavg(),'script_mains_or_retirement_or_capacity_admission_performed':False},sort_keys=True,separators=(',',':')))

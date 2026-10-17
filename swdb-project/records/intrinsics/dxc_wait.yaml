@@ -1,0 +1,26 @@
+kind: intrinsic
+schema_version: '0.4'
+id: dxc_wait
+name: __dxc_wait
+status: draft
+created: '2026-10-03'
+updated: '2026-10-03'
+interface:
+  id: dx100-mmio
+  version: 1.0-e4fc4af
+hardware_operations:
+- dx100.mmio.v1.wait-ready
+memory_kind: none
+address_shape: null
+element_bits: null
+lanes: null
+library_entry:
+  id: intrinsic.dxc_wait
+  path: library/intrinsics/dxc_wait.yaml
+  content_sha256: e349a9c69489091c35d5cb3654cae16b0b5361f8706fd4c4f21052756cc815de
+provenance:
+- id: dx100-source
+  kind: source_code
+  description: Pinned DX100 e4fc4af interface and independent reference semantics;
+    no performance claim.
+  uri: https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/benchmarks/API/MAA_gem5.hpp

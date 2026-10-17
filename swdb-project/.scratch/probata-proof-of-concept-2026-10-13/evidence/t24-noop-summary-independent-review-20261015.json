@@ -1,0 +1,74 @@
+{
+  "actual_continuation_outcomes": "pending",
+  "actual_noop_acceptance": "provisional until unchanged actual safe caller witness",
+  "blocking_findings": [],
+  "continuation_source_sha256": "741d14aa985b3500972ed15423af285081c5170433ad9f082f93ca32fc79e621",
+  "created": "2026-10-15 ET",
+  "green": {
+    "resources": {
+      "cpu_seconds": 0.607738,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 81182720,
+      "timed_out": false,
+      "wall_seconds": 0.9063462500344031
+    },
+    "skipped": 0,
+    "tests_passed": 24
+  },
+  "hash_errors": [],
+  "original_lowering_fixture_diff": [],
+  "planned_continuation": {
+    "deliberate_no_launch_lifetime_refusals": 9,
+    "dispatcher": "root only; no launch by ticket worker",
+    "groups": [
+      "maa_summary",
+      "dxc_summary",
+      "templates",
+      "classes",
+      "omp",
+      "new_array"
+    ],
+    "new_actual_wp_rows": 15,
+    "new_rows": 24,
+    "public_timeout_seconds": 1800,
+    "reused_rows": 12,
+    "rss_cap_bytes": 8589934592,
+    "suggested_raw_budget_bytes": 8589934592,
+    "suggested_whole_seconds": 14400,
+    "workers": 1
+  },
+  "policy_source_sha256": "cf011367b0f7ef60e505cf6de0c3492caf437c349f851abe6f156dece2eea726",
+  "production_diff": [],
+  "production_freeze": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+  "red": {
+    "reason": "unchanged strict audit rejects exact3VC/zero-smoke summary",
+    "resources": {
+      "cpu_seconds": 0.398665,
+      "exit_code": 1,
+      "out_of_memory": false,
+      "peak_rss_bytes": 65126400,
+      "timed_out": false,
+      "wall_seconds": 0.6152067499933764
+    },
+    "tests_failed": 1
+  },
+  "references_verified": 15,
+  "review": {
+    "path": "/private/tmp/probata-resume-t24/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t24-noop-summary-independent-review-20261015.md",
+    "sha256": "181651833ab1e4177f90c5676f8589db65242d64eb58e23097fe3248be480b8a"
+  },
+  "reviewed_commit": "fa26b0ccf44ced95818444f8793ad3c7e4fda0a8",
+  "reviewer_scope": "Read-only static/source/evidence review; no test/compiler/typechecker/verifier/remote jobs",
+  "source_evidence": {
+    "path": "/private/tmp/probata-resume-t24/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t24-noop-summary-continuation-20261015.json",
+    "sha256": "7f6dd2eadb6bba6d8445f21fc363259bf2d8a3e6c437f36b0bd15b82790f6c5c"
+  },
+  "stopped_audit": {
+    "path": "/private/tmp/probata-resume-t24/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t24-current-atomic-stopped-matrix-0e7-20261015.json",
+    "remote_instances_not_reread_by_this_reviewer": true,
+    "sha256": "60eaef830ec401446f97e0585a0a5381279a83ae02ebc901d9b68c7a5cecb620"
+  },
+  "stopped_matrix_sha256": "946176dcb5fcf7caa4e0e2e4bed8fe5ada363eaa7d5bb2514e339de914a22c49",
+  "verdict": "passed for root-owned continuation dispatch"
+}

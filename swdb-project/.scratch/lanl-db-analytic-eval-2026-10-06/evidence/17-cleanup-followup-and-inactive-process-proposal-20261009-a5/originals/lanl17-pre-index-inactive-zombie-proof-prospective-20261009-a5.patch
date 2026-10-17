@@ -1,0 +1,72 @@
+--- /private/tmp/lanl17_pre_full_index_host_observation_20261008_a5_r5.py
++++ PROSPECTIVE-UNSELECTED/inactive-owned-zombie-proof.py
+@@ -285,13 +285,62 @@
+     need(not raw or raw.endswith(b'\0'),'owned_cmdline_terminated');return raw
+ 
+ def inactive_owned_identity(p,ps):
+-    # Empty cmdline alone never proves absence. Only exact stable Z/X state can.
+-    b=kernel_bytes(p/'stat',8192,UID);v=b.rsplit(b')',1)[1].split()
+-    need(len(v)>=20 and b.split(b' ',1)[0]==p.name.encode() and v[0] in (b'Z',b'X'),'empty_owned_cmdline_not_proved_inactive')
+-    start=int(v[19]);need(start>0,'inactive_start_positive')
+-    b2=kernel_bytes(p/'stat',8192,UID);w=b2.rsplit(b')',1)[1].split()
+-    need(len(w)>=20 and b2.split(b' ',1)[0]==p.name.encode() and w[0] in (b'Z',b'X') and int(w[19])==start and p.stat().st_uid==UID and p.stat().st_ino==ps.st_ino,'inactive_process_identity_race')
+-    return {'pid':int(p.name),'uid':UID,'proc_inode':ps.st_ino,'start_ticks':start,'state':w[0].decode('ascii')}
++    # Prospective 2026-10-09 ET: only stable owned empty-cmdline Z/X proof.
++    tick();pid=int(p.name)
++    need(p.parent==Path('/proc') and p.name==str(pid) and 0<pid<2**31,
++         'inactive_canonical_numeric_PID')
++    need(stat.S_ISDIR(ps.st_mode) and ps.st_uid==UID and stamp(p.lstat())==stamp(ps),
++         'inactive_owned_directory_identity')
++    dfd=os.open(p,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW|os.O_CLOEXEC)
++    try:
++        def directory_unchanged():
++            need(stamp(os.fstat(dfd))==stamp(ps)==stamp(p.lstat()),
++                 'inactive_directory_nine_stat_race')
++        def leaf(name,cap):
++            tick();directory_unchanged()
++            q=os.stat(name,dir_fd=dfd,follow_symlinks=False)
++            need(stat.S_ISREG(q.st_mode) and q.st_uid in (0,UID),
++                 'inactive_kernel_leaf_regular_root_or_account')
++            fd=os.open(name,os.O_RDONLY|os.O_NOFOLLOW|os.O_CLOEXEC,dir_fd=dfd)
++            with os.fdopen(fd,'rb') as f:
++                need(stamp(os.fstat(f.fileno()))==stamp(q),'inactive_leaf_open_race')
++                b=f.read(cap+1)
++                need(len(b)<=cap and stamp(os.fstat(f.fileno()))==stamp(q)==
++                     stamp(os.stat(name,dir_fd=dfd,follow_symlinks=False)),
++                     'inactive_leaf_cap_or_nine_stat_race')
++            directory_unchanged();return b,stamp(q)
++        empty=leaf('cmdline',0)
++        first=leaf('stat',8192);status=leaf('status',65536)
++        b=first[0];tail=b.rsplit(b')',1)[-1].split()
++        need(b.endswith(b'\n') and b.startswith(str(pid).encode()+b' (') and
++             len(tail)>=20 and tail[0] in (b'Z',b'X'),
++             'empty_owned_cmdline_not_proved_inactive')
++        need(tail[1].isdigit() and tail[19].isdigit(),'inactive_stat_numeric_identity')
++        parent,start=int(tail[1]),int(tail[19])
++        need(0<=parent<2**31 and 0<start<2**63,'inactive_parent_start_bounds')
++        fields={};wanted={b'Pid',b'Tgid',b'PPid',b'Uid',b'State'}
++        need(status[0].endswith(b'\n'),'inactive_status_complete')
++        for line in status[0].splitlines():
++            tick();key,sep,value=line.partition(b':')
++            need(bool(sep),'inactive_status_line_shape')
++            if key in wanted:
++                need(key not in fields,'inactive_status_duplicate_identity')
++                fields[key]=value.strip()
++        need(set(fields)==wanted,'inactive_status_required_identity')
++        need(all(fields[k].isdigit() for k in (b'Pid',b'Tgid',b'PPid')) and
++             int(fields[b'Pid'])==int(fields[b'Tgid'])==pid and
++             int(fields[b'PPid'])==parent,'inactive_status_PID_Tgid_parent')
++        uids=fields[b'Uid'].split()
++        need(len(uids)==4 and all(v.isdigit() and int(v)==UID for v in uids),
++             'inactive_status_all_four_account_UIDs')
++        need(fields[b'State']=={b'Z':b'Z (zombie)',b'X':b'X (dead)'}[tail[0]],
++             'inactive_status_stat_exact_terminal_state')
++        need(leaf('stat',8192)==first and leaf('status',65536)==status and
++             leaf('cmdline',0)==empty,'inactive_bytes_and_nine_stat_continuity')
++        directory_unchanged()
++        return {'pid':pid,'uid':UID,'proc_inode':ps.st_ino,
++                'start_ticks':start,'state':tail[0].decode('ascii')}
++    finally:os.close(dfd)
+ 
+ def consumers(transport):
+     matches=[];unknowns=[];seen=0;owned=0;needles=[str(SOURCE).encode(),str(RAW).encode(),str(H).encode()]

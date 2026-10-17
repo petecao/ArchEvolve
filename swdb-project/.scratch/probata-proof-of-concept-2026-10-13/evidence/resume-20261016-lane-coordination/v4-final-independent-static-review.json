@@ -1,0 +1,36 @@
+{
+  "date_ET": "2026-10-16",
+  "at_utc": "2026-10-16T16:56:21.562340+00:00",
+  "review": "PASS for static V3-to-V4 main-source guarded-lane adaptation; per-entry and runtime admission remain separate",
+  "launcher": {
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/launch_reviewed_main_v4.py",
+    "sha256": "46effb9a33fb0b93d3cb4f5a4922d2a2a1c5bc3a3e259cd06ce6737dfa821de4",
+    "bytes": 9007
+  },
+  "reviewed_scope": [
+    "main ref and exact-source ancestor gate",
+    "c978 production baseline and reviewed exact delta",
+    "new shared detached source and fresh output/session namespaces",
+    "current socket_lane and hostlock content hashes",
+    "local and remote nonoptimized admission",
+    "tmux direct exec env -i before first shell and lane wrapper",
+    "exact historical execute/watch/run pins and preserved watchdog caps/timeouts",
+    "conditional source-storage reservation and bounded raw planning metadata"
+  ],
+  "fixed_initial_findings": [
+    "remote Python -I -B and optimize refusal plus forbidden PYTHONOPTIMIZE",
+    "actual tmux child explicit environment rather than inherited server selectors",
+    "no extra2GiB source reservation when shared source already exists"
+  ],
+  "syntax_only": {
+    "outer_ast": true,
+    "embedded_remote_ast": true,
+    "no_launcher_execution": true
+  },
+  "remaining_boundaries": [
+    "fresh selected+legacy lease/load check at dispatch",
+    "published exact command and independent entry/source/runtime policy review",
+    "sampled RSS limits and planning raw limit are not kernel/filesystem quotas",
+    "no assertion of proof/model/body/caller/ticket success"
+  ]
+}

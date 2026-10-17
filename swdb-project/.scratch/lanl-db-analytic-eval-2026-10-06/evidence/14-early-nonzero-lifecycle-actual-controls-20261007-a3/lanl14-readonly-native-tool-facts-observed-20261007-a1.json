@@ -1,0 +1,89 @@
+{
+  "format": "swdb.lanl14-parent-readonly-native-facts.v1",
+  "canonical_ensure_ascii": true,
+  "checked_utc": "2026-10-07T23:17:16.878920+00:00",
+  "uid": 114316761,
+  "native_tools": {
+    "python": {
+      "path": "/usr/bin/python3.12",
+      "bytes": 8020928,
+      "sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+      "uid": 0,
+      "mode": 493,
+      "executable": true,
+      "ELF_x86_64": true
+    },
+    "timeout": {
+      "path": "/usr/bin/timeout",
+      "bytes": 39880,
+      "sha256": "12690a043dfd555a6c14ccc1564f5649c18f1762c0d6ff66729948130898ec52",
+      "uid": 0,
+      "mode": 493,
+      "executable": true,
+      "ELF_x86_64": true
+    },
+    "bash": {
+      "path": "/usr/bin/bash",
+      "bytes": 1446024,
+      "sha256": "bc5945feb8bd26203ebfafea5ce1878bb2e32cb8fb50ab7ae395cfb1e1aaaef1",
+      "uid": 0,
+      "mode": 493,
+      "executable": true,
+      "ELF_x86_64": true
+    },
+    "git": {
+      "path": "/usr/bin/git",
+      "bytes": 4019024,
+      "sha256": "06b2aa74919b1993f9fd7e47060ea98d98c27206f16ccc2d35f51ced7e7877eb",
+      "uid": 0,
+      "mode": 493,
+      "executable": true,
+      "ELF_x86_64": true
+    }
+  },
+  "python_version": [
+    3,
+    12,
+    3
+  ],
+  "wrapper_sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8",
+  "original_cleanup_helper_sha256": "31e1d71bc6e9ef4a5a5f1d5fbff136ceef249935f8f00601edf45277fce249ec",
+  "raw_base": {
+    "path": "/data/yanruj/EvolveSWDB_runs",
+    "uid": 114316761,
+    "mode": 509
+  },
+  "leases": {
+    "mbit10-evaluation-node0": "held",
+    "mbit10-evaluation-node1": "released",
+    "mbit10-evaluation": "released"
+  },
+  "reserved_startup_overrides_present": {
+    "BASH_ENV": false,
+    "ENV": false,
+    "PYTHONHOME": false,
+    "LD_PRELOAD": false,
+    "LD_LIBRARY_PATH": false,
+    "SOCKET_LANE_REEXEC": false,
+    "SOCKET_LANE_NODE_DIR": false,
+    "LACT_LEASE_ROOT": false,
+    "LACT_LEASE_NAME": false,
+    "LACT_NUMACTL": false,
+    "LOCKDIR": false
+  },
+  "capacity_bytes": {
+    "/data1": 23116881920,
+    "/data": 46896816128
+  },
+  "memory_available_bytes": 120087875584,
+  "load": [
+    2.0,
+    2.0478515625,
+    2.02685546875
+  ],
+  "selected_control_or_fixture_main": false,
+  "source_copy": false,
+  "scientific_admission": false,
+  "scope": "Read-only physical native/source byte pins and account/lane/capacity facts. No version command, Git operation, fixture, evaluator, provider, auth/environment values or original argv read.",
+  "identity_sha256": "99315c81be9ff5a080745dc1ae23a5c1ddb29a1b21deff0f912e412c425eaf8b"
+}

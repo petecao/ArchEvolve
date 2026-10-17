@@ -1,0 +1,107 @@
+{
+  "created": "2026-09-27",
+  "state": "local_preparation_review_pending",
+  "host_dispatch": false,
+  "files": [
+    {
+      "path": "scripts/bfs_linux_fixture.py",
+      "bytes": 15716,
+      "sha256": "277e0827a079eed032cc8f7cdedcbc2867f8880e247ea20b9e5dbe7096f48c3a"
+    },
+    {
+      "path": "scripts/bfs_simulator_batch.py",
+      "bytes": 67829,
+      "sha256": "b08335b912e5e83e58f366ed5294c32c2de06073600c8faf4fe2cb370918b4e6"
+    },
+    {
+      "path": "scripts/bfs_simulator_recovery.py",
+      "bytes": 27405,
+      "sha256": "e242c904684bd0e433d0c9501c3c1cd2d8e2f342db8188cfe1894b829d657744"
+    },
+    {
+      "path": "scripts/bfs_supervision_supplement.py",
+      "bytes": 9638,
+      "sha256": "e2ddf39589b8db49cbf1c89d1dd106dbbd2d54637f3e41582d78a5ad0defaef6"
+    },
+    {
+      "path": "tests/test_bfs_linux_fixture.py",
+      "bytes": 12904,
+      "sha256": "95221714be8b97a2fb9288a86adedc3d3688b838e01fd56a8975612f2da13da6"
+    },
+    {
+      "path": "tests/test_bfs_simulator_recovery.py",
+      "bytes": 27261,
+      "sha256": "02b896a87adacdd6122b3f170c3f71f45db451156a930c65a31a5c6c19f93d75"
+    },
+    {
+      "path": "tests/test_bfs_simulator_setup_recovery.py",
+      "bytes": 15835,
+      "sha256": "e4eee9b891f0284af86ab1e8b623e5e9c0415c1c2b4880c40e99dd4f043641a0"
+    },
+    {
+      "path": "docs/bfs-supervision-recovery-20260926.md",
+      "bytes": 5800,
+      "sha256": "78ce2dcca11b52dc249cd9fbc807e773e366d7f643ca1eb31817a470485b1f67"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t15-supervision-recovery-simulator-batch-20260926-a1.json",
+      "bytes": 10526,
+      "sha256": "b25650774e11a3975ba7c7d63e8453886e0ebe77d5f79514f57fbd7214768fb5"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t16-supervision-recovery-simulator-batch-20260926-a1.json",
+      "bytes": 14056,
+      "sha256": "a99d3c9e787881d7e04a01b714bd1bf07e4b045cdbbe3efb5cb8da11e50eba16"
+    }
+  ],
+  "checks": {
+    "focused": "157 passed in1.68s",
+    "combined": "262 passed,7 platform skips in2.66s",
+    "selection": "42 tests collected in0.09s"
+  },
+  "logs": [
+    "/private/tmp/bfs-recovery-producer-20260927.log",
+    "/private/tmp/bfs-supervision-final-scope-20260927.log",
+    "/private/tmp/bfs-supplement-42-collection-20260927.log"
+  ],
+  "preparation_failures": [
+    {
+      "counts": "4 failed,2 passed",
+      "cause": "synthetic old standard fixture lacked pytest.module required by new producer",
+      "fix": "materialize and pin test-owned pytest module"
+    },
+    {
+      "counts": "2 failed,4 passed",
+      "cause": "synthetic standard fixture used noncanonical stderr filename",
+      "fix": "materialize canonical supplemental pytest.stderr"
+    },
+    {
+      "counts": "1 failed,5 passed",
+      "cause": "synthetic input retained old standard proof.pending.json",
+      "fix": "remove test-owned inherited pending artifact before producer invocation"
+    }
+  ],
+  "remaining": "Independent scoped review and separate group operator preparation; then exact Git runtime export and actual Linux proofgroup. No empirical acceptance.",
+  "combined_command": {
+    "cwd": "/Users/yanrujhou/CLionProjects/EvolveSWDB",
+    "environment": {
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1"
+    },
+    "argv": [
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "tests/test_bfs_linux_fixture.py",
+      "tests/test_bfs_linux_fixture_audit.py",
+      "tests/test_bfs_simulator_recovery.py",
+      "tests/test_bfs_simulator_setup_recovery.py",
+      "tests/test_bfs_owned_execution.py",
+      "tests/test_bfs_owned_rss.py"
+    ],
+    "stdout_stderr": "/private/tmp/bfs-supervision-final-scope-20260927.log"
+  }
+}

@@ -1,0 +1,13 @@
+# Created: 2026-10-15 ET. Executed by test_summary_source_binding.py through swdb prove.
+id: summary-same-name-different-body
+adapter: summary_source_binding
+input:
+  original_return: 'return x < lo ? lo : (x > hi ? hi : x);'
+  changed_return: 'return 0;'
+failure_class: unsupported_construct
+cause: >-
+  The candidate's same-name clamp returns zero while the library implementation
+  preserves an in-range input. Both native views agree on the changed behavior,
+  but replacing that body with the unrelated proven summary falsely proves the
+  caller. Bind the actual global callee closure to the proof's fresh source,
+  method and evidence before importing its contract on CBMC or either Crux form.

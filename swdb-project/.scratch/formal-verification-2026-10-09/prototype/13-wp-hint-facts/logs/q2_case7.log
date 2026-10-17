@@ -1,0 +1,7 @@
+== q2_case7: frama-c q2_logic.c -cpp-extra-args=-DCASE=7 -wp -wp-cache none -wp-timeout 5 -wp-prover alt-ergo -then -report
+[kernel] Parsing q2_logic.c (with preprocessing)
+[kernel:annot-error] q2_logic.c:36: Failure: 
+  unbound logic function mg. Ignoring global annotation
+[kernel] User Error: warning annot-error treated as fatal error.
+[kernel] Frama-C aborted: invalid user input.
+exit=1

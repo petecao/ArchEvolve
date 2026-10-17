@@ -1,0 +1,2264 @@
+kind: evaluation
+schema_version: '0.4'
+id: bc-gem5-20261003-a1.timed-r1.baseline.aggregate
+status: draft
+created: '2026-10-04'
+updated: '2026-10-04'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: bc-gem5-20261003-a1.timed-r1.baseline.aggregate
+  protocol: bc-gem5-20261003-a1.protocol.e731422f9ab9f668
+  protocol_role: baseline
+  evaluations:
+  - bc-gem5-20261003-a1.timed-r1.baseline.evaluation
+outcome:
+  state: complete
+  stage: aggregation
+  reason: Exact completed simulator executions; no synthetic repetitions.
+stages:
+- stage: execution_identity
+  state: complete
+  started: '2026-10-04T04:26:00.916619+00:00'
+  finished: '2026-10-04T04:26:06.438978+00:00'
+  component_evaluation: bc-gem5-20261003-a1.timed-r1.baseline.evaluation
+- stage: checkpoint
+  state: complete
+  started: '2026-10-04T04:26:10.562125+00:00'
+  command:
+  - /data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt
+  - --outdir=/data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/checkpoint
+  - /data1/yanruj/DX100-bfs-e4fc4af/configs/deprecated/example/se.py
+  - --cpu-type
+  - AtomicSimpleCPU
+  - -n
+  - '4'
+  - --mem-size
+  - 16GB
+  - --max-checkpoints
+  - '1'
+  - --cmd
+  - /data1/yanruj/EvolveSWDB_builds/bc-gem5-20261003-a1.baseline.primary.build/bc
+  - --options
+  - -f /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/dx100-loader-inputs/dx100-gapbs-2ab1fb21b853f601d4e294adf186b5ef36a4df8a415d70eff150bb7e2d607160.sg
+    -l -n 1 -v -r 0
+  timeout_s: 1800
+  log: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/001-checkpoint.log
+  finished: '2026-10-04T04:27:34.230113+00:00'
+  host_wall_s: 79.52623699977994
+  returncode: 0
+  log_sha256: fac4d5a824066b1dbc99c91cd9943f104cb27042026fa226467bbef7282c9540
+  reason: null
+  sampled_peak_process_group_rss_kib: 178996
+  component_evaluation: bc-gem5-20261003-a1.timed-r1.baseline.evaluation
+- stage: simulation
+  state: complete
+  started: '2026-10-04T04:27:43.292667+00:00'
+  command:
+  - /data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt
+  - --debug-flags=MAATrace
+  - --debug-file=/data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/simulation/roi-debug.trace.gz
+  - --outdir=/data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/simulation
+  - /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/verification-runtime/scripts/dx100_bc_verify.py
+  - --cpu-type
+  - X86O3CPU
+  - -n
+  - '4'
+  - --mem-size
+  - 16GB
+  - --sys-clock
+  - 3.2GHz
+  - --cpu-clock
+  - 3.2GHz
+  - --caches
+  - --l1d_size=32kB
+  - --l1d_assoc=8
+  - --l1d-hwp-type=StridePrefetcher
+  - --l1d_mshrs=16
+  - --l1d_write_buffers=8
+  - --l1i_size=32kB
+  - --l1i_assoc=8
+  - --l1i-hwp-type=StridePrefetcher
+  - --l1i_mshrs=16
+  - --l1i_write_buffers=8
+  - --l2cache
+  - --l2_size=256kB
+  - --l2_assoc=4
+  - --l2-hwp-type=StridePrefetcher
+  - --l2_mshrs=32
+  - --l2_write_buffers=16
+  - --l3cache
+  - --l3_size=8MB
+  - --l3_assoc=16
+  - --l3_mshrs=256
+  - --l3_write_buffers=128
+  - --l3_ports
+  - '4'
+  - --cacheline_size=64
+  - --mem-type
+  - Ramulator2
+  - --ramulator-config
+  - /data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/example_gem5_config.yaml
+  - --mem-channels
+  - '2'
+  - --maa_ncbus_width
+  - '32'
+  - --prog-interval=1000
+  - --cmd
+  - /data1/yanruj/EvolveSWDB_builds/bc-gem5-20261003-a1.baseline.primary.build/bc
+  - --options
+  - -f /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/dx100-loader-inputs/dx100-gapbs-2ab1fb21b853f601d4e294adf186b5ef36a4df8a415d70eff150bb7e2d607160.sg
+    -l -n 1 -v -r 0
+  - --checkpoint-dir
+  - /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/checkpoint
+  - -r
+  - '1'
+  timeout_s: 7140
+  log: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/002-simulation.log
+  finished: '2026-10-04T04:34:37.051336+00:00'
+  host_wall_s: 409.5967994136736
+  returncode: 0
+  log_sha256: b30fcb1e0ea13f0d2f4d731118aff2a6d5b41d5963e0e8467942d84de527f7be
+  reason: null
+  sampled_peak_process_group_rss_kib: 31984180
+  component_evaluation: bc-gem5-20261003-a1.timed-r1.baseline.evaluation
+- stage: execution_observations
+  state: complete
+  started: '2026-10-04T04:34:46.217727+00:00'
+  finished: '2026-10-04T04:34:50.450345+00:00'
+  component_evaluation: bc-gem5-20261003-a1.timed-r1.baseline.evaluation
+timing:
+- source: 0
+  source_position: 0
+  repetition: 0
+  duration_s: 0.003074735468
+  roi: bc.complete_call.v1
+  basis: simulated
+  quantity: simulated_roi_seconds
+  binary_sha256: 2b5359be47b094b3053e6925c3ceccc62e5fa10e3b2331ceb56fce725e772f52
+  output: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/002-simulation.log
+  output_sha256: b30fcb1e0ea13f0d2f4d731118aff2a6d5b41d5963e0e8467942d84de527f7be
+  statistics_sha256: 1e72d57d41f8d03cefa2e3fc28727a536ed285b0bc3f342c6a8186eef2bf1c82
+  verified: true
+  evidence_kind: execution
+correctness:
+  state: passed
+  checks:
+  - state: passed
+    checker: dx100.bc.verifier.v2
+    execution: bc-gem5-20261003-a1.timed-r1.baseline.evaluation
+    binding:
+      model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+      simulator:
+        path: /data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt
+        sha256: f4038c88318ee09085b6c07f163094a07a31a256f21b652d4f3cfa046feb1f6b
+      binary:
+        path: /data1/yanruj/EvolveSWDB_builds/bc-gem5-20261003-a1.baseline.primary.build/bc
+        sha256: 2b5359be47b094b3053e6925c3ceccc62e5fa10e3b2331ceb56fce725e772f52
+      workload:
+        id: bc-gem5-20261003-kronecker14-s0.bba5ce8b1f8b84b2
+        source: 0
+        representation:
+          path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-kronecker14/graph.sg32
+          sha256: 2ab1fb21b853f601d4e294adf186b5ef36a4df8a415d70eff150bb7e2d607160
+      guest_cores: 4
+      guest_memory: 16GB
+      options: -f /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/dx100-loader-inputs/dx100-gapbs-2ab1fb21b853f601d4e294adf186b5ef36a4df8a415d70eff150bb7e2d607160.sg
+        -l -n 1 -v -r 0
+      entry_script_sha256: aacc6e624b7ab0e7b032d5cb913974fa790efdca84598bf468c11f14b9575d0f
+      roi: bc.complete_call.v1
+      candidate_build: bc-gem5-20261003-a1.baseline.primary.build
+      modeled_configuration:
+        mode: BASE
+        l3_size_mb: 8
+        l3_assoc: 16
+        tile_elements: 16384
+        guest_cores: 4
+        guest_memory: 16GB
+        cpu: X86O3CPU
+        clock_hz: 3200000000
+        model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        cache:
+          l1d_kib: 32
+          l1i_kib: 32
+          l1_assoc: 8
+          l2_kib: 256
+          l2_assoc: 4
+          l3_mib: 8
+          l3_assoc: 16
+          cacheline_bytes: 64
+          prefetcher: StridePrefetcher
+        memory:
+          model: Ramulator2
+          channels: 2
+          size: 16GB
+          configuration_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+        cpu_clock: 3.2GHz
+        ramulator_config_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+        command_arguments:
+        - --cpu-type
+        - X86O3CPU
+        - -n
+        - '4'
+        - --mem-size
+        - 16GB
+        - --sys-clock
+        - 3.2GHz
+        - --cpu-clock
+        - 3.2GHz
+        - --caches
+        - --l1d_size=32kB
+        - --l1d_assoc=8
+        - --l1d-hwp-type=StridePrefetcher
+        - --l1d_mshrs=16
+        - --l1d_write_buffers=8
+        - --l1i_size=32kB
+        - --l1i_assoc=8
+        - --l1i-hwp-type=StridePrefetcher
+        - --l1i_mshrs=16
+        - --l1i_write_buffers=8
+        - --l2cache
+        - --l2_size=256kB
+        - --l2_assoc=4
+        - --l2-hwp-type=StridePrefetcher
+        - --l2_mshrs=32
+        - --l2_write_buffers=16
+        - --l3cache
+        - --l3_size=8MB
+        - --l3_assoc=16
+        - --l3_mshrs=256
+        - --l3_write_buffers=128
+        - --l3_ports
+        - '4'
+        - --cacheline_size=64
+        - --mem-type
+        - Ramulator2
+        - --ramulator-config
+        - /data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/example_gem5_config.yaml
+        - --mem-channels
+        - '2'
+        - --maa_ncbus_width
+        - '32'
+        - --prog-interval=1000
+      hardware_target: dx100-e4fc4af-4c
+      loader_representation:
+        path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/dx100-loader-inputs/dx100-gapbs-2ab1fb21b853f601d4e294adf186b5ef36a4df8a415d70eff150bb7e2d607160.sg
+        sha256: 2ab1fb21b853f601d4e294adf186b5ef36a4df8a415d70eff150bb7e2d607160
+    target: dx100-e4fc4af-4c
+    configuration:
+      mode: BASE
+      l3_size_mb: 8
+      l3_assoc: 16
+      tile_elements: 16384
+      guest_cores: 4
+      guest_memory: 16GB
+      cpu: X86O3CPU
+      clock_hz: 3200000000
+      model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+      cache:
+        l1d_kib: 32
+        l1i_kib: 32
+        l1_assoc: 8
+        l2_kib: 256
+        l2_assoc: 4
+        l3_mib: 8
+        l3_assoc: 16
+        cacheline_bytes: 64
+        prefetcher: StridePrefetcher
+      memory:
+        model: Ramulator2
+        channels: 2
+        size: 16GB
+        configuration_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+      cpu_clock: 3.2GHz
+      ramulator_config_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+      command_arguments:
+      - --cpu-type
+      - X86O3CPU
+      - -n
+      - '4'
+      - --mem-size
+      - 16GB
+      - --sys-clock
+      - 3.2GHz
+      - --cpu-clock
+      - 3.2GHz
+      - --caches
+      - --l1d_size=32kB
+      - --l1d_assoc=8
+      - --l1d-hwp-type=StridePrefetcher
+      - --l1d_mshrs=16
+      - --l1d_write_buffers=8
+      - --l1i_size=32kB
+      - --l1i_assoc=8
+      - --l1i-hwp-type=StridePrefetcher
+      - --l1i_mshrs=16
+      - --l1i_write_buffers=8
+      - --l2cache
+      - --l2_size=256kB
+      - --l2_assoc=4
+      - --l2-hwp-type=StridePrefetcher
+      - --l2_mshrs=32
+      - --l2_write_buffers=16
+      - --l3cache
+      - --l3_size=8MB
+      - --l3_assoc=16
+      - --l3_mshrs=256
+      - --l3_write_buffers=128
+      - --l3_ports
+      - '4'
+      - --cacheline_size=64
+      - --mem-type
+      - Ramulator2
+      - --ramulator-config
+      - /data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/example_gem5_config.yaml
+      - --mem-channels
+      - '2'
+      - --maa_ncbus_width
+      - '32'
+      - --prog-interval=1000
+    timed_source:
+      path: /data1/yanruj/EvolveSWDB_sources/ee936dd99e7e8b26/bc-gem5-20261003-a1.baseline/source/benchmarks/gapbs/src/bc.cc
+      sha256: 9732327b347c5da72526923f44b4250afcd7816c3b0ca1d0c8a43cd1d77f36ea
+    verifier_source:
+      path: /data1/yanruj/EvolveSWDB_builds/bc-gem5-20261003-a1.baseline.primary.build/complete_call.cc
+      sha256: 05524bdfc17aaae21cf869a18b7f8a4e51f6e551f99e79fb5d251bae11184233
+      symbol: swdb_original::Graph::verify_scores
+      bounds_check: trusted original-CSR oracle checks exact score length, a non-vacuous source and finite
+        scores within float epsilon of serial Brandes
+    sealed_roi:
+      path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/simulation/roi-seal.json
+      sha256: 461512378538c46e7d7074c17a50f88b0845e0004e2d719dafdb53a4f1ed9595
+    output:
+      path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/002-simulation.log
+      sha256: b30fcb1e0ea13f0d2f4d731118aff2a6d5b41d5963e0e8467942d84de527f7be
+    requested_checks: 1
+    observed_verdicts:
+    - verdict: PASS
+      line: 267
+      after_seal: true
+    continuation:
+      checker: dx100.bc.verifier.v2
+      chunk_ticks: 1000000000
+      exit_cause: simulate() limit reached
+      exit_code: 0
+      exit_tick: 19802429860
+      exit_witness:
+        allowed_cpus: [system.switch_cpus0, system.switch_cpus1, system.switch_cpus2, system.switch_cpus3]
+        caller:
+          cpu: system.switch_cpus0
+          thread: 0
+        completed: true
+        enabled_tick: 13802429860
+        end_tick: 19802429860
+        events_after_exit: 4
+        exit_request:
+          call_line: 47
+          return_line: 48
+          return_value: 0
+          status: 0
+          tick: 18855452093
+        format: swdb.dx100.exit-witness.v1
+        initial_partial_calls: []
+        line_count: 52
+        pending_calls: []
+        progress_records:
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 3761060
+          ipc: '01.17721'
+          line: 9
+          tick: 14710410000
+          total_committed: 13594863
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 4088068
+          ipc: '01.27957'
+          line: 10
+          tick: 14710410000
+          total_committed: 15200213
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 4161686
+          ipc: '01.30261'
+          line: 11
+          tick: 14710410000
+          total_committed: 15263040
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 4179981
+          ipc: '01.30833'
+          line: 12
+          tick: 14710410000
+          total_committed: 12086134
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 13
+          tick: 15710410000
+          total_committed: 12086134
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 14
+          tick: 15710410000
+          total_committed: 15263040
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 15
+          tick: 15710410000
+          total_committed: 15200213
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 3794282
+          ipc: '01.18761'
+          line: 16
+          tick: 15710410000
+          total_committed: 17389145
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 4596088
+          ipc: '01.43858'
+          line: 17
+          tick: 16710410000
+          total_committed: 21985233
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 18
+          tick: 16710410000
+          total_committed: 15200213
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 19
+          tick: 16710410000
+          total_committed: 15263040
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 20
+          tick: 16710410000
+          total_committed: 12086134
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 23
+          tick: 17710410000
+          total_committed: 12086134
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 24
+          tick: 17710410000
+          total_committed: 15263040
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 25
+          tick: 17710410000
+          total_committed: 15200213
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 4815545
+          ipc: '01.50727'
+          line: 26
+          tick: 17710410000
+          total_committed: 26800778
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 3444253
+          ipc: '01.07805'
+          line: 27
+          tick: 18710410000
+          total_committed: 30245031
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 28
+          tick: 18710410000
+          total_committed: 15200213
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 29
+          tick: 18710410000
+          total_committed: 15263040
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 30
+          tick: 18710410000
+          total_committed: 12086134
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 49
+          tick: 19710410000
+          total_committed: 12086134
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 50
+          tick: 19710410000
+          total_committed: 15263040
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 51
+          tick: 19710410000
+          total_committed: 15200213
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 948004
+          ipc: '0.296725'
+          line: 52
+          tick: 19710410000
+          total_committed: 31193035
+        trace:
+          bytes: 5516
+          path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/simulation/post-roi-syscalls.log
+          sha256: 9c346f77880937ae43cafe84a1b22a576e93efae343825e62392cea881764753
+      max_ticks: 100000000000000
+      normal_exit_observed: false
+      parser_sha256: 89a48e42389a47c0f8466093c52dea7c032bf276d8470172fbe88199767c65de
+      post_roi_trace:
+        bytes: 5516
+        disabled_format_flags: [FmtTicksOff, FmtStackTrace]
+        disabled_roi_flags: [MAATrace, MAARangeFuser, MAAIndirect]
+        enabled_tick: 13802429860
+        flag: SyscallBase
+        format_flags: [FmtFlag]
+        output: separate_simulator_trace
+        path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/simulation/post-roi-syscalls.log
+        scope: post-seal verifier continuation only
+        sha256: 9c346f77880937ae43cafe84a1b22a576e93efae343825e62392cea881764753
+      simulated_ticks: 6000000000
+      state: finished
+      stop_reason: exit_witness
+    score_results:
+    - source: 0
+      vertices: 16381
+      score_count: 16381
+      score_fnv1a64: 9ec6d9845db5d49c
+      line: 266
+      after_seal: true
+      fingerprint_kind: noncryptographic FNV-1a over little-endian IEEE single score bits
+    coverage:
+      state: observed
+      tick_interval: [10725986038, 13800721506]
+      completed_trace_units: {}
+      address_space_contract:
+        model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        instruction_baseAddr: guest virtual; compared only with returned parent.data()
+        recvData_addr: translated physical cache line; compared only with other physical words
+        source_evidence:
+        - path: src/mem/MAA/IF.cc
+          sha256: fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561
+          lines: [38, 63]
+        - path: src/mem/MAA/IndirectAccess.cc
+          sha256: 7e238a370f25ff5a7a1211548630a291d6358c32d8a199fc58bfacd37d1d35db
+          lines: [494, 505]
+      range_output_tile_sizes: {}
+      full_tiles:
+        state: unobserved
+        count: 0
+        capacity: 16384
+      tail_tiles:
+        state: unobserved
+        count: 0
+        capacity: 16384
+      competing_parent_updates:
+        state: unobserved
+        count: 0
+        samples: []
+        parent_storage:
+          virtual_address: 370000
+          count: 16381
+          line: 255
+          stream: stdout
+        target_tracking_truncated: false
+        definition: Different signed32 vector-store values observed at the same physical word, from instructions
+          whose virtual base is the returned parent array.
+      limits: Positive counts prove these finite observed cases only. Graph topology is not substituted
+        for executed updates; traces outside the selected ROI are excluded.
+      debug_trace:
+        format: swdb.dx100.debug-trace.v1
+        transport: gem5-gzip.v1
+        path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/simulation/roi-debug.trace.gz
+        sha256: ed5ed6fe9c98a6d4602c1759e003a756546e8e4a8bd49f34d2e189017fea2d30
+        bytes: 337
+        uncompressed_sha256: e241783f802bca2f64809f3f797c670ff685162aae81dd8445afa9910e35c417
+        uncompressed_bytes: 1610
+        lines: 12
+      accelerator_executed: false
+      instruction_counters: {}
+    scope: This execution only; finite graph/source checking is not a proof for all inputs.
+    completion_sequence:
+      kind: protected_candidate
+      times: []
+      observed: true
+    passed: true
+    source: 0
+    source_position: 0
+    repetition: 0
+    binary_sha256: 2b5359be47b094b3053e6925c3ceccc62e5fa10e3b2331ceb56fce725e772f52
+    graph_sha256: ef0b65a15a9acab6bd8ddd9af87d80a7b52fb7f692f6f6a76b0a84f8dcdaf8b5
+    output_sha256: b30fcb1e0ea13f0d2f4d731118aff2a6d5b41d5963e0e8467942d84de527f7be
+profiling:
+  state: component_profiles
+  regions: []
+raw_artifacts:
+- host: mbit10
+  path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation
+  kind: dx100_execute
+- host: mbit10
+  kind: host_observation
+  path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/host-observation.json
+  sha256: 4856a73277d33df80857c3d7d1d83899095f4d469d7f9e712ef3946b0b9c6956
+  host_wall_s: 0.0827475804835558
+  evidence_kind: execution
+  unavailable_commands: 2
+- host: mbit10
+  kind: process_group_memory
+  path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/001-checkpoint.memory.jsonl
+  sha256: 90a7832817a3771e44d05728175e1d9c9fe81fbab762c5f7bdcbc94677b20ebc
+- host: mbit10
+  kind: process_group_memory
+  path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/002-simulation.memory.jsonl
+  sha256: cd489d4437f4f6ff4e6e7a871500a6ff1ae09981e41a3d22f7f0a0c093a7c9e2
+- host: mbit10
+  kind: simulator_host_memory_phases
+  path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/simulation/host-memory-phases.jsonl
+  sha256: c158f8ba287b57e27743b7d72fc88d3c7069a79ae7e1723cb8a90e5f85138837
+- kind: simulation
+  artifact:
+    path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/simulation
+    sha256: 9f33a27d34ec08f8140fe426ee73bd9510312dc1deba5a1581c94cb2dbe0895e
+    files:
+    - path: citations.bib
+      sha256: fdc8f17efa3fbc1401cc7e2abef63bcc3b99c38297ee69e4a39ed578be1bc8c0
+      bytes: 3951
+      executable: false
+    - path: config.ini
+      sha256: 9a9e99bd6bec05d9be5a78030c0eeb9ee2adb4d82a2cd328438966525ba85d35
+      bytes: 139170
+      executable: false
+    - path: config.json
+      sha256: a82e577889ddb52471551054af8b483e0beaa95cecd0d60806c25eba828c409d
+      bytes: 395663
+      executable: false
+    - path: fs/proc/cpuinfo
+      sha256: 6a3bb84922536b0d0c374a7e29f19497ff167cb62b315ace0c4757a28237686f
+      bytes: 1576
+      executable: false
+    - path: fs/proc/stat
+      sha256: 77f984b7e5466538244ea688c0225d6ce4be8c9571c181dd59f63990e028ea51
+      bytes: 94
+      executable: false
+    - path: fs/sys/devices/system/cpu/online
+      sha256: f0e7dd3ebbfd0bb1bfeca50048635775fe0cc4eae4280a9a924de9450351064b
+      bytes: 3
+      executable: false
+    - path: fs/sys/devices/system/cpu/possible
+      sha256: f0e7dd3ebbfd0bb1bfeca50048635775fe0cc4eae4280a9a924de9450351064b
+      bytes: 3
+      executable: false
+    - path: host-memory-phases.jsonl
+      sha256: c158f8ba287b57e27743b7d72fc88d3c7069a79ae7e1723cb8a90e5f85138837
+      bytes: 10235
+      executable: false
+    - path: post-roi-syscalls.log
+      sha256: 9c346f77880937ae43cafe84a1b22a576e93efae343825e62392cea881764753
+      bytes: 5516
+      executable: false
+    - path: roi-debug.trace.gz
+      sha256: ed5ed6fe9c98a6d4602c1759e003a756546e8e4a8bd49f34d2e189017fea2d30
+      bytes: 337
+      executable: false
+    - path: roi-seal.json
+      sha256: 461512378538c46e7d7074c17a50f88b0845e0004e2d719dafdb53a4f1ed9595
+      bytes: 8879
+      executable: false
+    - path: roi-stats.txt
+      sha256: 1e72d57d41f8d03cefa2e3fc28727a536ed285b0bc3f342c6a8186eef2bf1c82
+      bytes: 1321123
+      executable: false
+    - path: stats.txt
+      sha256: fcf3593b1154f0db2e0e9c8fbcc76f2e3375eef55f0eadc03777aab4fa26d6bf
+      bytes: 2643149
+      executable: false
+component_evaluations:
+- evaluation: bc-gem5-20261003-a1.timed-r1.baseline.evaluation
+  sha256: 709967b64a28e808065b9bba7984b98b245d8fcaff7adaeb9756263c65dd05d5
+gain_claim: false
+evidence_kind: execution
+candidate: bc-gem5-20261003-a1.baseline
+source_snapshot: bc-gem5-20261003-a1.full.source
+implementation: dx100-bc-scalar
+machine: mbit10
+build:
+  binary: /data1/yanruj/EvolveSWDB_builds/bc-gem5-20261003-a1.baseline.primary.build/bc
+  binary_sha256: 2b5359be47b094b3053e6925c3ceccc62e5fa10e3b2331ceb56fce725e772f52
+  simulator: /data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt
+  simulator_sha256: f4038c88318ee09085b6c07f163094a07a31a256f21b652d4f3cfa046feb1f6b
+  model_build:
+    evaluation: bfs-dx100-build-20260925-a2
+    sha256: 13d277a961e44fe0ee254b4685126572fb06394fea455e3e1d450626cc535cea
+  compiler: /usr/bin/g++-13
+  compiler_version:
+  - g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+  - Copyright (C) 2023 Free Software Foundation, Inc.
+  flags:
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -g
+  - -fopenmp
+  - -DGEM5
+  - -DNUM_CORES=4
+  - -DTILE_SIZE=16384
+  adapter: dx100.complete_call.v2
+context:
+  backend: dx100-gem5-se
+  target: dx100-e4fc4af-4c
+  target_sha256: 94cf9373c255c1c36d4b6f622124aec90e8bd485d66fa2af996d6e46c91e04e1
+  model:
+    id: dx100-gem5
+    revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  interface:
+    id: dx100-mmio
+    version: 1.0-e4fc4af
+  model_root: /data1/yanruj/DX100-bfs-e4fc4af
+  host: mbit10
+  lane: 'mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 449)'
+  budget:
+    total_seconds: 9000
+    checkpoint_seconds: 1800
+    run_seconds: 7140
+    memory_gib: 36
+    storage_gib: 8
+  load_average: [1.40771484375, 1.10791015625, 1.12158203125]
+  roi: bc.complete_call.v1
+  basis: simulated
+  dispatch_preflight:
+    disk: /data1
+    runs_folder: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1
+    free_bytes: 43555790848
+    memory_node: 0
+    free_memory_bytes: 34364411904
+    secondary_free_bytes: 78837571584
+    node_memory_stats_bytes:
+      MemTotal: 66951016448
+      MemFree: 34364411904
+      Inactive(file): 22120509440
+      Mapped: 973967360
+      Shmem: 6590464
+      Dirty: 589824
+      Writeback: 0
+      Unevictable: 40005632
+    node_zone_reserve_bytes: 450916352
+    node_managed_memory_bytes: 66951016448
+    estimated_memory_capacity_bytes: 40619122688
+    memory_capacity_basis: node_memfree_plus_conservative_inactive_file.v1
+    inactive_file_credit_bytes: 10549678080
+    node_memory_reserve_bytes: 4294967296
+    format: swdb.dispatch-preflight.v1
+    observed_at: '2026-10-04T04:26:00.831481+00:00'
+    planned_raw_bytes: 8589934592
+    reserve_bytes: 21474836480
+    memory_budget_bytes: 38654705664
+    state: admitted
+  host_observation:
+    path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/host-observation.json
+    sha256: 4856a73277d33df80857c3d7d1d83899095f4d469d7f9e712ef3946b0b9c6956
+    host_wall_s: 0.0827475804835558
+    evidence_kind: execution
+    unavailable_commands: 2
+  application: dx100-gapbs
+  workload:
+    id: bc-gem5-20261003-kronecker14-s0.bba5ce8b1f8b84b2
+    canonical_sha256: ef0b65a15a9acab6bd8ddd9af87d80a7b52fb7f692f6f6a76b0a84f8dcdaf8b5
+    sources: [0]
+    family: kronecker
+    representation:
+      id: bfs-20260925-kronecker14.dx100
+      path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-kronecker14/graph.sg32
+      sha256: 2ab1fb21b853f601d4e294adf186b5ef36a4df8a415d70eff150bb7e2d607160
+      format: gapbs_sg32le
+      application: dx100-gapbs
+      canonical_sha256: ef0b65a15a9acab6bd8ddd9af87d80a7b52fb7f692f6f6a76b0a84f8dcdaf8b5
+      bytes: 1768977
+      loader: swdb.gapbs-representation.v1
+      adjacency_verified: true
+  graph_verification:
+    contract: swdb.bc.original-adjacency.v1
+    input_format: gapbs.sg32
+    byte_order: little
+    adjacency: outgoing CSR from exact registered serialized input
+    maximum_extra_bytes: 2147483648
+    preload: before checkpoint and ROI
+    verification: after ROI on exact returned score buffer; serial Brandes in the source's float types
+    count_type: float
+    allocation: oracle adjacency before ROI; Brandes work arrays in the post-ROI continuation
+  protected_bc_verifier:
+    path: /data1/yanruj/EvolveSWDB_sources/ee936dd99e7e8b26/bc-gem5-20261003-a1.baseline/source/benchmarks/gapbs/src/bc.cc
+    sha256: 9732327b347c5da72526923f44b4250afcd7816c3b0ca1d0c8a43cd1d77f36ea
+    symbol: BCVerifier
+    protected_text_sha256: 016bceefed63c691952d9d9e3ee3e2046c95306196bbcebbbe37c41a31a272b4
+    bounds_check: trusted driver checks the returned score length before the original-graph oracle
+  timed_source:
+    path: /data1/yanruj/EvolveSWDB_sources/ee936dd99e7e8b26/bc-gem5-20261003-a1.baseline/source/benchmarks/gapbs/src/bc.cc
+    sha256: 9732327b347c5da72526923f44b4250afcd7816c3b0ca1d0c8a43cd1d77f36ea
+  verifier_source:
+    path: /data1/yanruj/EvolveSWDB_builds/bc-gem5-20261003-a1.baseline.primary.build/complete_call.cc
+    sha256: 05524bdfc17aaae21cf869a18b7f8a4e51f6e551f99e79fb5d251bae11184233
+    symbol: swdb_original::Graph::verify_scores
+    bounds_check: trusted original-CSR oracle checks exact score length, a non-vacuous source and finite
+      scores within float epsilon of serial Brandes
+  candidate_build: bc-gem5-20261003-a1.baseline.primary.build
+  candidate_driver:
+    path: /data1/yanruj/EvolveSWDB_builds/bc-gem5-20261003-a1.baseline.primary.build/complete_call.cc
+    sha256: 05524bdfc17aaae21cf869a18b7f8a4e51f6e551f99e79fb5d251bae11184233
+  suppressed_internal_events: [m5_reset_stats, m5_dump_stats, m5_work_begin, m5_work_end, m5_exit]
+  candidate_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  loader_input:
+    format: swdb.dx100.loader-input.v1
+    application: dx100-gapbs
+    serialization: gapbs_sg32le
+    original:
+      path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-kronecker14/graph.sg32
+      sha256: 2ab1fb21b853f601d4e294adf186b5ef36a4df8a415d70eff150bb7e2d607160
+    alias:
+      path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/dx100-loader-inputs/dx100-gapbs-2ab1fb21b853f601d4e294adf186b5ef36a4df8a415d70eff150bb7e2d607160.sg
+      sha256: 2ab1fb21b853f601d4e294adf186b5ef36a4df8a415d70eff150bb7e2d607160
+    provenance:
+      method: existing_verified_alias
+      storage_charge_bytes: 0
+  configuration:
+    mode: BASE
+    l3_size_mb: 8
+    l3_assoc: 16
+    tile_elements: 16384
+    guest_cores: 4
+    guest_memory: 16GB
+    cpu: X86O3CPU
+    clock_hz: 3200000000
+    model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+    cache:
+      l1d_kib: 32
+      l1i_kib: 32
+      l1_assoc: 8
+      l2_kib: 256
+      l2_assoc: 4
+      l3_mib: 8
+      l3_assoc: 16
+      cacheline_bytes: 64
+      prefetcher: StridePrefetcher
+    memory:
+      model: Ramulator2
+      channels: 2
+      size: 16GB
+      configuration_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+    cpu_clock: 3.2GHz
+    ramulator_config_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+    command_arguments:
+    - --cpu-type
+    - X86O3CPU
+    - -n
+    - '4'
+    - --mem-size
+    - 16GB
+    - --sys-clock
+    - 3.2GHz
+    - --cpu-clock
+    - 3.2GHz
+    - --caches
+    - --l1d_size=32kB
+    - --l1d_assoc=8
+    - --l1d-hwp-type=StridePrefetcher
+    - --l1d_mshrs=16
+    - --l1d_write_buffers=8
+    - --l1i_size=32kB
+    - --l1i_assoc=8
+    - --l1i-hwp-type=StridePrefetcher
+    - --l1i_mshrs=16
+    - --l1i_write_buffers=8
+    - --l2cache
+    - --l2_size=256kB
+    - --l2_assoc=4
+    - --l2-hwp-type=StridePrefetcher
+    - --l2_mshrs=32
+    - --l2_write_buffers=16
+    - --l3cache
+    - --l3_size=8MB
+    - --l3_assoc=16
+    - --l3_mshrs=256
+    - --l3_write_buffers=128
+    - --l3_ports
+    - '4'
+    - --cacheline_size=64
+    - --mem-type
+    - Ramulator2
+    - --ramulator-config
+    - /data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/example_gem5_config.yaml
+    - --mem-channels
+    - '2'
+    - --maa_ncbus_width
+    - '32'
+    - --prog-interval=1000
+  backend_configuration:
+    mode: BASE
+    l3_size_mb: 8
+    l3_assoc: 16
+    tile_elements: 16384
+    guest_cores: 4
+    guest_memory: 16GB
+    cpu: X86O3CPU
+    clock_hz: 3200000000
+    model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+    cache:
+      l1d_kib: 32
+      l1i_kib: 32
+      l1_assoc: 8
+      l2_kib: 256
+      l2_assoc: 4
+      l3_mib: 8
+      l3_assoc: 16
+      cacheline_bytes: 64
+      prefetcher: StridePrefetcher
+    memory:
+      model: Ramulator2
+      channels: 2
+      size: 16GB
+      configuration_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+    cpu_clock: 3.2GHz
+    ramulator_config_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+    command_arguments:
+    - --cpu-type
+    - X86O3CPU
+    - -n
+    - '4'
+    - --mem-size
+    - 16GB
+    - --sys-clock
+    - 3.2GHz
+    - --cpu-clock
+    - 3.2GHz
+    - --caches
+    - --l1d_size=32kB
+    - --l1d_assoc=8
+    - --l1d-hwp-type=StridePrefetcher
+    - --l1d_mshrs=16
+    - --l1d_write_buffers=8
+    - --l1i_size=32kB
+    - --l1i_assoc=8
+    - --l1i-hwp-type=StridePrefetcher
+    - --l1i_mshrs=16
+    - --l1i_write_buffers=8
+    - --l2cache
+    - --l2_size=256kB
+    - --l2_assoc=4
+    - --l2-hwp-type=StridePrefetcher
+    - --l2_mshrs=32
+    - --l2_write_buffers=16
+    - --l3cache
+    - --l3_size=8MB
+    - --l3_assoc=16
+    - --l3_mshrs=256
+    - --l3_write_buffers=128
+    - --l3_ports
+    - '4'
+    - --cacheline_size=64
+    - --mem-type
+    - Ramulator2
+    - --ramulator-config
+    - /data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/example_gem5_config.yaml
+    - --mem-channels
+    - '2'
+    - --maa_ncbus_width
+    - '32'
+    - --prog-interval=1000
+  execution_binding:
+    model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+    simulator:
+      path: /data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt
+      sha256: f4038c88318ee09085b6c07f163094a07a31a256f21b652d4f3cfa046feb1f6b
+    binary:
+      path: /data1/yanruj/EvolveSWDB_builds/bc-gem5-20261003-a1.baseline.primary.build/bc
+      sha256: 2b5359be47b094b3053e6925c3ceccc62e5fa10e3b2331ceb56fce725e772f52
+    workload:
+      id: bc-gem5-20261003-kronecker14-s0.bba5ce8b1f8b84b2
+      source: 0
+      representation:
+        path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-kronecker14/graph.sg32
+        sha256: 2ab1fb21b853f601d4e294adf186b5ef36a4df8a415d70eff150bb7e2d607160
+    guest_cores: 4
+    guest_memory: 16GB
+    options: -f /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/dx100-loader-inputs/dx100-gapbs-2ab1fb21b853f601d4e294adf186b5ef36a4df8a415d70eff150bb7e2d607160.sg
+      -l -n 1 -v -r 0
+    entry_script_sha256: aacc6e624b7ab0e7b032d5cb913974fa790efdca84598bf468c11f14b9575d0f
+    roi: bc.complete_call.v1
+    candidate_build: bc-gem5-20261003-a1.baseline.primary.build
+    modeled_configuration:
+      mode: BASE
+      l3_size_mb: 8
+      l3_assoc: 16
+      tile_elements: 16384
+      guest_cores: 4
+      guest_memory: 16GB
+      cpu: X86O3CPU
+      clock_hz: 3200000000
+      model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+      cache:
+        l1d_kib: 32
+        l1i_kib: 32
+        l1_assoc: 8
+        l2_kib: 256
+        l2_assoc: 4
+        l3_mib: 8
+        l3_assoc: 16
+        cacheline_bytes: 64
+        prefetcher: StridePrefetcher
+      memory:
+        model: Ramulator2
+        channels: 2
+        size: 16GB
+        configuration_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+      cpu_clock: 3.2GHz
+      ramulator_config_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+      command_arguments:
+      - --cpu-type
+      - X86O3CPU
+      - -n
+      - '4'
+      - --mem-size
+      - 16GB
+      - --sys-clock
+      - 3.2GHz
+      - --cpu-clock
+      - 3.2GHz
+      - --caches
+      - --l1d_size=32kB
+      - --l1d_assoc=8
+      - --l1d-hwp-type=StridePrefetcher
+      - --l1d_mshrs=16
+      - --l1d_write_buffers=8
+      - --l1i_size=32kB
+      - --l1i_assoc=8
+      - --l1i-hwp-type=StridePrefetcher
+      - --l1i_mshrs=16
+      - --l1i_write_buffers=8
+      - --l2cache
+      - --l2_size=256kB
+      - --l2_assoc=4
+      - --l2-hwp-type=StridePrefetcher
+      - --l2_mshrs=32
+      - --l2_write_buffers=16
+      - --l3cache
+      - --l3_size=8MB
+      - --l3_assoc=16
+      - --l3_mshrs=256
+      - --l3_write_buffers=128
+      - --l3_ports
+      - '4'
+      - --cacheline_size=64
+      - --mem-type
+      - Ramulator2
+      - --ramulator-config
+      - /data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/example_gem5_config.yaml
+      - --mem-channels
+      - '2'
+      - --maa_ncbus_width
+      - '32'
+      - --prog-interval=1000
+    hardware_target: dx100-e4fc4af-4c
+    loader_representation:
+      path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/dx100-loader-inputs/dx100-gapbs-2ab1fb21b853f601d4e294adf186b5ef36a4df8a415d70eff150bb7e2d607160.sg
+      sha256: 2ab1fb21b853f601d4e294adf186b5ef36a4df8a415d70eff150bb7e2d607160
+  execution_binding_sha256: 28bf08555e432d0d0c0d770914e926a570a51834f0692a9a1529b6fd87f4d630
+  source: 0
+  sources: [0]
+  threads: 4
+  verification_runtime:
+    format: swdb.dx100.verification-runtime.v1
+    files:
+    - source:
+        code_root: /data1/yanruj/ArchEvolve/swdb-project
+        repository_relative_path: scripts/dx100_bc_verify.py
+        copied_sha256: 7b4004302b22c219cd46f1f7fe507a5f149320ff4385452b665c63f9846305e2
+      snapshot:
+        path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/verification-runtime/scripts/dx100_bc_verify.py
+        sha256: 7b4004302b22c219cd46f1f7fe507a5f149320ff4385452b665c63f9846305e2
+    - source:
+        code_root: /data1/yanruj/ArchEvolve/swdb-project
+        repository_relative_path: scripts/dx100_host_memory.py
+        copied_sha256: 655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd
+      snapshot:
+        path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/verification-runtime/scripts/dx100_host_memory.py
+        sha256: 655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd
+    - source:
+        code_root: /data1/yanruj/ArchEvolve/swdb-project
+        repository_relative_path: swdb/dx100_witness.py
+        copied_sha256: 89a48e42389a47c0f8466093c52dea7c032bf276d8470172fbe88199767c65de
+      snapshot:
+        path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/verification-runtime/swdb/dx100_witness.py
+        sha256: 89a48e42389a47c0f8466093c52dea7c032bf276d8470172fbe88199767c65de
+    source_paths_are_provenance_only: true
+  verification_parser:
+    path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/verification-runtime/swdb/dx100_witness.py
+    sha256: 89a48e42389a47c0f8466093c52dea7c032bf276d8470172fbe88199767c65de
+  verification_driver:
+    path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/verification-runtime/scripts/dx100_bc_verify.py
+    sha256: 7b4004302b22c219cd46f1f7fe507a5f149320ff4385452b665c63f9846305e2
+  host_memory_observer:
+    path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/verification-runtime/scripts/dx100_host_memory.py
+    sha256: 655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd
+    sample_interval_seconds: 5
+    scope: host process group and bounded phase observations; no modeled changes
+  trace_transport: gem5-gzip.v1
+  instrumentation:
+    treatment: primary
+    roi: bc.complete_call.v1
+    suppressed_internal_events: [m5_reset_stats, m5_dump_stats, m5_work_begin, m5_work_end, m5_exit]
+    verification: same_guest_post_roi
+    debug_flags: MAATrace
+    graph_verification:
+      contract: swdb.bc.original-adjacency.v1
+      input_format: gapbs.sg32
+      byte_order: little
+      adjacency: outgoing CSR from exact registered serialized input
+      maximum_extra_bytes: 2147483648
+      preload: before checkpoint and ROI
+      verification: after ROI on exact returned score buffer; serial Brandes in the source's float types
+      count_type: float
+      allocation: oracle adjacency before ROI; Brandes work arrays in the post-ROI continuation
+    verifier_runtime:
+      driver_sha256: 7b4004302b22c219cd46f1f7fe507a5f149320ff4385452b665c63f9846305e2
+      parser_sha256: 89a48e42389a47c0f8466093c52dea7c032bf276d8470172fbe88199767c65de
+      observer_sha256: 655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd
+    post_roi_trace:
+      flag: SyscallBase
+      scope: post-seal verifier continuation only
+      output: separate_simulator_trace
+      format_flags: [FmtFlag]
+      disabled_format_flags: [FmtTicksOff, FmtStackTrace]
+      disabled_roi_flags: [MAATrace, MAARangeFuser, MAAIndirect]
+      chunk_ticks: 1000000000
+  verifier: dx100.bc.verifier.v2
+  repetitions: 1
+  protocol: bc-gem5-20261003-a1.protocol.e731422f9ab9f668
+  protocol_binding:
+    protocol: bc-gem5-20261003-a1.protocol.e731422f9ab9f668
+    frozen_sha256: e731422f9ab9f668e659583eb4c8c3f0c3ee249d2e39a51092d5268eb9980909
+    workload_id: bc-gem5-20261003-kronecker14-s0.bba5ce8b1f8b84b2
+    workload_sha256: bba5ce8b1f8b84b208c3cf0096f1cdd628f8ce7d04d571e314561a200f056176
+    role: baseline
+    frozen_at: '2026-10-04T03:47:41.347079+00:00'
+    bound_at: '2026-10-04T04:26:06.438690+00:00'
+    settings_sha256: b09a3f732a44022d3b98a79f7587db4acd8b3e12f95f64d391a64dce46649b34
+  adapter: dx100.complete_call.v2
+  checkpoint_manifest:
+    path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/checkpoint-manifest.json
+    sha256: 6aac12622ee011f8f6176d5384c16daf119de92c79d21a06fbbbef082db9465b
+  debug_flags: MAATrace
+  sealed_roi:
+    path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/simulation/roi-seal.json
+    sha256: 461512378538c46e7d7074c17a50f88b0845e0004e2d719dafdb53a4f1ed9595
+    driver_sha256: 7b4004302b22c219cd46f1f7fe507a5f149320ff4385452b665c63f9846305e2
+    execution_binding_sha256: 28bf08555e432d0d0c0d770914e926a570a51834f0692a9a1529b6fd87f4d630
+    format: swdb.dx100.roi-seal.v1
+    host_memory_observer_sha256: 655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd
+    roi_exit_cause: m5_exit instruction encountered
+    roi_exit_tick: 13802429860
+    statistics:
+      path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/simulation/roi-stats.txt
+      sha256: 1e72d57d41f8d03cefa2e3fc28727a536ed285b0bc3f342c6a8186eef2bf1c82
+    verification:
+      checker: dx100.bc.verifier.v2
+      chunk_ticks: 1000000000
+      exit_cause: simulate() limit reached
+      exit_code: 0
+      exit_tick: 19802429860
+      exit_witness:
+        allowed_cpus: [system.switch_cpus0, system.switch_cpus1, system.switch_cpus2, system.switch_cpus3]
+        caller:
+          cpu: system.switch_cpus0
+          thread: 0
+        completed: true
+        enabled_tick: 13802429860
+        end_tick: 19802429860
+        events_after_exit: 4
+        exit_request:
+          call_line: 47
+          return_line: 48
+          return_value: 0
+          status: 0
+          tick: 18855452093
+        format: swdb.dx100.exit-witness.v1
+        initial_partial_calls: []
+        line_count: 52
+        pending_calls: []
+        progress_records:
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 3761060
+          ipc: '01.17721'
+          line: 9
+          tick: 14710410000
+          total_committed: 13594863
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 4088068
+          ipc: '01.27957'
+          line: 10
+          tick: 14710410000
+          total_committed: 15200213
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 4161686
+          ipc: '01.30261'
+          line: 11
+          tick: 14710410000
+          total_committed: 15263040
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 4179981
+          ipc: '01.30833'
+          line: 12
+          tick: 14710410000
+          total_committed: 12086134
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 13
+          tick: 15710410000
+          total_committed: 12086134
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 14
+          tick: 15710410000
+          total_committed: 15263040
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 15
+          tick: 15710410000
+          total_committed: 15200213
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 3794282
+          ipc: '01.18761'
+          line: 16
+          tick: 15710410000
+          total_committed: 17389145
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 4596088
+          ipc: '01.43858'
+          line: 17
+          tick: 16710410000
+          total_committed: 21985233
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 18
+          tick: 16710410000
+          total_committed: 15200213
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 19
+          tick: 16710410000
+          total_committed: 15263040
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 20
+          tick: 16710410000
+          total_committed: 12086134
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 23
+          tick: 17710410000
+          total_committed: 12086134
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 24
+          tick: 17710410000
+          total_committed: 15263040
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 25
+          tick: 17710410000
+          total_committed: 15200213
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 4815545
+          ipc: '01.50727'
+          line: 26
+          tick: 17710410000
+          total_committed: 26800778
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 3444253
+          ipc: '01.07805'
+          line: 27
+          tick: 18710410000
+          total_committed: 30245031
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 28
+          tick: 18710410000
+          total_committed: 15200213
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 29
+          tick: 18710410000
+          total_committed: 15263040
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 30
+          tick: 18710410000
+          total_committed: 12086134
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 49
+          tick: 19710410000
+          total_committed: 12086134
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 50
+          tick: 19710410000
+          total_committed: 15263040
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 51
+          tick: 19710410000
+          total_committed: 15200213
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 948004
+          ipc: '0.296725'
+          line: 52
+          tick: 19710410000
+          total_committed: 31193035
+        trace:
+          bytes: 5516
+          path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/simulation/post-roi-syscalls.log
+          sha256: 9c346f77880937ae43cafe84a1b22a576e93efae343825e62392cea881764753
+      max_ticks: 100000000000000
+      normal_exit_observed: false
+      parser_sha256: 89a48e42389a47c0f8466093c52dea7c032bf276d8470172fbe88199767c65de
+      post_roi_trace:
+        bytes: 5516
+        disabled_format_flags: [FmtTicksOff, FmtStackTrace]
+        disabled_roi_flags: [MAATrace, MAARangeFuser, MAAIndirect]
+        enabled_tick: 13802429860
+        flag: SyscallBase
+        format_flags: [FmtFlag]
+        output: separate_simulator_trace
+        path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/simulation/post-roi-syscalls.log
+        scope: post-seal verifier continuation only
+        sha256: 9c346f77880937ae43cafe84a1b22a576e93efae343825e62392cea881764753
+      simulated_ticks: 6000000000
+      state: finished
+      stop_reason: exit_witness
+    verification_parser:
+      path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/verification-runtime/swdb/dx100_witness.py
+      sha256: 89a48e42389a47c0f8466093c52dea7c032bf276d8470172fbe88199767c65de
+  statistics:
+    path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/simulation/roi-stats.txt
+    sha256: 1e72d57d41f8d03cefa2e3fc28727a536ed285b0bc3f342c6a8186eef2bf1c82
+  post_roi_trace:
+    bytes: 5516
+    disabled_format_flags: [FmtTicksOff, FmtStackTrace]
+    disabled_roi_flags: [MAATrace, MAARangeFuser, MAAIndirect]
+    enabled_tick: 13802429860
+    flag: SyscallBase
+    format_flags: [FmtFlag]
+    output: separate_simulator_trace
+    path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/simulation/post-roi-syscalls.log
+    scope: post-seal verifier continuation only
+    sha256: 9c346f77880937ae43cafe84a1b22a576e93efae343825e62392cea881764753
+  actual_configuration:
+    path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/simulation/config.ini
+    sha256: 9a9e99bd6bec05d9be5a78030c0eeb9ee2adb4d82a2cd328438966525ba85d35
+  debug_trace:
+    format: swdb.dx100.debug-trace.v1
+    transport: gem5-gzip.v1
+    path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/simulation/roi-debug.trace.gz
+    sha256: ed5ed6fe9c98a6d4602c1759e003a756546e8e4a8bd49f34d2e189017fea2d30
+    bytes: 337
+    uncompressed_sha256: e241783f802bca2f64809f3f797c670ff685162aae81dd8445afa9910e35c417
+    uncompressed_bytes: 1610
+    lines: 12
+  exit_tick: 13802429860
+  exit_cause: m5_exit instruction encountered
+  roi_ticks:
+    sim_ticks: 3074735468
+    tick_frequency_hz: 1000000000000
+    duration_s: 0.003074735468
+    unit: seconds
+    conversion: simTicks / simFreq; no fixed clock-period divisor
+  component_bindings:
+    bc-gem5-20261003-a1.timed-r1.baseline.evaluation:
+      model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+      simulator:
+        path: /data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt
+        sha256: f4038c88318ee09085b6c07f163094a07a31a256f21b652d4f3cfa046feb1f6b
+      binary:
+        path: /data1/yanruj/EvolveSWDB_builds/bc-gem5-20261003-a1.baseline.primary.build/bc
+        sha256: 2b5359be47b094b3053e6925c3ceccc62e5fa10e3b2331ceb56fce725e772f52
+      workload:
+        id: bc-gem5-20261003-kronecker14-s0.bba5ce8b1f8b84b2
+        source: 0
+        representation:
+          path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-kronecker14/graph.sg32
+          sha256: 2ab1fb21b853f601d4e294adf186b5ef36a4df8a415d70eff150bb7e2d607160
+      guest_cores: 4
+      guest_memory: 16GB
+      options: -f /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/dx100-loader-inputs/dx100-gapbs-2ab1fb21b853f601d4e294adf186b5ef36a4df8a415d70eff150bb7e2d607160.sg
+        -l -n 1 -v -r 0
+      entry_script_sha256: aacc6e624b7ab0e7b032d5cb913974fa790efdca84598bf468c11f14b9575d0f
+      roi: bc.complete_call.v1
+      candidate_build: bc-gem5-20261003-a1.baseline.primary.build
+      modeled_configuration:
+        mode: BASE
+        l3_size_mb: 8
+        l3_assoc: 16
+        tile_elements: 16384
+        guest_cores: 4
+        guest_memory: 16GB
+        cpu: X86O3CPU
+        clock_hz: 3200000000
+        model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        cache:
+          l1d_kib: 32
+          l1i_kib: 32
+          l1_assoc: 8
+          l2_kib: 256
+          l2_assoc: 4
+          l3_mib: 8
+          l3_assoc: 16
+          cacheline_bytes: 64
+          prefetcher: StridePrefetcher
+        memory:
+          model: Ramulator2
+          channels: 2
+          size: 16GB
+          configuration_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+        cpu_clock: 3.2GHz
+        ramulator_config_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+        command_arguments:
+        - --cpu-type
+        - X86O3CPU
+        - -n
+        - '4'
+        - --mem-size
+        - 16GB
+        - --sys-clock
+        - 3.2GHz
+        - --cpu-clock
+        - 3.2GHz
+        - --caches
+        - --l1d_size=32kB
+        - --l1d_assoc=8
+        - --l1d-hwp-type=StridePrefetcher
+        - --l1d_mshrs=16
+        - --l1d_write_buffers=8
+        - --l1i_size=32kB
+        - --l1i_assoc=8
+        - --l1i-hwp-type=StridePrefetcher
+        - --l1i_mshrs=16
+        - --l1i_write_buffers=8
+        - --l2cache
+        - --l2_size=256kB
+        - --l2_assoc=4
+        - --l2-hwp-type=StridePrefetcher
+        - --l2_mshrs=32
+        - --l2_write_buffers=16
+        - --l3cache
+        - --l3_size=8MB
+        - --l3_assoc=16
+        - --l3_mshrs=256
+        - --l3_write_buffers=128
+        - --l3_ports
+        - '4'
+        - --cacheline_size=64
+        - --mem-type
+        - Ramulator2
+        - --ramulator-config
+        - /data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/example_gem5_config.yaml
+        - --mem-channels
+        - '2'
+        - --maa_ncbus_width
+        - '32'
+        - --prog-interval=1000
+      hardware_target: dx100-e4fc4af-4c
+      loader_representation:
+        path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/dx100-loader-inputs/dx100-gapbs-2ab1fb21b853f601d4e294adf186b5ef36a4df8a415d70eff150bb7e2d607160.sg
+        sha256: 2ab1fb21b853f601d4e294adf186b5ef36a4df8a415d70eff150bb7e2d607160
+  component_contexts:
+    bc-gem5-20261003-a1.timed-r1.baseline.evaluation:
+      backend: dx100-gem5-se
+      target: dx100-e4fc4af-4c
+      target_sha256: 94cf9373c255c1c36d4b6f622124aec90e8bd485d66fa2af996d6e46c91e04e1
+      model:
+        id: dx100-gem5
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+      interface:
+        id: dx100-mmio
+        version: 1.0-e4fc4af
+      model_root: /data1/yanruj/DX100-bfs-e4fc4af
+      host: mbit10
+      lane: 'mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 449)'
+      budget:
+        total_seconds: 9000
+        checkpoint_seconds: 1800
+        run_seconds: 7140
+        memory_gib: 36
+        storage_gib: 8
+      load_average: [1.40771484375, 1.10791015625, 1.12158203125]
+      roi: bc.complete_call.v1
+      basis: simulated
+      dispatch_preflight:
+        disk: /data1
+        runs_folder: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1
+        free_bytes: 43555790848
+        memory_node: 0
+        free_memory_bytes: 34364411904
+        secondary_free_bytes: 78837571584
+        node_memory_stats_bytes:
+          MemTotal: 66951016448
+          MemFree: 34364411904
+          Inactive(file): 22120509440
+          Mapped: 973967360
+          Shmem: 6590464
+          Dirty: 589824
+          Writeback: 0
+          Unevictable: 40005632
+        node_zone_reserve_bytes: 450916352
+        node_managed_memory_bytes: 66951016448
+        estimated_memory_capacity_bytes: 40619122688
+        memory_capacity_basis: node_memfree_plus_conservative_inactive_file.v1
+        inactive_file_credit_bytes: 10549678080
+        node_memory_reserve_bytes: 4294967296
+        format: swdb.dispatch-preflight.v1
+        observed_at: '2026-10-04T04:26:00.831481+00:00'
+        planned_raw_bytes: 8589934592
+        reserve_bytes: 21474836480
+        memory_budget_bytes: 38654705664
+        state: admitted
+      host_observation:
+        path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/host-observation.json
+        sha256: 4856a73277d33df80857c3d7d1d83899095f4d469d7f9e712ef3946b0b9c6956
+        host_wall_s: 0.0827475804835558
+        evidence_kind: execution
+        unavailable_commands: 2
+      application: dx100-gapbs
+      workload:
+        id: bc-gem5-20261003-kronecker14-s0.bba5ce8b1f8b84b2
+        canonical_sha256: ef0b65a15a9acab6bd8ddd9af87d80a7b52fb7f692f6f6a76b0a84f8dcdaf8b5
+        sources: [0]
+        family: kronecker
+        representation:
+          id: bfs-20260925-kronecker14.dx100
+          path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-kronecker14/graph.sg32
+          sha256: 2ab1fb21b853f601d4e294adf186b5ef36a4df8a415d70eff150bb7e2d607160
+          format: gapbs_sg32le
+          application: dx100-gapbs
+          canonical_sha256: ef0b65a15a9acab6bd8ddd9af87d80a7b52fb7f692f6f6a76b0a84f8dcdaf8b5
+          bytes: 1768977
+          loader: swdb.gapbs-representation.v1
+          adjacency_verified: true
+      graph_verification:
+        contract: swdb.bc.original-adjacency.v1
+        input_format: gapbs.sg32
+        byte_order: little
+        adjacency: outgoing CSR from exact registered serialized input
+        maximum_extra_bytes: 2147483648
+        preload: before checkpoint and ROI
+        verification: after ROI on exact returned score buffer; serial Brandes in the source's float types
+        count_type: float
+        allocation: oracle adjacency before ROI; Brandes work arrays in the post-ROI continuation
+      protected_bc_verifier:
+        path: /data1/yanruj/EvolveSWDB_sources/ee936dd99e7e8b26/bc-gem5-20261003-a1.baseline/source/benchmarks/gapbs/src/bc.cc
+        sha256: 9732327b347c5da72526923f44b4250afcd7816c3b0ca1d0c8a43cd1d77f36ea
+        symbol: BCVerifier
+        protected_text_sha256: 016bceefed63c691952d9d9e3ee3e2046c95306196bbcebbbe37c41a31a272b4
+        bounds_check: trusted driver checks the returned score length before the original-graph oracle
+      protocol_trial:
+        source_position: 0
+        repetition: 0
+      timed_source:
+        path: /data1/yanruj/EvolveSWDB_sources/ee936dd99e7e8b26/bc-gem5-20261003-a1.baseline/source/benchmarks/gapbs/src/bc.cc
+        sha256: 9732327b347c5da72526923f44b4250afcd7816c3b0ca1d0c8a43cd1d77f36ea
+      verifier_source:
+        path: /data1/yanruj/EvolveSWDB_builds/bc-gem5-20261003-a1.baseline.primary.build/complete_call.cc
+        sha256: 05524bdfc17aaae21cf869a18b7f8a4e51f6e551f99e79fb5d251bae11184233
+        symbol: swdb_original::Graph::verify_scores
+        bounds_check: trusted original-CSR oracle checks exact score length, a non-vacuous source and
+          finite scores within float epsilon of serial Brandes
+      candidate_build: bc-gem5-20261003-a1.baseline.primary.build
+      candidate_driver:
+        path: /data1/yanruj/EvolveSWDB_builds/bc-gem5-20261003-a1.baseline.primary.build/complete_call.cc
+        sha256: 05524bdfc17aaae21cf869a18b7f8a4e51f6e551f99e79fb5d251bae11184233
+      suppressed_internal_events: [m5_reset_stats, m5_dump_stats, m5_work_begin, m5_work_end, m5_exit]
+      candidate_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+      loader_input:
+        format: swdb.dx100.loader-input.v1
+        application: dx100-gapbs
+        serialization: gapbs_sg32le
+        original:
+          path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-kronecker14/graph.sg32
+          sha256: 2ab1fb21b853f601d4e294adf186b5ef36a4df8a415d70eff150bb7e2d607160
+        alias:
+          path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/dx100-loader-inputs/dx100-gapbs-2ab1fb21b853f601d4e294adf186b5ef36a4df8a415d70eff150bb7e2d607160.sg
+          sha256: 2ab1fb21b853f601d4e294adf186b5ef36a4df8a415d70eff150bb7e2d607160
+        provenance:
+          method: existing_verified_alias
+          storage_charge_bytes: 0
+      configuration:
+        mode: BASE
+        l3_size_mb: 8
+        l3_assoc: 16
+        tile_elements: 16384
+        guest_cores: 4
+        guest_memory: 16GB
+        cpu: X86O3CPU
+        clock_hz: 3200000000
+        model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        cache:
+          l1d_kib: 32
+          l1i_kib: 32
+          l1_assoc: 8
+          l2_kib: 256
+          l2_assoc: 4
+          l3_mib: 8
+          l3_assoc: 16
+          cacheline_bytes: 64
+          prefetcher: StridePrefetcher
+        memory:
+          model: Ramulator2
+          channels: 2
+          size: 16GB
+          configuration_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+        cpu_clock: 3.2GHz
+        ramulator_config_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+        command_arguments:
+        - --cpu-type
+        - X86O3CPU
+        - -n
+        - '4'
+        - --mem-size
+        - 16GB
+        - --sys-clock
+        - 3.2GHz
+        - --cpu-clock
+        - 3.2GHz
+        - --caches
+        - --l1d_size=32kB
+        - --l1d_assoc=8
+        - --l1d-hwp-type=StridePrefetcher
+        - --l1d_mshrs=16
+        - --l1d_write_buffers=8
+        - --l1i_size=32kB
+        - --l1i_assoc=8
+        - --l1i-hwp-type=StridePrefetcher
+        - --l1i_mshrs=16
+        - --l1i_write_buffers=8
+        - --l2cache
+        - --l2_size=256kB
+        - --l2_assoc=4
+        - --l2-hwp-type=StridePrefetcher
+        - --l2_mshrs=32
+        - --l2_write_buffers=16
+        - --l3cache
+        - --l3_size=8MB
+        - --l3_assoc=16
+        - --l3_mshrs=256
+        - --l3_write_buffers=128
+        - --l3_ports
+        - '4'
+        - --cacheline_size=64
+        - --mem-type
+        - Ramulator2
+        - --ramulator-config
+        - /data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/example_gem5_config.yaml
+        - --mem-channels
+        - '2'
+        - --maa_ncbus_width
+        - '32'
+        - --prog-interval=1000
+      backend_configuration:
+        mode: BASE
+        l3_size_mb: 8
+        l3_assoc: 16
+        tile_elements: 16384
+        guest_cores: 4
+        guest_memory: 16GB
+        cpu: X86O3CPU
+        clock_hz: 3200000000
+        model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        cache:
+          l1d_kib: 32
+          l1i_kib: 32
+          l1_assoc: 8
+          l2_kib: 256
+          l2_assoc: 4
+          l3_mib: 8
+          l3_assoc: 16
+          cacheline_bytes: 64
+          prefetcher: StridePrefetcher
+        memory:
+          model: Ramulator2
+          channels: 2
+          size: 16GB
+          configuration_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+        cpu_clock: 3.2GHz
+        ramulator_config_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+        command_arguments:
+        - --cpu-type
+        - X86O3CPU
+        - -n
+        - '4'
+        - --mem-size
+        - 16GB
+        - --sys-clock
+        - 3.2GHz
+        - --cpu-clock
+        - 3.2GHz
+        - --caches
+        - --l1d_size=32kB
+        - --l1d_assoc=8
+        - --l1d-hwp-type=StridePrefetcher
+        - --l1d_mshrs=16
+        - --l1d_write_buffers=8
+        - --l1i_size=32kB
+        - --l1i_assoc=8
+        - --l1i-hwp-type=StridePrefetcher
+        - --l1i_mshrs=16
+        - --l1i_write_buffers=8
+        - --l2cache
+        - --l2_size=256kB
+        - --l2_assoc=4
+        - --l2-hwp-type=StridePrefetcher
+        - --l2_mshrs=32
+        - --l2_write_buffers=16
+        - --l3cache
+        - --l3_size=8MB
+        - --l3_assoc=16
+        - --l3_mshrs=256
+        - --l3_write_buffers=128
+        - --l3_ports
+        - '4'
+        - --cacheline_size=64
+        - --mem-type
+        - Ramulator2
+        - --ramulator-config
+        - /data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/example_gem5_config.yaml
+        - --mem-channels
+        - '2'
+        - --maa_ncbus_width
+        - '32'
+        - --prog-interval=1000
+      execution_binding:
+        model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        simulator:
+          path: /data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt
+          sha256: f4038c88318ee09085b6c07f163094a07a31a256f21b652d4f3cfa046feb1f6b
+        binary:
+          path: /data1/yanruj/EvolveSWDB_builds/bc-gem5-20261003-a1.baseline.primary.build/bc
+          sha256: 2b5359be47b094b3053e6925c3ceccc62e5fa10e3b2331ceb56fce725e772f52
+        workload:
+          id: bc-gem5-20261003-kronecker14-s0.bba5ce8b1f8b84b2
+          source: 0
+          representation:
+            path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-kronecker14/graph.sg32
+            sha256: 2ab1fb21b853f601d4e294adf186b5ef36a4df8a415d70eff150bb7e2d607160
+        guest_cores: 4
+        guest_memory: 16GB
+        options: -f /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/dx100-loader-inputs/dx100-gapbs-2ab1fb21b853f601d4e294adf186b5ef36a4df8a415d70eff150bb7e2d607160.sg
+          -l -n 1 -v -r 0
+        entry_script_sha256: aacc6e624b7ab0e7b032d5cb913974fa790efdca84598bf468c11f14b9575d0f
+        roi: bc.complete_call.v1
+        candidate_build: bc-gem5-20261003-a1.baseline.primary.build
+        modeled_configuration:
+          mode: BASE
+          l3_size_mb: 8
+          l3_assoc: 16
+          tile_elements: 16384
+          guest_cores: 4
+          guest_memory: 16GB
+          cpu: X86O3CPU
+          clock_hz: 3200000000
+          model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+          cache:
+            l1d_kib: 32
+            l1i_kib: 32
+            l1_assoc: 8
+            l2_kib: 256
+            l2_assoc: 4
+            l3_mib: 8
+            l3_assoc: 16
+            cacheline_bytes: 64
+            prefetcher: StridePrefetcher
+          memory:
+            model: Ramulator2
+            channels: 2
+            size: 16GB
+            configuration_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+          cpu_clock: 3.2GHz
+          ramulator_config_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+          command_arguments:
+          - --cpu-type
+          - X86O3CPU
+          - -n
+          - '4'
+          - --mem-size
+          - 16GB
+          - --sys-clock
+          - 3.2GHz
+          - --cpu-clock
+          - 3.2GHz
+          - --caches
+          - --l1d_size=32kB
+          - --l1d_assoc=8
+          - --l1d-hwp-type=StridePrefetcher
+          - --l1d_mshrs=16
+          - --l1d_write_buffers=8
+          - --l1i_size=32kB
+          - --l1i_assoc=8
+          - --l1i-hwp-type=StridePrefetcher
+          - --l1i_mshrs=16
+          - --l1i_write_buffers=8
+          - --l2cache
+          - --l2_size=256kB
+          - --l2_assoc=4
+          - --l2-hwp-type=StridePrefetcher
+          - --l2_mshrs=32
+          - --l2_write_buffers=16
+          - --l3cache
+          - --l3_size=8MB
+          - --l3_assoc=16
+          - --l3_mshrs=256
+          - --l3_write_buffers=128
+          - --l3_ports
+          - '4'
+          - --cacheline_size=64
+          - --mem-type
+          - Ramulator2
+          - --ramulator-config
+          - /data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/example_gem5_config.yaml
+          - --mem-channels
+          - '2'
+          - --maa_ncbus_width
+          - '32'
+          - --prog-interval=1000
+        hardware_target: dx100-e4fc4af-4c
+        loader_representation:
+          path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/dx100-loader-inputs/dx100-gapbs-2ab1fb21b853f601d4e294adf186b5ef36a4df8a415d70eff150bb7e2d607160.sg
+          sha256: 2ab1fb21b853f601d4e294adf186b5ef36a4df8a415d70eff150bb7e2d607160
+      execution_binding_sha256: 28bf08555e432d0d0c0d770914e926a570a51834f0692a9a1529b6fd87f4d630
+      source: 0
+      sources: [0]
+      threads: 4
+      verification_runtime:
+        format: swdb.dx100.verification-runtime.v1
+        files:
+        - source:
+            code_root: /data1/yanruj/ArchEvolve/swdb-project
+            repository_relative_path: scripts/dx100_bc_verify.py
+            copied_sha256: 7b4004302b22c219cd46f1f7fe507a5f149320ff4385452b665c63f9846305e2
+          snapshot:
+            path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/verification-runtime/scripts/dx100_bc_verify.py
+            sha256: 7b4004302b22c219cd46f1f7fe507a5f149320ff4385452b665c63f9846305e2
+        - source:
+            code_root: /data1/yanruj/ArchEvolve/swdb-project
+            repository_relative_path: scripts/dx100_host_memory.py
+            copied_sha256: 655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd
+          snapshot:
+            path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/verification-runtime/scripts/dx100_host_memory.py
+            sha256: 655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd
+        - source:
+            code_root: /data1/yanruj/ArchEvolve/swdb-project
+            repository_relative_path: swdb/dx100_witness.py
+            copied_sha256: 89a48e42389a47c0f8466093c52dea7c032bf276d8470172fbe88199767c65de
+          snapshot:
+            path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/verification-runtime/swdb/dx100_witness.py
+            sha256: 89a48e42389a47c0f8466093c52dea7c032bf276d8470172fbe88199767c65de
+        source_paths_are_provenance_only: true
+      verification_parser:
+        path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/verification-runtime/swdb/dx100_witness.py
+        sha256: 89a48e42389a47c0f8466093c52dea7c032bf276d8470172fbe88199767c65de
+      verification_driver:
+        path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/verification-runtime/scripts/dx100_bc_verify.py
+        sha256: 7b4004302b22c219cd46f1f7fe507a5f149320ff4385452b665c63f9846305e2
+      host_memory_observer:
+        path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/verification-runtime/scripts/dx100_host_memory.py
+        sha256: 655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd
+        sample_interval_seconds: 5
+        scope: host process group and bounded phase observations; no modeled changes
+      trace_transport: gem5-gzip.v1
+      instrumentation:
+        treatment: primary
+        roi: bc.complete_call.v1
+        suppressed_internal_events: [m5_reset_stats, m5_dump_stats, m5_work_begin, m5_work_end, m5_exit]
+        verification: same_guest_post_roi
+        debug_flags: MAATrace
+        graph_verification:
+          contract: swdb.bc.original-adjacency.v1
+          input_format: gapbs.sg32
+          byte_order: little
+          adjacency: outgoing CSR from exact registered serialized input
+          maximum_extra_bytes: 2147483648
+          preload: before checkpoint and ROI
+          verification: after ROI on exact returned score buffer; serial Brandes in the source's float
+            types
+          count_type: float
+          allocation: oracle adjacency before ROI; Brandes work arrays in the post-ROI continuation
+        verifier_runtime:
+          driver_sha256: 7b4004302b22c219cd46f1f7fe507a5f149320ff4385452b665c63f9846305e2
+          parser_sha256: 89a48e42389a47c0f8466093c52dea7c032bf276d8470172fbe88199767c65de
+          observer_sha256: 655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd
+        post_roi_trace:
+          flag: SyscallBase
+          scope: post-seal verifier continuation only
+          output: separate_simulator_trace
+          format_flags: [FmtFlag]
+          disabled_format_flags: [FmtTicksOff, FmtStackTrace]
+          disabled_roi_flags: [MAATrace, MAARangeFuser, MAAIndirect]
+          chunk_ticks: 1000000000
+      verifier: dx100.bc.verifier.v2
+      repetitions: 1
+      protocol: bc-gem5-20261003-a1.protocol.e731422f9ab9f668
+      protocol_binding:
+        protocol: bc-gem5-20261003-a1.protocol.e731422f9ab9f668
+        frozen_sha256: e731422f9ab9f668e659583eb4c8c3f0c3ee249d2e39a51092d5268eb9980909
+        workload_id: bc-gem5-20261003-kronecker14-s0.bba5ce8b1f8b84b2
+        workload_sha256: bba5ce8b1f8b84b208c3cf0096f1cdd628f8ce7d04d571e314561a200f056176
+        role: baseline
+        frozen_at: '2026-10-04T03:47:41.347079+00:00'
+        bound_at: '2026-10-04T04:26:06.438690+00:00'
+        settings_sha256: b09a3f732a44022d3b98a79f7587db4acd8b3e12f95f64d391a64dce46649b34
+      adapter: dx100.complete_call.v2
+      checkpoint_manifest:
+        path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/checkpoint-manifest.json
+        sha256: 6aac12622ee011f8f6176d5384c16daf119de92c79d21a06fbbbef082db9465b
+      debug_flags: MAATrace
+      sealed_roi:
+        path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/simulation/roi-seal.json
+        sha256: 461512378538c46e7d7074c17a50f88b0845e0004e2d719dafdb53a4f1ed9595
+        driver_sha256: 7b4004302b22c219cd46f1f7fe507a5f149320ff4385452b665c63f9846305e2
+        execution_binding_sha256: 28bf08555e432d0d0c0d770914e926a570a51834f0692a9a1529b6fd87f4d630
+        format: swdb.dx100.roi-seal.v1
+        host_memory_observer_sha256: 655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd
+        roi_exit_cause: m5_exit instruction encountered
+        roi_exit_tick: 13802429860
+        statistics:
+          path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/simulation/roi-stats.txt
+          sha256: 1e72d57d41f8d03cefa2e3fc28727a536ed285b0bc3f342c6a8186eef2bf1c82
+        verification:
+          checker: dx100.bc.verifier.v2
+          chunk_ticks: 1000000000
+          exit_cause: simulate() limit reached
+          exit_code: 0
+          exit_tick: 19802429860
+          exit_witness:
+            allowed_cpus: [system.switch_cpus0, system.switch_cpus1, system.switch_cpus2, system.switch_cpus3]
+            caller:
+              cpu: system.switch_cpus0
+              thread: 0
+            completed: true
+            enabled_tick: 13802429860
+            end_tick: 19802429860
+            events_after_exit: 4
+            exit_request:
+              call_line: 47
+              return_line: 48
+              return_value: 0
+              status: 0
+              tick: 18855452093
+            format: swdb.dx100.exit-witness.v1
+            initial_partial_calls: []
+            line_count: 52
+            pending_calls: []
+            progress_records:
+            - cpu: system.switch_cpus0
+              event: 289
+              interval_committed: 3761060
+              ipc: '01.17721'
+              line: 9
+              tick: 14710410000
+              total_committed: 13594863
+            - cpu: system.switch_cpus1
+              event: 290
+              interval_committed: 4088068
+              ipc: '01.27957'
+              line: 10
+              tick: 14710410000
+              total_committed: 15200213
+            - cpu: system.switch_cpus2
+              event: 291
+              interval_committed: 4161686
+              ipc: '01.30261'
+              line: 11
+              tick: 14710410000
+              total_committed: 15263040
+            - cpu: system.switch_cpus3
+              event: 292
+              interval_committed: 4179981
+              ipc: '01.30833'
+              line: 12
+              tick: 14710410000
+              total_committed: 12086134
+            - cpu: system.switch_cpus3
+              event: 292
+              interval_committed: 0
+              ipc: '00000000'
+              line: 13
+              tick: 15710410000
+              total_committed: 12086134
+            - cpu: system.switch_cpus2
+              event: 291
+              interval_committed: 0
+              ipc: '00000000'
+              line: 14
+              tick: 15710410000
+              total_committed: 15263040
+            - cpu: system.switch_cpus1
+              event: 290
+              interval_committed: 0
+              ipc: '00000000'
+              line: 15
+              tick: 15710410000
+              total_committed: 15200213
+            - cpu: system.switch_cpus0
+              event: 289
+              interval_committed: 3794282
+              ipc: '01.18761'
+              line: 16
+              tick: 15710410000
+              total_committed: 17389145
+            - cpu: system.switch_cpus0
+              event: 289
+              interval_committed: 4596088
+              ipc: '01.43858'
+              line: 17
+              tick: 16710410000
+              total_committed: 21985233
+            - cpu: system.switch_cpus1
+              event: 290
+              interval_committed: 0
+              ipc: '00000000'
+              line: 18
+              tick: 16710410000
+              total_committed: 15200213
+            - cpu: system.switch_cpus2
+              event: 291
+              interval_committed: 0
+              ipc: '00000000'
+              line: 19
+              tick: 16710410000
+              total_committed: 15263040
+            - cpu: system.switch_cpus3
+              event: 292
+              interval_committed: 0
+              ipc: '00000000'
+              line: 20
+              tick: 16710410000
+              total_committed: 12086134
+            - cpu: system.switch_cpus3
+              event: 292
+              interval_committed: 0
+              ipc: '00000000'
+              line: 23
+              tick: 17710410000
+              total_committed: 12086134
+            - cpu: system.switch_cpus2
+              event: 291
+              interval_committed: 0
+              ipc: '00000000'
+              line: 24
+              tick: 17710410000
+              total_committed: 15263040
+            - cpu: system.switch_cpus1
+              event: 290
+              interval_committed: 0
+              ipc: '00000000'
+              line: 25
+              tick: 17710410000
+              total_committed: 15200213
+            - cpu: system.switch_cpus0
+              event: 289
+              interval_committed: 4815545
+              ipc: '01.50727'
+              line: 26
+              tick: 17710410000
+              total_committed: 26800778
+            - cpu: system.switch_cpus0
+              event: 289
+              interval_committed: 3444253
+              ipc: '01.07805'
+              line: 27
+              tick: 18710410000
+              total_committed: 30245031
+            - cpu: system.switch_cpus1
+              event: 290
+              interval_committed: 0
+              ipc: '00000000'
+              line: 28
+              tick: 18710410000
+              total_committed: 15200213
+            - cpu: system.switch_cpus2
+              event: 291
+              interval_committed: 0
+              ipc: '00000000'
+              line: 29
+              tick: 18710410000
+              total_committed: 15263040
+            - cpu: system.switch_cpus3
+              event: 292
+              interval_committed: 0
+              ipc: '00000000'
+              line: 30
+              tick: 18710410000
+              total_committed: 12086134
+            - cpu: system.switch_cpus3
+              event: 292
+              interval_committed: 0
+              ipc: '00000000'
+              line: 49
+              tick: 19710410000
+              total_committed: 12086134
+            - cpu: system.switch_cpus2
+              event: 291
+              interval_committed: 0
+              ipc: '00000000'
+              line: 50
+              tick: 19710410000
+              total_committed: 15263040
+            - cpu: system.switch_cpus1
+              event: 290
+              interval_committed: 0
+              ipc: '00000000'
+              line: 51
+              tick: 19710410000
+              total_committed: 15200213
+            - cpu: system.switch_cpus0
+              event: 289
+              interval_committed: 948004
+              ipc: '0.296725'
+              line: 52
+              tick: 19710410000
+              total_committed: 31193035
+            trace:
+              bytes: 5516
+              path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/simulation/post-roi-syscalls.log
+              sha256: 9c346f77880937ae43cafe84a1b22a576e93efae343825e62392cea881764753
+          max_ticks: 100000000000000
+          normal_exit_observed: false
+          parser_sha256: 89a48e42389a47c0f8466093c52dea7c032bf276d8470172fbe88199767c65de
+          post_roi_trace:
+            bytes: 5516
+            disabled_format_flags: [FmtTicksOff, FmtStackTrace]
+            disabled_roi_flags: [MAATrace, MAARangeFuser, MAAIndirect]
+            enabled_tick: 13802429860
+            flag: SyscallBase
+            format_flags: [FmtFlag]
+            output: separate_simulator_trace
+            path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/simulation/post-roi-syscalls.log
+            scope: post-seal verifier continuation only
+            sha256: 9c346f77880937ae43cafe84a1b22a576e93efae343825e62392cea881764753
+          simulated_ticks: 6000000000
+          state: finished
+          stop_reason: exit_witness
+        verification_parser:
+          path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/verification-runtime/swdb/dx100_witness.py
+          sha256: 89a48e42389a47c0f8466093c52dea7c032bf276d8470172fbe88199767c65de
+      statistics:
+        path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/simulation/roi-stats.txt
+        sha256: 1e72d57d41f8d03cefa2e3fc28727a536ed285b0bc3f342c6a8186eef2bf1c82
+      post_roi_trace:
+        bytes: 5516
+        disabled_format_flags: [FmtTicksOff, FmtStackTrace]
+        disabled_roi_flags: [MAATrace, MAARangeFuser, MAAIndirect]
+        enabled_tick: 13802429860
+        flag: SyscallBase
+        format_flags: [FmtFlag]
+        output: separate_simulator_trace
+        path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/simulation/post-roi-syscalls.log
+        scope: post-seal verifier continuation only
+        sha256: 9c346f77880937ae43cafe84a1b22a576e93efae343825e62392cea881764753
+      actual_configuration:
+        path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/simulation/config.ini
+        sha256: 9a9e99bd6bec05d9be5a78030c0eeb9ee2adb4d82a2cd328438966525ba85d35
+      debug_trace:
+        format: swdb.dx100.debug-trace.v1
+        transport: gem5-gzip.v1
+        path: /data1/yanruj/EvolveSWDB_runs/bc-gem5-20261003-a1/bc-gem5-20261003-a1.timed-r1.baseline.evaluation/simulation/roi-debug.trace.gz
+        sha256: ed5ed6fe9c98a6d4602c1759e003a756546e8e4a8bd49f34d2e189017fea2d30
+        bytes: 337
+        uncompressed_sha256: e241783f802bca2f64809f3f797c670ff685162aae81dd8445afa9910e35c417
+        uncompressed_bytes: 1610
+        lines: 12
+      exit_tick: 13802429860
+      exit_cause: m5_exit instruction encountered
+      roi_ticks:
+        sim_ticks: 3074735468
+        tick_frequency_hz: 1000000000000
+        duration_s: 0.003074735468
+        unit: seconds
+        conversion: simTicks / simFreq; no fixed clock-period divisor
+  correctness_cases: []

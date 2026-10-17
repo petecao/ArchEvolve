@@ -1,0 +1,97 @@
+{
+  "format": "swdb.lanl14-exact-export-invocation-r5-source-review.v1",
+  "sealed": false,
+  "status": "SOURCE_ONLY_NOT_RUN",
+  "selected_source": {
+    "path": "/private/tmp/lanl14_invoke_reviewed_supervised_export_20261008_a1_r5.py",
+    "bytes": 35775,
+    "sha256": "62808f732d3ca492c102bbeb0b0ccab5fcb6ed2c63efd088d8ccdac845d362b7"
+  },
+  "immutable_R4": {
+    "path": "/private/tmp/lanl14_invoke_reviewed_supervised_export_20261008_a1_r4.py",
+    "bytes": 30654,
+    "sha256": "7f0568754989cdce7bc6903b4d2fd246702a4ad5fae84e0306bcc2239151fa6e"
+  },
+  "complete_R4_derivation": {
+    "path": "/private/tmp/lanl14-exact-export-invocation-r5-complete-r4-derivation-20261008-a1.diff",
+    "bytes": 11668,
+    "sha256": "30aba1c22ea670f96e24294019a9853118605176fda0f224c0d0c368f1dca4f0"
+  },
+  "original_independent_findings": {
+    "path": "/private/tmp/lanl14-exact-export-invocation-r4-independent-source-review-20261008-a1.md",
+    "bytes": 3946,
+    "sha256": "7553c02d99c83e8f246991c9b18fdeca3c9e8f27573c80a9c0297a1ca8fc56d0"
+  },
+  "static": {
+    "syntax_parsed_only": true,
+    "target_import_compile_main_test_or_action": false,
+    "unchanged_function_class_ASTs": [
+      "Refusal",
+      "require",
+      "sha_syntax",
+      "bootstrap_source",
+      "reviewed_helpers",
+      "PrivateParser",
+      "exact_commit",
+      "fixed_git",
+      "fresh_absent",
+      "native_checks",
+      "correction",
+      "gates",
+      "absent_outputs",
+      "argv",
+      "supervisor_result"
+    ],
+    "changed_function_class_ASTs": [
+      "stream_pin",
+      "source_checks",
+      "main"
+    ],
+    "three_new_readonly_witness_helpers": [
+      "private_ancestor_witnesses",
+      "retention_original",
+      "report_directory"
+    ],
+    "no_chmod_fchmod_calls": true,
+    "original_argv_AST_byte_source_unchanged": true,
+    "original503f928ee12a_source_bytes_unchanged": true,
+    "scientific_and_child_caps_unchanged": true
+  },
+  "exact_exception_scope": {
+    "retention_route": "/data1/yanruj/ArchEvolve/swdb-project/records/.retention.lock",
+    "retention_empty_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "retention_observed_identity": {
+      "dev": 2097,
+      "inode": 54947305,
+      "mode": "0o666",
+      "uid": 114316761,
+      "gid": 0,
+      "nlink": 1,
+      "bytes": 0
+    },
+    "0664_sources_only": [
+      "/data1/yanruj/lanl14_final_reports_catalog_caps_a5.py",
+      "/data/yanruj/EvolveSWDB_runs/lanl-generality-counts-20261006-a1/controls/pr-cpu/dispatcher.py",
+      "/data1/yanruj/ArchEvolve-lanl-generality-final-20261007-a1/swdb-project/scripts/generality_report.py"
+    ],
+    "literal_private0700_ancestors": [
+      "/data1/yanruj",
+      "/data/yanruj"
+    ],
+    "all_other_source_native_strict": true,
+    "report_directory_requirement": "owned canonical nonsymlink directory witness always; no022 REQUIRED only report>100MiB; no chmod or assumed administration"
+  },
+  "budget": {
+    "D": "explicit60..3600 each metadata phase",
+    "child_s": 18000,
+    "GNU_s": 18120,
+    "GNU_KILL_s": 60,
+    "launch_wait_s": 18300,
+    "nominal_total": "2D+18300; atD3600=25500 plus explicitly reviewed outer margin",
+    "sufficiency": "unproved; no finite hard guarantee for blocked filesystem/bootstrap calls"
+  },
+  "actual_inputs_or_results_constructed": false,
+  "SSH_Git_project_mutation": false,
+  "scientific_admission": false,
+  "parent_full_actual_argv_selection_required": true
+}

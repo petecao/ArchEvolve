@@ -1,0 +1,52 @@
+{
+  "added_function": "absolute_definition",
+  "all_acceptance_false": true,
+  "changed_existing_functions": [
+    "canon",
+    "inspect_task",
+    "main"
+  ],
+  "classification": "PREPARATION_ONLY; INDEPENDENT_REVIEW_AND_ROOT_ADMISSION_REQUIRED",
+  "command": {
+    "bytes": 1341,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v3/command.json",
+    "sha256": "91623c301d14f635c55ea40ab6b44e064c860aa211a643ed629e860b1b7df19f"
+  },
+  "date": "2026-10-16 ET",
+  "entry": {
+    "bytes": 247600,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v3/entry.py",
+    "sha256": "cd85933706b161b4611dbb6e04cf04a2018127f525bcf8f1da73751b4deee7c6"
+  },
+  "no_actual_compiler_native_solver_project_or_remote_execution": true,
+  "packet": {
+    "bytes": 8725,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v3/source-packet.json",
+    "sha256": "e90e9b2ef762ef1ecb6c954524ce2a406f7edf9afc108fcb7c7eb1bb73498b4d"
+  },
+  "pure_controls": {
+    "child_native_network_attempts": [],
+    "passed": 21,
+    "scope": "Synthetic and retained-metadata source controls only; no actual task query or scientific run."
+  },
+  "source_definition_attribution": {
+    "attribution": "Exact complete typed total definition with selected source; compiler/driver alpha-name translation remains explicit TCB. No new axiom or theorem premise.",
+    "bytes": 18553,
+    "expected_SMT_definition_sha256": "ce2ba2b92eb7d1fabb1e744b18bd6ba82509dfbee0e310692da12faafa888abe",
+    "module": "int.Abs",
+    "module_body_sha256": "6c11a4a45652edebc09fa54477a0f003e3bb6ae2be1c00b1c078535556d504c3",
+    "module_byte_range": [
+      1277,
+      1651
+    ],
+    "path": "/data1/yanruj/probata-verifiers/opam/framac-33/share/why3/stdlib/int.mlw",
+    "sha256": "eb5bc9d4a46e1b6a298d24fd36dcf9dfb8f35cbc75b2f44007cfe1a24550ce8d",
+    "source_definition": "let function abs (x:int) : int = if x >= 0 then x else -x"
+  },
+  "source_inverse": {
+    "bytes": 6496,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v3/full-source-inverses.json",
+    "sha256": "da5fbdb30d2f711ce16fad5bca74dda682eb3cbcefce7294a1dae80bdb3e0250"
+  },
+  "unchanged20task_source_and_support_context": true
+}

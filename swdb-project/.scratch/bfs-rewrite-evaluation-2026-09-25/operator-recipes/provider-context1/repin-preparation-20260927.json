@@ -1,0 +1,44 @@
+{
+  "created": "2026-09-27",
+  "state": "local_preparation_passed_actual_proof_pending",
+  "runtime_commit": "8cbfee600f23416a8e9578fa8d3ce3f0e19fced8",
+  "historical_recipe_commit": "40b82ef",
+  "files": {
+    "bfs-provider-context1-20260926.py": {
+      "bytes": 24989,
+      "sha256": "ca46630cea6b07e027ea31ae1f139fe52160a299ec7b18ec853ba9bcf2a6f739"
+    },
+    "bfs-provider-context1-launch-20260926.sh": {
+      "bytes": 2740,
+      "sha256": "2b423dd61e73cfe143f75ea89f9ddf2923b680123c47670fd04878720b9aceca"
+    },
+    "bfs-provider-context1-preflight-20260926.md": {
+      "bytes": 8598,
+      "sha256": "8b46ac152113a2687d8c4ed7e09dcf977c25936e80138d82c4f0f19d3aae0a3b"
+    },
+    "test_bfs_provider_context_recipe_20260926.py": {
+      "bytes": 9007,
+      "sha256": "2292e9cd69627a71018b7b1e56d6427cb55882606a94dac51069e63271e9c26b"
+    }
+  },
+  "validation": {
+    "red": {
+      "log": "/private/tmp/bfs-provider-final-runtime-repin-red-20260927.log",
+      "result": "1 failed,22 passed; old372-file test assertion after manifest grew to375"
+    },
+    "green": {
+      "log": "/private/tmp/bfs-provider-final-runtime-repin-green-20260927.log",
+      "result": "23 passed in0.58s"
+    },
+    "independent": {
+      "log": "/private/tmp/bfs-provider-repin-independent-20260927.log",
+      "result": "23 passed in0.61s"
+    }
+  },
+  "provider_called": false,
+  "pending": [
+    "actual compatible Linux proof group",
+    "exact runtime package/prompt equality check",
+    "fresh lane and capacity admission"
+  ]
+}

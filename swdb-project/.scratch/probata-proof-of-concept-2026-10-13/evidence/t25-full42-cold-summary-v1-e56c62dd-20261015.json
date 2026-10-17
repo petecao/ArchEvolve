@@ -1,0 +1,1730 @@
+{
+  "all_result_expectations_matched": true,
+  "capability_acceptance_pending": "Independent per-task standard-support and source/event/clause/RTE/init/frame/lifetime closure review",
+  "complete": true,
+  "created": "2026-10-15 ET",
+  "errors": [],
+  "lane": {
+    "socket_lane": {
+      "aligned_cell_age_s": "",
+      "aligned_to": "no_gapbs_batch_running",
+      "command": [
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=60",
+        "9120",
+        "bash",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/run.sh"
+      ],
+      "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+      "ended_utc": "2026-10-16T03:42:11Z",
+      "exit_code": 0,
+      "host": "mbit10",
+      "job": "probata-reviewed-e56c62dd-t25-heap-capability-v5",
+      "lease_generation": 613,
+      "lease_name": "mbit10-evaluation-node1",
+      "load1_at_start": 0.51,
+      "load1_max": 32,
+      "node": 1,
+      "numa_memory_policy": "bind:1",
+      "numactl": "--cpunodebind=1 --membind=1",
+      "preregistration_sha256": null,
+      "started_utc": "2026-10-16T03:38:01Z"
+    }
+  },
+  "metadata_pins": [
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/resources.json",
+      "sha256": "b039e4bfae5929f3756edc71d833b8398336f2ed54745f9d3a4f3bf8f0edf82b"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/outer-resources.json",
+      "sha256": "cb0edb8f7376f599e4bd8489dc63bffc3f2278cd74500bd57598b8c78e202903"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/source-after.json",
+      "sha256": "6b0eee439bfe017627e24d6d203cf40b46662d3dd2277cde2cbc2eaa041edf50"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/lane.json",
+      "sha256": "ccd5e8ca189adfd96720d7000ae2e58b3cb51f626fb5e37c5c40f0e06024ab5d"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/canonical-packet-precheck.json",
+      "sha256": "83565e46a2565a681b11e1204076b39b78680900dee0df77ba544e9da7ec1486"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/selected-formal-tool-metadata.json",
+      "sha256": "fc67f950dfee051e3c0290b66a984ae85ee03901e114bd7fb6085c7ad83dff90"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/profile.json",
+      "sha256": "a4027ce13acb63aaf53679ea0ebacc63beff873733d30745dfe996dce572310e"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/executed-plan.json",
+      "sha256": "a82ac834b9defd8881c3f7678b2e1a2d07e7f7d9948f80b3d0024cf1cc370401"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/manifest.json",
+      "sha256": "390a2d3a89720fab8a5b1fb1f5cd96093aae23a9c1714143b57caa8681a4c065"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/execute.py",
+      "sha256": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/launch.json",
+      "sha256": "06411b1cf43241c4fed0702d21254ba800d3eb1243697ac7a9ed1036ba85cf1a"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/runtime-provenance.json",
+      "sha256": "6dbf982637df8b452519eedd22bf23225af901c74905201b5f5ca32c1218a866"
+    }
+  ],
+  "model_body_proof_records_created": 0,
+  "outer_resources": {
+    "cpu_seconds": 334.989101,
+    "exit_code": 0,
+    "out_of_memory": false,
+    "peak_rss_bytes": 587251712,
+    "timed_out": false,
+    "wall_seconds": 250.25356919597834
+  },
+  "physical_or_input_hash_errors": [],
+  "physical_report_references_checked": 426,
+  "producer": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5",
+  "rows": [
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/000-t25_control_ctor_premises_feasible.c",
+        "sha256": "54b7b254e0d1b4884e8303054036f73e15704c4cb2aaf3a589df08aa932467d6"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/control.ctor.premises_feasible/wp-goals.json",
+        "sha256": "c43f56c9e2773f287045e08df43e2b68bca6640282752f6e4c67275a05bc55ff"
+      },
+      "id": "control.ctor.premises_feasible",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/control.ctor.premises_feasible/wp-inventory.json",
+        "sha256": "ff8dbe1125eb3a1a75a9cbea852f4271c2627c409b69a5c23f5117044192cad8"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 4,
+      "property_dependencies": [],
+      "report_count": 11,
+      "resources": {
+        "cpu_seconds": 10.934944999999999,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 382185472,
+        "timed_out": false,
+        "wall_seconds": 11.279657582752407
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/001-t25_control_dtor_premises_feasible.c",
+        "sha256": "dec3f7dd92706e176aa34c20a5459fc78a0d9954c80d1941fa4a7f97ec2cfedd"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/control.dtor.premises_feasible/wp-goals.json",
+        "sha256": "f455ee908019dace75720fec7bb49f79c5775b70c324c8923a7122e4fca856b2"
+      },
+      "id": "control.dtor.premises_feasible",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/control.dtor.premises_feasible/wp-inventory.json",
+        "sha256": "33dd68a9aa93c0fde0ed16a7b2244d3b7cf1daf77537191cda27d65eba9b0f28"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 2,
+      "property_dependencies": [],
+      "report_count": 9,
+      "resources": {
+        "cpu_seconds": 8.854973999999999,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 218591232,
+        "timed_out": false,
+        "wall_seconds": 9.10334400460124
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/002-t25_ctor_rte_zero_data.c",
+        "sha256": "8cebb60cf2e25c91cabd024afe79b7cd5dff0e90aac33529c28034684129f400"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.rte.zero_data/wp-goals.json",
+        "sha256": "ae6c10b4780e306b591f52524886b4f25830a6f5f487d8b8398aec6dfd9b2be0"
+      },
+      "id": "ctor.rte.zero_data",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.rte.zero_data/wp-inventory.json",
+        "sha256": "bbfdb576cdc72f778bfbafe9900f2fb5be0410d939f1ac3bea844dfc529c802e"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 2,
+      "property_dependencies": [],
+      "report_count": 9,
+      "resources": {
+        "cpu_seconds": 0.742185,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 136294400,
+        "timed_out": false,
+        "wall_seconds": 0.9724820349365473
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/003-t25_ctor_rte_zero_size.c",
+        "sha256": "0ecedd99a9eaf5689253b96d5c683ec5ade71b9a9d592ae5146403fc5a21a2f8"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.rte.zero_size/wp-goals.json",
+        "sha256": "9de1f05dea8f02ae692515219b0d590e842a16ae623c2b3446a47b021454b2fc"
+      },
+      "id": "ctor.rte.zero_size",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.rte.zero_size/wp-inventory.json",
+        "sha256": "f95d09784663da75668a67749b625363017f843930469dcbcfffcee5109b1873"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 2,
+      "property_dependencies": [],
+      "report_count": 9,
+      "resources": {
+        "cpu_seconds": 3.795384,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 215461888,
+        "timed_out": false,
+        "wall_seconds": 4.036753220483661
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/004-t25_ctor_rte_zero_capacity.c",
+        "sha256": "8218929abb4e862171bd3c25be8b2e4e00988cf4bdce7c5c6e13af55d31ad9cf"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.rte.zero_capacity/wp-goals.json",
+        "sha256": "f35e470ba6d897c412cbbd3e42e03fbaf23d75a806a86393662568be1d7dedc9"
+      },
+      "id": "ctor.rte.zero_capacity",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.rte.zero_capacity/wp-inventory.json",
+        "sha256": "387c6d4764544b0227ef02f6e6cadde6225d942b0102f7d9440ab8c9faf3157a"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 4,
+      "property_dependencies": [],
+      "report_count": 11,
+      "resources": {
+        "cpu_seconds": 10.927751,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 366452736,
+        "timed_out": false,
+        "wall_seconds": 11.283600630238652
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/005-t25_ctor_fields_initialized.c",
+        "sha256": "3ba6d15266176ee293c81ee73baf752b9d21c91e1ba5740d9a5efd3dc200a421"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.fields.initialized/wp-goals.json",
+        "sha256": "7ccc5259a4992199295765cdebdae2181a4837cb04628ccbc98a601fe4ae51a4"
+      },
+      "id": "ctor.fields.initialized",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.fields.initialized/wp-inventory.json",
+        "sha256": "e97b2765f0f96ba9bcdb11e7eba09f29a5c76ef0a23c800d1116b59460424e6e"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 2,
+      "property_dependencies": [],
+      "report_count": 9,
+      "resources": {
+        "cpu_seconds": 0.81356,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 160940032,
+        "timed_out": false,
+        "wall_seconds": 1.0348842227831483
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/006-t25_ctor_zero_post.c",
+        "sha256": "a626273570d2a0d0f369dff3eca6c6b96ab0bf777255d15e0fb442b5451f2872"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.zero.post/wp-goals.json",
+        "sha256": "c46ce2a18b6a127dc196cbcc21935c8ae7cbe3b1bbbef3a0a95c1f27f621f698"
+      },
+      "id": "ctor.zero.post",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.zero.post/wp-inventory.json",
+        "sha256": "c28c6580071df31aec1f5bf3860af44823b8a004420f9776ae07cebd5ccebbe1"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 2,
+      "property_dependencies": [],
+      "report_count": 9,
+      "resources": {
+        "cpu_seconds": 0.8167369999999999,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 160473088,
+        "timed_out": false,
+        "wall_seconds": 1.0345838582143188
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/007-t25_ctor_zero_frame.c",
+        "sha256": "3f3de6da65af811a6215f3094a5ce024573ff7c72d304c521144a7940121e1d0"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.zero.frame/wp-goals.json",
+        "sha256": "72d5f842e6faa63a8983c6312c873ac4488e15f408c31d39fafc774a675c8d12"
+      },
+      "id": "ctor.zero.frame",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.zero.frame/wp-inventory.json",
+        "sha256": "9b58f56d3456dbb465dc2e6e2b9520f24502ff5fa023564e64a83f7067262057"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 2,
+      "property_dependencies": [],
+      "report_count": 9,
+      "resources": {
+        "cpu_seconds": 0.807817,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 161464320,
+        "timed_out": false,
+        "wall_seconds": 1.0346506014466286
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/008-t25_ctor_alloc_identity.c",
+        "sha256": "d03d2d325eb836a4b9fd2556a68e781c9b99929e99bce7413fa87b30b6706fa7"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.alloc.identity/wp-goals.json",
+        "sha256": "ad369da1827d270d74d3953a707cb6f050fe2da6307148fa45280476e336f00d"
+      },
+      "id": "ctor.alloc.identity",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.alloc.identity/wp-inventory.json",
+        "sha256": "170e9c125bd32a64cd942ddbd24306b553fde351daf42172dca126c9078cc475"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 2,
+      "property_dependencies": [],
+      "report_count": 9,
+      "resources": {
+        "cpu_seconds": 0.768044,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 136294400,
+        "timed_out": false,
+        "wall_seconds": 0.994322819635272
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/009-t25_ctor_alloc_well_formed.c",
+        "sha256": "8540340052e6e4623d3b69f8b5316354461da77abd23492f1a5608f1f701dda8"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.alloc.well_formed/wp-goals.json",
+        "sha256": "6708addaf55b888c430464c9e647acf3230fab1b3d7d93a7658d91cd501e2fea"
+      },
+      "id": "ctor.alloc.well_formed",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.alloc.well_formed/wp-inventory.json",
+        "sha256": "3a40007eb070e48b789be0d5c3f2a0d7c605180fca1a7d652bc484778ebd3e53"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 4,
+      "property_dependencies": [],
+      "report_count": 11,
+      "resources": {
+        "cpu_seconds": 10.880122,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 264937472,
+        "timed_out": false,
+        "wall_seconds": 11.22584405168891
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/010-t25_ctor_alloc_separation.c",
+        "sha256": "02821568cd2c9aed7ed5482a453839f78453b12b1828f6e67527b1f93272e7a0"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.alloc.separation/wp-goals.json",
+        "sha256": "45563e69ac57dd8e7b5baa30e7340b8f52977bff62b6945989db3550d2e9e720"
+      },
+      "id": "ctor.alloc.separation",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.alloc.separation/wp-inventory.json",
+        "sha256": "882c1e4dae2271a721e2a607d128dcc9693ca66c35c141093b1355f3accd8b06"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 2,
+      "property_dependencies": [],
+      "report_count": 9,
+      "resources": {
+        "cpu_seconds": 0.7676160000000001,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 136290304,
+        "timed_out": false,
+        "wall_seconds": 0.974020360969007
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/011-t25_ctor_alloc_extent.c",
+        "sha256": "5d7fa1a19741fa677059b8747b2f2247cab5d55602797bfbb333d6d0f793964d"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.alloc.extent/wp-goals.json",
+        "sha256": "140092bef5e799e3b8f02bb78c8b3ca7eaad59548d6c7cc8a010565c8be7ebba"
+      },
+      "id": "ctor.alloc.extent",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.alloc.extent/wp-inventory.json",
+        "sha256": "573454018fb9b3efb10bc684f9d2eefe8a78a28f32df2bc9d59fc8cb68640d59"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 2,
+      "property_dependencies": [],
+      "report_count": 9,
+      "resources": {
+        "cpu_seconds": 0.761864,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 136454144,
+        "timed_out": false,
+        "wall_seconds": 0.9720038212835789
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/012-t25_ctor_alloc_uninitialized.c",
+        "sha256": "21f1a2751b41bb8402afaee6b45f9e631b8e055b143e106e0b2ec9023311e42a"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.alloc.uninitialized/wp-goals.json",
+        "sha256": "0a0151420a19b716faabffe801bf4df227e75bd63e237dbb46da89b0c63c4481"
+      },
+      "id": "ctor.alloc.uninitialized",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.alloc.uninitialized/wp-inventory.json",
+        "sha256": "e42debdacc604cfb07ec2d096aa9ec21c137ecef913ece8eaa611fccb7264700"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 2,
+      "property_dependencies": [],
+      "report_count": 9,
+      "resources": {
+        "cpu_seconds": 0.5811299999999999,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 136388608,
+        "timed_out": false,
+        "wall_seconds": 0.8125973399728537
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/013-t25_ctor_capacity_entry.c",
+        "sha256": "879c35c2b77efc9ddc284aedbeb714a6daabc784a336d0cd659a29853d411dfb"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.capacity.entry/wp-goals.json",
+        "sha256": "cee6b036188df8a7c51be2cabf181b89f80284d4e2d2890dca36c6bd62df7d11"
+      },
+      "id": "ctor.capacity.entry",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.capacity.entry/wp-inventory.json",
+        "sha256": "213442b44df6eb42b3eb110204586c4386832cfd9c05cc579bc357668bfadeba"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 4,
+      "property_dependencies": [],
+      "report_count": 11,
+      "resources": {
+        "cpu_seconds": 10.966541,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 360161280,
+        "timed_out": false,
+        "wall_seconds": 11.303080649115145
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/014-t25_ctor_rte_allocated_data.c",
+        "sha256": "644862cc4ab8db57c287769d1896adf7aa4d504f79faedb3ad76bc8730e7bfff"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.rte.allocated_data/wp-goals.json",
+        "sha256": "6b00271378aebe5ea9c98e7078a63295462ca1f64ee63d41f2995c04a66731b8"
+      },
+      "id": "ctor.rte.allocated_data",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.rte.allocated_data/wp-inventory.json",
+        "sha256": "e0a9642c6750a103b8bf85e85ca737e74834750f9e5cea19812a893f1827f197"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 2,
+      "property_dependencies": [],
+      "report_count": 9,
+      "resources": {
+        "cpu_seconds": 0.7977409999999999,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 161460224,
+        "timed_out": false,
+        "wall_seconds": 1.02139179315418
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/015-t25_ctor_rte_allocated_capacity.c",
+        "sha256": "d78b7ada3d80197aafa54234c93aa7acd208c84e81a5d4a49db770ba94946e0b"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.rte.allocated_capacity/wp-goals.json",
+        "sha256": "090cc58d0740350d9f902333f1f4c0a5eb2af8538a75c1b8ff8d6cad0d39c999"
+      },
+      "id": "ctor.rte.allocated_capacity",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.rte.allocated_capacity/wp-inventory.json",
+        "sha256": "68d3fc7a028378c684a0f171ea6aa2327fd2d1a65fed5497a7e085b96097ba1c"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 4,
+      "property_dependencies": [],
+      "report_count": 11,
+      "resources": {
+        "cpu_seconds": 10.899925,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 287289344,
+        "timed_out": false,
+        "wall_seconds": 11.22400011215359
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/016-t25_ctor_prefix_establish.c",
+        "sha256": "33721fe080f0388323b41d373ac2cf38bb24f551ec7b52414775fee58f9d4b8c"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.prefix.establish/wp-goals.json",
+        "sha256": "007f4df3ac85625ad27c7f021f3e5810f7f110813155065a41939d3d436ea5b5"
+      },
+      "id": "ctor.prefix.establish",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.prefix.establish/wp-inventory.json",
+        "sha256": "7ac8c87f1c8d8a1170f590936b52f4cb5d526584c56f24e3abaf9bced5cfb13d"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 2,
+      "property_dependencies": [],
+      "report_count": 9,
+      "resources": {
+        "cpu_seconds": 0.746226,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 136290304,
+        "timed_out": false,
+        "wall_seconds": 0.9742484716698527
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/017-t25_ctor_store_access.c",
+        "sha256": "7bfa52910e31e1e270b2a93b40eebf4a31bcd6adfc94c9e83b22963f58c6622b"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.store.access/wp-goals.json",
+        "sha256": "5ab84f5878556a99dc649d22ff310f2d2c634d6046503892ee776ffacd45de92"
+      },
+      "id": "ctor.store.access",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.store.access/wp-inventory.json",
+        "sha256": "acc5c14640fe773cef9a74d86d79d08f53a75ea2cbbfc2be00b9b2e22082f49d"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 4,
+      "property_dependencies": [],
+      "report_count": 11,
+      "resources": {
+        "cpu_seconds": 10.903127,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 332144640,
+        "timed_out": false,
+        "wall_seconds": 11.241354913450778
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/018-t25_ctor_prefix_step.c",
+        "sha256": "0786fd3cc331399d83f29ed25ab84e6e1f817d36c983d41d85171f30937de250"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.prefix.step/wp-goals.json",
+        "sha256": "10da57dc55576a1db7874aad97b06cb77dd69c50b6fbfeecb270d81f4c00e37e"
+      },
+      "id": "ctor.prefix.step",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.prefix.step/wp-inventory.json",
+        "sha256": "9ae683c1a3435ee961616e9828198f4138315f86e73fd2152dd72daf3470782a"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 6,
+      "property_dependencies": [],
+      "report_count": 13,
+      "resources": {
+        "cpu_seconds": 11.105545,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 354398208,
+        "timed_out": false,
+        "wall_seconds": 11.545987539924681
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/019-t25_ctor_prefix_exit.c",
+        "sha256": "9ad43dc7a4a3e21e3041032922403cb031b8cb48202c91bdbd47922da10ed119"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.prefix.exit/wp-goals.json",
+        "sha256": "db53fbb247e7f907885f6eb986188fecd0defcf82fea35fb6a5a55768be947ac"
+      },
+      "id": "ctor.prefix.exit",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.prefix.exit/wp-inventory.json",
+        "sha256": "d8621edc0b1d82d93642782eaf4e25c37b272274541a5ee419d509384c938905"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 2,
+      "property_dependencies": [],
+      "report_count": 9,
+      "resources": {
+        "cpu_seconds": 0.762544,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 136290304,
+        "timed_out": false,
+        "wall_seconds": 0.9944439707323909
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/020-t25_ctor_final_post.c",
+        "sha256": "57202a9f663973a318a16caad7fa58659e4342b51018d24c2448a325f4dd1ce3"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.final.post/wp-goals.json",
+        "sha256": "2c38d362bc71d82df3427af5d9e88c15f879d3f19c42113c0bdb06eb20774d4a"
+      },
+      "id": "ctor.final.post",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.final.post/wp-inventory.json",
+        "sha256": "20270ed99be65c8cd7b3830c266ce72350c4cdbda47eee1791dded1f1b491b10"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 2,
+      "property_dependencies": [],
+      "report_count": 9,
+      "resources": {
+        "cpu_seconds": 0.860966,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 160931840,
+        "timed_out": false,
+        "wall_seconds": 1.075303747318685
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/021-t25_ctor_rte_final_size.c",
+        "sha256": "6a38e3703c45886f0d1f9e9693aabb83fd498b5cfc0c9190f3dc63691ac25a04"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.rte.final_size/wp-goals.json",
+        "sha256": "71d41e72b3eba7ce06f13e8a4538d51197c318233ab50b6a99d2e87b0dabc01a"
+      },
+      "id": "ctor.rte.final_size",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.rte.final_size/wp-inventory.json",
+        "sha256": "0f91987784dbdadd82c8e863bef46a0dc7d41ec0a5698493d69cffad8f55c38d"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 4,
+      "property_dependencies": [],
+      "report_count": 11,
+      "resources": {
+        "cpu_seconds": 10.877984,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 324714496,
+        "timed_out": false,
+        "wall_seconds": 11.20317435450852
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/022-t25_ctor_frame_preexisting.c",
+        "sha256": "a3f5701556b8c421f8ff9cd16fe7acbb15043daf64a86cfa0c4441924aa7dbc6"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.frame.preexisting/wp-goals.json",
+        "sha256": "3c9c842f8d8315c356b77421e06a98d254367f355404c1e65ba07cab5b0b9875"
+      },
+      "id": "ctor.frame.preexisting",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.frame.preexisting/wp-inventory.json",
+        "sha256": "b6b934e00073f4bac67250a9e5689847d8de99b221543534fb5921583a2aeba3"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 2,
+      "property_dependencies": [],
+      "report_count": 9,
+      "resources": {
+        "cpu_seconds": 1.633087,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 176140288,
+        "timed_out": false,
+        "wall_seconds": 1.8808880122378469
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/023-t25_ctor_frame_loop_step.c",
+        "sha256": "35506283e33204c845f4d4b066bdce9b1571a2aa6ccabdcbbf04c3c1dc2ac320"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.frame.loop_step/wp-goals.json",
+        "sha256": "4f56850e253c9e01fdf8bf02afddbaff9defc6947304a3648c2ddf7d316d9f59"
+      },
+      "id": "ctor.frame.loop_step",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.frame.loop_step/wp-inventory.json",
+        "sha256": "3e43f65cdb0ad31d07b3662f47c4bec73c33970784bc5853eed6add5ef81eed3"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 2,
+      "property_dependencies": [],
+      "report_count": 9,
+      "resources": {
+        "cpu_seconds": 0.752737,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 136286208,
+        "timed_out": false,
+        "wall_seconds": 1.022237617522478
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/024-t25_ctor_frame_final.c",
+        "sha256": "95c74dd9d2f35b0a834bd89268d40fbc608ea034f5ee91c0f2186c95fa59f673"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.frame.final/wp-goals.json",
+        "sha256": "4555cbd697e207773d667b65fe18250f668777d51086809e4851becb934d847b"
+      },
+      "id": "ctor.frame.final",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.frame.final/wp-inventory.json",
+        "sha256": "5fc0f972cc0db5049615776245d1cd96f2eaaff2570a4636c6ee30b537073224"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 2,
+      "property_dependencies": [],
+      "report_count": 9,
+      "resources": {
+        "cpu_seconds": 0.7907939999999999,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 160931840,
+        "timed_out": false,
+        "wall_seconds": 1.0325675113126636
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/025-t25_ctor_numeric.c",
+        "sha256": "f545ad0de4eb25926e8ea8f0b341c9763f61d9f15290a640487ba7586179e986"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.numeric/wp-goals.json",
+        "sha256": "f8f38703e12952d8b483521ded3fd5484d8dbc0e78e348108800be022effedfc"
+      },
+      "id": "ctor.numeric",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/ctor.numeric/wp-inventory.json",
+        "sha256": "f2f17bf5ef2ff470132dbcbe940fca8095a3314fd54ee7f22d9602d1c7ccb35b"
+      },
+      "kind": "c_kernel",
+      "matches_expected": true,
+      "ordinary": 10,
+      "prepared_task_count": 12,
+      "property_dependencies": [
+        {
+          "dependencies": [
+            "t25_ctor_numeric_assert_allocation_size_exact",
+            "t25_ctor_numeric_assert_allocation_size_no_wrap"
+          ],
+          "property": "t25_ctor_numeric_assert_scaled_index_in_range"
+        },
+        {
+          "dependencies": [
+            "t25_ctor_numeric_assert_allocation_size_exact",
+            "t25_ctor_numeric_assert_allocation_size_no_wrap",
+            "t25_ctor_numeric_assert_scaled_index_in_range"
+          ],
+          "property": "t25_ctor_numeric_assert_variant_nonnegative"
+        },
+        {
+          "dependencies": [
+            "t25_ctor_numeric_assigns",
+            "t25_ctor_numeric_ensures",
+            "t25_ctor_numeric_exits"
+          ],
+          "property": "t25_ctor_numeric"
+        },
+        {
+          "dependencies": [
+            "t25_ctor_numeric_assert_allocation_size_exact",
+            "t25_ctor_numeric_assert_allocation_size_no_wrap",
+            "t25_ctor_numeric_assert_scaled_index_in_range",
+            "t25_ctor_numeric_assert_variant_nonnegative"
+          ],
+          "property": "t25_ctor_numeric_assert_variant_decreases"
+        },
+        {
+          "dependencies": [
+            "t25_ctor_numeric_assert_allocation_size_exact",
+            "t25_ctor_numeric_assert_allocation_size_no_wrap",
+            "t25_ctor_numeric_assert_scaled_index_in_range",
+            "t25_ctor_numeric_assert_variant_decreases",
+            "t25_ctor_numeric_assert_variant_nonnegative"
+          ],
+          "property": "t25_ctor_numeric_assert_rte_initialization"
+        },
+        {
+          "dependencies": [
+            "t25_ctor_numeric_assert_allocation_size_no_wrap"
+          ],
+          "property": "t25_ctor_numeric_assert_allocation_size_exact"
+        },
+        {
+          "dependencies": [
+            "t25_ctor_numeric_assert_allocation_size_exact",
+            "t25_ctor_numeric_assert_allocation_size_no_wrap",
+            "t25_ctor_numeric_assert_rte_initialization",
+            "t25_ctor_numeric_assert_scaled_index_in_range",
+            "t25_ctor_numeric_assert_variant_decreases",
+            "t25_ctor_numeric_assert_variant_nonnegative"
+          ],
+          "property": "t25_ctor_numeric_ensures"
+        }
+      ],
+      "report_count": 19,
+      "resources": {
+        "cpu_seconds": 5.165013,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 288862208,
+        "timed_out": false,
+        "wall_seconds": 6.269660901278257
+      },
+      "smoke": 1,
+      "statuses": {
+        "valid": 11
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/026-t25_dtor_data_read.c",
+        "sha256": "b69086b6fffb1b5e3daa8030b2f1aef43db39bafc60e508477043f6f7f2144cc"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/dtor.data.read/wp-goals.json",
+        "sha256": "2f94ee21d5550427d38e7cdd6d8be66ef667d73d3d3b61b7ea3ad1b877b5f6bb"
+      },
+      "id": "dtor.data.read",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/dtor.data.read/wp-inventory.json",
+        "sha256": "05f43484816341c9420077d39b012db0dea6129440fc06053e6c75a760931b91"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 2,
+      "property_dependencies": [],
+      "report_count": 9,
+      "resources": {
+        "cpu_seconds": 0.767754,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 136814592,
+        "timed_out": false,
+        "wall_seconds": 0.9943418269976974
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/027-t25_dtor_free_argument.c",
+        "sha256": "fcfc6117fa8bd819c775242ae6b96a3b61c7ef1b3cfe9c0f367c782d6ab320c7"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/dtor.free.argument/wp-goals.json",
+        "sha256": "6a483ee2a502c722d865ffa8807d58530f9c46421546d9fdf1deeb6ef3459b28"
+      },
+      "id": "dtor.free.argument",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/dtor.free.argument/wp-inventory.json",
+        "sha256": "562b2e2200aecff36c650a304e9fc17ceead5df574ddf835e7cce132faf72b54"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 2,
+      "property_dependencies": [],
+      "report_count": 9,
+      "resources": {
+        "cpu_seconds": 0.763929,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 136298496,
+        "timed_out": false,
+        "wall_seconds": 0.9924034848809242
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/028-t25_dtor_null_no_op.c",
+        "sha256": "6ec5685230d0da0a74db05788c37dff0c5a96b447233ec7ac00b2f6078ec6228"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/dtor.null.no_op/wp-goals.json",
+        "sha256": "bba8f81b726d152286da37629c89e6a58e917f3c375eb9a1c1bceb6305cc5ab0"
+      },
+      "id": "dtor.null.no_op",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/dtor.null.no_op/wp-inventory.json",
+        "sha256": "275186452a514f227c2485c17d8cf8e0c50502c70afc8ce29224dff8e3c92383"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 2,
+      "property_dependencies": [],
+      "report_count": 9,
+      "resources": {
+        "cpu_seconds": 0.749428,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 136294400,
+        "timed_out": false,
+        "wall_seconds": 0.9744144799187779
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/029-t25_dtor_alias_invalidated.c",
+        "sha256": "1abc7a7eabab2c5bf104a13df637f374218df7353895d8c399b6c80a979ab01a"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/dtor.alias.invalidated/wp-goals.json",
+        "sha256": "03e058e99237e1215de1641e2ae884a99498d2c49867494ac630c8859cffcae1"
+      },
+      "id": "dtor.alias.invalidated",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/dtor.alias.invalidated/wp-inventory.json",
+        "sha256": "967099cdee37bef8c93360616a160dbb04904caf37efae8da8babe8d375bb82c"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 2,
+      "property_dependencies": [],
+      "report_count": 9,
+      "resources": {
+        "cpu_seconds": 0.753085,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 136294400,
+        "timed_out": false,
+        "wall_seconds": 0.9746763603761792
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/030-t25_dtor_post_old_invalid.c",
+        "sha256": "011adc852b898ed4807397d98c28ef96fb6ec44d5be701a025602b429529852d"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/dtor.post.old_invalid/wp-goals.json",
+        "sha256": "80c7b9e10bfc717f6f7af9c2aef5568b2949acbd7fee276df43ff38ed10fdff2"
+      },
+      "id": "dtor.post.old_invalid",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/dtor.post.old_invalid/wp-inventory.json",
+        "sha256": "0771b44630aad3889807961431de44b4c058c4b96fbdb72fa4e42e142c621ff3"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 2,
+      "property_dependencies": [],
+      "report_count": 9,
+      "resources": {
+        "cpu_seconds": 0.7648109999999999,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 136286208,
+        "timed_out": false,
+        "wall_seconds": 0.9744777688756585
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/031-t25_dtor_frame_surviving.c",
+        "sha256": "0fbb79e8aeaa7f52d70e0dd12f1bce0118fc8a84350fe7cea71602487ad70cf4"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/dtor.frame.surviving/wp-goals.json",
+        "sha256": "9451a6864fc91d36654a366b13e65acdfc0123bd0bd9d2b891215e4d846528be"
+      },
+      "id": "dtor.frame.surviving",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/dtor.frame.surviving/wp-inventory.json",
+        "sha256": "929a31079b9cb3c13d6af01363c75cbd292000840a3d9b3a74ac60db05cbaac9"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 2,
+      "property_dependencies": [],
+      "report_count": 9,
+      "resources": {
+        "cpu_seconds": 0.755408,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 136290304,
+        "timed_out": false,
+        "wall_seconds": 0.9742867285385728
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/032-t25_dtor_frame_other_live.c",
+        "sha256": "b2bea5ec2aeda9ce7dfcc2713e9e6579b494761a02b2ac058629349adc764d87"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/dtor.frame.other_live/wp-goals.json",
+        "sha256": "6a32f2ab2cfc8daaf5523e802ed288c89088084d58273ac9a60c9be4526ec1f0"
+      },
+      "id": "dtor.frame.other_live",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/dtor.frame.other_live/wp-inventory.json",
+        "sha256": "9a046b5e06ac052de3be73ba7f45771bc633d8b30b552f87bae2bc1e48f897e7"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 2,
+      "property_dependencies": [],
+      "report_count": 9,
+      "resources": {
+        "cpu_seconds": 0.7290629999999999,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 136294400,
+        "timed_out": false,
+        "wall_seconds": 0.9520556600764394
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/033-t25_dtor_receiver_overlap.c",
+        "sha256": "3fb8151fb0a50405940685e5f07910969c525c451744d4c74b2bf552d7e9cb95"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/dtor.receiver.overlap/wp-goals.json",
+        "sha256": "0b829b31aa3c0b1df2e2c7675729d5a9ab2d5945e2ff190707edcf615cf81c9a"
+      },
+      "id": "dtor.receiver.overlap",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/dtor.receiver.overlap/wp-inventory.json",
+        "sha256": "fa1b2688b4af9a1fd5ee398d55862188f1867573dda650d549c89a5cbcc97403"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 2,
+      "property_dependencies": [],
+      "report_count": 9,
+      "resources": {
+        "cpu_seconds": 0.7310869999999999,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 136290304,
+        "timed_out": false,
+        "wall_seconds": 0.9543473860248923
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/034-t25_control_zero_size_formation.c",
+        "sha256": "dbb8f5f60b18052cc3c5c470d1ae02b5f14264d494763874b76a284a335ccf95"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/control.zero_size.formation/wp-goals.json",
+        "sha256": "0b1f2846e4749bcfe5cf156dc2dfa635585fdd5b362002040f710214ae6381b1"
+      },
+      "id": "control.zero_size.formation",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/control.zero_size.formation/wp-inventory.json",
+        "sha256": "55056aaaa3111d7e292358b62406befe1997a7f423f203a581c2338a9b2c0e93"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 4,
+      "property_dependencies": [],
+      "report_count": 11,
+      "resources": {
+        "cpu_seconds": 10.955898000000001,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 406822912,
+        "timed_out": false,
+        "wall_seconds": 11.32262840680778
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/035-t25_control_live_zero_base_not_fresh.c",
+        "sha256": "dda942da1fb2e4f53f1c322c3aec869eca9db687b60f4cf7866437f6b48736c4"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/control.live_zero_base.not_fresh/wp-goals.json",
+        "sha256": "0032495c82787212df4595f73412968ddbfdb0a1913b35d55f316ca5784f1f8e"
+      },
+      "id": "control.live_zero_base.not_fresh",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/control.live_zero_base.not_fresh/wp-inventory.json",
+        "sha256": "7c6616302351586a7cfebf8e02acd3dedab56dbb4f3eca7481d10bd6a4603ed6"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 2,
+      "property_dependencies": [],
+      "report_count": 9,
+      "resources": {
+        "cpu_seconds": 0.749978,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 136290304,
+        "timed_out": false,
+        "wall_seconds": 0.9736320860683918
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/036-t25_control_reused_address_stale.c",
+        "sha256": "754f876aa059c3f81b1370563db1ed90f652863d307bc71efd542ba791154cc5"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/control.reused_address.stale/wp-goals.json",
+        "sha256": "19200d9947b63ee9d2682b8d1b49fea69dc68aa49b69905e6e549dca77bb6ae3"
+      },
+      "id": "control.reused_address.stale",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/control.reused_address.stale/wp-inventory.json",
+        "sha256": "a9140904d5e673ef5ca061ebbe800b2502fa3ac1ddaf6a91d788d98b3599d667"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 4,
+      "property_dependencies": [],
+      "report_count": 11,
+      "resources": {
+        "cpu_seconds": 11.028758,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 272187392,
+        "timed_out": false,
+        "wall_seconds": 11.344882145524025
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/037-t25_control_before_release_read.c",
+        "sha256": "f6abf66f4fcd4880b12bd4c2b5b7eb97d6df9765e9911f911e3e9cecd9dec575"
+      },
+      "expected": "proven",
+      "extern_properties": [],
+      "failure_class": null,
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/control.before_release.read/wp-goals.json",
+        "sha256": "be1b557545aca24546dcd3beb9c7a90a78dbb5e4afee48922e05676a7824c718"
+      },
+      "id": "control.before_release.read",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/control.before_release.read/wp-inventory.json",
+        "sha256": "4256ae200cd5727a7ebdc25bbddf256fd1d680de43aedbcdd485e20bbfc63c4c"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 2,
+      "property_dependencies": [],
+      "report_count": 9,
+      "resources": {
+        "cpu_seconds": 0.738188,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 136290304,
+        "timed_out": false,
+        "wall_seconds": 0.9721990516409278
+      },
+      "smoke": 0,
+      "statuses": {
+        "valid": 1
+      },
+      "verdict": "proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/038-t25_control_omitted_store.c",
+        "sha256": "754f6f7e9524e827369da038a4c8c5c3bdf472ddc04969b4a66ade50e1ece6d1"
+      },
+      "expected": "not_proven",
+      "extern_properties": [],
+      "failure_class": "timeout",
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/control.omitted_store/wp-goals.json",
+        "sha256": "23f74d481b17c560a82ee520125223de5492bdc5d1ebdabeac0f5cae239dcea4"
+      },
+      "id": "control.omitted_store",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/control.omitted_store/wp-inventory.json",
+        "sha256": "8eaa02b81263b940a198993357c5292dafb9df96c318bfbde1034b91130c899d"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 6,
+      "property_dependencies": [],
+      "report_count": 13,
+      "resources": {
+        "cpu_seconds": 21.044279999999997,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 326123520,
+        "timed_out": false,
+        "wall_seconds": 21.47255185712129
+      },
+      "smoke": 0,
+      "statuses": {
+        "timeout": 1
+      },
+      "verdict": "not_proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/039-t25_control_wrong_release.c",
+        "sha256": "b466c4854bc82d496f30fdffbabe99df1e86b1b9f024c615ca511547ce587f75"
+      },
+      "expected": "not_proven",
+      "extern_properties": [],
+      "failure_class": "timeout",
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/control.wrong_release/wp-goals.json",
+        "sha256": "e6628a81a1a06bddb154d8932956a9d06669fef9a916a9c9c964c08ca5ff31c7"
+      },
+      "id": "control.wrong_release",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/control.wrong_release/wp-inventory.json",
+        "sha256": "6b8c0e281bcb54e728e00a4769f8bfc2fd9568a1f1b464b16d218b7187f8be5d"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 6,
+      "property_dependencies": [],
+      "report_count": 13,
+      "resources": {
+        "cpu_seconds": 21.026563,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 305106944,
+        "timed_out": false,
+        "wall_seconds": 21.490115631371737
+      },
+      "smoke": 0,
+      "statuses": {
+        "timeout": 1
+      },
+      "verdict": "not_proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/040-t25_control_stale_read.c",
+        "sha256": "cbd321fb70e1eb7235a6fa8b6c29c25e597c8d11ca2748a51ad6b8e226ec5648"
+      },
+      "expected": "not_proven",
+      "extern_properties": [],
+      "failure_class": "timeout",
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/control.stale_read/wp-goals.json",
+        "sha256": "b86405f3200c4839201b93ab878cdf1a3d2c677c912726f57a759421f508a3a3"
+      },
+      "id": "control.stale_read",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/control.stale_read/wp-inventory.json",
+        "sha256": "679df94afe5303f3ee4a2e40d70122f3a1ee76123b76d8b3732e3d16b7ab5213"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 6,
+      "property_dependencies": [],
+      "report_count": 13,
+      "resources": {
+        "cpu_seconds": 21.041344000000002,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 397389824,
+        "timed_out": false,
+        "wall_seconds": 21.46963865775615
+      },
+      "smoke": 0,
+      "statuses": {
+        "timeout": 1
+      },
+      "verdict": "not_proven"
+    },
+    {
+      "canonical_input": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability-inputs/041-t25_control_double_release.c",
+        "sha256": "3c11c75ec1ecd3c388e41fbc05d24d245ef233eced91da44b85c81a3be7f1e1d"
+      },
+      "expected": "not_proven",
+      "extern_properties": [],
+      "failure_class": "timeout",
+      "goals": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/control.double_release/wp-goals.json",
+        "sha256": "275370be3469ad04a50746cb49e47ba1259392216502e38cd2d4c8dbdab596ad"
+      },
+      "id": "control.double_release",
+      "inventory": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-e56c62dd-t25-heap-capability-v5/capability/jobs/control.double_release/wp-inventory.json",
+        "sha256": "9e8b0a341feffb297e739b811ff670dcd523d31273732adca9efc3f1e241e425"
+      },
+      "kind": "check_lemma",
+      "matches_expected": true,
+      "ordinary": 1,
+      "prepared_task_count": 6,
+      "property_dependencies": [],
+      "report_count": 13,
+      "resources": {
+        "cpu_seconds": 21.066216999999998,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 481648640,
+        "timed_out": false,
+        "wall_seconds": 21.476539094932377
+      },
+      "smoke": 0,
+      "statuses": {
+        "timeout": 1
+      },
+      "verdict": "not_proven"
+    }
+  ],
+  "scope": "Cold full42 physical/report reconciliation; semantic import and original-body coverage review pending. No public c_model record or ticket acceptance.",
+  "source_after": {
+    "commit": "e56c62dd4af709eed914aff32b8d4504edcc46d6",
+    "source_unchanged": true,
+    "tracked_changes": ""
+  },
+  "source_commit": "e56c62dd4af709eed914aff32b8d4504edcc46d6",
+  "source_git_head": "e56c62dd4af709eed914aff32b8d4504edcc46d6",
+  "source_git_status": "",
+  "whole_resources": {
+    "cpu_seconds": 285.09188900000004,
+    "exit_code": 0,
+    "out_of_memory": false,
+    "peak_rss_bytes": 535871488,
+    "timed_out": false,
+    "wall_seconds": 248.22248722054064
+  }
+}

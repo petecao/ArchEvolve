@@ -1,0 +1,237 @@
+# Native-CPU rewrite contract for the fork's scalar TDStep (ticket 75). Created 2026-10-05 ET.
+# Agent-decided under Yan-Ru's 2026-10-05 delegation ("certify it"); revisable.
+# Derived from the uncertified best of Extensa native campaign a8 (it1.kronecker.a0, artifact 7acca955...).
+# Updated 2026-10-05 ET: wording and controls revised after the independent review (ticket 75).
+kind: rewrite_contract
+id: contract.bfs_tdstep_frontier_staging
+provenance:
+  origin:
+    kind: extensa_campaign
+    campaign: extensa-native-bfs-20261005-a8
+    candidate: extensa-native-bfs-20261005-a8.it1.kronecker.a0
+    artifact_sha256: 7acca955a1f85a8563280d57b3d4e594bd0312393aeff946eda92f1577ad6ea3
+    provider_patch_sha256: be754a79d466c57df20b08d870d1bfc3cfe98b36b34d3e0c000be57731e61562
+    ticket: 75
+  reference_rewrite:
+    root: library
+    path: native/bfs-tdstep-frontier-staging.patch
+    sha256: 7bab407546d7db74bfcc3c2088cc8d51856d5cda47bb9bca5451a218a96ed085
+    note: The exact a8 TDStep rewrite of snapshot bfs-dx100-scalar-only-20260929-a1.source as a -p1 patch;
+      applied to that snapshot it reproduces artifact 7acca955... byte for byte.
+  staging_semantics:
+    root: library
+    path: library_operations/reference/movement_reference.hh
+    sha256: 465470e4b50f4446801f005fc0bb787f4e4b064d8585044ca710c91d28cbcc8c
+    symbol: gather_stream
+    note: The row-offset staging of one batch is gather_stream with rows 1 and row_len the batch's lane count
+      (the reference semantics of operation.gather_staging_executor, ticket 51); the executor itself is not
+      called, so it is not a dependency.
+pattern_key:
+- roles:
+  - target
+  address_shapes:
+  - stream
+  update_kind: read
+- roles:
+  - index
+  - target
+  address_shapes:
+  - stream
+  - single_valued_indirect
+  update_kind: read
+- roles:
+  - index
+  - offsets
+  - target
+  address_shapes:
+  - stream
+  - single_valued_indirect
+  - ranged_indirect
+  update_kind: read
+- roles:
+  - index
+  - offsets
+  - index
+  - target
+  address_shapes:
+  - stream
+  - single_valued_indirect
+  - ranged_indirect
+  - single_valued_indirect
+  update_kind: compare_and_swap
+strategies:
+- packing
+- loop_tiling
+uses_intrinsics: []
+uses_library_operations: []
+certification_profile:
+  root: library
+  path: profiles/native_bfs_tdstep.yaml
+  sha256: ad5b76b8674a2289437b663b6c8aa5d15a1337596e4881819adc250d57b14a36
+rewrite:
+  scope: The definition of TDStep in benchmarks/gapbs/src/bfs.cc of the fork's scalar-only snapshot. Certify checks
+    before any build that every other byte of the tree is unchanged, that the region holds exactly one function
+    definition with the snapshot's signature, and that authored lines hold no preprocessor directive other than
+    '#pragma omp' (harness scan).
+  transformations:
+  - id: frontier_staging
+    statement: The frontier loop runs over batches of B consecutive window positions (B = knob frontier_batch,
+      a compile-time constant). Per batch, the frontier vertex IDs are copied into a local array, then their row
+      bounds offsets[u] and offsets[u + 1] are gathered into two local arrays; the edge loop of each lane then
+      reads the staged vertex and bounds instead of re-reading the queue and the offsets.
+    clauses: [S1, S2, S3]
+  - id: post_claim_store_elimination
+    statement: The store parent[v] = u that follows a successful compare_and_swap(parent[v], curr_val, u) is
+      removed.
+    clauses: [C1, C2]
+clauses:
+- id: S1
+  role: legality
+  statement: Frontier coverage. Across all threads the batched loop stages and expands every window position in
+    [shared_out_start, shared_out_end) exactly once, including the final partial batch of (size mod B)
+    positions; the worksharing schedule only distributes whole batches. Holds for every integer B of at least 1.
+    For a candidate it is discharged by the positive cells; its control (a fault on the step's inputs) shows that
+    frontier_size_equality catches a dropped final partial batch, whatever the candidate.
+  discharge_mode: differential_test
+  negative_control:
+    id: partial_batch_dropped
+    check: frontier_size_equality
+  natural_language_only: Coverage of a worksharing loop over batches exceeds the closed predicate alphabet.
+- id: S2
+  role: legality
+  statement: Lane correspondence. Lane k claims with the vertex u_k it staged and expands exactly the row
+    [offsets[u_k], offsets[u_k + 1]) of that same vertex; the staged bounds equal gather_stream(offsets,
+    staged_vertices) and gather_stream(offsets + 1, staged_vertices) over the batch's lanes. For a candidate it
+    is discharged by the positive matrix; its control (a fault on the step's row offsets) shows that the verifier
+    catches a row taken from another vertex.
+  discharge_mode: differential_test
+  negative_control:
+    id: stale_row_offset
+    check: verifier
+  formal:
+    language: reference
+    reference:
+      root: library
+      path: library_operations/reference/movement_reference.hh
+      sha256: 465470e4b50f4446801f005fc0bb787f4e4b064d8585044ca710c91d28cbcc8c
+      symbol: gather_stream
+  formal_label: stated
+- id: S3
+  role: frame
+  statement: Staging sources are read only during the step. Within one TDStep nothing writes the frontier window
+    [shared_out_start, shared_out_end), the row offsets or the neighbor array (queue-buffer flushes write at or
+    beyond shared_in, which is at least shared_out_end), so a staged copy cannot go stale and the staging loops
+    have no cross-iteration dependence (each iteration writes only its own lane slot; vectorizing them with omp
+    simd is legal).
+  discharge_mode: assumed
+  negative_control:
+    id: none
+    reason: A frame violation is a write during the step; no seam fault emulates one, so no local test discharges
+      this clause.
+  owner: promotion reviewer (per candidate)
+  evidence: Read from code at review. For the a8 tree (ticket 75 review) TDStep writes only parent through the
+    claim and per-thread queue buffers; flushes write at index shared_in or later, and shared_in is at least
+    shared_out_end; VertexOffsets and the neighbor array are never written by BFS.
+  natural_language_only: The frame of a step (who writes which array between which barriers) exceeds the closed
+    predicate alphabet.
+- id: C1
+  role: legality
+  statement: Claim retained. Each discovery of an unvisited vertex v (parent[v] < 0) by frontier vertex u is one
+    call compare_and_swap(parent[v], curr_val, u) from platform_atomics.h and, on success only, exactly one
+    QueueBuffer push_back(v); both go through these library seams, where the certification faults act. Under
+    certify 1.4 a candidate that bypasses a seam fails seam_witness in every positive cell (under 1.3 it leaves
+    forged_frontier or claim_without_write alive); the spelling is also checked by the promotion reviewer per
+    candidate.
+  discharge_mode: structural
+  negative_control:
+    id: forged_frontier
+    check: duplicate_frontier
+  natural_language_only: Ownership of the claim and the enqueue exceeds the closed predicate alphabet.
+- id: C2
+  role: legality
+  statement: Post-claim store elimination. The removed statement parent[v] = u is redundant if all of the
+    following hold (sufficient, not necessary). (i) It follows a successful compare_and_swap(parent[v], curr_val,
+    u) on the same lvalue with the same new value u, with no reassignment of u or v in between. (ii) The claim
+    primitive writes new_val on success as one atomic read-modify-write (platform_atomics.h,
+    __sync_bool_compare_and_swap, a full barrier). (iii) Per location, within the step the only writes to
+    parent[v] are claims on parent[v] whose expected value is negative and, in the original, the winning
+    thread's own store of the same value; claimed values are vertex IDs of at least 0, so a claimed entry is
+    never overwritten and no other value can be written between the claim and the removed store. (iv) The
+    removed store is a plain store that orders nothing (no release or flush semantics); parent[v] reaches later
+    steps through the claim itself and the implicit barrier and flush at the end of the OpenMP parallel region.
+    The argument is relative to the original program under GCC's de facto model (aligned 32-bit
+    plain loads and stores are single-copy atomic; no loads or stores are invented). The plain read curr_val =
+    parent[v] races with other threads' claims in both programs, which ISO C++11 leaves undefined; the rewrite
+    removes one such race (the plain store) and adds none. Under (i)-(iv) the removed store writes the value the
+    location already holds, so removing it preserves the final parent vector.
+  discharge_mode: differential_test
+  negative_control:
+    id: claim_without_write
+    check: verifier
+  natural_language_only: Atomicity and memory order under OpenMP exceed the closed predicate alphabet.
+- id: frontier_size_equality
+  role: preservation
+  statement: The window handed to each TDStep has exactly the trusted oracle's per-depth count of vertices, level
+    by level (recorded by the evaluator's frontier hook, judged out of process).
+  discharge_mode: differential_test
+  negative_control:
+    id: partial_batch_dropped
+    check: frontier_size_equality
+  natural_language_only: A per-level count obligation over the whole BFS call.
+- id: once_enqueue
+  role: preservation
+  statement: Each discovered vertex is enqueued exactly once; no window repeats a vertex.
+  discharge_mode: differential_test
+  negative_control:
+    id: forged_frontier
+    check: duplicate_frontier
+  natural_language_only: Ownership, memory order or application obligations exceed the closed predicate alphabet.
+runtime_guards: []
+knobs:
+- name: frontier_batch
+  default: 16
+  range:
+    min: 1
+    max: 4096
+  origin: Extensa native campaign a8, iteration 1 (kFrontierBatch = 16)
+  legality_clause: S1
+  note: Coverage (S1) holds for every positive B; the upper bound keeps the three per-thread staging arrays
+    (about 12 B bytes) small on the stack. Certification exercises B = 16 (the candidate's constant and the
+    partial_batch_dropped fault's batch).
+preservation_obligations:
+- frontier_size_equality
+- once_enqueue
+correctness_check:
+  kernel: gapbs-bfs
+  application: dx100-gapbs
+  symbol: BFSVerifier
+  scope: full BFS call; certification judges the returned parent vector with the evaluator's structural criterion
+    (swdb.bfs_native.verify_parents) out of process; the target check is the compiled verifier v2 on every timed
+    trial on mbit10
+execution_witness:
+  functional: claims > 0 and pushes > 0 through the contract's seams whenever BFS goes past the source
+  native: every timed trial passes the compiled structural verifier v2
+negative_controls:
+- id: claim_without_write
+  kind: dropped_operand
+  check: verifier
+- id: partial_batch_dropped
+  kind: dropped_operand
+  check: frontier_size_equality
+- id: stale_row_offset
+  kind: overlapping_pointer
+  check: verifier
+  note: The bug is a row taken from another vertex (an index mismatch); the staged range overlaps vertex u + 1's
+    row, which is why it is filed under the mandatory overlapping_pointer kind.
+- id: forged_frontier
+  kind: double_claim
+  check: duplicate_frontier
+requirement_map: []
+specification_notes:
+- In the DX100 fork SGOffset is int32_t (benchmarks/gapbs/src/graph.h line 90), so the a8 rewrite's change of the
+  edge index from int to SGOffset changes no type; it is not a legality condition.
+- The a8 rewrite adds schedule(static) to the worksharing loop; no clause depends on the schedule (S1 only needs
+  each batch executed once).
+- contract.bfs_read_offload (DX100) keeps the post-claim store by its clause L4; this contract removes it under C2.
+- The store elimination realizes no memory-access strategy (the effect vocabulary has no removal effect); the
+  strategies listed are those of the staging transformation.

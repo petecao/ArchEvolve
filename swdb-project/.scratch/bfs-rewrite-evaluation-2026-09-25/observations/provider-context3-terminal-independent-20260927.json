@@ -1,0 +1,430 @@
+{
+  "observed_at": "2026-09-27T04:27:01.191525-04:00",
+  "driver_reference": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-provider-context3-20260927-a1/driver.json",
+    "sha256": "61977ba1a272ebc7c3632ca84a7173a0eb094302da38ebbe73b6bfb2fe715fd4"
+  },
+  "driver": {
+    "state": "initial_context_submission_finished",
+    "reason": null,
+    "outer_started": "2026-09-27T04:15:37.652278-04:00",
+    "outer_deadline": "2026-09-27T04:28:07.652278-04:00",
+    "finished": "2026-09-27T04:26:10.064670-04:00",
+    "provider_calls": 1,
+    "budget_debit": {
+      "original_provider_allowance_seconds": 1800,
+      "previous_used_seconds": 767.2889378825203,
+      "supplement_used_seconds": 600.3210216322914,
+      "cumulative_used_seconds": 1367.6099595148116,
+      "remaining_provider_seconds": 430.6789783677086,
+      "cumulative_floor_discarded_seconds": 1.7110621174797416,
+      "initial_provider_used_seconds": 62.419636563397944,
+      "context1_provider_used_seconds": 104.55376222543418,
+      "context2_provider_used_seconds": 600.3155390936881,
+      "repairs_used": 0,
+      "maximum_later_repairs": 2,
+      "per_call_seconds": 600,
+      "per_call_usd": 10
+    },
+    "proposal_outcome": {
+      "state": "failed",
+      "stage": "rewriting",
+      "reason": "Command '['/data1/yanruj/.npm-global/bin/claude', '-p', '--safe-mode', '--tools', '', '--strict-mcp-config', '--mcp-config', '{\"mcpServers\":{}}', '--no-session-persistence', '--output-format', 'json', '--json-schema', '{\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"interpretation\", \"patch\", \"unresolved\"], \"properties\": {\"interpretation\": {\"type\": \"string\"}, \"patch\": {\"type\": \"string\"}, \"unresolved\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}}}', '--max-budget-usd', '10']' timed out after 600 seconds"
+    },
+    "candidate": null,
+    "reported_cost_usd": null,
+    "repairs": 0,
+    "builds": 0,
+    "evaluations": 0,
+    "gain_claim": false,
+    "retained_bytes": null
+  },
+  "outer_exit": 0,
+  "outer_finished": "2026-09-27T04:26:10,154964329-04:00",
+  "provider": {
+    "state": "interrupted_or_timeout",
+    "classification": "rewrite_provider",
+    "returncode": null,
+    "host_wall_s": 600.3210216322914,
+    "timeout_s": 600,
+    "prompt_sha256": "d3649b124305743ae82ed62532d9d4e1e1a369037ecbab8f812d80c58a71c7d4"
+  },
+  "provider_reference": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-provider-context3-20260927-a1/provider/bfs-campaign-preparation-20260925-a1.upstream-annotated-context3/provider-1/provider.json",
+    "sha256": "4d74ae8a7d08ef36fc7665db5236a168878e3d274da0483d1c23a66d484acf12"
+  },
+  "strict_cleanup": {
+    "passed": true,
+    "result": {
+      "ledger": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-provider-context3-20260927-a1/cleanup.json",
+        "sha256": "cccae4f171a16678f5853467720ee417e4d3b11d49fd5a07a96bfd5dd79ce268"
+      },
+      "binding": "04a8475aedc26abf59a0170642fb2be25e1359169e05706087586f225be7973e",
+      "spent_seconds": 1.1882313640788202,
+      "events": 21
+    }
+  },
+  "identity_count": 14,
+  "closure_observations": [
+    {
+      "at": "2026-09-27T04:26:58.164336-04:00",
+      "processes": [
+        {
+          "pid": 3572548,
+          "start_ticks": 499887047,
+          "state": "Z",
+          "current_start_ticks": 499887047,
+          "rss_pages": 0
+        },
+        {
+          "pid": 3572560,
+          "start_ticks": 499887057,
+          "state": "absent"
+        },
+        {
+          "pid": 3572561,
+          "start_ticks": 499887057,
+          "state": "absent"
+        },
+        {
+          "pid": 3572632,
+          "start_ticks": 499887080,
+          "state": "absent"
+        },
+        {
+          "pid": 3572642,
+          "start_ticks": 499887120,
+          "state": "absent"
+        },
+        {
+          "pid": 3572643,
+          "start_ticks": 499887122,
+          "state": "absent"
+        },
+        {
+          "pid": 3572644,
+          "start_ticks": 499887123,
+          "state": "absent"
+        },
+        {
+          "pid": 3572647,
+          "start_ticks": 499887163,
+          "state": "absent"
+        },
+        {
+          "pid": 3572650,
+          "start_ticks": 499887340,
+          "state": "absent"
+        },
+        {
+          "pid": 3572672,
+          "start_ticks": 499887709,
+          "state": "absent"
+        },
+        {
+          "pid": 3572975,
+          "start_ticks": 499889037,
+          "state": "absent"
+        },
+        {
+          "pid": 3582976,
+          "start_ticks": 499949458,
+          "state": "absent"
+        },
+        {
+          "pid": 3583029,
+          "start_ticks": 499949697,
+          "state": "absent"
+        },
+        {
+          "pid": 3583034,
+          "start_ticks": 499949936,
+          "state": "absent"
+        }
+      ],
+      "leases": {
+        "mbit10-evaluation": {
+          "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation.meta.json",
+          "sha256": "7c553f8a9743bad52659e93651d454ea9758d8b9c8f0268f8b3d260c8b3f72a0",
+          "metadata": {
+            "active_session": null,
+            "heartbeat_at": "2026-09-12T04:49:11Z",
+            "lease": {
+              "acquired_at": "2026-09-12T01:35:42Z",
+              "daemon_pid": 209457,
+              "daemon_start_token": "sh209457-1789176942",
+              "generation": 77,
+              "host": "mbit10",
+              "lease_name": "mbit10-evaluation",
+              "mode": "measure",
+              "session_id": null
+            },
+            "attempt_pid": null,
+            "attempt_start_token": null,
+            "recovered_from_generation": null,
+            "released_at": "2026-09-12T04:49:11Z",
+            "session_note": null,
+            "session_state": "none",
+            "state": "released",
+            "writer": "hostlock.sh"
+          },
+          "kernel_held": false
+        },
+        "mbit10-evaluation-node0": {
+          "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation-node0.meta.json",
+          "sha256": "4d9e1908cce489f6e94932a0cc6fea65660e721bb16a6b10221f7187d698379e",
+          "metadata": {
+            "active_session": null,
+            "heartbeat_at": "2026-09-27T08:26:10Z",
+            "lease": {
+              "acquired_at": "2026-09-27T08:15:37Z",
+              "daemon_pid": 3572561,
+              "daemon_start_token": "sh3572561-1790496937",
+              "generation": 352,
+              "host": "mbit10",
+              "lease_name": "mbit10-evaluation-node0",
+              "mode": "measure",
+              "session_id": null
+            },
+            "attempt_pid": null,
+            "attempt_start_token": null,
+            "recovered_from_generation": null,
+            "released_at": "2026-09-27T08:26:10Z",
+            "session_note": null,
+            "session_state": "none",
+            "state": "released",
+            "writer": "hostlock.sh"
+          },
+          "kernel_held": false
+        },
+        "mbit10-evaluation-node1": {
+          "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation-node1.meta.json",
+          "sha256": "cdfa636e60dc6b5f4f54499a36e1ba3b31b87a5dc3209a959678f3e0e24fb85e",
+          "metadata": {
+            "active_session": null,
+            "heartbeat_at": "2026-09-27T08:14:49Z",
+            "lease": {
+              "acquired_at": "2026-09-27T08:14:49Z",
+              "daemon_pid": 3571657,
+              "daemon_start_token": "sh3571657-1790496889",
+              "generation": 446,
+              "host": "mbit10",
+              "lease_name": "mbit10-evaluation-node1",
+              "mode": "measure",
+              "session_id": null
+            },
+            "attempt_pid": null,
+            "attempt_start_token": null,
+            "recovered_from_generation": null,
+            "released_at": null,
+            "session_note": null,
+            "session_state": "none",
+            "state": "held",
+            "writer": "hostlock.sh"
+          },
+          "kernel_held": true
+        }
+      }
+    },
+    {
+      "at": "2026-09-27T04:27:00.165125-04:00",
+      "processes": [
+        {
+          "pid": 3572548,
+          "start_ticks": 499887047,
+          "state": "Z",
+          "current_start_ticks": 499887047,
+          "rss_pages": 0
+        },
+        {
+          "pid": 3572560,
+          "start_ticks": 499887057,
+          "state": "absent"
+        },
+        {
+          "pid": 3572561,
+          "start_ticks": 499887057,
+          "state": "absent"
+        },
+        {
+          "pid": 3572632,
+          "start_ticks": 499887080,
+          "state": "absent"
+        },
+        {
+          "pid": 3572642,
+          "start_ticks": 499887120,
+          "state": "absent"
+        },
+        {
+          "pid": 3572643,
+          "start_ticks": 499887122,
+          "state": "absent"
+        },
+        {
+          "pid": 3572644,
+          "start_ticks": 499887123,
+          "state": "absent"
+        },
+        {
+          "pid": 3572647,
+          "start_ticks": 499887163,
+          "state": "absent"
+        },
+        {
+          "pid": 3572650,
+          "start_ticks": 499887340,
+          "state": "absent"
+        },
+        {
+          "pid": 3572672,
+          "start_ticks": 499887709,
+          "state": "absent"
+        },
+        {
+          "pid": 3572975,
+          "start_ticks": 499889037,
+          "state": "absent"
+        },
+        {
+          "pid": 3582976,
+          "start_ticks": 499949458,
+          "state": "absent"
+        },
+        {
+          "pid": 3583029,
+          "start_ticks": 499949697,
+          "state": "absent"
+        },
+        {
+          "pid": 3583034,
+          "start_ticks": 499949936,
+          "state": "absent"
+        }
+      ],
+      "leases": {
+        "mbit10-evaluation": {
+          "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation.meta.json",
+          "sha256": "7c553f8a9743bad52659e93651d454ea9758d8b9c8f0268f8b3d260c8b3f72a0",
+          "metadata": {
+            "active_session": null,
+            "heartbeat_at": "2026-09-12T04:49:11Z",
+            "lease": {
+              "acquired_at": "2026-09-12T01:35:42Z",
+              "daemon_pid": 209457,
+              "daemon_start_token": "sh209457-1789176942",
+              "generation": 77,
+              "host": "mbit10",
+              "lease_name": "mbit10-evaluation",
+              "mode": "measure",
+              "session_id": null
+            },
+            "attempt_pid": null,
+            "attempt_start_token": null,
+            "recovered_from_generation": null,
+            "released_at": "2026-09-12T04:49:11Z",
+            "session_note": null,
+            "session_state": "none",
+            "state": "released",
+            "writer": "hostlock.sh"
+          },
+          "kernel_held": false
+        },
+        "mbit10-evaluation-node0": {
+          "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation-node0.meta.json",
+          "sha256": "4d9e1908cce489f6e94932a0cc6fea65660e721bb16a6b10221f7187d698379e",
+          "metadata": {
+            "active_session": null,
+            "heartbeat_at": "2026-09-27T08:26:10Z",
+            "lease": {
+              "acquired_at": "2026-09-27T08:15:37Z",
+              "daemon_pid": 3572561,
+              "daemon_start_token": "sh3572561-1790496937",
+              "generation": 352,
+              "host": "mbit10",
+              "lease_name": "mbit10-evaluation-node0",
+              "mode": "measure",
+              "session_id": null
+            },
+            "attempt_pid": null,
+            "attempt_start_token": null,
+            "recovered_from_generation": null,
+            "released_at": "2026-09-27T08:26:10Z",
+            "session_note": null,
+            "session_state": "none",
+            "state": "released",
+            "writer": "hostlock.sh"
+          },
+          "kernel_held": false
+        },
+        "mbit10-evaluation-node1": {
+          "path": "/data1/yanruj/lact-host-lease/mbit10-evaluation-node1.meta.json",
+          "sha256": "cdfa636e60dc6b5f4f54499a36e1ba3b31b87a5dc3209a959678f3e0e24fb85e",
+          "metadata": {
+            "active_session": null,
+            "heartbeat_at": "2026-09-27T08:14:49Z",
+            "lease": {
+              "acquired_at": "2026-09-27T08:14:49Z",
+              "daemon_pid": 3571657,
+              "daemon_start_token": "sh3571657-1790496889",
+              "generation": 446,
+              "host": "mbit10",
+              "lease_name": "mbit10-evaluation-node1",
+              "mode": "measure",
+              "session_id": null
+            },
+            "attempt_pid": null,
+            "attempt_start_token": null,
+            "recovered_from_generation": null,
+            "released_at": null,
+            "session_note": null,
+            "session_state": "none",
+            "state": "held",
+            "writer": "hostlock.sh"
+          },
+          "kernel_held": true
+        }
+      }
+    }
+  ],
+  "storage": [
+    {
+      "/data/yanruj/EvolveSWDB_runs/bfs-provider-context3-20260927-a1": 28884992,
+      "/data/yanruj/EvolveSWDB_runs/bfs-provider-context3-20260927-a1.dispatch": 90112
+    },
+    {
+      "/data/yanruj/EvolveSWDB_runs/bfs-provider-context3-20260927-a1": 28884992,
+      "/data/yanruj/EvolveSWDB_runs/bfs-provider-context3-20260927-a1.dispatch": 90112
+    }
+  ],
+  "storage_stable": true,
+  "final_allocated_bytes": 28975104,
+  "logs": {
+    "provider/bfs-campaign-preparation-20260925-a1.upstream-annotated-context3/provider-1/stdout.txt": {
+      "bytes": 0,
+      "mtime_ns": 1790496957484142751
+    },
+    "provider/bfs-campaign-preparation-20260925-a1.upstream-annotated-context3/provider-1/provider.json": {
+      "bytes": 1163,
+      "mtime_ns": 1790497557805432531
+    },
+    "provider/bfs-campaign-preparation-20260925-a1.upstream-annotated-context3/provider-1/stderr.txt": {
+      "bytes": 0,
+      "mtime_ns": 1790496957484142751
+    }
+  },
+  "disk_available_bytes": {
+    "/data": 158153703424,
+    "/data1": 16953085952
+  },
+  "mutations": false,
+  "additional_provider_calls": 0,
+  "complete_recorded_identity_union": true,
+  "union_sources": [
+    "driver.json recursive identities",
+    "all resource-samples.jsonl rows",
+    "dispatch/launch.json"
+  ],
+  "owned_closure_verified": true
+}

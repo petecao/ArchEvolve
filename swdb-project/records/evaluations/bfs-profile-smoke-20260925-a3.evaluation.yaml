@@ -1,0 +1,356 @@
+kind: evaluation
+schema_version: '0.4'
+id: bfs-profile-smoke-20260925-a3.evaluation
+status: draft
+created: '2026-09-25'
+updated: '2026-09-25'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: bfs-profile-smoke-20260925-a3.evaluation
+  candidate: bfs-profile-smoke-20260925-a3.proposal.candidate-1
+  machine: mbit10
+  threads: 1
+  sources: [0, 3, 8]
+  repetitions: 1
+  roi: bfs.complete_call.v1
+  budget:
+    build_seconds: 180
+    run_seconds: 60
+    total_seconds: 600
+  comparison_baseline: dx100-bfs-scalar
+  workload:
+    id: bfs-native-smoke-20260925-a1.graph
+    family: diagnostic
+    generator:
+      name: explicit-small-correctness-case
+      version: '1.0'
+    graph:
+      num_vertices: 10
+      directed: true
+      edges:
+      - [0, 1]
+      - [0, 2]
+      - [1, 3]
+      - [2, 3]
+      - [3, 4]
+      - [4, 5]
+      - [5, 3]
+      - [6, 7]
+outcome:
+  state: complete
+  stage: evaluation
+  reason: null
+stages:
+- stage: source_resolution
+  state: complete
+  started: '2026-09-26T00:13:14.950977+00:00'
+  finished: '2026-09-26T00:13:27.320616+00:00'
+- stage: workload_resolution
+  state: complete
+  started: '2026-09-26T00:13:40.691532+00:00'
+  finished: '2026-09-26T00:13:52.680297+00:00'
+- stage: compiler_identity
+  state: complete
+  started: '2026-09-26T00:14:04.837409+00:00'
+  command: [/usr/bin/g++, --version]
+  timeout_s: 30
+  log: /data/yanruj/EvolveSWDB_runs/bfs-profile-smoke-20260925/bfs-profile-smoke-20260925-a3.evaluation/002-compiler_identity.log
+  finished: '2026-09-26T00:14:16.198196+00:00'
+  returncode: 0
+  host_wall_s: 0.004202602431178093
+  log_sha256: 59d1cbef41d4ae78d5063d525b7aa13d18dc0493ea00537efc19b2ee398cb5a8
+- stage: build
+  state: complete
+  started: '2026-09-26T00:14:29.295833+00:00'
+  command:
+  - /usr/bin/g++
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -fopenmp
+  - -pthread
+  - -DFUNC
+  - -I/data1/yanruj/EvolveSWDB_sources/bfs-profile-smoke-20260925-a3.proposal/source/benchmarks/gapbs/src
+  - -I/data1/yanruj/EvolveSWDB_sources/bfs-profile-smoke-20260925-a3.proposal/source/benchmarks/API
+  - /data1/yanruj/EvolveSWDB_builds/bfs-profile-smoke-20260925-a3.evaluation/native_driver.cc
+  - -o
+  - /data1/yanruj/EvolveSWDB_builds/bfs-profile-smoke-20260925-a3.evaluation/bfs-native
+  timeout_s: 180.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-profile-smoke-20260925/bfs-profile-smoke-20260925-a3.evaluation/003-build.log
+  finished: '2026-09-26T00:14:45.264280+00:00'
+  returncode: 0
+  host_wall_s: 3.123618128709495
+  log_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- stage: execution
+  state: complete
+  started: '2026-09-26T00:15:10.243859+00:00'
+  command:
+  - /data1/yanruj/EvolveSWDB_builds/bfs-profile-smoke-20260925-a3.evaluation/bfs-native
+  - /data/yanruj/EvolveSWDB_runs/bfs-profile-smoke-20260925/bfs-profile-smoke-20260925-a3.evaluation/graph.swdb
+  - '0'
+  - /data/yanruj/EvolveSWDB_runs/bfs-profile-smoke-20260925/bfs-profile-smoke-20260925-a3.evaluation/trial-0-0.json
+  timeout_s: 60.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-profile-smoke-20260925/bfs-profile-smoke-20260925-a3.evaluation/004-execution.log
+  repetition: 0
+  source_position: 0
+  source: 0
+  finished: '2026-09-26T00:15:21.380091+00:00'
+  returncode: 0
+  host_wall_s: 0.008252029307186604
+  log_sha256: 49a4e8c0eb438d046f8f27a62301e63f811aca660c4a952f0049a2e9452d93c1
+- stage: correctness
+  state: complete
+  started: '2026-09-26T00:15:34.446977+00:00'
+  repetition: 0
+  source_position: 0
+  source: 0
+  finished: '2026-09-26T00:15:47.857193+00:00'
+  reason: null
+- stage: execution
+  state: complete
+  started: '2026-09-26T00:16:00.357904+00:00'
+  command:
+  - /data1/yanruj/EvolveSWDB_builds/bfs-profile-smoke-20260925-a3.evaluation/bfs-native
+  - /data/yanruj/EvolveSWDB_runs/bfs-profile-smoke-20260925/bfs-profile-smoke-20260925-a3.evaluation/graph.swdb
+  - '3'
+  - /data/yanruj/EvolveSWDB_runs/bfs-profile-smoke-20260925/bfs-profile-smoke-20260925-a3.evaluation/trial-0-1.json
+  timeout_s: 60.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-profile-smoke-20260925/bfs-profile-smoke-20260925-a3.evaluation/006-execution.log
+  repetition: 0
+  source_position: 1
+  source: 3
+  finished: '2026-09-26T00:16:13.063204+00:00'
+  returncode: 0
+  host_wall_s: 0.008290689438581467
+  log_sha256: c507d4fea04175fddbbcb19d252cafe5f26fb647f64fcbdcdaa69fcf9cb6b0d7
+- stage: correctness
+  state: complete
+  started: '2026-09-26T00:16:25.122848+00:00'
+  repetition: 0
+  source_position: 1
+  source: 3
+  finished: '2026-09-26T00:16:38.924302+00:00'
+  reason: null
+- stage: execution
+  state: complete
+  started: '2026-09-26T00:16:52.200892+00:00'
+  command:
+  - /data1/yanruj/EvolveSWDB_builds/bfs-profile-smoke-20260925-a3.evaluation/bfs-native
+  - /data/yanruj/EvolveSWDB_runs/bfs-profile-smoke-20260925/bfs-profile-smoke-20260925-a3.evaluation/graph.swdb
+  - '8'
+  - /data/yanruj/EvolveSWDB_runs/bfs-profile-smoke-20260925/bfs-profile-smoke-20260925-a3.evaluation/trial-0-2.json
+  timeout_s: 60.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-profile-smoke-20260925/bfs-profile-smoke-20260925-a3.evaluation/008-execution.log
+  repetition: 0
+  source_position: 2
+  source: 8
+  finished: '2026-09-26T00:17:04.849751+00:00'
+  returncode: 0
+  host_wall_s: 0.008370453491806984
+  log_sha256: 57e7c4021111269c97e5201c4524fb10baa7fc251620aaffb417e5263419bd30
+- stage: correctness
+  state: complete
+  started: '2026-09-26T00:17:18.130731+00:00'
+  repetition: 0
+  source_position: 2
+  source: 8
+  finished: '2026-09-26T00:17:29.811275+00:00'
+  reason: null
+- stage: aggregation
+  state: complete
+  started: '2026-09-26T00:17:43.335845+00:00'
+  finished: '2026-09-26T00:17:56.576426+00:00'
+timing:
+- source: 0
+  source_position: 0
+  repetition: 0
+  duration_s: 0.000147553
+  roi: bfs.complete_call.v1
+  basis: measured
+  quantity: native_roi_wall_seconds
+  binary_sha256: e7db1f8531ddbd675ec5874acade25a35e675bd782e1967e8243b2322e46027a
+  output: /data/yanruj/EvolveSWDB_runs/bfs-profile-smoke-20260925/bfs-profile-smoke-20260925-a3.evaluation/trial-0-0.json
+  output_sha256: 74e56aa3d78ea5a57c00ee74dbb90462b04803008346865afae4c9d0f47e2fa9
+  verified: true
+  evidence_kind: execution
+- source: 3
+  source_position: 1
+  repetition: 0
+  duration_s: 0.000366288
+  roi: bfs.complete_call.v1
+  basis: measured
+  quantity: native_roi_wall_seconds
+  binary_sha256: e7db1f8531ddbd675ec5874acade25a35e675bd782e1967e8243b2322e46027a
+  output: /data/yanruj/EvolveSWDB_runs/bfs-profile-smoke-20260925/bfs-profile-smoke-20260925-a3.evaluation/trial-0-1.json
+  output_sha256: 852eaed45ce9fcf91cf7b6a4421b3c1f7a77b30e0095984dd0df301fd464a5c4
+  verified: true
+  evidence_kind: execution
+- source: 8
+  source_position: 2
+  repetition: 0
+  duration_s: 0.00013604
+  roi: bfs.complete_call.v1
+  basis: measured
+  quantity: native_roi_wall_seconds
+  binary_sha256: e7db1f8531ddbd675ec5874acade25a35e675bd782e1967e8243b2322e46027a
+  output: /data/yanruj/EvolveSWDB_runs/bfs-profile-smoke-20260925/bfs-profile-smoke-20260925-a3.evaluation/trial-0-2.json
+  output_sha256: d621e34be6318290f6b21adc202e8ce2b79fd21546485bd4479a9c275868f687
+  verified: true
+  evidence_kind: execution
+correctness:
+  state: passed
+  checks:
+  - passed: true
+    reason: null
+    reachable_vertices: 6
+    source: 0
+    source_position: 0
+    repetition: 0
+    trial: 0
+    output_sha256: 74e56aa3d78ea5a57c00ee74dbb90462b04803008346865afae4c9d0f47e2fa9
+    binary_sha256: e7db1f8531ddbd675ec5874acade25a35e675bd782e1967e8243b2322e46027a
+    graph_sha256: 3762adc123e79df54d24bce58e77627b375459898de001a62a17372bcc7fd9a7
+    verifier: swdb.bfs.structural.v1
+  - passed: true
+    reason: null
+    reachable_vertices: 3
+    source: 3
+    source_position: 1
+    repetition: 0
+    trial: 1
+    output_sha256: 852eaed45ce9fcf91cf7b6a4421b3c1f7a77b30e0095984dd0df301fd464a5c4
+    binary_sha256: e7db1f8531ddbd675ec5874acade25a35e675bd782e1967e8243b2322e46027a
+    graph_sha256: 3762adc123e79df54d24bce58e77627b375459898de001a62a17372bcc7fd9a7
+    verifier: swdb.bfs.structural.v1
+  - passed: true
+    reason: null
+    reachable_vertices: 1
+    source: 8
+    source_position: 2
+    repetition: 0
+    trial: 2
+    output_sha256: d621e34be6318290f6b21adc202e8ce2b79fd21546485bd4479a9c275868f687
+    binary_sha256: e7db1f8531ddbd675ec5874acade25a35e675bd782e1967e8243b2322e46027a
+    graph_sha256: 3762adc123e79df54d24bce58e77627b375459898de001a62a17372bcc7fd9a7
+    verifier: swdb.bfs.structural.v1
+profiling:
+  state: unavailable
+  reasons:
+  - automatic function attribution not collected
+  - automatic loop attribution not collected
+  - dynamic memory observations not collected
+raw_artifacts:
+- host: mbit10
+  path: /data/yanruj/EvolveSWDB_runs/bfs-profile-smoke-20260925/bfs-profile-smoke-20260925-a3.evaluation
+  kind: evaluation_run
+- host: mbit10
+  path: /data1/yanruj/EvolveSWDB_builds/bfs-profile-smoke-20260925-a3.evaluation
+  kind: evaluation_build
+gain_claim: false
+evidence_kind: execution
+candidate: bfs-profile-smoke-20260925-a3.proposal.candidate-1
+source_snapshot: bfs-native-smoke-20260925-a1.source
+implementation: dx100-bfs-scalar
+proposal: bfs-profile-smoke-20260925-a3.proposal
+profile_package: bfs-native-smoke-20260925-a1.package
+machine: mbit10
+comparison_baseline: dx100-bfs-scalar
+context:
+  candidate_sha256: e6e789e6942776ad88cbc3ba8377d09be8f8b8eee63e511230d7a9957a2490fd
+  source_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  application: dx100-gapbs
+  adapter: dx100_scalar_func
+  target: mbit10
+  machine_sha256: fcb0123f0bdb9bc004348eb8c6444f03304b6612e0cb2e26a82e621b07d82a79
+  threads: 1
+  sources: [0, 3, 8]
+  repetitions: 1
+  roi: bfs.complete_call.v1
+  protocol: null
+  basis: measured
+  process_policy: one fresh process per source and repetition; graph construction before ROI
+  verifier: swdb.bfs.structural.v1
+  verifier_sha256: 4a6216fada28fae9ec42c7be1bde8f8461cb2967a896cf9a6acc9645ea173be3
+  backend_configuration: {}
+  instrumentation:
+    template_sha256: 99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95
+    treatment: included
+  host: mbit10
+  architecture: x86_64
+  lane: 'mbit10-evaluation-node1 (verified: affinity, bind:1, lease held, generation 380)'
+  load_average: [19.44189453125, 18.1953125, 14.3330078125]
+  budget:
+    build_seconds: 180.0
+    run_seconds: 60.0
+    total_seconds: 600.0
+  workload:
+    id: bfs-native-smoke-20260925-a1.graph
+    family: diagnostic
+    generator:
+      name: explicit-small-correctness-case
+      version: '1.0'
+    representation:
+      kind: inline_graph
+      sha256: 691eecc01480d05d8a9d9e5494522a3ff309989f34a2aa60d4fc9ee4abfff270
+    normalization: 'simple graph: remove self loops and duplicates; symmetrize if undirected; sort neighbors'
+    canonical_sha256: 3762adc123e79df54d24bce58e77627b375459898de001a62a17372bcc7fd9a7
+    adjacency_order_sha256: 3762adc123e79df54d24bce58e77627b375459898de001a62a17372bcc7fd9a7
+    num_vertices: 10
+    num_directed_edges: 8
+    directed: true
+    sources: [0, 3, 8]
+    canonical_path: /data/yanruj/EvolveSWDB_runs/bfs-profile-smoke-20260925/bfs-profile-smoke-20260925-a3.evaluation/graph.swdb
+    canonical_file_sha256: f1d7afd5722fb22960c08c3c04439291feba97e38fa902b43754a75f9d5fcddf
+build:
+  directory: /data1/yanruj/EvolveSWDB_builds/bfs-profile-smoke-20260925-a3.evaluation
+  compiler: /usr/bin/g++
+  flags: [-std=c++11, -O3, -Wall, -fopenmp, -pthread, -DFUNC]
+  command:
+  - /usr/bin/g++
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -fopenmp
+  - -pthread
+  - -DFUNC
+  - -I/data1/yanruj/EvolveSWDB_sources/bfs-profile-smoke-20260925-a3.proposal/source/benchmarks/gapbs/src
+  - -I/data1/yanruj/EvolveSWDB_sources/bfs-profile-smoke-20260925-a3.proposal/source/benchmarks/API
+  - /data1/yanruj/EvolveSWDB_builds/bfs-profile-smoke-20260925-a3.evaluation/native_driver.cc
+  - -o
+  - /data1/yanruj/EvolveSWDB_builds/bfs-profile-smoke-20260925-a3.evaluation/bfs-native
+  wrapper_sha256: bf6d3af41c461aad8e2c1a54e6c6ff092c11a6a207468b230eb98de23b995efa
+  template_sha256: 99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95
+  compiler_version:
+  - g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+  - Copyright (C) 2023 Free Software Foundation, Inc.
+  binary: /data1/yanruj/EvolveSWDB_builds/bfs-profile-smoke-20260925-a3.evaluation/bfs-native
+  binary_sha256: e7db1f8531ddbd675ec5874acade25a35e675bd782e1967e8243b2322e46027a
+  execution_environment:
+    OMP_NUM_THREADS: '1'
+    OMP_DYNAMIC: 'FALSE'
+    OMP_PROC_BIND: close
+    OMP_PLACES: cores
+summary:
+  trials: 3
+  median_roi_seconds: 0.000147553
+  by_source_position:
+  - source_position: 0
+    source: 0
+    median_roi_seconds: 0.000147553
+  - source_position: 1
+    source: 3
+    median_roi_seconds: 0.000366288
+  - source_position: 2
+    source: 8
+    median_roi_seconds: 0.00013604
+  gain_claim: false

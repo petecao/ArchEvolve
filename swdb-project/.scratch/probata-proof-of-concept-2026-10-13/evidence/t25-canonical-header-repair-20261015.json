@@ -1,0 +1,239 @@
+{
+  "created": "2026-10-15 ET",
+  "status": "claimed",
+  "repair_commits": [
+    "d918de78",
+    "ce94128b"
+  ],
+  "runtime_scope": "canonical clean cinttypes baseline plus physical canonical libcxx macro-origin discrimination; no header directory whitelist, input precondition or origin relaxation",
+  "independent_review": "coordinator independently reviewed both one-line runtime changes before replay",
+  "local_reports": [
+    {
+      "path": "/private/tmp/probata-c-header-red.jsonl",
+      "sha256": "482df843495d9d8a73cf5568e1f4da195d2435508e9cccd72bd32579018ab023",
+      "scope": "legitimate inttypes publiclower RED,1failed"
+    },
+    {
+      "path": "/private/tmp/probata-c-header-green.jsonl",
+      "sha256": "f8aaa3ac561495c7c7daf53adf85c0a264e5e686c7176a6eda6d65bdfdf518cb",
+      "scope": "legitimate inttypes publiclower GREEN1"
+    },
+    {
+      "path": "/private/tmp/probata-c-header-shadow-before.jsonl",
+      "sha256": "69a2a6af3ec2a341e358e5a061fe34eadce250f8743d0a00a6522bffa9eefa2d",
+      "scope": "two malicious header shadows refused on old source"
+    },
+    {
+      "path": "/private/tmp/probata-c-header-context-final.jsonl",
+      "sha256": "a52456a7f84c2ffc1015303d0673eb91038a4358d1a205edb5d89efff33c006c",
+      "scope": "first repair compiler/context16PASS4deselected"
+    },
+    {
+      "path": "/private/tmp/probata-canonical-macro-red2.jsonl",
+      "sha256": "347b1819c648f81cd19b9764a17e83f928fe9df1ed0924bed52f715e47577fbf",
+      "scope": "canonicaliostreamRED1FAIL/projectguardnegative1PASS"
+    },
+    {
+      "path": "/private/tmp/probata-canonical-macro-green.jsonl",
+      "sha256": "4f06ebf332f986348ba37f09086e191a4cc9979c4cb9340de80a52fbf64dd17e",
+      "scope": "finalcompiler/context18PASS4deselected"
+    }
+  ],
+  "excluded_setup_attempt": "initial macro RED command used wrong cwd and selected0tests; not counted as RED evidence",
+  "intermediate_remote_refusal": {
+    "source": "feb92b5b1f5210d88565877c82e102a2a1baadd1",
+    "selection": [
+      "tests/test_std_models.py::test_a_unit_using_vector_members_and_pair_proves_and_its_c_and_cpp_agree_with_the_model_pinned"
+    ],
+    "outcome": "1failed; previous integer C-header check passed; separate canonical-macro false refusal before verification",
+    "record": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-t25-bounded-max-20261015-1244-node0/pytest/test_a_unit_using_vector_membe0/records/proofs/proof.vector-safe.candidate-1.20261015t164559z.0308ccc6.yaml",
+      "sha256": "68ec666f1ad5d2415cba8fa64301d08b70c583c32160b98199673ed8f769578e",
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "verifier_launched": false,
+      "reason": "candidate macro can rewrite canonical standard headers: /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/include/c++/v1/iostream:11 (_LIBCPP_IOSTREAM)",
+      "certificate_sha256": "487b032430eb9eac74458e985983c4d6664514f686ddc37dec0d7cd2680a7af5"
+    },
+    "audit": {
+      "records": 1,
+      "artifact_references_including_adapter_log": 2,
+      "declared_absolute_file_pin_references": 1569,
+      "unique_absolute_pinned_files": 854,
+      "runtime_test_fixture_reader_schema_source_pins": 201,
+      "errors": [],
+      "certificate_self_hash_matches": true
+    },
+    "resources": {
+      "exit_code": 1,
+      "peak_rss_bytes": 430682112,
+      "out_of_memory": false,
+      "timed_out": false,
+      "wall_seconds": 150.76398264896125,
+      "cpu_seconds": 151.157104
+    },
+    "lane": {
+      "aligned_cell_age_s": "",
+      "aligned_to": "no_gapbs_batch_running",
+      "command": [
+        "timeout",
+        "2000",
+        "bash",
+        "/data/yanruj/EvolveSWDB_runs/probata-t25-bounded-max-20261015-1244-node0/run.sh"
+      ],
+      "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+      "ended_utc": "2026-10-15T16:46:21Z",
+      "exit_code": 1,
+      "host": "mbit10",
+      "job": "probata-t25-bounded-max-canonical-repair",
+      "lease_generation": 563,
+      "lease_name": "mbit10-evaluation-node0",
+      "load1_at_start": 0.05,
+      "load1_max": 32,
+      "node": 0,
+      "numa_memory_policy": "bind:0",
+      "numactl": "--cpunodebind=0 --membind=0",
+      "preregistration_sha256": null,
+      "started_utc": "2026-10-15T16:43:50Z"
+    },
+    "source_after": {
+      "commit": "feb92b5b1f5210d88565877c82e102a2a1baadd1",
+      "tracked_changes": "",
+      "source_unchanged": true
+    },
+    "output_bytes_before_audit": 7353146,
+    "diagnosis": "Macro guard incorrectly treats a physically canonical libc++ header absent from the small clean baseline as candidate code. Original parser physical-location binding remains available as trusted."
+  },
+  "prospective_replay": {
+    "source": "ce94128b74ac4c8b77b28e750cae8f09a575cf1b",
+    "lane": {
+      "aligned_cell_age_s": "",
+      "aligned_to": "no_gapbs_batch_running",
+      "command": [
+        "timeout",
+        "2000",
+        "bash",
+        "/data/yanruj/EvolveSWDB_runs/probata-t25-bounded-max-20261015-1252-node0/run.sh"
+      ],
+      "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+      "ended_utc": "2026-10-15T16:53:32Z",
+      "exit_code": 1,
+      "host": "mbit10",
+      "job": "probata-t25-bounded-max-header-macro-repair",
+      "lease_generation": 564,
+      "lease_name": "mbit10-evaluation-node0",
+      "load1_at_start": 0.14,
+      "load1_max": 32,
+      "node": 0,
+      "numa_memory_policy": "bind:0",
+      "numactl": "--cpunodebind=0 --membind=0",
+      "preregistration_sha256": null,
+      "started_utc": "2026-10-15T16:51:01Z"
+    },
+    "test": "test_std_models.py::test_a_unit_using_vector_members_and_pair_proves_and_its_c_and_cpp_agree_with_the_model_pinned",
+    "n": 3,
+    "state": "completed with prelaunch refusal; see third_remote_refusal",
+    "rss_cap_bytes": 8589934592,
+    "output_budget_bytes": 1073741824,
+    "workers": 1,
+    "wall_seconds": 1800
+  },
+  "retention_readers": [
+    "coordinator",
+    "ticket25 acceptance",
+    "independent audit"
+  ],
+  "third_remote_refusal": {
+    "source": "ce94128b74ac4c8b77b28e750cae8f09a575cf1b",
+    "outcome": "same single max1FAIL; platform getopt macro refusal; no actual verification/native differential",
+    "record": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-t25-bounded-max-20261015-1252-node0/pytest/test_a_unit_using_vector_membe0/records/proofs/proof.vector-safe.candidate-1.20261015t165310z.d022942c.yaml",
+      "sha256": "03d86c7912ff30255bfeaa69c9bdf436fed9f47bba0eb21cc9bee907961afeea",
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "verifier_launched": false,
+      "reason": "candidate macro can rewrite canonical standard headers: /usr/include/getopt.h:32 (__getopt_argv_const)",
+      "certificate_sha256": "e7aa91ddccbd38ebf87b2717243e1fb829ca996425dfb95e4b1932f4eb8406b3"
+    },
+    "audit": {
+      "records": 1,
+      "artifact_references_including_adapter_log": 2,
+      "declared_absolute_file_pin_references": 1569,
+      "unique_absolute_pinned_files": 854,
+      "runtime_test_fixture_reader_schema_source_pins": 201,
+      "certificate_self_hash_matches": true,
+      "errors": []
+    },
+    "resources": {
+      "exit_code": 1,
+      "peak_rss_bytes": 437018624,
+      "out_of_memory": false,
+      "timed_out": false,
+      "wall_seconds": 150.62032592762262,
+      "cpu_seconds": 150.933808
+    },
+    "source_after": {
+      "commit": "ce94128b74ac4c8b77b28e750cae8f09a575cf1b",
+      "tracked_changes": "",
+      "source_unchanged": true
+    },
+    "lane": {
+      "aligned_cell_age_s": "",
+      "aligned_to": "no_gapbs_batch_running",
+      "command": [
+        "timeout",
+        "2000",
+        "bash",
+        "/data/yanruj/EvolveSWDB_runs/probata-t25-bounded-max-20261015-1252-node0/run.sh"
+      ],
+      "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+      "ended_utc": "2026-10-15T16:53:32Z",
+      "exit_code": 1,
+      "host": "mbit10",
+      "job": "probata-t25-bounded-max-header-macro-repair",
+      "lease_generation": 564,
+      "lease_name": "mbit10-evaluation-node0",
+      "load1_at_start": 0.14,
+      "load1_max": 32,
+      "node": 0,
+      "numa_memory_policy": "bind:0",
+      "numactl": "--cpunodebind=0 --membind=0",
+      "preregistration_sha256": null,
+      "started_utc": "2026-10-15T16:51:01Z"
+    },
+    "output_bytes_before_audit": 7353186
+  },
+  "targeted_platform_repair": {
+    "commit": "d874c4dc",
+    "runtime_sha256": "4aee5a271a2f92fced7a94c04807cd2d94d36da24ea3d163f2364048bc79d937",
+    "policy": "actual inclusion spelling/physicaltarget, clean angle probe without project-I/defines/includeENV, exact overlapping header hashes, at most16probes; trust onlymacroorigins, declaration/body checks unchanged; explicit-D reserved macro screening",
+    "independent_review": "coordinator reviewed exactdiff before final samecase launch",
+    "reports": [
+      {
+        "path": "/private/tmp/probata-platform-macro-red2.jsonl",
+        "sha256": "3843e3fc9ef26377e926f7bfb6f36a566ea6d1ee48cc8ba796c0b4be1744f72c",
+        "scope": "6FAIL1PASS: platform false refusal masks intended negative-origin assertions"
+      },
+      {
+        "path": "/private/tmp/probata-platform-macro-green.jsonl",
+        "sha256": "6e34c8478f48f447c6746b7a0d2eca58f2a9532c44f5645019826ffe413d0366",
+        "scope": "7PASS43.96s: clean platform plus project/context controls"
+      },
+      {
+        "path": "/private/tmp/probata-platform-flag-red.jsonl",
+        "sha256": "358416cbfb97eab716abddf8800d22411dacc5c4225a260afe20f5c384541b35",
+        "scope": "1FAIL1PASS9.31s: explicit-D accepted on old source, source macro refuses; no platform masking"
+      },
+      {
+        "path": "/private/tmp/probata-platform-macro-final.jsonl",
+        "sha256": "e3e49e9dd70f43630f6c79828d4c412ffef0da80c57fe1846db381200c5a9f8c",
+        "scope": "25PASS4deselected103.79s: final compiler/context controls; no real verifier"
+      }
+    ],
+    "accepted_same_case": "t25-bounded-max-accepted-20261015.json"
+  },
+  "excluded_setup_attempts": [
+    "initial macroRED wrongcwd selected0tests",
+    "initial platformRED wrongtestpath selected0tests"
+  ]
+}

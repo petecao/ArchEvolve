@@ -1,0 +1,29 @@
+{
+  "accepted_source_only": true,
+  "actual_collection": "NOT_RUN; fullquietthrough11:38Z",
+  "complete_adjacent_diff_byte_exact_recomputed": true,
+  "complete_delta": {
+    "bytes": 31964,
+    "path": "/private/tmp/lanl17-readonly-sparse-collector-capture-complete-defaultR1-derivation-20261008-a1.diff",
+    "sha256": "3e21ac3fb0ffd0180655401abb55b74a45be172fa5c025ce82c99bb1ceb44483"
+  },
+  "embedded_collector_exact": {
+    "bytes": 11504,
+    "sha256": "af667835394c5b2adced9c66313382de4a948347fc99594692f45253b29fe957"
+  },
+  "findings": [],
+  "format": "swdb.parent-readonly-sparse-original-collector-capture-source-review.v1",
+  "full_selected_source_read": true,
+  "guard_wrapper_mains_or_remote_mutations": false,
+  "inherited_local_definitions_exact_except_main": 11,
+  "largeBOOTdelta_review": "Both exact BOOT source literals read in selected sources; remaining complete diff lines read, no unknown source delta.",
+  "reviewed_utc": "2026-10-08T10:46:59.436086+00:00",
+  "sealed": false,
+  "source": {
+    "bytes": 25892,
+    "path": "/private/tmp/lanl17_capture_readonly_sparse_collector_originals_20261008_a1.py",
+    "sha256": "354303d16cd5e7fcb8d1665c0593cc3fe4f0734acfe5098fab1603fff6dbf5ff"
+  },
+  "source_review_mechanical_initial_error": "Initial delta comparison used basename headers but original uses absolute paths; corrected exact comparison without changing any source/diff.",
+  "target_execution_tests_or_SSH": false
+}

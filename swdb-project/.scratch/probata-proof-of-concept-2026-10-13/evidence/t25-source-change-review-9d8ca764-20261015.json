@@ -1,0 +1,30 @@
+{
+  "baseline": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+  "date_et": "2026-10-15",
+  "entry": {
+    "command_sha256": "12062ef5a25e422dbb8eacbc264e4ad51f79d7f6ee831dc09005bfa2bd3a12dc",
+    "sha256": "862d3844a4768902b920d66e51889b2d019ca54f2924faf3d0b274cfc314b434"
+  },
+  "files_after": {
+    "swdb-project/swdb/c_lowering.py": "e8a427bcafec10d6299f57236bfcb949c554931ea77b3cd01615ed972ffdf152",
+    "swdb-project/swdb/cbmc_adapter.py": "d63b7f6547fa3b7655a59db0f26f1e0a957c7916bf8d9b7d77ef4142ef3e9a27",
+    "swdb-project/swdb/dx100_interface.py": "9a50ad98a26169b2ff60766e351a3be28e2b511901edd09701489720c8e9a451",
+    "swdb-project/swdb/formal_frame.py": "b89aaffb60217db66ba09630fced8f8c547304a2d12ca125a6174def02ff70f1",
+    "swdb-project/swdb/proof_semantics.py": "2354b1be662a4a9fe4985110ce657c9a432b27f288639f661e13aa5bad5ea5b6",
+    "swdb-project/swdb/proof_setup.py": "dad41c8714cd3bfa3cbc472c82e2130f639a04ece008d641eec47512d7098e11",
+    "swdb-project/swdb/stdlib_provenance.py": "4a7ca7d9b05a992e8172125fcbbfd175bb7ade2aec47cfb349126c9739b6e8e4",
+    "swdb-project/swdb/wp_adapter.py": "aa03842938a19d22fe6c3fb466007cfa57544c55fddc3c19b1784b047271ee43"
+  },
+  "readers": [
+    "root",
+    "ticket24",
+    "merger",
+    "independent reviewer"
+  ],
+  "review_evidence": {
+    "path": "/private/tmp/probata-t25-source-allowlist-9d8ca764-root-review-20261015.md",
+    "sha256": "6f50aed791f9f3d5b596ad9afd2db280c8c6f161321754f9d4cf6487f844a705"
+  },
+  "scope": "Post-syntax first42-packet unbounded heap capability, FULL-layout protocolv3. Eight reviewed prerequisite production files; no body certification/import acceptance.",
+  "source_commit": "9d8ca7645546ce3b282b2a51005392ceb78ff609"
+}

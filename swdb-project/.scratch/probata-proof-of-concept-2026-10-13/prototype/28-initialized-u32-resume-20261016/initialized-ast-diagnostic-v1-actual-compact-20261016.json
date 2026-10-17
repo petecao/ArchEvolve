@@ -1,0 +1,131 @@
+{
+  "assertions": [
+    {
+      "expected": "width",
+      "index": 0,
+      "kind_counts": {
+        "BinaryOperator": 3,
+        "CXXFunctionalCastExpr": 1,
+        "CXXStaticCastExpr": 1,
+        "CallExpr": 1,
+        "ConditionalOperator": 1,
+        "DeclRefExpr": 3,
+        "ImplicitCastExpr": 5,
+        "IntegerLiteral": 3,
+        "ParenExpr": 1,
+        "PredefinedExpr": 1,
+        "SourceLocExpr": 2,
+        "StringLiteral": 2,
+        "UnaryOperator": 1
+      },
+      "original_refusal": {
+        "message": "initialized assertion contains an unchecked AST effect",
+        "type": "Refused"
+      },
+      "subtree": {
+        "bytes": 31288,
+        "name": "assertion-0.json",
+        "sha256": "160c6b76a6a241cd730ceaa5c25b93ec27fbfe7ef7403df38cc106b122ad4a09"
+      },
+      "unchecked": [
+        {
+          "castKind": null,
+          "child_kinds": [],
+          "kind": "SourceLocExpr",
+          "name": null,
+          "opcode": null,
+          "type": {
+            "qualType": "const char *"
+          }
+        },
+        {
+          "castKind": null,
+          "child_kinds": [],
+          "kind": "SourceLocExpr",
+          "name": null,
+          "opcode": null,
+          "type": {
+            "qualType": "unsigned int"
+          }
+        }
+      ],
+      "variable": "num_regs_needed"
+    }
+  ],
+  "capture_completion": {
+    "accepted": true,
+    "compiler_phases": {
+      "get_new_reg": 5,
+      "get_reg": 7,
+      "init_MAA": 4,
+      "llvm": 9,
+      "preprocess": 3,
+      "set_reg": 6,
+      "trust_fixture": 8
+    },
+    "original_assertion_refusals": 1,
+    "scope": "retained source-form diagnostic only; no proof or repair"
+  },
+  "date": "2026-10-16 ET",
+  "diagnostic_result": {
+    "bytes": 7738,
+    "sha256": "6d5346b565fcdd3c6d9879283ee6effc30ee825b2cceddb1d587729f9db73a61"
+  },
+  "original_exception": {
+    "message": "unsupported construct: DX100 source size definition: initialized assertion contains an unchecked AST effect (trust.cc line 2)",
+    "type": "Unsupported"
+  },
+  "raw_payload_transferred": false,
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-ast-diagnostic-2baf722f-v1",
+  "retained_bytes": 12094397,
+  "retained_exact_artifacts": [
+    {
+      "bytes": 31288,
+      "name": "assertion-0.json",
+      "sha256": "160c6b76a6a241cd730ceaa5c25b93ec27fbfe7ef7403df38cc106b122ad4a09"
+    },
+    {
+      "bytes": 307359,
+      "name": "ast-get_new_reg.json",
+      "sha256": "a4007b4423f16b6e9502877010bdde7887fb24a487fcb9b54e6e8907d153468e"
+    },
+    {
+      "bytes": 3627355,
+      "name": "preprocessed-original.ii",
+      "sha256": "6c6e2afb2c01bafc6b1fd57d253a0853b58698a8bf90724e22eff66485c0e310"
+    },
+    {
+      "bytes": 13967,
+      "name": "compiler-observed.ll",
+      "sha256": "532e61811b0f19e5c88301e8923d6a383b8f7070a8f26871990de9bc5595f0b7"
+    }
+  ],
+  "retained_file_count": 32,
+  "scope": "passive compact diagnostic metadata; original unchanged refusal, not public proof/repair acceptance",
+  "source_commit": "2baf722fdaa6cba24b859eae3172a6f597417d72",
+  "source_location_observations": [
+    {
+      "children": 0,
+      "direct_parent_child_index": 2,
+      "direct_parent_kind": "CallExpr",
+      "kind": "SourceLocExpr",
+      "original_file_basename": "MAA_gem5.hpp",
+      "original_line": 121,
+      "token_text": "__builtin_FILE ()",
+      "type": "const char *",
+      "valueCategory": "prvalue"
+    },
+    {
+      "children": 0,
+      "direct_parent_child_index": 3,
+      "direct_parent_kind": "CallExpr",
+      "kind": "SourceLocExpr",
+      "original_file_basename": "MAA_gem5.hpp",
+      "original_line": 121,
+      "token_text": "__builtin_LINE ()",
+      "type": "unsigned int",
+      "valueCategory": "prvalue"
+    }
+  ],
+  "status": "DIAGNOSTIC_REPRODUCED_SOURCE_REFUSAL"
+}

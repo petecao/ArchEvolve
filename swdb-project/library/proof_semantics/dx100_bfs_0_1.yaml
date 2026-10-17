@@ -1,0 +1,653 @@
+# DX100 proof semantics 0.1 (Probata proof of concept ticket 27). Created: 2026-10-14 ET.
+# Format: docs/reference/format-v0.4-proof-semantics.md. Every rule cites gem5 DX100 at e4fc4af or names an owner.
+id: semantics.dx100_bfs_0_1
+kind: proof_semantics
+formal_frame: 1
+version: '0.1'
+sequence: 1
+target: dx100-mmio
+description: 'DX100 proof semantics, working version 0.1 (ticket 27): the dx100-mmio 1.0-e4fc4af calls the BFS read
+  offload''s lowerings and the authors'' TDStepMAA make. Values as if each command finished at issue; hazards checked
+  against ghost state (K = 32 uncovered commands per thread). Ticket 28 supersedes it (remaining calls, memory overlap,
+  region stall, ownership).'
+provenance:
+  origin:
+    probata_ticket: '27'
+    created: 2026-10-14 ET
+    research: .scratch/formal-verification-2026-10-09/research/14-dx100-wait-rule.md
+    rocq: 'library/rocq/probata/Reduction.v (ticket 41: F2, F5, F6)'
+hardware_interface:
+  id: dx100-mmio
+  version: 1.0-e4fc4af
+  gem5_commit: e4fc4afdf894f295442cef3604667a469fab8e62
+constants:
+  DX_K: 32
+  DX_NT: 8
+  DX_NR: 8
+  DX_NM: 8
+  DX_TS: 2
+inventory:
+  read: 2026-10-14 ET (ticket 27 start)
+  sources:
+  - root: library
+    path: dx100/dxc_lowering.hpp
+    sha256: 7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c
+    role: lowerings
+  - root: library
+    path: dx100/bfs_read_offload.inc
+    sha256: 3c5867a2b8919806f681603836bd0cff448f21634485abf84e49ed71f25515ef
+    role: offload
+  - root: library
+    path: dx100/peter-section5.patch
+    sha256: cc99ca4d024983ab02c17f5db74db5210a7450968787ccad25562da4d9873cff
+    role: setup
+  - root: project
+    path: apps/dx100/benchmarks/gapbs/src/bfs.cc
+    sha256: 6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465
+    role: function
+    function: TDStepMAA
+  calls:
+  - add_mem_region
+  - clear_mem_region
+  - get_cacheable_tile_pointer
+  - get_new_reg
+  - get_new_tile
+  - get_tile_size
+  - maa_alu_scalar
+  - maa_const
+  - maa_indirect_load
+  - maa_indirect_store_vector
+  - maa_range_loop
+  - maa_stream_load
+  - wait_ready
+ghost:
+  acsl:
+    root: library
+    path: proof_semantics/dx100_bfs/ghost.acsl
+    sha256: 5fa3f12850eba75ccb254b1c1e8ab5c143488046949fbe0e4c965b55ecdb48e9
+  capacity:
+    commands: 32
+model:
+  state:
+    root: library
+    path: proof_semantics/dx100_bfs/state.h
+    sha256: b371131b4a3a7ef21ad654b0eaffac94b4c63252d63397ee8b67a6b017610701
+  c:
+    root: library
+    path: proof_semantics/dx100_bfs/model.h
+    sha256: 88298dbb9176640fd8ec2d0c6e31386dd51849411b08df7cebf7f12eab1d22ce
+  logic:
+    root: library
+    path: proof_semantics/dx100_bfs/logic.acsl
+    sha256: 34c9971965b53e04cf5ef2dd66abeaecd4d8772660f47def86158bc47624351d
+clauses: []
+rules:
+- id: operands
+  statement: Tile operands name one of the core's tiles and register operands one of its registers; a command's
+    destination tile is none of its source tiles (MAA.cc:563-566 asserts it at dispatch).
+  cites:
+    gem5_commit: e4fc4afdf894f295442cef3604667a469fab8e62
+    path: src/mem/MAA/MAA.cc
+    lines: 563-566
+- id: allocation
+  statement: get_new_tile and get_new_reg hand out the core's 8 tiles and 8 scalar registers (MAA.py num_tiles_per_core,
+    num_regs_per_core); one more is a hazard.
+  cites:
+    gem5_commit: e4fc4afdf894f295442cef3604667a469fab8e62
+    path: src/mem/MAA/MAA.py
+    lines: 13-15
+- id: regions
+  statement: add_mem_region registers one memory region (at most DX_NM); clear_mem_region forgets them. Which region
+    a command uses, and the region stall, are ticket 28's rules.
+  assumed:
+    owner: Eric
+- id: wait_counted_roles
+  statement: 'wait_ready(t) returns when no unfinished command names t as src1, src2, dst1 or dst2; a condition
+    tile is not counted (ready counter: MAA.cc:563-580 at dispatch, 605-620 at finish; SPD.cc:120-139; blocking
+    read CpuSidePort.cc:295-315).'
+  cites:
+    gem5_commit: e4fc4afdf894f295442cef3604667a469fab8e62
+    path: src/mem/MAA/MAA.cc
+    lines: 563-580
+- id: wait_transitive
+  statement: A command finishes only after the producers of its input tiles finished, so a wait also covers those
+    producers, transitively (IndirectAccess.cc:399-459; ALU.cc:199-246; StreamAccess.cc:305-316).
+  cites:
+    gem5_commit: e4fc4afdf894f295442cef3604667a469fab8e62
+    path: src/mem/MAA/IndirectAccess.cc
+    lines: 399-459
+- id: wait_range_loop_exception
+  statement: A range loop finishes without waiting for the producers of its min, max or condition tiles, so coverage
+    never passes through a range loop.
+  cites:
+    gem5_commit: e4fc4afdf894f295442cef3604667a469fab8e62
+    path: src/mem/MAA/RangeFuser.cc
+    lines: 211-219
+- id: dispatch_stall
+  statement: A command is not dispatched while its destination tile is any unfinished command's source, destination
+    or condition tile, and the issuing call returns only at dispatch; so issuing it covers every uncovered command
+    that names that tile in any role.
+  cites:
+    gem5_commit: e4fc4afdf894f295442cef3604667a469fab8e62
+    path: src/mem/MAA/IF.cc
+    lines: 193-212
+- id: register_write_stall
+  statement: A CPU write to a scalar register is held until no unfinished command names the register; so maa_const
+    covers every uncovered command that names it.
+  cites:
+    gem5_commit: e4fc4afdf894f295442cef3604667a469fab8e62
+    path: src/mem/MAA/IF.cc
+    lines: 233-249
+- id: register_overlap
+  statement: No gem5 rule orders a command after an unfinished command on a register (issue checks tile status only),
+    so issuing a command that shares a register with an uncovered command where either writes it is a hazard (ticket
+    41, F6).
+  cites:
+    gem5_commit: e4fc4afdf894f295442cef3604667a469fab8e62
+    path: src/mem/MAA/IF.cc
+    lines: 279-299
+- id: memory_serial_domain
+  statement: 'Conservative proof-domain restriction until ticket 28: after destination-stall coverage, a device
+    store needs no uncovered memory command, and a device load needs no uncovered device store. An indirect store
+    copies a whole cache line, updates selected words, and writes back the whole line; selected-element disjointness
+    therefore does not establish absence of memory interference. Domain failure is not proven, never a refutation
+    of the program.'
+  cites:
+    gem5_commit: e4fc4afdf894f295442cef3604667a469fab8e62
+    path: src/mem/MAA/IndirectAccess.cc
+    lines: 898-940, 1145-1158
+- id: unready_read
+  statement: A CPU read of tile memory is not blocked while a command fills the tile, so reading a tile through
+    its tile pointer while an uncovered command writes it is a hazard (map 12 item 3).
+  cites:
+    gem5_commit: e4fc4afdf894f295442cef3604667a469fab8e62
+    path: src/mem/MAA/CpuSidePort.cc
+    lines: 346-360
+- id: cpu_write_overlap
+  statement: A CPU write to tile memory is not ordered with a running command that reads or writes the tile element
+    by element, so writing a tile that an uncovered command names as a reader or writer is a hazard; reading a tile
+    an uncovered command only reads is not.
+  cites:
+    gem5_commit: e4fc4afdf894f295442cef3604667a469fab8e62
+    path: src/mem/MAA/SPD.cc
+    lines: 140-157
+- id: unready_size_read
+  statement: A tile's size is set when its command finishes, so get_tile_size before a wait covers the tile's writer
+    is a hazard like an unready read (stream StreamAccess.cc:336-341; indirect IndirectAccess.cc:470-473; range
+    loop RangeFuser.cc:235-237).
+  cites:
+    gem5_commit: e4fc4afdf894f295442cef3604667a469fab8e62
+    path: src/mem/MAA/StreamAccess.cc
+    lines: 336-341
+- id: tile_pointer
+  statement: get_cacheable_tile_pointer gives the tile's elements in the CPU's cacheable tile range.
+  cites:
+    gem5_commit: e4fc4afdf894f295442cef3604667a469fab8e62
+    path: src/mem/MAA/CpuSidePort.cc
+    lines: 346-353
+- id: stream_values
+  statement: maa_stream_load fills dst[k] = data[min + k * stride] for k < n, n = 0 if max == min else min(TILE_SIZE,
+    (max - min - 1) / stride + 1), from registers min, max, stride; size n.
+  cites:
+    gem5_commit: e4fc4afdf894f295442cef3604667a469fab8e62
+    path: src/mem/MAA/StreamAccess.cc
+    lines: 143-146
+- id: stream_operands
+  statement: The stream formula is used only with stride > 0 and min <= max; anything else is a hazard (gem5 gives
+    a negative or undefined count).
+  assumed:
+    owner: Eric
+- id: gather_values
+  statement: maa_indirect_load fills dst[k] = data[idx[k]] (index read as uint32) for k < size(idx); size = size(idx).
+  cites:
+    gem5_commit: e4fc4afdf894f295442cef3604667a469fab8e62
+    path: src/mem/MAA/IndirectAccess.cc
+    lines: 413-418, 491-492
+- id: range_loop_values
+  statement: 'maa_range_loop continues from registers (last_i, last_j): for i from last_i below size(min), j from
+    min[i] (or last_j) while j < max[i] (unsigned), step stride, it emits (i, j) pairs until TILE_SIZE are emitted;
+    it writes last_i, last_j back and both sizes.'
+  cites:
+    gem5_commit: e4fc4afdf894f295442cef3604667a469fab8e62
+    path: src/mem/MAA/RangeFuser.cc
+    lines: 84-93, 154-208, 233-237
+- id: range_operands
+  statement: size(min) == size(max) (gem5 panics otherwise); stride > 0 and last_i >= 0 are assumed (otherwise gem5
+    loops forever or reads outside the tile).
+  cites:
+    gem5_commit: e4fc4afdf894f295442cef3604667a469fab8e62
+    path: src/mem/MAA/RangeFuser.cc
+    lines: 126-143
+- id: alu_lt_values
+  statement: 'maa_alu_scalar with LT_OP on int32 fills dst[k] = (src[k] < reg) ? 1 : 0 for k < size(src); size =
+    size(src).'
+  cites:
+    gem5_commit: e4fc4afdf894f295442cef3604667a469fab8e62
+    path: src/mem/MAA/ALU.cc
+    lines: 357-447
+- id: store_vector_values
+  statement: 'maa_indirect_store_vector, for k < size(idx) with cond[k] != 0 (or no condition): dst[k] = the old
+    data[idx[k]], then data[idx[k]] = src[k]; size(dst) = size(idx).'
+  cites:
+    gem5_commit: e4fc4afdf894f295442cef3604667a469fab8e62
+    path: src/mem/MAA/IndirectAccess.cc
+    lines: 905-933
+- id: store_operands
+  statement: size(src) and size(cond) equal size(idx) (gem5 panics otherwise).
+  cites:
+    gem5_commit: e4fc4afdf894f295442cef3604667a469fab8e62
+    path: src/mem/MAA/IndirectAccess.cc
+    lines: 399-418
+- id: store_duplicate_order
+  statement: With a repeated index, the lanes take effect in element order (the old value a lane returns includes
+    earlier lanes' writes).
+  assumed:
+    owner: Eric
+- id: initialized_state
+  statement: 'The working C model has initialized fixed device storage: static globals start initialized and harness
+    state draws assign initialized tile values. Trusted call contracts preserve dx_state_initialized, requiring
+    initialized ordinary-memory cells before reading them; ordinary CPU stores preserve initialized storage after
+    their RHS initialization obligations. This is a model representation invariant, not an assumed caller-buffer
+    premise or a body proof; ticket 29 checks contract/body agreement.'
+  assumed:
+    owner: SWDB proof-semantics model
+calls:
+- call: get_new_tile
+  prototype: int get_new_tile(void)
+  lowerings:
+  - lowering.dxc_thread_context.dx100-mmio.1.0-e4fc4af
+  used_by:
+  - bfs_read_offload
+  rules:
+  - allocation
+  - initialized_state
+  contract: 'requires initialized_state: dx_state_initialized;
+
+    requires dx_next_tile < DX_NT;
+
+    assigns dx_next_tile, dx_tile_owner[dx_next_tile];
+
+    ensures \result == \old(dx_next_tile) && dx_next_tile == \old(dx_next_tile) + 1;
+
+    ensures dx_tile_owner[\result] == 0;
+
+    ensures dx_state_initialized;
+
+    '
+- call: get_new_reg
+  prototype: int get_new_reg(void)
+  lowerings:
+  - lowering.dxc_thread_context.dx100-mmio.1.0-e4fc4af
+  used_by:
+  - bfs_read_offload
+  rules:
+  - allocation
+  - initialized_state
+  contract: 'requires initialized_state: dx_state_initialized;
+
+    requires dx_next_reg < DX_NR;
+
+    assigns dx_next_reg, dx_reg_owner[dx_next_reg];
+
+    ensures \result == \old(dx_next_reg) && dx_next_reg == \old(dx_next_reg) + 1;
+
+    ensures dx_reg_owner[\result] == 0;
+
+    ensures dx_state_initialized;
+
+    '
+- call: add_mem_region
+  prototype: void add_mem_region(void *start, void *end)
+  lowerings: []
+  used_by:
+  - bfs_read_offload
+  - TDStepMAA
+  rules:
+  - regions
+  - initialized_state
+  contract: 'requires initialized_state: dx_state_initialized;
+
+    requires dx_regions < DX_NM;
+
+    assigns dx_regions;
+
+    ensures dx_regions == \old(dx_regions) + 1;
+
+    ensures dx_state_initialized;
+
+    '
+- call: clear_mem_region
+  prototype: void clear_mem_region(void)
+  lowerings: []
+  used_by:
+  - bfs_read_offload
+  - TDStepMAA
+  rules:
+  - regions
+  - initialized_state
+  contract: 'requires initialized_state: dx_state_initialized;
+
+    assigns dx_regions;
+
+    ensures dx_regions == 0;
+
+    ensures dx_state_initialized;
+
+    '
+- call: maa_const
+  prototype: void maa_const(int value, int reg)
+  lowerings:
+  - lowering.dxc_const_i32.dx100-mmio.1.0-e4fc4af
+  used_by:
+  - bfs_read_offload
+  - TDStepMAA
+  rules:
+  - operands
+  - register_write_stall
+  - initialized_state
+  contract: "requires initialized_state: dx_state_initialized;\nrequires 0 <= reg < DX_NR;\nassigns dx_reg_value[reg],\
+    \ dx_live, dx_kind[0 .. DX_K - 1], dx_dst1[0 .. DX_K - 1], dx_dst2[0 .. DX_K - 1], dx_src1[0 .. DX_K - 1], dx_src2[0\
+    \ .. DX_K - 1], dx_cond[0 .. DX_K - 1], dx_regs_in[0 .. DX_K - 1], dx_regs_out[0 .. DX_K - 1], dx_reg_a[0 ..\
+    \ DX_K - 1], dx_reg_b[0 .. DX_K - 1], dx_reg_c[0 .. DX_K - 1], dx_region[0 .. DX_K - 1], dx_base[0 .. DX_K -\
+    \ 1], dx_lo[0 .. DX_K - 1], dx_hi[0 .. DX_K - 1], dx_stride[0 .. DX_K - 1], dx_index[0 .. DX_K - 1], dx_deps[0\
+    \ .. DX_K - 1], dx_writes_memory[0 .. DX_K - 1], dx_tile_writer[0 .. DX_NT - 1], dx_tile_readers[0 .. DX_NT\
+    \ - 1], dx_reg_writer[0 .. DX_NR - 1], dx_reg_named[0 .. DX_NR - 1], dx_count;\nensures dx_reg_value[reg] ==\
+    \ value;\nensures dx_reg_writer[reg] == -1 && dx_reg_named[reg] == 0;\nensures \\forall integer u; 0 <= u <\
+    \ DX_NT && dx_uses_reg{Pre}(\\at(dx_tile_writer[u], Pre), reg) ==>\n  dx_tile_writer[u] == -1;\nensures dx_kept{Pre,\
+    \ Post}(-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0);\nensures dx_state_initialized;\n"
+- call: wait_ready
+  prototype: void wait_ready(int tile)
+  lowerings:
+  - lowering.dxc_wait.dx100-mmio.1.0-e4fc4af
+  used_by:
+  - bfs_read_offload
+  - TDStepMAA
+  rules:
+  - operands
+  - wait_counted_roles
+  - wait_transitive
+  - wait_range_loop_exception
+  - initialized_state
+  contract: 'requires initialized_state: dx_state_initialized;
+
+    requires 0 <= tile < DX_NT;
+
+    assigns dx_live, dx_kind[0 .. DX_K - 1], dx_dst1[0 .. DX_K - 1], dx_dst2[0 .. DX_K - 1], dx_src1[0 .. DX_K -
+    1], dx_src2[0 .. DX_K - 1], dx_cond[0 .. DX_K - 1], dx_regs_in[0 .. DX_K - 1], dx_regs_out[0 .. DX_K - 1], dx_reg_a[0
+    .. DX_K - 1], dx_reg_b[0 .. DX_K - 1], dx_reg_c[0 .. DX_K - 1], dx_region[0 .. DX_K - 1], dx_base[0 .. DX_K
+    - 1], dx_lo[0 .. DX_K - 1], dx_hi[0 .. DX_K - 1], dx_stride[0 .. DX_K - 1], dx_index[0 .. DX_K - 1], dx_deps[0
+    .. DX_K - 1], dx_writes_memory[0 .. DX_K - 1], dx_tile_writer[0 .. DX_NT - 1], dx_tile_readers[0 .. DX_NT -
+    1], dx_reg_writer[0 .. DX_NR - 1], dx_reg_named[0 .. DX_NR - 1], dx_count;
+
+    ensures dx_wait_covers{Pre, Post}(tile);
+
+    ensures dx_kept{Pre, Post}(-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0);
+
+    ensures dx_state_initialized;
+
+    '
+- call: get_tile_size
+  prototype: unsigned short get_tile_size(int tile)
+  lowerings:
+  - lowering.dxc_tile_size.dx100-mmio.1.0-e4fc4af
+  used_by:
+  - bfs_read_offload
+  - TDStepMAA
+  rules:
+  - operands
+  - unready_size_read
+  - initialized_state
+  contract: 'requires initialized_state: dx_state_initialized;
+
+    requires 0 <= tile < DX_NT;
+
+    requires dx_tile_writer[tile] == -1;
+
+    assigns \nothing;
+
+    ensures \result == dx_tile_size[tile];
+
+    ensures dx_state_initialized;
+
+    '
+- call: get_cacheable_tile_pointer
+  prototype: int *get_cacheable_tile_pointer(int tile)
+  lowerings:
+  - lowering.dxc_tile_pointer.dx100-mmio.1.0-e4fc4af
+  used_by:
+  - bfs_read_offload
+  - TDStepMAA
+  rules:
+  - operands
+  - tile_pointer
+  - initialized_state
+  contract: 'requires initialized_state: dx_state_initialized;
+
+    requires 0 <= tile < DX_NT;
+
+    assigns \nothing;
+
+    ensures \result == &dx_tile_data[tile][0];
+
+    ensures dx_state_initialized;
+
+    ensures \initialized(\result + (0 .. DX_TS - 1));
+
+    '
+- call: maa_stream_load
+  prototype: void maa_stream_load(int *data, int min_reg, int max_reg, int stride_reg, int dst_tile, int cond_tile)
+  lowerings:
+  - lowering.dxc_stream_load.dx100-mmio.1.0-e4fc4af
+  used_by:
+  - bfs_read_offload
+  - TDStepMAA
+  rules:
+  - operands
+  - stream_operands
+  - stream_values
+  - dispatch_stall
+  - register_overlap
+  - memory_serial_domain
+  - initialized_state
+  contract: "requires initialized_state: dx_state_initialized;\nrequires 0 <= min_reg < DX_NR && 0 <= max_reg <\
+    \ DX_NR && 0 <= stride_reg < DX_NR && 0 <= dst_tile < DX_NT;\nrequires memory_domain: dx_memory_clear_after_stall(dst_tile,\
+    \ -1, 0);\nrequires cond_tile == -1;\nrequires dx_reg_value[stride_reg] > 0 && dx_reg_value[min_reg] <= dx_reg_value[max_reg];\n\
+    requires ghost_capacity: 0 <= dx_count < DX_K;\nrequires dx_issuable(min_reg, max_reg, stride_reg, -1, -1);\n\
+    requires \\forall integer k; 0 <= k < DX_TS && dx_reg_value[min_reg] + k * dx_reg_value[stride_reg] <\n  dx_reg_value[max_reg]\
+    \ ==> \\valid_read(data + (dx_reg_value[min_reg] + k * dx_reg_value[stride_reg]));\nrequires source_initialized:\
+    \ \\forall integer k; 0 <= k < DX_TS && dx_reg_value[min_reg] + k * dx_reg_value[stride_reg] <\n  dx_reg_value[max_reg]\
+    \ ==> \\initialized(data + (dx_reg_value[min_reg] + k * dx_reg_value[stride_reg]));\nassigns dx_tile_data[dst_tile][0\
+    \ .. DX_TS - 1], dx_tile_size[dst_tile], dx_live, dx_kind[0 .. DX_K - 1], dx_dst1[0 .. DX_K - 1], dx_dst2[0\
+    \ .. DX_K - 1], dx_src1[0 .. DX_K - 1], dx_src2[0 .. DX_K - 1], dx_cond[0 .. DX_K - 1], dx_regs_in[0 .. DX_K\
+    \ - 1], dx_regs_out[0 .. DX_K - 1], dx_reg_a[0 .. DX_K - 1], dx_reg_b[0 .. DX_K - 1], dx_reg_c[0 .. DX_K - 1],\
+    \ dx_region[0 .. DX_K - 1], dx_base[0 .. DX_K - 1], dx_lo[0 .. DX_K - 1], dx_hi[0 .. DX_K - 1], dx_stride[0\
+    \ .. DX_K - 1], dx_index[0 .. DX_K - 1], dx_deps[0 .. DX_K - 1], dx_writes_memory[0 .. DX_K - 1], dx_tile_writer[0\
+    \ .. DX_NT - 1], dx_tile_readers[0 .. DX_NT - 1], dx_reg_writer[0 .. DX_NR - 1], dx_reg_named[0 .. DX_NR - 1],\
+    \ dx_count;\nensures dx_new_slot(DX_STREAM_LOAD, dst_tile, -1, -1, -1, -1, min_reg, max_reg, stride_reg);\n\
+    ensures dx_stall_covers{Pre, Post}(dst_tile, -1);\nensures dx_kept{Pre, Post}(dst_tile, -1, -1, -1, -1, min_reg,\
+    \ max_reg, stride_reg, -1, -1, 1);\nensures dx_base[dx_tile_writer[dst_tile]] == data && dx_lo[dx_tile_writer[dst_tile]]\
+    \ == \\old(dx_reg_value[min_reg]) &&\n  dx_hi[dx_tile_writer[dst_tile]] == \\old(dx_reg_value[max_reg]) &&\n\
+    \  dx_stride[dx_tile_writer[dst_tile]] == \\old(dx_reg_value[stride_reg]);\nensures \\let lo = \\old(dx_reg_value[min_reg]);\
+    \ \\let hi = \\old(dx_reg_value[max_reg]);\n  \\let st = \\old(dx_reg_value[stride_reg]); \\let n = (hi == lo\
+    \ ? 0 : (hi - lo - 1) / st + 1);\n  dx_tile_size[dst_tile] == (n < DX_TS ? n : DX_TS) &&\n  (\\forall integer\
+    \ k; 0 <= k < DX_TS && k < n ==> dx_tile_data[dst_tile][k] == \\old(data[lo + k * st]));\nensures dx_state_initialized;\n\
+    ensures \\initialized(dx_tile_data[dst_tile] + (0 .. DX_TS - 1));\n"
+- call: maa_indirect_load
+  prototype: void maa_indirect_load(int *data, int idx_tile, int dst_tile, int cond_tile)
+  lowerings:
+  - lowering.dxc_gather.dx100-mmio.1.0-e4fc4af
+  used_by:
+  - bfs_read_offload
+  - TDStepMAA
+  rules:
+  - operands
+  - gather_values
+  - dispatch_stall
+  - memory_serial_domain
+  - initialized_state
+  contract: "requires initialized_state: dx_state_initialized;\nrequires 0 <= idx_tile < DX_NT && 0 <= dst_tile\
+    \ < DX_NT && dst_tile != idx_tile && cond_tile == -1;\nrequires memory_domain: dx_memory_clear_after_stall(dst_tile,\
+    \ -1, 0);\nrequires ghost_capacity: 0 <= dx_count < DX_K;\nrequires dx_issuable(-1, -1, -1, -1, -1);\nrequires\
+    \ \\forall integer k; 0 <= k < dx_tile_size[idx_tile] && k < DX_TS ==>\n  \\valid_read(data + (unsigned int)dx_tile_data[idx_tile][k]);\n\
+    requires source_initialized: \\forall integer k; 0 <= k < dx_tile_size[idx_tile] && k < DX_TS ==>\n  \\initialized(data\
+    \ + (unsigned int)dx_tile_data[idx_tile][k]);\nassigns dx_tile_data[dst_tile][0 .. DX_TS - 1], dx_tile_size[dst_tile],\
+    \ dx_live, dx_kind[0 .. DX_K - 1], dx_dst1[0 .. DX_K - 1], dx_dst2[0 .. DX_K - 1], dx_src1[0 .. DX_K - 1], dx_src2[0\
+    \ .. DX_K - 1], dx_cond[0 .. DX_K - 1], dx_regs_in[0 .. DX_K - 1], dx_regs_out[0 .. DX_K - 1], dx_reg_a[0 ..\
+    \ DX_K - 1], dx_reg_b[0 .. DX_K - 1], dx_reg_c[0 .. DX_K - 1], dx_region[0 .. DX_K - 1], dx_base[0 .. DX_K -\
+    \ 1], dx_lo[0 .. DX_K - 1], dx_hi[0 .. DX_K - 1], dx_stride[0 .. DX_K - 1], dx_index[0 .. DX_K - 1], dx_deps[0\
+    \ .. DX_K - 1], dx_writes_memory[0 .. DX_K - 1], dx_tile_writer[0 .. DX_NT - 1], dx_tile_readers[0 .. DX_NT\
+    \ - 1], dx_reg_writer[0 .. DX_NR - 1], dx_reg_named[0 .. DX_NR - 1], dx_count;\nensures dx_new_slot(DX_GATHER,\
+    \ dst_tile, -1, idx_tile, -1, -1, -1, -1, -1);\nensures dx_stall_covers{Pre, Post}(dst_tile, -1);\nensures dx_kept{Pre,\
+    \ Post}(dst_tile, -1, idx_tile, -1, -1, -1, -1, -1, -1, -1, 1);\nensures dx_base[dx_tile_writer[dst_tile]] ==\
+    \ data && dx_index[dx_tile_writer[dst_tile]] == idx_tile;\nensures dx_tile_size[dst_tile] == \\old(dx_tile_size[idx_tile]);\n\
+    ensures \\forall integer k; 0 <= k < \\old(dx_tile_size[idx_tile]) && k < DX_TS ==>\n  dx_tile_data[dst_tile][k]\
+    \ == \\old(data[(unsigned int)dx_tile_data[idx_tile][k]]);\nensures dx_state_initialized;\nensures \\initialized(dx_tile_data[dst_tile]\
+    \ + (0 .. DX_TS - 1));\n"
+- call: maa_range_loop
+  prototype: void maa_range_loop(int last_i_reg, int last_j_reg, int min_tile, int max_tile, int stride_reg, int
+    dst_i_tile, int dst_j_tile, int cond_tile)
+  lowerings:
+  - lowering.dxc_range_loop.dx100-mmio.1.0-e4fc4af
+  used_by:
+  - bfs_read_offload
+  - TDStepMAA
+  rules:
+  - operands
+  - range_operands
+  - range_loop_values
+  - dispatch_stall
+  - register_overlap
+  - initialized_state
+  contract: "requires initialized_state: dx_state_initialized;\nrequires 0 <= last_i_reg < DX_NR && 0 <= last_j_reg\
+    \ < DX_NR && 0 <= stride_reg < DX_NR && last_i_reg != last_j_reg;\nrequires 0 <= min_tile < DX_NT && 0 <= max_tile\
+    \ < DX_NT && 0 <= dst_i_tile < DX_NT && 0 <= dst_j_tile < DX_NT;\nrequires dst_i_tile != dst_j_tile && dst_i_tile\
+    \ != min_tile && dst_i_tile != max_tile && dst_j_tile != min_tile &&\n  dst_j_tile != max_tile && cond_tile\
+    \ == -1;\nrequires dx_tile_size[min_tile] == dx_tile_size[max_tile] && dx_reg_value[stride_reg] > 0 && dx_reg_value[last_i_reg]\
+    \ >= 0;\nrequires 0 <= dx_tile_size[min_tile] <= DX_TS;\nrequires ghost_capacity: 0 <= dx_count < DX_K;\nrequires\
+    \ dx_issuable(last_i_reg, last_j_reg, stride_reg, last_i_reg, last_j_reg);\nassigns dx_tile_data[dst_i_tile][0\
+    \ .. DX_TS - 1], dx_tile_data[dst_j_tile][0 .. DX_TS - 1], dx_tile_size[dst_i_tile],\n  dx_tile_size[dst_j_tile],\
+    \ dx_reg_value[last_i_reg], dx_reg_value[last_j_reg], dx_live, dx_kind[0 .. DX_K - 1], dx_dst1[0 .. DX_K - 1],\
+    \ dx_dst2[0 .. DX_K - 1], dx_src1[0 .. DX_K - 1], dx_src2[0 .. DX_K - 1], dx_cond[0 .. DX_K - 1], dx_regs_in[0\
+    \ .. DX_K - 1], dx_regs_out[0 .. DX_K - 1], dx_reg_a[0 .. DX_K - 1], dx_reg_b[0 .. DX_K - 1], dx_reg_c[0 ..\
+    \ DX_K - 1], dx_region[0 .. DX_K - 1], dx_base[0 .. DX_K - 1], dx_lo[0 .. DX_K - 1], dx_hi[0 .. DX_K - 1], dx_stride[0\
+    \ .. DX_K - 1], dx_index[0 .. DX_K - 1], dx_deps[0 .. DX_K - 1], dx_writes_memory[0 .. DX_K - 1], dx_tile_writer[0\
+    \ .. DX_NT - 1], dx_tile_readers[0 .. DX_NT - 1], dx_reg_writer[0 .. DX_NR - 1], dx_reg_named[0 .. DX_NR - 1],\
+    \ dx_count;\nensures dx_new_slot(DX_RANGE_LOOP, dst_i_tile, dst_j_tile, min_tile, max_tile, -1, last_i_reg,\
+    \ last_j_reg, stride_reg);\nensures dx_stall_covers{Pre, Post}(dst_i_tile, dst_j_tile);\nensures dx_kept{Pre,\
+    \ Post}(dst_i_tile, dst_j_tile, min_tile, max_tile, -1, last_i_reg, last_j_reg, stride_reg, last_i_reg, last_j_reg,\
+    \ 1);\nensures 0 <= dx_tile_size[dst_i_tile] <= DX_TS && dx_tile_size[dst_j_tile] == dx_tile_size[dst_i_tile];\n\
+    ensures \\old(dx_reg_value[last_j_reg]) == -1 && \\old(dx_reg_value[last_i_reg]) < \\old(dx_tile_size[min_tile])\
+    \ &&\n  (unsigned int)\\old(dx_tile_data[min_tile][dx_reg_value[last_i_reg]]) <\n  (unsigned int)\\old(dx_tile_data[max_tile][dx_reg_value[last_i_reg]])\
+    \ ==>\n  dx_tile_size[dst_j_tile] >= 1 && dx_tile_data[dst_i_tile][0] == \\old(dx_reg_value[last_i_reg]) &&\n\
+    \  dx_tile_data[dst_j_tile][0] == \\old(dx_tile_data[min_tile][dx_reg_value[last_i_reg]]);\nensures dx_state_initialized;\n\
+    ensures \\initialized(dx_tile_data[dst_i_tile] + (0 .. DX_TS - 1)) && \\initialized(dx_tile_data[dst_j_tile]\
+    \ + (0 .. DX_TS - 1));\n"
+- call: maa_alu_scalar
+  prototype: void maa_alu_scalar(int src_tile, int src_reg, int dst_tile, int op, int cond_tile)
+  lowerings: []
+  used_by:
+  - TDStepMAA
+  rules:
+  - operands
+  - alu_lt_values
+  - dispatch_stall
+  - register_overlap
+  - initialized_state
+  contract: "requires initialized_state: dx_state_initialized;\nrequires 0 <= src_tile < DX_NT && 0 <= src_reg <\
+    \ DX_NR && 0 <= dst_tile < DX_NT && dst_tile != src_tile;\nrequires op == DX_LT_OP && cond_tile == -1;\nrequires\
+    \ ghost_capacity: 0 <= dx_count < DX_K;\nrequires dx_issuable(src_reg, -1, -1, -1, -1);\nassigns dx_tile_data[dst_tile][0\
+    \ .. DX_TS - 1], dx_tile_size[dst_tile], dx_live, dx_kind[0 .. DX_K - 1], dx_dst1[0 .. DX_K - 1], dx_dst2[0\
+    \ .. DX_K - 1], dx_src1[0 .. DX_K - 1], dx_src2[0 .. DX_K - 1], dx_cond[0 .. DX_K - 1], dx_regs_in[0 .. DX_K\
+    \ - 1], dx_regs_out[0 .. DX_K - 1], dx_reg_a[0 .. DX_K - 1], dx_reg_b[0 .. DX_K - 1], dx_reg_c[0 .. DX_K - 1],\
+    \ dx_region[0 .. DX_K - 1], dx_base[0 .. DX_K - 1], dx_lo[0 .. DX_K - 1], dx_hi[0 .. DX_K - 1], dx_stride[0\
+    \ .. DX_K - 1], dx_index[0 .. DX_K - 1], dx_deps[0 .. DX_K - 1], dx_writes_memory[0 .. DX_K - 1], dx_tile_writer[0\
+    \ .. DX_NT - 1], dx_tile_readers[0 .. DX_NT - 1], dx_reg_writer[0 .. DX_NR - 1], dx_reg_named[0 .. DX_NR - 1],\
+    \ dx_count;\nensures dx_new_slot(DX_ALU_SCALAR, dst_tile, -1, src_tile, -1, -1, src_reg, -1, -1);\nensures dx_stall_covers{Pre,\
+    \ Post}(dst_tile, -1);\nensures dx_kept{Pre, Post}(dst_tile, -1, src_tile, -1, -1, src_reg, -1, -1, -1, -1,\
+    \ 1);\nensures dx_tile_size[dst_tile] == \\old(dx_tile_size[src_tile]);\nensures \\forall integer k; 0 <= k\
+    \ < \\old(dx_tile_size[src_tile]) && k < DX_TS ==>\n  dx_tile_data[dst_tile][k] == (\\old(dx_tile_data[src_tile][k])\
+    \ < \\old(dx_reg_value[src_reg]) ? 1 : 0);\nensures memory_domain_preserved: DX_NT == 8 && DX_TS == 2 ==> \\\
+    forall integer d1, d2, writing;\n  -1 <= d1 < DX_NT && -1 <= d2 < DX_NT && 0 <= writing <= 1 &&\n  \\at(dx_memory_clear_after_stall(d1,\
+    \ d2, writing), Pre) ==>\n  dx_memory_clear_after_stall(d1, d2, writing);\nensures dx_state_initialized;\nensures\
+    \ \\initialized(dx_tile_data[dst_tile] + (0 .. DX_TS - 1));\n"
+- call: maa_indirect_store_vector
+  prototype: void maa_indirect_store_vector(int *data, int idx_tile, int src_tile, int cond_tile, int dst_tile)
+  lowerings: []
+  used_by:
+  - TDStepMAA
+  rules:
+  - operands
+  - store_operands
+  - store_vector_values
+  - store_duplicate_order
+  - dispatch_stall
+  - memory_serial_domain
+  - initialized_state
+  contract: "requires initialized_state: dx_state_initialized;\nrequires 0 <= idx_tile < DX_NT && 0 <= src_tile\
+    \ < DX_NT && (cond_tile == -1 || 0 <= cond_tile < DX_NT);\nrequires 0 <= dst_tile < DX_NT && dst_tile != idx_tile\
+    \ && dst_tile != src_tile && dst_tile != cond_tile;\nrequires memory_domain: dx_memory_clear_after_stall(dst_tile,\
+    \ -1, 1);\nrequires (\\forall integer swdb_tile; 0 <= swdb_tile < DX_NT ==>\n  \\base_addr(data) != \\base_addr(dx_tile_data[swdb_tile]))\
+    \ &&\n  \\base_addr(data) != \\base_addr(&dx_tile_size[0]) && \\base_addr(data) != \\base_addr(&dx_reg_value[0]);\n\
+    requires dx_tile_size[src_tile] == dx_tile_size[idx_tile] &&\n  (cond_tile == -1 || dx_tile_size[cond_tile]\
+    \ == dx_tile_size[idx_tile]);\nrequires ghost_capacity: 0 <= dx_count < DX_K;\nrequires dx_issuable(-1, -1,\
+    \ -1, -1, -1);\nrequires \\forall integer k; 0 <= k < dx_tile_size[idx_tile] && k < DX_TS &&\n  (cond_tile ==\
+    \ -1 || dx_tile_data[cond_tile][k] != 0) ==> \\valid(data + (unsigned int)dx_tile_data[idx_tile][k]);\nrequires\
+    \ source_initialized: \\forall integer k; 0 <= k < dx_tile_size[idx_tile] && k < DX_TS &&\n  (cond_tile == -1\
+    \ || dx_tile_data[cond_tile][k] != 0) ==> \\initialized(data + (unsigned int)dx_tile_data[idx_tile][k]);\nrequires\
+    \ store_frame_bound: 0 <= dx_store_bound;\nrequires store_indices: \\forall integer k; 0 <= k < dx_tile_size[idx_tile]\
+    \ && k < DX_TS &&\n  (cond_tile == -1 || dx_tile_data[cond_tile][k] != 0) ==>\n  0 <= (unsigned int)dx_tile_data[idx_tile][k]\
+    \ < dx_store_bound;\nassigns data[0 .. dx_store_bound - 1],\n  dx_tile_data[dst_tile][0 .. DX_TS - 1], dx_tile_size[dst_tile],\
+    \ dx_live, dx_kind[0 .. DX_K - 1], dx_dst1[0 .. DX_K - 1], dx_dst2[0 .. DX_K - 1], dx_src1[0 .. DX_K - 1], dx_src2[0\
+    \ .. DX_K - 1], dx_cond[0 .. DX_K - 1], dx_regs_in[0 .. DX_K - 1], dx_regs_out[0 .. DX_K - 1], dx_reg_a[0 ..\
+    \ DX_K - 1], dx_reg_b[0 .. DX_K - 1], dx_reg_c[0 .. DX_K - 1], dx_region[0 .. DX_K - 1], dx_base[0 .. DX_K -\
+    \ 1], dx_lo[0 .. DX_K - 1], dx_hi[0 .. DX_K - 1], dx_stride[0 .. DX_K - 1], dx_index[0 .. DX_K - 1], dx_deps[0\
+    \ .. DX_K - 1], dx_writes_memory[0 .. DX_K - 1], dx_tile_writer[0 .. DX_NT - 1], dx_tile_readers[0 .. DX_NT\
+    \ - 1], dx_reg_writer[0 .. DX_NR - 1], dx_reg_named[0 .. DX_NR - 1], dx_count;\nensures dx_new_slot(DX_STORE_VECTOR,\
+    \ dst_tile, -1, idx_tile, src_tile, cond_tile, -1, -1, -1);\nensures dx_stall_covers{Pre, Post}(dst_tile, -1);\n\
+    ensures dx_kept{Pre, Post}(dst_tile, -1, idx_tile, src_tile, cond_tile, -1, -1, -1, -1, -1, 1);\nensures dx_base[dx_tile_writer[dst_tile]]\
+    \ == data && dx_index[dx_tile_writer[dst_tile]] == idx_tile;\nensures dx_tile_size[dst_tile] == \\old(dx_tile_size[idx_tile]);\n\
+    ensures \\forall integer k; 0 <= k < \\old(dx_store_bound) && \\at(\\initialized(data + k), Pre) ==>\n  \\initialized(data\
+    \ + k);\nensures host_initialized: DX_NT == 8 && DX_TS == 2 ==> \\forall int *cell;\n  \\at(\\valid_read(cell)\
+    \ && \\initialized(cell), Pre) ==> \\initialized(cell);\nensures \\old(dx_tile_size[idx_tile]) >= 1 && (cond_tile\
+    \ == -1 || \\old(dx_tile_data[cond_tile][0]) != 0) ==>\n  dx_tile_data[dst_tile][0] == \\old(data[(unsigned\
+    \ int)dx_tile_data[idx_tile][0]]);\nensures dx_state_initialized;\nensures \\initialized(dx_tile_data[dst_tile]\
+    \ + (0 .. DX_TS - 1));\n"
+queries:
+- query: swdb_dx_in_footprint
+  prototype: int swdb_dx_in_footprint(int tile, const int *addr)
+  contract: 'requires 0 <= tile < DX_NT;
+
+    assigns \nothing;
+
+    ensures \result == 1 <==> (dx_tile_writer[tile] >= 0 && dx_in_footprint(dx_tile_writer[tile], (int *)addr));
+
+    '
+wp:
+  probes:
+  - macro: SWDB_TILE_READ
+    prototype: int *swdb_tile_read_probe(int *addr)
+    contract: 'requires dx_read_ok(addr);
+
+      requires initialized_read: \initialized(addr);
+
+      assigns \nothing;
+
+      ensures \result == addr;
+
+      ensures \initialized(\result);
+
+      '
+  - macro: SWDB_TILE_WRITE
+    prototype: int *swdb_tile_write_probe(int *addr)
+    contract: 'requires dx_write_ok(addr);
+
+      assigns \nothing;
+
+      ensures \result == addr;
+
+      '
+  unit_requires: dx_idle && dx_state_initialized
+  separate_from:
+  - dx_tile_data
+  - dx_tile_size
+  - dx_reg_value

@@ -1,0 +1,222 @@
+kind: proposal
+schema_version: '0.4'
+id: bfs-campaign-preparation-20260925-a1.dx100-instructions
+status: draft
+created: '2026-09-26'
+updated: '2026-09-26'
+message_version: '1.0'
+producer:
+  name: swdb-representative-dx100-instructions
+  role: sw
+  test_client: true
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: bfs-campaign-preparation-20260925-a1.dx100-instructions
+  producer:
+    name: swdb-representative-dx100-instructions
+    role: sw
+    test_client: true
+  profile_package: bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.5828ff2030b22718
+  source_snapshot: bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.source
+  implementation: dx100-bfs-scalar
+  source_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  regions:
+  - function:bfs.cc:10396:92351720b886b03a
+  - function:bfs.cc:13304:76a956649bfe9705
+  constraints:
+    editable_files: [benchmarks/gapbs/src/bfs.cc]
+    preserve_correctness: true
+    preserve_roi: true
+  parameters:
+    supporting_profile_packages:
+    - bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.5828ff2030b22718
+    - bfs-native-pilot-20260925-dx10018-a1.kronecker.package.v1.1d44ec6b44f05000
+    selection: operator_selected_before_candidate_assessment
+  required_operations:
+  - operation: dx100.mmio.v1.alu-scalar-lt.i32
+    interface: dx100-mmio
+    interface_version: 1.0-e4fc4af
+    model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  - operation: dx100.mmio.v1.const.i32
+    interface: dx100-mmio
+    interface_version: 1.0-e4fc4af
+    model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  - operation: dx100.mmio.v1.indirect-load.i32
+    interface: dx100-mmio
+    interface_version: 1.0-e4fc4af
+    model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  - operation: dx100.mmio.v1.indirect-store-vector.i32
+    interface: dx100-mmio
+    interface_version: 1.0-e4fc4af
+    model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  - operation: dx100.mmio.v1.range-loop.i32
+    interface: dx100-mmio
+    interface_version: 1.0-e4fc4af
+    model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  - operation: dx100.mmio.v1.stream-load.i32
+    interface: dx100-mmio
+    interface_version: 1.0-e4fc4af
+    model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  - operation: dx100.mmio.v1.wait-ready
+    interface: dx100-mmio
+    interface_version: 1.0-e4fc4af
+    model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  hardware_target: dx100-e4fc4af-4c
+  require_executable_backend: true
+  strategy: existing-dx100-top-down-offload
+  intent: 'Within the original scalar DOBFS, initialize the same per-thread MAA tiles and registers used
+    by DOBFSMAA, inside the complete-call ROI, and route its frontier expansion through the existing TDStepMAA.
+    Preserve the original DOBFS signature, BFSVerifier, m5 event locations, graph representation, parent
+    initialization, level transitions, and normalization. Preserve existing adaptive full/tail handling
+    and serialized parent updates. In TDStepMAA, wait for tile5, the destination holding returned old
+    parent values, after the masked indirect store before CPU consumption or leaving the critical section.
+    Do not merely select the existing DOBFSMAA entry point or add a comment: the evaluated DOBFS body
+    must actually change. Use only the pinned supported operations. This is a representative selected
+    offload strategy; no tuning or alternative strategy search is authorized.'
+  payload:
+    kind: natural_language
+    content: 'Within the original scalar DOBFS, initialize the same per-thread MAA tiles and registers
+      used by DOBFSMAA, inside the complete-call ROI, and route its frontier expansion through the existing
+      TDStepMAA. Preserve the original DOBFS signature, BFSVerifier, m5 event locations, graph representation,
+      parent initialization, level transitions, and normalization. Preserve existing adaptive full/tail
+      handling and serialized parent updates. In TDStepMAA, wait for tile5, the destination holding returned
+      old parent values, after the masked indirect store before CPU consumption or leaving the critical
+      section. Do not merely select the existing DOBFSMAA entry point or add a comment: the evaluated
+      DOBFS body must actually change. Use only the pinned supported operations. This is a representative
+      selected offload strategy; no tuning or alternative strategy search is authorized.'
+payload_sha256: ebeccf3969bd9900cf481fa6deca272403d11c62071847c84ee870e02c5f8912
+outcome:
+  state: candidate_created
+  stage: rewriting
+  reason: null
+attempts:
+- number: 1
+  stage: rewriting
+  state: completed
+  provider:
+    provider:
+      kind: claude
+      command:
+      - /data1/yanruj/.npm-global/bin/claude
+      timeout_s: 600
+      max_repairs: 2
+      total_seconds: 1800
+      budget_usd: 10
+    command:
+    - /data1/yanruj/.npm-global/bin/claude
+    - -p
+    - --safe-mode
+    - --tools
+    - ''
+    - --strict-mcp-config
+    - --mcp-config
+    - '{"mcpServers":{}}'
+    - --no-session-persistence
+    - --output-format
+    - json
+    - --json-schema
+    - '{"type": "object", "additionalProperties": false, "required": ["interpretation", "patch", "unresolved"],
+      "properties": {"interpretation": {"type": "string"}, "patch": {"type": "string"}, "unresolved":
+      {"type": "array", "items": {"type": "string"}}}}'
+    - --max-budget-usd
+    - '10'
+    timeout_s: 600
+    classification: rewrite_provider
+    prompt_sha256: 5628f294b68b1c6f57dcf33c338743951e0d901cb56481cd016d929d75e94db4
+    state: completed
+    executable_sha256: 5c4735937844e84f8a93306e841a5b0e12252909b07870f789b190468da147ab
+    version: 2.1.278 (Claude Code)
+    returncode: 0
+    host_wall_s: 233.21830715797842
+  candidate: bfs-campaign-preparation-20260925-a1.dx100-instructions.candidate-1
+raw_artifacts:
+- path: /data1/yanruj/EvolveSWDB_runs/bfs-provider-initial-20260926-a1/bfs-campaign-preparation-20260925-a1.dx100-instructions
+  stage: rewriting
+source_snapshot: bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.source
+profile_package: bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.5828ff2030b22718
+provider:
+  kind: claude
+  command:
+  - /data1/yanruj/.npm-global/bin/claude
+  timeout_s: 600
+  max_repairs: 2
+  total_seconds: 1800
+  budget_usd: 10
+repair_budget:
+  max_repairs: 2
+  total_seconds: 1800
+  used_seconds: 233.21830715797842
+  repairs: 0
+interpretation:
+  interpretation: 'The proposal (strategy "existing-dx100-top-down-offload") asks to rewrite the scalar
+    DOBFS so its frontier expansion runs through the existing TDStepMAA instead of TDStep, while keeping
+    DOBFS''s signature, BFSVerifier, m5 event placement, graph representation, parent initialization/normalization,
+    and adaptive full/tail handling untouched. This requires (1) adding the same per-thread MAA tile/register
+    allocation block that DOBFSMAA already performs, placed inside DOBFS''s body (which is itself the
+    complete-call ROI) before parent initialization, and (2) changing the frontier-expansion call inside
+    DOBFS''s while-loop from TDStep(...) to TDStepMAA(...). The intent also calls out a required correctness
+    fix inside TDStepMAA itself: after the masked indirect store into tile5 (which returns the old parent
+    values used to decide whether to enqueue a vertex), the code only did wait_ready(tile3) before leaving
+    the critical section, but never waited on tile5 before the CPU (the following #pragma omp simd loop)
+    reads tile5Ptr. I added wait_ready(tile5) immediately after wait_ready(tile3), still inside the critical
+    section, using only the pinned wait-ready operation. No other operations, tuning, or alternate strategies
+    were introduced; TDStep and BFSVerifier are left completely unmodified, and DOBFSMAA is untouched
+    (DOBFS now duplicates its tile/reg setup rather than merely calling it, per the "must actually change
+    the DOBFS body" requirement).'
+  patch: |
+    --- a/benchmarks/gapbs/src/bfs.cc
+    +++ b/benchmarks/gapbs/src/bfs.cc
+    @@ -178,6 +178,7 @@
+                             //     parent[v] = inner u
+                             maa_indirect_store_vector<int>(parent.data(), tile0, tile3, tile4, tile5);
+                             wait_ready(tile3);
+    +                        wait_ready(tile5);
+                             // #pragma omp simd aligned(tile4Ptr, tile0Ptr, tile5Ptr : 16) simdlen(4)
+                             //                     for (int i = 0; i < curr_tile7_size; i++) {
+                             //                         if (tile4Ptr[i] && tile5Ptr[i] < 0) {
+    @@ -322,6 +323,29 @@
+         alloc_MAA();
+         init_MAA();
+         t.Start();
+    +#pragma omp parallel
+    +    {
+    +#pragma omp critical
+    +        {
+    +            int tid = omp_get_thread_num();
+    +            tiles0[tid] = get_new_tile<int>();
+    +            tiles1[tid] = get_new_tile<int>();
+    +            tiles2[tid] = get_new_tile<int>();
+    +            tiles3[tid] = get_new_tile<int>();
+    +            tiles4[tid] = get_new_tile<int>();
+    +            tiles5[tid] = get_new_tile<int>();
+    +            tilesi[tid] = get_new_tile<int>();
+    +            tilesj[tid] = get_new_tile<int>();
+    +            regs0[tid] = get_new_reg<int>();
+    +            regs1[tid] = get_new_reg<int>();
+    +            regs2[tid] = get_new_reg<int>();
+    +            regs3[tid] = get_new_reg<int>();
+    +            regs4[tid] = get_new_reg<int>();
+    +            regs5[tid] = get_new_reg<int>();
+    +            last_i_regs[tid] = get_new_reg<int>();
+    +            last_j_regs[tid] = get_new_reg<int>();
+    +        }
+    +    }
+         pvector<NodeID> parent = InitParent(g);
+         t.Stop();
+         if (logging_enabled)
+    @@ -343,7 +367,7 @@
+         while (!queue.empty()) {
+             std::cout << "Starting TDStep: " << queue.size() << " elements" << std::endl;
+             t.Start();
+    -        TDStep(g, VertexOffsetsOut, parent, queue, num_nodes, num_edges);
+    +        TDStepMAA(g, VertexOffsetsOut, parent, queue, num_nodes, num_edges);
+             queue.slide_window();
+             t.Stop();
+             if (logging_enabled) {
+  unresolved: []
+candidate: bfs-campaign-preparation-20260925-a1.dx100-instructions.candidate-1

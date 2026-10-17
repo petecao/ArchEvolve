@@ -1,0 +1,72 @@
+{
+  "format": "swdb.bfs.owned-rss-esrch-preparation.v1",
+  "created": "2026-09-26",
+  "state": "local_validation_passed",
+  "scope": [
+    "scripts/bfs_owned_rss.py",
+    "tests/test_bfs_owned_rss.py"
+  ],
+  "actual_failure": "Original T16 active8c failed on Linux procfs ProcessLookupError ESRCH; failure preserved, no host mutation or retry.",
+  "repair": "At most two procfs reads; disappearance only after independent folder stat ENOENT. Otherwise actual reopened identity and RSS, or fail closed. Task traversal reopens parent identity. No zero measurement fallback.",
+  "validation": [
+    {
+      "command": "python3 -m pytest tests/test_bfs_owned_rss.py -k esrch -q",
+      "result": "7 failed, 4 passed, 13 deselected (pre-fix)"
+    },
+    {
+      "command": "python3 -m pytest tests/test_bfs_owned_rss.py tests/test_bfs_owned_execution.py -q",
+      "result": "48 passed, 6 Linux-only skipped in 1.10s",
+      "log": {
+        "path": "/private/tmp/bfs-owned-rss-esrch-affected-final-20260926.log",
+        "bytes": 110,
+        "sha256": "441f2627fa49c5b95950657dc561fe77ed3e7cc103594e984baf742dc121d5cb"
+      }
+    },
+    {
+      "command": "git diff --check",
+      "result": "passed"
+    }
+  ],
+  "intermediate_failure": "First combined group: 1 failed, 47 passed, 6 skipped. New PID-reuse fixture incorrectly left reused unrelated PID in current parent children; corrected fixture only to reflect current kernel ownership. Stale-list rejection remains tested.",
+  "limitations": [
+    "Mac synthetic procfs races and local Owned subprocess tests; skipped Linux cases are not actual Linux proof.",
+    "All original runtime pins and actual failed T16 outcome remain unchanged."
+  ],
+  "artifacts": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_owned_rss.py",
+      "bytes": 6772,
+      "sha256": "1904023de515879ef89d1929b292ebc92caad599b106ee4cf77e8170bab4afee"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_owned_rss.py",
+      "bytes": 15804,
+      "sha256": "7c7951191ad19c843e0a206e8d4b436db43e08951d30b5d34a1b83cef10c8aa2"
+    },
+    {
+      "path": "/private/tmp/bfs-owned-rss-before-esrch-20260926.py",
+      "bytes": 6160,
+      "sha256": "e9e48a661ed1cb68eee64711090d83e0bd1be7524f012c19d48b21da99475cb3"
+    },
+    {
+      "path": "/private/tmp/bfs-owned-rss-esrch-red-20260926.log",
+      "bytes": 19827,
+      "sha256": "6742d4652f2833ce0b42827036487efaa2b7aa17cc1f902727978fd56dbe58ef"
+    },
+    {
+      "path": "/private/tmp/bfs-owned-rss-esrch-green-20260926.log",
+      "bytes": 110,
+      "sha256": "b102c58ce952c74ae0fbd03bb97055fb4e63a59b58577274acf2dd6b3641e2fb"
+    },
+    {
+      "path": "/private/tmp/bfs-owned-rss-esrch-affected-20260926.log",
+      "bytes": 2034,
+      "sha256": "55c4c914b354a178c3431755a4397915e12f3748dcd0e89207995d8a72d992be"
+    },
+    {
+      "path": "/private/tmp/bfs-owned-rss-esrch-affected-final-20260926.log",
+      "bytes": 110,
+      "sha256": "441f2627fa49c5b95950657dc561fe77ed3e7cc103594e984baf742dc121d5cb"
+    }
+  ]
+}

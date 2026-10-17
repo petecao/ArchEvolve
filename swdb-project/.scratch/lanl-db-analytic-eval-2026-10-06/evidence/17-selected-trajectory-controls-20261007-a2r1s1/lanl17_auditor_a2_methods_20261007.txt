@@ -1,0 +1,193 @@
+    def dependencies(self):
+        result={}
+        for ticket,key in ((11,'final_ticket11_acceptance'),(14,'final_ticket14_acceptance')):
+            admission=need(self.pins,key);selected=self.json(need(admission,'receipt_pin'))
+            require(admission['accepted'] is True and selected['identity_sha256']==admission['receipt_identity'],'Explicit accepted dependency pin differs')
+            export=need(admission,'actual_export_commit');require(re.fullmatch('[0-9a-f]{40}',export),'Full dependency export commit required')
+            self.git('merge-base','--is-ancestor',export,self.R['commit'])
+            require(selected['export_commit']==export and selected['estimator_sha256']==F6,'Dependency export/F6 differs')
+            inherited=self.json(need(admission,'actual_export_receipt_pin'))
+            require(inherited['identity_sha256']==admission['actual_export_receipt_identity'],'Dependency actual export receipt differs')
+            if ticket==11:
+                require(selected['format']=='swdb.cpu-future-phase-local-readonly-admission.v1' and selected['phase']=='report' and selected['admitted'] is True and selected['source_commit']==C,'Actual final CPU report admission missing')
+                require(selected['actual_compact_receipt_identity']==inherited['identity_sha256'],'CPU reader/export receipt linkage differs')
+                require(selected['native_or_provider_or_remote_invocations']==selected['store_or_writer_or_index_invocations']==0,'CPU selected-reader scope differs')
+                require(need(admission,'selected_reader_source_sha256')==selected['reader_sha256'] if 'reader_sha256' in selected else need(admission,'reader_source_pin')['sha256']==need(admission,'selected_reader_source_sha256'),'CPU original reader source pin missing')
+                scope='Checks existing selected-reader phase/admitted/C/F6/export semantics; its original full validation and numerical checks are inherited from pinned actual admission, not independently rerun'
+            else:
+                require(selected['format']=='swdb.lanl14-selected-nine-export-admission.v1' and selected['final_source_commit']==need(admission,'final_source_commit'),'Actual final generality selected-reader source differs')
+                require(selected['receipt_identity_sha256']==inherited['identity_sha256'] and selected['prior_tracked_blobs_unchanged'] is True and selected['source_clean'] is True,'Generality source/export custody differs')
+                require(len(selected['pairs'])==9 and {(r['kernel'],r['target']) for r in selected['pairs']}=={(k,t) for k in ('bfs','bc','pagerank') for t in ('cpu','dx100','maple')},'Nine actual disclosed pairs missing')
+                direct=selected['direct_observations'];pre=selected['inherited_pinned_export_preconditions']
+                require(direct['lane_exit_code']==0 and direct['cleanup_survivors']=={} and pre['runner_exit_code']==pre['wrapper_exit_code']==0 and pre['new_native_or_compiler_execution']==0,'Generality direct/inherited execution preconditions differ')
+                require(selected['provider_calls']==selected['application_timings']==selected['reader_native_compiler_provider_remote_actions']==0,'Generality selected-reader scope differs')
+                require(selected['reader_sha256']==need(admission,'selected_reader_source_sha256'),'Generality original reader pin differs')
+                scope='Checks nine-pair selected disclosure/direct facts and explicitly inherited pinned-export/full-catalogue preconditions; no admitted:true is invented'
+            result[str(ticket)]={'actual_export_commit':export,'receipt_identity':selected['identity_sha256'],'admission_boundary':scope,'numerical_accuracy_not_required_for_completed_dependency':True}
+        return result
+
+    def retained_ledger(self,summary,state,projection):
+        ledger=state['ledger'];require(digest(ledger)==state['ledger_sha256'],'Retained ledger projection hash differs')
+        calls_by_invocation={r['invocation']:r for r in ledger['calls']}
+        require(len(calls_by_invocation)==len(ledger['calls']) and [r['index'] for r in ledger['calls']]==list(range(1,len(ledger['calls'])+1)),'Duplicate/nonconsecutive provider calls')
+        replay=SearchLedger(SearchBudget.from_mapping(BUDGETS,summary['campaign_file']['sha256']));used=set()
+        def replay_calls(rows,index):
+            for row in rows:
+                invocation=row['invocation'];require(invocation in calls_by_invocation and invocation not in used,'Provider projection missing/duplicated')
+                saved=calls_by_invocation[invocation]
+                require(saved['iteration']==index and all(saved[k]==row[k] for k in ('role','invocation','outcome','counted')),'Provider row/ledger differs')
+                require(saved['index']==len(replay.calls)+1,'Provider projections do not preserve opened-call order')
+                require(row['outcome'] is not None,'Open/unsaved provider call cannot be independently reconciled')
+                call=replay.open_call(row['role'],invocation);replay.close_call(call,CallOutcome(row['outcome']))
+                require(call.to_dict()==saved,'Counted/uncounted exception or provider slot differs');used.add(invocation)
+        # A paused setup call raises before campaign._setup_call persists its row;
+        # the retained ledger itself provides those exact setup invocation/outcomes.
+        replay_calls([r for r in ledger['calls'] if r['iteration']==0],0)
+        pauses=[r for r in state['pauses'] if r.get('iteration',0)>0];pause_position=0
+        completed_by_index={r['index']:r for r in state['iterations']}
+        for saved in ledger['iterations']:
+            index=replay.begin_iteration();require(index==saved['index'],'Iteration/paused retry index differs')
+            if saved['outcome']=='paused':
+                require(pause_position<len(pauses),'Paused session provider custody missing');body=pauses[pause_position];pause_position+=1
+                require(body['iteration']==index,'Pause partition index differs')
+            elif saved['outcome'] in ('improved','not_improved'):
+                body=completed_by_index[index]
+                require(bool(body['improved_classes'])==(saved['outcome']=='improved'),'Improvement/plateau outcome differs')
+            else:
+                body=need(projection,'infrastructure_iteration_provider_partition')
+                require(body['index']==index,'Infrastructure session partition differs')
+            replay_calls(body['provider_calls'],index)
+            require(replay.record_iteration(IterationOutcome(saved['outcome'])).to_dict()==saved,'Plateau/paused/completion transition differs')
+        require(pause_position==len(pauses),'Additional paused session not in retained ledger')
+        if ledger['iteration']:
+            interrupted=state.get('interrupted_iteration')
+            if interrupted is None:raise Pending('Open retained session has no original interrupted provider partition; explicit parent capture/attestation required')
+            require(replay.begin_iteration()==ledger['iteration']==interrupted['index'],'Interrupted open session differs')
+            replay_calls(interrupted['provider_calls'],ledger['iteration'])
+        require(used==set(calls_by_invocation),'Provider calls lack exact setup/paused/completed/interrupted partition; do not group repeated iteration indices')
+        if ledger['terminal']:replay.terminate(StopReason(ledger['terminal']))
+        require(replay.to_state()==ledger,'Retained public SearchLedger state does not replay exactly')
+        winner,conditions=replay.stop()
+        require(winner is not None and winner.value==summary['stop_reason']==state['stop_reason'],'Terminal precedence differs')
+        used_summary=summary['budgets']['used']
+        require(used_summary['provider_calls_counted']==replay.counted_calls and used_summary['provider_calls_uncounted']==replay.uncounted_calls,'Summary provider totals differ')
+        require(replay.counted_calls<=25,'Actual retained provider total exceeds fixed setup+iterations budget')
+        if winner is StopReason.PROVIDER_CALLS:require(replay.counted_calls==25,'Local call-slot refusal alone is not a provider-budget terminal')
+        require(used_summary['lane_hours']==round(state['lane_hours'],6),'Summary lane-hour rounding differs')
+        if 'provider_wait_hours' in state:require(used_summary['provider_wait_hours']==round(state['provider_wait_hours'],6),'Provider-wait rounding differs')
+        peak=state.get('disk_bytes_peak',0);summary_peak=used_summary['disk_gb_peak']
+        require(type(peak) in (int,float) and peak>=0 and summary_peak>=0 and round(peak/1e9,6)<=summary_peak,'Summary disk peak is below retained peak')
+        administrative=need(projection,'administrative_enforcement')
+        require(administrative['basis']=='explicit_parent_attestation_of_original_source_enforcement' and administrative['accepted'] is True and administrative['source_commit']==self.R['commit'] and administrative['campaign_source_sha256']==PINNED_SOURCE_FILES['swdb/campaign.py'] and administrative['search_source_sha256']==PINNED_SOURCE_FILES['swdb/extensa/search.py'],'Administrative enforcement attestation missing/different')
+        require(administrative['state_file_sha256']==projection['source_state_file_sha256'] and administrative['summary_sha256']==digest(summary) and administrative['terminal']==winner.value,'Administrative attestation evidence binding differs')
+        require(administrative['unsaved_provider_or_step_events_independently_replayed'] is False and administrative['summary_time_disk_usage_independently_reconstructed'] is False,'Unsupported independent budget replay claim')
+        if winner in (StopReason.LANE_HOURS,StopReason.DISK):
+            require(administrative['terminal_premise']['state']=='parent_attested_from_original_source_enforcement' and administrative['terminal_premise']['prospective_refusal_may_occur_below_used_limit'] is True,'Exact unsaved exhaustion premise must be explicitly inherited, never guessed')
+        return {'retained_ledger':'exact_public_replay','completed':replay.iterations_completed,'plateau':replay.plateau,'provider_counted':replay.counted_calls,'provider_uncounted':replay.uncounted_calls,'terminal_conditions':[r.value for r in conditions],'lane_disk_unsaved_event_boundary':administrative,'disk_later_du_not_used':True}
+
+    def attempt_states(self,attempts,projection,cid,stopped):
+        previous=None;previous_invocations=None;facts=[]
+        collector_pin=need(self.pins,'collector_source_pin');require(sha(self.raw(collector_pin))==need(self.pins,'collector_sha256'),'Reviewed collector bytes differ')
+        for number,(attempt,triplet) in enumerate(zip(attempts,stopped),1):
+            dispatch,stop,release=triplet
+            before=self.json(need(attempt,'before_custody'));after=self.json(need(attempt,'after_custody'))
+            for value,phase in ((before,'before'),(after,'after')):
+                require(value['format']=='swdb.lanl17-attempt-control-custody.v2' and value['phase']==phase and value['campaign']==cid and value['attempt']==number,'Original state custody identity differs')
+                require(value['source_commit']==self.R['commit'] and value['estimator_sha256']==F6 and value['helper_sha256']==HELPER and value['collector_sha256']==self.pins['collector_sha256'] and value['manifest_identity_sha256']==self.m2['identity_sha256'] and value['policy']==self.m2['policy'],'State custody changes R/M2/policy/control')
+                require(value['raw_state_snapshots_transferred'] is False and value['provider_prompts_auth_logs_argv_read'] is False,'Private original state was transferred/read beyond scope')
+            require(before['resume']==dispatch['resume'] and before['baselines_only']==dispatch['baselines_only'],'State guard action differs from dispatch')
+            require(after['before_identity_sha256']==before['identity_sha256'] and after['dispatch_identity_sha256']==dispatch['identity_sha256'] and after['stopped_identity_sha256']==stop['identity_sha256'] and after['released']==release,'Released post-state custody differs')
+            require(utc(before['checked_utc'])<=utc(dispatch['checked_utc'])<=utc(stop['started_utc'])<utc(stop['ended_utc'])<=utc(release['checked_utc'])<=utc(after['checked_utc']),'Original before/launch/stop/release/after order differs')
+            pre,post=before['state'],after['state']
+            for control in (before,after):
+                inventory=control['invocation_inventory'];require(inventory['names_sha256']==digest(inventory['provider_directories']) and inventory['provider_receipts_prompts_commands_inputs_opened'] is False,'Invocation-name custody differs/private metadata opened')
+                if control['state']['present']:
+                    known={r['invocation'] for r in control['state']['projection']['ledger']['calls']}
+                    if not {r['invocation'] for r in inventory['provider_directories']}<=known:raise Pending('Unpersisted invocation directory requires concrete actual-call/budget admission; no free retry is inferred')
+                cfg=next(p['configuration'] for p in self.policy['population'] if p['campaign']==cid)
+                if cfg['library'].get('synthesize') or inventory['synthesis_directory_present']:raise Pending('Synthesis invocation metadata needs its separate exact source mapping; selected campaigns declare none')
+            corroboration=self.json(need(attempt,'dispatch_state_corroboration'))
+            require(corroboration['format']=='swdb.lanl17-dispatch-state-corroboration.v1' and corroboration['before_identity_sha256']==before['identity_sha256'] and corroboration['dispatch_identity_sha256']==dispatch['identity_sha256'] and corroboration['state_unchanged_under_parent_exclusive_campaign_ownership'] is True and corroboration['basis']=='explicit_parent_attestation_no_other_campaign_writer_between_capture_and_dispatch' and corroboration['parent_checked_pre_dispatch_state_sha256']==(pre['file']['sha256'] if pre['present'] else None),'State guard time-of-check gap lacks explicit parent capture')
+            if number==1:require(pre['present'] is False and dispatch['resume'] is False,'Initial campaign state must be absent')
+            else:
+                require(before['invocation_inventory']==previous_invocations,'Resume directory-existence custody changed after previous release')
+                require(pre['present'] is True and previous['present'] is True and pre['file']['sha256']==previous['file']['sha256'] and pre['projection']==previous['projection'],'Resume input is not exact prior released post-state')
+                require(pre['projection'].get('stopped') is not True,'ALL prior stopped terminal states are nonresumable, including infrastructure failure')
+                require(before['prior_after_identity_sha256']==facts[-1]['after_identity_sha256'],'Resume custody does not bind prior attempt')
+                previous_release=stopped[number-2][2]
+                if any(previous_release[k]!=0 for k in ('runner_exit_code','public_exit_code','wrapper_exit_code')):
+                    unclean=self.json(need(before,'unclean_resume_admission_pin'))
+                    require(unclean['format']=='swdb.lanl17-unclean-resume-admission.v1' and unclean['basis']=='explicit_parent_attestation_from_concrete_attempt_custody' and unclean['accepted'] is True and unclean['source_commit']==self.R['commit'] and unclean['prior_after_identity_sha256']==before['prior_after_identity_sha256'] and unclean['prior_state_sha256']==pre['file']['sha256'],'Unclean resume lacks concrete prior custody admission')
+                    require(unclean['unaccounted_opened_calls']==0 and unclean['scientific_source_or_state_changed'] is False,'Lost/unknown provider calls cannot be treated as free retries or patched into frozen state')
+            facts.append({'attempt':number,'before_identity_sha256':before['identity_sha256'],'after_identity_sha256':after['identity_sha256'],'before_present':pre['present'],'after_present':post['present'],'prior_stopped_refused':number>1,'resume_scope':'Exact captured nonterminal state only; no terminal infrastructure resumption'})
+            previous=post;previous_invocations=after['invocation_inventory']
+        require(previous['present'] and previous['file']['sha256']==projection['source_state_file_sha256'] and previous['projection']==projection['state'],'Final released state projection differs from trajectory input')
+        return facts
+
+    def outcome_linkage(self,summary,projection,roots):
+        cid=summary['campaign'];protocol=self.record(summary['protocol']['id'],'protocol');cfg=next(p['configuration'] for p in self.policy['population'] if p['campaign']==cid)
+        require(summary['protocol']['identity_sha256']==protocol['identity_sha256'],'Summary exact execution protocol differs')
+        workload_classes={r['class']:r['workload'] for r in summary['workload_classes']}
+        baseline_map={(r['role'],cls):(r['candidate'],eid) for r in summary['baselines'] for cls,eid in r['evaluation_ids_by_class'].items()}
+        events=summary['paired_estimates']['outcome_accesses'];forecasts={r['id']:r for r in summary['paired_estimates']['records']}
+        linked_components={};attested=[]
+        for event in events:
+            component_id=event['stage']+'.evaluation'
+            if component_id not in self.records:
+                raw=next((r for r in need(projection,'outcome_accesses_without_component') if r['event_sha256']==digest(event)),None)
+                if raw is None:raise Pending('Outcome access lacks selected original component or explicit no-evaluator parent custody: '+component_id)
+                require(raw['component_id']==component_id and raw['basis']=='explicit_parent_attestation_of_preflight_or_evaluator_refusal' and raw['accepted'] is True and raw['source_commit']==self.R['commit'],'Absent execution body cannot be treated as completed evidence')
+                attested.append(raw);continue
+            component=self.record(component_id,'evaluation');roots.add(component_id)
+            request=component['request'];role=request['protocol_role'];workload=request['workload']['id'];subject=self.record(request['candidate'],'candidate')
+            require(component['id']==request['id']==component_id and component.get('candidate',request['candidate'])==request['candidate'] and component.get('campaign')==cid and component.get('mode')=='extensa' and component['evidence_kind']=='execution','Execution request/subject/campaign/mode differs')
+            require(request['protocol']==protocol['id'] and role in ('baseline','candidate') and not request.get('fixture'),'Execution protocol/role/actual scope differs')
+            wrapper=SimpleNamespace(protocol=protocol)
+            execution_build=component.get('build') or self.record(request['candidate_build'],'evaluation')['build']
+            require(execution_build['binary_sha256']==request['binary']['sha256'],'Execution request/retained guest build bytes differ')
+            paired_request=source_pairing_request(wrapper,request,{'build':execution_build})
+            source=SimpleNamespace(campaign=cfg);catalog=SimpleNamespace(get=lambda rid,kind:self.record(rid,kind))
+            expected=source_pairing_context(source,catalog,paired_request)
+            matching=[(context,rid) for context,rid in zip(event['timing_contexts'],event['paired_estimates']) if request_identity(context)==request_identity(expected)]
+            require(len(matching)==1,'Execution component does not match exact source-derived event context')
+            context,rid=matching[0];forecast=forecasts[rid]
+            require(request_identity(forecast['timing_context'])==request_identity(expected) and utc(forecast['estimated_at'])<utc(event['outcome_access_started_at']),'Execution lacks actual preceding immutable forecast')
+            require(expected['subject']['artifact_sha256']==subject['artifact']['sha256'],'Exact execution artifact differs')
+            if component.get('outcome',{}).get('state')=='complete':
+                binding=component['context']['protocol_binding'];definition=self.record(workload,'workload')['definition']
+                require(binding['protocol']==protocol['id'] and binding['frozen_sha256']==protocol['identity_sha256'] and binding['role']==role and binding['workload_id']==workload and binding['workload_sha256']==self.record(workload,'workload')['identity_sha256'],'Component protocol/workload binding differs')
+                require(binding['settings_sha256']==digest(protocol['settings']),'Component exact frozen settings differ')
+                require(component['context']['candidate_sha256']==subject['artifact']['sha256'] and component['context']['workload']['canonical_sha256']==definition['canonical_sha256'] and component['context']['sources']==[0],'Actual component artifact/input/source facts differ')
+            linked_components[component_id]={'record_sha256':digest(component),'event_sha256':digest(event),'forecast':rid,'subject':subject['id'],'workload':workload,'role':role}
+        def aggregate(eid,subject,workload,role):
+            value=self.record(eid,'evaluation');roots.add(eid)
+            require(value.get('mode')=='extensa' and value.get('campaign')==cid and value['candidate']==subject and value['evidence_kind']=='execution' and value['outcome']['state']=='complete','Aggregate actual subject/campaign/completion differs')
+            require(value['request']['protocol']==protocol['id'] and value['request']['protocol_role']==role and value['context']['workload']['id']==workload,'Aggregate exact class/workload/protocol/role differs')
+            components=value['component_evaluations'];require(components,'Aggregate has no real component execution')
+            require(value['request']['evaluations']==[r['evaluation'] for r in components],'Aggregate component ID inventory differs')
+            for entry in components:
+                component=self.record(entry['evaluation'],'evaluation');require(digest(component)==entry['sha256'] and entry['evaluation'] in linked_components,'Aggregate component/digest/event linkage missing')
+                link=linked_components[entry['evaluation']];require((link['subject'],link['workload'],link['role'])==(subject,workload,role),'Aggregate component exact role/class differs')
+                require(not component.get('component_evaluations') and component['outcome']['state']=='complete' and component['correctness']['state']=='passed','Aggregate component is nested/incomplete/incorrect')
+            require(value['timing']==[r for e in components for r in self.record(e['evaluation'],'evaluation')['timing']] and value['correctness']['checks']==[r for e in components for r in self.record(e['evaluation'],'evaluation')['correctness']['checks']],'Aggregate timed/correctness rows differ')
+        for (role,cls),(subject,eid) in baseline_map.items():aggregate(eid,subject,workload_classes[cls],'baseline')
+        iterations=summary['iterations']+([summary['interrupted_iteration']] if summary.get('interrupted_iteration') else [])
+        for iteration in iterations:
+            for candidate in iteration['candidates']:
+                if not candidate.get('id'):continue
+                selection=next((r for r in candidate.get('comparisons',[]) if r['baseline_role']==cfg['base_source']),None)
+                require(candidate.get('selection')==({'lower':selection['lower'],'verdict':selection['verdict'],'ratio':selection['ratio']} if selection else None),'Candidate timing-only selection does not match base-source comparison')
+                for row in candidate.get('comparisons',[]):
+                    role=row['baseline_role'];cls=candidate['class'];subject,baseline=baseline_map[(role,cls)]
+                    comparison=self.record(row['comparison'],'comparison_result');require(row['baseline_evaluation']==comparison['baseline_evaluation']==baseline,'Comparison is not the retained exact class/role baseline')
+                    aggregate(comparison['candidate_evaluation'],candidate['id'],workload_classes[cls],'candidate')
+                    require(comparison['evaluation_identities']=={baseline:digest(self.record(baseline,'evaluation')),comparison['candidate_evaluation']:digest(self.record(comparison['candidate_evaluation'],'evaluation'))},'Comparison original evaluation identity map differs')
+                    require(comparison['metrics']['workload']==workload_classes[cls],'Comparison exact class workload differs')
+                    require(comparison['protocol']==protocol['id'] and comparison['protocol_sha256']==protocol['identity_sha256'] and comparison['request']['baseline_evaluation']==baseline and comparison['request']['candidate_evaluation']==comparison['candidate_evaluation'],'Comparison request/frozen protocol differs')
+                    verdict={'gain':'gain','no_gain':'no_gain','inconclusive':'inconclusive','regression':'no_gain'}.get(comparison['decision']['state'])
+                    require(verdict is not None and row['verdict']==verdict and row['lower']==row['ratio'],'Gem5 exact point timing-only verdict/lower differs')
+                    require(comparison.get('mode')=='extensa' and comparison.get('campaign')==cid and comparison['metrics']['roi_speedup']==row['ratio'],'Comparison actual ratio/campaign differs')
+                    roots.update((row['comparison'],comparison['candidate_evaluation'],baseline))
+                    for field in ('baseline_sha256','candidate_sha256'):
+                        if field in comparison:require(comparison[field]==digest(self.record(comparison['baseline_evaluation' if field=='baseline_sha256' else 'candidate_evaluation'],'evaluation')),'Comparison retained evaluation digest differs')
+        return {'linked_execution_components':len(linked_components),'class_baselines':len(baseline_map),'nonvacuous_baseline_forecast_checks':True,'absent_component_attestations':attested,'interrupted_roots_included':bool(summary.get('interrupted_iteration'))}

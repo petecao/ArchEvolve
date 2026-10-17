@@ -1,0 +1,38 @@
+{
+  "argv": [
+    "ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "mbit10",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=10",
+    "90",
+    "/usr/bin/python3.12",
+    "-B",
+    "-s",
+    "-P",
+    "-"
+  ],
+  "elapsed_seconds": 0.5248199999332428,
+  "finished_utc": "2026-10-08T08:20:59.275074+00:00",
+  "returncode": 0,
+  "sealed": false,
+  "source": {
+    "bytes": 1782,
+    "path": "/private/tmp/lanl17-read-private-publication-originals-20261008-a1.py",
+    "sha256": "7f10585f636c18651b51e0b80dd45160ea1d26a1b8e0bb617da893f64f5cdfa9"
+  },
+  "started_utc": "2026-10-08T08:20:58.750202+00:00",
+  "stderr": {
+    "bytes": 0,
+    "path": "/private/tmp/lanl17-private-publication-original-custody-actual-20261008-a1.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 26781,
+    "path": "/private/tmp/lanl17-private-publication-original-custody-actual-20261008-a1.stdout",
+    "sha256": "9aaf0a33b7d4b6bf040646b566cead8b37bd8f4f3c69b83cf995373a800cff00"
+  }
+}

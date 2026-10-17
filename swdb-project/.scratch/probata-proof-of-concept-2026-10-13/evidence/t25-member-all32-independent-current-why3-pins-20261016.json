@@ -1,0 +1,47 @@
+{
+  "classification": "CURRENT_PASSIVE_WHY3_CONFIG_AND_SELECTED_BINARY_PIN_OBSERVATION",
+  "config": {
+    "bytes": 375,
+    "path": "/Users/yanrujhou/.why3.conf",
+    "sha256": "5f82bccca4b275b60979f8eabba62c3f8af1a9178913dbd31efd350a030817c8"
+  },
+  "config_source_rule": "Matches exact pure source of wp_adapter._solvers, selecting first configured recognized prover. This is current passive metadata only; original environment/loader/use-time resolution and full runtime closure remain TCB.",
+  "date": "2026-10-16 ET",
+  "no_compiler_solver_or_tool_execution": true,
+  "original_decision": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-member-all32-independent-scoped-decision-20261016.json",
+    "sha256": "50f20377e486f90cdca346a72ebd0139e2a570af70b879c9c454428801d07b9c"
+  },
+  "selected": {
+    "alt-ergo": {
+      "current_configured_binary_matches_record": true,
+      "exists": true,
+      "historical_resolution_or_continuous_identity_attested": false,
+      "path": "/Users/yanrujhou/.opam/framac-33/bin/alt-ergo",
+      "physical_path": "/Users/yanrujhou/.opam/framac-33/bin/alt-ergo",
+      "record_sha256": "0845fc162c1c8081841e38e45966854a3c72cde075cebd149bdf3d58be12f7ae",
+      "sha256": "0845fc162c1c8081841e38e45966854a3c72cde075cebd149bdf3d58be12f7ae",
+      "version": "2.6.4"
+    },
+    "cvc5": {
+      "current_configured_binary_matches_record": true,
+      "exists": true,
+      "historical_resolution_or_continuous_identity_attested": false,
+      "path": "/opt/homebrew/bin/cvc5",
+      "physical_path": "/opt/homebrew/Cellar/cvc5/1.2.1/bin/cvc5",
+      "record_sha256": "28dd5e5d8b8828ec6eea7fdf2e1544a218551382ca19e6ec8c2967fd6230cf5f",
+      "sha256": "28dd5e5d8b8828ec6eea7fdf2e1544a218551382ca19e6ec8c2967fd6230cf5f",
+      "version": "1.2.1"
+    },
+    "z3": {
+      "current_configured_binary_matches_record": true,
+      "exists": true,
+      "historical_resolution_or_continuous_identity_attested": false,
+      "path": "/opt/homebrew/bin/z3",
+      "physical_path": "/opt/homebrew/Cellar/z3/5.1.0/bin/z3",
+      "record_sha256": "b9a2c3a7dc833da652955116ad743cc733aa7938dbe64f528f71cb09066e2512",
+      "sha256": "b9a2c3a7dc833da652955116ad743cc733aa7938dbe64f528f71cb09066e2512",
+      "version": "5.1.0"
+    }
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "format": "swdb.ticket10-ticket12.integrated-merger-proof.v1",
+  "created_utc": "2026-10-07T03:14:07.554917+00:00",
+  "base": "97ca4dfdb0af4c709a35b04b5855a5f9c42d1a84",
+  "ticket10_done_tip": "4677e8dc441f9e340f0645e4fde41e155795bf0a",
+  "ticket12_request_integrity_tip": "8cf9d37bcd894602d19b993c45271729cb01a2ee",
+  "tested_combined_source_tip": "696f9923051599fbd50a47f8615af571330c45ec",
+  "progress_checkpoint": "5facb251429e7e335076797b8f98fc676f9b2d62",
+  "metadata_merge_tip": "97b055bded00f8e2ae8c4af4e9d06d62dae12694",
+  "merge": {
+    "ticket10": "clean fast-forward",
+    "ticket12": "clean automatic merge; prepared closure pruning and request/path integrity tests preserved",
+    "progress": "clean metadata-only merge after active checks completed",
+    "conflicts": []
+  },
+  "preservation": {
+    "protected_prefixes": [
+      "swdb-project/records",
+      "swdb-project/library",
+      "swdb-project/apps",
+      "swdb-project/campaigns"
+    ],
+    "protected_prior_blob_count": 891,
+    "prior_record_yaml_count": 628,
+    "all_prior_blobs_equal": true,
+    "only_new_canonical_record_paths": [
+      "swdb-project/records/estimates/bfs.functional.kron-g16.t4.estimate.llm.a2.postfill.a1.yaml",
+      "swdb-project/records/protocols/bfs.functional.kron-g16.t4.estimated.protocol.llm.a2.postfill.a1.3fef19dcd9d39c07.yaml",
+      "swdb-project/records/target_descriptions/dx100-e4fc4af-functional-analytic-v1.t4.estimated.a2.yaml"
+    ],
+    "scope_only_swdb_project": true,
+    "base_2c50e5f_ancestor": true,
+    "root_idea_resurrected": false,
+    "other_map_rows_unchanged": true,
+    "only_ticket10_map_row_resolved": true,
+    "ticket11_worktree_untouched": true,
+    "manifest_sha256": "8f885f8aacaa45fd23aa5e3f56c604124a7f4edc563e7001a347912bc63144b5"
+  },
+  "combined_public_check": {
+    "command": "python3 -m pytest -q tests/test_functional_evaluation.py::test_strict_certified_candidate_gets_estimated_handoff_without_target_timing",
+    "result": "1 passed",
+    "elapsed_s": 85.68,
+    "exit_code": 0
+  },
+  "canonical_validation": {
+    "command": "python3 -m swdb validate --records records",
+    "result": "OK: 631 record(s) valid",
+    "exit_code": 0
+  },
+  "retained_actual_handoff": {
+    "command": "python3 -m swdb handoff-message evaluation_result bfs.functional.evaluation.20261006.a1 --records records --db <external disposable SQLite> --format json",
+    "exit_code": 0,
+    "complete_archived_semantic_json_equal": true,
+    "canonical_json_sha256": "00a541c781665e3bfb8ed6083b9b25f0c8e5c4e64cff9dddb78e97f42eabd00b",
+    "archive": "12-functional-handoff-mbit10-20261006-a1.json",
+    "format_version": "1.1",
+    "functional_correctness": "passed",
+    "hardware_correctness_claim": false,
+    "seconds": null,
+    "ratio": null,
+    "error_band": null,
+    "verdict": "within_error",
+    "performance_claim": "none"
+  },
+  "execution_boundary": {
+    "push": false,
+    "main_branch_change": false,
+    "ssh": false,
+    "raw_transfer": false
+  },
+  "boundary": "Public functional correctness, numerical-fill coexistence and preserved estimated handoff; no native timing or agreement claim.",
+  "identity_sha256": "55d25b4014430e57351d4266824817e717f25c39ca81b277b8bd83bc11541133"
+}

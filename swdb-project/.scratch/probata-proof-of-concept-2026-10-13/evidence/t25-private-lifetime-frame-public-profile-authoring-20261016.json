@@ -1,0 +1,148 @@
+{
+  "SSH_calls": 0,
+  "actual_evaluations": 0,
+  "actual_public_prepare_check_executions": 0,
+  "author": {
+    "bytes": 12588,
+    "path": "prototype/25-private-lifetime-frame-20261016/author-public-v1.py",
+    "sha256": "3ee115c2bca8d037ab3a878aaae1e138f72871cf94aca3c6d8a2dea5fe3da2ef"
+  },
+  "authoring_SWDB_imports": 0,
+  "body_acceptance": false,
+  "bootstrap_bytes": 74128,
+  "boundary": "Only Git/stdlb inert packet authoring; no actual mathematical, original source, Typed or caller proof.",
+  "caller_acceptance": false,
+  "canonical_file_count": 12,
+  "canonical_manifest_sha256": "70bedf4ecb49e993719f4be3a480fcc1d29ab8e877a58a4b2cc427b9f706c346",
+  "check_lemma_count": 9,
+  "compiler_native_verifier_solver_executions": 0,
+  "compiler_recipe_metadata_author": {
+    "bytes": 10748,
+    "path": "prototype/25-prefix10-resume-20261016/author.py",
+    "sha256": "0a7fdeb7e66cbd6aa50cf1f188974cf2ce0d80667c9b523a5d5827e03ebc0c7a"
+  },
+  "compiler_recipe_predecessor_pin_matches": true,
+  "compressed_bootstrap_roundtrip": true,
+  "created": "2026-10-16 ET",
+  "entry": {
+    "bytes": 32374,
+    "path": "prototype/25-private-lifetime-frame-20261016/inert-f918f5d5-public-v1/entry.py",
+    "sha256": "7d1721e2e138dd7424e3a8aba8679609cfe7ea7e20b1783434a77d5ede28faa4"
+  },
+  "expected": {
+    "bytes": 133585,
+    "path": "prototype/25-private-lifetime-frame-20261016/inert-f918f5d5-public-v1/expected.json",
+    "sha256": "6132a9f3da7dbeeae3a4807564b22650a7805134cf13653735c17c896f5a27d4"
+  },
+  "independent_review_pending": true,
+  "linux_lane_boundary": "Reviewed Linux socket-lane/watch-execute ownership with verifier-lock environment-marker metadata only; copied linux_admission does not attest a held advisory lock.",
+  "normal_public_prepare_check_prospective": true,
+  "packet": {
+    "bytes": 4169,
+    "path": "prototype/25-private-lifetime-frame-20261016/inert-f918f5d5-public-v1/packet.json",
+    "sha256": "23f6a9eeaab2d8f403a0b1ac7066888c2ffca974e4e34bfba03bd72fd35e04bc"
+  },
+  "policy_readme": {
+    "bytes": 4818,
+    "path": "prototype/25-private-lifetime-frame-20261016/README-public-v1.md",
+    "sha256": "b4675bbf1250a78a143b509396e7586f8c2b10d06bb9b0a60fc05ffc60db71fd"
+  },
+  "predicted_compiler_identity": {
+    "c_lowering": {
+      "id": "swdb-c-lowering-9",
+      "sha256": "8d375b017ad7c0f7505f6e3668491e96614064fd949ec5a153f907bbb3e57bde"
+    },
+    "clang": {
+      "id": "clang-22.1.8",
+      "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+    },
+    "naming_rules": {
+      "id": "kept-names.3",
+      "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+    }
+  },
+  "proof_acceptance": false,
+  "public_proof_record_created": false,
+  "python_ast_parse": true,
+  "remote_project": "/data1/yanruj/probata-resume-20261016-f918f5d5/swdb-project",
+  "resource_policy": {
+    "cap_bytes": 8589934592,
+    "leaf_timeout_seconds": 180,
+    "metadata_reserve_bytes": 4194304,
+    "output_budget_bytes": 2147483648,
+    "profile_seconds": 1300,
+    "root_outer_seconds": 1620,
+    "root_whole_seconds": 1500,
+    "workers": 1
+  },
+  "reviewed_guard_helpers_exact": [
+    "guarded_generation",
+    "raw_bytes",
+    "bounded_bytes",
+    "bounded_json"
+  ],
+  "reviewed_metadata_helpers_exact": [
+    "sha",
+    "pin",
+    "write",
+    "surface",
+    "linux_admission",
+    "consumer_closure",
+    "initialize_workspace"
+  ],
+  "root_admission_pending": true,
+  "root_command": {
+    "bytes": 74394,
+    "path": "prototype/25-private-lifetime-frame-20261016/inert-f918f5d5-public-v1/root-command.json",
+    "sha256": "2332f9818a2b7b630647dbcb579ea091f8e6c094705502561e0fdf32063d4568"
+  },
+  "runtime_measurement_performed": false,
+  "source_commit": "f918f5d52035fd99499280a0a8058efd0ed4ef55",
+  "source_consumer_trees": {
+    "library": {
+      "kind": "tree",
+      "oid": "2a499122a756b457333d6619d28f8893a38e839d"
+    },
+    "pyproject.toml": {
+      "kind": "blob",
+      "oid": "b8cacc5b150c2364224e0168e149cd0bc1791f99"
+    },
+    "records": {
+      "kind": "tree",
+      "oid": "f2158ba461f694c93f39b782b76981b52de08471"
+    },
+    "schemas": {
+      "kind": "tree",
+      "oid": "ae703dc49a3cb939fbe493b1b991b7bc0d52a731"
+    },
+    "tests": {
+      "kind": "tree",
+      "oid": "d5bfb05b240d8d016a5672e13b7336a2a1413d54"
+    },
+    "vocab": {
+      "kind": "tree",
+      "oid": "4534a8a7d09e9b500caad1e6a13a3fe17823ce41"
+    }
+  },
+  "source_package_files": 324,
+  "source_typed_bridge_established": false,
+  "status": "INERT / UNEXECUTED / ROOT ADMISSION PENDING",
+  "target_ids": [
+    "entry.reflexive",
+    "automatic.frame",
+    "allocation.frame",
+    "integer_store.frame",
+    "pointer_store.frame",
+    "release.frame",
+    "automatic_end.frame",
+    "cleanup.observation",
+    "cleanup.exists_scalar"
+  ],
+  "template": {
+    "bytes": 19958,
+    "path": "prototype/25-private-lifetime-frame-20261016/entry-template-public-v1.py",
+    "sha256": "6951fcc1ad127395db67c52c7956725e1cd020af030b687d6c1f7cd5522e3bd6"
+  },
+  "ticket_closure": false,
+  "universal_proof_setup_attested": false
+}

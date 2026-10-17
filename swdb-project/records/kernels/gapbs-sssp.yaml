@@ -1,0 +1,82 @@
+kind: kernel
+schema_version: '0.2'
+id: gapbs-sssp
+status: draft
+deprecated_by: null
+created: '2026-09-22'
+updated: '2026-09-22'
+provenance:
+- id: src-gapbs-sssp
+  kind: source_code
+  description: gapbs src/sssp.cc (SSSPVerifier, kDistInf, main), src/benchmark.h (WeightT, WNode, SourcePicker),
+    src/command_line.h (CLDelta), src/builder.h (MakeGraphFromEL) and src/generator.h (InsertWeights)
+    at commit 2972aeb2703165bafd921222f4ed7196f542d3a8, read 2026-09-22 from the copy in apps/gapbs.
+  uri: https://github.com/sbeamer/gapbs/blob/2972aeb2703165bafd921222f4ed7196f542d3a8/src/sssp.cc
+name: gapbs Single-Source Shortest Paths
+application: gapbs
+computes: 'Shortest-path distances (pvector<WeightT>, WeightT = int32_t) from one source vertex over weighted
+  out-edges; unreachable vertices keep kDistInf = numeric_limits<int32_t>::max() / 2 = 1073741823 (sssp.cc
+  line 64). The binary builds a weighted graph (WeightedBuilder, WNode = NodeWeight<int32_t, int32_t>);
+  for generated inputs Generator::InsertWeights gives every edge a pseudo-random integer weight in [1,
+  255] seeded from kRandSeed per block (generator.h lines 172-187, called from builder.h line 325), so
+  the weights are fixed for a given input, and a symmetrized edge carries the same weight both ways. The
+  source is chosen per trial by SourcePicker (src/benchmark.h lines 46-68: uniformly random vertex with
+  non-zero out-degree, mt19937_64 seeded with kRandSeed = 27491095); -r <node> fixes it. The delta parameter
+  (-d, default 1; command_line.h line 203) is the bucket width of delta-stepping: it changes the work,
+  not the result.'
+correctness_check:
+  command: '{binary} {input_args} -n 1 -v'
+  verifier:
+    description: 'SSSPVerifier: serial Dijkstra with a binary-heap priority queue from the same source
+      gives oracle distances; every vertex''s distance must equal the oracle''s.'
+    code:
+      root: application
+      path: src/sssp.cc
+      lines: [163, 194]
+      excerpt: |-
+        // Compares against simple serial implementation
+        bool SSSPVerifier(const WGraph &g, NodeID source,
+                          const pvector<WeightT> &dist_to_test) {
+          // Serial Dijkstra implementation to get oracle distances
+          pvector<WeightT> oracle_dist(g.num_nodes(), kDistInf);
+          oracle_dist[source] = 0;
+          typedef pair<WeightT, NodeID> WN;
+          priority_queue<WN, vector<WN>, greater<WN>> mq;
+          mq.push(make_pair(0, source));
+          while (!mq.empty()) {
+            WeightT td = mq.top().first;
+            NodeID u = mq.top().second;
+            mq.pop();
+            if (td == oracle_dist[u]) {
+              for (WNode wn : g.out_neigh(u)) {
+                if (td + wn.w < oracle_dist[wn.v]) {
+                  oracle_dist[wn.v] = td + wn.w;
+                  mq.push(make_pair(td + wn.w, wn.v));
+                }
+              }
+            }
+          }
+          // Report any mismatches
+          bool all_ok = true;
+          for (NodeID n : g.vertices()) {
+            if (dist_to_test[n] != oracle_dist[n]) {
+              cout << n << ": " << dist_to_test[n] << " != " << oracle_dist[n] << endl;
+              all_ok = false;
+            }
+          }
+          return all_ok;
+        }
+      sha256: null
+  pass_criterion: 'the run exits 0 and prints Verification: PASS'
+  pass_regex: Verification:\s+PASS
+  tolerance:
+    value: null
+    measure: exact equality of the int32_t distance of every vertex (line 188)
+    note: Integer distances; unreachable vertices must hold kDistInf in both.
+baseline_implementation: gapbs-sssp-delta
+notes:
+- Any code whose distances pass SSSPVerifier implements this kernel (ADR 0001); delta-stepping with any
+  delta, Bellman-Ford, and Dijkstra are implementations of the same kernel.
+- 'The input records say weighted: false (unweighted as generated); the weights are added inside the sssp
+  binary and do not change any array size, so no input property is needed for them.'
+extensions: {}

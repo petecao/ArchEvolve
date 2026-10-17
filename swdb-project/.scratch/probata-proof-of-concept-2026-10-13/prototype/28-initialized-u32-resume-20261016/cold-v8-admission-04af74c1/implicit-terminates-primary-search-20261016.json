@@ -1,0 +1,231 @@
+{
+  "classification": "PASSIVE_PRIMARY_SOURCE_SEARCH_ONLY",
+  "files_read": 502,
+  "matches": [
+    {
+      "bytes": 129459,
+      "excerpt": [
+        {
+          "line": 3169,
+          "text": "    (match default_bhv with"
+        },
+        {
+          "line": 3170,
+          "text": "     | None ->"
+        },
+        {
+          "line": 3171,
+          "text": "       self#terminates_decreases ~extra_nl:nl_default nl_default fmt"
+        },
+        {
+          "line": 3172,
+          "text": "         (terminates, variant)"
+        },
+        {
+          "line": 3173,
+          "text": "     | Some b"
+        },
+        {
+          "line": 3174,
+          "text": "       when b.b_assumes == [] && b.b_requires == [] && b.b_post_cond == []"
+        }
+      ],
+      "line": 3171,
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c/kernel/kernel_services/ast_printing/cil_printer.ml",
+      "sha256": "4ef661a6fc78fb938c5559888774d50f92408ec466f08b98b56914c14f80873c"
+    },
+    {
+      "bytes": 129459,
+      "excerpt": [
+        {
+          "line": 3175,
+          "text": "            && b.b_extended == []"
+        },
+        {
+          "line": 3176,
+          "text": "            && b.b_allocation == FreeAllocAny && b.b_assigns == WritesAny ->"
+        },
+        {
+          "line": 3177,
+          "text": "       self#terminates_decreases ~extra_nl:nl_default nl_default fmt"
+        },
+        {
+          "line": 3178,
+          "text": "         (terminates, variant)"
+        },
+        {
+          "line": 3179,
+          "text": "     | Some b ->"
+        },
+        {
+          "line": 3180,
+          "text": "       self#behavior_contents"
+        }
+      ],
+      "line": 3177,
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c/kernel/kernel_services/ast_printing/cil_printer.ml",
+      "sha256": "4ef661a6fc78fb938c5559888774d50f92408ec466f08b98b56914c14f80873c"
+    },
+    {
+      "bytes": 129459,
+      "excerpt": [
+        {
+          "line": 3179,
+          "text": "     | Some b ->"
+        },
+        {
+          "line": 3180,
+          "text": "       self#behavior_contents"
+        },
+        {
+          "line": 3181,
+          "text": "         ~extra_nl:nl_default nl_default ?terminates ?variant fmt b);"
+        },
+        {
+          "line": 3182,
+          "text": "    fprintf fmt \"%a%a%a@]\""
+        },
+        {
+          "line": 3183,
+          "text": "      (pp_list ~extra_nl:true nl_other_bhvs self#behavior) other_bhvs"
+        },
+        {
+          "line": 3184,
+          "text": "      (pp_list nl_complete self#complete_behaviors) complete"
+        }
+      ],
+      "line": 3181,
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c/kernel/kernel_services/ast_printing/cil_printer.ml",
+      "sha256": "4ef661a6fc78fb938c5559888774d50f92408ec466f08b98b56914c14f80873c"
+    },
+    {
+      "bytes": 20093,
+      "excerpt": [
+        {
+          "line": 74,
+          "text": "      | PKRequires _ | PKAssumes _ -> true"
+        },
+        {
+          "line": 75,
+          "text": "      | PKEnsures(bhv,_) -> is_selected_bhv mode bhv"
+        },
+        {
+          "line": 76,
+          "text": "      | PKTerminates -> is_default_bhv mode"
+        },
+        {
+          "line": 77,
+          "text": "    end"
+        },
+        {
+          "line": 78,
+          "text": "  | IPAllocation { ial_bhv = bhv } | IPAssigns { ias_bhv = bhv } ->"
+        },
+        {
+          "line": 79,
+          "text": "    begin match bhv with"
+        }
+      ],
+      "line": 76,
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/cfgCalculus.ml",
+      "sha256": "03524cc3990c9e3bffc5625e37ed13160aed616e4143b2429f2fe0a6fcaed240"
+    },
+    {
+      "bytes": 20093,
+      "excerpt": [
+        {
+          "line": 377,
+          "text": "          if generated then"
+        },
+        {
+          "line": 378,
+          "text": "            Wp_parameters.warning ~once:true"
+        },
+        {
+          "line": 379,
+          "text": "              \"Missing terminates clause on call to %a, defaults to %a\""
+        },
+        {
+          "line": 380,
+          "text": "              Kernel_function.pretty callee Cil_printer.pp_predicate callee_t ;"
+        },
+        {
+          "line": 381,
+          "text": "          callee_t, Mcfg.Terminates"
+        },
+        {
+          "line": 382,
+          "text": "      in"
+        }
+      ],
+      "line": 379,
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/cfgCalculus.ml",
+      "sha256": "03524cc3990c9e3bffc5625e37ed13160aed616e4143b2429f2fe0a6fcaed240"
+    },
+    {
+      "bytes": 20093,
+      "excerpt": [
+        {
+          "line": 443,
+          "text": "      in"
+        },
+        {
+          "line": 444,
+          "text": "      if not @@ Property.Set.is_empty deps then"
+        },
+        {
+          "line": 445,
+          "text": "        on_selected_terminates env (prove Logic_const.ptrue) w"
+        },
+        {
+          "line": 446,
+          "text": "      else w"
+        },
+        {
+          "line": 447,
+          "text": ""
+        },
+        {
+          "line": 448,
+          "text": "  let do_global_init env w ="
+        }
+      ],
+      "line": 445,
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/cfgCalculus.ml",
+      "sha256": "03524cc3990c9e3bffc5625e37ed13160aed616e4143b2429f2fe0a6fcaed240"
+    },
+    {
+      "bytes": 63415,
+      "excerpt": [
+        {
+          "line": 1168,
+          "text": "      (fun env wp ->"
+        },
+        {
+          "line": 1169,
+          "text": "         let compile_caller_t caller_t ="
+        },
+        {
+          "line": 1170,
+          "text": "           if not @@ Wp_parameters.TerminatesVariantHyp.get () then p_true"
+        },
+        {
+          "line": 1171,
+          "text": "           else match caller_t with"
+        },
+        {
+          "line": 1172,
+          "text": "             | None -> p_true"
+        },
+        {
+          "line": 1173,
+          "text": "             | Some t -> (L.pred `Positive env) t"
+        }
+      ],
+      "line": 1170,
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/cfgWP.ml",
+      "sha256": "490ab8a263f85e50e304d6cd4ee9ff7a5137f1c7f00e4ec7cd7555b68483256c"
+    }
+  ],
+  "native_execution": false
+}

@@ -1,0 +1,80 @@
+{
+  "created": "2026-10-16 ET",
+  "source_commit": "57c22ba6fe1707c9b40a910ed1c19c3ef99e9e84",
+  "baseline": "c978393b119a3614229a37f0f2c8ca2a097c750b",
+  "files_after": {
+    "swdb-project/swdb/bounded_initialization.py": "d6586a771548f46423595eb971a63bffb00f23e559cfe576adee5a2abeb6b3cc",
+    "swdb-project/swdb/cbmc_adapter.py": "2ef59469412c287b174f085e2c08c8a969435ccf1bc129fe34ea89bbb78cac4a",
+    "swdb-project/swdb/vector_reallocation_caller_packets.py": "a30b633404723d99c84ee3473eb0a352fe6641274e036524451826940abc59f0",
+    "swdb-project/swdb/vector_reallocation_caller_view.py": "47c286034927b11db471c45ebce061856c4bc73008f0baf2cbdae255a2293413",
+    "swdb-project/swdb/vector_reallocation_composition.py": "fbce29f010d92be33b09a0f31c440f8db97c7f0dfd0769a41a59e71bdfe6e108",
+    "swdb-project/swdb/vector_reallocation_private_frame.py": "062c68a138b4aeb0887f50490d405f3b1fdd50284e6e8404e096df02568982da"
+  },
+  "readers": [
+    "root",
+    "ticket28"
+  ],
+  "planned_raw_budget_bytes": 268435456,
+  "review_evidence": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-trace-v2-final-independent-static-review-20261016.json",
+    "sha256": "cf2093135a71ad5dfc2bdbc2111b2aba10185f780895cbf3d2927ff85c5568e1"
+  },
+  "scope": "25 synthetic fixed-order abstract scalar event traces; no actual API/header/hardware/current0.2/full28 promotion",
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-57c22ba6-v2",
+  "control_files": [
+    {
+      "bytes": 35681,
+      "name": "linux_trace_entry_v2.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/linux_trace_entry_v2.py",
+      "sha256": "d319185131bd708c57229fe16e269da6e6298d1afba3c057a8fcc0f89aa43c93"
+    },
+    {
+      "bytes": 531529,
+      "name": "linux_trace_policy_57c22ba6_v2.json",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/linux_trace_policy_57c22ba6_v2.json",
+      "sha256": "130a1569e75c1bee434270dc964c0771d8b4c3b1cce278e0cb193a7d25a8feca"
+    },
+    {
+      "bytes": 1905,
+      "name": "cbmc_release_gate.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/cbmc_release_gate.py",
+      "sha256": "681ad7be43312e224529a03d42b939305010795becd2fc203724a59c63db3dfc"
+    },
+    {
+      "bytes": 18385,
+      "name": "closed_python_surface.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/closed_python_surface.py",
+      "sha256": "748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af"
+    },
+    {
+      "bytes": 9416,
+      "name": "python-physical-metadata-v2.json",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python-physical-metadata-v2.json",
+      "sha256": "9d90835f12dfb89a43ac0e0661681159ec8ab563e9cf664548162a7357299eda"
+    },
+    {
+      "bytes": 2709,
+      "name": "python_role_observer_v2.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python_role_observer_v2.py",
+      "sha256": "9b100cbe2fdef3e7d429ccdf05d6489d44855a84328e2dd8532eb547beeaf43b"
+    },
+    {
+      "bytes": 9610,
+      "name": "python_startup_roles_v2.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python_startup_roles_v2.py",
+      "sha256": "5e9d2e6dfa2aaa7999f4670a979d3cc32736b852a612f77d4e2f7c71bc229618"
+    },
+    {
+      "bytes": 116503,
+      "name": "t28-linux-runtime-observer-v2-actual-20261016.json",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-linux-runtime-observer-v2-actual-20261016.json",
+      "sha256": "092397608fe3a08c42d85e9c8e121ed139f0d94e345a12ae3aaa57ad6e93a5f0"
+    },
+    {
+      "bytes": 5478,
+      "name": "trace_pytest_child_v2.py",
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace_pytest_child_v2.py",
+      "sha256": "e3957b2f358b7e446a6a61e80d3d761539e14a9fd1fae5323c2abfd7937f3493"
+    }
+  ]
+}

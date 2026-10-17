@@ -1,0 +1,460 @@
+{
+ "created": "2026-09-28",
+ "updated": "2026-09-28",
+ "kind": "t15_pilot_analysis",
+ "run": "bfs-t15-pilot-simulator-batch-20260927-b3",
+ "closure": "observations/t15-pilot-b3-closure-20260928.json",
+ "grid": {
+  "families": 2,
+  "sources_per_family": 3,
+  "replays": 2,
+  "pairs": 12,
+  "executions": 24
+ },
+ "families": {
+  "uniform18": {
+   "sources": {
+    "0": {
+     "primary": {
+      "roi_seconds": 0.005731610302,
+      "tick_interval": [
+       3089784508,
+       8821394810
+      ],
+      "r1_checkpoint_restored": true,
+      "r0_r1_identical_ticks": true,
+      "correctness": [
+       "passed",
+       "passed"
+      ],
+      "binary_sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d",
+      "full_tiles": 476,
+      "tail_tiles": 36,
+      "competing_parent_updates": [
+       "unobserved",
+       "unobserved"
+      ],
+      "simulation_host_seconds": [
+       2015.2708451366052,
+       2012.391516411677
+      ],
+      "checkpoint_host_seconds": 77.52106811758131,
+      "trace_bytes": 1297018969,
+      "trace_uncompressed_bytes": 17790653260
+     },
+     "diagnostic": {
+      "roi_seconds": 0.015414111306,
+      "tick_interval": [
+       3212903058,
+       18627014364
+      ],
+      "r1_checkpoint_restored": true,
+      "r0_r1_identical_ticks": true,
+      "correctness": [
+       "passed",
+       "passed"
+      ],
+      "binary_sha256": "c0d2efb85cd1ec490ce38c3d8d69dc6d470bedd590e2189bd62cfd676d490ec5",
+      "full_tiles": 476,
+      "tail_tiles": 36,
+      "competing_parent_updates": [
+       "observed",
+       "observed"
+      ],
+      "simulation_host_seconds": [
+       2503.4566740840673,
+       2478.3082707105204
+      ],
+      "checkpoint_host_seconds": 77.5181803368032,
+      "trace_bytes": 1296759565,
+      "trace_uncompressed_bytes": 17785454367
+     }
+    },
+    "1234": {
+     "primary": {
+      "roi_seconds": 0.005959031407,
+      "tick_interval": [
+       3089831771,
+       9048863178
+      ],
+      "r1_checkpoint_restored": true,
+      "r0_r1_identical_ticks": true,
+      "correctness": [
+       "passed",
+       "passed"
+      ],
+      "binary_sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d",
+      "full_tiles": 484,
+      "tail_tiles": 24,
+      "competing_parent_updates": [
+       "unobserved",
+       "unobserved"
+      ],
+      "simulation_host_seconds": [
+       2027.384051430039,
+       2023.4004421243444
+      ],
+      "checkpoint_host_seconds": 77.52753786370158,
+      "trace_bytes": 1298570830,
+      "trace_uncompressed_bytes": 17787871151
+     },
+     "diagnostic": {
+      "roi_seconds": 0.015621265974,
+      "tick_interval": [
+       3212886469,
+       18834152443
+      ],
+      "r1_checkpoint_restored": true,
+      "r0_r1_identical_ticks": true,
+      "correctness": [
+       "passed",
+       "passed"
+      ],
+      "binary_sha256": "c0d2efb85cd1ec490ce38c3d8d69dc6d470bedd590e2189bd62cfd676d490ec5",
+      "full_tiles": 484,
+      "tail_tiles": 24,
+      "competing_parent_updates": [
+       "observed",
+       "observed"
+      ],
+      "simulation_host_seconds": [
+       2485.353677400388,
+       2495.6433363081887
+      ],
+      "checkpoint_host_seconds": 77.55223630741239,
+      "trace_bytes": 1298891623,
+      "trace_uncompressed_bytes": 17793653949
+     }
+    },
+    "7777": {
+     "primary": {
+      "roi_seconds": 0.005905449876,
+      "tick_interval": [
+       3089854307,
+       8995304183
+      ],
+      "r1_checkpoint_restored": true,
+      "r0_r1_identical_ticks": true,
+      "correctness": [
+       "passed",
+       "passed"
+      ],
+      "binary_sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d",
+      "full_tiles": 476,
+      "tail_tiles": 36,
+      "competing_parent_updates": [
+       "unobserved",
+       "unobserved"
+      ],
+      "simulation_host_seconds": [
+       2040.3582007959485,
+       2015.4025679500774
+      ],
+      "checkpoint_host_seconds": 77.52173507772386,
+      "trace_bytes": 1297458127,
+      "trace_uncompressed_bytes": 17775441295
+     },
+     "diagnostic": {
+      "roi_seconds": 0.015583620212,
+      "tick_interval": [
+       3212953138,
+       18796573350
+      ],
+      "r1_checkpoint_restored": true,
+      "r0_r1_identical_ticks": true,
+      "correctness": [
+       "passed",
+       "passed"
+      ],
+      "binary_sha256": "c0d2efb85cd1ec490ce38c3d8d69dc6d470bedd590e2189bd62cfd676d490ec5",
+      "full_tiles": 476,
+      "tail_tiles": 36,
+      "competing_parent_updates": [
+       "observed",
+       "observed"
+      ],
+      "simulation_host_seconds": [
+       2510.590849937871,
+       2493.5131370741874
+      ],
+      "checkpoint_host_seconds": 77.53036808501929,
+      "trace_bytes": 1297473767,
+      "trace_uncompressed_bytes": 17780846741
+     }
+    }
+   },
+   "primary_simulation_host_seconds_median": 2019.4015050372109,
+   "diagnostic_simulation_host_seconds_median": 2494.578236691188,
+   "gem5_slot_waits_seconds": [
+    8.004065603017807e-05,
+    1361.9462714474648,
+    33.15205267909914,
+    1294.8807114697993,
+    3.6061741411685944e-05,
+    1378.5640947790816,
+    13.115844293497503,
+    1292.1336216069758,
+    0.00010700058192014694,
+    1382.4417361514643,
+    6.881449371576309e-05,
+    1297.4996901489794
+   ],
+   "cleanup_ledger": {
+    "state": "settled_within_budget",
+    "spent_seconds": 6.50649836175143,
+    "settled_events": 84,
+    "dead_owner_charges": null
+   },
+   "coverage_summary": {
+    "primary_executed_full_tail_all": true,
+    "primary_competing_parent_observed": 0,
+    "diagnostic_competing_parent_observed": 6,
+    "executions": 12
+   }
+  },
+  "kronecker18": {
+   "sources": {
+    "0": {
+     "primary": {
+      "roi_seconds": 0.005851991667,
+      "tick_interval": [
+       3211008782,
+       9063000449
+      ],
+      "r1_checkpoint_restored": true,
+      "r0_r1_identical_ticks": true,
+      "correctness": [
+       "passed",
+       "passed"
+      ],
+      "binary_sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d",
+      "full_tiles": 436,
+      "tail_tiles": 16,
+      "competing_parent_updates": [
+       "unobserved",
+       "unobserved"
+      ],
+      "simulation_host_seconds": [
+       1695.1975000053644,
+       1695.1653180504218
+      ],
+      "checkpoint_host_seconds": 75.50144874397665,
+      "trace_bytes": 987175855,
+      "trace_uncompressed_bytes": 15017831797
+     },
+     "diagnostic": {
+      "roi_seconds": 0.015906315387,
+      "tick_interval": [
+       3452757149,
+       19359072536
+      ],
+      "r1_checkpoint_restored": true,
+      "r0_r1_identical_ticks": true,
+      "correctness": [
+       "passed",
+       "passed"
+      ],
+      "binary_sha256": "c0d2efb85cd1ec490ce38c3d8d69dc6d470bedd590e2189bd62cfd676d490ec5",
+      "full_tiles": 417,
+      "tail_tiles": 16,
+      "competing_parent_updates": [
+       "observed",
+       "observed"
+      ],
+      "simulation_host_seconds": [
+       2149.1117452448234,
+       2158.3239474259317
+      ],
+      "checkpoint_host_seconds": 75.49336623772979,
+      "trace_bytes": 944753205,
+      "trace_uncompressed_bytes": 14375146493
+     }
+    },
+    "1234": {
+     "primary": {
+      "roi_seconds": 0.006516798972,
+      "tick_interval": [
+       3211049785,
+       9727848757
+      ],
+      "r1_checkpoint_restored": true,
+      "r0_r1_identical_ticks": true,
+      "correctness": [
+       "passed",
+       "passed"
+      ],
+      "binary_sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d",
+      "full_tiles": 437,
+      "tail_tiles": 16,
+      "competing_parent_updates": [
+       "unobserved",
+       "unobserved"
+      ],
+      "simulation_host_seconds": [
+       1693.1257171183825,
+       1680.1395205901936
+      ],
+      "checkpoint_host_seconds": 77.52554416842759,
+      "trace_bytes": 983636648,
+      "trace_uncompressed_bytes": 15059828717
+     },
+     "diagnostic": {
+      "roi_seconds": 0.016372498213,
+      "tick_interval": [
+       3452868890,
+       19825367103
+      ],
+      "r1_checkpoint_restored": true,
+      "r0_r1_identical_ticks": true,
+      "correctness": [
+       "passed",
+       "passed"
+      ],
+      "binary_sha256": "c0d2efb85cd1ec490ce38c3d8d69dc6d470bedd590e2189bd62cfd676d490ec5",
+      "full_tiles": 439,
+      "tail_tiles": 16,
+      "competing_parent_updates": [
+       "observed",
+       "observed"
+      ],
+      "simulation_host_seconds": [
+       2144.171770427376,
+       2141.1934427423403
+      ],
+      "checkpoint_host_seconds": 75.50101456325501,
+      "trace_bytes": 985459315,
+      "trace_uncompressed_bytes": 15099316468
+     }
+    },
+    "7777": {
+     "primary": {
+      "roi_seconds": 0.0063978765,
+      "tick_interval": [
+       3211040395,
+       9608916895
+      ],
+      "r1_checkpoint_restored": true,
+      "r0_r1_identical_ticks": true,
+      "correctness": [
+       "passed",
+       "passed"
+      ],
+      "binary_sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d",
+      "full_tiles": 346,
+      "tail_tiles": 28,
+      "competing_parent_updates": [
+       "unobserved",
+       "unobserved"
+      ],
+      "simulation_host_seconds": [
+       1691.4167220881209,
+       1675.0281174965203
+      ],
+      "checkpoint_host_seconds": 75.49112302996218,
+      "trace_bytes": 804213687,
+      "trace_uncompressed_bytes": 12073761502
+     },
+     "diagnostic": {
+      "roi_seconds": 0.015979048136,
+      "tick_interval": [
+       3452813176,
+       19431861312
+      ],
+      "r1_checkpoint_restored": true,
+      "r0_r1_identical_ticks": true,
+      "correctness": [
+       "passed",
+       "passed"
+      ],
+      "binary_sha256": "c0d2efb85cd1ec490ce38c3d8d69dc6d470bedd590e2189bd62cfd676d490ec5",
+      "full_tiles": 348,
+      "tail_tiles": 28,
+      "competing_parent_updates": [
+       "observed",
+       "observed"
+      ],
+      "simulation_host_seconds": [
+       2128.2616970343515,
+       2138.1871957043186
+      ],
+      "checkpoint_host_seconds": 77.54593800846487,
+      "trace_bytes": 804596366,
+      "trace_uncompressed_bytes": 12076868923
+     }
+    }
+   },
+   "primary_simulation_host_seconds_median": 1692.2712196032517,
+   "diagnostic_simulation_host_seconds_median": 2142.682606584858,
+   "gem5_slot_waits_seconds": [
+    2150.3721133070067,
+    2248.5425673620775,
+    228.03541242796928,
+    2149.912362099625,
+    344.22951899375767,
+    2238.222357348539,
+    172.4858958395198,
+    2181.517238563858,
+    310.1265096068382,
+    2352.619241199456,
+    529.1616079481319,
+    2265.2088504005224
+   ],
+   "cleanup_ledger": {
+    "state": "settled_within_budget",
+    "spent_seconds": 6.68714666720479,
+    "settled_events": 84,
+    "dead_owner_charges": null
+   },
+   "coverage_summary": {
+    "primary_executed_full_tail_all": true,
+    "primary_competing_parent_observed": 0,
+    "diagnostic_competing_parent_observed": 6,
+    "executions": 12
+   }
+  }
+ },
+ "gain_claim": false,
+ "determinism": {
+  "all_r0_r1_identical_ticks": true,
+  "cross_attempt_s0_primary_roi_seconds": {
+   "b1.uniform18.s0.primary": 0.005731610302,
+   "b1.kronecker18.s0.primary": 0.005851991667,
+   "b2.uniform18.s0.primary": 0.005731610302,
+   "b2.kronecker18.s0.primary": 0.005851991667,
+   "b3.uniform18.s0.primary": 0.005731610302,
+   "b3.kronecker18.s0.primary": 0.005851991667
+  },
+  "cross_attempt_identical": true,
+  "interpretation": "gem5 simulated ticks are identical across checkpoint-restored replays and across three independently created checkpoints (b1, b2, b3); host load does not change simulated time. Supports R6: one replay per ordered source for controlled-simulator candidate protocols."
+ },
+ "costs": {
+  "b3_wall": "2026-09-27 16:10:52 to 2026-09-28 07:31:42 ET (about 15.3 h, one lane, one gem5 slot)",
+  "per_pair_postprocessing_seconds": {
+   "profile": [
+    733,
+    908
+   ],
+   "package": [
+    683,
+    862
+   ]
+  },
+  "retained_bytes_b3": 27490381824,
+  "charged_attempts": {
+   "b1": {
+    "elapsed_seconds": 9687,
+    "raw_bytes": 4834476032
+   },
+   "b2": {
+    "elapsed_seconds": 10584,
+    "raw_bytes": 4837421056
+   },
+   "cost_measure": {
+    "raw_bytes": 16711680
+   }
+  }
+ },
+ "ac10": {
+  "status": "timed-binary competing-parent updates unobserved on all 12 scale-18 primaries (observed on all 12 diagnostics); companion correctness case bfs-t15-ac10-parent-case-20260928-a1 required on the exact timed binary"
+ }
+}

@@ -1,0 +1,14 @@
+.E..
+======================================================================
+ERROR: test_exact_initialized_input (__main__.ColdObligations.test_exact_initialized_input)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/test_initialized_cold_obligations.py", line 23, in test_exact_initialized_input
+    self.assertEqual(reader.initialized_wp_source(text, 711, HERE)["expected_result"], 711)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'initialized_cold_obligations' has no attribute 'initialized_wp_source'
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.004s
+
+FAILED (errors=1)

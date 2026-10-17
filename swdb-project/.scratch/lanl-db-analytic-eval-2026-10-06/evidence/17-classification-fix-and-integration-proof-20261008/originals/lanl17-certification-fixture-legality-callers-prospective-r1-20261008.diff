@@ -1,0 +1,45 @@
+--- a/swdb-project/tests/test_certification_legality.py
++++ b/swdb-project/tests/test_certification_legality.py
+@@ -132,8 +132,8 @@
+     return _replace(source, '#pragma omp for schedule(dynamic,1)', '#pragma omp for schedule(guided)')
+ 
+ 
+-def test_knob_interface_candidate_certifies_and_its_static_assert_does_not_hide_the_control(tmp_path, monkeypatch):
+-    record = _certify(tmp_path, monkeypatch, knob_interface)
++def test_knob_interface_candidate_certifies_and_its_static_assert_does_not_hide_the_control(tmp_path, monkeypatch, *, certification_store):
++    record = _certify(tmp_path, monkeypatch, knob_interface, certification_store=certification_store)
+     assert record['verdict'] == 'certified', _controls(record)
+     assert len(record['negative_controls']) == 20
+     knob = [x for x in record['negative_controls'] if x['id'] == 'knob_out_of_range']
+@@ -147,8 +147,8 @@
+     assert rows[('frontier_threshold', 'certifier')]['matched'] and rows[('schedule', 'certifier')]['matched']
+ 
+ 
+-def test_out_of_range_schedule_is_refused_by_schedule_range(tmp_path, monkeypatch):
+-    record = _certify(tmp_path, monkeypatch, guided)
++def test_out_of_range_schedule_is_refused_by_schedule_range(tmp_path, monkeypatch, *, certification_store):
++    record = _certify(tmp_path, monkeypatch, guided, certification_store=certification_store)
+     assert record['verdict'] == 'failed'
+     assert {x['reason'] for x in record['matrix']} == {'schedule_range'}
+     # The runs themselves pass: only the named structural check refuses the candidate.
+@@ -266,16 +266,16 @@
+     return source[:start] + region + source[end:]
+ 
+ 
+-def test_a_zero_threshold_is_refused_by_knob_range_under_1_6(tmp_path, monkeypatch):
+-    record = _certify(tmp_path, monkeypatch, zero_threshold)
++def test_a_zero_threshold_is_refused_by_knob_range_under_1_6(tmp_path, monkeypatch, *, certification_store):
++    record = _certify(tmp_path, monkeypatch, zero_threshold, certification_store=certification_store)
+     assert record['command']['version'] == '1.6' and record['verdict'] == 'failed'
+     assert {x['reason'] for x in record['matrix']} == {'knob_range'}
+     knob = {k['name']: k for k in record['matrix'][0]['legality_checks'][0]['knobs']}['frontier_threshold']
+     assert (knob['value'], knob['source'], knob['macro']) == (0, 'assignment', 'SWDB_FRONTIER_THRESHOLD')
+ 
+ 
+-def test_a_pragma_operator_candidate_certifies_under_1_6(tmp_path, monkeypatch):
+-    record = _certify(tmp_path, monkeypatch, pragma_operators)
++def test_a_pragma_operator_candidate_certifies_under_1_6(tmp_path, monkeypatch, *, certification_store):
++    record = _certify(tmp_path, monkeypatch, pragma_operators, certification_store=certification_store)
+     assert record['verdict'] == 'certified', _controls(record)
+     schedule = [x for x in record['negative_controls'] if x['id'] == 'schedule_out_of_range']
+     assert len(schedule) == 2 and all(x['status'] == 'rejected' and x['reason'] == 'schedule_range' for x in schedule)

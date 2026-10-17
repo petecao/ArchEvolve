@@ -1,0 +1,53 @@
+--- /private/tmp/lanl14-pr-final-local-runner-20261007-a3.py
++++ /private/tmp/lanl14-pr-final-local-runner-catalog-caps-20261007-a4.py
+@@ -125 +125 @@
+-    freeze=run('freeze',[sys.executable,'-m','swdb','freeze-protocol',str(request),'--records',str(raw/'records'),'--format','json'],1800)
++    freeze=run('freeze',[sys.executable,'-m','swdb','freeze-protocol',str(request),'--records',str(raw/'records'),'--format','json'],3600)
+@@ -127,2 +127,2 @@
+-    run('estimate',[sys.executable,'-m','swdb','estimate','--records',str(raw/'records'),'--characterization',CHAR,'--target-description',TARGET,'--protocol',protocol,'--id',ESTIMATE,'--format','json'],1400)
+-    run('checker',[sys.executable,str(checker),'--source',str(source),'--source-sha',a.source_sha,'--estimator-sha256',BUNDLE,'--target-sha256',a.target_sha256,'--records',str(raw/'records'),'--protocol',protocol,'--estimate',ESTIMATE,'--output',str(raw/'actual-pr-services-acceptance.json')],1000)
++    run('estimate',[sys.executable,'-m','swdb','estimate','--records',str(raw/'records'),'--characterization',CHAR,'--target-description',TARGET,'--protocol',protocol,'--id',ESTIMATE,'--format','json'],2400)
++    run('checker',[sys.executable,str(checker),'--source',str(source),'--source-sha',a.source_sha,'--estimator-sha256',BUNDLE,'--target-sha256',a.target_sha256,'--records',str(raw/'records'),'--protocol',protocol,'--estimate',ESTIMATE,'--output',str(raw/'actual-pr-services-acceptance.json')],2400)
+--- /private/tmp/lanl14_final_reports_freeze_caps_a3.py
++++ /private/tmp/lanl14_final_reports_catalog_caps_a4.py
+@@ -147 +147 @@
+-  'limits':{'threads_max':4,'thread_limit':16,'provider_calls':0,'application_timings':0,'freeze_s':1800,'estimate_s':1400,'validate_s':1400,'report_s':1000,'outer_s':36600},
++  'limits':{'threads_max':4,'thread_limit':16,'provider_calls':0,'application_timings':0,'freeze_s':6000,'estimate_s':4000,'validate_s':3600,'report_s':3600,'outer_s':108000},
+@@ -159 +159 @@
+- argv=['timeout','--signal=TERM','--kill-after=40s','36600s','bash',m['wrapper']['path'],str(args.node),job,'--record',str(control/'lane.json'),'--lease-timeout-s','30','--no-align','--',*child]
++ argv=['timeout','--signal=TERM','--kill-after=40s','108000s','bash',m['wrapper']['path'],str(args.node),job,'--record',str(control/'lane.json'),'--lease-timeout-s','30','--no-align','--',*child]
+@@ -185 +185 @@
+-  invoke(['python3','-m','swdb','validate','--records',records,'--library',raw/'library'],'before-validate',1400)
++  invoke(['python3','-m','swdb','validate','--records',records,'--library',raw/'library'],'before-validate',3600)
+@@ -194 +194 @@
+-   protocol=json.loads(invoke(['python3','-m','swdb','freeze-protocol',request_path,'--records',records,'--format','json'],name+'-freeze',1800))
++   protocol=json.loads(invoke(['python3','-m','swdb','freeze-protocol',request_path,'--records',records,'--format','json'],name+'-freeze',6000))
+@@ -197 +197 @@
+-   estimate=json.loads(invoke(['python3','-m','swdb','estimate','--records',records,'--characterization',char['id'],'--target-description',td['id'],'--protocol',protocol['id'],'--id',estimate_id,'--format','json'],name+'-estimate',1400))
++   estimate=json.loads(invoke(['python3','-m','swdb','estimate','--records',records,'--characterization',char['id'],'--target-description',td['id'],'--protocol',protocol['id'],'--id',estimate_id,'--format','json'],name+'-estimate',4000))
+@@ -208 +208 @@
+-  invoke(['python3',source/'swdb-project/scripts/generality_report.py','--records',records,'--request',raw/'report-request.json','--output',raw/'report'],'nine-report',1000)
++  invoke(['python3',source/'swdb-project/scripts/generality_report.py','--records',records,'--request',raw/'report-request.json','--output',raw/'report'],'nine-report',3600)
+@@ -210 +210 @@
+-  validation=invoke(['python3','-m','swdb','validate','--records',records,'--library',raw/'library'],'final-validate',1400).strip();assert validation.startswith('OK: ')
++  validation=invoke(['python3','-m','swdb','validate','--records',records,'--library',raw/'library'],'final-validate',3600).strip();assert validation.startswith('OK: ')
+--- /private/tmp/lanl14-pr-final-local-envelope-20261007-a3.py
++++ /private/tmp/lanl14-pr-final-local-envelope-catalog-caps-20261007-a4.py
+@@ -2,3 +2 @@
+-"""4900-second local metadata envelope for the explicitly pinned cap-only runner.
+-No extra subprocesses, native/compiler/provider jobs or remote actions.
+-"""
++'10000-second local metadata envelope for the explicitly pinned cap-only runner.\nNo extra subprocesses, native/compiler/provider jobs or remote actions.\n'
+@@ -11,2 +9,2 @@
+-RUNNER=Path('/private/tmp/lanl14-pr-final-local-runner-20261007-a3.py')
+-RUNNER_SHA='0f4bf77738f3df5e39c28308b94dac6fac0f894955f1c7348c1a5f32c42227df'
++RUNNER=Path('/private/tmp/lanl14-pr-final-local-runner-catalog-caps-20261007-a4.py')
++RUNNER_SHA='d0209039a6f39f6824229918db3c927d47f68c468f90382aa58deecbd0be7ed7'
+@@ -23 +21 @@
+-    signal.setitimer(signal.ITIMER_REAL,4900)
++    signal.setitimer(signal.ITIMER_REAL,10000)
+--- /private/tmp/lanl14_final_export_caps_a2.py
++++ /private/tmp/lanl14_final_export_catalog_caps_a4.py
+@@ -68 +68 @@
+-   assert child.wait(timeout=1400)==0,'Preserve failed evidence W; no commit/push'
++   assert child.wait(timeout=3600)==0,'Preserve failed evidence W; no commit/push'

@@ -1,0 +1,455 @@
+{
+  "created": "2026-09-27",
+  "observed_at": "2026-09-27T05:14:59.344751-04:00",
+  "id": "bfs-t16-seal-recovery-simulator-batch-20260927-a1",
+  "empirical_execution": true,
+  "launch.json": {
+    "created": "2026-09-27",
+    "outer_started": "2026-09-27T05:14:00.067637-04:00",
+    "outer_deadline": "2026-09-27T20:16:17.225985-04:00",
+    "remaining_seconds": 73226,
+    "command": [
+      "timeout",
+      "--signal=TERM",
+      "--kill-after=30s",
+      "54106.6699s",
+      "bash",
+      "/data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh",
+      "0",
+      "bfs-t16-seal-recovery-simulator-batch-20260927-a1",
+      "--record",
+      "/data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1.dispatch/lane.json",
+      "--",
+      "/usr/bin/python3.12",
+      "-s",
+      "-B",
+      "/data1/yanruj/EvolveSWDB_t16_seal_recovery_runtime_20260927_a1/scripts/bfs_simulator_batch.py",
+      "t16-seal-recovery",
+      "--admission",
+      "/data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1.dispatch/admission.json",
+      "--admission-sha256",
+      "5a4bc09754d8268519e5cc33303bdac0d3ed36d43f3b2b7d7a7aa15d21ea4d65",
+      "--runs-dir",
+      "/data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1",
+      "--lane",
+      "0",
+      "--outer-started",
+      "2026-09-27T05:14:00.067637-04:00",
+      "--outer-deadline",
+      "2026-09-27T20:16:17.225985-04:00",
+      "--pane-pid",
+      "3629081",
+      "--pane-start-ticks",
+      "500237285"
+    ],
+    "leases": {
+      "mbit10-evaluation": {
+        "metadata": {
+          "active_session": null,
+          "heartbeat_at": "2026-09-12T04:49:11Z",
+          "lease": {
+            "acquired_at": "2026-09-12T01:35:42Z",
+            "daemon_pid": 209457,
+            "daemon_start_token": "sh209457-1789176942",
+            "generation": 77,
+            "host": "mbit10",
+            "lease_name": "mbit10-evaluation",
+            "mode": "measure",
+            "session_id": null
+          },
+          "attempt_pid": null,
+          "attempt_start_token": null,
+          "recovered_from_generation": null,
+          "released_at": "2026-09-12T04:49:11Z",
+          "session_note": null,
+          "session_state": "none",
+          "state": "released",
+          "writer": "hostlock.sh"
+        },
+        "kernel_held": false
+      },
+      "mbit10-evaluation-node0": {
+        "metadata": {
+          "active_session": null,
+          "heartbeat_at": "2026-09-27T08:55:02Z",
+          "lease": {
+            "acquired_at": "2026-09-27T08:54:54Z",
+            "daemon_pid": 3603405,
+            "daemon_start_token": "sh3603405-1790499294",
+            "generation": 355,
+            "host": "mbit10",
+            "lease_name": "mbit10-evaluation-node0",
+            "mode": "measure",
+            "session_id": null
+          },
+          "attempt_pid": null,
+          "attempt_start_token": null,
+          "recovered_from_generation": null,
+          "released_at": "2026-09-27T08:55:02Z",
+          "session_note": null,
+          "session_state": "none",
+          "state": "released",
+          "writer": "hostlock.sh"
+        },
+        "kernel_held": false
+      },
+      "mbit10-evaluation-node1": {
+        "metadata": {
+          "active_session": null,
+          "heartbeat_at": "2026-09-27T08:48:09Z",
+          "lease": {
+            "acquired_at": "2026-09-27T08:48:09Z",
+            "daemon_pid": 3593444,
+            "daemon_start_token": "sh3593444-1790498889",
+            "generation": 447,
+            "host": "mbit10",
+            "lease_name": "mbit10-evaluation-node1",
+            "mode": "measure",
+            "session_id": null
+          },
+          "attempt_pid": null,
+          "attempt_start_token": null,
+          "recovered_from_generation": null,
+          "released_at": null,
+          "session_note": null,
+          "session_state": "none",
+          "state": "held",
+          "writer": "hostlock.sh"
+        },
+        "kernel_held": true
+      }
+    },
+    "capacity": {
+      "/data/yanruj/EvolveSWDB_runs": 156245704704,
+      "/data1": 16873353216,
+      "inputs": {
+        "global": "MemTotal:       131426264 kB\nMemFree:        40311928 kB\nMemAvailable:   113935300 kB\nBuffers:        10178956 kB\nCached:         36791768 kB\nSwapCached:            0 kB\nActive:         18910668 kB\nInactive:       33511352 kB\nActive(anon):    4789556 kB\nInactive(anon):   683832 kB\nActive(file):   14121112 kB\nInactive(file): 32827520 kB\nUnevictable:       39100 kB\nMlocked:           36028 kB\nSwapTotal:             0 kB\nSwapFree:              0 kB\nZswap:                 0 kB\nZswapped:              0 kB\nDirty:            199956 kB\nWriteback:             0 kB\nAnonPages:       5465584 kB\nMapped:          1055204 kB\nShmem:              7164 kB\nKReclaimable:   28508292 kB\nSlab:           30872612 kB\nSReclaimable:   28420604 kB\nSUnreclaim:      2452008 kB\nKernelStack:       25120 kB\nPageTables:        39976 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:    65713132 kB\nCommitted_AS:    9912844 kB\nVmallocTotal:   13743895347199 kB\nVmallocUsed:      431724 kB\nVmallocChunk:          0 kB\nPercpu:           339456 kB\nHardwareCorrupted:     8 kB\nAnonHugePages:         0 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nUnaccepted:            0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:    37107684 kB\nDirectMap2M:    94451712 kB\nDirectMap1G:     4194304 kB\n",
+        "node": "Node 0 MemTotal:       65381852 kB\nNode 0 MemFree:        16794880 kB\nNode 0 MemUsed:        48586972 kB\nNode 0 SwapCached:            0 kB\nNode 0 Active:         12867488 kB\nNode 0 Inactive:       28466728 kB\nNode 0 Active(anon):     356016 kB\nNode 0 Inactive(anon):   616328 kB\nNode 0 Active(file):   12511472 kB\nNode 0 Inactive(file): 27850400 kB\nNode 0 Unevictable:       38916 kB\nNode 0 Mlocked:           35844 kB\nNode 0 Dirty:               364 kB\nNode 0 Writeback:             0 kB\nNode 0 FilePages:      40382368 kB\nNode 0 Mapped:           895872 kB\nNode 0 AnonPages:        990912 kB\nNode 0 Shmem:              5764 kB\nNode 0 KernelStack:       13816 kB\nNode 0 PageTables:        19408 kB\nNode 0 SecPageTables:         0 kB\nNode 0 NFS_Unstable:          0 kB\nNode 0 Bounce:                0 kB\nNode 0 WritebackTmp:          0 kB\nNode 0 KReclaimable:    4543512 kB\nNode 0 Slab:            5401784 kB\nNode 0 SReclaimable:    4488184 kB\nNode 0 SUnreclaim:       913600 kB\nNode 0 AnonHugePages:         0 kB\nNode 0 ShmemHugePages:        0 kB\nNode 0 ShmemPmdMapped:        0 kB\nNode 0 FileHugePages:         0 kB\nNode 0 FilePmdMapped:         0 kB\nNode 0 Unaccepted:            0 kB\nNode 0 HugePages_Total:     0\nNode 0 HugePages_Free:      0\nNode 0 HugePages_Surp:      0\n",
+        "zones": "Node 0, zone      DMA\n  per-node stats\n      nr_inactive_anon 154082\n      nr_active_anon 89004\n      nr_inactive_file 6962600\n      nr_active_file 3127868\n      nr_unevictable 9729\n      nr_slab_reclaimable 1122046\n      nr_slab_unreclaimable 228400\n      nr_isolated_anon 0\n      nr_isolated_file 0\n      workingset_nodes 732820\n      workingset_refault_anon 0\n      workingset_refault_file 27366005\n      workingset_activate_anon 0\n      workingset_activate_file 23923808\n      workingset_restore_anon 0\n      workingset_restore_file 16384072\n      workingset_nodereclaim 4114454\n      nr_anon_pages 247728\n      nr_mapped    223968\n      nr_file_pages 10095592\n      nr_dirty     91\n      nr_writeback 0\n      nr_writeback_temp 0\n      nr_shmem     1441\n      nr_shmem_hugepages 0\n      nr_shmem_pmdmapped 0\n      nr_file_hugepages 0\n      nr_file_pmdmapped 0\n      nr_anon_transparent_hugepages 0\n      nr_vmscan_write 0\n      nr_vmscan_immediate_reclaim 0\n      nr_dirtied   1077129472\n      nr_written   654645755\n      nr_throttled_written 0\n      nr_kernel_misc_reclaimable 13832\n      nr_foll_pin_acquired 218492582\n      nr_foll_pin_released 218492582\n      nr_kernel_stack 13816\n      nr_page_table_pages 4852\n      nr_sec_page_table_pages 0\n      nr_swapcached 0\n      pgpromote_success 0\n      pgpromote_candidate 0\n      pgdemote_kswapd 0\n      pgdemote_direct 0\n      pgdemote_khugepaged 0\n  pages free     2816\n        boost    0\n        min      2\n        low      5\n        high     8\n        spanned  4095\n        present  3998\n        managed  3840\n        cma      0\n        protection: (0, 1418, 63834, 63834, 63834)\n      nr_free_pages 2816\n      nr_zone_inactive_anon 0\n      nr_zone_active_anon 0\n      nr_zone_inactive_file 0\n      nr_zone_active_file 0\n      nr_zone_unevictable 0\n      nr_zone_write_pending 0\n      nr_mlock     0\n      nr_bounce    0\n      nr_zspages   0\n      nr_free_cma  0\n      nr_unaccepted 0\n      numa_hit     1\n      numa_miss    0\n      numa_foreign 0\n      numa_interleave 0\n      numa_local   1\n      numa_other   0\n  pagesets\n    cpu: 0\n              count: 0\n              high:  7\n              batch: 1\n  vm stats threshold: 14\n    cpu: 1\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 2\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 3\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 4\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 5\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 6\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 7\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 8\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 9\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 10\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 11\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 12\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 13\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 14\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 15\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 16\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 17\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 18\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 19\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 20\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 21\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 22\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 23\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 24\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 25\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 26\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 27\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 28\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 29\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 30\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 31\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 32\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 33\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 34\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 35\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 36\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 37\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 38\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 39\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 40\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 41\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 42\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 43\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 44\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 45\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 46\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 47\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 48\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 49\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 50\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 51\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 52\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 53\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 54\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 55\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 56\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 57\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 58\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 59\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 60\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 61\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 62\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n    cpu: 63\n              count: 0\n              high:  0\n              batch: 1\n  vm stats threshold: 14\n  node_unreclaimable:  1\n  start_pfn:           1\nNode 0, zone    DMA32\n  pages free     81492\n        boost    0\n        min      235\n        low      577\n        high     919\n        spanned  1044480\n        present  379897\n        managed  363200\n        cma      0\n        protection: (0, 0, 62415, 62415, 62415)\n      nr_free_pages 81492\n      nr_zone_inactive_anon 0\n      nr_zone_active_anon 9\n      nr_zone_inactive_file 240347\n      nr_zone_active_file 34766\n      nr_zone_unevictable 0\n      nr_zone_write_pending 0\n      nr_mlock     0\n      nr_bounce    0\n      nr_zspages   0\n      nr_free_cma  0\n      nr_unaccepted 0\n      numa_hit     877893664\n      numa_miss    4352815\n      numa_foreign 0\n      numa_interleave 1\n      numa_local   877893041\n      numa_other   4353438\n  pagesets\n    cpu: 0\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 1\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 2\n              count: 1\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 3\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 4\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 5\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 6\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 7\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 8\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 9\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 10\n              count: 2\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 11\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 12\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 13\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 14\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 15\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 16\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 17\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 18\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 19\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 20\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 21\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 22\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 23\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 24\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 25\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 26\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 27\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 28\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 29\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 30\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 31\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 32\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 33\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 34\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 35\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 36\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 37\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 38\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 39\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 40\n              count: 1\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 41\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 42\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 43\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 44\n              count: 1\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 45\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 46\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 47\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 48\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 49\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 50\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 51\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 52\n              count: 1\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 53\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 54\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 55\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 56\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 57\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 58\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 59\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 60\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 61\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 62\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n    cpu: 63\n              count: 0\n              high:  252\n              batch: 63\n  vm stats threshold: 70\n  node_unreclaimable:  1\n  start_pfn:           4096\nNode 0, zone   Normal\n  pages free     4114412\n        boost    64369\n        min      75330\n        low      91306\n        high     107282\n        spanned  16252928\n        present  16252928\n        managed  15978423\n        cma      0\n        protection: (0, 0, 0, 0, 0)\n      nr_free_pages 4114412\n      nr_zone_inactive_anon 154082\n      nr_zone_active_anon 88995\n      nr_zone_inactive_file 6722253\n      nr_zone_active_file 3093102\n      nr_zone_unevictable 9729\n      nr_zone_write_pending 91\n      nr_mlock     8961\n      nr_bounce    0\n      nr_zspages   0\n      nr_free_cma  0\n      nr_unaccepted 0\n      numa_hit     140614109242\n      numa_miss    4839463958\n      numa_foreign 2642071494\n      numa_interleave 34827692\n      numa_local   140597607228\n      numa_other   4834071977\n  pagesets\n    cpu: 0\n              count: 532\n              high:  982\n              batch: 63\n  vm stats threshold: 125\n    cpu: 1\n              count: 0\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 2\n              count: 305\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 3\n              count: 0\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 4\n              count: 728\n              high:  847\n              batch: 63\n  vm stats threshold: 125\n    cpu: 5\n              count: 33\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 6\n              count: 480\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 7\n              count: 68\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 8\n              count: 486\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 9\n              count: 4\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 10\n              count: 259\n              high:  967\n              batch: 63\n  vm stats threshold: 125\n    cpu: 11\n              count: 0\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 12\n              count: 236\n              high:  902\n              batch: 63\n  vm stats threshold: 125\n    cpu: 13\n              count: 0\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 14\n              count: 619\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 15\n              count: 0\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 16\n              count: 847\n              high:  847\n              batch: 63\n  vm stats threshold: 125\n    cpu: 17\n              count: 0\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 18\n              count: 833\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 19\n              count: 0\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 20\n              count: 559\n              high:  6942\n              batch: 63\n  vm stats threshold: 125\n    cpu: 21\n              count: 0\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 22\n              count: 393\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 23\n              count: 0\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 24\n              count: 440\n              high:  847\n              batch: 63\n  vm stats threshold: 125\n    cpu: 25\n              count: 0\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 26\n              count: 287\n              high:  1012\n              batch: 63\n  vm stats threshold: 125\n    cpu: 27\n              count: 0\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 28\n              count: 528\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 29\n              count: 0\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 30\n              count: 518\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 31\n              count: 0\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 32\n              count: 605\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 33\n              count: 0\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 34\n              count: 471\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 35\n              count: 21\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 36\n              count: 829\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 37\n              count: 0\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 38\n              count: 211\n              high:  847\n              batch: 63\n  vm stats threshold: 125\n    cpu: 39\n              count: 1\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 40\n              count: 822\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 41\n              count: 30\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 42\n              count: 792\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 43\n              count: 0\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 44\n              count: 600\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 45\n              count: 0\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 46\n              count: 780\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 47\n              count: 0\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 48\n              count: 261\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 49\n              count: 0\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 50\n              count: 2413\n              high:  2445\n              batch: 63\n  vm stats threshold: 125\n    cpu: 51\n              count: 2\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 52\n              count: 206\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 53\n              count: 14\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 54\n              count: 196\n              high:  957\n              batch: 63\n  vm stats threshold: 125\n    cpu: 55\n              count: 0\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 56\n              count: 0\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 57\n              count: 0\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 58\n              count: 775\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 59\n              count: 0\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 60\n              count: 824\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 61\n              count: 0\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n    cpu: 62\n              count: 90\n              high:  904\n              batch: 63\n  vm stats threshold: 125\n    cpu: 63\n              count: 0\n              high:  841\n              batch: 63\n  vm stats threshold: 125\n  node_unreclaimable:  1\n  start_pfn:           1048576\nNode 0, zone  Movable\n  pages free     0\n        boost    0\n        min      32\n        low      32\n        high     32\n        spanned  0\n        present  0\n        managed  0\n        cma      0\n        protection: (0, 0, 0, 0, 0)\nNode 0, zone   Device\n  pages free     0\n        boost    0\n        min      0\n        low      0\n        high     0\n        spanned  0\n        present  0\n        managed  0\n        cma      0\n        protection: (0, 0, 0, 0, 0)\nNode 1, zone      DMA\n  pages free     0\n        boost    0\n        min      0\n        low      0\n        high     0\n        spanned  0\n        present  0\n        managed  0\n        cma      0\n        protection: (0, 0, 0, 0, 0)\nNode 1, zone    DMA32\n  pages free     0\n        boost    0\n        min      0\n        low      0\n        high     0\n        spanned  0\n        present  0\n        managed  0\n        cma      0\n        protection: (0, 0, 0, 0, 0)\nNode 1, zone   Normal\n  per-node stats\n      nr_inactive_anon 16876\n      nr_active_anon 1108385\n      nr_inactive_file 1244280\n      nr_active_file 402410\n      nr_unevictable 46\n      nr_slab_reclaimable 5983105\n      nr_slab_unreclaimable 384602\n      nr_isolated_anon 0\n      nr_isolated_file 0\n      workingset_nodes 118522\n      workingset_refault_anon 0\n      workingset_refault_file 15579974\n      workingset_activate_anon 0\n      workingset_activate_file 13319315\n      workingset_restore_anon 0\n      workingset_restore_file 4301452\n      workingset_nodereclaim 3176076\n      nr_anon_pages 1116148\n      nr_mapped    39833\n      nr_file_pages 1647089\n      nr_dirty     49898\n      nr_writeback 0\n      nr_writeback_temp 0\n      nr_shmem     350\n      nr_shmem_hugepages 0\n      nr_shmem_pmdmapped 0\n      nr_file_hugepages 0\n      nr_file_pmdmapped 0\n      nr_anon_transparent_hugepages 0\n      nr_vmscan_write 0\n      nr_vmscan_immediate_reclaim 0\n      nr_dirtied   458785158\n      nr_written   323696476\n      nr_throttled_written 0\n      nr_kernel_misc_reclaimable 8090\n      nr_foll_pin_acquired 34914838\n      nr_foll_pin_released 34914838\n      nr_kernel_stack 11304\n      nr_page_table_pages 5142\n      nr_sec_page_table_pages 0\n      nr_swapcached 0\n      pgpromote_success 0\n      pgpromote_candidate 0\n      pgdemote_kswapd 0\n      pgdemote_direct 0\n      pgdemote_khugepaged 0\n  pages free     5879262\n        boost    0\n        min      11328\n        low      27839\n        high     44350\n        spanned  16777216\n        present  16777216\n        managed  16511103\n        cma      0\n        protection: (0, 0, 0, 0, 0)\n      nr_free_pages 5879262\n      nr_zone_inactive_anon 16876\n      nr_zone_active_anon 1108385\n      nr_zone_inactive_file 1244280\n      nr_zone_active_file 402410\n      nr_zone_unevictable 46\n      nr_zone_write_pending 49898\n      nr_mlock     46\n      nr_bounce    0\n      nr_zspages   0\n      nr_free_cma  0\n      nr_unaccepted 0\n      numa_hit     84876441894\n      numa_miss    2647992709\n      numa_foreign 4838769638\n      numa_interleave 31128917\n      numa_local   84759268066\n      numa_other   2761020564\n  pagesets\n    cpu: 0\n              count: 68\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 1\n              count: 40520\n              high:  40520\n              batch: 63\n  vm stats threshold: 125\n    cpu: 2\n              count: 21\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 3\n              count: 53564\n              high:  53564\n              batch: 63\n  vm stats threshold: 125\n    cpu: 4\n              count: 21\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 5\n              count: 56940\n              high:  57099\n              batch: 63\n  vm stats threshold: 125\n    cpu: 6\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 7\n              count: 42432\n              high:  42489\n              batch: 63\n  vm stats threshold: 125\n    cpu: 8\n              count: 42\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 9\n              count: 43891\n              high:  43941\n              batch: 63\n  vm stats threshold: 125\n    cpu: 10\n              count: 83\n              high:  932\n              batch: 63\n  vm stats threshold: 125\n    cpu: 11\n              count: 869\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 12\n              count: 44\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 13\n              count: 55454\n              high:  55454\n              batch: 63\n  vm stats threshold: 125\n    cpu: 14\n              count: 3\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 15\n              count: 61887\n              high:  61887\n              batch: 63\n  vm stats threshold: 125\n    cpu: 16\n              count: 121\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 17\n              count: 46659\n              high:  46777\n              batch: 63\n  vm stats threshold: 125\n    cpu: 18\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 19\n              count: 52803\n              high:  52803\n              batch: 63\n  vm stats threshold: 125\n    cpu: 20\n              count: 5\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 21\n              count: 57149\n              high:  57149\n              batch: 63\n  vm stats threshold: 125\n    cpu: 22\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 23\n              count: 35518\n              high:  37061\n              batch: 63\n  vm stats threshold: 125\n    cpu: 24\n              count: 13\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 25\n              count: 5002\n              high:  60466\n              batch: 63\n  vm stats threshold: 125\n    cpu: 26\n              count: 60\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 27\n              count: 5357\n              high:  64496\n              batch: 63\n  vm stats threshold: 125\n    cpu: 28\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 29\n              count: 4860\n              high:  56434\n              batch: 63\n  vm stats threshold: 125\n    cpu: 30\n              count: 26\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 31\n              count: 1298\n              high:  64496\n              batch: 63\n  vm stats threshold: 125\n    cpu: 32\n              count: 2\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 33\n              count: 3223\n              high:  64496\n              batch: 63\n  vm stats threshold: 125\n    cpu: 34\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 35\n              count: 44777\n              high:  44777\n              batch: 63\n  vm stats threshold: 125\n    cpu: 36\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 37\n              count: 31186\n              high:  31186\n              batch: 63\n  vm stats threshold: 125\n    cpu: 38\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 39\n              count: 59997\n              high:  59997\n              batch: 63\n  vm stats threshold: 125\n    cpu: 40\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 41\n              count: 39592\n              high:  39652\n              batch: 63\n  vm stats threshold: 125\n    cpu: 42\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 43\n              count: 869\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 44\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 45\n              count: 57228\n              high:  58450\n              batch: 63\n  vm stats threshold: 125\n    cpu: 46\n              count: 15\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 47\n              count: 3640\n              high:  60466\n              batch: 63\n  vm stats threshold: 125\n    cpu: 48\n              count: 100\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 49\n              count: 2096\n              high:  46295\n              batch: 63\n  vm stats threshold: 125\n    cpu: 50\n              count: 1\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 51\n              count: 50805\n              high:  50805\n              batch: 63\n  vm stats threshold: 125\n    cpu: 52\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 53\n              count: 52922\n              high:  52968\n              batch: 63\n  vm stats threshold: 125\n    cpu: 54\n              count: 6\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 55\n              count: 57086\n              high:  58891\n              batch: 63\n  vm stats threshold: 125\n    cpu: 56\n              count: 20\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 57\n              count: 37212\n              high:  37214\n              batch: 63\n  vm stats threshold: 125\n    cpu: 58\n              count: 1\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 59\n              count: 61606\n              high:  61665\n              batch: 63\n  vm stats threshold: 125\n    cpu: 60\n              count: 3\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 61\n              count: 56951\n              high:  56951\n              batch: 63\n  vm stats threshold: 125\n    cpu: 62\n              count: 0\n              high:  869\n              batch: 63\n  vm stats threshold: 125\n    cpu: 63\n              count: 53880\n              high:  54113\n              batch: 63\n  vm stats threshold: 125\n  node_unreclaimable:  0\n  start_pfn:           17301504\nNode 1, zone  Movable\n  pages free     0\n        boost    0\n        min      32\n        low      32\n        high     32\n        spanned  0\n        present  0\n        managed  0\n        cma      0\n        protection: (0, 0, 0, 0, 0)\nNode 1, zone   Device\n  pages free     0\n        boost    0\n        min      0\n        low      0\n        high     0\n        spanned  12484608\n        present  0\n        managed  0\n        cma      0\n        protection: (0, 0, 0, 0, 0)\n"
+      },
+      "estimate": {
+        "node": 0,
+        "page_size_bytes": 4096,
+        "node_fields_kib": {
+          "MemTotal": 65381852,
+          "MemFree": 16794880,
+          "MemUsed": 48586972,
+          "SwapCached": 0,
+          "Active": 12867488,
+          "Inactive": 28466728,
+          "Active(anon)": 356016,
+          "Inactive(anon)": 616328,
+          "Active(file)": 12511472,
+          "Inactive(file)": 27850400,
+          "Unevictable": 38916,
+          "Mlocked": 35844,
+          "Dirty": 364,
+          "Writeback": 0,
+          "FilePages": 40382368,
+          "Mapped": 895872,
+          "AnonPages": 990912,
+          "Shmem": 5764,
+          "KernelStack": 13816,
+          "PageTables": 19408,
+          "SecPageTables": 0,
+          "NFS_Unstable": 0,
+          "Bounce": 0,
+          "WritebackTmp": 0,
+          "KReclaimable": 4543512,
+          "Slab": 5401784,
+          "SReclaimable": 4488184,
+          "SUnreclaim": 913600,
+          "AnonHugePages": 0,
+          "ShmemHugePages": 0,
+          "ShmemPmdMapped": 0,
+          "FileHugePages": 0,
+          "FilePmdMapped": 0,
+          "Unaccepted": 0
+        },
+        "zones": [
+          {
+            "name": "DMA",
+            "low": 5,
+            "high": 8,
+            "managed": 3840,
+            "protection": [
+              0,
+              1418,
+              63834,
+              63834,
+              63834
+            ],
+            "reserved_pages": 3840
+          },
+          {
+            "name": "DMA32",
+            "low": 577,
+            "high": 919,
+            "managed": 363200,
+            "protection": [
+              0,
+              0,
+              62415,
+              62415,
+              62415
+            ],
+            "reserved_pages": 63334
+          },
+          {
+            "name": "Normal",
+            "low": 91306,
+            "high": 107282,
+            "managed": 15978423,
+            "protection": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "reserved_pages": 107282
+          },
+          {
+            "name": "Movable",
+            "low": 32,
+            "high": 32,
+            "managed": 0,
+            "protection": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "reserved_pages": 0
+          },
+          {
+            "name": "Device",
+            "low": 0,
+            "high": 0,
+            "managed": 0,
+            "protection": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "reserved_pages": 0
+          }
+        ],
+        "low_watermarks_kib": 367680,
+        "reserved_kib": 697824,
+        "clean_file_lru_kib": 40361508,
+        "reclaimable_slab_kib": 4488184,
+        "before_uncertainty_discount_kib": 60211388,
+        "uncertainty_discount_kib": 1048576,
+        "estimated_available_kib": 59162812,
+        "global_available_kib": 113935300,
+        "required_node_kib": 54525952,
+        "required_global_kib": 67108864,
+        "eligible": true,
+        "definition": "Linux v6.8 MemAvailable node analogue; subtract dirty/writeback; exclude miscellaneous reclaimable memory; extra 1 GiB discount",
+        "estimate_is_guarantee": false
+      },
+      "required_node_bytes": 21474836480,
+      "required_global_bytes": 25769803776,
+      "load_average": [
+        9.46240234375,
+        6.64599609375,
+        4.17626953125
+      ]
+    },
+    "pane_identity": {
+      "pid": 3629081,
+      "parent_pid": 359742,
+      "start_ticks": 500237285,
+      "state": "S",
+      "rss_bytes": 3145728
+    },
+    "recipe": {
+      "path": "/data1/yanruj/EvolveSWDB_seal_simulator_operator_20260927_a1/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/seal-simulator-recovery/operator.py",
+      "sha256": "e058c399555395150d20fdfa2c51422b3f3613e1f036eb04d8014cdacb4cde96"
+    }
+  },
+  "lane.json": {
+    "socket_lane": {
+      "aligned_cell_age_s": "",
+      "aligned_to": "no_gapbs_batch_running",
+      "command": [
+        "/usr/bin/python3.12",
+        "-s",
+        "-B",
+        "/data1/yanruj/EvolveSWDB_t16_seal_recovery_runtime_20260927_a1/scripts/bfs_simulator_batch.py",
+        "t16-seal-recovery",
+        "--admission",
+        "/data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1.dispatch/admission.json",
+        "--admission-sha256",
+        "5a4bc09754d8268519e5cc33303bdac0d3ed36d43f3b2b7d7a7aa15d21ea4d65",
+        "--runs-dir",
+        "/data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1",
+        "--lane",
+        "0",
+        "--outer-started",
+        "2026-09-27T05:14:00.067637-04:00",
+        "--outer-deadline",
+        "2026-09-27T20:16:17.225985-04:00",
+        "--pane-pid",
+        "3629081",
+        "--pane-start-ticks",
+        "500237285"
+      ],
+      "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+      "ended_utc": "",
+      "exit_code": -1,
+      "host": "mbit10",
+      "job": "bfs-t16-seal-recovery-simulator-batch-20260927-a1",
+      "lease_generation": 356,
+      "lease_name": "mbit10-evaluation-node0",
+      "load1_at_start": 9.46,
+      "load1_max": 32,
+      "node": 0,
+      "numa_memory_policy": "bind:0",
+      "numactl": "--cpunodebind=0 --membind=0",
+      "preregistration_sha256": null,
+      "started_utc": "2026-09-27T09:14:00Z"
+    }
+  },
+  "stderr_tail": "socket_lane: node 0, cpus 0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62, policy bind:0, lease generation 356, aligned to no_gapbs_batch_running, load1 9.46, starting at 2026-09-27T09:14:00Z\n{\"aligned_cell_age_s\": \"\", \"aligned_to\": \"no_gapbs_batch_running\", \"command\": [\"/usr/bin/python3.12\", \"-s\", \"-B\", \"/data1/yanruj/EvolveSWDB_t16_seal_recovery_runtime_20260927_a1/scripts/bfs_simulator_batch.py\", \"t16-seal-recovery\", \"--admission\", \"/data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1.dispatch/admission.json\", \"--admission-sha256\", \"5a4bc09754d8268519e5cc33303bdac0d3ed36d43f3b2b7d7a7aa15d21ea4d65\", \"--runs-dir\", \"/data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1\", \"--lane\", \"0\", \"--outer-started\", \"2026-09-27T05:14:00.067637-04:00\", \"--outer-deadline\", \"2026-09-27T20:16:17.225985-04:00\", \"--pane-pid\", \"3629081\", \"--pane-start-ticks\", \"500237285\"], \"cpus_allowed_list\": \"0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62\", \"ended_utc\": \"\", \"exit_code\": -1, \"host\": \"mbit10\", \"job\": \"bfs-t16-seal-recovery-simulator-batch-20260927-a1\", \"lease_generation\": 356, \"lease_name\": \"mbit10-evaluation-node0\", \"load1_at_start\": 9.46, \"load1_max\": 32, \"node\": 0, \"numa_memory_policy\": \"bind:0\", \"numactl\": \"--cpunodebind=0 --membind=0\", \"preregistration_sha256\": null, \"started_utc\": \"2026-09-27T09:14:00Z\"}\n",
+  "driver": {
+    "id": "bfs-t16-seal-recovery-simulator-batch-20260927-a1",
+    "state": "running",
+    "started": "2026-09-27T05:14:01.100680-04:00",
+    "outer_started": "2026-09-27T05:14:00.067637-04:00",
+    "outer_deadline": "2026-09-27T20:16:17.225985-04:00",
+    "stages": [
+      {
+        "command": [
+          "/usr/bin/python3.12",
+          "/data1/yanruj/EvolveSWDB_t16_seal_recovery_runtime_20260927_a1/scripts/bfs_simulator_series.py",
+          "--id",
+          "bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar",
+          "--candidate",
+          "bfs-author-scalar-compile-20260925-a1.candidate",
+          "--workload",
+          "bfs-20260925-uniform22.f23b09bb0c0601b5",
+          "--build-evaluation",
+          "bfs-dx100-build-20260925-a2",
+          "--diagnostic-build",
+          "bfs-author-scalar-compile-20260925-a1.diagnostic.build",
+          "--configuration",
+          "/data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1/bfs-t16-seal-recovery-simulator-batch-20260927-a1.driver/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar.configuration.json",
+          "--runs-dir",
+          "/data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar",
+          "--records",
+          "/data1/yanruj/EvolveSWDB_t16_seal_recovery_runtime_20260927_a1/records",
+          "--lane",
+          "0",
+          "--author-binary",
+          "--verifier",
+          "dx100.bfs.verifier.v2",
+          "--require-capacity",
+          "--total-seconds",
+          "21600",
+          "--checkpoint-seconds",
+          "3600",
+          "--run-seconds",
+          "14400",
+          "--diagnostic-seconds",
+          "600",
+          "--memory-gib",
+          "48",
+          "--storage-gib",
+          "15",
+          "--batch-storage-gib",
+          "52",
+          "--verification-ticks",
+          "100000000000000",
+          "--owned-cleanup-ledger",
+          "/data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1/bfs-t16-seal-recovery-simulator-batch-20260927-a1.driver/cleanup-ledger.json",
+          "--owned-cleanup-binding",
+          "7182ae23a4ef4242ae27ef809735640944b260ce7959237d3853f692d9099047",
+          "--trace-transport",
+          "gem5-gzip.v1",
+          "--protocol",
+          "bfs-author-reference-20260925.b4cbd3924b40e7df",
+          "--protocol-role",
+          "baseline"
+        ],
+        "started": "2026-09-27T05:14:16.419027-04:00",
+        "state": "running",
+        "output": "/data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1/bfs-t16-seal-recovery-simulator-batch-20260927-a1.driver/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar.stdout.json",
+        "stderr": "/data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1/bfs-t16-seal-recovery-simulator-batch-20260927-a1.driver/00.stderr",
+        "identity": {
+          "pid": 3629752,
+          "parent_pid": 3629167,
+          "start_ticks": 500238930,
+          "state": "R",
+          "rss_bytes": 0
+        },
+        "timeout_s": 21600
+      }
+    ],
+    "process_observations": {
+      "driver_identity": {
+        "pid": 3629167,
+        "parent_pid": 3629097,
+        "start_ticks": 500237367,
+        "state": "R",
+        "rss_bytes": 43585536
+      },
+      "pane_identity": {
+        "pid": 3629081,
+        "start_ticks": 500237285
+      },
+      "ancestry": [
+        {
+          "pid": 3629167,
+          "parent_pid": 3629097,
+          "start_ticks": 500237367,
+          "state": "R",
+          "rss_bytes": 43585536
+        },
+        {
+          "pid": 3629097,
+          "parent_pid": 3629091,
+          "start_ticks": 500237344,
+          "state": "S",
+          "rss_bytes": 3670016
+        },
+        {
+          "pid": 3629091,
+          "parent_pid": 3629081,
+          "start_ticks": 500237290,
+          "state": "S",
+          "rss_bytes": 1572864
+        },
+        {
+          "pid": 3629081,
+          "parent_pid": 359742,
+          "start_ticks": 500237285,
+          "state": "S",
+          "rss_bytes": 3145728
+        }
+      ]
+    },
+    "code_commit": "923cf33b955104fdf96705b648933e7d486a3810",
+    "ticket_acceptance": false,
+    "telemetry": null
+  },
+  "telemetry": [
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1/bfs-t16-seal-recovery-simulator-batch-20260927-a1.driver/ledger.jsonl",
+      "bytes": 411472,
+      "mtime_ns": 1790500499042200119
+    }
+  ],
+  "tmux": "3629081 0 bash\n",
+  "owned_processes": [
+    "3629091 3629081 S         59 timeout --signal=TERM --kill-after=30s 54106.6699s bash /data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh 0 bfs-t16-seal-recovery-simulator-batch-20260927-a1 --record /data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1.dispatch/lane.json -- /usr/bin/python3.12 -s -B /data1/yanruj/EvolveSWDB_t16_seal_recovery_runtime_20260927_a1/scripts/bfs_simulator_batch.py t16-seal-recovery --admission /data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1.dispatch/admission.json --admission-sha256 5a4bc09754d8268519e5cc33303bdac0d3ed36d43f3b2b7d7a7aa15d21ea4d65 --runs-dir /data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1 --lane 0 --outer-started 2026-09-27T05:14:00.067637-04:00 --outer-deadline 2026-09-27T20:16:17.225985-04:00 --pane-pid 3629081 --pane-start-ticks 500237285",
+    "3629097 3629091 S         58 bash /data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh 0 bfs-t16-seal-recovery-simulator-batch-20260927-a1 --record /data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1.dispatch/lane.json --max-cell-age-s 900 --load1-max 32 --lease-timeout-s 600 -- /usr/bin/python3.12 -s -B /data1/yanruj/EvolveSWDB_t16_seal_recovery_runtime_20260927_a1/scripts/bfs_simulator_batch.py t16-seal-recovery --admission /data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1.dispatch/admission.json --admission-sha256 5a4bc09754d8268519e5cc33303bdac0d3ed36d43f3b2b7d7a7aa15d21ea4d65 --runs-dir /data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1 --lane 0 --outer-started 2026-09-27T05:14:00.067637-04:00 --outer-deadline 2026-09-27T20:16:17.225985-04:00 --pane-pid 3629081 --pane-start-ticks 500237285",
+    "3629167 3629097 Sl        58 /usr/bin/python3.12 -s -B /data1/yanruj/EvolveSWDB_t16_seal_recovery_runtime_20260927_a1/scripts/bfs_simulator_batch.py t16-seal-recovery --admission /data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1.dispatch/admission.json --admission-sha256 5a4bc09754d8268519e5cc33303bdac0d3ed36d43f3b2b7d7a7aa15d21ea4d65 --runs-dir /data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1 --lane 0 --outer-started 2026-09-27T05:14:00.067637-04:00 --outer-deadline 2026-09-27T20:16:17.225985-04:00 --pane-pid 3629081 --pane-start-ticks 500237285",
+    "3629752 3629167 Ssl       42 /usr/bin/python3.12 /data1/yanruj/EvolveSWDB_t16_seal_recovery_runtime_20260927_a1/scripts/bfs_simulator_series.py --id bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar --candidate bfs-author-scalar-compile-20260925-a1.candidate --workload bfs-20260925-uniform22.f23b09bb0c0601b5 --build-evaluation bfs-dx100-build-20260925-a2 --diagnostic-build bfs-author-scalar-compile-20260925-a1.diagnostic.build --configuration /data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1/bfs-t16-seal-recovery-simulator-batch-20260927-a1.driver/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar.configuration.json --runs-dir /data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar --records /data1/yanruj/EvolveSWDB_t16_seal_recovery_runtime_20260927_a1/records --lane 0 --author-binary --verifier dx100.bfs.verifier.v2 --require-capacity --total-seconds 21600 --checkpoint-seconds 3600 --run-seconds 14400 --diagnostic-seconds 600 --memory-gib 48 --storage-gib 15 --batch-storage-gib 52 --verification-ticks 100000000000000 --owned-cleanup-ledger /data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1/bfs-t16-seal-recovery-simulator-batch-20260927-a1.driver/cleanup-ledger.json --owned-cleanup-binding 7182ae23a4ef4242ae27ef809735640944b260ce7959237d3853f692d9099047 --trace-transport gem5-gzip.v1 --protocol bfs-author-reference-20260925.b4cbd3924b40e7df --protocol-role baseline",
+    "3630294 3629752 Rs         5 /usr/bin/python3.12 -m swdb dx100-execute /data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar.driver/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar.s0.r0.primary.evaluation.request.json --runs-dir /data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar --lane 0 --records /data1/yanruj/EvolveSWDB_t16_seal_recovery_runtime_20260927_a1/records --db /data/yanruj/EvolveSWDB_runs/bfs-t16-seal-recovery-simulator-batch-20260927-a1/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar/bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar.driver/swdb.sqlite --format json"
+  ]
+}

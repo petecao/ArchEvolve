@@ -1,0 +1,218 @@
+{
+  "actual_original_facts": {
+    "completed_file_count": 21,
+    "correction_ended_utc": "2026-10-08T01:13:47.729821+00:00",
+    "correction_started_utc": "2026-10-08T01:13:46.386456+00:00",
+    "observed_scope_only": true,
+    "parent_ended_utc": "2026-10-08T01:13:47.750313+00:00",
+    "parent_returncode": 0,
+    "parent_started_utc": "2026-10-08T01:13:45.737989+00:00",
+    "requested_deadline_s": 600,
+    "science_or_exporter_reader_main_invoked": false,
+    "scientific_admission": false,
+    "state": "completed",
+    "streamed_bytes": 622480873
+  },
+  "archive_actions": {
+    "current_r5_outcome_inferred": false,
+    "local_git_stage_and_commit": true,
+    "permission_or_cleanup_action": false,
+    "remote_source_staging": false,
+    "scientific_admission": false,
+    "ssh": false,
+    "target_import_or_main": false,
+    "test_repeat": false
+  },
+  "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-completed21-mode-actual-custody-20261008-a1",
+  "canonical_ensure_ascii": true,
+  "created_et": "2026-10-07 21:21 ET",
+  "delivered_base": "de2a137c77bbc2ad5f5856e5e456617c47e51d21",
+  "estimator_sha256_inherited": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "format": "swdb.lanl14-completed21-mode-byte-retention.v1",
+  "identity_sha256": "485eef94ea6c11918312076a1c32386bb936127f37cde164c09b52c53c325ae3",
+  "incoming_parent": "8a8215f35d637eb36a48d6169a561dacdda1fa03",
+  "local_reconciliation": {
+    "all_21_stat_changes_only_mode_ctime": true,
+    "completed_comparison_excludes_only_state": true,
+    "initial_independent_marker_refusal_retained": true,
+    "journal_rows": 42,
+    "ordered_pairs": 21,
+    "review_only_no_action": true,
+    "three_base64_originals_exact": true
+  },
+  "original_count": 11,
+  "original_total_bytes": 211224,
+  "originals": [
+    {
+      "archive_relative_path": "lanl14-invoke-completed21-mode-20261008-a1.py",
+      "bytes": 3085,
+      "encoding": "python",
+      "original_path": "/private/tmp/lanl14-invoke-completed21-mode-20261008-a1.py",
+      "policy": {
+        "identity_or_policy_added": false,
+        "original_seal": "unsealed"
+      },
+      "role": "native bootstrap",
+      "sha256": "69583a87a632d4933d9aba628799429e0c4f9594c31657d50523026e9c54103e"
+    },
+    {
+      "archive_relative_path": "lanl14-capture-completed21-mode-once-20261008-a1.py",
+      "bytes": 6277,
+      "encoding": "python",
+      "original_path": "/private/tmp/lanl14-capture-completed21-mode-once-20261008-a1.py",
+      "policy": {
+        "identity_or_policy_added": false,
+        "original_seal": "unsealed"
+      },
+      "role": "parent once-capture source",
+      "sha256": "60424abb466e16f30a6202d988c87ef51d1ecb107afb36cd1d3fefb28c8c09a0"
+    },
+    {
+      "archive_relative_path": "actual/start.json",
+      "bytes": 4946,
+      "encoding": "json",
+      "original_path": "/private/tmp/lanl14-completed21-mode-actual-20261008-a1/start.json",
+      "policy": {
+        "identity_or_policy_added": false,
+        "original_canonical_ensure_ascii_present": false,
+        "original_identity_sha256_present": false,
+        "original_seal": "unsealed",
+        "original_sealed_field": false,
+        "original_sealed_field_present": true
+      },
+      "role": "parent start and exact public argv",
+      "sha256": "a9bc410e83f660cd314da9fa088d55675dadf354608c10ca49440a2993e8bd47"
+    },
+    {
+      "archive_relative_path": "actual/stdout.json",
+      "bytes": 297,
+      "encoding": "json",
+      "original_path": "/private/tmp/lanl14-completed21-mode-actual-20261008-a1/stdout.json",
+      "policy": {
+        "identity_or_policy_added": false,
+        "original_canonical_ensure_ascii_present": false,
+        "original_identity_sha256_present": false,
+        "original_seal": "unsealed",
+        "original_sealed_field_present": false
+      },
+      "role": "original parent stdout",
+      "sha256": "47a7be1d3585445313c0a6b2759fb9bc2b5017d855000de5be3125810429cfa2"
+    },
+    {
+      "archive_relative_path": "actual/stderr.txt",
+      "bytes": 0,
+      "encoding": "text",
+      "original_path": "/private/tmp/lanl14-completed21-mode-actual-20261008-a1/stderr.txt",
+      "policy": {
+        "identity_or_policy_added": false,
+        "original_seal": "unsealed"
+      },
+      "role": "original empty stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_relative_path": "actual/exit.json",
+      "bytes": 602,
+      "encoding": "json",
+      "original_path": "/private/tmp/lanl14-completed21-mode-actual-20261008-a1/exit.json",
+      "policy": {
+        "identity_or_policy_added": false,
+        "original_canonical_ensure_ascii_present": false,
+        "original_identity_sha256_present": false,
+        "original_seal": "unsealed",
+        "original_sealed_field": false,
+        "original_sealed_field_present": true
+      },
+      "role": "parent exit facts",
+      "sha256": "4dc2587c384da8db581980160021e38ebeb02ab47a457b9d2e07764fb6ec40c5"
+    },
+    {
+      "archive_relative_path": "actual/remote-receipt.json",
+      "bytes": 30212,
+      "encoding": "json",
+      "original_path": "/private/tmp/lanl14-completed21-mode-actual-20261008-a1/remote-receipt.json",
+      "policy": {
+        "identity_or_policy_added": false,
+        "original_canonical_ensure_ascii_present": false,
+        "original_identity_sha256_present": false,
+        "original_seal": "unsealed",
+        "original_sealed_field": false,
+        "original_sealed_field_present": true
+      },
+      "role": "genuine original unsealed mode facts",
+      "sha256": "8a838ddbfd636796350cb89b1ccdc759476bf26c970dc9aa9a0d868106be55ad"
+    },
+    {
+      "archive_relative_path": "actual/remote-journal.jsonl",
+      "bytes": 32329,
+      "encoding": "jsonl",
+      "original_path": "/private/tmp/lanl14-completed21-mode-actual-20261008-a1/remote-journal.jsonl",
+      "policy": {
+        "identity_or_policy_added": false,
+        "original_seal": "unsealed"
+      },
+      "role": "ordered pending/completed rows",
+      "sha256": "5ce5eb903cf1e5790adb36a8304481f7ddbfe83b73573113689aedc2c787be14"
+    },
+    {
+      "archive_relative_path": "actual/remote-preflight.json",
+      "bytes": 19387,
+      "encoding": "json",
+      "original_path": "/private/tmp/lanl14-completed21-mode-actual-20261008-a1/remote-preflight.json",
+      "policy": {
+        "identity_or_policy_added": false,
+        "original_canonical_ensure_ascii_present": false,
+        "original_identity_sha256_present": false,
+        "original_seal": "unsealed",
+        "original_sealed_field": false,
+        "original_sealed_field_present": true
+      },
+      "role": "original preflight before mutation",
+      "sha256": "e8a39a97af49fab160c17413f0889aa3f51357930e782ae7c73a19138698af59"
+    },
+    {
+      "archive_relative_path": "actual/originals-transfer-stdout.json",
+      "bytes": 109801,
+      "encoding": "json",
+      "original_path": "/private/tmp/lanl14-completed21-mode-actual-20261008-a1/originals-transfer-stdout.json",
+      "policy": {
+        "identity_or_policy_added": false,
+        "original_canonical_ensure_ascii_present": false,
+        "original_identity_sha256_present": false,
+        "original_seal": "unsealed",
+        "original_sealed_field": false,
+        "original_sealed_field_present": true
+      },
+      "role": "original raw-base64 transfer envelope",
+      "sha256": "f58852f2aae75f558e05a2f4c1e1ce555a3ca6e5ff530806dfcccede27110723"
+    },
+    {
+      "archive_relative_path": "lanl14-completed21-mode-independent-reconciliation-20261008-a1.md",
+      "bytes": 4288,
+      "encoding": "markdown",
+      "original_path": "/private/tmp/lanl14-completed21-mode-independent-reconciliation-20261008-a1.md",
+      "policy": {
+        "identity_or_policy_added": false,
+        "original_seal": "unsealed"
+      },
+      "role": "independent local metadata review; no action",
+      "sha256": "12964b5be9367cfc9851ff327f297ee9558c3ce748b1da2ec21bdabe5637142f"
+    }
+  ],
+  "preservation": {
+    "bytes_and_eof": true,
+    "durable_canonical_yaml_count": 686,
+    "earlier_notrun_history": true,
+    "issue_status": "claimed",
+    "only_issue_append": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/issues/14-generality-maple-pagerank.md",
+    "parent_controls_delivery_after_r5_postflight": true,
+    "unsealed_original_policies": true
+  },
+  "readme": {
+    "bytes": 4016,
+    "path": "README.md",
+    "sha256": "c465d83a6d46c0a1af676e36dafc9ece6f9b7c2de4322506e758054f7becc2a3"
+  },
+  "retained_source_c": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "scope": "exact-original additive byte custody; not scientific/export/reader admission"
+}

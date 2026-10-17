@@ -1,0 +1,96 @@
+# An implementation for profile tests (Created 2026-09-22). Its "build" copies the stub
+# script; its access patterns mirror PageRank's gather so footprints and features apply.
+kind: implementation
+schema_version: "0.2"
+id: stub-impl
+status: draft
+deprecated_by: null
+created: 2026-09-22
+updated: 2026-09-22
+provenance:
+  - id: src-stub
+    kind: source_code
+    description: Test fixture.
+    uri: null
+name: Stub implementation
+kernel: stub-kernel
+function: StubKernel
+origin:
+  kind: derived
+  description: Test fixture.
+  derived_from: null
+code:
+  - root: records
+    path: implementations/stub-impl/stub_bench.py
+    lines: null
+    excerpt: null
+    sha256: null
+build:
+  compiler: c++
+  flags: ""
+  command: "cp {source} {binary} && chmod +x {binary}"
+run:
+  command: "{binary} {input_args} -n {trials}"
+  timer: gapbs_trial_time
+  threads_env: OMP_NUM_THREADS
+  sweep_log_flag: -l
+  kernel_symbols: [StubKernel]
+  index_stream:
+    order: in_neighbors_by_vertex
+    pattern: gather
+loops:
+  - id: sweep
+    description: outer loop
+    parent: null
+    trip_count: {value: null, formula: null, scope: per_call, basis: unknown, evidence_refs: []}
+    parallel: {construct: serial}
+  - id: vertex
+    description: for u
+    parent: sweep
+    trip_count: {formula: num_nodes, scope: per_sweep, basis: code_reading, evidence_refs: [src-stub]}
+    parallel: {construct: omp_parallel_for, schedule: "dynamic, 16384", reduction: null}
+  - id: edge
+    description: for v in in_neigh(u)
+    parent: vertex
+    trip_count: {formula: num_edges_directed, scope: per_sweep, basis: code_reading, evidence_refs: [src-stub]}
+    parallel: {construct: nested_serial}
+access_patterns:
+  - id: gather
+    expression: contrib[v] for v in g.in_neigh(u)
+    loop: edge
+    steps:
+      - array: {name: g.in_index_, role: offsets, element_type: "NodeID*", element_bytes: 8, element_count: num_nodes + 1, layout: array_of_pointers}
+        address_shape: stream
+        stride: 1
+      - array: {name: g.in_neighbors_, role: index, element_type: NodeID, element_bytes: 4, element_count: num_edges_directed, layout: contiguous}
+        address_shape: ranged_indirect
+      - array: {name: contrib, role: target, element_type: float, element_bytes: 4, element_count: num_nodes, layout: contiguous}
+        address_shape: single_valued_indirect
+        index_transform: identity
+    update_kind: read
+    semantics:
+      duplicate_target_indices: {value: true, basis: code_reading, evidence_refs: [src-stub]}
+      index_modified_during_loop: {value: false, basis: code_reading, evidence_refs: [src-stub]}
+      loop_carried_dependencies: {value: null, basis: unknown}
+      shared_target_between_threads: {value: true, basis: code_reading, evidence_refs: [src-stub]}
+      atomic_updates_required: {value: false, basis: code_reading, evidence_refs: [src-stub]}
+      ordering: {value: null, basis: unknown}
+      numerical_requirement: {value: fp_reassociation_allowed, basis: code_reading, evidence_refs: [src-stub]}
+  - id: degree
+    expression: g.out_degree(u)
+    loop: vertex
+    steps:
+      - array: {name: g.out_index_, role: target, element_type: "NodeID*", element_bytes: 8, element_count: num_nodes + 1, layout: array_of_pointers, undirected_alias: g.in_index_}
+        address_shape: stream
+        stride: 1
+    update_kind: read
+    semantics:
+      duplicate_target_indices: {value: false, basis: code_reading}
+      index_modified_during_loop: {value: false, basis: code_reading}
+      loop_carried_dependencies: {value: false, basis: code_reading}
+      shared_target_between_threads: {value: false, basis: code_reading}
+      atomic_updates_required: {value: false, basis: code_reading}
+      ordering: {value: any_order, basis: code_reading}
+      numerical_requirement: {value: exact, basis: code_reading}
+notes: []
+extensions: {}

@@ -1,0 +1,344 @@
+{
+  "readback_failure": {
+    "created": "2026-09-26",
+    "id": "bfs-native-one-thread-readback-20260926-a2",
+    "state": "failed",
+    "reason": "runtime admission rejected ignored top-level .pytest_cache; no pinned reader started",
+    "repository_commit": "5e8b750b14679d5962d1e4b40cd5fa0f1b6981b0",
+    "observed_at": "2026-09-26T19:01:55.601879-04:00",
+    "outer_started": "2026-09-26T19:00:20.134537-04:00",
+    "outer_deadline": "2026-09-26T19:16:50.134537-04:00",
+    "lane": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-one-thread-readback-20260926-a2.dispatch/lane.json",
+      "sha256": "2777c4846a5f6b97a1b299429e9f9aeb013323f9f46b46d9500e7da06e037de2",
+      "bytes": 1191
+    },
+    "outer_exit": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-one-thread-readback-20260926-a2.dispatch/outer.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "bytes": 2
+    },
+    "launch": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-one-thread-readback-20260926-a2.dispatch/launch.json",
+      "sha256": "82eeb970fbe4657a9ff2a3b06d3b12e51d4c23addabd7dab6707ca417c2bbb28",
+      "bytes": 1554
+    },
+    "preflight": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-one-thread-readback-20260926-a2.dispatch/preflight.json",
+      "sha256": "424f53fa8a9f062335b621780378d2645a0d4cfcbf967aea33483948c720dc5b",
+      "bytes": 7361
+    },
+    "recipe": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-one-thread-readback-20260926-a2/readback-recipe.py",
+      "sha256": "cc1d2dda1d0c3498c0c12312183249b700fbec983bbba6f0e7e2d40510047339",
+      "bytes": 17626
+    },
+    "selection": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-one-thread-readback-20260926-a2/selection.json",
+      "sha256": "0d309a21eea3a869729ecdcd6a0e55898a3659821fe430938ae9e7c5c51ee5f0",
+      "bytes": 2762
+    },
+    "stdout": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-one-thread-readback-20260926-a2.dispatch/outer.stdout",
+      "sha256": "65ae8a0f66b3a5c61a1173fb7ab3ee431f732f4a7d56f14475f220b2468af277",
+      "bytes": 259
+    },
+    "stderr": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-one-thread-readback-20260926-a2.dispatch/outer.stderr",
+      "sha256": "f808be667aaa9c292e8943628dc6a0f714455e7bb9f87d363311189ffbdcdf46",
+      "bytes": 3603
+    },
+    "pending": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-one-thread-readback-20260926-a2/result/readback.pending.json",
+      "sha256": "15fd90c481d878242a95446e203c3db70e6b5cd4b57a93e54830da00445d2b3c",
+      "bytes": 531
+    },
+    "process_observations": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-one-thread-readback-20260926-a2/result/process-observations.json",
+      "sha256": "4c24bb7f2340dc07c747a6f8f1d74056a189163f6db30b8d44ccb494a9659a47",
+      "bytes": 1451
+    },
+    "resource_samples": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-one-thread-readback-20260926-a2/result/resource-samples.jsonl",
+      "sha256": "6009fd2fcae4f70253d6fcfa85f7d7aee7e04161ada5fe83071b66d536a88355",
+      "bytes": 570
+    },
+    "reader_events": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-one-thread-readback-20260926-a2/result/reader-events.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "reader_spawn_events": 0,
+    "result_published": false,
+    "unexpected_root_entries": [
+      ".pytest_cache"
+    ],
+    "owned_processes": [
+      {
+        "pid": 3081575,
+        "start_ticks": 496555297,
+        "parent_pid": 359742,
+        "state": "Z",
+        "rss_bytes": 0,
+        "role": "tmux_launcher"
+      },
+      {
+        "pid": 3081578,
+        "start_ticks": 496555303,
+        "state": "absent",
+        "current_identity": null
+      },
+      {
+        "pid": 3081579,
+        "start_ticks": 496555303,
+        "state": "absent",
+        "current_identity": null
+      },
+      {
+        "pid": 3081648,
+        "start_ticks": 496555328,
+        "state": "absent",
+        "current_identity": null
+      }
+    ],
+    "process_passes": [
+      {
+        "observed_at": "2026-09-26T19:01:55.386702-04:00",
+        "processes": [
+          {
+            "pid": 3081575,
+            "start_ticks": 496555297,
+            "parent_pid": 359742,
+            "state": "Z",
+            "rss_bytes": 0,
+            "role": "tmux_launcher"
+          },
+          {
+            "pid": 3081578,
+            "start_ticks": 496555303,
+            "state": "absent",
+            "current_identity": null
+          },
+          {
+            "pid": 3081579,
+            "start_ticks": 496555303,
+            "state": "absent",
+            "current_identity": null
+          },
+          {
+            "pid": 3081648,
+            "start_ticks": 496555328,
+            "state": "absent",
+            "current_identity": null
+          }
+        ],
+        "leases": {
+          "mbit10-evaluation-node0": {
+            "metadata": {
+              "active_session": null,
+              "heartbeat_at": "2026-09-26T23:00:20Z",
+              "lease": {
+                "acquired_at": "2026-09-26T23:00:20Z",
+                "daemon_pid": 3081579,
+                "daemon_start_token": "sh3081579-1790463620",
+                "generation": 328,
+                "host": "mbit10",
+                "lease_name": "mbit10-evaluation-node0",
+                "mode": "measure",
+                "session_id": null
+              },
+              "attempt_pid": null,
+              "attempt_start_token": null,
+              "recovered_from_generation": null,
+              "released_at": "2026-09-26T23:00:20Z",
+              "session_note": null,
+              "session_state": "none",
+              "state": "released",
+              "writer": "hostlock.sh"
+            },
+            "kernel_rows": []
+          },
+          "mbit10-evaluation-node1": {
+            "metadata": {
+              "active_session": null,
+              "heartbeat_at": "2026-09-26T22:50:54Z",
+              "lease": {
+                "acquired_at": "2026-09-26T22:50:45Z",
+                "daemon_pid": 3080597,
+                "daemon_start_token": "sh3080597-1790463045",
+                "generation": 406,
+                "host": "mbit10",
+                "lease_name": "mbit10-evaluation-node1",
+                "mode": "measure",
+                "session_id": null
+              },
+              "attempt_pid": null,
+              "attempt_start_token": null,
+              "recovered_from_generation": null,
+              "released_at": "2026-09-26T22:50:54Z",
+              "session_note": null,
+              "session_state": "none",
+              "state": "released",
+              "writer": "hostlock.sh"
+            },
+            "kernel_rows": []
+          },
+          "mbit10-evaluation": {
+            "metadata": {
+              "active_session": null,
+              "heartbeat_at": "2026-09-12T04:49:11Z",
+              "lease": {
+                "acquired_at": "2026-09-12T01:35:42Z",
+                "daemon_pid": 209457,
+                "daemon_start_token": "sh209457-1789176942",
+                "generation": 77,
+                "host": "mbit10",
+                "lease_name": "mbit10-evaluation",
+                "mode": "measure",
+                "session_id": null
+              },
+              "attempt_pid": null,
+              "attempt_start_token": null,
+              "recovered_from_generation": null,
+              "released_at": "2026-09-12T04:49:11Z",
+              "session_note": null,
+              "session_state": "none",
+              "state": "released",
+              "writer": "hostlock.sh"
+            },
+            "kernel_rows": []
+          }
+        }
+      },
+      {
+        "observed_at": "2026-09-26T19:01:55.494849-04:00",
+        "processes": [
+          {
+            "pid": 3081575,
+            "start_ticks": 496555297,
+            "parent_pid": 359742,
+            "state": "Z",
+            "rss_bytes": 0,
+            "role": "tmux_launcher"
+          },
+          {
+            "pid": 3081578,
+            "start_ticks": 496555303,
+            "state": "absent",
+            "current_identity": null
+          },
+          {
+            "pid": 3081579,
+            "start_ticks": 496555303,
+            "state": "absent",
+            "current_identity": null
+          },
+          {
+            "pid": 3081648,
+            "start_ticks": 496555328,
+            "state": "absent",
+            "current_identity": null
+          }
+        ],
+        "leases": {
+          "mbit10-evaluation-node0": {
+            "metadata": {
+              "active_session": null,
+              "heartbeat_at": "2026-09-26T23:00:20Z",
+              "lease": {
+                "acquired_at": "2026-09-26T23:00:20Z",
+                "daemon_pid": 3081579,
+                "daemon_start_token": "sh3081579-1790463620",
+                "generation": 328,
+                "host": "mbit10",
+                "lease_name": "mbit10-evaluation-node0",
+                "mode": "measure",
+                "session_id": null
+              },
+              "attempt_pid": null,
+              "attempt_start_token": null,
+              "recovered_from_generation": null,
+              "released_at": "2026-09-26T23:00:20Z",
+              "session_note": null,
+              "session_state": "none",
+              "state": "released",
+              "writer": "hostlock.sh"
+            },
+            "kernel_rows": []
+          },
+          "mbit10-evaluation-node1": {
+            "metadata": {
+              "active_session": null,
+              "heartbeat_at": "2026-09-26T22:50:54Z",
+              "lease": {
+                "acquired_at": "2026-09-26T22:50:45Z",
+                "daemon_pid": 3080597,
+                "daemon_start_token": "sh3080597-1790463045",
+                "generation": 406,
+                "host": "mbit10",
+                "lease_name": "mbit10-evaluation-node1",
+                "mode": "measure",
+                "session_id": null
+              },
+              "attempt_pid": null,
+              "attempt_start_token": null,
+              "recovered_from_generation": null,
+              "released_at": "2026-09-26T22:50:54Z",
+              "session_note": null,
+              "session_state": "none",
+              "state": "released",
+              "writer": "hostlock.sh"
+            },
+            "kernel_rows": []
+          },
+          "mbit10-evaluation": {
+            "metadata": {
+              "active_session": null,
+              "heartbeat_at": "2026-09-12T04:49:11Z",
+              "lease": {
+                "acquired_at": "2026-09-12T01:35:42Z",
+                "daemon_pid": 209457,
+                "daemon_start_token": "sh209457-1789176942",
+                "generation": 77,
+                "host": "mbit10",
+                "lease_name": "mbit10-evaluation",
+                "mode": "measure",
+                "session_id": null
+              },
+              "attempt_pid": null,
+              "attempt_start_token": null,
+              "recovered_from_generation": null,
+              "released_at": "2026-09-12T04:49:11Z",
+              "session_note": null,
+              "session_state": "none",
+              "state": "released",
+              "writer": "hostlock.sh"
+            },
+            "kernel_rows": []
+          }
+        }
+      }
+    ],
+    "retained_identity_union_complete": true,
+    "unobserved_short_lived_processes_possible": true,
+    "cleanup_state": "terminal_no_live_owned_processes",
+    "owned_processes_nonrunning": true,
+    "lease_released": true,
+    "sample_count": 2,
+    "sample_peak_rss_bytes": 37748736,
+    "maximum_gap_seconds": 0.014003828167915344,
+    "audit_seconds": 0.22397288214415312,
+    "terminal_reference": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-one-thread-readback-20260926-a2.dispatch/terminal-validation.json",
+      "sha256": "33ff5c13e67bc317156014c800a17d02aaf27107e28631aa2efbfe6e2dc68e33",
+      "bytes": 11104
+    },
+    "cache_entry_mtime": "2026-09-26T18:42:49.573145-04:00",
+    "cache_entry_children": [
+      ".gitignore",
+      "v",
+      "CACHEDIR.TAG",
+      "README.md"
+    ]
+  }
+}

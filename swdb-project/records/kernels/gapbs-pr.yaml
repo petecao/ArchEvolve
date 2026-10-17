@@ -1,0 +1,60 @@
+kind: kernel
+schema_version: '0.2'
+id: gapbs-pr
+status: draft
+deprecated_by: null
+created: '2026-09-22'
+updated: '2026-09-22'
+provenance:
+- id: src-gapbs-pr
+  kind: source_code
+  description: gapbs src/pr.cc and src/command_line.h at commit 2972aeb2703165bafd921222f4ed7196f542d3a8,
+    read 2026-09-22 from the copy in apps/gapbs.
+  uri: https://github.com/sbeamer/gapbs/blob/2972aeb2703165bafd921222f4ed7196f542d3a8/src/pr.cc
+name: gapbs PageRank
+application: gapbs
+computes: 'PageRank scores (float) for every vertex of a graph with damping 0.85: iterate score[u] = (1
+  - 0.85)/N + 0.85 * sum over in-neighbors v of score[v]/out_degree(v) until the L1 change of one iteration
+  is below the tolerance (-t, default 1e-4) or max_iters (-i, default 20) iterations have run.'
+correctness_check:
+  command: '{binary} {input_args} -n 1 -v'
+  verifier:
+    description: 'PRVerifier: from the returned scores, one serial push-direction PageRank iteration;
+      the L1 distance between its result and the scores must be below the tolerance.'
+    code:
+      root: application
+      path: src/pr.cc
+      lines: [76, 94]
+      excerpt: |-
+        // Verifies by asserting a single serial iteration in push direction has
+        //   error < target_error
+        bool PRVerifier(const Graph &g, const pvector<ScoreT> &scores,
+                                double target_error) {
+          const ScoreT base_score = (1.0f - kDamp) / g.num_nodes();
+          pvector<ScoreT> incoming_sums(g.num_nodes(), 0);
+          double error = 0;
+          for (NodeID u : g.vertices()) {
+            ScoreT outgoing_contrib = scores[u] / g.out_degree(u);
+            for (NodeID v : g.out_neigh(u))
+              incoming_sums[v] += outgoing_contrib;
+          }
+          for (NodeID n : g.vertices()) {
+            error += fabs(base_score + kDamp * incoming_sums[n] - scores[n]);
+            incoming_sums[n] = 0;
+          }
+          PrintTime("Total Error", error);
+          return error < target_error;
+        }
+      sha256: null
+  pass_criterion: 'the run exits 0 and prints Verification: PASS'
+  pass_regex: Verification:\s+PASS
+  tolerance:
+    value: 0.0001
+    measure: L1 norm over vertices of (one push iteration from the scores) - scores; the same -t value
+      as the convergence tolerance
+    note: gapbs passes cli.tolerance() to the verifier; -t 1e-4 is the default.
+baseline_implementation: gapbs-pr-gs
+notes:
+- Any code whose scores pass PRVerifier at the tolerance implements this kernel (ADR 0001); the Gauss-Seidel
+  baseline and the Jacobi implementation differ in scores and sweep counts and both pass.
+extensions: {}

@@ -1,0 +1,13 @@
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+// Ported 2026-10-03 from MaizeHPC/MemAcc af3d6d7f7a69a72facdc3b95b42e78c952f44a76
+// Source: AgenticRefiner/refiner/synthesis/drivers/gather_stream_{ref,cand,run}.cpp.tmpl
+// SWDB changes: reference TU calls SWDB's plain C++ reference header (swdb_ref::) instead of DataLayoutAPI; run TU drops all timing and adds an input frame check (2026-10-03 ET)
+// Two-binary certification CANDIDATE TU for family gather_stream: includes a cleanroom
+// copy of the candidate header (a synthesized `SynthBackend`); its macros and
+// includes stay in this TU.
+#include "{{BACKEND_HEADER}}"
+#include <cstddef>
+#include <cstdint>
+extern "C" void swdb_cand_gather_stream(double* dst, const double* src, const std::int32_t* idx, std::size_t rows, std::size_t row_len, std::size_t dst_stride, std::size_t src_stride) {
+  SynthBackend::gather_stream<double, std::int32_t>(dst, src, idx, rows, row_len, dst_stride, src_stride);
+}

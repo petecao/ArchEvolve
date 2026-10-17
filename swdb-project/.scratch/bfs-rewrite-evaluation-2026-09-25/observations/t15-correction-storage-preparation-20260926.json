@@ -1,0 +1,74 @@
+{
+  "created": "2026-09-26T21:25:14.984004-04:00",
+  "scope": "Future T15 lossless correction and process-free monitoring; no corrected host run implied",
+  "state": "local_targeted_tests_passed",
+  "validation": {
+    "result": "351 passed, 3 skipped in 27.50s",
+    "exit_code": 0,
+    "log": {
+      "path": "/private/tmp/bfs-correction-storage-final-targeted-20260926.log",
+      "sha256": "816404c409a5afb4d1b3b5299c1a455695596e95b91054e0bbd8489786a9aafb",
+      "bytes": 432
+    }
+  },
+  "files": [
+    {
+      "path": "scripts/bfs_simulator_batch.py",
+      "sha256": "46b171a570b606892c54bf63701f70fde74fa3cfe0a438ab2bd73634fb7047b0",
+      "bytes": 56532
+    },
+    {
+      "path": "scripts/bfs_linux_fixture.py",
+      "sha256": "544971e14f229dffa0945277db7a97e5dcb0ef14c1c78ef319e7e6555b1f5441",
+      "bytes": 13247
+    },
+    {
+      "path": "scripts/bfs_storage.py",
+      "sha256": "485914c80e272b1ab4d05d7866d2ba0d981d0c3ba41cb510c509e4acdb8f4eac",
+      "bytes": 2586
+    },
+    {
+      "path": "scripts/bfs_simulator_series.py",
+      "sha256": "a568e4e6da573ccc281df7deff214abb59d9d87799e274b9abaff1a90ca87b43",
+      "bytes": 30265
+    },
+    {
+      "path": "tests/test_bfs_simulator_correction.py",
+      "sha256": "9b7de48c088c6bc1dfdc0ede632c23ed65b4d40de08610b7bb3e03a10ba2ec9d",
+      "bytes": 16019
+    },
+    {
+      "path": "tests/test_bfs_simulator_storage.py",
+      "sha256": "7db4f48df5b5c38f68902eb936251d8aaa80d122f135c249e66bad2b6724d28a",
+      "bytes": 9194
+    },
+    {
+      "path": "tests/test_bfs_storage.py",
+      "sha256": "25e1b4b53e555646a3b6bce38486b0c398d68d66def616b5a900f24dd582cb24",
+      "bytes": 7847
+    },
+    {
+      "path": "tests/test_bfs_simulator_series.py",
+      "sha256": "78c219a8bf92d8c38a6400d9d8fdee9f715c8d3fd0c05d843257c8394201a3fc",
+      "bytes": 33248
+    },
+    {
+      "path": "docs/bfs-t15-gzip-correction-20260926.md",
+      "sha256": "34285b9fd14626aca1d79ec633476aa87f66bcf42739e8098895e31080081140",
+      "bytes": 4536
+    },
+    {
+      "path": "docs/bfs-t15-correction-proofgroup-20260926.md",
+      "sha256": "7eb0bf563a095943b8ff28b6d917e43a9905420bce01bb7cb53d7d574b4e535c",
+      "bytes": 7447
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t15-correction-simulator-batch-20260926-a1.json",
+      "sha256": "d93e8c02574e1b2fcf90f8c8b1f79c2c83bd63b81d377e627ede71b7755f7f62",
+      "bytes": 9414
+    }
+  ],
+  "active_t16_changed": false,
+  "original_failed_attempts_preserved": true,
+  "full_linux_admission_required": true
+}

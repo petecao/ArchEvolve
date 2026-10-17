@@ -1,0 +1,209 @@
+kind: campaign_summary
+schema_version: '0.4'
+id: extensa-native-bfs-20261004-a6.summary
+status: draft
+created: '2026-10-04'
+updated: '2026-10-04'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+mode: extensa
+campaign: extensa-native-bfs-20261004-a6
+campaign_file:
+  path: campaigns/extensa/extensa-native-bfs-20261004-a6.yaml
+  sha256: 856627202e640a3e5b33c7dab193c461f4f3617a35745037071df74f6b7b140d
+swdb_commit: ce42a453b89b0be32dd991c2586f095f711009d1
+extensa_source:
+  repository: MaizeHPC/MemAcc
+  commit: af3d6d7f7a69a72facdc3b95b42e78c952f44a76
+target: native_cpu
+evidence_basis: measured
+evidence_kind: execution
+protocol:
+  id: extensa-native-bfs-20261004-a6.protocol.fork_scalar_tdstep.b69804aa7a94a785
+  identity_sha256: b69804aa7a94a7851a930126d6611cdf14d95eaa3c9a822539f35f96067dee68
+  settings:
+    target: native_cpu
+    roi: bfs.complete_call.v1
+    threads: 1
+    repetitions: 20
+    sources: [0, 1234, 7777]
+    region_pairs: []
+    differences: 'Extensa campaign extensa-native-bfs-20261004-a6: provider rewrites of the fork''s scalar
+      TDStep (scalar-only snapshot plus patch) versus the unchanged full-source dx100-bfs-scalar DOBFS,
+      and separately versus upstream direction-optimizing GAPBS BFS. Native evaluator v3 (mmap SG driver,
+      saturating parent narrowing, compiled structural verifier); CI-width speed rule.'
+    evidence_basis: measured
+    profitability:
+      minimum_speedup: 1.05
+      speed_rule: swdb.speed_rule.ci_width.v1
+      gate:
+        statistic: relative_ci_width.v1
+        maximum: 0.05
+      block_length: 4
+      aa_equivalence: 1.05
+      rule: relative 95% CI width at most the gate; then the lower bound of the same CI strictly above
+        the minimum
+    workloads:
+      kronecker: bfs-20261004-kronecker22.0b2b1e1555d0a1e8
+      uniform_random: bfs-20261004-uniform22.2f83a134a6bef789
+  by_role:
+    fork_scalar_tdstep:
+      id: extensa-native-bfs-20261004-a6.protocol.fork_scalar_tdstep.b69804aa7a94a785
+      identity_sha256: b69804aa7a94a7851a930126d6611cdf14d95eaa3c9a822539f35f96067dee68
+    upstream_do_bfs:
+      id: extensa-native-bfs-20261004-a6.protocol.upstream_do_bfs.bf63cbbf946414d8
+      identity_sha256: bf63cbbf946414d805c41e3b8bc3a98d4f075d8471a73229db8de07918085b92
+      aa: extensa-native-bfs-20261004-a6.protocol.upstream_do_bfs.aa.02a9e16966ceba03
+baselines:
+- role: fork_scalar_tdstep
+  candidate: bfs-native-pilot-20260925-dx10018-a1.baseline
+  evaluation_ids_by_class: {}
+- role: upstream_do_bfs
+  candidate: bfs-native-pilot-20260925-upstream18-a2.baseline
+  evaluation_ids_by_class: {}
+workload_classes:
+- class: kronecker
+  workload: bfs-20261004-kronecker22.0b2b1e1555d0a1e8
+  sources: [0, 1234, 7778]
+  source_policy:
+    policy: swdb.sources.next_positive_out_degree.v1
+    requested_sources: [0, 1234, 7777]
+    replacements:
+    - requested: 7777
+      requested_out_degree: 0
+      selected: 7778
+      selected_out_degree: 16
+    rule: GAPBS SourcePicker skips out-degree 0; the next vertex (ascending, wrapping) with positive out-degree
+      that is not already a source replaces it
+- class: uniform_random
+  workload: bfs-20261004-uniform22.2f83a134a6bef789
+  sources: [0, 1234, 7777]
+  source_policy:
+    policy: swdb.sources.next_positive_out_degree.v1
+    requested_sources: [0, 1234, 7777]
+    replacements: []
+    rule: GAPBS SourcePicker skips out-degree 0; the next vertex (ascending, wrapping) with positive out-degree
+      that is not already a source replaces it
+label: single graph per class
+provider:
+  name: codex
+  model: gpt-5.6-sol
+  effort: xhigh
+pilot:
+  spreads_by_class_and_role:
+    kronecker:
+      fork_scalar_tdstep: 0.1312536328850219
+      upstream_do_bfs: 0.18018571052634877
+    uniform_random:
+      fork_scalar_tdstep: 0.10327373273044309
+      upstream_do_bfs: 0.161854826760125
+  passed: false
+  unstable_classes: [kronecker, uniform_random]
+  speed_rule: swdb.speed_rule.ci_width.v1
+  ci_by_class_and_role:
+    kronecker:
+      fork_scalar_tdstep:
+        ratio: 0.9828251185578393
+        lower: 0.9678994944819908
+        upper: 1.0069763039546635
+        relative_width: 0.039759677215019315
+        passed: true
+      upstream_do_bfs:
+        ratio: 1.0018373766204944
+        lower: 0.9272863937359698
+        upper: 1.0521378611975223
+        relative_width: 0.12462248901385063
+        passed: false
+    uniform_random:
+      fork_scalar_tdstep:
+        ratio: 0.9978003616055406
+        lower: 0.9907986525761171
+        upper: 1.0100185007240903
+        relative_width: 0.019262218062385646
+        passed: true
+      upstream_do_bfs:
+        ratio: 0.9994404991611634
+        lower: 0.9540855909342008
+        upper: 1.0466992243016133
+        relative_width: 0.09266547978108128
+        passed: false
+  gate:
+    maximum_relative_ci_width: 0.05
+    aa_interval: [0.9523809523809523, 1.05]
+  isolation_by_class_and_role:
+    kronecker:
+      fork_scalar_tdstep:
+        other_socket: released
+        waited_s: 0.0
+        load_average: [1.6484375, 1.31201171875, 1.177734375]
+        other_socket_at_end: released
+        load_average_at_end: [2.06689453125, 2.015625, 1.9208984375]
+      upstream_do_bfs:
+        other_socket: released
+        waited_s: 0.0
+        load_average: [2.06689453125, 2.015625, 1.9208984375]
+        other_socket_at_end: released
+        load_average_at_end: [2.0244140625, 2.08642578125, 2.07958984375]
+    uniform_random:
+      fork_scalar_tdstep:
+        other_socket: released
+        waited_s: 0.0
+        load_average: [2.0244140625, 2.08642578125, 2.07958984375]
+        other_socket_at_end: released
+        load_average_at_end: [2.0166015625, 2.0419921875, 2.01708984375]
+      upstream_do_bfs:
+        other_socket: released
+        waited_s: 0.0
+        load_average: [2.0166015625, 2.0419921875, 2.01708984375]
+        other_socket_at_end: released
+        load_average_at_end: [2.037109375, 2.0263671875, 2.0009765625]
+setup:
+  provider_calls: []
+iterations: []
+per_class:
+- class: kronecker
+  verdict: baseline_unstable
+  best: null
+  best_level: null
+  best_selection_baseline: null
+  best_other_baseline: null
+  faster_uncertified: []
+  label: single graph per class
+- class: uniform_random
+  verdict: baseline_unstable
+  best: null
+  best_level: null
+  best_selection_baseline: null
+  best_other_baseline: null
+  faster_uncertified: []
+  label: single graph per class
+budgets:
+  limits:
+    max_iterations: 8
+    plateau_iterations: 4
+    lane_hours: 24
+    provider_calls_per_iteration: 3
+    provider_calls_setup: 1
+    disk_gb: 20
+    lanes: 1
+  used:
+    iterations: 0
+    lane_hours: 1.965402
+    provider_calls_counted: 0
+    provider_calls_uncounted: 0
+    disk_gb_peak: 0.333908
+pauses: []
+stop_reason: baseline_unstable
+stop_detail: baseline A/A CI-width gate failed in every class
+artifacts: []
+retentions: []
+library_entries: []
+site_finder: null

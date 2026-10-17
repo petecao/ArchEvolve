@@ -1,0 +1,22 @@
+{
+  "observed_at": "2026-09-27T03:50:33.385311-04:00",
+  "verdict": "pass",
+  "scope": "Independent local semantic review of necessary-literal prefilters; no active runtime modification or actual trace reread",
+  "files": {
+    "swdb/dx100_coverage.py": "27cfe64295a914193805809ed9c4d7ff08c9ffd462bdade3f97f6bcbe4d30e79",
+    "tests/test_dx100_coverage_scan.py": "325fce2c9ea3194bc0a563a29873e41c71e9d50734530fb99156d5f349440f57",
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/observations/t15-freeze-dependency-audit-20260927.md": "a90ae6d4f1dab296961ac347c4148f89004c0bf08c4f2bad39d9018bed57bdad"
+  },
+  "tests": "36 passed in 51.05s",
+  "test_log": "/private/tmp/bfs-coverage-prefilter-independent-20260927.log",
+  "static_receipt": "/private/tmp/bfs-coverage-prefilter-ast-independent-20260927.json",
+  "findings": [],
+  "boundaries": [
+    "Six conditions are necessary for corresponding unchanged regex matches; stdout-only storage effect was already enforced.",
+    "All other functions including trace_lines, hashes, deadlines, validate_trace are AST-identical to immutable 07ba.",
+    "Observe is AST-identical after removing exactly six new conditional guards.",
+    "Mixed valid/malformed Unicode multi-event stdout/gzip outputs and corruption failures match frozen parser.",
+    "Existing public coverage/gzip tests reject changed or consistently resealed trace evidence; full reread remains mandatory.",
+    "Synthetic performance does not prove actual trace performance or waive empirical freeze gates."
+  ]
+}

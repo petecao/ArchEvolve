@@ -1,0 +1,133 @@
+{
+  "SSH_used": false,
+  "bootstrap_bytes": 110136,
+  "bootstrap_embedded_roundtrip_exact": true,
+  "bootstrap_inverse_predecessor_equal": true,
+  "compiler_or_native_or_verifier_executed": false,
+  "cost": "Unmeasured allowance; no failed solver budget was raised. Normal three solvers at30seconds,180seconds per leaf; all ten must freshly settle and receive complete cold source/task/hypothesis/import review.",
+  "date": "2026-10-16 ET",
+  "guards": {
+    "cap_bytes": 8589934592,
+    "leaf_timeout_seconds": 180,
+    "metadata_reserve_bytes": 4194304,
+    "output_budget_bytes": 2147483648,
+    "per_file_bytes": 134217728,
+    "profile_seconds": 1900,
+    "root_outer_seconds": 2220,
+    "root_whole_seconds": 2100,
+    "workers": 1
+  },
+  "inputs": [
+    {
+      "bytes": 13819,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v1/prepare.py",
+      "sha256": "1a792917f06a03050a2d13f10882443904e1e3b2893c9ebaea27f15e696139c3"
+    },
+    {
+      "bytes": 21937,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v1/entry_template.py",
+      "sha256": "f43e938185315f4748b56ebdbd0b5629722d24c7c3f1556be5f3e6dc9b8c9647"
+    },
+    {
+      "bytes": 7725,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v1/runtime_quota.py",
+      "sha256": "a8cee0e21a557882fea391653989123a3044248cbad0fe610b543655430ec9fc"
+    },
+    {
+      "bytes": 1921,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v1/reviewed_why3_package_check.py",
+      "sha256": "62ada266ff589a83b009c221c347dcabc5547cf86904238cdf9bfb7adf56d50d"
+    },
+    {
+      "bytes": 90513,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v1/why3-runtime-snapshot.json",
+      "sha256": "de07b17e79d6fa4fb2f632acc0653949f510087fdf33e3f2fe99db1b444f9529"
+    },
+    {
+      "bytes": 12582,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v1/pure_controls.py",
+      "sha256": "8dead47e6978b72bda1de6cb69511a689ce6e15d860dd0e478222ea3ebcd07ac"
+    },
+    {
+      "bytes": 2246,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v1/pure-controls-v2.log",
+      "sha256": "c1acb289a905a220ea477eb7a7283135dd0f2a27abfd9e007583eb6ac98a8db3"
+    },
+    {
+      "bytes": 13350,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v1/template-delta-final-v1.json",
+      "sha256": "a10d4ab8dd6e703b4b85cdb2a1375188db9064038a61e2625f9d2971df53c06a"
+    },
+    {
+      "bytes": 41509,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v1/inert-d7f685c6-public10-v1/entry.py",
+      "sha256": "a2c2f3854e182652b46cb612a2f762d8fdfddd713ad1a33b16b2e0f148545478"
+    },
+    {
+      "bytes": 239850,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v1/inert-d7f685c6-public10-v1/expected.json",
+      "sha256": "7fb3f40e7ec3eb2c1e2e53a91267738381db7c7f9656ec75fe74722a1c7ea078"
+    },
+    {
+      "bytes": 5223,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v1/inert-d7f685c6-public10-v1/packet.json",
+      "sha256": "f4a868336af4866cadd297f02c8f99859a52969949e6af63122cffe0f333059a"
+    },
+    {
+      "bytes": 110402,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v1/inert-d7f685c6-public10-v1/root-command.json",
+      "sha256": "22a4d77a89f9ca96aefac53cbaaae56648453e4d7ae3d1739d053541f0881b08"
+    }
+  ],
+  "new_science": {
+    "body_or_caller_acceptance": false,
+    "complete_canonical_files": 21,
+    "elements": [
+      "int",
+      "float",
+      "double",
+      "int *"
+    ],
+    "proof_acceptance": false,
+    "source_heap_bridge_established": false,
+    "source_members": 8,
+    "source_typed_bridge_established": false,
+    "targets": 10
+  },
+  "old_scientific_results_imported": 0,
+  "packet": {
+    "bytes": 5223,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v1/inert-d7f685c6-public10-v1/packet.json",
+    "sha256": "f4a868336af4866cadd297f02c8f99859a52969949e6af63122cffe0f333059a"
+  },
+  "prior_nine_profile_raw_preserved": true,
+  "pure_controls": {
+    "child_native_network_attempts": [],
+    "errors": 0,
+    "failures": 0,
+    "scope": "Canonical packet mutation, no test-module seed, command embedded-byte roundtrip, exact normal complete census, scoped live IPC and strict settlement/quotas, first failure retention. Not mathematical evidence.",
+    "tests": 13
+  },
+  "runtime_boundary": "Inherited selected tools/WP artifacts/180 import-support files/ten WP source modules/config plus fresh nine-package Why3/server/dependency candidates are physically checked before/after. Compiler context/header/parser are observed at compiler use. Python imports, OS loader/dlopen, source-to-binary and between-check identity remain explicit original-producer/runtime TCB. No full Python or continuous runtime closure claim. Historical proof records/methods are not relabeled.",
+  "runtime_extension": {
+    "distinct_package_and_ELF_candidate_files": 152,
+    "extension_byte_equal": true,
+    "frozen_mixed_source_packet": {
+      "bytes": 15284,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/mixed-pair-actual-v6/source-packet.json",
+      "sha256": "8c92f3638518faff550b478322e136dcf85dff6ce1efd5fd8c42707506e45245"
+    },
+    "frozen_policy": {
+      "bytes": 717516,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/mixed-pair-actual-v6/policy.json",
+      "sha256": "b0cc09d4e50dc0dc153bd56958a11a7f6bcf4762b5cc3d953eb78cd91ffdf3a1"
+    },
+    "inventories": 9,
+    "literal_candidate_aliases": 3,
+    "mixed_independent_review_receipt_pending": true,
+    "package_checker_api_adaptation": "Exactly the final local digest expression uses hashlib.sha256(...).hexdigest() because standalone sha accepts a path, not bytes; complete inverse verified.",
+    "package_files": 148
+  },
+  "source_commit": "d7f685c6fdbd7ff776eb1eaccc40099a2c48dc08",
+  "status": "INERT_PENDING_INDEPENDENT_ENTRY_REVIEW_AND_ROOT_ADMISSION"
+}

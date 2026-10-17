@@ -1,0 +1,37 @@
+{
+  "created": "2026-10-16 03:09 ET",
+  "source_commit": "01771a839893975bba389ee0adcbec2aecdb88ac",
+  "source_checkout": "/private/tmp/probata-root-t25-controls-01771a83",
+  "source_clean_before": true,
+  "argv": [
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+    "/private/tmp/probata-mac-compiler-worker-b.py",
+    "--",
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+    "/private/tmp/probata-root-t25-017-native-control-guard-20261016.py",
+    "/private/tmp/probata-root-t25-017-native-controls-20261016",
+    "tests/test_vector_reallocation_view.py",
+    "tests/test_vector_reallocation_packets.py",
+    "tests/test_vector_reallocation_domain.py",
+    "tests/test_vector_reallocation_calls.py",
+    "tests/test_heap_model_view.py::test_complete_synthetic_heap_success_serializes_a_schema_valid_public_record",
+    "tests/test_heap_model_view.py::test_public_original_model_reaches_checked_heap_packet_before_scripted_parse_error",
+    "tests/test_heap_model_view.py::test_public_original_count_constructor_maps_zero_fill_before_standin"
+  ],
+  "env_overrides": {
+    "SWDB_FRAMA_C": "none",
+    "SWDB_CBMC": "none",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "guard": {
+    "path": "/private/tmp/probata-root-t25-017-native-control-guard-20261016.py",
+    "sha256": "5f87ef1055f291255233a6927d0050e8a413f7ef6ec80970bdea94f33861df91"
+  },
+  "prior_guard_sha256": "8295a685f16de901534ae27cbfa5e5984a7c8550f57efa7543b818ff8130aa23",
+  "scope": "Root reviewed native/compiler and existing OCaml package-query/config-loadpath metadata helper boundary only. All Frama version/share/WP argv in selected public tests target explicit Python stand-ins; no actual Frama/Why3 theory or prover invocation permitted. The rejected new direct query was removed from this frozen source. No scientific proof acceptance.",
+  "limits": "one shared B worker,8GiB sampled RSS,180s controls; root outer240s including B queue",
+  "raw_budget_bytes": 268435456,
+  "raw_budget_boundary": "planning allowance, not filesystem quota",
+  "free_bytes": 59392000000,
+  "memory_pressure": "The system has 38654705664 (2359296 pages with a page size of 16384).\nSystem-wide memory free percentage: 76%\n"
+}

@@ -1,0 +1,1357 @@
+{
+  "created": "2026-10-15 ET",
+  "status": "scoped origin-admission checkpoint; ticket36 remains claimed",
+  "raw_evidence_root": "/private/tmp/probata-cbmc-pointers/wp-builtins-v3-uncached",
+  "raw_runs": [
+    {
+      "case": "object",
+      "command": [
+        "opam",
+        "exec",
+        "--switch=framac-33",
+        "--",
+        "frama-c",
+        "-machdep",
+        "x86_64",
+        "/private/tmp/probata-cbmc-pointers/wp-builtins-v3-uncached/object/input.c",
+        "-print",
+        "-ocode",
+        "/private/tmp/probata-cbmc-pointers/wp-builtins-v3-uncached/object/normalized.c",
+        "-then",
+        "-wp",
+        "-wp-cache",
+        "none",
+        "-wp-rte",
+        "-rte-initialized",
+        "@all",
+        "-wp-model",
+        "+real",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-wp-timeout",
+        "10",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-report-json",
+        "/private/tmp/probata-cbmc-pointers/wp-builtins-v3-uncached/object/goals.json",
+        "-then",
+        "-load-module",
+        "/private/tmp/probata-cbmc-pointers/wp-builtins-v3-uncached/object/proof_report.cmxs",
+        "-report",
+        "-report-untried",
+        "-report-csv",
+        "/private/tmp/probata-cbmc-pointers/wp-builtins-v3-uncached/object/properties.csv"
+      ],
+      "result": {
+        "exit_code": 0,
+        "peak_rss_bytes": 299384832,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 6.0742546250112355,
+        "cpu_seconds": 4.565197
+      },
+      "source_sha256": "cc52b9a075b9de05e2b85bb515f9dbb7db19cb8c6323fa2e173ac15d16f5f017",
+      "goals": [
+        {
+          "goal": "typed_real_field_assert_target_live",
+          "passed": true,
+          "verdict": "valid",
+          "smoke": false,
+          "cached": null
+        },
+        {
+          "goal": "typed_real_field_assert_rte_initialization",
+          "passed": true,
+          "verdict": "valid",
+          "smoke": false,
+          "cached": null
+        },
+        {
+          "goal": "typed_real_flat_wp_smoke_default_requires",
+          "passed": true,
+          "verdict": "timeout",
+          "smoke": true,
+          "cached": null
+        },
+        {
+          "goal": "typed_real_flat_assert_target_live",
+          "passed": true,
+          "verdict": "valid",
+          "smoke": false,
+          "cached": null
+        },
+        {
+          "goal": "typed_real_flat_assigns",
+          "passed": true,
+          "verdict": "valid",
+          "smoke": false,
+          "cached": null
+        },
+        {
+          "goal": "typed_real_row_assert_target_live",
+          "passed": true,
+          "verdict": "valid",
+          "smoke": false,
+          "cached": null
+        },
+        {
+          "goal": "typed_real_row_assert_rte_initialization",
+          "passed": true,
+          "verdict": "valid",
+          "smoke": false,
+          "cached": null
+        }
+      ],
+      "inventory_sha256": "f92e4499941201d328d29708fb660b8d184bbd31dc9dcd3a7f04286df090a684",
+      "log_sha256": "584ddba8391490b90ee2d068acf85db8643097eb1bc3e94c42cab90a6744fc0f"
+    },
+    {
+      "case": "comparable",
+      "command": [
+        "opam",
+        "exec",
+        "--switch=framac-33",
+        "--",
+        "frama-c",
+        "-machdep",
+        "x86_64",
+        "/private/tmp/probata-cbmc-pointers/wp-builtins-v3-uncached/comparable/input.c",
+        "-print",
+        "-ocode",
+        "/private/tmp/probata-cbmc-pointers/wp-builtins-v3-uncached/comparable/normalized.c",
+        "-then",
+        "-wp",
+        "-wp-cache",
+        "none",
+        "-wp-rte",
+        "-rte-initialized",
+        "@all",
+        "-wp-model",
+        "+real",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-wp-timeout",
+        "10",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-report-json",
+        "/private/tmp/probata-cbmc-pointers/wp-builtins-v3-uncached/comparable/goals.json",
+        "-then",
+        "-load-module",
+        "/private/tmp/probata-cbmc-pointers/wp-builtins-v3-uncached/comparable/proof_report.cmxs",
+        "-report",
+        "-report-untried",
+        "-report-csv",
+        "/private/tmp/probata-cbmc-pointers/wp-builtins-v3-uncached/comparable/properties.csv"
+      ],
+      "result": {
+        "exit_code": 0,
+        "peak_rss_bytes": 517357568,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 25.68741695897188,
+        "cpu_seconds": 24.506428
+      },
+      "source_sha256": "778a6c30acaf7ef86303ceb97ae76f4600ed95beec5f2cc75e60f8e65a58a890",
+      "goals": [
+        {
+          "goal": "typed_real_flat_wp_smoke_default_requires",
+          "passed": true,
+          "verdict": "timeout",
+          "smoke": true,
+          "cached": null
+        },
+        {
+          "goal": "typed_real_flat_assert_comparable",
+          "passed": false,
+          "verdict": "timeout",
+          "smoke": false,
+          "cached": null
+        },
+        {
+          "goal": "typed_real_flat_assigns",
+          "passed": true,
+          "verdict": "valid",
+          "smoke": false,
+          "cached": null
+        }
+      ],
+      "inventory_sha256": "c381ef897cb1ef4d293d249b08b4f678cd4076e3edb83c3bc70c160154eb01bc",
+      "log_sha256": "5788a016f29b18fba666695776eada5c64e92ad75404236efb0ba98fe016c26c"
+    },
+    {
+      "case": "contracts",
+      "command": [
+        "opam",
+        "exec",
+        "--switch=framac-33",
+        "--",
+        "frama-c",
+        "-machdep",
+        "x86_64",
+        "/private/tmp/probata-cbmc-pointers/wp-builtins-v3-uncached/contracts/input.c",
+        "-print",
+        "-ocode",
+        "/private/tmp/probata-cbmc-pointers/wp-builtins-v3-uncached/contracts/normalized.c",
+        "-then",
+        "-wp",
+        "-wp-cache",
+        "none",
+        "-wp-rte",
+        "-rte-initialized",
+        "@all",
+        "-wp-model",
+        "+real",
+        "-wp-prover",
+        "z3,cvc5,alt-ergo",
+        "-wp-timeout",
+        "10",
+        "-wp-par",
+        "1",
+        "-wp-smoke-tests",
+        "-wp-report-json",
+        "/private/tmp/probata-cbmc-pointers/wp-builtins-v3-uncached/contracts/goals.json",
+        "-then",
+        "-load-module",
+        "/private/tmp/probata-cbmc-pointers/wp-builtins-v3-uncached/contracts/proof_report.cmxs",
+        "-report",
+        "-report-untried",
+        "-report-csv",
+        "/private/tmp/probata-cbmc-pointers/wp-builtins-v3-uncached/contracts/properties.csv"
+      ],
+      "result": {
+        "exit_code": 0,
+        "peak_rss_bytes": 411893760,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 70.58418337500188,
+        "cpu_seconds": 65.24876
+      },
+      "source_sha256": "64e9c175536c77a661bb0253acf4d0b7fffbb7d293d028d2af01b1178f617b36",
+      "goals": [
+        {
+          "goal": "typed_real_helper_wp_smoke_dead_call_s16",
+          "passed": true,
+          "verdict": "timeout",
+          "smoke": true,
+          "cached": null
+        },
+        {
+          "goal": "typed_real_flat_wp_smoke_dead_code_s17",
+          "passed": true,
+          "verdict": "timeout",
+          "smoke": true,
+          "cached": null
+        },
+        {
+          "goal": "typed_real_flat_terminates",
+          "passed": true,
+          "verdict": "valid",
+          "smoke": false,
+          "cached": null
+        },
+        {
+          "goal": "typed_real_flat_exits",
+          "passed": true,
+          "verdict": "valid",
+          "smoke": false,
+          "cached": null
+        },
+        {
+          "goal": "typed_real_flat_call_helper_requires",
+          "passed": true,
+          "verdict": "valid",
+          "smoke": false,
+          "cached": null
+        },
+        {
+          "goal": "typed_real_helper_wp_smoke_dead_call_s5",
+          "passed": false,
+          "verdict": "valid",
+          "smoke": true,
+          "cached": null
+        },
+        {
+          "goal": "typed_real_global_field_call_wp_smoke_dead_code_s6",
+          "passed": false,
+          "verdict": "valid",
+          "smoke": true,
+          "cached": null
+        },
+        {
+          "goal": "typed_real_global_field_call_terminates",
+          "passed": true,
+          "verdict": "valid",
+          "smoke": false,
+          "cached": null
+        },
+        {
+          "goal": "typed_real_global_field_call_exits",
+          "passed": true,
+          "verdict": "valid",
+          "smoke": false,
+          "cached": null
+        },
+        {
+          "goal": "typed_real_global_field_call_call_helper_requires",
+          "passed": false,
+          "verdict": "timeout",
+          "smoke": false,
+          "cached": null
+        },
+        {
+          "goal": "typed_real_helper_wp_smoke_dead_call_s12",
+          "passed": true,
+          "verdict": "timeout",
+          "smoke": true,
+          "cached": null
+        },
+        {
+          "goal": "typed_real_global_row_wp_smoke_dead_code_s13",
+          "passed": true,
+          "verdict": "timeout",
+          "smoke": true,
+          "cached": null
+        },
+        {
+          "goal": "typed_real_global_row_terminates",
+          "passed": true,
+          "verdict": "valid",
+          "smoke": false,
+          "cached": null
+        },
+        {
+          "goal": "typed_real_global_row_exits",
+          "passed": true,
+          "verdict": "valid",
+          "smoke": false,
+          "cached": null
+        },
+        {
+          "goal": "typed_real_global_row_call_helper_requires",
+          "passed": true,
+          "verdict": "valid",
+          "smoke": false,
+          "cached": null
+        },
+        {
+          "goal": "typed_real_helper_wp_smoke_dead_call_s2",
+          "passed": false,
+          "verdict": "valid",
+          "smoke": true,
+          "cached": null
+        },
+        {
+          "goal": "typed_real_local_field_wp_smoke_dead_code_s3",
+          "passed": false,
+          "verdict": "valid",
+          "smoke": true,
+          "cached": null
+        },
+        {
+          "goal": "typed_real_local_field_terminates",
+          "passed": true,
+          "verdict": "valid",
+          "smoke": false,
+          "cached": null
+        },
+        {
+          "goal": "typed_real_local_field_exits",
+          "passed": true,
+          "verdict": "valid",
+          "smoke": false,
+          "cached": null
+        },
+        {
+          "goal": "typed_real_local_field_call_helper_requires",
+          "passed": false,
+          "verdict": "timeout",
+          "smoke": false,
+          "cached": null
+        },
+        {
+          "goal": "typed_real_helper_wp_smoke_dead_call_s9",
+          "passed": true,
+          "verdict": "timeout",
+          "smoke": true,
+          "cached": null
+        },
+        {
+          "goal": "typed_real_local_row_wp_smoke_dead_code_s10",
+          "passed": true,
+          "verdict": "timeout",
+          "smoke": true,
+          "cached": null
+        },
+        {
+          "goal": "typed_real_local_row_terminates",
+          "passed": true,
+          "verdict": "valid",
+          "smoke": false,
+          "cached": null
+        },
+        {
+          "goal": "typed_real_local_row_exits",
+          "passed": true,
+          "verdict": "valid",
+          "smoke": false,
+          "cached": null
+        },
+        {
+          "goal": "typed_real_local_row_call_helper_requires",
+          "passed": true,
+          "verdict": "valid",
+          "smoke": false,
+          "cached": null
+        }
+      ],
+      "inventory_sha256": "f2d3eaabd66df4739dc520b50541c8a3e02f027710f0f17ad0f10084d7ac3d14",
+      "log_sha256": "91419ebca785a025102f26921b593c8534e3503a600e57da3db8e60e1994a49c"
+    }
+  ],
+  "primary_sources": [
+    "https://www.ece.uvic.ca/~frodo/cppdraft/n4659/html/expr.add",
+    "https://frama-c.com/download/frama-c-acsl-implementation.pdf"
+  ],
+  "finding": "WP33 allocation validity admits local/global 2D-row windows past the row. Struct-field windows fail. object_pointer checks target liveness; pointer_comparable is undefined.",
+  "admission": "Opaque incoming pointer arithmetic/indexing and generated-C-model parameter operations refuse. Concrete 1D arrays, exact audited semantic rows and certified terminal typed allocations remain supported.",
+  "pending": "Explicit formal array window domain with independent caller-origin discharge; model endpoint domain; final combined method freeze and ticket27 acceptance.",
+  "identities": {
+    "lowering": {
+      "id": "swdb-c-lowering-9",
+      "sha256": "12653a9ed0814dec3df7581e201e04029500eeb0a01c3973987a7b9adbc4cf5f"
+    },
+    "checks": {
+      "proof_setup_check": {
+        "version": "1",
+        "sha256": "5291f0d48eeeb16809d6694d7ab2db9add9cc82df5fa50649fbdae14c4d3d47d"
+      },
+      "verdict_reading": {
+        "version": "1",
+        "sha256": "5291f0d48eeeb16809d6694d7ab2db9add9cc82df5fa50649fbdae14c4d3d47d"
+      }
+    },
+    "pointer_bounds": {
+      "id": "swdb-wp-pointer-bounds-1",
+      "sha256": "b8f40ca0cee2faaf56ea75bfc6507f8b9ff628633683dee94b1dcc3670ef242b"
+    }
+  },
+  "validation": {
+    "focused_public_proof": "8 passed in 449.11s, before function-scoping internal Clang ID map; no checker premise or emitted C-view semantics changed by that final scoping fix",
+    "public_lowering_after_scoping": "8 passed in 2.75s: flat local/global origins, alias/references/address escape, unknown indexing, retained callee and terminal certificate",
+    "fully_pinned_replay": "std_copy_int refuses opaque model origins before launch; concrete flat onepast proves with new fixture method sequence 3 and exact setup/verdict hashes",
+    "logs": [
+      "/private/tmp/probata-cbmc-pointers/origin-green.jsonl",
+      "/private/tmp/probata-cbmc-pointers/origin-red.jsonl",
+      "/private/tmp/probata-cbmc-pointers/origin-lower.jsonl",
+      "/private/tmp/probata-cbmc-pointers/origin-lower-full.jsonl",
+      "/private/tmp/probata-cbmc-pointers/origin-post-scope.json",
+      "/private/tmp/probata-cbmc-pointers/origin-red3.jsonl",
+      "/private/tmp/probata-cbmc-pointers/origin-final.jsonl",
+      "/private/tmp/probata-cbmc-pointers/origin-final.log",
+      "/private/tmp/probata-cbmc-pointers/origin-red2.jsonl",
+      "/private/tmp/probata-cbmc-pointers/origin-lower-scoped.jsonl",
+      "/private/tmp/probata-cbmc-pointers/origin-final.summary.json"
+    ]
+  },
+  "records": [
+    {
+      "id": "proof.dx100-fixtures.candidate-1.20261015t104549z.5c08c6c4",
+      "record_path": "/private/tmp/probata-t36-tests/origin-final/bounded-tile-pointers0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t104549z.5c08c6c4.yaml",
+      "record_sha256": "3588819964ce7fa32882aca766310454b57e9bd2ebb31ec7f0a9d55efba0b7f0",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_tile_extent"
+      },
+      "verdict": "not_proven",
+      "failure_class": "vacuous_pass",
+      "check": {
+        "version": "1",
+        "sha256": "d616a1f94c0a2b79dc59cd35079d9e523873c5b406fb80d9ddc66fd3d532a0ea"
+      },
+      "goal_statuses": {
+        "valid": 61,
+        "failed_smoke": 1,
+        "timeout": 1
+      },
+      "origin_report": {
+        "check": {
+          "id": "swdb-wp-pointer-bounds-1",
+          "sha256": "c8e54da20893425067187ad2b4c13089ae2db8bad411e6d89deb1c449d7d129c"
+        },
+        "source_sha256": "c10f909d3284f27d2b3f866c7423688f72ec5226d2fc2e8491093755b6d53979",
+        "lowering_sha256": "0d0d495ccc6918b7b8b1dca3e370adf8e7b153e1506c3d12e666a4c1e5dc5b46",
+        "sites": [
+          {
+            "function": "dxf_tile_extent",
+            "source_line": null,
+            "admission_only": true,
+            "origin": {
+              "kind": "semantic_rows",
+              "producer": "get_cacheable_tile_pointer",
+              "element_type": "int",
+              "elements": 2,
+              "policy": {
+                "id": "dx100-initialized-inputs-1",
+                "entry": "semantics.dx100_bfs_0_1",
+                "entry_sha256": "c8130de97acd75e416c4b12ab12beb03e3fc99233693ed393bbd08b9e63d72b9",
+                "components": {
+                  "ghost": "5fa3f12850eba75ccb254b1c1e8ab5c143488046949fbe0e4c965b55ecdb48e9",
+                  "state": "b371131b4a3a7ef21ad654b0eaffac94b4c63252d63397ee8b67a6b017610701",
+                  "c": "88298dbb9176640fd8ec2d0c6e31386dd51849411b08df7cebf7f12eab1d22ce"
+                },
+                "generated_sha256": "9da2171a242634c65940ae091c2787a93647d695c6113d61f1a74f237a810aee",
+                "tile_objects": [
+                  {
+                    "name": "swdb_dx_tile_row_0",
+                    "elements": 2
+                  },
+                  {
+                    "name": "swdb_dx_tile_row_1",
+                    "elements": 2
+                  }
+                ],
+                "calls": [
+                  "add_mem_region",
+                  "clear_mem_region",
+                  "get_cacheable_tile_pointer",
+                  "get_new_reg",
+                  "get_new_tile",
+                  "get_tile_size",
+                  "maa_alu_scalar",
+                  "maa_const",
+                  "maa_indirect_load",
+                  "maa_indirect_store_vector",
+                  "maa_range_loop",
+                  "maa_stream_load",
+                  "swdb_dx_in_footprint",
+                  "wait_ready"
+                ]
+              }
+            },
+            "reason": ""
+          },
+          {
+            "function": "dxf_tile_extent",
+            "source_line": null,
+            "admission_only": true,
+            "origin": {
+              "kind": "semantic_rows",
+              "producer": "get_cacheable_tile_pointer",
+              "element_type": "int",
+              "elements": 2,
+              "policy": {
+                "id": "dx100-initialized-inputs-1",
+                "entry": "semantics.dx100_bfs_0_1",
+                "entry_sha256": "c8130de97acd75e416c4b12ab12beb03e3fc99233693ed393bbd08b9e63d72b9",
+                "components": {
+                  "ghost": "5fa3f12850eba75ccb254b1c1e8ab5c143488046949fbe0e4c965b55ecdb48e9",
+                  "state": "b371131b4a3a7ef21ad654b0eaffac94b4c63252d63397ee8b67a6b017610701",
+                  "c": "88298dbb9176640fd8ec2d0c6e31386dd51849411b08df7cebf7f12eab1d22ce"
+                },
+                "generated_sha256": "9da2171a242634c65940ae091c2787a93647d695c6113d61f1a74f237a810aee",
+                "tile_objects": [
+                  {
+                    "name": "swdb_dx_tile_row_0",
+                    "elements": 2
+                  },
+                  {
+                    "name": "swdb_dx_tile_row_1",
+                    "elements": 2
+                  }
+                ],
+                "calls": [
+                  "add_mem_region",
+                  "clear_mem_region",
+                  "get_cacheable_tile_pointer",
+                  "get_new_reg",
+                  "get_new_tile",
+                  "get_tile_size",
+                  "maa_alu_scalar",
+                  "maa_const",
+                  "maa_indirect_load",
+                  "maa_indirect_store_vector",
+                  "maa_range_loop",
+                  "maa_stream_load",
+                  "swdb_dx_in_footprint",
+                  "wait_ready"
+                ]
+              }
+            },
+            "reason": ""
+          },
+          {
+            "function": "dxf_tile_extent",
+            "source_line": null,
+            "admission_only": true,
+            "origin": {
+              "kind": "semantic_rows",
+              "producer": "get_cacheable_tile_pointer",
+              "element_type": "int",
+              "elements": 2,
+              "policy": {
+                "id": "dx100-initialized-inputs-1",
+                "entry": "semantics.dx100_bfs_0_1",
+                "entry_sha256": "c8130de97acd75e416c4b12ab12beb03e3fc99233693ed393bbd08b9e63d72b9",
+                "components": {
+                  "ghost": "5fa3f12850eba75ccb254b1c1e8ab5c143488046949fbe0e4c965b55ecdb48e9",
+                  "state": "b371131b4a3a7ef21ad654b0eaffac94b4c63252d63397ee8b67a6b017610701",
+                  "c": "88298dbb9176640fd8ec2d0c6e31386dd51849411b08df7cebf7f12eab1d22ce"
+                },
+                "generated_sha256": "9da2171a242634c65940ae091c2787a93647d695c6113d61f1a74f237a810aee",
+                "tile_objects": [
+                  {
+                    "name": "swdb_dx_tile_row_0",
+                    "elements": 2
+                  },
+                  {
+                    "name": "swdb_dx_tile_row_1",
+                    "elements": 2
+                  }
+                ],
+                "calls": [
+                  "add_mem_region",
+                  "clear_mem_region",
+                  "get_cacheable_tile_pointer",
+                  "get_new_reg",
+                  "get_new_tile",
+                  "get_tile_size",
+                  "maa_alu_scalar",
+                  "maa_const",
+                  "maa_indirect_load",
+                  "maa_indirect_store_vector",
+                  "maa_range_loop",
+                  "maa_stream_load",
+                  "swdb_dx_in_footprint",
+                  "wait_ready"
+                ]
+              }
+            },
+            "reason": ""
+          },
+          {
+            "function": "dxf_tile_extent",
+            "source_line": null,
+            "admission_only": true,
+            "origin": {
+              "kind": "semantic_rows",
+              "producer": "get_cacheable_tile_pointer",
+              "element_type": "int",
+              "elements": 2,
+              "policy": {
+                "id": "dx100-initialized-inputs-1",
+                "entry": "semantics.dx100_bfs_0_1",
+                "entry_sha256": "c8130de97acd75e416c4b12ab12beb03e3fc99233693ed393bbd08b9e63d72b9",
+                "components": {
+                  "ghost": "5fa3f12850eba75ccb254b1c1e8ab5c143488046949fbe0e4c965b55ecdb48e9",
+                  "state": "b371131b4a3a7ef21ad654b0eaffac94b4c63252d63397ee8b67a6b017610701",
+                  "c": "88298dbb9176640fd8ec2d0c6e31386dd51849411b08df7cebf7f12eab1d22ce"
+                },
+                "generated_sha256": "9da2171a242634c65940ae091c2787a93647d695c6113d61f1a74f237a810aee",
+                "tile_objects": [
+                  {
+                    "name": "swdb_dx_tile_row_0",
+                    "elements": 2
+                  },
+                  {
+                    "name": "swdb_dx_tile_row_1",
+                    "elements": 2
+                  }
+                ],
+                "calls": [
+                  "add_mem_region",
+                  "clear_mem_region",
+                  "get_cacheable_tile_pointer",
+                  "get_new_reg",
+                  "get_new_tile",
+                  "get_tile_size",
+                  "maa_alu_scalar",
+                  "maa_const",
+                  "maa_indirect_load",
+                  "maa_indirect_store_vector",
+                  "maa_range_loop",
+                  "maa_stream_load",
+                  "swdb_dx_in_footprint",
+                  "wait_ready"
+                ]
+              }
+            },
+            "reason": ""
+          },
+          {
+            "function": "dxf_tile_extent",
+            "source_line": null,
+            "admission_only": true,
+            "origin": {
+              "kind": "semantic_rows",
+              "producer": "get_cacheable_tile_pointer",
+              "element_type": "int",
+              "elements": 2,
+              "policy": {
+                "id": "dx100-initialized-inputs-1",
+                "entry": "semantics.dx100_bfs_0_1",
+                "entry_sha256": "c8130de97acd75e416c4b12ab12beb03e3fc99233693ed393bbd08b9e63d72b9",
+                "components": {
+                  "ghost": "5fa3f12850eba75ccb254b1c1e8ab5c143488046949fbe0e4c965b55ecdb48e9",
+                  "state": "b371131b4a3a7ef21ad654b0eaffac94b4c63252d63397ee8b67a6b017610701",
+                  "c": "88298dbb9176640fd8ec2d0c6e31386dd51849411b08df7cebf7f12eab1d22ce"
+                },
+                "generated_sha256": "9da2171a242634c65940ae091c2787a93647d695c6113d61f1a74f237a810aee",
+                "tile_objects": [
+                  {
+                    "name": "swdb_dx_tile_row_0",
+                    "elements": 2
+                  },
+                  {
+                    "name": "swdb_dx_tile_row_1",
+                    "elements": 2
+                  }
+                ],
+                "calls": [
+                  "add_mem_region",
+                  "clear_mem_region",
+                  "get_cacheable_tile_pointer",
+                  "get_new_reg",
+                  "get_new_tile",
+                  "get_tile_size",
+                  "maa_alu_scalar",
+                  "maa_const",
+                  "maa_indirect_load",
+                  "maa_indirect_store_vector",
+                  "maa_range_loop",
+                  "maa_stream_load",
+                  "swdb_dx_in_footprint",
+                  "wait_ready"
+                ]
+              }
+            },
+            "reason": ""
+          }
+        ],
+        "domain_boundary": "Only certified whole one-dimensional arrays, exact audited semantic rows and terminal typed allocations; opaque incoming pointer arithmetic/indexing is unsupported; exact C++ null-plus-zero is checked.",
+        "certificate_sha256": "ace0ca8a65fc148f7c72a7cf790f777241f2bf55d11ee3957889e8aebc6cde84"
+      },
+      "method": {
+        "id": "method.cbmc-fixture",
+        "sha256": "96460cd70d5787d90756e891c3bb64d065f4c501cdc4b38f5ce81103b9ca3bc6"
+      }
+    },
+    {
+      "id": "proof.dx100-fixtures.candidate-1.20261015t104818z.93f5d643",
+      "record_path": "/private/tmp/probata-t36-tests/origin-final/bounded-tile-pointers0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t104818z.93f5d643.yaml",
+      "record_sha256": "0570e49bdbce84483e2d9a20e38b90a66396fd4ddbdda1e2ed69769a6a21a16d",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_tile_extent"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "check": {
+        "version": "1",
+        "sha256": "d616a1f94c0a2b79dc59cd35079d9e523873c5b406fb80d9ddc66fd3d532a0ea"
+      },
+      "goal_statuses": {
+        "valid": 63
+      },
+      "origin_report": {
+        "check": {
+          "id": "swdb-wp-pointer-bounds-1",
+          "sha256": "c8e54da20893425067187ad2b4c13089ae2db8bad411e6d89deb1c449d7d129c"
+        },
+        "source_sha256": "c10f909d3284f27d2b3f866c7423688f72ec5226d2fc2e8491093755b6d53979",
+        "lowering_sha256": "3d916782eab2d4a16da21600ea88a2e001c460fa8cce3fff23a9f8bbb97cb27c",
+        "sites": [
+          {
+            "function": "dxf_tile_extent",
+            "source_line": null,
+            "admission_only": true,
+            "origin": {
+              "kind": "semantic_rows",
+              "producer": "get_cacheable_tile_pointer",
+              "element_type": "int",
+              "elements": 2,
+              "policy": {
+                "id": "dx100-initialized-inputs-1",
+                "entry": "semantics.dx100_bfs_0_1",
+                "entry_sha256": "c8130de97acd75e416c4b12ab12beb03e3fc99233693ed393bbd08b9e63d72b9",
+                "components": {
+                  "ghost": "5fa3f12850eba75ccb254b1c1e8ab5c143488046949fbe0e4c965b55ecdb48e9",
+                  "state": "b371131b4a3a7ef21ad654b0eaffac94b4c63252d63397ee8b67a6b017610701",
+                  "c": "88298dbb9176640fd8ec2d0c6e31386dd51849411b08df7cebf7f12eab1d22ce"
+                },
+                "generated_sha256": "9da2171a242634c65940ae091c2787a93647d695c6113d61f1a74f237a810aee",
+                "tile_objects": [
+                  {
+                    "name": "swdb_dx_tile_row_0",
+                    "elements": 2
+                  },
+                  {
+                    "name": "swdb_dx_tile_row_1",
+                    "elements": 2
+                  }
+                ],
+                "calls": [
+                  "add_mem_region",
+                  "clear_mem_region",
+                  "get_cacheable_tile_pointer",
+                  "get_new_reg",
+                  "get_new_tile",
+                  "get_tile_size",
+                  "maa_alu_scalar",
+                  "maa_const",
+                  "maa_indirect_load",
+                  "maa_indirect_store_vector",
+                  "maa_range_loop",
+                  "maa_stream_load",
+                  "swdb_dx_in_footprint",
+                  "wait_ready"
+                ]
+              }
+            },
+            "reason": ""
+          },
+          {
+            "function": "dxf_tile_extent",
+            "source_line": null,
+            "admission_only": true,
+            "origin": {
+              "kind": "semantic_rows",
+              "producer": "get_cacheable_tile_pointer",
+              "element_type": "int",
+              "elements": 2,
+              "policy": {
+                "id": "dx100-initialized-inputs-1",
+                "entry": "semantics.dx100_bfs_0_1",
+                "entry_sha256": "c8130de97acd75e416c4b12ab12beb03e3fc99233693ed393bbd08b9e63d72b9",
+                "components": {
+                  "ghost": "5fa3f12850eba75ccb254b1c1e8ab5c143488046949fbe0e4c965b55ecdb48e9",
+                  "state": "b371131b4a3a7ef21ad654b0eaffac94b4c63252d63397ee8b67a6b017610701",
+                  "c": "88298dbb9176640fd8ec2d0c6e31386dd51849411b08df7cebf7f12eab1d22ce"
+                },
+                "generated_sha256": "9da2171a242634c65940ae091c2787a93647d695c6113d61f1a74f237a810aee",
+                "tile_objects": [
+                  {
+                    "name": "swdb_dx_tile_row_0",
+                    "elements": 2
+                  },
+                  {
+                    "name": "swdb_dx_tile_row_1",
+                    "elements": 2
+                  }
+                ],
+                "calls": [
+                  "add_mem_region",
+                  "clear_mem_region",
+                  "get_cacheable_tile_pointer",
+                  "get_new_reg",
+                  "get_new_tile",
+                  "get_tile_size",
+                  "maa_alu_scalar",
+                  "maa_const",
+                  "maa_indirect_load",
+                  "maa_indirect_store_vector",
+                  "maa_range_loop",
+                  "maa_stream_load",
+                  "swdb_dx_in_footprint",
+                  "wait_ready"
+                ]
+              }
+            },
+            "reason": ""
+          },
+          {
+            "function": "dxf_tile_extent",
+            "source_line": null,
+            "admission_only": true,
+            "origin": {
+              "kind": "semantic_rows",
+              "producer": "get_cacheable_tile_pointer",
+              "element_type": "int",
+              "elements": 2,
+              "policy": {
+                "id": "dx100-initialized-inputs-1",
+                "entry": "semantics.dx100_bfs_0_1",
+                "entry_sha256": "c8130de97acd75e416c4b12ab12beb03e3fc99233693ed393bbd08b9e63d72b9",
+                "components": {
+                  "ghost": "5fa3f12850eba75ccb254b1c1e8ab5c143488046949fbe0e4c965b55ecdb48e9",
+                  "state": "b371131b4a3a7ef21ad654b0eaffac94b4c63252d63397ee8b67a6b017610701",
+                  "c": "88298dbb9176640fd8ec2d0c6e31386dd51849411b08df7cebf7f12eab1d22ce"
+                },
+                "generated_sha256": "9da2171a242634c65940ae091c2787a93647d695c6113d61f1a74f237a810aee",
+                "tile_objects": [
+                  {
+                    "name": "swdb_dx_tile_row_0",
+                    "elements": 2
+                  },
+                  {
+                    "name": "swdb_dx_tile_row_1",
+                    "elements": 2
+                  }
+                ],
+                "calls": [
+                  "add_mem_region",
+                  "clear_mem_region",
+                  "get_cacheable_tile_pointer",
+                  "get_new_reg",
+                  "get_new_tile",
+                  "get_tile_size",
+                  "maa_alu_scalar",
+                  "maa_const",
+                  "maa_indirect_load",
+                  "maa_indirect_store_vector",
+                  "maa_range_loop",
+                  "maa_stream_load",
+                  "swdb_dx_in_footprint",
+                  "wait_ready"
+                ]
+              }
+            },
+            "reason": ""
+          },
+          {
+            "function": "dxf_tile_extent",
+            "source_line": null,
+            "admission_only": true,
+            "origin": {
+              "kind": "semantic_rows",
+              "producer": "get_cacheable_tile_pointer",
+              "element_type": "int",
+              "elements": 2,
+              "policy": {
+                "id": "dx100-initialized-inputs-1",
+                "entry": "semantics.dx100_bfs_0_1",
+                "entry_sha256": "c8130de97acd75e416c4b12ab12beb03e3fc99233693ed393bbd08b9e63d72b9",
+                "components": {
+                  "ghost": "5fa3f12850eba75ccb254b1c1e8ab5c143488046949fbe0e4c965b55ecdb48e9",
+                  "state": "b371131b4a3a7ef21ad654b0eaffac94b4c63252d63397ee8b67a6b017610701",
+                  "c": "88298dbb9176640fd8ec2d0c6e31386dd51849411b08df7cebf7f12eab1d22ce"
+                },
+                "generated_sha256": "9da2171a242634c65940ae091c2787a93647d695c6113d61f1a74f237a810aee",
+                "tile_objects": [
+                  {
+                    "name": "swdb_dx_tile_row_0",
+                    "elements": 2
+                  },
+                  {
+                    "name": "swdb_dx_tile_row_1",
+                    "elements": 2
+                  }
+                ],
+                "calls": [
+                  "add_mem_region",
+                  "clear_mem_region",
+                  "get_cacheable_tile_pointer",
+                  "get_new_reg",
+                  "get_new_tile",
+                  "get_tile_size",
+                  "maa_alu_scalar",
+                  "maa_const",
+                  "maa_indirect_load",
+                  "maa_indirect_store_vector",
+                  "maa_range_loop",
+                  "maa_stream_load",
+                  "swdb_dx_in_footprint",
+                  "wait_ready"
+                ]
+              }
+            },
+            "reason": ""
+          },
+          {
+            "function": "dxf_tile_extent",
+            "source_line": null,
+            "admission_only": true,
+            "origin": {
+              "kind": "semantic_rows",
+              "producer": "get_cacheable_tile_pointer",
+              "element_type": "int",
+              "elements": 2,
+              "policy": {
+                "id": "dx100-initialized-inputs-1",
+                "entry": "semantics.dx100_bfs_0_1",
+                "entry_sha256": "c8130de97acd75e416c4b12ab12beb03e3fc99233693ed393bbd08b9e63d72b9",
+                "components": {
+                  "ghost": "5fa3f12850eba75ccb254b1c1e8ab5c143488046949fbe0e4c965b55ecdb48e9",
+                  "state": "b371131b4a3a7ef21ad654b0eaffac94b4c63252d63397ee8b67a6b017610701",
+                  "c": "88298dbb9176640fd8ec2d0c6e31386dd51849411b08df7cebf7f12eab1d22ce"
+                },
+                "generated_sha256": "9da2171a242634c65940ae091c2787a93647d695c6113d61f1a74f237a810aee",
+                "tile_objects": [
+                  {
+                    "name": "swdb_dx_tile_row_0",
+                    "elements": 2
+                  },
+                  {
+                    "name": "swdb_dx_tile_row_1",
+                    "elements": 2
+                  }
+                ],
+                "calls": [
+                  "add_mem_region",
+                  "clear_mem_region",
+                  "get_cacheable_tile_pointer",
+                  "get_new_reg",
+                  "get_new_tile",
+                  "get_tile_size",
+                  "maa_alu_scalar",
+                  "maa_const",
+                  "maa_indirect_load",
+                  "maa_indirect_store_vector",
+                  "maa_range_loop",
+                  "maa_stream_load",
+                  "swdb_dx_in_footprint",
+                  "wait_ready"
+                ]
+              }
+            },
+            "reason": ""
+          }
+        ],
+        "domain_boundary": "Only certified whole one-dimensional arrays, exact audited semantic rows and terminal typed allocations; opaque incoming pointer arithmetic/indexing is unsupported; exact C++ null-plus-zero is checked.",
+        "certificate_sha256": "af93e0d7c9534cd11a1d8298e64e90e750fa062b7184cd3664c46d3ee6bc521a"
+      },
+      "method": {
+        "id": "method.cbmc-fixture",
+        "sha256": "96460cd70d5787d90756e891c3bb64d065f4c501cdc4b38f5ce81103b9ca3bc6"
+      }
+    },
+    {
+      "id": "proof.dx100-fixtures.candidate-1.20261015t104945z.cbc7d9ad",
+      "record_path": "/private/tmp/probata-t36-tests/origin-final/bounded-tile-pointers0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t104945z.cbc7d9ad.yaml",
+      "record_sha256": "f1d10a5e57e73dceee144fca38f80d6dd5b2d7a515818254e12d8a8443898e74",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_pointer_null"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "check": {
+        "version": "1",
+        "sha256": "d616a1f94c0a2b79dc59cd35079d9e523873c5b406fb80d9ddc66fd3d532a0ea"
+      },
+      "goal_statuses": {
+        "valid": 6
+      },
+      "origin_report": {
+        "check": {
+          "id": "swdb-wp-pointer-bounds-1",
+          "sha256": "c8e54da20893425067187ad2b4c13089ae2db8bad411e6d89deb1c449d7d129c"
+        },
+        "source_sha256": "c10f909d3284f27d2b3f866c7423688f72ec5226d2fc2e8491093755b6d53979",
+        "lowering_sha256": "172665e8dbada366d38bbe0c21608d3e6b0d3d1a78755fb1fa5011bd33fa1e9e",
+        "sites": [
+          {
+            "function": "dxf_pointer_null",
+            "anchor": "dxf_pointer_null.s1.before",
+            "source_line": "bfs.cc line 510",
+            "base": "p",
+            "expression": "p + 0",
+            "offset": "0",
+            "reason": "",
+            "normalized_expression": "((0) == 0 ? (p) : (p + 0))",
+            "null_only": true
+          }
+        ],
+        "domain_boundary": "Only certified whole one-dimensional arrays, exact audited semantic rows and terminal typed allocations; opaque incoming pointer arithmetic/indexing is unsupported; exact C++ null-plus-zero is checked.",
+        "certificate_sha256": "3e337def596e85a6e82b1e0cec6f16e95c68dcde126275d168704bf3f44e59e1"
+      },
+      "method": {
+        "id": "method.cbmc-fixture",
+        "sha256": "96460cd70d5787d90756e891c3bb64d065f4c501cdc4b38f5ce81103b9ca3bc6"
+      }
+    },
+    {
+      "id": "proof.dx100-fixtures.candidate-1.20261015t105009z.87207902",
+      "record_path": "/private/tmp/probata-t36-tests/origin-final/bounded-tile-pointers0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t105009z.87207902.yaml",
+      "record_sha256": "a79b169054c3ff0fb37bc82932d2b40994647279339e386f43aade8f8a770b31",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_pointer_formation"
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "check": {
+        "version": "1",
+        "sha256": "d616a1f94c0a2b79dc59cd35079d9e523873c5b406fb80d9ddc66fd3d532a0ea"
+      },
+      "goal_statuses": {},
+      "origin_report": {
+        "verdict": "refused",
+        "reason": "dxf_pointer_formation:None: pointer arithmetic/indexing needs a certified array-object origin; incoming pointer domains are unsupported",
+        "check": {
+          "id": "swdb-wp-pointer-bounds-1",
+          "sha256": "c8e54da20893425067187ad2b4c13089ae2db8bad411e6d89deb1c449d7d129c"
+        }
+      },
+      "method": {
+        "id": "method.cbmc-fixture",
+        "sha256": "96460cd70d5787d90756e891c3bb64d065f4c501cdc4b38f5ce81103b9ca3bc6"
+      }
+    },
+    {
+      "id": "proof.dx100-fixtures.candidate-1.20261015t105032z.e10ebcc5",
+      "record_path": "/private/tmp/probata-t36-tests/origin-final/bounded-tile-pointers0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t105032z.e10ebcc5.yaml",
+      "record_sha256": "ec6a327a78b4963ddac4ccb1daba97cdbd6c5a46dbbffaa5c08c4893343d5202",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_pointer_index"
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "check": {
+        "version": "1",
+        "sha256": "d616a1f94c0a2b79dc59cd35079d9e523873c5b406fb80d9ddc66fd3d532a0ea"
+      },
+      "goal_statuses": {},
+      "origin_report": {
+        "verdict": "refused",
+        "reason": "dxf_pointer_index:None: pointer arithmetic/indexing needs a certified array-object origin; incoming pointer domains are unsupported",
+        "check": {
+          "id": "swdb-wp-pointer-bounds-1",
+          "sha256": "c8e54da20893425067187ad2b4c13089ae2db8bad411e6d89deb1c449d7d129c"
+        }
+      },
+      "method": {
+        "id": "method.cbmc-fixture",
+        "sha256": "96460cd70d5787d90756e891c3bb64d065f4c501cdc4b38f5ce81103b9ca3bc6"
+      }
+    },
+    {
+      "id": "proof.dx100-fixtures.candidate-1.20261015t105055z.0f7b58ee",
+      "record_path": "/private/tmp/probata-t36-tests/origin-final/bounded-tile-pointers0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t105055z.0f7b58ee.yaml",
+      "record_sha256": "8eafc2654024f7ac7c14ce08ce8326fc158b1db0b9baf79cf41e4e87dbb73b95",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_pointer_flat"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "check": {
+        "version": "1",
+        "sha256": "d616a1f94c0a2b79dc59cd35079d9e523873c5b406fb80d9ddc66fd3d532a0ea"
+      },
+      "goal_statuses": {
+        "valid": 9
+      },
+      "origin_report": {
+        "check": {
+          "id": "swdb-wp-pointer-bounds-1",
+          "sha256": "c8e54da20893425067187ad2b4c13089ae2db8bad411e6d89deb1c449d7d129c"
+        },
+        "source_sha256": "c10f909d3284f27d2b3f866c7423688f72ec5226d2fc2e8491093755b6d53979",
+        "lowering_sha256": "603cb8efc504bd9c718ec8b98e40bdcf0a54de687dc36cf09f9c4baffe889fac",
+        "sites": [
+          {
+            "function": "dxf_pointer_flat",
+            "anchor": "dxf_pointer_flat.s3.before",
+            "source_line": "bfs.cc line 504",
+            "base": "p",
+            "expression": "p + n",
+            "offset": "n",
+            "reason": "",
+            "normalized_expression": "((n) == 0 ? (p) : (p + n))",
+            "origin": {
+              "kind": "one_dimensional_array",
+              "name": "a",
+              "element_type": "int",
+              "elements": 2
+            }
+          }
+        ],
+        "domain_boundary": "Only certified whole one-dimensional arrays, exact audited semantic rows and terminal typed allocations; opaque incoming pointer arithmetic/indexing is unsupported; exact C++ null-plus-zero is checked.",
+        "certificate_sha256": "448b1aaed031a9549cece4df293476b77a464a8c9032e7c4c5f4eeee4f331588"
+      },
+      "method": {
+        "id": "method.cbmc-fixture",
+        "sha256": "96460cd70d5787d90756e891c3bb64d065f4c501cdc4b38f5ce81103b9ca3bc6"
+      }
+    },
+    {
+      "id": "proof.dx100-fixtures.candidate-1.20261015t105131z.6b3c078f",
+      "record_path": "/private/tmp/probata-t36-tests/origin-final/bounded-tile-pointers0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t105131z.6b3c078f.yaml",
+      "record_sha256": "dc1b576793c93490bf2b3eb6b8477b0dff2957f3193fda0d06ba1462e1bbdaf5",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_pointer_flat"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "check": {
+        "version": "1",
+        "sha256": "d616a1f94c0a2b79dc59cd35079d9e523873c5b406fb80d9ddc66fd3d532a0ea"
+      },
+      "goal_statuses": {
+        "valid": 9
+      },
+      "origin_report": {
+        "check": {
+          "id": "swdb-wp-pointer-bounds-1",
+          "sha256": "c8e54da20893425067187ad2b4c13089ae2db8bad411e6d89deb1c449d7d129c"
+        },
+        "source_sha256": "c10f909d3284f27d2b3f866c7423688f72ec5226d2fc2e8491093755b6d53979",
+        "lowering_sha256": "91d5769d25ef0ea1d5d67d682277a9a287dcccbc0555342b3f17f89d4dbdba1f",
+        "sites": [
+          {
+            "function": "dxf_pointer_flat",
+            "anchor": "dxf_pointer_flat.s2.before",
+            "source_line": "bfs.cc line 504",
+            "base": "p",
+            "expression": "p + n",
+            "offset": "n",
+            "reason": "",
+            "normalized_expression": "((n) == 0 ? (p) : (p + n))",
+            "origin": {
+              "kind": "one_dimensional_array",
+              "name": "pointer_global_flat",
+              "element_type": "int",
+              "elements": 2
+            }
+          }
+        ],
+        "domain_boundary": "Only certified whole one-dimensional arrays, exact audited semantic rows and terminal typed allocations; opaque incoming pointer arithmetic/indexing is unsupported; exact C++ null-plus-zero is checked.",
+        "certificate_sha256": "eedf00098ba1c173d9098b30b8074bb027ebbd1d135d525be923d9e29bb346ac"
+      },
+      "method": {
+        "id": "method.cbmc-fixture",
+        "sha256": "96460cd70d5787d90756e891c3bb64d065f4c501cdc4b38f5ce81103b9ca3bc6"
+      }
+    },
+    {
+      "id": "proof.dx100-fixtures.candidate-1.20261015t105157z.6f972e44",
+      "record_path": "/private/tmp/probata-t36-tests/origin-final/bounded-tile-pointers0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t105157z.6f972e44.yaml",
+      "record_sha256": "7a2eed785dab4354dc0ce122ac8432af7ad6527fd1a5c733b8c3b2c5b6bfa22c",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_pointer_rebound"
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "check": {
+        "version": "1",
+        "sha256": "d616a1f94c0a2b79dc59cd35079d9e523873c5b406fb80d9ddc66fd3d532a0ea"
+      },
+      "goal_statuses": {},
+      "origin_report": {
+        "verdict": "refused",
+        "reason": "dxf_pointer_rebound:None: pointer arithmetic/indexing needs a certified array-object origin; incoming pointer domains are unsupported",
+        "check": {
+          "id": "swdb-wp-pointer-bounds-1",
+          "sha256": "c8e54da20893425067187ad2b4c13089ae2db8bad411e6d89deb1c449d7d129c"
+        }
+      },
+      "method": {
+        "id": "method.cbmc-fixture",
+        "sha256": "96460cd70d5787d90756e891c3bb64d065f4c501cdc4b38f5ce81103b9ca3bc6"
+      }
+    },
+    {
+      "id": "proof.dx100-fixtures.candidate-1.20261015t105354z.6be70f71",
+      "record_path": "/private/tmp/probata-t36-tests/origin-final/bounded-tile-pointers0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t105354z.6be70f71.yaml",
+      "record_sha256": "637bb35f40e1f35fc23b84e49213d04cfd119359434c984417e6651a72025b3d",
+      "subject": {
+        "kind": "candidate_proof_unit",
+        "candidate": "dx100-fixtures.candidate-1",
+        "function": "dxf_pointer_flat"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "check": {
+        "version": "1",
+        "sha256": "5291f0d48eeeb16809d6694d7ab2db9add9cc82df5fa50649fbdae14c4d3d47d"
+      },
+      "goal_statuses": {
+        "valid": 9
+      },
+      "origin_report": {
+        "check": {
+          "id": "swdb-wp-pointer-bounds-1",
+          "sha256": "b8f40ca0cee2faaf56ea75bfc6507f8b9ff628633683dee94b1dcc3670ef242b"
+        },
+        "source_sha256": "c10f909d3284f27d2b3f866c7423688f72ec5226d2fc2e8491093755b6d53979",
+        "lowering_sha256": "603cb8efc504bd9c718ec8b98e40bdcf0a54de687dc36cf09f9c4baffe889fac",
+        "sites": [
+          {
+            "function": "dxf_pointer_flat",
+            "anchor": "dxf_pointer_flat.s3.before",
+            "source_line": "bfs.cc line 504",
+            "base": "p",
+            "expression": "p + n",
+            "offset": "n",
+            "reason": "",
+            "normalized_expression": "((n) == 0 ? (p) : (p + n))",
+            "origin": {
+              "kind": "one_dimensional_array",
+              "name": "a",
+              "element_type": "int",
+              "elements": 2
+            }
+          }
+        ],
+        "domain_boundary": "Only certified whole one-dimensional arrays, exact audited semantic rows and terminal typed allocations; opaque incoming pointer arithmetic/indexing is unsupported; exact C++ null-plus-zero is checked.",
+        "certificate_sha256": "d674d6524e0d4ea3b1cd6e4f1f315ab4e4c92e928bc3dc6736d4df1a54546ced"
+      },
+      "method": {
+        "id": "method.origin-final-fixture",
+        "sha256": "8087e77bce7066353bb160c55805326326665638e3eca1ab95ad3fab8027e45c"
+      }
+    },
+    {
+      "id": "proof.model.std_copy_int.20261015t105335z.e8d6b74b",
+      "record_path": "/private/tmp/probata-t36-tests/origin-final/bounded-tile-pointers0/records/proofs/proof.model.std_copy_int.20261015t105335z.e8d6b74b.yaml",
+      "record_sha256": "fbf0321b5617dec7d9c374d6701a3260e0289447f4d32f7291fb6577cd3e9a89",
+      "subject": {
+        "kind": "c_model",
+        "id": "std_copy_int"
+      },
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "check": {
+        "version": "1",
+        "sha256": "5291f0d48eeeb16809d6694d7ab2db9add9cc82df5fa50649fbdae14c4d3d47d"
+      },
+      "goal_statuses": {},
+      "origin_report": {
+        "verdict": "refused",
+        "reason": "generated C model pointer arithmetic/indexing needs a certified array-object origin; opaque parameter domains are unsupported",
+        "check": {
+          "id": "swdb-wp-pointer-bounds-1",
+          "sha256": "b8f40ca0cee2faaf56ea75bfc6507f8b9ff628633683dee94b1dcc3670ef242b"
+        }
+      },
+      "method": {
+        "id": "method.origin-final-fixture",
+        "sha256": "8087e77bce7066353bb160c55805326326665638e3eca1ab95ad3fab8027e45c"
+      }
+    }
+  ],
+  "integration_handoff": {
+    "merge_commit": "964feccc",
+    "integration_parent": "0d3e6c18",
+    "lowering": {
+      "id": "swdb-c-lowering-9",
+      "sha256": "12653a9ed0814dec3df7581e201e04029500eeb0a01c3973987a7b9adbc4cf5f"
+    },
+    "checks": {
+      "proof_setup_check": {
+        "version": "1",
+        "sha256": "415d739ad05470ccb2a6edfa17c45168787c99733c00ee250ea77995eca1f764"
+      },
+      "verdict_reading": {
+        "version": "1",
+        "sha256": "415d739ad05470ccb2a6edfa17c45168787c99733c00ee250ea77995eca1f764"
+      }
+    },
+    "validation": "8 public lowering controls passed in 1.98s after resolving the union with no-filter-init and standard_model_view; no extra real verifier run for dependency-union-only merge",
+    "status": "staging: explicit array domain metadata alone never waives conservative admission"
+  }
+}

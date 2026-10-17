@@ -1,0 +1,253 @@
+{
+  "actual_outcomes": null,
+  "cases": [
+    {
+      "case_id": "source-79",
+      "contract_id": "contract.dx100_whole_source_79",
+      "expected_verdict": "refuted",
+      "function": "whole_interface_source_fixture",
+      "kind": "SourceUnit"
+    },
+    {
+      "case_id": "source-80",
+      "contract_id": "contract.dx100_whole_source_80",
+      "expected_verdict": "proven",
+      "function": "whole_interface_source_fixture",
+      "kind": "SourceUnit"
+    },
+    {
+      "case_id": "whole_same_thread_read_during_store",
+      "contract_id": "contract.dx100_whole_same_thread_read_during_store",
+      "expected_verdict": "refuted",
+      "function": "whole_same_thread_read_during_store",
+      "kind": "SourceUnit"
+    },
+    {
+      "case_id": "whole_same_thread_write_during_gather",
+      "contract_id": "contract.dx100_whole_same_thread_write_during_gather",
+      "expected_verdict": "refuted",
+      "function": "whole_same_thread_write_during_gather",
+      "kind": "SourceUnit"
+    },
+    {
+      "case_id": "whole_same_thread_read_during_gather",
+      "contract_id": "contract.dx100_whole_same_thread_read_during_gather",
+      "expected_verdict": "proven",
+      "function": "whole_same_thread_read_during_gather",
+      "kind": "SourceUnit"
+    },
+    {
+      "case_id": "finite-history_latest_positive",
+      "contract_id": "contract.dx100_finite_history_latest_positive",
+      "expected_verdict": "proven",
+      "function": "dwe_finite_trace",
+      "kind": "TraceUnit"
+    },
+    {
+      "case_id": "finite-history_exact_issue_negative",
+      "contract_id": "contract.dx100_finite_history_exact_issue_negative",
+      "expected_verdict": "refuted",
+      "function": "dwe_finite_trace",
+      "kind": "TraceUnit"
+    },
+    {
+      "case_id": "finite-other_thread_cpu_read_positive",
+      "contract_id": "contract.dx100_finite_other_thread_cpu_read_positive",
+      "expected_verdict": "proven",
+      "function": "dwe_finite_trace",
+      "kind": "TraceUnit"
+    },
+    {
+      "case_id": "finite-pending_store_cpu_read_negative",
+      "contract_id": "contract.dx100_finite_pending_store_cpu_read_negative",
+      "expected_verdict": "refuted",
+      "function": "dwe_finite_trace",
+      "kind": "TraceUnit"
+    },
+    {
+      "case_id": "finite-same_region_write_cover_positive",
+      "contract_id": "contract.dx100_finite_same_region_write_cover_positive",
+      "expected_verdict": "proven",
+      "function": "dwe_finite_trace",
+      "kind": "TraceUnit"
+    },
+    {
+      "case_id": "finite-same_region_read_read_noncover_negative",
+      "contract_id": "contract.dx100_finite_same_region_read_read_noncover_negative",
+      "expected_verdict": "refuted",
+      "function": "dwe_finite_trace",
+      "kind": "TraceUnit"
+    },
+    {
+      "case_id": "finite-different_region_noncover_negative",
+      "contract_id": "contract.dx100_finite_different_region_noncover_negative",
+      "expected_verdict": "refuted",
+      "function": "dwe_finite_trace",
+      "kind": "TraceUnit"
+    },
+    {
+      "case_id": "finite-owned_tile_positive",
+      "contract_id": "contract.dx100_finite_owned_tile_positive",
+      "expected_verdict": "proven",
+      "function": "dwe_finite_trace",
+      "kind": "TraceUnit"
+    },
+    {
+      "case_id": "finite-wrong_owner_negative",
+      "contract_id": "contract.dx100_finite_wrong_owner_negative",
+      "expected_verdict": "refuted",
+      "function": "dwe_finite_trace",
+      "kind": "TraceUnit"
+    },
+    {
+      "case_id": "finite-disjoint_owned_tiles_positive",
+      "contract_id": "contract.dx100_finite_disjoint_owned_tiles_positive",
+      "expected_verdict": "proven",
+      "function": "dwe_finite_trace",
+      "kind": "TraceUnit"
+    },
+    {
+      "case_id": "finite-u64_second_half_conflict_negative",
+      "contract_id": "contract.dx100_finite_u64_second_half_conflict_negative",
+      "expected_verdict": "refuted",
+      "function": "dwe_finite_trace",
+      "kind": "TraceUnit"
+    },
+    {
+      "case_id": "finite-u32_disjoint_half_positive",
+      "contract_id": "contract.dx100_finite_u32_disjoint_half_positive",
+      "expected_verdict": "proven",
+      "function": "dwe_finite_trace",
+      "kind": "TraceUnit"
+    },
+    {
+      "case_id": "finite-prior_cpu_store_visible_positive",
+      "contract_id": "contract.dx100_finite_prior_cpu_store_visible_positive",
+      "expected_verdict": "proven",
+      "function": "dwe_finite_trace",
+      "kind": "TraceUnit"
+    },
+    {
+      "case_id": "finite-covered_store_next_thread_load_positive",
+      "contract_id": "contract.dx100_finite_covered_store_next_thread_load_positive",
+      "expected_verdict": "proven",
+      "function": "dwe_finite_trace",
+      "kind": "TraceUnit"
+    },
+    {
+      "case_id": "finite-critical_end_wait_positive",
+      "contract_id": "contract.dx100_finite_critical_end_wait_positive",
+      "expected_verdict": "proven",
+      "function": "dwe_finite_trace",
+      "kind": "TraceUnit"
+    },
+    {
+      "case_id": "finite-critical_end_without_wait_negative",
+      "contract_id": "contract.dx100_finite_critical_end_without_wait_negative",
+      "expected_verdict": "refuted",
+      "function": "dwe_finite_trace",
+      "kind": "TraceUnit"
+    },
+    {
+      "case_id": "finite-outside_critical_store_positive",
+      "contract_id": "contract.dx100_finite_outside_critical_store_positive",
+      "expected_verdict": "proven",
+      "function": "dwe_finite_trace",
+      "kind": "TraceUnit"
+    },
+    {
+      "case_id": "finite-pending_read_lifetime_end_negative",
+      "contract_id": "contract.dx100_finite_pending_read_lifetime_end_negative",
+      "expected_verdict": "refuted",
+      "function": "dwe_finite_trace",
+      "kind": "TraceUnit"
+    },
+    {
+      "case_id": "finite-pair_owned_positive",
+      "contract_id": "contract.dx100_finite_pair_owned_positive",
+      "expected_verdict": "proven",
+      "function": "dwe_finite_trace",
+      "kind": "TraceUnit"
+    },
+    {
+      "case_id": "finite-pair_wrong_owner_negative",
+      "contract_id": "contract.dx100_finite_pair_wrong_owner_negative",
+      "expected_verdict": "refuted",
+      "function": "dwe_finite_trace",
+      "kind": "TraceUnit"
+    },
+    {
+      "case_id": "finite-command_wrong_owner_negative",
+      "contract_id": "contract.dx100_finite_command_wrong_owner_negative",
+      "expected_verdict": "refuted",
+      "function": "dwe_finite_trace",
+      "kind": "TraceUnit"
+    },
+    {
+      "case_id": "finite-pair_command_half_negative",
+      "contract_id": "contract.dx100_finite_pair_command_half_negative",
+      "expected_verdict": "refuted",
+      "function": "dwe_finite_trace",
+      "kind": "TraceUnit"
+    },
+    {
+      "case_id": "finite-u32_command_half_positive",
+      "contract_id": "contract.dx100_finite_u32_command_half_positive",
+      "expected_verdict": "proven",
+      "function": "dwe_finite_trace",
+      "kind": "TraceUnit"
+    },
+    {
+      "case_id": "finite-pair_cpu_half_read_negative",
+      "contract_id": "contract.dx100_finite_pair_cpu_half_read_negative",
+      "expected_verdict": "refuted",
+      "function": "dwe_finite_trace",
+      "kind": "TraceUnit"
+    },
+    {
+      "case_id": "finite-u32_cpu_half_read_positive",
+      "contract_id": "contract.dx100_finite_u32_cpu_half_read_positive",
+      "expected_verdict": "proven",
+      "function": "dwe_finite_trace",
+      "kind": "TraceUnit"
+    },
+    {
+      "case_id": "finite-ready_relation_positive",
+      "contract_id": "contract.dx100_finite_ready_relation_positive",
+      "expected_verdict": "proven",
+      "function": "dwe_finite_trace",
+      "kind": "TraceUnit"
+    },
+    {
+      "case_id": "finite-ready_always_one_negative",
+      "contract_id": "contract.dx100_finite_ready_always_one_negative",
+      "expected_verdict": "refuted",
+      "function": "dwe_finite_trace",
+      "kind": "TraceUnit"
+    },
+    {
+      "case_id": "finite-ready_always_zero_negative",
+      "contract_id": "contract.dx100_finite_ready_always_zero_negative",
+      "expected_verdict": "refuted",
+      "function": "dwe_finite_trace",
+      "kind": "TraceUnit"
+    },
+    {
+      "case_id": "finite-ready_cpu_read_negative",
+      "contract_id": "contract.dx100_finite_ready_cpu_read_negative",
+      "expected_verdict": "refuted",
+      "function": "dwe_finite_trace",
+      "kind": "TraceUnit"
+    },
+    {
+      "case_id": "finite-prior_cpu_store_old_value_negative",
+      "contract_id": "contract.dx100_finite_prior_cpu_store_old_value_negative",
+      "expected_verdict": "refuted",
+      "function": "dwe_finite_trace",
+      "kind": "TraceUnit"
+    }
+  ],
+  "required_count": 35,
+  "required_skips": 0,
+  "schema": "checked-whole-required-public-cases-1"
+}

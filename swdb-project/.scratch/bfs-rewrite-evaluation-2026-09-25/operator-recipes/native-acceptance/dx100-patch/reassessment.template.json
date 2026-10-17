@@ -1,0 +1,66 @@
+{
+  "assessment": {
+    "packages": [
+      {
+        "id": null,
+        "sha256": null
+      },
+      {
+        "id": null,
+        "sha256": null
+      }
+    ],
+    "protocol": {
+      "id": null,
+      "sha256": null
+    }
+  },
+  "kind": "native_candidate_reassessment",
+  "origin": {
+    "baseline_packages": [
+      {
+        "id": "bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.5828ff2030b22718",
+        "sha256": "2a3b9b86867570830aa72394032b324fc4b66f78051cc155330fd0fd310bb859"
+      },
+      {
+        "id": "bfs-native-pilot-20260925-dx10018-a1.kronecker.package.v1.1d44ec6b44f05000",
+        "sha256": "c3a7a74bd034ee04dcd02f4b270d764a248423b8ad4544cee761a6b2cd4848db"
+      }
+    ],
+    "candidate": {
+      "id": "bfs-campaign-preparation-20260925-a1.dx100-patch.candidate-1",
+      "sha256": "822aa2376c6df046b22c3463d8999506f69091a54cc0f518184593de286f6ef4"
+    },
+    "profile_package": {
+      "id": "bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.5828ff2030b22718",
+      "sha256": "2a3b9b86867570830aa72394032b324fc4b66f78051cc155330fd0fd310bb859"
+    },
+    "proposal": {
+      "id": "bfs-campaign-preparation-20260925-a1.dx100-patch",
+      "sha256": "f59bbbd6b536420fd8b2c9159f0f00c8294cab3c204048d4c0b2027bcd348dca"
+    },
+    "request_sha256": "56915ef942b3bac615ac2d3ba66487dae8b366c1053bcd224255e5ef92956578",
+    "source_snapshot": {
+      "id": "bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.source",
+      "sha256": "c579930c7b04e98868966fab10c9c5d30c506ed3c515d1b3681beb0b8f975443"
+    }
+  },
+  "transition": {
+    "from_threads": 4,
+    "native_runtime": {
+      "environment": {
+        "GOMP_CPU_AFFINITY": null,
+        "GOMP_SPINCOUNT": null,
+        "OMP_DYNAMIC": "FALSE",
+        "OMP_NUM_THREADS": "1",
+        "OMP_PLACES": "cores",
+        "OMP_PROC_BIND": "close",
+        "OMP_THREAD_LIMIT": null,
+        "OMP_WAIT_POLICY": null
+      },
+      "version": 1
+    },
+    "to_threads": 1
+  },
+  "version": 1
+}

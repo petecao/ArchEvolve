@@ -1,0 +1,25 @@
+kind: intrinsic
+schema_version: '0.4'
+id: dxc_thread_context
+name: __dxc_thread_context
+status: draft
+created: '2026-10-03'
+updated: '2026-10-03'
+interface:
+  id: dx100-mmio
+  version: 1.0-e4fc4af
+hardware_operations: []
+memory_kind: none
+address_shape: null
+element_bits: null
+lanes: null
+library_entry:
+  id: intrinsic.dxc_thread_context
+  path: library/intrinsics/dxc_thread_context.yaml
+  content_sha256: 9a25951c2ee114ff9e1c5265c2da5452bf3f8c5f850c36afeb157b00be0e8e88
+provenance:
+- id: dx100-source
+  kind: source_code
+  description: Pinned DX100 e4fc4af interface and independent reference semantics;
+    no performance claim.
+  uri: https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/benchmarks/API/MAA_gem5.hpp

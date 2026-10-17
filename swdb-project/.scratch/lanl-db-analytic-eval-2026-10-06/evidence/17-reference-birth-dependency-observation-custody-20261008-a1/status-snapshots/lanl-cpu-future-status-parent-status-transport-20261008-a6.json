@@ -1,0 +1,39 @@
+{
+  "argv": [
+    "ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "mbit10",
+    "/usr/bin/env",
+    "GIT_OPTIONAL_LOCKS=0",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=60",
+    "180",
+    "/usr/bin/python3.12",
+    "-B",
+    "-"
+  ],
+  "elapsed_seconds": 0.6887109170202166,
+  "finished_utc": "2026-10-08T07:38:28.934948+00:00",
+  "format": "swdb.parent-readonly-status-original-transport.v1",
+  "returncode": 0,
+  "sealed": false,
+  "source": {
+    "bytes": 2299,
+    "path": "/private/tmp/lanl-cpu-future-status-with-report-retry-20261007-a4.py",
+    "sha256": "b8dcec92f447a4d988137d413839a608998088b2c8692fdf55a340867316f54b"
+  },
+  "started_utc": "2026-10-08T07:38:28.246161+00:00",
+  "stderr": {
+    "bytes": 0,
+    "path": "/private/tmp/lanl-cpu-future-status-observed-20261008-a6.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 6379,
+    "path": "/private/tmp/lanl-cpu-future-status-observed-20261008-a6.json",
+    "sha256": "ad84e7c95ede901cec5f273d52c0daee1cfe4eaa4d6b90cfa8e728217989cc0f"
+  }
+}

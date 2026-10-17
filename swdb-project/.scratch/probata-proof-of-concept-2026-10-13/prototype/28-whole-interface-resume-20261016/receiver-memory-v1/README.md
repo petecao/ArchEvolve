@@ -1,0 +1,11 @@
+# Exact source-memory receiver binding
+
+2026-10-16 ET. Prospective source only; no supplied context receipt, compiler/native or public result.
+
+`receiver_memory_v1.py` is a separate fixed-source receiver. Its complete inverse to the reviewed receiver V2 changes only the exact source SHA and byte extent from the original3148/4524-byte fixture to the reviewed55b9/3258-byte three-caller memory fixture. Every function, class, ownership/freshness/quiescence premise, input census, runtime/physical gate, backend pin, full-domain draw and generated receiver statement remains byte-identical. The original receiver V2 remains unchanged for fixed79/80. No arbitrary source whitelist is added.
+
+The separately owned context still binds the complete source/TU/ABI/capture/model/atlas/statements/assertion/runtime inputs and every ordinary allocation. The new exact source extent constrains all declaration/scope ranges. Source selection must additionally bind one reviewed function, its actual complete-TU body/calls and exact one-line mapping; this receiver does not replace that validation or grant64-byte mapping alignment. Ordinary allocation origin remains separate from exclusive access. Payload initializedness, software ownership, command histories and registered regions are never fabricated.
+
+Four no-child controls verify the complete two-constant text/AST inverse, the real receiver source gate against old/new/wrong inputs, one16-element allocation's source identity and exact extent bound, and byte-identical generated one-thread receiver/draw code. Their allocation metadata is synthetic and has no compiler observation claim. A deliberately incomplete synthetic atlas first refused and was repaired only in the control input to use the existing complete atlas schema; production predicates were unchanged. The21 prior V2 controls remain evidence for V2 and are not relabeled as an executed V1 suite.
+
+A future normal producer/runtime profile must pin this exact separate module and recheck the actual owned receiver policy before and after use. Actual source capture, context ownership, new0.2 library validation, native agreement, reachability and exact public hazard verdict/replay are pending.

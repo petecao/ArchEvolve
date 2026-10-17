@@ -1,0 +1,9 @@
+# Allocator repair integration — 2026-10-16 08:29 ET
+
+The reviewed [allocator qualification repair](t28-allocator-linux-assert-independent-source-review-v1-20261016.md) is now integrated from exact029e50e5. It admits only the pure fourth diagnostic argument wrapper of the captured glibc __assert_fail signature, with executable guard/abort/call/body/LLVM checks unchanged. Library/API, originaltotal102vs101, three-counter frame and no-extra-premise semantics remain unchanged.
+
+[RootG623 AST capture](t28-allocation-linux-ast-settlement-v2-20261016.json) and [declaration diagnosis](t28-allocation-assert-declarations-v1-20261016.json) are preserved byte-for-byte; these are compiler/source-shape evidence, not a theorem. The [24retained controls](t28-allocator-linux-assert-controls-20261016.md) comprise18pure and6public compiler/exit99 cases. Both public records are not_proven/tool_crash from explicit stand-ins. InitialRED/intermediate failures, G597pre-solver refusal and G622precompiler alias failure remain unchanged. Fresh repaired allocator actual pair is pending root admission and complete cold review.
+
+Separate actual registerG599 at exacta3a8 settled2pytestpass/221.18s, guard0/239.092317233s2,120,040,448B and outer0/241.656762248s2,174,566,400B, noOOM/timeout, clean source/finite released lease snapshots. [Rootstate](t28-register-a3a8-settled-state-v2-20261016.json) preserves both raw record paths. This is provisional producer/plumbing success only; native/source/assumption/smoke/certificate cold acceptance is pending. Its source staysa3a8, not this allocator merge tip.
+
+Counts remain35resolved/25ready-for-agent/3claimed. User full table08:27ET; next08:57ET. No hardware/source-body/refinement/current0.2/full28/ticket acceptance or reviewer actual job follows. Root owns all live admissions and current capacity checks.

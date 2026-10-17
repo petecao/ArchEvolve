@@ -1,0 +1,25 @@
+{
+  "format": "swdb.private.fixed68.parent-source-review.v1",
+  "sealed": false,
+  "created_utc": "2026-10-08T06:59:03.628740+00:00",
+  "source": {
+    "path": "/private/tmp/lanl17_read_68_remaining_grouped_RAW_reference_contexts_20261008_a1.py",
+    "bytes": 78700,
+    "sha256": "27421d13cd10507fe7dbabc67903c79c6e57bd38d9672b9225514a9c17dc1b2e"
+  },
+  "reviewed_changed_function_bodies": [
+    "context_add",
+    "json_contexts",
+    "main"
+  ],
+  "reviewed_new_function_bodies": [
+    "JSON_field_pattern",
+    "charge_context",
+    "grouped_JSON_add",
+    "retain_context"
+  ],
+  "remaining_inputs_equal_fixed111_suffix": true,
+  "excluded_exact_completed_43": true,
+  "accepted_for_one_fixed_readonly_query": true,
+  "basis": "Full inherited route/read/hash/stat checks and all407 operational lines read. Group projection retains exact pattern/example/multiplicity/full-context rolling digest and every matched site remains charged; no cap increase. Original string_value_bytes naming caveat remains characters. No semantic history, queue, process or cleanup admission follows."
+}

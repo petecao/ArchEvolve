@@ -1,0 +1,33 @@
+test_adapter_expanded_allowance_never_changes_abi_or_retained_constants (__main__.Controls.test_adapter_expanded_allowance_never_changes_abi_or_retained_constants) ... ok
+test_adapter_preserves_full_json_parser_output_and_strict_refusals (__main__.Controls.test_adapter_preserves_full_json_parser_output_and_strict_refusals) ... ok
+test_capture_refuses_empty_oversize_chunks_short_sink_and_double_finish (__main__.Controls.test_capture_refuses_empty_oversize_chunks_short_sink_and_double_finish) ... ok
+test_collector_mock_nonzero_and_read_failures_kill_wait_and_never_finish_receipt (__main__.Controls.test_collector_mock_nonzero_and_read_failures_kill_wait_and_never_finish_receipt) ... ok
+test_collector_mock_preserves_complete_stdout_and_retained_receipt (__main__.Controls.test_collector_mock_preserves_complete_stdout_and_retained_receipt) ... ok
+test_decoder_expansion_limit_stops_repetitive_bomb_with_bounded_emits (__main__.Controls.test_decoder_expansion_limit_stops_repetitive_bomb_with_bounded_emits) ... ok
+test_decoder_short_reads_and_callback_deadlines (__main__.Controls.test_decoder_short_reads_and_callback_deadlines) ... ok
+test_entry_inverse_all_old_nonmain_functions_resources_and_stat_fields_exact (__main__.Controls.test_entry_inverse_all_old_nonmain_functions_resources_and_stat_fields_exact) ... ok
+test_exact_adapter_inverse_and_every_other_function_ast_unchanged (__main__.Controls.test_exact_adapter_inverse_and_every_other_function_ast_unchanged) ... ok
+test_exact_staged_membership_pins_and_unchanged_runtime_source_role_guards (__main__.Controls.test_exact_staged_membership_pins_and_unchanged_runtime_source_role_guards) ... ok
+test_expanded_and_retained_caps_are_distinct_and_fail_before_writing_overflow (__main__.Controls.test_expanded_and_retained_caps_are_distinct_and_fail_before_writing_overflow) ... ok
+test_four_original_argv_unchanged_except_fresh_namespace_no_caller_filter (__main__.Controls.test_four_original_argv_unchanged_except_fresh_namespace_no_caller_filter) ... ok
+test_lossless_roundtrip_raw_and_retained_hashes_match (__main__.Controls.test_lossless_roundtrip_raw_and_retained_hashes_match) ... ok
+test_policy_and_command_complete_json_inverses (__main__.Controls.test_policy_and_command_complete_json_inverses) ... ok
+test_receipt_shapes_types_hashes_counts_and_profiles_refuse_mutations (__main__.Controls.test_receipt_shapes_types_hashes_counts_and_profiles_refuse_mutations) ... ok
+test_strict_single_member_corruption_truncation_and_trailing_data_refuse (__main__.Controls.test_strict_single_member_corruption_truncation_and_trailing_data_refuse) ... ok
+test_whole_synthetic_prepare_matches_old_semantics_after_lossless_decode (__main__.Controls.test_whole_synthetic_prepare_matches_old_semantics_after_lossless_decode) ... ERROR
+test_zlib_origin_is_actual_root_builtin_and_existing_native_closure (__main__.Controls.test_zlib_origin_is_actual_root_builtin_and_existing_native_closure) ... ok
+
+======================================================================
+ERROR: test_whole_synthetic_prepare_matches_old_semantics_after_lossless_decode (__main__.Controls.test_whole_synthetic_prepare_matches_old_semantics_after_lossless_decode)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v8/test_capture_v8.py", line 215, in test_whole_synthetic_prepare_matches_old_semantics_after_lossless_decode
+    declaration=next(row for row in case.declarations if row['name']=='maa_alu_scalar')
+                                    ^^^^^^^^^^^^^^^^^
+AttributeError: 'Controls' object has no attribute 'declarations'
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.100s
+
+FAILED (errors=1)
+{"actual_controller_compiler_native_or_network": false, "adapter_sha256": "624a9932464d5bfd321150d444b0b92d5819a6dfbe8077dc683362d0d77f5ce1", "child_events": [], "codec_sha256": "f93850883bdab523e59122812fa46877728127e8ba5997c567621347de739193", "controller_sha256": "2899b3eb8cf4fd0eef389d936b9a4c88d6ba150c0aef4ef15f9e27949c971caf", "controls_sha256": "24a56e8796e14b4283c1923fd2bce344f1d7049ab0e58ea4ce488e7eaca441be", "errors": 1, "failures": 0, "skips": 0, "tests": 18}

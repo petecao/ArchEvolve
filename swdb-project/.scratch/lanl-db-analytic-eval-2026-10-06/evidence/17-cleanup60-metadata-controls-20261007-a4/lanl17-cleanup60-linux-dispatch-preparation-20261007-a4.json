@@ -1,0 +1,25 @@
+{
+  "format": "swdb.parent17-cleanup60-linux-dispatch-preparation.v1",
+  "prepared_utc": "2026-10-07T08:28:26.171522+00:00",
+  "snapshots": {
+    "lanl17-dispatch-cleanup-caps-smoke-20261007-a4.py": {
+      "path": "/private/tmp/lanl17-dispatch-cleanup-caps-smoke-20261007-a4.py",
+      "sha256": "b347be70ae4eaa44de043c8d3d4870d14a32da1018f01fd017d711595329aa2e",
+      "bytes": 4761,
+      "baseline": "/private/tmp/lanl17-dispatch-cleanup-caps-smoke-20261007-a3.py"
+    },
+    "lanl17-dispatch-metadata-supervisor-fixture-20261007-a4.py": {
+      "path": "/private/tmp/lanl17-dispatch-metadata-supervisor-fixture-20261007-a4.py",
+      "sha256": "d6f9c894b59d6e1698949082f1d9df7ad8fb70a5005ed97d61482015e9254268",
+      "bytes": 5487,
+      "baseline": "/private/tmp/lanl17-dispatch-metadata-supervisor-fixture-20261007-a3.py"
+    }
+  },
+  "selected_helper_sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414",
+  "selected_supervisor_sha256": "fa703bbd4c71bb4bcf56f47d1e224449f627d5921295e00b9cc105f21e95bde0",
+  "only_changes": "Fresh a4 paths/full-helper pins and stronger after-development acceptance gate; existing wrapper/capacity/all-free/sourceC/outer180/KILL60 and original4d/a848 unchanged.",
+  "actual_linux_checks_run": false,
+  "raw_transferred": false,
+  "scope": "Parent source preparation only; two fresh exact-hash Linux cleanup tests wait for development0/cleanup/release before holdout.",
+  "identity_sha256": "ae02b6b1c39a79c48f105cf3243a53e9acead504c9e94e957f59ced8dd1cdebd"
+}

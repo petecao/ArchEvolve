@@ -1,0 +1,20 @@
+--- lanl17_pre_original32_host_observation_selected_20261009_a5_r7.py
++++ lanl17_pre_actual_template_host_observation_selected_20261009_a5_r8.py
+@@ -33,7 +33,7 @@
+  '/usr/bin/sha256sum':(39336,'4d2db56c867e5324e0084c9e897f6360d37517de77ac96f2bd31494223d69a60'),
+  '/usr/bin/wc':(55824,'9005273a966c875547a4317288bdd92e7b2aa49ad86bc9978121242106405e6b'),
+  '/usr/bin/mkdir':(76296,'430c3f949d7d328cd835722f5bbddeac0956fbdfbbb6a197e0abb1def3ed27e2')}
+-ROUTE_ROLES=('trajectory_request','trajectory_output','candidate_selection_request','candidate_selection_output')
++ROUTE_ROLES=('author_input','author_output','spec_output','accepted_output')
+ STARTUP=('BASH_ENV','ENV','PYTHONHOME','PYTHONSTARTUP','PYTHONOPTIMIZE','LD_PRELOAD','LD_LIBRARY_PATH','DYLD_INSERT_LIBRARIES','POSIXLY_CORRECT')
+ INPUT_PIN=None
+ INPUT=None
+@@ -410,7 +410,7 @@
+     need(INPUT['format']=='swdb.lanl17-pre-full-index-host-observation-input.v1' and INPUT['campaign'] in CIDS,'actual_input_format_CID')
+     need(type(INPUT['nonce']) is str and re.fullmatch('[0-9a-f]{32,64}',INPUT['nonce']) is not None,'actual_parent_nonce');need(type(INPUT['expected_ER_commit']) is str and re.fullmatch('[0-9a-f]{40}',INPUT['expected_ER_commit']) is not None,'actual_ER_commit_no_default')
+     review=closed(INPUT['parent_review'],('basis','source_sha256','payload_sha256','completion_packet_sha256','completion_root_review_sha256','completion_peer_review_sha256','actual_completion_originals_reviewed','fixtures','checked_utc','valid_until_utc'),'closed_actual_parent_review')
+-    need(review['basis']=='explicit_parent_review_of_genuine_completed_FINALIZE_and_next_original32_metadata_routes' and review['source_sha256']==ARGS.source_sha256 and review['payload_sha256']==payload_digest({k:v for k,v in INPUT.items() if k!='parent_review'}) and review['actual_completion_originals_reviewed'] is True and review['fixtures'] is False,'genuine_bound_parent_review')
++    need(review['basis']=='explicit_parent_review_of_genuine_completed_FINALIZE_and_next_actual_template_assembly_routes' and review['source_sha256']==ARGS.source_sha256 and review['payload_sha256']==payload_digest({k:v for k,v in INPUT.items() if k!='parent_review'}) and review['actual_completion_originals_reviewed'] is True and review['fixtures'] is False,'genuine_bound_parent_review')
+     for k in ('completion_packet_sha256','completion_root_review_sha256','completion_peer_review_sha256'):hex64(review[k])
+     checked,end=utc(review['checked_utc']),utc(review['valid_until_utc']);need(checked<=datetime.datetime.now(datetime.timezone.utc)<end and 0<(end-checked).total_seconds()<=300,'actual_parent_review_interval')
+     d=read();b=(json.dumps(d,sort_keys=True,allow_nan=False)+'\n').encode();need(len(b)<=65536,'observation_return_cap');sys.stdout.buffer.write(b)

@@ -1,0 +1,1014 @@
+{
+  "actual_admission": false,
+  "adapter_edits": [
+    {
+      "new": "Original complete JSON tokens are retained after strict streaming whitespace\nremoval. The DOM parser still refuses above 128 MiB; gzip and minified artifacts\nboth count against the unchanged 256-MiB retained total.",
+      "old": "Oversize evidence refuses under current 128/256-MiB retained-output caps."
+    },
+    {
+      "new": "declarations, compiler_capture_pin, full_tu_identity, full_tu_compressed_bytes):",
+      "old": "declarations, compiler_capture_pin):"
+    },
+    {
+      "new": "    need(isinstance(full_tu_identity, dict) and set(full_tu_identity) == {\n        \"schema\", \"raw_bytes\", \"raw_sha256\", \"minified_bytes\", \"minified_sha256\", \"raw_limit\", \"retained_limit\",\n        \"objects\", \"arrays\", \"values\", \"keys\", \"max_depth\", \"peak_live_key_charge\",\n        \"complete_JSON_syntax_and_duplicate_key_check\", \"outside_string_whitespace_only_removed\",\n        \"all_token_spellings_and_key_order_preserved\", \"AST_nodes_elided\", \"independent_filtered_parse_join\",\n        \"downstream_complete_TU_consumer_required\", \"compiler_success_or_source_admission_inferred\"},\n         \"exact complete token identity fields required\")\n    need(full_tu_identity.get(\"schema\") == \"full-tu-token-preserving-identity-1\"\n         and full_tu_identity.get(\"raw_limit\") == 2147483648 and full_tu_identity.get(\"retained_limit\") == STAGE_BYTES\n         and type(full_tu_identity.get(\"raw_bytes\")) is int and 0 < full_tu_identity[\"raw_bytes\"] <= 2147483648\n         and isinstance(full_tu_identity.get(\"raw_sha256\"), str) and re.fullmatch(\"[0-9a-f]{64}\", full_tu_identity[\"raw_sha256\"])\n         and type(full_tu_raw) is bytes and type(full_tu_identity.get(\"minified_bytes\")) is int\n         and 0 < full_tu_identity[\"minified_bytes\"] <= full_tu_identity[\"raw_bytes\"]\n         and full_tu_identity.get(\"minified_bytes\") == len(full_tu_raw)\n         and full_tu_identity.get(\"minified_sha256\") == sha(full_tu_raw), \"exact complete raw/minified identity linkage required\")\n    for key, bound in {\"objects\": 20000000, \"arrays\": 20000000, \"values\": 20000000,\n        \"keys\": 20000000 * 1024, \"max_depth\": 256, \"peak_live_key_charge\": 16777216}.items():\n        need(type(full_tu_identity[key]) is int and 0 <= full_tu_identity[key] <= bound, \"bounded token census required: \" + key)\n    need(full_tu_identity[\"values\"] > 0, \"nonempty complete token census required\")\n    for key, value in {\"complete_JSON_syntax_and_duplicate_key_check\": True,\n        \"outside_string_whitespace_only_removed\": True, \"all_token_spellings_and_key_order_preserved\": True,\n        \"AST_nodes_elided\": False, \"independent_filtered_parse_join\": False,\n        \"downstream_complete_TU_consumer_required\": True, \"compiler_success_or_source_admission_inferred\": False}.items():\n        need(type(full_tu_identity.get(key)) is type(value) and full_tu_identity[key] == value, \"complete identity profile differs: \" + key)\n    need(type(full_tu_compressed_bytes) is int and 0 < full_tu_compressed_bytes <= STAGE_BYTES,\n         \"retained complete original gzip count required\")\n    need(full_tu_compressed_bytes + len(full_tu_raw) + len(abi_raw) + len(source_bytes) + len(probe_bytes) <= TOTAL_BYTES,",
+      "old": "    need(len(full_tu_raw) + len(abi_raw) + len(source_bytes) + len(probe_bytes) <= TOTAL_BYTES,"
+    },
+    {
+      "new": "\"schema\": \"whole-interface-original-tu-preparation-2\"",
+      "old": "\"schema\": \"whole-interface-original-tu-preparation-1\""
+    },
+    {
+      "new": "\"raw_full_tu_sha256\": full_tu_identity[\"raw_sha256\"], \"parser_full_tu_sha256\": sha(full_tu_raw),\n        \"full_tu_identity\": copy.deepcopy(full_tu_identity), \"retained_full_tu_archive_bytes\": full_tu_compressed_bytes,",
+      "old": "\"raw_full_tu_sha256\": sha(full_tu_raw),"
+    }
+  ],
+  "adapter_predecessor": {
+    "bytes": 14281,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler_unit_adapter_v2.py",
+    "sha256": "1cf112859f976f77e8381c777c977f5cf5857d6e18f1bd0e24f9689148e80317"
+  },
+  "adapter_successor": {
+    "bytes": 17211,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/streaming-minify-v1/compiler_unit_adapter_v4.py",
+    "sha256": "541c6af68717c5fba4968f23f123fdf51e79edd9a3dff501ff7fa025fc38f9b5"
+  },
+  "command": {
+    "bytes": 14026,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v9/linux_compiler_capture_command_v9.json",
+    "sha256": "2d53b880d762083f796b65c89fd004a16b3b19536312e9808378a8d835f1ba02"
+  },
+  "command_edits": [
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/control/linux_compiler_capture_v9.py",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/control/linux_compiler_capture_v8.py",
+      "path": [
+        "argv",
+        3
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8",
+      "path": [
+        "argv",
+        5
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/control/linux_compiler_capture_policy_v9.json",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/control/linux_compiler_capture_policy_v8.json",
+      "path": [
+        "argv",
+        6
+      ]
+    },
+    {
+      "new": "a45df6a74f1642e56a9c58e99cfdf20fb416fe9d1fb11ec660b4f2369f9db0e8",
+      "old": "e38ad0ff84d07852d6f7c37adeea40f96f6c94b745b2bc5b77d2b65504c1a89f",
+      "path": [
+        "argv",
+        7
+      ]
+    },
+    {
+      "new": 120,
+      "operation": "add",
+      "path": [
+        "caller_ast_phase_seconds"
+      ]
+    },
+    {
+      "new": true,
+      "operation": "add",
+      "path": [
+        "complete_TU_token_preserving_ingress"
+      ]
+    },
+    {
+      "new": [
+        {
+          "bytes": 30010,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v9/linux_compiler_capture_v9.py",
+          "sha256": "a25a623e4e10376919c2d51ea800466d69262b6e354b7ba23ffae113e04694d9"
+        },
+        {
+          "bytes": 23441,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/linux_native86_entry_v4.py",
+          "sha256": "9f63dbe826ca70f2ceacd37b56753a5f212811a5a377c7baed59da4de60b7721"
+        },
+        {
+          "bytes": 17211,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/streaming-minify-v1/compiler_unit_adapter_v4.py",
+          "sha256": "541c6af68717c5fba4968f23f123fdf51e79edd9a3dff501ff7fa025fc38f9b5"
+        },
+        {
+          "bytes": 34803,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v4.py",
+          "sha256": "217cdda6ca8eaea99526010f2c379dad963ca81c18c79322ce02ab8cc9296ed8"
+        },
+        {
+          "bytes": 4524,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source_call_fixture_v2.cpp",
+          "sha256": "3148b662b2fbeaa7a8733569d5ea750bce8a598d4e883f9bc64cb1e27dae67cd"
+        },
+        {
+          "bytes": 1588,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler_abi_probe_v1.cpp",
+          "sha256": "c0f4f37ba62992b3de117f6117b134ad0ba663484c172ffa98081952f769bf34"
+        },
+        {
+          "bytes": 133,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler_include_v1/gem5/m5ops.h",
+          "sha256": "4caae6752583fd058e911da16305fe5bebec0fa08d3242242af85494b2b90d7a"
+        },
+        {
+          "bytes": 18385,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/closed_python_surface.py",
+          "sha256": "748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af"
+        },
+        {
+          "bytes": 9610,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python_startup_roles_v2.py",
+          "sha256": "5e9d2e6dfa2aaa7999f4670a979d3cc32736b852a612f77d4e2f7c71bc229618"
+        },
+        {
+          "bytes": 2709,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python_role_observer_v2.py",
+          "sha256": "9b100cbe2fdef3e7d429ccdf05d6489d44855a84328e2dd8532eb547beeaf43b"
+        },
+        {
+          "bytes": 116503,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-linux-runtime-observer-v2-actual-20261016.json",
+          "sha256": "092397608fe3a08c42d85e9c8e121ed139f0d94e345a12ae3aaa57ad6e93a5f0"
+        },
+        {
+          "bytes": 6812,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/streaming-minify-v1/lossless_gzip_v2.py",
+          "sha256": "aae4a423216fcdca6b16f9eba370ec4c83615ed61ae79dd4b3d09e3bed1702ef"
+        },
+        {
+          "bytes": 1798,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-selected-python-zlib-origin-observation-20261016.json",
+          "sha256": "bc53f66a5c159b43af8b3fbc69a0ec367c39197589e57fd8af505e5730ae4e3d"
+        },
+        {
+          "bytes": 7658,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/streaming-minify-v1/strict_minify_v1.py",
+          "sha256": "c2d1ae801da0393df801dff3acc489f717e10851d70bc40964db53ad8939fe26"
+        },
+        {
+          "bytes": 666154,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v9/linux_compiler_capture_policy_v9.json",
+          "sha256": "a45df6a74f1642e56a9c58e99cfdf20fb416fe9d1fb11ec660b4f2369f9db0e8"
+        }
+      ],
+      "old": [
+        {
+          "bytes": 28420,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v8/linux_compiler_capture_v8.py",
+          "sha256": "937380eef851574e5d7c49c2cc31860c354a76258d5ff79d5813a9c76296728b"
+        },
+        {
+          "bytes": 23441,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/linux_native86_entry_v4.py",
+          "sha256": "9f63dbe826ca70f2ceacd37b56753a5f212811a5a377c7baed59da4de60b7721"
+        },
+        {
+          "bytes": 15063,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/lossless-capture-v1/compiler_unit_adapter_v3.py",
+          "sha256": "775ab2ecf6068153a6167473129dcd416dc2727c9afe0ef6e0846bab62d3085c"
+        },
+        {
+          "bytes": 34803,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v4.py",
+          "sha256": "217cdda6ca8eaea99526010f2c379dad963ca81c18c79322ce02ab8cc9296ed8"
+        },
+        {
+          "bytes": 4524,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source_call_fixture_v2.cpp",
+          "sha256": "3148b662b2fbeaa7a8733569d5ea750bce8a598d4e883f9bc64cb1e27dae67cd"
+        },
+        {
+          "bytes": 1588,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler_abi_probe_v1.cpp",
+          "sha256": "c0f4f37ba62992b3de117f6117b134ad0ba663484c172ffa98081952f769bf34"
+        },
+        {
+          "bytes": 133,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler_include_v1/gem5/m5ops.h",
+          "sha256": "4caae6752583fd058e911da16305fe5bebec0fa08d3242242af85494b2b90d7a"
+        },
+        {
+          "bytes": 18385,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/closed_python_surface.py",
+          "sha256": "748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af"
+        },
+        {
+          "bytes": 9610,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python_startup_roles_v2.py",
+          "sha256": "5e9d2e6dfa2aaa7999f4670a979d3cc32736b852a612f77d4e2f7c71bc229618"
+        },
+        {
+          "bytes": 2709,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python_role_observer_v2.py",
+          "sha256": "9b100cbe2fdef3e7d429ccdf05d6489d44855a84328e2dd8532eb547beeaf43b"
+        },
+        {
+          "bytes": 116503,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-linux-runtime-observer-v2-actual-20261016.json",
+          "sha256": "092397608fe3a08c42d85e9c8e121ed139f0d94e345a12ae3aaa57ad6e93a5f0"
+        },
+        {
+          "bytes": 5976,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/lossless-capture-v1/lossless_gzip_v1.py",
+          "sha256": "f93850883bdab523e59122812fa46877728127e8ba5997c567621347de739193"
+        },
+        {
+          "bytes": 1798,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-selected-python-zlib-origin-observation-20261016.json",
+          "sha256": "bc53f66a5c159b43af8b3fbc69a0ec367c39197589e57fd8af505e5730ae4e3d"
+        },
+        {
+          "bytes": 665757,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v8/linux_compiler_capture_policy_v8.json",
+          "sha256": "e38ad0ff84d07852d6f7c37adeea40f96f6c94b745b2bc5b77d2b65504c1a89f"
+        }
+      ],
+      "path": [
+        "controller_inputs"
+      ]
+    },
+    {
+      "new": 2147483648,
+      "old": 536870912,
+      "path": [
+        "expanded_caller_stream_limit_bytes"
+      ]
+    },
+    {
+      "new": 45,
+      "operation": "add",
+      "path": [
+        "other_phase_seconds"
+      ]
+    },
+    {
+      "new": false,
+      "operation": "add",
+      "path": [
+        "raw_full_DOM_materialized"
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8",
+      "path": [
+        "raw_root"
+      ]
+    },
+    {
+      "new": 120,
+      "operation": "add",
+      "path": [
+        "recipe",
+        "caller_ast_phase_seconds"
+      ]
+    },
+    {
+      "new": "-I/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/control/include",
+      "old": "-I/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/control/include",
+      "path": [
+        "recipe",
+        "commands",
+        0,
+        "argv",
+        7
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/component/caller.d",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/component/caller.d",
+      "path": [
+        "recipe",
+        "commands",
+        0,
+        "argv",
+        13
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/control/source_call_fixture_v2.cpp",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/control/source_call_fixture_v2.cpp",
+      "path": [
+        "recipe",
+        "commands",
+        0,
+        "argv",
+        16
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/component/caller.ii",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/component/caller.ii",
+      "path": [
+        "recipe",
+        "commands",
+        0,
+        "argv",
+        18
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/component",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/component",
+      "path": [
+        "recipe",
+        "commands",
+        0,
+        "cwd"
+      ]
+    },
+    {
+      "new": "-I/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/control/include",
+      "old": "-I/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/control/include",
+      "path": [
+        "recipe",
+        "commands",
+        1,
+        "argv",
+        7
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/component/caller.ast.d",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/component/caller.ast.d",
+      "path": [
+        "recipe",
+        "commands",
+        1,
+        "argv",
+        13
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/control/source_call_fixture_v2.cpp",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/control/source_call_fixture_v2.cpp",
+      "path": [
+        "recipe",
+        "commands",
+        1,
+        "argv",
+        18
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/component",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/component",
+      "path": [
+        "recipe",
+        "commands",
+        1,
+        "cwd"
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/component/caller.ast.json.gz",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/component/caller.ast.json.gz",
+      "path": [
+        "recipe",
+        "commands",
+        1,
+        "stdout"
+      ]
+    },
+    {
+      "new": "-I/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/control/include",
+      "old": "-I/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/control/include",
+      "path": [
+        "recipe",
+        "commands",
+        2,
+        "argv",
+        7
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/component/abi.d",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/component/abi.d",
+      "path": [
+        "recipe",
+        "commands",
+        2,
+        "argv",
+        13
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/control/compiler_abi_probe_v1.cpp",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/control/compiler_abi_probe_v1.cpp",
+      "path": [
+        "recipe",
+        "commands",
+        2,
+        "argv",
+        16
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/component/abi.ii",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/component/abi.ii",
+      "path": [
+        "recipe",
+        "commands",
+        2,
+        "argv",
+        18
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/component",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/component",
+      "path": [
+        "recipe",
+        "commands",
+        2,
+        "cwd"
+      ]
+    },
+    {
+      "new": "-I/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/control/include",
+      "old": "-I/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/control/include",
+      "path": [
+        "recipe",
+        "commands",
+        3,
+        "argv",
+        7
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/component/abi.ast.d",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/component/abi.ast.d",
+      "path": [
+        "recipe",
+        "commands",
+        3,
+        "argv",
+        13
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/control/compiler_abi_probe_v1.cpp",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/control/compiler_abi_probe_v1.cpp",
+      "path": [
+        "recipe",
+        "commands",
+        3,
+        "argv",
+        20
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/component",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/component",
+      "path": [
+        "recipe",
+        "commands",
+        3,
+        "cwd"
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/component/abi.ast.json",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/component/abi.ast.json",
+      "path": [
+        "recipe",
+        "commands",
+        3,
+        "stdout"
+      ]
+    },
+    {
+      "new": true,
+      "operation": "add",
+      "path": [
+        "recipe",
+        "lossless_caller_stdout",
+        "complete_TU_parser_unchanged"
+      ]
+    },
+    {
+      "new": 2147483648,
+      "old": 536870912,
+      "path": [
+        "recipe",
+        "lossless_caller_stdout",
+        "expanded_limit"
+      ]
+    },
+    {
+      "new": 134217728,
+      "operation": "add",
+      "path": [
+        "recipe",
+        "lossless_caller_stdout",
+        "minified_file_limit"
+      ]
+    },
+    {
+      "new": false,
+      "operation": "add",
+      "path": [
+        "recipe",
+        "lossless_caller_stdout",
+        "raw_full_DOM_materialized"
+      ]
+    },
+    {
+      "new": true,
+      "operation": "add",
+      "path": [
+        "recipe",
+        "lossless_caller_stdout",
+        "streaming_strict_token_preserving_minification"
+      ]
+    },
+    {
+      "new": 45,
+      "operation": "add",
+      "path": [
+        "recipe",
+        "other_phase_seconds"
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8",
+      "path": [
+        "root_required_environment",
+        "PROBATA_OUTPUT"
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/verifier.lock",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/verifier.lock",
+      "path": [
+        "root_required_environment",
+        "SWDB_VERIFIER_LOCK"
+      ]
+    }
+  ],
+  "date": "2026-10-16 ET",
+  "entry_and_adapter_text_and_AST_inverse_exact": true,
+  "entry_edits": [
+    {
+      "new": "RAW_NAME = \"probata-resume-20261016-t28-full-tu-2baf722f-v9\"",
+      "old": "RAW_NAME = \"probata-resume-20261016-t28-full-tu-2baf722f-v8\""
+    },
+    {
+      "new": "ADAPTER_SHA = \"541c6af68717c5fba4968f23f123fdf51e79edd9a3dff501ff7fa025fc38f9b5\"",
+      "old": "ADAPTER_SHA = \"775ab2ecf6068153a6167473129dcd416dc2727c9afe0ef6e0846bab62d3085c\""
+    },
+    {
+      "new": "CODEC_SHA = \"aae4a423216fcdca6b16f9eba370ec4c83615ed61ae79dd4b3d09e3bed1702ef\"\nMINIFIER_SHA = \"c2d1ae801da0393df801dff3acc489f717e10851d70bc40964db53ad8939fe26\"",
+      "old": "CODEC_SHA = \"f93850883bdab523e59122812fa46877728127e8ba5997c567621347de739193\""
+    },
+    {
+      "new": "recipe[\"caller_ast_phase_seconds\"] = 120\n    recipe[\"other_phase_seconds\"] = 45\n    recipe[\"lossless_caller_stdout\"] = {\"codec\": \"gzip-single-member\", \"expanded_limit\": 2147483648,",
+      "old": "recipe[\"lossless_caller_stdout\"] = {\"codec\": \"gzip-single-member\", \"expanded_limit\": 536870912,"
+    },
+    {
+      "new": "\"expanded_memory_is_not_retained_disk_bytes\": True,\n        \"streaming_strict_token_preserving_minification\": True, \"minified_file_limit\": STAGE_BYTES,\n        \"raw_full_DOM_materialized\": False, \"complete_TU_parser_unchanged\": True}",
+      "old": "\"expanded_memory_is_not_retained_disk_bytes\": True}"
+    },
+    {
+      "new": "capture = codec.Capture(zlib_module, stdout, expanded_limit=2147483648,",
+      "old": "capture = codec.Capture(zlib_module, stdout, expanded_limit=536870912,"
+    },
+    {
+      "new": "adapter = module(\"compiler_unit_adapter_v4.py\", ADAPTER_SHA)",
+      "old": "adapter = module(\"compiler_unit_adapter_v3.py\", ADAPTER_SHA)"
+    },
+    {
+      "new": "codec = module(\"lossless_gzip_v2.py\", CODEC_SHA)\n    minifier = module(\"strict_minify_v1.py\", MINIFIER_SHA)",
+      "old": "codec = module(\"lossless_gzip_v1.py\", CODEC_SHA)"
+    },
+    {
+      "new": "        phase_seconds = 120 if item[\"phase\"] == \"caller-ast\" else 45\n        remaining = min(phase_seconds, deadline - time.monotonic() - 10)",
+      "old": "        remaining = min(45, deadline - time.monotonic() - 10)"
+    },
+    {
+      "new": "        tentative = out / \"caller.ast.minified.tentative\"\n        with (out / \"caller.ast.json.gz\").open(\"rb\") as compressed, tentative.open(\"xb\") as target:\n            decoded = codec.DecodeReader(zlib_module, compressed, stream_receipt, expanded_limit=2147483648,\n                compressed_limit=STAGE_BYTES, check=decode_check)\n            identity = minifier.minify(decoded, target, raw_limit=2147483648,\n                retained_limit=STAGE_BYTES, check=decode_check)\n            if not decoded.verified or (identity[\"raw_bytes\"], identity[\"raw_sha256\"]) != (stream_receipt[\"expanded_bytes\"], stream_receipt[\"expanded_sha256\"]):\n                raise ValueError(\"complete original gzip/minified JSON identity differs\")\n        decode_check()\n        minified_path = out / \"caller.ast.minified.json\"\n        os.rename(tentative, minified_path)\n        minified_pin = pin(minified_path)\n        if (minified_pin[\"bytes\"], minified_pin[\"sha256\"]) != (identity[\"minified_bytes\"], identity[\"minified_sha256\"]):\n            raise ValueError(\"physical complete minified TU differs\")\n        save(out / \"caller.ast.identity.json\", identity)\n        groups[0][\"minified_ast\"] = minified_pin\n        groups[0][\"token_identity\"] = pin(out / \"caller.ast.identity.json\")\n        full_tu_raw = minified_path.read_bytes()",
+      "old": "        with (out / \"caller.ast.json.gz\").open(\"rb\") as compressed:\n            full_tu_raw = codec.decode(zlib_module, compressed, stream_receipt, expanded_limit=536870912,\n                compressed_limit=STAGE_BYTES, check=decode_check)"
+    },
+    {
+      "new": "full_tu_identity=identity, full_tu_compressed_bytes=stream_receipt[\"compressed_bytes\"])",
+      "old": "full_tu_compressed_bytes=stream_receipt[\"compressed_bytes\"], full_tu_expanded_limit=536870912)"
+    },
+    {
+      "new": "for k in (\"ast\", \"ast_dependency\", \"expanded_stream_receipt\", \"minified_ast\", \"token_identity\") if k in group",
+      "old": "for k in (\"ast\", \"ast_dependency\", \"expanded_stream_receipt\") if k in group"
+    }
+  ],
+  "old_command": {
+    "bytes": 13299,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v8/linux_compiler_capture_command_v8.json",
+    "sha256": "45b181d544e8def16e5585bfb73fe253cb919b073b8a957a2fbb572108d257d0"
+  },
+  "old_policy": {
+    "bytes": 665757,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v8/linux_compiler_capture_policy_v8.json",
+    "sha256": "e38ad0ff84d07852d6f7c37adeea40f96f6c94b745b2bc5b77d2b65504c1a89f"
+  },
+  "policy": {
+    "bytes": 666154,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v9/linux_compiler_capture_policy_v9.json",
+    "sha256": "a45df6a74f1642e56a9c58e99cfdf20fb416fe9d1fb11ec660b4f2369f9db0e8"
+  },
+  "policy_edits": [
+    {
+      "new": 120,
+      "operation": "add",
+      "path": [
+        "capture_recipe",
+        "caller_ast_phase_seconds"
+      ]
+    },
+    {
+      "new": "-I/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/control/include",
+      "old": "-I/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/control/include",
+      "path": [
+        "capture_recipe",
+        "commands",
+        0,
+        "argv",
+        7
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/component/caller.d",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/component/caller.d",
+      "path": [
+        "capture_recipe",
+        "commands",
+        0,
+        "argv",
+        13
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/control/source_call_fixture_v2.cpp",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/control/source_call_fixture_v2.cpp",
+      "path": [
+        "capture_recipe",
+        "commands",
+        0,
+        "argv",
+        16
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/component/caller.ii",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/component/caller.ii",
+      "path": [
+        "capture_recipe",
+        "commands",
+        0,
+        "argv",
+        18
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/component",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/component",
+      "path": [
+        "capture_recipe",
+        "commands",
+        0,
+        "cwd"
+      ]
+    },
+    {
+      "new": "-I/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/control/include",
+      "old": "-I/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/control/include",
+      "path": [
+        "capture_recipe",
+        "commands",
+        1,
+        "argv",
+        7
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/component/caller.ast.d",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/component/caller.ast.d",
+      "path": [
+        "capture_recipe",
+        "commands",
+        1,
+        "argv",
+        13
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/control/source_call_fixture_v2.cpp",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/control/source_call_fixture_v2.cpp",
+      "path": [
+        "capture_recipe",
+        "commands",
+        1,
+        "argv",
+        18
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/component",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/component",
+      "path": [
+        "capture_recipe",
+        "commands",
+        1,
+        "cwd"
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/component/caller.ast.json.gz",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/component/caller.ast.json.gz",
+      "path": [
+        "capture_recipe",
+        "commands",
+        1,
+        "stdout"
+      ]
+    },
+    {
+      "new": "-I/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/control/include",
+      "old": "-I/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/control/include",
+      "path": [
+        "capture_recipe",
+        "commands",
+        2,
+        "argv",
+        7
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/component/abi.d",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/component/abi.d",
+      "path": [
+        "capture_recipe",
+        "commands",
+        2,
+        "argv",
+        13
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/control/compiler_abi_probe_v1.cpp",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/control/compiler_abi_probe_v1.cpp",
+      "path": [
+        "capture_recipe",
+        "commands",
+        2,
+        "argv",
+        16
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/component/abi.ii",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/component/abi.ii",
+      "path": [
+        "capture_recipe",
+        "commands",
+        2,
+        "argv",
+        18
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/component",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/component",
+      "path": [
+        "capture_recipe",
+        "commands",
+        2,
+        "cwd"
+      ]
+    },
+    {
+      "new": "-I/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/control/include",
+      "old": "-I/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/control/include",
+      "path": [
+        "capture_recipe",
+        "commands",
+        3,
+        "argv",
+        7
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/component/abi.ast.d",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/component/abi.ast.d",
+      "path": [
+        "capture_recipe",
+        "commands",
+        3,
+        "argv",
+        13
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/control/compiler_abi_probe_v1.cpp",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/control/compiler_abi_probe_v1.cpp",
+      "path": [
+        "capture_recipe",
+        "commands",
+        3,
+        "argv",
+        20
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/component",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/component",
+      "path": [
+        "capture_recipe",
+        "commands",
+        3,
+        "cwd"
+      ]
+    },
+    {
+      "new": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v9/component/abi.ast.json",
+      "old": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/component/abi.ast.json",
+      "path": [
+        "capture_recipe",
+        "commands",
+        3,
+        "stdout"
+      ]
+    },
+    {
+      "new": true,
+      "operation": "add",
+      "path": [
+        "capture_recipe",
+        "lossless_caller_stdout",
+        "complete_TU_parser_unchanged"
+      ]
+    },
+    {
+      "new": 2147483648,
+      "old": 536870912,
+      "path": [
+        "capture_recipe",
+        "lossless_caller_stdout",
+        "expanded_limit"
+      ]
+    },
+    {
+      "new": 134217728,
+      "operation": "add",
+      "path": [
+        "capture_recipe",
+        "lossless_caller_stdout",
+        "minified_file_limit"
+      ]
+    },
+    {
+      "new": false,
+      "operation": "add",
+      "path": [
+        "capture_recipe",
+        "lossless_caller_stdout",
+        "raw_full_DOM_materialized"
+      ]
+    },
+    {
+      "new": true,
+      "operation": "add",
+      "path": [
+        "capture_recipe",
+        "lossless_caller_stdout",
+        "streaming_strict_token_preserving_minification"
+      ]
+    },
+    {
+      "new": 45,
+      "operation": "add",
+      "path": [
+        "capture_recipe",
+        "other_phase_seconds"
+      ]
+    },
+    {
+      "old": {
+        "bytes": 15063,
+        "sha256": "775ab2ecf6068153a6167473129dcd416dc2727c9afe0ef6e0846bab62d3085c"
+      },
+      "operation": "remove",
+      "path": [
+        "controller_files",
+        "compiler_unit_adapter_v3.py"
+      ]
+    },
+    {
+      "new": {
+        "bytes": 17211,
+        "sha256": "541c6af68717c5fba4968f23f123fdf51e79edd9a3dff501ff7fa025fc38f9b5"
+      },
+      "operation": "add",
+      "path": [
+        "controller_files",
+        "compiler_unit_adapter_v4.py"
+      ]
+    },
+    {
+      "old": {
+        "bytes": 28420,
+        "sha256": "937380eef851574e5d7c49c2cc31860c354a76258d5ff79d5813a9c76296728b"
+      },
+      "operation": "remove",
+      "path": [
+        "controller_files",
+        "linux_compiler_capture_v8.py"
+      ]
+    },
+    {
+      "new": {
+        "bytes": 30010,
+        "sha256": "a25a623e4e10376919c2d51ea800466d69262b6e354b7ba23ffae113e04694d9"
+      },
+      "operation": "add",
+      "path": [
+        "controller_files",
+        "linux_compiler_capture_v9.py"
+      ]
+    },
+    {
+      "old": {
+        "bytes": 5976,
+        "sha256": "f93850883bdab523e59122812fa46877728127e8ba5997c567621347de739193"
+      },
+      "operation": "remove",
+      "path": [
+        "controller_files",
+        "lossless_gzip_v1.py"
+      ]
+    },
+    {
+      "new": {
+        "bytes": 6812,
+        "sha256": "aae4a423216fcdca6b16f9eba370ec4c83615ed61ae79dd4b3d09e3bed1702ef"
+      },
+      "operation": "add",
+      "path": [
+        "controller_files",
+        "lossless_gzip_v2.py"
+      ]
+    },
+    {
+      "new": {
+        "bytes": 7658,
+        "sha256": "c2d1ae801da0393df801dff3acc489f717e10851d70bc40964db53ad8939fe26"
+      },
+      "operation": "add",
+      "path": [
+        "controller_files",
+        "strict_minify_v1.py"
+      ]
+    },
+    {
+      "new": "a25a623e4e10376919c2d51ea800466d69262b6e354b7ba23ffae113e04694d9",
+      "old": "937380eef851574e5d7c49c2cc31860c354a76258d5ff79d5813a9c76296728b",
+      "path": [
+        "entry_sha256"
+      ]
+    },
+    {
+      "new": "probata-resume-20261016-t28-full-tu-2baf722f-v9",
+      "old": "probata-resume-20261016-t28-full-tu-2baf722f-v8",
+      "path": [
+        "raw_name"
+      ]
+    },
+    {
+      "new": "t28-whole-source-compiler-capture-9",
+      "old": "t28-whole-source-compiler-capture-8",
+      "path": [
+        "schema"
+      ]
+    }
+  ],
+  "predecessor": {
+    "bytes": 28420,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v8/linux_compiler_capture_v8.py",
+    "sha256": "937380eef851574e5d7c49c2cc31860c354a76258d5ff79d5813a9c76296728b"
+  },
+  "semantic_AST_functions_and_original_compiler_argv_unchanged": true,
+  "successor": {
+    "bytes": 30010,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v9/linux_compiler_capture_v9.py",
+    "sha256": "a25a623e4e10376919c2d51ea800466d69262b6e354b7ba23ffae113e04694d9"
+  }
+}

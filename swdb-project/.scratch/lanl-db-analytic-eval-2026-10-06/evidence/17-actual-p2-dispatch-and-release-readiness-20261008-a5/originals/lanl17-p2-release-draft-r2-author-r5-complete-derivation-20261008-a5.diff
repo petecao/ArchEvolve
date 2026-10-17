@@ -1,0 +1,33 @@
+--- /private/tmp/lanl17-p2-release-request-draft-r1-20261008-a5.json
++++ /private/tmp/lanl17-p2-release-request-draft-r2-20261008-a5.json
+@@ -269,7 +269,8 @@
+   "scientific_admission": false,
+   "supersedes_source_only_draft": {
+     "bytes": 10877,
+-    "path": "/private/tmp/lanl17-p2-release-request-draft-20261008-a5.json",
+-    "sha256": "3f04c3a497a8a0f4f37cda84758dd8fa6b244d79403b477f6d2adc665ed5addd"
++    "path": "/private/tmp/lanl17-p1-release-request-draft-20261008-a5.json",
++    "sha256": "3f04c3a497a8a0f4f37cda84758dd8fa6b244d79403b477f6d2adc665ed5addd",
++    "reference_scope": "original_p1_draft_predecessor_provenance_only"
+   }
+ }
+--- /private/tmp/lanl17_finalize_p2_normal_release_request_20261008_a5_r4.py
++++ /private/tmp/lanl17_finalize_p2_normal_release_request_20261008_a5_r5.py
+@@ -6,7 +6,7 @@
+ N='00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8'
+ Q='3f89941c85bbf0dd4b080d3f75b1ab07089327dcee7e7b6f0b4f92d4fea4e029'
+ P='32bead204337aa66d0a732b6f143216946abafc5d2eb752577b0d90f7190b7b6'
+-DRAFT='56fb9feb0e684273999e4d9f5be27511d5711592f33adf4f31d096e891d6c066'
++DRAFT='78b2565af02a84ada59be8bf48fb8aa6c728c64b631f458b39436490ca0429b3'
+ M2SHA='b86d78bac1d0a09e176114d1c23491ede098c4fcf5af5ab96f318ceabc29b8d1'
+ DSHA='c0c35fa265e2860a77e7ce1c528a21aa6cd18008b8d59d2e4c31ece6ac81dc69'
+ S='/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5'
+@@ -83,7 +83,7 @@
+     for value in (a.terminal_metadata_sha256,a.native_observation_sha256):need(re.fullmatch('[0-9a-f]{64}',value) is not None,'explicit_original_SHA')
+     for out in (a.output_request,a.output_action_config):need(out.parent==Path('/private/tmp') and not os.path.lexists(out) and not out.is_symlink(),'fresh_private_output')
+     need(a.output_request!=a.output_action_config,'distinct_outputs')
+-    base=Path('/private/tmp');draft=strict(read(base/'lanl17-p2-release-request-draft-r1-20261008-a5.json',32768,DRAFT,12397));spec=copy.deepcopy(draft['request_template']);ctx=spec['context']
++    base=Path('/private/tmp');draft=strict(read(base/'lanl17-p2-release-request-draft-r2-20261008-a5.json',32768,DRAFT,12469));spec=copy.deepcopy(draft['request_template']);ctx=spec['context']
+     need(draft['executable'] is False and spec['capture']=='release' and ctx['source_commit']==R and ctx['source_path']==S and ctx['campaign']=='extensa-gem5-bfs-20261006-p2' and type(ctx['attempt']) is int and ctx['attempt']==1,'reviewed_p1_scope')
+     read(base/'lanl17_parent_helpers_cleanup60_a4.py',65536,H,38195);read(a.native_wrapper_source,32768,N,10510)
+     read(base/'lanl17_read_p2_native_release_observation_20261008_a5_r2.py',32768,Q,15125)

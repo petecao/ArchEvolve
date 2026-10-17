@@ -1,0 +1,94 @@
+{
+  "argv_template": [
+    "python3",
+    "-B",
+    "/private/tmp/lanl17_capture_reviewed_normal_campaign_dispatch_20261008_a2r1.py",
+    "--source-sha256",
+    "76de56fc103d0ffa3d1b197fa93e474e4db4aef78698e69abb9197b994d8e8e3",
+    "--ssh-sha256",
+    "c7f9f9779c1dd141b04889c6cb214859d0702687e7fde34511bb5fa7af8951f1",
+    "--ssh-bytes",
+    "1584560",
+    "--local-processes",
+    "/Users/yanrujhou/.codex/worktrees/lanl-ticket17/ArchEvolve/swdb-project/swdb/processes.py",
+    "--expected-primary",
+    {
+      "required_future_input": "actual_current_primary_full40"
+    },
+    "--manifest-local-original",
+    "/private/tmp/lanl17-prepare-completion-decoded-originals-20261008-a1/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/manifest.json",
+    "--manifest-remote",
+    "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/manifest.json",
+    "--manifest-sha256",
+    "b86d78bac1d0a09e176114d1c23491ede098c4fcf5af5ab96f318ceabc29b8d1",
+    "--publication-local-original",
+    "/private/tmp/lanl17-first-producer-capture-20261008-a5/publication-custody.json",
+    "--publication-remote",
+    "/data/yanruj/EvolveSWDB_runs/lanl17-first-publication-custody-20261008-a5.json",
+    "--publication-sha256",
+    "e1fa63af665bea9937375b4be17fe3de7f013a1da0e1106e36817c828fc3d5e1",
+    "--before-local-original",
+    "/private/tmp/lanl17-p4-before-capture-20261008-a5/custody.json",
+    "--before-remote",
+    "/data/yanruj/EvolveSWDB_runs/lanl17-p4-before-custody-20261008-a5/custody.json",
+    "--before-sha256",
+    {
+      "required_future_input": "actual_p4_before_file_sha256"
+    },
+    "--campaign",
+    "extensa-gem5-bfs-20261006-p4",
+    "--node",
+    "0",
+    "--parent-exclusive-checked-utc",
+    {
+      "required_future_input": "fresh_parent_exclusive_checked_utc"
+    },
+    "--valid-until-utc",
+    {
+      "required_future_input": "fresh_parent_valid_until_utc"
+    },
+    "--transport-wait-s",
+    "900",
+    "--capture-directory",
+    "/private/tmp/lanl17-normal-campaign-dispatch-capture-20261008-a5-p4-a2"
+  ],
+  "derived_from": {
+    "bytes": 1892,
+    "path": "/private/tmp/lanl17-p1-dispatch-parent-argv-20261008-a5-a2.json",
+    "sha256": "16611f93760173274d8cc22d99d0a76be3a06a2bb9d6d4445a5950100d67c915"
+  },
+  "derived_from_selected_p2_r1": {
+    "bytes": 3139,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-active-p1-startup-and-p2-preparation-20261008-a5/originals/p2-selected-r1-argv-draft.json",
+    "sha256": "21949d683b64c6e374ba65fa441e975509706e87ac568e49114ab27425b6fd3c"
+  },
+  "executable": false,
+  "format": "swdb.lanl17-parent-dispatch-source-only-draft.v1",
+  "future_native_generation_observation": {
+    "basis": "actual fresh released preflight and actual acquired final lane generation; never inherit p1 generation511",
+    "known_value": null,
+    "required_future_input": "actual_p4_native_generation"
+  },
+  "historical_p2_supersession_provenance": {
+    "bytes": 2613,
+    "path": "/private/tmp/lanl17-p2-dispatch-parent-argv-draft-20261008-a5-a2.json",
+    "sha256": "b2a84f9b8ce93671de2fe53bb677f88570684461ce20ffa44c50de2fd4fbc734"
+  },
+  "lane_choice": "serial node0; fresh floors and native leases must pass unchanged checks",
+  "primary_verification_requirement": {
+    "external_administrative_advancement_is_dispatch_blocker": true,
+    "must_live_verify_PRIMARY_and_origin_equal_required_commit": true,
+    "required_commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+    "substitute_new_administrative_HEAD": false
+  },
+  "required_future_admission_flag": {
+    "actual_parent_review": null,
+    "flag": "--parent-exclusive-state-unchanged-reviewed"
+  },
+  "scientific_admission": false,
+  "serial_predecessor_requirement": {
+    "actual_completion_observed": null,
+    "campaign": "extensa-gem5-bfs-20261006-p3",
+    "original_release32_and_AFTER_required": true
+  }
+}

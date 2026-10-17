@@ -1,0 +1,1921 @@
+kind: cpu_calibration
+schema_version: '0.4'
+id: mbit10.cpu.lanl20261006a2.v2.calibration.t16
+status: draft
+created: '2026-10-06'
+updated: '2026-10-06'
+provenance:
+- id: cpu-calibration
+  kind: measurement
+  description: Compact CPU calibration receipt aa2dd212a7e5a4ecd67962d428fa8cdf497f07857092378ae8c8d60fd5f3a088;
+    exact elapsed/work trials retained; raw remains external.
+  uri: null
+format: swdb.cpu-calibration-record.v1
+backend: native
+evidence_kind: native
+receipt_sha256: aa2dd212a7e5a4ecd67962d428fa8cdf497f07857092378ae8c8d60fd5f3a088
+target: mbit10
+threads: 16
+context:
+  compiler: /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang++
+  compiler_version: |
+    clang version 22.1.8 (https://github.com/llvm/llvm-project ca7933e47d3a3451d81e72ac174dcb5aa28b59d1)
+    Target: x86_64-unknown-linux-gnu
+    Thread model: posix
+    InstalledDir: /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin
+  flags:
+  - -O3
+  - -std=c++17
+  - -pthread
+  - --gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13
+  host: mbit10
+  architecture: x86_64
+  runtime: std::thread; physical-core pinning on Linux
+  lane: 'mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 468)'
+  cpus: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30]
+  commit: 40435a907559a27e6a0cfe8ae4c17140a591405d
+  dirty: false
+  source_sha256:
+    CpuCalibration.cpp: 3368e0a9afb761ce0564a2959977ae7a2aaf7483a475843099268ddd475c6f47
+    CpuWork.h: 18505bf0e53496132ac3c4bf03881d804d6e0fd9dee51c5887fbda2190fd8393
+    CpuCount.cpp: 9d739f2f19f19d0c91d6ad50d5439e2a3c6c073be41d1d14fe111b368ddfd3f3
+  binary_sha256: 1efbe9b2afe0ad8c5ff3c11819d3868c5c7e5291703340daf73f01e5a9635567
+  start_state:
+    load: [1.88525390625, 2.10302734375, 2.0283203125]
+    time_ns: 1791321317678184149
+    available_memory: |-
+      MemTotal:       131426264 kB
+      MemFree:        27411468 kB
+      MemAvailable:   122736584 kB
+      Buffers:        12201404 kB
+      Cached:         54863560 kB
+      SwapCached:            0 kB
+      Active:          4224448 kB
+      Inactive:       64325040 kB
+      Active(anon):    1458032 kB
+      Inactive(anon):    56224 kB
+      Active(file):    2766416 kB
+      Inactive(file): 64268816 kB
+      Unevictable:       39252 kB
+      Mlocked:           36180 kB
+      SwapTotal:             0 kB
+      SwapFree:              0 kB
+      Zswap:                 0 kB
+      Zswapped:              0 kB
+      Dirty:               672 kB
+      Writeback:             0 kB
+      AnonPages:       1524440 kB
+      Mapped:          1125948 kB
+      Shmem:             14900 kB
+      KReclaimable:   29608484 kB
+      Slab:           32111796 kB
+      SReclaimable:   29524652 kB
+      SUnreclaim:      2587144 kB
+      KernelStack:       25488 kB
+      PageTables:        30776 kB
+      SecPageTables:         0 kB
+      NFS_Unstable:          0 kB
+      Bounce:                0 kB
+      WritebackTmp:          0 kB
+      CommitLimit:    65713132 kB
+      Committed_AS:    5482688 kB
+      VmallocTotal:   13743895347199 kB
+      VmallocUsed:      432500 kB
+      VmallocChunk:          0 kB
+      Percpu:           362496 kB
+      HardwareCorrupted:     8 kB
+      AnonHugePages:         0 kB
+      ShmemHugePages:        0 kB
+      ShmemPmdMapped:        0 kB
+      FileHugePages:         0 kB
+      FilePmdMapped:         0 kB
+      Unaccepted:            0 kB
+      HugePages_Total:       0
+      HugePages_Free:        0
+      HugePages_Rsvd:        0
+      HugePages_Surp:        0
+      Hugepagesize:       2048 kB
+      Hugetlb:               0 kB
+      DirectMap4k:    40398820 kB
+      DirectMap2M:    91160576 kB
+      DirectMap1G:     4194304 kB
+    governor: null
+    no_turbo: null
+  free_disk_bytes: 62370263040
+  last_level_cache:
+    capacity_bytes: 25165824
+    level: 3
+    sharing: 0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62
+    basis: reported
+  end_state:
+    load: [11.533203125, 5.087890625, 3.1025390625]
+    time_ns: 1791321569891771891
+    available_memory: |-
+      MemTotal:       131426264 kB
+      MemFree:        27394628 kB
+      MemAvailable:   122734820 kB
+      Buffers:        12201736 kB
+      Cached:         54877408 kB
+      SwapCached:            0 kB
+      Active:          4225452 kB
+      Inactive:       64339240 kB
+      Active(anon):    1459036 kB
+      Inactive(anon):    56220 kB
+      Active(file):    2766416 kB
+      Inactive(file): 64283020 kB
+      Unevictable:       39252 kB
+      Mlocked:           36180 kB
+      SwapTotal:             0 kB
+      SwapFree:              0 kB
+      Zswap:                 0 kB
+      Zswapped:              0 kB
+      Dirty:                16 kB
+      Writeback:             0 kB
+      AnonPages:       1525112 kB
+      Mapped:          1125808 kB
+      Shmem:             14900 kB
+      KReclaimable:   29609356 kB
+      Slab:           32111872 kB
+      SReclaimable:   29525524 kB
+      SUnreclaim:      2586348 kB
+      KernelStack:       25712 kB
+      PageTables:        31012 kB
+      SecPageTables:         0 kB
+      NFS_Unstable:          0 kB
+      Bounce:                0 kB
+      WritebackTmp:          0 kB
+      CommitLimit:    65713132 kB
+      Committed_AS:    5489596 kB
+      VmallocTotal:   13743895347199 kB
+      VmallocUsed:      432612 kB
+      VmallocChunk:          0 kB
+      Percpu:           363008 kB
+      HardwareCorrupted:     8 kB
+      AnonHugePages:         0 kB
+      ShmemHugePages:        0 kB
+      ShmemPmdMapped:        0 kB
+      FileHugePages:         0 kB
+      FilePmdMapped:         0 kB
+      Unaccepted:            0 kB
+      HugePages_Total:       0
+      HugePages_Free:        0
+      HugePages_Rsvd:        0
+      HugePages_Surp:        0
+      Hugepagesize:       2048 kB
+      Hugetlb:               0 kB
+      DirectMap4k:    40398820 kB
+      DirectMap2M:    91160576 kB
+      DirectMap1G:     4194304 kB
+    governor: null
+    no_turbo: null
+settings:
+  threads: [1, 2, 4, 8, 16]
+  chains: [1, 16, 32, 64, 128]
+  repetitions: 7
+  working_set_bytes: 268435456
+  cache_bytes: 8388608
+  min_trial_s: 0.2
+  max_wall_s: 900.0
+  seed: 20261006
+  memory_cap_bytes: 1610612736
+  raw_cap_bytes: 52428800
+compute_counts:
+  integer:
+    level: source_normalized_ir
+    pipeline:
+      version: source-normalized-v2
+      passes:
+      - function(sroa,mem2reg),cgscc(inline),function(loop-simplify)
+    per_iteration: 26
+    per_invocation: 8
+    validation_points:
+    - [32, 840]
+    - [64, 1672]
+    - [96, 2504]
+    characterization_sha256:
+    - 636112bcb5a32675f02308f15a44a5521a33c5b00b53eda7a96760a915719809
+    - 703c877451eed28d0d789ec1145cd74591ce2c51619a3f705df71201642f3367
+    - 499bbb8e27d4ed487c3eec801ac8c8a34b8af042b7dc86aa52052f245abb147b
+    source_sha256: 18505bf0e53496132ac3c4bf03881d804d6e0fd9dee51c5887fbda2190fd8393
+    basis: inferred
+    timing: separate uninstrumented binary
+    scope: effective constructed work, not physical issue throughput
+  floating_point:
+    level: source_normalized_ir
+    pipeline:
+      version: source-normalized-v2
+      passes:
+      - function(sroa,mem2reg),cgscc(inline),function(loop-simplify)
+    per_iteration: 8
+    per_invocation: 5
+    validation_points:
+    - [32, 261]
+    - [64, 517]
+    - [96, 773]
+    characterization_sha256:
+    - f380b5ce97645fe2d82737748fde1b63d333e4dc523729bb70a07965a8b2a9ec
+    - 514f0abb1aa05b9d85bed1f42678956c5ec6a369840d3c2040bfec3171dc4630
+    - 4aace0eae1c2aebb344d3d915cacc9439291a3fc4e00225d2fbe92b9e89ee28d
+    source_sha256: 18505bf0e53496132ac3c4bf03881d804d6e0fd9dee51c5887fbda2190fd8393
+    basis: inferred
+    timing: separate uninstrumented binary
+    scope: effective constructed work, not physical issue throughput
+  branch:
+    level: source_normalized_ir
+    pipeline:
+      version: source-normalized-v2
+      passes:
+      - function(sroa,mem2reg),cgscc(inline),function(loop-simplify)
+    per_iteration: 5
+    per_invocation: 3
+    validation_points:
+    - [32, 163]
+    - [64, 323]
+    - [96, 483]
+    characterization_sha256:
+    - 71f7c7954b49f240b6ff432633c14901edab6d75d06a5b90a77d9af38f2579e8
+    - 4508754e75e39c7fb393c1b755acc6b05d32ad5900ac88493a8515aa9f41a1ed
+    - cdfedb82e7e46acedaa232c92fbe8946488d27be241dc914b178a695eeff4421
+    source_sha256: 18505bf0e53496132ac3c4bf03881d804d6e0fd9dee51c5887fbda2190fd8393
+    basis: inferred
+    timing: separate uninstrumented binary
+    scope: effective constructed work, not physical issue throughput
+  atomic:
+    level: source_normalized_ir
+    pipeline:
+      version: source-normalized-v2
+      passes:
+      - function(sroa,mem2reg),cgscc(inline),function(loop-simplify)
+    per_iteration: 1
+    per_invocation: 0
+    validation_points:
+    - [32, 32]
+    - [64, 64]
+    - [96, 96]
+    characterization_sha256:
+    - 3ce82e934a1461c77772165cba20b7b9d708ee89a290357e63f3d3e0a6d232c9
+    - 7f961a17cefd78607e9e5ef5ba2855785722d60b80a7c2714c688a0ec1d65c58
+    - 15ea927cff9b9ec5f4867421008ade0e05b340e545a782b03cb2406787aca8aa
+    source_sha256: 18505bf0e53496132ac3c4bf03881d804d6e0fd9dee51c5887fbda2190fd8393
+    basis: inferred
+    timing: separate uninstrumented binary
+    scope: effective constructed work, not physical issue throughput
+series:
+- shape: stream
+  chains: 1
+  seconds:
+    values: [0.295657762, 0.296213289, 0.296085389, 0.296201619, 0.29623097, 0.295810971, 0.29596411]
+    median: 0.296085389
+    min: 0.295657762
+    max: 0.29623097
+    spread: 0.0005732079999999917
+    repetitions: 7
+  useful_bytes_per_s:
+    values: [58107282784.613655, 57998306699.872604, 58023360227.34307, 58000591765.84041, 57994844981.940956,
+      58077187353.5414, 58047136809.9328]
+    median: 58023360227.34307
+    min: 57994844981.940956
+    max: 58107282784.613655
+    spread: 112437802.67269897
+    repetitions: 7
+  helper_bytes_per_s:
+    values: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    median: 0.0
+    min: 0.0
+    max: 0.0
+    spread: 0.0
+    repetitions: 7
+  footprint_bytes: 268435456
+  scope: partitioned, first-touched on bound worker; useful payload bytes; helper bytes separate; compiler-only
+    pass fence for repeated stores
+  source_access_derivation: payload source-element accesses only; index/offset helper elements separate;
+    checksum/control bookkeeping excluded
+  trials:
+  - seconds: 0.295657762
+    iterations: 2147483648
+    accesses: 4294967296
+    useful_bytes: 17179869184
+    helper_bytes: 0
+    checksum: 16
+    worker_iterations: [134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728,
+      134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728]
+  - seconds: 0.296213289
+    iterations: 2147483648
+    accesses: 4294967296
+    useful_bytes: 17179869184
+    helper_bytes: 0
+    checksum: 16
+    worker_iterations: [134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728,
+      134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728]
+  - seconds: 0.296085389
+    iterations: 2147483648
+    accesses: 4294967296
+    useful_bytes: 17179869184
+    helper_bytes: 0
+    checksum: 16
+    worker_iterations: [134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728,
+      134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728]
+  - seconds: 0.296201619
+    iterations: 2147483648
+    accesses: 4294967296
+    useful_bytes: 17179869184
+    helper_bytes: 0
+    checksum: 16
+    worker_iterations: [134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728,
+      134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728]
+  - seconds: 0.29623097
+    iterations: 2147483648
+    accesses: 4294967296
+    useful_bytes: 17179869184
+    helper_bytes: 0
+    checksum: 16
+    worker_iterations: [134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728,
+      134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728]
+  - seconds: 0.295810971
+    iterations: 2147483648
+    accesses: 4294967296
+    useful_bytes: 17179869184
+    helper_bytes: 0
+    checksum: 16
+    worker_iterations: [134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728,
+      134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728]
+  - seconds: 0.29596411
+    iterations: 2147483648
+    accesses: 4294967296
+    useful_bytes: 17179869184
+    helper_bytes: 0
+    checksum: 16
+    worker_iterations: [134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728,
+      134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728]
+- shape: single_valued_indirect
+  chains: 1
+  seconds:
+    values: [0.296826983, 0.296696789, 0.296886613, 0.296600224, 0.297229283, 0.296674044, 0.296768616]
+    median: 0.296768616
+    min: 0.296600224
+    max: 0.297229283
+    spread: 0.0006290589999999874
+    repetitions: 7
+  useful_bytes_per_s:
+    values: [3617399648.6027017, 3618987005.6193967, 3616673089.9382114, 3620165249.7740526, 3612503496.164609,
+      3619264461.167354, 3618111101.074111]
+    median: 3618111101.074111
+    min: 3612503496.164609
+    max: 3620165249.7740526
+    spread: 7661753.609443665
+    repetitions: 7
+  helper_bytes_per_s:
+    values: [3617399648.6027017, 3618987005.6193967, 3616673089.9382114, 3620165249.7740526, 3612503496.164609,
+      3619264461.167354, 3618111101.074111]
+    median: 3618111101.074111
+    min: 3612503496.164609
+    max: 3620165249.7740526
+    spread: 7661753.609443665
+    repetitions: 7
+  footprint_bytes: 268435456
+  scope: partitioned, first-touched on bound worker; useful payload bytes; helper bytes separate; compiler-only
+    pass fence for repeated stores
+  source_access_derivation: payload source-element accesses only; index/offset helper elements separate;
+    checksum/control bookkeeping excluded
+  trials:
+  - seconds: 0.296826983
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 1073741824
+    helper_bytes: 1073741824
+    checksum: 133160831.96850395
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.296696789
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 1073741824
+    helper_bytes: 1073741824
+    checksum: 133160831.96850395
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.296886613
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 1073741824
+    helper_bytes: 1073741824
+    checksum: 133160831.96850395
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.296600224
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 1073741824
+    helper_bytes: 1073741824
+    checksum: 133160831.96850395
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.297229283
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 1073741824
+    helper_bytes: 1073741824
+    checksum: 133160831.96850395
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.296674044
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 1073741824
+    helper_bytes: 1073741824
+    checksum: 133160831.96850395
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.296768616
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 1073741824
+    helper_bytes: 1073741824
+    checksum: 133160831.96850395
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+- shape: ranged_indirect
+  chains: 1
+  seconds:
+    values: [0.300493356, 0.300388539, 0.30045906, 0.300326673, 0.300392053, 0.30051961, 0.300308519]
+    median: 0.300392053
+    min: 0.300308519
+    max: 0.30051961
+    spread: 0.0002110909999999966
+    repetitions: 7
+  useful_bytes_per_s:
+    values: [3573263110.682554, 3574509958.2511034, 3573670981.996682, 3575246291.8936276, 3574468143.4698277,
+      3572950943.201344, 3575462419.699123]
+    median: 3574468143.4698277
+    min: 3572950943.201344
+    max: 3575462419.699123
+    spread: 2511476.4977788925
+    repetitions: 7
+  helper_bytes_per_s:
+    values: [4466578888.353192, 4468137447.813879, 4467088727.495852, 4469057864.867035, 4468085179.337284,
+      4466188679.00168, 4469328024.623903]
+    median: 4468085179.337284
+    min: 4466188679.00168
+    max: 4469328024.623903
+    spread: 3139345.6222229004
+    repetitions: 7
+  footprint_bytes: 268435456
+  scope: partitioned, first-touched on bound worker; useful payload bytes; helper bytes separate; compiler-only
+    pass fence for repeated stores
+  source_access_derivation: payload source-element accesses only; index/offset helper elements separate;
+    checksum/control bookkeeping excluded
+  trials:
+  - seconds: 0.300493356
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 1073741824
+    helper_bytes: 1342177280
+    checksum: 133160831.96850395
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.300388539
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 1073741824
+    helper_bytes: 1342177280
+    checksum: 133160831.96850395
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.30045906
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 1073741824
+    helper_bytes: 1342177280
+    checksum: 133160831.96850395
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.300326673
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 1073741824
+    helper_bytes: 1342177280
+    checksum: 133160831.96850395
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.300392053
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 1073741824
+    helper_bytes: 1342177280
+    checksum: 133160831.96850395
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.30051961
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 1073741824
+    helper_bytes: 1342177280
+    checksum: 133160831.96850395
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.300308519
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 1073741824
+    helper_bytes: 1342177280
+    checksum: 133160831.96850395
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+- shape: data_dependent_merge
+  chains: 1
+  seconds:
+    values: [0.245218236, 0.245630865, 0.245197654, 0.245674718, 0.245360443, 0.245156924, 0.245573237]
+    median: 0.245360443
+    min: 0.245156924
+    max: 0.245674718
+    spread: 0.0005177939999999881
+    repetitions: 7
+  useful_bytes_per_s:
+    values: [70059492182.30246, 69941801035.4684, 70065373007.19852, 69929316406.09435, 70018886817.87227,
+      70077013562.13786, 69958214086.6596]
+    median: 70018886817.87227
+    min: 69929316406.09435
+    max: 70077013562.13786
+    spread: 147697156.04351807
+    repetitions: 7
+  helper_bytes_per_s:
+    values: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    median: 0.0
+    min: 0.0
+    max: 0.0
+    spread: 0.0
+    repetitions: 7
+  footprint_bytes: 268435456
+  scope: partitioned, first-touched on bound worker; useful payload bytes; helper bytes separate; compiler-only
+    pass fence for repeated stores
+  source_access_derivation: 'per worker/pass: N output elements; N-1 compare/select steps each read 2
+    heads, reread 1 selected head, write 1 output; final tail reads/writes once: 4*N-2 accesses, 4 bytes
+    each'
+  trials:
+  - seconds: 0.245218236
+    iterations: 1073741824
+    accesses: 4294966272
+    useful_bytes: 17179865088
+    helper_bytes: 0
+    checksum: 33554416
+    worker_iterations: [67108864, 67108864, 67108864, 67108864, 67108864, 67108864, 67108864, 67108864,
+      67108864, 67108864, 67108864, 67108864, 67108864, 67108864, 67108864, 67108864]
+  - seconds: 0.245630865
+    iterations: 1073741824
+    accesses: 4294966272
+    useful_bytes: 17179865088
+    helper_bytes: 0
+    checksum: 33554416
+    worker_iterations: [67108864, 67108864, 67108864, 67108864, 67108864, 67108864, 67108864, 67108864,
+      67108864, 67108864, 67108864, 67108864, 67108864, 67108864, 67108864, 67108864]
+  - seconds: 0.245197654
+    iterations: 1073741824
+    accesses: 4294966272
+    useful_bytes: 17179865088
+    helper_bytes: 0
+    checksum: 33554416
+    worker_iterations: [67108864, 67108864, 67108864, 67108864, 67108864, 67108864, 67108864, 67108864,
+      67108864, 67108864, 67108864, 67108864, 67108864, 67108864, 67108864, 67108864]
+  - seconds: 0.245674718
+    iterations: 1073741824
+    accesses: 4294966272
+    useful_bytes: 17179865088
+    helper_bytes: 0
+    checksum: 33554416
+    worker_iterations: [67108864, 67108864, 67108864, 67108864, 67108864, 67108864, 67108864, 67108864,
+      67108864, 67108864, 67108864, 67108864, 67108864, 67108864, 67108864, 67108864]
+  - seconds: 0.245360443
+    iterations: 1073741824
+    accesses: 4294966272
+    useful_bytes: 17179865088
+    helper_bytes: 0
+    checksum: 33554416
+    worker_iterations: [67108864, 67108864, 67108864, 67108864, 67108864, 67108864, 67108864, 67108864,
+      67108864, 67108864, 67108864, 67108864, 67108864, 67108864, 67108864, 67108864]
+  - seconds: 0.245156924
+    iterations: 1073741824
+    accesses: 4294966272
+    useful_bytes: 17179865088
+    helper_bytes: 0
+    checksum: 33554416
+    worker_iterations: [67108864, 67108864, 67108864, 67108864, 67108864, 67108864, 67108864, 67108864,
+      67108864, 67108864, 67108864, 67108864, 67108864, 67108864, 67108864, 67108864]
+  - seconds: 0.245573237
+    iterations: 1073741824
+    accesses: 4294966272
+    useful_bytes: 17179865088
+    helper_bytes: 0
+    checksum: 33554416
+    worker_iterations: [67108864, 67108864, 67108864, 67108864, 67108864, 67108864, 67108864, 67108864,
+      67108864, 67108864, 67108864, 67108864, 67108864, 67108864, 67108864, 67108864]
+- shape: cache_stream
+  chains: 1
+  seconds:
+    values: [0.207868156, 0.222962928, 0.210696072, 0.20736966, 0.215585821, 0.216596398, 0.216501953]
+    median: 0.215585821
+    min: 0.20736966
+    max: 0.222962928
+    spread: 0.015593267999999993
+    repetitions: 7
+  useful_bytes_per_s:
+    values: [1322366601183.4924, 1232841304201.0283, 1304618089624.376, 1325545438730.0437, 1275027762349.9182,
+      1269078846565.1216, 1269632458899.805]
+    median: 1275027762349.9182
+    min: 1232841304201.0283
+    max: 1325545438730.0437
+    spread: 92704134529.01538
+    repetitions: 7
+  helper_bytes_per_s:
+    values: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    median: 0.0
+    min: 0.0
+    max: 0.0
+    spread: 0.0
+    repetitions: 7
+  footprint_bytes: 8388608
+  scope: partitioned, first-touched on bound worker; useful payload bytes; helper bytes separate; compiler-only
+    pass fence for repeated stores
+  source_access_derivation: payload source-element accesses only; index/offset helper elements separate;
+    checksum/control bookkeeping excluded
+  trials:
+  - seconds: 0.207868156
+    iterations: 34359738368
+    accesses: 68719476736
+    useful_bytes: 274877906944
+    helper_bytes: 0
+    checksum: 16.755905151367188
+    worker_iterations: [2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648,
+      2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648,
+      2147483648]
+  - seconds: 0.222962928
+    iterations: 34359738368
+    accesses: 68719476736
+    useful_bytes: 274877906944
+    helper_bytes: 0
+    checksum: 16.755905151367188
+    worker_iterations: [2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648,
+      2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648,
+      2147483648]
+  - seconds: 0.210696072
+    iterations: 34359738368
+    accesses: 68719476736
+    useful_bytes: 274877906944
+    helper_bytes: 0
+    checksum: 16.755905151367188
+    worker_iterations: [2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648,
+      2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648,
+      2147483648]
+  - seconds: 0.20736966
+    iterations: 34359738368
+    accesses: 68719476736
+    useful_bytes: 274877906944
+    helper_bytes: 0
+    checksum: 16.755905151367188
+    worker_iterations: [2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648,
+      2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648,
+      2147483648]
+  - seconds: 0.215585821
+    iterations: 34359738368
+    accesses: 68719476736
+    useful_bytes: 274877906944
+    helper_bytes: 0
+    checksum: 16.755905151367188
+    worker_iterations: [2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648,
+      2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648,
+      2147483648]
+  - seconds: 0.216596398
+    iterations: 34359738368
+    accesses: 68719476736
+    useful_bytes: 274877906944
+    helper_bytes: 0
+    checksum: 16.755905151367188
+    worker_iterations: [2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648,
+      2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648,
+      2147483648]
+  - seconds: 0.216501953
+    iterations: 34359738368
+    accesses: 68719476736
+    useful_bytes: 274877906944
+    helper_bytes: 0
+    checksum: 16.755905151367188
+    worker_iterations: [2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648,
+      2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648, 2147483648,
+      2147483648]
+- shape: cache_cold_stream
+  chains: 1
+  seconds:
+    values: [0.000193981, 0.000180985, 0.000174975, 0.000185614, 0.000169507, 0.000181171, 0.000168183]
+    median: 0.000180985
+    min: 0.000168183
+    max: 0.000193981
+    spread: 2.5798e-05
+    repetitions: 7
+  useful_bytes_per_s:
+    values: [43244482707.06925, 46349741691.300385, 47941751678.81126, 45193832361.78306, 49488268921.04751,
+      46302156526.154854, 49877859236.664825]
+    median: 46349741691.300385
+    min: 43244482707.06925
+    max: 49877859236.664825
+    spread: 6633376529.595573
+    repetitions: 7
+  helper_bytes_per_s:
+    values: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    median: 0.0
+    min: 0.0
+    max: 0.0
+    spread: 0.0
+    repetitions: 7
+  footprint_bytes: 8388608
+  scope: partitioned, first-touched on bound worker; useful payload bytes; helper bytes separate; compiler-only
+    pass fence for repeated stores
+  source_access_derivation: payload source-element accesses only; index/offset helper elements separate;
+    checksum/control bookkeeping excluded
+  trials:
+  - seconds: 0.000193981
+    iterations: 1048576
+    accesses: 2097152
+    useful_bytes: 8388608
+    helper_bytes: 0
+    checksum: 16.755905151367188
+    worker_iterations: [65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536,
+      65536, 65536, 65536, 65536]
+  - seconds: 0.000180985
+    iterations: 1048576
+    accesses: 2097152
+    useful_bytes: 8388608
+    helper_bytes: 0
+    checksum: 16.755905151367188
+    worker_iterations: [65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536,
+      65536, 65536, 65536, 65536]
+  - seconds: 0.000174975
+    iterations: 1048576
+    accesses: 2097152
+    useful_bytes: 8388608
+    helper_bytes: 0
+    checksum: 16.755905151367188
+    worker_iterations: [65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536,
+      65536, 65536, 65536, 65536]
+  - seconds: 0.000185614
+    iterations: 1048576
+    accesses: 2097152
+    useful_bytes: 8388608
+    helper_bytes: 0
+    checksum: 16.755905151367188
+    worker_iterations: [65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536,
+      65536, 65536, 65536, 65536]
+  - seconds: 0.000169507
+    iterations: 1048576
+    accesses: 2097152
+    useful_bytes: 8388608
+    helper_bytes: 0
+    checksum: 16.755905151367188
+    worker_iterations: [65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536,
+      65536, 65536, 65536, 65536]
+  - seconds: 0.000181171
+    iterations: 1048576
+    accesses: 2097152
+    useful_bytes: 8388608
+    helper_bytes: 0
+    checksum: 16.755905151367188
+    worker_iterations: [65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536,
+      65536, 65536, 65536, 65536]
+  - seconds: 0.000168183
+    iterations: 1048576
+    accesses: 2097152
+    useful_bytes: 8388608
+    helper_bytes: 0
+    checksum: 16.755905151367188
+    worker_iterations: [65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536, 65536,
+      65536, 65536, 65536, 65536]
+- shape: compute_integer
+  chains: 1
+  seconds:
+    values: [0.319028766, 0.319029763, 0.319032525, 0.319091381, 0.319041929, 0.319039117, 0.319021178]
+    median: 0.319032525
+    min: 0.319021178
+    max: 0.319091381
+    spread: 7.020299999999091e-05
+    repetitions: 7
+  useful_bytes_per_s:
+    values: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    median: 0.0
+    min: 0.0
+    max: 0.0
+    spread: 0.0
+    repetitions: 7
+  helper_bytes_per_s:
+    values: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    median: 0.0
+    min: 0.0
+    max: 0.0
+    spread: 0.0
+    repetitions: 7
+  footprint_bytes: 0
+  scope: scalar state; no payload arrays; uncontended atomic uses one private 8-byte word per worker;
+    logical footprint from shared source
+  source_access_derivation: payload source-element accesses only; index/offset helper elements separate;
+    checksum/control bookkeeping excluded
+  trials:
+  - seconds: 0.319028766
+    iterations: 2147483648
+    accesses: 0
+    useful_bytes: 0
+    helper_bytes: 0
+    checksum: 5.691779633708145e+19
+    worker_iterations: [134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728,
+      134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728]
+  - seconds: 0.319029763
+    iterations: 2147483648
+    accesses: 0
+    useful_bytes: 0
+    helper_bytes: 0
+    checksum: 5.691779633708145e+19
+    worker_iterations: [134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728,
+      134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728]
+  - seconds: 0.319032525
+    iterations: 2147483648
+    accesses: 0
+    useful_bytes: 0
+    helper_bytes: 0
+    checksum: 5.6917796337081434e+19
+    worker_iterations: [134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728,
+      134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728]
+  - seconds: 0.319091381
+    iterations: 2147483648
+    accesses: 0
+    useful_bytes: 0
+    helper_bytes: 0
+    checksum: 5.6917796337081434e+19
+    worker_iterations: [134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728,
+      134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728]
+  - seconds: 0.319041929
+    iterations: 2147483648
+    accesses: 0
+    useful_bytes: 0
+    helper_bytes: 0
+    checksum: 5.6917796337081434e+19
+    worker_iterations: [134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728,
+      134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728]
+  - seconds: 0.319039117
+    iterations: 2147483648
+    accesses: 0
+    useful_bytes: 0
+    helper_bytes: 0
+    checksum: 5.6917796337081434e+19
+    worker_iterations: [134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728,
+      134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728]
+  - seconds: 0.319021178
+    iterations: 2147483648
+    accesses: 0
+    useful_bytes: 0
+    helper_bytes: 0
+    checksum: 5.6917796337081434e+19
+    worker_iterations: [134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728,
+      134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728]
+  operations_per_s:
+    values: [175014233594.22076, 175013686657.19128, 175012171489.41162, 174979890716.63455, 175007012874.47394,
+      175008555380.37363, 175018396352.3575]
+    median: 175012171489.41162
+    min: 174979890716.63455
+    max: 175018396352.3575
+    spread: 38505635.722961426
+    repetitions: 7
+  requested_working_set_bytes: 268435456
+- shape: compute_floating_point
+  chains: 1
+  seconds:
+    values: [0.327021415, 0.327009107, 0.327032329, 0.327060714, 0.327049123, 0.327039672, 0.327065095]
+    median: 0.327039672
+    min: 0.327009107
+    max: 0.327065095
+    spread: 5.59879999999513e-05
+    repetitions: 7
+  useful_bytes_per_s:
+    values: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    median: 0.0
+    min: 0.0
+    max: 0.0
+    spread: 0.0
+    repetitions: 7
+  helper_bytes_per_s:
+    values: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    median: 0.0
+    min: 0.0
+    max: 0.0
+    spread: 0.0
+    repetitions: 7
+  footprint_bytes: 0
+  scope: scalar state; no payload arrays; uncontended atomic uses one private 8-byte word per worker;
+    logical footprint from shared source
+  source_access_derivation: payload source-element accesses only; index/offset helper elements separate;
+    checksum/control bookkeeping excluded
+  trials:
+  - seconds: 0.327021415
+    iterations: 2147483648
+    accesses: 0
+    useful_bytes: 0
+    helper_bytes: 0
+    checksum: 5819743.716635421
+    worker_iterations: [134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728,
+      134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728]
+  - seconds: 0.327009107
+    iterations: 2147483648
+    accesses: 0
+    useful_bytes: 0
+    helper_bytes: 0
+    checksum: 5819743.777873399
+    worker_iterations: [134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728,
+      134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728]
+  - seconds: 0.327032329
+    iterations: 2147483648
+    accesses: 0
+    useful_bytes: 0
+    helper_bytes: 0
+    checksum: 5819743.8391113095
+    worker_iterations: [134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728,
+      134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728]
+  - seconds: 0.327060714
+    iterations: 2147483648
+    accesses: 0
+    useful_bytes: 0
+    helper_bytes: 0
+    checksum: 5819743.900349127
+    worker_iterations: [134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728,
+      134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728]
+  - seconds: 0.327049123
+    iterations: 2147483648
+    accesses: 0
+    useful_bytes: 0
+    helper_bytes: 0
+    checksum: 5819743.961587024
+    worker_iterations: [134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728,
+      134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728]
+  - seconds: 0.327039672
+    iterations: 2147483648
+    accesses: 0
+    useful_bytes: 0
+    helper_bytes: 0
+    checksum: 5819744.02282496
+    worker_iterations: [134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728,
+      134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728]
+  - seconds: 0.327065095
+    iterations: 2147483648
+    accesses: 0
+    useful_bytes: 0
+    helper_bytes: 0
+    checksum: 5819744.084062812
+    worker_iterations: [134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728,
+      134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728]
+  operations_per_s:
+    values: [52534386055.42087, 52536363349.66047, 52532632833.37348, 52528073622.440636, 52529935278.25482,
+      52531453321.66306, 52527370014.8284]
+    median: 52531453321.66306
+    min: 52527370014.8284
+    max: 52536363349.66047
+    spread: 8993334.832069397
+    repetitions: 7
+  requested_working_set_bytes: 268435456
+- shape: compute_branch
+  chains: 1
+  seconds:
+    values: [0.299702284, 0.297057707, 0.296286873, 0.296232921, 0.29622331, 0.296204303, 0.2962197]
+    median: 0.296232921
+    min: 0.296204303
+    max: 0.299702284
+    spread: 0.0034979809999999834
+    repetitions: 7
+  useful_bytes_per_s:
+    values: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    median: 0.0
+    min: 0.0
+    max: 0.0
+    spread: 0.0
+    repetitions: 7
+  helper_bytes_per_s:
+    values: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    median: 0.0
+    min: 0.0
+    max: 0.0
+    spread: 0.0
+    repetitions: 7
+  footprint_bytes: 0
+  scope: scalar state; no payload arrays; uncontended atomic uses one private 8-byte word per worker;
+    logical footprint from shared source
+  source_access_derivation: payload source-element accesses only; index/offset helper elements separate;
+    checksum/control bookkeeping excluded
+  trials:
+  - seconds: 0.299702284
+    iterations: 2147483648
+    accesses: 0
+    useful_bytes: 0
+    helper_bytes: 0
+    checksum: 1.442181456808772e+20
+    worker_iterations: [134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728,
+      134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728]
+  - seconds: 0.297057707
+    iterations: 2147483648
+    accesses: 0
+    useful_bytes: 0
+    helper_bytes: 0
+    checksum: 1.349559199506103e+20
+    worker_iterations: [134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728,
+      134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728]
+  - seconds: 0.296286873
+    iterations: 2147483648
+    accesses: 0
+    useful_bytes: 0
+    helper_bytes: 0
+    checksum: 1.2325216487851036e+20
+    worker_iterations: [134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728,
+      134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728]
+  - seconds: 0.296232921
+    iterations: 2147483648
+    accesses: 0
+    useful_bytes: 0
+    helper_bytes: 0
+    checksum: 1.2689817212461649e+20
+    worker_iterations: [134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728,
+      134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728]
+  - seconds: 0.29622331
+    iterations: 2147483648
+    accesses: 0
+    useful_bytes: 0
+    helper_bytes: 0
+    checksum: 1.2696152699868632e+20
+    worker_iterations: [134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728,
+      134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728]
+  - seconds: 0.296204303
+    iterations: 2147483648
+    accesses: 0
+    useful_bytes: 0
+    helper_bytes: 0
+    checksum: 1.1894950105960936e+20
+    worker_iterations: [134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728,
+      134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728]
+  - seconds: 0.2962197
+    iterations: 2147483648
+    accesses: 0
+    useful_bytes: 0
+    helper_bytes: 0
+    checksum: 1.1581624420422294e+20
+    worker_iterations: [134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728,
+      134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728, 134217728]
+  operations_per_s:
+    values: [35826948479.311554, 36145900392.343636, 36239939283.438995, 36246539553.245674, 36247715576.46831,
+      36250041539.7409, 36248157323.770164]
+    median: 36246539553.245674
+    min: 35826948479.311554
+    max: 36250041539.7409
+    spread: 423093060.4293442
+    repetitions: 7
+  requested_working_set_bytes: 268435456
+- shape: compute_atomic
+  chains: 1
+  seconds:
+    values: [0.204422778, 0.204430941, 0.204419375, 0.204419719, 0.204417832, 0.204416391, 0.204434904]
+    median: 0.204419719
+    min: 0.204416391
+    max: 0.204434904
+    spread: 1.851299999999778e-05
+    repetitions: 7
+  useful_bytes_per_s:
+    values: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    median: 0.0
+    min: 0.0
+    max: 0.0
+    spread: 0.0
+    repetitions: 7
+  helper_bytes_per_s:
+    values: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    median: 0.0
+    min: 0.0
+    max: 0.0
+    spread: 0.0
+    repetitions: 7
+  footprint_bytes: 128
+  scope: scalar state; no payload arrays; uncontended atomic uses one private 8-byte word per worker;
+    logical footprint from shared source
+  source_access_derivation: payload source-element accesses only; index/offset helper elements separate;
+    checksum/control bookkeeping excluded
+  trials:
+  - seconds: 0.204422778
+    iterations: 536870912
+    accesses: 0
+    useful_bytes: 0
+    helper_bytes: 0
+    checksum: 861047400
+    worker_iterations: [33554432, 33554432, 33554432, 33554432, 33554432, 33554432, 33554432, 33554432,
+      33554432, 33554432, 33554432, 33554432, 33554432, 33554432, 33554432, 33554432]
+  - seconds: 0.204430941
+    iterations: 536870912
+    accesses: 0
+    useful_bytes: 0
+    helper_bytes: 0
+    checksum: 861047416
+    worker_iterations: [33554432, 33554432, 33554432, 33554432, 33554432, 33554432, 33554432, 33554432,
+      33554432, 33554432, 33554432, 33554432, 33554432, 33554432, 33554432, 33554432]
+  - seconds: 0.204419375
+    iterations: 536870912
+    accesses: 0
+    useful_bytes: 0
+    helper_bytes: 0
+    checksum: 861047432
+    worker_iterations: [33554432, 33554432, 33554432, 33554432, 33554432, 33554432, 33554432, 33554432,
+      33554432, 33554432, 33554432, 33554432, 33554432, 33554432, 33554432, 33554432]
+  - seconds: 0.204419719
+    iterations: 536870912
+    accesses: 0
+    useful_bytes: 0
+    helper_bytes: 0
+    checksum: 861047448
+    worker_iterations: [33554432, 33554432, 33554432, 33554432, 33554432, 33554432, 33554432, 33554432,
+      33554432, 33554432, 33554432, 33554432, 33554432, 33554432, 33554432, 33554432]
+  - seconds: 0.204417832
+    iterations: 536870912
+    accesses: 0
+    useful_bytes: 0
+    helper_bytes: 0
+    checksum: 861047464
+    worker_iterations: [33554432, 33554432, 33554432, 33554432, 33554432, 33554432, 33554432, 33554432,
+      33554432, 33554432, 33554432, 33554432, 33554432, 33554432, 33554432, 33554432]
+  - seconds: 0.204416391
+    iterations: 536870912
+    accesses: 0
+    useful_bytes: 0
+    helper_bytes: 0
+    checksum: 861047480
+    worker_iterations: [33554432, 33554432, 33554432, 33554432, 33554432, 33554432, 33554432, 33554432,
+      33554432, 33554432, 33554432, 33554432, 33554432, 33554432, 33554432, 33554432]
+  - seconds: 0.204434904
+    iterations: 536870912
+    accesses: 0
+    useful_bytes: 0
+    helper_bytes: 0
+    checksum: 861047496
+    worker_iterations: [33554432, 33554432, 33554432, 33554432, 33554432, 33554432, 33554432, 33554432,
+      33554432, 33554432, 33554432, 33554432, 33554432, 33554432, 33554432, 33554432]
+  operations_per_s:
+    values: [2626277351.538584, 2626172483.3522143, 2626321071.571616, 2626316651.966438, 2626340895.7394676,
+      2626359409.7011523, 2626121574.6211324]
+    median: 2626316651.966438
+    min: 2626121574.6211324
+    max: 2626359409.7011523
+    spread: 237835.08001995087
+    repetitions: 7
+  requested_working_set_bytes: 268435456
+- shape: pointer_chase
+  chains: 1
+  seconds:
+    values: [0.378238831, 0.378522664, 0.377762137, 0.378221586, 0.378358686, 0.378114173, 0.377147481]
+    median: 0.378221586
+    min: 0.377147481
+    max: 0.378522664
+    spread: 0.001375183000000002
+    repetitions: 7
+  useful_bytes_per_s:
+    values: [1419396603.412197, 1418332277.1922581, 1421187724.803664, 1419461320.750741, 1418946972.4503696,
+      1419864555.0374544, 1423503905.0943575]
+    median: 1419461320.750741
+    min: 1418332277.1922581
+    max: 1423503905.0943575
+    spread: 5171627.902099371
+    repetitions: 7
+  helper_bytes_per_s:
+    values: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    median: 0.0
+    min: 0.0
+    max: 0.0
+    spread: 0.0
+    repetitions: 7
+  footprint_bytes: 268435456
+  scope: partitioned, first-touched on bound worker; useful payload bytes; helper bytes separate; compiler-only
+    pass fence for repeated stores
+  source_access_derivation: payload source-element accesses only; index/offset helper elements separate;
+    checksum/control bookkeeping excluded
+  trials:
+  - seconds: 0.378238831
+    iterations: 67108864
+    accesses: 67108864
+    useful_bytes: 536870912
+    helper_bytes: 0
+    checksum: 14686976
+    worker_iterations: [4194304, 4194304, 4194304, 4194304, 4194304, 4194304, 4194304, 4194304, 4194304,
+      4194304, 4194304, 4194304, 4194304, 4194304, 4194304, 4194304]
+  - seconds: 0.378522664
+    iterations: 67108864
+    accesses: 67108864
+    useful_bytes: 536870912
+    helper_bytes: 0
+    checksum: 14686976
+    worker_iterations: [4194304, 4194304, 4194304, 4194304, 4194304, 4194304, 4194304, 4194304, 4194304,
+      4194304, 4194304, 4194304, 4194304, 4194304, 4194304, 4194304]
+  - seconds: 0.377762137
+    iterations: 67108864
+    accesses: 67108864
+    useful_bytes: 536870912
+    helper_bytes: 0
+    checksum: 14686976
+    worker_iterations: [4194304, 4194304, 4194304, 4194304, 4194304, 4194304, 4194304, 4194304, 4194304,
+      4194304, 4194304, 4194304, 4194304, 4194304, 4194304, 4194304]
+  - seconds: 0.378221586
+    iterations: 67108864
+    accesses: 67108864
+    useful_bytes: 536870912
+    helper_bytes: 0
+    checksum: 14686976
+    worker_iterations: [4194304, 4194304, 4194304, 4194304, 4194304, 4194304, 4194304, 4194304, 4194304,
+      4194304, 4194304, 4194304, 4194304, 4194304, 4194304, 4194304]
+  - seconds: 0.378358686
+    iterations: 67108864
+    accesses: 67108864
+    useful_bytes: 536870912
+    helper_bytes: 0
+    checksum: 14686976
+    worker_iterations: [4194304, 4194304, 4194304, 4194304, 4194304, 4194304, 4194304, 4194304, 4194304,
+      4194304, 4194304, 4194304, 4194304, 4194304, 4194304, 4194304]
+  - seconds: 0.378114173
+    iterations: 67108864
+    accesses: 67108864
+    useful_bytes: 536870912
+    helper_bytes: 0
+    checksum: 14686976
+    worker_iterations: [4194304, 4194304, 4194304, 4194304, 4194304, 4194304, 4194304, 4194304, 4194304,
+      4194304, 4194304, 4194304, 4194304, 4194304, 4194304, 4194304]
+  - seconds: 0.377147481
+    iterations: 67108864
+    accesses: 67108864
+    useful_bytes: 536870912
+    helper_bytes: 0
+    checksum: 14686976
+    worker_iterations: [4194304, 4194304, 4194304, 4194304, 4194304, 4194304, 4194304, 4194304, 4194304,
+      4194304, 4194304, 4194304, 4194304, 4194304, 4194304, 4194304]
+- shape: pointer_chase
+  chains: 16
+  seconds:
+    values: [0.361377125, 0.360954405, 0.360803954, 0.360983049, 0.360834538, 0.361765674, 0.361140885]
+    median: 0.360983049
+    min: 0.360803954
+    max: 0.361765674
+    spread: 0.0009617199999999992
+    repetitions: 7
+  useful_bytes_per_s:
+    values: [5942500228.812214, 5949459594.488118, 5951940449.078339, 5948987504.950683, 5951435968.138948,
+      5936117775.507911, 5946387510.237175]
+    median: 5948987504.950683
+    min: 5936117775.507911
+    max: 5951940449.078339
+    spread: 15822673.570427895
+    repetitions: 7
+  helper_bytes_per_s:
+    values: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    median: 0.0
+    min: 0.0
+    max: 0.0
+    spread: 0.0
+    repetitions: 7
+  footprint_bytes: 268435456
+  scope: partitioned, first-touched on bound worker; useful payload bytes; helper bytes separate; compiler-only
+    pass fence for repeated stores
+  source_access_derivation: payload source-element accesses only; index/offset helper elements separate;
+    checksum/control bookkeeping excluded
+  trials:
+  - seconds: 0.361377125
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 2147483648
+    helper_bytes: 0
+    checksum: 270744720
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.360954405
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 2147483648
+    helper_bytes: 0
+    checksum: 270744720
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.360803954
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 2147483648
+    helper_bytes: 0
+    checksum: 270744720
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.360983049
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 2147483648
+    helper_bytes: 0
+    checksum: 270744720
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.360834538
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 2147483648
+    helper_bytes: 0
+    checksum: 270744720
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.361765674
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 2147483648
+    helper_bytes: 0
+    checksum: 270744720
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.361140885
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 2147483648
+    helper_bytes: 0
+    checksum: 270744720
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+- shape: pointer_chase
+  chains: 32
+  seconds:
+    values: [0.365517469, 0.359087547, 0.358461291, 0.35813158, 0.358328545, 0.357349118, 0.357723114]
+    median: 0.358328545
+    min: 0.357349118
+    max: 0.365517469
+    spread: 0.008168350999999963
+    repetitions: 7
+  useful_bytes_per_s:
+    values: [5875187453.762983, 5980390202.726802, 5990838346.894197, 5996353764.7252445, 5993057706.30135,
+      6009483554.958711, 6003200698.962941]
+    median: 5993057706.30135
+    min: 5875187453.762983
+    max: 6009483554.958711
+    spread: 134296101.19572735
+    repetitions: 7
+  helper_bytes_per_s:
+    values: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    median: 0.0
+    min: 0.0
+    max: 0.0
+    spread: 0.0
+    repetitions: 7
+  footprint_bytes: 268435456
+  scope: partitioned, first-touched on bound worker; useful payload bytes; helper bytes separate; compiler-only
+    pass fence for repeated stores
+  source_access_derivation: payload source-element accesses only; index/offset helper elements separate;
+    checksum/control bookkeeping excluded
+  trials:
+  - seconds: 0.365517469
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 2147483648
+    helper_bytes: 0
+    checksum: 532648752
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.359087547
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 2147483648
+    helper_bytes: 0
+    checksum: 532648752
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.358461291
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 2147483648
+    helper_bytes: 0
+    checksum: 532648752
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.35813158
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 2147483648
+    helper_bytes: 0
+    checksum: 532648752
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.358328545
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 2147483648
+    helper_bytes: 0
+    checksum: 532648752
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.357349118
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 2147483648
+    helper_bytes: 0
+    checksum: 532648752
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.357723114
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 2147483648
+    helper_bytes: 0
+    checksum: 532648752
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+- shape: pointer_chase
+  chains: 64
+  seconds:
+    values: [0.358735936, 0.358115472, 0.358586193, 0.359558026, 0.358577525, 0.358110009, 0.358683447]
+    median: 0.358586193
+    min: 0.358110009
+    max: 0.359558026
+    spread: 0.0014480169999999681
+    repetitions: 7
+  useful_bytes_per_s:
+    values: [5986251815.039796, 5996623480.149442, 5988751630.490134, 5972564906.672394, 5988896398.345099,
+      5996714959.173342, 5987127830.853037]
+    median: 5988751630.490134
+    min: 5972564906.672394
+    max: 5996714959.173342
+    spread: 24150052.500947952
+    repetitions: 7
+  helper_bytes_per_s:
+    values: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    median: 0.0
+    min: 0.0
+    max: 0.0
+    spread: 0.0
+    repetitions: 7
+  footprint_bytes: 268435456
+  scope: partitioned, first-touched on bound worker; useful payload bytes; helper bytes separate; compiler-only
+    pass fence for repeated stores
+  source_access_derivation: payload source-element accesses only; index/offset helper elements separate;
+    checksum/control bookkeeping excluded
+  trials:
+  - seconds: 0.358735936
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 2147483648
+    helper_bytes: 0
+    checksum: 1054902584
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.358115472
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 2147483648
+    helper_bytes: 0
+    checksum: 1054902584
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.358586193
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 2147483648
+    helper_bytes: 0
+    checksum: 1054902584
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.359558026
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 2147483648
+    helper_bytes: 0
+    checksum: 1054902584
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.358577525
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 2147483648
+    helper_bytes: 0
+    checksum: 1054902584
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.358110009
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 2147483648
+    helper_bytes: 0
+    checksum: 1054902584
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.358683447
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 2147483648
+    helper_bytes: 0
+    checksum: 1054902584
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+- shape: pointer_chase
+  chains: 128
+  seconds:
+    values: [0.359019061, 0.359436703, 0.358681066, 0.358655071, 0.359288666, 0.358657146, 0.360293299]
+    median: 0.359019061
+    min: 0.358655071
+    max: 0.360293299
+    spread: 0.0016382280000000193
+    repetitions: 7
+  useful_bytes_per_s:
+    values: [5981531014.031592, 5974580865.215648, 5987167574.660883, 5987601519.2323885, 5977042559.978778,
+      5987566878.146072, 5960376321.070573]
+    median: 5981531014.031592
+    min: 5960376321.070573
+    max: 5987601519.2323885
+    spread: 27225198.161815643
+    repetitions: 7
+  helper_bytes_per_s:
+    values: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    median: 0.0
+    min: 0.0
+    max: 0.0
+    spread: 0.0
+    repetitions: 7
+  footprint_bytes: 268435456
+  scope: partitioned, first-touched on bound worker; useful payload bytes; helper bytes separate; compiler-only
+    pass fence for repeated stores
+  source_access_derivation: payload source-element accesses only; index/offset helper elements separate;
+    checksum/control bookkeeping excluded
+  trials:
+  - seconds: 0.359019061
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 2147483648
+    helper_bytes: 0
+    checksum: 2126847200
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.359436703
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 2147483648
+    helper_bytes: 0
+    checksum: 2126847200
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.358681066
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 2147483648
+    helper_bytes: 0
+    checksum: 2126847200
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.358655071
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 2147483648
+    helper_bytes: 0
+    checksum: 2126847200
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.359288666
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 2147483648
+    helper_bytes: 0
+    checksum: 2126847200
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.358657146
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 2147483648
+    helper_bytes: 0
+    checksum: 2126847200
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+  - seconds: 0.360293299
+    iterations: 268435456
+    accesses: 268435456
+    useful_bytes: 2147483648
+    helper_bytes: 0
+    checksum: 2126847200
+    worker_iterations: [16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216,
+      16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216, 16777216]
+concurrency_curve:
+- chains: 1
+  effective_requests_per_thread:
+    values: [0.9999544071137425, 0.9992045971651515, 1.0012162388842056, 1.0, 0.9996376454272812, 1.0002840755720628,
+      1.0028479707650493]
+    median: 1.0
+    min: 0.9992045971651515
+    max: 1.0028479707650493
+    spread: 0.003643373599897748
+    repetitions: 7
+- chains: 16
+  effective_requests_per_thread:
+    values: [4.18644745153695, 4.191350273173699, 4.193098016880381, 4.191017689586859, 4.19274261379048,
+      4.181951060398284, 4.189186012544661]
+    median: 4.191017689586859
+    min: 4.181951060398284
+    max: 4.193098016880381
+    spread: 0.011146956482096293
+    repetitions: 7
+- chains: 32
+  effective_requests_per_thread:
+    values: [4.1390260994612005, 4.213140657868595, 4.220501298144351, 4.224386869206006, 4.222064820428972,
+      4.233636709297824, 4.2292104837262485]
+    median: 4.222064820428972
+    min: 4.1390260994612005
+    max: 4.233636709297824
+    spread: 0.09461060983662328
+    repetitions: 7
+- chains: 64
+  effective_requests_per_thread:
+    values: [4.217270120381807, 4.224576881727132, 4.219031221874179, 4.207627794685913, 4.21913320975708,
+      4.224641328022753, 4.217887267041905]
+    median: 4.219031221874179
+    min: 4.207627794685913
+    max: 4.224641328022753
+    spread: 0.01701353333683997
+    repetitions: 7
+- chains: 128
+  effective_requests_per_thread:
+    values: [4.213944350993665, 4.209048022566576, 4.217915266260528, 4.218220977001048, 4.210782268316808,
+      4.218196572611996, 4.199041026294524]
+    median: 4.213944350993665
+    min: 4.199041026294524
+    max: 4.218220977001048
+    spread: 0.019179950706523563
+    repetitions: 7
+plateau:
+  state: established_for_constructed_work
+  criterion: last 3 distinct C medians within 15% relative range; <=25% elapsed spread; same footprint
+    and balanced workers
+  points:
+  - chains: 32
+    effective_requests_per_thread:
+      values: [4.1390260994612005, 4.213140657868595, 4.220501298144351, 4.224386869206006, 4.222064820428972,
+        4.233636709297824, 4.2292104837262485]
+      median: 4.222064820428972
+      min: 4.1390260994612005
+      max: 4.233636709297824
+      spread: 0.09461060983662328
+      repetitions: 7
+  - chains: 64
+    effective_requests_per_thread:
+      values: [4.217270120381807, 4.224576881727132, 4.219031221874179, 4.207627794685913, 4.21913320975708,
+        4.224641328022753, 4.217887267041905]
+      median: 4.219031221874179
+      min: 4.207627794685913
+      max: 4.224641328022753
+      spread: 0.01701353333683997
+      repetitions: 7
+  - chains: 128
+    effective_requests_per_thread:
+      values: [4.213944350993665, 4.209048022566576, 4.217915266260528, 4.218220977001048, 4.210782268316808,
+        4.218196572611996, 4.199041026294524]
+      median: 4.213944350993665
+      min: 4.199041026294524
+      max: 4.218220977001048
+      spread: 0.019179950706523563
+      repetitions: 7
+  relative_range: 0.0019247237122128108
+  elapsed_relative_spreads: [0.0036359188658259237, 0.022795702753739485, 0.004038128149568681, 0.0045630669174972285]
+  same_footprint: true
+  balanced_workers: true
+dependent_latency_s:
+  values: [9.017916464805603e-08, 9.024683570861817e-08, 9.006551194190979e-08, 9.017505311965942e-08,
+    9.020774030685425e-08, 9.014944386482239e-08, 8.991896653175354e-08]
+  median: 9.017505311965942e-08
+  min: 8.991896653175354e-08
+  max: 9.024683570861817e-08
+  spread: 3.278691768646245e-10
+  repetitions: 7
+lineage:
+  description: Derived from immutable target description mbit10.cpu.lanl20261006a2.t16
+  target_description_sha256: 455edac3406e9c6b6cf931a219baa54793c335db48b594e1fd5ed48b892a7e07
+  original_receipt_sha256: aa2dd212a7e5a4ecd67962d428fa8cdf497f07857092378ae8c8d60fd5f3a088
+  original_resolved_calibration_sources: []
+  timings_rerun: false
+  compute_metadata_corrections:
+  - shape: compute_integer
+    original_footprint_bytes: 268435456
+    original_scope: partitioned, first-touched on bound worker; useful payload bytes; helper bytes separate;
+      compiler-only pass fence for repeated stores
+  - shape: compute_floating_point
+    original_footprint_bytes: 268435456
+    original_scope: partitioned, first-touched on bound worker; useful payload bytes; helper bytes separate;
+      compiler-only pass fence for repeated stores
+  - shape: compute_branch
+    original_footprint_bytes: 268435456
+    original_scope: partitioned, first-touched on bound worker; useful payload bytes; helper bytes separate;
+      compiler-only pass fence for repeated stores
+  - shape: compute_atomic
+    original_footprint_bytes: 268435456
+    original_scope: partitioned, first-touched on bound worker; useful payload bytes; helper bytes separate;
+      compiler-only pass fence for repeated stores
+  original_compute_counts:
+    integer:
+      level: source_normalized_ir
+      pipeline:
+        version: source-normalized-v1
+        passes: [mem2reg, loop-simplify]
+      per_iteration: 26
+      per_invocation: 8
+      validation_points:
+      - [32, 840]
+      - [64, 1672]
+      - [96, 2504]
+      characterization_sha256:
+      - 4654563d84d1b33055f59a270e62e3f5848eba42f85a3299a650d22b83d198b8
+      - 913d5cee667b3dabc6e3b0fc82580c7c948a4f55d1fa0d304d85e95ce5353d57
+      - cf36cec72a8c852481a827e1981506f8825bcd8275b862eb47c02ce28e591c46
+      source_sha256: 18505bf0e53496132ac3c4bf03881d804d6e0fd9dee51c5887fbda2190fd8393
+      basis: inferred
+      timing: separate uninstrumented binary
+      scope: effective constructed work, not physical issue throughput
+    floating_point:
+      level: source_normalized_ir
+      pipeline:
+        version: source-normalized-v1
+        passes: [mem2reg, loop-simplify]
+      per_iteration: 8
+      per_invocation: 5
+      validation_points:
+      - [32, 261]
+      - [64, 517]
+      - [96, 773]
+      characterization_sha256:
+      - 9ab2078ed091429977bed35414cad8f88d3613ae5316cf40e49a50eac0446700
+      - 57f0a63e245b2079d71152dc76bafecee795efe3bb2581b3f58b9dea670ad65a
+      - 5ae8e6b00e6b8cdeee278157765bbd181efd7a237f6bae03fd2b882f26eacaf2
+      source_sha256: 18505bf0e53496132ac3c4bf03881d804d6e0fd9dee51c5887fbda2190fd8393
+      basis: inferred
+      timing: separate uninstrumented binary
+      scope: effective constructed work, not physical issue throughput
+    branch:
+      level: source_normalized_ir
+      pipeline:
+        version: source-normalized-v1
+        passes: [mem2reg, loop-simplify]
+      per_iteration: 5
+      per_invocation: 3
+      validation_points:
+      - [32, 163]
+      - [64, 323]
+      - [96, 483]
+      characterization_sha256:
+      - 0a5ecb3796aabaedabbbb38f2ead4c502f4994df17db9f84d769643fdfbaa2c1
+      - 5247d74b45e2b555c3d69ae0bdeb85529371edb8774c17ca4d118d97225a69fe
+      - 9f68317fa43c60dec28d8d1a3745f013f87d39af443182c1b4791b685547addf
+      source_sha256: 18505bf0e53496132ac3c4bf03881d804d6e0fd9dee51c5887fbda2190fd8393
+      basis: inferred
+      timing: separate uninstrumented binary
+      scope: effective constructed work, not physical issue throughput
+    atomic:
+      level: source_normalized_ir
+      pipeline:
+        version: source-normalized-v1
+        passes: [mem2reg, loop-simplify]
+      per_iteration: 1
+      per_invocation: 0
+      validation_points:
+      - [32, 32]
+      - [64, 64]
+      - [96, 96]
+      characterization_sha256:
+      - c6fe0d52e84d47aa93bc137899772f564ba5228f4777e9720488bd77629fb39b
+      - 669ae4a02f8e3318fcbcc7c174465c98b8a6f15027e660c09a1ed34fc5bbb3d2
+      - 2ab7b086c789d73300428d7065ceab27c5874521344d7474e8e3479c60f8fde9
+      source_sha256: 18505bf0e53496132ac3c4bf03881d804d6e0fd9dee51c5887fbda2190fd8393
+      basis: inferred
+      timing: separate uninstrumented binary
+      scope: effective constructed work, not physical issue throughput
+source_count_equivalence:
+  format: swdb.cpu-calibration-pipeline-equivalence.v1
+  evidence_kind: count_only
+  runtime_commit: cda8f2db11996402bcb483bf98440eedc07feaa7
+  runtime_dirty: false
+  previous_receipt_sha256: edde78d5210d8c55ebea529781c2707e2a18dfe44908603ce18a888019feb286
+  host: mbit10
+  architecture: x86_64
+  source_sha256: 18505bf0e53496132ac3c4bf03881d804d6e0fd9dee51c5887fbda2190fd8393
+  compiler_version: |-
+    clang version 22.1.8 (https://github.com/llvm/llvm-project ca7933e47d3a3451d81e72ac174dcb5aa28b59d1)
+    Target: x86_64-unknown-linux-gnu
+    Thread model: posix
+    InstalledDir: /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin
+  toolchain_flags:
+  - --gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13
+  build_flags: [-std=c++17, -pthread]
+  compute_counts:
+    integer:
+      old_pipeline:
+        version: source-normalized-v1
+        passes: [mem2reg, loop-simplify]
+      old_pipeline_basis: code_reading
+      old_pipeline_source_commit: 97f5f196bd5e1c1405b2f24326e73761890f9930
+      old_validation_points:
+      - [32, 840]
+      - [64, 1672]
+      - [96, 2504]
+      new_pipeline:
+        version: source-normalized-v2
+        passes:
+        - function(sroa,mem2reg),cgscc(inline),function(loop-simplify)
+      source_sha256: 18505bf0e53496132ac3c4bf03881d804d6e0fd9dee51c5887fbda2190fd8393
+      old_per_iteration: 26
+      old_per_invocation: 8
+      per_iteration: 26
+      per_invocation: 8
+      validation_points:
+      - [32, 840]
+      - [64, 1672]
+      - [96, 2504]
+      characterization_sha256:
+      - 636112bcb5a32675f02308f15a44a5521a33c5b00b53eda7a96760a915719809
+      - 703c877451eed28d0d789ec1145cd74591ce2c51619a3f705df71201642f3367
+      - 499bbb8e27d4ed487c3eec801ac8c8a34b8af042b7dc86aa52052f245abb147b
+      coefficients_identical: true
+    floating_point:
+      old_pipeline:
+        version: source-normalized-v1
+        passes: [mem2reg, loop-simplify]
+      old_pipeline_basis: code_reading
+      old_pipeline_source_commit: 97f5f196bd5e1c1405b2f24326e73761890f9930
+      old_validation_points:
+      - [32, 261]
+      - [64, 517]
+      - [96, 773]
+      new_pipeline:
+        version: source-normalized-v2
+        passes:
+        - function(sroa,mem2reg),cgscc(inline),function(loop-simplify)
+      source_sha256: 18505bf0e53496132ac3c4bf03881d804d6e0fd9dee51c5887fbda2190fd8393
+      old_per_iteration: 8
+      old_per_invocation: 5
+      per_iteration: 8
+      per_invocation: 5
+      validation_points:
+      - [32, 261]
+      - [64, 517]
+      - [96, 773]
+      characterization_sha256:
+      - f380b5ce97645fe2d82737748fde1b63d333e4dc523729bb70a07965a8b2a9ec
+      - 514f0abb1aa05b9d85bed1f42678956c5ec6a369840d3c2040bfec3171dc4630
+      - 4aace0eae1c2aebb344d3d915cacc9439291a3fc4e00225d2fbe92b9e89ee28d
+      coefficients_identical: true
+    branch:
+      old_pipeline:
+        version: source-normalized-v1
+        passes: [mem2reg, loop-simplify]
+      old_pipeline_basis: code_reading
+      old_pipeline_source_commit: 97f5f196bd5e1c1405b2f24326e73761890f9930
+      old_validation_points:
+      - [32, 163]
+      - [64, 323]
+      - [96, 483]
+      new_pipeline:
+        version: source-normalized-v2
+        passes:
+        - function(sroa,mem2reg),cgscc(inline),function(loop-simplify)
+      source_sha256: 18505bf0e53496132ac3c4bf03881d804d6e0fd9dee51c5887fbda2190fd8393
+      old_per_iteration: 5
+      old_per_invocation: 3
+      per_iteration: 5
+      per_invocation: 3
+      validation_points:
+      - [32, 163]
+      - [64, 323]
+      - [96, 483]
+      characterization_sha256:
+      - 71f7c7954b49f240b6ff432633c14901edab6d75d06a5b90a77d9af38f2579e8
+      - 4508754e75e39c7fb393c1b755acc6b05d32ad5900ac88493a8515aa9f41a1ed
+      - cdfedb82e7e46acedaa232c92fbe8946488d27be241dc914b178a695eeff4421
+      coefficients_identical: true
+    atomic:
+      old_pipeline:
+        version: source-normalized-v1
+        passes: [mem2reg, loop-simplify]
+      old_pipeline_basis: code_reading
+      old_pipeline_source_commit: 97f5f196bd5e1c1405b2f24326e73761890f9930
+      old_validation_points:
+      - [32, 32]
+      - [64, 64]
+      - [96, 96]
+      new_pipeline:
+        version: source-normalized-v2
+        passes:
+        - function(sroa,mem2reg),cgscc(inline),function(loop-simplify)
+      source_sha256: 18505bf0e53496132ac3c4bf03881d804d6e0fd9dee51c5887fbda2190fd8393
+      old_per_iteration: 1
+      old_per_invocation: 0
+      per_iteration: 1
+      per_invocation: 0
+      validation_points:
+      - [32, 32]
+      - [64, 64]
+      - [96, 96]
+      characterization_sha256:
+      - 3ce82e934a1461c77772165cba20b7b9d708ee89a290357e63f3d3e0a6d232c9
+      - 7f961a17cefd78607e9e5ef5ba2855785722d60b80a7c2714c688a0ec1d65c58
+      - 15ea927cff9b9ec5f4867421008ade0e05b340e545a782b03cb2406787aca8aa
+      coefficients_identical: true
+  all_coefficients_identical: true
+  timings_rerun: false
+  raw_directory: /data/yanruj/EvolveSWDB_runs/lanl-analytic-count-equivalence-20261006-a2/count-equivalence
+  raw_transferred: false
+  identity_sha256: 5ce7552b4b3f58e83270784a5e2a916c0dd41fb2dec46a9789bc65106343a75d
+identity_sha256: b1d79839702050f9e06d08f2f66cbae41a199532fe0b9ae83595715a181d0971

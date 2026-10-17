@@ -1,0 +1,53 @@
+{
+  "GREEN": {
+    "actual_entry_main": false,
+    "candidate": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/public_default4_v2.py",
+    "child_native_network_or_write_attempts": [],
+    "date": "2026-10-16 ET",
+    "errors": 0,
+    "failures": 0,
+    "scientific_acceptance": false,
+    "tests": 18
+  },
+  "GREEN_log": {
+    "bytes": 1950,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/finalization-v2/pure-green-v2.log",
+    "sha256": "8b62bfe1dc18818d1d4ff4113ef44fd8031cd05778dd0a9a4e45e2f60c8d2050"
+  },
+  "RED": {
+    "actual_entry_main": false,
+    "candidate": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/public_default4_v1.py",
+    "child_native_network_or_write_attempts": [],
+    "date": "2026-10-16 ET",
+    "errors": 0,
+    "failures": 15,
+    "scientific_acceptance": false,
+    "tests": 18
+  },
+  "RED_log": {
+    "bytes": 10887,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/finalization-v2/pure-red-v1.log",
+    "sha256": "3ff1532a39390c9c25b2fcad23de9358eead45aab565340cb2b8077216675063"
+  },
+  "actual_resource_or_scientific_observation": false,
+  "candidate": {
+    "bytes": 8565,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/public_default4_v2.py",
+    "sha256": "3af3ee7559e4c15d4f7e429ab96f4b83b12a3ddd40a16e521083df98b6f7fec0"
+  },
+  "classification": "SCRIPTED_AST_EXTRACTED_FINALIZATION_CONTROLS_NO_ACTUAL_ENTRY",
+  "complete_byte_inverse": true,
+  "controls": {
+    "bytes": 7620,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/finalization-v2/pure_finalization_controls_v2.py",
+    "sha256": "8c69688d8168df3aaed72b794c690ff2b545a998ad9bb7d4b73e01ee0a4b4d27"
+  },
+  "date": "2026-10-16 ET",
+  "limits": "Controls exercise the extracted Boolean gate plus static main ordering and flushed-publication checks; they are not an actual RSS, deadline, filesystem, compiler, verifier, or source/runtime admission.",
+  "main_project_imports_or_native_calls": false,
+  "predecessor": {
+    "bytes": 7523,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-default-ctors-20261016/public_default4_v1.py",
+    "sha256": "785c7392cd85ad664f800813a26bfcce27add978de0e55f48fb654f6038e8c35"
+  }
+}

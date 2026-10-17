@@ -1,0 +1,121 @@
+{
+  "format": "swdb.lanl14-protocol-freeze-only-cap-proof.v1",
+  "updated": "2026-10-07 ET",
+  "scope": "Unexecuted administrative revisions only. Preserve science/C/F6, source/count/target/input/ROI/requests/allowlist/native900 and all custody/cleanup rules. Raw IDs/paths and every other original byte are restored by explicit selected administrative reversal; no broad literal replacement.",
+  "source_commit": "97023167a1fa42acf903c365100ef7ae4e6ef64c",
+  "generic_estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "observed_model_freeze_wall_s": 1266.086,
+  "helpers": [
+    {
+      "original": "/private/tmp/lanl14-pr-final-local-runner-20261007-a2.py",
+      "original_sha256": "fa99126eb9735e7aac9ab4f8dbfb1adbfabab40be8b6c9067e6904c95d7a806b",
+      "revision": "/private/tmp/lanl14-pr-final-local-runner-20261007-a3.py",
+      "revision_sha256": "0f4bf77738f3df5e39c28308b94dac6fac0f894955f1c7348c1a5f32c42227df",
+      "explicit_administrative_reversal_byte_identical": true,
+      "source_path_independent_ast_equality": true,
+      "approved_edits": [
+        {
+          "line": 125,
+          "from": 1400,
+          "to": 1800,
+          "reason": "protocol freeze child only"
+        }
+      ]
+    },
+    {
+      "original": "/private/tmp/lanl14_final_reports_caps_a2.py",
+      "original_sha256": "0c4eeb817df34d513819302c1dd7dbd469bab58eba0cfa008748596d8ff77158",
+      "revision": "/private/tmp/lanl14_final_reports_freeze_caps_a3.py",
+      "revision_sha256": "a877644dd08473d8eb91d8ea7fd6eb66adbf2ed82775699bc7026208ff7b9dd4",
+      "explicit_administrative_reversal_byte_identical": true,
+      "source_path_independent_ast_equality": true,
+      "approved_edits": [
+        {
+          "line": 147,
+          "from": 1400,
+          "to": 1800,
+          "reason": "manifest protocol freeze budget"
+        },
+        {
+          "line": 147,
+          "from": 33000,
+          "to": 36600,
+          "reason": "manifest outer bound: nine freeze deltas"
+        },
+        {
+          "line": 159,
+          "from": "33000s",
+          "to": "36600s",
+          "reason": "wrapper outer bound"
+        },
+        {
+          "line": 194,
+          "from": 1400,
+          "to": 1800,
+          "reason": "protocol freeze child only"
+        }
+      ]
+    },
+    {
+      "original": "/private/tmp/lanl14-pr-final-local-envelope-20261007-a2.py",
+      "original_sha256": "134de6899dd6c530f815defb7a4a31ad3159620310f8edf2dcdabed759682df2",
+      "revision": "/private/tmp/lanl14-pr-final-local-envelope-20261007-a3.py",
+      "revision_sha256": "921ca0d1c37514a69e009cf09df6abfcb3e3f0e96081e15de03ee5456e999ac9",
+      "explicit_administrative_reversal_byte_identical": true,
+      "source_path_independent_ast_equality": true,
+      "approved_edits": [
+        {
+          "line": 2,
+          "from": "4500-second local metadata envelope for the explicitly pinned cap-only runner.\nNo extra subprocesses, native/compiler/provider jobs or remote actions.\n",
+          "to": "4900-second local metadata envelope for the explicitly pinned cap-only runner.\nNo extra subprocesses, native/compiler/provider jobs or remote actions.\n",
+          "reason": "outer-bound documentation delta"
+        },
+        {
+          "line": 11,
+          "from": "/private/tmp/lanl14-pr-final-local-runner-20261007-a2.py",
+          "to": "/private/tmp/lanl14-pr-final-local-runner-20261007-a3.py",
+          "reason": "distinct cap-only helper path"
+        },
+        {
+          "line": 12,
+          "from": "fa99126eb9735e7aac9ab4f8dbfb1adbfabab40be8b6c9067e6904c95d7a806b",
+          "to": "0f4bf77738f3df5e39c28308b94dac6fac0f894955f1c7348c1a5f32c42227df",
+          "reason": "exact revised helper SHA pin"
+        },
+        {
+          "line": 23,
+          "from": 4500,
+          "to": 4900,
+          "reason": "local envelope delta400"
+        }
+      ]
+    }
+  ],
+  "preserved_exporter": {
+    "path": "/private/tmp/lanl14_final_export_caps_a2.py",
+    "sha256": "d8e97dc6a1153c30c3c6a0e329cc091ded63d3627f8dd905de7470166b60c833",
+    "reason": "Dynamic helper/manifest hashes; no static freeze/outer fields. Validation1400 unchanged."
+  },
+  "local_caps": {
+    "freeze_s": 1800,
+    "estimate_s": 1400,
+    "checker_s": 1000,
+    "outer_s": 4900,
+    "stage_sum_s": 4200,
+    "reserve_s": 700
+  },
+  "nine_caps": {
+    "freeze_s": 1800,
+    "estimate_s": 1400,
+    "validate_s": 1400,
+    "report_s": 1000,
+    "outer_s": 36600,
+    "stage_sum_s": 32600,
+    "reserve_s": 4000
+  },
+  "actual_execution": false,
+  "native_execution": 0,
+  "provider_calls": 0,
+  "remote_actions": 0,
+  "identity_sha256": "737517fa126270d121d743942927f18baa39454d711644566f6691fa47318ba8"
+}

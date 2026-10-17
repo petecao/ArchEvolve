@@ -1,0 +1,53 @@
+{
+  "authority_boundary": "The root launch selects the exact policy pin independently; matching bytes and owner labels do not attest context truth.",
+  "date": "2026-10-16 ET",
+  "draw_recipe": "one independent full signed-64 swdb_next slot cast to uint32 for each table element before source; fixed model V2 zero/exhaustion and translator oracle-capacity checks unchanged",
+  "input_roles": [
+    "abi_observation",
+    "assertion_header",
+    "capture_receipt",
+    "full_tu",
+    "model_assembly",
+    "runtime_receipt",
+    "source",
+    "source_atlas",
+    "source_globals",
+    "statement_preparation"
+  ],
+  "mapping": "all 12 observed source globals; initial instruction pointers stay null until actual source alloc; tile/register ownership -1; payload initializedness 0; size UINT_MAX; no prior commands/history by external premise",
+  "minimal_production_seams": [
+    "closed selection/context validation and unchanged existing compiler/TU/ABI/capture gates",
+    "per-declaration fixed enter hooks before initializer stores; live allocation hooks at all CPU/device memory uses; pending-command leave hooks on every exit",
+    "Plan registration/capacity/method identity plus same ordered native/differential/replay oracle draws",
+    "single preparation call before the single source entry; no added reset/alloc/init call"
+  ],
+  "model_kind": "dx100-whole-interface-checked-body-1",
+  "ordinary_allocation": "source declaration/lifetime origin is separate from shared access rights; no origin-thread equality at ordinary reads/CAS/device memory footprint",
+  "physical_roles": [
+    "address_projection",
+    "compiler_driver",
+    "compiler_wrapper",
+    "device_configuration",
+    "numeric_runtime"
+  ],
+  "receipt_order": [
+    "physical/runtime selection and actual source/model/statement producers",
+    "owned context receipt binding every input except source_globals",
+    "source globals observation binding exact context receipt",
+    "root selection binding context and globals",
+    "fixed preparation output"
+  ],
+  "remaining": "Independent source review, an actual externally owned context, public integration and root admission; no actual run or hardware theorem follows.",
+  "required_premises": {
+    "exclusive-model-instance": "This modeled trace exclusively controls the selected DX100 instance; all CPU/device interference is represented by the complete admitted trace.",
+    "fresh-host": "A fresh C++ program supplies the twelve observed static globals, with no intervening mutation before source entry.",
+    "ordinary-allocation": "Ordinary local storage comes from the exact checked original automatic declaration and live scope; allocation origin is not exclusive ordinary-memory access ownership.",
+    "physical-runtime": "The selected physical mapping, device configuration, compiler ABI, and numeric runtime policies apply to this trace under their exact pinned inputs.",
+    "quiescent-entry": "The modeled trace starts quiescent, with no prior pending command, construction, history, software tile/register owner, or registered region; no device payload value is asserted.",
+    "valid-entry-metadata": "Initial tile size/status metadata is in the selected valid/quiescent domain: Finished with an unknown size in 0..16384. No particular size, payload value, or payload initializedness is asserted."
+  },
+  "schema": "whole-interface-receiver-preparation-plan-1",
+  "scope": "inert source-only fixed fixture preparation",
+  "source_kind": "dx100-whole-interface-source-v1",
+  "typed_api": "prepare(OwnedSelection(Pin(path, bytes, sha256))) -> PreparedReceiver"
+}

@@ -1,0 +1,410 @@
+date: '2026-09-25'
+classification: contract_fixture
+scope: Durable public failure and independent-comparator contracts only. Synthetic durations are not native
+  performance, simulated acceleration, or empirical regression.
+driver: scripts/bfs_contract_demonstrations.py
+driver_sha256: 8662ed8f0fe9e548d2ba3b12b93b8c4e59ad93adc8d5b30ec65346a5fcba6283
+host: local macOS Apple M4 Max arm64
+exit_code: 0
+elapsed_seconds: 382.0168240829371
+raw_root: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb
+receipt:
+  path: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/receipt.json
+  sha256: 48e8ca387b89a58399db9137faa90997ef2f6f5226f25ac7b32f2893da0ccb6a
+fresh_report:
+  path: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/fresh-report-after-ac14-fix.json
+  sha256: 2d5043f8da33190c01bb8dcc232ab901d13a1793040d026da08d928724827d78
+  identity_sha256: d2a5dfe8b643e9541be59bb8394ac1e1bcb6a37525a4dd5371cfde6b6fdc8144
+archive:
+  path: /Users/yanrujhou/CLionProjects/EvolveSWDB_runs/bfs-contract-fixtures/bfs-contract-20260925-a3.tar.gz
+  sha256: d968708aee643e543b5815a6314c34f97f909200e1d8c4b0f2437078fa0d8d59
+  bytes: 348214
+  verified_members: 428
+  contents: Only the local a3 raw folder, exact source snapshots and materialized candidates, fixture
+    compiler/program, machine capture, public request/output receipts, report, and metadata hashes. No
+    remote raw files.
+  restoration: Verify the archive SHA; if the original root is missing, extract the single bfs-contract-20260925-a3-j1u4qvpb
+    directory into /private/tmp. Do not overwrite an existing evidence root. Check archive-manifest.json
+    hashes after restoration. Persisted paths and records remain unchanged.
+comparison:
+  id: bfs-contract-20260925-a3.comparison
+  source_ancestor: gapbs-bfs-do
+  comparison_baseline: bfs-contract-20260925-a3.independent-reference
+  protocol: bfs-contract-20260925-a3.fixture-protocol.d414370aaa72b04e
+  baseline_evaluation: bfs-contract-20260925-a3.baseline.evaluation
+  candidate_evaluation: bfs-contract-20260925-a3.candidate.evaluation
+  fixture_ratio: 0.5
+  source_count: 2
+  repetitions_per_source: 5
+  empirical_regression: false
+  gain_claim: false
+criteria:
+  AC08:
+    state: satisfied_by_retained_metadata
+    reason: stale source, unsupported operation, and protected verifier/ROI requests must retain explicit
+      non-success records
+    evidence:
+      source:
+      - bfs-contract-20260925-a3.stale-source
+      operations:
+      - bfs-contract-20260925-a3.unsupported-operation
+      protected:
+      - bfs-contract-20260925-a3.protected-verifier
+  AC09:
+    state: satisfied_by_retained_metadata
+    reason: failure contracts must remain retrievable; unfavorable fixture ratios demonstrate handling
+      only, never empirical regression
+    evidence:
+      build_failure:
+      - bfs-contract-20260925-a3.build-failure
+      - bfs-dx100-build-20260925-a1
+      - bfs-instruction-smoke-20260925-a1.structured-instructions.evaluation
+      verifier_failure_exit_zero:
+      - bfs-contract-20260925-a3.incorrect
+      timeout:
+      - bfs-contract-20260925-a3.timeout
+      budget_exhausted:
+      - bfs-contract-20260925-a3.budget
+      - bfs-dx100-smoke-20260925-a4
+      - bfs-dx100-smoke-20260925-a5
+      missing_observation:
+      - bfs-contract-20260925-a3.missing
+      - bfs-dx100-smoke-20260925-a3
+      regression: []
+    unfavorable_fixture_demonstrations:
+    - comparison: bfs-contract-20260925-a3.comparison
+      classification: contract_fixture
+      outcome: unfavorable_fixture_ratio
+      fixture_ratio: 0.5
+      empirical_regression: false
+      gain_claim: false
+    classified_failures:
+      build_failure:
+      - id: bfs-contract-20260925-a3.build-failure
+        classification: contract_fixture
+      - id: bfs-dx100-build-20260925-a1
+        classification: execution
+      - id: bfs-instruction-smoke-20260925-a1.structured-instructions.evaluation
+        classification: execution
+      verifier_failure_exit_zero:
+      - id: bfs-contract-20260925-a3.incorrect
+        classification: contract_fixture
+      timeout:
+      - id: bfs-contract-20260925-a3.timeout
+        classification: contract_fixture
+      budget_exhausted:
+      - id: bfs-contract-20260925-a3.budget
+        classification: contract_fixture
+      - id: bfs-dx100-smoke-20260925-a4
+        classification: execution
+      - id: bfs-dx100-smoke-20260925-a5
+        classification: execution
+      missing_observation:
+      - id: bfs-contract-20260925-a3.missing
+        classification: contract_fixture
+      - id: bfs-dx100-smoke-20260925-a3
+        classification: execution
+      regression: []
+  AC14:
+    state: satisfied_by_retained_metadata
+    reason: a retained compatible comparison must resolve a baseline different from source ancestry; fixtures
+      prove this contract only
+    evidence:
+    - bfs-contract-20260925-a3.comparison
+  AC17:
+    state: incomplete
+    reason: at least one generated correct candidate must pass its frozen profitability policy against
+      its unaccelerated source baseline
+empirical_matrix_completed: 0
+empirical_matrix_required: 8
+acceptance: incomplete
+gain_claim: false
+retrieved_chain_records: 16
+records:
+- path: candidates/bfs-contract-20260925-a3.candidate-proposal.candidate-1.yaml
+  sha256: e13d485ab51b64f11f0d65710bba94ee4f985aca72d121881e4b8ccd0aeb2e3e
+  bytes: 16517
+- path: candidates/bfs-contract-20260925-a3.reference-candidate.yaml
+  sha256: 03f6a53472214b75d205b32d42f6a294d79dd0fb84b9e77b4404ecb7c2c87583
+  bytes: 16087
+- path: comparison_results/bfs-contract-20260925-a3.comparison.yaml
+  sha256: 035ce1b666764630d821348b0528c2f1a1161768af2839f0e032adeef290629b
+  bytes: 2189
+- path: evaluations/bfs-contract-20260925-a3.baseline.evaluation.yaml
+  sha256: a20b1a49d7400e29c55bf301980ca82462a1707d3332872ab869b7d3610bb166
+  bytes: 26991
+- path: evaluations/bfs-contract-20260925-a3.budget.yaml
+  sha256: 4647d97e62de601d4cb34f6e21123d5c6ef0f7734aff65e994b3a9a1b5a3f9c8
+  bytes: 3186
+- path: evaluations/bfs-contract-20260925-a3.build-failure.yaml
+  sha256: ac48f6b9c77cfe02c5206315921214827e187ede1fc4ccebc67c905826d65800
+  bytes: 6889
+- path: evaluations/bfs-contract-20260925-a3.candidate.evaluation.yaml
+  sha256: b1eee5652fe143e27b5982f1f8030415d423e3702cfa6be3de133f887d7fb97c
+  bytes: 27129
+- path: evaluations/bfs-contract-20260925-a3.incorrect.yaml
+  sha256: 7a9b29ca90117f5611a20015cb73cf5cc75681b94ea59fc5110ac19fbf3d6936
+  bytes: 8916
+- path: evaluations/bfs-contract-20260925-a3.missing.yaml
+  sha256: d196609ecbb30f54512b5405ceb07cc5b1803bc3f239e4cea637b40b3fe9c14d
+  bytes: 8065
+- path: evaluations/bfs-contract-20260925-a3.timeout.yaml
+  sha256: 0cdd4a28872bd421e0b1c58e06d2227acf02c50854f8a0dd1ef9b39f4a21f8a9
+  bytes: 7759
+- path: implementations/bfs-contract-20260925-a3.independent-reference.yaml
+  sha256: 15098b447bdddb842707609511f9fbae341ac8f17561fe1b692b2601464945f4
+  bytes: 42908
+- path: machines/bfs-contract-20260925-a3.local-host.yaml
+  sha256: 368ea0b7961ef27785a0034f245714646976db5ed1a65194cb7f47b8b4a9e314
+  bytes: 1607
+- path: profile_packages/bfs-contract-20260925-a3.fixture-package.yaml
+  sha256: 15c999f9195d53850e6a9cb35db05a0bf46149035753016f7b76f5873981af14
+  bytes: 8652
+- path: proposals/bfs-contract-20260925-a3.candidate-proposal.yaml
+  sha256: 1601d0b86e74ead3799c44b04afd1e28ee49d6386bdb97d8691b39139c469ae9
+  bytes: 2109
+- path: proposals/bfs-contract-20260925-a3.protected-verifier.yaml
+  sha256: 15052cdff35c70e963c5849152a62b1fa3bdd8daaa9f3b854298ab505d956172
+  bytes: 2213
+- path: proposals/bfs-contract-20260925-a3.stale-source.yaml
+  sha256: ea2ed838501f2b499dcfb872392e2913d779b68b2350e2609f35066e4efff5ed
+  bytes: 1718
+- path: proposals/bfs-contract-20260925-a3.unsupported-operation.yaml
+  sha256: 22fb2f8f14cd3c0055bb2247b0182df6ebc8d13e2e742ad13a60d798b33456e6
+  bytes: 1929
+- path: protocols/bfs-contract-20260925-a3.fixture-protocol.d414370aaa72b04e.yaml
+  sha256: 980257f969660f1ce27634b19fad9b98b448ff14e6178d32765641aa47a1835c
+  bytes: 2558
+- path: source_snapshots/bfs-contract-20260925-a3.reference-source.yaml
+  sha256: 490af313d091298a9db7b6c63ff74902fdcb5f98ac386cce4bed32e64bebf74c
+  bytes: 21628
+- path: source_snapshots/bfs-contract-20260925-a3.source.yaml
+  sha256: 766a47579bc896cba55a59c02e651a241130168caaf5187bced48cc62eb0d4f5
+  bytes: 21802
+- path: workloads/bfs-contract-20260925-a3.workload.584a833b37d4d8a1.yaml
+  sha256: 5e92d5ea7c0909646d9cee26e2ffd1e1f0f67307a2e0ece217536207de3b9970
+  bytes: 1616
+setup_failures:
+- id: bfs-contract-20260925-a1
+  state: failed
+  receipt:
+    path: /private/tmp/bfs-contract-20260925-a1-m67dg1vd/receipt.json
+    sha256: 6bd654c0a86acb32c9b2f3ad9980ddfa91ba7b6c4b7d9f152f48537ee6be9134
+  validation_error: 'swdb add: validation failed; nothing written:
+
+    machines/bfs-contract-20260925-a1.local-host.yaml: message_version: unknown key; put experimental
+    fields under `extensions`
+
+    machines/bfs-contract-20260925-a1.local-host.yaml: producer: unknown key; put experimental fields
+    under `extensions`'
+  execution_started: false
+- id: bfs-contract-20260925-a2
+  state: failed
+  receipt:
+    path: /private/tmp/bfs-contract-20260925-a2-h_8znl0m/receipt.json
+    sha256: 07846792f5adf6e6ee68e33e1951acee99f54fa100d53df8b30582eae5923613
+  validation_error: 'swdb add: validation failed; nothing written:
+
+    implementations/bfs-contract-20260925-a2.independent-reference.yaml: source_baseline: source baseline
+    must be found in the application''s source'
+  execution_started: false
+public_stages:
+- command: add
+  returncode: 0
+  stdout: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/00-add.stdout
+  stdout_sha256: 6eee4186db5f7bb0d27bde91d2527badcbb3785a8eeb54facd62d688b477b783
+  stderr: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/00-add.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: get
+  returncode: 0
+  stdout: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/01-get.stdout
+  stdout_sha256: 792b1d5781944ce89e0563d53ba3ea0ecbee50a44552cb14cfd69b2d4eaa66e9
+  stderr: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/01-get.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: add
+  returncode: 0
+  stdout: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/02-add.stdout
+  stdout_sha256: 7feba3206c75649e0b5b489874675cc676de33c6fcddff6e6338dbfb4d5d8ca1
+  stderr: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/02-add.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: source-snapshot
+  returncode: 0
+  stdout: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/03-source-snapshot.stdout
+  stdout_sha256: 8045746f26187cebb6fdcdb4ab29a327cde50db3ae5a93d90f058e8e0373bd38
+  stderr: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/03-source-snapshot.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: fixture-package
+  returncode: 0
+  stdout: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/04-fixture-package.stdout
+  stdout_sha256: fa1630e5dcbeab8d8b99bb3954997b1279cd71318d93e26ed9f1af1899269e05
+  stderr: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/04-fixture-package.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: submit
+  returncode: 1
+  stdout: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/05-submit.stdout
+  stdout_sha256: 6cf98cd5911daab8e737f584e007837f0a695e61bb37726e32bf9c03e7852a3f
+  stderr: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/05-submit.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: submit
+  returncode: 1
+  stdout: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/06-submit.stdout
+  stdout_sha256: c55399a9dfe9f133bf5e570d5cefd0ce90788a43ec37502a66b6dacc7a0c2762
+  stderr: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/06-submit.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: submit
+  returncode: 1
+  stdout: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/07-submit.stdout
+  stdout_sha256: 2b39f91586ebdcad1fcc9f977da40374287100267da1fbef819d0f7f84995a63
+  stderr: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/07-submit.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: submit
+  returncode: 0
+  stdout: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/08-submit.stdout
+  stdout_sha256: c83ee0b85833be4d22dbc2e955397ac73477733faa8fe2404d7dfbb023ed9f82
+  stderr: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/08-submit.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: source-snapshot
+  returncode: 0
+  stdout: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/09-source-snapshot.stdout
+  stdout_sha256: 43d10305016e1a5ea41fdce1ba98a3565d35433165e62e690e366c2b0e5321e8
+  stderr: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/09-source-snapshot.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: baseline-candidate
+  returncode: 0
+  stdout: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/10-baseline-candidate.stdout
+  stdout_sha256: 5125fc5a2cd4fbab0f504970139d1c998aaafc6bbc805fe69c4b19a945b06835
+  stderr: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/10-baseline-candidate.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: register-workload
+  returncode: 0
+  stdout: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/11-register-workload.stdout
+  stdout_sha256: 521d17a2ab29c32dc2b4046bcf1daeb6ea58bd1257493d7ada35263fcb90aee5
+  stderr: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/11-register-workload.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: evaluate
+  returncode: 1
+  stdout: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/12-evaluate.stdout
+  stdout_sha256: b969508e6b93ca37b76241696000e844c14f23864d2cad48e8527cfdb7c2e9dd
+  stderr: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/12-evaluate.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: evaluate
+  returncode: 1
+  stdout: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/13-evaluate.stdout
+  stdout_sha256: 535f93621eb0c007bdcde00dbcf2913d7e11e98ca666593f702ad7a7d7be3aa1
+  stderr: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/13-evaluate.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: evaluate
+  returncode: 1
+  stdout: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/14-evaluate.stdout
+  stdout_sha256: 62a2abeb23c110f928f6760b31c2fbf4abd7c8d41028f588ea01e650f42d8db8
+  stderr: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/14-evaluate.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: evaluate
+  returncode: 1
+  stdout: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/15-evaluate.stdout
+  stdout_sha256: e6657784f8be5970e805671feb4977de1f91ceda2dbb4ccd468e4cde0ae3bd87
+  stderr: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/15-evaluate.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: evaluate
+  returncode: 1
+  stdout: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/16-evaluate.stdout
+  stdout_sha256: 9f64c3f6cb5882c293f9484c2258d2a127d9153f695520cc59ebf0993126866f
+  stderr: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/16-evaluate.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: freeze-protocol
+  returncode: 0
+  stdout: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/17-freeze-protocol.stdout
+  stdout_sha256: b16ca7f8bc51b72671f5daada019d78bb4c29922bda8595ee98a6445db66b1c2
+  stderr: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/17-freeze-protocol.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: evaluate
+  returncode: 0
+  stdout: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/18-evaluate.stdout
+  stdout_sha256: 5f0cafe4682073b6d1843270ad09d68f23bf0ef0ba0e9e1a58d4616659b40286
+  stderr: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/18-evaluate.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: evaluate
+  returncode: 0
+  stdout: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/19-evaluate.stdout
+  stdout_sha256: 09d4f66610562d8669e6b4c2b4ef3a4caaf0c1e6fb92f1dfbd6339022148ea81
+  stderr: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/19-evaluate.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: compare-evaluations
+  returncode: 0
+  stdout: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/20-compare-evaluations.stdout
+  stdout_sha256: c1aca78193bd4b035df4b6f669a8489b140d85f0fbbd3411304381c9b121b0d6
+  stderr: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/20-compare-evaluations.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: build
+  returncode: 0
+  stdout: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/21-build.stdout
+  stdout_sha256: 521f957998fafcc16fa4c1f23ff585fc91d815315716a0836406b0557e81c8c2
+  stderr: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/21-build.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: get
+  returncode: 0
+  stdout: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/22-get.stdout
+  stdout_sha256: 3a08cec507a27cbd8a655b3ea37617a3a9b75af2a68aca36047980225ef09ca3
+  stderr: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/22-get.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: bfs-coverage
+  returncode: 0
+  stdout: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/23-bfs-coverage.stdout
+  stdout_sha256: 2d5043f8da33190c01bb8dcc232ab901d13a1793040d026da08d928724827d78
+  stderr: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/23-bfs-coverage.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- command: validate
+  returncode: 0
+  stdout: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/24-validate.stdout
+  stdout_sha256: 3cf88379670231c8023a956b48bc210f0ca4b054c1595e2e0e855d71b9690ce2
+  stderr: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/24-validate.stderr
+  stderr_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+driver_commit_containing_executed_bytes: 61af16e
+execution_checkout_revision: null
+execution_checkout_note: The driver was untracked when launched; the full checkout HEAD was not captured.
+  The retained driver SHA is byte-identical to the file later committed in 61af16e; that commit is not
+  represented as the run-start checkout.
+setup_failure_archive:
+  path: /Users/yanrujhou/CLionProjects/EvolveSWDB_runs/bfs-contract-fixtures/bfs-contract-20260925-setup-failures.tar.gz
+  sha256: fc3c48607c2611ff04b77ad9de1ab01e89bf614fe7d13f781f19864757a8b415
+  bytes: 20698
+  verified_members: 20
+  contents: Only the local a1/a2 setup-failure folders, raw requests/receipts/validation errors/machine
+    captures, persisted a2 local-host metadata, and per-folder hash manifests. The completed a3 archive
+    remains unchanged.
+  restoration: Verify archive SHA; restore missing bfs-contract-20260925-a1-m67dg1vd and bfs-contract-20260925-a2-h_8znl0m
+    directories into /private/tmp without overwriting existing evidence. Validate each archive-manifest.json.
+master_import_verification:
+  date: '2026-09-25'
+  imported_records: 21
+  overwritten_records: 0
+  public_validation: OK:145 records valid
+  query_index_rebuilt: true
+  retrieved_chain_records: 16
+  coverage_report:
+    path: /Users/yanrujhou/CLionProjects/EvolveSWDB_runs/bfs-contract-fixtures/master-verification-20260925/bfs-contract-master-coverage-20260925.json
+    sha256: 2d5043f8da33190c01bb8dcc232ab901d13a1793040d026da08d928724827d78
+    identity_sha256: d2a5dfe8b643e9541be59bb8394ac1e1bcb6a37525a4dd5371cfde6b6fdc8144
+  chain:
+    path: /Users/yanrujhou/CLionProjects/EvolveSWDB_runs/bfs-contract-fixtures/master-verification-20260925/bfs-contract-master-chain-20260925.json
+    sha256: 3a08cec507a27cbd8a655b3ea37617a3a9b75af2a68aca36047980225ef09ca3
+  criteria_satisfied_by_contract_metadata:
+  - AC08
+  - AC09
+  - AC14
+  empirical_matrix_completed: 0
+  empirical_matrix_required: 8
+  AC17: incomplete
+  empirical_regression_count: 0
+  acceptance: incomplete
+  gain_claim: false
+  catalog_regressions:
+    test_files:
+    - tests/test_db.py
+    - tests/test_records.py
+    - tests/test_repo.py
+    - tests/test_view.py
+    - tests/test_index_features.py
+    passed: 57
+    skipped: 1
+    elapsed_seconds: 44.24

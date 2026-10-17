@@ -1,0 +1,1815 @@
+{
+  "executable": false,
+  "format": "swdb.source-only-typed-future-input-draft.v1",
+  "input_template": {
+    "campaign": "extensa-gem5-bfs-20261006-p2",
+    "completion_originals": {
+      "agreement_receipt": {
+        "bytes": {
+          "future_type": "nonnegative_integer",
+          "required_actual_fact": "exact actual original byte count",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "path": "/data1/yanruj/ArchEvolve-lanl17-actual-report-evidence-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-actual-report-mbit10-20261007-a5.json",
+        "sha256": {
+          "future_type": "sha256_hex64",
+          "required_actual_fact": "exact actual original SHA256",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "stat": {
+          "ctime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ctime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "dev": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_dev",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "gid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_gid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "ino": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ino",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mode": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mode",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mtime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mtime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "nlink": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_nlink",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "size": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_size",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "uid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_uid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          }
+        }
+      },
+      "final_export": {
+        "bytes": {
+          "future_type": "nonnegative_integer",
+          "required_actual_fact": "exact actual original byte count",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/final-export.json",
+        "sha256": {
+          "future_type": "sha256_hex64",
+          "required_actual_fact": "exact actual original SHA256",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "stat": {
+          "ctime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ctime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "dev": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_dev",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "gid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_gid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "ino": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ino",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mode": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mode",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mtime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mtime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "nlink": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_nlink",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "size": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_size",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "uid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_uid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          }
+        }
+      },
+      "guard_preregistration": {
+        "bytes": {
+          "future_type": "nonnegative_integer",
+          "required_actual_fact": "exact actual original byte count",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-metadata-finalize-20261007-a5/preregistration.json",
+        "sha256": {
+          "future_type": "sha256_hex64",
+          "required_actual_fact": "exact actual original SHA256",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "stat": {
+          "ctime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ctime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "dev": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_dev",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "gid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_gid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "ino": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ino",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mode": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mode",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mtime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mtime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "nlink": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_nlink",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "size": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_size",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "uid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_uid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          }
+        }
+      },
+      "guard_source": {
+        "bytes": {
+          "future_type": "nonnegative_integer",
+          "required_actual_fact": "exact actual original byte count",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "path": "/data1/yanruj/lanl17-metadata-dispatch-guard-cleanup60-20261007-a4.py",
+        "sha256": {
+          "future_type": "sha256_hex64",
+          "required_actual_fact": "exact actual original SHA256",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "stat": {
+          "ctime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ctime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "dev": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_dev",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "gid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_gid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "ino": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ino",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mode": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mode",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mtime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mtime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "nlink": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_nlink",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "size": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_size",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "uid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_uid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          }
+        }
+      },
+      "helper_source": {
+        "bytes": {
+          "future_type": "nonnegative_integer",
+          "required_actual_fact": "exact actual original byte count",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "path": "/data1/yanruj/lanl17-control-cleanup60-20261007-a4.py",
+        "sha256": {
+          "future_type": "sha256_hex64",
+          "required_actual_fact": "exact actual original SHA256",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "stat": {
+          "ctime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ctime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "dev": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_dev",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "gid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_gid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "ino": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ino",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mode": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mode",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mtime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mtime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "nlink": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_nlink",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "size": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_size",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "uid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_uid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          }
+        }
+      },
+      "helper_stdout": {
+        "bytes": {
+          "future_type": "nonnegative_integer",
+          "required_actual_fact": "exact actual original byte count",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-metadata-finalize-20261007-a5/helper.stdout",
+        "sha256": {
+          "future_type": "sha256_hex64",
+          "required_actual_fact": "exact actual original SHA256",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "stat": {
+          "ctime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ctime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "dev": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_dev",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "gid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_gid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "ino": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ino",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mode": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mode",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mtime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mtime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "nlink": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_nlink",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "size": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_size",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "uid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_uid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          }
+        }
+      },
+      "manifest_M2": {
+        "bytes": {
+          "future_type": "nonnegative_integer",
+          "required_actual_fact": "exact actual original byte count",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/manifest.json",
+        "sha256": {
+          "future_type": "sha256_hex64",
+          "required_actual_fact": "exact actual original SHA256",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "stat": {
+          "ctime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ctime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "dev": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_dev",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "gid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_gid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "ino": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ino",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mode": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mode",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mtime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mtime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "nlink": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_nlink",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "size": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_size",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "uid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_uid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          }
+        }
+      },
+      "supervisor_receipt": {
+        "bytes": {
+          "future_type": "nonnegative_integer",
+          "required_actual_fact": "exact actual original byte count",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-metadata-finalize-20261007-a5/supervisor-receipt.json",
+        "sha256": {
+          "future_type": "sha256_hex64",
+          "required_actual_fact": "exact actual original SHA256",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "stat": {
+          "ctime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ctime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "dev": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_dev",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "gid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_gid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "ino": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ino",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mode": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mode",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mtime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mtime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "nlink": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_nlink",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "size": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_size",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "uid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_uid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          }
+        }
+      },
+      "supervisor_source": {
+        "bytes": {
+          "future_type": "nonnegative_integer",
+          "required_actual_fact": "exact actual original byte count",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "path": "/data1/yanruj/lanl17-metadata-supervisor-cleanup60-20261007-a4.py",
+        "sha256": {
+          "future_type": "sha256_hex64",
+          "required_actual_fact": "exact actual original SHA256",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "stat": {
+          "ctime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ctime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "dev": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_dev",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "gid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_gid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "ino": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ino",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mode": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mode",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mtime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mtime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "nlink": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_nlink",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "size": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_size",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "uid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_uid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          }
+        }
+      },
+      "validate-extensa-gem5-bfs-20261006-p1:argv": {
+        "bytes": {
+          "future_type": "nonnegative_integer",
+          "required_actual_fact": "exact actual original byte count",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-extensa-gem5-bfs-20261006-p1.argv.json",
+        "sha256": {
+          "future_type": "sha256_hex64",
+          "required_actual_fact": "exact actual original SHA256",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "stat": {
+          "ctime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ctime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "dev": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_dev",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "gid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_gid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "ino": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ino",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mode": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mode",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mtime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mtime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "nlink": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_nlink",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "size": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_size",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "uid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_uid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          }
+        }
+      },
+      "validate-extensa-gem5-bfs-20261006-p1:exit": {
+        "bytes": {
+          "future_type": "nonnegative_integer",
+          "required_actual_fact": "exact actual original byte count",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-extensa-gem5-bfs-20261006-p1.exit-code.txt",
+        "sha256": {
+          "future_type": "sha256_hex64",
+          "required_actual_fact": "exact actual original SHA256",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "stat": {
+          "ctime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ctime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "dev": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_dev",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "gid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_gid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "ino": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ino",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mode": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mode",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mtime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mtime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "nlink": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_nlink",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "size": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_size",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "uid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_uid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          }
+        }
+      },
+      "validate-extensa-gem5-bfs-20261006-p1:stderr": {
+        "bytes": {
+          "future_type": "nonnegative_integer",
+          "required_actual_fact": "exact actual original byte count",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-extensa-gem5-bfs-20261006-p1.stderr",
+        "sha256": {
+          "future_type": "sha256_hex64",
+          "required_actual_fact": "exact actual original SHA256",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "stat": {
+          "ctime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ctime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "dev": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_dev",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "gid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_gid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "ino": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ino",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mode": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mode",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mtime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mtime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "nlink": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_nlink",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "size": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_size",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "uid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_uid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          }
+        }
+      },
+      "validate-extensa-gem5-bfs-20261006-p1:stdout": {
+        "bytes": {
+          "future_type": "nonnegative_integer",
+          "required_actual_fact": "exact actual original byte count",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-extensa-gem5-bfs-20261006-p1.stdout",
+        "sha256": {
+          "future_type": "sha256_hex64",
+          "required_actual_fact": "exact actual original SHA256",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "stat": {
+          "ctime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ctime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "dev": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_dev",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "gid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_gid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "ino": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ino",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mode": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mode",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mtime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mtime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "nlink": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_nlink",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "size": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_size",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "uid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_uid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          }
+        }
+      },
+      "validate-extensa-gem5-bfs-20261006-p2:argv": {
+        "bytes": {
+          "future_type": "nonnegative_integer",
+          "required_actual_fact": "exact actual original byte count",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-extensa-gem5-bfs-20261006-p2.argv.json",
+        "sha256": {
+          "future_type": "sha256_hex64",
+          "required_actual_fact": "exact actual original SHA256",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "stat": {
+          "ctime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ctime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "dev": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_dev",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "gid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_gid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "ino": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ino",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mode": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mode",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mtime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mtime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "nlink": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_nlink",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "size": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_size",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "uid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_uid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          }
+        }
+      },
+      "validate-extensa-gem5-bfs-20261006-p2:exit": {
+        "bytes": {
+          "future_type": "nonnegative_integer",
+          "required_actual_fact": "exact actual original byte count",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-extensa-gem5-bfs-20261006-p2.exit-code.txt",
+        "sha256": {
+          "future_type": "sha256_hex64",
+          "required_actual_fact": "exact actual original SHA256",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "stat": {
+          "ctime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ctime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "dev": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_dev",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "gid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_gid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "ino": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ino",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mode": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mode",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mtime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mtime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "nlink": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_nlink",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "size": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_size",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "uid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_uid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          }
+        }
+      },
+      "validate-extensa-gem5-bfs-20261006-p2:stderr": {
+        "bytes": {
+          "future_type": "nonnegative_integer",
+          "required_actual_fact": "exact actual original byte count",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-extensa-gem5-bfs-20261006-p2.stderr",
+        "sha256": {
+          "future_type": "sha256_hex64",
+          "required_actual_fact": "exact actual original SHA256",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "stat": {
+          "ctime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ctime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "dev": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_dev",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "gid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_gid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "ino": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ino",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mode": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mode",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mtime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mtime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "nlink": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_nlink",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "size": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_size",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "uid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_uid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          }
+        }
+      },
+      "validate-extensa-gem5-bfs-20261006-p2:stdout": {
+        "bytes": {
+          "future_type": "nonnegative_integer",
+          "required_actual_fact": "exact actual original byte count",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-extensa-gem5-bfs-20261006-p2.stdout",
+        "sha256": {
+          "future_type": "sha256_hex64",
+          "required_actual_fact": "exact actual original SHA256",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "stat": {
+          "ctime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ctime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "dev": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_dev",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "gid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_gid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "ino": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ino",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mode": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mode",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mtime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mtime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "nlink": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_nlink",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "size": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_size",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "uid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_uid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          }
+        }
+      },
+      "validate-extensa-gem5-bfs-20261006-p3:argv": {
+        "bytes": {
+          "future_type": "nonnegative_integer",
+          "required_actual_fact": "exact actual original byte count",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-extensa-gem5-bfs-20261006-p3.argv.json",
+        "sha256": {
+          "future_type": "sha256_hex64",
+          "required_actual_fact": "exact actual original SHA256",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "stat": {
+          "ctime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ctime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "dev": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_dev",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "gid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_gid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "ino": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ino",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mode": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mode",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mtime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mtime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "nlink": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_nlink",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "size": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_size",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "uid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_uid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          }
+        }
+      },
+      "validate-extensa-gem5-bfs-20261006-p3:exit": {
+        "bytes": {
+          "future_type": "nonnegative_integer",
+          "required_actual_fact": "exact actual original byte count",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-extensa-gem5-bfs-20261006-p3.exit-code.txt",
+        "sha256": {
+          "future_type": "sha256_hex64",
+          "required_actual_fact": "exact actual original SHA256",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "stat": {
+          "ctime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ctime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "dev": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_dev",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "gid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_gid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "ino": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ino",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mode": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mode",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mtime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mtime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "nlink": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_nlink",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "size": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_size",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "uid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_uid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          }
+        }
+      },
+      "validate-extensa-gem5-bfs-20261006-p3:stderr": {
+        "bytes": {
+          "future_type": "nonnegative_integer",
+          "required_actual_fact": "exact actual original byte count",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-extensa-gem5-bfs-20261006-p3.stderr",
+        "sha256": {
+          "future_type": "sha256_hex64",
+          "required_actual_fact": "exact actual original SHA256",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "stat": {
+          "ctime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ctime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "dev": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_dev",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "gid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_gid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "ino": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ino",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mode": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mode",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mtime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mtime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "nlink": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_nlink",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "size": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_size",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "uid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_uid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          }
+        }
+      },
+      "validate-extensa-gem5-bfs-20261006-p3:stdout": {
+        "bytes": {
+          "future_type": "nonnegative_integer",
+          "required_actual_fact": "exact actual original byte count",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-extensa-gem5-bfs-20261006-p3.stdout",
+        "sha256": {
+          "future_type": "sha256_hex64",
+          "required_actual_fact": "exact actual original SHA256",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "stat": {
+          "ctime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ctime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "dev": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_dev",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "gid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_gid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "ino": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ino",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mode": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mode",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mtime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mtime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "nlink": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_nlink",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "size": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_size",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "uid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_uid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          }
+        }
+      },
+      "validate-extensa-gem5-bfs-20261006-p4:argv": {
+        "bytes": {
+          "future_type": "nonnegative_integer",
+          "required_actual_fact": "exact actual original byte count",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-extensa-gem5-bfs-20261006-p4.argv.json",
+        "sha256": {
+          "future_type": "sha256_hex64",
+          "required_actual_fact": "exact actual original SHA256",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "stat": {
+          "ctime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ctime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "dev": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_dev",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "gid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_gid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "ino": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ino",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mode": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mode",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mtime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mtime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "nlink": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_nlink",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "size": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_size",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "uid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_uid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          }
+        }
+      },
+      "validate-extensa-gem5-bfs-20261006-p4:exit": {
+        "bytes": {
+          "future_type": "nonnegative_integer",
+          "required_actual_fact": "exact actual original byte count",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-extensa-gem5-bfs-20261006-p4.exit-code.txt",
+        "sha256": {
+          "future_type": "sha256_hex64",
+          "required_actual_fact": "exact actual original SHA256",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "stat": {
+          "ctime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ctime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "dev": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_dev",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "gid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_gid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "ino": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ino",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mode": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mode",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mtime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mtime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "nlink": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_nlink",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "size": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_size",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "uid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_uid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          }
+        }
+      },
+      "validate-extensa-gem5-bfs-20261006-p4:stderr": {
+        "bytes": {
+          "future_type": "nonnegative_integer",
+          "required_actual_fact": "exact actual original byte count",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-extensa-gem5-bfs-20261006-p4.stderr",
+        "sha256": {
+          "future_type": "sha256_hex64",
+          "required_actual_fact": "exact actual original SHA256",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "stat": {
+          "ctime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ctime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "dev": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_dev",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "gid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_gid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "ino": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ino",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mode": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mode",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mtime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mtime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "nlink": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_nlink",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "size": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_size",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "uid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_uid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          }
+        }
+      },
+      "validate-extensa-gem5-bfs-20261006-p4:stdout": {
+        "bytes": {
+          "future_type": "nonnegative_integer",
+          "required_actual_fact": "exact actual original byte count",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-extensa-gem5-bfs-20261006-p4.stdout",
+        "sha256": {
+          "future_type": "sha256_hex64",
+          "required_actual_fact": "exact actual original SHA256",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "stat": {
+          "ctime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ctime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "dev": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_dev",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "gid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_gid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "ino": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ino",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mode": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mode",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mtime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mtime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "nlink": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_nlink",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "size": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_size",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "uid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_uid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          }
+        }
+      },
+      "validate-final-export:argv": {
+        "bytes": {
+          "future_type": "nonnegative_integer",
+          "required_actual_fact": "exact actual original byte count",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-final-export.argv.json",
+        "sha256": {
+          "future_type": "sha256_hex64",
+          "required_actual_fact": "exact actual original SHA256",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "stat": {
+          "ctime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ctime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "dev": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_dev",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "gid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_gid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "ino": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ino",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mode": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mode",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mtime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mtime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "nlink": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_nlink",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "size": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_size",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "uid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_uid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          }
+        }
+      },
+      "validate-final-export:exit": {
+        "bytes": {
+          "future_type": "nonnegative_integer",
+          "required_actual_fact": "exact actual original byte count",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-final-export.exit-code.txt",
+        "sha256": {
+          "future_type": "sha256_hex64",
+          "required_actual_fact": "exact actual original SHA256",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "stat": {
+          "ctime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ctime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "dev": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_dev",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "gid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_gid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "ino": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ino",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mode": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mode",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mtime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mtime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "nlink": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_nlink",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "size": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_size",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "uid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_uid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          }
+        }
+      },
+      "validate-final-export:stderr": {
+        "bytes": {
+          "future_type": "nonnegative_integer",
+          "required_actual_fact": "exact actual original byte count",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-final-export.stderr",
+        "sha256": {
+          "future_type": "sha256_hex64",
+          "required_actual_fact": "exact actual original SHA256",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "stat": {
+          "ctime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ctime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "dev": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_dev",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "gid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_gid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "ino": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ino",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mode": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mode",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mtime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mtime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "nlink": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_nlink",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "size": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_size",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "uid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_uid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          }
+        }
+      },
+      "validate-final-export:stdout": {
+        "bytes": {
+          "future_type": "nonnegative_integer",
+          "required_actual_fact": "exact actual original byte count",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-final-export.stdout",
+        "sha256": {
+          "future_type": "sha256_hex64",
+          "required_actual_fact": "exact actual original SHA256",
+          "state": "FUTURE_NOT_SUPPLIED"
+        },
+        "stat": {
+          "ctime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ctime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "dev": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_dev",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "gid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_gid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "ino": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_ino",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mode": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mode",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "mtime_ns": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_mtime_ns",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "nlink": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_nlink",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "size": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_size",
+            "state": "FUTURE_NOT_SUPPLIED"
+          },
+          "uid": {
+            "future_type": "nonnegative_integer",
+            "required_actual_fact": "actual original st_uid",
+            "state": "FUTURE_NOT_SUPPLIED"
+          }
+        }
+      }
+    },
+    "expected_ER_commit": {
+      "future_type": "git_hex40",
+      "required_actual_fact": "genuine reviewed completed ER commit",
+      "state": "FUTURE_NOT_SUPPLIED"
+    },
+    "format": "swdb.lanl17-pre-full-index-host-observation-input.v1",
+    "fresh_routes": {
+      "inventory_output": {
+        "future_type": "canonical_remote_path",
+        "required_actual_fact": "fresh external next-stage output route; explicit nonempty whitelist subset only",
+        "state": "FUTURE_NOT_SUPPLIED"
+      }
+    },
+    "nonce": {
+      "future_type": "lowercase_hex_32_to_64",
+      "required_actual_fact": "fresh parent-owned nonce",
+      "state": "FUTURE_NOT_SUPPLIED"
+    },
+    "parent_review": {
+      "actual_completion_originals_reviewed": {
+        "future_type": "boolean_true",
+        "required_actual_fact": "explicit actual parent review; never default approval",
+        "state": "FUTURE_NOT_SUPPLIED"
+      },
+      "basis": "explicit_parent_review_of_genuine_completed_FINALIZE_and_next_full_index_metadata_routes",
+      "checked_utc": {
+        "future_type": "UTC_timestamp",
+        "required_actual_fact": "genuine actual review UTC",
+        "state": "FUTURE_NOT_SUPPLIED"
+      },
+      "completion_packet_sha256": {
+        "future_type": "sha256_hex64",
+        "required_actual_fact": "genuine reviewed FINALIZE completion packet",
+        "state": "FUTURE_NOT_SUPPLIED"
+      },
+      "completion_peer_review_sha256": {
+        "future_type": "sha256_hex64",
+        "required_actual_fact": "actual independent completion review original",
+        "state": "FUTURE_NOT_SUPPLIED"
+      },
+      "completion_root_review_sha256": {
+        "future_type": "sha256_hex64",
+        "required_actual_fact": "actual root completion review original",
+        "state": "FUTURE_NOT_SUPPLIED"
+      },
+      "fixtures": false,
+      "payload_sha256": {
+        "future_type": "sha256_hex64",
+        "required_actual_fact": "canonical True input digest excluding parent_review",
+        "state": "FUTURE_NOT_SUPPLIED"
+      },
+      "source_sha256": "be2f68c21a72b4de5deee05f17f48a8cd09342cf3a6e7e17280ff72414dc3fd4",
+      "valid_until_utc": {
+        "future_type": "UTC_timestamp",
+        "required_actual_fact": "actual expiry within 300 seconds",
+        "state": "FUTURE_NOT_SUPPLIED"
+      }
+    }
+  },
+  "scientific_admission": false,
+  "source": {
+    "bytes": 36052,
+    "path": "/private/tmp/lanl17_pre_full_index_host_observation_20261008_a5_r5.py",
+    "sha256": "be2f68c21a72b4de5deee05f17f48a8cd09342cf3a6e7e17280ff72414dc3fd4"
+  },
+  "source_only_not_run": true,
+  "supersedes_source_only_input_draft": "/private/tmp/lanl17-p2-pre-full-index-host-input-SOURCE-ONLY-draft-r4-20261008-a5.json"
+}

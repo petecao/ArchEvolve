@@ -1,0 +1,47 @@
+--- lanl17_parent_helpers_caps_a2.py
++++ lanl17_parent_helpers_caps_a3.py
+@@ -333,13 +333,13 @@
+         'scope': 'Prospective population; no application outcomes before public policy and Git export. Numeric bridge unsupported.'})
+     dump(raw / 'manifest-before-freeze.json', manifest)
+     env = environment(source, raw)
+-    run_cli(source, raw, 'validate-before-freeze', ['python3', '-m', 'swdb', 'validate', '--records', base / 'records'], 1400, env)
++    run_cli(source, raw, 'validate-before-freeze', ['python3', '-m', 'swdb', 'validate', '--records', base / 'records'], 3600, env)
+     argv = ['python3', '-m', 'swdb', 'agreement-freeze']
+     for cid in CIDS:
+         argv.extend(['--campaign-file', config_dir / (cid + '.yaml')])
+     argv.extend(['--provider-config', config_dir / 'provider-codex.yaml', '--records', base / 'records',
+                  '--mode', 'extensa', '--campaign', CIDS[0], '--format', 'json'])
+-    policy = json.loads(run_cli(source, raw, 'population-freeze', argv, 1400, env))
++    policy = json.loads(run_cli(source, raw, 'population-freeze', argv, 6000, env))
+     assert policy['estimator_sha256'] == manifest['estimator_sha256']
+     after = inventory(base / 'records')
+     assert all(after.get(key) == value for key, value in before.items())
+@@ -606,7 +606,7 @@
+         folder = raw / 'campaign-runs/extensa' / cid / 'records'
+         assert folder.is_dir(), 'Do not substitute fixtures or old stores for a failed setup'
+         assert Store(folder).get(cid + '.summary', 'campaign_summary'), 'Resume incomplete actual trajectory; never manufacture a summary'
+-        run_cli(source, raw, 'validate-' + cid, ['python3', '-m', 'swdb', 'validate', '--records', folder], 1400)
++        run_cli(source, raw, 'validate-' + cid, ['python3', '-m', 'swdb', 'validate', '--records', folder], 3600)
+         summary = Store(folder).get(cid + '.summary', 'campaign_summary')
+         assert summary['evidence_kind'] == 'execution' and summary['target'] == 'dx100_gem5'
+         # Export named non-rejected candidate closures through the public command.
+@@ -618,16 +618,16 @@
+                     '--records', raw / 'base/records', '--runs-root', raw / 'campaign-runs', '--format', 'json']
+             for rid in ids:
+                 argv.extend(['--candidate', rid])
+-            run_cli(source, raw, 'export-' + cid, argv, 900)
++            run_cli(source, raw, 'export-' + cid, argv, 6000)
+     argv = ['python3', '-m', 'swdb', 'agreement-report', '--policy', manifest['policy']['id'],
+             '--records', raw / 'base/records', '--mode', 'extensa', '--campaign', CIDS[0], '--format', 'json']
+     for cid in CIDS:
+         argv.extend(['--campaign-records', raw / 'campaign-runs/extensa' / cid / 'records'])
+-    report = json.loads(run_cli(source, raw, 'final-agreement-report', argv, 1200))
++    report = json.loads(run_cli(source, raw, 'final-agreement-report', argv, 14400))
+     assert report['counts']['unique_eligible_dx100_pairs'] == 0 and report['gate']['state'] == 'unsupported'
+     assert report['recommendation'] == 'do_not_switch_to_flow_b' and report['selection_policy'] == 'unchanged_timing_only'
+     assert report['counts']['observed_campaigns'] == 4
+-    run_cli(source, raw, 'validate-final-export', ['python3', '-m', 'swdb', 'validate', '--records', raw / 'base/records'], 1400)
++    run_cli(source, raw, 'validate-final-export', ['python3', '-m', 'swdb', 'validate', '--records', raw / 'base/records'], 3600)
+     receipt = seal({'format': 'swdb.lanl17-actual-agreement-compact.v1', 'checked_utc': now(),
+                     'manifest': manifest, 'stopped_attempts': stopped, 'public_report': report,
+                     'raw_transferred': False, 'source_clean': not git(source, 'status', '--porcelain'),

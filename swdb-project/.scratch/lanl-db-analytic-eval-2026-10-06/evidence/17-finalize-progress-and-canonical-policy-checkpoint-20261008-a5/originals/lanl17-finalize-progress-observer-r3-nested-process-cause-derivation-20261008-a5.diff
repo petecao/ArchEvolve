@@ -1,0 +1,73 @@
+--- /private/tmp/lanl17_observe_finalize_progress_metadata_20261008_a5_r2.py
++++ /private/tmp/lanl17_observe_finalize_progress_metadata_20261008_a5_r3.py
+@@ -154,35 +154,43 @@
+     return rows
+ 
+ def process_rows():
+-    proc={};anchors=set();public=set();seen=0
++    proc={};anchors=set();public=set();seen=0;errors=[]
+     for p in Path('/proc').iterdir():
+         tick();seen+=1;need(seen<=MAX_PROC,'proc_inventory_bound')
+         if not p.name.isdecimal():continue
++        diagnostic=None;operation='proc_owner'
+         try:
+             ps=p.stat()
+             if ps.st_uid!=UID:continue
++            pid=int(p.name);need(0<pid<2**31,'process_PID_range')
++            diagnostic={'pid':pid,'uid':UID,'proc_inode':ps.st_ino};operation='stat'
+             need(len(proc)<MAX_OWNED,'owned_proc_bound');b=kernel(p/'stat',8192,UID);tail=b.rsplit(b')',1)[1].split();need(len(tail)>=22,'process_stat_shape')
+             pid=int(p.name);start=int(tail[19]);row={'pid':pid,'parent_pid':int(tail[1]),'start_ticks':start,'state':tail[0].decode('ascii'),'user_cpu_ticks':int(tail[11]),'kernel_cpu_ticks':int(tail[12]),'rss_bytes':int(tail[21])*os.sysconf('SC_PAGE_SIZE'),'proc_inode':ps.st_ino,'uid':UID,'role':None}
+-            comm=kernel(p/'comm',256,UID).strip()
++            if start>0:diagnostic['start_ticks']=start
++            operation='comm';comm=kernel(p/'comm',256,UID).strip()
+             if comm in (b'python3',b'python3.12',b'python'):
+-                argv=kernel(p/'cmdline',32768,UID);tokens=argv.rstrip(b'\0').split(b'\0')
++                operation='cmdline';argv=kernel(p/'cmdline',32768,UID);tokens=argv.rstrip(b'\0').split(b'\0')
+                 args=tokens[1:]
+                 while args and args[0] in (b'-I',b'-B'):args=args[1:]
+                 if args and str(M2).encode() in args and b'finalize' in args:
+                     for source,role in ((H,'helper28_finalize'),(SUP,'supervisorfa_finalize'),(G,'guard9c_finalize')):
+-                        if args[0]==str(source).encode():row['role']=role;anchors.add(pid);break
++                        if args[0]==str(source).encode():row['role']=role;break
+                 if len(args)>=5 and args[:2]==[b'-m',b'swdb']:
+                     command=args[2]
+-                    if command==b'validate' and args[3]==b'--records' and args[4].decode('utf-8') in {str(RAW/'base/records'),*(str(RAW/'campaign-runs/extensa'/cid/'records') for cid in CIDS)}:row['role']='public_validate';public.add(pid)
+-                    elif command in (b'campaign-export',b'agreement-report') and any(str(RAW).encode() in x for x in args[3:]):row['role']='public_'+command.decode();public.add(pid)
++                    if command==b'validate' and args[3]==b'--records' and args[4].decode('utf-8') in {str(RAW/'base/records'),*(str(RAW/'campaign-runs/extensa'/cid/'records') for cid in CIDS)}:row['role']='public_validate'
++                    elif command in (b'campaign-export',b'agreement-report') and any(str(RAW).encode() in x for x in args[3:]):row['role']='public_'+command.decode()
+                 if row['role']:
++                    operation='exe'
+                     row['argv_bytes']=len(argv);row['argv_sha256']=sha(argv);row['exe_is_native_python']=Path('/proc/'+str(pid)+'/exe').resolve(strict=True)==Path('/usr/bin/python3.12')
+                     need(row['exe_is_native_python'],'matching_process_native_executable')
+-            b2=kernel(p/'stat',8192,UID);need(int(b2.rsplit(b')',1)[1].split()[19])==start and p.stat().st_ino==ps.st_ino,'process_PID_reused')
++            operation='identity_recheck';b2=kernel(p/'stat',8192,UID);need(int(b2.rsplit(b')',1)[1].split()[19])==start and p.stat().st_ino==ps.st_ino,'process_PID_reused')
+             proc[pid]=row
+-        except FileNotFoundError:continue  # Process vanished; never call it idle or terminal.
++            if row['role'] in ('helper28_finalize','supervisorfa_finalize','guard9c_finalize'):anchors.add(pid)
++            elif row['role'] and row['role'].startswith('public_'):public.add(pid)
+         except (OSError,ValueError,IndexError,UnicodeError) as exc:
+-            need(False,'owned_process_inventory_unknown_'+type(exc).__name__)
++            if isinstance(exc,FileNotFoundError) and diagnostic is None:continue
++            need(len(errors)<MAX_ROWS,'owned_process_unknown_bound')
++            errors.append({'operation':operation,**(diagnostic or {}),**unknown(exc)})
+     selected=set(anchors)
+     for _ in range(MAX_ROWS):
+         new={pid for pid,row in proc.items() if row['parent_pid'] in selected}-selected
+@@ -192,7 +200,7 @@
+     rows=[]
+     for pid in sorted(selected):
+         row=dict(proc[pid]);row['role']=row['role'] or 'owned_finalize_descendant';rows.append(row)
+-    return {'anchor_count':len(anchors),'owned_exact_process_tree':rows,'matching_public_processes_outside_anchored_tree_count':len(public-selected),'absent_anchor_is_not_completion':True,'CPU_tick_frequency':os.sysconf('SC_CLK_TCK'),'CPU_deltas_require_same_PID_and_start_ticks':True,'cmdline_or_comm_body_returned':False}
++    return {'state':'unknown' if errors else 'observed','owned_process_unknowns':errors,'partial_process_inventory_not_completion':True,'anchor_count':len(anchors),'owned_exact_process_tree':rows,'matching_public_processes_outside_anchored_tree_count':len(public-selected),'absent_anchor_is_not_completion':True,'CPU_tick_frequency':os.sysconf('SC_CLK_TCK'),'CPU_deltas_require_same_PID_and_start_ticks':True,'cmdline_or_comm_body_returned':False}
+ 
+ def observe():
+     need(sys.platform=='linux' and socket.gethostname().split('.')[0]=='mbit10' and os.getuid()==os.geteuid()==UID and pwd.getpwuid(UID).pw_name=='yanruj','actual_native_account')
+@@ -209,7 +217,7 @@
+     source=git_facts();native=leases();processes=process_rows()
+     for p,n,d in SOURCE_PINS:
+         b,pin=metadata(p,n);need(pin==next(x for x in pins if x['path']==str(p)) and sha(b)==d,'original_source_or_M2_race')
+-    return {'format':'swdb.lanl17-finalize-progress-metadata-readonly.v1','checked_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'read_only':True,'sealed':False,'scientific_admission':False,'completion_inferred':False,'source':source,'source_and_M2_pins':pins,'native_leases':native,'all_three_currently_released_without_kernel_holder_or_FD9':all(x.get('released_no_kernel_holder_or_FD9') is True for x in native),'processes':processes,'phase_files':files,'raw_diagnostic_output_record_provider_auth_bodies_read':False,'compact_control_and_public_argv_exit_metadata_read':True,'stage_file_presence_is_not_success':True,'requires_original_completion_reader_after_parent_terminal_review':True,'fresh_live_admission_not_replaced':True}
++    return {'format':'swdb.lanl17-finalize-progress-metadata-readonly.v1','checked_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'read_only':True,'sealed':False,'scientific_admission':False,'completion_inferred':False,'state':'unknown' if processes['state']=='unknown' else 'observed','source':source,'source_and_M2_pins':pins,'native_leases':native,'all_three_currently_released_without_kernel_holder_or_FD9':all(x.get('released_no_kernel_holder_or_FD9') is True for x in native),'processes':processes,'phase_files':files,'raw_diagnostic_output_record_provider_auth_bodies_read':False,'compact_control_and_public_argv_exit_metadata_read':True,'stage_file_presence_is_not_success':True,'requires_original_completion_reader_after_parent_terminal_review':True,'fresh_live_admission_not_replaced':True}
+ 
+ def interrupted(n,f):raise Refused('progress_query_deadline_or_signal')
+ for number in (signal.SIGALRM,signal.SIGTERM,signal.SIGINT,signal.SIGHUP):signal.signal(number,interrupted)

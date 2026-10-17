@@ -1,0 +1,91 @@
+{
+  "created": "2026-10-16 ET",
+  "kind": "initialized-ast-diagnostic-v1",
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-ast-diagnostic-2baf722f-v1",
+  "outer-resources.json": {
+    "exit_code": 0,
+    "peak_rss_bytes": 455192576,
+    "out_of_memory": false,
+    "timed_out": false,
+    "wall_seconds": 51.000325148925185,
+    "cpu_seconds": 60.919463
+  },
+  "resources.json": {
+    "cpu_seconds": 49.192187,
+    "exit_code": 0,
+    "out_of_memory": false,
+    "peak_rss_bytes": 401715200,
+    "timed_out": false,
+    "wall_seconds": 48.920672182925045
+  },
+  "source-after.json": {
+    "commit": "2baf722fdaa6cba24b859eae3172a6f597417d72",
+    "source_unchanged": true,
+    "tracked_changes": ""
+  },
+  "lane.json": {
+    "socket_lane": {
+      "aligned_cell_age_s": "",
+      "aligned_to": "no_gapbs_batch_running",
+      "command": [
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=60",
+        "1320",
+        "bash",
+        "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-ast-diagnostic-2baf722f-v1/run.sh"
+      ],
+      "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+      "ended_utc": "2026-10-16T18:58:01Z",
+      "exit_code": 0,
+      "host": "mbit10",
+      "job": "probata-resume-20261016-2baf722f-t28-initialized-ast-diagnostic-v1",
+      "lease_generation": 610,
+      "lease_name": "mbit10-evaluation-node0",
+      "load1_at_start": 0.55,
+      "load1_max": 32,
+      "node": 0,
+      "numa_memory_policy": "bind:0",
+      "numactl": "--cpunodebind=0 --membind=0",
+      "preregistration_sha256": null,
+      "started_utc": "2026-10-16T18:57:10Z"
+    }
+  },
+  "diagnostic": {
+    "status": "DIAGNOSTIC_REPRODUCED_SOURCE_REFUSAL",
+    "scope": "Clang-only diagnostic leaf; unchanged controller bootstrap also uses Git, OCaml package queries, pytest collection and compiler runtime/provenance workers. No WP/solver, proof, repair, source-body or hardware theorem.",
+    "diagnostic_only": true,
+    "instrumentation": "Pass-through exact subprocess.run arguments/results, original TemporaryDirectory paths/cleanup, observation inputs and assertion node; original validators always called unchanged",
+    "proof_or_wp_or_solver_requested": false,
+    "public_acceptance": false,
+    "temporary_original_cleanup_preserved": true,
+    "retained_bytes": 12094397,
+    "retention_cap_bytes": 67108864,
+    "capture_completion": {
+      "accepted": true,
+      "compiler_phases": {
+        "get_new_reg": 5,
+        "get_reg": 7,
+        "init_MAA": 4,
+        "llvm": 9,
+        "preprocess": 3,
+        "set_reg": 6,
+        "trust_fixture": 8
+      },
+      "original_assertion_refusals": 1,
+      "scope": "retained source-form diagnostic only; no proof or repair"
+    },
+    "original_exception": {
+      "message": "unsupported construct: DX100 source size definition: initialized assertion contains an unchecked AST effect (trust.cc line 2)",
+      "type": "Unsupported"
+    },
+    "selected_compiler": [
+      "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++"
+    ]
+  },
+  "diagnostic_result_pin": {
+    "sha256": "6d5346b565fcdd3c6d9879283ee6effc30ee825b2cceddb1d587729f9db73a61",
+    "bytes": 7738
+  },
+  "scope": "Retained compiler-observation diagnostic only. Original validator refusal reproduced; no WP/solver or public proof acceptance. Raw AST/LLVM stay on mbit10."
+}

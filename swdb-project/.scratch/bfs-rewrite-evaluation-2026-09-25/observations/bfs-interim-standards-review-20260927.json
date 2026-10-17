@@ -1,0 +1,35 @@
+{
+  "date": "2026-09-27",
+  "axis": "Standards",
+  "scope": "interim",
+  "base": "1bdb7d4037916dea782c40239a6415b61a47f3c1",
+  "head": "dfa9e56f46a31def975c127ecb98d590a9042692",
+  "diff": "git diff 1bdb7d4037916dea782c40239a6415b61a47f3c1...dfa9e56f46a31def975c127ecb98d590a9042692",
+  "hard_findings": [
+    {
+      "priority": "P2",
+      "title": "Route the new query entrypoints through the generated SQLite snapshot",
+      "rule": "docs/adr/0002-yaml-in-git-is-the-master-copy-sqlite-is-generated.md:6 states every query runs against that database",
+      "sites": [
+        "swdb/capabilities.py:12",
+        "swdb/bfs_profiling.py:433",
+        "swdb/profile_package.py:541",
+        "swdb/profile_package.py:554",
+        "swdb/workflow.py:151"
+      ],
+      "evidence": "New query functions obtain Store from _require_valid and call get/of_kind directly; _require_valid returns validate_records(...).store without indexing. profile-strategies/strategy-regions accept --db but ignore it. get --chain reads root from SQLite then descendants from YAML Store.",
+      "action": "Reuse a generated-index-backed record view after freshness validation for query selection and chain traversal, while preserving live raw-artifact verification. Or explicitly revise ADR with an approved exception rather than silently diverging."
+    }
+  ],
+  "heuristic_findings": [],
+  "checks": [
+    "Read AGENTS/CLAUDE/CONTEXT/rules/domain/tracker docs and all5ADRs.",
+    "Inspected fixed diff and commit list, public query call paths, evidence and supervision architecture.",
+    "122 changed Markdown files all contain dates; resolved changed tickets contain Answer sections."
+  ],
+  "limits": [
+    "Read-only interim review; no test or remote workload execution.",
+    "Immutable historical operator duplication is intentional evidence preservation and was not flagged.",
+    "No assertion of final ticket acceptance."
+  ]
+}

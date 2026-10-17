@@ -1,0 +1,11 @@
+# Floating-element proof boundary
+
+Created: 2026-10-16 ET. Source and documentation research only; no compiler, native execution, solver or experimental counterexample.
+
+The Frama-C 33.0 WP manual distinguishes its IEEE-oriented float model from the real model, which removes rounding and cannot justify C/IEEE floating arithmetic. A proof obtained with `+real` therefore does not establish general floating arithmetic behavior. The currently prepared ownership registry duties use only mathematical identities/maps, and the original move/swap bodies copy receiver headers without reading an element. Their stated scope supplies no floating arithmetic theorem. [WP manual, version33, §1.5](https://www.frama-c.com/download/frama-c-wp-manual.pdf).
+
+ACSL annotation equality must also be distinguished from a C floating comparison. ACSL1.24 explains the difference between real interpretation, logical equality, explicit IEEE equality predicates and NaNs. Consequently, a native expression such as `nan == nan` being false does not, by itself, refute an ACSL clause written with logical `==`. The exact clause, coercions, selected importer and generated obligations must first be reconciled. [ACSL1.24, §2.2.5](https://frama-c.com/download/acsl-1.24.pdf).
+
+For the remaining `float`/`double` members, prefer a source-checked opaque value/representation transfer where the body only copies or initializes stored element values. It must cover the actual target values and observations, including exceptional floating values where admitted; an integer surrogate or a finite-only assumption cannot silently replace that obligation. Where actual floating arithmetic or comparison occurs, select an appropriate floating model and inspect the full generated context. Preserve the original model and historical results while versioning any changed source interpretation or specification.
+
+This note adds no optional NaN experiment to ticket acceptance. Existing actual stale-data/iterator and unchecked/checked `at` controls remain separate obligations under the accepted A2 route. No existing floating contract is labeled refuted by this research, and no header-transfer packet establishes element payload correctness.

@@ -1,0 +1,82 @@
+{
+  "base": "actual applied coherent V5 production snapshot; exact per-file pins retained",
+  "date": "2026-10-16 ET",
+  "files": {
+    "cbmc_adapter.py": {
+      "base_sha256": "0b04badc1d23bcf500cefb878c58599e8ad5f69fb8c122a7bd0014cec09d81eb",
+      "byte_exact_inverse": true,
+      "edits": [
+        {
+          "after": "        from swdb import dx100_finite_trace, dx100_finite_trace_adapter\n        finite_selection = dx100_finite_trace.select_baseline(self.library,self.contract,entry)\n        if finite_selection is not None:\n            return dx100_finite_trace_adapter.run(self,job,entry,context,finite_selection)\n        if summary_job:\n            source = self.library.resolve((entry.get(\"proof_unit\") or {}).get(\"source\"))",
+          "before": "        if summary_job:\n            source = self.library.resolve((entry.get(\"proof_unit\") or {}).get(\"source\"))"
+        },
+        {
+          "after": "        from swdb import dx100_finite_trace, dx100_finite_trace_adapter\n        finite_selection = dx100_finite_trace.select_baseline(self.library,self.contract,entry)\n        if finite_selection is not None:\n            try:\n                dx100_finite_trace_adapter.check_summary_job(job,finite_selection)\n            except (ValueError,OSError,TypeError,KeyError,AttributeError) as error:\n                raise AdapterError('finite summary attribution refused: '+str(error)) from None\n        tools = self._tools()\n",
+          "before": "        tools = self._tools()\n"
+        },
+        {
+          "after": "        if finite_selection is not None:\n            return dx100_finite_trace_adapter.run(self,job,entry,context,finite_selection)\n",
+          "before": "        from swdb import dx100_finite_trace, dx100_finite_trace_adapter\n        finite_selection = dx100_finite_trace.select_baseline(self.library,self.contract,entry)\n        if finite_selection is not None:\n            return dx100_finite_trace_adapter.run(self,job,entry,context,finite_selection)\n"
+        }
+      ],
+      "proposed_sha256": "da0bb637b37e5102c8bd130447ee2868262a758f4a502e848607fe17c8d53bcf"
+    },
+    "formal_frame.py": {
+      "base_sha256": "bcee46cf9e585f1b7a16e7c8f89e7667a279359bc8db3865f87d04d522d56a98",
+      "byte_exact_inverse": true,
+      "edits": [
+        {
+          "after": "    from swdb import dx100_checked_source, dx100_finite_trace\n    whole_format = dx100_finite_trace.checked_unit_format(library,entry_id,data)\n    if whole_format is None:\n        whole_format = dx100_checked_source.checked_unit_format(library,entry_id,data)",
+          "before": "    from swdb import dx100_checked_source\n    whole_format = dx100_checked_source.checked_unit_format(library,entry_id,data)"
+        },
+        {
+          "after": "    from swdb import dx100_finite_trace\n    try:\n        finite = dx100_finite_trace.lowering_for(library,unit)\n        if finite is not None:\n            return finite\n    except (ValueError,OSError,TypeError,KeyError,AttributeError) as exc:\n        return c_lowering.LoweringError(str(exc))\n    path = library.resolve(unit['source'])\n    from swdb import dx100_checked_source",
+          "before": "    path = library.resolve(unit['source'])\n    from swdb import dx100_checked_source"
+        }
+      ],
+      "proposed_sha256": "60075ac8103f8765d47bc52f30a01910e9250b7ba3ce7a80d5580a1db3f01e78"
+    },
+    "proof_semantics.py": {
+      "base_sha256": "22c2f2bbe14064c5abf14177902c45b9be8a8cc40b5411e7a770465a9feee597",
+      "byte_exact_inverse": true,
+      "edits": [
+        {
+          "after": "        dx100_whole_checked.policy(library, data)\n        from swdb import dx100_finite_trace\n        if type(source_unit) is dx100_finite_trace.TraceUnit:\n            dx100_finite_trace.recheck(source_unit)\n            return Model(**dx100_finite_trace.model_fields(source_unit))\n        dx100_checked_source.recheck(source_unit)",
+          "before": "        dx100_whole_checked.policy(library, data)\n        dx100_checked_source.recheck(source_unit)"
+        }
+      ],
+      "proposed_sha256": "9c81d8ae45481813c9ce9ff837b7d000d38cad51f3e51fbbeb7281e270e0bbcd"
+    },
+    "proof_setup.py": {
+      "base_sha256": "f85605cd87561bbaadedcfcd4deb2fa00d3c967dd3031cb9f0a6c27bb4d64af7",
+      "byte_exact_inverse": true,
+      "edits": [
+        {
+          "after": "    finite_selection = None\n    if library is not None and job.unit.contract:\n        from swdb import dx100_finite_trace\n        finite_selection = dx100_finite_trace.select_baseline(library,job.unit.contract,library.get(job.unit.contract))\n        if finite_selection is not None:\n            finite = dx100_finite_trace.compose(finite_selection)\n            report['hashes']['finite_trace'] = _sha(finite.certificate_json)\n            job.setup['finite_trace_certificate_sha256'] = _sha(finite.certificate_json)\n            for row in finite.input_pins:\n                if row['bytes'] <= 8*1024*1024:\n                    job.setup['files'][row['path']] = row['sha256']\n    # Scan the actual translation units of both sides; scripted fixtures have no",
+          "before": "    # Scan the actual translation units of both sides; scripted fixtures have no"
+        },
+        {
+          "after": "    if library is not None and finite_selection is None and not str(job.unit.contract or \"\").startswith(\"c_model.\"):\n        from swdb.wp_adapter import _unit_source",
+          "before": "    if library is not None and not str(job.unit.contract or \"\").startswith(\"c_model.\"):\n        from swdb.wp_adapter import _unit_source"
+        },
+        {
+          "after": "        if context.get('finite_trace_unit') is not None:\n            from swdb import dx100_finite_trace_adapter\n            try:\n                hashes['finite_trace'] = dx100_finite_trace_adapter.check_launch(adapter,job,context,[path for path,_ in inputs])\n                if job.setup.get('finite_trace_certificate_sha256') != _sha(context['finite_trace_unit'].certificate_json):\n                    _fail('finite_trace','selected finite certificate differs from startup')\n            except (ValueError,OSError,TypeError,KeyError,AttributeError) as exc:\n                _fail('finite_trace',str(exc))\n        elif context.get('whole_source_unit') is not None:\n            from swdb import dx100_checked_adapter",
+          "before": "        if context.get('whole_source_unit') is not None:\n            from swdb import dx100_checked_adapter"
+        },
+        {
+          "after": "    elif adapter.name == \"cbmc\":\n        if context.get('finite_trace_unit') is not None:\n            from swdb import dx100_finite_trace_adapter\n            hashes['finite_phase'] = dx100_finite_trace_adapter.check_command(context,command)\n            check_cbmc_flags(flags)\n        else:\n            check_cbmc_flags(list(command) if command else flags)",
+          "before": "    elif adapter.name == \"cbmc\":\n        check_cbmc_flags(list(command) if command else flags)"
+        },
+        {
+          "after": "        from swdb import dx100_finite_trace, dx100_finite_trace_adapter\n",
+          "before": "        from swdb import dx100_finite_trace\n"
+        },
+        {
+          "after": "        if finite_selection is not None:\n            try:\n                dx100_finite_trace_adapter.check_summary_job(job,finite_selection)\n            except (ValueError,OSError,TypeError,KeyError,AttributeError) as error:\n                _fail('finite_summary_attribution',str(error))\n            finite = dx100_finite_trace.compose(finite_selection)\n",
+          "before": "        if finite_selection is not None:\n            finite = dx100_finite_trace.compose(finite_selection)\n"
+        }
+      ],
+      "proposed_sha256": "888754054d142c6beec78dea1d15f0daa3857fa33d7d2c2c17aaa39c74280841"
+    }
+  }
+}

@@ -1,0 +1,166 @@
+{
+  "BOOT_original": {
+    "bytes": 8150,
+    "path": "embedded:original.BOOT",
+    "sha256": "38691b2af6962b48a5737117c209c36fc7e4cd76d4e7b6f2c342d9bafe61a392"
+  },
+  "BOOT_selected": {
+    "bytes": 8150,
+    "path": "embedded:selected.BOOT",
+    "sha256": "8d17b5269b1f7503a79ee78261360285b71732a74fedc6a9ea5b5da63ad139f1"
+  },
+  "PRESTARTUP_literal_bytes_exact": true,
+  "actual_default_success_pins_or_retirement_plan_values_populated": false,
+  "all_BOOT_function_ASTs_exact": [
+    "exact",
+    "option",
+    "original",
+    "stamp",
+    "strict"
+  ],
+  "complete_adjacent_diff": {
+    "bytes": 23412,
+    "path": "/private/tmp/lanl17-sparse-retire-launch-a2-complete-a1-derivation-20261008.diff",
+    "sha256": "241cc157d6b3420b79dc7a4ed7c2fe196933e86906ee8bfb532f7f84ce6811cf"
+  },
+  "complete_adjacent_diff_generated_from_exact_original_and_selected_bytes": true,
+  "complete_literal_byte_reversal_restores_original": true,
+  "default_original_plan_True_seal_reconciled_without_resealing": true,
+  "disposition": "NOT RUN",
+  "format": "swdb.corrected-sparse-retire-launch-chain-static-source-comparison.v1",
+  "future_retirement_plan_file_SHA_required_explicit_CLI": true,
+  "intended_future_retirement_control": "/data1/yanruj/lanl17-detached-sparse-retire-a4",
+  "intended_future_retirement_guard_attempt": "a4",
+  "literal_changes": [
+    {
+      "after": "e16f1afa5a427d452504e7a759a7562dcc05a98014e2b4ece1663db6755d39ec",
+      "before": "1127d1fba8e004153cf086cace7d19ccd901e85902f9ad91924407922c85c6ca",
+      "occurrences": 2
+    },
+    {
+      "after": "d75baaf9dbe7192b02812cab525ccd6c50c81fd312d67cbfae7b9c8fdf955301",
+      "before": "4956a7453ae569d7ccf6e1a9ed98a1a933bee2e35cca1774932afbfba819bd26",
+      "occurrences": 2
+    },
+    {
+      "after": "lanl17_detach_library_preserving_sparse_administration_20261008_a1_r2.py",
+      "before": "lanl17_detach_library_preserving_sparse_administration_20261008_a1_r1.py",
+      "occurrences": 2
+    },
+    {
+      "after": "lanl_sparse_retire_consumed_source_guard_20261008_a1_r5.py",
+      "before": "lanl_sparse_retire_consumed_source_guard_20261008_a1_r2.py",
+      "occurrences": 2
+    },
+    {
+      "after": "24114",
+      "before": "24115",
+      "occurrences": 4
+    },
+    {
+      "after": "180887",
+      "before": "166145",
+      "occurrences": 4
+    },
+    {
+      "after": "lanl17-sparse-retirement-source-20261008-a2",
+      "before": "lanl17-sparse-retirement-source-20261008-a1",
+      "occurrences": 2
+    },
+    {
+      "after": "lanl17-detached-sparse-default-a3",
+      "before": "lanl17-detached-sparse-default-a1",
+      "occurrences": 2
+    },
+    {
+      "after": "lanl-library-preserving-sparse-retirement-20261008-a3/receipt.json",
+      "before": "lanl-library-preserving-sparse-retirement-20261008-a1/receipt.json",
+      "occurrences": 1
+    },
+    {
+      "after": "lanl-sparse-retirement-parent-plan-20261008-a3.json",
+      "before": "lanl-sparse-retirement-parent-plan-20261008-a2.json",
+      "occurrences": 3
+    },
+    {
+      "after": "e2fb42a2bde17b3d9aab4c0d2121903a22dd3d7f29d7caab85acf22638677c02",
+      "before": "cbd6d8a7b86329fdd6aa518db3254bef9532883cda055ff49882148d7fe01a2d",
+      "occurrences": 1
+    },
+    {
+      "after": "4d3e5845e0a844d5181d0c6025f49c955ccbdcdc64b03491b78b01519765cd58",
+      "before": "9db99519d2ce573be4e430bbe34c9aef8d2a8c8eeecdd21df59f58f0c5eaf69f",
+      "occurrences": 1
+    },
+    {
+      "after": "option('--attempt')!='a3'",
+      "before": "option('--attempt')!='a1'",
+      "occurrences": 1
+    },
+    {
+      "after": "status['guard_attempt']=='a3'",
+      "before": "status['guard_attempt']=='a1'",
+      "occurrences": 1
+    },
+    {
+      "after": "a.attempt!='a3'",
+      "before": "a.attempt!='a1'",
+      "occurrences": 1
+    },
+    {
+      "after": "'selected_G5_W2_basenames'",
+      "before": "'selected_R2_basenames'",
+      "occurrences": 1
+    }
+  ],
+  "native_pins_processes_caps_signal_cleanup_flow_unchanged": true,
+  "no_automatic_retry_cleanup_or_admission": true,
+  "only_changed_local_definition": "main",
+  "only_changed_top_level_ASTs": [
+    "WRAPPER_SHA",
+    "GUARD_SHA",
+    "BOOT",
+    "main"
+  ],
+  "original_corrected_default_plan": {
+    "bytes": 740733,
+    "path": "/private/tmp/lanl17-actual-sparse-default-parent-plan-20261008-a3.json",
+    "sha256": "e2fb42a2bde17b3d9aab4c0d2121903a22dd3d7f29d7caab85acf22638677c02"
+  },
+  "original_corrected_default_plan_parent_review": {
+    "bytes": 1445,
+    "path": "/private/tmp/lanl17-corrected-sparse-default-parent-plan-review-original-20261008-a3.json",
+    "sha256": "a886a82ca169ca09af77dbb2e46c413cbcad7c7ec69c9eba02a2a466d5eecd49"
+  },
+  "original_launcher": {
+    "bytes": 20752,
+    "path": "/private/tmp/lanl17_capture_reviewed_sparse_retire_launch_20261008_a1.py",
+    "sha256": "83f6fb2bbbc5e83ea5abdff5dd2df81b28247f398ed7341c7454c704cb6fe74d"
+  },
+  "pending_default_control": "/data1/yanruj/lanl17-detached-sparse-default-a3",
+  "pending_default_guard_attempt": "a3",
+  "preparation_history": "Initial local AST metadata comparison attempted literal_eval of unchanged multiplication caps and refused before any file write; corrected comparison uses AST equality. This was no target execution or test.",
+  "prior_default_inspect_twice_remains_in_exact_selected_W2": true,
+  "review_date_ET": "2026-10-08",
+  "sealed": false,
+  "selected_launcher": {
+    "bytes": 20755,
+    "path": "/private/tmp/lanl17_capture_reviewed_sparse_retire_launch_20261008_a2.py",
+    "sha256": "542dc49cff3e94f8aed4af45b1db56e23b8e230177abbcd54f1c13aa6aa435fb"
+  },
+  "selected_mains_or_tests_SSH_Git_project_actions_performed": false,
+  "source_generation_and_static_inspection_only": true,
+  "unchanged_local_definitions": [
+    "Refusal",
+    "CaptureSignal",
+    "Parser",
+    "require",
+    "sha",
+    "stamp",
+    "read_exact",
+    "private_file",
+    "original_json",
+    "stream_pin",
+    "ssh_file_limit"
+  ]
+}

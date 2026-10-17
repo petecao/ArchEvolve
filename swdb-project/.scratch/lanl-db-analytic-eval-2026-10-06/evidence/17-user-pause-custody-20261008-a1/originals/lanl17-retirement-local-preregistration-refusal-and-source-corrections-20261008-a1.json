@@ -1,0 +1,125 @@
+{
+  "actual_tool_reported_exit_code": 2,
+  "actual_tool_reported_local_refusal_error_sha256": "1d0220c0797f616f35bf05e31c00fcee778729de0c645d6095814c8485567da5",
+  "author_adjacent_diff": {
+    "bytes": 812,
+    "path": "/private/tmp/lanl17-fresh-retirement-author-r3-complete-r2-derivation-20261008-a1.diff",
+    "sha256": "53c0473662b17788befaa8dd04145a099eae680f439c1f8387e91fb45266f9ac",
+    "stat": {
+      "ctime_ns": 1791466689388233833,
+      "dev": 16777229,
+      "gid": 0,
+      "ino": 350043172,
+      "mode": 33152,
+      "mtime_ns": 1791466689388233833,
+      "nlink": 1,
+      "size": 812,
+      "uid": 501
+    }
+  },
+  "checked_utc": "2026-10-08T13:38:09.388400+00:00",
+  "failed_capture_directory": {
+    "children": [],
+    "path": "/private/tmp/lanl17-sparse-retire-launch-20261008-a4",
+    "stat": {
+      "ctime_ns": 1791466597993900912,
+      "dev": 16777229,
+      "gid": 0,
+      "ino": 350042934,
+      "mode": 16832,
+      "mtime_ns": 1791466597993865162,
+      "nlink": 2,
+      "size": 64,
+      "uid": 501
+    }
+  },
+  "format": "swdb.parent-local-preregistration-refusal-and-source-preparation.v1",
+  "independent_source_review": "PENDING",
+  "launcher_adjacent_diff": {
+    "bytes": 4105,
+    "path": "/private/tmp/lanl17-sparse-retire-launch-a3-complete-a2-derivation-20261008-a1.diff",
+    "sha256": "a5e8ff65a2558f2f0a4adf2e132804d6d8e3639c7d046dac2babe59f018d8d43",
+    "stat": {
+      "ctime_ns": 1791466689387312787,
+      "dev": 16777229,
+      "gid": 0,
+      "ino": 350043170,
+      "mode": 33152,
+      "mtime_ns": 1791466689387312787,
+      "nlink": 1,
+      "size": 4105,
+      "uid": 501
+    }
+  },
+  "new_author": {
+    "bytes": 38653,
+    "path": "/private/tmp/lanl17_author_fresh_sparse_retirement_parent_request_20261008_a1_r3.py",
+    "sha256": "10de4f2a80422da5c81698374ee1579e031d5bbcf83ef0f23dada8ec1d556236",
+    "stat": {
+      "ctime_ns": 1791466689387719122,
+      "dev": 16777229,
+      "gid": 0,
+      "ino": 350043171,
+      "mode": 33152,
+      "mtime_ns": 1791466689387719122,
+      "nlink": 1,
+      "size": 38653,
+      "uid": 501
+    }
+  },
+  "new_retire_launcher": {
+    "bytes": 21231,
+    "path": "/private/tmp/lanl17_capture_reviewed_sparse_retire_launch_20261008_a3.py",
+    "sha256": "048dabae98db1baebd50aca60b69eab02738d8a92b66b17c17fa1af783d22705",
+    "stat": {
+      "ctime_ns": 1791466689387000660,
+      "dev": 16777229,
+      "gid": 0,
+      "ino": 350043169,
+      "mode": 33152,
+      "mtime_ns": 1791466689387000660,
+      "nlink": 1,
+      "size": 21231,
+      "uid": 501
+    }
+  },
+  "old_author": {
+    "bytes": 38653,
+    "path": "/private/tmp/lanl17_author_fresh_sparse_retirement_parent_request_20261008_a1_r2.py",
+    "sha256": "ab80545158b84846d4dc80b3d2c32e7344f7250e938b71708d50712bdfb8ee72",
+    "stat": {
+      "ctime_ns": 1791462426428901675,
+      "dev": 16777229,
+      "gid": 0,
+      "ino": 350031803,
+      "mode": 33188,
+      "mtime_ns": 1791462426428901675,
+      "nlink": 1,
+      "size": 38653,
+      "uid": 501
+    }
+  },
+  "old_retire_launcher": {
+    "bytes": 20755,
+    "path": "/private/tmp/lanl17_capture_reviewed_sparse_retire_launch_20261008_a2.py",
+    "sha256": "542dc49cff3e94f8aed4af45b1db56e23b8e230177abbcd54f1c13aa6aa435fb",
+    "stat": {
+      "ctime_ns": 1791462402606966001,
+      "dev": 16777229,
+      "gid": 0,
+      "ino": 350031767,
+      "mode": 33152,
+      "mtime_ns": 1791462402606966001,
+      "nlink": 1,
+      "size": 20755,
+      "uid": 501
+    }
+  },
+  "retirement_recovery_capacity_science_admission": false,
+  "sealed": false,
+  "sole_author_code_change": "Fresh output basename a4 to a5; source is already private600, all old fixed DEFAULTa3 originals and bounds unchanged.",
+  "sole_launcher_code_change": "Replace duplicated full public_argv in <=16KiB preregistration with exact canonical argv digest/byte count/count/serialization, SSH options and remote-command digest/bytes. Target wrapper argv and all actual subprocess argv/BOOT/guards/caps unchanged.",
+  "source_basis_for_no_SSH_started": "Main creates directory then calls bounded original_json(preregistration); the actual original_metadata_bound refusal precedes any private stdout/stderr opening and subprocess.Popen. Empty directory confirms no capture streams or metadata were created.",
+  "source_literal_digest_identified_reason": "original_metadata_bound",
+  "target_executions": "NOTRUN"
+}

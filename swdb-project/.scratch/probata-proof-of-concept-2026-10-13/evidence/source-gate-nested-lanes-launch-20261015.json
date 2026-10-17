@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-15 11:02 ET",
+  "source_commit": "5c2a9bea695526dfadd91cac43be5709e531943d",
+  "wrapper_blob": "261e7e04a64474020c6d2fd288bee9bab8dd1f5d",
+  "source_checkout": "/data1/yanruj/probata-t27",
+  "source_policy": "Git-only; clean detached checkout frozen until both jobs finish.",
+  "output_mount": "/data",
+  "available_gib_before": {
+    "data1": 21,
+    "data": 97
+  },
+  "budget_bytes_each": 2147483648,
+  "threads_each": 1,
+  "verifier_rss_cap_bytes": 8589934592,
+  "timeout_seconds": 7200,
+  "remaining_readers": [
+    "coordinator",
+    "tickets24/25/27/36 acceptance",
+    "independent audit"
+  ],
+  "jobs": [
+    {
+      "node": 0,
+      "lease_generation": 557,
+      "shard": "native and standard-source/allocator/declaration controls",
+      "output": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0"
+    },
+    {
+      "node": 1,
+      "lease_generation": 598,
+      "shard": "entry windows, original nested three-reads, helper initializedness pair, qualified copy model, current-owner/stale alias pair",
+      "output": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-entry-windows-20261015-1102-node1"
+    }
+  ],
+  "live_readback": {
+    "time": "2026-10-15 11:03 ET",
+    "load": [
+      2.73,
+      1.16,
+      0.67
+    ],
+    "legacy": "released",
+    "node0": "held; 51 passing calls; no failure",
+    "node1": "held; first test in progress; no completed call"
+  },
+  "acceptance_boundary": "Prospective frozen combined-source replay; no final results or whole-ticket completion claimed."
+}

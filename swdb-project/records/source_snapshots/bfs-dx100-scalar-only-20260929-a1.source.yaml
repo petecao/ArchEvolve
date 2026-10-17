@@ -1,0 +1,556 @@
+kind: source_snapshot
+schema_version: '0.4'
+id: bfs-dx100-scalar-only-20260929-a1.source
+status: draft
+created: '2026-09-29'
+updated: '2026-09-29'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Scalar-only derivative registered by prepare_dx100_scalar_snapshot.py on 2026-09-29; removed
+    author accelerator BFS code under ADR 0006; full snapshot retained unchanged.
+  uri: null
+implementation: dx100-bfs-scalar
+application: dx100-gapbs
+revision: e4fc4afdf894f295442cef3604667a469fab8e62
+artifact:
+  path: /data1/yanruj/EvolveSWDB_runs/provider-scalar-20260929-a1/bfs-dx100-scalar-only-20260929-a1.source/source
+  sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  files:
+  - path: LICENSE
+    sha256: b8c77da160595e378d8fa7635b1c777c7a84c56c79a24efbbbcd9203375231c2
+    bytes: 1208
+    executable: false
+  - path: PROVENANCE.md
+    sha256: 3009aa7f259294b67bfbbee311ead96d66050a86f1a7bfde715556f10174e6c6
+    bytes: 619
+    executable: false
+  - path: benchmarks/API/MAA.hpp
+    sha256: 4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd
+    bytes: 1323
+    executable: false
+  - path: benchmarks/API/MAA_atomics.hpp
+    sha256: 896459489ded4a790a2b52da62b337f00b7310a4bafc6d3ceaa9d8c4f1eb026a
+    bytes: 845
+    executable: false
+  - path: benchmarks/API/MAA_functional.hpp
+    sha256: ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc
+    bytes: 25345
+    executable: false
+  - path: benchmarks/API/MAA_gem5.hpp
+    sha256: 5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174
+    bytes: 27473
+    executable: false
+  - path: benchmarks/API/MAA_gem5_magic.hpp
+    sha256: e3353661cce76167a2f986385e448c2a6aef471fc8424762183bae11ba769c32
+    bytes: 9802
+    executable: false
+  - path: benchmarks/API/MAA_utility.hpp
+    sha256: 3fb818fff3a37e14d77ea009a2246788213c1e938a05515b361aceb010a2b10e
+    bytes: 786
+    executable: false
+  - path: benchmarks/gapbs/LICENSE
+    sha256: bc33e6a6a2571d48fde7fc7d30be3aa11fb0558edd46173861274ac7a1f74fc3
+    bytes: 1499
+    executable: false
+  - path: benchmarks/gapbs/src/benchmark.h
+    sha256: 87c20752c8437dd5152d00e7c995bedfab15b8929219f85846f47e0f9a4b339f
+    bytes: 3565
+    executable: false
+  - path: benchmarks/gapbs/src/bfs.cc
+    sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+    bytes: 9326
+    executable: false
+  - path: benchmarks/gapbs/src/bitmap.h
+    sha256: 6f6e444c82b0e7d797cc9218ba85be7f5f702e95d4c134715c90e6a5b1288465
+    bytes: 1706
+    executable: false
+  - path: benchmarks/gapbs/src/builder.h
+    sha256: 2d3646e12dc2ae9776cfa429aaec699d031b4826c79a356983cf109753f1eb01
+    bytes: 16778
+    executable: false
+  - path: benchmarks/gapbs/src/command_line.h
+    sha256: de1415dfe29eb6ba436d57523b2dee8fa3268a0785ae690bde9e94e9444172b2
+    bytes: 8511
+    executable: false
+  - path: benchmarks/gapbs/src/generator.h
+    sha256: 24bfdab312afdf6e552ef9a23d124332984761cdb94f109bb15009710d1dbafe
+    bytes: 6418
+    executable: false
+  - path: benchmarks/gapbs/src/graph.h
+    sha256: 79a271a3e3b01d6f02750b2b828ad94b3696eff080eb068bc3fcf80bc81139e0
+    bytes: 8276
+    executable: false
+  - path: benchmarks/gapbs/src/platform_atomics.h
+    sha256: 9c8dbe6419b34d850af33ef14ea724c1c64de369d052a8f3c6e20038dcabe9cd
+    bytes: 4198
+    executable: false
+  - path: benchmarks/gapbs/src/pvector.h
+    sha256: b3280b03eb774fdd27bbc1967c4f274e46d42179f149275e1b2c394986ebe03d
+    bytes: 4265
+    executable: false
+  - path: benchmarks/gapbs/src/reader.h
+    sha256: 951fb6e82df079389b953f35363e8a502d79da4f3c56b8ce6eab7faac38800e1
+    bytes: 9268
+    executable: false
+  - path: benchmarks/gapbs/src/sliding_queue.h
+    sha256: 3d5a1d3cff924737c2fc7c6b4fcbb859270f1fcc626c25aac4c780b7b6f4c02c
+    bytes: 2502
+    executable: false
+  - path: benchmarks/gapbs/src/timer.h
+    sha256: 3337a59a57341585d296ed01b3eb64ca7f5e02d8c0871f4920ab9d1cd7e63bcb
+    bytes: 1161
+    executable: false
+  - path: benchmarks/gapbs/src/util.h
+    sha256: a103e6c5767d724adc9b6b421ecade4b2d2c4351e5ea0da5d2c9bf16a9fcecf6
+    bytes: 1953
+    executable: false
+  - path: benchmarks/gapbs/src/writer.h
+    sha256: 3fd16ac75a8c069c7cf09d540ca35b66ec51813406b5fd2f8149253bebd9ebea
+    bytes: 2898
+    executable: false
+  - path: include/gem5/asm/generic/m5ops.h
+    sha256: 28efe83deb0cd19d5d15b73d3544c7f45238c2744531657f5aa881da643e868d
+    bytes: 5479
+    executable: false
+  - path: include/gem5/m5ops.h
+    sha256: bbef6be56e1fb63a820da56fe4306fbce67ee7bedbb43b6e72e0281c947f07e8
+    bytes: 3937
+    executable: false
+context:
+  application: dx100-gapbs
+  source:
+    origin: upstream
+    uri: https://github.com/arkhadem/DX100
+    commit: e4fc4afdf894f295442cef3604667a469fab8e62
+    local_path: apps/dx100
+  code:
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+  function: DOBFS
+  build:
+    compiler: g++
+    flags: -std=c++11 -O3 -Wall -fopenmp -pthread -DFUNC
+    command: '{cxx} {flags} -I{app}/benchmarks/API -I{app}/benchmarks/gapbs/src {source} -o {binary}'
+  run:
+    command: '{binary} {input_args} -n {trials}'
+    timer: gapbs_trial_time
+    threads_env: OMP_NUM_THREADS
+    kernel_symbols: [DOBFS, TDStep, InitParent]
+    index_stream: null
+  evaluator:
+    backend: native
+    command: '{binary} {input_args} -n 1 -v'
+    pass_regex: Verification:\s+PASS
+    verifier:
+      description: DX100 BFSVerifier structurally checks parent edges, depths and reachability from the
+        same source. Native FUNC binding; GEM5 post-ROI correctness requires its own evaluator.
+      code:
+        root: application
+        path: benchmarks/gapbs/src/bfs.cc
+        sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+        lines: [217, 268]
+  source_ancestor: null
+  source_baseline: dx100-bfs-scalar
+  comparison_baseline: null
+  verification:
+    status: passed
+    evidence:
+    - /data1/yanruj/EvolveSWDB_runs/provider-scalar-20260929-a1/bfs-dx100-scalar-only-20260929-a1.source/correctness.json
+    scope: Native correctness smoke on two small synthetic graph families; no performance claim.
+    receipt_sha256: afb88d837f2645f378af6942d9c64116957c1097dcbc156ad6f00ca19082b427
+  context_resolution: explicit
+  source_derivation:
+    date: '2026-09-29'
+    decision: docs/adr/0006-rewrite-providers-work-in-a-guarded-workspace.md
+    upstream_bfs_sha256: 6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465
+    removed_functions: [TDStepMAA, DOBFSMAA]
+    removed_pinned_line_ranges:
+    - [63, 225]
+    - [366, 443]
+    removed_main_selection: MAA branch calling DOBFSMAA
+    excluded_material: Other benchmark translation units, API examples/scripts, and old manifests.
+    purpose: From-scratch proposals cannot read the authors' accelerator BFS answer key.
+    full_snapshot: bfs-dx100-compile-20260925-a1.source
+    full_source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+regions:
+- id: benchmarks/gapbs/src/bfs.cc:1-291:e2fd2653fd1adcfd
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [1, 291]
+  source_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+  text: |
+    // Copyright (c) 2015, The Regents of the University of California (Regents)
+    // See LICENSE.txt for license details
+
+    #include <iostream>
+    #include <omp.h>
+    #include <vector>
+
+    #include "benchmark.h"
+    #include "bitmap.h"
+    #include "builder.h"
+    #include "command_line.h"
+    #include "graph.h"
+    #include "platform_atomics.h"
+    #include "pvector.h"
+    #include "sliding_queue.h"
+    #include "timer.h"
+
+    #if !defined(FUNC) && !defined(GEM5) && !defined(GEM5_MAGIC)
+    #define GEM5
+    #endif
+
+    #ifdef GEM5
+    #include <gem5/m5ops.h>
+    #endif
+
+    #if defined(FUNC)
+    #include <MAA_functional.hpp>
+    #elif defined(GEM5)
+    #include <MAA_gem5.hpp>
+    #include <gem5/m5ops.h>
+    #elif defined(GEM5_MAGIC)
+    #include "MAA_gem5_magic.hpp"
+    #endif
+    #include <MAA_utility.hpp>
+
+    /*
+    GAP Benchmark Suite
+    Kernel: Breadth-First Search (BFS)
+    Author: Scott Beamer
+
+    Will return parent array for a BFS traversal from a source vertex
+
+    This BFS implementation makes use of the Direction-Optimizing approach [1].
+    It uses the alpha and beta parameters to determine whether to switch search
+    directions. For representing the frontier, it uses a SlidingQueue for the
+    top-down approach and a Bitmap for the bottom-up approach. To reduce
+    false-sharing for the top-down approach, thread-local QueueBuffer's are used.
+
+    To save time computing the number of edges exiting the frontier, this
+    implementation precomputes the degrees in bulk at the beginning by storing
+    them in the parent array as negative numbers. Thus, the encoding of parent is:
+      parent[x] < 0 implies x is unvisited and parent[x] = -out_degree(x)
+      parent[x] >= 0 implies x been visited
+
+    [1] Scott Beamer, Krste Asanović, and David Patterson. "Direction-Optimizing
+        Breadth-First Search." International Conference on High Performance
+        Computing, Networking, Storage and Analysis (SC), Salt Lake City, Utah,
+        November 2012.
+    */
+
+    using namespace std;
+
+
+    void TDStep(const Graph &g, pvector<SGOffset> &VertexOffsets, pvector<NodeID> &parent, SlidingQueue<NodeID> &queue, int num_nodes, int num_edges) {
+    #ifdef GEM5
+        clear_mem_region();
+        add_mem_region(queue.beginp(), queue.endp());                   // 6
+        add_mem_region(VertexOffsets.beginp(), VertexOffsets.endp());   // 7
+        add_mem_region(g.out_neighbors_, &g.out_neighbors_[num_edges]); // 8
+        add_mem_region(parent.beginp(), parent.endp());                 // 9
+    #endif
+    #pragma omp parallel
+        {
+            QueueBuffer<NodeID> lqueue(queue);
+    #pragma omp for nowait
+            for (size_t i = queue.shared_out_start; i < queue.shared_out_end; i++) {
+                NodeID u = queue.shared[i];
+                for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+                    NodeID v = g.out_neighbors_[j];
+                    NodeID curr_val = parent[v];
+                    if (curr_val < 0) {
+                        // indirect write (parent, v_tile, u_tile)
+                        // core fetch v tile
+                        if (compare_and_swap(parent[v], curr_val, u)) {
+                            parent[v] = u;
+                            lqueue.push_back(v);
+                        }
+                    }
+                }
+            }
+            lqueue.flush();
+        }
+    #ifdef GEM5
+        clear_mem_region();
+    #endif
+    }
+
+    int64_t TDStep2(const Graph &g, pvector<NodeID> &parent, SlidingQueue<NodeID> &queue) {
+        int64_t scout_count = 0;
+    #pragma omp parallel
+        {
+            QueueBuffer<NodeID> lqueue(queue);
+    #pragma omp for reduction(+ : scout_count) nowait
+            for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+                NodeID u = *q_iter;
+                for (NodeID v : g.out_neigh(u)) {
+                    NodeID curr_val = parent[v];
+                    if (curr_val < 0) {
+                        if (compare_and_swap(parent[v], curr_val, u)) {
+                            lqueue.push_back(v);
+                            scout_count += -curr_val;
+                        }
+                    }
+                }
+            }
+            lqueue.flush();
+        }
+        return scout_count;
+    }
+
+    void QueueToBitmap(const SlidingQueue<NodeID> &queue, Bitmap &bm) {
+    #pragma omp parallel for
+        for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+            NodeID u = *q_iter;
+            bm.set_bit_atomic(u);
+        }
+    }
+
+    void BitmapToQueue(const Graph &g, const Bitmap &bm,
+                       SlidingQueue<NodeID> &queue) {
+    #pragma omp parallel
+        {
+            QueueBuffer<NodeID> lqueue(queue);
+    #pragma omp for nowait
+            for (NodeID n = 0; n < g.num_nodes(); n++)
+                if (bm.get_bit(n))
+                    lqueue.push_back(n);
+            lqueue.flush();
+        }
+        queue.slide_window();
+    }
+
+    pvector<NodeID> InitParent(const Graph &g) {
+        pvector<NodeID> parent(g.num_nodes());
+    #pragma omp parallel for
+        for (NodeID n = 0; n < g.num_nodes(); n++)
+            parent[n] = g.out_degree(n) != 0 ? -g.out_degree(n) : -1;
+        return parent;
+    }
+
+    pvector<NodeID> DOBFS(const Graph &g, NodeID source, bool logging_enabled = false,
+                          int alpha = 1, int beta = 18) {
+        int num_nodes = g.num_nodes();
+        int num_edges = g.num_edges_directed();
+        if (logging_enabled)
+            PrintStep("Source", static_cast<int64_t>(source));
+        pvector<SGOffset> VertexOffsetsOut = g.VertexOffsets();
+        Timer t;
+        alloc_MAA();
+        init_MAA();
+        t.Start();
+        pvector<NodeID> parent = InitParent(g);
+        t.Stop();
+        if (logging_enabled)
+            PrintStep("i", t.Seconds());
+        parent[source] = source;
+        SlidingQueue<NodeID> queue(g.num_nodes());
+        queue.push_back(source);
+        queue.slide_window();
+        Bitmap curr(g.num_nodes());
+        curr.reset();
+        Bitmap front(g.num_nodes());
+        front.reset();
+
+    #ifdef GEM5
+        std::cout << "ROI started: " << omp_get_num_threads() << " threads" << std::endl;
+        m5_work_begin(0, 0);
+        m5_reset_stats(0, 0);
+    #endif
+        while (!queue.empty()) {
+            std::cout << "Starting TDStep: " << queue.size() << " elements" << std::endl;
+            t.Start();
+            TDStep(g, VertexOffsetsOut, parent, queue, num_nodes, num_edges);
+            queue.slide_window();
+            t.Stop();
+            if (logging_enabled) {
+                PrintStep("td", t.Seconds());
+            }
+        }
+    #pragma omp parallel for
+        for (NodeID n = 0; n < g.num_nodes(); n++)
+            if (parent[n] < -1)
+                parent[n] = -1;
+    #ifdef GEM5
+        m5_dump_stats(0, 0);
+        m5_work_end(0, 0);
+        std::cout << "ROI End!!!" << std::endl;
+        m5_exit(0);
+    #endif
+        return parent;
+    }
+
+
+    void PrintBFSStats(const Graph &g, const pvector<NodeID> &bfs_tree) {
+        int64_t tree_size = 0;
+        int64_t n_edges = 0;
+        for (NodeID n : g.vertices()) {
+            if (bfs_tree[n] >= 0) {
+                n_edges += g.out_degree(n);
+                tree_size++;
+            }
+        }
+        cout << "BFS Tree has " << tree_size << " nodes and ";
+        cout << n_edges << " edges" << endl;
+    }
+
+    // BFS verifier does a serial BFS from same source and asserts:
+    // - parent[source] = source
+    // - parent[v] = u  =>  depth[v] = depth[u] + 1 (except for source)
+    // - parent[v] = u  => there is edge from u to v
+    // - all vertices reachable from source have a parent
+    bool BFSVerifier(const Graph &g, NodeID source,
+                     const pvector<NodeID> &parent) {
+        pvector<int> depth(g.num_nodes(), -1);
+        depth[source] = 0;
+        vector<NodeID> to_visit;
+        to_visit.reserve(g.num_nodes());
+        to_visit.push_back(source);
+        for (auto it = to_visit.begin(); it != to_visit.end(); it++) {
+            NodeID u = *it;
+            for (NodeID v : g.out_neigh(u)) {
+                if (depth[v] == -1) {
+                    depth[v] = depth[u] + 1;
+                    to_visit.push_back(v);
+                }
+            }
+        }
+        for (NodeID u : g.vertices()) {
+            if ((depth[u] != -1) && (parent[u] != -1)) {
+                if (u == source) {
+                    if (!((parent[u] == u) && (depth[u] == 0))) {
+                        cout << "Source wrong" << endl;
+                        return false;
+                    }
+                    continue;
+                }
+                bool parent_found = false;
+                for (NodeID v : g.in_neigh(u)) {
+                    if (v == parent[u]) {
+                        if (depth[v] != depth[u] - 1) {
+                            cout << "Wrong depths for " << u << " & " << v << endl;
+                            return false;
+                        }
+                        parent_found = true;
+                        break;
+                    }
+                }
+                if (!parent_found) {
+                    cout << "Couldn't find edge from " << parent[u] << " to " << u << endl;
+                    return false;
+                }
+            } else if (depth[u] != parent[u]) {
+                cout << "Reachability mismatch" << endl;
+                return false;
+            }
+        }
+        return true;
+    }
+
+    int main(int argc, char *argv[]) {
+        CLApp cli(argc, argv, "breadth-first search");
+        if (!cli.ParseArgs())
+            return -1;
+        Builder b(cli);
+        Graph g = b.MakeGraph();
+        SourcePicker<Graph> sp(g, cli.start_vertex());
+    #ifdef GEM5
+        std::cout << "Fake Checkpoint started" << std::endl;
+        m5_checkpoint(0, 0);
+        std::cout << "Fake Checkpoint ended" << std::endl;
+    #endif
+        auto BFSBound = [&sp, &cli](const Graph &g) {
+            return DOBFS(g, sp.PickNext(), cli.logging_en());
+        };
+        SourcePicker<Graph> vsp(g, cli.start_vertex());
+        auto VerifierBound = [&vsp](const Graph &g, const pvector<NodeID> &parent) {
+            return BFSVerifier(g, vsp.PickNext(), parent);
+        };
+        BenchmarkKernel(cli, g, BFSBound, PrintBFSStats, VerifierBound);
+        return 0;
+    }
+  association: declared_source_region
+protections:
+- path: benchmarks/gapbs/src/bfs.cc
+  kind: verifier
+  text: |
+    // BFS verifier does a serial BFS from same source and asserts:
+    // - parent[source] = source
+    // - parent[v] = u  =>  depth[v] = depth[u] + 1 (except for source)
+    // - parent[v] = u  => there is edge from u to v
+    // - all vertices reachable from source have a parent
+    bool BFSVerifier(const Graph &g, NodeID source,
+                     const pvector<NodeID> &parent) {
+        pvector<int> depth(g.num_nodes(), -1);
+        depth[source] = 0;
+        vector<NodeID> to_visit;
+        to_visit.reserve(g.num_nodes());
+        to_visit.push_back(source);
+        for (auto it = to_visit.begin(); it != to_visit.end(); it++) {
+            NodeID u = *it;
+            for (NodeID v : g.out_neigh(u)) {
+                if (depth[v] == -1) {
+                    depth[v] = depth[u] + 1;
+                    to_visit.push_back(v);
+                }
+            }
+        }
+        for (NodeID u : g.vertices()) {
+            if ((depth[u] != -1) && (parent[u] != -1)) {
+                if (u == source) {
+                    if (!((parent[u] == u) && (depth[u] == 0))) {
+                        cout << "Source wrong" << endl;
+                        return false;
+                    }
+                    continue;
+                }
+                bool parent_found = false;
+                for (NodeID v : g.in_neigh(u)) {
+                    if (v == parent[u]) {
+                        if (depth[v] != depth[u] - 1) {
+                            cout << "Wrong depths for " << u << " & " << v << endl;
+                            return false;
+                        }
+                        parent_found = true;
+                        break;
+                    }
+                }
+                if (!parent_found) {
+                    cout << "Couldn't find edge from " << parent[u] << " to " << u << endl;
+                    return false;
+                }
+            } else if (depth[u] != parent[u]) {
+                cout << "Reachability mismatch" << endl;
+                return false;
+            }
+        }
+        return true;
+    }
+- path: benchmarks/gapbs/src/benchmark.h
+  kind: file
+  sha256: 87c20752c8437dd5152d00e7c995bedfab15b8929219f85846f47e0f9a4b339f
+- path: benchmarks/gapbs/src/bfs.cc
+  kind: roi_calls
+  calls: ['m5_work_begin(0, 0);', 'm5_reset_stats(0, 0);', 'm5_dump_stats(0, 0);', 'm5_work_end(0, 0);',
+    m5_exit(0);]
+- path: benchmarks/gapbs/src/command_line.h
+  kind: file
+  sha256: de1415dfe29eb6ba436d57523b2dee8fa3268a0785ae690bde9e94e9444172b2
+- path: benchmarks/gapbs/src/timer.h
+  kind: file
+  sha256: 3337a59a57341585d296ed01b3eb64ca7f5e02d8c0871f4920ab9d1cd7e63bcb
+- path: include/gem5/m5ops.h
+  kind: roi_calls
+  calls:
+  - m5_exit(uint64_t ns_delay);
+  - m5_reset_stats(uint64_t ns_delay, uint64_t ns_period);
+  - m5_dump_stats(uint64_t ns_delay, uint64_t ns_period);
+  - m5_work_begin(uint64_t workid, uint64_t threadid);
+  - m5_work_end(uint64_t workid, uint64_t threadid);

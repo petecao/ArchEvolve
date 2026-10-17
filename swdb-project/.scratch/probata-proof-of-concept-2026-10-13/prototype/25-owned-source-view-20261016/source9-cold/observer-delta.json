@@ -1,0 +1,280 @@
+{
+  "actual_execution": false,
+  "changes": [
+    {
+      "after": "G623 source9",
+      "before": "G621 ownership10",
+      "count": 1,
+      "label": "scope"
+    },
+    {
+      "after": "probata-resume-20261016-032e1851-owned-source9-public-v3",
+      "before": "probata-resume-20261016-d7f685c6-owned-transfer10-public-v2",
+      "count": 1,
+      "label": "raw"
+    },
+    {
+      "after": "owned-source9-public-v3-profile",
+      "before": "owned-transfer10-public-v2-profile",
+      "count": 1,
+      "label": "profile"
+    },
+    {
+      "after": "/data1/yanruj/probata-resume-20261016-032e1851",
+      "before": "/data1/yanruj/probata-resume-20261016-d7f685c6",
+      "count": 1,
+      "label": "source"
+    },
+    {
+      "after": "032e1851eec7b195c7a3737997d5f5ea1d1343a5",
+      "before": "d7f685c6fdbd7ff776eb1eaccc40099a2c48dc08",
+      "count": 1,
+      "label": "commit"
+    },
+    {
+      "after": "f3e61ca1c339d0b9b34f4e77ccae1b5a0bb24e0793a57b4bbd37b74bb12f5e7b",
+      "before": "663fcd74640b4d04f7d3ae38b5587924fc10501cd82831a014f18e05eaf31c94",
+      "count": 1,
+      "label": "entry"
+    },
+    {
+      "after": "3074642620b687b5faec08ca2a9132f83125c378a799d3c62fa5e853c869ef0d",
+      "before": "ff336dc468cb526061000c41125dabb1a285b5399f58ac27a3ca72f7a6ca46cf",
+      "count": 1,
+      "label": "expected"
+    },
+    {
+      "after": "08b0067565913912d90344c830d6b5c1de82f44a919c0a9560233a855d1a5214",
+      "before": "12bcda644bfb6fde4877b6d5d82a2648c77e1b7b021ab154a4a198cae27bb0c1",
+      "count": 1,
+      "label": "unresolved command pin"
+    },
+    {
+      "after": "38325d9f0c0890d23044022b721143c20252ee5dbdbbf7565e54579c3051492a",
+      "before": "38f8de3d374aae446abbf1e9f7e8d3fa23817d0074bc8320b1518659288480a4",
+      "count": 1,
+      "label": "resolved command pin"
+    },
+    {
+      "after": "project_modules = {'heap_reallocation.Heap':'heap_reallocation.mlw', 'vector_owned_state.Owners':'vector_owned_state.mlw', 'vector_owned_effects.OwnedEffects':'vector_owned_effects.mlw'}\n            candidates = [PROFILE/'canonical-inputs/theory'/project_modules[name]] if name in project_modules else [prefix/'share/why3/stdlib'/filename, prefix/'share/frama-c/share/wp/why3'/filename]",
+      "before": "candidates = [PROFILE / 'canonical-inputs/theory/vector_owned_state.mlw'] if name == 'vector_owned_state.Owners' else [prefix / 'share/why3/stdlib' / filename, prefix / 'share/frama-c/share/wp/why3' / filename]",
+      "count": 1,
+      "label": "all three project module roots"
+    },
+    {
+      "after": "if name in project_modules:\n                need(not propositions, 'all Heap/Owners/OwnedEffects project modules are definitions only')\n                wanted=CONTEXT['source_theories'][project_modules[name]]\n                need(pin(found[0])['sha256']==wanted['sha256'], 'complete original source theory pin')",
+      "before": "if name == 'vector_owned_state.Owners':\n                need(not propositions, 'Owners is definition-only, no desired axiom/lemma premise')",
+      "count": 1,
+      "label": "definitions only source modules"
+    },
+    {
+      "after": "if name in project_modules else 'selected standard arithmetic/maps/Qed support TCB'",
+      "before": "if name == 'vector_owned_state.Owners' else 'selected standard arithmetic/maps/Qed support TCB'",
+      "count": 1,
+      "label": "project module classification"
+    },
+    {
+      "after": "launch['timeout_seconds'] == 2400",
+      "before": "launch['timeout_seconds'] == 2100",
+      "count": 1,
+      "label": "whole duration"
+    },
+    {
+      "after": "lane['lease_generation'] == 623",
+      "before": "lane['lease_generation'] == 621",
+      "count": 1,
+      "label": "generation"
+    },
+    {
+      "after": "2026-10-16T22:42:27Z",
+      "before": "2026-10-16T21:51:35Z",
+      "count": 1,
+      "label": "start"
+    },
+    {
+      "after": "2026-10-16T22:45:42Z",
+      "before": "2026-10-16T21:52:07Z",
+      "count": 1,
+      "label": "end"
+    },
+    {
+      "after": "(2520 if name.startswith('outer') else 2400)",
+      "before": "(2220 if name.startswith('outer') else 2100)",
+      "count": 1,
+      "label": "outer duration"
+    },
+    {
+      "after": "exact settled original G623 lane",
+      "before": "exact settled G621 lane",
+      "count": 1,
+      "label": "lane label"
+    },
+    {
+      "after": "exact settled188-file/51-directory raw membership",
+      "before": "exact settled184-file/54-directory raw membership",
+      "count": 1,
+      "label": "membership label"
+    },
+    {
+      "after": "== 188 and\n         sum(r.get('bytes', 0) for r in initial) == 21450336",
+      "before": "== 184 and\n         sum(r.get('bytes', 0) for r in initial) == 21000828",
+      "count": 1,
+      "label": "raw extent"
+    },
+    {
+      "after": "owned-source9-public-v3-entry.py",
+      "before": "owned-transfer10-public-v2-entry.py",
+      "count": 1,
+      "label": "staged producer entry"
+    },
+    {
+      "after": "len(canonical) == 29, 'complete29 canonical bytes'",
+      "before": "len(canonical) == 21, 'complete21 canonical bytes'",
+      "count": 1,
+      "label": "canonical census"
+    },
+    {
+      "after": "result['all_nine_producer_proven'] is False",
+      "before": "result['all_ten_producer_proven'] is True",
+      "count": 1,
+      "label": "all nine actual outcomes"
+    },
+    {
+      "after": "'settled nine producer results including original timeout'",
+      "before": "'settled ten producer results'",
+      "count": 1,
+      "label": "result label"
+    },
+    {
+      "after": "list(semantic.CONCLUSIONS), 'all nine distinct source duties in order'",
+      "before": "list(semantic.GOALS), 'all ten distinct source duties in order'",
+      "count": 1,
+      "label": "nine formula census"
+    },
+    {
+      "after": "outcome == run['outcome'] and not outcome['assumptions'] and outcome['reading']['check']==reading\n             and outcome['reading']['verdict']==outcome['verdict'], 'unchanged current normal outcome, no opaque premise')\n        timed_out=ident=='swap.owner_correspondence'\n        need(outcome['verdict']==('not_proven' if timed_out else 'proven') and outcome['failure_class']==('timeout' if timed_out else None)\n             and bool(outcome['unproven'])==timed_out, 'exact original8 Valid and sole ordinary Timeout'",
+      "before": "outcome == run['outcome'] and outcome['verdict'] == 'proven' and not outcome['assumptions'] and\n             not outcome['unproven'] and outcome['reading'] == {'check': reading, 'verdict': 'proven'}, 'current normal outcome with no opaque premise'",
+      "count": 1,
+      "label": "normal outcome and timeout"
+    },
+    {
+      "after": "goal['property']==prop and goal['passed'] is (not timed_out) and goal['smoke'] is False\n             and goal['targets']==[] and goal['function'] is None\n             and (('valid' not in goal['results'] and 'timeout' in goal['results']) if timed_out else 'valid' in goal['results']), 'all original native outcomes retained'",
+      "before": "goal['property'] == prop and goal['passed'] is True and goal['smoke'] is False and\n             goal['targets'] == [] and 'valid' in goal['results'] and goal['function'] is None, 'direct global native Valid'",
+      "count": 1,
+      "label": "native timeout"
+    },
+    {
+      "after": "(not any(p.get('success') for p in peer['provers']) if timed_out else any(p.get('success') for p in peer['provers'])), 'ordinary/native/prover peer'",
+      "before": "any(p.get('success') for p in peer['provers']), 'ordinary/native/prover peer'",
+      "count": 1,
+      "label": "timeout prover matrix"
+    },
+    {
+      "after": "len(properties) == 4",
+      "before": "len(properties) == 2",
+      "count": 1,
+      "label": "property count"
+    },
+    {
+      "after": "closure['exported_count'] == 4",
+      "before": "closure['exported_count'] == 2",
+      "count": 1,
+      "label": "registered property count"
+    },
+    {
+      "after": "wanted=[r for r in context['task_artifacts'] if r['relative'].startswith(str(directory.relative_to(RAW))+'/')]\n        need(selected==wanted and len(selected)==(6 if ident.endswith('owner_correspondence') else 2), 'complete actual26-task solver/artifact census')",
+      "before": "need(len(selected) == 2 and all(Path(r['relative']).suffix == '.psmt2' for r in selected), 'all two retained Alt-Ergo task artifacts')",
+      "count": 1,
+      "label": "all actual solver tasks"
+    },
+    {
+      "after": "len(tasks) == 26 and len(leaves) == 9, 'complete nine-owner/twenty-six-task census'",
+      "before": "len(tasks) == 20 and len(leaves) == 10, 'complete ten-owner/twenty-task census'",
+      "count": 1,
+      "label": "total tasks"
+    },
+    {
+      "after": "need({'heap_reallocation.Heap','vector_owned_state.Owners','vector_owned_effects.OwnedEffects'}<=set(graph), 'all actual source imports present')",
+      "before": "need('vector_owned_state.Owners' in graph, 'actual Owners import present')",
+      "count": 1,
+      "label": "complete source import roots"
+    },
+    {
+      "after": "len(advertised) == len(set(advertised)) == len(profile_files)-1",
+      "before": "len(advertised) == len(set(advertised)) == 164",
+      "count": 1,
+      "label": "complete manifest membership"
+    },
+    {
+      "after": "'COMPLETE_SOURCE9_COLD_PENDING_ENCODING_REVIEW' if unresolved else 'COMPLETE_SOURCE9_COLD_EIGHT_PROVEN_ONE_TIMEOUT'",
+      "before": "'COMPLETE_COLD_CAPTURE_PENDING_ENCODING_REVIEW' if unresolved else 'PASS_CONDITIONAL_OWNERSHIP10_MATH_COLD'",
+      "count": 1,
+      "label": "honest classification"
+    },
+    {
+      "after": "'raw_files': 188,\n                  'raw_bytes': 21450336",
+      "before": "'raw_files': 184,\n                  'raw_bytes': 21000828",
+      "count": 1,
+      "label": "reported extent"
+    },
+    {
+      "after": "'all_nine_conditional_math_semantically_reconciled': not unresolved,\n                  'source_statement_census': context['source_statement_census'], 'source_type_semantics_established':False, 'all_nine_proven':False",
+      "before": "'all_ten_conditional_math_semantically_reconciled': not unresolved,\n                  'consistency': context['constructive_consistency']",
+      "count": 1,
+      "label": "no vacuity or type adoption"
+    },
+    {
+      "after": "Nine conditional source/Heap/header duties; eight native Valid and one original normal Timeout retained. Complete source formula/hypothesis/import/encoding census is separate from mathematical adoption. Original8 move/swap bodies/layout/padding/payload/source ownership/Heap/Typed/cleanup/caller/default/public gates stay pending. Zero global check-lemma smokes are not empirical consistency evidence.",
+      "before": "Ten conditional unbounded mathematical registry duties only. Original8 move/swap bodies remain unproved context; no source field/ownership/lifetime/Heap/allocator/Typed/body/caller/default/public admission. Zero global check-lemma smokes are not empirical consistency evidence.",
+      "count": 1,
+      "label": "scope statement"
+    },
+    {
+      "after": "STATE = {'classification': 'REFUSED_SOURCE9_PASSIVE_COLD'",
+      "before": "STATE = {'classification': 'REFUSED_OWNERSHIP10_PASSIVE_COLD'",
+      "count": 1,
+      "label": "initial refusal label"
+    },
+    {
+      "after": "context = json.loads(CONTEXT_JSON)\n        globals()['CONTEXT']=context",
+      "before": "context = json.loads(CONTEXT_JSON)",
+      "count": 1,
+      "label": "exact project-module context binding"
+    },
+    {
+      "after": "source9_semantics",
+      "before": "ownership10_semantics",
+      "count": 1,
+      "label": "semantic namespace"
+    },
+    {
+      "after": "pinned-source9-pure-terms",
+      "before": "pinned-ownership10-pure-terms",
+      "count": 1,
+      "label": "semantic source label"
+    },
+    {
+      "after": "REFUSED_SOURCE9_PASSIVE_COLD",
+      "before": "REFUSED_OWNERSHIP10_PASSIVE_COLD",
+      "count": 2,
+      "label": "final refusal labels"
+    },
+    {
+      "after": "    need([semantic.source_statement(row['id']) for row in manifest['obligations']]==[row['statement'] for row in manifest['obligations']], 'all nine independently transcribed full ACSL statements')\n    for name,row in context['source_theories'].items():\n        need(pin(PROFILE/'canonical-inputs'/row['canonical_path'])['sha256']==row['sha256']\n             and pin(SOURCE/'swdb-project'/row['frozen_source_path'])['sha256']==row['sha256'], 'whole actual source theory/input inverse')\n    need(result['layout']=={'executed':False,'units':0,'C_layout_assertions_adopted':False,'scope':'Math-only namespace repair; previous V2 layout observations remain separate and require complete dependency cold closure.'}, 'original9 never adopts separate layout observations')\n    leaves, tasks, roots, unresolved = [], [], set(), []",
+      "before": "    leaves, tasks, roots, unresolved = [], [], set(), []",
+      "count": 1,
+      "label": "independent source formula and theory/phase boundary"
+    },
+    {
+      "after": "'native_provers': peer['provers'], 'common_theories': common, 'task_census': census, 'normal_verdict':outcome['verdict'],'failure_class':outcome['failure_class']}",
+      "before": "'native_provers': peer['provers'], 'common_theories': common, 'task_census': census}",
+      "count": 1,
+      "label": "retain reader decision"
+    }
+  ],
+  "date": "2026-10-16 ET",
+  "source": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-v3/observer.py",
+  "source_sha256": "49979868cee895afe09833cb5a497ae49cf870ce3635c32508a72a23098f3692",
+  "successor_sha256": "90c8bb7640b5de5824fa17b4184ddbd9e97de1b23129cbf60c29edb0aa8c5afe",
+  "unchanged17helpers": true
+}

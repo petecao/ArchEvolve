@@ -1,0 +1,227 @@
+{
+  "actual_compiler_formal_runs": 0,
+  "body_acceptance": false,
+  "caller_acceptance": false,
+  "canonical": {
+    "files": [
+      {
+        "bytes": 48844,
+        "path": "manifest.json",
+        "sha256": "54bb92af5068634433af157a9fc3391b839060461683f33ada8ab20ff2911b0e"
+      },
+      {
+        "bytes": 5982,
+        "path": "obligations/000-t25_closed_receiver_entry.c",
+        "sha256": "e2a209ecae6c0e6f0ee148a6f698ad4a89b117486042d3a775a0179da5bb84da"
+      },
+      {
+        "bytes": 5725,
+        "path": "obligations/001-t25_closed_constructor_frame.c",
+        "sha256": "11e25f8df22cb8fb36e9cb86f37c62bcb72ae8022a23a5cd57c4d68d49cdbd6e"
+      },
+      {
+        "bytes": 6150,
+        "path": "obligations/002-t25_closed_buffer_identity.c",
+        "sha256": "1fdf5472d4fa6c932a19cdd8aa0f872588bb849137b7530987a526d4d8070338"
+      },
+      {
+        "bytes": 5882,
+        "path": "obligations/003-t25_closed_zero_cleanup.c",
+        "sha256": "fc17fbcb8761d8d4c67cde988cba3e0af0528d6cf5fda679adbde5f0e56835a5"
+      },
+      {
+        "bytes": 6260,
+        "path": "obligations/004-t25_closed_positive_exit_image.c",
+        "sha256": "9e18a0b7f5ce529bad0fabe8971586e3728fdba8ae7cfdeb13ad66a591718095"
+      },
+      {
+        "bytes": 6274,
+        "path": "obligations/005-t25_closed_positive_cleanup.c",
+        "sha256": "b9c368e2082bd48c5a16fdf5185b878c23d9ba65020cf3090efdad8e74c43997"
+      },
+      {
+        "bytes": 5448,
+        "path": "prelude.acsl",
+        "sha256": "67c5dca42b20aa5f1eca8d8acd0505183494bc8a43f61a91adef6bc38020154d"
+      },
+      {
+        "bytes": 6929,
+        "path": "sources/original-caller.c",
+        "sha256": "7082d6fc081e23547bf792f8029277695b83d933913545f290f66353ee5841ec"
+      },
+      {
+        "bytes": 2724,
+        "path": "sources/original-constructor.c",
+        "sha256": "57cf2a6f3f9049f8edf41633f9ef60d0bb7c804e5ee937af796217a2a018c594"
+      },
+      {
+        "bytes": 2124,
+        "path": "sources/original-destructor.c",
+        "sha256": "1056f4f83c59a30941ec9417c36aada8eab4b62160087ae10315cd2ac9778317"
+      },
+      {
+        "bytes": 757,
+        "path": "sources/original.cc",
+        "sha256": "1172e62dbff5076d25471285afcfa17927707dbe6fae121d9570109d39e62b57"
+      },
+      {
+        "bytes": 8162,
+        "path": "sources/projected-caller.c",
+        "sha256": "e97874959eaf6d9596e0ff32e25a55099c5c7f0c22f09ddda7b70723e69e03c8"
+      },
+      {
+        "bytes": 3631,
+        "path": "sources/qualified-constructor.c",
+        "sha256": "a20cb8431cc975b034954666967398d8466745cd0bab9a92f45f60c19a837a1a"
+      },
+      {
+        "bytes": 2987,
+        "path": "sources/qualified-destructor.c",
+        "sha256": "9ca9409923f9d39b4e35a0690c70256af56bfd1c37f1e389e406f615b0164e7f"
+      },
+      {
+        "bytes": 8386,
+        "path": "theory/heap_reallocation.mlw",
+        "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+      }
+    ],
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-lifetime-glue-20261016/inert-reviewed-working-source",
+    "targets": [
+      "receiver.entry",
+      "constructor.frame",
+      "buffer.identity",
+      "zero.cleanup",
+      "positive.exit_image",
+      "positive.cleanup"
+    ]
+  },
+  "control_history": "RED2 missing module; first GREEN had one mistaken test expectation for the explicit positive state name, preserved; corrected expectation and exact tamper mutation; final GREEN2 with four tamper cases. Source-specific fresh-history target tightened after independent Spec discussion; full original source/Typed admission remains closed.",
+  "created": "2026-10-16 ET",
+  "dependencies": {
+    "all_current_records_admitted": false,
+    "constructor_targets": 35,
+    "destructor_targets": 11,
+    "private_frame_targets": 9
+  },
+  "external_native_attempts": [],
+  "green": {
+    "bytes": 2958,
+    "path": "/private/tmp/probata-resume-20261016-t25-closed-lifetime-green-v4/result.json",
+    "sha256": "6798c10db9df838e178b81c232538f2444b249dbee6bc5d9d6ea0c5d550026b1"
+  },
+  "harness": {
+    "bytes": 4978,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-prefix10-resume-20261016/run_pure_closed_lifetime.py",
+    "sha256": "4efa4e582ac578ae5d8931d6c3b9807927c038813b5608bb8f191bdefec70c67"
+  },
+  "production": {
+    "bytes": 14256,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_reallocation_closed_lifetime.py",
+    "sha256": "ac631823afe598629032482b9383a4bfb8f6673ca71f1f7795a55c6d905361ee"
+  },
+  "proof_acceptance": false,
+  "public_controls": {
+    "caller_acceptance": false,
+    "created": "2026-10-16 ET",
+    "external_native_attempts": [],
+    "failed": 0,
+    "outcomes": [
+      {
+        "name": "test_closed_lifetime_packet_binds_constructor_frame_and_real_cleanup",
+        "passed": true
+      },
+      {
+        "name": "test_closed_lifetime_packet_refuses_changed_observer_source_or_dependencies",
+        "passed": true
+      }
+    ],
+    "passed": 2,
+    "raw_bytes": 834058,
+    "source_pins": [
+      {
+        "path": "__init__.py",
+        "sha256": "bcbd2c199a6b63c92302a8daf37c26909a76332b89452797351082ddba66b743"
+      },
+      {
+        "path": "std_models.py",
+        "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+      },
+      {
+        "path": "heap_model_vcs.py",
+        "sha256": "f20e0ec130222aeda96b4fbb8e72eef8d922d3f33e84077777203f7e6d159092"
+      },
+      {
+        "path": "vector_reallocation_model.py",
+        "sha256": "92ad23030531650924a51b0a3bd1abb479afa373a7d1dd2a543b9ae225ab8b89"
+      },
+      {
+        "path": "vector_reallocation_inventory.py",
+        "sha256": "0a0474084a17b84788585a62a9e0b63b88eb43efd858101769db267579af5f07"
+      },
+      {
+        "path": "vector_reallocation_vcs.py",
+        "sha256": "f2185ad536bca5e8845ff0b718d81fe1787f1d6fedea7e53907dbe75969861e9"
+      },
+      {
+        "path": "vector_reallocation_composition.py",
+        "sha256": "fbce29f010d92be33b09a0f31c440f8db97c7f0dfd0769a41a59e71bdfe6e108"
+      },
+      {
+        "path": "vector_reallocation_caller_packets.py",
+        "sha256": "a30b633404723d99c84ee3473eb0a352fe6641274e036524451826940abc59f0"
+      },
+      {
+        "path": "vector_reallocation_calls.py",
+        "sha256": "d1d7ea169a50b82d5545ab0a3fa02910849d944b9104a5839e0955dd5a283a95"
+      },
+      {
+        "path": "vector_reallocation_caller_vcs.py",
+        "sha256": "e8e514a1208d6653e8ae424b37309a3ce299690050ecac2710aed580b9ab397a"
+      },
+      {
+        "path": "vector_reallocation_lifetime.py",
+        "sha256": "d20ac49e7896ed47632ad05f6f0610caee805649da81d3f469da2b6237051159"
+      },
+      {
+        "path": "vector_reallocation_capacity.py",
+        "sha256": "e4aa221acb78151895fa5c5d3cbdab6050b151b42a7096521a90fcdf3c95f617"
+      },
+      {
+        "path": "heap_reallocation.mlw",
+        "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+      },
+      {
+        "path": "vector_reallocation_caller_view.py",
+        "sha256": "47c286034927b11db471c45ebce061856c4bc73008f0baf2cbdae255a2293413"
+      },
+      {
+        "path": "vector_reallocation_private_frame.py",
+        "sha256": "062c68a138b4aeb0887f50490d405f3b1fdd50284e6e8404e096df02568982da"
+      },
+      {
+        "path": "vector_reallocation_closed_view.py",
+        "sha256": "758092d5997274b29e22f2196c46af361b7cfdfd5c9eb83ee328ae6a877eb757"
+      },
+      {
+        "path": "vector_reallocation_closed_lifetime.py",
+        "sha256": "ac631823afe598629032482b9383a4bfb8f6673ca71f1f7795a55c6d905361ee"
+      }
+    ],
+    "source_typed_bridge_established": false,
+    "stage": "green-v4",
+    "whole_alarm_seconds": 60
+  },
+  "public_proof_record_created": false,
+  "red": {
+    "bytes": 4734,
+    "path": "/private/tmp/probata-resume-20261016-t25-closed-lifetime-red/result.json",
+    "sha256": "9197f2ba171673e9616ddf2d304f403f6b6f5be8fafc74122cc64ae06e7c079d"
+  },
+  "source_typed_bridge_established": false,
+  "status": "SOURCE PREPARATION / REVIEW PENDING / NO FORMAL EXECUTION",
+  "tests": {
+    "bytes": 4266,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_reallocation_closed_lifetime.py",
+    "sha256": "fd8735700fd957b03e0737fc668c4fd909f384b2c2933f4ed64d6c12b0e13a28"
+  }
+}

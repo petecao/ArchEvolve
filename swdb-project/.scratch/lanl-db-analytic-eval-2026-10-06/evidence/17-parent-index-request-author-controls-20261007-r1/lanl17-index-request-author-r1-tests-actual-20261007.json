@@ -1,0 +1,100 @@
+{
+  "format": "swdb.lanl17-index-request-author-r1-isolated-tests-actual.v1",
+  "canonical_ensure_ascii": true,
+  "started_utc": "2026-10-07T17:35:47.026492+00:00",
+  "ended_utc": "2026-10-07T17:35:47.161338+00:00",
+  "actual_subprocess_returncode": 0,
+  "actual_timed_out": false,
+  "actual_reported_test_count": 5,
+  "actual_reported_OK": true,
+  "actual_successful_test_method_names": [
+    "test_R1_git_failure_is_captured_and_refusal_only_hashed",
+    "test_R1_refuses_noncanonical_and_preserves_exact_route",
+    "test_original_git_failure_exposes_synthetic_stderr",
+    "test_original_route_accepts_writer_incompatible_spelling",
+    "test_successful_read_only_git_bytes_and_fixed_argv_are_preserved"
+  ],
+  "expected_method_names": [
+    "test_original_route_accepts_writer_incompatible_spelling",
+    "test_R1_refuses_noncanonical_and_preserves_exact_route",
+    "test_original_git_failure_exposes_synthetic_stderr",
+    "test_R1_git_failure_is_captured_and_refusal_only_hashed",
+    "test_successful_read_only_git_bytes_and_fixed_argv_are_preserved"
+  ],
+  "elapsed_parent_seconds": 0.13479599996935576,
+  "original_preparation_identity": "acf228e14a566c9637ca8694588cee96bfaf8ac2ea20e29637c9d3999ef19166",
+  "source_pins": {
+    "original_author": {
+      "path": "/private/tmp/lanl17_author_parent_full_record_index_request_20261007.py",
+      "bytes": 38076,
+      "sha256": "7f2e2d01dc8fc375a2bfb36d3654444bab15d4abfb6a4a7be86532d9971f0e3f"
+    },
+    "original_handoff": {
+      "path": "/private/tmp/lanl17-parent-full-record-index-request-author-source-handoff-20261007.md",
+      "bytes": 10131,
+      "sha256": "3c4e9281caba557dd225b09a3f3a18e6fbf8f7ab76e38ee4b7318d5baee04e74"
+    },
+    "original_index_writer": {
+      "path": "/private/tmp/lanl17_write_parent_full_record_index_20261007.py",
+      "bytes": 33445,
+      "sha256": "7a67d46f8ad7d453fe07bd458a21f663bd4dc7ec12e71de83ad8b5caaf28894b"
+    },
+    "r1_author": {
+      "path": "/private/tmp/lanl17_author_parent_full_record_index_request_r1_20261007.py",
+      "bytes": 38266,
+      "sha256": "a2e69aef10deb6186ac49401516ffba9a165b2f3cc94c8001646b6ac9a5b701d"
+    },
+    "complete_r1_diff": {
+      "path": "/private/tmp/lanl17-parent-full-record-index-request-author-r1-20261007.diff",
+      "bytes": 1722,
+      "sha256": "b314eaa15d7c15cdfb6df2b8bda2012154edb477bf7c10e50c9286327f666531"
+    },
+    "isolated_test_SOURCE_NOT_RUN": {
+      "path": "/private/tmp/lanl17_parent_index_request_author_r1_isolated_test_source_20261007.py",
+      "bytes": 9306,
+      "sha256": "3212942c5bde997e4d37ddf6768732254928d78123cb3266cac297af7d630ba3"
+    },
+    "r1_source_only_handoff": {
+      "path": "/private/tmp/lanl17-parent-full-record-index-request-author-r1-source-handoff-20261007.md",
+      "bytes": 5147,
+      "sha256": "46c66dbf42a710fbf11fada5da2d122aee6b07a2143de24399cfc4641bf7f24e"
+    },
+    "original_source_preparation": {
+      "path": "/private/tmp/lanl17-parent-full-record-index-request-author-r1-source-preparation-20261007.json",
+      "bytes": 4526,
+      "sha256": "f1ea8ccc986bfb40e68c41fa9ef8aa1a1b3b6f1054615b0bc364ccfbef192911"
+    },
+    "reviewed_execution_driver": {
+      "path": "/private/tmp/lanl17-index-request-author-r1-tests-driver-20261007.py",
+      "bytes": 4914,
+      "sha256": "b0574a65d9f585a9ba56495173832478c8dae25afbbafd21889667c16b2718bc"
+    }
+  },
+  "outputs": {
+    "start": {
+      "path": "/private/tmp/lanl17-index-request-author-r1-tests-actual-20261007.start.json",
+      "bytes": 405,
+      "sha256": "2bf8958c6d74171932559df5d65ffe87ed12293d8f4d5bf379a4583dad480ba0",
+      "original_sealed": false
+    },
+    "stdout": {
+      "path": "/private/tmp/lanl17-index-request-author-r1-tests-actual-20261007.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "original_sealed": false
+    },
+    "stderr": {
+      "path": "/private/tmp/lanl17-index-request-author-r1-tests-actual-20261007.stderr",
+      "bytes": 881,
+      "sha256": "c820ad5cf6731d51ab3222c816d3cfd590e4b7ad5dfd06b78809e56bd513a989",
+      "original_sealed": false
+    }
+  },
+  "batch_invocations": 1,
+  "source_and_preparation_preserved": true,
+  "actual_inputs_constructed": false,
+  "author_main_or_Store_validate_index_writer_auditor_collector_native_provider_campaign_remote_actions": 0,
+  "scientific_admission": false,
+  "scope": "One local five-case synthetic route/privacy batch using closed exact source AST and mocked Git. No actual catalog, request, selected main, Store, validator, remote or scientific action. Original preparation remains NOT_RUN chronology.",
+  "identity_sha256": "b8034b45d6e54d8dfd281c0f56eb3983799d497b649c424dd29adb7b51defe58"
+}

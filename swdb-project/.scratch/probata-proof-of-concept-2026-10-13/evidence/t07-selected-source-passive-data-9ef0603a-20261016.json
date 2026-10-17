@@ -1,0 +1,60 @@
+{
+  "source_commit": "9ef0603a70f32a30f3556080891457355ad7a5b3",
+  "evidence_sha256": "8f292dd53bd98790efa5ae611947cbae8db2bccc3f0d136a23f2ba6a86782fe5",
+  "raw_manifest_sha256": "6087e5125ba95294cb368d708d1060e098f7acd18b3cb84d0321e51b719dd8af",
+  "raw_artifacts_checked": 495,
+  "include_closure_files_checked": 901,
+  "physical_original_and_staged_source_pairs_checked": 22,
+  "source_records_checked": 3,
+  "project_producer_pins_checked": 4,
+  "compiler_and_SDK_settings_pins_checked": 2,
+  "selected_main_sha256": "093c56b91837122380fd5e66766c92947e5f1c5194dd4c038936bc28934864dc",
+  "composition_independently_reconstructed_without_project_execution": true,
+  "independent_AST_observations": {
+    "one_exact_main_TDStep": true,
+    "one_QueueBuffer_int_local": true,
+    "constructor_default": 16384,
+    "source_member_uses": [
+      {
+        "byte_range": [
+          4539,
+          4545
+        ],
+        "method": "push_back"
+      },
+      {
+        "byte_range": [
+          4931,
+          4937
+        ],
+        "method": "push_back"
+      },
+      {
+        "byte_range": [
+          4970,
+          4976
+        ],
+        "method": "flush"
+      }
+    ],
+    "same_dump_captures": [
+      [
+        4539,
+        4545
+      ],
+      [
+        4931,
+        4937
+      ]
+    ],
+    "new_array_no_initializer": true,
+    "delete_array_in_dtor": true
+  },
+  "compiler_commands_read": 6,
+  "passing_control_records": 35,
+  "unchanged_hand_model_files": 44,
+  "unchanged_directories": 5,
+  "hash_errors": [],
+  "reviewer_actual_tool_execution": false,
+  "reviewer_source_edits": false
+}

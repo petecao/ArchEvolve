@@ -1,0 +1,104 @@
+{
+  "command": [
+    "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++"
+  ],
+  "driver": {
+    "bytes": 271520144,
+    "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang-22",
+    "sha256": "31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113"
+  },
+  "runtime_identity": {
+    "check": {
+      "id": "swdb-stdlib-provenance-1",
+      "sha256": "4a7ca7d9b05a992e8172125fcbbfd175bb7ade2aec47cfb349126c9739b6e8e4"
+    },
+    "command": [
+      "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++"
+    ],
+    "command_executable": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+      "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+    },
+    "driver": {
+      "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang-22",
+      "sha256": "31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113"
+    },
+    "frontend": [
+      "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang-22",
+      "-cc1",
+      "-triple",
+      "x86_64-unknown-linux-gnu",
+      "-fsyntax-only",
+      "-disable-free",
+      "-clear-ast-before-backend",
+      "-disable-llvm-verifier",
+      "-discard-value-names",
+      "-main-file-name",
+      "-",
+      "-mrelocation-model",
+      "pic",
+      "-pic-level",
+      "2",
+      "-pic-is-pie",
+      "-mframe-pointer=all",
+      "-fmath-errno",
+      "-ffp-contract=on",
+      "-fno-rounding-math",
+      "-mconstructor-aliases",
+      "-funwind-tables=2",
+      "-target-cpu",
+      "x86-64",
+      "-tune-cpu",
+      "generic",
+      "-debugger-tuning=gdb",
+      "-fdebug-compilation-dir=/data1/yanruj/probata-resume-20261016-2baf722f",
+      "-fcoverage-compilation-dir=/data1/yanruj/probata-resume-20261016-2baf722f",
+      "-resource-dir",
+      "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22",
+      "-internal-isystem",
+      "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/../include/x86_64-unknown-linux-gnu/c++/v1",
+      "-internal-isystem",
+      "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/../include/c++/v1",
+      "-internal-isystem",
+      "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/include",
+      "-internal-isystem",
+      "/usr/local/include",
+      "-internal-isystem",
+      "/usr/lib/gcc/x86_64-linux-gnu/13/../../../../x86_64-linux-gnu/include",
+      "-internal-externc-isystem",
+      "/usr/include/x86_64-linux-gnu",
+      "-internal-externc-isystem",
+      "/include",
+      "-internal-externc-isystem",
+      "/usr/include",
+      "-fdeprecated-macro",
+      "-ferror-limit",
+      "19",
+      "-fgnuc-version=4.2.1",
+      "-fskip-odr-check-in-gmf",
+      "-fcxx-exceptions",
+      "-fexceptions",
+      "-faddrsig",
+      "-fdwarf2-cfi-asm",
+      "-x",
+      "c++",
+      "-"
+    ],
+    "headers": {
+      "files": 1983,
+      "id": "llvm-standard-resource-headers",
+      "sha256": "d37aec646b1e6e1748d40690c60436f905f55852ee578e79c43a3199c4a16e23"
+    },
+    "parser": {
+      "id": "libclang-22.1.8",
+      "sha256": "8b03ee2c60f0699651869fea5135cb5a144777a10c6e4b9b7835283ac9ca3f7d"
+    }
+  },
+  "schema": "root-selected-compiler-observation-1",
+  "version": "22.1.8",
+  "wrapper": {
+    "bytes": 145,
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+    "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+  }
+}

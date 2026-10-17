@@ -1,0 +1,24 @@
+{
+  "format": "swdb.ticket16-adapter-proof.v1",
+  "created_et": "2026-10-06 21:39 ET",
+  "base": "11e3a14",
+  "public_test": "tests/test_extensa_pairing.py::test_real_adapters_persist_estimates_before_every_evaluator_entry",
+  "red": {
+    "passed": 0,
+    "failed": 2,
+    "seconds": 90.9,
+    "reason": "first evaluator entry lacks persisted pairing boundary"
+  },
+  "green": {
+    "passed": 2,
+    "failed": 0,
+    "seconds": 160.4
+  },
+  "routes": [
+    "native A/A pilots and both paired sides",
+    "gem5 shared baselines",
+    "gem5 primary/diagnostic companions and candidate primary"
+  ],
+  "scope": "real adapters with fixture evaluator/host; all application estimates structural unknown/ineligible",
+  "application_timing_evidence": false
+}

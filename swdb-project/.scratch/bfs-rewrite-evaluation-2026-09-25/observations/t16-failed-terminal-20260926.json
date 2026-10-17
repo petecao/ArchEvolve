@@ -1,0 +1,154 @@
+{
+  "terminal": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1.dispatch/terminal-validation.json",
+    "sha256": "e049e2957c15994b8a34125e5113d96f7e2da7b4ecb69094da55523c3cfd0baf",
+    "bytes": 1344179
+  },
+  "lease_snapshot": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1.dispatch/terminal-lease-snapshot.json",
+    "sha256": "82245d49684238be283bc7eed581bfac72fa72941b753eb198bd5d0a199b5809",
+    "bytes": 5556
+  },
+  "accounting": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1.dispatch/terminal-accounting.json",
+    "sha256": "3a3fe7add8a31984dea554813befc8d27ed135e3b570b9eac142cf24f0dc53c3",
+    "bytes": 2164
+  },
+  "driver": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1/bfs-t16-simulator-batch-20260926-a1.driver/driver.json",
+    "sha256": "dadc3d1f149a4c2ffd9cb98281fa53b8fee1dee1609bba74131705ae7b98533e",
+    "bytes": 299232
+  },
+  "state": "failed",
+  "reason": "ProcessLookupError: [Errno 3] No such process",
+  "driver_started": "2026-09-26T20:20:30.827122-04:00",
+  "driver_finished": "2026-09-26T23:20:51.817090-04:00",
+  "outer_started": "2026-09-26T20:20:30.225985-04:00",
+  "outer_deadline": "2026-09-27T20:16:17.225985-04:00",
+  "final_readonly_at": "2026-09-26T23:25:50.305136-04:00",
+  "outer_through_final_recount_seconds": 11120.079151,
+  "driver_host_wall_s": null,
+  "union_count": 944,
+  "current_present": [
+    {
+      "pid": 3089722,
+      "start_ticks": 497036306,
+      "sources": [
+        "/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1/bfs-t16-simulator-batch-20260926-a1.driver/driver.json",
+        "/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1.dispatch/launch.json"
+      ],
+      "state": "Z",
+      "rss_bytes": 0,
+      "role": "tmux_launcher",
+      "current": {
+        "pid": 3089722,
+        "parent_pid": 359742,
+        "start_ticks": 497036306,
+        "state": "Z",
+        "rss_bytes": 0
+      }
+    }
+  ],
+  "cleanup_state": "terminal_no_live_owned_processes",
+  "cleanup_error": {
+    "state": "failed_readback",
+    "reason": "ValueError: final cleanup ledger has outstanding reservations",
+    "ledger": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1/bfs-t16-simulator-batch-20260926-a1.driver/cleanup-ledger.json",
+      "sha256": "38454147b9df88fadb63c46f5c7036ad72ed74639fd71be47b7e2e81a14e95a7"
+    },
+    "spent_seconds": 20.94487111307685,
+    "reservations": {
+      "b3aac8d5d3bc45ca83bf59b152ce8b3b": {
+        "pid": 3089858,
+        "seconds": 5,
+        "started": "2026-09-26T23:20:50.936598-04:00",
+        "purpose": "cleanup_or_finalization"
+      }
+    },
+    "settled_events": 117,
+    "budget_seconds": 30,
+    "process_absence_verified": false,
+    "empirical_qualification": false
+  },
+  "ledger": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1/bfs-t16-simulator-batch-20260926-a1.driver/cleanup-ledger.json",
+    "sha256": "38454147b9df88fadb63c46f5c7036ad72ed74639fd71be47b7e2e81a14e95a7",
+    "bytes": 26553
+  },
+  "outstanding_reservations": {
+    "b3aac8d5d3bc45ca83bf59b152ce8b3b": {
+      "pid": 3089858,
+      "seconds": 5,
+      "started": "2026-09-26T23:20:50.936598-04:00",
+      "purpose": "cleanup_or_finalization"
+    }
+  },
+  "settled_seconds": 20.94487111307685,
+  "settled_events": 117,
+  "final_allocations": [
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1",
+      "allocated_bytes": 657186816
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1.dispatch",
+      "allocated_bytes": 1458176
+    }
+  ],
+  "raw_bytes": 658644992,
+  "preparation_charges": [
+    {
+      "id": "bfs-20260925-uniform22",
+      "elapsed_seconds": 111,
+      "raw_bytes": 1124384768
+    },
+    {
+      "id": "bfs-author-scalar-compile-20260925-a1",
+      "elapsed_seconds": 72,
+      "raw_bytes": 3301376
+    },
+    {
+      "id": "bfs-author-maa-compile-20260925-a1",
+      "elapsed_seconds": 70,
+      "raw_bytes": 3301376
+    }
+  ],
+  "prior_charged_bytes": 1130987520,
+  "charged_raw_bytes": 1789632512,
+  "storage_admitted": false,
+  "cleanup_budget_admitted": false,
+  "outer_returncode": 1,
+  "helper_returncode": 1,
+  "lease_generation": 332,
+  "evaluation": {
+    "path": "/data1/yanruj/EvolveSWDB_simulator_campaign_20260926_a2/records/evaluations/bfs-t16-simulator-batch-20260926-a1.artifact.scalar.s0.r0.primary.evaluation.yaml",
+    "sha256": "41112a7299e91f76209fd21783987d8b69c062add097d660d23dee532e31b49b"
+  },
+  "evaluation_outcome": {
+    "state": "running",
+    "stage": "simulation",
+    "reason": null
+  },
+  "correctness": {
+    "state": "unverified",
+    "checks": []
+  },
+  "completed_samples": 0,
+  "no_further_closed_root_writes": true,
+  "audit_wall_seconds": 0.03499138914048672,
+  "failure_traceback": {
+    "repository_commit": "8c39ae09406dad0da253b21dbe2c87e263f8c5fb",
+    "frames": [
+      "scripts/bfs_simulator_batch.py:681 guarded",
+      "scripts/bfs_owned_execution.py:306 observe",
+      "scripts/bfs_simulator_batch.py:661 monitor",
+      "scripts/bfs_owned_execution.py:203 sample",
+      "scripts/bfs_owned_rss.py:114 sample",
+      "scripts/bfs_owned_rss.py:80 _children",
+      "scripts/bfs_owned_rss.py:36 _stat",
+      "pathlib.py:1030 read_text/f.read"
+    ],
+    "exception": "ProcessLookupError: [Errno 3] No such process"
+  }
+}

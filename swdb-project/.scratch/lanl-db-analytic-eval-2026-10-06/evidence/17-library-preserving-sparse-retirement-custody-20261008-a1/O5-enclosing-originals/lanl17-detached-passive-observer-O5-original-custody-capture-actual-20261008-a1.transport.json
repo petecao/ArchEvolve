@@ -1,0 +1,43 @@
+{
+  "argv": [
+    "ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "mbit10",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=10",
+    "90",
+    "/usr/bin/python3.12",
+    "-B",
+    "-s",
+    "-P",
+    "-",
+    "--control-directory",
+    "/data1/yanruj/lanl17-detached-observer-a5"
+  ],
+  "elapsed_seconds": 2.8295119169633836,
+  "finished_utc": "2026-10-08T08:45:16.185979+00:00",
+  "format": "swdb.parent-original-observer-custody-capture-transport.v1",
+  "no_original_observer_success_or_admission_inferred": true,
+  "returncode": 0,
+  "sealed": false,
+  "source": {
+    "bytes": 4820,
+    "path": "/private/tmp/lanl_read_detached_passive_observer_administration_originals_20261008_a5_r2.py",
+    "sha256": "dee4d37d7abd2071d9ab9a536d9aa24bad075ebc96beedb44ffcf984347ea91d"
+  },
+  "started_utc": "2026-10-08T08:45:13.356010+00:00",
+  "stderr": {
+    "bytes": 0,
+    "path": "/private/tmp/lanl17-detached-passive-observer-O5-original-custody-capture-actual-20261008-a1.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 30499529,
+    "path": "/private/tmp/lanl17-detached-passive-observer-O5-original-custody-capture-actual-20261008-a1.json",
+    "sha256": "6d1213c9f8b03e96f0fa1afa8126076a22f34245a9499b6a102c3493f24f7473"
+  },
+  "transport_timeout": false
+}

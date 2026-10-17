@@ -1,0 +1,84 @@
+{
+  "updated": "2026-10-06 ET",
+  "receipt": {
+    "passed": true,
+    "owned_before": {
+      "same_group": {
+        "pid": 2067222,
+        "start_time": "584602130",
+        "state": "S"
+      },
+      "escaped_session": {
+        "pid": 2067223,
+        "start_time": "584602130",
+        "state": "S"
+      }
+    },
+    "cleanup": {
+      "subreaper": true,
+      "terminated_owned_processes": [
+        {
+          "pid": 2067222,
+          "start_time": "584602130",
+          "signal": "SIGTERM"
+        },
+        {
+          "pid": 2067223,
+          "start_time": "584602130",
+          "signal": "SIGTERM"
+        },
+        {
+          "pid": 2067223,
+          "start_time": "584602130",
+          "signal": "SIGKILL"
+        }
+      ],
+      "survivors": {}
+    },
+    "processes_py_sha256": "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289",
+    "same_group_after_returned_leader": "terminated",
+    "detached_session": "terminated_and_reaped",
+    "format": "swdb.lanl17-linux-cleanup-smoke.v1",
+    "helper_sha256": "31e1d71bc6e9ef4a5a5f1d5fbff136ceef249935f8f00601edf45277fce249ec",
+    "unrelated_sibling_survived": true,
+    "provider_calls": 0,
+    "application_outcomes": 0,
+    "platform": "linux",
+    "host": "mbit10",
+    "smoke_script_sha256": "4d0bdf1d4c8d2ce96d948085a785cde15c389a4c50413962bc7db14df57cf9d6",
+    "scope": "Actual Linux descendant cleanup only, not campaign/performance evidence.",
+    "identity_sha256": "414be978a6776e08185fef5b90adbbb142fa93ea2434e4779dc2beed618a416b"
+  },
+  "lane": {
+    "aligned_cell_age_s": "",
+    "aligned_to": "none",
+    "command": [
+      "python3",
+      "/data1/yanruj/lanl17-control-linux-smoke-20261006.py",
+      "--helper",
+      "/data1/yanruj/lanl17-control-20261006.py",
+      "--helper-sha",
+      "31e1d71bc6e9ef4a5a5f1d5fbff136ceef249935f8f00601edf45277fce249ec",
+      "--project",
+      "/data1/yanruj/ArchEvolve/swdb-project",
+      "--output",
+      "/data/yanruj/EvolveSWDB_runs/lanl17-cleanup-smoke-20261006-a1"
+    ],
+    "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+    "ended_utc": "2026-10-07T03:35:03Z",
+    "exit_code": 0,
+    "host": "mbit10",
+    "job": "swdb-lanl17-cleanup-smoke-20261006-a1",
+    "lease_generation": 539,
+    "lease_name": "mbit10-evaluation-node1",
+    "load1_at_start": 1.17,
+    "load1_max": 32,
+    "node": 1,
+    "numa_memory_policy": "bind:1",
+    "numactl": "--cpunodebind=1 --membind=1",
+    "preregistration_sha256": null,
+    "started_utc": "2026-10-07T03:34:48Z"
+  },
+  "raw_transferred": false,
+  "scope": "Bounded actual Linux cleanup test only; no campaign, provider or application outcome."
+}

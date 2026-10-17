@@ -1,0 +1,167 @@
+{
+  "assertion_header": null,
+  "capture": {
+    "kind": "complete-original-tu-paired-type-gzip-2",
+    "original": {
+      "abi": {
+        "bytes": 127394,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component/abi.ast.json",
+        "sha256": "0416fecb76bfec1cd375b8d0940de7b1306e9d9b3d591fd0683f544c080ddf15"
+      },
+      "compressed_tu": {
+        "bytes": 39192152,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component/caller.ast.json.gz",
+        "sha256": "1e01a023699d56da8054533db08de4370e4cd9425b414d1bb772a0efaca3891b"
+      },
+      "gzip_receipt": {
+        "bytes": 541,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component/caller.ast.gzip.json",
+        "sha256": "adde1b71f5019cebbb78c525d3b056b3a5badfb44e7f3a9a2df83a944859f5d3"
+      },
+      "observation": {
+        "bytes": 408741,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component/compiler-observation.json",
+        "sha256": "0a85c7c097619c0eb80f11bf77a3f37725d17e16145fd99b0db8d9d5aaa55a13"
+      },
+      "policy": {
+        "bytes": 666177,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/control/linux_compiler_capture_policy_v10.json",
+        "sha256": "8d86faea6d8235c9431acddae4d28e08831afaaca1ebc506e9363d66e8e32517"
+      },
+      "probe": {
+        "bytes": 1588,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/control/compiler_abi_probe_v1.cpp",
+        "sha256": "c0f4f37ba62992b3de117f6117b134ad0ba663484c172ffa98081952f769bf34"
+      },
+      "result": {
+        "bytes": 478,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/component/result.json",
+        "sha256": "404a0c416e893e9827fe313932f1fbec73652150b02bffb57f595af373310064"
+      },
+      "runtime_after": {
+        "bytes": 9580,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/capture-runtime-after.json",
+        "sha256": "9b80ab96d17393608722d248f22f41892ee1ce45bee14a1901c131afd812ed2c"
+      },
+      "runtime_before": {
+        "bytes": 9035,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/capture-runtime-before.json",
+        "sha256": "9bf4dc41f2583017d5b5a8f1c7c983f8df9f4a0b3753868a132ba5930920acf9"
+      },
+      "source": {
+        "bytes": 4524,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/control/source_call_fixture_v2.cpp",
+        "sha256": "3148b662b2fbeaa7a8733569d5ea750bce8a598d4e883f9bc64cb1e27dae67cd"
+      },
+      "source_after": {
+        "bytes": 112,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/source-after.json",
+        "sha256": "a185a8f90eeed849768421e0c786f76c8ae4c1573e2287ab6114d1098c7be818"
+      },
+      "zlib_after": {
+        "bytes": 628,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/capture-zlib-after.json",
+        "sha256": "1452c916ee289ffbc21b097d5d191d93ac04a6caa8f40d4ffe13070c829ad2f3"
+      },
+      "zlib_before": {
+        "bytes": 628,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10/capture-zlib-before.json",
+        "sha256": "1452c916ee289ffbc21b097d5d191d93ac04a6caa8f40d4ffe13070c829ad2f3"
+      },
+      "zlib_runtime": {
+        "bytes": 362,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-unit-observation-2baf722f-v3/control/selected-zlib-runtime.json",
+        "sha256": "3dc27f15f8dbbfe494a380fb2b5f589f1aba6aa36c455107e1090ab0eafb9285"
+      }
+    },
+    "prepared": null,
+    "transform": {
+      "bootstrap": {
+        "bytes": 3028,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-unit-observation-2baf722f-v3/control/transform-bootstrap.py",
+        "sha256": "880acab0e36c5a3b3a50cf29da39ab9f93198f5dfa106d8b18b61c7d9425f627"
+      },
+      "command": {
+        "bytes": 13366,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-unit-observation-2baf722f-v3/control/transform-command.json",
+        "sha256": "d8b6d6815412273c40c00c3cd456c4635d355d25d96c42099869b77616e00c03"
+      },
+      "complete_census": {
+        "bytes": 9181,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v2/control/census.json",
+        "sha256": "df800e08c89abd76ef0ea7e713af9fd52315ae873accc8ea54ab5a760fa8a41b"
+      },
+      "controller": {
+        "bytes": 82330,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v2/control/controller.py",
+        "sha256": "e37e893b31b9b0be5f1cd2a5953998393d6040ed2c0c2d45434012727673aa54"
+      },
+      "execution": {
+        "bytes": 2073,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-unit-observation-2baf722f-v3/control/transform-execution.json",
+        "sha256": "77e31a0c6541b6162450afbef5f7113148409dd6c346501815e88197ddb40d3a"
+      },
+      "inverse": {
+        "bytes": 609,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v2/component/inverse.json",
+        "sha256": "23915cad826a4b5cfe6e735f459bb1d7c7a23acdddcae344ff229681a43c7f75"
+      },
+      "manifest": {
+        "bytes": 31776,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v2/component/rename-manifest.jsonl",
+        "sha256": "f394231d47fa1b1fa9ce6fe7d0854cb17403f478adc1d1a4fe351d4aee97c4b1"
+      },
+      "normalized_gzip": {
+        "bytes": 12787585,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v2/component/caller.normalized.json.gz",
+        "sha256": "4156be12cc79326a4d7559f3e801b9f41ba9d2e01478ea6040c97fb6588a142b"
+      },
+      "policy": {
+        "bytes": 14295,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v2/control/policy.json",
+        "sha256": "c9d01e061d2a8263de775e18259a4d6961d6ce8ca8bfdfdbe5ad71473b496d39"
+      },
+      "result": {
+        "bytes": 10621,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v2/result.json",
+        "sha256": "387215380fc35422ec92ff0d751421a8d7e29a05555b3efa6c1169d9966f16a1"
+      },
+      "stderr": {
+        "bytes": 0,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-unit-observation-2baf722f-v3/control/transform-stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 287,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-unit-observation-2baf722f-v3/control/transform-stdout.json",
+        "sha256": "ccee9c4c1c2ce592206d088005070bd70a8b00afe35156988cc6b8166b3bde3b"
+      },
+      "transport": {
+        "bytes": 8010,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v2/component/transport.json",
+        "sha256": "25546fb9eaa2fdf59e34813bef2ff28a5abca5abfbbb0d61c9cd84f18ca8d1ad"
+      }
+    }
+  },
+  "choice_budget": 256,
+  "compiler_observation": null,
+  "components": null,
+  "design": null,
+  "ingress": "reviewed-production-route-v4-normalized-complete-capture",
+  "library_root": null,
+  "mapping_receipt": null,
+  "method_seed": null,
+  "original_project": "/data1/yanruj/probata-resume-20261016-2baf722f/swdb-project",
+  "owned_rules_receipt": null,
+  "owner": null,
+  "physical_inputs": null,
+  "producer_project": null,
+  "producer_snapshot": null,
+  "proof_source": {
+    "path": "proof_units/source.cpp",
+    "root": "library",
+    "sha256": "3148b662b2fbeaa7a8733569d5ea750bce8a598d4e883f9bc64cb1e27dae67cd"
+  },
+  "runtime_receipt": null,
+  "schema": "dx100-public-profile-selection-1"
+}

@@ -1,0 +1,43 @@
+kind: input
+schema_version: '0.2'
+id: dx100-functional-kron-g16-k16
+status: draft
+created: '2026-10-06'
+updated: '2026-10-06'
+provenance:
+- id: functional-source
+  kind: source_code
+  description: Fresh functional-source/configuration identity; no output, calibration,
+    build-readiness or performance evidence imported.
+  uri: https://github.com/arkhadem/DX100/tree/e4fc4afdf894f295442cef3604667a469fab8e62
+name: DX100 registered built-in Kronecker scale16 degree16 source-only input
+generator:
+  application: dx100-gapbs
+  tool: Pinned built-in Generator and Builder in the protected source artifact
+  arguments: -g 16 -k 16
+properties:
+  scale:
+    value: 16
+    basis: code_reading
+    evidence_refs:
+    - functional-source
+  requested_degree:
+    value: 16
+    basis: code_reading
+    evidence_refs:
+    - functional-source
+  directed:
+    value: false
+    basis: code_reading
+    evidence_refs:
+    - functional-source
+  weighted:
+    value: false
+    basis: code_reading
+    evidence_refs:
+    - functional-source
+notes:
+- Source-defined input identity; new execution receipts retain actual graph sizes
+  and trial-source sequence.
+- The same generator tuple has historical native profiles. A new ID does not establish
+  campaign baseline blindness.

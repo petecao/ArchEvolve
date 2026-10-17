@@ -1,0 +1,369 @@
+{
+  "created": "2026-10-16 ET",
+  "line_edits": [
+    {
+      "new_lines": [
+        "import re\n"
+      ],
+      "new_range": [
+        11,
+        12
+      ],
+      "old_lines": [],
+      "old_range": [
+        11,
+        11
+      ]
+    },
+    {
+      "new_lines": [
+        "FINAL_RESERVE_BYTES = 65536\n",
+        "FINAL_RESULT_BYTES = 16384\n",
+        "FINAL_MARGIN_SECONDS = 1.0\n",
+        "CASE_IDS = (\"safe\", \"missing_bundle\", \"stale_method\", \"wrong_result\", \"default_method\")\n",
+        "CASE_PREFIX = \"test_public_closed_source_proo\"\n",
+        "PYTEST_BASE = Path(\"closed-source-profile/pytest\")\n"
+      ],
+      "new_range": [
+        29,
+        35
+      ],
+      "old_lines": [],
+      "old_range": [
+        28,
+        28
+      ]
+    },
+    {
+      "new_lines": [
+        "    need(expected[\"finalization\"] == {\"reserve_bytes\": FINAL_RESERVE_BYTES,\n",
+        "         \"result_byte_cap\": FINAL_RESULT_BYTES, \"time_margin_seconds\": FINAL_MARGIN_SECONDS},\n",
+        "         \"closed finalization reserve/size/time policy differs\")\n"
+      ],
+      "new_range": [
+        54,
+        57
+      ],
+      "old_lines": [],
+      "old_range": [
+        47,
+        47
+      ]
+    },
+    {
+      "new_lines": [
+        "def pytest_alias_policy(raw):\n",
+        "    alias = str(PYTEST_BASE / (CASE_PREFIX + \"current\"))\n",
+        "    targets = [{\"literal_target\": str(raw / PYTEST_BASE / (CASE_PREFIX + str(index))),\n",
+        "                \"target_relative\": str(PYTEST_BASE / (CASE_PREFIX + str(index)))}\n",
+        "               for index in range(len(CASE_IDS))]\n",
+        "    return {alias: {\"allowed_targets\": targets, \"final_target\": targets[-1]}}\n",
+        "\n",
+        "\n",
+        "def pytest_source_check(expected):\n",
+        "    wanted = expected[\"pytest_alias_policy\"]\n",
+        "    derived = [re.sub(r\"[\\W]\", \"_\", SELECTION.split(\"::\")[-1] + \"[\" + name + \"]\")[:30]\n",
+        "               for name in CASE_IDS]\n",
+        "    need(all(name == CASE_PREFIX for name in derived)\n",
+        "         and wanted[\"case_prefix\"] == CASE_PREFIX and wanted[\"case_ids\"] == list(CASE_IDS)\n",
+        "         and wanted[\"basetemp_relative\"] == str(PYTEST_BASE)\n",
+        "         and wanted[\"aliases\"] == pytest_alias_policy(output), \"closed five-case pytest alias policy differs\")\n",
+        "    source = wanted[\"source\"]\n",
+        "    path = Path(source[\"path\"])\n",
+        "    need(path.resolve(strict=True) == path and path.is_file() and not path.is_symlink(),\n",
+        "         \"pinned pytest tmpdir source must be physical regular input\")\n",
+        "    raw = path.read_bytes()\n",
+        "    need(len(raw) == source[\"bytes\"] and sha(raw) == source[\"sha256\"], \"pinned pytest tmpdir source changed\")\n",
+        "    return wanted\n",
+        "\n",
+        "\n",
+        "def raw_extent(raw, *, require_aliases=False, reserve=None):\n",
+        "    \"\"\"Walk physical entries without traversing even the five-target permitted alias.\"\"\"\n",
+        "    need(raw.is_absolute() and raw.resolve(strict=True) == raw and raw.is_dir(),\n",
+        "         \"physical raw directory required\")\n",
+        "    reserve = FINAL_RESERVE_BYTES if reserve is None else reserve\n",
+        "    allowed, aliases, total, regular_files = pytest_alias_policy(raw), [], 0, 0\n",
+        "    pending = [raw]\n",
+        "    while pending:\n",
+        "        parent = pending.pop()\n",
+        "        with os.scandir(parent) as entries:\n",
+        "            for item in entries:\n",
+        "                path = Path(item.path)\n",
+        "                observed = item.stat(follow_symlinks=False)\n",
+        "                mode = observed.st_mode\n",
+        "                relative = str(path.relative_to(raw))\n",
+        "                if stat.S_ISLNK(mode):\n",
+        "                    need(relative in allowed, \"unlisted raw output symlink refused\")\n",
+        "                    policy = allowed[relative]\n",
+        "                    literal = os.readlink(path)\n",
+        "                    matches = [item for item in policy[\"allowed_targets\"] if literal == item[\"literal_target\"]]\n",
+        "                    need(len(matches) == 1, \"pytest-current link literal differs\")\n",
+        "                    wanted = matches[0]\n",
+        "                    target = raw / wanted[\"target_relative\"]\n",
+        "                    # No resolution of arbitrary link text or recursive traversal\n",
+        "                    # through aliases. Every target component must be physical.\n",
+        "                    part = raw\n",
+        "                    for name in target.relative_to(raw).parts:\n",
+        "                        part = part / name\n",
+        "                        need(stat.S_ISDIR(part.lstat().st_mode), \"pytest-current target is not physical directory\")\n",
+        "                    need(target.resolve(strict=True) == target and target.parent == raw / PYTEST_BASE,\n",
+        "                         \"pytest-current target escapes sole expected test directory\")\n",
+        "                    aliases.append({\"relative\": relative, \"literal_target\": literal,\n",
+        "                                    \"target_relative\": wanted[\"target_relative\"]})\n",
+        "                    total += observed.st_size\n",
+        "                elif stat.S_ISDIR(mode):\n",
+        "                    pending.append(path)\n",
+        "                else:\n",
+        "                    need(stat.S_ISREG(mode), \"raw output special entry refused\")\n",
+        "                    need(observed.st_size <= STAGE_BYTES, \"raw per-file budget exceeded\")\n",
+        "                    total += observed.st_size\n",
+        "                    regular_files += 1\n",
+        "    aliases.sort(key=lambda row: row[\"relative\"])\n",
+        "    if require_aliases:\n",
+        "        need({row[\"relative\"] for row in aliases} == set(allowed), \"complete exact pytest-current alias set required\")\n",
+        "        need({path.name for path in (raw / PYTEST_BASE).iterdir()}\n",
+        "             == {*(CASE_PREFIX + str(index) for index in range(len(CASE_IDS))), CASE_PREFIX + \"current\"},\n",
+        "             \"exact five physical pytest test directories required\")\n",
+        "        need(all({key: item[key] for key in (\"literal_target\", \"target_relative\")}\n",
+        "                 == allowed[item[\"relative\"]][\"final_target\"] for item in aliases),\n",
+        "             \"completed pytest-current must target the fifth case\")\n",
+        "    need(total <= TOTAL_BYTES - reserve, \"raw total budget/final metadata reserve exceeded\")\n",
+        "    return {\"bytes\": total, \"regular_files\": regular_files, \"aliases\": aliases}\n",
+        "\n",
+        "\n",
+        "\n",
+        "def final_payload(result, extent, elapsed):\n",
+        "    result = dict(result)\n",
+        "    if elapsed >= WHOLE_SECONDS - FINAL_MARGIN_SECONDS:\n",
+        "        result.update(status=\"REFUSED_OR_FAILED\", error=\"FinalizationDeadline\",\n",
+        "                      reason=\"insufficient whole-entry time for bounded final metadata\")\n",
+        "    result[\"finalization\"] = {\"before\": extent, \"elapsed_seconds_before\": round(elapsed, 6),\n",
+        "        \"whole_seconds\": WHOLE_SECONDS, \"margin_seconds\": FINAL_MARGIN_SECONDS,\n",
+        "        \"reserve_bytes\": FINAL_RESERVE_BYTES, \"result_byte_cap\": FINAL_RESULT_BYTES,\n",
+        "        \"result_bytes\": 0, \"projected_total_bytes\": extent[\"bytes\"],\n",
+        "        \"controller_exit_zero_requires_post_fsync_extent_and_time_checks\": True,\n",
+        "        \"remaining_reserve_covers_bounded_stdout_and_root_guard_metadata\": True}\n",
+        "    for _ in range(8):\n",
+        "        payload = (json.dumps(result, sort_keys=True, indent=2, allow_nan=False) + \"\\n\").encode()\n",
+        "        if (result[\"finalization\"][\"result_bytes\"] == len(payload)\n",
+        "                and result[\"finalization\"][\"projected_total_bytes\"] == extent[\"bytes\"] + len(payload)):\n",
+        "            break\n",
+        "        result[\"finalization\"][\"result_bytes\"] = len(payload)\n",
+        "        result[\"finalization\"][\"projected_total_bytes\"] = extent[\"bytes\"] + len(payload)\n",
+        "    else:\n",
+        "        raise ValueError(\"final metadata size did not stabilize\")\n",
+        "    need(len(payload) <= FINAL_RESULT_BYTES <= FINAL_RESERVE_BYTES\n",
+        "         and extent[\"bytes\"] + len(payload) <= TOTAL_BYTES, \"projected final metadata exceeds reserved raw budget\")\n",
+        "    return result, payload\n",
+        "\n",
+        "\n",
+        "\n",
+        "def finalize_result(raw, result, started, *, clock=time.monotonic):\n",
+        "    complete = result.get(\"status\") == \"PRODUCER_WORKFLOW_COMPLETE\"\n",
+        "    before = raw_extent(raw, require_aliases=complete)\n",
+        "    result, payload = final_payload(result, before, clock() - started)\n",
+        "    with (raw / \"closed-result.json\").open(\"xb\") as stream:\n",
+        "        stream.write(payload); stream.flush(); os.fsync(stream.fileno())\n",
+        "    after = raw_extent(raw, require_aliases=complete, reserve=0)\n",
+        "    need(after[\"bytes\"] == before[\"bytes\"] + len(payload)\n",
+        "         and after[\"regular_files\"] == before[\"regular_files\"] + 1\n",
+        "         and after[\"aliases\"] == before[\"aliases\"], \"raw changed during bounded finalization\")\n",
+        "    need(clock() - started < WHOLE_SECONDS, \"whole-entry deadline exceeded after final fsync; controller exit is failure\")\n",
+        "    return result, int(result.get(\"status\") != \"PRODUCER_WORKFLOW_COMPLETE\")\n",
+        "\n"
+      ],
+      "new_range": [
+        69,
+        188
+      ],
+      "old_lines": [
+        "def raw_extent(raw):\n",
+        "    total = 0\n",
+        "    for path in raw.rglob(\"*\"):\n",
+        "        mode = path.lstat().st_mode\n",
+        "        need(stat.S_ISREG(mode) or stat.S_ISDIR(mode), \"raw output symlink/special entry refused\")\n",
+        "        if stat.S_ISREG(mode):\n",
+        "            size = path.stat().st_size\n",
+        "            need(size <= STAGE_BYTES, \"raw per-file budget exceeded\")\n",
+        "            total += size\n",
+        "    need(total <= TOTAL_BYTES, \"raw total budget exceeded\")\n",
+        "    return total\n"
+      ],
+      "old_range": [
+        59,
+        70
+      ]
+    },
+    {
+      "new_lines": [
+        "    save(output / \"closed-pytest-alias-policy-before.json\", pytest_source_check(EXPECTED))\n",
+        "    raw_extent(output)\n"
+      ],
+      "new_range": [
+        305,
+        307
+      ],
+      "old_lines": [],
+      "old_range": [
+        187,
+        187
+      ]
+    },
+    {
+      "new_lines": [
+        "    need(not os.path.lexists(profile / \"pytest\"), \"fresh absent five-case pytest basetemp required\")\n"
+      ],
+      "new_range": [
+        359,
+        360
+      ],
+      "old_lines": [],
+      "old_range": [
+        239,
+        239
+      ]
+    },
+    {
+      "new_lines": [
+        "        need(not os.path.lexists(profile / \"pytest\"), \"pytest basetemp changed before dispatch\")\n"
+      ],
+      "new_range": [
+        369,
+        370
+      ],
+      "old_lines": [],
+      "old_range": [
+        248,
+        248
+      ]
+    },
+    {
+      "new_lines": [
+        "        save(output / \"closed-pytest-alias-policy-after.json\", pytest_source_check(EXPECTED))\n",
+        "        save(output / \"closed-final-aliases.json\", raw_extent(output, require_aliases=code == 0))\n",
+        "        raw_extent(output, require_aliases=code == 0)\n"
+      ],
+      "new_range": [
+        413,
+        416
+      ],
+      "old_lines": [
+        "        raw_extent(output)\n"
+      ],
+      "old_range": [
+        291,
+        292
+      ]
+    },
+    {
+      "new_lines": [
+        "    started = time.monotonic()\n"
+      ],
+      "new_range": [
+        422,
+        423
+      ],
+      "old_lines": [],
+      "old_range": [
+        298,
+        298
+      ]
+    },
+    {
+      "new_lines": [
+        "        result = {\"status\": \"REFUSED_OR_FAILED\", \"error\": type(error).__name__, \"reason\": str(error)[:4096],\n"
+      ],
+      "new_range": [
+        426,
+        427
+      ],
+      "old_lines": [
+        "        result = {\"status\": \"REFUSED_OR_FAILED\", \"error\": type(error).__name__, \"reason\": str(error),\n"
+      ],
+      "old_range": [
+        301,
+        302
+      ]
+    },
+    {
+      "new_lines": [
+        "    try:\n",
+        "        need(len(sys.argv) >= 3 and Path(sys.argv[2]).is_dir(), \"existing raw namespace required for finalization\")\n",
+        "        result, status = finalize_result(Path(sys.argv[2]), result, started)\n",
+        "    except (Exception, SystemExit) as error:\n",
+        "        print(json.dumps({\"status\": \"FINALIZATION_REFUSED\", \"error\": type(error).__name__,\n",
+        "                          \"reason\": str(error)[:4096], \"independent_cold_acceptance\": False}, sort_keys=True))\n"
+      ],
+      "new_range": [
+        428,
+        434
+      ],
+      "old_lines": [
+        "        if len(sys.argv) >= 3 and Path(sys.argv[2]).is_dir():\n",
+        "            save(Path(sys.argv[2]) / \"closed-result.json\", result)\n",
+        "        print(json.dumps(result, sort_keys=True))\n"
+      ],
+      "old_range": [
+        303,
+        306
+      ]
+    },
+    {
+      "new_lines": [],
+      "new_range": [
+        435,
+        435
+      ],
+      "old_lines": [
+        "    save(Path(sys.argv[2]) / \"closed-result.json\", result)\n"
+      ],
+      "old_range": [
+        307,
+        308
+      ]
+    },
+    {
+      "new_lines": [
+        "    raise SystemExit(status)\n"
+      ],
+      "new_range": [
+        436,
+        437
+      ],
+      "old_lines": [],
+      "old_range": [
+        309,
+        309
+      ]
+    }
+  ],
+  "parent": {
+    "bytes": 18117,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v1/entry_template.py",
+    "sha256": "4cccf1fdc7a5921614112aa39158cc157ffcc96546d46c601682db7e90c4e13e"
+  },
+  "reference_finalization": {
+    "bytes": 27177,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/mixed-pair-actual-v2/entry.py",
+    "sha256": "895d551265dc2f9065ebe936a1b8b094e111be918fb4aa16d3e120d2dc89a043"
+  },
+  "scope": "Pure metadata only; V1 remains unexecuted and preserved; no actual source/result claim",
+  "source_observation": {
+    "bytes": 1649,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v2/pytest-tmpdir-source-observation.json",
+    "sha256": "24709dcf0212c84770bf60826a5472072e94862ad3d8a630b335e66c11c0777d"
+  },
+  "successor": {
+    "bytes": 25997,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v2/entry_template.py",
+    "sha256": "b443f44c4729daefa70c55bcfa62da92bf7949e88f7eea838009e98f66e14536"
+  },
+  "unchanged_functions": [
+    "check_records",
+    "junit_census",
+    "need",
+    "save",
+    "sha",
+    "stop_tree"
+  ]
+}

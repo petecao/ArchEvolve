@@ -1,0 +1,102 @@
+{
+  "created": "2026-09-26T18:49:35.748861-04:00",
+  "scope": "Independent native readbacka2 operational recipe, command, prepared selection and actual Linux proof field review",
+  "state": "clean_scoped_readiness_subject_to_fresh_host_admission_and_final_external_closure",
+  "recipe": {
+    "path": "/private/tmp/bfs-native-readback-a2-recipe-20260926.py",
+    "bytes": 17626,
+    "sha256": "cc1d2dda1d0c3498c0c12312183249b700fbec983bbba6f0e7e2d40510047339"
+  },
+  "selection": {
+    "path": "/private/tmp/bfs-native-readback-a2-selection-prepared-20260926.json",
+    "bytes": 2820,
+    "sha256": "e69e7250ad24135063106dac8764ca1311435bec7eb11141e2b573153b303774"
+  },
+  "preflight": {
+    "path": "/private/tmp/bfs-native-readback-a2-preflight-v2-20260926.md",
+    "bytes": 9298,
+    "sha256": "2c65efe08a4a3c7b399bdf04d2c662e9bd01b462010583e2f0433a632b8e14f6"
+  },
+  "author_receipt": {
+    "path": "/private/tmp/bfs-native-readback-a2-preparation-v2-20260926.json",
+    "bytes": 3533,
+    "sha256": "01b58d350acef8f9333b1a60100b83e37e1b89e81225788cb8cb31a75e90c3fe"
+  },
+  "supervisor_commit": "5e8b750b14679d5962d1e4b40cd5fa0f1b6981b0",
+  "collector_commit": "319645eab0a25c815fa03fe1c372d32b4ba45d10",
+  "fixed_clocks": {
+    "whole_seconds": 990,
+    "reader_work_seconds": 900,
+    "reader_cleanup_seconds": 30,
+    "cumulative_ancillary_seconds": 60,
+    "combined_a1_a2_ceiling_seconds": 1980,
+    "earliest": "2026-09-26T19:00:00-04:00",
+    "latest": "2026-09-26T23:43:30-04:00",
+    "absolute_end": "2026-09-27T00:00:00-04:00"
+  },
+  "checks": [
+    "Saved original reader delegated exactlyonce with unchanged positional arguments/result; only assigned optional synchronous observer added. No original collector mutation, alternate statisticalanalysis, extra cleanup reserve or automaticretry.",
+    "Cumulative60 timer pauses only during original900+30 reader; wrapper startup, proof/runtime/terminal checks, monitorstop, hashes and output share remaining original990. Outer TERM allowance clips originalend-current-30.",
+    "Actual spawn identity is fsynced before polling/reaping; sampler-known identities persist after telemetry failures; shared Monitor lock serializes reader observations/sampling. Observation output always cleanup_verified:false.",
+    "Monitor remains read-only with sampled16GiB/5snominal/30smax; sample/event file bounds16MiB/64KiB. ExternalHost must independently union ancestry/resources/known/events/wrappers after exit.",
+    "Final sample/write first-error ordering repaired without retry or newreserve. Newly linkedresult withdrawn on latefailure; retainedpending notsuccess.",
+    "Prepared spec exactlyequals priorV2 historical/native selection; Linuxproofref exactlymatches reportedpath/hash plus actual2914B. No oldfailedstudy/control exclusion.",
+    "V2preflight execution shellblock unchanged from V1 and independently bash-n checked, never invoked. Typed actualpane and originalclocks remain only unresolved operationalvalues."
+  ],
+  "finding_closed": {
+    "description": "Secondary observation persistence could mask primary final sample/monitor error.",
+    "original_recipe": {
+      "path": "/private/tmp/bfs-native-readback-a2-recipe-v1-reviewed-20260926.py",
+      "bytes": 17443,
+      "sha256": "64e68a9b3640562868d4ce5da56a7e70dcb4b8142c440952e2e95b75a7dbb95e"
+    },
+    "independent_probe": {
+      "path": "/private/tmp/test_native_readback_a2_finish_standards_20260926.py",
+      "bytes": 758,
+      "sha256": "930437d0441b389960284a6c463edc29a014c7041833ab9850de7d1b63af331d"
+    },
+    "original_red": {
+      "path": "/private/tmp/bfs-native-readback-a2-finish-standards-red-20260926.log",
+      "bytes": 1711,
+      "sha256": "29303f491026514aed2a28ab458b4a4606e3beb8be2e268fab9960c192926d40"
+    },
+    "final_validation": {
+      "command": "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest /private/tmp/test_native_readback_a2_finish_standards_20260926.py /private/tmp/test_bfs_native_readback_a2_recipe_20260926.py -q --basetemp /private/tmp/bfs-native-readback-a2-standards-final-20260926",
+      "log": {
+        "path": "/private/tmp/bfs-native-readback-a2-standards-final-20260926.log",
+        "bytes": 99,
+        "sha256": "f5c48f0aec40c7b769a4203fd6fdd7f81573cc8be100a125c28d5a0e6c52cd63"
+      },
+      "result": "22passed0.14s"
+    }
+  },
+  "actual_linux_proof": {
+    "basis": "Source-free Host metadata summary independently read locally; no additional host test/auditor or remote raw rehash.",
+    "summary": {
+      "path": "/private/tmp/bfs-native-reader-fast-exit-actual-20260926.json",
+      "bytes": 4368,
+      "sha256": "f3cc5db3b2039b27dc2733dad725feafcd170eec06947f6bb1395d246f037e2e"
+    },
+    "proof": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-reader-fast-exit-linux-20260926-a1/proof.json",
+      "sha256": "79f349b0e348e4ee47e63a4a74ff04565497e7c7df45848c6cd9e1aad940b4b1"
+    },
+    "terminal": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-reader-fast-exit-linux-20260926-a1.dispatch/terminal-validation.json",
+      "sha256": "dfc60af762b51e2c38ffebd0218d8be4a9b90027691991b737f7f38895df91bc"
+    },
+    "reported_invariants": "Exact5e8/test75c/reader77fc/Pythone50d; real unskipped1pass0skip/allzeroexit, original90s/actual1.247585s. Spawn+finished reader3079278/start496450236 is identicalZ/RSS0, parentpytest3079276/start496450165; finished confirms directreap0. Independentaudit18:44:41 retainsfull7union/sixabsent/exactpaneZ, released327/kernelclearintwoobservations.",
+    "schema_match": "Actual format/state/types/timestamps/python/pytest/events/terminalflag shapes agree with linux_proof reader; bytecountextra accepted by common hashedreference helper."
+  },
+  "remaining_gates": [
+    "Exact recipe/input Gittransfer and rehash into fresha2rawroot; retainexpanded input/argv hash and immediatepane/helper/timeout/wrapper identities.",
+    "Fresh pristine5e8/319/Python/helper/hostcapacity/currentprocess and bothsocket/legacylock admission.",
+    "One invocation inside fixedwindow only; no dispatch authorized by this review itself.",
+    "Afterexit, externalzero/resultimmutability plus complete retainedPID/startunion and exactreleasedgeneration/kernel check before acceptingreadback."
+  ],
+  "limits": [
+    "No hostcall, actualreader/auditor, provider,measurement,recordwrite,export or implementationedit by reviewer.",
+    "Contracttests and manualLinuxfixture are lifecycle evidence only; native qualification requires actualreadback; no protocolfreeze/candidategain.",
+    "Originalfaileda1 and its incompletehistoricalunion/current-inactivitysupplement remainunchanged."
+  ]
+}

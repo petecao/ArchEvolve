@@ -1,0 +1,14 @@
+...F
+======================================================================
+FAIL: test_pass_flag_without_direct_valid_is_refused (__main__.NativeOutcomeTests.test_pass_flag_without_direct_valid_is_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/test_formal_outcomes.py", line 67, in test_pass_flag_without_direct_valid_is_refused
+    with self.assertRaises(AssertionError): self.observe(711, 'no_direct_valid')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.015s
+
+FAILED (failures=1)

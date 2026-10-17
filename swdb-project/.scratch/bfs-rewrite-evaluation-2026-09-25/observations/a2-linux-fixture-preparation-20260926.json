@@ -1,0 +1,73 @@
+{
+  "created": "2026-09-26",
+  "status": "local_scoped_reviews_complete_actual_linux_pending",
+  "scope": "A2 fixture tests at exact historical673 runtime under separately pinned supervisor; shared immediate-root inventory guard",
+  "tested_commit": "67313d9b2a45d9f0fb23d935b56e755a3a19fa7f",
+  "files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_a2_linux_fixture.py",
+      "bytes": 15973,
+      "sha256": "ab2f28b64af523f031691fe08a508111aa4d80617f4e57fabe554f783f5cb5f3"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_a2_linux_fixture.py",
+      "bytes": 13694,
+      "sha256": "566d343f87f3b24057b7ffc28fed48d7349d09564eab35978b1d1f3dd7dad16d"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-a2-linux-fixture-20260926.md",
+      "bytes": 5567,
+      "sha256": "00bed9f525ec9c11f142eaec2205d888ba0a5cbbd5e8fd73db0520b9df04940d"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_native_campaign.py",
+      "bytes": 72515,
+      "sha256": "e341ada6cec7ee628c7fb75576b47f863ce4b6d30059ae100ad5acdea58cb0e4"
+    }
+  ],
+  "author": {
+    "path": "/private/tmp/bfs-a2-linux-fixture-preparation-v2-20260926.json",
+    "bytes": 2043,
+    "sha256": "76e87e8091d82d4b0fab0b5ffb630a5b361d2dd913c5a1e56ed62bd0b96f0db4"
+  },
+  "checks": {
+    "author": "29 passed in1.33s",
+    "shared_native_and_fixture": "62 passed,2 Linux-only skipped in1.84s",
+    "independent_spec": "Original import-shadow repro now rejects;36 combined cases pass",
+    "independent_standards": "7 boundary cases plus2 original subprocess probes pass"
+  },
+  "reviews": {
+    "Spec": {
+      "path": "/private/tmp/bfs-a2-root-smoke-independent-spec-20260926.json",
+      "bytes": 3883,
+      "sha256": "42c552d4ef9cca052e89d8b7f5493c37fa9a8a0adf31a43e0744de03d7b13bf1"
+    },
+    "Standards": {
+      "path": "/private/tmp/bfs-shared-root-a2-smoke-standards-review-20260926.json",
+      "bytes": 3922,
+      "sha256": "b1f1b7b7677120ded324d5200a5edf4bf3f49927bfcba3c83b1e462a045d2ad5"
+    }
+  },
+  "retained_import_shadow_failure": {
+    "path": "/private/tmp/bfs-a2-fixture-import-spec-red-20260926.log",
+    "bytes": 2680,
+    "sha256": "8b7c7411806606cfa6eeec5756a2ec1f5c415b47d5548a85cf7d93029fade12b"
+  },
+  "actual_linux_selections": {
+    "owned_cleanup": "not_started",
+    "dx100_interruption": "not_started"
+  },
+  "bounds": {
+    "outer_seconds": 90,
+    "work_seconds": 60,
+    "shared_cleanup_seconds": 30,
+    "sampled_rss_bytes": 536870912,
+    "output_bytes": 536870912
+  },
+  "limits": [
+    "Both review receipts contain additional smoke findings/checks outside this A2 scope; the remaining generic work-clock issue is tracked separately.",
+    "No host fixture, whole-process closure, empirical result, export or historical checkout change follows from this preparation.",
+    "Only pending proof is emitted; independent terminal audit is required before separate passed proof.",
+    "The active native pilot and A2 tested runtime remain unchanged."
+  ]
+}

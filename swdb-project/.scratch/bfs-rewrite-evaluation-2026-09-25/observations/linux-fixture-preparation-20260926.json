@@ -1,0 +1,113 @@
+{
+  "created": "2026-09-26",
+  "status": "local_review_complete_actual_linux_pending",
+  "scope": "Three fixed Linux process-contract selections; no empirical execution or terminal cleanup claim",
+  "files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_linux_fixture.py",
+      "bytes": 13247,
+      "sha256": "36b1b61b35a07a8ad457ed94e2af152fc02188dbffc7d4d5246c411a3a45bf2d"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_linux_fixture.py",
+      "bytes": 10156,
+      "sha256": "fb5f1a16d567e1873df50a9a5cea032f3f27a6f6e9e5a011b8bf83cb20294ee8"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-linux-supervision-admission-20260926.md",
+      "bytes": 9131,
+      "sha256": "dc0dbbbb203bb96e76103166bb2f62cc01d553b0afeb679d0e778d6ef2c187f7"
+    }
+  ],
+  "tests": {
+    "runner": "20 passed",
+    "independent_spec": "2 passed",
+    "independent_standards": "2 passed"
+  },
+  "reviews": {
+    "Spec": {
+      "receipt": {
+        "path": "/private/tmp/bfs-linux-fixture-independent-spec-20260926.json",
+        "bytes": 3697,
+        "sha256": "4beb394e2b88e7f00c3af755abfe262734a689b7e2723915d78e8c938b31c208"
+      },
+      "result": "clean_after_draft_corrections"
+    },
+    "Standards": {
+      "receipt": {
+        "path": "/private/tmp/bfs-linux-fixture-standards-review-20260926.json",
+        "bytes": 3240,
+        "sha256": "d05629654725116420ed340366ea5cd9c1bf80c1afd2b5f22652e64fcd35fc10"
+      },
+      "result": "no_actionable_scoped_findings"
+    }
+  },
+  "proof_boundary": "Runner emits only tests_passed_cleanup_unverified pending proof. A separate passed proof requires independent terminal audit of all owned PID/start identities, exact released lease and zero outer/driver/pytest exits.",
+  "bounds": {
+    "outer_seconds": 90,
+    "work_seconds": 60,
+    "shared_cleanup_seconds": 30,
+    "sampled_rss_bytes": 536870912,
+    "output_bytes": 536870912
+  },
+  "actual_selections": {
+    "owned_cleanup": "not_started",
+    "dx100_interruption": "not_started",
+    "native_campaign_owned_cleanup": "not_started"
+  },
+  "limits": [
+    "These local mocked-host and subprocess checks are not Linux admission.",
+    "Future export commit and actual Python/pytest/runtime identities remain to be pinned.",
+    "The active native pilot and historical checkouts remain unchanged.",
+    "This interim review does not replace final all-ticket Standards and Spec review."
+  ],
+  "initial_review_files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_linux_fixture.py",
+      "bytes": 13148,
+      "sha256": "76a9df1a94c9232b3cb49655480b267fa7859316cefe3bd14144880e4682e382"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_linux_fixture.py",
+      "bytes": 9549,
+      "sha256": "4a7a901bcc57353747cf230ae13359e3a39d2a806d8b03e2870223c52d9f67b2"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-linux-supervision-admission-20260926.md",
+      "bytes": 8969,
+      "sha256": "d9015f34e120e853b6365737864f7bb5239a2f6b86e1f7e2051710dd071b9daa"
+    }
+  ],
+  "environment_follow_up": {
+    "created": "2026-09-26",
+    "change": "Clear PYTEST_PLUGINS/PYTHONOPTIMIZE and reject optimized startup before project imports. Keep nested fixture assertions enabled.",
+    "red": {
+      "result": "3 failed, 20 deselected",
+      "log": {
+        "path": "/private/tmp/bfs-linux-fixture-environment-red-20260926.log",
+        "bytes": 4475,
+        "sha256": "6c8472799c16f7410c555c71499d6ee9e5936127f117bef0a9f06c93bd6d0866"
+      }
+    },
+    "green": {
+      "result": "23 passed in0.76s",
+      "log": {
+        "path": "/private/tmp/bfs-linux-fixture-environment-green-20260926.log",
+        "bytes": 99,
+        "sha256": "ceb17225ca04dc578c8c660b269b0c293f1cc08f1197b0826e84c7fc9e3584be"
+      }
+    },
+    "Standards": {
+      "result": "3 independent subprocess probes passed; clean",
+      "receipt": {
+        "path": "/private/tmp/bfs-linux-fixture-environment-standards-review-20260926.json",
+        "bytes": 1731,
+        "sha256": "71ba954bc46edf40a56976d4cc7161bb582e58c17855e997c464e8ca578f4043"
+      }
+    },
+    "Spec": {
+      "result": "clean scoped readback reported by spec_postfix in-session; no additional execution claimed",
+      "basis": "The prior review is retained; this follow-up changes environment isolation only, not lifecycle, selections or proof schema."
+    }
+  }
+}

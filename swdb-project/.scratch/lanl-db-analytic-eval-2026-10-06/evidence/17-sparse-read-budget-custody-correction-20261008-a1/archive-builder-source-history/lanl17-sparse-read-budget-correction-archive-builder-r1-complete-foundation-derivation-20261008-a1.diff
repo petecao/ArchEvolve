@@ -1,0 +1,125 @@
+--- /private/tmp/lanl17_build_sparse_administration_custody_archive_20261008_a1.py
++++ /private/tmp/lanl17_build_sparse_read_budget_correction_custody_archive_20261008_a1_r1.py
+@@ -1,4 +1,4 @@
+-"""2026-10-08 ET: prospective local archive-only builder. SOURCE ONLY / NOT RUN."""
++"""2026-10-08 ET: prospective read-budget correction archive-only builder. SOURCE ONLY / NOT RUN."""
+ import argparse
+ import datetime
+ import gzip
+@@ -14,14 +14,18 @@
+ 
+ WORKTREE=Path('/Users/yanrujhou/.codex/worktrees/lanl-ticket17/ArchEvolve')
+ BRANCH='codex/lanl17-storage-guard-cost'
+-BASE40='5e12a9796432654d88def24ecea617d16ca605b2'
+-REL=PurePosixPath('swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-library-preserving-sparse-retirement-custody-20261008-a1')
+-FORMAT='swdb.parent-sparse-administration-archive-input-materials.v1'
++BASE40='28446e8682b0a55ef4bb2050de9c46e072c39ce6'
++SCIENTIFIC_BASE40='5e12a9796432654d88def24ecea617d16ca605b2'
++OLD_REL=PurePosixPath('swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-library-preserving-sparse-retirement-custody-20261008-a1')
++REL=PurePosixPath('swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-sparse-read-budget-custody-correction-20261008-a1')
++FORMAT='swdb.parent-sparse-read-budget-correction-archive-input-materials.v1'
+ MAX_FILE=64*1024*1024
+ MAX_TOTAL=128*1024*1024
+ MAX_LEDGER=2*1024*1024
+ THRESHOLD=256*1024
+ CHUNK=1024*1024
++# Required plain source destinations match the selected native bootstrap Git REL.
++REQUIRED_PLAIN_SOURCES={'selected-sparse-control-source/lanl_sparse_retire_consumed_source_guard_20261008_a1_r5.py': (180887, 'd75baaf9dbe7192b02812cab525ccd6c50c81fd312d67cbfae7b9c8fdf955301'), 'selected-sparse-control-source/lanl17_detach_library_preserving_sparse_administration_20261008_a1_r2.py': (24114, 'e16f1afa5a427d452504e7a759a7562dcc05a98014e2b4ece1663db6755d39ec'), 'Git-private-two-source-copy/lanl17_copy_sparse_retirement_sources_from_administrative_git_20261008_a2.py': (12028, '9f8e43a01b4be0567ce7c637509222c0903481bea8dd9d6b82dfaf6de79af9de'), 'Git-private-two-source-copy/lanl17_sparse_retirement_copy_native_stdin_bootstrap_20261008_a2.py': (5610, '345159afa21734985a9c465602b193d357e9a0a2b8b47ef02b2e8e9fbd4f4932'), 'Git-private-two-source-copy/lanl17_capture_exact_administrative_fetch_two_source_copy_20261008_a2_r1.py': (20701, '8fd38ee31710bbfa3e5ba9d65d7e082b7cfbbae102a23336e7e6f7324094ed48')}
+ class Refused(Exception):pass
+ def require(ok,code):
+     if not ok:raise Refused(code)
+@@ -72,7 +76,23 @@
+     canonical(WORKTREE);s=WORKTREE.lstat();require(stat.S_ISDIR(s.st_mode) and s.st_uid==os.geteuid(),'worktree_owner')
+     require(git('rev-parse','HEAD').strip().decode()==BASE40 and git('symbolic-ref','--short','HEAD').strip().decode()==BRANCH,'fixed_archive_worktree_head_branch')
+     require(not git('diff','--name-only') and not git('diff','--cached','--name-only'),'tracked_or_cached_change')
++    original_tree=git('ls-tree','-r','-z','--full-tree',SCIENTIFIC_BASE40)
++    parent_tree=git('ls-tree','-r','-z','--full-tree',BASE40)
++    previous_archive=git('ls-tree','-r','-z','--full-tree',BASE40,'--',str(OLD_REL))
++    require(len(original_tree.split(b'\0'))-1==4567 and len(previous_archive.split(b'\0'))-1==175,
++            'original_4567_and_old_archive_175_entries_required')
++    original_rows={r.split(b'\t',1)[1]:r for r in original_tree.split(b'\0') if r}
++    parent_rows={r.split(b'\t',1)[1]:r for r in parent_tree.split(b'\0') if r}
++    old_rows={r.split(b'\t',1)[1]:r for r in previous_archive.split(b'\0') if r}
++    require(len(original_rows)==4567 and len(old_rows)==175 and len(parent_rows)==4742
++            and set(parent_rows)==set(original_rows)|set(old_rows)
++            and all(parent_rows[p]==r for p,r in original_rows.items()),
++            'all_original_blobs_modes_and_exact_old_archive_union_required')
+     return {'head':BASE40,'branch':BRANCH,'tree':git('rev-parse','HEAD^{tree}').strip().decode(),
++            'prior_tracked_blob_mode_inventory_sha256':sha(parent_tree),
++            'original_4567_blob_modes_sha256':sha(original_tree),
++            'old_175_archive_blob_modes_sha256':sha(previous_archive),
++            'old_archive_relative_prefix':str(OLD_REL),
+             'scientific_source_tree':git('rev-parse','HEAD:swdb-project/swdb').strip().decode(),
+             'canonical_records_tree':git('rev-parse','HEAD:swdb-project/records').strip().decode(),
+             'ref_inventory_sha256':sha(git('for-each-ref','--format=%(refname) %(objectname)')),
+@@ -135,15 +155,22 @@
+     self_path=Path(__file__).absolute();self_pin=hash_file(self_path,256*1024);require(self_pin['sha256']==args.builder_source_sha256,'builder_source_pin')
+     b,ledger_stat=read_small(ledger_path,MAX_LEDGER);require(sha(b)==args.input_ledger_sha256,'ledger_returned_byte_pin');ledger=strict_json(b)
+     require(isinstance(ledger,dict) and ledger.get('format')==FORMAT and ledger.get('sealed') is False and ledger.get('archive_relative_prefix')==str(REL) and ledger.get('branch')==BRANCH and ledger.get('expected_base')==BASE40,'ledger_exact_archive_contract')
+-    require(ledger.get('archive_builder_or_project_write_performed') is False and ledger.get('new_selected_control_and_copier_sources_still_pending') is False,'final_not_pending_ledger_required')
++    require(ledger.get('archive_builder_or_project_write_performed') is False and ledger.get('new_selected_control_and_copier_sources_still_pending') is False
++            and ledger.get('final_parent_request_review_checkpoint_inputs_pending') is False
++            and ledger.get('parent_complete_explicit_byte_custody_inventory_reviewed') is True,'final_not_pending_ledger_required')
+     rows=ledger.get('rows');require(isinstance(rows,list) and 1<=len(rows)<=192,'ledger_original_cardinality')
+     root=WORKTREE/str(REL);require(not os.path.lexists(root),'absent_exact_archive_prefix')
++    require(not root.is_relative_to(WORKTREE/str(OLD_REL)),'old_archive_is_not_mutation_scope')
+     before=repository_state();require(before['status']==b'','initial_clean_worktree')
+     routes=set();origins=set();prepared=[];total=0
+     for original in rows:
+         tick();require(isinstance(original,dict),'original_row_object')
+         row=dict(original);require(type(row.get('bytes')) is int and 0<=row['bytes']<=MAX_FILE and isinstance(row.get('sha256'),str) and re.fullmatch('[a-f0-9]{64}',row['sha256']),'original_row_byte_pin')
+-        require(isinstance(row.get('original_path'),str) and isinstance(row.get('scope'),str) and isinstance(row.get('execution_or_evidence_boundary'),str),'original_row_metadata')
++        require(isinstance(row.get('original_path'),str) and isinstance(row.get('scope'),str)
++                and isinstance(row.get('execution_or_evidence_boundary'),str)
++                and isinstance(row.get('original_policy'),dict)
++                and row['original_policy'].get('custody_handling')=='preserve_exact_original_bytes_without_new_seal_or_fields',
++                'original_row_metadata_and_explicit_policy')
+         source=Path(row['original_path']);require(str(source).startswith('/private/tmp/') and not source.is_relative_to(root),'explicit_original_private_route')
+         relative=safe_relative(row.get('relative_archive_path'))
+         compressed=row['bytes']>=THRESHOLD and (relative.name.lower().endswith('.json') or relative.name.lower().endswith('.stdout'))
+@@ -153,6 +180,12 @@
+         observed=hash_file(source,MAX_FILE);require(observed['bytes']==row['bytes'] and observed['sha256']==row['sha256'],'all_original_pins_before_publication')
+         prepared.append((row,relative,target,compressed,observed))
+     require(type(ledger.get('original_bytes_total')) is int and total==ledger['original_bytes_total'],'exact_ledger_total')
++    by_relative={str(relative):row for row,relative,_,_,_ in prepared}
++    for relative,(size,digest) in REQUIRED_PLAIN_SOURCES.items():
++        require(relative in by_relative and by_relative[relative]['bytes']==size
++                and by_relative[relative]['sha256']==digest,'selected_plain_source_destination_pin')
++    require(all(not compressed for _,relative,_,compressed,_ in prepared if str(relative) in REQUIRED_PLAIN_SOURCES),
++            'selected_sources_must_remain_plain')
+     # Refuse file/directory collisions before any prefix exists.
+     for route in routes:
+         require(not any(str(parent) in routes for parent in PurePosixPath(route).parents if str(parent)!='.'),'target_file_parent_collision')
+@@ -169,10 +202,17 @@
+           'representation':'gzip-original-bytes' if compressed else 'original-bytes','encoded_bytes':encoded['bytes'],'encoded_sha256':encoded['sha256'],
+           'original_bytes':decoded['bytes'],'original_sha256':decoded['sha256'],'original_stat':observed['stat'],'archive_stat':encoded['stat'],
+           'original_json_seals_recomputed':False})
+-    note=('''# Library-preserving sparse retirement custody — 2026-10-08 ET\n\nThis additive archive preserves exact original source, preparation, observations and review bytes from the explicit parent-reviewed ledger. Gzip rows decode to those complete original bytes; no JSON fields or original seal/canonical-policy claims are rewritten. Earlier NOT RUN source histories remain creation-time facts. Any genuine synthetic or administrative execution is described only by its separate original custody.\n\nThe archive does not invoke selected guard/wrapper/control mains, authorize retirement or removal, assert consumer visibility or reserve, or supply scientific/campaign admission. Parent owns actual selection and execution.\n\nBuilder and input ledger remain separately pinned original files outside this archive unless explicitly named ledger rows. No circular manifest selfproof is asserted. All files here are newly created; prior tracked source, records, refs and current source tree remain unchanged.\n''').encode()
++    note=('''# Sparse read-budget correction custody — 2026-10-08 ET
++
++Date: 2026-10-08 (ET)\n\nThis additive archive preserves exact original source, preparation, observations and review bytes from the explicit parent-reviewed ledger. Gzip rows decode to those complete original bytes; no JSON fields or original seal/canonical-policy claims are rewritten. Earlier NOT RUN source histories remain creation-time facts. Any genuine synthetic or administrative execution is described only by its separate original custody.\n\nThe archive does not invoke selected guard/wrapper/control mains, authorize retirement or removal, assert consumer visibility or reserve, or supply scientific/campaign admission. Parent owns actual selection and execution.
++
++The original R2 DEFAULT a1 failed cumulative_read_limit and performed no retirement. Its nine decoded originals, separate local custody and enclosing publication/launch/collection originals remain exact. That failed DEFAULT does not authorize historical-witness inheritance. The separately preserved fifteen-method synthetic batch passed; it exercises its named virtual contracts and gives no production receipt-fit, host-budget or administrative success proof. Selected G5/W2 and their dependency chain remain source-review preparations; earlier NOT RUN labels stay creation-time history. Final later request/review/checkpoint originals, if included, retain only their own explicitly reviewed creation/execution boundary. No successful corrected DEFAULT, retirement, capacity or scientific result is inferred by this archive.
++
++The previous 175-path archive and all 4,567 original scientific-base tracked entries are retained byte/mode exact in the required parent. Older O5 and large evidence bodies are referenced through that immutable parent archive, rather than copied again.\n\nBuilder and input ledger remain separately pinned original files outside this archive unless explicitly named ledger rows. No circular manifest selfproof is asserted. All files here are newly created; prior tracked source, records, refs and current source tree remain unchanged.\n''').encode()
+     write_metadata(root/'README.md',note)
+-    manifest={'format':'swdb.lanl17-library-preserving-sparse-retirement-archival-custody.v1','canonical_ensure_ascii':True,'created_date_ET':'2026-10-08',
++    manifest={'format':'swdb.lanl17-sparse-read-budget-correction-archival-custody.v1','canonical_ensure_ascii':True,'created_date_ET':'2026-10-08',
+       'source_base40':BASE40,'source_branch':BRANCH,'source_tree':before['tree'],'archive_relative_prefix':str(REL),
++      'scientific_original_base40':SCIENTIFIC_BASE40,'prior_originals_and_archive':{k:v for k,v in before.items() if k.endswith('sha256') or k=='old_archive_relative_prefix'},
+       'builder_original':{'path':str(self_path),'bytes':self_pin['bytes'],'sha256':self_pin['sha256']},
+       'input_ledger_original':{'path':str(ledger_path),'bytes':len(b),'sha256':sha(b)},'original_rows':manifest_rows,'original_bytes_total':total,
+       'readme':{'bytes':len(note),'sha256':sha(note)},'original_seal_policies_preserved_without_recomputation':True,
+@@ -201,10 +241,10 @@
+     status_lines=after['status'].splitlines()
+     require(len(status_lines)==len(expected) and all(x.startswith(b'?? '+str(REL).encode()+b'/') for x in status_lines),'only_exact_archive_untracked_additions')
+     require(hash_file(self_path,256*1024)==self_pin and read_small(ledger_path,MAX_LEDGER)==(b,ledger_stat),'final_builder_ledger_originals')
+-    print(json.dumps({'format':'swdb.sparse-administration-archive-only-builder-original.v1','sealed':False,'archive_relative_prefix':str(REL),'base40':BASE40,
++    print(json.dumps({'format':'swdb.sparse-read-budget-correction-archive-only-builder-original.v1','sealed':False,'archive_relative_prefix':str(REL),'base40':BASE40,
+       'original_rows':len(rows),'original_bytes':total,'added_files':len(expected),'manifest_file_sha256':sha(mb),'manifest_identity_sha256':manifest['identity_sha256'],
+       'prior_tracked_tree_refs_preserved':True,'selected_mains_invoked':False,'cleanup_capacity_or_scientific_admission':False},sort_keys=True))
+ if __name__=='__main__':
+     try:main()
+     except (Refused,OSError,ValueError,TypeError,UnicodeError,EOFError,zlib.error,subprocess.SubprocessError) as e:
+-        print(json.dumps({'format':'swdb.sparse-administration-archive-builder-refusal.v1','sealed':False,'error_class':type(e).__name__,'error_digest':sha(str(e).encode()),'partial_archive_preserved':True}));raise SystemExit(1)
++        print(json.dumps({'format':'swdb.sparse-read-budget-correction-archive-builder-refusal.v1','sealed':False,'error_class':type(e).__name__,'error_digest':sha(str(e).encode()),'partial_archive_preserved':True}));raise SystemExit(1)

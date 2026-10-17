@@ -1,0 +1,52 @@
+{
+  "canonical_ensure_ascii": false,
+  "cleanup_errors": [],
+  "completed_node1_lane_bound": false,
+  "delivered_revision": "673b39d75ec8ab2b7d1ca19cc6ec7e180444cb4e",
+  "dispatcher_cleanup_original": {
+    "bytes": 79,
+    "identity_sha256": null,
+    "path": "/data/yanruj/EvolveSWDB_runs/lanl14-lifecycle-administration-20261007-a1/dispatch/dispatcher-cleanup.json",
+    "sha256": "8ca1ae3e7af283894271a2266304d107280623739bc334067134e61e09278978"
+  },
+  "dispatcher_sha256": "cbaaef6a8f7f324502357daacc1ffa27b3245c0e23ebbaa9f827bdebdf7dc9b1",
+  "ended_utc": "2026-10-07T23:36:49.943934+00:00",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "failure_type": "Refused",
+  "fixture_only": true,
+  "fixture_original": null,
+  "format": "swdb.lanl14-parent-early-nonzero-dispatch-result.v1",
+  "identity_sha256": "3a27dc5c78a79c607e69afe3cfe76b9bdf5a80bcef05f7e9c061ebc51072fb1e",
+  "leases_after": {
+    "legacy": "released",
+    "node0": {
+      "generation": 510,
+      "job": "swdb-lanl14-reports-final-20261007-a1",
+      "lane_original": {
+        "bytes": 812,
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1/control/lane.json",
+        "sha256": "89e0f90292083c616a13d3738fe4631d9365bbc1398d7ba7e5bcbbf4bb651286"
+      },
+      "pid": 2128960,
+      "start_time": "588421769",
+      "state": "held"
+    },
+    "node1": "released"
+  },
+  "one_attempt": true,
+  "originals": {
+    "wrapper-exit-code.txt": {
+      "bytes": 12,
+      "sha256": "05a8087c5e42d4f63b7fb36de8ad93ec31a17722092b5eb6c12319f41b2ab759"
+    }
+  },
+  "passed": false,
+  "preregistration": null,
+  "remote_program_sha256": "3888a1a58fb8800f6e7645b5e651f4ad62e8d5c67222ed987d8a920f8b243ebe",
+  "scientific_admission": false,
+  "scientific_source_revision": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "scope": "Actual administrative fixture result only when this future main is selected. No scientific/native application result or production control admission.",
+  "selected_control_main_invoked": false,
+  "started_utc": "2026-10-07T23:36:49.746201+00:00",
+  "wrapper_exit": null
+}

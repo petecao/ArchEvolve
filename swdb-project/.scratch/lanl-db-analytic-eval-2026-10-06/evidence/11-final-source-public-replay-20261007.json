@@ -1,0 +1,25 @@
+{
+  "date": "2026-10-07 ET",
+  "public_replay": {
+    "scope": "Final-source public freeze/estimate plus public module prospective pairing replay; no new count or native invocation, fixture only/no accuracy claim.",
+    "protocol": {
+      "id": "fixture.protected.final-source-protocol.921b836d30079ae0",
+      "sha256": "e405e175a6662523169aaeac12714ee182c53ed46bd2ed8654e23c7bfd915bb8"
+    },
+    "estimate": {
+      "id": "fixture.protected.final-source-estimate",
+      "sha256": "de98c229206bd7a79287867312f10b1e4d3e88cf7ffba407dfd7deadcc327712"
+    },
+    "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+    "characterization_sha256": "babc92bd932e94ebb104e03f4aebae51cac445647958cf9262b38409d5fef247",
+    "kernel_seconds": 7.92e-05,
+    "elapsed_seconds": null,
+    "error_band": null,
+    "prior_records_preserved": 19,
+    "agreement_claim": false,
+    "identity_sha256": "bf72f0bb564b7c161f6e1f0b64ba6ced49423347f439c7ce571695b3b0d8bb01"
+  },
+  "log_sha256": "85f4070e09b16d78580e1bf0400d46f7806e83a9e03e765fb0f20f5a644a13ea",
+  "orchestration_note": "Public freeze/estimate succeeded once. The external receipt collector used a nonexistent Store.load method afterward; only module admission/export resumed with the actual Store constructor. No public command, count or native invocation was repeated.",
+  "identity_sha256": "a0ebfba2af3eafd150f29f17d7b573aa54153eee4a807cfb9f4bfa0a11e80f64"
+}

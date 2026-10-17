@@ -1,0 +1,1692 @@
+{
+ "created": "2026-10-05 ET",
+ "purpose": "Certification code-review fixes (F1-F14, spec review C4, C10, C22, C24): re-certify ticket 20, ticket 42 (BC), both a7 bests, ticket 75's native contract and the five library operations under every runnable version, before (base 03b9d3b) and after the changes, and compare verdicts, matrix cells, controls (status, reason, observed and named checks, attribution), clause rows and compile command lines (normalized for run folders and checkout roots).",
+ "decision": "agent-decided under Yan-Ru's delegation; revisable",
+ "host": {
+  "system": "Darwin",
+  "machine": "arm64",
+  "compiler": "/opt/homebrew/bin/g++-16"
+ },
+ "code": {
+  "before": "03b9d3b (yanrujhou_main; extracted with git archive)",
+  "after": "bb7673f (worktree branch; certification code final at this commit, manifests equal the frozen digests)"
+ },
+ "inputs": {
+  "t20": "library/dx100/peter-section5.patch on bfs-dx100-scalar-only-20260929-a1.source",
+  "bc": "library/dx100/bc-forward-pass.patch on bc-dx100-scalar-only-20261003-a1.source",
+  "a7_kronecker": "extensa-gem5-bfs-20261004-a7.it4.kronecker.a2 as a patch on the BFS snapshot (tree c8f4bf16..., equal to the candidate record)",
+  "a7_uniform": "extensa-gem5-bfs-20261004-a7.it8.uniform_random.a1 (tree d63c714a...)",
+  "native": "library/native/bfs-tdstep-frontier-staging.patch (tree 7acca955...)",
+  "library operations": "the five seeded entries with their profiles, seed 20261005 for every run"
+ },
+ "result": {
+  "pairs_compared": 30,
+  "pairs_identical": 30,
+  "evidence_basis_change": "native and library-operation records now say measured (ADR 0008); DX100 records stay simulated",
+  "certify_1_6": "matrix, controls and compile commands equal to 1.5 on all four DX100 inputs; only the knob_range rows differ (C4)"
+ },
+ "runs": {
+  "a7_kronecker@1.3": {
+   "after": {
+    "verdict": "certified",
+    "version": "1.3",
+    "evidence_basis": "simulated",
+    "tree_sha256": "c8f4bf16b26ddf5ce243170ebebcfbe0cd4afa11be38c5de970461a955e3414c",
+    "matrix": "10/10",
+    "controls_rejected": "20/20",
+    "library_faults_attributed": 0,
+    "compile_commands": 26,
+    "seconds": 23.8
+   },
+   "before": {
+    "verdict": "certified",
+    "version": "1.3",
+    "evidence_basis": "simulated",
+    "tree_sha256": "c8f4bf16b26ddf5ce243170ebebcfbe0cd4afa11be38c5de970461a955e3414c",
+    "matrix": "10/10",
+    "controls_rejected": "20/20",
+    "library_faults_attributed": 0,
+    "compile_commands": 26,
+    "seconds": 21.5
+   },
+   "comparison": {
+    "clause_controls_equal": true,
+    "compile_commands_equal": true,
+    "controls_equal": true,
+    "evidence_basis": [
+     "simulated",
+     "simulated"
+    ],
+    "evidence_basis_expected": true,
+    "matrix_equal": true,
+    "tree_sha256_equal": true,
+    "verdict": [
+     "certified",
+     "certified"
+    ]
+   }
+  },
+  "a7_kronecker@1.4": {
+   "after": {
+    "verdict": "certified",
+    "version": "1.4",
+    "evidence_basis": "simulated",
+    "tree_sha256": "c8f4bf16b26ddf5ce243170ebebcfbe0cd4afa11be38c5de970461a955e3414c",
+    "matrix": "10/10",
+    "controls_rejected": "20/20",
+    "library_faults_attributed": 16,
+    "compile_commands": 10,
+    "seconds": 15.7
+   },
+   "before": {
+    "verdict": "certified",
+    "version": "1.4",
+    "evidence_basis": "simulated",
+    "tree_sha256": "c8f4bf16b26ddf5ce243170ebebcfbe0cd4afa11be38c5de970461a955e3414c",
+    "matrix": "10/10",
+    "controls_rejected": "20/20",
+    "library_faults_attributed": 16,
+    "compile_commands": 10,
+    "seconds": 14.3
+   },
+   "comparison": {
+    "clause_controls_equal": true,
+    "compile_commands_equal": true,
+    "controls_equal": true,
+    "evidence_basis": [
+     "simulated",
+     "simulated"
+    ],
+    "evidence_basis_expected": true,
+    "matrix_equal": true,
+    "tree_sha256_equal": true,
+    "verdict": [
+     "certified",
+     "certified"
+    ]
+   }
+  },
+  "a7_kronecker@1.5": {
+   "after": {
+    "verdict": "certified",
+    "version": "1.5",
+    "evidence_basis": "simulated",
+    "tree_sha256": "c8f4bf16b26ddf5ce243170ebebcfbe0cd4afa11be38c5de970461a955e3414c",
+    "matrix": "10/10",
+    "controls_rejected": "20/20",
+    "library_faults_attributed": 16,
+    "compile_commands": 10,
+    "seconds": 17.7
+   },
+   "before": {
+    "verdict": "certified",
+    "version": "1.5",
+    "evidence_basis": "simulated",
+    "tree_sha256": "c8f4bf16b26ddf5ce243170ebebcfbe0cd4afa11be38c5de970461a955e3414c",
+    "matrix": "10/10",
+    "controls_rejected": "20/20",
+    "library_faults_attributed": 16,
+    "compile_commands": 10,
+    "seconds": 15.7
+   },
+   "comparison": {
+    "clause_controls_equal": true,
+    "compile_commands_equal": true,
+    "controls_equal": true,
+    "evidence_basis": [
+     "simulated",
+     "simulated"
+    ],
+    "evidence_basis_expected": true,
+    "matrix_equal": true,
+    "tree_sha256_equal": true,
+    "verdict": [
+     "certified",
+     "certified"
+    ]
+   }
+  },
+  "a7_kronecker@1.6": {
+   "after": {
+    "verdict": "certified",
+    "version": "1.6",
+    "evidence_basis": "simulated",
+    "tree_sha256": "c8f4bf16b26ddf5ce243170ebebcfbe0cd4afa11be38c5de970461a955e3414c",
+    "matrix": "10/10",
+    "controls_rejected": "20/20",
+    "library_faults_attributed": 16,
+    "compile_commands": 10,
+    "seconds": 17.8
+   },
+   "comparison_with_1_5": {
+    "compile_commands_equal_to_1_5": true,
+    "controls_equal_to_1_5_before_legality": true,
+    "evidence_basis": "simulated",
+    "knobs_1_5": {
+     "chunk_size": [
+      [
+       "1024",
+       "assignment",
+       "SWDB_KNOB_CHUNK_SIZE"
+      ],
+      [
+       "16384",
+       "assignment",
+       "SWDB_KNOB_CHUNK_SIZE"
+      ]
+     ],
+     "frontier_threshold": [
+      [
+       "1",
+       "assignment",
+       "SWDB_KNOB_FRONTIER_THRESHOLD"
+      ]
+     ],
+     "schedule": [
+      [
+       "\"dynamic\"",
+       "contract_default",
+       "SWDB_KNOB_SCHEDULE"
+      ]
+     ],
+     "schedule_granularity": [
+      [
+       "1",
+       "contract_default",
+       "SWDB_KNOB_SCHEDULE_GRANULARITY"
+      ]
+     ]
+    },
+    "knobs_1_6": {
+     "chunk_size": [
+      [
+       "1024",
+       "assignment",
+       "SWDB_KNOB_CHUNK_SIZE"
+      ],
+      [
+       "16384",
+       "assignment",
+       "SWDB_KNOB_CHUNK_SIZE"
+      ]
+     ],
+     "frontier_threshold": [
+      [
+       "1",
+       "assignment",
+       "SWDB_KNOB_FRONTIER_THRESHOLD"
+      ]
+     ],
+     "schedule": [
+      [
+       "null",
+       "unverified",
+       null
+      ]
+     ],
+     "schedule_granularity": [
+      [
+       "null",
+       "unverified",
+       null
+      ]
+     ]
+    },
+    "matrix_equal_to_1_5_before_legality": true,
+    "verdict": "certified"
+   }
+  },
+  "a7_uniform@1.3": {
+   "after": {
+    "verdict": "certified",
+    "version": "1.3",
+    "evidence_basis": "simulated",
+    "tree_sha256": "d63c714aacf820cfa8aceadbd802f3d8dd8833666bd3921c0b320b7be37f3e89",
+    "matrix": "10/10",
+    "controls_rejected": "20/20",
+    "library_faults_attributed": 0,
+    "compile_commands": 26,
+    "seconds": 23.7
+   },
+   "before": {
+    "verdict": "certified",
+    "version": "1.3",
+    "evidence_basis": "simulated",
+    "tree_sha256": "d63c714aacf820cfa8aceadbd802f3d8dd8833666bd3921c0b320b7be37f3e89",
+    "matrix": "10/10",
+    "controls_rejected": "20/20",
+    "library_faults_attributed": 0,
+    "compile_commands": 26,
+    "seconds": 21.7
+   },
+   "comparison": {
+    "clause_controls_equal": true,
+    "compile_commands_equal": true,
+    "controls_equal": true,
+    "evidence_basis": [
+     "simulated",
+     "simulated"
+    ],
+    "evidence_basis_expected": true,
+    "matrix_equal": true,
+    "tree_sha256_equal": true,
+    "verdict": [
+     "certified",
+     "certified"
+    ]
+   }
+  },
+  "a7_uniform@1.4": {
+   "after": {
+    "verdict": "certified",
+    "version": "1.4",
+    "evidence_basis": "simulated",
+    "tree_sha256": "d63c714aacf820cfa8aceadbd802f3d8dd8833666bd3921c0b320b7be37f3e89",
+    "matrix": "10/10",
+    "controls_rejected": "20/20",
+    "library_faults_attributed": 16,
+    "compile_commands": 10,
+    "seconds": 15.4
+   },
+   "before": {
+    "verdict": "certified",
+    "version": "1.4",
+    "evidence_basis": "simulated",
+    "tree_sha256": "d63c714aacf820cfa8aceadbd802f3d8dd8833666bd3921c0b320b7be37f3e89",
+    "matrix": "10/10",
+    "controls_rejected": "20/20",
+    "library_faults_attributed": 16,
+    "compile_commands": 10,
+    "seconds": 13.9
+   },
+   "comparison": {
+    "clause_controls_equal": true,
+    "compile_commands_equal": true,
+    "controls_equal": true,
+    "evidence_basis": [
+     "simulated",
+     "simulated"
+    ],
+    "evidence_basis_expected": true,
+    "matrix_equal": true,
+    "tree_sha256_equal": true,
+    "verdict": [
+     "certified",
+     "certified"
+    ]
+   }
+  },
+  "a7_uniform@1.5": {
+   "after": {
+    "verdict": "certified",
+    "version": "1.5",
+    "evidence_basis": "simulated",
+    "tree_sha256": "d63c714aacf820cfa8aceadbd802f3d8dd8833666bd3921c0b320b7be37f3e89",
+    "matrix": "10/10",
+    "controls_rejected": "20/20",
+    "library_faults_attributed": 16,
+    "compile_commands": 10,
+    "seconds": 17.5
+   },
+   "before": {
+    "verdict": "certified",
+    "version": "1.5",
+    "evidence_basis": "simulated",
+    "tree_sha256": "d63c714aacf820cfa8aceadbd802f3d8dd8833666bd3921c0b320b7be37f3e89",
+    "matrix": "10/10",
+    "controls_rejected": "20/20",
+    "library_faults_attributed": 16,
+    "compile_commands": 10,
+    "seconds": 15.7
+   },
+   "comparison": {
+    "clause_controls_equal": true,
+    "compile_commands_equal": true,
+    "controls_equal": true,
+    "evidence_basis": [
+     "simulated",
+     "simulated"
+    ],
+    "evidence_basis_expected": true,
+    "matrix_equal": true,
+    "tree_sha256_equal": true,
+    "verdict": [
+     "certified",
+     "certified"
+    ]
+   }
+  },
+  "a7_uniform@1.6": {
+   "after": {
+    "verdict": "certified",
+    "version": "1.6",
+    "evidence_basis": "simulated",
+    "tree_sha256": "d63c714aacf820cfa8aceadbd802f3d8dd8833666bd3921c0b320b7be37f3e89",
+    "matrix": "10/10",
+    "controls_rejected": "20/20",
+    "library_faults_attributed": 16,
+    "compile_commands": 10,
+    "seconds": 17.6
+   },
+   "comparison_with_1_5": {
+    "compile_commands_equal_to_1_5": true,
+    "controls_equal_to_1_5_before_legality": true,
+    "evidence_basis": "simulated",
+    "knobs_1_5": {
+     "chunk_size": [
+      [
+       "1024",
+       "assignment",
+       "SWDB_KNOB_CHUNK_SIZE"
+      ],
+      [
+       "16384",
+       "assignment",
+       "SWDB_KNOB_CHUNK_SIZE"
+      ]
+     ],
+     "frontier_threshold": [
+      [
+       "1",
+       "assignment",
+       "SWDB_KNOB_FRONTIER_THRESHOLD"
+      ]
+     ],
+     "schedule": [
+      [
+       "\"dynamic\"",
+       "contract_default",
+       "SWDB_KNOB_SCHEDULE"
+      ]
+     ],
+     "schedule_granularity": [
+      [
+       "1",
+       "contract_default",
+       "SWDB_KNOB_SCHEDULE_GRANULARITY"
+      ]
+     ]
+    },
+    "knobs_1_6": {
+     "chunk_size": [
+      [
+       "1024",
+       "assignment",
+       "SWDB_KNOB_CHUNK_SIZE"
+      ],
+      [
+       "16384",
+       "assignment",
+       "SWDB_KNOB_CHUNK_SIZE"
+      ]
+     ],
+     "frontier_threshold": [
+      [
+       "1",
+       "assignment",
+       "SWDB_KNOB_FRONTIER_THRESHOLD"
+      ]
+     ],
+     "schedule": [
+      [
+       "null",
+       "unverified",
+       null
+      ]
+     ],
+     "schedule_granularity": [
+      [
+       "null",
+       "unverified",
+       null
+      ]
+     ]
+    },
+    "matrix_equal_to_1_5_before_legality": true,
+    "verdict": "certified"
+   }
+  },
+  "bc@1.3": {
+   "after": {
+    "verdict": "certified",
+    "version": "1.3",
+    "evidence_basis": "simulated",
+    "tree_sha256": "d6f86eb6f33798ca43afa1b6cfdc462ebc6a5ffdebd3b2a7601082257dceb3b9",
+    "matrix": "10/10",
+    "controls_rejected": "28/28",
+    "library_faults_attributed": 0,
+    "compile_commands": 44,
+    "seconds": 44.0
+   },
+   "before": {
+    "verdict": "certified",
+    "version": "1.3",
+    "evidence_basis": "simulated",
+    "tree_sha256": "d6f86eb6f33798ca43afa1b6cfdc462ebc6a5ffdebd3b2a7601082257dceb3b9",
+    "matrix": "10/10",
+    "controls_rejected": "28/28",
+    "library_faults_attributed": 0,
+    "compile_commands": 44,
+    "seconds": 40.0
+   },
+   "comparison": {
+    "clause_controls_equal": true,
+    "compile_commands_equal": true,
+    "controls_equal": true,
+    "evidence_basis": [
+     "simulated",
+     "simulated"
+    ],
+    "evidence_basis_expected": true,
+    "matrix_equal": true,
+    "tree_sha256_equal": true,
+    "verdict": [
+     "certified",
+     "certified"
+    ]
+   }
+  },
+  "bc@1.4": {
+   "after": {
+    "verdict": "certified",
+    "version": "1.4",
+    "evidence_basis": "simulated",
+    "tree_sha256": "d6f86eb6f33798ca43afa1b6cfdc462ebc6a5ffdebd3b2a7601082257dceb3b9",
+    "matrix": "10/10",
+    "controls_rejected": "28/28",
+    "library_faults_attributed": 16,
+    "compile_commands": 28,
+    "seconds": 38.8
+   },
+   "before": {
+    "verdict": "certified",
+    "version": "1.4",
+    "evidence_basis": "simulated",
+    "tree_sha256": "d6f86eb6f33798ca43afa1b6cfdc462ebc6a5ffdebd3b2a7601082257dceb3b9",
+    "matrix": "10/10",
+    "controls_rejected": "28/28",
+    "library_faults_attributed": 16,
+    "compile_commands": 28,
+    "seconds": 35.0
+   },
+   "comparison": {
+    "clause_controls_equal": true,
+    "compile_commands_equal": true,
+    "controls_equal": true,
+    "evidence_basis": [
+     "simulated",
+     "simulated"
+    ],
+    "evidence_basis_expected": true,
+    "matrix_equal": true,
+    "tree_sha256_equal": true,
+    "verdict": [
+     "certified",
+     "certified"
+    ]
+   }
+  },
+  "bc@1.5": {
+   "after": {
+    "verdict": "certified",
+    "version": "1.5",
+    "evidence_basis": "simulated",
+    "tree_sha256": "d6f86eb6f33798ca43afa1b6cfdc462ebc6a5ffdebd3b2a7601082257dceb3b9",
+    "matrix": "10/10",
+    "controls_rejected": "28/28",
+    "library_faults_attributed": 16,
+    "compile_commands": 28,
+    "seconds": 39.1
+   },
+   "before": {
+    "verdict": "certified",
+    "version": "1.5",
+    "evidence_basis": "simulated",
+    "tree_sha256": "d6f86eb6f33798ca43afa1b6cfdc462ebc6a5ffdebd3b2a7601082257dceb3b9",
+    "matrix": "10/10",
+    "controls_rejected": "28/28",
+    "library_faults_attributed": 16,
+    "compile_commands": 28,
+    "seconds": 34.8
+   },
+   "comparison": {
+    "clause_controls_equal": true,
+    "compile_commands_equal": true,
+    "controls_equal": true,
+    "evidence_basis": [
+     "simulated",
+     "simulated"
+    ],
+    "evidence_basis_expected": true,
+    "matrix_equal": true,
+    "tree_sha256_equal": true,
+    "verdict": [
+     "certified",
+     "certified"
+    ]
+   }
+  },
+  "bc@1.6": {
+   "after": {
+    "verdict": "certified",
+    "version": "1.6",
+    "evidence_basis": "simulated",
+    "tree_sha256": "d6f86eb6f33798ca43afa1b6cfdc462ebc6a5ffdebd3b2a7601082257dceb3b9",
+    "matrix": "10/10",
+    "controls_rejected": "28/28",
+    "library_faults_attributed": 16,
+    "compile_commands": 28,
+    "seconds": 39.3
+   },
+   "comparison_with_1_5": {
+    "compile_commands_equal_to_1_5": true,
+    "controls_equal_to_1_5_before_legality": true,
+    "evidence_basis": "simulated",
+    "knobs_1_5": {
+     "chunk_size": [
+      [
+       "1024",
+       "contract_default",
+       "SWDB_KNOB_CHUNK_SIZE"
+      ],
+      [
+       "16384",
+       "contract_default",
+       "SWDB_KNOB_CHUNK_SIZE"
+      ]
+     ],
+     "frontier_threshold": [
+      [
+       "64",
+       "contract_default",
+       "SWDB_KNOB_FRONTIER_THRESHOLD"
+      ]
+     ],
+     "schedule": [
+      [
+       "\"dynamic\"",
+       "contract_default",
+       "SWDB_KNOB_SCHEDULE"
+      ]
+     ],
+     "schedule_granularity": [
+      [
+       "1",
+       "contract_default",
+       "SWDB_KNOB_SCHEDULE_GRANULARITY"
+      ]
+     ]
+    },
+    "knobs_1_6": {
+     "chunk_size": [
+      [
+       "1024",
+       "assignment",
+       "SWDB_CHUNK_SIZE"
+      ],
+      [
+       "16384",
+       "assignment",
+       "SWDB_CHUNK_SIZE"
+      ]
+     ],
+     "frontier_threshold": [
+      [
+       "64",
+       "assignment",
+       "SWDB_FRONTIER_THRESHOLD"
+      ]
+     ],
+     "schedule": [
+      [
+       "null",
+       "unverified",
+       null
+      ]
+     ],
+     "schedule_granularity": [
+      [
+       "null",
+       "unverified",
+       null
+      ]
+     ]
+    },
+    "matrix_equal_to_1_5_before_legality": true,
+    "verdict": "certified"
+   }
+  },
+  "gather_staging_executor@1.0": {
+   "after": {
+    "verdict": "certified",
+    "version": "1.0",
+    "evidence_basis": "measured",
+    "tree_sha256": null,
+    "matrix": "2/2",
+    "controls_rejected": "3/3",
+    "library_faults_attributed": 0,
+    "compile_commands": 0,
+    "seconds": 8.8
+   },
+   "before": {
+    "verdict": "certified",
+    "version": "1.0",
+    "evidence_basis": "simulated",
+    "tree_sha256": null,
+    "matrix": "2/2",
+    "controls_rejected": "3/3",
+    "library_faults_attributed": 0,
+    "compile_commands": 0,
+    "seconds": 8.4
+   },
+   "comparison": {
+    "compile_commands_equal": true,
+    "controls_equal": true,
+    "evidence_basis": [
+     "simulated",
+     "measured"
+    ],
+    "evidence_basis_expected": true,
+    "matrix_equal": true,
+    "verdict": [
+     "certified",
+     "certified"
+    ]
+   }
+  },
+  "gather_staging_executor@1.1": {
+   "after": {
+    "verdict": "certified",
+    "version": "1.1",
+    "evidence_basis": "measured",
+    "tree_sha256": null,
+    "matrix": "2/2",
+    "controls_rejected": "5/5",
+    "library_faults_attributed": 0,
+    "compile_commands": 24,
+    "seconds": 9.9
+   },
+   "before": {
+    "verdict": "certified",
+    "version": "1.1",
+    "evidence_basis": "simulated",
+    "tree_sha256": null,
+    "matrix": "2/2",
+    "controls_rejected": "5/5",
+    "library_faults_attributed": 0,
+    "compile_commands": 24,
+    "seconds": 9.4
+   },
+   "comparison": {
+    "compile_commands_equal": true,
+    "controls_equal": true,
+    "evidence_basis": [
+     "simulated",
+     "measured"
+    ],
+    "evidence_basis_expected": true,
+    "matrix_equal": true,
+    "verdict": [
+     "certified",
+     "certified"
+    ]
+   }
+  },
+  "gather_staging_executor@1.2": {
+   "after": {
+    "verdict": "certified",
+    "version": "1.2",
+    "evidence_basis": "measured",
+    "tree_sha256": null,
+    "matrix": "2/2",
+    "controls_rejected": "5/5",
+    "library_faults_attributed": 0,
+    "compile_commands": 30,
+    "seconds": 12.6
+   },
+   "before": {
+    "verdict": "certified",
+    "version": "1.2",
+    "evidence_basis": "simulated",
+    "tree_sha256": null,
+    "matrix": "2/2",
+    "controls_rejected": "5/5",
+    "library_faults_attributed": 0,
+    "compile_commands": 30,
+    "seconds": 12.1
+   },
+   "comparison": {
+    "compile_commands_equal": true,
+    "controls_equal": true,
+    "evidence_basis": [
+     "simulated",
+     "measured"
+    ],
+    "evidence_basis_expected": true,
+    "matrix_equal": true,
+    "verdict": [
+     "certified",
+     "certified"
+    ]
+   }
+  },
+  "native@1.3": {
+   "after": {
+    "verdict": "certified",
+    "version": "1.3",
+    "evidence_basis": "measured",
+    "tree_sha256": "7acca955a1f85a8563280d57b3d4e594bd0312393aeff946eda92f1577ad6ea3",
+    "matrix": "22/22",
+    "controls_rejected": "8/8",
+    "library_faults_attributed": 0,
+    "compile_commands": 12,
+    "seconds": 10.0
+   },
+   "before": {
+    "verdict": "certified",
+    "version": "1.3",
+    "evidence_basis": "simulated",
+    "tree_sha256": "7acca955a1f85a8563280d57b3d4e594bd0312393aeff946eda92f1577ad6ea3",
+    "matrix": "22/22",
+    "controls_rejected": "8/8",
+    "library_faults_attributed": 0,
+    "compile_commands": 12,
+    "seconds": 8.9
+   },
+   "comparison": {
+    "clause_controls_equal": true,
+    "compile_commands_equal": true,
+    "controls_equal": true,
+    "evidence_basis": [
+     "simulated",
+     "measured"
+    ],
+    "evidence_basis_expected": true,
+    "matrix_equal": true,
+    "tree_sha256_equal": true,
+    "verdict": [
+     "certified",
+     "certified"
+    ]
+   }
+  },
+  "native@1.4": {
+   "after": {
+    "verdict": "certified",
+    "version": "1.4",
+    "evidence_basis": "measured",
+    "tree_sha256": "7acca955a1f85a8563280d57b3d4e594bd0312393aeff946eda92f1577ad6ea3",
+    "matrix": "22/22",
+    "controls_rejected": "8/8",
+    "library_faults_attributed": 8,
+    "compile_commands": 4,
+    "seconds": 10.4
+   },
+   "before": {
+    "verdict": "certified",
+    "version": "1.4",
+    "evidence_basis": "simulated",
+    "tree_sha256": "7acca955a1f85a8563280d57b3d4e594bd0312393aeff946eda92f1577ad6ea3",
+    "matrix": "22/22",
+    "controls_rejected": "8/8",
+    "library_faults_attributed": 8,
+    "compile_commands": 4,
+    "seconds": 9.4
+   },
+   "comparison": {
+    "clause_controls_equal": true,
+    "compile_commands_equal": true,
+    "controls_equal": true,
+    "evidence_basis": [
+     "simulated",
+     "measured"
+    ],
+    "evidence_basis_expected": true,
+    "matrix_equal": true,
+    "tree_sha256_equal": true,
+    "verdict": [
+     "certified",
+     "certified"
+    ]
+   }
+  },
+  "native@1.5": {
+   "after": {
+    "verdict": "certified",
+    "version": "1.5",
+    "evidence_basis": "measured",
+    "tree_sha256": "7acca955a1f85a8563280d57b3d4e594bd0312393aeff946eda92f1577ad6ea3",
+    "matrix": "22/22",
+    "controls_rejected": "8/8",
+    "library_faults_attributed": 8,
+    "compile_commands": 4,
+    "seconds": 12.7
+   },
+   "before": {
+    "verdict": "certified",
+    "version": "1.5",
+    "evidence_basis": "simulated",
+    "tree_sha256": "7acca955a1f85a8563280d57b3d4e594bd0312393aeff946eda92f1577ad6ea3",
+    "matrix": "22/22",
+    "controls_rejected": "8/8",
+    "library_faults_attributed": 8,
+    "compile_commands": 4,
+    "seconds": 11.3
+   },
+   "comparison": {
+    "clause_controls_equal": true,
+    "compile_commands_equal": true,
+    "controls_equal": true,
+    "evidence_basis": [
+     "simulated",
+     "measured"
+    ],
+    "evidence_basis_expected": true,
+    "matrix_equal": true,
+    "tree_sha256_equal": true,
+    "verdict": [
+     "certified",
+     "certified"
+    ]
+   }
+  },
+  "pack_executor@1.0": {
+   "after": {
+    "verdict": "certified",
+    "version": "1.0",
+    "evidence_basis": "measured",
+    "tree_sha256": null,
+    "matrix": "3/3",
+    "controls_rejected": "3/3",
+    "library_faults_attributed": 0,
+    "compile_commands": 0,
+    "seconds": 10.9
+   },
+   "before": {
+    "verdict": "certified",
+    "version": "1.0",
+    "evidence_basis": "simulated",
+    "tree_sha256": null,
+    "matrix": "3/3",
+    "controls_rejected": "3/3",
+    "library_faults_attributed": 0,
+    "compile_commands": 0,
+    "seconds": 11.0
+   },
+   "comparison": {
+    "compile_commands_equal": true,
+    "controls_equal": true,
+    "evidence_basis": [
+     "simulated",
+     "measured"
+    ],
+    "evidence_basis_expected": true,
+    "matrix_equal": true,
+    "verdict": [
+     "certified",
+     "certified"
+    ]
+   }
+  },
+  "pack_executor@1.1": {
+   "after": {
+    "verdict": "certified",
+    "version": "1.1",
+    "evidence_basis": "measured",
+    "tree_sha256": null,
+    "matrix": "3/3",
+    "controls_rejected": "5/5",
+    "library_faults_attributed": 0,
+    "compile_commands": 24,
+    "seconds": 13.7
+   },
+   "before": {
+    "verdict": "certified",
+    "version": "1.1",
+    "evidence_basis": "simulated",
+    "tree_sha256": null,
+    "matrix": "3/3",
+    "controls_rejected": "5/5",
+    "library_faults_attributed": 0,
+    "compile_commands": 24,
+    "seconds": 12.9
+   },
+   "comparison": {
+    "compile_commands_equal": true,
+    "controls_equal": true,
+    "evidence_basis": [
+     "simulated",
+     "measured"
+    ],
+    "evidence_basis_expected": true,
+    "matrix_equal": true,
+    "verdict": [
+     "certified",
+     "certified"
+    ]
+   }
+  },
+  "pack_executor@1.2": {
+   "after": {
+    "verdict": "certified",
+    "version": "1.2",
+    "evidence_basis": "measured",
+    "tree_sha256": null,
+    "matrix": "3/3",
+    "controls_rejected": "5/5",
+    "library_faults_attributed": 0,
+    "compile_commands": 30,
+    "seconds": 17.9
+   },
+   "before": {
+    "verdict": "certified",
+    "version": "1.2",
+    "evidence_basis": "simulated",
+    "tree_sha256": null,
+    "matrix": "3/3",
+    "controls_rejected": "5/5",
+    "library_faults_attributed": 0,
+    "compile_commands": 30,
+    "seconds": 17.6
+   },
+   "comparison": {
+    "compile_commands_equal": true,
+    "controls_equal": true,
+    "evidence_basis": [
+     "simulated",
+     "measured"
+    ],
+    "evidence_basis_expected": true,
+    "matrix_equal": true,
+    "verdict": [
+     "certified",
+     "certified"
+    ]
+   }
+  },
+  "regroup_executor@1.0": {
+   "after": {
+    "verdict": "certified",
+    "version": "1.0",
+    "evidence_basis": "measured",
+    "tree_sha256": null,
+    "matrix": "2/2",
+    "controls_rejected": "3/3",
+    "library_faults_attributed": 0,
+    "compile_commands": 0,
+    "seconds": 9.7
+   },
+   "before": {
+    "verdict": "certified",
+    "version": "1.0",
+    "evidence_basis": "simulated",
+    "tree_sha256": null,
+    "matrix": "2/2",
+    "controls_rejected": "3/3",
+    "library_faults_attributed": 0,
+    "compile_commands": 0,
+    "seconds": 9.5
+   },
+   "comparison": {
+    "compile_commands_equal": true,
+    "controls_equal": true,
+    "evidence_basis": [
+     "simulated",
+     "measured"
+    ],
+    "evidence_basis_expected": true,
+    "matrix_equal": true,
+    "verdict": [
+     "certified",
+     "certified"
+    ]
+   }
+  },
+  "regroup_executor@1.1": {
+   "after": {
+    "verdict": "certified",
+    "version": "1.1",
+    "evidence_basis": "measured",
+    "tree_sha256": null,
+    "matrix": "2/2",
+    "controls_rejected": "5/5",
+    "library_faults_attributed": 0,
+    "compile_commands": 24,
+    "seconds": 11.3
+   },
+   "before": {
+    "verdict": "certified",
+    "version": "1.1",
+    "evidence_basis": "simulated",
+    "tree_sha256": null,
+    "matrix": "2/2",
+    "controls_rejected": "5/5",
+    "library_faults_attributed": 0,
+    "compile_commands": 24,
+    "seconds": 10.8
+   },
+   "comparison": {
+    "compile_commands_equal": true,
+    "controls_equal": true,
+    "evidence_basis": [
+     "simulated",
+     "measured"
+    ],
+    "evidence_basis_expected": true,
+    "matrix_equal": true,
+    "verdict": [
+     "certified",
+     "certified"
+    ]
+   }
+  },
+  "regroup_executor@1.2": {
+   "after": {
+    "verdict": "certified",
+    "version": "1.2",
+    "evidence_basis": "measured",
+    "tree_sha256": null,
+    "matrix": "2/2",
+    "controls_rejected": "5/5",
+    "library_faults_attributed": 0,
+    "compile_commands": 30,
+    "seconds": 13.8
+   },
+   "before": {
+    "verdict": "certified",
+    "version": "1.2",
+    "evidence_basis": "simulated",
+    "tree_sha256": null,
+    "matrix": "2/2",
+    "controls_rejected": "5/5",
+    "library_faults_attributed": 0,
+    "compile_commands": 30,
+    "seconds": 13.5
+   },
+   "comparison": {
+    "compile_commands_equal": true,
+    "controls_equal": true,
+    "evidence_basis": [
+     "simulated",
+     "measured"
+    ],
+    "evidence_basis_expected": true,
+    "matrix_equal": true,
+    "verdict": [
+     "certified",
+     "certified"
+    ]
+   }
+  },
+  "t20@1.3": {
+   "after": {
+    "verdict": "certified",
+    "version": "1.3",
+    "evidence_basis": "simulated",
+    "tree_sha256": "991de65287fe1fae3a20412704cccb6140a93f84cc11200032b20214f5174ff1",
+    "matrix": "10/10",
+    "controls_rejected": "20/20",
+    "library_faults_attributed": 0,
+    "compile_commands": 28,
+    "seconds": 25.4
+   },
+   "before": {
+    "verdict": "certified",
+    "version": "1.3",
+    "evidence_basis": "simulated",
+    "tree_sha256": "991de65287fe1fae3a20412704cccb6140a93f84cc11200032b20214f5174ff1",
+    "matrix": "10/10",
+    "controls_rejected": "20/20",
+    "library_faults_attributed": 0,
+    "compile_commands": 28,
+    "seconds": 23.6
+   },
+   "comparison": {
+    "clause_controls_equal": true,
+    "compile_commands_equal": true,
+    "controls_equal": true,
+    "evidence_basis": [
+     "simulated",
+     "simulated"
+    ],
+    "evidence_basis_expected": true,
+    "matrix_equal": true,
+    "tree_sha256_equal": true,
+    "verdict": [
+     "certified",
+     "certified"
+    ]
+   }
+  },
+  "t20@1.4": {
+   "after": {
+    "verdict": "certified",
+    "version": "1.4",
+    "evidence_basis": "simulated",
+    "tree_sha256": "991de65287fe1fae3a20412704cccb6140a93f84cc11200032b20214f5174ff1",
+    "matrix": "10/10",
+    "controls_rejected": "20/20",
+    "library_faults_attributed": 16,
+    "compile_commands": 12,
+    "seconds": 17.6
+   },
+   "before": {
+    "verdict": "certified",
+    "version": "1.4",
+    "evidence_basis": "simulated",
+    "tree_sha256": "991de65287fe1fae3a20412704cccb6140a93f84cc11200032b20214f5174ff1",
+    "matrix": "10/10",
+    "controls_rejected": "20/20",
+    "library_faults_attributed": 16,
+    "compile_commands": 12,
+    "seconds": 16.0
+   },
+   "comparison": {
+    "clause_controls_equal": true,
+    "compile_commands_equal": true,
+    "controls_equal": true,
+    "evidence_basis": [
+     "simulated",
+     "simulated"
+    ],
+    "evidence_basis_expected": true,
+    "matrix_equal": true,
+    "tree_sha256_equal": true,
+    "verdict": [
+     "certified",
+     "certified"
+    ]
+   }
+  },
+  "t20@1.5": {
+   "after": {
+    "verdict": "certified",
+    "version": "1.5",
+    "evidence_basis": "simulated",
+    "tree_sha256": "991de65287fe1fae3a20412704cccb6140a93f84cc11200032b20214f5174ff1",
+    "matrix": "10/10",
+    "controls_rejected": "20/20",
+    "library_faults_attributed": 16,
+    "compile_commands": 12,
+    "seconds": 19.7
+   },
+   "before": {
+    "verdict": "certified",
+    "version": "1.5",
+    "evidence_basis": "simulated",
+    "tree_sha256": "991de65287fe1fae3a20412704cccb6140a93f84cc11200032b20214f5174ff1",
+    "matrix": "10/10",
+    "controls_rejected": "20/20",
+    "library_faults_attributed": 16,
+    "compile_commands": 12,
+    "seconds": 17.5
+   },
+   "comparison": {
+    "clause_controls_equal": true,
+    "compile_commands_equal": true,
+    "controls_equal": true,
+    "evidence_basis": [
+     "simulated",
+     "simulated"
+    ],
+    "evidence_basis_expected": true,
+    "matrix_equal": true,
+    "tree_sha256_equal": true,
+    "verdict": [
+     "certified",
+     "certified"
+    ]
+   }
+  },
+  "t20@1.6": {
+   "after": {
+    "verdict": "certified",
+    "version": "1.6",
+    "evidence_basis": "simulated",
+    "tree_sha256": "991de65287fe1fae3a20412704cccb6140a93f84cc11200032b20214f5174ff1",
+    "matrix": "10/10",
+    "controls_rejected": "20/20",
+    "library_faults_attributed": 16,
+    "compile_commands": 12,
+    "seconds": 19.9
+   },
+   "comparison_with_1_5": {
+    "compile_commands_equal_to_1_5": true,
+    "controls_equal_to_1_5_before_legality": true,
+    "evidence_basis": "simulated",
+    "knobs_1_5": {
+     "chunk_size": [
+      [
+       "1024",
+       "contract_default",
+       "SWDB_KNOB_CHUNK_SIZE"
+      ],
+      [
+       "16384",
+       "contract_default",
+       "SWDB_KNOB_CHUNK_SIZE"
+      ]
+     ],
+     "frontier_threshold": [
+      [
+       "64",
+       "contract_default",
+       "SWDB_KNOB_FRONTIER_THRESHOLD"
+      ]
+     ],
+     "schedule": [
+      [
+       "\"dynamic\"",
+       "contract_default",
+       "SWDB_KNOB_SCHEDULE"
+      ]
+     ],
+     "schedule_granularity": [
+      [
+       "1",
+       "contract_default",
+       "SWDB_KNOB_SCHEDULE_GRANULARITY"
+      ]
+     ]
+    },
+    "knobs_1_6": {
+     "chunk_size": [
+      [
+       "1024",
+       "assignment",
+       "SWDB_CHUNK_SIZE"
+      ],
+      [
+       "16384",
+       "assignment",
+       "SWDB_CHUNK_SIZE"
+      ]
+     ],
+     "frontier_threshold": [
+      [
+       "64",
+       "assignment",
+       "SWDB_FRONTIER_THRESHOLD"
+      ]
+     ],
+     "schedule": [
+      [
+       "null",
+       "unverified",
+       null
+      ]
+     ],
+     "schedule_granularity": [
+      [
+       "null",
+       "unverified",
+       null
+      ]
+     ]
+    },
+    "matrix_equal_to_1_5_before_legality": true,
+    "verdict": "certified"
+   }
+  },
+  "update_binning_executor@1.0": {
+   "after": {
+    "verdict": "certified",
+    "version": "1.0",
+    "evidence_basis": "measured",
+    "tree_sha256": null,
+    "matrix": "2/2",
+    "controls_rejected": "3/3",
+    "library_faults_attributed": 0,
+    "compile_commands": 0,
+    "seconds": 10.7
+   },
+   "before": {
+    "verdict": "certified",
+    "version": "1.0",
+    "evidence_basis": "simulated",
+    "tree_sha256": null,
+    "matrix": "2/2",
+    "controls_rejected": "3/3",
+    "library_faults_attributed": 0,
+    "compile_commands": 0,
+    "seconds": 10.6
+   },
+   "comparison": {
+    "compile_commands_equal": true,
+    "controls_equal": true,
+    "evidence_basis": [
+     "simulated",
+     "measured"
+    ],
+    "evidence_basis_expected": true,
+    "matrix_equal": true,
+    "verdict": [
+     "certified",
+     "certified"
+    ]
+   }
+  },
+  "update_binning_executor@1.1": {
+   "after": {
+    "verdict": "certified",
+    "version": "1.1",
+    "evidence_basis": "measured",
+    "tree_sha256": null,
+    "matrix": "2/2",
+    "controls_rejected": "5/5",
+    "library_faults_attributed": 0,
+    "compile_commands": 24,
+    "seconds": 11.3
+   },
+   "before": {
+    "verdict": "certified",
+    "version": "1.1",
+    "evidence_basis": "simulated",
+    "tree_sha256": null,
+    "matrix": "2/2",
+    "controls_rejected": "5/5",
+    "library_faults_attributed": 0,
+    "compile_commands": 24,
+    "seconds": 11.4
+   },
+   "comparison": {
+    "compile_commands_equal": true,
+    "controls_equal": true,
+    "evidence_basis": [
+     "simulated",
+     "measured"
+    ],
+    "evidence_basis_expected": true,
+    "matrix_equal": true,
+    "verdict": [
+     "certified",
+     "certified"
+    ]
+   }
+  },
+  "update_binning_executor@1.2": {
+   "after": {
+    "verdict": "certified",
+    "version": "1.2",
+    "evidence_basis": "measured",
+    "tree_sha256": null,
+    "matrix": "2/2",
+    "controls_rejected": "5/5",
+    "library_faults_attributed": 0,
+    "compile_commands": 30,
+    "seconds": 14.5
+   },
+   "before": {
+    "verdict": "certified",
+    "version": "1.2",
+    "evidence_basis": "simulated",
+    "tree_sha256": null,
+    "matrix": "2/2",
+    "controls_rejected": "5/5",
+    "library_faults_attributed": 0,
+    "compile_commands": 30,
+    "seconds": 14.1
+   },
+   "comparison": {
+    "compile_commands_equal": true,
+    "controls_equal": true,
+    "evidence_basis": [
+     "simulated",
+     "measured"
+    ],
+    "evidence_basis_expected": true,
+    "matrix_equal": true,
+    "verdict": [
+     "certified",
+     "certified"
+    ]
+   }
+  },
+  "vertex_relabel_executor@1.0": {
+   "after": {
+    "verdict": "certified",
+    "version": "1.0",
+    "evidence_basis": "measured",
+    "tree_sha256": null,
+    "matrix": "2/2",
+    "controls_rejected": "3/3",
+    "library_faults_attributed": 0,
+    "compile_commands": 0,
+    "seconds": 9.7
+   },
+   "before": {
+    "verdict": "certified",
+    "version": "1.0",
+    "evidence_basis": "simulated",
+    "tree_sha256": null,
+    "matrix": "2/2",
+    "controls_rejected": "3/3",
+    "library_faults_attributed": 0,
+    "compile_commands": 0,
+    "seconds": 10.0
+   },
+   "comparison": {
+    "compile_commands_equal": true,
+    "controls_equal": true,
+    "evidence_basis": [
+     "simulated",
+     "measured"
+    ],
+    "evidence_basis_expected": true,
+    "matrix_equal": true,
+    "verdict": [
+     "certified",
+     "certified"
+    ]
+   }
+  },
+  "vertex_relabel_executor@1.1": {
+   "after": {
+    "verdict": "certified",
+    "version": "1.1",
+    "evidence_basis": "measured",
+    "tree_sha256": null,
+    "matrix": "2/2",
+    "controls_rejected": "5/5",
+    "library_faults_attributed": 0,
+    "compile_commands": 24,
+    "seconds": 10.9
+   },
+   "before": {
+    "verdict": "certified",
+    "version": "1.1",
+    "evidence_basis": "simulated",
+    "tree_sha256": null,
+    "matrix": "2/2",
+    "controls_rejected": "5/5",
+    "library_faults_attributed": 0,
+    "compile_commands": 24,
+    "seconds": 10.5
+   },
+   "comparison": {
+    "compile_commands_equal": true,
+    "controls_equal": true,
+    "evidence_basis": [
+     "simulated",
+     "measured"
+    ],
+    "evidence_basis_expected": true,
+    "matrix_equal": true,
+    "verdict": [
+     "certified",
+     "certified"
+    ]
+   }
+  },
+  "vertex_relabel_executor@1.2": {
+   "after": {
+    "verdict": "certified",
+    "version": "1.2",
+    "evidence_basis": "measured",
+    "tree_sha256": null,
+    "matrix": "2/2",
+    "controls_rejected": "5/5",
+    "library_faults_attributed": 0,
+    "compile_commands": 30,
+    "seconds": 13.6
+   },
+   "before": {
+    "verdict": "certified",
+    "version": "1.2",
+    "evidence_basis": "simulated",
+    "tree_sha256": null,
+    "matrix": "2/2",
+    "controls_rejected": "5/5",
+    "library_faults_attributed": 0,
+    "compile_commands": 30,
+    "seconds": 13.2
+   },
+   "comparison": {
+    "compile_commands_equal": true,
+    "controls_equal": true,
+    "evidence_basis": [
+     "simulated",
+     "measured"
+    ],
+    "evidence_basis_expected": true,
+    "matrix_equal": true,
+    "verdict": [
+     "certified",
+     "certified"
+    ]
+   }
+  }
+ },
+ "committed_native_certificates": {
+  "certification.f5b8f6a732714abfad544aaa65982438": {
+   "label": "1.3",
+   "compared_with": "native@1.3",
+   "verdict": [
+    "certified",
+    "certified"
+   ],
+   "controls_equal": true,
+   "matrix_equal": true,
+   "tree_equal": true
+  },
+  "certification.7f15786592134bdabbc921f16c806ce1": {
+   "label": "1.4",
+   "compared_with": "native@1.4",
+   "verdict": [
+    "certified",
+    "certified"
+   ],
+   "controls_equal": true,
+   "matrix_equal": true,
+   "tree_equal": true
+  },
+  "certification.b7954f4df9dd4e228fb12437b845f190": {
+   "label": "1.4",
+   "compared_with": "native@1.3",
+   "verdict": [
+    "certified",
+    "certified"
+   ],
+   "controls_equal": true,
+   "matrix_equal": false,
+   "tree_equal": true
+  }
+ },
+ "legacy_label_digests": {
+  "note": "sources_sha256 each commit's own certify code records (source_digest of that commit), used for swdb.certification_procedures.LEGACY_ALIASES",
+  "commits": {
+   "12ec6fe": {
+    "version": "1.5",
+    "versions": [
+     "1.3",
+     "1.4",
+     "1.5"
+    ],
+    "sources_sha256": "865781417754167dad648133fc09e967413d07e8c67e394a39ee57b81ee6789b",
+    "dx100_1_4_record_name": "cell"
+   },
+   "537818e": {
+    "version": "1.4",
+    "versions": [
+     "1.3",
+     "1.4"
+    ],
+    "sources_sha256": "28529e9823e38cbd64f70b24e83d27da13436bb08954f3b9c2aa4e21568c8a8d",
+    "dx100_1_4_record_name": "cell"
+   },
+   "6e1fe61": {
+    "version": "1.4",
+    "versions": [],
+    "sources_sha256": "06fe4cc53b3b69254a457dd5b8a43031da60b3fe04bcd34cc6e42a50b1ef7cc9",
+    "dx100_1_4_record_name": null
+   },
+   "8c08fe6": {
+    "version": "1.4",
+    "versions": [
+     "1.3",
+     "1.4"
+    ],
+    "sources_sha256": "5605e1f037857ac90126c7acfe14a0785fa31377c95ceca4c97bb02289f65db5",
+    "dx100_1_4_record_name": "cell"
+   },
+   "9490d57": {
+    "version": "1.4",
+    "versions": [
+     "1.3",
+     "1.4"
+    ],
+    "sources_sha256": "d9b414cb2f2ebf3e2eabccff02f3d74e7a7be9f90b0724e211f51576fd7efa81",
+    "dx100_1_4_record_name": "cell"
+   },
+   "9e267fd": {
+    "version": "1.5",
+    "versions": [
+     "1.3",
+     "1.4",
+     "1.5"
+    ],
+    "sources_sha256": "9b75b279b582b8a312d1738bb0983cfcde19cd69d400ad4614939e908e7a363f",
+    "dx100_1_4_record_name": "cell"
+   },
+   "be156e8": {
+    "version": "1.4",
+    "versions": [
+     "1.3",
+     "1.4"
+    ],
+    "sources_sha256": "3c89c471a8711a246ae164fa4a5f47ab679f3984a085892cf3bc6523c3c843b4",
+    "dx100_1_4_record_name": "cell"
+   },
+   "c2fb788": {
+    "version": "1.4",
+    "versions": [
+     "1.3",
+     "1.4"
+    ],
+    "sources_sha256": "29f3bcab362c7c830f0030122aae1b3382c1eb83be3171f1a91b62a690724be1",
+    "dx100_1_4_record_name": "cell"
+   },
+   "ce6e6e9": {
+    "version": "1.5",
+    "versions": [
+     "1.3",
+     "1.4",
+     "1.5"
+    ],
+    "sources_sha256": "240b91cfd3f48d51ad3f979c690902713717eb9baa2f273f15e75546d0ee58e8",
+    "dx100_1_4_record_name": "cell"
+   }
+  }
+ },
+ "bc_record_c22": {
+  "certification": "certification.1e424fce0b694628959f8275548e05b9",
+  "command_version": "1.6",
+  "verdict": "certified",
+  "matrix": "10/10",
+  "controls_rejected": "28/28",
+  "library_faults_attributed": 16,
+  "code_commit": "bb7673f",
+  "sources_differ_from_commit": false,
+  "sources_match_version": true
+ }
+}

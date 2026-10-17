@@ -1,0 +1,31 @@
+{
+  "actual_execution": false,
+  "argv": [
+    "ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=10",
+    "mbit10",
+    "/data1/yanruj/venvs/swdb-test/bin/python",
+    "-I",
+    "-B",
+    "-",
+    "--generation",
+    "619",
+    "--ended-utc",
+    "2026-10-16T21:28:57Z"
+  ],
+  "observer": {
+    "bytes": 1088800,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/observer-v2.py",
+    "sha256": "55bfa4564acfcc387f28f8bb0dde57eeb4ea0ca6853e1b7071032111365d12d7"
+  },
+  "raw_payload_transfer": false,
+  "remote_scientific_or_tool_child": false,
+  "status": "PROSPECTIVE_ONLY_REQUIRES_PARENT_STATIC_PASS_AND_EXACT_ROOT_ADMISSION",
+  "stdin_file": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/observer-v2.py",
+  "stdout_max_bytes": 4194304,
+  "transport": "Stream the exact 1.09 MiB reviewed source over SSH stdin; never put it in one remote -c argument. No remote file creation or staging."
+}

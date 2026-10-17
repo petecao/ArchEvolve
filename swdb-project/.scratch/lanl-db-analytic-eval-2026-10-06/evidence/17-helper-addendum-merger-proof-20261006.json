@@ -1,0 +1,35 @@
+{
+  "format": "swdb.lanl17-helper-addendum-merger.v1",
+  "updated": "2026-10-06 ET",
+  "base_commit": "28d5cec4f4fd4bb32b8410ae42c156b0d20bda60",
+  "tested_addendum_commit": "5fd93d12448a7056e30e5b7fc89678006922fcf3",
+  "merged_commit": "b85f033ccf6d7feb3c67c8889b543b471fc916bd",
+  "changed_paths": [
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-parent-control-prerequisite-20261006.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-prospective-campaign-runbook.md"
+  ],
+  "all_changes_inside_swdb_project": true,
+  "protected_tree_identities": {
+    "records": "4b526c6b42c784b4bac05cc32b45ff47cb70d6d4",
+    "library": "efd78f19dd19389f18a3cae36eb3c86d06459b55",
+    "apps": "09fb65f4b5c4ab842f49d8f15fa532f3df50f23a",
+    "swdb": "91d7f55cfb11e0fff95573cae374881422fa779c",
+    "schemas": "2f5e03a7fc1afd8d179f71172d01931a687f2453",
+    "vocab": "2af57b3fbe6e62390b763e6d8c20abd87fac9004",
+    "tests": "2ea1e469ea47ebb8dc522890b0dcaa843397d7e3",
+    "tools": "c7643f80330662aae8be7247c22cc8da01a6e497",
+    "scripts": "b42f7fe43875acbf69ef0dc677c06f5060f4f991"
+  },
+  "map_progress_issue_and_single_parent_cleanup_receipt_bytes_preserved": true,
+  "estimator_sha256": "fec496c6dec0930aada7bc760991c125907fffe739ea2e9d4d3e03e3748faa52",
+  "helper_sha256": "31e1d71bc6e9ef4a5a5f1d5fbff136ceef249935f8f00601edf45277fce249ec",
+  "linux_smoke_sha256": "4d0bdf1d4c8d2ce96d948085a785cde15c389a4c50413962bc7db14df57cf9d6",
+  "parent_cleanup_receipt_identity_sha256": "414be978a6776e08185fef5b90adbbb142fa93ea2434e4779dc2beed618a416b",
+  "source_processes_sha256_verified": true,
+  "check_scope": "Docs/metadata-only exact diff, protected tree equality, single parent receipt reference, process implementation hash. Identical tested source; no repeated public suite.",
+  "ticket17_state": "claimed",
+  "actual_campaigns": 0,
+  "no_remote_actions": true,
+  "identity_sha256": "69560394a89d191a1b3cdd5e6586269b2b8aa9b3ba17381774bd69fc48cae440",
+  "parent_receipt_seal_and_exact_helper_hashes_verified": true
+}

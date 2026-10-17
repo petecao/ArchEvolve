@@ -1,0 +1,58 @@
+{
+  "format": "swdb.lanl17-reviewed-index-privacy-envelope-source-staging.v1",
+  "checked_utc": "2026-10-07T19:16:31.445349+00:00",
+  "canonical_ensure_ascii": true,
+  "host": "mbit10",
+  "uid": 114316761,
+  "user": "yanruj",
+  "source_git_revision": "30015b4ff2190b7331f13cd85aeef9653bded734",
+  "source_git_branch": "yanrujhou_main",
+  "source_git_tracked_clean": true,
+  "scientific_source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "scientific_python_modules_Git_blob_equal_C": 185,
+  "estimator_F6_from_exact_original_reviewed_custody": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "live_estimator_imported_or_computed": false,
+  "destination": "/data1/yanruj/lanl17-index-privacy-source-20261007-a1",
+  "directory_mode": "0700",
+  "staging_driver_sha256": "103b7557c5428b04626db360922907b1873440d089cb093dd7da0e122364551b",
+  "sources": [
+    {
+      "target": "/data1/yanruj/lanl17-index-privacy-source-20261007-a1/envelope.py",
+      "mode": "0600",
+      "source_git_pin": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-privacy-envelope-controls-20261007/lanl17_remote_original_index_writer_privacy_envelope_20261007.py",
+        "bytes": 38790,
+        "sha256": "1ee5ffbdf1ef322cfd5bfec4b6e402c29d23c776e855f01d25208ebbece0fcfc"
+      },
+      "original_review_git_pin": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-privacy-envelope-controls-20261007/lanl17-original-index-writer-privacy-envelope-parent-review-20261007.json",
+        "bytes": 7051,
+        "sha256": "70beddcfeb95e3b612476b358021581b288b031321be01b2e95c6dfd4f3c383a",
+        "format": "swdb.lanl17-original-index-writer-privacy-envelope-parent-source-review.v1",
+        "identity_sha256": "4a1023632f0db9da20860d1ade13efac5503bea6eabd0854a1432208cfb4a443",
+        "canonical_ensure_ascii": true
+      },
+      "original_manifest_git_pin": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-privacy-envelope-controls-20261007/manifest.json",
+        "bytes": 8784,
+        "sha256": "69e9ee241ad19e45dd89cfd974c311633926a6c10b41ffb8242a4e5b2febf03a",
+        "format": "swdb.lanl17-original-index-writer-privacy-envelope-archival-custody.v1",
+        "identity_sha256": "0e916296aea2b8c0ba930c5bf11f15e0b4b2b7de05192594a2786fa496e4de1d",
+        "canonical_ensure_ascii": true
+      }
+    }
+  ],
+  "receipt_written_on_remote": false,
+  "remote_destination_contains_only_one_source_file": true,
+  "source_imports_or_selected_mains_executed": false,
+  "actual_inputs_or_catalog_read_or_constructed": false,
+  "Store_validate_campaign_native_provider_collector_auditor_tests_executed": false,
+  "scientific_admission": false,
+  "environment_or_authentication_contents_read": false,
+  "earlier_stages_including_original7a_opened_or_modified": false,
+  "untracked_files_cleaned_or_modified": false,
+  "remote_seconds_limit": 60,
+  "SSH_seconds_limit": 120,
+  "scope": "One exact envelope source copy only; original source preparation/review chronology retained. No envelope/original7a main or actual inputs. Real argv/input and separate private remote startup/outer-capture review remain required before execution.",
+  "identity_sha256": "f66589a8923a0a9b205dbb7a6f7b6d38a1df6670beb959cb207b99bf3fa9900e"
+}

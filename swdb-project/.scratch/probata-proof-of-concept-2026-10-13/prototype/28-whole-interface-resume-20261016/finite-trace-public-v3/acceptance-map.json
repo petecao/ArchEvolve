@@ -1,0 +1,151 @@
+{
+  "date": "2026-10-16 ET",
+  "schema": "ticket28-finite-public-acceptance-map-1",
+  "rows": [
+    {
+      "acceptance": "Whole interface per call",
+      "finite_cases": [],
+      "boundary": "Parent SourceUnit/new0.2 checked-body policy:26names/27decls/132instances, deletion refusal; this finite branch invokes that exact validator and cannot replace it.",
+      "actual_accepted": false
+    },
+    {
+      "acceptance": "Same-thread unfinished store CPU read / gather CPU write / gather CPU read",
+      "finite_cases": [],
+      "boundary": "Separate original SourceUnit three-function source55b9 profile; finite scope does not count a model-only fixture as that original-source acceptance.",
+      "actual_accepted": false
+    },
+    {
+      "acceptance": "Other-thread CAS history allowed disjunction and exact-at-issue negative",
+      "finite_cases": [
+        "history_latest_positive",
+        "history_exact_issue_negative"
+      ],
+      "boundary": "Fixed sequential thread IDs; completed pre-issue stores exclude older values.",
+      "actual_accepted": false
+    },
+    {
+      "acceptance": "Other-thread unfinished-store CPU read",
+      "finite_cases": [
+        "pending_store_cpu_read_negative",
+        "other_thread_cpu_read_positive"
+      ],
+      "boundary": "Read/read positive is separate from unfinished-store hazard negative.",
+      "actual_accepted": false
+    },
+    {
+      "acceptance": "Region writer stall vsread/read anddifferent-region noncover",
+      "finite_cases": [
+        "same_region_write_cover_positive",
+        "same_region_read_read_noncover_negative",
+        "different_region_noncover_negative"
+      ],
+      "boundary": "Both command threads share the same modeled instance and first-ID/F2 region policy.",
+      "actual_accepted": false
+    },
+    {
+      "acceptance": "Tile ownership; command/pointer access; disjoint tiles",
+      "finite_cases": [
+        "owned_tile_positive",
+        "wrong_owner_negative",
+        "command_wrong_owner_negative",
+        "disjoint_owned_tiles_positive"
+      ],
+      "boundary": "Complete owner image is separately owned; no grant event is emitted.",
+      "actual_accepted": false
+    },
+    {
+      "acceptance": "Eight-byte pair ownership",
+      "finite_cases": [
+        "pair_owned_positive",
+        "pair_wrong_owner_negative",
+        "owned_tile_positive"
+      ],
+      "boundary": "Wrong second-half owner refuses;4-byte t0 control proves.",
+      "actual_accepted": false
+    },
+    {
+      "acceptance": "Eight-byte pending destination second-half command write",
+      "finite_cases": [
+        "pair_command_half_negative",
+        "u32_command_half_positive"
+      ],
+      "boundary": "Exact physical half vs explicit hardware starting tile distinction is retained.",
+      "actual_accepted": false
+    },
+    {
+      "acceptance": "Eight-byte pending destination second-half CPU read/write",
+      "finite_cases": [
+        "pair_cpu_half_read_negative",
+        "u32_cpu_half_read_positive",
+        "u64_second_half_conflict_negative",
+        "u32_disjoint_half_positive"
+      ],
+      "boundary": "Both CPU access variants have explicit4-byte positives.",
+      "actual_accepted": false
+    },
+    {
+      "acceptance": "Readiness both answers, zerounsafe read, no forced zero/one",
+      "finite_cases": [
+        "ready_relation_positive",
+        "ready_cpu_read_negative",
+        "ready_always_zero_negative",
+        "ready_always_one_negative"
+      ],
+      "boundary": "Explicit logical query absent original header; one covers, zero may stay pending.",
+      "actual_accepted": false
+    },
+    {
+      "acceptance": "Readiness unbounded ready-until1 then read",
+      "finite_cases": [],
+      "boundary": "Root-owned unbounded ready-loop proof and concrete correspondence bridge; no finite bounded loop is substituted.",
+      "actual_accepted": false
+    },
+    {
+      "acceptance": "Pre-issue CPU-store visibility / stalevalue negative",
+      "finite_cases": [
+        "prior_cpu_store_visible_positive",
+        "prior_cpu_store_old_value_negative"
+      ],
+      "boundary": "Owned MMIO/visibility premise with ordinary memory initialized only by explicit writes.",
+      "actual_accepted": false
+    },
+    {
+      "acceptance": "Covered store visible to next-thread load",
+      "finite_cases": [
+        "covered_store_next_thread_load_positive"
+      ],
+      "boundary": "Exact same-region store cover occurs before the later issue snapshot.",
+      "actual_accepted": false
+    },
+    {
+      "acceptance": "Critical store completion withwait/withoutwait",
+      "finite_cases": [
+        "critical_end_wait_positive",
+        "critical_end_without_wait_negative",
+        "outside_critical_store_positive"
+      ],
+      "boundary": "Explicit command frontier covers every store issued inside the literal block, either thread; unrelated older store excluded. No mutex theorem or hidden wait.",
+      "actual_accepted": false
+    },
+    {
+      "acceptance": "Ordinary lifetime",
+      "finite_cases": [
+        "pending_read_lifetime_end_negative"
+      ],
+      "boundary": "Distinct from tile ownership; pending read prevents end, and subsequent source-Plan uses refuse.",
+      "actual_accepted": false
+    },
+    {
+      "acceptance": "Proof trust and noncapping handoff",
+      "finite_cases": [],
+      "boundary": "Normal real-source record_assumptions, Rule.level and handoff_level.render controls; all base+finite rows preserved. Actual public records still required.",
+      "actual_accepted": false
+    },
+    {
+      "acceptance": "New version with old0.1 readable",
+      "finite_cases": [],
+      "boundary": "Four additive discriminated hooks have complete inverses to frozenV4. No old library or shared production bytes edited; actual full-library validate remains required.",
+      "actual_accepted": false
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "verdict": "PASS_STATIC_SINGLE_HEADER_DELTA",
+  "packet_sha256": "b7d98af62c4bbbae5056560b0e450dde71244e123e4e3a7c0135338ccaca66fa",
+  "entry_sha256": "9ba1cb80977657f397a48bbec4f98ee8066abe03ccace7c65543d6411863146c",
+  "expected_sha256": "79f09a71b31d46f613ecf34bf64ea519539affbe2375e085e9068ffde82c0afb",
+  "entry_AST_only_expected_pin_changed": true,
+  "expected_only_delta": [
+    "fresh_output",
+    "exact_Clang22_stdbool.h_1172B_hash48655faf"
+  ],
+  "actual_V2_dependencies": 129,
+  "known_V2_dependencies": 128,
+  "unexpected_header_now_explicitly_admitted": {
+    "path": "/opt/homebrew/Cellar/llvm/22.1.8/lib/clang/22/include/stdbool.h",
+    "resolved": "/opt/homebrew/Cellar/llvm/22.1.8/lib/clang/22/include/stdbool.h",
+    "bytes": 1172,
+    "sha256": "48655faf4ebd4ca0af26a1ee8e3e16f8dc68385c9cd550ffb3629320681305b3"
+  },
+  "findings": [],
+  "actual_V2_preserved": "Compilation succeeded; gate refused missing header BEFORE native observations. No profile/TD acceptance inferred.",
+  "scope": "V2negative-shape/compilerclosure fixes/resource/sourceTCB unchanged; new rootcontrols/native/outeradmission separate.",
+  "execution": "Passive AST/JSON/hash/dependencytext only, no compiler/native/control/project/probe/SSH/job."
+}

@@ -1,0 +1,297 @@
+{
+  "created": "2026-09-26",
+  "evidence_kind": "actual_failed_empirical_attempt_and_independent_operational_closure",
+  "terminal": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1.dispatch/terminal-validation.json",
+    "sha256": "5f2a053673a697a678939106ebcf7d2a7ce0c7b882cb5ce4e94df43023517ee5"
+  },
+  "terminal_bytes": 248534,
+  "lease_snapshot": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1.dispatch/terminal-lease-snapshot.json",
+    "sha256": "729d95f37d227594b49a47df17a1802afe6281c2ba700e468f723f10cfb22577"
+  },
+  "accounting": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1.dispatch/terminal-accounting.json",
+    "sha256": "67eafaf4a1ff229b8069e7e898e9a1cdc9439c128c0b942cc3c7316d8b373fcb"
+  },
+  "driver": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.driver/driver.json",
+    "sha256": "b62d2131aeef346c5a16c4612def7dcecef8faaae475d97869565e4830d33c61"
+  },
+  "evaluation": {
+    "path": "/data1/yanruj/EvolveSWDB_simulator_campaign_20260926_a2/records/evaluations/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation.yaml",
+    "sha256": "eba20fb64097336876ca76a5a30e7fb380fd75b81d33891b7e79b5b502f9f4fb"
+  },
+  "observed_at": "2026-09-26T20:39:58.260045-04:00",
+  "state": "failed",
+  "cleanup_state": "terminal_no_live_owned_processes",
+  "union_count": 181,
+  "zombies": [
+    {
+      "pid": 3090015,
+      "start_ticks": 497040825,
+      "sources": [
+        "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.driver/driver.json",
+        "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1.dispatch/launch.json"
+      ],
+      "state": "Z",
+      "rss_bytes": 0,
+      "role": "tmux_launcher",
+      "current": {
+        "pid": 3090015,
+        "parent_pid": 359742,
+        "start_ticks": 497040825,
+        "state": "Z",
+        "rss_bytes": 0
+      }
+    }
+  ],
+  "completed_samples": 0,
+  "evaluation_outcome": {
+    "state": "budget_exhausted",
+    "stage": "simulation",
+    "reason": "raw artifact storage budget exhausted"
+  },
+  "correctness": {
+    "state": "unverified",
+    "checks": [
+      {
+        "state": "unverified",
+        "reason": "No sealed ROI receipt was produced."
+      }
+    ]
+  },
+  "cleanup": {
+    "state": "settled_within_budget",
+    "driver": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.driver/driver.json",
+      "sha256": "b62d2131aeef346c5a16c4612def7dcecef8faaae475d97869565e4830d33c61"
+    },
+    "ledger": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.driver/cleanup-ledger.json",
+      "sha256": "01eef60d603d90aacb4df9c786f61c5cfb4b48d3f74c5565d14b104a630036bb"
+    },
+    "run_id": "bfs-t15-simulator-batch-20260926-a1",
+    "driver_outcome": "failed",
+    "binding": "9d4b9f65b6053c6bc9c81839a9ed846bb8d8268178591389f135b59cce80ffac",
+    "creator": {
+      "pid": 3090096,
+      "start_ticks": 497040853
+    },
+    "budget_seconds": 30,
+    "spent_seconds": 1.608396964706481,
+    "settled_events": 23,
+    "observed_at": "2026-09-26T20:39:58.233680-04:00",
+    "embedded_cleanup_snapshots": "nonfinal",
+    "process_absence_verified": false,
+    "empirical_qualification": false
+  },
+  "storage_final_read_only": {
+    "state": "within_existing_storage_budget",
+    "run_id": "bfs-t15-simulator-batch-20260926-a1",
+    "driver": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.driver/driver.json",
+      "sha256": "b62d2131aeef346c5a16c4612def7dcecef8faaae475d97869565e4830d33c61"
+    },
+    "terminal_audit": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1.dispatch/terminal-validation.json",
+      "sha256": "5f2a053673a697a678939106ebcf7d2a7ce0c7b882cb5ce4e94df43023517ee5"
+    },
+    "storage_paths": [
+      "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1",
+      "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1.dispatch"
+    ],
+    "raw_bytes": 11014971392,
+    "preparation_charges": [],
+    "charged_raw_bytes": 11014971392,
+    "ceiling_bytes": 42949672960,
+    "observed_at": "2026-09-26T20:39:58.522576-04:00",
+    "driver_storage_snapshot": "nonfinal",
+    "requires_recheck_after_any_write": true,
+    "process_absence_verified": false,
+    "empirical_qualification": false
+  },
+  "audit_wall_seconds": 0.5182426162064075,
+  "process_observation_passes": [
+    {
+      "observed_at": "2026-09-26T20:39:58.196070-04:00",
+      "count": 181,
+      "present": [
+        {
+          "pid": 3090015,
+          "start_ticks": 497040825,
+          "sources": [
+            "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.driver/driver.json",
+            "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1.dispatch/launch.json"
+          ],
+          "state": "Z",
+          "rss_bytes": 0,
+          "role": "tmux_launcher",
+          "current": {
+            "pid": 3090015,
+            "parent_pid": 359742,
+            "start_ticks": 497040825,
+            "state": "Z",
+            "rss_bytes": 0
+          }
+        }
+      ]
+    },
+    {
+      "observed_at": "2026-09-26T20:39:58.260045-04:00",
+      "count": 181,
+      "present": [
+        {
+          "pid": 3090015,
+          "start_ticks": 497040825,
+          "sources": [
+            "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.driver/driver.json",
+            "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1.dispatch/launch.json"
+          ],
+          "state": "Z",
+          "rss_bytes": 0,
+          "role": "tmux_launcher",
+          "current": {
+            "pid": 3090015,
+            "parent_pid": 359742,
+            "start_ticks": 497040825,
+            "state": "Z",
+            "rss_bytes": 0
+          }
+        }
+      ]
+    }
+  ],
+  "driver_finished": "2026-09-26T20:36:58.024446-04:00",
+  "original_outer_started": "2026-09-26T20:21:15.408826-04:00",
+  "original_outer_deadline": "2026-09-27T08:21:15.408826-04:00",
+  "source_emitter": {
+    "path": "/data1/yanruj/DX100-bfs-e4fc4af/src/mem/MAA/IndirectAccess.cc",
+    "line": 524,
+    "flag": "MAAIndirect",
+    "function": "fillRowTable"
+  },
+  "log_diagnosis": {
+    "observed_at": "2026-09-26T20:36:09.455836-04:00",
+    "log": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation/002-simulation.log",
+      "bytes": 10668270668,
+      "allocated_bytes": 10668277760,
+      "mtime_ns": 1790469369428373000
+    },
+    "bounded_reads": {
+      "first_bytes": 16384,
+      "tail_bytes": 131072,
+      "complete_tail_lines": 1712,
+      "first_sha256": "272a73135241b8a8894e1e4603f69c49ee9e471f582b08fa7bf20ecc8395a8ac",
+      "tail_sha256": "22ac93edff3bb3ad9e217dfe73a109591b2421041c7bd98f86cdb0feb72c8e9d"
+    },
+    "top_tail_patterns": [
+      [
+        "#: global: I[#] fillRowTable: SPD[#][#] = # (cond not taken)",
+        1631
+      ],
+      [
+        "#: global: I[#] executeInstruction: Checking row table bank[#]!",
+        32
+      ],
+      [
+        "#: global: I[#] executeInstruction: T[#] has nothing, setting sent to true!",
+        32
+      ],
+      [
+        "#: global: I[#] scheduleExecuteInstructionEvent: scheduling execute for the IndirectAccess Unit in the next # cycles!",
+        4
+      ],
+      [
+        "#: global: I[#] checkReadyForFinish: cond tile[#] not ready, returning!",
+        1
+      ],
+      [
+        "#: global: I[#] executeInstruction: waiting for fill finish INSTR[core_id(#) maa_id(#) opcode(INDIR_ST_VECTOR) datatype(INT3#) state(Service) srcSPD1(#/FNS) srcSPD2(#/FNS) dstSPD1(#/SRV) condSPD(#/SRV) baseAddr(#) minAddr(#) maxAddr(#)]!",
+        1
+      ],
+      [
+        "#: global: A[#] End [INSTR[core_id(#) maa_id(#) opcode(ALU_SCALAR) optype(LT) datatype(INT3#) state(Service) srcSPD1(#/FNS) srcREG1(#) dstSPD1(#/SRV)]]",
+        1
+      ],
+      [
+        "#: global: I[#] executeInstruction: filling INSTR[core_id(#) maa_id(#) opcode(INDIR_ST_VECTOR) datatype(INT3#) state(Service) srcSPD1(#/FNS) srcSPD2(#/FNS) dstSPD1(#/SRV) condSPD(#/FNS) baseAddr(#) minAddr(#) maxAddr(#)]!",
+        1
+      ],
+      [
+        "#: global: I[#] executeInstruction: fill finished INSTR[core_id(#) maa_id(#) opcode(INDIR_ST_VECTOR) datatype(INT3#) state(Service) srcSPD1(#/FNS) srcSPD2(#/FNS) dstSPD1(#/SRV) condSPD(#/FNS) baseAddr(#) minAddr(#) maxAddr(#)]!",
+        1
+      ],
+      [
+        "#: global: I[#] executeInstruction: state set to Build for INSTR[core_id(#) maa_id(#) opcode(INDIR_ST_VECTOR) datatype(INT3#) state(Service) srcSPD1(#/FNS) srcSPD2(#/FNS) dstSPD1(#/SRV) condSPD(#/FNS) baseAddr(#) minAddr(#) maxAddr(#)]!",
+        1
+      ]
+    ],
+    "last_tick": 6665022626,
+    "request_budget": {
+      "total_seconds": 7260,
+      "checkpoint_seconds": 3600,
+      "run_seconds": 3600,
+      "memory_gib": 48,
+      "storage_gib": 10
+    },
+    "debug_flags": [
+      "MAATrace",
+      "MAARangeFuser",
+      "MAAIndirect"
+    ],
+    "classification": "Explicit coverage instrumentation emits per-element accelerator debug lines; sampled tail is not repeated warnings.",
+    "dominant_tail_count": 1631,
+    "total_complete_tail_lines": 1712,
+    "dominant_percent": 95.26869158878505,
+    "model_head": "e4fc4afdf894f295442cef3604667a469fab8e62",
+    "source_emitter": {
+      "path": "/data1/yanruj/DX100-bfs-e4fc4af/src/mem/MAA/IndirectAccess.cc",
+      "sha256": "7e238a370f25ff5a7a1211548630a291d6358c32d8a199fc58bfacd37d1d35db",
+      "line": 524,
+      "flag": "MAAIndirect",
+      "function": "fillRowTable"
+    },
+    "future_compressed_sink": {
+      "source_supported": true,
+      "actual_runtime_not_tested": true,
+      "option": "--debug-file",
+      "default": "cout",
+      "suffix": ".gz",
+      "sources": [
+        {
+          "path": "/data1/yanruj/DX100-bfs-e4fc4af/src/base/output.cc",
+          "sha256": "b459ec461c433abc275425d2477b8f53ff941d6c5830e9fc64de15ab30cb8774",
+          "lines": [
+            229,
+            230,
+            231,
+            232,
+            233,
+            234
+          ]
+        },
+        {
+          "path": "/data1/yanruj/DX100-bfs-e4fc4af/src/python/m5/main.py",
+          "sha256": "e2212752125b5ebb025131aaeee1fe9de3bedd538faf4bd4d08baacdb31e10a3",
+          "lines": [
+            296,
+            297,
+            298,
+            299,
+            300,
+            301,
+            611,
+            612,
+            613,
+            614,
+            615,
+            616
+          ]
+        }
+      ]
+    }
+  },
+  "interpretation": "Failure and unverified correctness are preserved. Cleanup and batch-level storage consistency do not qualify the experiment. No retry or configuration change occurred. No subsequent writes to T15 raw or sibling dispatch roots are allowed without a new final storage recount."
+}

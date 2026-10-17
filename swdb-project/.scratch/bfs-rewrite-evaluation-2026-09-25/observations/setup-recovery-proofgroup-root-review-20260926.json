@@ -1,0 +1,44 @@
+{
+  "format": "swdb.bfs.setup-recovery-proofgroup-root-review.v1",
+  "reviewed_at": "2026-09-26T23:16:22.485331-04:00",
+  "state": "prepared_scope_review_passed_actual_execution_pending",
+  "runtime": "eb2f51d0a02b7d3d1ca9cc02b022a18f1181a3e2",
+  "files": [
+    {
+      "path": "/private/tmp/bfs-setup-recovery-proofgroup-init-20260926.py",
+      "bytes": 3109,
+      "sha256": "c4711cd38cdb288534ce0e4703837f054f55e8d20ec5daccbcf871a07bdc4692"
+    },
+    {
+      "path": "/private/tmp/bfs-setup-recovery-proofgroup-launch-20260926.py",
+      "bytes": 6895,
+      "sha256": "e87f2e1a4d55bfac5c9663a8238cfc844cb16e58d33d68310690a16bd0f3286a"
+    },
+    {
+      "path": "/private/tmp/bfs-setup-recovery-proofgroup-audit-20260926.py",
+      "bytes": 3289,
+      "sha256": "ac5d81217c21d2e3cf4e52fbcf71096589cd832ae891fc9b68154c8b33b33093"
+    },
+    {
+      "path": "/private/tmp/bfs-setup-recovery-proofgroup-readback-20260926.py",
+      "bytes": 1904,
+      "sha256": "b30a257e1b39018cc3bc60287eb43986dfdd012b01098342e219ed881d52d43f"
+    },
+    {
+      "path": "/private/tmp/bfs-setup-recovery-proofgroup-final-20260926.py",
+      "bytes": 2500,
+      "sha256": "9d85f5c14b2f590ceea4f5d132763ef02c0183e1837a0a11fe70ea6b0838d9d2"
+    }
+  ],
+  "checks": [
+    "Original600s/2GiB reservation starts before preflight and includes all five output roots",
+    "Fresh unused a4 IDs; exact runtime and Python/pytest identities",
+    "Five owned cases plus two interruption cases selected by reviewed runtime",
+    "Each fixture90s outer, independent auditor60s, final readback before group deadline",
+    "Both socket and legacy metadata/kernel locks checked; no override of other owner",
+    "Installed helper subtree must be clean and byte-equivalent to freshly inspected upstream object",
+    "Root-reviewed closure/readback/final allocation; passing local AST/source review is not Linux proof"
+  ],
+  "finding_fixed": "Added installed host-script working-tree/index/untracked cleanliness guard to close the hostlock.sh drift gap",
+  "handoff": "After full proof closure/release, one bounded T20 provider job precedes long T15 launch; no retained lane or overlapping node1 dispatch"
+}

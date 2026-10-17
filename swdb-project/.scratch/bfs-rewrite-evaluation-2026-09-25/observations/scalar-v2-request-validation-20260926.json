@@ -1,0 +1,66 @@
+{
+  "date": "2026-09-26",
+  "scope": "Local Mac contract and catalog checks only; no compiler, provider, simulator, or remote process invoked. Temporary request records are discarded and never canonical evidence.",
+  "catalog_records": 218,
+  "cases": [
+    {
+      "id": "bfs-scalar-v2-preparation-20260926-a1.dx100.primary.build",
+      "public_entrypoint": "swdb dx100-compile",
+      "exit": 1,
+      "expected_local_refusal": "execution host differs from requested machine",
+      "request_retained_exactly": true,
+      "stages_started": 0,
+      "compiler_invoked": false,
+      "seconds": 6.826947707915679
+    },
+    {
+      "id": "bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build",
+      "public_entrypoint": "swdb dx100-compile",
+      "exit": 1,
+      "expected_local_refusal": "execution host differs from requested machine",
+      "request_retained_exactly": true,
+      "stages_started": 0,
+      "compiler_invoked": false,
+      "seconds": 6.889174457872286
+    },
+    {
+      "id": "bfs-scalar-v2-preparation-20260926-a1.upstream.primary.build",
+      "public_entrypoint": "swdb dx100-compile",
+      "exit": 1,
+      "expected_local_refusal": "execution host differs from requested machine",
+      "request_retained_exactly": true,
+      "stages_started": 0,
+      "compiler_invoked": false,
+      "seconds": 6.779778291936964
+    },
+    {
+      "id": "bfs-scalar-v2-preparation-20260926-a1.upstream.diagnostic.build",
+      "public_entrypoint": "swdb dx100-compile",
+      "exit": 1,
+      "expected_local_refusal": "execution host differs from requested machine",
+      "request_retained_exactly": true,
+      "stages_started": 0,
+      "compiler_invoked": false,
+      "seconds": 6.830286458134651
+    }
+  ],
+  "temporary_catalog_schema_and_cross_reference_validation": {
+    "records": 222,
+    "problems": 0
+  },
+  "static_and_pure_checks": [
+    "Exact historical request field shape retained; only id changed",
+    "workflow.message_from_text JSON-compatible parsing",
+    "Actual _integer strict budget checks and compile storage/key limits",
+    "Local new IDs absent before temporary writes",
+    "Unchanged candidate/source manifest identity and source_baseline role",
+    "Application, selected DOBFS function, false acceleration and primary/diagnostic booleans",
+    "Compatible completed execution model-build and target/backend/revision catalog bindings",
+    "Expected current compiler adapter is dx100.complete_call.v2; remote paths are not accessed locally"
+  ],
+  "limits": [
+    "No standalone dx100-compile request JSON schema or dry-run API exists; evaluation request is schema-unconstrained and semantic validation is in the public compiler.",
+    "Public local probe intentionally stops at the real host mismatch guard, before lanes/model/source paths; downstream source/compiler/artifact and discovery checks are not claimed executed.",
+    "No build success, executable readiness, correctness, profile, protocol qualification, or gain is established."
+  ]
+}

@@ -1,0 +1,1325 @@
+{
+  "admission": {
+    "actual_scientific_verdict": false,
+    "hardware_or_native_correspondence": false,
+    "original_CPP_ABI": false,
+    "public_Library": false,
+    "ready_query_or_polling": false
+  },
+  "correction": "canonical JSON type-sensitive equality at the sole owned-selection comparison; invariant entry rules/owned-selection design unchanged",
+  "date": "2026-10-16 ET",
+  "inverse": {
+    "exact_v2_restored": true,
+    "only_changed_function_AST": "prepare",
+    "unchanged_functions_and_classes": [
+      "Inputs",
+      "OwnedSelection",
+      "Pin",
+      "PreparedOwnedTrace",
+      "Refused",
+      "canonical",
+      "captured_finite",
+      "exact",
+      "facts_for",
+      "need",
+      "owned_selection_metadata",
+      "receiver_text",
+      "resolve_rules",
+      "rule_rows",
+      "sha",
+      "stable"
+    ],
+    "unique_text_changes": 1
+  },
+  "predecessor": {
+    "bytes": 184097,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/source-packet-v2.json",
+    "sha256": "b76331439f2157888ce2cfc0b099e18430d5674d29584aa22723a5b87da18658"
+  },
+  "rebound_corpus": [
+    {
+      "bytes": 16336,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/covered_store_next_thread_load_positive/composition-certificate-v3.json",
+      "sha256": "bff341557a68966daf58a346581974a73a52c6148faa486809aae81aeada9316"
+    },
+    {
+      "bytes": 3591,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/covered_store_next_thread_load_positive/composition-policy-v3.json",
+      "sha256": "eadc3d86de32dc1893e436c2c3a6e4b32d0a677eb4fbf9c0427af82b418626e2"
+    },
+    {
+      "bytes": 16049,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/critical_end_wait_positive/composition-certificate-v3.json",
+      "sha256": "dc67625c5997364fed5df8d3e10620b9a0ef4203f1897d597fd67995b7155b93"
+    },
+    {
+      "bytes": 3499,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/critical_end_wait_positive/composition-policy-v3.json",
+      "sha256": "073453fbff975342cb21c6cfc1cc09e9967ec020ea0cf899ade2b812f58dea46"
+    },
+    {
+      "bytes": 16225,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/critical_end_without_wait_negative/composition-certificate-v3.json",
+      "sha256": "a50152abff439f1a159e7c17addcd6e3603cbe1183fa4f4c3171a4511b60ea2b"
+    },
+    {
+      "bytes": 3555,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/critical_end_without_wait_negative/composition-policy-v3.json",
+      "sha256": "56673360096adae0831db46847b01275f1d3090f3919a3ef8c3b22618188b7c4"
+    },
+    {
+      "bytes": 16259,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/different_region_noncover_negative/composition-certificate-v3.json",
+      "sha256": "3713cf28ceac84d17753430a5f88f1b22aebff89f121d0bc351340e5c33fe7c2"
+    },
+    {
+      "bytes": 3556,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/different_region_noncover_negative/composition-policy-v3.json",
+      "sha256": "be360ddcee292355f0b88716b79e05ea5aa09a348bf1f15cb6a99b7236994e74"
+    },
+    {
+      "bytes": 16111,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/disjoint_owned_tiles_positive/composition-certificate-v3.json",
+      "sha256": "80044d6e8b6caaa3976ae75d0613709e3e9be56daa2e37c16a0c03a1f5323e99"
+    },
+    {
+      "bytes": 3519,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/disjoint_owned_tiles_positive/composition-policy-v3.json",
+      "sha256": "87995606cc1680e44f58835853e72766413f70deac09958959e7dd5e520d7d19"
+    },
+    {
+      "bytes": 16094,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/history_exact_issue_negative/composition-certificate-v3.json",
+      "sha256": "5dd5d8a028fbaf7d793d92fe943f60065e3881dced9785b31b1842cb2143b7b3"
+    },
+    {
+      "bytes": 3514,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/history_exact_issue_negative/composition-policy-v3.json",
+      "sha256": "11b8e222ef7be5b4db9d6058183f4d20299f7b92c878a3fe99ca1bb788a9e208"
+    },
+    {
+      "bytes": 15984,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/history_latest_positive/composition-certificate-v3.json",
+      "sha256": "9e20291dd4c040276d40e67017c173a3adc4ba6e58fdca34b6bbfc42f9e62538"
+    },
+    {
+      "bytes": 3479,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/history_latest_positive/composition-policy-v3.json",
+      "sha256": "1fd792a05fd8e722177b92cc3d8d86d1bfc0f444e43cb2b2073caefe4d7e640f"
+    },
+    {
+      "bytes": 42546,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/manifest-v3.json",
+      "sha256": "a7704913ddaec7cb3325253aa9ba526c5c2f5c36eec17081a32a6ee781469536"
+    },
+    {
+      "bytes": 16138,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/other_thread_cpu_read_positive/composition-certificate-v3.json",
+      "sha256": "4f5029bb6b80225c22e828fec80552fa5815b46b01e4bbb980f14fc2a66580ca"
+    },
+    {
+      "bytes": 3528,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/other_thread_cpu_read_positive/composition-policy-v3.json",
+      "sha256": "5b025cc3632e651c6a9a687396ef0476913f08e698eb8c60324a26610b482c73"
+    },
+    {
+      "bytes": 16159,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/outside_critical_store_positive/composition-certificate-v3.json",
+      "sha256": "2f70a518bd2d1e55c0b10864aab49c72e422714b1bdbcc227aa9654caa47c345"
+    },
+    {
+      "bytes": 3534,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/outside_critical_store_positive/composition-policy-v3.json",
+      "sha256": "bd72576912cd03d58c39cae4fa45d3b6ab20000c3128a181cb89c5e99f591f25"
+    },
+    {
+      "bytes": 15891,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/owned_tile_positive/composition-certificate-v3.json",
+      "sha256": "88a9c015cccaf28e9e12491ca0c8a744d3969ea8a3bc6b16faa9b7820a389c31"
+    },
+    {
+      "bytes": 3449,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/owned_tile_positive/composition-policy-v3.json",
+      "sha256": "213e89adfd77e31c89455407a8e4c4510de0f807702da10a11f87f644ade98cc"
+    },
+    {
+      "bytes": 16225,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/pending_read_lifetime_end_negative/composition-certificate-v3.json",
+      "sha256": "7f5e05316e513f977da5ec2438b4ef8f3c0c6fa4c89cf1e49c174af3dda22b8e"
+    },
+    {
+      "bytes": 3555,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/pending_read_lifetime_end_negative/composition-policy-v3.json",
+      "sha256": "d3bdf9ccc829663f16993af87bbf386f8ec3a5026976b12d80006a4bc4a08a41"
+    },
+    {
+      "bytes": 16159,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/pending_store_cpu_read_negative/composition-certificate-v3.json",
+      "sha256": "0f9e36f9a88463e995de702154884165dfb0b0dc6614e1949c52eaa964261159"
+    },
+    {
+      "bytes": 3534,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/pending_store_cpu_read_negative/composition-policy-v3.json",
+      "sha256": "ad60d6ccded221ac2cd6bef281cecbfbe4f9e19f5f03bd348e7987ac23b21e97"
+    },
+    {
+      "bytes": 16182,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/prior_cpu_store_visible_positive/composition-certificate-v3.json",
+      "sha256": "ab8dfc5ade6a7e68d5a5938dcd9bc4a5c3bff795e25cff7c36444d981c15893a"
+    },
+    {
+      "bytes": 3542,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/prior_cpu_store_visible_positive/composition-policy-v3.json",
+      "sha256": "18582767d654d33b21de8d8fe9484dbaf86d7a4f6b857c25ac8c994c09a8845d"
+    },
+    {
+      "bytes": 16336,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/same_region_read_read_noncover_negative/composition-certificate-v3.json",
+      "sha256": "576c2ead35903f4a96dec057a22a5e4314a71600273a226f74448d539d1d9799"
+    },
+    {
+      "bytes": 3591,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/same_region_read_read_noncover_negative/composition-policy-v3.json",
+      "sha256": "c224313e0baa60915434ca623f869612753619d5510b7426ce2b5066ee8e79ed"
+    },
+    {
+      "bytes": 16182,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/same_region_write_cover_positive/composition-certificate-v3.json",
+      "sha256": "d2278e3730eb21d92b391d6474ae6a99b759520d1d05a1941c076e776e888665"
+    },
+    {
+      "bytes": 3542,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/same_region_write_cover_positive/composition-policy-v3.json",
+      "sha256": "b9eedb48dc9ea7c3390577e61bdfe7978da68388332fe577ff6c8143a45b851b"
+    },
+    {
+      "bytes": 16050,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/u32_disjoint_half_positive/composition-certificate-v3.json",
+      "sha256": "9c8d624001cbd52be6da000e4de9dceefaa642a7ed2bce14e73922eb228872ac"
+    },
+    {
+      "bytes": 3500,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/u32_disjoint_half_positive/composition-policy-v3.json",
+      "sha256": "39246e42edc22ac894bccc2d2e110b21b8bdd0abb6590f4d83f72f94777cf49e"
+    },
+    {
+      "bytes": 16204,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/u64_second_half_conflict_negative/composition-certificate-v3.json",
+      "sha256": "4f3c2d4c741960d052b92e2553608b6c2ba249810fb99092e8bef463628c4460"
+    },
+    {
+      "bytes": 3549,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/u64_second_half_conflict_negative/composition-policy-v3.json",
+      "sha256": "0988eb249e1c2bdd6414b8d1c45cd1094c416beefb8545cc0472d0657f9b2170"
+    },
+    {
+      "bytes": 15912,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/wrong_owner_negative/composition-certificate-v3.json",
+      "sha256": "602643ae6f8b899a67585d0baae191bd8142ce04e386ca0e7c1ea62e352ca55b"
+    },
+    {
+      "bytes": 3455,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/wrong_owner_negative/composition-policy-v3.json",
+      "sha256": "746e69bfc83d00c3c8d6f8e88ccf059e0853f6cff091fe04c53c9005a37d319e"
+    }
+  ],
+  "remaining": [
+    "independent source review",
+    "actual same-entry Library and external owned-selection resolution",
+    "TraceUnit registry/assumption and harness/draw/replay integration",
+    "root-admitted actual scientific profiles"
+  ],
+  "same_physical_entry": {
+    "bytes": 2409,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/shared-entry-with-owned-rules.json",
+    "sha256": "81e951b0c1968a4f8fffb1016a7c763eec9adcfe58bd9074771fbb623f59defb"
+  },
+  "schema": "finite-owned-receiver-source-packet-3",
+  "selected_input_union": [
+    {
+      "bytes": 23943,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/event_plan_v1.py",
+      "sha256": "07c94720ec30625d9b934dea2685d49e75a949661c8852ae0997b0d8070b488b"
+    },
+    {
+      "bytes": 1635,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/covered_store_next_thread_load_positive/plan.json",
+      "sha256": "d1ccefdb9fd8a54bf772bd7f17e7b7a2a86855749be61aa0f02a34c3b034928f"
+    },
+    {
+      "bytes": 1135,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/critical_end_wait_positive/plan.json",
+      "sha256": "68d5528cfc7f44adf5d02b99239c759f6a59d876642ce87e057b9f566f1da385"
+    },
+    {
+      "bytes": 1099,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/critical_end_without_wait_negative/plan.json",
+      "sha256": "b73ecb7ef9a9f8ab7da3087fbc61951bd2e812724dba5aabc39ba81057ad1c19"
+    },
+    {
+      "bytes": 1615,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/different_region_noncover_negative/plan.json",
+      "sha256": "efc0a2700fe81ad59b7fd75c2fefcacf84c0c8e720835908d6bbd0227eb151d6"
+    },
+    {
+      "bytes": 899,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/disjoint_owned_tiles_positive/plan.json",
+      "sha256": "ae36f616b513a5a677661bd4a619a4ac286f101aa5795017d275b1685fb510b6"
+    },
+    {
+      "bytes": 1805,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/history_exact_issue_negative/plan.json",
+      "sha256": "84cb370c71aa617368228a7c05df3b6da603354f1e10da7fb4b4dd99e56f6403"
+    },
+    {
+      "bytes": 1805,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/history_latest_positive/plan.json",
+      "sha256": "0ad27216e1ca58439d3029af6c88da4ffd2ec20cd7931c81870314a327adb473"
+    },
+    {
+      "bytes": 1261,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/other_thread_cpu_read_positive/plan.json",
+      "sha256": "926b1bf35c7f96c8571803486d2f2de6a7a8e519f640340a49f87ed1a6745d3a"
+    },
+    {
+      "bytes": 1209,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/outside_critical_store_positive/plan.json",
+      "sha256": "b2687d59f5fc17752fea57d22c330c37654b54e8df9e8e6a5bebd17cba3968ed"
+    },
+    {
+      "bytes": 824,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/owned_tile_positive/plan.json",
+      "sha256": "40d735c4f7883956a77f3dce5ec407908e479f14224cfed1a896002f50928974"
+    },
+    {
+      "bytes": 1117,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/pending_read_lifetime_end_negative/plan.json",
+      "sha256": "e65b89c7fbbd48c70859c5ee7b03f711c08d77ba62122adfb46e3628d04b57e4"
+    },
+    {
+      "bytes": 1206,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/pending_store_cpu_read_negative/plan.json",
+      "sha256": "590dc6da6ccdff8f1b749aa5e402df5f8b74a547ea9344d9283f7b6498225b6c"
+    },
+    {
+      "bytes": 1321,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/prior_cpu_store_visible_positive/plan.json",
+      "sha256": "3f4b0e2610af0d54b0aca992af025e31040d5fdb2af63ed0d1208a2ba4905126"
+    },
+    {
+      "bytes": 1619,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/same_region_read_read_noncover_negative/plan.json",
+      "sha256": "22515382071c46e9bb359d38c694cae7397e3f2798891281fcf4f3116a6fe129"
+    },
+    {
+      "bytes": 1613,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/same_region_write_cover_positive/plan.json",
+      "sha256": "ed855b3a6bf8dddc1b1974bc41b431b608e831a6cf95783bd26d64e1275623da"
+    },
+    {
+      "bytes": 1329,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/u32_disjoint_half_positive/plan.json",
+      "sha256": "883a041ac88d5ffe2ee40e645c8232678c79ffa7bf56922943fe4dac597ea110"
+    },
+    {
+      "bytes": 1342,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/u64_second_half_conflict_negative/plan.json",
+      "sha256": "624e14836cf42ea6e001faf64eff84464e36c8b82793c45a22e916a43a255b21"
+    },
+    {
+      "bytes": 707,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-event-plan-v1/prepared-corpus-v1/wrong_owner_negative/plan.json",
+      "sha256": "a6e7ffc3847c1cf6564a7efc66ae28fd76128169678521347a48cc2b71c8f816"
+    },
+    {
+      "bytes": 1705,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/covered_store_next_thread_load_positive/anchors.json",
+      "sha256": "b762e2cd0cffe984295da2e94f9bd3d51300fe70815386181f721415bc21b0f0"
+    },
+    {
+      "bytes": 2162,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/covered_store_next_thread_load_positive/context.json",
+      "sha256": "811d9dab8aae3053e6097b73f9cb124c1c8084b3bfb2f755ca6b00545e3c92d7"
+    },
+    {
+      "bytes": 460,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/covered_store_next_thread_load_positive/draws.json",
+      "sha256": "4966594729ce1e5541f3464c8257def1adff211f7db02a8a37f66b25b5258e76"
+    },
+    {
+      "bytes": 2889,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/covered_store_next_thread_load_positive/owned-selection.json",
+      "sha256": "1658c3a08fbd25ff5261bc9ef0fe971d6a105332defed617a666fa14d8fb7c32"
+    },
+    {
+      "bytes": 1582,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/covered_store_next_thread_load_positive/profile.json",
+      "sha256": "b9f23ab90747e6e95e2ea0b56c6fa158abd1f205a5a03b10ddbf5afcd1258bfb"
+    },
+    {
+      "bytes": 432,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/covered_store_next_thread_load_positive/receiver.json",
+      "sha256": "434f4d313c4530425bbcff1fa2eca9ef33c966c78abc4a5882ee61a57b94ed85"
+    },
+    {
+      "bytes": 6881,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/covered_store_next_thread_load_positive/trace-certificate.json",
+      "sha256": "5c9b698e38d0dd6a34bb99330bc043a564fef4cb4d5d469271c03ee1f0a7968b"
+    },
+    {
+      "bytes": 3261,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/covered_store_next_thread_load_positive/trace-policy.json",
+      "sha256": "c047a89e694599011ecdcbc07faa37a1186c06e965b77db15e1392af278d5e2b"
+    },
+    {
+      "bytes": 141732,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/covered_store_next_thread_load_positive/trace.c",
+      "sha256": "26711daeef914e93b900df1cb06dce5c1e668588091c33a23c4af01a708adb37"
+    },
+    {
+      "bytes": 805,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/critical_end_wait_positive/anchors.json",
+      "sha256": "4a65a75ad94f56a000048474f7b447a93a1fdf64b4c7a4c07b43768702e114a1"
+    },
+    {
+      "bytes": 2162,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/critical_end_wait_positive/context.json",
+      "sha256": "8f6e3e0d55cd7b1a05b975753a0d9a7abd800f83d9492bff043fb4b70bbdb9b2"
+    },
+    {
+      "bytes": 316,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/critical_end_wait_positive/draws.json",
+      "sha256": "3d7cdcf73f97503a2a998046707d4d0c65ecaff259e846a17b9a9b4f9d1e4d85"
+    },
+    {
+      "bytes": 2798,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/critical_end_wait_positive/owned-selection.json",
+      "sha256": "6a766c6f6c676be8a2d8ad9ff4be1aa3a5aaad0479531d769a8ec40a74b87405"
+    },
+    {
+      "bytes": 1161,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/critical_end_wait_positive/profile.json",
+      "sha256": "2dc3b39756ea7c5ac7f57af271735ed88ac4c564d4c7eb8425e29381d6a753d4"
+    },
+    {
+      "bytes": 432,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/critical_end_wait_positive/receiver.json",
+      "sha256": "2a7024374178f785b1c46108f799d5462a2b316fc96c6e7733adc24e36bc76fa"
+    },
+    {
+      "bytes": 6790,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/critical_end_wait_positive/trace-certificate.json",
+      "sha256": "74346396c49b5a6111fc48f1fd33a063319eb31e1b00819e642afbbb48351acc"
+    },
+    {
+      "bytes": 3222,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/critical_end_wait_positive/trace-policy.json",
+      "sha256": "e72426ee4d5366ff30bbd724071a9801f6a7cbc65e8379e0abc8009bc8103a11"
+    },
+    {
+      "bytes": 139758,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/critical_end_wait_positive/trace.c",
+      "sha256": "95e02a06d88d45b77de49d4d597c33c20e9c6e6cbd206a30440426bfc8eb0204"
+    },
+    {
+      "bytes": 762,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/critical_end_without_wait_negative/anchors.json",
+      "sha256": "9001402804dbc420d1488583ab0a22827e24d915b5e9975b529ed1c77efd27cc"
+    },
+    {
+      "bytes": 2162,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/critical_end_without_wait_negative/context.json",
+      "sha256": "f0685ce76871852d1639061c9c57250203385b6609a40f67d5cbbdb4585a4f58"
+    },
+    {
+      "bytes": 316,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/critical_end_without_wait_negative/draws.json",
+      "sha256": "3d7cdcf73f97503a2a998046707d4d0c65ecaff259e846a17b9a9b4f9d1e4d85"
+    },
+    {
+      "bytes": 2854,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/critical_end_without_wait_negative/owned-selection.json",
+      "sha256": "2b5190fc0358531ef0facb67e162ca0ddf949db8f1fa4f381ba7f5f01d975be4"
+    },
+    {
+      "bytes": 1103,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/critical_end_without_wait_negative/profile.json",
+      "sha256": "1857f8e9227c7e6473acebac0a65ddbd796cc955add6b86f8f60a2b6e3c7ec69"
+    },
+    {
+      "bytes": 432,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/critical_end_without_wait_negative/receiver.json",
+      "sha256": "64e5916672e0da2a5cfa426b73705de79d7c20e369908644696c8fd21c1c75e1"
+    },
+    {
+      "bytes": 6846,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/critical_end_without_wait_negative/trace-certificate.json",
+      "sha256": "e4d0ee4a80ad5217d8b2b09cd44c4511fd77bc2321e594b5697ecbdd33ba95b5"
+    },
+    {
+      "bytes": 3246,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/critical_end_without_wait_negative/trace-policy.json",
+      "sha256": "53120f79472447cb2327413417b9444e1b1707103162d36a2dd87ab9fc614080"
+    },
+    {
+      "bytes": 139707,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/critical_end_without_wait_negative/trace.c",
+      "sha256": "66af30a1a99ed911f4bfae60ea78f9fa80594f4d86ed29a5d51f3ad0a98a7037"
+    },
+    {
+      "bytes": 1630,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/different_region_noncover_negative/anchors.json",
+      "sha256": "3aefd192e751afdae93ca490445db216affead01a80d7b4acb9693bd3987cd89"
+    },
+    {
+      "bytes": 2195,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/different_region_noncover_negative/context.json",
+      "sha256": "ceb4e4dd5e97f9c89e82caf700e458faccc61154c36583f69e64ecfcab25f3f6"
+    },
+    {
+      "bytes": 460,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/different_region_noncover_negative/draws.json",
+      "sha256": "4966594729ce1e5541f3464c8257def1adff211f7db02a8a37f66b25b5258e76"
+    },
+    {
+      "bytes": 2854,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/different_region_noncover_negative/owned-selection.json",
+      "sha256": "ea5e46f9622d7818c23fc0984364aa78d03682afda29e1787582135fe103c040"
+    },
+    {
+      "bytes": 1582,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/different_region_noncover_negative/profile.json",
+      "sha256": "d100e48138b662cdd1633a355031565416d51fdbeac0b00d3df3e3c9e2ac78fd"
+    },
+    {
+      "bytes": 432,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/different_region_noncover_negative/receiver.json",
+      "sha256": "275d2e821e24d68c728f2d42be201b27afef8ed39e2038fe2d4541cefbaa4bad"
+    },
+    {
+      "bytes": 6846,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/different_region_noncover_negative/trace-certificate.json",
+      "sha256": "235860268a375f1a24b14ff468182b8a0865e1f8f0b89bac016e8872a0f8a031"
+    },
+    {
+      "bytes": 3246,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/different_region_noncover_negative/trace-policy.json",
+      "sha256": "aad23ebe4b03089469c585e7cb222592b1696614c1665e50670a1bd6fba05459"
+    },
+    {
+      "bytes": 141562,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/different_region_noncover_negative/trace.c",
+      "sha256": "5579bda3d292b92e607ebbf0f11328e97dfede12abfe890285fe67b0c8118673"
+    },
+    {
+      "bytes": 411,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/disjoint_owned_tiles_positive/anchors.json",
+      "sha256": "d2476637470acc617c32612c6e908d66b4697d578f8fcf62ea40721b00e7400d"
+    },
+    {
+      "bytes": 2162,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/disjoint_owned_tiles_positive/context.json",
+      "sha256": "d3e9588b48d3b6c60fe122f240fb0296e1f0082ab17709652b2256d81574ef27"
+    },
+    {
+      "bytes": 316,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/disjoint_owned_tiles_positive/draws.json",
+      "sha256": "3d7cdcf73f97503a2a998046707d4d0c65ecaff259e846a17b9a9b4f9d1e4d85"
+    },
+    {
+      "bytes": 2817,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/disjoint_owned_tiles_positive/owned-selection.json",
+      "sha256": "d5bf79ed49d3d100a020d781f0b1b7a9bcd68be8f7d64842df606a94d58a9776"
+    },
+    {
+      "bytes": 917,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/disjoint_owned_tiles_positive/profile.json",
+      "sha256": "dec6c4e0da1473d09e8e5d9088e8452ec60bf4e119ac20c89c592a9ee68c0ec9"
+    },
+    {
+      "bytes": 432,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/disjoint_owned_tiles_positive/receiver.json",
+      "sha256": "ff9eb6a23b3434fc735d0b088aea639ff9f23e4ca2e48ac7af8f16cad7ee08f1"
+    },
+    {
+      "bytes": 6809,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/disjoint_owned_tiles_positive/trace-certificate.json",
+      "sha256": "d6293b094cb5ea0a99bcebb93cb264e27fa18168d10fe0b7851eaeaaa0f562af"
+    },
+    {
+      "bytes": 3230,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/disjoint_owned_tiles_positive/trace-policy.json",
+      "sha256": "f8c03ed9202b652c6cd64f46407ff61e423324a8f92726e8d52a7739d7f57dfc"
+    },
+    {
+      "bytes": 138783,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/disjoint_owned_tiles_positive/trace.c",
+      "sha256": "ac2ba07cc22d0700dfa07a311e35277073e273116d546ba847587ee9e0f11acd"
+    },
+    {
+      "bytes": 1735,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/history_exact_issue_negative/anchors.json",
+      "sha256": "1759036f462281cf673cd3c2bc6e2afce2a24736ce93c8d8615d9f0d6f15daf4"
+    },
+    {
+      "bytes": 2162,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/history_exact_issue_negative/context.json",
+      "sha256": "9c1b9e69b5644bf3d6c07e6efdf4c0db6d145246503dd25543c388a91aacadc6"
+    },
+    {
+      "bytes": 532,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/history_exact_issue_negative/draws.json",
+      "sha256": "007121a5bc93cbc3acb5316c28eaf96905e9bbace1c385fdc4cab32b1482ea16"
+    },
+    {
+      "bytes": 2812,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/history_exact_issue_negative/owned-selection.json",
+      "sha256": "13b05cd14bc17f1f6c10569b9a61c5ddbb4bc39166fd61297cb9559dc55aea82"
+    },
+    {
+      "bytes": 1691,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/history_exact_issue_negative/profile.json",
+      "sha256": "34df7672c224d8ee51ae3ae8a115682ed8c3ea66ec360ed83fcb0058a2c2b751"
+    },
+    {
+      "bytes": 432,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/history_exact_issue_negative/receiver.json",
+      "sha256": "dae6385a29faf9f8c6858341d91c551ecc1a18269562594b059561a629fdde6e"
+    },
+    {
+      "bytes": 6804,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/history_exact_issue_negative/trace-certificate.json",
+      "sha256": "ea8fca3a36843e5c6b8450eeb5b7192c2a7b7f0cb1a75351d708abaabf568da1"
+    },
+    {
+      "bytes": 3228,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/history_exact_issue_negative/trace-policy.json",
+      "sha256": "7bfc843951424fe758381deb6973ef6e95f24e4c8b532c0a750d093e2eb2a11d"
+    },
+    {
+      "bytes": 141936,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/history_exact_issue_negative/trace.c",
+      "sha256": "1328c15134ec2c1d41b8fed1036b4a8fbb61bf5ae7457017d055cf703dc337f5"
+    },
+    {
+      "bytes": 1650,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/history_latest_positive/anchors.json",
+      "sha256": "380d8c0028a10f93a2d5a62260e515194beda24a252df368c742af94e02c7a14"
+    },
+    {
+      "bytes": 2162,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/history_latest_positive/context.json",
+      "sha256": "4c8f630a8380ec012d08bc69eb53c21f23c6514c9968a358dbf04c586430d719"
+    },
+    {
+      "bytes": 532,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/history_latest_positive/draws.json",
+      "sha256": "007121a5bc93cbc3acb5316c28eaf96905e9bbace1c385fdc4cab32b1482ea16"
+    },
+    {
+      "bytes": 2777,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/history_latest_positive/owned-selection.json",
+      "sha256": "bb2fd6d3c7b62cc5266e5b16ebe304af7db0d2c9f419a1350cf0741b4fa1e025"
+    },
+    {
+      "bytes": 1691,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/history_latest_positive/profile.json",
+      "sha256": "67b98f4fc0818a09559ce11da0cdfbed15f6f87b7d77d678d450f85a4d19dc72"
+    },
+    {
+      "bytes": 432,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/history_latest_positive/receiver.json",
+      "sha256": "5e30ce496a35764ff4655b3fcacf39402fae08c372a6637247473a1b75f925dc"
+    },
+    {
+      "bytes": 6769,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/history_latest_positive/trace-certificate.json",
+      "sha256": "b3ea2c128918fb9572b1fc4b5035b8f27b654c1ba149ee3825924dde457b4a58"
+    },
+    {
+      "bytes": 3213,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/history_latest_positive/trace-policy.json",
+      "sha256": "873647e938d6d0901a135fb23bf33c707e549151cc6a538918a98a4ac16dee92"
+    },
+    {
+      "bytes": 141796,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/history_latest_positive/trace.c",
+      "sha256": "8a7d63b590987e0f4e842508054cb223d60e3bb61bfb5c4525090e6619d6e1e0"
+    },
+    {
+      "bytes": 1040,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/other_thread_cpu_read_positive/anchors.json",
+      "sha256": "7c4937425d44d75b16b4614c9cc0c9705e617e031dbca56767ca719e738fd314"
+    },
+    {
+      "bytes": 2162,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/other_thread_cpu_read_positive/context.json",
+      "sha256": "677f3bc22ccbf87f8de9fd846549ff3e0e40ef449060bf7359d3f3353a3b613b"
+    },
+    {
+      "bytes": 388,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/other_thread_cpu_read_positive/draws.json",
+      "sha256": "5cfe380d8958a2f5cdaf7df8dd660583f4c5b2756360fa81bae5b25792ad86f7"
+    },
+    {
+      "bytes": 2826,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/other_thread_cpu_read_positive/owned-selection.json",
+      "sha256": "7083a1451580e413423d5a48df2c6c05d05e1fb770ef04da94d26aecddad0a8b"
+    },
+    {
+      "bytes": 1275,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/other_thread_cpu_read_positive/profile.json",
+      "sha256": "c392c9c949c3e4ffe6152a4a9459b5e0de51bae6088544fcea074d5853b33642"
+    },
+    {
+      "bytes": 432,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/other_thread_cpu_read_positive/receiver.json",
+      "sha256": "bbf30da7eccd509147b520fc47ee46bea0987168f5ae18ce40b09c250d659a62"
+    },
+    {
+      "bytes": 6818,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/other_thread_cpu_read_positive/trace-certificate.json",
+      "sha256": "34c205c23e86e167a23777a9bba239666e8c56fb839177ecf6790322dc088468"
+    },
+    {
+      "bytes": 3234,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/other_thread_cpu_read_positive/trace-policy.json",
+      "sha256": "234a0a0ea4db1ff2741257b24678ed85f95037a757c5bc14f1e2ab42e2b266dd"
+    },
+    {
+      "bytes": 140282,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/other_thread_cpu_read_positive/trace.c",
+      "sha256": "f7a672724048d8f26fdaeba3dba618cddfaa8c76e2f84aca16a6892dbc85eefb"
+    },
+    {
+      "bytes": 954,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/outside_critical_store_positive/anchors.json",
+      "sha256": "d0e7ce124f5d4e375c6ddc995392d1bd212097ead374398db9afcebf93c8d212"
+    },
+    {
+      "bytes": 2162,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/outside_critical_store_positive/context.json",
+      "sha256": "e739be3e8fbed8789012f58481381ba122c3dc64afc3eeb30acc321336b78181"
+    },
+    {
+      "bytes": 316,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/outside_critical_store_positive/draws.json",
+      "sha256": "3d7cdcf73f97503a2a998046707d4d0c65ecaff259e846a17b9a9b4f9d1e4d85"
+    },
+    {
+      "bytes": 2833,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/outside_critical_store_positive/owned-selection.json",
+      "sha256": "eeb9a38e077567325184b6e232fe37a4406901a0301f95ffafd1089a9161cca5"
+    },
+    {
+      "bytes": 1224,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/outside_critical_store_positive/profile.json",
+      "sha256": "81124c1dbce2372d9ad5413eecaaf8befb68e2a1610d906aaedb2e899c7744fe"
+    },
+    {
+      "bytes": 432,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/outside_critical_store_positive/receiver.json",
+      "sha256": "97f1ca1ec3042ef2cf643d66c4f0f4f8ca467588ed00c16fbc5e4a439f20c92b"
+    },
+    {
+      "bytes": 6825,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/outside_critical_store_positive/trace-certificate.json",
+      "sha256": "97fce63ae6c753f08c0057d913da33dcb2819855144fc1e2d4006e165b0aae0a"
+    },
+    {
+      "bytes": 3237,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/outside_critical_store_positive/trace-policy.json",
+      "sha256": "110ecc101598395a6b202ad07b1ee70e4b9e8b657a45a5fcee3dd0cd1b6b3179"
+    },
+    {
+      "bytes": 140069,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/outside_critical_store_positive/trace.c",
+      "sha256": "c28b74d1084b53a18274508a6e0bceade129ca3f999aa27dcdf68b0c0faccd70"
+    },
+    {
+      "bytes": 278,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/owned_tile_positive/anchors.json",
+      "sha256": "4f67769f27fe8a5c576aea72720c29bcbb0d6003cba1695885b501e7032e7d9c"
+    },
+    {
+      "bytes": 2162,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/owned_tile_positive/context.json",
+      "sha256": "8ffc99bd31459f14278b4fd9788a0ddbd6a95a46d98a148d2ece2a35044057eb"
+    },
+    {
+      "bytes": 316,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/owned_tile_positive/draws.json",
+      "sha256": "3d7cdcf73f97503a2a998046707d4d0c65ecaff259e846a17b9a9b4f9d1e4d85"
+    },
+    {
+      "bytes": 2747,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/owned_tile_positive/owned-selection.json",
+      "sha256": "d50b19661bf53dc10e1297fabd8620a17868af533c8204a295213aaedfedb42a"
+    },
+    {
+      "bytes": 858,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/owned_tile_positive/profile.json",
+      "sha256": "5a40e0217f1e40976829488e877eb44ed718589b28d288a1febc2e9ec7c53906"
+    },
+    {
+      "bytes": 432,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/owned_tile_positive/receiver.json",
+      "sha256": "a763630f51e772c519504e8548d003b8f67a5a4e350f4b3d555bbebf8a1b4f33"
+    },
+    {
+      "bytes": 6739,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/owned_tile_positive/trace-certificate.json",
+      "sha256": "b4350c9ff6dc081890b80eac59f7701daa986bf8cc51fdc3844f6b788000ef0a"
+    },
+    {
+      "bytes": 3200,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/owned_tile_positive/trace-policy.json",
+      "sha256": "d8dd1a5bb254484d41a78d878bb065c7fdaf2c9f5d87e214d2eb9190c5a4cf4e"
+    },
+    {
+      "bytes": 138528,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/owned_tile_positive/trace.c",
+      "sha256": "d874d08adc4b5934c66950ddb3491a3718bfa49dd0c9e05087bed2c52abe7ca9"
+    },
+    {
+      "bytes": 755,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/pending_read_lifetime_end_negative/anchors.json",
+      "sha256": "c57b72dff3b0a07fe27c1b02d674d7ea2203ba28e65a815f28392b69cebaaca7"
+    },
+    {
+      "bytes": 2162,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/pending_read_lifetime_end_negative/context.json",
+      "sha256": "ac16451354e71960c135c961393e1010420655b95a792ad084706e210d9b4449"
+    },
+    {
+      "bytes": 388,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/pending_read_lifetime_end_negative/draws.json",
+      "sha256": "5cfe380d8958a2f5cdaf7df8dd660583f4c5b2756360fa81bae5b25792ad86f7"
+    },
+    {
+      "bytes": 2854,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/pending_read_lifetime_end_negative/owned-selection.json",
+      "sha256": "01801bc694f8ab6135285598377c2b184eacb195340f59288d72bb1e5d75af07"
+    },
+    {
+      "bytes": 1097,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/pending_read_lifetime_end_negative/profile.json",
+      "sha256": "24f4ed2eb15584077bda42c88ef6d242f90b559eeda3b25d8df26daccb9dd93e"
+    },
+    {
+      "bytes": 432,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/pending_read_lifetime_end_negative/receiver.json",
+      "sha256": "db730b446b0b89ac5adaec2f112d6eefc3e90258a9e48af7e7b2bd458335d5ae"
+    },
+    {
+      "bytes": 6846,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/pending_read_lifetime_end_negative/trace-certificate.json",
+      "sha256": "3da62f887f25fde9e853a175f9a1b6e597875fb4484e32fb7190aa7c1006a541"
+    },
+    {
+      "bytes": 3246,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/pending_read_lifetime_end_negative/trace-policy.json",
+      "sha256": "263959ce436ca5a1a0c92c99a023579a9a013cecef93a6c20c0fbb2070a1f22c"
+    },
+    {
+      "bytes": 139780,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/pending_read_lifetime_end_negative/trace.c",
+      "sha256": "3972155435cfba913e4c9cc0e3fd8d5d46677542e5f7c7184056ac24950db18c"
+    },
+    {
+      "bytes": 948,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/pending_store_cpu_read_negative/anchors.json",
+      "sha256": "463982ff5d5cf2cb244e89300eb5f0fc279f1e682a6b2feb371a54871be90d6e"
+    },
+    {
+      "bytes": 2162,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/pending_store_cpu_read_negative/context.json",
+      "sha256": "7c5e618b1681473f4e7d0c3d26a76df5023bb85629330e2cb6053802e9d7fd64"
+    },
+    {
+      "bytes": 316,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/pending_store_cpu_read_negative/draws.json",
+      "sha256": "3d7cdcf73f97503a2a998046707d4d0c65ecaff259e846a17b9a9b4f9d1e4d85"
+    },
+    {
+      "bytes": 2833,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/pending_store_cpu_read_negative/owned-selection.json",
+      "sha256": "1cacd593fc071d9a746536f28d4c8bcaca963e876bb7f29d970b26553aec90f6"
+    },
+    {
+      "bytes": 1218,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/pending_store_cpu_read_negative/profile.json",
+      "sha256": "248f368f64cb09e1ae8a443b83b4122be87909466dc517b9c3a84f505d8777f3"
+    },
+    {
+      "bytes": 432,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/pending_store_cpu_read_negative/receiver.json",
+      "sha256": "f2b4f4ffa6d9119c08b52cc9f2ffb35418e73c98ed8422cb058b6ce5a42a089e"
+    },
+    {
+      "bytes": 6825,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/pending_store_cpu_read_negative/trace-certificate.json",
+      "sha256": "f38e91d6078b29cc9006e1f74860276e0f7a5770d44041b0937456ab02f4578a"
+    },
+    {
+      "bytes": 3237,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/pending_store_cpu_read_negative/trace-policy.json",
+      "sha256": "080067cac87a9d81a9ee7a5ae06e1eabcba965f427719d51882adc30e0d99db8"
+    },
+    {
+      "bytes": 140065,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/pending_store_cpu_read_negative/trace.c",
+      "sha256": "88a7cdf9d1727a69e1fd4542e10204499e4b5e6427cc6135cca2beaa51cd89c3"
+    },
+    {
+      "bytes": 1167,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/prior_cpu_store_visible_positive/anchors.json",
+      "sha256": "f9068a25fe27a89d393ff407bbc256bc0c6fb2d504a9c974891a2aece28084a1"
+    },
+    {
+      "bytes": 2162,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/prior_cpu_store_visible_positive/context.json",
+      "sha256": "268e6f0b5d5fad5f9a1170bfbef0c9fdaf4cd0fcdb1a6a61ec8c76a60c9891d0"
+    },
+    {
+      "bytes": 388,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/prior_cpu_store_visible_positive/draws.json",
+      "sha256": "5cfe380d8958a2f5cdaf7df8dd660583f4c5b2756360fa81bae5b25792ad86f7"
+    },
+    {
+      "bytes": 2840,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/prior_cpu_store_visible_positive/owned-selection.json",
+      "sha256": "9b4daa48cc6f1b3cb15a8ccee47460a93542ba3bf1a8ccf28d010c4d82c90bb1"
+    },
+    {
+      "bytes": 1335,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/prior_cpu_store_visible_positive/profile.json",
+      "sha256": "62d251bc52c8ed3367794511a34d7a195548d7078921a8d3e2e3cf2b9dcbba7e"
+    },
+    {
+      "bytes": 432,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/prior_cpu_store_visible_positive/receiver.json",
+      "sha256": "39995fd4967221a3864cc2acd7f593ec4d497e009b38bbbe4564f2b5dc9cad52"
+    },
+    {
+      "bytes": 6832,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/prior_cpu_store_visible_positive/trace-certificate.json",
+      "sha256": "767f89956ecb7dfe69fab80215c53b6c2d09a684d405b2a91133e2d71d652b4e"
+    },
+    {
+      "bytes": 3240,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/prior_cpu_store_visible_positive/trace-policy.json",
+      "sha256": "81c2e580deadef24710e6d4b28035e8c04b5d78b361c68ca089f71632b6a6e22"
+    },
+    {
+      "bytes": 140522,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/prior_cpu_store_visible_positive/trace.c",
+      "sha256": "3777ac9fed3784c1873dae264222801ee0e9ab7a74ae98e9ba43790f4d051aee"
+    },
+    {
+      "bytes": 1703,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/same_region_read_read_noncover_negative/anchors.json",
+      "sha256": "361b7c0d9e392cd8cf6de4b73b391dd578b41b268cd263ae4e6e0a199515c4a1"
+    },
+    {
+      "bytes": 2162,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/same_region_read_read_noncover_negative/context.json",
+      "sha256": "28c1626228c879e2374b786e568a9c4d0f3423df1e75b0d5327923fef138af90"
+    },
+    {
+      "bytes": 532,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/same_region_read_read_noncover_negative/draws.json",
+      "sha256": "007121a5bc93cbc3acb5316c28eaf96905e9bbace1c385fdc4cab32b1482ea16"
+    },
+    {
+      "bytes": 2889,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/same_region_read_read_noncover_negative/owned-selection.json",
+      "sha256": "f4523eaba3f6cda8bd5052b562544f82b17134ba36dcbd82cedcb2c7abb6f0b9"
+    },
+    {
+      "bytes": 1580,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/same_region_read_read_noncover_negative/profile.json",
+      "sha256": "817b128052a6c7284e8749f777964b60802d09a960c2f1878e2bcd58922f6094"
+    },
+    {
+      "bytes": 432,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/same_region_read_read_noncover_negative/receiver.json",
+      "sha256": "0b9424c4f18b4b4f051497065360adb9c3cbeee69644a74ea1926ae5d7356e15"
+    },
+    {
+      "bytes": 6881,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/same_region_read_read_noncover_negative/trace-certificate.json",
+      "sha256": "ae39ba8193f1fd88fc863859767ad9d5389aa30226f028980d7f94cf58a85792"
+    },
+    {
+      "bytes": 3261,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/same_region_read_read_noncover_negative/trace-policy.json",
+      "sha256": "32c0ae89d6fff172db450c718274f68e3d0591f28dbbac7135005ab8952b549c"
+    },
+    {
+      "bytes": 141726,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/same_region_read_read_noncover_negative/trace.c",
+      "sha256": "68d5b8831db2b2c3058631811e2818350d7f6fc2f161dfbd59d7180d5982bf3a"
+    },
+    {
+      "bytes": 1600,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/same_region_write_cover_positive/anchors.json",
+      "sha256": "fd31c88377b0cd9d12eef441065a6bf466951c0c6b932b63a31cd24ff87182fc"
+    },
+    {
+      "bytes": 2162,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/same_region_write_cover_positive/context.json",
+      "sha256": "c2a17d52d55b4ed456fcaf7bb1dc674f96c3142235aa692b22673ae33bbb2b51"
+    },
+    {
+      "bytes": 460,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/same_region_write_cover_positive/draws.json",
+      "sha256": "4966594729ce1e5541f3464c8257def1adff211f7db02a8a37f66b25b5258e76"
+    },
+    {
+      "bytes": 2840,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/same_region_write_cover_positive/owned-selection.json",
+      "sha256": "e9567b35f59be031bd9347e0431314edd4691a8a7ad1db87338ee2d5285a3f0e"
+    },
+    {
+      "bytes": 1582,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/same_region_write_cover_positive/profile.json",
+      "sha256": "d100e48138b662cdd1633a355031565416d51fdbeac0b00d3df3e3c9e2ac78fd"
+    },
+    {
+      "bytes": 432,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/same_region_write_cover_positive/receiver.json",
+      "sha256": "e4f689902fb521d11e42bd7a84902e94345af527b92cd9446c22f0feceeb366c"
+    },
+    {
+      "bytes": 6832,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/same_region_write_cover_positive/trace-certificate.json",
+      "sha256": "b2894786c7f06d365195770d02a1436efd39b3d236a0a41f9b91d13f4f60ce95"
+    },
+    {
+      "bytes": 3240,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/same_region_write_cover_positive/trace-policy.json",
+      "sha256": "19d8ff4d1121bc7878909c8afea171a07a2312e871d48963ffa46d1ac5309e4f"
+    },
+    {
+      "bytes": 141496,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/same_region_write_cover_positive/trace.c",
+      "sha256": "9507dc647b1d2c88f8aff0b990991e1aa90b9acf7d0342fdf2028f06fcb8dc5a"
+    },
+    {
+      "bytes": 2409,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/shared-entry-with-owned-rules.json",
+      "sha256": "81e951b0c1968a4f8fffb1016a7c763eec9adcfe58bd9074771fbb623f59defb"
+    },
+    {
+      "bytes": 1102,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/u32_disjoint_half_positive/anchors.json",
+      "sha256": "a075b856cf025608a21cdbfb358c0cbabda6ef59a301ec311c6f302b77af7e30"
+    },
+    {
+      "bytes": 2162,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/u32_disjoint_half_positive/context.json",
+      "sha256": "035b81d05e8cec9cca806b56d14269c75981205fb5ab7efeed6a31f8abe39aa3"
+    },
+    {
+      "bytes": 388,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/u32_disjoint_half_positive/draws.json",
+      "sha256": "5cfe380d8958a2f5cdaf7df8dd660583f4c5b2756360fa81bae5b25792ad86f7"
+    },
+    {
+      "bytes": 2798,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/u32_disjoint_half_positive/owned-selection.json",
+      "sha256": "ebc138b4654787bec61a34389182cf4d1fc0de4bf766445130c0397702353abd"
+    },
+    {
+      "bytes": 1336,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/u32_disjoint_half_positive/profile.json",
+      "sha256": "6001a60275b882e8819dfe557946419437668ff3f960050bd9dc9cf9d00c7e73"
+    },
+    {
+      "bytes": 432,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/u32_disjoint_half_positive/receiver.json",
+      "sha256": "6e7cd5c015bcc881f00796a9751a9c68dbf6396ef57173cb42aeb3c05c64c63e"
+    },
+    {
+      "bytes": 6790,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/u32_disjoint_half_positive/trace-certificate.json",
+      "sha256": "9108116b52941af4a577b93dd7df647069fb7e3ed0b4d5578aae4768a6b83c9a"
+    },
+    {
+      "bytes": 3222,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/u32_disjoint_half_positive/trace-policy.json",
+      "sha256": "071179a4b73375331a32ac5fb4a4fcebe0df78d75e263255fc78c1863096dd91"
+    },
+    {
+      "bytes": 140371,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/u32_disjoint_half_positive/trace.c",
+      "sha256": "c06f6c85acbc178f3a258b2870cf55a67bef0e03d5237acb95489f04dc1e5d7f"
+    },
+    {
+      "bytes": 1179,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/u64_second_half_conflict_negative/anchors.json",
+      "sha256": "9dbeeebfe94bf6ea4ecb5a34ca53711c5bc71cd7202af15ad23e67b6ac4ccc7b"
+    },
+    {
+      "bytes": 2162,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/u64_second_half_conflict_negative/context.json",
+      "sha256": "dffa83b5fad5db535006fb9d20cc7225180bb60cbae43a2cd47ed0b255c9fac4"
+    },
+    {
+      "bytes": 388,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/u64_second_half_conflict_negative/draws.json",
+      "sha256": "5cfe380d8958a2f5cdaf7df8dd660583f4c5b2756360fa81bae5b25792ad86f7"
+    },
+    {
+      "bytes": 2847,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/u64_second_half_conflict_negative/owned-selection.json",
+      "sha256": "75a42bfa411cce834eff48296a7ef122fdbf7b8c5dc13a7458ddb97c434a5ca5"
+    },
+    {
+      "bytes": 1336,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/u64_second_half_conflict_negative/profile.json",
+      "sha256": "de0b6eca9062f522a9aa58e9bf45d580aec1fc8f27422f2199921f703726cdda"
+    },
+    {
+      "bytes": 432,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/u64_second_half_conflict_negative/receiver.json",
+      "sha256": "78b1ca75008bf24f07aaa502aaf8701cc004f25c076ba8b4d008b4e7feaf34cc"
+    },
+    {
+      "bytes": 6839,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/u64_second_half_conflict_negative/trace-certificate.json",
+      "sha256": "41d4ae42733f78916907ea1d6159792da3b5f03a7652cad50ad39dc738041555"
+    },
+    {
+      "bytes": 3243,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/u64_second_half_conflict_negative/trace-policy.json",
+      "sha256": "701cda32e826f99f96c3c25d11bd9705f0161e7d2dd2784022c4f748d1158d6e"
+    },
+    {
+      "bytes": 140525,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/u64_second_half_conflict_negative/trace.c",
+      "sha256": "ec9c558a4acb62ba36425eb4fdc8786533abd98ef4160eaa8d6d38dd100d8173"
+    },
+    {
+      "bytes": 95,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/wrong_owner_negative/anchors.json",
+      "sha256": "1a67c80d300e03d8d26a4f2a29373046a12236d06429e832a00e7462b6ea5fa6"
+    },
+    {
+      "bytes": 2162,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/wrong_owner_negative/context.json",
+      "sha256": "e94e488fc031509b1a1f12d9ff527cc527be178820ca515859984ef9584ddbf9"
+    },
+    {
+      "bytes": 316,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/wrong_owner_negative/draws.json",
+      "sha256": "3d7cdcf73f97503a2a998046707d4d0c65ecaff259e846a17b9a9b4f9d1e4d85"
+    },
+    {
+      "bytes": 2754,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/wrong_owner_negative/owned-selection.json",
+      "sha256": "94ce50f8d30f713706699cda74789b2ee030dc9485af4a42c9c12f8fbadee3eb"
+    },
+    {
+      "bytes": 742,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/wrong_owner_negative/profile.json",
+      "sha256": "fd620a169e0427efe96258a3c111614b787ae8fb36983b57344766d9f7cb5978"
+    },
+    {
+      "bytes": 432,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/wrong_owner_negative/receiver.json",
+      "sha256": "b87e180e1a332a573c084124b7f7cae25265e1c472ffad2162716295fd76ac7d"
+    },
+    {
+      "bytes": 6746,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/wrong_owner_negative/trace-certificate.json",
+      "sha256": "d2be96074cd4b2166d1f4f23cfd7c3f9efb818349fad8239cab334cc51e77f33"
+    },
+    {
+      "bytes": 3203,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/wrong_owner_negative/trace-policy.json",
+      "sha256": "95879d981a1e7932a0d6f7c67ab0789259661d1d3f4f5520b8292dfcfe346a22"
+    },
+    {
+      "bytes": 138156,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v2/prepared-owned-corpus-v2/wrong_owner_negative/trace.c",
+      "sha256": "af034b30129dd310cfa69638413a2aaa72a7bc6706f4cc04a6281170c5d0376d"
+    },
+    {
+      "bytes": 17678,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/finite_owned_receiver_v3.py",
+      "sha256": "5cf81486d5b43192277f1d1ab8043d3b8865453b3575a5e753a2c08c88a951d6"
+    },
+    {
+      "bytes": 3591,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/covered_store_next_thread_load_positive/composition-policy-v3.json",
+      "sha256": "eadc3d86de32dc1893e436c2c3a6e4b32d0a677eb4fbf9c0427af82b418626e2"
+    },
+    {
+      "bytes": 3499,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/critical_end_wait_positive/composition-policy-v3.json",
+      "sha256": "073453fbff975342cb21c6cfc1cc09e9967ec020ea0cf899ade2b812f58dea46"
+    },
+    {
+      "bytes": 3555,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/critical_end_without_wait_negative/composition-policy-v3.json",
+      "sha256": "56673360096adae0831db46847b01275f1d3090f3919a3ef8c3b22618188b7c4"
+    },
+    {
+      "bytes": 3556,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/different_region_noncover_negative/composition-policy-v3.json",
+      "sha256": "be360ddcee292355f0b88716b79e05ea5aa09a348bf1f15cb6a99b7236994e74"
+    },
+    {
+      "bytes": 3519,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/disjoint_owned_tiles_positive/composition-policy-v3.json",
+      "sha256": "87995606cc1680e44f58835853e72766413f70deac09958959e7dd5e520d7d19"
+    },
+    {
+      "bytes": 3514,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/history_exact_issue_negative/composition-policy-v3.json",
+      "sha256": "11b8e222ef7be5b4db9d6058183f4d20299f7b92c878a3fe99ca1bb788a9e208"
+    },
+    {
+      "bytes": 3479,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/history_latest_positive/composition-policy-v3.json",
+      "sha256": "1fd792a05fd8e722177b92cc3d8d86d1bfc0f444e43cb2b2073caefe4d7e640f"
+    },
+    {
+      "bytes": 3528,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/other_thread_cpu_read_positive/composition-policy-v3.json",
+      "sha256": "5b025cc3632e651c6a9a687396ef0476913f08e698eb8c60324a26610b482c73"
+    },
+    {
+      "bytes": 3534,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/outside_critical_store_positive/composition-policy-v3.json",
+      "sha256": "bd72576912cd03d58c39cae4fa45d3b6ab20000c3128a181cb89c5e99f591f25"
+    },
+    {
+      "bytes": 3449,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/owned_tile_positive/composition-policy-v3.json",
+      "sha256": "213e89adfd77e31c89455407a8e4c4510de0f807702da10a11f87f644ade98cc"
+    },
+    {
+      "bytes": 3555,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/pending_read_lifetime_end_negative/composition-policy-v3.json",
+      "sha256": "d3bdf9ccc829663f16993af87bbf386f8ec3a5026976b12d80006a4bc4a08a41"
+    },
+    {
+      "bytes": 3534,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/pending_store_cpu_read_negative/composition-policy-v3.json",
+      "sha256": "ad60d6ccded221ac2cd6bef281cecbfbe4f9e19f5f03bd348e7987ac23b21e97"
+    },
+    {
+      "bytes": 3542,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/prior_cpu_store_visible_positive/composition-policy-v3.json",
+      "sha256": "18582767d654d33b21de8d8fe9484dbaf86d7a4f6b857c25ac8c994c09a8845d"
+    },
+    {
+      "bytes": 3591,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/same_region_read_read_noncover_negative/composition-policy-v3.json",
+      "sha256": "c224313e0baa60915434ca623f869612753619d5510b7426ce2b5066ee8e79ed"
+    },
+    {
+      "bytes": 3542,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/same_region_write_cover_positive/composition-policy-v3.json",
+      "sha256": "b9eedb48dc9ea7c3390577e61bdfe7978da68388332fe577ff6c8143a45b851b"
+    },
+    {
+      "bytes": 3500,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/u32_disjoint_half_positive/composition-policy-v3.json",
+      "sha256": "39246e42edc22ac894bccc2d2e110b21b8bdd0abb6590f4d83f72f94777cf49e"
+    },
+    {
+      "bytes": 3549,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/u64_second_half_conflict_negative/composition-policy-v3.json",
+      "sha256": "0988eb249e1c2bdd6414b8d1c45cd1094c416beefb8545cc0472d0657f9b2170"
+    },
+    {
+      "bytes": 3455,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebound-owned-corpus-v3/wrong_owner_negative/composition-policy-v3.json",
+      "sha256": "746e69bfc83d00c3c8d6f8e88ccf059e0853f6cff091fe04c53c9005a37d319e"
+    },
+    {
+      "bytes": 9975,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/model-entry-v3/whole_model_v3.py",
+      "sha256": "2de83f722c439c5a834f9b17549b979e24b3716d79170377bf8cbeafd7b07b50"
+    },
+    {
+      "bytes": 34554,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/receiver-state-draws-v2/receiver_state_draws_v2.py",
+      "sha256": "f6c19464a6587b4fbd4a6278dc66be97f1c4ab16d46b2db8cd6b804d41608a5f"
+    },
+    {
+      "bytes": 15884,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_adapters.h",
+      "sha256": "e8efe60182d7fbd0d7c9f54c8fc6f70c235a91bd613cabd3be6ac893105c4a1a"
+    },
+    {
+      "bytes": 3881,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_closed_routes_v1.h",
+      "sha256": "0168b2f78e0d5a6a6d42c8955ba45304533b8a0c63b92bebcabd50fd730969c7"
+    },
+    {
+      "bytes": 69747,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_value_backend_v1.h",
+      "sha256": "c37481e56517d29729ffc83f2eb538cc5b5cb8ce5ab831babae3287cb332956f"
+    },
+    {
+      "bytes": 13765,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_value_builders_v1.h",
+      "sha256": "88f6bd0d310e8a2a6ad522ae15fec32b9f32b4ed6d792a314e8a365e0118824e"
+    }
+  ],
+  "source_files": [
+    {
+      "bytes": 17678,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/finite_owned_receiver_v3.py",
+      "sha256": "5cf81486d5b43192277f1d1ab8043d3b8865453b3575a5e753a2c08c88a951d6"
+    },
+    {
+      "bytes": 5532,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/build_fixtures_v3.py",
+      "sha256": "cddac6c04be486672fb8bff51673b009fe3bb42a4160a5163693871a803b4c8d"
+    },
+    {
+      "bytes": 12488,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/test_finite_owned_receiver_v3.py",
+      "sha256": "b85365d6a9cb7fac16bcc380a5405c60a918e17fe890e298400e5166c42a2509"
+    },
+    {
+      "bytes": 515,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/inverse-v3.json",
+      "sha256": "35fabc667661f497beb8e6651c39f7e8c49af6a4043164f77361c696c72ddab4"
+    },
+    {
+      "bytes": 2430,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/rebind_corpus_v3.py",
+      "sha256": "f5641d091c9b8f793dda0aa920163944a182c14620b6cfa8ae3775184827fac0"
+    },
+    {
+      "bytes": 1785,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/README.md",
+      "sha256": "21c9a16c4b4076ebf1b8db7d28ed36fc8f18973ce04f8d3295a9695d5af817ba"
+    },
+    {
+      "bytes": 113,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/finite-owned-receiver-v3/pure-controls-green-v3.log",
+      "sha256": "724b4809d3e3320ad46a444d8f2dd9c87484e343c82a8bced58776c78f791f61"
+    }
+  ],
+  "status": "FROZEN_SOURCE_ONLY_AWAITING_INDEPENDENT_REVIEW",
+  "validation": {
+    "actual_compiler_native_verifier_solver_ssh_or_project_import": false,
+    "all_entry_context_receiver_trace_draw_resource_integration_artifacts_reused": true,
+    "all_existing_V2_artifacts_rehashed": true,
+    "bool_int1_exact_comparison_AST_control": true,
+    "cases": 18,
+    "equal_float_attack_rebases_owned_selection_and_policy_pins": true,
+    "exact_unchanged_model_C": true,
+    "exit": 0,
+    "no_full_extent1_trace_fixture_claim": true,
+    "pure_controls": 14
+  }
+}

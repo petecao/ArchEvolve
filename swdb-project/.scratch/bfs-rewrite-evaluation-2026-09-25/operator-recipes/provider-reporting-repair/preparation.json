@@ -1,0 +1,17 @@
+{
+  "created": "2026-09-27",
+  "state": "prospective_patch_not_applied",
+  "source_path": ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context2/bfs-provider-context2-20260927.py",
+  "source_sha256": "8f92bc1d0d81e2aded280e87644740a326cae441a947f2747f5d6bc01db68092",
+  "patched_sha256": "e28d1d032d6eeca05ccc7692d00da7cf9f152ac0d0e08579a06c78f7e34a54ca",
+  "historical_failure_unchanged": true,
+  "provider_calls": 0,
+  "runtime_changes": 0,
+  "validation": {
+    "tests_passed": 13,
+    "seconds": 0.44,
+    "git_apply_check": true,
+    "historical_source_unchanged": true,
+    "command": "PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 /Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest -q -p no:cacheprovider .scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-reporting-repair/test_reporting.py"
+  }
+}

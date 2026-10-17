@@ -1,0 +1,451 @@
+kind: profile_package
+schema_version: '0.4'
+id: bc-gem5-20261003-a1.contract-fixture-package
+status: draft
+created: '2026-10-03'
+updated: '2026-10-03'
+message_version: '1.0'
+producer:
+  name: swdb-contract-fixture
+  role: operator
+  test_client: true
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+implementation: dx100-bc-scalar
+source_snapshot: bc-dx100-scalar-only-20261003-a1.source
+context:
+  fixture: true
+  source_sha256: 946d5398e3354c014ebe3309c2627951a5cf43d166bbb7c726adefb330a2d123
+completeness: fixture
+regions:
+- id: benchmarks/gapbs/src/bc.cc:1-324:d5999e06ba88d279
+  path: benchmarks/gapbs/src/bc.cc
+  lines: [1, 324]
+  source_sha256: d5999e06ba88d279bcb0d5d936fb6ee2bfdbd9e5f2699460feaf8546cf069b98
+  text: |
+    // Copyright (c) 2015, The Regents of the University of California (Regents)
+    // See LICENSE.txt for license details
+
+    #include <functional>
+    #include <iostream>
+    #include <vector>
+    #include <omp.h>
+
+    #include "MAA.hpp"
+    #include "benchmark.h"
+    #include "bitmap.h"
+    #include "builder.h"
+    #include "command_line.h"
+    #include "graph.h"
+    #include "platform_atomics.h"
+    #include "pvector.h"
+    #include "sliding_queue.h"
+    #include "timer.h"
+    #include "util.h"
+
+    #define MAA_FULL2
+
+    #if !defined(FUNC) && !defined(GEM5) && !defined(GEM5_MAGIC)
+    #define GEM5
+    #endif
+
+    #if defined(FUNC)
+    #include <MAA_functional.hpp>
+    #elif defined(GEM5)
+    #include <MAA_gem5.hpp>
+    #include <gem5/m5ops.h>
+    #elif defined(GEM5_MAGIC)
+    #include "MAA_gem5_magic.hpp"
+    #endif
+    #include <MAA_utility.hpp>
+
+    /*
+    GAP Benchmark Suite
+    Kernel: Betweenness Centrality (BC)
+    Author: Scott Beamer
+
+    Will return array of approx betweenness centrality scores for each vertex
+
+    This BC implementation makes use of the Brandes [1] algorithm with
+    implementation optimizations from Madduri et al. [2]. It is only approximate
+    because it does not compute the paths from every start vertex, but only a small
+    subset of them. Additionally, the scores are normalized to the range [0,1].
+
+    As an optimization to save memory, this implementation uses a Bitmap to hold
+    succ (list of successors) found during the BFS phase that are used in the back-
+    propagation phase.
+
+    [1] Ulrik Brandes. "A faster algorithm for betweenness centrality." Journal of
+        Mathematical Sociology, 25(2):163–177, 2001.
+
+    [2] Kamesh Madduri, David Ediger, Karl Jiang, David A Bader, and Daniel
+        Chavarria-Miranda. "A faster parallel algorithm and efficient multithreaded
+        implementations for evaluating betweenness centrality on massive datasets."
+        International Symposium on Parallel & Distributed Processing (IPDPS), 2009.
+    */
+
+    using namespace std;
+    typedef float ScoreT;
+    typedef float CountT;
+
+
+    void PBFS(const Graph &g, SGOffset *VertexOffsetsData, NodeID source, pvector<CountT> &path_counts,
+              Bitmap &succ, vector<SlidingQueue<NodeID>::iterator> &depth_index,
+              SlidingQueue<NodeID> &queue, pvector<NodeID> &depths) {
+        depths.fill(-1);
+        depths[source] = 0;
+        path_counts[source] = 1;
+        queue.push_back(source);
+        depth_index.push_back(queue.begin());
+        queue.slide_window();
+        const NodeID *g_out_start = g.out_neigh(0).begin();
+
+    #pragma omp parallel
+        {
+            NodeID depth = 0;
+            QueueBuffer<NodeID> lqueue(queue);
+            while (!queue.empty()) {
+    #pragma omp master
+                std::cout << "Starting PBFS: " << queue.size() << " elements" << std::endl;
+                depth++;
+    // #pragma omp single
+    //             {
+    //                 std::vector<int32_t> qv;
+    //                 for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+    //                     qv.push_back(*q_iter);
+    //                 }
+    //                 // sort qv
+    //                 std::sort(qv.begin(), qv.end());
+    //                 printf("depth %d: %zu elements\n", depth, queue.size());
+    //                 for (int i = 0; i < queue.size(); i++) {
+    //                     printf("[%d] %d\n", i, qv[i]);
+    //                 }
+    //             }
+    #pragma omp for schedule(dynamic, 64) nowait
+                for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+                    NodeID u = *q_iter;
+                    for (SGOffset vidx = VertexOffsetsData[u]; vidx < VertexOffsetsData[u + 1]; vidx++) {
+                        NodeID &v = g.out_neighbors_[vidx];
+                        if ((depths[v] == -1) &&
+                            (compare_and_swap(depths[v], static_cast<NodeID>(-1), depth))) {
+                            lqueue.push_back(v);
+                        }
+                        if (depths[v] == depth) {
+                            succ.set_bit_atomic(&v - g_out_start);
+    #pragma omp atomic
+                            path_counts[v] += path_counts[u];
+                        }
+                    }
+                }
+                // std::cout << lqueue.in << std::endl;
+                lqueue.flush();
+    #pragma omp barrier
+    #pragma omp single
+                {
+                    depth_index.push_back(queue.begin());
+                    queue.slide_window();
+                }
+            }
+        }
+        depth_index.push_back(queue.begin());
+    }
+
+    pvector<ScoreT> Brandes(const Graph &g, SourcePicker<Graph> &sp, NodeID num_iters, bool logging_enabled = false) {
+        Timer t;
+        t.Start();
+        alloc_MAA();
+        init_MAA();
+        pvector<ScoreT> scores(g.num_nodes(), 0);
+        pvector<CountT> path_counts(g.num_nodes());
+        Bitmap succ(g.num_edges_directed());
+        vector<SlidingQueue<NodeID>::iterator> depth_index;
+        SlidingQueue<NodeID> queue(g.num_nodes());
+        t.Stop();
+        if (logging_enabled)
+            PrintStep("a", t.Seconds());
+        pvector<SGOffset> VertexOffsetsOut = g.VertexOffsets(false);
+        SGOffset *VertexOffsetsData = VertexOffsetsOut.data();
+        pvector<ScoreT> deltas(g.num_nodes());
+        pvector<NodeID> depths(g.num_nodes());
+
+    #pragma omp parallel
+        {
+    #ifdef GEM5
+    #pragma omp master
+            {
+                clear_mem_region();
+                add_mem_region(queue.beginp(), queue.endp());                                // 6
+                add_mem_region(VertexOffsetsOut.beginp(), VertexOffsetsOut.endp());          // 7
+                add_mem_region(g.out_neighbors_, &g.out_neighbors_[g.num_edges_directed()]); // 8
+                add_mem_region(succ.beginp(), succ.endp());                                  // 9
+                add_mem_region(path_counts.beginp(), path_counts.endp());                    // 10
+                add_mem_region(deltas.beginp(), deltas.endp());                              // 11
+                add_mem_region(scores.beginp(), scores.endp());                              // 12
+                add_mem_region(depths.beginp(), depths.endp());                              // 13
+                std::cout << "ROI started: " << omp_get_num_threads() << " threads" << std::endl;
+                m5_work_begin(0, 0);
+                m5_reset_stats(0, 0);
+            }
+    #endif
+        }
+
+        for (NodeID iter = 0; iter < num_iters; iter++) {
+            NodeID source = sp.PickNext();
+            if (logging_enabled)
+                PrintStep("Source", static_cast<int64_t>(source));
+            t.Start();
+            path_counts.fill(0);
+            deltas.fill(0);
+            depth_index.resize(0);
+            queue.reset();
+            succ.reset();
+            PBFS(g, VertexOffsetsData, source, path_counts, succ, depth_index, queue, depths);
+            t.Stop();
+            if (logging_enabled)
+                PrintStep("b", t.Seconds());
+            t.Start();
+            for (int d = depth_index.size() - 2; d >= 0; d--) {
+                std::cout << "Starting Brandes: " << d << "/" << depth_index.size() << ": " << *(depth_index[d]) << "-" << *(depth_index[d + 1]) << " elements" << std::endl;
+    #pragma omp parallel for schedule(dynamic, 64)
+                for (auto it = depth_index[d]; it < depth_index[d + 1]; it++) {
+                    NodeID u = *it;
+                    ScoreT delta_u = 0;
+                    for (SGOffset vidx = VertexOffsetsData[u]; vidx < VertexOffsetsData[u + 1]; vidx++) {
+                        NodeID v = g.out_neighbors_[vidx];
+                        if (succ.get_bit(vidx)) {
+                            delta_u += (path_counts[u] / path_counts[v]) * (1 + deltas[v]);
+                        }
+                    }
+                    deltas[u] = delta_u;
+                    scores[u] += delta_u;
+                }
+            }
+            t.Stop();
+            if (logging_enabled)
+                PrintStep("p", t.Seconds());
+        }
+        // normalize scores
+        ScoreT biggest_score = 0;
+    #pragma omp parallel for reduction(max : biggest_score)
+        for (NodeID n = 0; n < g.num_nodes(); n++)
+            biggest_score = max(biggest_score, scores[n]);
+    #pragma omp parallel for
+        for (NodeID n = 0; n < g.num_nodes(); n++)
+            scores[n] = scores[n] / biggest_score;
+
+    #ifdef GEM5
+        clear_mem_region();
+        m5_dump_stats(0, 0);
+        m5_work_end(0, 0);
+        std::cout << "ROI End!!!" << std::endl;
+        m5_exit(0);
+    #endif
+
+        return scores;
+    }
+
+    void PrintTopScores(const Graph &g, const pvector<ScoreT> &scores) {
+        vector<pair<NodeID, ScoreT>> score_pairs(g.num_nodes());
+        for (NodeID n : g.vertices())
+            score_pairs[n] = make_pair(n, scores[n]);
+        int k = 5;
+        vector<pair<ScoreT, NodeID>> top_k = TopK(score_pairs, k);
+        for (auto kvp : top_k)
+            cout << kvp.second << ":" << kvp.first << endl;
+    }
+
+    // Still uses Brandes algorithm, but has the following differences:
+    // - serial (no need for atomics or dynamic scheduling)
+    // - uses vector for BFS queue
+    // - regenerates farthest to closest traversal order from depths
+    // - regenerates successors from depths
+    bool BCVerifier(const Graph &g, SourcePicker<Graph> &sp, NodeID num_iters,
+                    const pvector<ScoreT> &scores_to_test) {
+        pvector<ScoreT> scores(g.num_nodes(), 0);
+        for (int iter = 0; iter < num_iters; iter++) {
+            NodeID source = sp.PickNext();
+            // BFS phase, only records depth & path_counts
+            pvector<int> depths(g.num_nodes(), -1);
+            depths[source] = 0;
+            vector<CountT> path_counts(g.num_nodes(), 0);
+            path_counts[source] = 1;
+            vector<NodeID> to_visit;
+            to_visit.reserve(g.num_nodes());
+            to_visit.push_back(source);
+            for (auto it = to_visit.begin(); it != to_visit.end(); it++) {
+                NodeID u = *it;
+                for (NodeID v : g.out_neigh(u)) {
+                    if (depths[v] == -1) {
+                        depths[v] = depths[u] + 1;
+                        to_visit.push_back(v);
+                    }
+                    if (depths[v] == depths[u] + 1)
+                        path_counts[v] += path_counts[u];
+                }
+            }
+            // Get lists of vertices at each depth
+            vector<vector<NodeID>> verts_at_depth;
+            for (NodeID n : g.vertices()) {
+                if (depths[n] != -1) {
+                    if (depths[n] >= static_cast<int>(verts_at_depth.size()))
+                        verts_at_depth.resize(depths[n] + 1);
+                    verts_at_depth[depths[n]].push_back(n);
+                }
+            }
+            // Going from farthest to closest, compute "dependencies" (deltas)
+            pvector<ScoreT> deltas(g.num_nodes(), 0);
+            for (int depth = verts_at_depth.size() - 1; depth >= 0; depth--) {
+                for (NodeID u : verts_at_depth[depth]) {
+                    for (NodeID v : g.out_neigh(u)) {
+                        if (depths[v] == depths[u] + 1) {
+                            deltas[u] += (path_counts[u] / path_counts[v]) * (1 + deltas[v]);
+                        }
+                    }
+                    scores[u] += deltas[u];
+                }
+            }
+        }
+        // Normalize scores
+        ScoreT biggest_score = *max_element(scores.begin(), scores.end());
+        for (NodeID n : g.vertices())
+            scores[n] = scores[n] / biggest_score;
+        // Compare scores
+        bool all_ok = true;
+        for (NodeID n : g.vertices()) {
+            ScoreT delta = abs(scores_to_test[n] - scores[n]);
+            if (delta > std::numeric_limits<ScoreT>::epsilon()) {
+                cout << n << ": " << scores[n] << " != " << scores_to_test[n];
+                cout << "(" << delta << ")" << endl;
+                all_ok = false;
+            }
+        }
+        return all_ok;
+    }
+
+    int main(int argc, char *argv[]) {
+        CLIterApp cli(argc, argv, "betweenness-centrality", 1);
+        if (!cli.ParseArgs())
+            return -1;
+        if (cli.num_iters() > 1 && cli.start_vertex() != -1)
+            cout << "Warning: iterating from same source (-r & -i)" << endl;
+        Builder b(cli);
+        Graph g = b.MakeGraph();
+        SourcePicker<Graph> sp(g, cli.start_vertex());
+    #ifdef GEM5
+        std::cout << "Fake Checkpoint started" << std::endl;
+        m5_checkpoint(0, 0);
+        std::cout << "Fake Checkpoint ended" << std::endl;
+    #endif
+        auto BCBound = [&sp, &cli](const Graph &g) {
+            return Brandes(g, sp, cli.num_iters(), cli.logging_en());
+        };
+        SourcePicker<Graph> vsp(g, cli.start_vertex());
+        auto VerifierBound = [&vsp, &cli](const Graph &g,
+                                          const pvector<ScoreT> &scores) {
+            return BCVerifier(g, vsp, cli.num_iters(), scores);
+        };
+        BenchmarkKernel(cli, g, BCBound, PrintTopScores, VerifierBound);
+        return 0;
+    }
+  association: declared_source_region
+dynamic_memory: []
+constraints:
+  protections:
+  - path: benchmarks/gapbs/src/bc.cc
+    kind: verifier
+    text: |
+      // Still uses Brandes algorithm, but has the following differences:
+      // - serial (no need for atomics or dynamic scheduling)
+      // - uses vector for BFS queue
+      // - regenerates farthest to closest traversal order from depths
+      // - regenerates successors from depths
+      bool BCVerifier(const Graph &g, SourcePicker<Graph> &sp, NodeID num_iters,
+                      const pvector<ScoreT> &scores_to_test) {
+          pvector<ScoreT> scores(g.num_nodes(), 0);
+          for (int iter = 0; iter < num_iters; iter++) {
+              NodeID source = sp.PickNext();
+              // BFS phase, only records depth & path_counts
+              pvector<int> depths(g.num_nodes(), -1);
+              depths[source] = 0;
+              vector<CountT> path_counts(g.num_nodes(), 0);
+              path_counts[source] = 1;
+              vector<NodeID> to_visit;
+              to_visit.reserve(g.num_nodes());
+              to_visit.push_back(source);
+              for (auto it = to_visit.begin(); it != to_visit.end(); it++) {
+                  NodeID u = *it;
+                  for (NodeID v : g.out_neigh(u)) {
+                      if (depths[v] == -1) {
+                          depths[v] = depths[u] + 1;
+                          to_visit.push_back(v);
+                      }
+                      if (depths[v] == depths[u] + 1)
+                          path_counts[v] += path_counts[u];
+                  }
+              }
+              // Get lists of vertices at each depth
+              vector<vector<NodeID>> verts_at_depth;
+              for (NodeID n : g.vertices()) {
+                  if (depths[n] != -1) {
+                      if (depths[n] >= static_cast<int>(verts_at_depth.size()))
+                          verts_at_depth.resize(depths[n] + 1);
+                      verts_at_depth[depths[n]].push_back(n);
+                  }
+              }
+              // Going from farthest to closest, compute "dependencies" (deltas)
+              pvector<ScoreT> deltas(g.num_nodes(), 0);
+              for (int depth = verts_at_depth.size() - 1; depth >= 0; depth--) {
+                  for (NodeID u : verts_at_depth[depth]) {
+                      for (NodeID v : g.out_neigh(u)) {
+                          if (depths[v] == depths[u] + 1) {
+                              deltas[u] += (path_counts[u] / path_counts[v]) * (1 + deltas[v]);
+                          }
+                      }
+                      scores[u] += deltas[u];
+                  }
+              }
+          }
+          // Normalize scores
+          ScoreT biggest_score = *max_element(scores.begin(), scores.end());
+          for (NodeID n : g.vertices())
+              scores[n] = scores[n] / biggest_score;
+          // Compare scores
+          bool all_ok = true;
+          for (NodeID n : g.vertices()) {
+              ScoreT delta = abs(scores_to_test[n] - scores[n]);
+              if (delta > std::numeric_limits<ScoreT>::epsilon()) {
+                  cout << n << ": " << scores[n] << " != " << scores_to_test[n];
+                  cout << "(" << delta << ")" << endl;
+                  all_ok = false;
+              }
+          }
+          return all_ok;
+      }
+  - path: benchmarks/gapbs/src/bc.cc
+    kind: roi_calls
+    calls: ['m5_work_begin(0, 0);', 'm5_reset_stats(0, 0);', 'm5_dump_stats(0, 0);', 'm5_work_end(0, 0);',
+      m5_exit(0);]
+  - path: benchmarks/gapbs/src/benchmark.h
+    kind: file
+    sha256: 87c20752c8437dd5152d00e7c995bedfab15b8929219f85846f47e0f9a4b339f
+  - path: benchmarks/gapbs/src/command_line.h
+    kind: file
+    sha256: de1415dfe29eb6ba436d57523b2dee8fa3268a0785ae690bde9e94e9444172b2
+  - path: benchmarks/gapbs/src/timer.h
+    kind: file
+    sha256: 3337a59a57341585d296ed01b3eb64ca7f5e02d8c0871f4920ab9d1cd7e63bcb
+  - path: include/gem5/m5ops.h
+    kind: roi_calls
+    calls:
+    - m5_exit(uint64_t ns_delay);
+    - m5_reset_stats(uint64_t ns_delay, uint64_t ns_period);
+    - m5_dump_stats(uint64_t ns_delay, uint64_t ns_period);
+    - m5_work_begin(uint64_t workid, uint64_t threadid);
+    - m5_work_end(uint64_t workid, uint64_t threadid);
+evidence:
+  classification: contract_fixture
+reasons:
+- 'Explicit contract fixture: no execution, correctness, profiling, or gain evidence.'

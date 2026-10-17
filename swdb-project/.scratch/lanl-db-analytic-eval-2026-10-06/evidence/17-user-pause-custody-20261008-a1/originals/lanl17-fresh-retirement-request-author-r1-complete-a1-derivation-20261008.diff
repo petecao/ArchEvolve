@@ -1,0 +1,20 @@
+--- lanl17_author_fresh_sparse_retirement_parent_request_20261008_a1.py
++++ lanl17_author_fresh_sparse_retirement_parent_request_20261008_a1_r1.py
+@@ -427,7 +427,16 @@
+         out['fresh_capacity_and_cost'].update({
+             'checked_at':fresh['checked_at'],'actual_free_data1_bytes':fresh['actual_free_bytes']['/data1'],
+             'actual_free_data_bytes':fresh['actual_free_bytes']['/data'],
+-            'fresh_capacity_original_pin':fresh_pin,'Q_bytes':values['required_floor_Q_bytes']})
++            'fresh_capacity_original_pin':fresh_pin,'Q_bytes':values['required_floor_Q_bytes'],
++            'remaining_cost_terms':
++                'The genuinely parent-accepted default supplies its original measured counters, bound '
++                'in parent_review_facts.successful_default_original_bindings. Strict retirement '
++                'checks and limits remain unchanged; default counters do not predict or substitute '
++                'for actual retirement counter debits. The 64 MiB administrative allowance and retained '
++                'index/witness estimates are conditional planning estimates, not universal caps or '
++                'guaranteed recovery. Post-retirement statvfs remains required before scientific '
++                'prepare. This unsealed request author gives no recovery, capacity or scientific '
++                'admission.'})
+         review = out['parent_review_facts']; review['actual_default_only'] = False
+         review['successful_default_original_bindings'] = default
+         review['parent_default_acceptance_original'] = parent_pin

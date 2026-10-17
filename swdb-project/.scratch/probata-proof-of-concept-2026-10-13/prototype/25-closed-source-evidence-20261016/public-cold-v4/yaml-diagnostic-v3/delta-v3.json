@@ -1,0 +1,26 @@
+{
+  "actual_execution": false,
+  "changes": [
+    "Block frames now report identifier key/indent only; scalar/value lexical shapes remain.",
+    "Retain at most four traceback frames.",
+    "Retain five neighboring rows with only line/indent/length/sequence/colon/key/style.",
+    "Diagnostic name v3; no reader, input, audit, resource, transport or full final recheck changes.",
+    "Deduplicate only exact bounded syntax contexts by SHA-256; all 20 pins and 15 parse outcomes remain, with explicit references to the first matching context."
+  ],
+  "date": "2026-10-16 ET",
+  "predecessor": {
+    "bytes": 21431,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/yaml-diagnostic-v2/diagnostic-v2.py",
+    "sha256": "18e78f4f471f23dbfed850dae2feb0323be2b6b9bcbf41b78b8c8472e4dc3744"
+  },
+  "preserved_v2_refusal": {
+    "bytes": 2760,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-yaml-diagnostic-execution-v2-20261016.json",
+    "sha256": "0fd182d539825b72e8261003f5e6bbaeb03e8a44ce4e73cddc9f9532cbbbf37f"
+  },
+  "successor": {
+    "bytes": 22181,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/yaml-diagnostic-v3/diagnostic-v3.py",
+    "sha256": "bf9666e4becc934fe263505b3fd0d358843279068554f1db8c1490fd664f255d"
+  }
+}

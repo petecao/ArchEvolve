@@ -1,0 +1,54 @@
+{
+  "date": "2026-10-16 22:00 ET",
+  "observed_UTC": "2026-10-17 02:00:13 UTC",
+  "decision": "ONE_EXACT_GUARDED_METADATA_OBSERVER_ATTEMPT_ADMITTED",
+  "ancillary_packet_sha256": "4358a403da63e98e40dec6bc1aaf04171388a6b0af5c2b83e98649984557e632",
+  "root_local_ancillary_check": "86880a9e4332caa35ce0e04c4b0e14bbea54afb1b9dfd7129eb0c6d68b0e1bb1",
+  "source_Spec": "746645bba2f6ea761fc3c6cb27a2616d30cb4d9c4307ac26e7be0d25961fddc0",
+  "source_Standards": "061d10e6ca275f1152f629d1b874a9a417fee64ad1c6c61abce55a308da9982f",
+  "preflight_invocation": "4332b1ba72b43e231e83247be54f19c6547a2b650b5131b069e714173d95eb0a",
+  "preflight_stdout_sha256": "26e190e471dca49436d9bc3ee73f445779a65592cf6bee39cc8acfbb88d4f819",
+  "preflight_scope": {
+    "processes": 12,
+    "descriptors": 203,
+    "readers": 0,
+    "unreadable": 0,
+    "vanished": 0,
+    "all_three_leases_released": true,
+    "original_source_raw_runtime_52_pins_equal": true,
+    "free_bytes": {
+      "/data": 71903662080,
+      "/data1": 12364771328
+    }
+  },
+  "exact_argv": [
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+    "-I",
+    "-B",
+    "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/root-launcher-loader-v11/launch_observer_loader_v11.py",
+    "2baf722fdaa6cba24b859eae3172a6f597417d72",
+    "t28-unit-observation-v5",
+    "1200",
+    "0",
+    "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v5/root-argv-v5.json",
+    "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v5-dispatch/root-source-review-v5.json"
+  ],
+  "controls": {
+    "files": 31,
+    "bytes": 479538,
+    "all_local_pins_rechecked": true
+  },
+  "resource_guard": {
+    "retained_bytes": 268435456,
+    "rss_bytes": 4294967296,
+    "whole_seconds": 1200,
+    "workers": 1
+  },
+  "conditions": [
+    "Exact V11 launcher and paired LIBRARY_PATH/LD_LIBRARY_PATH unsets before selected interpreter; original2baf and actualv3+semanticv4 remain distinct.",
+    "Fresh launcher wrapper/source/leases/runtime/disk/process rechecks must pass; failure before attempt token is a refusal, not authority to rerun unchanged.",
+    "At most one node0 evaluation and no third lane; stop/reconcile exact producer settlement and preserve all old raw/source/Claude work.",
+    "Retain complete output census/actual native metadata/source runtime before-after/final finite process-reader and lease status; parse no mere console-success or producer Boolean as source/ABI/formal proof."
+  ],
+  "scope": "Private full-TU metadata consumer/call preparation only. No compiler/native test/formal proof/public or ticket acceptance is authorized by its result."
+}

@@ -1,0 +1,95 @@
+kind: proposal
+schema_version: '0.4'
+id: bfs-campaign-preparation-20260925-a1.dx100-patch
+status: draft
+created: '2026-09-25'
+updated: '2026-09-25'
+message_version: '1.0'
+producer:
+  name: swdb-representative-dx100-patch
+  role: sw
+  test_client: true
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: bfs-campaign-preparation-20260925-a1.dx100-patch
+  producer:
+    name: swdb-representative-dx100-patch
+    role: sw
+    test_client: true
+  profile_package: bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.5828ff2030b22718
+  source_snapshot: bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.source
+  implementation: dx100-bfs-scalar
+  source_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  regions:
+  - function:bfs.cc:10396:92351720b886b03a
+  - function:bfs.cc:13304:76a956649bfe9705
+  constraints:
+    editable_files: [benchmarks/gapbs/src/bfs.cc]
+    preserve_correctness: true
+    preserve_roi: true
+  parameters:
+    supporting_profile_packages:
+    - bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.5828ff2030b22718
+    - bfs-native-pilot-20260925-dx10018-a1.kronecker.package.v1.1d44ec6b44f05000
+    selection: operator_selected_before_candidate_assessment
+    frontier_schedule:
+      kind: dynamic
+      chunk_vertices: 64
+  required_operations: []
+  strategy: cpu-frontier-load-balancing-and-redundant-work-elimination
+  intent: Use dynamic 64-vertex scheduling for scalar TDStep; remove the redundant parent store after
+    successful CAS; emit the per-level diagnostic only when logging is enabled. Preserve the BFS algorithm,
+    parent updates, level barriers, and complete-call ROI.
+  payload:
+    kind: patch
+    content: |
+      --- a/benchmarks/gapbs/src/bfs.cc
+      +++ b/benchmarks/gapbs/src/bfs.cc
+      @@ -235,7 +235,7 @@
+       #pragma omp parallel
+           {
+               QueueBuffer<NodeID> lqueue(queue);
+      -#pragma omp for nowait
+      +#pragma omp for schedule(dynamic, 64) nowait
+               for (size_t i = queue.shared_out_start; i < queue.shared_out_end; i++) {
+                   NodeID u = queue.shared[i];
+                   for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+      @@ -245,7 +245,6 @@
+                           // indirect write (parent, v_tile, u_tile)
+                           // core fetch v tile
+                           if (compare_and_swap(parent[v], curr_val, u)) {
+      -                        parent[v] = u;
+                               lqueue.push_back(v);
+                           }
+                       }
+      @@ -341,7 +340,8 @@
+           m5_reset_stats(0, 0);
+       #endif
+           while (!queue.empty()) {
+      -        std::cout << "Starting TDStep: " << queue.size() << " elements" << std::endl;
+      +        if (logging_enabled)
+      +            std::cout << "Starting TDStep: " << queue.size() << " elements" << std::endl;
+               t.Start();
+               TDStep(g, VertexOffsetsOut, parent, queue, num_nodes, num_edges);
+               queue.slide_window();
+payload_sha256: e48e33767f87b1c49821d15f38f8ba3fd2c6477dbcfa1ab3ad4827242279e433
+outcome:
+  state: candidate_created
+  stage: rewriting
+  reason: null
+attempts:
+- number: 1
+  stage: rewriting
+  state: completed
+  candidate: bfs-campaign-preparation-20260925-a1.dx100-patch.candidate-1
+raw_artifacts:
+- path: /data/yanruj/EvolveSWDB_runs/bfs-campaign-preparation-20260925/bfs-campaign-preparation-20260925-a1.dx100-patch
+  stage: rewriting
+source_snapshot: bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.source
+profile_package: bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.5828ff2030b22718
+candidate: bfs-campaign-preparation-20260925-a1.dx100-patch.candidate-1

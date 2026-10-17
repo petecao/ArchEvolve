@@ -1,0 +1,19 @@
+--- /private/tmp/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r4.py
++++ /private/tmp/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r5.py
+@@ -459,6 +459,7 @@
+         root=P(root);root_stat=stamp(root.lstat());self.dir_stamps[str(root)]=root_stat
+         result={'path':str(root),'root_stat':root_stat,'files':[],'directories':[],'symlinks':[],
+                 'scope_complete_within_observed_limits':False,
++                'regular_file_hash_scope':'all_regular_files' if hash_all else 'metadata_suffixes_only',
+                 'regular_file_logical_bytes_observed':0,
+                 'allocated_bytes_unique_dev_inode_st_blocks512':root.lstat().st_blocks*512,
+                 'allocation_is_partial_until_scope_finished':True}
+@@ -759,7 +760,7 @@
+                 require(stamp(root.lstat())==sidecar['stat'],'original_top_sidecar_still_exact')
+                 continue
+             require(not root.is_symlink() and root.is_dir(),'raw_namespace_root_redirect')
+-            inv=self.file_inventory(root,True,True)
++            inv=self.file_inventory(root,(str(root) in roots),True)
+             inv['declared_or_referenced_by_original_receipts']=str(root) in roots
+             inv['control_sibling_or_original_raw_classification']='parent_review_required'
+             self.output['observations']['raw_trees_and_control_sibling_candidates'][str(root)]=inv

@@ -1,0 +1,70 @@
+# Created: 2026-10-14 ET (Probata proof of concept ticket 10, follow-up). The one list of part names a
+# proof record's subject may carry when it is a contract-proof part or a method part (formal-verification
+# map 26 item 1, 10 item 2, 12 items 8-9, 15 items 9 and 12, 19 item 1). The level rule reads `voids`
+# from here (swdb.level_rule): a counting refuted record of a part that voids something voids that pin.
+# A ticket that writes a new part (29, 32, 33, 42, 43, 48) adds its value here first.
+name: proof_part_names
+description: The part of a contract proof or of the method that one proof record proves, with what a failed record of it voids.
+fields: [subject_kind, voids]
+values:
+  - value: unit_postcondition
+    subject_kind: contract_proof_part
+    voids: none
+    meaning: The contract's unit postcondition on its reference instance, with "the baseline meets it" and "two units that meet it satisfy the unit relation".
+  - value: lifting_lemma
+    subject_kind: contract_proof_part
+    voids: none
+    meaning: The lifting lemma of the contract for one kernel.
+  - value: negative_controls
+    subject_kind: contract_proof_part
+    voids: contract
+    meaning: Every formal-visible negative control is refuted; a refuted record (a control proved) voids the contract proof (10 item 2).
+  - value: minimum_bounds_derivation
+    subject_kind: contract_proof_part
+    voids: none
+    meaning: The contract's minimum bounds for one rung; its bounds are the minimum, and it caps only the records that pin it.
+  - value: composition_theorem
+    subject_kind: method_part
+    voids: none
+    meaning: The parallel composition theorem of the method version.
+  - value: reduction_lemma
+    subject_kind: method_part
+    voids: none
+    meaning: The DX100 reduction lemma joining finish-at-issue values to hazard freedom (12 item 2).
+  - value: strict_layer_agreement
+    subject_kind: method_part
+    voids: none
+    meaning: The proof semantics agrees with the strict layer on the fixture scenarios (12 item 8).
+  - value: summary_form_agreement
+    subject_kind: method_part
+    voids: none
+    meaning: The three generated summary forms give the same verdict on every scenario (12 item 8).
+  - value: semantics_controls
+    subject_kind: method_part
+    voids: proof_semantics
+    meaning: Every semantics negative control has its required verdict; a refuted record voids its proof-semantics version (12 item 9).
+  - value: concurrency_controls
+    subject_kind: method_part
+    voids: method_version
+    meaning: Every concurrency negative control has its required verdict; a refuted record voids its method version (15 item 9).
+  - value: civl_genmc_agreement
+    subject_kind: method_part
+    voids: method_version
+    meaning: CIVL and GenMC agree; a refuted record (a contradiction) voids its method version (15 item 12).
+  # Ticket 26 (2026-10-14 ET): logic-library parts, written by `swdb prove-logic`.
+  - value: logic_lemmas
+    subject_kind: method_part
+    voids: none
+    meaning: Every lemma of one version of a shared logic-library file (subject id logic.<name>), proven by WP; a proof that uses the file depends on it (the sum library is proven once, with the method).
+  - value: logic_false_check
+    subject_kind: method_part
+    voids: logic
+    meaning: WP cannot prove \false from one version of a shared logic-library file alone (evidence, not a consistency proof); a refuted record (WP proved \false) voids every proof that pins that version.
+  - value: contract_logic_lemmas
+    subject_kind: contract_proof_part
+    voids: none
+    meaning: Every lemma of a contract's own logic file (beside its YAML), proven by WP; a contract-proof part of that contract.
+  - value: contract_logic_false_check
+    subject_kind: contract_proof_part
+    voids: logic
+    meaning: WP cannot prove \false from a contract's own logic file alone; a refuted record voids every proof that pins that version.

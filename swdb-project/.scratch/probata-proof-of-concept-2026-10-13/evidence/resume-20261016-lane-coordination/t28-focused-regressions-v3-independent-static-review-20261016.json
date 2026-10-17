@@ -1,0 +1,41 @@
+{
+  "V2_failure_boundary_from_root": "V2 actual refused at cwd assertion line12 before pytest; original failure/raw remain retained, no regression result promoted.",
+  "argv": {
+    "bytes": 4269,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/focused-regressions-command-v3.json",
+    "sha256": "98e1f5af3e7e6b941b2749d7e98cb39774fe8db8d656730b28f0a4ef7b23b687"
+  },
+  "argv_prefix_exactly_unchanged_embeds_reviewed_V3": true,
+  "at_utc": "2026-10-16T18:37:09.728955+00:00",
+  "created": "2026-10-16 ET",
+  "decision": "PASS narrow focused regression V3 cwd correction under unchanged root dispatch guard",
+  "directory_behavior": "Require the actual immutable source repository as initial cwd, derive its swdb-project directory, require it exists, and chdir there before the existing project imports/pytest/child environment. This matches the retained execute.py run(cwd=source) contract.",
+  "entire_inverse_restores_exact_V2_source": true,
+  "frozen_wrapper_snapshot": {
+    "input_metadata": {
+      "bytes": 35379,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/mbit10-preflight-and-wrapper-snapshots.json",
+      "sha256": "1cb06ce419633d45b802b10247612380af302b2d7448f7c8f7e28895d70bac76"
+    },
+    "run_cwd_argument": "source repository root",
+    "sha256": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612"
+  },
+  "prior_V2_review": {
+    "bytes": 2390,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-focused-regressions-v2-independent-static-review-20261016.json",
+    "sha256": "87268720be15238c051bb562e7c4cb872568e7c11f5ca10a0493a196e2c362b2"
+  },
+  "proof_or_whole_ticket_acceptance": false,
+  "reviewer_execution_tests_native_SSH": false,
+  "script": {
+    "bytes": 3965,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/focused_regressions_v3.py",
+    "sha256": "52402c8617f1b21668f8325e9b58c632218492c5e0ad96140751ea67097a0489"
+  },
+  "unchanged": [
+    "source615ddf504fed61b9f6c6e4663760d006ecaf255b and eight explicit selections",
+    "isolated pinned interpreter/bootstrap source-cache/tool pins and child environment",
+    "V2 zero-case/skip/failure/error/cache-write rejection and outer result accounting",
+    "root V6 node0/8GiB/oneworker/900whole+1020outer/2GiBraw contract and scientific acceptance boundary"
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "observed_at": "2026-09-27T00:22:33.145123-04:00",
+  "state": "scoped_pass",
+  "commit": "8cbfee600f23416a8e9578fa8d3ce3f0e19fced8",
+  "sole_parent": "0dc0d4fecfe2903ff0cc1ba9e6b738a8f5c1a4f1",
+  "source_commit": "60cdd5e787ef590d8a6a7bdacc91c29719feb066",
+  "exact_changed_files": 12,
+  "source_bytes": 250634,
+  "verification": [
+    "sole parent and exact changed-file set",
+    "All12 mode/blob/size/SHA values equal source60c and export receipt",
+    "Author producer preparation and independent producer review file hashes match",
+    "Full records tree identical to0dc",
+    "10T15 and13T16 parsed canonical anchor digests match",
+    "Both frozen author protocol identity seals verified"
+  ],
+  "worktree": "/Users/yanrujhou/.codex/worktrees/bfs-dx100-acceptance/EvolveSWDB",
+  "worktree_clean_before_and_after": true,
+  "tests": {
+    "result": "262 passed,7 skipped in2.85s",
+    "files": [
+      "tests/test_bfs_owned_rss.py",
+      "tests/test_bfs_owned_execution.py",
+      "tests/test_bfs_linux_fixture.py",
+      "tests/test_bfs_linux_fixture_audit.py",
+      "tests/test_bfs_simulator_recovery.py",
+      "tests/test_bfs_simulator_setup_recovery.py"
+    ],
+    "python": "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+    "args": [
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider"
+    ],
+    "env": {
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1"
+    },
+    "log": "/private/tmp/bfs-runtime-export-independent-20260927.log",
+    "sha256": "7590aed6af92d94acbb675381f6ec0e41b94dd931e2c761343869400f17a9daa"
+  },
+  "limits": [
+    "Mac contract tests only; seven Linux platform skips",
+    "No remote execution, no empirical acceptance, no final whole-task review",
+    "Ongoing bfs-validation worktree untouched"
+  ]
+}

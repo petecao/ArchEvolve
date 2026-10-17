@@ -1,0 +1,12 @@
+{
+  "swdb_t28_claim": "int swdb_t28_claim(int thread, int tile, int bytes)",
+  "swdb_t28_cpu_write": "int swdb_t28_cpu_write(int thread, int cell, int value)",
+  "swdb_t28_cpu_read": "int swdb_t28_cpu_read(int thread, int cell)",
+  "swdb_t28_cpu_cas": "int swdb_t28_cpu_cas(int thread, int cell, int expected, int desired)",
+  "swdb_t28_issue": "int swdb_t28_issue(int thread, int access, int region, int cell, int tile, int bytes, int value)",
+  "swdb_t28_wait": "int swdb_t28_wait(int tile)",
+  "swdb_t28_tile_read": "int swdb_t28_tile_read(int thread, int tile, int bytes)",
+  "swdb_t28_pending": "int swdb_t28_pending(int command)",
+  "swdb_t28_result": "int swdb_t28_result(int command)",
+  "swdb_t28_ready": "int swdb_t28_ready(int tile)"
+}

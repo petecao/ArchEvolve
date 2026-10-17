@@ -1,0 +1,65 @@
+{
+  "created": "2026-09-26",
+  "observed_at_et": "2026-09-26 14:33:18 ET",
+  "host": "mbit10",
+  "agent_health": {
+    "host_dx100": "running",
+    "spec_postfix": "running",
+    "standards_postfix": "running"
+  },
+  "ticket_counts": {
+    "resolved": 13,
+    "claimed": 8
+  },
+  "final_acceptance_cells": {
+    "complete": 0,
+    "required": 8
+  },
+  "empirical_protocol_frozen": false,
+  "policy_qualified_gain": false,
+  "leases": {
+    "node0": {
+      "state": "released",
+      "generation": 321
+    },
+    "node1": {
+      "state": "released",
+      "generation": 401
+    },
+    "legacy": {
+      "state": "released",
+      "generation": 77
+    },
+    "all_kernel_locks_empty": true,
+    "all_lease_owners_absent": true
+  },
+  "active_owned_jobs": 0,
+  "remaining_owned_identity": {
+    "pid": 3053339,
+    "start_ticks": 494729548,
+    "state": "Z",
+    "rss_bytes": 0
+  },
+  "capacity": {
+    "node_available_gib": [
+      57.25,
+      58.56
+    ],
+    "global_available_gib": 117.71,
+    "data1_free_bytes": 17629736960,
+    "data_free_bytes": 195731742720,
+    "load_average": [
+      0.0,
+      0.0,
+      0.05
+    ]
+  },
+  "historical_pins_and_11_receipt_hashes_unchanged": true,
+  "host_receipt": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926.dispatch/health-20260926-1433.json",
+    "bytes": 41999,
+    "sha256": "0308a3074d5955d2dbb647b4622e924444e95f1cbc3194232fd0efeca2912f35"
+  },
+  "next_check_et": "2026-09-26 15:03 ET",
+  "next_work": "Bounded Linux RSS and T17 cleanup fixtures, one T17 build, review one-thread pilot; no automatic retry of failed coverage."
+}

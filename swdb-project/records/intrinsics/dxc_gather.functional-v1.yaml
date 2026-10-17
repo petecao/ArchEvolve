@@ -1,0 +1,41 @@
+kind: intrinsic
+schema_version: '0.4'
+id: dxc_gather.functional-v1
+status: draft
+created: '2026-10-06'
+updated: '2026-10-06'
+provenance:
+- id: functional-source
+  kind: source_code
+  description: Fresh functional-source/configuration identity; no output, calibration,
+    build-readiness or performance evidence imported.
+  uri: https://github.com/arkhadem/DX100/tree/e4fc4afdf894f295442cef3604667a469fab8e62
+name: __dxc_gather
+interface:
+  id: dx100-functional-source
+  version: 1.0-e4fc4af
+hardware_operations:
+- dx100.functional.v1.gather
+memory_kind: gather
+address_shape: single_valued_indirect
+element_bits: 32
+lanes: null
+library_entry:
+  id: intrinsic.dxc_gather.functional-v1
+  path: library/intrinsics/dxc_gather.functional-v1.yaml
+  content_sha256: 585fd81fe94f6099a4371dd3e2cb6be2e87488b6b39575e7679a4372d0b53478
+source_view:
+  format: swdb.intrinsic-source-view.v1
+  variant: functional-v1
+  source:
+    root: library
+    path: dx100/dxc_lowering.hpp
+    sha256: 7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c
+  backend: functional_source
+  compile_defines:
+  - FUNC
+  compile_undefines:
+  - GEM5
+  - SWDB_STRICT
+  - SWDB_DXC_DIAGNOSTIC
+  evidence_scope: functional_source_semantics

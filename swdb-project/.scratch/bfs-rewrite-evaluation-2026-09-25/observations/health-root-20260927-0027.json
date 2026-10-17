@@ -1,0 +1,219 @@
+{
+  "created": "2026-09-27",
+  "observed_at": "2026-09-27T00:26:37.436538-04:00",
+  "host": "mbit10",
+  "kind": "readonly_host_health",
+  "leases": {
+    "mbit10-evaluation": {
+      "metadata": {
+        "active_session": null,
+        "heartbeat_at": "2026-09-12T04:49:11Z",
+        "lease": {
+          "acquired_at": "2026-09-12T01:35:42Z",
+          "daemon_pid": 209457,
+          "daemon_start_token": "sh209457-1789176942",
+          "generation": 77,
+          "host": "mbit10",
+          "lease_name": "mbit10-evaluation",
+          "mode": "measure",
+          "session_id": null
+        },
+        "attempt_pid": null,
+        "attempt_start_token": null,
+        "recovered_from_generation": null,
+        "released_at": "2026-09-12T04:49:11Z",
+        "session_note": null,
+        "session_state": "none",
+        "state": "released",
+        "writer": "hostlock.sh"
+      },
+      "metadata_stable": true,
+      "kernel_held": false,
+      "owner": null
+    },
+    "mbit10-evaluation-node0": {
+      "metadata": {
+        "active_session": null,
+        "heartbeat_at": "2026-09-27T04:24:56Z",
+        "lease": {
+          "acquired_at": "2026-09-27T04:24:56Z",
+          "daemon_pid": 3264202,
+          "daemon_start_token": "sh3264202-1790483096",
+          "generation": 336,
+          "host": "mbit10",
+          "lease_name": "mbit10-evaluation-node0",
+          "mode": "measure",
+          "session_id": null
+        },
+        "attempt_pid": null,
+        "attempt_start_token": null,
+        "recovered_from_generation": null,
+        "released_at": null,
+        "session_note": null,
+        "session_state": "none",
+        "state": "held",
+        "writer": "hostlock.sh"
+      },
+      "metadata_stable": true,
+      "kernel_held": true,
+      "owner": {
+        "pid": 3264202,
+        "start_ticks": 498502945,
+        "state": "S",
+        "rss_bytes": 3670016
+      }
+    },
+    "mbit10-evaluation-node1": {
+      "metadata": {
+        "active_session": null,
+        "heartbeat_at": "2026-09-27T04:26:04Z",
+        "lease": {
+          "acquired_at": "2026-09-27T04:24:56Z",
+          "daemon_pid": 3264095,
+          "daemon_start_token": "sh3264095-1790483096",
+          "generation": 433,
+          "host": "mbit10",
+          "lease_name": "mbit10-evaluation-node1",
+          "mode": "measure",
+          "session_id": null
+        },
+        "attempt_pid": null,
+        "attempt_start_token": null,
+        "recovered_from_generation": null,
+        "released_at": "2026-09-27T04:26:04Z",
+        "session_note": null,
+        "session_state": "none",
+        "state": "released",
+        "writer": "hostlock.sh"
+      },
+      "metadata_stable": true,
+      "kernel_held": false,
+      "owner": null
+    }
+  },
+  "disk": {
+    "/data1": {
+      "free_bytes": 17196822528
+    },
+    "/data": {
+      "free_bytes": 174403911680
+    }
+  },
+  "memory": {
+    "global_meminfo": {
+      "MemFree": "43696676 kB",
+      "MemAvailable": "120756348 kB"
+    },
+    "0": {
+      "MemFree": [
+        "28749944",
+        "kB"
+      ],
+      "FilePages": [
+        "27059792",
+        "kB"
+      ],
+      "Shmem": [
+        "5760",
+        "kB"
+      ],
+      "SReclaimable": [
+        "3925004",
+        "kB"
+      ]
+    },
+    "1": {
+      "MemFree": [
+        "14946732",
+        "kB"
+      ],
+      "FilePages": [
+        "23416240",
+        "kB"
+      ],
+      "Shmem": [
+        "1408",
+        "kB"
+      ],
+      "SReclaimable": [
+        "24364988",
+        "kB"
+      ]
+    }
+  },
+  "load": [
+    1.2060546875,
+    1.0,
+    1.0771484375
+  ],
+  "t16": {
+    "terminal_sha256": "e049e2957c15994b8a34125e5113d96f7e2da7b4ecb69094da55523c3cfd0baf",
+    "retained_identity_count": 944,
+    "present_exact_identities": [],
+    "unknown": []
+  },
+  "previous_health_top_level_keys": [
+    "created",
+    "observed_at",
+    "leases",
+    "heads",
+    "immutable_receipts",
+    "helper_script",
+    "helper_origin_existing",
+    "disk",
+    "loadavg",
+    "process_inventory_top_cpu",
+    "helper_upstream_observation",
+    "memory_pressure",
+    "capacity",
+    "coverage",
+    "historical_hashes_unchanged",
+    "terminal_owned_identities",
+    "acceptance_tracked_diff",
+    "acceptance_untracked_records",
+    "native",
+    "a2_unused",
+    "T17",
+    "native_one_thread",
+    "a2_fixtures",
+    "failed_readback",
+    "new_reader_checkout_exists",
+    "readback_a2",
+    "corrected_a2_proofs",
+    "a2_empirical_unused",
+    "coverage_a2",
+    "t16_freeze",
+    "campaign",
+    "campaign_light",
+    "campaign_output_observations",
+    "t15_storage_breakdown",
+    "bounded_preparations",
+    "t15_charge_metadata",
+    "t16_actual_budget",
+    "t17_primary_terminal",
+    "t17_primary_record",
+    "scalar_terminal_current",
+    "t15_correction",
+    "prior_2133_receipts_unchanged",
+    "t15_correction_closed_final_storage",
+    "closed_root_allocations",
+    "closed_terminal_hashes_unchanged",
+    "t16_roi_progress",
+    "t16_active_execution_stage",
+    "t16_failed_terminal",
+    "a4_failed_group",
+    "helper_host_subtree_status"
+  ],
+  "new_group_started": false,
+  "matching_processes": [
+    {
+      "identity": {
+        "pid": 3265258,
+        "start_ticks": 498513028,
+        "state": "R",
+        "rss_bytes": 21688320
+      },
+      "executable": "python3"
+    }
+  ]
+}

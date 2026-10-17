@@ -1,0 +1,55 @@
+{
+  "actual_diagnostic_basis": {
+    "all5complete_record_checks": true,
+    "all_complete_float_plans_match": true,
+    "all_root_post_and478physical_final_checks": true,
+    "failed_original_integer_plan_predicates": 5,
+    "source1433CLItypeandjobexpression": "float minutes5 \u00d760 =300.0; no arbitrary coercion",
+    "type_conflation_or_unclassified_executed_equality": 0
+  },
+  "actual_full_observer_or_compiler_native_solver_SSH_by_reviewer": false,
+  "all14physicalpins_checked": true,
+  "date": "2026-10-16 ET",
+  "exact_inverse": "Only 'budget_seconds':300 \u2192 'budget_seconds':300.0, independently full-byte verified; all other source and scientific/runtime/physical predicates exact V3.",
+  "findings": [],
+  "fresh_root_once_passive_admission_required": true,
+  "inherited_complete_review": "V3 parent review1d079386 and prior complete V2 d184b558; all nonplan bytes exact",
+  "observer": {
+    "bytes": 1090102,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/full-observer-v4/observer-v4.py",
+    "sha256": "2953a79db94e3fc2497bed3e82099863d79245d43d0db953233e65b1341502f3"
+  },
+  "preparation": {
+    "path": ".scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-full-cold-observer-preparation-v4-20261016.json",
+    "sha256": "dc415183fcd323c06086d829f7c59481c4258a4cb31cb760f9231a7e9116d9d7"
+  },
+  "prior17controls_supplement": {
+    "path": ".scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/full-observer-v4/inherited-controls-location-supplement.json",
+    "sha256": "28ca0deead564f7f189cabecb7b3170d0cd5913f140b5d9a7057a981046ff309"
+  },
+  "pure_controls": {
+    "GREEN_against_V4": {
+      "candidate": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/full-observer-v4/observer-v4.py",
+      "candidate_sha256": "2953a79db94e3fc2497bed3e82099863d79245d43d0db953233e65b1341502f3",
+      "child_events": [],
+      "errors": 0,
+      "failures": 0,
+      "observer_main_or_project_import_or_actual_metadata_run": false,
+      "skips": 0,
+      "tests": 3
+    },
+    "RED_against_preserved_V3": {
+      "candidate": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/full-observer-v3/observer-v3.py",
+      "candidate_sha256": "6e51a0f12b9d535d3827d1d717a410203d2bb4554533de65fd1d35024f491666",
+      "child_events": [],
+      "errors": 0,
+      "failures": 5,
+      "observer_main_or_project_import_or_actual_metadata_run": false,
+      "skips": 0,
+      "tests": 3
+    },
+    "scope": "AST-extracted complete plan assignment plus independently rebuilt complete contracts and actual pinned matrix; exact numeric/null/contract negatives and whole source inverse; no observer main/project imports/tools/children/network."
+  },
+  "source_body_caller_Typed_default_or_ticket_adoption": false,
+  "verdict": "PASS_EXACT_ONE_LITERAL_FULL_OBSERVER_SUCCESSOR"
+}

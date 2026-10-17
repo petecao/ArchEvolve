@@ -1,0 +1,85 @@
+{
+  "format": "swdb.paper-sanity-request.v1",
+  "updated": "2026-10-06 ET",
+  "source": {
+    "uri": "https://arxiv.org/pdf/2505.23073v2",
+    "sha256": "ec18bdc585f32e3da5c0fd467e686dd2137b3db88d4c327d510509213e7c44a3"
+  },
+  "observations": [
+    {
+      "kernel": "gapbs-bfs",
+      "label": "BFS",
+      "ratio": 2.9,
+      "unit": "ratio",
+      "basis": "reported",
+      "locator": "PDF page 9, Figure 9; inputs/configuration on page 8, Table 3 and Section 5",
+      "approximate": true,
+      "reading_uncertainty": 0.1,
+      "scope": {
+        "input": "Uniform graphs, 2^20–2^22 nodes, average degree 15",
+        "cores": 4,
+        "algorithm": "Bottom-up BFS",
+        "configuration": "gem5/Ramulator Skylake-like 3.2 GHz, 8-wide cores; baseline 10 MB LLC versus DX100 8 MB LLC"
+      }
+    },
+    {
+      "kernel": "gapbs-bc",
+      "label": "BC",
+      "ratio": 2.2,
+      "unit": "ratio",
+      "basis": "reported",
+      "locator": "PDF page 9, Figure 9; inputs/configuration on page 8, Table 3 and Section 5",
+      "approximate": true,
+      "reading_uncertainty": 0.1,
+      "scope": {
+        "input": "Uniform graphs, 2^20–2^22 nodes, average degree 15",
+        "cores": 4,
+        "algorithm": "GAPBS betweenness centrality",
+        "configuration": "gem5/Ramulator Skylake-like 3.2 GHz, 8-wide cores; baseline 10 MB LLC versus DX100 8 MB LLC"
+      }
+    },
+    {
+      "kernel": "gapbs-pr",
+      "label": "PageRank",
+      "ratio": 1.2,
+      "unit": "ratio",
+      "basis": "reported",
+      "locator": "PDF page 9, Figure 9; inputs/configuration on page 8, Table 3 and Section 5",
+      "approximate": true,
+      "reading_uncertainty": 0.1,
+      "scope": {
+        "input": "Uniform graphs, 2^20–2^22 nodes, average degree 15",
+        "cores": 4,
+        "algorithm": "GAPBS PageRank",
+        "configuration": "gem5/Ramulator Skylake-like 3.2 GHz, 8-wide cores; baseline 10 MB LLC versus DX100 8 MB LLC"
+      }
+    }
+  ],
+  "comparisons": [
+    {
+      "kernel": "gapbs-bfs",
+      "estimate": {
+        "id": "bfs.functional.kron-g16.t4.estimate.llm.a2.postfill.a1",
+        "sha256": "36e826f2fe0c8a6fce30a8e235d76feb4aaba328c6338fe46fd9afc1135c4e44"
+      },
+      "differences": [
+        {
+          "dimension": "input",
+          "paper": "Uniform scale 20–22, average degree 15",
+          "estimate": "Kronecker scale 16, requested edge factor 16; exact registered input"
+        },
+        {
+          "dimension": "algorithm/ROI",
+          "paper": "Bottom-up BFS",
+          "estimate": "Whole registered DOBFS read-offload trial lambda"
+        },
+        {
+          "dimension": "configuration",
+          "paper": "Simulated four Skylake-like cores, baseline 10 MB LLC versus DX100 8 MB LLC",
+          "estimate": "Source/configuration-only FUNC identity; four requested software threads; hardware/runtime service and overlap unknown"
+        }
+      ]
+    }
+  ],
+  "identity_sha256": "41fe257cb22e94b647e31129a0489fd6390bff5b83eb49e962c13774e3015ce1"
+}

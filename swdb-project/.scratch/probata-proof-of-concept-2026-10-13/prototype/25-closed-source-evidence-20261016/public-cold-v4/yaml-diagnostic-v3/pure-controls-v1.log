@@ -1,0 +1,29 @@
+test_actual_noncanonical_binary_not_mislabeled_as_sha (__main__.Controls.test_actual_noncanonical_binary_not_mislabeled_as_sha) ... ok
+test_complete_five_synthetic_failure_context_stays_under_output_cap (__main__.Controls.test_complete_five_synthetic_failure_context_stays_under_output_cap) ... ERROR
+test_guard_and_read_functions_ast_unchanged (__main__.Controls.test_guard_and_read_functions_ast_unchanged) ... ok
+test_known_good_parse_and_no_children (__main__.Controls.test_known_good_parse_and_no_children) ... ok
+test_literal_and_folded_styles_are_syntax_only (__main__.Controls.test_literal_and_folded_styles_are_syntax_only) ... ok
+test_mapping_colon_context_contains_only_identifier_key_labels (__main__.Controls.test_mapping_colon_context_contains_only_identifier_key_labels) ... ok
+test_sha_guard_false_positive_classified_without_value (__main__.Controls.test_sha_guard_false_positive_classified_without_value) ... ok
+test_unchanged_frozen_reader (__main__.Controls.test_unchanged_frozen_reader) ... ok
+
+======================================================================
+ERROR: test_complete_five_synthetic_failure_context_stays_under_output_cap (__main__.Controls.test_complete_five_synthetic_failure_context_stays_under_output_cap)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/yaml-diagnostic-v3/pure_controls.py", line 39, in test_complete_five_synthetic_failure_context_stays_under_output_cap
+    report=json.loads((HERE.parents[4]/'evidence/t25-public-v4-yaml-diagnostic-actual-v1-20261016.json').read_bytes())
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/evidence/t25-public-v4-yaml-diagnostic-actual-v1-20261016.json'
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.008s
+
+FAILED (errors=1)
+{"date": "2026-10-16 ET", "tests": 8, "failures": 0, "errors": 1, "skips": 0, "child_events": [], "diagnostic_main_executed": false, "remote_or_project_or_compiler_executed": false, "source_sha256": "47cf137083a6da8e5839384c51035ab7f5b7432082a1c87195580a95c7990401"}

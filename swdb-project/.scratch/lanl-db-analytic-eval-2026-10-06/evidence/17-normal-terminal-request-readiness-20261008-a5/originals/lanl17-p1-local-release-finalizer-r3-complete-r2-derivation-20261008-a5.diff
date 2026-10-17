@@ -1,0 +1,11 @@
+--- /private/tmp/lanl17_finalize_p1_normal_release_request_20261008_a5_r2.py
++++ /private/tmp/lanl17_finalize_p1_normal_release_request_20261008_a5_r3.py
+@@ -129,7 +129,7 @@
+         need(set(desc['writer_source'])=={'path','bytes','sha256'} and type(desc['bytes']) is int and 0<=desc['bytes']<=33554432,'bounded_exact_descriptor')
+     request_raw=(json.dumps(spec,indent=2,ensure_ascii=True,allow_nan=False)+'\n').encode()
+     stage=lambda path,b:{'path':path,'bytes':len(b),'sha256':sha(b),'base64':base64.b64encode(b).decode('ascii')}
+-    config={'source_pins':[{'path':PRODUCER,'bytes':46165,'sha256':P},copied_helper,wrapper,writer],'stage':[stage(OBS,native_raw),stage(REQUEST,request_raw)],'argv':['/usr/bin/python3.12','-B',PRODUCER,'--request',REQUEST,'--request-sha256',sha(request_raw),'--output',OUTPUT],'collect':[OUTPUT],'remote_seconds':300,'local_seconds':420}
++    config={'source_pins':[{'path':PRODUCER,'bytes':46165,'sha256':P},copied_helper,writer],'stage':[stage(OBS,native_raw),stage(REQUEST,request_raw)],'argv':['/usr/bin/python3.12','-B',PRODUCER,'--request',REQUEST,'--request-sha256',sha(request_raw),'--output',OUTPUT],'collect':[OUTPUT],'remote_seconds':300,'local_seconds':420}
+     action_raw=(json.dumps(config,sort_keys=True,allow_nan=False)+'\n').encode()
+     for path,cap,digest,before in list(SEEN):need(path.lstat() and stamp(path.lstat())==before and sha(read(path,cap,digest))==digest,'local_original_changed_before_authoring')
+     need(datetime.datetime.now(datetime.timezone.utc)<=end,'fresh_parent_validity_expired')

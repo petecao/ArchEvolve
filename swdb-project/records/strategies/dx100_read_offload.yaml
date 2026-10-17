@@ -1,0 +1,34 @@
+kind: strategy
+schema_version: '0.4'
+id: dx100_read_offload
+status: draft
+deprecated_by: null
+created: '2026-10-03'
+updated: '2026-10-03'
+provenance:
+- id: peter-v11
+  kind: human_report
+  description: Peter intrinsic specification v1.1 section 5 at ArchEvolve 0b56895;
+    performance is not reproduced.
+  uri: null
+name: DX100 read offload
+target: access_pattern
+effect:
+- kind: offload
+  steps:
+  - -1
+  hardware_operations:
+  - dx100.mmio.v1.indirect-load.i32
+  note: The CPU keeps compare-and-swap and queue updates.
+parameters: []
+preconditions:
+  requires_shapes:
+  - single_valued_indirect
+  requires_update_kinds:
+  - read
+  requires_semantics: []
+  unchecked:
+  - Contract-specific bounds, ownership and completion clauses must hold.
+common_intrinsics: []
+notes:
+- Created 2026-10-03 ET; legality query does not certify a rewrite.

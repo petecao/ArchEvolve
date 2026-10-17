@@ -1,0 +1,69 @@
+{
+  "date": "2026-10-15 ET",
+  "scope": "closed owner private-view annotation inventory; no actual WP acceptance",
+  "source_checkpoint": "7e15176f3fafbddf202833ec74f9fa2a16c651a3",
+  "finding": "Clang ignores ACSL; arbitrary annotations after the pinned allocator prefix were not independently inventoried.",
+  "repair": "Only checked named assertions, the two exact generated loop annotation blocks, and the two exact liveness ghost effects are admitted before separately checked contract insertion; line-style and all other block annotations refuse.",
+  "red_green": [
+    {
+      "annotation": "axiom",
+      "before": "accepted",
+      "after": "refused",
+      "reason": "closed owner view has an untracked ACSL annotation"
+    },
+    {
+      "annotation": "requires",
+      "before": "accepted",
+      "after": "refused",
+      "reason": "closed owner view has an untracked ACSL annotation"
+    },
+    {
+      "annotation": "line",
+      "before": "accepted",
+      "after": "refused",
+      "reason": "closed owner view has an untracked ACSL annotation"
+    }
+  ],
+  "public_controls": {
+    "passed": 7,
+    "deselected": 9,
+    "wall_seconds": 67.06,
+    "junit": "/private/tmp/probata-owner-annotation-merge.xml",
+    "actual_solver": false
+  },
+  "collection": {
+    "entry_windows": 15,
+    "owner": 16
+  },
+  "identities": {
+    "lowering": {
+      "c_lowering": {
+        "id": "swdb-c-lowering-9",
+        "sha256": "e645ba54b4b4f5977c82b30ae4be751fa8ed8b62ddd2c52f0c059110f92dbc70"
+      },
+      "naming_rules": {
+        "id": "kept-names.3",
+        "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+      },
+      "clang": {
+        "id": "clang-22.1.8",
+        "sha256": "305697d3868243dca6e4aabf4f628df7de135d701eb4fd78f6a5d7528fef4395"
+      }
+    },
+    "checks": {
+      "proof_setup_check": {
+        "version": "1",
+        "sha256": "a55f80085d15f839ddbe86092c7dddbc1a62d922e9038b5d7058fe1a773d51ec"
+      },
+      "verdict_reading": {
+        "version": "1",
+        "sha256": "a55f80085d15f839ddbe86092c7dddbc1a62d922e9038b5d7058fe1a773d51ec"
+      }
+    },
+    "model_domains": {
+      "id": "closed-owner-model-domain-1",
+      "sha256": "976a6d1b54d6b8f25850226d339f3650b781890349ef0083eb2bccf9ebc60a1d"
+    }
+  },
+  "boundary": "Ticket 36 remains claimed; combined actual safe and stale WP outcomes await remote replay. Source allocator relation and private-frame projection remain explicit trusted-tool assumptions."
+}

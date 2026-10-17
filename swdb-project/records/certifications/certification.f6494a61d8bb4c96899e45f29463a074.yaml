@@ -1,0 +1,185 @@
+kind: certification
+schema_version: '0.4'
+id: certification.f6494a61d8bb4c96899e45f29463a074
+status: draft
+created: '2026-10-03'
+updated: '2026-10-03'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+entry:
+  id: lowering.dxc_alu_scalar.dx100-mmio.1.0-e4fc4af
+  content_sha256: 5a2a27f42df1cc3d3eca23f5d67de01cb5b2c5c03e1b083926a4324988f09e92
+command:
+  version: '1.0'
+  sources_sha256: 8b36bf787813456d10fea33924a38da1ca4a82830d7f8bc29ffa12be8260a0b1
+host:
+  hostname: YanRus-Mac-Studio.local
+  system: Darwin
+  architecture: arm64
+  compiler: /opt/homebrew/bin/g++-16
+matrix:
+- operation: alu_scalar
+  tile_size: 16384
+  threads: 4
+  status: passed
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-b7b1e392b3bf46139c90f21c3133adfc/alu_scalar-16384
+    - alu_scalar
+    returncode: 0
+    stdout: |
+      SWDB_DIFFERENTIAL_PASS:alu_scalar
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-b7b1e392b3bf46139c90f21c3133adfc/alu_scalar-16384.positive.json
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=16384
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/drivers/differential.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-b7b1e392b3bf46139c90f21c3133adfc/alu_scalar-16384
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-b7b1e392b3bf46139c90f21c3133adfc/alu_scalar-16384.build.json
+- operation: alu_scalar
+  tile_size: 1024
+  threads: 4
+  status: passed
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-b7b1e392b3bf46139c90f21c3133adfc/alu_scalar-1024
+    - alu_scalar
+    returncode: 0
+    stdout: |
+      SWDB_DIFFERENTIAL_PASS:alu_scalar
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-b7b1e392b3bf46139c90f21c3133adfc/alu_scalar-1024.positive.json
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=1024
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/drivers/differential.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-b7b1e392b3bf46139c90f21c3133adfc/alu_scalar-1024
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-b7b1e392b3bf46139c90f21c3133adfc/alu_scalar-1024.build.json
+negative_controls:
+- id: dropped_wait
+  tile_size: 16384
+  status: rejected
+  reason: read_before_wait
+  expected_check: read_before_wait
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=16384
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/drivers/differential.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-b7b1e392b3bf46139c90f21c3133adfc/alu_scalar-16384-dropped_wait
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-b7b1e392b3bf46139c90f21c3133adfc/alu_scalar-16384-dropped_wait.build.json
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-b7b1e392b3bf46139c90f21c3133adfc/alu_scalar-16384-dropped_wait
+    - alu_scalar
+    - dropped_wait
+    returncode: 87
+    stdout: ''
+    stderr: |
+      SWDB_DIFFERENTIAL_MISMATCH:read_before_wait
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-b7b1e392b3bf46139c90f21c3133adfc/alu_scalar-16384-dropped_wait.run.json
+- id: dropped_wait
+  tile_size: 1024
+  status: rejected
+  reason: read_before_wait
+  expected_check: read_before_wait
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=1024
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/drivers/differential.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-b7b1e392b3bf46139c90f21c3133adfc/alu_scalar-1024-dropped_wait
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-b7b1e392b3bf46139c90f21c3133adfc/alu_scalar-1024-dropped_wait.build.json
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-b7b1e392b3bf46139c90f21c3133adfc/alu_scalar-1024-dropped_wait
+    - alu_scalar
+    - dropped_wait
+    returncode: 87
+    stdout: ''
+    stderr: |
+      SWDB_DIFFERENTIAL_MISMATCH:read_before_wait
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-b7b1e392b3bf46139c90f21c3133adfc/alu_scalar-1024-dropped_wait.run.json
+verdict: certified
+evidence_basis: simulated
+evidence_kind: execution
+created_at: '2026-10-03T06:47:31.346195+00:00'

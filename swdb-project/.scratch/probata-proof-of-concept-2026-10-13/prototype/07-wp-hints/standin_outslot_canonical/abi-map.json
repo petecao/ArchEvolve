@@ -1,0 +1,559 @@
+{
+  "method": "t07-private-outslot-v2-canonical",
+  "source_pins": {
+    "gapbs_models.h": "eccc1c111f32698043682509be8effad02e8cec82957a889f7a4fb6c54ff490c",
+    "tdstep_standin.c": "f24d4fbac9646f3eb28637c591c8cef83a529d96907b1d3071bfadccc3a24de7",
+    "bfs_unit.h": "1bcbf4dac683d6a46269fcd5f896fefc2571adc49d059b46f93fb25eb0f7b235",
+    "dxc_summaries.h": "d708c0ef974e5ede1aaadd2b5e66dd785affa5e1dc6ef37419bf9e72517ae0d2"
+  },
+  "interfaces": [
+    {
+      "name": "__sync_bool_compare_and_swap_NodeID",
+      "result_type": "bool",
+      "new_name": "__sync_bool_compare_and_swap_NodeID_out",
+      "body": false,
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, ptr);\n requires \\valid(ptr);\n    requires \\initialized(ptr);\n    terminates \\true;\n    assigns *ptr, *swdb_out;\n    ensures \\initialized(ptr);\n    ensures ((*swdb_out) != 0) <==> (\\old(*ptr) == oldval);\n    ensures \\old(*ptr) == oldval ==> *ptr == newval;\n    ensures \\old(*ptr) != oldval ==> *ptr == \\old(*ptr);\n    exits \\false;\n    ensures \\initialized(swdb_out);",
+      "file": "gapbs_models.h",
+      "original_contract": "requires \\valid(ptr);\n    requires \\initialized(ptr);\n    terminates \\true;\n    assigns *ptr;\n    ensures \\initialized(ptr);\n    ensures (\\result != 0) <==> (\\old(*ptr) == oldval);\n    ensures \\old(*ptr) == oldval ==> *ptr == newval;\n    ensures \\old(*ptr) != oldval ==> *ptr == \\old(*ptr);\n    exits \\false;"
+    },
+    {
+      "name": "__atomic_load_n_NodeID",
+      "result_type": "NodeID",
+      "new_name": "__atomic_load_n_NodeID_out",
+      "body": false,
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, ptr);\n requires \\valid_read(ptr);\n    requires \\initialized(ptr);\n    terminates \\true;\n    assigns *swdb_out;\n    ensures (*swdb_out) == *ptr;\n    exits \\false;\n    ensures \\initialized(swdb_out);",
+      "file": "gapbs_models.h",
+      "original_contract": "requires \\valid_read(ptr);\n    requires \\initialized(ptr);\n    terminates \\true;\n    assigns \\nothing;\n    ensures \\result == *ptr;\n    exits \\false;"
+    },
+    {
+      "name": "__sync_fetch_and_add_size_t",
+      "result_type": "size_t",
+      "new_name": "__sync_fetch_and_add_size_t_out",
+      "body": false,
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, ptr);\n requires \\valid(ptr);\n    requires \\initialized(ptr);\n    terminates \\true;\n    assigns *ptr, *swdb_out;\n    ensures \\initialized(ptr);\n    ensures *ptr == ((integer)\\old(*ptr) + value) % ((integer)SIZE_MAX + 1);\n    ensures (*swdb_out) == \\old(*ptr);\n    exits \\false;\n    ensures \\initialized(swdb_out);",
+      "file": "gapbs_models.h",
+      "original_contract": "requires \\valid(ptr);\n    requires \\initialized(ptr);\n    terminates \\true;\n    assigns *ptr;\n    ensures \\initialized(ptr);\n    ensures *ptr == ((integer)\\old(*ptr) + value) % ((integer)SIZE_MAX + 1);\n    ensures \\result == \\old(*ptr);\n    exits \\false;"
+    },
+    {
+      "name": "swdb_new_NodeID_array",
+      "result_type": "NodeID *",
+      "new_name": "swdb_new_NodeID_array_out",
+      "body": false,
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, swdb_lqueue_storage + (0 .. SWDB_LQUEUE_CAPACITY - 1));\n requires n <= SWDB_LQUEUE_CAPACITY;\n    terminates \\true;\n    assigns *swdb_out;\n    ensures (*swdb_out) == &swdb_lqueue_storage[0];\n    exits \\false;\n    ensures \\initialized(swdb_out);",
+      "file": "gapbs_models.h",
+      "original_contract": "requires n <= SWDB_LQUEUE_CAPACITY;\n    terminates \\true;\n    assigns \\nothing;\n    ensures \\result == &swdb_lqueue_storage[0];\n    exits \\false;"
+    },
+    {
+      "name": "std_copy_NodeID",
+      "result_type": "NodeID *",
+      "new_name": "std_copy_NodeID_out",
+      "body": false,
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, first + (0 .. swdb_count - 1), d_first + (0 .. swdb_count - 1));\n requires gapbs_nodeid_span((NodeID *)first, swdb_count);\n    requires last == first + swdb_count;\n    requires \\valid_read(first + (0 .. swdb_count - 1));\n    requires \\initialized(first + (0 .. swdb_count - 1));\n    requires gapbs_nodeid_span(d_first, swdb_count);\n    requires \\valid(d_first + (0 .. swdb_count - 1));\n    requires \\separated(first + (0 .. swdb_count - 1), d_first + (0 .. swdb_count - 1));\n    terminates \\true;\n    assigns d_first[0 .. swdb_count - 1], *swdb_out;\n    ensures \\forall integer i; 0 <= i < swdb_count ==> d_first[i] == \\old(first[i]);\n    ensures (*swdb_out) == d_first + (swdb_count);\n    ensures \\initialized(d_first + (0 .. swdb_count - 1));\n    exits \\false;\n    ensures \\initialized(swdb_out);",
+      "file": "gapbs_models.h",
+      "original_contract": "requires \\object_pointer(first) && \\object_pointer(last);\n    requires \\base_addr(first) == \\base_addr(last);\n    requires first <= last;\n    requires \\offset(last) - \\offset(first) <= (integer)PTRDIFF_MAX * sizeof(NodeID);\n    requires \\valid_read(first + (0 .. last - first - 1));\n    requires \\initialized(first + (0 .. last - first - 1));\n    requires gapbs_nodeid_span(d_first, last - first);\n    requires \\valid(d_first + (0 .. last - first - 1));\n    requires \\separated(first + (0 .. last - first - 1), d_first + (0 .. last - first - 1));\n    terminates \\true;\n    assigns d_first[0 .. last - first - 1];\n    ensures \\forall integer i; 0 <= i < last - first ==> d_first[i] == \\old(first[i]);\n    ensures \\result == d_first + (last - first);\n    ensures \\initialized(d_first + (0 .. last - first - 1));\n    exits \\false;"
+    },
+    {
+      "name": "compare_and_swap",
+      "result_type": "bool",
+      "new_name": "compare_and_swap_out",
+      "body": true,
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, x);\n requires \\valid(x);\n    requires \\initialized(x);\n    assigns *x, *swdb_out;\n    ensures \\initialized(x);\n    ensures ((*swdb_out) != 0) <==> (\\old(*x) == old_val);\n    ensures \\old(*x) == old_val ==> *x == new_val;\n    ensures \\old(*x) != old_val ==> *x == \\old(*x);\n    ensures \\initialized(swdb_out);",
+      "file": "gapbs_models.h",
+      "original_contract": "requires \\valid(x);\n    requires \\initialized(x);\n    assigns *x;\n    ensures \\initialized(x);\n    ensures (\\result != 0) <==> (\\old(*x) == old_val);\n    ensures \\old(*x) == old_val ==> *x == new_val;\n    ensures \\old(*x) != old_val ==> *x == \\old(*x);"
+    },
+    {
+      "name": "fetch_and_add_size_t",
+      "result_type": "size_t",
+      "new_name": "fetch_and_add_size_t_out",
+      "body": true,
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, x);\n requires \\valid(x);\n    requires \\initialized(x);\n    assigns *x, *swdb_out;\n    ensures \\initialized(x);\n    ensures *x == ((integer)\\old(*x) + inc) % ((integer)SIZE_MAX + 1);\n    ensures (*swdb_out) == \\old(*x);\n    ensures \\initialized(swdb_out);",
+      "file": "gapbs_models.h",
+      "original_contract": "requires \\valid(x);\n    requires \\initialized(x);\n    assigns *x;\n    ensures \\initialized(x);\n    ensures *x == ((integer)\\old(*x) + inc) % ((integer)SIZE_MAX + 1);\n    ensures \\result == \\old(*x);"
+    },
+    {
+      "name": "std_min_size_t",
+      "result_type": "size_t",
+      "new_name": "std_min_size_t_out",
+      "body": true,
+      "new_contract": "requires \\valid(swdb_out);\n assigns *swdb_out;\n    ensures a <= b ==> (*swdb_out) == a;\n    ensures a > b ==> (*swdb_out) == b;\n    ensures \\initialized(swdb_out);",
+      "file": "gapbs_models.h",
+      "original_contract": "assigns \\nothing;\n    ensures a <= b ==> \\result == a;\n    ensures a > b ==> \\result == b;"
+    },
+    {
+      "name": "omp_get_thread_num",
+      "result_type": "int",
+      "new_name": "omp_get_thread_num_out",
+      "body": true,
+      "new_contract": "requires \\valid(swdb_out);\n assigns *swdb_out;\n    ensures (*swdb_out) == 0;\n    ensures \\initialized(swdb_out);",
+      "file": "gapbs_models.h",
+      "original_contract": "assigns \\nothing;\n    ensures \\result == 0;"
+    },
+    {
+      "name": "pvector_NodeID_operator_index",
+      "result_type": "NodeID *",
+      "new_name": "pvector_NodeID_operator_index_out",
+      "body": true,
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, self);\n requires \\valid_read(self);\n    requires \\initialized(&self->start_) && \\initialized(&self->end_size_);\n    requires \\exists integer count; gapbs_nodeid_span(self->start_, count) && self->end_size_ == self->start_ + count;\n    requires 0 <= n < self->end_size_ - self->start_;\n    requires \\valid(self->start_ + n);\n    assigns *swdb_out; ensures (*swdb_out) == self->start_ + n;\n    ensures \\initialized(swdb_out);",
+      "file": "gapbs_models.h",
+      "original_contract": "requires \\valid_read(self);\n    requires \\initialized(&self->start_) && \\initialized(&self->end_size_);\n    requires \\object_pointer(self->start_) && \\object_pointer(self->end_size_);\n    requires \\base_addr(self->start_) == \\base_addr(self->end_size_);\n    requires self->start_ <= self->end_size_;\n    requires \\offset(self->end_size_) - \\offset(self->start_) <= (integer)PTRDIFF_MAX * sizeof(*self->start_);\n    requires 0 <= n < self->end_size_ - self->start_;\n    requires \\valid(self->start_ + n);\n    assigns \\nothing; ensures \\result == self->start_ + n;"
+    },
+    {
+      "name": "pvector_NodeID_data",
+      "result_type": "NodeID *",
+      "new_name": "pvector_NodeID_data_out",
+      "body": true,
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, self);\n requires \\valid_read(self);\n    requires \\initialized(&self->start_) && \\object_pointer(self->start_);\n    assigns *swdb_out; ensures (*swdb_out) == self->start_;\n    ensures \\initialized(swdb_out);",
+      "file": "gapbs_models.h",
+      "original_contract": "requires \\valid_read(self);\n    requires \\initialized(&self->start_) && \\object_pointer(self->start_);\n    assigns \\nothing; ensures \\result == self->start_;"
+    },
+    {
+      "name": "pvector_NodeID_beginp",
+      "result_type": "NodeID *",
+      "new_name": "pvector_NodeID_beginp_out",
+      "body": true,
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, self);\n requires \\valid_read(self);\n    requires \\initialized(&self->start_) && \\object_pointer(self->start_);\n    assigns *swdb_out; ensures (*swdb_out) == self->start_;\n    ensures \\initialized(swdb_out);",
+      "file": "gapbs_models.h",
+      "original_contract": "requires \\valid_read(self);\n    requires \\initialized(&self->start_) && \\object_pointer(self->start_);\n    assigns \\nothing; ensures \\result == self->start_;"
+    },
+    {
+      "name": "pvector_NodeID_endp",
+      "result_type": "NodeID *",
+      "new_name": "pvector_NodeID_endp_out",
+      "body": true,
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, self);\n requires \\valid_read(self);\n    requires \\initialized(&self->start_) && \\initialized(&self->end_size_);\n    requires \\exists integer count; gapbs_nodeid_span(self->start_, count) && self->end_size_ == self->start_ + count;\n    assigns *swdb_out; ensures (*swdb_out) == self->end_size_;\n    ensures \\initialized(swdb_out);",
+      "file": "gapbs_models.h",
+      "original_contract": "requires \\valid_read(self);\n    requires \\initialized(&self->start_) && \\initialized(&self->end_size_);\n    requires \\object_pointer(self->start_) && \\object_pointer(self->end_size_);\n    requires \\base_addr(self->start_) == \\base_addr(self->end_size_);\n    requires self->start_ <= self->end_size_;\n    requires \\offset(self->end_size_) - \\offset(self->start_) <= (integer)PTRDIFF_MAX * sizeof(*self->start_);\n    assigns \\nothing; ensures \\result == self->end_size_;"
+    },
+    {
+      "name": "pvector_SGOffset_operator_index",
+      "result_type": "SGOffset *",
+      "new_name": "pvector_SGOffset_operator_index_out",
+      "body": true,
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, self);\n requires \\valid_read(self);\n    requires \\initialized(&self->start_) && \\initialized(&self->end_size_);\n    requires \\exists integer count; gapbs_nodeid_span(self->start_, count) && self->end_size_ == self->start_ + count;\n    requires 0 <= n < self->end_size_ - self->start_;\n    requires \\valid(self->start_ + n);\n    assigns *swdb_out; ensures (*swdb_out) == self->start_ + n;\n    ensures \\initialized(swdb_out);",
+      "file": "gapbs_models.h",
+      "original_contract": "requires \\valid_read(self);\n    requires \\initialized(&self->start_) && \\initialized(&self->end_size_);\n    requires \\object_pointer(self->start_) && \\object_pointer(self->end_size_);\n    requires \\base_addr(self->start_) == \\base_addr(self->end_size_);\n    requires self->start_ <= self->end_size_;\n    requires \\offset(self->end_size_) - \\offset(self->start_) <= (integer)PTRDIFF_MAX * sizeof(*self->start_);\n    requires 0 <= n < self->end_size_ - self->start_;\n    requires \\valid(self->start_ + n);\n    assigns \\nothing; ensures \\result == self->start_ + n;"
+    },
+    {
+      "name": "pvector_SGOffset_data",
+      "result_type": "SGOffset *",
+      "new_name": "pvector_SGOffset_data_out",
+      "body": true,
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, self);\n requires \\valid_read(self);\n    requires \\initialized(&self->start_) && \\object_pointer(self->start_);\n    assigns *swdb_out; ensures (*swdb_out) == self->start_;\n    ensures \\initialized(swdb_out);",
+      "file": "gapbs_models.h",
+      "original_contract": "requires \\valid_read(self);\n    requires \\initialized(&self->start_) && \\object_pointer(self->start_);\n    assigns \\nothing; ensures \\result == self->start_;"
+    },
+    {
+      "name": "pvector_SGOffset_beginp",
+      "result_type": "SGOffset *",
+      "new_name": "pvector_SGOffset_beginp_out",
+      "body": true,
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, self);\n requires \\valid_read(self);\n    requires \\initialized(&self->start_) && \\object_pointer(self->start_);\n    assigns *swdb_out; ensures (*swdb_out) == self->start_;\n    ensures \\initialized(swdb_out);",
+      "file": "gapbs_models.h",
+      "original_contract": "requires \\valid_read(self);\n    requires \\initialized(&self->start_) && \\object_pointer(self->start_);\n    assigns \\nothing; ensures \\result == self->start_;"
+    },
+    {
+      "name": "pvector_SGOffset_endp",
+      "result_type": "SGOffset *",
+      "new_name": "pvector_SGOffset_endp_out",
+      "body": true,
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, self);\n requires \\valid_read(self);\n    requires \\initialized(&self->start_) && \\initialized(&self->end_size_);\n    requires \\exists integer count; gapbs_nodeid_span(self->start_, count) && self->end_size_ == self->start_ + count;\n    assigns *swdb_out; ensures (*swdb_out) == self->end_size_;\n    ensures \\initialized(swdb_out);",
+      "file": "gapbs_models.h",
+      "original_contract": "requires \\valid_read(self);\n    requires \\initialized(&self->start_) && \\initialized(&self->end_size_);\n    requires \\object_pointer(self->start_) && \\object_pointer(self->end_size_);\n    requires \\base_addr(self->start_) == \\base_addr(self->end_size_);\n    requires self->start_ <= self->end_size_;\n    requires \\offset(self->end_size_) - \\offset(self->start_) <= (integer)PTRDIFF_MAX * sizeof(*self->start_);\n    assigns \\nothing; ensures \\result == self->end_size_;"
+    },
+    {
+      "name": "SlidingQueue_NodeID_beginp",
+      "result_type": "NodeID *",
+      "new_name": "SlidingQueue_NodeID_beginp_out",
+      "body": true,
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, self);\n requires gapbs_queue_domain(self);\n    assigns *swdb_out; ensures (*swdb_out) == self->shared;\n    ensures \\initialized(swdb_out);",
+      "file": "gapbs_models.h",
+      "original_contract": "requires gapbs_queue_domain(self);\n    assigns \\nothing; ensures \\result == self->shared;"
+    },
+    {
+      "name": "SlidingQueue_NodeID_endp",
+      "result_type": "NodeID *",
+      "new_name": "SlidingQueue_NodeID_endp_out",
+      "body": true,
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, self);\n requires gapbs_queue_domain(self);\n    assigns *swdb_out; ensures (*swdb_out) == self->shared + self->shared_max_size;\n    ensures \\initialized(swdb_out);",
+      "file": "gapbs_models.h",
+      "original_contract": "requires gapbs_queue_domain(self);\n    assigns \\nothing; ensures \\result == self->shared + self->shared_max_size;"
+    },
+    {
+      "name": "SlidingQueue_NodeID_size",
+      "result_type": "size_t",
+      "new_name": "SlidingQueue_NodeID_size_out",
+      "body": true,
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, self);\n requires gapbs_queue_domain(self);\n    assigns *swdb_out;\n    ensures (*swdb_out) == self->shared_out_end - self->shared_out_start;\n    ensures \\initialized(swdb_out);",
+      "file": "gapbs_models.h",
+      "original_contract": "requires gapbs_queue_domain(self);\n    assigns \\nothing;\n    ensures \\result == self->shared_out_end - self->shared_out_start;"
+    },
+    {
+      "name": "__dxc_tile_size",
+      "result_type": "uint16_t",
+      "new_name": "__dxc_tile_size_out",
+      "body": false,
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, dxc_tile_len + (0 .. DXC_NUM_TILES - 1), dxc_tile_data + (0 .. DXC_NUM_TILES - 1), dxc_pending + (0 .. DXC_NUM_TILES - 1));\n requires dxc_tile_ok(tile);\n    requires hazard_tile_size_ready: dxc_pending[tile] == 0;\n    requires 0 <= dxc_tile_len[tile] <= TILE_SIZE;\n    terminates \\true;\n    assigns *swdb_out;\n    ensures (*swdb_out) == dxc_tile_len[tile];\n    exits \\false;\n    ensures \\initialized(swdb_out);",
+      "file": "dxc_summaries.h",
+      "original_contract": "requires dxc_tile_ok(tile);\n    requires hazard_tile_size_ready: dxc_pending[tile] == 0;\n    requires 0 <= dxc_tile_len[tile] <= TILE_SIZE;\n    terminates \\true;\n    assigns \\nothing;\n    ensures \\result == dxc_tile_len[tile];\n    exits \\false;"
+    },
+    {
+      "name": "__dxc_tile_pointer",
+      "result_type": "int *",
+      "new_name": "__dxc_tile_pointer_out",
+      "body": false,
+      "new_contract": "requires \\valid(swdb_out); requires \\separated(swdb_out, dxc_tile_len + (0 .. DXC_NUM_TILES - 1), dxc_tile_data + (0 .. DXC_NUM_TILES - 1), dxc_pending + (0 .. DXC_NUM_TILES - 1));\n requires dxc_tile_ok(tile);\n    terminates \\true;\n    assigns *swdb_out;\n    ensures (*swdb_out) == dxc_tile_data[tile];\n    exits \\false;\n    ensures \\initialized(swdb_out);",
+      "file": "dxc_summaries.h",
+      "original_contract": "requires dxc_tile_ok(tile);\n    terminates \\true;\n    assigns \\nothing;\n    ensures \\result == dxc_tile_data[tile];\n    exits \\false;"
+    }
+  ],
+  "helper_bodies": 19,
+  "returning_helpers": 15,
+  "returning_standard_summaries": 5,
+  "returning_device_summaries": 2,
+  "proof_acceptance": false,
+  "source_interface_occurrences": [
+    {
+      "file": "gapbs_models.h",
+      "line": 77,
+      "interface": "__sync_bool_compare_and_swap_NodeID",
+      "source_line": "bool __sync_bool_compare_and_swap_NodeID(NodeID *ptr, NodeID oldval, NodeID newval);"
+    },
+    {
+      "file": "gapbs_models.h",
+      "line": 161,
+      "interface": "__sync_bool_compare_and_swap_NodeID",
+      "source_line": "return __sync_bool_compare_and_swap_NodeID(x, old_val, new_val);"
+    },
+    {
+      "file": "gapbs_models.h",
+      "line": 85,
+      "interface": "__atomic_load_n_NodeID",
+      "source_line": "NodeID __atomic_load_n_NodeID(const NodeID *ptr, int memorder);"
+    },
+    {
+      "file": "gapbs_models.h",
+      "line": 95,
+      "interface": "__sync_fetch_and_add_size_t",
+      "source_line": "size_t __sync_fetch_and_add_size_t(size_t *ptr, size_t value);"
+    },
+    {
+      "file": "gapbs_models.h",
+      "line": 172,
+      "interface": "__sync_fetch_and_add_size_t",
+      "source_line": "return __sync_fetch_and_add_size_t(x, inc);"
+    },
+    {
+      "file": "gapbs_models.h",
+      "line": 123,
+      "interface": "swdb_new_NodeID_array",
+      "source_line": "NodeID *swdb_new_NodeID_array(size_t n);"
+    },
+    {
+      "file": "gapbs_models.h",
+      "line": 271,
+      "interface": "swdb_new_NodeID_array",
+      "source_line": "self->local_queue = swdb_new_NodeID_array(self->local_size);"
+    },
+    {
+      "file": "gapbs_models.h",
+      "line": 146,
+      "interface": "std_copy_NodeID",
+      "source_line": "NodeID *std_copy_NodeID(const NodeID *first, const NodeID *last, NodeID *d_first);"
+    },
+    {
+      "file": "gapbs_models.h",
+      "line": 298,
+      "interface": "std_copy_NodeID",
+      "source_line": "std_copy_NodeID(self->local_queue, self->local_queue + self->in, shared_queue + copy_start);"
+    },
+    {
+      "file": "gapbs_models.h",
+      "line": 160,
+      "interface": "compare_and_swap",
+      "source_line": "bool compare_and_swap(NodeID *x, NodeID old_val, NodeID new_val) {"
+    },
+    {
+      "file": "gapbs_models.h",
+      "line": 171,
+      "interface": "fetch_and_add_size_t",
+      "source_line": "size_t fetch_and_add_size_t(size_t *x, size_t inc) {"
+    },
+    {
+      "file": "gapbs_models.h",
+      "line": 297,
+      "interface": "fetch_and_add_size_t",
+      "source_line": "size_t copy_start = fetch_and_add_size_t(&self->sq->shared_in, self->in);"
+    },
+    {
+      "file": "gapbs_models.h",
+      "line": 179,
+      "interface": "std_min_size_t",
+      "source_line": "size_t std_min_size_t(size_t a, size_t b) {"
+    },
+    {
+      "file": "gapbs_models.h",
+      "line": 186,
+      "interface": "omp_get_thread_num",
+      "source_line": "int omp_get_thread_num(void) { return 0; }"
+    },
+    {
+      "file": "gapbs_models.h",
+      "line": 198,
+      "interface": "pvector_NodeID_operator_index",
+      "source_line": "NodeID *pvector_NodeID_operator_index(struct pvector_NodeID *self, size_t n) { return self->start_ + n; }"
+    },
+    {
+      "file": "gapbs_models.h",
+      "line": 202,
+      "interface": "pvector_NodeID_data",
+      "source_line": "NodeID *pvector_NodeID_data(struct pvector_NodeID *self) { return self->start_; }"
+    },
+    {
+      "file": "gapbs_models.h",
+      "line": 206,
+      "interface": "pvector_NodeID_beginp",
+      "source_line": "NodeID *pvector_NodeID_beginp(struct pvector_NodeID *self) { return self->start_; }"
+    },
+    {
+      "file": "gapbs_models.h",
+      "line": 214,
+      "interface": "pvector_NodeID_endp",
+      "source_line": "NodeID *pvector_NodeID_endp(struct pvector_NodeID *self) { return self->end_size_; }"
+    },
+    {
+      "file": "gapbs_models.h",
+      "line": 224,
+      "interface": "pvector_SGOffset_operator_index",
+      "source_line": "SGOffset *pvector_SGOffset_operator_index(struct pvector_SGOffset *self, size_t n) { return self->start_ + n; }"
+    },
+    {
+      "file": "gapbs_models.h",
+      "line": 228,
+      "interface": "pvector_SGOffset_data",
+      "source_line": "SGOffset *pvector_SGOffset_data(struct pvector_SGOffset *self) { return self->start_; }"
+    },
+    {
+      "file": "gapbs_models.h",
+      "line": 232,
+      "interface": "pvector_SGOffset_beginp",
+      "source_line": "SGOffset *pvector_SGOffset_beginp(struct pvector_SGOffset *self) { return self->start_; }"
+    },
+    {
+      "file": "gapbs_models.h",
+      "line": 240,
+      "interface": "pvector_SGOffset_endp",
+      "source_line": "SGOffset *pvector_SGOffset_endp(struct pvector_SGOffset *self) { return self->end_size_; }"
+    },
+    {
+      "file": "gapbs_models.h",
+      "line": 247,
+      "interface": "SlidingQueue_NodeID_beginp",
+      "source_line": "NodeID *SlidingQueue_NodeID_beginp(struct SlidingQueue_NodeID *self) { return self->shared; }"
+    },
+    {
+      "file": "gapbs_models.h",
+      "line": 250,
+      "interface": "SlidingQueue_NodeID_endp",
+      "source_line": "NodeID *SlidingQueue_NodeID_endp(struct SlidingQueue_NodeID *self) { return self->shared + self->shared_max_size; }"
+    },
+    {
+      "file": "gapbs_models.h",
+      "line": 254,
+      "interface": "SlidingQueue_NodeID_size",
+      "source_line": "size_t SlidingQueue_NodeID_size(struct SlidingQueue_NodeID *self) {"
+    },
+    {
+      "file": "tdstep_standin.c",
+      "line": 206,
+      "interface": "__atomic_load_n_NodeID",
+      "source_line": "const NodeID value = __atomic_load_n_NodeID(pvector_NodeID_operator_index(parent, (size_t)v), __ATOMIC_RELAXED);"
+    },
+    {
+      "file": "tdstep_standin.c",
+      "line": 177,
+      "interface": "compare_and_swap",
+      "source_line": "const bool claimed = hint < 0 && compare_and_swap(pvector_NodeID_operator_index(parent, (size_t)v), hint, u);"
+    },
+    {
+      "file": "tdstep_standin.c",
+      "line": 208,
+      "interface": "compare_and_swap",
+      "source_line": "if (value < 0 && compare_and_swap(pvector_NodeID_operator_index(parent, (size_t)v), value, u)) {"
+    },
+    {
+      "file": "tdstep_standin.c",
+      "line": 135,
+      "interface": "std_min_size_t",
+      "source_line": "const size_t end = std_min_size_t(begin + (size_t)SWDB_CHUNK_SIZE, (size_t)queue->shared_out_end);"
+    },
+    {
+      "file": "tdstep_standin.c",
+      "line": 127,
+      "interface": "omp_get_thread_num",
+      "source_line": "dxc_context c = swdb_contexts[omp_get_thread_num()];"
+    },
+    {
+      "file": "tdstep_standin.c",
+      "line": 177,
+      "interface": "pvector_NodeID_operator_index",
+      "source_line": "const bool claimed = hint < 0 && compare_and_swap(pvector_NodeID_operator_index(parent, (size_t)v), hint, u);"
+    },
+    {
+      "file": "tdstep_standin.c",
+      "line": 181,
+      "interface": "pvector_NodeID_operator_index",
+      "source_line": "*pvector_NodeID_operator_index(parent, (size_t)v) = u;"
+    },
+    {
+      "file": "tdstep_standin.c",
+      "line": 206,
+      "interface": "pvector_NodeID_operator_index",
+      "source_line": "const NodeID value = __atomic_load_n_NodeID(pvector_NodeID_operator_index(parent, (size_t)v), __ATOMIC_RELAXED);"
+    },
+    {
+      "file": "tdstep_standin.c",
+      "line": 208,
+      "interface": "pvector_NodeID_operator_index",
+      "source_line": "if (value < 0 && compare_and_swap(pvector_NodeID_operator_index(parent, (size_t)v), value, u)) {"
+    },
+    {
+      "file": "tdstep_standin.c",
+      "line": 210,
+      "interface": "pvector_NodeID_operator_index",
+      "source_line": "*pvector_NodeID_operator_index(parent, (size_t)v) = u;"
+    },
+    {
+      "file": "tdstep_standin.c",
+      "line": 158,
+      "interface": "pvector_NodeID_data",
+      "source_line": "__dxc_gather(pvector_NodeID_data(parent), c.tile[0], c.tile[5]);"
+    },
+    {
+      "file": "tdstep_standin.c",
+      "line": 117,
+      "interface": "pvector_NodeID_beginp",
+      "source_line": "add_mem_region(pvector_NodeID_beginp(parent), pvector_NodeID_endp(parent));"
+    },
+    {
+      "file": "tdstep_standin.c",
+      "line": 117,
+      "interface": "pvector_NodeID_endp",
+      "source_line": "add_mem_region(pvector_NodeID_beginp(parent), pvector_NodeID_endp(parent));"
+    },
+    {
+      "file": "tdstep_standin.c",
+      "line": 202,
+      "interface": "pvector_SGOffset_operator_index",
+      "source_line": "for (int j = *pvector_SGOffset_operator_index(VertexOffsets, (size_t)u);"
+    },
+    {
+      "file": "tdstep_standin.c",
+      "line": 203,
+      "interface": "pvector_SGOffset_operator_index",
+      "source_line": "j < *pvector_SGOffset_operator_index(VertexOffsets, (size_t)(u + 1)); ++j) {"
+    },
+    {
+      "file": "tdstep_standin.c",
+      "line": 139,
+      "interface": "pvector_SGOffset_data",
+      "source_line": "__dxc_gather(pvector_SGOffset_data(VertexOffsets), c.tile[0], c.tile[1]);"
+    },
+    {
+      "file": "tdstep_standin.c",
+      "line": 140,
+      "interface": "pvector_SGOffset_data",
+      "source_line": "__dxc_gather(pvector_SGOffset_data(VertexOffsets) + 1, c.tile[0], c.tile[2]);"
+    },
+    {
+      "file": "tdstep_standin.c",
+      "line": 115,
+      "interface": "pvector_SGOffset_beginp",
+      "source_line": "add_mem_region(pvector_SGOffset_beginp(VertexOffsets), pvector_SGOffset_endp(VertexOffsets));"
+    },
+    {
+      "file": "tdstep_standin.c",
+      "line": 115,
+      "interface": "pvector_SGOffset_endp",
+      "source_line": "add_mem_region(pvector_SGOffset_beginp(VertexOffsets), pvector_SGOffset_endp(VertexOffsets));"
+    },
+    {
+      "file": "tdstep_standin.c",
+      "line": 114,
+      "interface": "SlidingQueue_NodeID_beginp",
+      "source_line": "add_mem_region(SlidingQueue_NodeID_beginp(queue), SlidingQueue_NodeID_endp(queue));"
+    },
+    {
+      "file": "tdstep_standin.c",
+      "line": 114,
+      "interface": "SlidingQueue_NodeID_endp",
+      "source_line": "add_mem_region(SlidingQueue_NodeID_beginp(queue), SlidingQueue_NodeID_endp(queue));"
+    },
+    {
+      "file": "tdstep_standin.c",
+      "line": 124,
+      "interface": "SlidingQueue_NodeID_size",
+      "source_line": "const bool accelerate = swdb_acceleration_enabled && SlidingQueue_NodeID_size(queue) >= (size_t)SWDB_FRONTIER_THRESHOLD;"
+    },
+    {
+      "file": "tdstep_standin.c",
+      "line": 152,
+      "interface": "__dxc_tile_size",
+      "source_line": "const unsigned count = __dxc_tile_size(c.tile[7]);"
+    },
+    {
+      "file": "tdstep_standin.c",
+      "line": 163,
+      "interface": "__dxc_tile_pointer",
+      "source_line": "int *vertices = __dxc_tile_pointer(c.tile[0]);"
+    },
+    {
+      "file": "tdstep_standin.c",
+      "line": 164,
+      "interface": "__dxc_tile_pointer",
+      "source_line": "int *frontier = __dxc_tile_pointer(c.tile[3]);"
+    },
+    {
+      "file": "tdstep_standin.c",
+      "line": 165,
+      "interface": "__dxc_tile_pointer",
+      "source_line": "int *hints = __dxc_tile_pointer(c.tile[5]);"
+    },
+    {
+      "file": "dxc_summaries.h",
+      "line": 169,
+      "interface": "__dxc_tile_size",
+      "source_line": "uint16_t __dxc_tile_size(int tile);"
+    },
+    {
+      "file": "dxc_summaries.h",
+      "line": 176,
+      "interface": "__dxc_tile_pointer",
+      "source_line": "int *__dxc_tile_pointer(int tile);"
+    }
+  ],
+  "unit_postconditions_sha256": "bb7ed9a054f6f396ce9247087ca72df3517bd23a759d4cad85f7e2c55a6f0b20",
+  "private_slot_rule": "Each call receives the address of a fresh automatic scalar/pointer object; never initialized by this rewrite, never passed to a source operation except as its private out cell, never escaped, and consumed after the call. Semantic short-circuit accumulators are separate objects.",
+  "unsupported": [
+    "changed input bytes",
+    "unknown/indirect/variadic calls",
+    "aggregate or reference returns",
+    "exceptions/nonlocal exits",
+    "volatile/atomic object qualifiers not in pinned source",
+    "arbitrary raw-pointer Graph producers",
+    "in-place -m allocator/type-punning path",
+    "full C++/OpenMP/DX100/allocator correspondence",
+    "fresh allocation payload initializedness proof"
+  ],
+  "allocator_correspondence": {
+    "status": "REFUSED_PENDING_SEPARATE_REPAIR",
+    "reason": "swdb_lqueue_storage has static storage duration and implicit zero initialization; it cannot represent the initial payload initializedness of new NodeID[n]",
+    "same_path_negative_closed": false,
+    "TD_or_source_proof_admissible": false
+  },
+  "output_pins": {
+    "gapbs_models.h": "e2248bbe1e7dd47c6a46f8645aca9f065900c7205b066fbd5956b2c7c5fcf95c",
+    "tdstep_standin.c": "3af025040802b2c018a7a192738c276863f7c489e4c3ce238443b9f2a3f6bcfa",
+    "bfs_unit.h": "52d40d00b0a7462eed164deec3a8958a855de5763e7f20fefb8e2f257f09bd34",
+    "dxc_summaries.h": "c70a4644a4cd27feabcacd3633a1135bcb46a8f36d86a08b2fee4a469a868c71"
+  }
+}

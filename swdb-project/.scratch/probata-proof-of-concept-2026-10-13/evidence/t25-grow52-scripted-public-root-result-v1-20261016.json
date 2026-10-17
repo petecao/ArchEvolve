@@ -1,0 +1,40 @@
+{
+  "accepted": true,
+  "author_commit": "fbc171761f81a70488a2c625cac7947f60a6b70e",
+  "inner_summary": {
+    "bytes": 2676,
+    "path": "/private/tmp/probata-t25-root-grow52-public-controls-v1-20261016/inner.log.summary.json",
+    "sha256": "aa8979b4d8c126ddb318dd0e97a943fdb436c73175716fdf51faedecfcd9e07d"
+  },
+  "outer_receipt": {
+    "bytes": 175,
+    "path": "/private/tmp/probata-t25-root-grow52-public-controls-v1-20261016/outer-receipt.json",
+    "sha256": "b48d68062a95c501e14b8d1a226b64b0d0280066d73f7e57d76e8f8289117190"
+  },
+  "persisted_workflow": {
+    "records": [
+      {
+        "bytes": 488089,
+        "path": "/private/tmp/probata-t25-root-grow52-public-controls-v1-20261016/pytest/test_complete_synthetic_qualif0/records/proofs/proof.model.std_vector_int_realloc_v3_grow.20261016t143021z.05541189.yaml",
+        "sha256": "83ba309fec94250d7f454a803aa46dfa2255dd27e923de02fbd1981dd7da2247"
+      },
+      {
+        "bytes": 140735,
+        "path": "/private/tmp/probata-t25-root-grow52-public-controls-v1-20261016/pytest/test_public_qualified_grow_rea0/records/proofs/proof.model.std_vector_int_realloc_v3_grow.20261016t143019z.8d4c5567.yaml",
+        "sha256": "37c8ee509bf1222bf4e204cfdf066055a57d863d08bb54536378beb405052f52"
+      }
+    ],
+    "runs": 52,
+    "scientific_proof": false,
+    "setup_runs": 52,
+    "synthetic_goals": 62,
+    "synthetic_smoke_goals": 1,
+    "tamper_prelaunch_refusal_test_passed": true
+  },
+  "raw_bytes": 43974380,
+  "runtime_candidate": "3a48da2f44dd2066c2ac0bf42c4d873490044a99",
+  "scientific_proof": false,
+  "scope": "scripted workflow only; no actual formal result",
+  "source_unchanged": true,
+  "tests_passed": 3
+}

@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/private/tmp/probata-t28-initialized-frame-control-v1-20261016.py", line 15, in <module>
+    exec(compile(ast.fix_missing_locations(ast.Module(body=[node],type_ignores=[])),str(source),'exec'),{'text':text})
+  File "/private/tmp/probata-resume-t25-pair/swdb-project/tests/test_dx100_initialized_register.py", line 20, in <module>
+    assert 'REG_count, SPD_count, region_count, __swdb_dx_reg_words[0..1]'in text
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

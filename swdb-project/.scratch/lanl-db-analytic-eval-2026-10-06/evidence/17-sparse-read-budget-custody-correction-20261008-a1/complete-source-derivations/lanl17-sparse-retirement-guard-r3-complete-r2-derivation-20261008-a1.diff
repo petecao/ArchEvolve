@@ -1,0 +1,241 @@
+--- lanl_sparse_retire_consumed_source_guard_20261008_a1_r2.py
++++ lanl_sparse_retire_consumed_source_guard_20261008_a1_r3.py
+@@ -1,6 +1,9 @@
+ """Prospective exact-owner library-preserving sparse retirement. NOT RUN.
+ 
+-Default is a full read-only storage assessment with fresh administrative custody.
++Default is a read-only metadata/source-proof assessment with fresh administrative
++custody. Full tracked regular-file byte checks are deferred to each actual
++retirement. Original historical bytes may be inherited only from an accepted
++exact-source DEFAULT receipt with unchanged complete file identities.
+ Only --retire selects ONE fixed private-pattern/native read-tree operation per
+ explicit reviewed row. No worktree deletion, common configuration migration,
+ force/reset/GC, automatic rehydration, capacity or scientific admission.
+@@ -776,6 +779,9 @@
+         # Unread removal-initial metadata is not a byte-verified passive cache.
+         self.initial_tracked_metadata_stats = {}
+         self.passive_hashes = {}
++        # Inherited original history is separate from fresh byte-read caches.
++        self.inherited_history = {}
++        self.parent_review = None
+         self.reference_hits = {}
+         self.directory_stats = {}
+         self.symlink_stats = {}
+@@ -913,6 +919,12 @@
+         return raw
+ 
+     def pin_fact(self, pin):
++        if pin['path'] in self.inherited_history:
++            witness = self.inherited_history[pin['path']]
++            require(pin['bytes'] == witness['bytes'] and pin['sha256'] == witness['sha256']
++                    and pin.get('stat') == witness['stat'], 'inherited_history_pin_changed')
++            self.check_inherited_history_file(witness)
++            return
+         # Only an already-byte-checked, stable baseline file can use this cache.
+         path = pin['path']
+         if path not in self.passive_stats:
+@@ -1495,6 +1507,9 @@
+             b = self.pinned(pin)
+             require(not any(str(x).encode() in b for x in self.selected),
+                     'future_source_has_selected_dependency')
++        # One fresh parsed original per receipt in this call; every reused proof
++        # retains a complete file-identity check and its own exact JSON field.
++        receipt_documents = {}
+         # Explicit parent source-byte proofs, when claimed by original receipts.
+         for proof in self.plan['receipt_source_file_proofs']:
+             require(proof['row'] in self.args.select and proof['receipt_key'] in ROWS[proof['row']]['receipts'],
+@@ -1507,8 +1522,16 @@
+             if proof['row'] not in self.completed_names() or str(rel).startswith('swdb-project/library/'):
+                 actual, _ = self.read(BASE/proof['row']/rel)
+                 require(body == actual, 'receipt_source_byte_proof_changed')
+-            doc = strict_json(self.read(PRIMARY/EVIDENCE/RECEIPTS[proof['receipt_key']]['file'],
+-                                        LIMITS['inventory_bytes'])[0])
++            receipt_key = proof['receipt_key']
++            receipt_path = PRIMARY/EVIDENCE/RECEIPTS[receipt_key]['file']
++            if receipt_key not in receipt_documents:
++                receipt_body, receipt_stat = self.read(receipt_path, LIMITS['inventory_bytes'])
++                require(sha(receipt_body) == RECEIPTS[receipt_key]['sha256'],
++                        'source_proof_original_receipt_bytes_changed')
++                receipt_documents[receipt_key] = (strict_json(receipt_body), receipt_stat)
++            doc, receipt_stat = receipt_documents[receipt_key]
++            require(stamp(receipt_path.lstat()) == receipt_stat,
++                    'source_proof_cached_original_receipt_changed')
+             for key in proof['receipt_json_path']:
+                 doc = doc[key]
+             require(doc == proof['sha256'], 'original_source_hash_field_changed')
+@@ -1547,6 +1570,131 @@
+             require(not any_inside(pin['path'], self.selected), 'protected_file_inside_selection')
+             self.pin_fact(pin)
+ 
++    def historical_custody_projection(self):
++        # Preserve every original semantic handling/basis and physical pin.
++        return sorted(self.plan['historical_reference_files'], key=lambda pin: pin['path'])
++
++    def historical_custody_eligible_paths(self):
++        roots = {str(RAW/name) for row in RECEIPTS.values() for name in row['raw_names']}
++        roots.update(self.plan['raw_control_sibling_paths'])
++        # RAW/PRIMARY and candidate source bodies always keep their fresh checks.
++        return {pin['path'] for pin in self.historical_custody_projection()
++                if inside(pin['path'], RAW) and not any(inside(pin['path'], P(root)) for root in roots)}
++
++    def check_inherited_history_file(self, witness):
++        self.left(); self.stat_checks += 1
++        require(self.stat_checks <= LIMITS['stat_checks'], 'inherited_history_stat_limit')
++        p, observed = self.path(witness['path'])
++        require(observed.st_nlink == 1 and observed.st_size == witness['bytes']
++                and observed.st_size <= LIMITS['one_file']
++                and stamp(observed) == witness['stat']
++                and stamp(p.lstat()) == witness['stat'], 'inherited_history_file_identity_changed')
++
++    def inherit_historical_custody(self):
++        bindings = self.parent_review.get('successful_default_original_bindings')
++        if not self.args.retire:
++            require(bindings is None and self.parent_review.get('actual_default_only') is True,
++                    'default_cannot_inherit_historical_byte_custody')
++            return
++        require(self.parent_review.get('actual_default_only') is False and type(bindings) is dict,
++                'retirement_requires_original_default_history_custody')
++        receipt_pin = dict(bindings['original_guard_receipt'])
++        receipt_pin['format'] = 'swdb.library-preserving-sparse-retirement-guard.v1'
++        prior = self.sealed(receipt_pin, LIMITS['receipt_bytes'])
++        plan_pin = dict(bindings['default_reviewed_plan']['file'])
++        plan_pin.update(identity_sha256=bindings['default_reviewed_plan']['identity_sha256'],
++                        canonical_ensure_ascii=True,
++                        format='swdb.library-preserving-sparse-retirement-parent-plan.v1')
++        prior_plan = self.sealed(plan_pin, LIMITS['plan_bytes'])
++        prior_review = self.sealed(prior_plan['parent_review_pin'], LIMITS['plan_bytes'])
++        require(prior_review.get('actual_default_only') is True
++                and prior_review['accepted_for_exact_subset'] is True
++                and prior_review['accepted_library_preserving_sparse_scope'] is True
++                and prior_review['final14_completed_and_released'] is True
++                and bindings['default_review'] == prior_plan['parent_review_pin'],
++                'original_default_history_review_changed')
++        require(prior['admitted'] is True and prior['failure'] is None
++                and prior['retire_requested'] is False and prior['retired_rows'] == []
++                and prior['completed_retirements'] == [] and prior['pre_retire_full_byte_checks'] == {}
++                and prior['full_raw_byte_passes'] == 2 and prior['inspection_limits'] == LIMITS
++                and prior['scientific_admission'] is False and prior['capacity_admission'] is False
++                and prior['guard_source_sha256'] == prior_plan['guard_source_sha256'] == self.own_sha
++                and prior['expected_primary'] == prior_plan['expected_primary'] == self.args.expected_primary
++                and prior['selected_rows'] == prior_plan['selected_rows'] == self.args.select
++                and prior['reviewed_plan_file_sha256'] == plan_pin['sha256']
++                and prior['reviewed_plan_identity_sha256'] == prior_plan['identity_sha256']
++                and prior['parent_review_identity_sha256'] == prior_review['identity_sha256'],
++                'original_default_history_receipt_scope_changed')
++        for key, limit in (('bytes_read', 'total_file_bytes'), ('walk_entries_checked', 'walk_entries'),
++                           ('stable_stat_checks', 'stat_checks')):
++            require(type(prior[key]) is int and 0 <= prior[key] <= LIMITS[limit],
++                    'original_default_history_counter_limit')
++        for key in ('historical_reference_files', 'raw_control_sibling_paths', 'original_raw_file_pins',
++                    'receipt_source_file_proofs', 'pending_control_files', 'future_source_pins',
++                    'native_git_pin', 'account_service_identification_pin', 'portal_service_review_pin',
++                    'retained_raw_library_aliases', 'retirement_operation'):
++            require(prior_plan[key] == self.plan[key], 'original_default_history_coverage_changed')
++        require(set(prior['initial_checks']['trees']) == set(self.args.select)
++                and all(tree['regular_bytes_verified'] is False
++                        and tree['tracked_mode_blob_source_inventory_sha256'] is None
++                        for tree in prior['initial_checks']['trees'].values()),
++                'original_default_deferred_tracked_byte_policy_changed')
++        projection = self.historical_custody_projection()
++        custody = prior['historical_byte_custody']
++        require(custody['format'] == 'swdb.original-historical-byte-custody.v1'
++                and custody['all_history_bytes_freshly_read_in_this_operation'] is True
++                and custody['inherited_history_files'] == 0
++                and custody['historical_projection_sha256'] == sha(canonical(projection)),
++                'original_default_historical_byte_policy_changed')
++        witnesses = custody['files']
++        require(type(witnesses) is list and len(witnesses) == len(projection)
++                and [x['path'] for x in witnesses] == [x['path'] for x in projection],
++                'original_default_historical_witness_set_changed')
++        eligible = self.historical_custody_eligible_paths()
++        for pin, witness in zip(projection, witnesses):
++            require(set(witness) == {'path', 'bytes', 'sha256', 'stat', 'reference_hits'}
++                    and all(witness[k] == pin[k] for k in ('path', 'bytes', 'sha256', 'stat'))
++                    and type(witness['reference_hits']) is bool,
++                    'original_default_historical_witness_pin_changed')
++            if pin['path'] in eligible:
++                self.check_inherited_history_file(witness)
++                self.inherited_history[pin['path']] = witness
++        require(set(self.inherited_history) == eligible, 'inherited_history_exact_scope_required')
++        self.facts['inherited_history_origin'] = {
++            'original_guard_receipt_pin': receipt_pin,
++            'original_default_plan_pin': plan_pin,
++            'historical_projection_sha256': custody['historical_projection_sha256'],
++            'files': len(eligible), 'bytes_previously_verified': sum(x['bytes'] for x in self.inherited_history.values()),
++            'fresh_byte_read_in_this_operation_claimed': False,
++            'unchanged_complete_file_identity_required_at_every_use_and_final': True}
++
++    def record_historical_custody(self):
++        projection = self.historical_custody_projection()
++        if self.args.retire:
++            for witness in self.inherited_history.values():
++                self.check_inherited_history_file(witness)
++            self.facts['historical_byte_custody'] = {
++                'format': 'swdb.original-historical-byte-custody.v1',
++                'historical_projection_sha256': sha(canonical(projection)),
++                'all_history_bytes_freshly_read_in_this_operation': False,
++                'inherited_history_files': len(self.inherited_history),
++                'fresh_RAW_and_pre_retire_regular_byte_checks_preserved': True}
++            return
++        require(not self.inherited_history, 'default_historical_fresh_byte_proof_required')
++        witnesses = []
++        for pin in projection:
++            self.pin_fact(pin)
++            require(pin['path'] in self.passive_hashes, 'default_historical_byte_witness_missing')
++            witnesses.append({'path': pin['path'], 'bytes': pin['bytes'],
++                              'sha256': self.passive_hashes[pin['path']],
++                              'stat': dict(self.passive_stats[pin['path']]),
++                              'reference_hits': self.reference_hits[pin['path']]})
++        self.facts['historical_byte_custody'] = {
++            'format': 'swdb.original-historical-byte-custody.v1',
++            'historical_projection_sha256': sha(canonical(projection)),
++            'all_history_bytes_freshly_read_in_this_operation': True,
++            'inherited_history_files': 0, 'files': witnesses}
++
+     def stable_inventory(self):
+         self.privacy_gate()
+         def removed(path):
+@@ -1559,6 +1707,8 @@
+             s = P(path).lstat()
+             require({**stamp(s), 'allocated_bytes': s.st_blocks*512} == expected,
+                     'initial_tracked_metadata_inventory_changed')
++        for witness in self.inherited_history.values():
++            self.check_inherited_history_file(witness)
+         for path,expected in self.passive_stats.items():
+             if removed(path):
+                 continue
+@@ -1629,7 +1779,9 @@
+         leases = self.leases()
+         sources = self.retain_git()
+         self.protect()
+-        trees = {p.name: self.tree(p, ROWS[p.name]['head'],hash_regular_bytes=not self.args.retire)
++        # Both modes begin with metadata only. Each actual retirement has its
++        # separate mandatory fresh full regular-byte/Git-blob check.
++        trees = {p.name: self.tree(p, ROWS[p.name]['head'],hash_regular_bytes=False)
+                  for p in self.selected if p.name not in self.completed_names()}
+         if compare:
+             for k, v in trees.items():
+@@ -1730,6 +1882,7 @@
+                 'concrete_parent_configuration_or_final14_review_missing')
+         require(all(link == review['identity_sha256'] for link in review_links),
+                 'excluded_parent_review_link_not_bound')
++        self.parent_review = review
+         native = d['native_git_pin']
+         require(native['path'] == '/usr/bin/git', 'fixed_native_git_path_required')
+         self.native_git()
+@@ -1750,6 +1903,7 @@
+         self.facts['no_concurrent_dispatch_or_queued_writer_is_parent_attestation'] = True
+         self.facts['free_before_bytes'] = {p: os.statvfs(p).f_bavail*os.statvfs(p).f_frsize for p in ('/data1','/data')}
+         self.load_retirement_inputs()
++        self.inherit_historical_custody()
+         first = self.gate()
+         self.baseline = first['trees']
+         self.facts['initial_checks'] = first
+@@ -1793,6 +1947,7 @@
+         require(sha(self.read(self.args.plan,LIMITS['plan_bytes'])[0])==self.args.plan_sha256
+                 and sha(self.read(P(__file__).absolute(),LIMITS['plan_bytes'])[0])==self.own_sha,
+                 'end_plan_or_source_changed')
++        self.record_historical_custody()
+         self.facts['retired_rows']=self.completed_names()
+         self.facts['admitted']=True
+         self.facts['free_after_bytes']={p:os.statvfs(p).f_bavail*os.statvfs(p).f_frsize for p in ('/data1','/data')}

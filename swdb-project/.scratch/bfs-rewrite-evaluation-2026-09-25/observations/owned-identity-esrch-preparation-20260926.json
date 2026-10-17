@@ -1,0 +1,58 @@
+{
+  "format": "swdb.bfs.owned-identity-esrch-preparation.v1",
+  "created": "2026-09-26",
+  "state": "local_validation_and_independent_review_passed",
+  "scope": [
+    "scripts/bfs_owned_execution.py",
+    "tests/test_bfs_owned_execution.py"
+  ],
+  "original_failure": "Original T16 sampler ESRCH outcome preserved; this additional reachable identity seam was found by local review, not claimed as actual failure cause.",
+  "changes": [
+    "identity reuses DescendantRSS bounded procfs read: independent directory ENOENT or valid reopened PID/start/RSS; no zero fallback.",
+    "Owned.signal now catches ESRCH only from pidfd_send_signal after valid identity, preserving unknown confirmation errors.",
+    "Ten focused cases cover absent/reopened/reused identity, actual parsed RSS, permission/EIO/malformed/unknown errors and no reused-PID signaling."
+  ],
+  "validation": {
+    "command": "python3 -m pytest tests/test_bfs_owned_execution.py tests/test_bfs_owned_rss.py -q",
+    "result": "58 passed, 6 Linux-only skipped in 0.97s",
+    "diff_check": "passed",
+    "prior_selected_red": "4 failed, 1 passed, 31 deselected in 0.19s"
+  },
+  "limitations": [
+    "Synthetic procfs failure injection on macOS; no actual Linux ESRCH or new host execution claimed.",
+    "Existing five-case owned Linux selection is unchanged; new identity regression selection can be included within the existing finite proof envelope.",
+    "Provider operational artifacts remain held; current0dc runtime lacks this additional fix and will not be dispatched."
+  ],
+  "artifacts": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_owned_execution.py",
+      "bytes": 22595,
+      "sha256": "66d2636b705f6a1ca29c01850b21ef5b3f7a941ca30277d6f4d4da8c9c3b88fb"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_owned_execution.py",
+      "bytes": 21069,
+      "sha256": "b522507bdef8ef31715955033af2c128f119f64d2a51a30f31c25d99edf909a9"
+    },
+    {
+      "path": "/private/tmp/bfs-owned-execution-before-identity-repair-20260926.py",
+      "bytes": 22576,
+      "sha256": "58b36373160d8ae95352251786cce5fa84297afcee29ce4818f3580dd0d991a6"
+    },
+    {
+      "path": "/private/tmp/bfs-owned-identity-author-red-20260926.log",
+      "bytes": 7856,
+      "sha256": "4e3795e36913e3778c954b938a333a8326dd3b829c339f786e130d7bf586d23c"
+    },
+    {
+      "path": "/private/tmp/bfs-owned-identity-author-green-20260926.log",
+      "bytes": 110,
+      "sha256": "38bf3b7c858eec7ae74638bf564c166063b8cac51d0e96bb04a2bf05ff5c0809"
+    }
+  ],
+  "independent_review": {
+    "path": "/private/tmp/bfs-owned-identity-standards-review-20260926.json",
+    "bytes": 2199,
+    "sha256": "2ad79c3a6a420773c99ecaac557e9606768a64ad6e08e0971bdd8fb85c3d053b"
+  }
+}

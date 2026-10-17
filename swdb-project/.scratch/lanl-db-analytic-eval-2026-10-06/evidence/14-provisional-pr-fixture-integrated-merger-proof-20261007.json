@@ -1,0 +1,45 @@
+{
+  "format": "swdb.lanl14-provisional-pr-fixture-custody-merger.v1",
+  "integration_base": "2b288877e3e140686899ac1183031b829e574652",
+  "incoming_tip": "7f33f52258aa8c6e92e7646311dc81f98eec9909",
+  "merged_tip": "67e7d798189104ae266c09518dbbc10332569a3b",
+  "scope": "Metadata-only independent hand-count PR fixture replay; actual g16 PR and final CPU target admission remain pending.",
+  "changed_paths": [
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-nine-pair-runbook-20261006.md",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-pr-cpu-public-transfer-replay-20261007-a1.json"
+  ],
+  "all_changes_inside_swdb_project": true,
+  "all_prior_blobs_except_approved_runbook_preserved": true,
+  "prior_preserved_blob_count": 3272,
+  "prior_preserved_tree_sha256": "50c3ea6dadc0c0e712a5ad52595636f1c60f00f34f5f5a0af6c88223f11b7169",
+  "protected_blob_count": 1077,
+  "protected_manifest_sha256": "bb8344948e1de39134182b4ca10ec71e9831affc42f0378f38e2eb6a534ff023",
+  "prior_canonical_yaml_count": 633,
+  "new_canonical_records": 0,
+  "generic_estimator_sha256": "b062619b14901a42d23349802a5f5b1eb35e5a12e1a5e954214675c6b51936f3",
+  "generic_source_code_unchanged": true,
+  "map_issues_progress_and_single_linux_receipt_preserved": true,
+  "ticket14_state": "claimed",
+  "ticket17_state": "claimed",
+  "reused_public_proof": {
+    "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-pr-cpu-public-transfer-replay-20261007-a1.json",
+    "identity_sha256": "e90bf5c1892b7c7ba8a9ed95c24a3158a10745d30e7e297734fcaa6ecf76b749",
+    "provisional_estimator_sha256": "174364f62010aa84341afbf8abce751223d98557d1c89c9c628d47599d85e840",
+    "module_count": 185,
+    "public_exit_codes": {
+      "bind": 0,
+      "freeze": 0,
+      "estimate": 0
+    },
+    "scope": "Separate provisional hand-count fixture; its 174364f6 bundle is not the current integration bundle or final application evidence.",
+    "whole_call_seconds": null,
+    "ratio": null,
+    "error_band": null,
+    "canonical_writes": 0,
+    "application_count_execution": 0
+  },
+  "redundant_tests_run": 0,
+  "no_remote_actions": true,
+  "no_main_push": true,
+  "identity_sha256": "c929626238039bb2a353638d5515865ad15bdc53192dd104686eb5cf94119fa9"
+}

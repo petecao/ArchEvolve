@@ -1,0 +1,90 @@
+{
+  "created": "2026-09-27",
+  "observed_at": "2026-09-27T07:17:10.772105-04:00",
+  "admission": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-protocol-recovery-simulator-batch-20260927-a1.dispatch/admission.json",
+    "sha256": "d93c96500d078796806cb03994fafba8905b957834ca155dcc39698e715e17ac",
+    "bytes": 21323
+  },
+  "code_commit": "2a64a188f08811baf09ab9c61e69633c3d45a7f2",
+  "clock": {
+    "not_before": "2026-09-27T07:16:31.610017-04:00",
+    "latest_start": "2026-09-27T14:15:47.225985-04:00",
+    "absolute_end": "2026-09-27T20:16:17.225985-04:00"
+  },
+  "charges": [
+    {
+      "id": "bfs-20260925-uniform22",
+      "elapsed_seconds": 111,
+      "raw_bytes": 1124384768
+    },
+    {
+      "id": "bfs-author-scalar-compile-20260925-a1",
+      "elapsed_seconds": 72,
+      "raw_bytes": 3301376
+    },
+    {
+      "id": "bfs-author-maa-compile-20260925-a1",
+      "elapsed_seconds": 70,
+      "raw_bytes": 3301376
+    },
+    {
+      "id": "bfs-t16-simulator-batch-20260926-a1",
+      "elapsed_seconds": 11121,
+      "raw_bytes": 658644992
+    },
+    {
+      "id": "bfs-supervision-recovery-linux-20260926-a1",
+      "elapsed_seconds": 600,
+      "raw_bytes": 2147483648
+    },
+    {
+      "id": "bfs-supervision-lease-recovery-linux-20260927-a1",
+      "elapsed_seconds": 600,
+      "raw_bytes": 2147483648
+    },
+    {
+      "id": "bfs-seal-recovery-linux-20260927-a1",
+      "elapsed_seconds": 600,
+      "raw_bytes": 2147483648
+    },
+    {
+      "id": "bfs-t16-seal-recovery-simulator-batch-20260927-a1",
+      "elapsed_seconds": 1839,
+      "raw_bytes": 11907072
+    },
+    {
+      "id": "bfs-protocol-recovery-linux-20260927-a1",
+      "elapsed_seconds": 600,
+      "raw_bytes": 2147483648
+    }
+  ],
+  "protocols": {
+    "artifact": {
+      "id": "author-reference-seal-runtime-20260927-a1.635cf14b1f7a25f7",
+      "sha256": "14eccccf4ad561970055f65c65ea2929fdf3bc6f53e4622e98e9bcad64805421"
+    },
+    "control": {
+      "id": "author-matched-control-seal-runtime-20260927-a1.50411a54eafe34cb",
+      "sha256": "602ddb804c9f8ea6c1a6e133a1102a556380265997192eae668001dd5c2ba2ea"
+    }
+  },
+  "files": {
+    "operator.py": {
+      "path": "/data1/yanruj/EvolveSWDB_protocol_simulator_operator_20260927_a1/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/protocol-simulator-recovery/operator.py",
+      "sha256": "46e71770e9f1640477f28e86d32f4e0e434ca15f592667a8c6fee84d23690d94"
+    },
+    "t16-config.json": {
+      "path": "/data1/yanruj/EvolveSWDB_protocol_simulator_operator_20260927_a1/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/protocol-simulator-recovery/t16-config.json",
+      "sha256": "91fb81e07ba824427927e4e8aec81bae086dfc0506d87be1396a0133b7400626"
+    },
+    "launch.sh": {
+      "path": "/data1/yanruj/EvolveSWDB_protocol_simulator_operator_20260927_a1/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/protocol-simulator-recovery/launch.sh",
+      "sha256": "4ef53eea46ba61a01e527ad28e9a1acf74d806b2d84120603ddff9fc269d9a77"
+    }
+  },
+  "runtime_clean": true,
+  "empirical_execution": false,
+  "prospective_launch_command": "env OPERATOR=/data1/yanruj/EvolveSWDB_protocol_simulator_operator_20260927_a1/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/protocol-simulator-recovery/operator.py OPERATOR_SHA=46e71770e9f1640477f28e86d32f4e0e434ca15f592667a8c6fee84d23690d94 CONFIG=/data1/yanruj/EvolveSWDB_protocol_simulator_operator_20260927_a1/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/protocol-simulator-recovery/t16-config.json CONFIG_SHA=91fb81e07ba824427927e4e8aec81bae086dfc0506d87be1396a0133b7400626 KIND=t16 ADMISSION_SHA=d93c96500d078796806cb03994fafba8905b957834ca155dcc39698e715e17ac bash /data1/yanruj/EvolveSWDB_protocol_simulator_operator_20260927_a1/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/protocol-simulator-recovery/launch.sh",
+  "prospective_tmux_session": "swdb-bfs-t16-protocol-recovery-20260927-a1"
+}

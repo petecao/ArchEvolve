@@ -1,0 +1,517 @@
+--- a/swdb/c_lowering.py
++++ b/swdb/c_lowering.py
+@@ -202,6 +202,7 @@
+     terminal_release: dict | None = None  # checked ownership certificate; native lowering retains delete[]
+     stdlib_provenance: dict = field(default_factory=dict)  # original full-TU declarations and header closure
+     stdlib_substitutions: tuple = ()  # printer-requested free std calls, independently bound in the original TU
++    whole_source: object | None = None  # exact checked source unit, freshly revalidated
+     vector_reallocation_candidate: dict = field(default_factory=dict)  # pending obligations; grants no origin
+ 
+     @property
+@@ -212,6 +213,8 @@
+     def anchors_json(self):
+         data = {"tool": self.tool, "function": self.function, "c_lowering_sha256": self.sha256,
+                 "anchors": list(self.anchors)}
++        if self.whole_source is not None:
++            data["whole_source"] = self.whole_source.certificate
+         if self.summaries:
+             data["summaries"] = list(self.summaries)
+         if self.models:
+@@ -2707,7 +2710,7 @@
+ # --- lowering ---------------------------------------------------------------------------------------
+ 
+ def lower(source, function, includes=(), defines=(), summaries=None, semantics=None,
+-          array_domains=None, array_domain_contract=None):
++          array_domains=None, array_domain_contract=None, whole_source_selection=None):
+     """The C lowering of `function` (and of every function, class and global it uses) from the C++ file `source`.
+ 
+     `summaries` maps the C++ name of a function to the summary that stands for it ({name: summary ID or
+@@ -2719,6 +2722,16 @@
+     gets a generated hazard probe (`SWDB_TILE_READ` / `SWDB_TILE_WRITE`, ID `<function>.probe<N>`), listed in
+     `Lowering.probes` with its C++ source range so the C++ side gets the same probe. A tile pointer used any
+     other way is outside the subset. Without `semantics` the output is unchanged."""
++    if whole_source_selection is not None:
++        from swdb import dx100_checked_source
++        if includes or summaries or semantics or array_domains or array_domain_contract:
++            raise Unsupported('checked whole source cannot mix generic summary/window inputs')
++        try:
++            unit = dx100_checked_source.compose(whole_source_selection, source=source,
++                                               function=function, defines=defines)
++            return Lowering(**dx100_checked_source.lowering_fields(unit))
++        except (dx100_checked_source.Refused, ValueError, OSError, TypeError, KeyError, AttributeError) as exc:
++            raise Unsupported('checked whole source: ' + str(exc)) from None
+     tool = locate()
+     if tool.missing:
+         raise LoweringError(tool.missing)
+--- a/swdb/cbmc_translator.py
++++ b/swdb/cbmc_translator.py
+@@ -931,8 +931,12 @@
+ """
+ 
+ 
+-def prelude():
+-    return PRELUDE.replace("@TOOL@", f"{TOOL_ID} {TOOL_VERSION}").replace("@CAPACITY@", ORACLE_CAPACITY)
++def prelude(whole_source=None):
++    text = PRELUDE.replace("@TOOL@", f"{TOOL_ID} {TOOL_VERSION}").replace("@CAPACITY@", ORACLE_CAPACITY)
++    if whole_source is not None:
++        from swdb import dx100_checked_source
++        text = dx100_checked_source.native_prelude(whole_source, text)
++    return text
+ 
+ 
+ def _draw(ctype):
+@@ -1067,7 +1071,7 @@
+ 
+ 
+ def harness(interface, rows, *, sizes, cap, knobs=(), logic=None, call=None, check=False, setup=(),
+-            state=(), finish=(), array_domains=None):
++            state=(), finish=(), array_domains=None, whole_source=None):
+     """(C text of the harness, Plan) for the proof unit `interface` and its clause list `rows` (Clause).
+ 
+     `sizes`: {parameter: bound} (each an integer parameter of the unit); `cap`: the length of every interface
+@@ -1079,6 +1083,17 @@
+     `array_domains` (2026-10-15 ET) only plans entry extents against capacity. Planner metadata alone is
+     insufficient for proof admission: checked WP/CBMC paths require independent source certificates;
+     unchecked adapter paths and runtime-check refuse these jobs."""
++    profile = None
++    if whole_source is not None:
++        from swdb import dx100_checked_source
++        if call is not None or check or cap != 0:
++            raise Untranslatable('checked whole source requires its original scalar proof interface')
++        try:
++            profile = dx100_checked_source.harness_profile(whole_source, interface, rows,
++                sizes, knobs, setup, state, finish, array_domains)
++        except (dx100_checked_source.Refused, ValueError, TypeError, KeyError) as exc:
++            raise Untranslatable(str(exc)) from None
++        setup = profile['setup']
+     for name in sizes:
+         if not interface.scalar(name):
+             raise Untranslatable(f"size bound {name} is not an integer parameter of {interface.function}")
+@@ -1109,6 +1124,8 @@
+         lines.append(f"  {name} = ({ctype}) swdb_next();")
+         plan.draws.append({"name": name, "role": "knob", "ctype": ctype, "range": list(legal)})
+     lines += [f"  {statement}" for statement in setup]
++    if profile is not None:
++        plan.draws.extend(profile["draws"])  # setup already drew each slot exactly once
+     for name in state:
+         lines.append(f"  {name} = (int) swdb_next();")
+         plan.draws.append({"name": name, "role": "state", "ctype": "int"})
+@@ -1117,6 +1134,8 @@
+         if draw["role"] == "element":
+             pointer, index = draw["name"].split("[")
+             lines.append(f"  {_print('input ' + draw['name'], draw['ctype'], f'swdb_buf_{pointer}[{index[:-1]}]')};")
++        elif profile is not None and draw["role"] == "whole-model-choice":
++            lines.append(f"  {_print('input ' + draw['name'], draw['ctype'], draw['c_lvalue'])};")
+         else:
+             lines.append(f"  {_print('input ' + draw['name'], draw['ctype'], draw['name'])};")
+     # A sanitizer may terminate inside the target without returning to main's final flush.
+@@ -1155,7 +1174,8 @@
+                               logic=logic, post=True)
+             lines.append(f'  SWDB_PROP({text}, "{clause.name}");')
+         elif clause.kind == "assigns":
+-            lines.append(f'  SWDB_PROP({_frame(clause, interface, cap, caps, counter, logic)}, "{clause.name}");')
++            frame = "1" if profile is not None else _frame(clause, interface, cap, caps, counter, logic)
++            lines.append(f'  SWDB_PROP({frame}, "{clause.name}");')
+     lines.append(f'  SWDB_REACH("{REACH_END}");')
+     lines.append("#if defined(SWDB_DIFFERENTIAL)")
+     if result:
+@@ -1209,6 +1229,7 @@
+         "#endif",
+         "    else printf(\" end=%s\\n\", code == 1 ? \"check\" : \"infeasible\");",
+         "    fflush(stdout);",
++        *(("    if (fgets(swdb_line, sizeof swdb_line, stdin)) return 3;", "    return 0;") if profile is not None else ()),
+         "  }",
+         "  return 0;",
+         "}",
+--- a/swdb/proof_semantics.py
++++ b/swdb/proof_semantics.py
+@@ -136,6 +136,9 @@
+ 
+ def check(library, entry_id, data, error):
+     """The checks of an entry that covers calls (called by swdb.formal_frame for proof_semantics entries)."""
++    from swdb import dx100_whole_checked
++    if dx100_whole_checked.checked(data):
++        return dx100_whole_checked.check(library, data, error)
+     rules = {r.get("id") for r in data.get("rules") or [] if isinstance(r, dict)}
+     interface = data.get("hardware_interface")
+     calls = data.get("calls")
+@@ -227,9 +230,17 @@
+     return _typecheck(library, entry_id, data, texts, error)
+ 
+ 
++def _require_summary_form(data):
++    from swdb import dx100_whole_checked
++    if dx100_whole_checked.checked(data):
++        from swdb.proof import AdapterError
++        raise AdapterError("whole-interface checked bodies have no WP/ACSL summary form")
++
++
+ def acsl_source(data, texts, rows=None, *, constants=None):
+     """The C file Frama-C type-checks: constants, the ghost block, the device state, the logic definitions, then each
+     call's (and query's) contract on its prototype. `rows` limits it to some call or query rows."""
++    _require_summary_form(data)
+     parts = [f"#define {name} {value}" for name, value in (data.get("constants") or {}).items()]
+     from swdb.dx100_source_selector import pure_layout
+     from swdb.dx100_size_source import size_layout
+@@ -259,6 +270,7 @@
+     constants, the probe macros (each a call of a contracted probe function), the ghost state (ghost.acsl as
+     written), the device state, the logic, and the contract of every call and query the unit makes."""
+     data = library.get(entry_id)
++    _require_summary_form(data)
+     constants = _constants(data, defines)
+     texts = {"ghost.acsl": library.resolve(data["ghost"]["acsl"]).read_text(),
+              "model.state": library.resolve(data["model"]["state"]).read_text(),
+@@ -279,6 +291,7 @@
+ def wp_locations(library, entry_id, defines=()):
+     """The ACSL locations of the ghost and device state (a unit that calls into the semantics assigns them)."""
+     data = library.get(entry_id)
++    _require_summary_form(data)
+     found = []
+     decls = [d for _n, d in ghost_declarations(library.resolve(data["ghost"]["acsl"]).read_text())]
+     state = library.resolve(data["model"]["state"]).read_text()
+@@ -438,6 +451,7 @@
+ def lowering_options(library):
+     """The keyword arguments of `c_lowering.lower` for a unit that may call into a current proof semantics: its
+     calls and queries as summaries (calls kept, prototype only) and the tile-pointer calls (hazard probes)."""
++    from swdb import dx100_whole_checked
+     covered = covered_names(library)
+     if not covered:
+         return {}
+@@ -445,7 +459,7 @@
+                  for row in data.get('calls', []) if 'instances' in row}
+     semantics = {"tile_pointer": {TILE_POINTER}, "calls": set(covered),
+                  "refused_calls": {row["call"] for data in current(library).values()
+-                                   for row in data.get("calls", []) if row.get("supported") is False}}
++                                   for row in data.get("calls", []) if row.get("supported") is False or dx100_whole_checked.checked(data)}}
+     if instances:
+         from swdb import dx100_source_selector, dx100_stream_source, dx100_allocation_source, dx100_register_source, dx100_initialized_register_source
+         instances = {name: [{**v, 'definition': (dx100_initialized_register_source.policy if isinstance(v['definition'],dict) and v['definition'].get('kind')==dx100_initialized_register_source.KIND else dx100_register_source.policy if isinstance(v['definition'],dict) and v['definition'].get('kind')==dx100_register_source.KIND else dx100_allocation_source.policy if isinstance(v['definition'],dict) and v['definition'].get('kind')==dx100_allocation_source.KIND else dx100_stream_source.policy if isinstance(v['definition'],dict) and v['definition'].get('kind')==dx100_stream_source.KIND else dx100_source_selector.policy)(library, v['definition'])}
+@@ -523,9 +537,18 @@
+     return re.sub(declaration, lambda _match: "\n".join(rows), text), objects
+ 
+ 
+-def model_for(library, entry_id, defines=()):
++def model_for(library, entry_id, defines=(), *, source_unit=None):
+     """The Model of one entry, with the build constants `defines` (NAME or NAME=VALUE) overriding its defaults."""
+     data = library.get(entry_id)
++    from swdb import dx100_whole_checked, dx100_checked_source
++    if dx100_whole_checked.checked(data):
++        if source_unit is None or source_unit.selection.entry_id != entry_id:
++            raise ValueError('whole checked model requires its exact complete source/receiver unit')
++        dx100_whole_checked.policy(library, data)
++        dx100_checked_source.recheck(source_unit)
++        return Model(**dx100_checked_source.model_fields(source_unit))
++    if source_unit is not None:
++        raise ValueError('a checked whole source unit cannot select a legacy model')
+     constants = _constants(data, defines)
+     parts = [f"/* Generated by swdb.proof_semantics: the C model of {entry_id} (version {data.get('version')}). */"]
+     parts += [f"#define {name} {value}" for name, value in constants.items()]
+@@ -554,7 +577,10 @@
+     """
+     from swdb import bounded_initialization, dx_array_domains
+     found = {}
++    from swdb import dx100_whole_checked
+     for entry in current(library):
++        if dx100_whole_checked.checked(library.get(entry)):
++            continue  # whole units gain no generic per-call or pointer exemptions
+         model = model_for(library, entry, defines)
+         policy = bounded_initialization._dx100_policy(library, model, defines)
+         if policy is None:
+@@ -570,7 +596,10 @@
+     """Every audited external call needs its exact prototype and model binding."""
+     from swdb import bounded_initialization
+     found = {}
++    from swdb import dx100_whole_checked
+     for entry in current(library):
++        if dx100_whole_checked.checked(library.get(entry)):
++            continue  # whole units gain no generic per-call or pointer exemptions
+         model = model_for(library, entry, defines)
+         policy = bounded_initialization._dx100_policy(library, model, defines)
+         if policy is None:
+--- a/swdb/formal_frame.py
++++ b/swdb/formal_frame.py
+@@ -92,6 +92,10 @@
+ def _entry(library, entry_id, data, error, vocabs, logic, rules, pending):
+     clauses = data.get('clauses') if isinstance(data.get('clauses'), list) else []
+     clauses = [c if isinstance(c, dict) else {} for c in clauses]
++    from swdb import dx100_checked_source
++    whole_format = dx100_checked_source.checked_unit_format(library,entry_id,data)
++    for reason in whole_format or ():
++        error('whole_source_unit_contract',reason)
+     if 'enables' in data:
+         error('enables', 'an enabling contract never lists what it enables (map 17 item 5); the offload-only '
+                          'contract names its required enabling contracts')
+@@ -125,7 +129,8 @@
+                     or not all(isinstance(u, str) for u in acsl.get('uses', []))):
+                 error(f'{where}.acsl', 'acsl takes text (the formal half) and uses (logic-library entry IDs)')
+                 continue
+-            reasons = acsl_subset.check_formal_half(acsl['text'], acsl.get('uses', []), logic)
++            reasons = ([] if whole_format == [] and dx100_checked_source.sole_whole_frame(acsl)
++                       else acsl_subset.check_formal_half(acsl['text'], acsl.get('uses', []), logic))
+             reasons += [f'uses {u}, which belongs to another entry: an entry\'s own logic file serves only that '
+                         'entry (map 16 item 9)' for u in acsl.get('uses', [])
+                         if u in logic.files and u.startswith('logic.') and library.get(u[len('logic.'):]) is not None
+@@ -340,6 +345,16 @@
+     """The C lowering of a proof_unit's baseline function (cached per source sha256), or the LoweringError."""
+     from swdb import c_lowering, proof_semantics
+     path = library.resolve(unit['source'])
++    from swdb import dx100_checked_source
++    selection = dx100_checked_source.select_baseline(library, unit)
++    if selection is not None:
++        # Source bytes and summary names do not identify an atlas/receiver/TU.
++        # Always freshly compose this route, bypassing the generic _LOWERED cache.
++        try:
++            return c_lowering.lower(path, unit['function'], defines=dx100_checked_source.DEFINES,
++                                    whole_source_selection=selection)
++        except c_lowering.LoweringError as exc:
++            return exc
+     options = proof_semantics.lowering_options(library)    # ticket 27: calls a proof semantics defines
+     summaries = {**summarized(library, unit['function']), **options.get('summaries', {})}   # ticket 24: summaries
+     options['summaries'] = summaries
+--- a/swdb/cbmc_adapter.py
++++ b/swdb/cbmc_adapter.py
+@@ -182,6 +182,10 @@
+             from swdb.wp_adapter import _unit_source
+             source = _unit_source(Path(job.unit.tree), job.unit.function)
+         log.line(f"source: {source.name}")
++        from swdb import dx100_checked_source, dx100_checked_adapter
++        selected_whole = dx100_checked_source.select_baseline(self.library, entry.get('proof_unit') or {})
++        if selected_whole is not None:
++            return dx100_checked_adapter.run(self,job,entry,context,source,selected_whole)
+         covered = proof_semantics.covered_names(self.library)
+         declarations = (entry.get('proof_unit') or {}).get('array_domains')
+         source_kwargs = dict(defines=self.defines, **proof_semantics.lowering_options(self.library))
+@@ -327,6 +331,12 @@
+ 
+     def check_entry_windows(self, job, context, inputs=()):
+         """Regenerate source, planner and both checked views immediately before launch."""
++        if 'whole_source_unit' in context:
++            from swdb import dx100_checked_adapter
++            if inputs and any(Path(path) != Path(job.scratch) / 'job.c' for path,_ in inputs):
++                raise AdapterError('whole checked CBMC callback requires its exact job.c input')
++            dx100_checked_adapter.check_launch(self,job,context,[('c',path) for path,_ in inputs])
++            return
+         trace_plan = context.get('synthetic_trace_source_plan')
+         if trace_plan is not None:
+             from swdb import bounded_initialization, bounded_entry_windows, wp_pointer_bounds
+@@ -411,6 +421,11 @@
+     # --- translation ---------------------------------------------------------------------------------------
+     def _build(self, job, entry, code, sizes, summary_job, context):
+         """The harness, the stubs and the plan."""
++        if code.lowering.whole_source is not None:
++            from swdb import dx100_checked_adapter
++            if sizes:
++                raise AdapterError('whole checked source has no size parameter')
++            return dx100_checked_adapter.build(self,job,entry,code,context)
+         unit = code.interface(job.unit.function)
+         rows = [c for c in entry.get("clauses") or [] if isinstance(c, dict) and c.get("acsl")]
+         if summary_job:
+@@ -546,24 +561,36 @@
+         lines, sampled, domain = _domain(built["plan"])
+         inputs = scratch / "domain.txt"
+         inputs.write_text("".join(" ".join(str(v) for v in line) + "\n" for line in lines))
+-        c_text = tr.prelude() + built["logic"] + code.c_text() + built["harness"]
+-        cxx_text = tr.prelude() + built["logic"] + code.cxx_text() + built["harness"]
++        c_text = tr.prelude(whole_source=code.lowering.whole_source) + built["logic"] + code.c_text() + built["harness"]
++        cxx_text = tr.prelude(whole_source=code.lowering.whole_source) + built["logic"] + code.cxx_text() + built["harness"]
+         paths_ = {"c": out / "differential_c.c", "cxx": out / "differential_cxx.cc"}
+         paths_["c"].write_text(c_text)
+         paths_["cxx"].write_text(cxx_text)
+         context["reports"] += [("differential_c", paths_["c"]), ("differential_cxx", paths_["cxx"])]
+         outputs, undefined = {}, set()
++        whole = code.lowering.whole_source is not None
+         heap = code.lowering.allocation           # ticket 25: heap use (models, new[]) runs under AddressSanitizer
+         for side in ("c", "cxx"):
+             binary = scratch / f"differential_{side}"
+-            problem = _compile(context["tools"]["clang"], side, paths_[side], binary,
+-                               ["-DSWDB_NATIVE", "-DSWDB_DIFFERENTIAL", "-O0", "-fwrapv", "-w",
+-                                *(("-fsanitize=address",) if heap else ()),
+-                                *(code.cxx_defines() if side == "cxx" else ())])
++            if whole:
++                from swdb import dx100_checked_adapter
++                dx100_checked_adapter.check_launch(self,job,context,[(side,paths_[side])])
++                problem = dx100_checked_adapter.compile_native(context['tools'],side,paths_[side],binary,
++                    ['-DSWDB_NATIVE','-DSWDB_DIFFERENTIAL','-O0','-w',*SANITIZERS,*code.cxx_defines()])
++            else:
++                problem = _compile(context["tools"]["clang"], side, paths_[side], binary,
++                                   ["-DSWDB_NATIVE", "-DSWDB_DIFFERENTIAL", "-O0", "-fwrapv", "-w",
++                                    *(("-fsanitize=address",) if heap else ()),
++                                    *(code.cxx_defines() if side == "cxx" else ())])
+             if problem:
+                 return self._not_proven("parse_error", f"the {side} side of the differential run does not compile: "
+                                         f"{problem}", context)
+-            done, crashed = _run_domain(binary, lines, sanitized=heap)
++            if whole:
++                dx100_checked_adapter.check_launch(self,job,context)
++                done, crashed = dx100_checked_adapter.run_fresh_domain(binary,lines)
++                dx100_checked_adapter.check_launch(self,job,context)
++            else:
++                done, crashed = _run_domain(binary, lines, sanitized=heap)
+             if done.returncode != 0:
+                 return self._not_proven("tool_crash", f"the {side} side of the differential run exited "
+                                         f"{done.returncode}: {done.stderr[-400:]}", context)
+@@ -602,7 +629,7 @@
+     # --- CBMC ------------------------------------------------------------------------------------------
+     def _cbmc(self, job, code, built, context):
+         tools, log, out, scratch = context["tools"], context["log"], context["out"], Path(job.scratch)
+-        text = tr.prelude() + built["logic"] + code.c_text(built["stubs"]) + built["harness"]
++        text = tr.prelude(whole_source=code.lowering.whole_source) + built["logic"] + code.c_text(built["stubs"]) + built["harness"]
+         job_c = out / "job.c"
+         job_c.write_text(text)
+         shutil.copyfile(job_c, scratch / "job.c")
+@@ -610,7 +637,11 @@
+         flags = ["-DSWDB_CBMC", "--unwind", str(built["unwind"]), *FROZEN,
+                  *(flag for flag in tools["flags"] if flag not in FROZEN)]
+         if code.model is not None:                   # ticket 27: the model's loops get the model's own bound
+-            loops = self._model_loops(tools, scratch, code.model)
++            if code.lowering.whole_source is not None:
++                from swdb import dx100_checked_adapter
++                loops = dx100_checked_adapter.model_loops(self,tools,scratch,code.lowering.whole_source,context)
++            else:
++                loops = self._model_loops(tools, scratch, code.model)
+             if loops:
+                 flags += ["--unwindset", ",".join(f"{loop}:{code.model.unwind}" for loop in loops)]
+         if code.lowering.allocation:              # ticket 25: the "allocation succeeds" assumption entry (CBMC 6
+@@ -653,11 +684,17 @@
+         """Replay each failing property's trace on the C++ (callees by their stubs) with sanitizers on."""
+         out, scratch = context["out"], Path(job.scratch)
+         replay_cc = out / "replay_cxx.cc"
+-        replay_cc.write_text(tr.prelude() + built["logic"] + code.cxx_text(built["stubs"]) + built["harness"])
++        replay_cc.write_text(tr.prelude(whole_source=code.lowering.whole_source) + built["logic"] + code.cxx_text(built["stubs"]) + built["harness"])
+         context["reports"].append(("replay_cxx", replay_cc))
+         binary = scratch / "replay_cxx"
+-        problem = _compile(context["tools"]["clang"], "cxx", replay_cc, binary,
+-                           ["-DSWDB_NATIVE", "-DSWDB_REPLAY", "-O0", "-g", "-w", *SANITIZERS, *code.cxx_defines()])
++        if code.lowering.whole_source is not None:
++            from swdb import dx100_checked_adapter
++            dx100_checked_adapter.check_launch(self,job,context,[('cxx',replay_cc)])
++            problem=dx100_checked_adapter.compile_native(context['tools'],'cxx',replay_cc,binary,
++                ['-DSWDB_NATIVE','-DSWDB_REPLAY','-O0','-g','-w',*SANITIZERS,*code.cxx_defines()])
++        else:
++            problem = _compile(context["tools"]["clang"], "cxx", replay_cc, binary,
++                               ["-DSWDB_NATIVE", "-DSWDB_REPLAY", "-O0", "-g", "-w", *SANITIZERS, *code.cxx_defines()])
+         if problem:
+             return self._not_proven("parse_error", f"the C++ replay does not compile: {problem}", context)
+         tries = []
+@@ -667,15 +704,27 @@
+             given = scratch / f"replay_input_{index}.txt"
+             given.write_text(" ".join(str(v) for v in failure["oracle"]) + "\n")
+             replay_log = scratch / f"replay_{index}.log"
++            if code.lowering.whole_source is not None:
++                dx100_checked_adapter.check_launch(self,job,context)
+             with open(given) as stdin:
+                 done = rss_watchdog.run([str(binary)], log=replay_log, cap_bytes=cap, timeout=REPLAY_SECONDS,
+                                         cwd=scratch, env={**os.environ, "ASAN_OPTIONS": "detect_leaks=0"},
+                                         stdin=stdin)
++            if code.lowering.whole_source is not None:
++                dx100_checked_adapter.check_launch(self,job,context)
+             text = replay_log.read_text(errors="replace")
+             if done.timed_out or done.out_of_memory:
+                 return self._not_proven("timeout" if done.timed_out else "out_of_memory",
+                                         f"the C++ replay of {failure['check']} exceeded its "
+                                         f"{'time' if done.timed_out else 'memory'} budget", context)
++            if code.lowering.whole_source is not None:
++                retained_replay = out / f'whole-source-replay-{index}.log'
++                retained_replay.write_text(text)
++                context['reports'].append((f'whole_source_replay_termination_{index}',retained_replay))
++                context['settings'].setdefault('whole_source_replay_terminations',[]).append({
++                    'exit_code':done.exit_code,'original_assert_abort_observed':
++                        bool(re.search(r'__assert_fail|Assertion .*failed',text)),
++                    'scope':'original C++ assert abort is retained; missing exact failure marker grants no replay'})
+             inputs = _inputs(text)
+             failed = re.findall(r" fail=(\S+)", text)
+             reports = [ln for ln in text.splitlines() if "runtime error" in ln or "AddressSanitizer" in ln]
+@@ -720,9 +769,15 @@
+             tools.append(ident)
+         model = context.get("model")
+         if model is not None:                        # ticket 27: the proof semantics and the reduction it rests on
+-            assumptions += proof_semantics.record_assumptions(self.library, model.entry, model.sha256)
++            if context.get('whole_source_unit') is not None:
++                from swdb import dx100_checked_source
++                assumptions += dx100_checked_source.record_assumptions(context['whole_source_unit'])
++            else:
++                assumptions += proof_semantics.record_assumptions(self.library, model.entry, model.sha256)
+             from swdb import bounded_initialization
+-            if model.entry == bounded_initialization.DX100_TRACE_ENTRY:
++            if context.get('whole_source_unit') is not None:
++                pass  # library-backed context rules were emitted once above
++            elif model.entry == bounded_initialization.DX100_TRACE_ENTRY:
+                 assumptions.append({'kind': 'proof_semantics',
+                     'reference': {'id': model.entry, 'sha256': model.sha256},
+                     'sentence': 'This is a synthetic abstract scalar trace. Deferred history, ownership, '
+@@ -913,7 +968,9 @@
+     range, values from a small fixed set; at most MAX_RUNS lines (a fixed-seed sample beyond that)."""
+     choices, summary = [], {}
+     for draw in plan.draws:
+-        if draw["role"] == "size":
++        if draw['role'] == 'whole-model-choice':
++            values = [0,1,2,3,2**31-1,2**31,2**32-1]
++        elif draw["role"] == "size":
+             values = list(range(-1, int(draw["bound"]) + 1))
+         elif draw["role"] == "knob":
+             low, high = draw["range"]
+@@ -1076,6 +1133,11 @@
+     def cxx_text(self, stubs=None):
+         """The C++ text of the lowered functions and globals, cut from the source by clang's source ranges."""
+         stubs = stubs or {}
++        if self.lowering.whole_source is not None:
++            from swdb import dx100_checked_native
++            if stubs:
++                raise AdapterError('whole checked source cannot substitute C++ summary bodies')
++            return self.model.c_text + dx100_checked_native.view(self.lowering.whole_source)['cxx_text']
+         tool = c_lowering.locate()
+         data = self.source.read_bytes()
+         parts = [self.model.c_text] if self.model is not None else []
+--- a/swdb/proof_setup.py
++++ b/swdb/proof_setup.py
+@@ -365,25 +365,32 @@
+             _fail("lowering_hash", "baseline C lowering differs from its planned pin")
+         hashes["baseline_lowering"] = _sha(baseline.text)
+     if adapter.name in {"cbmc", "crux-llvm-c", "crux-llvm-cxx"}:
+-        from swdb import bounded_initialization
+-        admissions = context.get("settings", {}).get("bounded_initialization") or {}
+-        sides = {"candidate": lowering, "baseline": baseline} if baseline is not None else {"unit": lowering}
+-        for side, lowered in sides.items():
+-            expected = admissions if side == "unit" else admissions.get(side, {})
+-            if lowered is None or not expected:
+-                _fail("bounded_initialization", "bounded verifier has no generated initializedness admission")
++        if context.get('whole_source_unit') is not None:
++            from swdb import dx100_checked_adapter
+             try:
+-                cap = max((value for name, value in job.bounds.items() if name != "threads"), default=0)
+-                actual = bounded_initialization.check(lowered, cap, library=getattr(adapter, "library", None),
+-                                                       model=context.get("model"))
+-                bounded_initialization.check_model_input(actual, context.get("model"),
+-                    getattr(adapter, "library", None), lowered.defines,
+-                    "\n".join(Path(path).read_text() for path, _expected in inputs))
+-            except ValueError as exc:
+-                _fail("bounded_initialization", str(exc))
+-            if actual != expected or actual.get("verdict") != "passed":
+-                _fail("bounded_initialization", f"{side} initializedness admission changed or refused")
+-        hashes["bounded_initialization"] = _digest(admissions)
++                hashes['whole_source'] = dx100_checked_adapter.check_launch(adapter,job,context,[('c',path) for path,_ in inputs])
++            except (ValueError,OSError,TypeError,KeyError,AttributeError) as exc:
++                _fail('whole_source',str(exc))
++        else:
++            from swdb import bounded_initialization
++            admissions = context.get("settings", {}).get("bounded_initialization") or {}
++            sides = {"candidate": lowering, "baseline": baseline} if baseline is not None else {"unit": lowering}
++            for side, lowered in sides.items():
++                expected = admissions if side == "unit" else admissions.get(side, {})
++                if lowered is None or not expected:
++                    _fail("bounded_initialization", "bounded verifier has no generated initializedness admission")
++                try:
++                    cap = max((value for name, value in job.bounds.items() if name != "threads"), default=0)
++                    actual = bounded_initialization.check(lowered, cap, library=getattr(adapter, "library", None),
++                                                           model=context.get("model"))
++                    bounded_initialization.check_model_input(actual, context.get("model"),
++                        getattr(adapter, "library", None), lowered.defines,
++                        "\n".join(Path(path).read_text() for path, _expected in inputs))
++                except ValueError as exc:
++                    _fail("bounded_initialization", str(exc))
++                if actual != expected or actual.get("verdict") != "passed":
++                    _fail("bounded_initialization", f"{side} initializedness admission changed or refused")
++            hashes["bounded_initialization"] = _digest(admissions)
+     if adapter.name == "wp" and context.get("semantics"):
+         base = context.get("semantics_hint_base")
+         if base is None:

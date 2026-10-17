@@ -1,0 +1,31 @@
+{
+  "created": "2026-10-16 ET",
+  "reviewer": "root",
+  "decision": "PASS_INERT_V2_DELTA_PENDING_REPAIRED_SOURCE_REBIND_AND_ACTUAL_CONTROLS",
+  "packet": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/mixed-pair-actual-v2/source-packet.json",
+    "sha256": "997b44443d31ebd4c3cb971d67f8bca8cec8eca7736e44955b129be9b64f168f"
+  },
+  "all_packet_file_pins_verified": 15,
+  "blocking_findings": [],
+  "prior_review": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-mixed-pair-actual-v1-root-static-findings-20261016.json",
+    "sha256": "749d6ebfbfdefe379dde0361b9acba0981181d426897bc5ee7636689eda7c9ff"
+  },
+  "resolved_findings": [
+    "Walker uses lstat/scandir without link traversal and admits exactly the pinned pytest name/current absolute link to sole fresh index0; final exact top-level directory and alias membership enforced",
+    "Complete result is bounded16KiB and projected before an exclusive/fsynced write under64KiB reserve; exact post-write extent/alias equality and strict whole-entry deadline are required for exit0"
+  ],
+  "checks": [
+    "Exact pytest first30-character prefix independently derived from selected test name and pinned implementation; prior19 observation supplies only absolute-link convention",
+    "Wrong/escaping/nested/unknown links, mismatched literal/target and incomplete final aliases refuse",
+    "All eight original record duties and JUnit/native C wrapper/tree-stop function ASTs are unchanged; both reviewed guard helper modules byte-identical",
+    "No time/RSS/scientific relaxation: same1200/1320/900 seconds,8GiB/one worker,128MiB/file256MiB total; pre-final extent leaves reserve",
+    "A late post-write check can leave projected producer JSON but exits failure; root/cold acceptance must require actual controller and outer exit0",
+    "Source18f remains root_authorized=false, and no actual invocation is admitted by this review"
+  ],
+  "pure_controls": "Author reports18 no-child cases; retained final pins/log inspected, no reviewer rerun",
+  "execution": "Independent static delta/README/policy/command and exact hash/AST comparisons only, no project import/test/native/tool/SSH",
+  "actual_admitted": false,
+  "scientific_acceptance": false
+}

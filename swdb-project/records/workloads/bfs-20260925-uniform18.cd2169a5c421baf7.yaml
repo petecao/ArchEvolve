@@ -1,0 +1,93 @@
+kind: workload
+schema_version: '0.4'
+id: bfs-20260925-uniform18.cd2169a5c421baf7
+status: draft
+created: '2026-09-25'
+updated: '2026-09-25'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+requested_id: bfs-20260925-uniform18
+version: 2
+supersedes: bfs-20260925-uniform18.176feafe5d830058
+invalidated_comparisons: []
+definition:
+  kernel: gapbs-bfs
+  family: uniform_random
+  generator:
+    name: DX100 GAPBS converter
+    revision: e4fc4afdf894f295442cef3604667a469fab8e62
+    parameters:
+      scale: 18
+      edge_factor: 16
+      seed: 27491095
+      symmetrize: true
+      binary_sha256: a6cd0fd88a8de97decd087e9f1e43117ace95230f710b0bd7745f7bd33b492e6
+      source_sha256: 9b15a2ad58d672d534a14c808320a5d666af62cbe017f14703d955bea2279cc1
+      explicit_symmetrize_flag: false
+    command:
+    - /data1/yanruj/EvolveSWDB_builds/bfs-workloads-20260925/bfs-20260925-uniform18/converter
+    - -u
+    - '18'
+    - -k
+    - '16'
+    - -b
+    - /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-uniform18/graph.sg32
+  normalization:
+    remove_self_loops: true
+    deduplicate: true
+    sort_neighbors: true
+    symmetrize_undirected: true
+  sources: [0, 1234, 7777]
+  representations:
+  - id: bfs-20260925-uniform18.dx100
+    path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-uniform18/graph.sg32
+    sha256: c6a430be5cf64a1b144d01f9bcbaeab2fcb45e0fac2359da36de8087b1b4790d
+    format: gapbs_sg32le
+    application: dx100-gapbs
+    canonical_sha256: 7d7dd24c2397071f4ad8fb3125079a4e42ecdbaa853745d84161bcd410d0164b
+    bytes: 34600749
+    loader: swdb.gapbs-representation.v1
+    adjacency_verified: true
+    verification:
+      method: exact_mmap_csr_transpose_membership
+      parser_sha256: ade4fb06fbef7f1947b0c1687ccebb99797773c3ea578611e57a10be36cfc893
+      compiler: /usr/bin/x86_64-linux-gnu-g++-13
+      budgets:
+        compile_timeout_s: 60
+        timeout_s: 900
+  - id: bfs-20260925-uniform18.upstream
+    path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-uniform18/graph.sg64
+    sha256: af148b98e84f35c217e7c64816e26a014110d530c5400840652eeead91d97a1c
+    format: gapbs_sg64le
+    application: gapbs
+    canonical_sha256: 7d7dd24c2397071f4ad8fb3125079a4e42ecdbaa853745d84161bcd410d0164b
+    bytes: 35649337
+    loader: swdb.gapbs-representation.v1
+    adjacency_verified: true
+    verification:
+      method: exact_mmap_csr_transpose_membership
+      parser_sha256: ade4fb06fbef7f1947b0c1687ccebb99797773c3ea578611e57a10be36cfc893
+      compiler: /usr/bin/x86_64-linux-gnu-g++-13
+      budgets:
+        compile_timeout_s: 60
+        timeout_s: 900
+  canonical_sha256: 7d7dd24c2397071f4ad8fb3125079a4e42ecdbaa853745d84161bcd410d0164b
+  canonical_format: swdb.bfs.adjacency.v1
+  realized:
+    num_vertices: 262144
+    num_directed_edges: 8388040
+    directed: false
+    isolated_vertices: 0
+    minimum_out_degree: 9
+    maximum_out_degree: 58
+  metadata_basis: operator_declared
+  adjacency_basis: parsed_representation
+identity_sha256: cd2169a5c421baf7a2c03febab6d8d86edcd74860c887c83a0d5a2c9d28bc49b

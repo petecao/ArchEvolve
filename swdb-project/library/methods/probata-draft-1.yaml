@@ -1,0 +1,82 @@
+# Created: 2026-10-14 15:43 ET (Probata proof of concept, fix-21). The first real method version: a DRAFT.
+# Updated before any record pinned it (same branch, unmerged): ticket 22's CBMC translator and flags, ticket 26's
+# logic library with logic.sum 1.0 as the sum library.
+# Never edited in place from now on: a change (including the freeze) is a new file with the next sequence.
+# A draft is never current: it is used only when named (`swdb prove --method-version method.probata-draft-1`,
+# or a campaign file's `method_version`). Ticket 59 freezes a method version after Yan-Ru's review.
+# Lineup: the Mac installs of ticket 03 and ticket 21; CBMC 6.11 on the C lowering is the bounded verifier
+# (Yan-Ru 2026-10-14 13:19 ET; SAW and crux-llvm are no longer in the lineup). Budgets: starting values of
+# ticket 11 (map 25 item 2, 13 item 11, 15 item 9). Frama-C/WP runs one prover at a time (-wp-par 1:
+# hard goals on the Mac, ticket 08). The machdep is frozen too (ticket 59's list).
+id: method.probata-draft-1
+kind: method_version
+sequence: 1
+status: draft
+created: '2026-10-14'
+evidence_kind: execution
+description: >-
+  First real Probata method version (draft): the Mac verifier lineup with CBMC 6.11 as the bounded verifier,
+  the starting budgets, and the C lowering tool of ticket 21; sections later tickets build are marked
+  not_yet_built.
+lineup:
+  - {role: front_end, tool: clang, version: '22.1.8', flags: ['-std=c++17', '-fopenmp']}
+  # The CBMC adapter (ticket 22) adds --unwind K and --unwinding-assertions per job itself.
+  - {role: bounded_verifier, tool: cbmc, version: '6.11', flags: ['--sat-solver', 'cadical']}
+  - {role: concurrent_bounded_verifier, tool: civl, version: '1.23', flags: ['verify']}
+  - {role: second_refuter, tool: genmc, version: '0.19.0', flags: ['--rc11', '--disable-mm-detector', '--print-error-trace']}
+  - {role: unbounded_verifier, tool: frama-c-wp, version: '33.0',
+     flags: ['-wp', '-wp-rte', '-wp-cache', 'none', '-wp-model', '+real', '-wp-par', '1', '-machdep', 'x86_64']}
+  - {role: solver, tool: alt-ergo, version: '2.6.4', flags: []}
+  - {role: solver, tool: z3, version: '5.1.0', flags: []}
+  - {role: solver, tool: cvc5, version: '1.2.1', flags: []}
+  - {role: proof_assistant, tool: rocq, version: '9.3.0', flags: []}
+civl:
+  java: {tool: openjdk, version: '21.0.12.1', flags: ['-Xmx4g']}
+  memory_model: sequential_consistency
+  result_line: "All errors marked with '+' are absent"
+  exit_code: CIVL exits 0 even on a bug; the verdict is read from its result line (ticket 03)
+genmc:
+  memory_model: rc11
+  memory_model_detector: disabled
+  error_exit_code: 42
+openmp_runtime: {name: libomp, version: '22.1.8'}
+c_lowering:
+  # The subset is what the C lowering tool accepts at this version (ticket 24 widens it: a new tool version).
+  subset: {id: swdb-c-lowering-1.subset, sha256: '2614c7dad7187fc65dd2a2f6d8956568296e8aacb57f51cdf7ed927da732a8ac'}
+  translators:
+    - {id: swdb-c-lowering-1, sha256: '2614c7dad7187fc65dd2a2f6d8956568296e8aacb57f51cdf7ed927da732a8ac'}
+    - {id: swdb-cbmc-translator-1, sha256: '90a98d8a6d95293e83e0f8a69af4496bd4d367732c29b2a6738f4bebfb8eba23'}
+  naming_rules: {id: format-v0.4-c-lowering-wp.kept-names, sha256: 'c633a950412a552abd14756d07e3721b9e8374e0ae950679db21ae8a1dc0e7c5'}
+acsl_version:
+  not_yet_built: The ACSL language version Frama-C 33.0 implements is confirmed by the proof setup check (ticket 36).
+proof_hint_vocabulary: [loop_invariant, loop_assigns, loop_variant, assert, ghost_declaration, ghost_statement,
+                        non_recursive_definition, same_run_lemma, wp_strategy]
+checks:
+  not_yet_built: Ticket 36 builds the proof setup check and the verdict reading, ticket 35 the proof hint check.
+budgets:
+  hint_rounds: 10
+  hint_loop_wall_minutes: 60
+  bounded_job_minutes: 15
+  counterexample_repair_rounds: 5
+  wp_seconds_per_solver: 30
+  civl_k: 3
+prompts:
+  not_yet_built: Tickets 34 and 37 write the proof-hint agent prompts.
+shared_action_kinds: [claim, min_update, atomic_add_or, openmp_reduction, queue_reserve]
+sharing_classes: [read_only, thread_owned, shared_actions_only, lock_protected]
+logic_library:
+  # Ticket 26's shared files (library/logic/, version 1.0), pinned as swdb prove pins them; sha256 is the
+  # digest of the `files` list (swdb.artifacts.digest).
+  id: library-logic-1.0
+  sha256: '42893946b3419945e742e225662c730c106c0b4f57f753d2efd07f53ee4e1b9c'
+  files:
+    - {id: logic.access, version: '1.0', sha256: '5dc8759e19002173e6a04422900ab178f4871391380b1981837bdeb8d058b379'}
+    - {id: logic.csr_graph, version: '1.0', sha256: '3149c52daf3b6d3196a456e0b636cd9ff2390574694dd660322a61a6cf1efc60'}
+    - {id: logic.sets, version: '1.0', sha256: '90d7762042cbfc8976a7f4dc1176d5c5bea659064512fc44c5880f65cabf9de9'}
+    - {id: logic.sum, version: '1.0', sha256: 'aaf0b33061b4883106d0d71e58d9f67da2f3538acd09290e0fd921100da04c26'}
+  sum_library: {id: logic.sum, version: '1.0', sha256: 'aaf0b33061b4883106d0d71e58d9f67da2f3538acd09290e0fd921100da04c26'}
+models:
+  not_yet_built: Ticket 25 writes the std::vector and std::pair models.
+rocq_development:
+  not_yet_built: Tickets 41-43 write the Rocq development (parallel composition theorem, DX100 reduction lemma).
+ghost_capacity_k: 32

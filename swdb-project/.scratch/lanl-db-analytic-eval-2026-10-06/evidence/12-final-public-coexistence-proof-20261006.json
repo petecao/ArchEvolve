@@ -1,0 +1,59 @@
+{
+  "format": "swdb.functional-evaluation-final-public-proof.v1",
+  "updated": "2026-10-06 22:35 ET",
+  "base_commit": "9a5057f45c7a1c3b8756cfccd39f000d72f95253",
+  "tested_head": "e56eb90d5d2bf8cdd369572a7d54a08a4801d46e",
+  "scope": "Integrated ticket 16 plus exact retained remote functional evaluation; no hardware or performance claim. Copied zero-work fixture removes only its dependent functional evaluations.",
+  "coexistence_gates": [
+    {
+      "cases": [
+        "strict certified functional evaluation, handoff and immutable cached result",
+        "stale certification and recursive team refusal"
+      ],
+      "passed": 2,
+      "elapsed_s": 90.74
+    },
+    {
+      "cases": [
+        "paired estimate pre-timing freeze, recursive team refusal and Extensa adapter"
+      ],
+      "passed": 1,
+      "elapsed_s": 197.77,
+      "batch_note": "One passing pairing case in earlier three-case gate; two functional cases then exposed fixture-only dangling references after actual record import, fixed and rerun above."
+    }
+  ],
+  "prior_protected_blobs_preserved": 888,
+  "prior_yaml_records_preserved": 625,
+  "new_records": [
+    {
+      "path": "swdb-project/records/estimates/bfs.functional.evaluation.20261006.a1.estimate.yaml",
+      "bytes": 4131682,
+      "file_sha256": "cd97d2c60722609ed8aaa19af6aad380d371b62444a778bef1e944505f1eeb53"
+    },
+    {
+      "path": "swdb-project/records/evaluations/bfs.functional.evaluation.20261006.a1.yaml",
+      "bytes": 9146,
+      "file_sha256": "c853cc9eefe0884a6636ceca60aec7082691dba6194035f979726d9a60b62a82"
+    },
+    {
+      "path": "swdb-project/records/protocols/bfs.functional.evaluation.protocol.20261006.a1.04ea188992780bf8.yaml",
+      "bytes": 17798,
+      "file_sha256": "189546aeb3e8e0dec5a0ac2f9433df715a3a9eb1d90753aaa8826a121a3bde5c"
+    }
+  ],
+  "historical_contract_bytes_preserved": true,
+  "canonical_validation": "OK: 628 record(s) valid",
+  "remote_acceptance_file": "12-functional-evaluation-mbit10-20261006-a1.json",
+  "remote_acceptance_identity": "d9f3942b414c0ea702ff47e438e3477ed571ac93c6c618bada200da0825da8a5",
+  "raw_transferred": false,
+  "unknown_whole_call_seconds": null,
+  "unknown_ratio": null,
+  "unknown_band": null,
+  "verdict": "within_error",
+  "finite_functional_target_correctness": true,
+  "hardware_correctness_claim": false,
+  "timing_rows": [],
+  "gain_claim": false,
+  "no_child_remote_evaluation_and_handoff": true,
+  "identity_sha256": "464e818aaa5de6e8ccdb403e1b2a3a8d760a679ebc8357d8f3b19638f3a4aed9"
+}

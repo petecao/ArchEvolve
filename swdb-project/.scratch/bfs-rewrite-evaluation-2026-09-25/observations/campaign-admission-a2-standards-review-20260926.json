@@ -1,0 +1,128 @@
+{
+  "created": "2026-09-26 ET",
+  "state": "clean",
+  "scope": "Narrow corrected export/proof/admission/argv metadata consistency review only; no host rerun or dispatch",
+  "pin": "8c39ae09406dad0da253b21dbe2c87e263f8c5fb",
+  "admission_snapshot": {
+    "path": "/private/tmp/bfs-campaign-admissions-a2-20260926.json",
+    "sha256": "bac920740ac5201dbdac7ea0de58db6000433e3b0c0507f8f76f3dfb6834f2f1"
+  },
+  "proof_snapshot": {
+    "path": "/private/tmp/bfs-standard-fixtures-a2-actual-20260926.json",
+    "sha256": "4bcbb420a7bd220927be23a23b0a5ac41fefca66f58c2c8731bad7c00ef73958"
+  },
+  "fixtures": {
+    "owned_cleanup": {
+      "proof": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-owned-linux-20260926-a2/proof.json",
+        "sha256": "819f73fd38b6cb0d7f01b0a356502183dd30a8b2d8ba973dbaa3633e31932a99",
+        "bytes": 3307
+      },
+      "union": 8,
+      "junit_tests": 4,
+      "generation": 409,
+      "settled_seconds": 0.2865335959941149,
+      "terminal_observed_at": "2026-09-26T20:13:55.374353-04:00"
+    },
+    "dx100_interruption": {
+      "proof": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-interruption-linux-20260926-a2/proof.json",
+        "sha256": "387ce8c85863c7fe2804f5a3c8d8a1552c0e035b286bd916026c23800966c968",
+        "bytes": 3392
+      },
+      "union": 6,
+      "junit_tests": 2,
+      "generation": 410,
+      "settled_seconds": 0.28894136659801006,
+      "terminal_observed_at": "2026-09-26T20:14:49.419400-04:00"
+    }
+  },
+  "checks": {
+    "t15": {
+      "admission": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1.dispatch/admission-a2.json",
+        "sha256": "6f51d6376d4660fbeeae816784da8ff0f637e2ba8ee4b534a6864442a7a0e88d"
+      },
+      "runtime_blobs": 150,
+      "wrapper": {
+        "path": "/private/tmp/bfs-t15-campaign-launch-a2-20260926.sh",
+        "sha256": "dc0f2875321eb6fc621a46225a24e807ceb8f8efab10fe8d8dc894ef22c9f64b"
+      },
+      "all_preserved_fields": [
+        "format",
+        "plan_sha256",
+        "preparation_charges",
+        "python",
+        "proofs",
+        "coverage_commit",
+        "protocols",
+        "latest_start",
+        "absolute_end"
+      ],
+      "rendered": [
+        {
+          "start": "2026-09-26T20:20:00-04:00",
+          "end": "2026-09-27T08:20:00-04:00",
+          "lane": 1,
+          "term": 43167.75
+        },
+        {
+          "start": "2026-09-26T20:25:00-04:00",
+          "end": "2026-09-27T08:25:00-04:00",
+          "lane": 1,
+          "term": 43167.75
+        },
+        {
+          "start": "2026-09-26T20:30:00-04:00",
+          "end": "2026-09-27T08:30:00-04:00",
+          "lane": 1,
+          "term": 43167.75
+        }
+      ]
+    },
+    "t16": {
+      "admission": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1.dispatch/admission-a2.json",
+        "sha256": "94f2e768e2bfb304dcffe9602133584f605fd68b366749a7b4b3d3f9431ffcca"
+      },
+      "runtime_blobs": 150,
+      "wrapper": {
+        "path": "/private/tmp/bfs-t16-campaign-launch-a2-20260926.sh",
+        "sha256": "fb60fc4fa7d4d8306787dca790ecf009fb0e952a0866197822cfbe45f0853bf8"
+      },
+      "all_preserved_fields": [
+        "format",
+        "plan_sha256",
+        "preparation_charges",
+        "python",
+        "proofs",
+        "coverage_commit",
+        "protocols",
+        "latest_start",
+        "absolute_end"
+      ],
+      "rendered": [
+        {
+          "start": "2026-09-26T20:20:00-04:00",
+          "end": "2026-09-27T20:15:47-04:00",
+          "lane": 0,
+          "term": 86114.75
+        },
+        {
+          "start": "2026-09-26T20:25:00-04:00",
+          "end": "2026-09-27T20:20:47-04:00",
+          "lane": 0,
+          "term": 86114.75
+        },
+        {
+          "start": "2026-09-26T20:30:00-04:00",
+          "end": "2026-09-27T20:25:47-04:00",
+          "lane": 0,
+          "term": 86114.75
+        }
+      ]
+    }
+  },
+  "remaining_operational_gates": "Actual driver performs charged prerequisite validation; normal fresh capacity/lease/runtime checks apply. Host has acknowledged final storage readback after all helper/audit writes under unchanged shared cap.",
+  "limitations": "Host raw evidence was not reopened by reviewer; typed retained metadata cross-checked against current code and local Git blobs. These fixture proofs do not establish simulator correctness or gain."
+}

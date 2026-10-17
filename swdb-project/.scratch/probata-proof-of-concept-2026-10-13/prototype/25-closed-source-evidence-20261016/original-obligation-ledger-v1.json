@@ -1,0 +1,392 @@
+{
+  "boundary": "Exact original goal identities and complete direct-source obligation accounting. No compiler/solver/native run or current proof record. Not a proof from naming dependencies; all direct rule and complete scientific evidence must be independently checked before composition.",
+  "caller_acceptance": false,
+  "classification": "INERT_ORIGINAL_SOURCE_DISCHARGE_LEDGER",
+  "created": "2026-10-16 ET",
+  "frame_partitions": 13,
+  "ordinary": [
+    {
+      "goal": "typed_real_vector_realloc_v3_no_growth_assert_rte_initialization",
+      "native_Typed_lifetime_proof_claimed": false,
+      "original_native_result_changed": false,
+      "required_evidence": [
+        "constructor35 fields and fill",
+        "exact source data() body",
+        "positive.exit_image.integer.initialization",
+        "positive.cleanup.scalar",
+        "zero.cleanup"
+      ],
+      "source_discharge": "Direct exact-source initialization: constructor initializes receiver data; the checked pure data return assigns the local alias; the positive guard reads a fully initialized first payload cell; both scalar branches initialize the captured return. The original modular data-return init failure remains unchanged.",
+      "status": "pending integration and independent source-rule/evidence review"
+    },
+    {
+      "goal": "typed_real_vector_realloc_v3_no_growth_assert_rte_initialization_2",
+      "native_Typed_lifetime_proof_claimed": false,
+      "original_native_result_changed": false,
+      "required_evidence": [
+        "constructor35 fields and fill",
+        "exact source data() body",
+        "positive.exit_image.integer.initialization",
+        "positive.cleanup.scalar",
+        "zero.cleanup"
+      ],
+      "source_discharge": "Direct exact-source initialization: constructor initializes receiver data; the checked pure data return assigns the local alias; the positive guard reads a fully initialized first payload cell; both scalar branches initialize the captured return. The original modular data-return init failure remains unchanged.",
+      "status": "pending integration and independent source-rule/evidence review"
+    },
+    {
+      "goal": "typed_real_vector_realloc_v3_no_growth_assert_rte_initialization_3",
+      "native_Typed_lifetime_proof_claimed": false,
+      "original_native_result_changed": false,
+      "required_evidence": [
+        "constructor35 fields and fill",
+        "exact source data() body",
+        "positive.exit_image.integer.initialization",
+        "positive.cleanup.scalar",
+        "zero.cleanup"
+      ],
+      "source_discharge": "Direct exact-source initialization: constructor initializes receiver data; the checked pure data return assigns the local alias; the positive guard reads a fully initialized first payload cell; both scalar branches initialize the captured return. The original modular data-return init failure remains unchanged.",
+      "status": "pending integration and independent source-rule/evidence review"
+    },
+    {
+      "goal": "typed_real_vector_realloc_v3_no_growth_assert_rte_mem_access",
+      "native_Typed_lifetime_proof_claimed": false,
+      "original_native_result_changed": false,
+      "required_evidence": [
+        "positive.exit_image.integer.access",
+        "original guard and capture source events"
+      ],
+      "source_discharge": "No element expression is evaluated at zero. At positive count, captured actual buffer element0 is live and readable before real terminal release.",
+      "status": "pending integration and independent source-rule/evidence review"
+    },
+    {
+      "goal": "typed_real_vector_realloc_v3_no_growth_assigns_exit_part1",
+      "native_Typed_lifetime_proof_claimed": false,
+      "original_native_result_changed": false,
+      "required_evidence": [
+        "source private-effect rule",
+        "constructor35 complete body",
+        "private-frame9",
+        "four unchanged gluing duties",
+        "all23 positive leaves"
+      ],
+      "source_discharge": "Direct exact-source pointwise private-effect induction preserves every incoming allocation and byte; actual null/dynamic release and automatic lifetime end are retained. Model allocator/deallocator framing is explicit TCB.",
+      "status": "pending integration and independent source-rule/evidence review"
+    },
+    {
+      "goal": "typed_real_vector_realloc_v3_no_growth_assigns_exit_part2",
+      "native_Typed_lifetime_proof_claimed": false,
+      "original_native_result_changed": false,
+      "required_evidence": [
+        "source private-effect rule",
+        "constructor35 complete body",
+        "private-frame9",
+        "four unchanged gluing duties",
+        "all23 positive leaves"
+      ],
+      "source_discharge": "Direct exact-source pointwise private-effect induction preserves every incoming allocation and byte; actual null/dynamic release and automatic lifetime end are retained. Model allocator/deallocator framing is explicit TCB.",
+      "status": "pending integration and independent source-rule/evidence review"
+    },
+    {
+      "goal": "typed_real_vector_realloc_v3_no_growth_assigns_exit_part3",
+      "native_Typed_lifetime_proof_claimed": false,
+      "original_native_result_changed": false,
+      "required_evidence": [
+        "source private-effect rule",
+        "constructor35 complete body",
+        "private-frame9",
+        "four unchanged gluing duties",
+        "all23 positive leaves"
+      ],
+      "source_discharge": "Direct exact-source pointwise private-effect induction preserves every incoming allocation and byte; actual null/dynamic release and automatic lifetime end are retained. Model allocator/deallocator framing is explicit TCB.",
+      "status": "pending integration and independent source-rule/evidence review"
+    },
+    {
+      "goal": "typed_real_vector_realloc_v3_no_growth_assigns_exit_part4",
+      "native_Typed_lifetime_proof_claimed": false,
+      "original_native_result_changed": false,
+      "required_evidence": [
+        "source private-effect rule",
+        "constructor35 complete body",
+        "private-frame9",
+        "four unchanged gluing duties",
+        "all23 positive leaves"
+      ],
+      "source_discharge": "Direct exact-source pointwise private-effect induction preserves every incoming allocation and byte; actual null/dynamic release and automatic lifetime end are retained. Model allocator/deallocator framing is explicit TCB.",
+      "status": "pending integration and independent source-rule/evidence review"
+    },
+    {
+      "goal": "typed_real_vector_realloc_v3_no_growth_assigns_exit_part5",
+      "native_Typed_lifetime_proof_claimed": false,
+      "original_native_result_changed": false,
+      "required_evidence": [
+        "source private-effect rule",
+        "constructor35 complete body",
+        "private-frame9",
+        "four unchanged gluing duties",
+        "all23 positive leaves"
+      ],
+      "source_discharge": "Direct exact-source pointwise private-effect induction preserves every incoming allocation and byte; actual null/dynamic release and automatic lifetime end are retained. Model allocator/deallocator framing is explicit TCB.",
+      "status": "pending integration and independent source-rule/evidence review"
+    },
+    {
+      "goal": "typed_real_vector_realloc_v3_no_growth_assigns_exit_part6",
+      "native_Typed_lifetime_proof_claimed": false,
+      "original_native_result_changed": false,
+      "required_evidence": [
+        "source private-effect rule",
+        "constructor35 complete body",
+        "private-frame9",
+        "four unchanged gluing duties",
+        "all23 positive leaves"
+      ],
+      "source_discharge": "Direct exact-source pointwise private-effect induction preserves every incoming allocation and byte; actual null/dynamic release and automatic lifetime end are retained. Model allocator/deallocator framing is explicit TCB.",
+      "status": "pending integration and independent source-rule/evidence review"
+    },
+    {
+      "goal": "typed_real_vector_realloc_v3_no_growth_assigns_normal_part1",
+      "native_Typed_lifetime_proof_claimed": false,
+      "original_native_result_changed": false,
+      "required_evidence": [
+        "source private-effect rule",
+        "constructor35 complete body",
+        "private-frame9",
+        "four unchanged gluing duties",
+        "all23 positive leaves"
+      ],
+      "source_discharge": "Direct exact-source pointwise private-effect induction preserves every incoming allocation and byte; actual null/dynamic release and automatic lifetime end are retained. Model allocator/deallocator framing is explicit TCB.",
+      "status": "pending integration and independent source-rule/evidence review"
+    },
+    {
+      "goal": "typed_real_vector_realloc_v3_no_growth_assigns_normal_part2",
+      "native_Typed_lifetime_proof_claimed": false,
+      "original_native_result_changed": false,
+      "required_evidence": [
+        "source private-effect rule",
+        "constructor35 complete body",
+        "private-frame9",
+        "four unchanged gluing duties",
+        "all23 positive leaves"
+      ],
+      "source_discharge": "Direct exact-source pointwise private-effect induction preserves every incoming allocation and byte; actual null/dynamic release and automatic lifetime end are retained. Model allocator/deallocator framing is explicit TCB.",
+      "status": "pending integration and independent source-rule/evidence review"
+    },
+    {
+      "goal": "typed_real_vector_realloc_v3_no_growth_assigns_normal_part3",
+      "native_Typed_lifetime_proof_claimed": false,
+      "original_native_result_changed": false,
+      "required_evidence": [
+        "source private-effect rule",
+        "constructor35 complete body",
+        "private-frame9",
+        "four unchanged gluing duties",
+        "all23 positive leaves"
+      ],
+      "source_discharge": "Direct exact-source pointwise private-effect induction preserves every incoming allocation and byte; actual null/dynamic release and automatic lifetime end are retained. Model allocator/deallocator framing is explicit TCB.",
+      "status": "pending integration and independent source-rule/evidence review"
+    },
+    {
+      "goal": "typed_real_vector_realloc_v3_no_growth_assigns_normal_part4",
+      "native_Typed_lifetime_proof_claimed": false,
+      "original_native_result_changed": false,
+      "required_evidence": [
+        "source private-effect rule",
+        "constructor35 complete body",
+        "private-frame9",
+        "four unchanged gluing duties",
+        "all23 positive leaves"
+      ],
+      "source_discharge": "Direct exact-source pointwise private-effect induction preserves every incoming allocation and byte; actual null/dynamic release and automatic lifetime end are retained. Model allocator/deallocator framing is explicit TCB.",
+      "status": "pending integration and independent source-rule/evidence review"
+    },
+    {
+      "goal": "typed_real_vector_realloc_v3_no_growth_assigns_normal_part5",
+      "native_Typed_lifetime_proof_claimed": false,
+      "original_native_result_changed": false,
+      "required_evidence": [
+        "source private-effect rule",
+        "constructor35 complete body",
+        "private-frame9",
+        "four unchanged gluing duties",
+        "all23 positive leaves"
+      ],
+      "source_discharge": "Direct exact-source pointwise private-effect induction preserves every incoming allocation and byte; actual null/dynamic release and automatic lifetime end are retained. Model allocator/deallocator framing is explicit TCB.",
+      "status": "pending integration and independent source-rule/evidence review"
+    },
+    {
+      "goal": "typed_real_vector_realloc_v3_no_growth_assigns_normal_part6",
+      "native_Typed_lifetime_proof_claimed": false,
+      "original_native_result_changed": false,
+      "required_evidence": [
+        "source private-effect rule",
+        "constructor35 complete body",
+        "private-frame9",
+        "four unchanged gluing duties",
+        "all23 positive leaves"
+      ],
+      "source_discharge": "Direct exact-source pointwise private-effect induction preserves every incoming allocation and byte; actual null/dynamic release and automatic lifetime end are retained. Model allocator/deallocator framing is explicit TCB.",
+      "status": "pending integration and independent source-rule/evidence review"
+    },
+    {
+      "goal": "typed_real_vector_realloc_v3_no_growth_assigns_normal_part7",
+      "native_Typed_lifetime_proof_claimed": false,
+      "original_native_result_changed": false,
+      "required_evidence": [
+        "source private-effect rule",
+        "constructor35 complete body",
+        "private-frame9",
+        "four unchanged gluing duties",
+        "all23 positive leaves"
+      ],
+      "source_discharge": "Direct exact-source pointwise private-effect induction preserves every incoming allocation and byte; actual null/dynamic release and automatic lifetime end are retained. Model allocator/deallocator framing is explicit TCB.",
+      "status": "pending integration and independent source-rule/evidence review"
+    },
+    {
+      "goal": "typed_real_vector_realloc_v3_no_growth_call_std_vector_int_ctor_count_value_requires",
+      "native_Typed_lifetime_proof_claimed": false,
+      "original_native_result_changed": false,
+      "required_evidence": [
+        "receiver.entry",
+        "constructor numeric/layout duty",
+        "original 0<=count contract"
+      ],
+      "source_discharge": "Source-created aligned automatic receiver is valid; the original nonnegative signed32 count widens exactly below the model maximum. No constructor post-state premise is used.",
+      "status": "pending integration and independent source-rule/evidence review"
+    },
+    {
+      "goal": "typed_real_vector_realloc_v3_no_growth_call_std_vector_int_data_requires",
+      "native_Typed_lifetime_proof_claimed": false,
+      "original_native_result_changed": false,
+      "required_evidence": [
+        "constructor35 zero/positive representation",
+        "exact source data() body"
+      ],
+      "source_discharge": "Full actual initialized constructor representation directly implies the original readable data precondition on both branches; exact data body returns the real initialized field.",
+      "status": "pending integration and independent source-rule/evidence review"
+    },
+    {
+      "goal": "typed_real_vector_realloc_v3_no_growth_call_std_vector_int_dtor_requires",
+      "native_Typed_lifetime_proof_claimed": false,
+      "original_native_result_changed": false,
+      "required_evidence": [
+        "constructor35",
+        "destructor11",
+        "positive.exit_image.buffer_freeable",
+        "zero.cleanup",
+        "positive.cleanup"
+      ],
+      "source_discharge": "Original destructor representation is the actual constructor post-state preserved by pure data/no-growth reserve. At zero capacity the freeable disjunction short-circuits; at positive capacity the actual source-fresh buffer is freeable under its checked constructor output and allocator TCB. Native WP33 false/ignored freeability is not converted to a native proof.",
+      "status": "pending integration and independent source-rule/evidence review"
+    },
+    {
+      "goal": "typed_real_vector_realloc_v3_no_growth_call_std_vector_int_reserve_requires",
+      "native_Typed_lifetime_proof_claimed": false,
+      "original_native_result_changed": false,
+      "required_evidence": [
+        "constructor35",
+        "buffer.identity",
+        "23 positive leaves"
+      ],
+      "source_discharge": "Actual source constructor supplies the original representation and count==capacity, while exact count widening satisfies the reserve maximum. No reserve summary is assumed.",
+      "status": "pending integration and independent source-rule/evidence review"
+    },
+    {
+      "goal": "typed_real_vector_realloc_v3_no_growth_ensures",
+      "native_Typed_lifetime_proof_claimed": false,
+      "original_native_result_changed": false,
+      "required_evidence": [
+        "positive.cleanup.scalar",
+        "zero.cleanup",
+        "exact source capture/return order"
+      ],
+      "source_discharge": "Source zero branch captures literal0. Positive branch captures the actual initialized filled value7 before release; scalar assignment preserves it across destruction and scope end.",
+      "status": "pending integration and independent source-rule/evidence review"
+    },
+    {
+      "goal": "typed_real_vector_realloc_v3_no_growth_exits",
+      "native_Typed_lifetime_proof_claimed": false,
+      "original_native_result_changed": false,
+      "required_evidence": [
+        "constructor numeric/variant duties",
+        "full source CFG certificate"
+      ],
+      "source_discharge": "Finite exact fill loop and exact normal-return CFG under modeled normal-return library/allocator TCB. This does not infer allocator/hardware termination from internal Qed or certify smoke satisfiability.",
+      "status": "pending integration and independent source-rule/evidence review"
+    },
+    {
+      "goal": "typed_real_vector_realloc_v3_no_growth_terminates",
+      "native_Typed_lifetime_proof_claimed": false,
+      "original_native_result_changed": false,
+      "required_evidence": [
+        "constructor numeric/variant duties",
+        "full source CFG certificate"
+      ],
+      "source_discharge": "Finite exact fill loop and exact normal-return CFG under modeled normal-return library/allocator TCB. This does not infer allocator/hardware termination from internal Qed or certify smoke satisfiability.",
+      "status": "pending integration and independent source-rule/evidence review"
+    }
+  ],
+  "ordinary_count": 24,
+  "original_census_receipt": {
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-original-no-growth-generation-v3c-passive-cold-result-20261016.json",
+    "sha256": "e718a7a6c00543c081dbaadd7ea1639ecdf7c2a5c2dc1dda41c90c04cb8c1120"
+  },
+  "original_entry_refusal_preserved": true,
+  "smoke_count": 9,
+  "smokes": [
+    {
+      "goal": "typed_real_vector_realloc_v3_no_growth_wp_smoke_default_requires",
+      "original_native_result_changed": false,
+      "proof_credit": false,
+      "satisfiability_claim": false
+    },
+    {
+      "goal": "typed_real_vector_realloc_v3_no_growth_wp_smoke_dead_code_s49",
+      "original_native_result_changed": false,
+      "proof_credit": false,
+      "satisfiability_claim": false
+    },
+    {
+      "goal": "typed_real_vector_realloc_v3_no_growth_wp_smoke_dead_code_s53",
+      "original_native_result_changed": false,
+      "proof_credit": false,
+      "satisfiability_claim": false
+    },
+    {
+      "goal": "typed_real_vector_realloc_v3_no_growth_wp_smoke_dead_code_s54",
+      "original_native_result_changed": false,
+      "proof_credit": false,
+      "satisfiability_claim": false
+    },
+    {
+      "goal": "typed_real_vector_realloc_v3_no_growth_wp_smoke_dead_code_s58",
+      "original_native_result_changed": false,
+      "proof_credit": false,
+      "satisfiability_claim": false
+    },
+    {
+      "goal": "typed_real_std_vector_int_ctor_count_value_wp_smoke_dead_call_s47",
+      "original_native_result_changed": false,
+      "proof_credit": false,
+      "satisfiability_claim": false
+    },
+    {
+      "goal": "typed_real_std_vector_int_dtor_wp_smoke_dead_call_s56",
+      "original_native_result_changed": false,
+      "proof_credit": false,
+      "satisfiability_claim": false
+    },
+    {
+      "goal": "typed_real_std_vector_int_data_wp_smoke_dead_call_s48",
+      "original_native_result_changed": false,
+      "proof_credit": false,
+      "satisfiability_claim": false
+    },
+    {
+      "goal": "typed_real_std_vector_int_reserve_wp_smoke_dead_call_s49",
+      "original_native_result_changed": false,
+      "proof_credit": false,
+      "satisfiability_claim": false
+    }
+  ],
+  "source_admission": false,
+  "source_commit": "c978393b119a3614229a37f0f2c8ca2a097c750b"
+}

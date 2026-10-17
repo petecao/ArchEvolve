@@ -1,0 +1,57 @@
+{
+  "actual_removal_performed": false,
+  "archive_or_cleanup_approval": false,
+  "bounds": "Official tag source review only; actual preflight sensitive-entry refusal remains unchanged.",
+  "created_date_et": "2026-10-09",
+  "findings": [
+    {
+      "docs_lines": [
+        199,
+        201
+      ],
+      "finding": "No-force cleanliness check omits --ignored; ignored files can be deleted.",
+      "id": "ignored-files",
+      "source_lines": [
+        1273,
+        1310
+      ]
+    },
+    {
+      "docs_lines": [
+        73,
+        86
+      ],
+      "finding": "Inherited status configuration may omit untracked entries; do not rely on no-force as full-tree recovery proof.",
+      "id": "user-config",
+      "source_lines": [
+        1263,
+        1271
+      ]
+    },
+    {
+      "finding": "Administrative registration deletion is attempted even after directory deletion failure; nonzero status needs exact fresh recovery observations.",
+      "id": "partial-removal",
+      "source_lines": [
+        1368,
+        1375
+      ]
+    }
+  ],
+  "format": "swdb.lanl17-exact-git-worktree-removal-source-review.v1",
+  "scientific_admission": false,
+  "sources": [
+    {
+      "bytes": 40981,
+      "path": "/private/tmp/lanl17-git-v2.48.1-builtin-worktree-source-20261009.c",
+      "sha256": "108b764293539c732fdbf0bc6b0ab1b93082b4ade3ceab3d849b147c4f3fee11",
+      "url": "https://raw.githubusercontent.com/git/git/v2.48.1/builtin/worktree.c"
+    },
+    {
+      "bytes": 20380,
+      "path": "/private/tmp/lanl17-git-v2.48.1-git-status-documentation-20261009.txt",
+      "sha256": "1cdd1c7339dfc64093687b6e072d59feee584b8639c0203ece0a1150ce23d325",
+      "url": "https://raw.githubusercontent.com/git/git/v2.48.1/Documentation/git-status.txt"
+    }
+  ],
+  "verdict": "PASS_SOURCE_ONLY_VERSION_MATCHED_SEMANTICS"
+}

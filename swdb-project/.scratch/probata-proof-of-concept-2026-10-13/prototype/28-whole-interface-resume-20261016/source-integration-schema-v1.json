@@ -1,0 +1,104 @@
+{
+  "actual_public_current_0_2": false,
+  "call_binding_record": {
+    "base": "exact source_dispatch_v2.bind_dispatch return object, preserving its fresh whole_interface_v3 binding and dispatch_plan",
+    "harness_draw_plan_required": true,
+    "public_admission": false,
+    "receiver_state_binding_required": true,
+    "source_RTE_and_local_lifetime_checks_required": true,
+    "staging_grammar": {
+      "literal": "closed pure scalar/local/descriptor v1"
+    },
+    "staging_statements": "one original pure expression evaluation per effective argument; source defaults remain exact pinned literals"
+  },
+  "cpu_access_record": {
+    "base": "source_argument_staging_v1.cpu_load/cpu_store/array_initializer return",
+    "complete_access_inventory": "every original pointer use must be projected, deliberately handled by exact ordinary source semantics, or refused; no omitted-access inference from output count",
+    "scope": "original same-caller TU node, direct physical source span, unchanged TU and declared type"
+  },
+  "date": "2026-10-16 ET",
+  "initial_source_scope": "the byte-pinned source_call_fixture_v2.cpp under actual original configuration and fresh program globals",
+  "optional_hardware_refinement_required": false,
+  "production_registration_authorized_by_this_packet": false,
+  "source_body_MMIO_TCB_explicit": true,
+  "source_policy_exact_fields": {
+    "actual_abi_observation_sha256": {
+      "format": "lowercase SHA-256 of retained separate literal ABI observation"
+    },
+    "actual_capture_receipt_sha256": {
+      "format": "actual root-reconciled lowercase SHA-256"
+    },
+    "actual_full_tu_sha256": {
+      "format": "lowercase SHA-256 of retained raw original full-TU JSON"
+    },
+    "actual_original_source_sha256": {
+      "format": "lowercase SHA-256 of exact original physical source bytes"
+    },
+    "entry": {
+      "literal": "semantics.dx100_bfs_0_2"
+    },
+    "execution_mode": {
+      "literal": "fresh-cxx-program-globals"
+    },
+    "harness_draw_plan_sha256": {
+      "format": "model identity bound independent full-domain uint32 draw plan; no desired-value assumption"
+    },
+    "kind": {
+      "literal": "dx100-whole-interface-source-v1"
+    },
+    "model_assembly_sha256": {
+      "format": "actual ABI/atlas checked-body assembly and all source/model input pins"
+    },
+    "model_kind": {
+      "literal": "dx100-whole-interface-checked-body-1"
+    },
+    "program_context_receipt_sha256": {
+      "format": "actual root-admitted fresh-program interpretation"
+    },
+    "receiver_state_binding_sha256": {
+      "format": "separate checked source host globals, scope bookkeeping and explicit device/ordinary allocation state; no hidden reset"
+    },
+    "source_atlas_sha256": {
+      "format": "actual source-declaration-pinned ordinary objects/physical cells; complete MMIO exclusion"
+    },
+    "source_globals_observation_sha256": {
+      "format": "lowercase SHA-256 of source_program_globals_v1 observation from the actual same TU"
+    },
+    "source_headers": {
+      "exact_path_sha256_map": {
+        "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API/MAA.hpp": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd",
+        "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API/MAA_gem5.hpp": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174"
+      }
+    },
+    "source_implementation_pins": {
+      "required_modules": [
+        {
+          "bytes": 34697,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py",
+          "sha256": "074b974f4a4dd1074247a90d2a727d1cb0ee37b576055d738dd746fd6d4cc1db"
+        },
+        {
+          "bytes": 25584,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source_dispatch_v2.py",
+          "sha256": "a2652610ae6198b7a3045e30155c77bfd9637a79ae2c9b668407ee5ae8eb7e9a"
+        },
+        {
+          "bytes": 14281,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler_unit_adapter_v2.py",
+          "sha256": "1cf112859f976f77e8381c777c977f5cf5857d6e18f1bd0e24f9689148e80317"
+        },
+        {
+          "bytes": 23561,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source_argument_staging_v1.py",
+          "sha256": "b7a244c0cc156a716af01475aa656cd5f7129e1dc4eb87a5ca43f54d4dce11eb"
+        },
+        {
+          "bytes": 6179,
+          "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source_program_globals_v1.py",
+          "sha256": "17bc9b0aefc7cadd5762f630b28c3ab97496f3cac17eb40bbd89deda1fe8cc77"
+        }
+      ]
+    }
+  },
+  "status": "INERT integration schema; no actual source/public admission"
+}

@@ -1,0 +1,48 @@
+{
+  "date": "2026-10-16 ET",
+  "edits": [
+    {
+      "new": "    std::uint32_t initial_scalar = get_reg<std::uint32_t>(scalar);\n    assert(initial_scalar == 3);",
+      "old": "    assert(get_reg<std::uint32_t>(scalar) == 3);"
+    },
+    {
+      "new": "    DataType selected_type = get_data_type<std::uint32_t>();\n    assert(selected_type == DataType::UINT32_TYPE);",
+      "old": "    assert(get_data_type<std::uint32_t>() == DataType::UINT32_TYPE);"
+    },
+    {
+      "new": "    DataType other_type = get_data_type<unsigned short>();\n    assert(other_type == DataType::MAX);",
+      "old": "    assert(get_data_type<unsigned short>() == DataType::MAX);"
+    },
+    {
+      "new": "    std::uint32_t observed_scalar = result_data[0];\n    assert(observed_scalar == 10);",
+      "old": "    assert(result_data[0] == 10);"
+    },
+    {
+      "new": "    std::uint32_t observed_vector = result_data[1];\n    assert(observed_vector == 18);",
+      "old": "    assert(result_data[1] == 18);"
+    },
+    {
+      "new": "    std::uint32_t observed_reduce = get_reg<std::uint32_t>(scalar);\n    assert(observed_reduce == 16);",
+      "old": "    assert(get_reg<std::uint32_t>(scalar) == 16);"
+    },
+    {
+      "new": "    std::uint32_t stored0 = data[0], stored1 = data[1];\n    assert(stored0 == 7 && stored1 == 9);",
+      "old": "    assert(data[0] == 7 && data[1] == 9);"
+    },
+    {
+      "new": "    std::uint32_t final0 = data[0], final1 = data[1];\n    assert(final0 == 39 && final1 == 41);",
+      "old": "    assert(data[0] == 39 && data[1] == 41);"
+    },
+    {
+      "new": "    std::int32_t final_i = get_reg<std::int32_t>(last_i);\n    assert(final_i == 2);",
+      "old": "    assert(get_reg<std::int32_t>(last_i) == 2);"
+    },
+    {
+      "new": "    std::uint16_t result_size = get_tile_size(result);\n    assert(result_size == 2);",
+      "old": "    assert(get_tile_size(result) == 2);"
+    }
+  ],
+  "new_sha256": "3148b662b2fbeaa7a8733569d5ea750bce8a598d4e883f9bc64cb1e27dae67cd",
+  "origin_sha256": "2615d8f0571e9966b3d625094034eebb5bb65ec9942c0f1baacf642d2adf6d8b",
+  "scope": "Stage source query/CPU observations into ordinary locals before assert macro; avoids attributing macro-expanded interface call spans. V1 source/value/dispatch/native packets unchanged."
+}

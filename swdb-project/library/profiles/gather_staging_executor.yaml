@@ -1,0 +1,30 @@
+# Certification profile (ticket 51). Created 2026-10-03 ET.
+format: swdb.certification-profile.v1
+id: profile.gather_staging_executor
+entry: operation.gather_staging_executor
+date: '2026-10-03'
+matrix:
+  builds:
+  - sanitized
+  - openmp
+  threads: 4
+  n_cases: 8
+  sizes:
+    rows: 16
+    row_len: 61
+    dst_stride: 63
+    src_stride: 128
+controls:
+- id: partial_drain
+  category: dropped_operand
+  expected_check: differential_mismatch
+- id: index_shift
+  category: index_bounds
+  expected_check: differential_mismatch
+- id: aliasing_write
+  category: aliasing
+  expected_check: frame_violation
+required_categories:
+- aliasing
+- dropped_operand
+- index_bounds

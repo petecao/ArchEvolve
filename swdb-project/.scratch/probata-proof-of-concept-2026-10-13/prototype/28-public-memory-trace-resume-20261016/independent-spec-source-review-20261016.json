@@ -1,0 +1,49 @@
+{
+  "actual_proof_acceptance": false,
+  "date": "2026-10-16 ET",
+  "entry_shape_sha256": "8c1d71f33cfd1ee2d596a63bf7efec9d5bf75b9bb7830cf933a456c4fb46bdf0",
+  "independent_controls": {
+    "cases": 22,
+    "child_project_compiler_native_verifier_executed": false,
+    "log": {
+      "bytes": 3675,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/independent-spec-controls-20261016.log",
+      "sha256": "00b83250a3d44f9d87a42390160aa52fb8a16f9803268b4891a1b430a772b0ed"
+    }
+  },
+  "model_components": {
+    "c": "2fe44f7fea203d1f7914db6077b999d03f64a2e43472bd2884eb8e534e775be8",
+    "ghost": "a71409828badd1e0cab4e2a73e2c1053caeaebba1dbd0fdb8a66709226231816",
+    "logic": "cee8b8a666997386cd213c9708ffb78b33e8d521f2859bc3ac853f8bd3db112e",
+    "state": "ffddb9894fb78489edc9a97361d2b401c4d3c9a4036af67b115142765dea4bca"
+  },
+  "patch": {
+    "bytes": 13669,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/integration.patch",
+    "sha256": "69c4c39fb96c01cb3f587579b62e664c08b838cd29e5ad8e7d5f6ec9c37a82f7"
+  },
+  "production_files_integrated": false,
+  "proposed": [
+    {
+      "bytes": 22867,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/bounded_initialization.py.proposed",
+      "sha256": "d6586a771548f46423595eb971a63bffb00f23e559cfe576adee5a2abeb6b3cc"
+    },
+    {
+      "bytes": 73392,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/cbmc_adapter.py.proposed",
+      "sha256": "2ef59469412c287b174f085e2c08c8a969435ccf1bc129fe34ea89bbb78cac4a"
+    }
+  ],
+  "remaining_engineering_scope": "complete per-call contracts/typed values/source-call dispatch and requested public verdicts/newversion under explicitly permitted owned MMIO TCB; a separate hardware/body theorem is not a ticket28 closure requirement",
+  "scope_findings": [
+    "exact entire entry/model/query and owned premise freeze; all26 actual interface calls unsupported",
+    "fixed event-order abstract cell/tile/history/region/pair/ownership model with fatal2command/1laterwrite/4independentchoice limits",
+    "no extra native oracle draws; canonical input cells supply choices with checked single consumption",
+    "full-TU imported scalar prototypes reused without pointer-domain exemptions; source/semantic-policy rechecked at final boundary",
+    "abstract trust/settings replace inapplicable at-issue/pointer ABI/Rocq claims, default nontrace branch preserved",
+    "25 prospective public cases require direct property statuses, reachability, native agreement and replayed abstract-model negative witnesses; no actual result inferred"
+  ],
+  "status": "PASS_SPEC_SOURCE_REVIEW; independent standards review and root actual admission pending",
+  "whole_ticket28": false
+}

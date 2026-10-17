@@ -1,0 +1,169 @@
+{
+  "axis": "Standards",
+  "backend_scope": {
+    "also_read": "Complete command/action/node struct layouts, completion macro binding, state constructors, step/frame assertions, actual caller and native/CBMC entry definitions.",
+    "complete_source_embedded_once": true,
+    "eight_fully_read_function_closures": {
+      "dxa_complete": {
+        "bytes": 1576,
+        "sha256": "242a596505fcf191da47a9197d36d6f0b4fe147bb5279cef4e554fce81679dd6"
+      },
+      "dxc_cover": {
+        "bytes": 748,
+        "sha256": "bceafcc9d574b30d5b7df5d0be452d29313bc865498651df74dda952181e2b9a"
+      },
+      "dxc_cpu_memory_access": {
+        "bytes": 620,
+        "sha256": "5ed3c287b178625b8d6ee9c9b8b0c581be144f98ee7497d1b2225baf2e0189c5"
+      },
+      "dxc_get_tile_ready": {
+        "bytes": 550,
+        "sha256": "8d24c3b923ad99e4830b930ee2d73748b6db8393d7db932cf25f2ab5765ad3f3"
+      },
+      "dxc_wait_tile": {
+        "bytes": 356,
+        "sha256": "6597b44e8a64d59c3d5d19ad437cee3f3ffb5f30a7665910646f9868b1728a15"
+      },
+      "dxm_cover": {
+        "bytes": 3896,
+        "sha256": "9b28497e32eecbf892c5804b5a7cbc9240b3ca65715ff0e749380780e57fd952"
+      },
+      "dxm_device_write": {
+        "bytes": 683,
+        "sha256": "0dd1f57ae6c6bb09bb2f740864d974fe83dee1d75fd435fa05cc58e864d74afa"
+      },
+      "dxm_value": {
+        "bytes": 174,
+        "sha256": "64751d7dfd58b9fe70c8b8d4e3eddd7126e8adcc674d655d5b231314bb5fe838"
+      }
+    },
+    "unchanged_complete_backend": {
+      "bytes": 69747,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_value_backend_v1.h",
+      "sha256": "c37481e56517d29729ffc83f2eb538cc5b5cb8ce5ab831babae3287cb332956f"
+    }
+  },
+  "date": "2026-10-16 ET",
+  "decision": "HOLD_NATIVE_ARGUMENT_IDENTITY_BOUNDARY",
+  "findings": [
+    {
+      "id": "READY-NATIVE-01",
+      "location": "CONCRETE_MAIN native branch: before/issued strtoull conversions and step selector strtoul conversion",
+      "priority": 2,
+      "problem": "The native parser passes a null end pointer, omits errno/range checks and narrows values before validating their destination domain. Invalid decimal suffixes are accepted as numeric prefixes, uint32_t payloads can be truncated, and a too-wide selector can narrow into0..3. The success output records only call count. A future observer cannot infer exact requested full-u32 argument identity from this CLI/result alone.",
+      "required_repair": "Keep V1 frozen. Add a narrow canonical decimal full-token parser with checked range before casts and deterministic malformed/overflow controls, or establish an independently reviewed exact external argv/value boundary. Rebind any future native producer/result identity to that repair. No actual native run is needed to establish this source issue.",
+      "science_impact": "Symbolic CBMC full-width nondeterministic inputs and WP source relation are unaffected. Native replay readiness is held.",
+      "source": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/concrete_ready_v1.py",
+      "static_examples": [
+        "before=\"7junk\" is not checked as a complete token",
+        "before=\"4294967296\" is converted directly to uint32_t without a pre-narrowing range check",
+        "selector is converted to unsigned before selector>3 is checked; an oversized value can narrow into the valid domain"
+      ]
+    }
+  ],
+  "frozen_source_edits": false,
+  "full_read_sources": [
+    {
+      "bytes": 13578,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/concrete_ready_v1.py",
+      "sha256": "0bbe6f7b1b4a7920d0a0271b011068adbc752fb780e0a144a093b41fee0e08f0"
+    },
+    {
+      "bytes": 3840,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/test_concrete_ready_v1.py",
+      "sha256": "fe77093ae5731b1c064e7254510bcc1b698cbd0764aeb198f572bf5737126902"
+    },
+    {
+      "bytes": 2083,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/concrete-ready-v1/wp-ready.c",
+      "sha256": "5920123a4f1c6ecfd6556a305c33cc768859824e9610dedf6bf990d6c8dbe9cb"
+    },
+    {
+      "bytes": 1909,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/concrete-ready-v1/wp-zero-read.c",
+      "sha256": "56878158957a020e7f997b0f637fe746a513c5db0b1ffc63f590f12acfac0299"
+    }
+  ],
+  "limits": [
+    "This is a source/preparation review, not an actual one-step or WP proof.",
+    "Actual complete CBMC/WP/native outputs, consistency controls, same-entry typed context/constructed receiver authority, and dedicated public partial-summary admission remain pending.",
+    "No source/API declaration of the logical readiness query, no original-header call correspondence and no fairness/termination/resource completeness are inferred."
+  ],
+  "physical_controls": {
+    "all_declared_rows_before_after": true,
+    "all_three_full_generated_C_outputs_regenerated_exact": true,
+    "canonical_regular_nine_field_metadata_and_SHA": true,
+    "compiler_native_verifier_SSH_or_Git": false,
+    "exact_prepared_JSON_regeneration": true,
+    "external_attempts": [],
+    "loop_annotation_inverse_exact": true,
+    "retained_author_GREEN": {
+      "actual_exit_code": 0,
+      "compiler_native_verifier_network_attempts": 0,
+      "tests": 5
+    },
+    "retained_author_RED": {
+      "actual_exit_code": 1,
+      "before_module_existed": true,
+      "observed": "ModuleNotFoundError: No module named concrete_ready_v1"
+    },
+    "reviewer_actual_test_or_native_run": false,
+    "rows": [
+      {
+        "bytes": 76158,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/concrete-ready-v1/concrete-ready.c",
+        "sha256": "135644755ad687e4d8f8c3d18859c080153501f8b1cc4c7e6e884d767633e05e"
+      },
+      {
+        "bytes": 2083,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/concrete-ready-v1/wp-ready.c",
+        "sha256": "5920123a4f1c6ecfd6556a305c33cc768859824e9610dedf6bf990d6c8dbe9cb"
+      },
+      {
+        "bytes": 1909,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/concrete-ready-v1/wp-zero-read.c",
+        "sha256": "56878158957a020e7f997b0f637fe746a513c5db0b1ffc63f590f12acfac0299"
+      },
+      {
+        "bytes": 94299,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/concrete-ready-v1/prepared.json",
+        "sha256": "9f7e06f8485c70b038b4c942d8ad5b2a8ce83f23443adc6b8b27adc06447c6fa"
+      },
+      {
+        "bytes": 757,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/concrete-ready-v1/pure-controls-green.log",
+        "sha256": "b6d04a1bb35d6e7da700e1af5077dde466dbfdb22c0adc72a6025fee9ddd3956"
+      },
+      {
+        "bytes": 69747,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_value_backend_v1.h",
+        "sha256": "c37481e56517d29729ffc83f2eb538cc5b5cb8ce5ab831babae3287cb332956f"
+      },
+      {
+        "bytes": 13578,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/concrete_ready_v1.py",
+        "sha256": "0bbe6f7b1b4a7920d0a0271b011068adbc752fb780e0a144a093b41fee0e08f0"
+      },
+      {
+        "bytes": 3840,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/test_concrete_ready_v1.py",
+        "sha256": "fe77093ae5731b1c064e7254510bcc1b698cbd0764aeb198f572bf5737126902"
+      }
+    ]
+  },
+  "positive_scope": [
+    "One fixed constructed command/action/cell/four-constant-node relation is explicit; it is not arbitrary backend-state authority or original C++/hardware correspondence.",
+    "Pending zero preserves memory/event/action state; pending one runs the original query\u2192wait\u2192command cover\u2192node cover\u2192action completion\u2192device write path; completed state stutters and returns ready without another draw. Full uint32 before/issued values enter symbolic targets.",
+    "One-step assertions separately cover answer, pending, visible value, event count, action completion, draw count and the concrete topology/value frame. There is no hidden bounded prefix used as an unbounded proof.",
+    "The unchanged polling caller has a source-exact quotient version after only removal of the literal loop annotation. Its invariant/frame and terminates-false contract express partial correctness; the helper choice admits arbitrary zero runs and neither fairness nor eventual-one is assumed.",
+    "The negative zero-read caller invokes the same concrete/quotient observation preconditions; original model assertions and future ordinary/RTE/init/frame/smoke requirements remain pending and unfiltered.",
+    "Producer and tests are small isolated source-generation seams; full backend hashes, generated inputs, function closures, separate symbolic/native branches and false acceptance metadata avoid helper-name proof credit."
+  ],
+  "reviewer": "ticket25/caller_assess, independent of root author",
+  "scientific_or_public_adoption": false,
+  "source_packet": {
+    "bytes": 3507,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-ready-loop-20261016/concrete-ready-v1/source-packet-v1.json",
+    "sha256": "aa71c4919e10a832424d0aea2cf36c24413c98bb081283e8522f31e8f75009ed"
+  }
+}

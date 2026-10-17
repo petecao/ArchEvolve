@@ -1,0 +1,64 @@
+{
+  "actual_execution": false,
+  "argv": [
+    "ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=10",
+    "mbit10",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "190s",
+    "/usr/bin/env",
+    "-i",
+    "HOME=/data1/yanruj",
+    "LANG=C",
+    "LC_ALL=C",
+    "PATH=/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "/data1/yanruj/venvs/swdb-test/bin/python",
+    "-I",
+    "-B",
+    "-",
+    "--generation",
+    "619",
+    "--ended-utc",
+    "2026-10-16T21:28:57Z"
+  ],
+  "date": "2026-10-16 ET",
+  "local_transport_deadline_seconds": 210,
+  "observer": {
+    "bytes": 1090102,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/full-observer-v4/observer-v4.py",
+    "sha256": "2953a79db94e3fc2497bed3e82099863d79245d43d0db953233e65b1341502f3"
+  },
+  "prior_full_observer_refusal": {
+    "bytes": 3140,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-full-cold-v3-refusal-decision-20261016.json",
+    "sha256": "10a48d0a30fa2cfcdd797f5ceb06a2c47708d3464b4aa4b63314214182c2ecc7"
+  },
+  "raw_payload_transfer": false,
+  "scientific_or_native_or_tool_execution": false,
+  "source_plan_lineage": {
+    "bytes": 1342,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/record-metadata-probe-v2/source-plan-lineage.json",
+    "sha256": "d32c8fea72e6e2c6cf394fbfd410be44a049a356f10e04986f0cba82f26cecad"
+  },
+  "status": "INERT_REQUIRES_FRESH_PARENT_STATIC_REVIEW_AND_ROOT_ONCE_ADMISSION",
+  "stdin_file": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/full-observer-v4/observer-v4.py",
+  "stdout_max_bytes": 4194304,
+  "successful_cheap_semantic_probe": {
+    "bytes": 3051,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-strict-yaml-probe-execution-v1-20261016.json",
+    "sha256": "bc26edb47de31632d7cccb9a8c80f904b452cac6cb8c62310ac346c65dfa74e8"
+  },
+  "successful_complete_record_metadata_probe": {
+    "bytes": 3578,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-complete-record-probe-v2-execution-20261016.json",
+    "sha256": "7bcf12bb398bb35b50f9716a71caddd070e760ee1c24e0e62349c35c46791883"
+  },
+  "transport": "Stream exact reviewed observer over SSH stdin; no remote staging or -c payload."
+}

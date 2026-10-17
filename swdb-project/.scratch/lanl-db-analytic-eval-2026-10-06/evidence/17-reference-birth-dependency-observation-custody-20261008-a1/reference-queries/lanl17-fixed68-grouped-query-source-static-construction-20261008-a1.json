@@ -1,0 +1,77 @@
+{
+  "source_pin": {
+    "path": "/private/tmp/lanl17_read_68_remaining_grouped_RAW_reference_contexts_20261008_a1.py",
+    "bytes": 78700,
+    "sha256": "27421d13cd10507fe7dbabc67903c79c6e57bd38d9672b9225514a9c17dc1b2e"
+  },
+  "diff_pin": {
+    "path": "/private/tmp/lanl17-fixed68-grouped-query-complete-fixed111-r1-derivation-20261008.diff",
+    "bytes": 49756,
+    "sha256": "46aa84f64399b302e70d5b4e38944213231cfe9862865fe2137d52ed61abee9b"
+  },
+  "parent_source_pin": {
+    "path": "/private/tmp/lanl17_read_111_unresolved_RAW_reference_contexts_20261008_a1_r1.py",
+    "bytes": 92146,
+    "sha256": "03b8ec3cec0417ba53025f002548a6f01927e0820c5c5604c6941fa4a484afed"
+  },
+  "failed_original_pin": {
+    "path": "/private/tmp/lanl17-fixed111-original-RAW-reference-context-query-actual-20261008-a1.json",
+    "bytes": 33026896,
+    "sha256": "1efb74e79b693a06281066820442b46d4260ff8b726af08496edad55ccf8515d"
+  },
+  "input_count": 68,
+  "input_bytes": 105265473,
+  "largest_input": 25470789,
+  "suffix_counts": {
+    ".json": 45,
+    ".py": 23
+  },
+  "changed_definitions": [
+    "context_add",
+    "json_contexts",
+    "main"
+  ],
+  "new_projection_definitions": [
+    "JSON_field_pattern",
+    "charge_context",
+    "grouped_JSON_add",
+    "retain_context"
+  ],
+  "unchanged_definitions": [
+    "Refused",
+    "call_name",
+    "check_time",
+    "checked_route",
+    "emit",
+    "json_category",
+    "labels",
+    "line_contexts",
+    "path_literals",
+    "python_contexts",
+    "read_original",
+    "require",
+    "sha",
+    "source_line",
+    "stamp",
+    "utc",
+    "value_projection"
+  ],
+  "changed_assignments": [
+    "EXPECTED_FILE_COUNT",
+    "EXPECTED_INPUT_BYTES",
+    "INPUTS"
+  ],
+  "unchanged_cap_assignments": [
+    "ONE_FILE",
+    "TOTAL_BYTES",
+    "OUTPUT_BYTES",
+    "MAX_CONTEXTS",
+    "MAX_VALUE",
+    "MAX_LINE",
+    "MAX_ALIAS_USES",
+    "SECONDS"
+  ],
+  "excluded_original_completed_count": 43,
+  "first_remaining_path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-object-counts-20261006-a1/bc/counted/source.json",
+  "preparation_operation": "source text construction and AST parsing/comparison only; no selected source execution/import/lift/test/SSH/Git/project actions"
+}

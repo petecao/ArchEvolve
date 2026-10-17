@@ -1,0 +1,22 @@
+# P1 iteration progress and queued campaign custody
+
+Updated: 2026-10-08 14:15 ET.
+
+**p1 attempt1 is active on node0 generation511, with three completed iterations. No normal campaign completion is admitted.** The latest14:14 ET monitor has six completed candidate rows, with no stopped receipt, final exits or reported infrastructure error. The earlier original monitor checked at18:09:51 UTC (14:09 ET) showed two iterations/four completed candidate rows; its parent table was reported at14:10 ET. Node1/g550 and legacy/g77 are reported released. All four substantive normal trajectories, final report/audit and final Standards/Spec review remain required.
+
+| Evaluation | Actual retained state | Next gate |
+|---|---|---|
+| p1 | Active,3 iterations,6 completed candidate rows,node0/g511 | Normal terminal plus original release32 and b08 AFTER |
+| p2–p4 | Queued, no attempts | Serial predecessor custody plus fresh admission |
+| Normal trajectories | 0/4 | Four actual substantive normal terminals |
+| Ticket17 | Claimed,14/15 assigned tickets resolved | Final report/audit/review/fixes and ticket/Git sync |
+
+P3/P4 BEFORE configs and selected R1 argv/bootstrap drafts derive from the exact selected p2 R1 archive originals. Root independently reversed perCID substitutions in all three command payloads and recovered exact p2 objects. Additional wrapper provenance is documented outside executable fields. BEFORE configs are preparation only; argv/bootstrap wrappers explicitly refuse execution and retain future actual BEFORE hash/generation/UTC/exclusivity/admission/PRIMARY=R checks. No generation511 inheritance, duplicate dispatch, provider, test, collector or SSH occurred in this agent preparation. Dispatcher76de and scientific sources/M2/FIRST/policy/full catalogs/environment/waits/budgets remain unchanged. Each campaign uses serial node0/attempt1 only after its predecessor's release32 and b08 AFTER plus complete fresh admission. Parent owns all actual remote operations.
+
+The parent terminal-original collection draft is nonexecutable and future-only. After fresh R2 release_ready=True for original p1/g511, its wrapped generic capture config collects exact stopped/runner/wrapper/lane bytes from four fixed routes. It reads no state, summary, SQLite, provider/prompt/auth or raw output body. Generic mode refusal must be preserved; never chmod native/public files. Release-ready is custody readiness, not normal/substantive scientific admission. Fresh selected native checks before32 and before/after b08 and no node0 reuse remain mandatory. The held14:01 snapshot in the prior archive cannot serve as release evidence.
+
+The index is unsealed byte-preserving archival metadata. Raw scientific output remains on mbit10. Local administrative checkpoint advances separately from remote scientific R. Heartbeat remains ACTIVE; all agents were responsive at14:10 ET. No acceptance box is checked by these live counters or future inputs.
+
+The14:15 ET heartbeat refreshed three independent bounded read-only captures, all SSH0/remote0. Original14:14 ET monitor shows3 completed iterations/6 completed candidate rows with no stopped receipt or reported infrastructure error. The process query matches the owned helper and provider tree. R2 confirms held511, exact matching lease inode/kernel FLOCK/daemonFD9, no terminal files and release_ready=False with no unknown reasons. Prior14:09 second-iteration original remains unchanged. All agents completed responsive scoped work and peer checks; no stranded worker. Next scheduled table/health check14:45 ET. These active native snapshots cannot be used for release32.
+
+Selected p2–p4 dispatch-state32 request/action R1 wrappers retain typed future original BEFORE/dispatch sizes, file hashes/seals, actual stateSHA-or-absence, exclusive-ownership attestation, UTC, request seal/stage bytes/SHA/base64. Root independently confirmed original request keysets, exact fixed account/R/C/F6/M2/global p1-policy context, and all actual-derived future fields remain unset. Separate peer source review passed. Original producer32/b08/auditor6a/plan/writers/canonical policy/FIRST/control/environment/waits/budgets remain frozen. Initial local JSON-only derivation IndexError/partial draft is preserved separately from corrected R1; neither executed a control or remote command. Terminal-original draft passed separate source review; collection success means retained bytes, not atomic cross-file/native freshness or science admission.

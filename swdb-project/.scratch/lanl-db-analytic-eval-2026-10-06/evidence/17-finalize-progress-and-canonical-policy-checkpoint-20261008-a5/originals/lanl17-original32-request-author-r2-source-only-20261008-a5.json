@@ -1,0 +1,46 @@
+{
+  "state": "NARROW_AST_SOURCE_DERIVATION_NOTRUN",
+  "original_preserved": {
+    "path": "/private/tmp/lanl17_prepare_original32_requests_20261008_a5_r1.py",
+    "bytes": 18442,
+    "sha256": "7bfd5d1a28e576dce5fac250dd23f70741b2812e3eb4473df4a0a896eac2e693"
+  },
+  "source": {
+    "path": "/private/tmp/lanl17_prepare_original32_requests_20261008_a5_r2.py",
+    "bytes": 18624,
+    "sha256": "b2f39f19ddf9bd646e92b2f8b1151928d2cde72acbb0b0f31b132528b5e48c7f"
+  },
+  "derivation": {
+    "path": "/private/tmp/lanl17-original32-request-author-r2-derivation-20261008-a5.diff",
+    "bytes": 1432,
+    "sha256": "7cde91f2d6213dc90f3ea134ee18546e988a8f5cc5289588935c72902dcdc34e"
+  },
+  "drafts": [
+    {
+      "path": "/private/tmp/lanl17-original32-request-author-input-FUTURE-p1-20261008-a5-r2.json",
+      "bytes": 13985,
+      "sha256": "c3c96e2f913cb1cd252064d75f83bfc6127e1fec1b01b9c168ccb7c50b0b32cd"
+    },
+    {
+      "path": "/private/tmp/lanl17-original32-request-author-input-FUTURE-p2-20261008-a5-r2.json",
+      "bytes": 13985,
+      "sha256": "cf7536d0adda4b7f2173a72a9e307de016555b6267676ba194aced91b1155f8d"
+    },
+    {
+      "path": "/private/tmp/lanl17-original32-request-author-input-FUTURE-p3-20261008-a5-r2.json",
+      "bytes": 13985,
+      "sha256": "648a4bc03d21e5b1ee14c21d054f75f45a44011f8bd1537a12fea7a5ed62454f"
+    },
+    {
+      "path": "/private/tmp/lanl17-original32-request-author-input-FUTURE-p4-20261008-a5-r2.json",
+      "bytes": 13985,
+      "sha256": "d3bf26f05a9d8b46e057fde45e7ca70320a81cf365906647c92a56a6955768dc"
+    }
+  ],
+  "changed_behavior": "Original32 output route must start /data/yanruj/; request source metadata can remain /data1/yanruj. No other logic changed.",
+  "target_imported": false,
+  "main_executed": false,
+  "tests_run": false,
+  "remote_executed": false,
+  "actual_input_authoring": false
+}

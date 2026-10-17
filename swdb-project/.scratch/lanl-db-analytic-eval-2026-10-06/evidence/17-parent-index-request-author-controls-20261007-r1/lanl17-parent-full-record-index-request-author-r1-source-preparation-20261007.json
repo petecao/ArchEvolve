@@ -1,0 +1,120 @@
+{
+  "format": "swdb.lanl17-parent-index-request-author-r1-source-preparation.v1",
+  "canonical_ensure_ascii": true,
+  "created_utc": "2026-10-07T17:33:34.348474+00:00",
+  "state": "source_only_preparation_NOT_RUN",
+  "pins": {
+    "original_author": {
+      "path": "/private/tmp/lanl17_author_parent_full_record_index_request_20261007.py",
+      "bytes": 38076,
+      "sha256": "7f2e2d01dc8fc375a2bfb36d3654444bab15d4abfb6a4a7be86532d9971f0e3f"
+    },
+    "original_handoff": {
+      "path": "/private/tmp/lanl17-parent-full-record-index-request-author-source-handoff-20261007.md",
+      "bytes": 10131,
+      "sha256": "3c4e9281caba557dd225b09a3f3a18e6fbf8f7ab76e38ee4b7318d5baee04e74"
+    },
+    "original_index_writer": {
+      "path": "/private/tmp/lanl17_write_parent_full_record_index_20261007.py",
+      "bytes": 33445,
+      "sha256": "7a67d46f8ad7d453fe07bd458a21f663bd4dc7ec12e71de83ad8b5caaf28894b"
+    },
+    "r1_author": {
+      "path": "/private/tmp/lanl17_author_parent_full_record_index_request_r1_20261007.py",
+      "bytes": 38266,
+      "sha256": "a2e69aef10deb6186ac49401516ffba9a165b2f3cc94c8001646b6ac9a5b701d"
+    },
+    "complete_r1_diff": {
+      "path": "/private/tmp/lanl17-parent-full-record-index-request-author-r1-20261007.diff",
+      "bytes": 1722,
+      "sha256": "b314eaa15d7c15cdfb6df2b8bda2012154edb477bf7c10e50c9286327f666531"
+    },
+    "isolated_test_SOURCE_NOT_RUN": {
+      "path": "/private/tmp/lanl17_parent_index_request_author_r1_isolated_test_source_20261007.py",
+      "bytes": 9306,
+      "sha256": "3212942c5bde997e4d37ddf6768732254928d78123cb3266cac297af7d630ba3"
+    },
+    "r1_source_only_handoff": {
+      "path": "/private/tmp/lanl17-parent-full-record-index-request-author-r1-source-handoff-20261007.md",
+      "bytes": 5147,
+      "sha256": "46c66dbf42a710fbf11fada5da2d122aee6b07a2143de24399cfc4641bf7f24e"
+    }
+  },
+  "exact_original_author_byte_reversal": true,
+  "changed_function_class_ASTs": [
+    "git",
+    "main"
+  ],
+  "unchanged_common_original7a_helper_class_ASTs": [
+    "RecordLoader",
+    "Refused",
+    "approved_inventory",
+    "build_index",
+    "checked_path",
+    "digest",
+    "exact",
+    "file_pin",
+    "fresh_output",
+    "full_hash",
+    "index_record",
+    "no_duplicates",
+    "original_seal",
+    "plain_record",
+    "recheck_catalog",
+    "recheck_originals",
+    "record_relative",
+    "remaining",
+    "require",
+    "require_inventory_equal",
+    "returned_bytes",
+    "scan_catalog",
+    "scientific_source",
+    "sha",
+    "stamp",
+    "strict_json",
+    "summary_check",
+    "token",
+    "utc",
+    "validation_originals"
+  ],
+  "unchanged_original7a_named_constant_ASTs": [
+    "AUDITOR",
+    "C",
+    "CIDS",
+    "COLLECTOR",
+    "F6",
+    "HELPER",
+    "MAX_CATALOG_FILE",
+    "MAX_CATALOG_TOTAL",
+    "MAX_DEADLINE",
+    "MAX_METADATA",
+    "MAX_RECORDS",
+    "STAMP_KEYS"
+  ],
+  "unchanged_original7a_loader_setup_ASTs": 2,
+  "git_only_deliberate_original7a_AST_difference": "stderr=subprocess.PIPE keyword; removal restores original AST",
+  "original_observation_context_equality_unchanged": true,
+  "new_guard": "context.records_directory equals str(resolved records) before publication; no normalization rewrite",
+  "limits_schemas_C_F6_science_observations_unchanged": true,
+  "synthetic_test_source": {
+    "state": "NOT_RUN",
+    "methods": [
+      "test_original_route_accepts_writer_incompatible_spelling",
+      "test_R1_refuses_noncanonical_and_preserves_exact_route",
+      "test_original_git_failure_exposes_synthetic_stderr",
+      "test_R1_git_failure_is_captured_and_refusal_only_hashed",
+      "test_successful_read_only_git_bytes_and_fixed_argv_are_preserved"
+    ],
+    "lifted_helper_class_count": 6,
+    "named_original_assignments": [
+      "CIDS"
+    ],
+    "main_or_module_or_loader_or_scientific_functions_imported_or_executed": false,
+    "Git_subprocess_calls": "mocked only on future authorized isolated run"
+  },
+  "preparation_setup_correction": "Initial metadata assertion included main in common helper count; stopped before packet publication. Named-helper comparison excludes main. No source/test/original bytes changed and no test body executed.",
+  "actual_inputs_requests_catalogs_fixtures_sourceimports_test_bodies_mains_Store_provider_native_remote_Git_mutations_executed": false,
+  "original_packets_and_selected_writer_preserved": true,
+  "parent_full_review_required_before_any_execution": true,
+  "identity_sha256": "acf228e14a566c9637ca8694588cee96bfaf8ac2ea20e29637c9d3999ef19166"
+}

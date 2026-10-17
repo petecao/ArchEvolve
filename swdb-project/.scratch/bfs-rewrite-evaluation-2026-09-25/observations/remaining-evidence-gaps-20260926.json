@@ -1,0 +1,201 @@
+{
+  "created": "2026-09-26",
+  "review_kind": "independent_remaining_evidence_gap_audit",
+  "head": "5474e7ea7cfe9d5eff550f7edce416efad5e6f30",
+  "scope": "Local source, all 21 contracts and retained typed observations; no host reopening, tests, new dispatch or source changes. This is not final all-ticket acceptance review.",
+  "report": {
+    "path": "/private/tmp/bfs-remaining-evidence-gaps-20260926.md",
+    "bytes": 3513,
+    "sha256": "31692c9f16d254dd09b499c4aea01a5891dde2bde9ff0abedd7b855ed9066bc6"
+  },
+  "statuses": {
+    "01-shared-bfs-identity-and-baselines.md": "resolved",
+    "02-patch-proposal-to-candidate.md": "resolved",
+    "03-native-bfs-evaluation.md": "resolved",
+    "04-instruction-rewriting-and-repair.md": "resolved",
+    "05-annotated-source-rewriting.md": "resolved",
+    "06-function-hotspot-discovery.md": "resolved",
+    "07-loop-discovery-and-reprofiling.md": "resolved",
+    "08-dynamic-memory-observations.md": "resolved",
+    "09-profile-packages-and-strategy-lookup.md": "resolved",
+    "10-dx100-operation-contracts.md": "resolved",
+    "11-workloads-and-comparison-protocols.md": "resolved",
+    "12-dx100-build-and-execution.md": "resolved",
+    "13-dx100-timed-binary-correctness.md": "claimed",
+    "14-dx100-region-and-memory-profiling.md": "resolved",
+    "15-baseline-pilot-and-protocol-freeze.md": "claimed",
+    "16-artifact-reference-and-controls.md": "claimed",
+    "17-dx100-instruction-route-acceptance.md": "claimed",
+    "18-dx100-patch-route-acceptance.md": "claimed",
+    "19-upstream-instruction-route-acceptance.md": "claimed",
+    "20-upstream-annotated-route-acceptance.md": "claimed",
+    "21-coverage-roi-gain-and-handoff.md": "claimed"
+  },
+  "inputs": [
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/spec.md",
+      "bytes": 44926,
+      "sha256": "9cff9a1ac5371ce7e64c65f1bd205e0c445d29e087cc372953b437baea471aed"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/map.md",
+      "bytes": 119947,
+      "sha256": "0819fb515052a1130ddec702fb6c7ac8418ad8b7d76a73db21ee6d77f8466bcc"
+    },
+    {
+      "path": "docs/bfs-handoff.md",
+      "bytes": 17277,
+      "sha256": "031b377371dc2e32e3f137f7bbf649052a6cf1a1b552e6cf4357ce24284a067f"
+    },
+    {
+      "path": "scripts/bfs_freeze_pilot.py",
+      "bytes": 54032,
+      "sha256": "6607a22eaae8d10e8f31c7dd53b80aa3fe4944935c3a1edc4f72514e015be5c6"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/issues/01-shared-bfs-identity-and-baselines.md",
+      "bytes": 6457,
+      "sha256": "7f731ca99f69759919c64afa5e9a5913dfb910cf54aec0b55f994964c37c9244"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/issues/02-patch-proposal-to-candidate.md",
+      "bytes": 5495,
+      "sha256": "4cf10d0a296944ae234737ed63648a458fdb85ed608254400605bf91494590df"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/issues/03-native-bfs-evaluation.md",
+      "bytes": 6449,
+      "sha256": "9382ba1459ed68451f719e0faaa684b634dddf87c3780dca8f1cbe09ef70aee2"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/issues/04-instruction-rewriting-and-repair.md",
+      "bytes": 6211,
+      "sha256": "8fd4ff31808c8b99c11563a48528deb87574ad2fead43f4b3035ea58f0f9ad0b"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/issues/05-annotated-source-rewriting.md",
+      "bytes": 5274,
+      "sha256": "bd6e776f27e64a35d91c4ff82c1bca95d5cad2373e45aff6cf7de568cb6b3d3c"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/issues/06-function-hotspot-discovery.md",
+      "bytes": 7743,
+      "sha256": "4592a19661616c80a5b23f020cf1ce80af362866337e41bdb994f5a78dc8e65c"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/issues/07-loop-discovery-and-reprofiling.md",
+      "bytes": 7915,
+      "sha256": "6ab0cf0a7f3c7108e47683693e42d51dd1398ca33e42068d5a603aadafa4655c"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/issues/08-dynamic-memory-observations.md",
+      "bytes": 10707,
+      "sha256": "04cd1eec46aa7a7ea64a301221962370dfc1c566ec9ea298bc6c6052a3a5a942"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/issues/09-profile-packages-and-strategy-lookup.md",
+      "bytes": 10568,
+      "sha256": "5710c8156cf88995797f397e94f69ed6ac5d2edc6425d5eaf724f61f77abf8b2"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/issues/10-dx100-operation-contracts.md",
+      "bytes": 6954,
+      "sha256": "c21cc1e024ae3cf77bd21d17fe5a8f6d32db06f6ced7d20b943d067ea6afede2"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/issues/11-workloads-and-comparison-protocols.md",
+      "bytes": 11901,
+      "sha256": "7453f54dae4c6e5b97f09c5eb4632fb2a25e2e3fba6ccff21c86007a569a3250"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/issues/12-dx100-build-and-execution.md",
+      "bytes": 13083,
+      "sha256": "65293376acaea4f1339de1dd8a342b1ef0329abd8881f157dde1a989e96303a1"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/issues/13-dx100-timed-binary-correctness.md",
+      "bytes": 20659,
+      "sha256": "dccb49dc15861717462c4620ef6fb69fc755f70ca2a1f4419bf55b0f1dd32a3b"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/issues/14-dx100-region-and-memory-profiling.md",
+      "bytes": 14968,
+      "sha256": "60a9b5e936da9a07935705698a585af56b18a1ed4d2109ecb80690dbb5460bf3"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/issues/15-baseline-pilot-and-protocol-freeze.md",
+      "bytes": 28839,
+      "sha256": "1804e7a4f650a8c3d46cba456cd9e034df7ab5f058101080385ef658e4901c8e"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/issues/16-artifact-reference-and-controls.md",
+      "bytes": 8221,
+      "sha256": "bb78d778026636ac9e97c45ba1a4ffd5178f8aadf9a48bbba6ff5654d12aaef3"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/issues/17-dx100-instruction-route-acceptance.md",
+      "bytes": 6863,
+      "sha256": "03b993fc3a952939b6a80d8ac5e0bf57585e5610b8dc91d9eeff4238c5b50947"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/issues/18-dx100-patch-route-acceptance.md",
+      "bytes": 8084,
+      "sha256": "a3b82dc4c850c3ffe908fa8d2c932a1896c75e18096e75e8ee1f1f29a8cd6535"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/issues/19-upstream-instruction-route-acceptance.md",
+      "bytes": 4990,
+      "sha256": "1dcc16f4ef105d58f3965cdbbcbd4691fad4a1818f7208421a4c5cef5d54fd26"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/issues/20-upstream-annotated-route-acceptance.md",
+      "bytes": 6299,
+      "sha256": "05b455f522d58a5d8ade781d5b2a8e9876d6464ab4c4c283806316bedf9bf31a"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/issues/21-coverage-roi-gain-and-handoff.md",
+      "bytes": 17497,
+      "sha256": "ac5446fe76c8e122892fd6cba73d736fe13f2f56028ef1775d9d06627b463747"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/observations/native-one-thread-terminal-20260926.json",
+      "bytes": 1969,
+      "sha256": "ad5dcc58d683d16bc34837ce4368299f2d4510a5f74e4b1558eaad9b87fd3e86"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/observations/native-readback-failure-20260926.json",
+      "bytes": 2752,
+      "sha256": "d009bff4742e998ea62837a89787e2c325f9228dfb114e74f0bcc00f5987aaa5"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/observations/a2-corrected-fixtures-actual-20260926.json",
+      "bytes": 11555,
+      "sha256": "ed14605e03eb96aa9b3ce935b3d8bd406d37132257081c72f192df810410876f"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/observations/provider-initial-summary-20260926.json",
+      "bytes": 3202,
+      "sha256": "dc7a149e98524935dcd10576af13d4ac5e25b9b93bb44a8ef41cc543bf40fcf2"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/observations/t17-build-only-terminal-20260926.json",
+      "bytes": 1930,
+      "sha256": "a124548a4d1e71003faeb895d9e09d1e060933ba41a99f1d9ae282689c886536"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/observations/dx100-coverage-terminal-20260926.json",
+      "bytes": 2930,
+      "sha256": "d4945309759afcd505f7f8c49716fd88c068f38e6e4cc9140292fc1b7aea0c12"
+    }
+  ],
+  "latest_unsealed_host_report": {
+    "time": "2026-09-26 19:00:20 ET",
+    "run": "bfs-native-one-thread-readback-20260926-a2",
+    "state": "failed_before_pinned_reader",
+    "error": "campaign_runtime root entry guard rejected untracked entry; exact entry and closure pending Host audit",
+    "outer_exit": 1,
+    "lease_generation": 328,
+    "no_retry": true,
+    "independently_reopened": false
+  }
+}

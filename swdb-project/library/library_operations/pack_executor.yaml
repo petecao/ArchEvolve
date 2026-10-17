@@ -1,0 +1,136 @@
+# Library operation seeded from Extensa (ticket 50). Created 2026-10-03 ET.
+id: operation.pack_executor
+kind: library_operation
+provenance:
+  origin:
+    kind: extensa_source
+    repository: MaizeHPC/MemAcc
+    commit: af3d6d7f7a69a72facdc3b95b42e78c952f44a76
+    paths:
+    - DataLayoutAPI/data_layout.hh
+    - DataLayoutAPI/data_layout_impl.hh
+    - AgenticRefiner/transformations/pack/pack_executor.yaml
+  license: Apache-2.0 WITH LLVM-exception (Q66 assumption, pending Peter)
+  semantics:
+    source: AgenticRefiner/transformations/pack/pack_executor.yaml
+    version: 1.1.0
+    output_equivalence: bitwise_identical
+signature: template <typename ValueT, typename IndexT> class PackExecutor { void initialize_packed_array(size_t);
+  void load_to_pack(const ValueT* source, const std::vector<IndexT*>& indices, int64_t coeff, int64_t offset); ValueT
+  get_packed_value(size_t); }
+intent: 'Reshape a sparse-source layout into a contiguous packed buffer through an n-level chained index: for each
+  packed slot i, idx = i; idx = indices[j][idx] for every level j; packed[i] = source[idx * coeff + offset].'
+location:
+  root: library
+  path: library_operations/pack.hh
+  symbol: PackExecutor
+code_sha256: 42c511058e51d88caf94388f715b7578d5356e7dfe80423ed8cf0d1f740c6605
+reference_semantics:
+  root: library
+  path: library_operations/reference/movement_reference.hh
+  sha256: 465470e4b50f4446801f005fc0bb787f4e4b064d8585044ca710c91d28cbcc8c
+  symbol: pack_gather
+uses_intrinsics: []
+uses_library_operations: []
+differential_test:
+  root: library
+  path: library_operations/drivers/pack_run.cpp.tmpl
+  sha256: 3179b82f7f5ccd534050046c6ff5aaf41e3d1ff6b25b3557208c298563d904b6
+  family: pack
+  files:
+    reference_template:
+      root: library
+      path: library_operations/drivers/pack_ref.cpp.tmpl
+      sha256: 05e5fd0b24da80ae539054a56bff7069a7b1ce724eae22900c5d27b7ca5f6efc
+    candidate_template:
+      root: library
+      path: library_operations/drivers/pack_executor_cand.cpp.tmpl
+      sha256: 7ef5d8352f83c9cc9b1c3dadc3ccd620eecdea166ed8c5140642a94059877ccc
+  input_set:
+    generator: chained_pack
+    seeds: post_hoc
+    depths:
+    - 1
+    - 2
+    patterns:
+    - random
+    - all_zero
+    - all_max
+    - reverse
+    - dup_max
+    - strided
+    sizes:
+      n: 257
+      n_src: 1031
+  probe:
+    marker: SWDB probe site
+    method: load_to_pack
+    var: pe
+    predicates:
+    - no_aliasing_between_src_and_dest
+    binding:
+      src:
+        expr: src
+        len: n_src
+      packed:
+        expr: packed
+        len: n
+    origins:
+      src: driver_operand
+      packed: driver_operand
+clauses:
+- id: no_aliasing_between_src_and_dest
+  role: legality
+  statement: The source array and the packed destination do not alias, and the source is not written.
+  formal:
+    language: extensa_predicate
+    predicate: alias(src[], packed[]) == false
+  formal_label: stated
+  discharge_mode: differential_test
+  negative_control:
+    id: aliasing_write
+    kind: aliasing
+    check: frame_violation
+    mutation:
+      root: library
+      path: library_operations/controls/pack_executor.aliasing_write.hh
+      sha256: 581cc5a54fbe6f7224e8c65679183d3b168f684f92bcbce73d46a4809c8d1811
+- id: every_chain_array_readonly_in_region
+  role: frame
+  statement: No array of the index chain is written while packing.
+  formal:
+    language: extensa_predicate
+    predicate: 'forall m in indices: not writes(loop, m)'
+  formal_label: stated
+  discharge_mode: assumed
+  owner: Extensa contract pack_executor.yaml (legality.structured)
+  evidence: The differential driver compares every chain array with its pre-call copy (frame check).
+  negative_control:
+    id: none
+    reason: the aliasing_write control exercises the same frame check
+- id: slot_reads_its_own_chain
+  role: postcondition
+  statement: packed[i] walks the chain starting from slot i, for every i in [0, n).
+  natural_language_only: bitwise equality with the plain C++ reference is the check
+  discharge_mode: differential_test
+  negative_control:
+    id: off_by_one_index
+    kind: index_bounds
+    check: differential_mismatch
+    mutation:
+      root: library
+      path: library_operations/controls/pack_executor.off_by_one_index.hh
+      sha256: a809e3f0eab2e66c90975b2e0ee106b20bb40bdd7c6fe6dcb315197559121a90
+- id: every_chain_level_applied
+  role: postcondition
+  statement: All K = indices.size() levels of the chain are applied, in order.
+  natural_language_only: bitwise equality with the plain C++ reference is the check
+  discharge_mode: differential_test
+  negative_control:
+    id: dropped_chain_level
+    kind: dropped_operand
+    check: differential_mismatch
+    mutation:
+      root: library
+      path: library_operations/controls/pack_executor.dropped_chain_level.hh
+      sha256: 7df98a51c558f043257d06c0b33c5205dfc70ca6a5207fc821061105b42d33c6

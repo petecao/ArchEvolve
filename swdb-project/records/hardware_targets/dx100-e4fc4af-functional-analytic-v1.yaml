@@ -1,0 +1,107 @@
+kind: hardware_target
+schema_version: '0.4'
+id: dx100-e4fc4af-functional-analytic-v1
+status: draft
+created: '2026-10-06'
+updated: '2026-10-06'
+provenance:
+- id: functional-source
+  kind: source_code
+  description: Fresh functional-source/configuration identity; no output, calibration,
+    build-readiness or performance evidence imported.
+  uri: https://github.com/arkhadem/DX100/tree/e4fc4afdf894f295442cef3604667a469fab8e62
+name: DX100 pinned configuration and FUNC source-only analytic identity
+model:
+  id: dx100-source-configuration
+  revision: e4fc4afdf894f295442cef3604667a469fab8e62
+interface:
+  id: dx100-functional-source
+  version: 1.0-e4fc4af
+backend:
+  id: functional-source
+  readiness: source_supported
+  build_evidence: []
+execution_host: null
+configuration:
+  evidence_scope: configuration_declarations_only
+  cores: 4
+  clock_hz: 3200000000
+  tile_elements: 16384
+  memory_channels: 2
+  transaction_bytes: 64
+  memory_ranks: 1
+  bank_groups: 4
+  banks_per_group: 4
+  row_bits: 16
+  column_bits: 7
+  controller_queue_entries: 32
+  cpu_model_declaration: X86O3CPU
+  native_physical_placement: null
+  effective_memory_parallelism: null
+  host_instruction_rates: null
+operations:
+- dx100.functional.v1.session_begin
+- dx100.functional.v1.thread_context
+- dx100.functional.v1.const_i32
+- dx100.functional.v1.wait
+- dx100.functional.v1.gather
+- dx100.functional.v1.stream_load
+- dx100.functional.v1.range_loop
+- dx100.functional.v1.tile_size
+- dx100.functional.v1.tile_pointer
+- dx100.functional.v1.alu_scalar
+source_evidence:
+- uri: https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/scripts/sim.py
+  path: scripts/sim.py
+  sha256: 82c8d78e4339f1be9249c0e92db8a8d5f9654310f1fe4dc91680da6a9e0f7681
+  lines:
+  - 90
+  - 235
+- uri: https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/configs/common/Options.py
+  path: configs/common/Options.py
+  sha256: 91e2f35957b62b2d331d490c76858b36c6d779886dc20fa3b11f17226b80916c
+  lines:
+  - 173
+  - 177
+- uri: https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/configs/common/MemConfig.py
+  path: configs/common/MemConfig.py
+  sha256: b86a10d1e42bed8558f78fc928f499b141995d269a45e0f157da34c6e791f352
+  lines:
+  - 155
+  - 264
+- uri: https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/ext/ramulator2/ramulator2/src/addr_mapper/impl/linear_mappers.cpp
+  path: ext/ramulator2/ramulator2/src/addr_mapper/impl/linear_mappers.cpp
+  sha256: 50b81367aeaa0e1c2df92f5d05586018d0d457db9dc807823fb74de6339d2339
+  lines:
+  - 25
+  - 93
+- uri: https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/ext/ramulator2/ramulator2/src/dram/impl/DDR4.cpp
+  path: ext/ramulator2/ramulator2/src/dram/impl/DDR4.cpp
+  sha256: b85f67de5bc9495f91ea51112c0ce5b9396c4e35473e219b6f06821e9d9aa5cc
+  lines:
+  - 25
+  - 49
+- uri: https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/ext/ramulator2/ramulator2/example_gem5_config.yaml
+  path: ext/ramulator2/ramulator2/example_gem5_config.yaml
+  sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+  lines:
+  - 1
+  - 60
+- uri: https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/ext/ramulator2/ramulator2/src/memory_system/impl/generic_DRAM_system.cpp
+  path: ext/ramulator2/ramulator2/src/memory_system/impl/generic_DRAM_system.cpp
+  sha256: f6e0b562be75766e2c48d45346e794f5c48b3d4e1c59b32e90596fe95a90374e
+  lines:
+  - 159
+  - 175
+- uri: https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/src/mem/MAA/MAA.cc
+  path: src/mem/MAA/MAA.cc
+  sha256: 058395cbd171ccf3746fb524967d2d205cb8d622d4aa06e8eef530b00dc21299
+  lines:
+  - 261
+  - 339
+- uri: https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/src/mem/MAA/MAA.py
+  path: src/mem/MAA/MAA.py
+  sha256: 347f0e08124bf9d951fb3ee24654074b5d681b71bc6168538c82dbd0b35856f2
+  lines:
+  - 26
+  - 75

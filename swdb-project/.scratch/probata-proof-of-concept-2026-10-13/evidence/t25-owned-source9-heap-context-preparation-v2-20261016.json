@@ -1,0 +1,2998 @@
+{
+  "classification": "OFFLINE_POSITIONAL_HEAP_CONTEXT_AND_DEFINITION_JOIN_PENDING_INDEPENDENT_REVIEW",
+  "controls": {
+    "bytes": 8248,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/test_heap_context_v2.py",
+    "sha256": "9302409e2078fcd5e0f3f42b7e5124fec5355bb7f3a7ff9771ab71bcd1d2e966"
+  },
+  "counts": {
+    "complete_Heap_definition_instances": 462,
+    "complete_cell_and_map_support_instances": 158,
+    "definition_roles": {
+      "H_aligned": 26,
+      "H_automatic_available": 14,
+      "H_begin_automatic": 14,
+      "H_can_read": 26,
+      "H_can_write": 26,
+      "H_contents": 26,
+      "H_freeable": 26,
+      "H_initialized_at": 26,
+      "H_integer_at": 26,
+      "H_issued": 26,
+      "H_live": 26,
+      "H_load_int": 26,
+      "H_pointer_at": 26,
+      "H_put_integer": 26,
+      "H_put_pointer": 26,
+      "H_release": 14,
+      "H_same_object": 4,
+      "H_separated": 26,
+      "H_typed_writes": 26,
+      "H_well_formed": 26
+    },
+    "modes": {
+      "closed_axiomatized_polymorphic_sum": 18,
+      "native_algebraic_sum": 8
+    },
+    "tasks": 26
+  },
+  "date": "2026-10-16 ET",
+  "history": [
+    {
+      "bytes": 3134,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/heap-position-history-v2/red.log",
+      "sha256": "0a755461668173732ce468f08ce123a3924eaefba166a9dcd895cbb1f9d6e00d"
+    },
+    {
+      "bytes": 2332,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/heap-position-history-v2/green.log",
+      "sha256": "0450f0552b3ff578dcc63b29fe13267e2bcbee77171cda5fa8185faf6584ae8f"
+    }
+  ],
+  "implementation": {
+    "bytes": 18821,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/heap_reader_v2.py",
+    "sha256": "66fb703fd3b2a0503ca834613081740527d54f53b05d3b2e38fd81b477983bf2"
+  },
+  "inputs": [
+    {
+      "bytes": 500042,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-source9-math-ast-v3-actual-stdout-20261016.json",
+      "sha256": "9924e02166c0613047bf750b31a06508b67d5eb8853fec79a59c8f1d926b5a72"
+    },
+    {
+      "bytes": 5598,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-source9-math-ast-v3-actual-execution-20261016.json",
+      "sha256": "9235ac6f18cfaa595052755255268dd16f2f12881aeb92d06ed30269b7c39421"
+    },
+    {
+      "bytes": 22718,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-cold/semantic_terms.py",
+      "sha256": "eb0265a44d147f062292bd32c299edd58dd3045cec252cfbe0369eb4726948fa"
+    },
+    {
+      "bytes": 8386,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/heap_reallocation.mlw",
+      "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+    }
+  ],
+  "no_actual_solver_submitted_byte_or_historical_runtime_attestation": true,
+  "observed_controls": {
+    "GREEN": {
+      "errors": 0,
+      "failures": 0,
+      "passed": 15
+    },
+    "actual_metadata_commands_or_proof_tools_rerun": false,
+    "external_attempts": [],
+    "genuine_RED": {
+      "failed": 1,
+      "passed": 14,
+      "reason": "Same-sort function parameters were incorrectly permutable under V1 outer-forall canonicalization."
+    }
+  },
+  "scientific_mathematical_source_Heap_Typed_caller_default_or_public_admission": false,
+  "scope": [
+    "All ordered Heap/state product fields, declared signatures, eight complete polymorphic sum laws or exact native sum datatype, and exact typed false-map law are checked.",
+    "All20 observed Heap source-definition roles match independently transcribed complete typed source bodies; source fresh_id/end_automatic inline aliases and two exact cell projection matches only.",
+    "Projection laws imply constructor injectivity, unequal index values imply disjointness, exhaustiveness closes the sum, and complete polymorphic match equations agree on both constructors. Normal datatype/Int/Real/Array/driver/compiler/solver foundations remain explicit TCB.",
+    "Unknown extra assertions/functions are never accepted by this component. Every remaining source definition, standard support assertion and full goal must be separately joined by the outer reader.",
+    "Function parameter order is fixed; only quantifiers inside the function body may commute under separately checked normalization. New mutation reproduces the prior acceptance of swapped Pointer target/offset and now refuses it."
+  ],
+  "supersedes": {
+    "implementation": {
+      "bytes": 16429,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/heap_reader.py",
+      "sha256": "c0b3973ec47da0071e58247e54ac91373d312bd9740491c3a14b631ef7ec7134"
+    },
+    "preparation": {
+      "bytes": 92761,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-source9-heap-context-preparation-v1-20261016.json",
+      "sha256": "8faccfaa010f84306f9702957e619a0c15bf3fef91ee228ccf265be67aab0c5a"
+    },
+    "scope": "Only body comparison now alpha-renames function parameters in their exact ordered positions with capture-aware bound/let/match handling before body canonicalization. All datatype/declaration/law/constant-map/source/capture identities remain unchanged.",
+    "status": "HOLD_UNSOUND_FUNCTION_PARAMETER_PERMUTATION_NO_ADOPTION_OCCURRED"
+  },
+  "tasks": [
+    {
+      "artifact": {
+        "bytes": 13515,
+        "kind": "regular",
+        "relative": "owned-source9-public-v3-profile/leaf-move.destination_header/prover-files/typed_real/check_lemma_t25_owned_effect_move_destination_header_Why3_Alt_Ergo_2_6_4.psmt2",
+        "sha256": "c82beb710f6fd27c7599f5b870cbf7f6758ad7840f17bd91ce160e9b125e6bab"
+      },
+      "cell_and_map_support_form_sha256": [
+        "3571f109b9e8c1868520fdc35b2f9ac3884f8e115fb08c6e99c3c99bc18756b6",
+        "d2ce060134c6647035c0b61baa257272121865b6945b3aaacc3deb1c8bc0e695",
+        "24b72ea916c35f335949e56d20e140cce0f4f4f8d45fe5e4e5e05215f15a9138",
+        "4ceb6bc05d319b522028b07d4ecb164a86dc47dc408a262f60b3d5826cb94639",
+        "e27adc2facca67026d07d556126e2c89050dd08c34095b5097e697823f5a6a9c",
+        "43cc4e61c6c6eaf8e69dbb3e174d74e71158e9288e4c1f996d5639460e340543",
+        "4cec523cf9add65a596bd2c522c06bf92cde4dac61ce938bb533130464447312",
+        "78bf7b1c72c2d1c0567837247fffead59662e5dd65ff9a3707ac01e99e81299e"
+      ],
+      "complete_declarations": 12,
+      "id": "move.destination_header",
+      "matched_heap_definitions": [
+        {
+          "complete_typed_body_equal": true,
+          "name": "live",
+          "role": "H_live"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "issued",
+          "role": "H_issued"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "separated",
+          "role": "H_separated"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "aligned",
+          "role": "H_aligned"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "well_formed",
+          "role": "H_well_formed"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "contents",
+          "role": "H_contents"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "initialized_at",
+          "role": "H_initialized_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "integer_at",
+          "role": "H_integer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "pointer_at",
+          "role": "H_pointer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_read",
+          "role": "H_can_read"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_write",
+          "role": "H_can_write"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "typed_writes",
+          "role": "H_typed_writes"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "freeable",
+          "role": "H_freeable"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_integer",
+          "role": "H_put_integer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_pointer",
+          "role": "H_put_pointer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "load_int",
+          "role": "H_load_int"
+        }
+      ],
+      "mode": "closed_axiomatized_polymorphic_sum",
+      "other_functions_support_goal_admitted": false
+    },
+    {
+      "artifact": {
+        "bytes": 13479,
+        "kind": "regular",
+        "relative": "owned-source9-public-v3-profile/leaf-move.destination_header/prover-files/typed_real/zilch-typed_real_check_lemma_t25_owned_effect_move_destination_header_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+        "sha256": "5379fd89fcbe0f75107ce470ea2fbb4b118d7a2b0b8d4bc1facc95785f779be0"
+      },
+      "cell_and_map_support_form_sha256": [
+        "3571f109b9e8c1868520fdc35b2f9ac3884f8e115fb08c6e99c3c99bc18756b6",
+        "d2ce060134c6647035c0b61baa257272121865b6945b3aaacc3deb1c8bc0e695",
+        "24b72ea916c35f335949e56d20e140cce0f4f4f8d45fe5e4e5e05215f15a9138",
+        "4ceb6bc05d319b522028b07d4ecb164a86dc47dc408a262f60b3d5826cb94639",
+        "e27adc2facca67026d07d556126e2c89050dd08c34095b5097e697823f5a6a9c",
+        "43cc4e61c6c6eaf8e69dbb3e174d74e71158e9288e4c1f996d5639460e340543",
+        "4cec523cf9add65a596bd2c522c06bf92cde4dac61ce938bb533130464447312",
+        "78bf7b1c72c2d1c0567837247fffead59662e5dd65ff9a3707ac01e99e81299e"
+      ],
+      "complete_declarations": 12,
+      "id": "move.destination_header",
+      "matched_heap_definitions": [
+        {
+          "complete_typed_body_equal": true,
+          "name": "live",
+          "role": "H_live"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "issued",
+          "role": "H_issued"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "separated",
+          "role": "H_separated"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "aligned",
+          "role": "H_aligned"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "well_formed",
+          "role": "H_well_formed"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "contents",
+          "role": "H_contents"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "initialized_at",
+          "role": "H_initialized_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "integer_at",
+          "role": "H_integer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "pointer_at",
+          "role": "H_pointer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_read",
+          "role": "H_can_read"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_write",
+          "role": "H_can_write"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "typed_writes",
+          "role": "H_typed_writes"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "freeable",
+          "role": "H_freeable"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_integer",
+          "role": "H_put_integer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_pointer",
+          "role": "H_put_pointer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "load_int",
+          "role": "H_load_int"
+        }
+      ],
+      "mode": "closed_axiomatized_polymorphic_sum",
+      "other_functions_support_goal_admitted": false
+    },
+    {
+      "artifact": {
+        "bytes": 13513,
+        "kind": "regular",
+        "relative": "owned-source9-public-v3-profile/leaf-move.source_empty/prover-files/typed_real/check_lemma_t25_owned_effect_move_source_empty_Why3_Alt_Ergo_2_6_4.psmt2",
+        "sha256": "3e2980b1bcbb838c98fcf2f7570e0b129191c191f77e6fad79e73735bf9fe909"
+      },
+      "cell_and_map_support_form_sha256": [
+        "3571f109b9e8c1868520fdc35b2f9ac3884f8e115fb08c6e99c3c99bc18756b6",
+        "d2ce060134c6647035c0b61baa257272121865b6945b3aaacc3deb1c8bc0e695",
+        "24b72ea916c35f335949e56d20e140cce0f4f4f8d45fe5e4e5e05215f15a9138",
+        "4ceb6bc05d319b522028b07d4ecb164a86dc47dc408a262f60b3d5826cb94639",
+        "e27adc2facca67026d07d556126e2c89050dd08c34095b5097e697823f5a6a9c",
+        "43cc4e61c6c6eaf8e69dbb3e174d74e71158e9288e4c1f996d5639460e340543",
+        "4cec523cf9add65a596bd2c522c06bf92cde4dac61ce938bb533130464447312",
+        "78bf7b1c72c2d1c0567837247fffead59662e5dd65ff9a3707ac01e99e81299e"
+      ],
+      "complete_declarations": 12,
+      "id": "move.source_empty",
+      "matched_heap_definitions": [
+        {
+          "complete_typed_body_equal": true,
+          "name": "live",
+          "role": "H_live"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "issued",
+          "role": "H_issued"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "separated",
+          "role": "H_separated"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "aligned",
+          "role": "H_aligned"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "well_formed",
+          "role": "H_well_formed"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "contents",
+          "role": "H_contents"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "initialized_at",
+          "role": "H_initialized_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "integer_at",
+          "role": "H_integer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "pointer_at",
+          "role": "H_pointer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_read",
+          "role": "H_can_read"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_write",
+          "role": "H_can_write"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "typed_writes",
+          "role": "H_typed_writes"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "freeable",
+          "role": "H_freeable"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_integer",
+          "role": "H_put_integer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_pointer",
+          "role": "H_put_pointer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "load_int",
+          "role": "H_load_int"
+        }
+      ],
+      "mode": "closed_axiomatized_polymorphic_sum",
+      "other_functions_support_goal_admitted": false
+    },
+    {
+      "artifact": {
+        "bytes": 13477,
+        "kind": "regular",
+        "relative": "owned-source9-public-v3-profile/leaf-move.source_empty/prover-files/typed_real/zilch-typed_real_check_lemma_t25_owned_effect_move_source_empty_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+        "sha256": "60aaab5813629b0df45fc85345c1ec0f023fafd36f1140826aa7c21135825a54"
+      },
+      "cell_and_map_support_form_sha256": [
+        "3571f109b9e8c1868520fdc35b2f9ac3884f8e115fb08c6e99c3c99bc18756b6",
+        "d2ce060134c6647035c0b61baa257272121865b6945b3aaacc3deb1c8bc0e695",
+        "24b72ea916c35f335949e56d20e140cce0f4f4f8d45fe5e4e5e05215f15a9138",
+        "4ceb6bc05d319b522028b07d4ecb164a86dc47dc408a262f60b3d5826cb94639",
+        "e27adc2facca67026d07d556126e2c89050dd08c34095b5097e697823f5a6a9c",
+        "43cc4e61c6c6eaf8e69dbb3e174d74e71158e9288e4c1f996d5639460e340543",
+        "4cec523cf9add65a596bd2c522c06bf92cde4dac61ce938bb533130464447312",
+        "78bf7b1c72c2d1c0567837247fffead59662e5dd65ff9a3707ac01e99e81299e"
+      ],
+      "complete_declarations": 12,
+      "id": "move.source_empty",
+      "matched_heap_definitions": [
+        {
+          "complete_typed_body_equal": true,
+          "name": "live",
+          "role": "H_live"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "issued",
+          "role": "H_issued"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "separated",
+          "role": "H_separated"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "aligned",
+          "role": "H_aligned"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "well_formed",
+          "role": "H_well_formed"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "contents",
+          "role": "H_contents"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "initialized_at",
+          "role": "H_initialized_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "integer_at",
+          "role": "H_integer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "pointer_at",
+          "role": "H_pointer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_read",
+          "role": "H_can_read"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_write",
+          "role": "H_can_write"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "typed_writes",
+          "role": "H_typed_writes"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "freeable",
+          "role": "H_freeable"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_integer",
+          "role": "H_put_integer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_pointer",
+          "role": "H_put_pointer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "load_int",
+          "role": "H_load_int"
+        }
+      ],
+      "mode": "closed_axiomatized_polymorphic_sum",
+      "other_functions_support_goal_admitted": false
+    },
+    {
+      "artifact": {
+        "bytes": 14529,
+        "kind": "regular",
+        "relative": "owned-source9-public-v3-profile/leaf-move.incoming_frame/prover-files/typed_real/check_lemma_t25_owned_effect_move_incoming_frame_Why3_Alt_Ergo_2_6_4.psmt2",
+        "sha256": "d6d276b23f66e028b7244bcddad9e6817a1767986f364adef61ce394e8747ce9"
+      },
+      "cell_and_map_support_form_sha256": [
+        "3571f109b9e8c1868520fdc35b2f9ac3884f8e115fb08c6e99c3c99bc18756b6",
+        "d2ce060134c6647035c0b61baa257272121865b6945b3aaacc3deb1c8bc0e695",
+        "24b72ea916c35f335949e56d20e140cce0f4f4f8d45fe5e4e5e05215f15a9138",
+        "4ceb6bc05d319b522028b07d4ecb164a86dc47dc408a262f60b3d5826cb94639",
+        "e27adc2facca67026d07d556126e2c89050dd08c34095b5097e697823f5a6a9c",
+        "43cc4e61c6c6eaf8e69dbb3e174d74e71158e9288e4c1f996d5639460e340543",
+        "4cec523cf9add65a596bd2c522c06bf92cde4dac61ce938bb533130464447312",
+        "78bf7b1c72c2d1c0567837247fffead59662e5dd65ff9a3707ac01e99e81299e"
+      ],
+      "complete_declarations": 12,
+      "id": "move.incoming_frame",
+      "matched_heap_definitions": [
+        {
+          "complete_typed_body_equal": true,
+          "name": "live",
+          "role": "H_live"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "issued",
+          "role": "H_issued"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "separated",
+          "role": "H_separated"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "aligned",
+          "role": "H_aligned"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "well_formed",
+          "role": "H_well_formed"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "same_object",
+          "role": "H_same_object"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "contents",
+          "role": "H_contents"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "initialized_at",
+          "role": "H_initialized_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "integer_at",
+          "role": "H_integer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "pointer_at",
+          "role": "H_pointer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_read",
+          "role": "H_can_read"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_write",
+          "role": "H_can_write"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "typed_writes",
+          "role": "H_typed_writes"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "freeable",
+          "role": "H_freeable"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_integer",
+          "role": "H_put_integer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_pointer",
+          "role": "H_put_pointer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "load_int",
+          "role": "H_load_int"
+        }
+      ],
+      "mode": "closed_axiomatized_polymorphic_sum",
+      "other_functions_support_goal_admitted": false
+    },
+    {
+      "artifact": {
+        "bytes": 14493,
+        "kind": "regular",
+        "relative": "owned-source9-public-v3-profile/leaf-move.incoming_frame/prover-files/typed_real/zilch-typed_real_check_lemma_t25_owned_effect_move_incoming_frame_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+        "sha256": "3600723375b4c4d4e1e9f6cd0e20d9dc5cb6b60f5511f9f1dd69b35d3f6c7490"
+      },
+      "cell_and_map_support_form_sha256": [
+        "3571f109b9e8c1868520fdc35b2f9ac3884f8e115fb08c6e99c3c99bc18756b6",
+        "d2ce060134c6647035c0b61baa257272121865b6945b3aaacc3deb1c8bc0e695",
+        "24b72ea916c35f335949e56d20e140cce0f4f4f8d45fe5e4e5e05215f15a9138",
+        "4ceb6bc05d319b522028b07d4ecb164a86dc47dc408a262f60b3d5826cb94639",
+        "e27adc2facca67026d07d556126e2c89050dd08c34095b5097e697823f5a6a9c",
+        "43cc4e61c6c6eaf8e69dbb3e174d74e71158e9288e4c1f996d5639460e340543",
+        "4cec523cf9add65a596bd2c522c06bf92cde4dac61ce938bb533130464447312",
+        "78bf7b1c72c2d1c0567837247fffead59662e5dd65ff9a3707ac01e99e81299e"
+      ],
+      "complete_declarations": 12,
+      "id": "move.incoming_frame",
+      "matched_heap_definitions": [
+        {
+          "complete_typed_body_equal": true,
+          "name": "live",
+          "role": "H_live"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "issued",
+          "role": "H_issued"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "separated",
+          "role": "H_separated"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "aligned",
+          "role": "H_aligned"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "well_formed",
+          "role": "H_well_formed"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "same_object",
+          "role": "H_same_object"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "contents",
+          "role": "H_contents"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "initialized_at",
+          "role": "H_initialized_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "integer_at",
+          "role": "H_integer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "pointer_at",
+          "role": "H_pointer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_read",
+          "role": "H_can_read"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_write",
+          "role": "H_can_write"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "typed_writes",
+          "role": "H_typed_writes"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "freeable",
+          "role": "H_freeable"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_integer",
+          "role": "H_put_integer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_pointer",
+          "role": "H_put_pointer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "load_int",
+          "role": "H_load_int"
+        }
+      ],
+      "mode": "closed_axiomatized_polymorphic_sum",
+      "other_functions_support_goal_admitted": false
+    },
+    {
+      "artifact": {
+        "bytes": 13963,
+        "kind": "regular",
+        "relative": "owned-source9-public-v3-profile/leaf-move.owner_correspondence/prover-files/typed_real/check_lemma_t25_owned_effect_move_owner_correspondence_Why3_Alt_Ergo_2_6_4.psmt2",
+        "sha256": "9c2cb89059ba8a5971a3c4e0bade16ff188fa7933d99f89bb2a2617ce4f58d05"
+      },
+      "cell_and_map_support_form_sha256": [
+        "3571f109b9e8c1868520fdc35b2f9ac3884f8e115fb08c6e99c3c99bc18756b6",
+        "d2ce060134c6647035c0b61baa257272121865b6945b3aaacc3deb1c8bc0e695",
+        "24b72ea916c35f335949e56d20e140cce0f4f4f8d45fe5e4e5e05215f15a9138",
+        "4ceb6bc05d319b522028b07d4ecb164a86dc47dc408a262f60b3d5826cb94639",
+        "e27adc2facca67026d07d556126e2c89050dd08c34095b5097e697823f5a6a9c",
+        "43cc4e61c6c6eaf8e69dbb3e174d74e71158e9288e4c1f996d5639460e340543",
+        "4cec523cf9add65a596bd2c522c06bf92cde4dac61ce938bb533130464447312",
+        "78bf7b1c72c2d1c0567837247fffead59662e5dd65ff9a3707ac01e99e81299e"
+      ],
+      "complete_declarations": 12,
+      "id": "move.owner_correspondence",
+      "matched_heap_definitions": [
+        {
+          "complete_typed_body_equal": true,
+          "name": "live",
+          "role": "H_live"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "issued",
+          "role": "H_issued"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "separated",
+          "role": "H_separated"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "aligned",
+          "role": "H_aligned"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "well_formed",
+          "role": "H_well_formed"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "contents",
+          "role": "H_contents"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "initialized_at",
+          "role": "H_initialized_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "integer_at",
+          "role": "H_integer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "pointer_at",
+          "role": "H_pointer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_read",
+          "role": "H_can_read"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_write",
+          "role": "H_can_write"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "typed_writes",
+          "role": "H_typed_writes"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "freeable",
+          "role": "H_freeable"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_integer",
+          "role": "H_put_integer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_pointer",
+          "role": "H_put_pointer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "load_int",
+          "role": "H_load_int"
+        }
+      ],
+      "mode": "closed_axiomatized_polymorphic_sum",
+      "other_functions_support_goal_admitted": false
+    },
+    {
+      "artifact": {
+        "bytes": 11805,
+        "kind": "regular",
+        "relative": "owned-source9-public-v3-profile/leaf-move.owner_correspondence/prover-files/typed_real/check_lemma_t25_owned_effect_move_owner_correspondence_Why3_CVC5_1_2_1.smt2",
+        "sha256": "1e5197a64784f959b1417e692e2759cccf28632d47ee43f6e8c7f107ebdd0386"
+      },
+      "cell_and_map_support_form_sha256": [],
+      "complete_declarations": 5,
+      "id": "move.owner_correspondence",
+      "matched_heap_definitions": [
+        {
+          "complete_typed_body_equal": true,
+          "name": "live",
+          "role": "H_live"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "issued",
+          "role": "H_issued"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "separated",
+          "role": "H_separated"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "aligned",
+          "role": "H_aligned"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "well_formed",
+          "role": "H_well_formed"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "contents",
+          "role": "H_contents"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "initialized_at",
+          "role": "H_initialized_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "integer_at",
+          "role": "H_integer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "pointer_at",
+          "role": "H_pointer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_read",
+          "role": "H_can_read"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_write",
+          "role": "H_can_write"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "typed_writes",
+          "role": "H_typed_writes"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "freeable",
+          "role": "H_freeable"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_integer",
+          "role": "H_put_integer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_pointer",
+          "role": "H_put_pointer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "load_int",
+          "role": "H_load_int"
+        }
+      ],
+      "mode": "native_algebraic_sum",
+      "other_functions_support_goal_admitted": false
+    },
+    {
+      "artifact": {
+        "bytes": 11613,
+        "kind": "regular",
+        "relative": "owned-source9-public-v3-profile/leaf-move.owner_correspondence/prover-files/typed_real/check_lemma_t25_owned_effect_move_owner_correspondence_Why3_Z3_5_1_0.smt2",
+        "sha256": "df4bd060130eb228edfb5dcfe1d41c9e1a3665ff7fc87ef15aabadb2e4ec3bf6"
+      },
+      "cell_and_map_support_form_sha256": [],
+      "complete_declarations": 5,
+      "id": "move.owner_correspondence",
+      "matched_heap_definitions": [
+        {
+          "complete_typed_body_equal": true,
+          "name": "live",
+          "role": "H_live"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "issued",
+          "role": "H_issued"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "separated",
+          "role": "H_separated"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "aligned",
+          "role": "H_aligned"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "well_formed",
+          "role": "H_well_formed"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "contents",
+          "role": "H_contents"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "initialized_at",
+          "role": "H_initialized_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "integer_at",
+          "role": "H_integer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "pointer_at",
+          "role": "H_pointer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_read",
+          "role": "H_can_read"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_write",
+          "role": "H_can_write"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "typed_writes",
+          "role": "H_typed_writes"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "freeable",
+          "role": "H_freeable"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_integer",
+          "role": "H_put_integer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_pointer",
+          "role": "H_put_pointer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "load_int",
+          "role": "H_load_int"
+        }
+      ],
+      "mode": "native_algebraic_sum",
+      "other_functions_support_goal_admitted": false
+    },
+    {
+      "artifact": {
+        "bytes": 13927,
+        "kind": "regular",
+        "relative": "owned-source9-public-v3-profile/leaf-move.owner_correspondence/prover-files/typed_real/zilch-typed_real_check_lemma_t25_owned_effect_move_owner_correspondence_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+        "sha256": "bbd2005412110334bdf550c02c33af3f2eb1e65c0a6d8f341d5968baaca5fe19"
+      },
+      "cell_and_map_support_form_sha256": [
+        "3571f109b9e8c1868520fdc35b2f9ac3884f8e115fb08c6e99c3c99bc18756b6",
+        "d2ce060134c6647035c0b61baa257272121865b6945b3aaacc3deb1c8bc0e695",
+        "24b72ea916c35f335949e56d20e140cce0f4f4f8d45fe5e4e5e05215f15a9138",
+        "4ceb6bc05d319b522028b07d4ecb164a86dc47dc408a262f60b3d5826cb94639",
+        "e27adc2facca67026d07d556126e2c89050dd08c34095b5097e697823f5a6a9c",
+        "43cc4e61c6c6eaf8e69dbb3e174d74e71158e9288e4c1f996d5639460e340543",
+        "4cec523cf9add65a596bd2c522c06bf92cde4dac61ce938bb533130464447312",
+        "78bf7b1c72c2d1c0567837247fffead59662e5dd65ff9a3707ac01e99e81299e"
+      ],
+      "complete_declarations": 12,
+      "id": "move.owner_correspondence",
+      "matched_heap_definitions": [
+        {
+          "complete_typed_body_equal": true,
+          "name": "live",
+          "role": "H_live"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "issued",
+          "role": "H_issued"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "separated",
+          "role": "H_separated"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "aligned",
+          "role": "H_aligned"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "well_formed",
+          "role": "H_well_formed"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "contents",
+          "role": "H_contents"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "initialized_at",
+          "role": "H_initialized_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "integer_at",
+          "role": "H_integer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "pointer_at",
+          "role": "H_pointer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_read",
+          "role": "H_can_read"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_write",
+          "role": "H_can_write"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "typed_writes",
+          "role": "H_typed_writes"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "freeable",
+          "role": "H_freeable"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_integer",
+          "role": "H_put_integer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_pointer",
+          "role": "H_put_pointer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "load_int",
+          "role": "H_load_int"
+        }
+      ],
+      "mode": "closed_axiomatized_polymorphic_sum",
+      "other_functions_support_goal_admitted": false
+    },
+    {
+      "artifact": {
+        "bytes": 11773,
+        "kind": "regular",
+        "relative": "owned-source9-public-v3-profile/leaf-move.owner_correspondence/prover-files/typed_real/zilch-typed_real_check_lemma_t25_owned_effect_move_owner_correspondence_CVC5_1dt2dt1-wp_goal.smt2",
+        "sha256": "ccb8b4e2c767f7e94c3109bf39780a44b9f7d11bda18a203eca1ea309ceeb482"
+      },
+      "cell_and_map_support_form_sha256": [],
+      "complete_declarations": 5,
+      "id": "move.owner_correspondence",
+      "matched_heap_definitions": [
+        {
+          "complete_typed_body_equal": true,
+          "name": "live",
+          "role": "H_live"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "issued",
+          "role": "H_issued"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "separated",
+          "role": "H_separated"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "aligned",
+          "role": "H_aligned"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "well_formed",
+          "role": "H_well_formed"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "contents",
+          "role": "H_contents"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "initialized_at",
+          "role": "H_initialized_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "integer_at",
+          "role": "H_integer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "pointer_at",
+          "role": "H_pointer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_read",
+          "role": "H_can_read"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_write",
+          "role": "H_can_write"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "typed_writes",
+          "role": "H_typed_writes"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "freeable",
+          "role": "H_freeable"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_integer",
+          "role": "H_put_integer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_pointer",
+          "role": "H_put_pointer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "load_int",
+          "role": "H_load_int"
+        }
+      ],
+      "mode": "native_algebraic_sum",
+      "other_functions_support_goal_admitted": false
+    },
+    {
+      "artifact": {
+        "bytes": 11583,
+        "kind": "regular",
+        "relative": "owned-source9-public-v3-profile/leaf-move.owner_correspondence/prover-files/typed_real/zilch-typed_real_check_lemma_t25_owned_effect_move_owner_correspondence_Z3_5dt1dt0-wp_goal.smt2",
+        "sha256": "ca92a4ac2ab7d6d86f16f3cff0349744381927f95f156996ecdfa4a9a2df2104"
+      },
+      "cell_and_map_support_form_sha256": [],
+      "complete_declarations": 5,
+      "id": "move.owner_correspondence",
+      "matched_heap_definitions": [
+        {
+          "complete_typed_body_equal": true,
+          "name": "live",
+          "role": "H_live"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "issued",
+          "role": "H_issued"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "separated",
+          "role": "H_separated"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "aligned",
+          "role": "H_aligned"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "well_formed",
+          "role": "H_well_formed"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "contents",
+          "role": "H_contents"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "initialized_at",
+          "role": "H_initialized_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "integer_at",
+          "role": "H_integer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "pointer_at",
+          "role": "H_pointer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_read",
+          "role": "H_can_read"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_write",
+          "role": "H_can_write"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "typed_writes",
+          "role": "H_typed_writes"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "freeable",
+          "role": "H_freeable"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_integer",
+          "role": "H_put_integer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_pointer",
+          "role": "H_put_pointer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "load_int",
+          "role": "H_load_int"
+        }
+      ],
+      "mode": "native_algebraic_sum",
+      "other_functions_support_goal_admitted": false
+    },
+    {
+      "artifact": {
+        "bytes": 15029,
+        "kind": "regular",
+        "relative": "owned-source9-public-v3-profile/leaf-swap.left_header/prover-files/typed_real/check_lemma_t25_owned_effect_swap_left_header_Why3_Alt_Ergo_2_6_4.psmt2",
+        "sha256": "2c1c78e4f3391b87e3092545157ffa1e118cf98f1bdd44062dd5e13191864ca1"
+      },
+      "cell_and_map_support_form_sha256": [
+        "3571f109b9e8c1868520fdc35b2f9ac3884f8e115fb08c6e99c3c99bc18756b6",
+        "d2ce060134c6647035c0b61baa257272121865b6945b3aaacc3deb1c8bc0e695",
+        "24b72ea916c35f335949e56d20e140cce0f4f4f8d45fe5e4e5e05215f15a9138",
+        "4ceb6bc05d319b522028b07d4ecb164a86dc47dc408a262f60b3d5826cb94639",
+        "e27adc2facca67026d07d556126e2c89050dd08c34095b5097e697823f5a6a9c",
+        "43cc4e61c6c6eaf8e69dbb3e174d74e71158e9288e4c1f996d5639460e340543",
+        "4cec523cf9add65a596bd2c522c06bf92cde4dac61ce938bb533130464447312",
+        "78bf7b1c72c2d1c0567837247fffead59662e5dd65ff9a3707ac01e99e81299e",
+        "6423ebd73f9cf37bfe80c18834697b59d692e59ffca44c8dbb990d09aa0eda39"
+      ],
+      "complete_declarations": 13,
+      "id": "swap.left_header",
+      "matched_heap_definitions": [
+        {
+          "complete_typed_body_equal": true,
+          "name": "live",
+          "role": "H_live"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "issued",
+          "role": "H_issued"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "separated",
+          "role": "H_separated"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "aligned",
+          "role": "H_aligned"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "well_formed",
+          "role": "H_well_formed"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "contents",
+          "role": "H_contents"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "initialized_at",
+          "role": "H_initialized_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "integer_at",
+          "role": "H_integer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "pointer_at",
+          "role": "H_pointer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_read",
+          "role": "H_can_read"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_write",
+          "role": "H_can_write"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "typed_writes",
+          "role": "H_typed_writes"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "freeable",
+          "role": "H_freeable"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_integer",
+          "role": "H_put_integer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_pointer",
+          "role": "H_put_pointer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "release",
+          "role": "H_release"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "load_int",
+          "role": "H_load_int"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "automatic_available",
+          "role": "H_automatic_available"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "begin_automatic",
+          "role": "H_begin_automatic"
+        }
+      ],
+      "mode": "closed_axiomatized_polymorphic_sum",
+      "other_functions_support_goal_admitted": false
+    },
+    {
+      "artifact": {
+        "bytes": 14993,
+        "kind": "regular",
+        "relative": "owned-source9-public-v3-profile/leaf-swap.left_header/prover-files/typed_real/zilch-typed_real_check_lemma_t25_owned_effect_swap_left_header_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+        "sha256": "43f4f18e7a808554cf073f5605ff7ca9793f5b7df6b9d3faede8a9872c6e5993"
+      },
+      "cell_and_map_support_form_sha256": [
+        "3571f109b9e8c1868520fdc35b2f9ac3884f8e115fb08c6e99c3c99bc18756b6",
+        "d2ce060134c6647035c0b61baa257272121865b6945b3aaacc3deb1c8bc0e695",
+        "24b72ea916c35f335949e56d20e140cce0f4f4f8d45fe5e4e5e05215f15a9138",
+        "4ceb6bc05d319b522028b07d4ecb164a86dc47dc408a262f60b3d5826cb94639",
+        "e27adc2facca67026d07d556126e2c89050dd08c34095b5097e697823f5a6a9c",
+        "43cc4e61c6c6eaf8e69dbb3e174d74e71158e9288e4c1f996d5639460e340543",
+        "4cec523cf9add65a596bd2c522c06bf92cde4dac61ce938bb533130464447312",
+        "78bf7b1c72c2d1c0567837247fffead59662e5dd65ff9a3707ac01e99e81299e",
+        "6423ebd73f9cf37bfe80c18834697b59d692e59ffca44c8dbb990d09aa0eda39"
+      ],
+      "complete_declarations": 13,
+      "id": "swap.left_header",
+      "matched_heap_definitions": [
+        {
+          "complete_typed_body_equal": true,
+          "name": "live",
+          "role": "H_live"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "issued",
+          "role": "H_issued"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "separated",
+          "role": "H_separated"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "aligned",
+          "role": "H_aligned"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "well_formed",
+          "role": "H_well_formed"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "contents",
+          "role": "H_contents"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "initialized_at",
+          "role": "H_initialized_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "integer_at",
+          "role": "H_integer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "pointer_at",
+          "role": "H_pointer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_read",
+          "role": "H_can_read"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_write",
+          "role": "H_can_write"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "typed_writes",
+          "role": "H_typed_writes"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "freeable",
+          "role": "H_freeable"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_integer",
+          "role": "H_put_integer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_pointer",
+          "role": "H_put_pointer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "release",
+          "role": "H_release"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "load_int",
+          "role": "H_load_int"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "automatic_available",
+          "role": "H_automatic_available"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "begin_automatic",
+          "role": "H_begin_automatic"
+        }
+      ],
+      "mode": "closed_axiomatized_polymorphic_sum",
+      "other_functions_support_goal_admitted": false
+    },
+    {
+      "artifact": {
+        "bytes": 15029,
+        "kind": "regular",
+        "relative": "owned-source9-public-v3-profile/leaf-swap.right_header/prover-files/typed_real/check_lemma_t25_owned_effect_swap_right_header_Why3_Alt_Ergo_2_6_4.psmt2",
+        "sha256": "7ebe826283cf8b80cf7cf10d4d4e1ef2301750aec51d3dda4b22e6d45b0fd231"
+      },
+      "cell_and_map_support_form_sha256": [
+        "3571f109b9e8c1868520fdc35b2f9ac3884f8e115fb08c6e99c3c99bc18756b6",
+        "d2ce060134c6647035c0b61baa257272121865b6945b3aaacc3deb1c8bc0e695",
+        "24b72ea916c35f335949e56d20e140cce0f4f4f8d45fe5e4e5e05215f15a9138",
+        "4ceb6bc05d319b522028b07d4ecb164a86dc47dc408a262f60b3d5826cb94639",
+        "e27adc2facca67026d07d556126e2c89050dd08c34095b5097e697823f5a6a9c",
+        "43cc4e61c6c6eaf8e69dbb3e174d74e71158e9288e4c1f996d5639460e340543",
+        "4cec523cf9add65a596bd2c522c06bf92cde4dac61ce938bb533130464447312",
+        "78bf7b1c72c2d1c0567837247fffead59662e5dd65ff9a3707ac01e99e81299e",
+        "6423ebd73f9cf37bfe80c18834697b59d692e59ffca44c8dbb990d09aa0eda39"
+      ],
+      "complete_declarations": 13,
+      "id": "swap.right_header",
+      "matched_heap_definitions": [
+        {
+          "complete_typed_body_equal": true,
+          "name": "live",
+          "role": "H_live"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "issued",
+          "role": "H_issued"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "separated",
+          "role": "H_separated"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "aligned",
+          "role": "H_aligned"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "well_formed",
+          "role": "H_well_formed"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "contents",
+          "role": "H_contents"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "initialized_at",
+          "role": "H_initialized_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "integer_at",
+          "role": "H_integer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "pointer_at",
+          "role": "H_pointer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_read",
+          "role": "H_can_read"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_write",
+          "role": "H_can_write"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "typed_writes",
+          "role": "H_typed_writes"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "freeable",
+          "role": "H_freeable"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_integer",
+          "role": "H_put_integer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_pointer",
+          "role": "H_put_pointer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "release",
+          "role": "H_release"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "load_int",
+          "role": "H_load_int"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "automatic_available",
+          "role": "H_automatic_available"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "begin_automatic",
+          "role": "H_begin_automatic"
+        }
+      ],
+      "mode": "closed_axiomatized_polymorphic_sum",
+      "other_functions_support_goal_admitted": false
+    },
+    {
+      "artifact": {
+        "bytes": 14993,
+        "kind": "regular",
+        "relative": "owned-source9-public-v3-profile/leaf-swap.right_header/prover-files/typed_real/zilch-typed_real_check_lemma_t25_owned_effect_swap_right_header_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+        "sha256": "6914f21fe9dda43db14e0a4f4066db0ec80ebc23cd71d4ee1510fa27e2b7c4a2"
+      },
+      "cell_and_map_support_form_sha256": [
+        "3571f109b9e8c1868520fdc35b2f9ac3884f8e115fb08c6e99c3c99bc18756b6",
+        "d2ce060134c6647035c0b61baa257272121865b6945b3aaacc3deb1c8bc0e695",
+        "24b72ea916c35f335949e56d20e140cce0f4f4f8d45fe5e4e5e05215f15a9138",
+        "4ceb6bc05d319b522028b07d4ecb164a86dc47dc408a262f60b3d5826cb94639",
+        "e27adc2facca67026d07d556126e2c89050dd08c34095b5097e697823f5a6a9c",
+        "43cc4e61c6c6eaf8e69dbb3e174d74e71158e9288e4c1f996d5639460e340543",
+        "4cec523cf9add65a596bd2c522c06bf92cde4dac61ce938bb533130464447312",
+        "78bf7b1c72c2d1c0567837247fffead59662e5dd65ff9a3707ac01e99e81299e",
+        "6423ebd73f9cf37bfe80c18834697b59d692e59ffca44c8dbb990d09aa0eda39"
+      ],
+      "complete_declarations": 13,
+      "id": "swap.right_header",
+      "matched_heap_definitions": [
+        {
+          "complete_typed_body_equal": true,
+          "name": "live",
+          "role": "H_live"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "issued",
+          "role": "H_issued"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "separated",
+          "role": "H_separated"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "aligned",
+          "role": "H_aligned"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "well_formed",
+          "role": "H_well_formed"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "contents",
+          "role": "H_contents"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "initialized_at",
+          "role": "H_initialized_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "integer_at",
+          "role": "H_integer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "pointer_at",
+          "role": "H_pointer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_read",
+          "role": "H_can_read"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_write",
+          "role": "H_can_write"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "typed_writes",
+          "role": "H_typed_writes"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "freeable",
+          "role": "H_freeable"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_integer",
+          "role": "H_put_integer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_pointer",
+          "role": "H_put_pointer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "release",
+          "role": "H_release"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "load_int",
+          "role": "H_load_int"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "automatic_available",
+          "role": "H_automatic_available"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "begin_automatic",
+          "role": "H_begin_automatic"
+        }
+      ],
+      "mode": "closed_axiomatized_polymorphic_sum",
+      "other_functions_support_goal_admitted": false
+    },
+    {
+      "artifact": {
+        "bytes": 15162,
+        "kind": "regular",
+        "relative": "owned-source9-public-v3-profile/leaf-swap.temporary_lifetime/prover-files/typed_real/check_lemma_t25_owned_effect_swap_temporary_lifetime_Why3_Alt_Ergo_2_6_4.psmt2",
+        "sha256": "ba5d5f3142093b80064f0662278b46cd2df79e0dea63ef6da97e76dff643c575"
+      },
+      "cell_and_map_support_form_sha256": [
+        "3571f109b9e8c1868520fdc35b2f9ac3884f8e115fb08c6e99c3c99bc18756b6",
+        "d2ce060134c6647035c0b61baa257272121865b6945b3aaacc3deb1c8bc0e695",
+        "24b72ea916c35f335949e56d20e140cce0f4f4f8d45fe5e4e5e05215f15a9138",
+        "4ceb6bc05d319b522028b07d4ecb164a86dc47dc408a262f60b3d5826cb94639",
+        "e27adc2facca67026d07d556126e2c89050dd08c34095b5097e697823f5a6a9c",
+        "43cc4e61c6c6eaf8e69dbb3e174d74e71158e9288e4c1f996d5639460e340543",
+        "4cec523cf9add65a596bd2c522c06bf92cde4dac61ce938bb533130464447312",
+        "78bf7b1c72c2d1c0567837247fffead59662e5dd65ff9a3707ac01e99e81299e",
+        "6423ebd73f9cf37bfe80c18834697b59d692e59ffca44c8dbb990d09aa0eda39"
+      ],
+      "complete_declarations": 13,
+      "id": "swap.temporary_lifetime",
+      "matched_heap_definitions": [
+        {
+          "complete_typed_body_equal": true,
+          "name": "live",
+          "role": "H_live"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "issued",
+          "role": "H_issued"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "separated",
+          "role": "H_separated"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "aligned",
+          "role": "H_aligned"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "well_formed",
+          "role": "H_well_formed"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "contents",
+          "role": "H_contents"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "initialized_at",
+          "role": "H_initialized_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "integer_at",
+          "role": "H_integer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "pointer_at",
+          "role": "H_pointer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_read",
+          "role": "H_can_read"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_write",
+          "role": "H_can_write"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "typed_writes",
+          "role": "H_typed_writes"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "freeable",
+          "role": "H_freeable"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_integer",
+          "role": "H_put_integer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_pointer",
+          "role": "H_put_pointer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "release",
+          "role": "H_release"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "load_int",
+          "role": "H_load_int"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "automatic_available",
+          "role": "H_automatic_available"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "begin_automatic",
+          "role": "H_begin_automatic"
+        }
+      ],
+      "mode": "closed_axiomatized_polymorphic_sum",
+      "other_functions_support_goal_admitted": false
+    },
+    {
+      "artifact": {
+        "bytes": 15126,
+        "kind": "regular",
+        "relative": "owned-source9-public-v3-profile/leaf-swap.temporary_lifetime/prover-files/typed_real/zilch-typed_real_check_lemma_t25_owned_effect_swap_temporary_lifetime_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+        "sha256": "94bcf5ed33ad305bc746a17e4078731f7902502dd8736f68fcc055b20366b20a"
+      },
+      "cell_and_map_support_form_sha256": [
+        "3571f109b9e8c1868520fdc35b2f9ac3884f8e115fb08c6e99c3c99bc18756b6",
+        "d2ce060134c6647035c0b61baa257272121865b6945b3aaacc3deb1c8bc0e695",
+        "24b72ea916c35f335949e56d20e140cce0f4f4f8d45fe5e4e5e05215f15a9138",
+        "4ceb6bc05d319b522028b07d4ecb164a86dc47dc408a262f60b3d5826cb94639",
+        "e27adc2facca67026d07d556126e2c89050dd08c34095b5097e697823f5a6a9c",
+        "43cc4e61c6c6eaf8e69dbb3e174d74e71158e9288e4c1f996d5639460e340543",
+        "4cec523cf9add65a596bd2c522c06bf92cde4dac61ce938bb533130464447312",
+        "78bf7b1c72c2d1c0567837247fffead59662e5dd65ff9a3707ac01e99e81299e",
+        "6423ebd73f9cf37bfe80c18834697b59d692e59ffca44c8dbb990d09aa0eda39"
+      ],
+      "complete_declarations": 13,
+      "id": "swap.temporary_lifetime",
+      "matched_heap_definitions": [
+        {
+          "complete_typed_body_equal": true,
+          "name": "live",
+          "role": "H_live"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "issued",
+          "role": "H_issued"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "separated",
+          "role": "H_separated"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "aligned",
+          "role": "H_aligned"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "well_formed",
+          "role": "H_well_formed"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "contents",
+          "role": "H_contents"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "initialized_at",
+          "role": "H_initialized_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "integer_at",
+          "role": "H_integer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "pointer_at",
+          "role": "H_pointer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_read",
+          "role": "H_can_read"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_write",
+          "role": "H_can_write"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "typed_writes",
+          "role": "H_typed_writes"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "freeable",
+          "role": "H_freeable"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_integer",
+          "role": "H_put_integer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_pointer",
+          "role": "H_put_pointer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "release",
+          "role": "H_release"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "load_int",
+          "role": "H_load_int"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "automatic_available",
+          "role": "H_automatic_available"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "begin_automatic",
+          "role": "H_begin_automatic"
+        }
+      ],
+      "mode": "closed_axiomatized_polymorphic_sum",
+      "other_functions_support_goal_admitted": false
+    },
+    {
+      "artifact": {
+        "bytes": 16042,
+        "kind": "regular",
+        "relative": "owned-source9-public-v3-profile/leaf-swap.incoming_frame/prover-files/typed_real/check_lemma_t25_owned_effect_swap_incoming_frame_Why3_Alt_Ergo_2_6_4.psmt2",
+        "sha256": "5bb84ae7ebc76538a6874d7d0a2a7eead609fb7ead200972569cf5fca9d18ff7"
+      },
+      "cell_and_map_support_form_sha256": [
+        "3571f109b9e8c1868520fdc35b2f9ac3884f8e115fb08c6e99c3c99bc18756b6",
+        "d2ce060134c6647035c0b61baa257272121865b6945b3aaacc3deb1c8bc0e695",
+        "24b72ea916c35f335949e56d20e140cce0f4f4f8d45fe5e4e5e05215f15a9138",
+        "4ceb6bc05d319b522028b07d4ecb164a86dc47dc408a262f60b3d5826cb94639",
+        "e27adc2facca67026d07d556126e2c89050dd08c34095b5097e697823f5a6a9c",
+        "43cc4e61c6c6eaf8e69dbb3e174d74e71158e9288e4c1f996d5639460e340543",
+        "4cec523cf9add65a596bd2c522c06bf92cde4dac61ce938bb533130464447312",
+        "78bf7b1c72c2d1c0567837247fffead59662e5dd65ff9a3707ac01e99e81299e",
+        "6423ebd73f9cf37bfe80c18834697b59d692e59ffca44c8dbb990d09aa0eda39"
+      ],
+      "complete_declarations": 13,
+      "id": "swap.incoming_frame",
+      "matched_heap_definitions": [
+        {
+          "complete_typed_body_equal": true,
+          "name": "live",
+          "role": "H_live"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "issued",
+          "role": "H_issued"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "separated",
+          "role": "H_separated"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "aligned",
+          "role": "H_aligned"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "well_formed",
+          "role": "H_well_formed"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "same_object",
+          "role": "H_same_object"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "contents",
+          "role": "H_contents"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "initialized_at",
+          "role": "H_initialized_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "integer_at",
+          "role": "H_integer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "pointer_at",
+          "role": "H_pointer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_read",
+          "role": "H_can_read"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_write",
+          "role": "H_can_write"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "typed_writes",
+          "role": "H_typed_writes"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "freeable",
+          "role": "H_freeable"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_integer",
+          "role": "H_put_integer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_pointer",
+          "role": "H_put_pointer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "release",
+          "role": "H_release"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "load_int",
+          "role": "H_load_int"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "automatic_available",
+          "role": "H_automatic_available"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "begin_automatic",
+          "role": "H_begin_automatic"
+        }
+      ],
+      "mode": "closed_axiomatized_polymorphic_sum",
+      "other_functions_support_goal_admitted": false
+    },
+    {
+      "artifact": {
+        "bytes": 16006,
+        "kind": "regular",
+        "relative": "owned-source9-public-v3-profile/leaf-swap.incoming_frame/prover-files/typed_real/zilch-typed_real_check_lemma_t25_owned_effect_swap_incoming_frame_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+        "sha256": "bba68b90be987e69f50b8869abefd420e6f33912412a688a76c9e47892dc7c93"
+      },
+      "cell_and_map_support_form_sha256": [
+        "3571f109b9e8c1868520fdc35b2f9ac3884f8e115fb08c6e99c3c99bc18756b6",
+        "d2ce060134c6647035c0b61baa257272121865b6945b3aaacc3deb1c8bc0e695",
+        "24b72ea916c35f335949e56d20e140cce0f4f4f8d45fe5e4e5e05215f15a9138",
+        "4ceb6bc05d319b522028b07d4ecb164a86dc47dc408a262f60b3d5826cb94639",
+        "e27adc2facca67026d07d556126e2c89050dd08c34095b5097e697823f5a6a9c",
+        "43cc4e61c6c6eaf8e69dbb3e174d74e71158e9288e4c1f996d5639460e340543",
+        "4cec523cf9add65a596bd2c522c06bf92cde4dac61ce938bb533130464447312",
+        "78bf7b1c72c2d1c0567837247fffead59662e5dd65ff9a3707ac01e99e81299e",
+        "6423ebd73f9cf37bfe80c18834697b59d692e59ffca44c8dbb990d09aa0eda39"
+      ],
+      "complete_declarations": 13,
+      "id": "swap.incoming_frame",
+      "matched_heap_definitions": [
+        {
+          "complete_typed_body_equal": true,
+          "name": "live",
+          "role": "H_live"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "issued",
+          "role": "H_issued"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "separated",
+          "role": "H_separated"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "aligned",
+          "role": "H_aligned"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "well_formed",
+          "role": "H_well_formed"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "same_object",
+          "role": "H_same_object"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "contents",
+          "role": "H_contents"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "initialized_at",
+          "role": "H_initialized_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "integer_at",
+          "role": "H_integer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "pointer_at",
+          "role": "H_pointer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_read",
+          "role": "H_can_read"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_write",
+          "role": "H_can_write"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "typed_writes",
+          "role": "H_typed_writes"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "freeable",
+          "role": "H_freeable"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_integer",
+          "role": "H_put_integer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_pointer",
+          "role": "H_put_pointer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "release",
+          "role": "H_release"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "load_int",
+          "role": "H_load_int"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "automatic_available",
+          "role": "H_automatic_available"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "begin_automatic",
+          "role": "H_begin_automatic"
+        }
+      ],
+      "mode": "closed_axiomatized_polymorphic_sum",
+      "other_functions_support_goal_admitted": false
+    },
+    {
+      "artifact": {
+        "bytes": 15285,
+        "kind": "regular",
+        "relative": "owned-source9-public-v3-profile/leaf-swap.owner_correspondence/prover-files/typed_real/check_lemma_t25_owned_effect_swap_owner_correspondence_Why3_Alt_Ergo_2_6_4.psmt2",
+        "sha256": "30c50f9f69e78713901dcee453f4964c5d0782b0b5ccfd8665bae9fff79c3f3d"
+      },
+      "cell_and_map_support_form_sha256": [
+        "3571f109b9e8c1868520fdc35b2f9ac3884f8e115fb08c6e99c3c99bc18756b6",
+        "d2ce060134c6647035c0b61baa257272121865b6945b3aaacc3deb1c8bc0e695",
+        "24b72ea916c35f335949e56d20e140cce0f4f4f8d45fe5e4e5e05215f15a9138",
+        "4ceb6bc05d319b522028b07d4ecb164a86dc47dc408a262f60b3d5826cb94639",
+        "e27adc2facca67026d07d556126e2c89050dd08c34095b5097e697823f5a6a9c",
+        "43cc4e61c6c6eaf8e69dbb3e174d74e71158e9288e4c1f996d5639460e340543",
+        "4cec523cf9add65a596bd2c522c06bf92cde4dac61ce938bb533130464447312",
+        "78bf7b1c72c2d1c0567837247fffead59662e5dd65ff9a3707ac01e99e81299e",
+        "6423ebd73f9cf37bfe80c18834697b59d692e59ffca44c8dbb990d09aa0eda39"
+      ],
+      "complete_declarations": 13,
+      "id": "swap.owner_correspondence",
+      "matched_heap_definitions": [
+        {
+          "complete_typed_body_equal": true,
+          "name": "live",
+          "role": "H_live"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "issued",
+          "role": "H_issued"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "separated",
+          "role": "H_separated"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "aligned",
+          "role": "H_aligned"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "well_formed",
+          "role": "H_well_formed"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "contents",
+          "role": "H_contents"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "initialized_at",
+          "role": "H_initialized_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "integer_at",
+          "role": "H_integer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "pointer_at",
+          "role": "H_pointer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_read",
+          "role": "H_can_read"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_write",
+          "role": "H_can_write"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "typed_writes",
+          "role": "H_typed_writes"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "freeable",
+          "role": "H_freeable"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_integer",
+          "role": "H_put_integer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_pointer",
+          "role": "H_put_pointer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "release",
+          "role": "H_release"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "load_int",
+          "role": "H_load_int"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "automatic_available",
+          "role": "H_automatic_available"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "begin_automatic",
+          "role": "H_begin_automatic"
+        }
+      ],
+      "mode": "closed_axiomatized_polymorphic_sum",
+      "other_functions_support_goal_admitted": false
+    },
+    {
+      "artifact": {
+        "bytes": 13117,
+        "kind": "regular",
+        "relative": "owned-source9-public-v3-profile/leaf-swap.owner_correspondence/prover-files/typed_real/check_lemma_t25_owned_effect_swap_owner_correspondence_Why3_CVC5_1_2_1.smt2",
+        "sha256": "200f88fe5ee713e8296b67fa20f1762a528e250347d5e98638e26fd2ba468c53"
+      },
+      "cell_and_map_support_form_sha256": [
+        "6423ebd73f9cf37bfe80c18834697b59d692e59ffca44c8dbb990d09aa0eda39"
+      ],
+      "complete_declarations": 6,
+      "id": "swap.owner_correspondence",
+      "matched_heap_definitions": [
+        {
+          "complete_typed_body_equal": true,
+          "name": "live",
+          "role": "H_live"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "issued",
+          "role": "H_issued"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "separated",
+          "role": "H_separated"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "aligned",
+          "role": "H_aligned"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "well_formed",
+          "role": "H_well_formed"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "contents",
+          "role": "H_contents"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "initialized_at",
+          "role": "H_initialized_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "integer_at",
+          "role": "H_integer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "pointer_at",
+          "role": "H_pointer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_read",
+          "role": "H_can_read"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_write",
+          "role": "H_can_write"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "typed_writes",
+          "role": "H_typed_writes"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "freeable",
+          "role": "H_freeable"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_integer",
+          "role": "H_put_integer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_pointer",
+          "role": "H_put_pointer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "release",
+          "role": "H_release"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "load_int",
+          "role": "H_load_int"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "automatic_available",
+          "role": "H_automatic_available"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "begin_automatic",
+          "role": "H_begin_automatic"
+        }
+      ],
+      "mode": "native_algebraic_sum",
+      "other_functions_support_goal_admitted": false
+    },
+    {
+      "artifact": {
+        "bytes": 12925,
+        "kind": "regular",
+        "relative": "owned-source9-public-v3-profile/leaf-swap.owner_correspondence/prover-files/typed_real/check_lemma_t25_owned_effect_swap_owner_correspondence_Why3_Z3_5_1_0.smt2",
+        "sha256": "dded50a0d89c0f0c32de5c57a1465d28e17f2dcb8d8e36f2586974107efceea1"
+      },
+      "cell_and_map_support_form_sha256": [
+        "6423ebd73f9cf37bfe80c18834697b59d692e59ffca44c8dbb990d09aa0eda39"
+      ],
+      "complete_declarations": 6,
+      "id": "swap.owner_correspondence",
+      "matched_heap_definitions": [
+        {
+          "complete_typed_body_equal": true,
+          "name": "live",
+          "role": "H_live"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "issued",
+          "role": "H_issued"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "separated",
+          "role": "H_separated"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "aligned",
+          "role": "H_aligned"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "well_formed",
+          "role": "H_well_formed"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "contents",
+          "role": "H_contents"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "initialized_at",
+          "role": "H_initialized_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "integer_at",
+          "role": "H_integer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "pointer_at",
+          "role": "H_pointer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_read",
+          "role": "H_can_read"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_write",
+          "role": "H_can_write"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "typed_writes",
+          "role": "H_typed_writes"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "freeable",
+          "role": "H_freeable"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_integer",
+          "role": "H_put_integer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_pointer",
+          "role": "H_put_pointer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "release",
+          "role": "H_release"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "load_int",
+          "role": "H_load_int"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "automatic_available",
+          "role": "H_automatic_available"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "begin_automatic",
+          "role": "H_begin_automatic"
+        }
+      ],
+      "mode": "native_algebraic_sum",
+      "other_functions_support_goal_admitted": false
+    },
+    {
+      "artifact": {
+        "bytes": 15249,
+        "kind": "regular",
+        "relative": "owned-source9-public-v3-profile/leaf-swap.owner_correspondence/prover-files/typed_real/zilch-typed_real_check_lemma_t25_owned_effect_swap_owner_correspondence_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+        "sha256": "44299b2d3db0d2836916ad3b37c424d7d6f32f099e17fc50faa403a765c3efae"
+      },
+      "cell_and_map_support_form_sha256": [
+        "3571f109b9e8c1868520fdc35b2f9ac3884f8e115fb08c6e99c3c99bc18756b6",
+        "d2ce060134c6647035c0b61baa257272121865b6945b3aaacc3deb1c8bc0e695",
+        "24b72ea916c35f335949e56d20e140cce0f4f4f8d45fe5e4e5e05215f15a9138",
+        "4ceb6bc05d319b522028b07d4ecb164a86dc47dc408a262f60b3d5826cb94639",
+        "e27adc2facca67026d07d556126e2c89050dd08c34095b5097e697823f5a6a9c",
+        "43cc4e61c6c6eaf8e69dbb3e174d74e71158e9288e4c1f996d5639460e340543",
+        "4cec523cf9add65a596bd2c522c06bf92cde4dac61ce938bb533130464447312",
+        "78bf7b1c72c2d1c0567837247fffead59662e5dd65ff9a3707ac01e99e81299e",
+        "6423ebd73f9cf37bfe80c18834697b59d692e59ffca44c8dbb990d09aa0eda39"
+      ],
+      "complete_declarations": 13,
+      "id": "swap.owner_correspondence",
+      "matched_heap_definitions": [
+        {
+          "complete_typed_body_equal": true,
+          "name": "live",
+          "role": "H_live"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "issued",
+          "role": "H_issued"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "separated",
+          "role": "H_separated"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "aligned",
+          "role": "H_aligned"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "well_formed",
+          "role": "H_well_formed"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "contents",
+          "role": "H_contents"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "initialized_at",
+          "role": "H_initialized_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "integer_at",
+          "role": "H_integer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "pointer_at",
+          "role": "H_pointer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_read",
+          "role": "H_can_read"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_write",
+          "role": "H_can_write"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "typed_writes",
+          "role": "H_typed_writes"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "freeable",
+          "role": "H_freeable"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_integer",
+          "role": "H_put_integer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_pointer",
+          "role": "H_put_pointer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "release",
+          "role": "H_release"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "load_int",
+          "role": "H_load_int"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "automatic_available",
+          "role": "H_automatic_available"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "begin_automatic",
+          "role": "H_begin_automatic"
+        }
+      ],
+      "mode": "closed_axiomatized_polymorphic_sum",
+      "other_functions_support_goal_admitted": false
+    },
+    {
+      "artifact": {
+        "bytes": 13085,
+        "kind": "regular",
+        "relative": "owned-source9-public-v3-profile/leaf-swap.owner_correspondence/prover-files/typed_real/zilch-typed_real_check_lemma_t25_owned_effect_swap_owner_correspondence_CVC5_1dt2dt1-wp_goal.smt2",
+        "sha256": "892eeabc5438904eb4130902eab86946342880c21a1983ee9f7c7571289f529f"
+      },
+      "cell_and_map_support_form_sha256": [
+        "6423ebd73f9cf37bfe80c18834697b59d692e59ffca44c8dbb990d09aa0eda39"
+      ],
+      "complete_declarations": 6,
+      "id": "swap.owner_correspondence",
+      "matched_heap_definitions": [
+        {
+          "complete_typed_body_equal": true,
+          "name": "live",
+          "role": "H_live"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "issued",
+          "role": "H_issued"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "separated",
+          "role": "H_separated"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "aligned",
+          "role": "H_aligned"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "well_formed",
+          "role": "H_well_formed"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "contents",
+          "role": "H_contents"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "initialized_at",
+          "role": "H_initialized_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "integer_at",
+          "role": "H_integer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "pointer_at",
+          "role": "H_pointer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_read",
+          "role": "H_can_read"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_write",
+          "role": "H_can_write"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "typed_writes",
+          "role": "H_typed_writes"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "freeable",
+          "role": "H_freeable"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_integer",
+          "role": "H_put_integer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_pointer",
+          "role": "H_put_pointer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "release",
+          "role": "H_release"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "load_int",
+          "role": "H_load_int"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "automatic_available",
+          "role": "H_automatic_available"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "begin_automatic",
+          "role": "H_begin_automatic"
+        }
+      ],
+      "mode": "native_algebraic_sum",
+      "other_functions_support_goal_admitted": false
+    },
+    {
+      "artifact": {
+        "bytes": 12895,
+        "kind": "regular",
+        "relative": "owned-source9-public-v3-profile/leaf-swap.owner_correspondence/prover-files/typed_real/zilch-typed_real_check_lemma_t25_owned_effect_swap_owner_correspondence_Z3_5dt1dt0-wp_goal.smt2",
+        "sha256": "fe7cd9c92620254ae913e81d9573eca6e5d9c5239960787f5f606ee553e292ce"
+      },
+      "cell_and_map_support_form_sha256": [
+        "6423ebd73f9cf37bfe80c18834697b59d692e59ffca44c8dbb990d09aa0eda39"
+      ],
+      "complete_declarations": 6,
+      "id": "swap.owner_correspondence",
+      "matched_heap_definitions": [
+        {
+          "complete_typed_body_equal": true,
+          "name": "live",
+          "role": "H_live"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "issued",
+          "role": "H_issued"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "separated",
+          "role": "H_separated"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "aligned",
+          "role": "H_aligned"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "well_formed",
+          "role": "H_well_formed"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "contents",
+          "role": "H_contents"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "initialized_at",
+          "role": "H_initialized_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "integer_at",
+          "role": "H_integer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "pointer_at",
+          "role": "H_pointer_at"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_read",
+          "role": "H_can_read"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "can_write",
+          "role": "H_can_write"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "typed_writes",
+          "role": "H_typed_writes"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "freeable",
+          "role": "H_freeable"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_integer",
+          "role": "H_put_integer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "put_pointer",
+          "role": "H_put_pointer"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "release",
+          "role": "H_release"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "load_int",
+          "role": "H_load_int"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "automatic_available",
+          "role": "H_automatic_available"
+        },
+        {
+          "complete_typed_body_equal": true,
+          "name": "begin_automatic",
+          "role": "H_begin_automatic"
+        }
+      ],
+      "mode": "native_algebraic_sum",
+      "other_functions_support_goal_admitted": false
+    }
+  ]
+}

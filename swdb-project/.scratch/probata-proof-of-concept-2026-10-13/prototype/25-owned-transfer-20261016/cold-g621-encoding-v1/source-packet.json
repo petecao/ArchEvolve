@@ -1,0 +1,90 @@
+{
+  "actual_query_executed": false,
+  "actual_tools_executed": false,
+  "canonicalizer_delta": "Separate binder_depth from traversal/resource depth, otherwise exact inverse to frozen V3 semantic source; no antecedent deletion or arithmetic solver.",
+  "classification": "FROZEN_INERT_BOUNDED_ENCODING_PROBE",
+  "date": "2026-10-16 ET",
+  "inputs": [
+    {
+      "bytes": 792560,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-cold-v3-root-stdout-20261016.json",
+      "sha256": "cf62bd6a0bf73a171fc8e7ddd68f32c1bb38dcc4f7e8a055264cbc6a2f8e5f5e"
+    },
+    {
+      "bytes": 14205,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-v3/semantic_terms.py",
+      "sha256": "c5f1bc8c78134a751d78b0d790a788c443906fc452a46c90791c0b4937813d9c"
+    },
+    {
+      "bytes": 200208,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-v3/context.json",
+      "sha256": "684df95d44ff149f0c76664953dedabec83dd44c9bd3ad849c0014ee59e2e90d"
+    },
+    {
+      "bytes": 2389,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_owned_state.mlw",
+      "sha256": "a2c295d2c6720a9c8c522f05e19723c2d2d2a32b63f9b198aab03f195269e4b6"
+    }
+  ],
+  "mathematical_acceptance": false,
+  "outputs": [
+    {
+      "bytes": 14468,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v1/semantic_terms.py",
+      "sha256": "9d8080959fd3ccf95cecfaf02f66e909351b3c2eb9f95af318b47edd20275147"
+    },
+    {
+      "bytes": 6797,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v1/encoding_probe.py",
+      "sha256": "790fb8363b3d827ef53898fd44bcdf15370e6a916e28db0e7fc9ac03c6514b11"
+    },
+    {
+      "bytes": 7998,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v1/observer.py",
+      "sha256": "2d0da611cb4320506bd22a31aafe16c38265420791f7dcd5de8d40250d61f7d5"
+    },
+    {
+      "bytes": 206620,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v1/context.json",
+      "sha256": "5b11b32609630d99d59511c0b69768a64bab7ccb8da20d92ded62879387a87ab"
+    },
+    {
+      "bytes": 7471,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v1/pure_controls.py",
+      "sha256": "7fd5976fe6347d2dfed7a069e4175b1a7d2ae00ec548d83b49acc0f1b609a183"
+    },
+    {
+      "bytes": 926,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v1/pure-controls.log",
+      "sha256": "fa7a17c330ba140bdd527b04c2e7b65710cd86ce7e1a1b421aa779b91203f016"
+    },
+    {
+      "bytes": 3900,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v1/freeze.py",
+      "sha256": "00c0cbbb0e92405be53167c9333686b4ecabec1a49ceba59420cb383d34b7a4e"
+    },
+    {
+      "bytes": 2587,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v1/README.md",
+      "sha256": "acdad697e7ae44acda37e4bc580c7dbf9de227133d9e58cd8069c0114fc5e8bd"
+    },
+    {
+      "bytes": 241849,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v1/entry.py",
+      "sha256": "6e87a4a2569bb03206c02335a9de215396270e4c1b2c97db590447160d7b64d2"
+    },
+    {
+      "bytes": 1341,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v1/command.json",
+      "sha256": "972d8be410e1d704ef6389b1e4cd8e12cab412e9e7ea04a910ff6a5dee5272d0"
+    }
+  ],
+  "pure_controls": {
+    "child_native_network_attempts": [],
+    "passed": 12
+  },
+  "root_exact_admission_required": true,
+  "scientific_acceptance": false,
+  "scope": "Exactly twenty pinned retained task artifacts and the exact source theory. Verify per-task record product before constructor alias, full captured false/zero quantified assertions and declaration types, source definition/goal comparison deltas; preserve unknowns. No proof adoption.",
+  "source_body_Typed_caller_default_or_public_record_acceptance": false
+}

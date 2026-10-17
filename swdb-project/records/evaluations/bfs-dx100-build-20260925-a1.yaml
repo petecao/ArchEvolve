@@ -1,0 +1,179 @@
+kind: evaluation
+schema_version: '0.4'
+id: bfs-dx100-build-20260925-a1
+status: draft
+created: '2026-09-25'
+updated: '2026-09-25'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: bfs-dx100-build-20260925-a1
+  machine: mbit10
+  hardware_target: dx100-e4fc4af-4c
+  model_root: /data1/yanruj/DX100-bfs-e4fc4af
+  budget:
+    total_seconds: 7200
+    memory_gib: 48
+    storage_gib: 10
+    jobs: 8
+outcome:
+  state: failed
+  stage: model_build
+  reason: model_build exited with status 1; see /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-build-20260925-a1/000-model_build.log
+stages:
+- stage: model_build
+  state: failed
+  started: '2026-09-25T21:40:58.718029+00:00'
+  command:
+  - /usr/bin/python3
+  - /data1/yanruj/EvolveSWDB_dx100_20260925_a1/scripts/dx100_build.py
+  - --source
+  - /data1/yanruj/DX100-bfs-e4fc4af
+  - --output
+  - /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-build-20260925-a1/build
+  - --lane
+  - '0'
+  - --jobs
+  - '8'
+  - --wall-seconds
+  - '7200'
+  - --memory-gib
+  - '48'
+  - --storage-gib
+  - '10'
+  timeout_s: 7220
+  log: /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-build-20260925-a1/000-model_build.log
+  finished: '2026-09-25T21:41:09.968650+00:00'
+  host_wall_s: 2.039971748366952
+  returncode: 1
+  log_sha256: 46f55897c6664fe5f4a45c730d61fa12728d02f58bb84f4bf139e255eef21bfa
+  reason: null
+timing: []
+correctness:
+  state: unverified
+  checks: []
+profiling:
+  state: incomplete
+  reasons:
+  - BFS ROI, regions, and memory metrics require the profile collector.
+raw_artifacts:
+- host: mbit10
+  path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-build-20260925-a1
+  kind: dx100_build
+gain_claim: false
+evidence_kind: execution
+machine: mbit10
+context:
+  backend: dx100-gem5-se
+  target: dx100-e4fc4af-4c
+  target_sha256: 93f54ec1684d6d92c092d1ffd7e41b96f859c18fdc7c654b1cd8df3c7ca8e890
+  model:
+    id: dx100-gem5
+    revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  interface:
+    id: dx100-mmio
+    version: 1.0-e4fc4af
+  model_root: /data1/yanruj/DX100-bfs-e4fc4af
+  host: mbit10
+  lane: 'mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 265)'
+  budget:
+    total_seconds: 7200
+    memory_gib: 48
+    storage_gib: 10
+    jobs: 8
+  load_average: [7.69482421875, 8.5947265625, 8.4921875]
+  roi: bfs.dx100.traversal.v1
+  basis: simulated
+build:
+  receipt: /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-build-20260925-a1/build/build-receipt.json
+  model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  receipt_sha256: 3f303c9f046ccba276d283732b6c8149d5c5a45daf653bb99cc554257e0b95bb
+  details:
+    classification: build_only
+    ended_unix: 1790372468.2661002
+    environment:
+      compiler: |-
+        g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+        Copyright (C) 2023 Free Software Foundation, Inc.
+        This is free software; see the source for copying conditions.  There is NO
+        warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+      disks: |-
+        Filesystem      Size  Used Avail Use% Mounted on
+        /dev/sdd1       1.8T  1.7T   22G  99% /data1
+        /dev/sdb1       1.8T  1.6T  198G  89% /data
+      load: 7.20 8.46 8.45 4/1691 1543710
+      python: Python 3.12.3
+      scons: "SCons by Steven Knight et al.:\n\tSCons: v4.5.2.120fd4f633e9ef3cafbc0fec35306d7555ffd1db,\
+        \ Tue, 21 Mar 2023 12:11:27 -0400, by bdbaddog on M1DOG2021\n\tSCons path: ['/usr/lib/python3/dist-packages/SCons']\n\
+        Copyright (c) 2001 - 2023 The SCons Foundation"
+      uname:
+        machine: x86_64
+        node: mbit10
+        processor: x86_64
+        release: 6.8.0-136-generic
+        system: Linux
+        version: '#136-Ubuntu SMP PREEMPT_DYNAMIC Wed Jul  1 21:53:05 UTC 2026'
+    host: mbit10
+    host_wall_seconds: 0.2686106441542506
+    lane: 0
+    lease:
+      active_session: null
+      attempt_pid: null
+      attempt_start_token: null
+      heartbeat_at: '2026-09-25T21:40:46Z'
+      lease:
+        acquired_at: '2026-09-25T21:40:46Z'
+        daemon_pid: 1378956
+        daemon_start_token: sh1378956-1790372446
+        generation: 265
+        host: mbit10
+        lease_name: mbit10-evaluation-node0
+        mode: measure
+        session_id: null
+      recovered_from_generation: null
+      released_at: null
+      session_note: null
+      session_state: none
+      state: held
+      writer: hostlock.sh
+    limits:
+      jobs: 8
+      memory_gib: 48
+      raw_storage_gib: 2
+      storage_gib: 10
+      wall_seconds: 7200
+    revision: e4fc4afdf894f295442cef3604667a469fab8e62
+    source: /data1/yanruj/DX100-bfs-e4fc4af
+    stages:
+    - command:
+      - cmake
+      - -S
+      - /data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2
+      - -B
+      - /data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/build
+      - -G
+      - Unix Makefiles
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DCMAKE_C_COMPILER=gcc-13
+      - -DCMAKE_CXX_COMPILER=g++-13
+      ended_unix: 1790372468.265007
+      log: /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-build-20260925-a1/build/ramulator-configure.log
+      name: ramulator-configure
+      peak_group_rss_kib: 9216
+      reason: 'build_or_monitor_failure: Command ''[''du'', ''-sk'', ''/data1/yanruj/DX100-bfs-e4fc4af'']''
+        returned non-zero exit status 1.'
+      returncode: -15
+      started_unix: 1790372468.1413383
+      state: failed
+    started_unix: 1790372467.9974968
+    state: failed
+    version: '1.0'

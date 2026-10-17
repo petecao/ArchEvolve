@@ -1,0 +1,38 @@
+{
+  "created": "2026-10-16 ET",
+  "source_commit": "2baf722fdaa6cba24b859eae3172a6f597417d72",
+  "baseline": "c978393b119a3614229a37f0f2c8ca2a097c750b",
+  "files_after": {
+    "swdb-project/swdb/vector_reallocation_caller_packets.py": "a30b633404723d99c84ee3473eb0a352fe6641274e036524451826940abc59f0",
+    "swdb-project/swdb/vector_reallocation_composition.py": "fbce29f010d92be33b09a0f31c440f8db97c7f0dfd0769a41a59e71bdfe6e108"
+  },
+  "readers": [
+    "root",
+    "ticket28"
+  ],
+  "planned_raw_budget_bytes": 268435456,
+  "review_evidence": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/independent-linux-pair-source-review-2baf722f-v1.md",
+    "sha256": "ba7e16b53987395afa2036d894015455831c283565b28434ad0bfe0bc510b223"
+  },
+  "additional_production_reviews": [
+    "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-reserve-entry-composition-spec-review-c978393b-20261016.md",
+    "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-reserve-entry-composition-standards-review-c978393b-20261016.md"
+  ],
+  "scope": "Original partial711/1107 initialized-register actual formal pair; complete ordinary/RTE/init/smoke/source/runtime/role closure required. No hardware/full-ticket claim.",
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-2baf722f-v1",
+  "control_files": [
+    {
+      "bytes": 20760,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/linux_pair_entry_v1.py",
+      "sha256": "615f6c867a29101e1dee2072893fea212f6c2843c77f6bbd3d18538fc891300a",
+      "name": "linux_pair_entry_v1.py"
+    },
+    {
+      "bytes": 84621,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/linux_pair_policy_2baf722f_v1.json",
+      "sha256": "574e8fba725e65cb8113795b784e7869005801cb2dc4dc5cd5adc21c2b3ed7f0",
+      "name": "linux_pair_policy_2baf722f_v1.json"
+    }
+  ]
+}

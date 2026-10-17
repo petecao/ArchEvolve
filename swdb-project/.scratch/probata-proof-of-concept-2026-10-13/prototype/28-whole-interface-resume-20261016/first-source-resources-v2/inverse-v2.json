@@ -1,0 +1,31 @@
+{
+  "backend_and_capacity_assertions_unchanged": true,
+  "edits": [
+    {
+      "new": "EVALUATION_HELPER_UNWIND = 20 * NODE_CAPACITY + 1\nCOUNT_SCANNING_HELPER_UNWIND = NODE_CAPACITY + 1\nOWNER_UNWIND = {'dxm_cover': EVALUATION_HELPER_UNWIND, 'dxm_cpu_write': COUNT_SCANNING_HELPER_UNWIND,\n                'dxm_device_write': COUNT_SCANNING_HELPER_UNWIND}",
+      "old": "EVALUATION_HELPER_UNWIND = 20 * NODE_CAPACITY + 1"
+    },
+    {
+      "new": "('four_initialized_register_stream_loads', 4, 58)",
+      "old": "('four_stream_loads', 4, 58)"
+    },
+    {
+      "new": "'schema': 'dx100-first-source-resource-profile-2'",
+      "old": "'schema': 'dx100-first-source-resource-profile-1'"
+    },
+    {
+      "new": "'helper_owner_unwind': dict(OWNER_UNWIND),\n        'stream_load_setup_source_basis': {'source_initializers': {'min_reg': 0, 'max_reg': 2, 'stride': 1},\n            'dtype': 'int32_t', 'before_all_four_loads': 'checked original source/model state, not an assumed initialized payload',\n            'initialized_setup_nodes': 30, 'generic_missing_register_setup_nodes': 33, 'two_lane_nodes_each': 14},",
+      "old": "'helper_owner_unwind': {'dxm_cover': EVALUATION_HELPER_UNWIND},"
+    },
+    {
+      "new": "and set(OWNER_UNWIND) <= set(helper_functions)",
+      "old": "and 'dxm_cover' in helper_functions"
+    },
+    {
+      "new": "OWNER_UNWIND.get(owner, DEFAULT_HELPER_UNWIND)",
+      "old": "EVALUATION_HELPER_UNWIND if owner == 'dxm_cover' else DEFAULT_HELPER_UNWIND"
+    }
+  ],
+  "exact_V1_restored": true,
+  "schema": "first-source-resource-v2-inverse-1"
+}

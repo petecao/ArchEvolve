@@ -1,0 +1,71 @@
+{
+  "admission_flags": {
+    "actual_source_ABI_native_public_or_new02_acceptance": false,
+    "complete_selected_body_CPU_effect_lifetime_validation_still_required": true,
+    "upstream_compiler_transport_and_owned_receiver_admission_still_required": true
+  },
+  "classification": "PASS_PROSPECTIVE_EXACT_THREE_SOURCE_ROOT_SELECTION_ONLY",
+  "date": "2026-10-16 ET",
+  "findings": [],
+  "inputs": [
+    {
+      "bytes": 2722,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source-memory-fixtures-v1/source-memory-fixture-packet-v1.json",
+      "sha256": "8713e6fd42c40503c4604b5b8291c308b5a1eaeeef4ba01c63bdbf9b4db6ef31"
+    },
+    {
+      "bytes": 3258,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source-memory-fixtures-v1/same_thread_memory_v1.cpp",
+      "sha256": "55b9fe4033e80c4c151a743744ccf745082ada5e408aaa782d6ccbb30d88d887"
+    },
+    {
+      "bytes": 34803,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v4.py",
+      "sha256": "217cdda6ca8eaea99526010f2c379dad963ca81c18c79322ce02ab8cc9296ed8"
+    },
+    {
+      "bytes": 11959,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source-memory-selection-v1/source_memory_selection_v1.py",
+      "sha256": "498f1eb7a2f4e824e4ec0d484fcd0730ac2eb4bb98ab03c740e36e943a523767"
+    },
+    {
+      "bytes": 9918,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source-memory-selection-v1/test_source_memory_selection_v1.py",
+      "sha256": "aaa0a6504f048f973d58cded7e62ed06a889c57ae340c2c091a004b222aea04b"
+    },
+    {
+      "bytes": 2386,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source-memory-selection-v1/README.md",
+      "sha256": "604579f4e4b478b2ab71ceae7a603cda64d06297afd30a8e2173209032587786"
+    }
+  ],
+  "packet": {
+    "bytes": 3195,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source-memory-selection-v1/source-packet-v1.json",
+    "sha256": "2d15479bb2a53fe5495f37bf1d166f7ad882da5b711c691dcb39befceffd952f"
+  },
+  "prior_three_fixture_review": {
+    "bytes": 5194,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-source-memory-three-fixtures-independent-source-review-20261016.json",
+    "sha256": "f7939d9d6a20f192b960ae6eda27e41812adbe0873160d34bbe95560402b84ba"
+  },
+  "reviewed_properties": [
+    "The helper accepts only the exact55b9fe40 three-function ASCII source and pinned217cdda6 binder. All three global no-argument uint32 definitions must have exact original ranges/types/manglings and unique actual-format declaration IDs; their spans must be disjoint. The complete normalized-TU digest is retained and its graph is never filtered or replaced.",
+    "Selected VarDecl references must resolve to its own automatic locals. Source global/helper/nested/omitted-root references refuse. Every selected CallExpr range must equal the distinct selected preparation-call census and is passed to the binder recheck with actual caller and exact source range plus complete original-TU/source/declarations/ABI inputs. The pinned real binder independently re-derives the exact original-header declaration inventory for each bound call.",
+    "Only the two unreferenced complete function-definition source spans are blanked in counterpart text. Every selected byte, total text length and newline offset are preserved; the source header tokens remain. The complete input graph and all three root hashes/ranges stay in the receipt. This is a native counterpart text cut, not a semantic AST reduction.",
+    "The fixed profile keeps predicted7/9/7 results and exact negative hazard labels as observations to check; it does not alter source/model/choice semantics to obtain them. Full64-byte physical alignment remains separately owned evidence and is explicitly not inferred from the uint32 source type.",
+    "The returned acceptance flag is always false and explicitly requires upstream complete compiler/source/ABI transport and owned receiver admission, plus downstream full selected-body expression/CPU effect/lifetime validation. It does not replace those mandatory consumers, emit a native harness or admit a source unit.",
+    "The api dictionary must actually be loaded from the pinned binder bytes by the outer consumer. The __file__ physical pin alone does not attest arbitrary supplied Python callables. Upstream preparation metadata likewise must be produced/rechecked by the reviewed complete-TU capture; this helper does not authenticate an invented AST or ABI.",
+    "Seven retained no-child controls are explicitly synthetic graph controls and recheck the real binder keyword signature, not compiler observations. No actual AST, header ABI, source replay, hardware refinement, public predicted verdict, runtime admission or new0.2 success follows. Old3148/79/80 remains unsupported and unchanged."
+  ],
+  "reviewer": "lane_coordination independent source/Spec review",
+  "verification": {
+    "SSH_or_remote_queries": false,
+    "author_retained_pure_controls": 7,
+    "reviewer_executed_tests_project_or_native_tools": false,
+    "runtime_V4_admitted": false,
+    "shared_files_edited": false,
+    "source_AST_hash_only": true
+  },
+  "verified_all_declared_basis_and_file_rows": 6
+}

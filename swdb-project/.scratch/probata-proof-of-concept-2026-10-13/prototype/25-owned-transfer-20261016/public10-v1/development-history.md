@@ -1,0 +1,1 @@
+Created: 2026-10-16 ET. development-inert-v1 is the first unexecuted author output. Its stored absolute pin paths name the original inert directory, which was moved here before any review or dispatch. The final author regenerates the canonical inert directory after adding first-error retention. No scientific/native result exists in either preparation.

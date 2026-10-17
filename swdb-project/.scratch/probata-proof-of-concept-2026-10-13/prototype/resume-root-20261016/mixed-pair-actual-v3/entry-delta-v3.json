@@ -1,0 +1,166 @@
+{
+  "added_functions": [
+    "root_control_gate"
+  ],
+  "date": "2026-10-16 ET",
+  "exact_inverse_reconstructs_parent": true,
+  "line_edits": [
+    {
+      "new_lines": [
+        "SOURCE = \"dcdecf317a0e9b34f3ce12d5b914eb823c439fbc\"\n",
+        "RAW_NAME = \"probata-resume-20261016-dcdecf31-mixed-pair-public-v3\"\n"
+      ],
+      "new_range": [
+        19,
+        21
+      ],
+      "old_lines": [
+        "SOURCE = \"18f04e569b949f465d6732db9505e3a264805040\"\n",
+        "RAW_NAME = \"probata-resume-20261016-18f04e56-mixed-pair-public-v2\"\n"
+      ],
+      "old_range": [
+        19,
+        21
+      ]
+    },
+    {
+      "new_lines": [
+        "         \"published source requires exact admitted root30-control success before tools\")\n",
+        "\n",
+        "\n",
+        "def root_control_gate(expected, control):\n",
+        "    need(control[\"schema\"] == \"mixed-pair-root30-admission-1\"\n",
+        "         and control[\"status\"] == \"ROOT_CONTROLS_PASSED\"\n",
+        "         and control.get(\"actual_success_admitted\") is True\n",
+        "         and control[\"source_commit\"] == SOURCE\n",
+        "         and control[\"raw_root\"] == expected[\"root_control_admission\"][\"expected_raw_root\"],\n",
+        "         \"exact root30 actual source/status/raw admission required\")\n",
+        "    need(control[\"tests\"] == {\"cases\": 30, \"failures\": 0, \"errors\": 0, \"skips\": 0, \"cache_absent\": True}\n",
+        "         and all(type(control[\"tests\"][key]) is int for key in (\"cases\", \"failures\", \"errors\", \"skips\"))\n",
+        "         and control[\"tests\"][\"cache_absent\"] is True,\n",
+        "         \"root30 controls must actually complete without skips/errors/failures/cache writes\")\n",
+        "    need(control[\"guard\"] == {\"exit_code\": 0, \"rss_cap_bytes\": RSS_BYTES, \"workers\": 1, \"whole_seconds\": WHOLE_SECONDS}\n",
+        "         and all(type(value) is int for value in control[\"guard\"].values())\n",
+        "         and type(control[\"outer_exit_code\"]) is int and control[\"outer_exit_code\"] == 0\n",
+        "         and control[\"formal_WP_CBMC_disabled\"] is True\n",
+        "         and control[\"actual_flags\"] == {\"SWDB_PAIR_ACTUAL\": \"0\", \"SWDB_MIXED_PAIR_ACTUAL\": \"0\"},\n",
+        "         \"root30 actual guard/outer/resource/disabled-formal context differs\")\n",
+        "    need(set(control[\"evidence\"]) == {\"command\", \"junit\", \"result\", \"guard\", \"outer\", \"source_publication\"},\n",
+        "         \"complete exact root30 compact evidence pin set required\")\n",
+        "    for name, row in control[\"evidence\"].items():\n",
+        "        need(set(row) == {\"path\", \"bytes\", \"sha256\"} and isinstance(row[\"path\"], str)\n",
+        "             and Path(row[\"path\"]).is_absolute() and type(row[\"bytes\"]) is int and row[\"bytes\"] > 0\n",
+        "             and isinstance(row[\"sha256\"], str) and len(row[\"sha256\"]) == 64\n",
+        "             and all(char in \"0123456789abcdef\" for char in row[\"sha256\"]),\n",
+        "             \"root30 evidence physical pin is incomplete: \" + name)\n",
+        "    return control\n"
+      ],
+      "new_range": [
+        58,
+        87
+      ],
+      "old_lines": [
+        "         \"inert source18f baseline requires a separately reviewed repaired-source successor\")\n"
+      ],
+      "old_range": [
+        58,
+        59
+      ]
+    },
+    {
+      "new_lines": [
+        "    name = EXPECTED[\"root_control_admission\"][\"file\"]\n",
+        "    need(name == \"root30-control-admission.json\" and name in EXPECTED[\"controller_files\"],\n",
+        "         \"exact closed root30 receipt basename required\")\n",
+        "    save(output / \"mixed-root30-admission.json\", root_control_gate(EXPECTED, json.loads((control / name).read_bytes())))\n"
+      ],
+      "new_range": [
+        336,
+        340
+      ],
+      "old_lines": [],
+      "old_range": [
+        308,
+        308
+      ]
+    },
+    {
+      "new_lines": [
+        "    from swdb import bounded_initialization, cbmc_translator, c_lowering, proof_setup, std_models, stdlib_provenance, wp_pointer_bounds\n"
+      ],
+      "new_range": [
+        396,
+        397
+      ],
+      "old_lines": [
+        "    from swdb import c_lowering, stdlib_provenance\n"
+      ],
+      "old_range": [
+        364,
+        365
+      ]
+    },
+    {
+      "new_lines": [
+        "    checker_identities = {\"bounded_initialization\": bounded_initialization.identity(),\n",
+        "        \"cbmc_translator\": cbmc_translator.identity(), \"wp_pointer_bounds\": wp_pointer_bounds.identity(),\n",
+        "        \"std_models\": std_models.identity(), \"proof_setup\": proof_setup.identity()}\n",
+        "    need(checker_identities == EXPECTED[\"source_checker_identities\"]\n",
+        "         and identity[\"naming_rules\"] == EXPECTED[\"naming\"], \"fresh source/compiler/checker identity differs\")\n"
+      ],
+      "new_range": [
+        402,
+        407
+      ],
+      "old_lines": [],
+      "old_range": [
+        370,
+        370
+      ]
+    },
+    {
+      "new_lines": [
+        "         \"model_hashes\": model_hashes, \"source_checker_identities\": checker_identities,\n",
+        "         \"scope\": \"Fresh source and admitted runtime composite; old composite not promoted. Independent record/cold reconciliation required\"})\n"
+      ],
+      "new_range": [
+        409,
+        411
+      ],
+      "old_lines": [
+        "         \"model_hashes\": model_hashes, \"scope\": \"Fresh context identity; independent record/cold reconciliation required\"})\n"
+      ],
+      "old_range": [
+        372,
+        373
+      ]
+    }
+  ],
+  "modified_functions": [
+    "main",
+    "policy_gate"
+  ],
+  "parent": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/mixed-pair-actual-v2/entry.py",
+    "sha256": "895d551265dc2f9065ebe936a1b8b094e111be918fb4aa16d3e120d2dc89a043"
+  },
+  "scope": "Published source/raw namespace rebind; exact mandatory root30-control receipt precondition and fresh source-checker identity comparisons. Science/JUnit, caps, runtime/native/alias/finalization helpers unchanged. Pending admission remains false.",
+  "successor": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/mixed-pair-actual-v3/entry.py",
+    "sha256": "1cc61ac12cd7097adf877c2d9b4855e708aae46485d9b5bca79b796a7b6cfbdc"
+  },
+  "unchanged_functions": [
+    "need",
+    "sha",
+    "save",
+    "pytest_alias_policy",
+    "pytest_source_check",
+    "native_c_wrapper_check",
+    "raw_extent",
+    "final_payload",
+    "finalize_result",
+    "junit_census",
+    "check_eight_records",
+    "stop_tree"
+  ]
+}

@@ -1,0 +1,169 @@
+--- lanl-stage-reviewed17-index-privacy-envelope-source-from-git-20261007-a1.py
++++ lanl-stage-reviewed17-index-private-outer-sources-from-git-20261007-a1-r1.py
+@@ -1,6 +1,6 @@
+ """NOT RUN: reviewed source-copy staging, requiring a parent supplied deliveredRevision.
+ 
+-Future invocation copies one exact Git envelope source blob only. It does not import or
++Future invocation copies two exact Git Python/Bash source blobs only. It does not import or
+ execute those sources, read a research catalog, construct inputs, or run tests.
+ All earlier source stages stay unopened. Parent review and SSH ownership remain
+ required. Failures retain partial output and expose only exception class/hash.
+@@ -17,21 +17,35 @@
+ 
+ SOURCE_C = 'f893fed400347ed23d92e917d8bde21b75e5375d'
+ ESTIMATOR_F6 = 'f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3'
+-OUTPUT = Path('/private/tmp/lanl17-reviewed-index-privacy-envelope-source-staging-actual-20261007-a1.json')
+-CONFIG = [{'target': 'envelope.py',
+-  'source': {'path': 'swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-privacy-envelope-controls-20261007/lanl17_remote_original_index_writer_privacy_envelope_20261007.py',
+-             'bytes': 38790,
+-             'sha256': '1ee5ffbdf1ef322cfd5bfec4b6e402c29d23c776e855f01d25208ebbece0fcfc'},
+-  'review': {'path': 'swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-privacy-envelope-controls-20261007/lanl17-original-index-writer-privacy-envelope-parent-review-20261007.json',
+-             'bytes': 7051,
+-             'sha256': '70beddcfeb95e3b612476b358021581b288b031321be01b2e95c6dfd4f3c383a',
+-             'format': 'swdb.lanl17-original-index-writer-privacy-envelope-parent-source-review.v1',
+-             'identity_sha256': '4a1023632f0db9da20860d1ade13efac5503bea6eabd0854a1432208cfb4a443'},
+-  'manifest': {'path': 'swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-privacy-envelope-controls-20261007/manifest.json',
+-               'bytes': 8784,
+-               'sha256': '69e9ee241ad19e45dd89cfd974c311633926a6c10b41ffb8242a4e5b2febf03a',
+-               'format': 'swdb.lanl17-original-index-writer-privacy-envelope-archival-custody.v1',
+-               'identity_sha256': '0e916296aea2b8c0ba930c5bf11f15e0b4b2b7de05192594a2786fa496e4de1d'}}]
++OUTPUT = Path('/private/tmp/lanl17-reviewed-index-private-outer-source-staging-actual-20261007-a1.json')
++CONFIG = [{'target': 'outer_capture.py',
++  'source': {'path': 'swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/lanl17_remote_original_index_writer_private_outer_capture_20261007.py',
++             'bytes': 34658,
++             'sha256': '59c06dd5ea606414827a85d6e27f4aff1bc381827624590b2449415198399544'},
++  'review': {'path': 'swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/lanl17-original-index-writer-private-outer-capture-parent-review-20261007.json',
++             'bytes': 6493,
++             'sha256': 'a9ab95d10d8e26a0a4b170f7184c31970d88c3b8f04f9dea6d02d38c3079e262',
++             'format': 'swdb.lanl17-original-index-writer-private-outer-capture-parent-source-review.v1',
++             'identity_sha256': 'b471b2d9e12fd4d54c3e74b25ed56782c6e319a4df59e271b5ddacde7befa687'},
++  'manifest': {'path': 'swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/manifest.json',
++               'bytes': 10568,
++               'sha256': '9d07052f2b54033a9a3c3fd860cf2ba657dfbb73fe381e03d6cfda0a45d3228c',
++               'format': 'swdb.lanl17-original-index-writer-private-outer-capture-archival-custody.v1',
++               'identity_sha256': '00b2aa6a7e6542f4e3ac26325dd5c2fdabe37cd19347836b86e30d65edc71eae'}},
++ {'target': 'bootstrap.sh',
++  'source': {'path': 'swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/lanl17_original_index_writer_outermost_private_bootstrap_20261007.sh',
++             'bytes': 6549,
++             'sha256': '0d1eb650d1bcb1a9f491d5fb790f083e371875ddd20fe0bf1f42d5fce05a9217'},
++  'review': {'path': 'swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/lanl17-original-index-writer-private-outer-capture-parent-review-20261007.json',
++             'bytes': 6493,
++             'sha256': 'a9ab95d10d8e26a0a4b170f7184c31970d88c3b8f04f9dea6d02d38c3079e262',
++             'format': 'swdb.lanl17-original-index-writer-private-outer-capture-parent-source-review.v1',
++             'identity_sha256': 'b471b2d9e12fd4d54c3e74b25ed56782c6e319a4df59e271b5ddacde7befa687'},
++  'manifest': {'path': 'swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/manifest.json',
++               'bytes': 10568,
++               'sha256': '9d07052f2b54033a9a3c3fd860cf2ba657dfbb73fe381e03d6cfda0a45d3228c',
++               'format': 'swdb.lanl17-original-index-writer-private-outer-capture-archival-custody.v1',
++               'identity_sha256': '00b2aa6a7e6542f4e3ac26325dd5c2fdabe37cd19347836b86e30d65edc71eae'}}]
+ 
+ REMOTE = r'''
+ import datetime,hashlib,json,os,pathlib,pwd,signal,socket,stat,subprocess,sys,time
+@@ -41,7 +55,7 @@
+ DRIVER_SHA='__LOCAL_DRIVER_SHA__'
+ SOURCE_C='f893fed400347ed23d92e917d8bde21b75e5375d'
+ F6='f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3'
+-RECEIPT_FORMAT='swdb.lanl17-reviewed-index-privacy-envelope-source-staging.v1'
++RECEIPT_FORMAT='swdb.lanl17-reviewed-index-private-outer-source-staging.v1'
+ KEYS=('st_dev','st_ino','st_uid','st_mode','st_size','st_mtime_ns','st_ctime_ns')
+ 
+ def sha(raw):return hashlib.sha256(raw).hexdigest()
+@@ -125,34 +139,46 @@
+   review=sealed(review_raw,config['review']);manifest=sealed(manifest_raw,config['manifest'])
+   assert manifest['source_C']==SOURCE_C and manifest['estimator_F6']==F6
+   assert manifest['scientific_admission_or_ticket_resolution'] is False
+-  assert config['target']=='envelope.py'
+-  assert review['complete_parent_source_read'] is True and review['complete_independent_ticket04_source_read'] is True
+-  assert review['concrete_blockers_found']==[] and review['actual_envelope_invocation_reviewed'] is False
++  roles={'outer_capture.py':('outer_source','original_NOTRUN_outer_Python_source'),
++         'bootstrap.sh':('bootstrap_source','original_NOTRUN_outermost_Bash_source')}
++  review_role,manifest_role=roles[config['target']]
++  assert review['complete_parent_packet_read'] is True and review['complete_independent_ticket04_packet_read'] is True
++  assert review['concrete_source_blockers_found']==[] and review['actual_invocation_reviewed'] is False
++  assert review['source_preservation_and_prospective_staging_reviewed'] is True
++  assert review['original_ordered_fourteen_flags_unchanged'] is True
+   assert review['no_new_execution_or_scientific_evidence'] is True
+   assert all(value==0 for value in review['not_performed'].values())
+-  exact_pin(review['prepared_packet_pins']['envelope'],config['source'])
+-  assert len(review['independently_verified_function_class_AST_matches'])==23
+-  assert all(row['AST_equal'] is True for row in review['independently_verified_function_class_AST_matches'])
+-  assert len(review['independently_verified_original_constant_Assign_names'])==12
+-  assert len(review['actual_input_argv_outer_capture_review_required'])==8
+-  row=entry(manifest,'source_only_NOTRUN_envelope',config['source']);assert row['original_bytes_preserved'] is True
+-  row=entry(manifest,'parent_complete_True_source_review',config['review'],seal_key='original_identity_sha256')
++  exact_pin(review['prepared_packet_pins'][review_role],config['source'])
++  assert len(review['independently_verified_function_class_AST_names'])==27
++  assert len(review['independently_verified_constant_Assign_AST_names'])==24
++  assert len(review['future_actual_parent_prerequisites'])==8
++  row=entry(manifest,manifest_role,config['source']);assert row['original_bytes_preserved'] is True
++  row=entry(manifest,'parent_complete_explicit_True_source_review',config['review'],seal_key='original_identity_sha256')
+   assert row['original_bytes_preserved'] is True
++  # Preparation remains an exact reference in the existing two True documents;
++  # no new preparation blob fetch, receipt schema or approval is introduced.
++  preparation_pin=dict(review['prepared_packet_pins']['preparation'],
++                       identity_sha256=review['verified_original_True_seals']['preparation'])
++  row=entry(manifest,'original_explicit_True_NOTRUN_preparation',preparation_pin,seal_key='original_identity_sha256')
++  assert row['original_bytes_preserved'] is True
++  assert manifest['old_seals_inherited_provenance_only']['preparation']==preparation_pin['identity_sha256']
+   assert manifest['Python_modules_Git_equal_C']==185
+   assert manifest['source_review']['identity_sha256']==config['review']['identity_sha256']
+   assert manifest['source_review']['full_parent_and_independent04'] is True
+-  assert manifest['source_review']['actual_envelope_invocation_reviewed'] is False
+-  assert manifest['source_review']['actual_argv_inputs_outer_private_capture_review_still_required'] is True
++  assert manifest['source_review']['copied_function_class_ASTs']==27 and manifest['source_review']['constant_Assigns']==24
++  assert manifest['source_review']['actual_invocation_reviewed'] is False
++  assert manifest['source_review']['real_native_bootstrap_inputs_and_complete_argv_review_required'] is True
+   assert len(source)==config['source']['bytes'] and sha(source)==config['source']['sha256']
+   return review,manifest
+  source_gate();assert python_tree(SOURCE_C)==python_tree(REVISION)
+- assert {v['target'] for v in CONFIG}=={'envelope.py'} and len(CONFIG)==1
++ assert {v['target'] for v in CONFIG}=={'outer_capture.py','bootstrap.sh'} and len(CONFIG)==2
++ assert CONFIG[0]['review']==CONFIG[1]['review'] and CONFIG[0]['manifest']==CONFIG[1]['manifest']
+  originals={}
+  for config in CONFIG:
+   raws={role:original_blob(config[role]) for role in ('source','review','manifest')}
+   custody(config,raws['source'],raws['review'],raws['manifest'])
+   originals[config['target']]=raws
+- destination=base/'lanl17-index-privacy-source-20261007-a1'
++ destination=base/'lanl17-index-private-outer-source-20261007-a1'
+  assert not destination.exists() and not destination.is_symlink()
+  source_gate();remaining();destination.mkdir(mode=0o700)
+  assert checked(destination,True)==destination and destination.stat().st_mode&0o777==0o700
+@@ -196,13 +222,13 @@
+       'sources':[{'target':str(destination/v['target']),'mode':'0600','source_git_pin':v['source'],
+                   'original_review_git_pin':dict(v['review'],canonical_ensure_ascii=True),
+                   'original_manifest_git_pin':dict(v['manifest'],canonical_ensure_ascii=True)} for v in CONFIG],
+-      'receipt_written_on_remote':False,'remote_destination_contains_only_one_source_file':True,
++      'receipt_written_on_remote':False,'remote_destination_contains_only_two_source_files':True,
+       'source_imports_or_selected_mains_executed':False,'actual_inputs_or_catalog_read_or_constructed':False,
+       'Store_validate_campaign_native_provider_collector_auditor_tests_executed':False,
+       'scientific_admission':False,'environment_or_authentication_contents_read':False,
+       'earlier_stages_including_original7a_opened_or_modified':False,
+       'untracked_files_cleaned_or_modified':False,'remote_seconds_limit':60,'SSH_seconds_limit':120,
+-      'scope':'One exact envelope source copy only; original source preparation/review chronology retained. No envelope/original7a main or actual inputs. Real argv/input and separate private remote startup/outer-capture review remain required before execution.'}
++      'scope':'Two exact private-outer Python/Bash source byte copies only; one original source/review/archive custody group retained. No copied source/envelope/original7a main or actual inputs. Real input/native/runtime/full56argv and outer supervision review remain required before execution.'}
+  row['identity_sha256']=digest(row)
+  encoded=(json.dumps(row,indent=2,ensure_ascii=True,allow_nan=False)+'\n').encode();assert len(encoded)<=16384
+  source_gate();remaining();sys.stdout.buffer.write(encoded);sys.stdout.buffer.flush()
+@@ -284,7 +310,7 @@
+                            ';stderr_sha256=' + sha(result.stderr))
+     assert len(result.stdout) <= 16384 and result.stderr == b''
+     row = strict_json(result.stdout)
+-    assert row['format'] == 'swdb.lanl17-reviewed-index-privacy-envelope-source-staging.v1'
++    assert row['format'] == 'swdb.lanl17-reviewed-index-private-outer-source-staging.v1'
+     assert row['canonical_ensure_ascii'] is True
+     assert row['identity_sha256'] == digest({k: v for k, v in row.items() if k != 'identity_sha256'})
+     assert row['source_git_revision'] == revision and row['source_git_branch'] == 'yanrujhou_main'
+@@ -293,9 +319,9 @@
+     assert row['scientific_source_C'] == SOURCE_C
+     assert row['scientific_python_modules_Git_blob_equal_C'] == 185
+     assert row['estimator_F6_from_exact_original_reviewed_custody'] == ESTIMATOR_F6
+-    assert row['destination'] == '/data1/yanruj/lanl17-index-privacy-source-20261007-a1'
+-    assert row['directory_mode'] == '0700' and row['remote_destination_contains_only_one_source_file'] is True
+-    assert row['receipt_written_on_remote'] is False and len(row['sources']) == 1
++    assert row['destination'] == '/data1/yanruj/lanl17-index-private-outer-source-20261007-a1'
++    assert row['directory_mode'] == '0700' and row['remote_destination_contains_only_two_source_files'] is True
++    assert row['receipt_written_on_remote'] is False and len(row['sources']) == 2
+     for config, saved in zip(CONFIG, row['sources']):
+         assert saved['target'] == row['destination'] + '/' + config['target'] and saved['mode'] == '0600'
+         assert saved['source_git_pin'] == config['source']

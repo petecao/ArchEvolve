@@ -1,0 +1,641 @@
+{
+  "closure": {
+    "actual_linux_role": {
+      "Mac_counted_claim": false,
+      "derived_marker": "ae1f8c638f61801d3b147273d387a9ce14689c3de29669d21e78be8b2ec1b6d0",
+      "launch": {
+        "bytes": 1704,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-unit-observation-2baf722f-v5/launch.json",
+        "sha256": "7b51d511e088e6d3d35f0d366ee0b593762d48a9e740404d62a90bcd0fbbed61"
+      },
+      "live": {
+        "ancestor_chain": [
+          3961386,
+          3961346,
+          3961345,
+          3961342,
+          3961341
+        ],
+        "ancestor_pid": 3961272,
+        "cpus": [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24,
+          26,
+          28,
+          30,
+          32,
+          34,
+          36,
+          38,
+          40,
+          42,
+          44,
+          46,
+          48,
+          50,
+          52,
+          54,
+          56,
+          58,
+          60,
+          62
+        ],
+        "fd9_matches_lease": true,
+        "generation": 626,
+        "lease": "mbit10-evaluation-node0",
+        "memory_policy": "bind:0"
+      }
+    },
+    "actual_stage_reconciliation": [
+      {
+        "actual": {
+          "bytes": 7892,
+          "sha256": "ea2e7e26ae154ccb9bd40204f75571ddca8fe50591a862d36abb140ec0893f8e",
+          "stable_while_hashed": true
+        },
+        "expected_bytes": 7892,
+        "expected_sha256": "ea2e7e26ae154ccb9bd40204f75571ddca8fe50591a862d36abb140ec0893f8e",
+        "matches": true,
+        "name": "abi_role_transport_v1.py"
+      },
+      {
+        "actual": {
+          "bytes": 18385,
+          "sha256": "748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af",
+          "stable_while_hashed": true
+        },
+        "expected_bytes": 18385,
+        "expected_sha256": "748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af",
+        "matches": true,
+        "name": "closed_python_surface.py"
+      },
+      {
+        "actual": {
+          "bytes": 15063,
+          "sha256": "775ab2ecf6068153a6167473129dcd416dc2727c9afe0ef6e0846bab62d3085c",
+          "stable_while_hashed": true
+        },
+        "expected_bytes": 15063,
+        "expected_sha256": "775ab2ecf6068153a6167473129dcd416dc2727c9afe0ef6e0846bab62d3085c",
+        "matches": true,
+        "name": "compiler_unit_adapter_v3.py"
+      },
+      {
+        "actual": {
+          "bytes": 23873,
+          "sha256": "b5bd7293259f69ffe4e5d6094cb6bd46c2d5527ef95cd28d0aaa95d88529e6c6",
+          "stable_while_hashed": true
+        },
+        "expected_bytes": 23873,
+        "expected_sha256": "b5bd7293259f69ffe4e5d6094cb6bd46c2d5527ef95cd28d0aaa95d88529e6c6",
+        "matches": true,
+        "name": "compiler_unit_adapter_v4.py"
+      },
+      {
+        "actual": {
+          "bytes": 13395,
+          "sha256": "0c8e0fb429a4a497821d20436d777870bc0608ec3dbe79d42eb5201ad5d23105",
+          "stable_while_hashed": true
+        },
+        "expected_bytes": 13395,
+        "expected_sha256": "0c8e0fb429a4a497821d20436d777870bc0608ec3dbe79d42eb5201ad5d23105",
+        "matches": true,
+        "name": "dx100_whole_checked_v2.py"
+      },
+      {
+        "actual": {
+          "bytes": 9173,
+          "sha256": "0c2ecf757113f0c125376214cc783489fca94a812fad2512d574af397dd78489",
+          "stable_while_hashed": true
+        },
+        "expected_bytes": 9173,
+        "expected_sha256": "0c2ecf757113f0c125376214cc783489fca94a812fad2512d574af397dd78489",
+        "matches": true,
+        "name": "envelope-policy-v5.json"
+      },
+      {
+        "actual": {
+          "bytes": 7595,
+          "sha256": "6c97194fed3a538916e14399f184d560322b80058e19418ac20c6fcad032bbb2",
+          "stable_while_hashed": true
+        },
+        "expected_bytes": 7595,
+        "expected_sha256": "6c97194fed3a538916e14399f184d560322b80058e19418ac20c6fcad032bbb2",
+        "matches": true,
+        "name": "fixed-modules-v3.json"
+      },
+      {
+        "actual": {
+          "bytes": 23441,
+          "sha256": "9f63dbe826ca70f2ceacd37b56753a5f212811a5a377c7baed59da4de60b7721",
+          "stable_while_hashed": true
+        },
+        "expected_bytes": 23441,
+        "expected_sha256": "9f63dbe826ca70f2ceacd37b56753a5f212811a5a377c7baed59da4de60b7721",
+        "matches": true,
+        "name": "linux_native86_entry_v4.py"
+      },
+      {
+        "actual": {
+          "bytes": 24791,
+          "sha256": "13de22dc3d1e20d8b7e652e8a48caa356e9985a566ced65f468f05f21ad10cc8",
+          "stable_while_hashed": true
+        },
+        "expected_bytes": 24791,
+        "expected_sha256": "13de22dc3d1e20d8b7e652e8a48caa356e9985a566ced65f468f05f21ad10cc8",
+        "matches": true,
+        "name": "linux_observation_envelope_v5.py"
+      },
+      {
+        "actual": {
+          "bytes": 6812,
+          "sha256": "aae4a423216fcdca6b16f9eba370ec4c83615ed61ae79dd4b3d09e3bed1702ef",
+          "stable_while_hashed": true
+        },
+        "expected_bytes": 6812,
+        "expected_sha256": "aae4a423216fcdca6b16f9eba370ec4c83615ed61ae79dd4b3d09e3bed1702ef",
+        "matches": true,
+        "name": "lossless_gzip_v2.py"
+      },
+      {
+        "actual": {
+          "bytes": 26153,
+          "sha256": "02a556b74d81594b8bc637fe8f085bc6e8f8df7642ecdad2267b2cc6f09a9bd4",
+          "stable_while_hashed": true
+        },
+        "expected_bytes": 26153,
+        "expected_sha256": "02a556b74d81594b8bc637fe8f085bc6e8f8df7642ecdad2267b2cc6f09a9bd4",
+        "matches": true,
+        "name": "normalized_capture_ingress_v2.py"
+      },
+      {
+        "actual": {
+          "bytes": 4490,
+          "sha256": "4bdeb0b2761fcc9b3721ee770d8eb8b33534ec7df22cc07cc42f1345b5bd285f",
+          "stable_while_hashed": true
+        },
+        "expected_bytes": 4490,
+        "expected_sha256": "4bdeb0b2761fcc9b3721ee770d8eb8b33534ec7df22cc07cc42f1345b5bd285f",
+        "matches": true,
+        "name": "normalized_compiler_adapter_v1.py"
+      },
+      {
+        "actual": {
+          "bytes": 13377,
+          "sha256": "72c9e4194ba4fe97f815419200eb43d9c95d038adcf294fd94f61431e32fa638",
+          "stable_while_hashed": true
+        },
+        "expected_bytes": 13377,
+        "expected_sha256": "72c9e4194ba4fe97f815419200eb43d9c95d038adcf294fd94f61431e32fa638",
+        "matches": true,
+        "name": "normalized_unit_observation_v1.py"
+      },
+      {
+        "actual": {
+          "bytes": 10961,
+          "sha256": "e8d55b457ff7beafee26fda3159b5c0cad8a2655573f4e447b880d443ee9521e",
+          "stable_while_hashed": true
+        },
+        "expected_bytes": 10961,
+        "expected_sha256": "e8d55b457ff7beafee26fda3159b5c0cad8a2655573f4e447b880d443ee9521e",
+        "matches": true,
+        "name": "observation-policy-v1.json"
+      },
+      {
+        "actual": {
+          "bytes": 2850,
+          "sha256": "ff7a881fde6f7caa53fc6109ad056a1fbc3f3e1ede5d45f492a8884d7c4e1350",
+          "stable_while_hashed": true
+        },
+        "expected_bytes": 2850,
+        "expected_sha256": "ff7a881fde6f7caa53fc6109ad056a1fbc3f3e1ede5d45f492a8884d7c4e1350",
+        "matches": true,
+        "name": "observation_source_bridge_v1.py"
+      },
+      {
+        "actual": {
+          "bytes": 11509,
+          "sha256": "7ecdbffea04c87a2c198a17cf7b5fbd872bc4c663cc4d8da42a3c5e7bc1a088e",
+          "stable_while_hashed": true
+        },
+        "expected_bytes": 11509,
+        "expected_sha256": "7ecdbffea04c87a2c198a17cf7b5fbd872bc4c663cc4d8da42a3c5e7bc1a088e",
+        "matches": true,
+        "name": "observe_entry_v3.py"
+      },
+      {
+        "actual": {
+          "bytes": 2709,
+          "sha256": "9b100cbe2fdef3e7d429ccdf05d6489d44855a84328e2dd8532eb547beeaf43b",
+          "stable_while_hashed": true
+        },
+        "expected_bytes": 2709,
+        "expected_sha256": "9b100cbe2fdef3e7d429ccdf05d6489d44855a84328e2dd8532eb547beeaf43b",
+        "matches": true,
+        "name": "python_role_observer_v2.py"
+      },
+      {
+        "actual": {
+          "bytes": 9610,
+          "sha256": "5e9d2e6dfa2aaa7999f4670a979d3cc32736b852a612f77d4e2f7c71bc229618",
+          "stable_while_hashed": true
+        },
+        "expected_bytes": 9610,
+        "expected_sha256": "5e9d2e6dfa2aaa7999f4670a979d3cc32736b852a612f77d4e2f7c71bc229618",
+        "matches": true,
+        "name": "python_startup_roles_v2.py"
+      },
+      {
+        "actual": {
+          "bytes": 34554,
+          "sha256": "f6c19464a6587b4fbd4a6278dc66be97f1c4ab16d46b2db8cd6b804d41608a5f",
+          "stable_while_hashed": true
+        },
+        "expected_bytes": 34554,
+        "expected_sha256": "f6c19464a6587b4fbd4a6278dc66be97f1c4ab16d46b2db8cd6b804d41608a5f",
+        "matches": true,
+        "name": "receiver_state_draws_v2.py"
+      },
+      {
+        "actual": {
+          "bytes": 27967,
+          "sha256": "6301baede48b9b0f1d3beaef2873e59026f5e9e26135bc2f7ba0a3f76825f941",
+          "stable_while_hashed": true
+        },
+        "expected_bytes": 27967,
+        "expected_sha256": "6301baede48b9b0f1d3beaef2873e59026f5e9e26135bc2f7ba0a3f76825f941",
+        "matches": true,
+        "name": "role_normalized_gzip_v2.py"
+      },
+      {
+        "actual": {
+          "bytes": 2033,
+          "sha256": "f49c61750be63e2d5439e0b72c917a154f760d1b4120db96765364aabde73e6a",
+          "stable_while_hashed": true
+        },
+        "expected_bytes": 2033,
+        "expected_sha256": "f49c61750be63e2d5439e0b72c917a154f760d1b4120db96765364aabde73e6a",
+        "matches": true,
+        "name": "root-source-review.json"
+      },
+      {
+        "actual": {
+          "bytes": 362,
+          "sha256": "3dc27f15f8dbbfe494a380fb2b5f589f1aba6aa36c455107e1090ab0eafb9285",
+          "stable_while_hashed": true
+        },
+        "expected_bytes": 362,
+        "expected_sha256": "3dc27f15f8dbbfe494a380fb2b5f589f1aba6aa36c455107e1090ab0eafb9285",
+        "matches": true,
+        "name": "selected-zlib-runtime.json"
+      },
+      {
+        "actual": {
+          "bytes": 4524,
+          "sha256": "3148b662b2fbeaa7a8733569d5ea750bce8a598d4e883f9bc64cb1e27dae67cd",
+          "stable_while_hashed": true
+        },
+        "expected_bytes": 4524,
+        "expected_sha256": "3148b662b2fbeaa7a8733569d5ea750bce8a598d4e883f9bc64cb1e27dae67cd",
+        "matches": true,
+        "name": "source_call_fixture_v2.cpp"
+      },
+      {
+        "actual": {
+          "bytes": 7959,
+          "sha256": "b866e14fe3ca210de178aab71f5c8a662e15f818a5ca485095487b005ae51897",
+          "stable_while_hashed": true
+        },
+        "expected_bytes": 7959,
+        "expected_sha256": "b866e14fe3ca210de178aab71f5c8a662e15f818a5ca485095487b005ae51897",
+        "matches": true,
+        "name": "strict_minify_v2.py"
+      },
+      {
+        "actual": {
+          "bytes": 116503,
+          "sha256": "092397608fe3a08c42d85e9c8e121ed139f0d94e345a12ae3aaa57ad6e93a5f0",
+          "stable_while_hashed": true
+        },
+        "expected_bytes": 116503,
+        "expected_sha256": "092397608fe3a08c42d85e9c8e121ed139f0d94e345a12ae3aaa57ad6e93a5f0",
+        "matches": true,
+        "name": "t28-linux-runtime-observer-v2-actual-20261016.json"
+      },
+      {
+        "actual": {
+          "bytes": 3028,
+          "sha256": "880acab0e36c5a3b3a50cf29da39ab9f93198f5dfa106d8b18b61c7d9425f627",
+          "stable_while_hashed": true
+        },
+        "expected_bytes": 3028,
+        "expected_sha256": "880acab0e36c5a3b3a50cf29da39ab9f93198f5dfa106d8b18b61c7d9425f627",
+        "matches": true,
+        "name": "transform-bootstrap.py"
+      },
+      {
+        "actual": {
+          "bytes": 13366,
+          "sha256": "d8b6d6815412273c40c00c3cd456c4635d355d25d96c42099869b77616e00c03",
+          "stable_while_hashed": true
+        },
+        "expected_bytes": 13366,
+        "expected_sha256": "d8b6d6815412273c40c00c3cd456c4635d355d25d96c42099869b77616e00c03",
+        "matches": true,
+        "name": "transform-command.json"
+      },
+      {
+        "actual": {
+          "bytes": 2073,
+          "sha256": "77e31a0c6541b6162450afbef5f7113148409dd6c346501815e88197ddb40d3a",
+          "stable_while_hashed": true
+        },
+        "expected_bytes": 2073,
+        "expected_sha256": "77e31a0c6541b6162450afbef5f7113148409dd6c346501815e88197ddb40d3a",
+        "matches": true,
+        "name": "transform-execution.json"
+      },
+      {
+        "actual": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stable_while_hashed": true
+        },
+        "expected_bytes": 0,
+        "expected_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matches": true,
+        "name": "transform-stderr.log"
+      },
+      {
+        "actual": {
+          "bytes": 287,
+          "sha256": "ccee9c4c1c2ce592206d088005070bd70a8b00afe35156988cc6b8166b3bde3b",
+          "stable_while_hashed": true
+        },
+        "expected_bytes": 287,
+        "expected_sha256": "ccee9c4c1c2ce592206d088005070bd70a8b00afe35156988cc6b8166b3bde3b",
+        "matches": true,
+        "name": "transform-stdout.json"
+      },
+      {
+        "actual": {
+          "bytes": 34803,
+          "sha256": "217cdda6ca8eaea99526010f2c379dad963ca81c18c79322ce02ab8cc9296ed8",
+          "stable_while_hashed": true
+        },
+        "expected_bytes": 34803,
+        "expected_sha256": "217cdda6ca8eaea99526010f2c379dad963ca81c18c79322ce02ab8cc9296ed8",
+        "matches": true,
+        "name": "whole_interface_v4.py"
+      }
+    ],
+    "all31actual_flat_stage_files_match_frozen_bytes": true,
+    "all3leases_released": true,
+    "cmdline_status_permission_failures": [],
+    "envelope_after_input_errors": [],
+    "finite_env_cwd_fd_original_reader_postflight_pending": true,
+    "lease_states": {
+      "mbit10-evaluation-node0.meta.json": "released",
+      "mbit10-evaluation-node1.meta.json": "released",
+      "mbit10-evaluation.meta.json": "released"
+    },
+    "no_global_or_live_absence_claim": true,
+    "observed_utc": "2026-10-17T02:03:43.446473+00:00",
+    "selected_processes": [],
+    "stronger_postflight_not_started": true,
+    "wrapper_after_not_collected": true,
+    "wrapper_before": {
+      "fetched_commit": "41f22f0ba765adcd4f4188aca91009ea0fe5a22b",
+      "sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8"
+    }
+  },
+  "current_owned_state": {
+    "SSH_active": false,
+    "children_told_to_freeze": true,
+    "local_exec_sessions": [],
+    "owned_actual_job_active": false
+  },
+  "date": "2026-10-16 Eastern",
+  "decision": "REFUSED_NO_PREPARATION_ADOPTED",
+  "measurement": {
+    "ended_utc": "2026-10-17T02:02:52Z",
+    "generation": 626,
+    "inner": {
+      "cpu_seconds": 58.223748,
+      "exit_code": 1,
+      "out_of_memory": false,
+      "peak_rss_bytes": 1709998080,
+      "timed_out": false,
+      "wall_seconds": 58.268207443878055
+    },
+    "node": 0,
+    "outer": {
+      "cpu_seconds": 71.514171,
+      "exit_code": 1,
+      "out_of_memory": false,
+      "peak_rss_bytes": 1763475456,
+      "timed_out": false,
+      "wall_seconds": 60.36906111240387
+    },
+    "raw": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-unit-observation-2baf722f-v5",
+    "raw_bytes": 849640,
+    "raw_files": 74,
+    "source_after": {
+      "commit": "2baf722fdaa6cba24b859eae3172a6f597417d72",
+      "source_unchanged": true,
+      "tracked_changes": ""
+    },
+    "source_commit": "2baf722fdaa6cba24b859eae3172a6f597417d72",
+    "started_utc": "2026-10-17T02:01:51Z"
+  },
+  "no_new_work_after_stop": true,
+  "pins": [
+    {
+      "bytes": 2930,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-semantic-observer-v5-root-once-admission-20261016.json",
+      "sha256": "99a7c8cd7b81a6fe1e5b44c974f91f5a9aca0e38a10de16e7e065a6d768e2a4d"
+    },
+    {
+      "bytes": 18548,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v5/source-packet-v5.json",
+      "sha256": "eb932238f0504c3330cc67aa1728f40fcc6956d0a18947c13693cdd40fdaa873"
+    },
+    {
+      "bytes": 5778,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v5-dispatch/root-ancillary-packet-v5.json",
+      "sha256": "4358a403da63e98e40dec6bc1aaf04171388a6b0af5c2b83e98649984557e632"
+    },
+    {
+      "bytes": 3045,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v5-actual/run_preflight_once_v5.py",
+      "sha256": "9a838b2bbb57890f9dde79cee5bad6dbb95ebb0d6f3bad4fad0cc067d6f923f7"
+    },
+    {
+      "bytes": 704,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v5-actual/preflight-attempt-v5.json",
+      "sha256": "714136c1816c601adf9dddd4f330d1ef708493c5ef41aef57f02c4bb242b7892"
+    },
+    {
+      "bytes": 1170,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v5-actual/preflight-invocation-v5.json",
+      "sha256": "4332b1ba72b43e231e83247be54f19c6547a2b650b5131b069e714173d95eb0a"
+    },
+    {
+      "bytes": 4586,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v5-actual/preflight-stdout-v5.json",
+      "sha256": "26e190e471dca49436d9bc3ee73f445779a65592cf6bee39cc8acfbb88d4f819"
+    },
+    {
+      "bytes": 0,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v5-actual/preflight-stderr-v5.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 3261,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v5-actual/run_dispatch_once_v5.py",
+      "sha256": "8cb137d098bac5c84960ffa09d741ad339916f01085284ad0b5bb17dadf04175"
+    },
+    {
+      "bytes": 999,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v5-actual/dispatch-attempt-v5.json",
+      "sha256": "59e28d9206c8237117789d4c2076bc0b76f6c6a504412b4a607a98cab06695dd"
+    },
+    {
+      "bytes": 1718,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v5-actual/dispatch-invocation-v5.json",
+      "sha256": "99d3a9f530c55e16486a5658b351ca7e686fd1bf3bac6d348aaa9ed197f5a242"
+    },
+    {
+      "bytes": 2134,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v5-actual/dispatch-stdout-v5.json",
+      "sha256": "95b0074a4d51555e9eaff350b4cb10f4f60927162748c01529f8b11b40d848cf"
+    },
+    {
+      "bytes": 233,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v5-actual/dispatch-stderr-v5.log",
+      "sha256": "b97b36be389eaa72ef5da715ce2fe97c11abe50217a47411705374186069020b"
+    },
+    {
+      "bytes": 4367,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v5-actual/passive_status_v5.py",
+      "sha256": "ab84293b162906d087257972be3f71402d49b568ec78962ced1505ba9378bc26"
+    },
+    {
+      "bytes": 2979,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v5-actual/run_status_once_v5.py",
+      "sha256": "3627d973f0d8b029ed15a596201cb6f16b33e713eb343c0261896fa37213a2fd"
+    },
+    {
+      "bytes": 684,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v5-actual/status-attempt-v5.json",
+      "sha256": "4ea632c560b75abadfd468e0e284805dfe87d0ea71f6ae68640b3094b06ab12d"
+    },
+    {
+      "bytes": 1166,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v5-actual/status-invocation-v5.json",
+      "sha256": "104ac5ead92386516e6284dc56b7ed8bc164c83f3dffc87b721c7ea3063f761c"
+    },
+    {
+      "bytes": 19140,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v5-actual/status-stdout-v5.json",
+      "sha256": "4004edfb2ccab803534481c300433fb849daa4d30630a9df717f04558ae0a996"
+    },
+    {
+      "bytes": 0,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v5-actual/status-stderr-v5.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "refusal": {
+    "ABI_v4_reached_source_call_binding": true,
+    "complete_ABI_or_source_preparation_adopted": false,
+    "condition": "whole_interface_v4.py bind_call walk line210 requires equal repeated FunctionDecl records for the same ID",
+    "message": "ambiguous full-TU declaration ID",
+    "observation_complete": false,
+    "owned_context_emitted": false,
+    "public_admission": false,
+    "retained_frame_chain": [
+      {
+        "filename": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-unit-observation-2baf722f-v5/observer/control/compiler_unit_adapter_v4.py",
+        "function": "prepare_unit",
+        "line": 332
+      },
+      {
+        "filename": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-unit-observation-2baf722f-v5/observer/control/compiler_unit_adapter_v4.py",
+        "function": "walk",
+        "line": 331
+      },
+      {
+        "filename": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-unit-observation-2baf722f-v5/observer/control/compiler_unit_adapter_v4.py",
+        "function": "walk",
+        "line": 331
+      },
+      {
+        "filename": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-unit-observation-2baf722f-v5/observer/control/compiler_unit_adapter_v4.py",
+        "function": "walk",
+        "line": 331
+      },
+      {
+        "filename": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-unit-observation-2baf722f-v5/observer/control/compiler_unit_adapter_v4.py",
+        "function": "walk",
+        "line": 327
+      },
+      {
+        "filename": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-unit-observation-2baf722f-v5/observer/control/whole_interface_v4.py",
+        "function": "bind_call",
+        "line": 221
+      },
+      {
+        "filename": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-unit-observation-2baf722f-v5/observer/control/whole_interface_v4.py",
+        "function": "walk",
+        "line": 220
+      },
+      {
+        "filename": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-unit-observation-2baf722f-v5/observer/control/whole_interface_v4.py",
+        "function": "walk",
+        "line": 220
+      },
+      {
+        "filename": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-unit-observation-2baf722f-v5/observer/control/whole_interface_v4.py",
+        "function": "walk",
+        "line": 220
+      },
+      {
+        "filename": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-unit-observation-2baf722f-v5/observer/control/whole_interface_v4.py",
+        "function": "walk",
+        "line": 220
+      },
+      {
+        "filename": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-unit-observation-2baf722f-v5/observer/control/whole_interface_v4.py",
+        "function": "walk",
+        "line": 210
+      },
+      {
+        "filename": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-unit-observation-2baf722f-v5/observer/control/whole_interface_v4.py",
+        "function": "_need",
+        "line": 48
+      }
+    ]
+  },
+  "resume_blockers": [
+    "Preserve originalV5 refusal and all retained raw. Collect the still-missing stronger finite/source/wrapper-after closure only under a later explicit resume admission if needed.",
+    "Before a successor, obtain bounded conflicting FunctionDecl metadata from the same retained normalized full TU; compare raw and location-resolved appearances. No binder equality relaxation is approved.",
+    "Production union is reviewed Spec-only pending root complete Standards/apply/final producer commit and complete snapshot regeneration.",
+    "No current0.2 Library/profile,35public summaries,minimal candidate or unbounded-ready actual proof is accepted."
+  ],
+  "schema": "semantic-observer-v5-settled-refusal-handoff-1",
+  "scientific_compiler_native_solver_rerun": false,
+  "shared_source_or_Git_mutation": false,
+  "user_requested_stop": true
+}

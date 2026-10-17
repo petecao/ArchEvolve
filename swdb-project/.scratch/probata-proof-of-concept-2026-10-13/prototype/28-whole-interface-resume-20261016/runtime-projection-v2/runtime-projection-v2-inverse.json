@@ -1,0 +1,38 @@
+{
+  "actual_execution": false,
+  "behavioral_edit": "pin enum reread and retain/finally recheck two exact source headers only",
+  "date": "2026-10-16 ET",
+  "edits": [
+    {
+      "new": "SOURCE_SHA='3148b662b2fbeaa7a8733569d5ea750bce8a598d4e883f9bc64cb1e27dae67cd'\nHEADER_PINS={'MAA.hpp':'4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd',\n 'MAA_gem5.hpp':'5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174'}",
+      "old": "SOURCE_SHA='3148b662b2fbeaa7a8733569d5ea750bce8a598d4e883f9bc64cb1e27dae67cd'"
+    },
+    {
+      "new": "headers={name:file_pin(Path(project)/'apps/dx100/benchmarks/API'/name,expected)[0].decode('ascii') for name,expected in HEADER_PINS.items()}",
+      "old": "headers={name:file_pin(Path(project)/'apps/dx100/benchmarks/API'/name)[0].decode('ascii') for name in ('MAA.hpp','MAA_gem5.hpp')}"
+    },
+    {
+      "new": "    need(declarations==api['inventory'](project),'actual two-header declaration binding changed')\n    need(api['HEADER_PINS']==HEADER_PINS,'exact source header pin matrix differs')\n    header_pins=[file_pin(project/'apps/dx100/benchmarks/API'/name,expected)[1] for name,expected in HEADER_PINS.items()]",
+      "old": "    need(declarations==api['inventory'](project),'actual two-header declaration binding changed')"
+    },
+    {
+      "new": "identity={'schema':'whole-interface-source-cxx-runtime-1','components':pins,'source_headers':header_pins,",
+      "old": "identity={'schema':'whole-interface-source-cxx-runtime-1','components':pins,"
+    },
+    {
+      "new": "    for pin in [*pins,*header_pins]:file_pin(pin['path'],pin['sha256'])",
+      "old": "    for pin in pins:file_pin(pin['path'],pin['sha256'])"
+    }
+  ],
+  "exact_text_and_AST_inverse": true,
+  "predecessor": {
+    "bytes": 22762,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/runtime-projection-v1/runtime_projection_v1.py",
+    "sha256": "b25a02b96ad4ed0bc2241e99a0b05490418e61e906f54dfee89e3fc9d1c2a6b4"
+  },
+  "successor": {
+    "bytes": 23198,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/runtime-projection-v2/runtime_projection_v2.py",
+    "sha256": "645b34878191a695fb61bd6dbf2dd3bcb0f984199482c9611a19b9f9a3a4e69b"
+  }
+}

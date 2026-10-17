@@ -1,0 +1,16 @@
+--- lanl14_lossless_report_codec_isolated_test_source_20261007_a1.py
++++ lanl14_lossless_report_codec_isolated_test_source_20261007_a1_r1.py
+@@ -87,7 +87,12 @@
+   _,(selected,transfer,_,_)=self.prepared(LARGE);target,changed=self.corrupted(selected.read_bytes()+b'junk',transfer)
+   with self.assertRaises(ValueError):self.n['read_report_transfer'](target,changed)
+  def test_concatenated_second_gzip_member_is_refused(self):
+-  _,(selected,transfer,_,_)=self.prepared(LARGE);target,changed=self.corrupted(selected.read_bytes()*2,transfer)
++  _,(selected,transfer,_,_)=self.prepared(LARGE)
++  empty_member=gzip.compress(b'',compresslevel=9,mtime=0)
++  self.assertEqual(len(empty_member),20);self.assertEqual(gzip.decompress(empty_member),b'')
++  concatenated=selected.read_bytes()+empty_member
++  self.assertLessEqual(len(concatenated),256)  # Reach member refusal, not encoded-size refusal.
++  target,changed=self.corrupted(concatenated,transfer)
+   with self.assertRaises(ValueError):self.n['read_report_transfer'](target,changed)
+  def test_truncated_footer_is_refused(self):
+   _,(selected,transfer,_,_)=self.prepared(LARGE);target,changed=self.corrupted(selected.read_bytes()[:-1],transfer)

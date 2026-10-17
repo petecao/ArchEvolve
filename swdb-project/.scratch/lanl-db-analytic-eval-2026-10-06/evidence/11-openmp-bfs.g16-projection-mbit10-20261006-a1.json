@@ -1,0 +1,1680 @@
+{
+  "all_source_json_sites_cross_checked": true,
+  "calls": [
+    {
+      "argument_count": 7,
+      "callee_parameter_count": 7,
+      "callee_variadic": false,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "2",
+        "state": "constant"
+      },
+      "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "name": "__kmpc_dispatch_init_4",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": null,
+          "state": "dynamic"
+        },
+        {
+          "bits": 32,
+          "index": 2,
+          "kind": "integer",
+          "signed_decimal": "1073741859",
+          "state": "constant"
+        },
+        {
+          "bits": 32,
+          "index": 3,
+          "kind": "integer",
+          "signed_decimal": "0",
+          "state": "constant"
+        },
+        {
+          "bits": 32,
+          "index": 4,
+          "kind": "integer",
+          "signed_decimal": null,
+          "state": "dynamic"
+        },
+        {
+          "bits": 32,
+          "index": 5,
+          "kind": "integer",
+          "signed_decimal": "1",
+          "state": "constant"
+        },
+        {
+          "bits": 32,
+          "index": 6,
+          "kind": "integer",
+          "signed_decimal": "1024",
+          "state": "constant"
+        }
+      ],
+      "region": "gapbs-bfs-do/serial.6724498749480273684",
+      "site": 55,
+      "source_location": {
+        "column": 3,
+        "line": 51,
+        "path": "/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1/swdb-project/apps/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "argument_count": 6,
+      "callee_parameter_count": 6,
+      "callee_variadic": false,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "2",
+        "state": "constant"
+      },
+      "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "name": "__kmpc_dispatch_next_4",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": null,
+          "state": "dynamic"
+        },
+        {
+          "bits": null,
+          "index": 2,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 3,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 4,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 5,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        }
+      ],
+      "region": "loop:bfs.cc:1717:6e2a9b58e359bcfa",
+      "site": 56,
+      "source_location": {
+        "column": 3,
+        "line": 51,
+        "path": "/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1/swdb-project/apps/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "argument_count": 2,
+      "callee_parameter_count": 2,
+      "callee_variadic": false,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "2",
+        "state": "constant"
+      },
+      "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "name": "__kmpc_dispatch_deinit",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": null,
+          "state": "dynamic"
+        }
+      ],
+      "region": "gapbs-bfs-do/serial.6724498749480273684",
+      "site": 57,
+      "source_location": {
+        "column": 3,
+        "line": 50,
+        "path": "/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1/swdb-project/apps/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "argument_count": 7,
+      "callee_parameter_count": 7,
+      "callee_variadic": false,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "18",
+        "state": "constant"
+      },
+      "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "name": "__kmpc_reduce_nowait",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": null,
+          "state": "dynamic"
+        },
+        {
+          "bits": 32,
+          "index": 2,
+          "kind": "integer",
+          "signed_decimal": "1",
+          "state": "constant"
+        },
+        {
+          "bits": 64,
+          "index": 3,
+          "kind": "integer",
+          "signed_decimal": "8",
+          "state": "constant"
+        },
+        {
+          "bits": null,
+          "index": 4,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 5,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 6,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        }
+      ],
+      "region": "gapbs-bfs-do/serial.6724498749480273684",
+      "site": 58,
+      "source_location": {
+        "column": 3,
+        "line": 50,
+        "path": "/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1/swdb-project/apps/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "argument_count": 3,
+      "callee_parameter_count": 3,
+      "callee_variadic": false,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "18",
+        "state": "constant"
+      },
+      "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "name": "__kmpc_end_reduce_nowait",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": null,
+          "state": "dynamic"
+        },
+        {
+          "bits": null,
+          "index": 2,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        }
+      ],
+      "region": "gapbs-bfs-do/serial.6724498749480273684",
+      "site": 60,
+      "source_location": {
+        "column": 3,
+        "line": 50,
+        "path": "/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1/swdb-project/apps/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "argument_count": 9,
+      "callee_parameter_count": 9,
+      "callee_variadic": false,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "514",
+        "state": "constant"
+      },
+      "llvm_function": "_Z6TDStepRK8CSRGraphIiiLb1EER7pvectorIiER12SlidingQueueIiE.omp_outlined",
+      "name": "__kmpc_for_static_init_8",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": null,
+          "state": "dynamic"
+        },
+        {
+          "bits": 32,
+          "index": 2,
+          "kind": "integer",
+          "signed_decimal": "34",
+          "state": "constant"
+        },
+        {
+          "bits": null,
+          "index": 3,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 4,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 5,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 6,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 64,
+          "index": 7,
+          "kind": "integer",
+          "signed_decimal": "1",
+          "state": "constant"
+        },
+        {
+          "bits": 64,
+          "index": 8,
+          "kind": "integer",
+          "signed_decimal": "1",
+          "state": "constant"
+        }
+      ],
+      "region": "gapbs-bfs-do/serial.433918642650629990",
+      "site": 65,
+      "source_location": {
+        "column": 5,
+        "line": 73,
+        "path": "/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1/swdb-project/apps/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "argument_count": 2,
+      "callee_parameter_count": 2,
+      "callee_variadic": false,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "514",
+        "state": "constant"
+      },
+      "llvm_function": "_Z6TDStepRK8CSRGraphIiiLb1EER7pvectorIiER12SlidingQueueIiE.omp_outlined",
+      "name": "__kmpc_for_static_fini",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": null,
+          "state": "dynamic"
+        }
+      ],
+      "region": "gapbs-bfs-do/serial.433918642650629990",
+      "site": 66,
+      "source_location": {
+        "column": 54,
+        "line": 73,
+        "path": "/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1/swdb-project/apps/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "argument_count": 7,
+      "callee_parameter_count": 7,
+      "callee_variadic": false,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "18",
+        "state": "constant"
+      },
+      "llvm_function": "_Z6TDStepRK8CSRGraphIiiLb1EER7pvectorIiER12SlidingQueueIiE.omp_outlined",
+      "name": "__kmpc_reduce_nowait",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": null,
+          "state": "dynamic"
+        },
+        {
+          "bits": 32,
+          "index": 2,
+          "kind": "integer",
+          "signed_decimal": "1",
+          "state": "constant"
+        },
+        {
+          "bits": 64,
+          "index": 3,
+          "kind": "integer",
+          "signed_decimal": "8",
+          "state": "constant"
+        },
+        {
+          "bits": null,
+          "index": 4,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 5,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 6,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        }
+      ],
+      "region": "gapbs-bfs-do/serial.433918642650629990",
+      "site": 67,
+      "source_location": {
+        "column": 5,
+        "line": 73,
+        "path": "/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1/swdb-project/apps/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "argument_count": 3,
+      "callee_parameter_count": 3,
+      "callee_variadic": false,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "18",
+        "state": "constant"
+      },
+      "llvm_function": "_Z6TDStepRK8CSRGraphIiiLb1EER7pvectorIiER12SlidingQueueIiE.omp_outlined",
+      "name": "__kmpc_end_reduce_nowait",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": null,
+          "state": "dynamic"
+        },
+        {
+          "bits": null,
+          "index": 2,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        }
+      ],
+      "region": "gapbs-bfs-do/serial.433918642650629990",
+      "site": 71,
+      "source_location": {
+        "column": 5,
+        "line": 73,
+        "path": "/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1/swdb-project/apps/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "argument_count": 9,
+      "callee_parameter_count": 9,
+      "callee_variadic": false,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "514",
+        "state": "constant"
+      },
+      "llvm_function": "_Z13QueueToBitmapRK12SlidingQueueIiER6Bitmap.omp_outlined",
+      "name": "__kmpc_for_static_init_8",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": null,
+          "state": "dynamic"
+        },
+        {
+          "bits": 32,
+          "index": 2,
+          "kind": "integer",
+          "signed_decimal": "34",
+          "state": "constant"
+        },
+        {
+          "bits": null,
+          "index": 3,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 4,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 5,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 6,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 64,
+          "index": 7,
+          "kind": "integer",
+          "signed_decimal": "1",
+          "state": "constant"
+        },
+        {
+          "bits": 64,
+          "index": 8,
+          "kind": "integer",
+          "signed_decimal": "1",
+          "state": "constant"
+        }
+      ],
+      "region": "gapbs-bfs-do/serial.2298107626477124825",
+      "site": 78,
+      "source_location": {
+        "column": 3,
+        "line": 93,
+        "path": "/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1/swdb-project/apps/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "argument_count": 2,
+      "callee_parameter_count": 2,
+      "callee_variadic": false,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "514",
+        "state": "constant"
+      },
+      "llvm_function": "_Z13QueueToBitmapRK12SlidingQueueIiER6Bitmap.omp_outlined",
+      "name": "__kmpc_for_static_fini",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": null,
+          "state": "dynamic"
+        }
+      ],
+      "region": "gapbs-bfs-do/serial.2298107626477124825",
+      "site": 79,
+      "source_location": {
+        "column": 27,
+        "line": 93,
+        "path": "/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1/swdb-project/apps/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "argument_count": 9,
+      "callee_parameter_count": 9,
+      "callee_variadic": false,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "514",
+        "state": "constant"
+      },
+      "llvm_function": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+      "name": "__kmpc_for_static_init_4",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": null,
+          "state": "dynamic"
+        },
+        {
+          "bits": 32,
+          "index": 2,
+          "kind": "integer",
+          "signed_decimal": "34",
+          "state": "constant"
+        },
+        {
+          "bits": null,
+          "index": 3,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 4,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 5,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 6,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 7,
+          "kind": "integer",
+          "signed_decimal": "1",
+          "state": "constant"
+        },
+        {
+          "bits": 32,
+          "index": 8,
+          "kind": "integer",
+          "signed_decimal": "1",
+          "state": "constant"
+        }
+      ],
+      "region": "gapbs-bfs-do/serial.292787490577224610",
+      "site": 84,
+      "source_location": {
+        "column": 5,
+        "line": 105,
+        "path": "/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1/swdb-project/apps/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "argument_count": 2,
+      "callee_parameter_count": 2,
+      "callee_variadic": false,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "514",
+        "state": "constant"
+      },
+      "llvm_function": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+      "name": "__kmpc_for_static_fini",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": null,
+          "state": "dynamic"
+        }
+      ],
+      "region": "gapbs-bfs-do/serial.292787490577224610",
+      "site": 85,
+      "source_location": {
+        "column": 27,
+        "line": 105,
+        "path": "/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1/swdb-project/apps/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "argument_count": 9,
+      "callee_parameter_count": 9,
+      "callee_variadic": false,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "514",
+        "state": "constant"
+      },
+      "llvm_function": "_Z10InitParentRK8CSRGraphIiiLb1EE.omp_outlined",
+      "name": "__kmpc_for_static_init_4",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": null,
+          "state": "dynamic"
+        },
+        {
+          "bits": 32,
+          "index": 2,
+          "kind": "integer",
+          "signed_decimal": "34",
+          "state": "constant"
+        },
+        {
+          "bits": null,
+          "index": 3,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 4,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 5,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 6,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 7,
+          "kind": "integer",
+          "signed_decimal": "1",
+          "state": "constant"
+        },
+        {
+          "bits": 32,
+          "index": 8,
+          "kind": "integer",
+          "signed_decimal": "1",
+          "state": "constant"
+        }
+      ],
+      "region": "gapbs-bfs-do/serial.15390188451096923551",
+      "site": 97,
+      "source_location": {
+        "column": 3,
+        "line": 116,
+        "path": "/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1/swdb-project/apps/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "argument_count": 2,
+      "callee_parameter_count": 2,
+      "callee_variadic": false,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "514",
+        "state": "constant"
+      },
+      "llvm_function": "_Z10InitParentRK8CSRGraphIiiLb1EE.omp_outlined",
+      "name": "__kmpc_for_static_fini",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": null,
+          "state": "dynamic"
+        }
+      ],
+      "region": "gapbs-bfs-do/serial.15390188451096923551",
+      "site": 98,
+      "source_location": {
+        "column": 27,
+        "line": 116,
+        "path": "/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1/swdb-project/apps/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "argument_count": 5,
+      "callee_parameter_count": 3,
+      "callee_variadic": true,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "2",
+        "state": "constant"
+      },
+      "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+      "name": "__kmpc_fork_call",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": "2",
+          "state": "constant"
+        },
+        {
+          "bits": null,
+          "index": 2,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 3,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 4,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        }
+      ],
+      "region": "gapbs-bfs-do/serial.995486541436624707",
+      "site": 109,
+      "source_location": {
+        "column": 3,
+        "line": 116,
+        "path": "/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1/swdb-project/apps/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "argument_count": 5,
+      "callee_parameter_count": 3,
+      "callee_variadic": true,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "2",
+        "state": "constant"
+      },
+      "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+      "name": "__kmpc_fork_call",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": "2",
+          "state": "constant"
+        },
+        {
+          "bits": null,
+          "index": 2,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 3,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 4,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        }
+      ],
+      "region": "loop:bfs.cc:4143:f22f36344da32b9b",
+      "site": 126,
+      "source_location": {
+        "column": 3,
+        "line": 93,
+        "path": "/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1/swdb-project/apps/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "argument_count": 8,
+      "callee_parameter_count": 3,
+      "callee_variadic": true,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "2",
+        "state": "constant"
+      },
+      "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+      "name": "__kmpc_fork_call",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": "5",
+          "state": "constant"
+        },
+        {
+          "bits": null,
+          "index": 2,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 3,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 4,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 5,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 6,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 7,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        }
+      ],
+      "region": "loop:bfs.cc:4439:e30e02362196352a",
+      "site": 137,
+      "source_location": {
+        "column": 3,
+        "line": 50,
+        "path": "/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1/swdb-project/apps/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "argument_count": 6,
+      "callee_parameter_count": 3,
+      "callee_variadic": true,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "2",
+        "state": "constant"
+      },
+      "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+      "name": "__kmpc_fork_call",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": "3",
+          "state": "constant"
+        },
+        {
+          "bits": null,
+          "index": 2,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 3,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 4,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 5,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        }
+      ],
+      "region": "loop:bfs.cc:4143:f22f36344da32b9b",
+      "site": 149,
+      "source_location": {
+        "column": 3,
+        "line": 102,
+        "path": "/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1/swdb-project/apps/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "argument_count": 7,
+      "callee_parameter_count": 3,
+      "callee_variadic": true,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "2",
+        "state": "constant"
+      },
+      "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+      "name": "__kmpc_fork_call",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": "4",
+          "state": "constant"
+        },
+        {
+          "bits": null,
+          "index": 2,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 3,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 4,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 5,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 6,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        }
+      ],
+      "region": "loop:bfs.cc:4143:f22f36344da32b9b",
+      "site": 160,
+      "source_location": {
+        "column": 3,
+        "line": 70,
+        "path": "/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1/swdb-project/apps/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "argument_count": 5,
+      "callee_parameter_count": 3,
+      "callee_variadic": true,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "2",
+        "state": "constant"
+      },
+      "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+      "name": "__kmpc_fork_call",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": "2",
+          "state": "constant"
+        },
+        {
+          "bits": null,
+          "index": 2,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 3,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 4,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        }
+      ],
+      "region": "gapbs-bfs-do/serial.995486541436624707",
+      "site": 170,
+      "source_location": {
+        "column": 3,
+        "line": 174,
+        "path": "/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1/swdb-project/apps/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "argument_count": 9,
+      "callee_parameter_count": 9,
+      "callee_variadic": false,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "514",
+        "state": "constant"
+      },
+      "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii.omp_outlined",
+      "name": "__kmpc_for_static_init_4",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": null,
+          "state": "dynamic"
+        },
+        {
+          "bits": 32,
+          "index": 2,
+          "kind": "integer",
+          "signed_decimal": "34",
+          "state": "constant"
+        },
+        {
+          "bits": null,
+          "index": 3,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 4,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 5,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 6,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 7,
+          "kind": "integer",
+          "signed_decimal": "1",
+          "state": "constant"
+        },
+        {
+          "bits": 32,
+          "index": 8,
+          "kind": "integer",
+          "signed_decimal": "1",
+          "state": "constant"
+        }
+      ],
+      "region": "gapbs-bfs-do/serial.9867237533740053636",
+      "site": 180,
+      "source_location": {
+        "column": 3,
+        "line": 174,
+        "path": "/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1/swdb-project/apps/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "argument_count": 2,
+      "callee_parameter_count": 2,
+      "callee_variadic": false,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "514",
+        "state": "constant"
+      },
+      "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii.omp_outlined",
+      "name": "__kmpc_for_static_fini",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": null,
+          "state": "dynamic"
+        }
+      ],
+      "region": "gapbs-bfs-do/serial.9867237533740053636",
+      "site": 181,
+      "source_location": {
+        "column": 27,
+        "line": 174,
+        "path": "/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1/swdb-project/apps/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    }
+  ],
+  "enumerated_access_sites": 4436,
+  "enumerated_call_sites": 1319,
+  "source_ir_sha256": "a2f1abc6e73ff8f3f796cba142dd7bd349f7c0e3697562fc699c585d57df081d",
+  "source_json_sha256": "ea94d499f9b0fe360b7e56ff833c908a28f5fa2724ba05d11b41adf773b1c77f",
+  "format": "swdb.openmp-call-projection.v1",
+  "updated": "2026-10-06 ET",
+  "basis": "code_reading",
+  "scope": "Exact-source static ABI facts for the all-trial executed-site union; no addresses, runtime internals, prewarm/residency state, timings or costs.",
+  "characterization": {
+    "id": "bfs.kron-g16.t1.characterization.objects.a1",
+    "identity_sha256": "4379d1ed06e37b58eacc5bee61b568e47c4e9c03ed363f8240df6c1fea16dd2c",
+    "sha256": "535d43719d2e9269dc557e900886c625b80c5aa686e7682861a4f6d045e143bc",
+    "file_sha256": "cda2c51423c167249fd760f359ee0ead180bcb2e2d4db2c722c9b724120458ba",
+    "execution_receipt_source_ir_sha256": "a2f1abc6e73ff8f3f796cba142dd7bd349f7c0e3697562fc699c585d57df081d"
+  },
+  "receipt": {
+    "llvm_version": "22.1.8",
+    "compiler_version": "clang version 22.1.8 (https://github.com/llvm/llvm-project ca7933e47d3a3451d81e72ac174dcb5aa28b59d1)\nTarget: x86_64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin",
+    "compiler_sha256": "31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113",
+    "wrapper_argv": [
+      "/usr/bin/python3",
+      "/data1/yanruj/ArchEvolve-lanl-openmp-projections-20261006-a1/swdb-project/scripts/openmp_call_projection.py",
+      "--characterization",
+      "/data/yanruj/EvolveSWDB_runs/lanl-analytic-openmp-call-projections-20261006-a1/bfs.g16/characterization.yaml",
+      "--source-ir",
+      "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-object-counts-20261006-a1/bfs/counted/normalized.bc",
+      "--source-map",
+      "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-object-counts-20261006-a1/bfs/counted/source.json",
+      "--llvm-bin",
+      "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin",
+      "--toolchain-flag=--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13",
+      "--timeout-s",
+      "180",
+      "--output-directory",
+      "/data/yanruj/EvolveSWDB_runs/lanl-analytic-openmp-call-projections-20261006-a1/bfs.g16/projection"
+    ],
+    "compiler_argv": [
+      "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang++",
+      "--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13",
+      "/data1/yanruj/ArchEvolve-lanl-openmp-projections-20261006-a1/swdb-project/swdb/llvm/OpenMPCallProjection.cpp",
+      "-I/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/include",
+      "-std=c++17",
+      "-D_GNU_SOURCE",
+      "-D_GLIBCXX_USE_CXX11_ABI=1",
+      "-D__STDC_CONSTANT_MACROS",
+      "-D__STDC_FORMAT_MACROS",
+      "-D__STDC_LIMIT_MACROS",
+      "-fno-exceptions",
+      "-fno-rtti",
+      "-L/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib",
+      "-lLLVMAnalysis",
+      "-lLLVMProfileData",
+      "-lLLVMSymbolize",
+      "-lLLVMDebugInfoBTF",
+      "-lLLVMDebugInfoPDB",
+      "-lLLVMDebugInfoMSF",
+      "-lLLVMDebugInfoCodeView",
+      "-lLLVMDebugInfoGSYM",
+      "-lLLVMDebugInfoDWARF",
+      "-lLLVMObject",
+      "-lLLVMTextAPI",
+      "-lLLVMMCParser",
+      "-lLLVMMC",
+      "-lLLVMDebugInfoDWARFLowLevel",
+      "-lLLVMFrontendHLSL",
+      "-lLLVMIRReader",
+      "-lLLVMBitReader",
+      "-lLLVMAsmParser",
+      "-lLLVMCore",
+      "-lLLVMRemarks",
+      "-lLLVMBitstreamReader",
+      "-lLLVMBinaryFormat",
+      "-lLLVMTargetParser",
+      "-lLLVMSupport",
+      "-lLLVMDemangle",
+      "-lrt",
+      "-ldl",
+      "-lm",
+      "-lz",
+      "/usr/lib/x86_64-linux-gnu/libzstd.a",
+      "-lxml2",
+      "-std=c++17",
+      "-O2",
+      "-o",
+      "/data/yanruj/EvolveSWDB_runs/lanl-analytic-openmp-call-projections-20261006-a1/bfs.g16/projection/openmp-projector"
+    ],
+    "projection_argv": [
+      "/data/yanruj/EvolveSWDB_runs/lanl-analytic-openmp-call-projections-20261006-a1/bfs.g16/projection/openmp-projector",
+      "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-object-counts-20261006-a1/bfs/counted/normalized.bc",
+      "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-object-counts-20261006-a1/bfs/counted/source.json",
+      "/data/yanruj/EvolveSWDB_runs/lanl-analytic-openmp-call-projections-20261006-a1/bfs.g16/projection/static.json",
+      "55,56,57,58,60,65,66,67,71,78,79,84,85,97,98,109,126,137,149,160,170,180,181",
+      "a2f1abc6e73ff8f3f796cba142dd7bd349f7c0e3697562fc699c585d57df081d"
+    ],
+    "projector_source_sha256": "70ddc2fb597aa60a784a3fed50faae6e090e54cde5a8586085ccdfee45311066",
+    "projector_binary_sha256": "4d86ac22ba611fbef46eede99ea39eab5bc2a827cc5762c43f7c2dbdccb8be22",
+    "wrapper_sha256": "cf924b0b9a4c63554f622b407dc94ab127a71830b8ed4c252209b5e149f418d8",
+    "inputs_byte_identical_after_projection": true,
+    "application_execution": false,
+    "raw_ir_exported": false,
+    "characterization_runtime_validation": "Required separately before model admission; this proof adds only static ABI facts."
+  },
+  "identity_sha256": "b9dead8a9f4866b0cbb6ad4811b4d6b5ff7ed6070bc5d18bc56f7718fd4796c7"
+}

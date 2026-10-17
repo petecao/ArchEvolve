@@ -1,0 +1,572 @@
+created: '2026-09-26'
+updated: '2026-09-26'
+timezone: America/New_York
+id: bfs-provider-initial-20260926-a1
+evidence_class: actual_provider_initial_submissions
+execution_commit: 6346189b55132f195b02544b729f34100d10ba92
+state: two_candidates_created_one_unresolved
+started: '2026-09-26T11:06:44.847256-04:00'
+finished: '2026-09-26T11:13:35.520311-04:00'
+host_wall_s: 410.67309917509556
+host: mbit10
+lane: 'mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 318)'
+helper_commit: 42ce8dce1ecfb949d6e5d4ee3c98c078bc7ddc65
+helper_sha256: 00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8
+claude:
+  path: /data1/yanruj/.npm-global/bin/claude
+  sha256: 5c4735937844e84f8a93306e841a5b0e12252909b07870f789b190468da147ab
+  version: 2.1.278 (Claude Code)
+generation_only: true
+provider_calls: 3
+retries: 0
+repairs_executed: 0
+performance_evaluations: 0
+gain_claim: false
+outer_term_seconds: 2100
+outer_cleanup_seconds: 120
+outer_returncode: 0
+outer_result_meaning: All three initial submissions completed; one public submission returned unresolved with exit 1.
+reported_cost_usd: 2.7976184
+reported_usage:
+  input_tokens: 6
+  cache_creation_input_tokens: 602476
+  cache_read_input_tokens: 10012
+  output_tokens: 38570
+sampled_peak_owned_rss_bytes: 455741440
+sampled_max_load1: 0.9736328125
+rss_scope: sampled driver and observed owned descendants across sessions; not a hard cap or true peak
+cleanup:
+  state: terminal_no_live_owned_processes
+  lease_generation: 318
+  lease_released: true
+  owned_processes_absent: false
+  owned_processes_nonrunning: true
+  owned_identity_count: 10
+  terminated_unreaped:
+  - pid: 3033637
+    start_ticks: 493713694
+    state: Z
+    rss_bytes: 0
+    parent_pid: 359742
+    role: tmux_launcher
+  shared_tmux_untouched: true
+artifacts:
+  preflight.json:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-provider-initial-20260926-a1/preflight.json
+    sha256: c3dc6e74fd69bdb4d870175e0f227fd03268f64b658deee9ba9f98ca7aaccdf2
+    bytes: 7381
+  driver.json:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-provider-initial-20260926-a1/driver.json
+    sha256: 4314ea8801207f3d461667fc46212f5d0e52e8445ec3a3b3a10023762deb7214
+    bytes: 14489
+  lane.json:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-provider-initial-20260926-a1/lane.json
+    sha256: f1b8b3b8799bfd48b27bf32cba2ce0548e2e7daabdc3466f0a6dab67d74ac478
+    bytes: 998
+  results-validation.json:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-provider-initial-20260926-a1/results-validation.json
+    sha256: 1f29bab9e3253f54f9f859f6bf67b44b07163815d02181bca19cc9bca81324bd
+    bytes: 5766
+  terminal-validation.json:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-provider-initial-20260926-a1/terminal-validation.json
+    sha256: 1f455257e4542f67555389195be532de3a131d677083f4e5372c6afcdf02ad1c
+    bytes: 5477
+  resource-samples.jsonl:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-provider-initial-20260926-a1/resource-samples.jsonl
+    sha256: b23ec7d09fb5d6b8d7cadfa55a5b1d07efd54c69f3b036b264a6e8698229eaa7
+    bytes: 47745
+  observed-process-identities.json:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-provider-initial-20260926-a1/observed-process-identities.json
+    sha256: c67260343b5a011e69bdf6c949683e58d85f94671f8dc4441a088a8d7b57f33d
+    bytes: 1177
+  outer.started:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-provider-initial-20260926-a1/outer.started
+    sha256: 3361f03aa1b9c7311efc7b8598948a9e12a7d13ded7d244999056d0dd10ef059
+    bytes: 26
+  outer.finished:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-provider-initial-20260926-a1/outer.finished
+    sha256: f931aa89091e9f78978d8ddde2ee30c1e0727ad5dd2a79e430e742f81f352b5d
+    bytes: 26
+  outer.returncode:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-provider-initial-20260926-a1/outer.returncode
+    sha256: 9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa
+    bytes: 2
+fresh_public_gets: 5
+cells:
+- id: bfs-campaign-preparation-20260925-a1.dx100-instructions
+  state: candidate_created
+  started: '2026-09-26T11:06:47.406721-04:00'
+  generation_attempts: 1
+  provider_seconds: 600
+  public_submit_seconds: 720
+  cleanup_seconds: 30
+  request:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-campaign-preparation-20260925/bfs-campaign-preparation-20260925-a1.prepare/dx100-instructions.proposal.json
+    sha256: 9dbfb4bc446507a09a3589d51d1c448336a7fda62456358a4f65b0c326512095
+    bytes: 4547
+  config:
+    path: /data1/yanruj/EvolveSWDB_runs/bfs-provider-initial-20260926-a1/dx100-instructions.provider.json
+    sha256: a77b747bcc76418d33d0cebb7d78d8a54c171bce5ea33b56254b731737dc8be2
+    settings:
+      kind: claude
+      command:
+      - /data1/yanruj/.npm-global/bin/claude
+      timeout_s: 600
+      max_repairs: 2
+      total_seconds: 1800
+      budget_usd: 10
+  prompt:
+    path: /data1/yanruj/EvolveSWDB_runs/bfs-provider-initial-20260926-a1/dx100-instructions.approved-prompt.txt
+    sha256: 5628f294b68b1c6f57dcf33c338743951e0d901cb56481cd016d929d75e94db4
+    bytes: 551004
+  outcome_stage: rewriting
+  finished: '2026-09-26T11:11:05.835192-04:00'
+  proposal_sha256: a72f2cdd2503cb719169ef2d2dd2c61ad1f622e711e097cdbddba24a8e17705c
+  candidate: bfs-campaign-preparation-20260925-a1.dx100-instructions.candidate-1
+  result:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-provider-initial-20260926-a1/dx100-instructions.submit.json
+    sha256: 2d9a930136ec3cdda33595ab88c05bac2f36684d1220a1e51fac11a8e4ed8950
+  reason_sha256: 74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b
+  provider_receipt:
+    path: /data1/yanruj/EvolveSWDB_runs/bfs-provider-initial-20260926-a1/bfs-campaign-preparation-20260925-a1.dx100-instructions/provider-1/provider.json
+    sha256: 44ec8eb2e856c1d7f65e63fcbccf3228dfd3214f963ef676f1b83591a33faff3
+    state: completed
+    host_wall_s: 233.21830715797842
+  cost_usd: 1.243954
+  usage:
+    input_tokens: 2
+    cache_creation_input_tokens: 240330
+    cache_read_input_tokens: 0
+    output_tokens: 28263
+    output_tokens_details:
+      thinking_tokens: 26722
+    server_tool_use:
+      web_search_requests: 0
+      web_fetch_requests: 0
+    cache_creation:
+      ephemeral_1h_input_tokens: 240330
+      ephemeral_5m_input_tokens: 0
+  model_usage:
+    claude-sonnet-5:
+      inputTokens: 2
+      outputTokens: 28263
+      cacheReadInputTokens: 0
+      cacheCreationInputTokens: 240330
+      webSearchRequests: 0
+      costUSD: 1.243954
+      contextWindow: 1000000
+      maxOutputTokens: 64000
+      thinkingTokens: 26722
+  provider_error: false
+- id: bfs-campaign-preparation-20260925-a1.upstream-instructions
+  state: candidate_created
+  started: '2026-09-26T11:11:07.090876-04:00'
+  generation_attempts: 1
+  provider_seconds: 300
+  public_submit_seconds: 420
+  cleanup_seconds: 30
+  request:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-campaign-preparation-20260925/bfs-campaign-preparation-20260925-a1.prepare/upstream-instructions.proposal.json
+    sha256: 09f0622dcd1bf3e08150f0a4464b2fc97a5b4b3de336f82c8db6fed7d65d26f3
+    bytes: 1998
+  config:
+    path: /data1/yanruj/EvolveSWDB_runs/bfs-provider-initial-20260926-a1/upstream-instructions.provider.json
+    sha256: 47df3d97f0e0efed7ff5da40df56391db97909da1c4180e24fb77e63e4d8aa18
+    settings:
+      kind: claude
+      command:
+      - /data1/yanruj/.npm-global/bin/claude
+      timeout_s: 300
+      max_repairs: 1
+      total_seconds: 600
+      budget_usd: 5
+  prompt:
+    path: /data1/yanruj/EvolveSWDB_runs/bfs-provider-initial-20260926-a1/upstream-instructions.approved-prompt.txt
+    sha256: 22f9ab6ed269ae6e72fae12eb94fc8f18c30b628a8af382cd56c8487fdbc3a04
+    bytes: 412577
+  outcome_stage: rewriting
+  finished: '2026-09-26T11:12:13.548726-04:00'
+  proposal_sha256: 36fe65fa454de66346ac2b94af490818b503bb0905fce39fa72461a0ab5546c5
+  candidate: bfs-campaign-preparation-20260925-a1.upstream-instructions.candidate-1
+  result:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-provider-initial-20260926-a1/upstream-instructions.submit.json
+    sha256: 4cb7fcee2630429be4f72db00c55eded9cb23b95a4dd9ae35f5cb5b24e6dea33
+  reason_sha256: 74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b
+  provider_receipt:
+    path: /data1/yanruj/EvolveSWDB_runs/bfs-provider-initial-20260926-a1/bfs-campaign-preparation-20260925-a1.upstream-instructions/provider-1/provider.json
+    sha256: ab30fab9a23380c2ccf0171f9a83920a21caeb8424c6379f80c558271858d9f6
+    state: completed
+    host_wall_s: 41.246362588368356
+  cost_usd: 0.7468272
+  usage:
+    input_tokens: 2
+    cache_creation_input_tokens: 176503
+    cache_read_input_tokens: 5006
+    output_tokens: 3981
+    output_tokens_details:
+      thinking_tokens: 3352
+    server_tool_use:
+      web_search_requests: 0
+      web_fetch_requests: 0
+    cache_creation:
+      ephemeral_1h_input_tokens: 176503
+      ephemeral_5m_input_tokens: 0
+  model_usage:
+    claude-sonnet-5:
+      inputTokens: 2
+      outputTokens: 3981
+      cacheReadInputTokens: 5006
+      cacheCreationInputTokens: 176503
+      webSearchRequests: 0
+      costUSD: 0.7468272
+      contextWindow: 1000000
+      maxOutputTokens: 64000
+      thinkingTokens: 3352
+  provider_error: false
+- id: bfs-campaign-preparation-20260925-a1.upstream-annotated
+  state: unresolved
+  started: '2026-09-26T11:12:14.835166-04:00'
+  generation_attempts: 1
+  provider_seconds: 600
+  public_submit_seconds: 720
+  cleanup_seconds: 30
+  request:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-campaign-preparation-20260925/bfs-campaign-preparation-20260925-a1.prepare/upstream-annotated.proposal.json
+    sha256: ad27ef024dc527fd45e8fba305d543f94f723a4bea28574445b00b0962736f88
+    bytes: 23108
+  config:
+    path: /data1/yanruj/EvolveSWDB_runs/bfs-provider-initial-20260926-a1/upstream-annotated.provider.json
+    sha256: a77b747bcc76418d33d0cebb7d78d8a54c171bce5ea33b56254b731737dc8be2
+    settings:
+      kind: claude
+      command:
+      - /data1/yanruj/.npm-global/bin/claude
+      timeout_s: 600
+      max_repairs: 2
+      total_seconds: 1800
+      budget_usd: 10
+  prompt:
+    path: /data1/yanruj/EvolveSWDB_runs/bfs-provider-initial-20260926-a1/upstream-annotated.approved-prompt.txt
+    sha256: fd6cc804f2cda5477fad977c379621becaee9d6af3722a82e266b625a92611d9
+    bytes: 433516
+  outcome_stage: interpretation
+  finished: '2026-09-26T11:13:35.516944-04:00'
+  proposal_sha256: b6fe6bbb94e268498765ac4b27bdc076b1328a28d8bc3a6b4aafe80030c2e521
+  candidate: null
+  result:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-provider-initial-20260926-a1/upstream-annotated.submit.json
+    sha256: b15bdf0fdee5fe60ad93a95ebe3e7f864136ab789b998dfd6ae0bfb40db854e8
+  reason_sha256: 071b3c2c321c1c1a841cb1ceb31c6051c190ffe93a01a6b83fc88c57c70d377f
+  provider_receipt:
+    path: /data1/yanruj/EvolveSWDB_runs/bfs-provider-initial-20260926-a1/bfs-campaign-preparation-20260925-a1.upstream-annotated/provider-1/provider.json
+    sha256: 8c3ea4898152cf6a3ef6e0f2200747c601b78be03df6724688c46df96c8fa123
+    state: completed
+    host_wall_s: 62.419636563397944
+  cost_usd: 0.8068372
+  usage:
+    input_tokens: 2
+    cache_creation_input_tokens: 185643
+    cache_read_input_tokens: 5006
+    output_tokens: 6326
+    output_tokens_details:
+      thinking_tokens: 4528
+    server_tool_use:
+      web_search_requests: 0
+      web_fetch_requests: 0
+    cache_creation:
+      ephemeral_1h_input_tokens: 185643
+      ephemeral_5m_input_tokens: 0
+  model_usage:
+    claude-sonnet-5:
+      inputTokens: 2
+      outputTokens: 6326
+      cacheReadInputTokens: 5006
+      cacheCreationInputTokens: 185643
+      webSearchRequests: 0
+      costUSD: 0.8068372
+      contextWindow: 1000000
+      maxOutputTokens: 64000
+      thinkingTokens: 4528
+  provider_error: false
+unresolved_summary:
+- Provider reported missing executable DX100 context in the supplied native package/machine view.
+- Provider reported missing MAA API headers and exact slot-allocation signatures.
+- Provider reported SlidingQueue source accessors unavailable because only a protected header hash was supplied.
+unresolved_scope: These are provider-reported context gaps; the public capability preflight had passed. No new context was sent and no retry or repair was attempted.
+embedded_source_utf8_bytes_by_category:
+  annotated_source: 19463
+  generated_patch: 2352
+  retained_source_excerpt: 43951
+  protected_source_text: 3466
+records:
+- path: records/proposals/bfs-campaign-preparation-20260925-a1.dx100-instructions.yaml
+  sha256: a556d0ca47c2f04661eaa9af35c6c86b5fff0afd22a76ebcd9f6d5df5b1551f6
+  bytes: 10454
+  kind: proposal
+  id: bfs-campaign-preparation-20260925-a1.dx100-instructions
+  embedded_source_fields:
+  - field: interpretation.patch
+    category: generated_patch
+    bytes: 2048
+    sha256: c2ccf62ffd536edf0e4a1d7d1dab91f7e10251c9d8afc626a13d7afa4dfa1e7b
+- path: records/candidates/bfs-campaign-preparation-20260925-a1.dx100-instructions.candidate-1.yaml
+  sha256: 2a4691b9036c7ecbbae4be956ece6d602e55a2a0f296f45a958f7e91c2ce9ac4
+  bytes: 66369
+  kind: candidate
+  id: bfs-campaign-preparation-20260925-a1.dx100-instructions.candidate-1
+  embedded_source_fields:
+  - field: context.code[0].excerpt
+    category: retained_source_excerpt
+    bytes: 8237
+    sha256: ba2f8e639d5daef5d58debef79db66fcac1e5296a5f53c207e3a80b92280725f
+  - field: context.code[1].excerpt
+    category: retained_source_excerpt
+    bytes: 6600
+    sha256: 555ee7236ddd1e7f01fd36c69f0682b7d3ec7ae468976dca19865fed64ef615f
+  - field: context.code[2].excerpt
+    category: retained_source_excerpt
+    bytes: 2214
+    sha256: a164130f692c4691a1df95bb18da5990228b1bbb0669c69eb51ea371703e624c
+  - field: context.code[3].excerpt
+    category: retained_source_excerpt
+    bytes: 710
+    sha256: d3183c577229b91edfe9cb2792cf213958309f872871f822f3d60495b409beb3
+  - field: context.code[4].excerpt
+    category: retained_source_excerpt
+    bytes: 590
+    sha256: 781ab83e6d1b28c0815701c42db67ffe0bb9806b3882940de203e97a60848bed
+  - field: context.code[5].excerpt
+    category: retained_source_excerpt
+    bytes: 1296
+    sha256: 92351720b886b03a3170e3ce91ef579321c5cdaa516f5c6e38a7ba4c9b706aca
+  - field: context.code[6].excerpt
+    category: retained_source_excerpt
+    bytes: 637
+    sha256: 784979f83d8fbb081a978ab6f74bad01b784baf4380ab6818607f1ac77a4794d
+  - field: context.code[7].excerpt
+    category: retained_source_excerpt
+    bytes: 502
+    sha256: 4abc496fc9c3ddd0d8780135931ee02616204e21a8656a076cd73f747d04dc1c
+  - field: context.code[8].excerpt
+    category: retained_source_excerpt
+    bytes: 754
+    sha256: cd1ef9d28c8c62ca8a2c340177951a7dbaa740ce3e9302ea3b9ce763851a50a1
+  - field: context.code[9].excerpt
+    category: retained_source_excerpt
+    bytes: 453
+    sha256: ee8a2407c2e768dff49d6ca1d8d0f638495c6952159f63bc01e4c62e9e94565a
+  - field: context.code[10].excerpt
+    category: retained_source_excerpt
+    bytes: 331
+    sha256: d3f90fae3543181f3ce5df866bea21d3b3bb2ecd044103944273db1e4c30ff71
+  - field: context.code[11].excerpt
+    category: retained_source_excerpt
+    bytes: 230
+    sha256: 3e560c996879193bc6c4b1bda8a34996b8b542c9231ad8fc5af16b7977999f4b
+  - field: context.code[12].excerpt
+    category: retained_source_excerpt
+    bytes: 131
+    sha256: 6fce0a8bf158547509cbb72c209724fe846ba3ee42c4c6f59f2c2bcb42bab441
+  - field: context.code[13].excerpt
+    category: retained_source_excerpt
+    bytes: 372
+    sha256: 9ca128eb96d3fcc8f69d73fee58e9fcd06cf8627e0d3b1dee4b8c9ee5226697a
+  - field: context.code[14].excerpt
+    category: retained_source_excerpt
+    bytes: 110
+    sha256: ec35536f223b52f4377c50e849b0d1edb09134486bb9fc5a82f3ea97301015e9
+  - field: context.code[15].excerpt
+    category: retained_source_excerpt
+    bytes: 246
+    sha256: a64d92c2d52fcfe583c71a23b2ca992cac0cdd0549e8a92b0fb5cf331a91ee1a
+  - field: context.code[16].excerpt
+    category: retained_source_excerpt
+    bytes: 108
+    sha256: 7429be52f28ee4f605b59b8f8f8963bc23d10594fb262ed1fa032c095231adca
+  - field: context.code[17].excerpt
+    category: retained_source_excerpt
+    bytes: 1551
+    sha256: 76a956649bfe97051a02af951fec5f4bc552440d0fb952c642fa4a5968d9cae5
+  - field: context.code[18].excerpt
+    category: retained_source_excerpt
+    bytes: 340
+    sha256: db5227d6bf4ba80839e6e815da4a5de5020fd6be3e1147e55f92927b50c3b430
+  - field: context.code[19].excerpt
+    category: retained_source_excerpt
+    bytes: 98
+    sha256: 01da7bd21c1235d7332ac2bf4123b457ff5757c5477c545eca47d07fb8f67c63
+  - field: context.code[20].excerpt
+    category: retained_source_excerpt
+    bytes: 2550
+    sha256: 094895302872aee07c44cac8f82564e826603f552ce1448b8e5460f1ddb5c349
+  - field: context.code[21].excerpt
+    category: retained_source_excerpt
+    bytes: 467
+    sha256: d6668c43308db1a59dc93d07795b7f58efc2ad3fbe6a93b20840f76c34fafe53
+  - field: context.code[22].excerpt
+    category: retained_source_excerpt
+    bytes: 98
+    sha256: 01da7bd21c1235d7332ac2bf4123b457ff5757c5477c545eca47d07fb8f67c63
+  - field: context.code[23].excerpt
+    category: retained_source_excerpt
+    bytes: 372
+    sha256: 660ca89daefffcee213996f21b5338c0cd52f823457bf58e3a994bee95d05a04
+  - field: context.code[24].excerpt
+    category: retained_source_excerpt
+    bytes: 144
+    sha256: a8105cce278141c3759b9973c40c12789eb0f32462d9e43ba7ce4242d825b6ce
+  - field: context.code[25].excerpt
+    category: retained_source_excerpt
+    bytes: 1601
+    sha256: 546ec83dfdeaf3fec444ebfcc1c70b72588f13dd21194e0d19146a5d6f5f5d96
+  - field: context.code[26].excerpt
+    category: retained_source_excerpt
+    bytes: 272
+    sha256: 859f5c781239d2afa384246228ba88c634694e7be3bfb36835a19fd12fa81a8a
+  - field: context.code[27].excerpt
+    category: retained_source_excerpt
+    bytes: 171
+    sha256: 696dcb82ce1ee80df7e1500bbf764349585ad5968d8f45e5aac89c3ce28c0175
+  - field: context.code[28].excerpt
+    category: retained_source_excerpt
+    bytes: 1039
+    sha256: 568810806794859013d79d3866031532944edd5e06bf0ef002028cde36deb171
+  - field: context.code[29].excerpt
+    category: retained_source_excerpt
+    bytes: 362
+    sha256: 61928faa9fc30778009b87fb9807969ac3532e62625421b22b79cd25b03ac08c
+  - field: context.code[30].excerpt
+    category: retained_source_excerpt
+    bytes: 866
+    sha256: 7a7b5f224b2acf8ff9416b29e133952d76182231067a6c5f9caf4522e5eebcc4
+  - field: protections[0].text
+    category: protected_source_text
+    bytes: 1866
+    sha256: ffc062874e4f47e73ac105c3cfdaca2efe1d286bb11205a3252a8b119e20532f
+- path: records/proposals/bfs-campaign-preparation-20260925-a1.upstream-instructions.yaml
+  sha256: 67358a5bf833d8c6b74ea96cae6719f0364a5a68a927e55fdd322ab1778699d3
+  bytes: 5787
+  kind: proposal
+  id: bfs-campaign-preparation-20260925-a1.upstream-instructions
+  embedded_source_fields:
+  - field: interpretation.patch
+    category: generated_patch
+    bytes: 304
+    sha256: 827466f81bad18137ec6faf2f17ce46ef6d4f9169db18955c39d65b4e1c23c5f
+- path: records/candidates/bfs-campaign-preparation-20260925-a1.upstream-instructions.candidate-1.yaml
+  sha256: 0de28d0baa815453b27791196316ba72af1b9658266e18880a79872f21f9ec59
+  bytes: 27922
+  kind: candidate
+  id: bfs-campaign-preparation-20260925-a1.upstream-instructions.candidate-1
+  embedded_source_fields:
+  - field: context.code[0].excerpt
+    category: retained_source_excerpt
+    bytes: 509
+    sha256: 3572ab9d571193951297d21d9285db5b84d0bbb4a350cc2409c44c022a825f12
+  - field: context.code[1].excerpt
+    category: retained_source_excerpt
+    bytes: 260
+    sha256: 6e2a9b58e359bcfaaa0c1d475fb9b43ced72573511bda25975e4ca21575d92f5
+  - field: context.code[2].excerpt
+    category: retained_source_excerpt
+    bytes: 176
+    sha256: c91be0a18a4752c0917043529033810fe87047265a03106ab5161ba05d8962d1
+  - field: context.code[3].excerpt
+    category: retained_source_excerpt
+    bytes: 664
+    sha256: ffc8e4d681ba23b54efb9de1ecaf4cef44a5fbef3230d646a69da558fa41de9c
+  - field: context.code[4].excerpt
+    category: retained_source_excerpt
+    bytes: 363
+    sha256: ac1d48c6461c461477e7c1cef41f1e29e752050c84fc61578662fef10e0b7e07
+  - field: context.code[5].excerpt
+    category: retained_source_excerpt
+    bytes: 257
+    sha256: 401922b5b521a378b9b4c7ddda8b39c07cc3a84643f84bf6dccc86bf49b6e157
+  - field: context.code[6].excerpt
+    category: retained_source_excerpt
+    bytes: 220
+    sha256: 2a4525d5109853ffb3eb27606adaef8634325ba1a2e90b6c9d2975d4e97cc465
+  - field: context.code[7].excerpt
+    category: retained_source_excerpt
+    bytes: 121
+    sha256: 13bf9af6e8aa2202a1f9205b841d1da27cd823272374b5d67e9d92d86eacb393
+  - field: context.code[8].excerpt
+    category: retained_source_excerpt
+    bytes: 344
+    sha256: 998b567e01b31fa778793b1646567e817b56d4cb25a3fa4e6f989a5619f1c16e
+  - field: context.code[9].excerpt
+    category: retained_source_excerpt
+    bytes: 94
+    sha256: d28ec09d2dd276862395055ecb249d6616275ae540625acf48e7dd7f3f64f908
+  - field: context.code[10].excerpt
+    category: retained_source_excerpt
+    bytes: 236
+    sha256: 228dafe7b10a6cec97589d03a00042a742c9a7a072166e3176b675ba315a331c
+  - field: context.code[11].excerpt
+    category: retained_source_excerpt
+    bytes: 102
+    sha256: 4fc081ce5a20fcdd6c4837980fb3f9234874515948b63e4d699b9fdafcab10bb
+  - field: context.code[12].excerpt
+    category: retained_source_excerpt
+    bytes: 1829
+    sha256: 2152911a89faaaf11d416adeade3edbcf69a5421f55eeab437ed83eb25f17f9a
+  - field: context.code[13].excerpt
+    category: retained_source_excerpt
+    bytes: 1026
+    sha256: f22f36344da32b9b5d014d4ae1dae346bdb493200cc8e267e0aeab7e92fb2089
+  - field: context.code[14].excerpt
+    category: retained_source_excerpt
+    bytes: 347
+    sha256: e30e02362196352a81f341e15ede3adf29f9f75028ae405f5db4787d13f34681
+  - field: context.code[15].excerpt
+    category: retained_source_excerpt
+    bytes: 88
+    sha256: 82c2122db9c90924e5e1dd1805648f1c5c6ce81a9b20498b82d9daa193e40f9e
+  - field: context.code[16].excerpt
+    category: retained_source_excerpt
+    bytes: 340
+    sha256: d0f2b5ebff7dad68c5c8f220ea496caa1b4afafe2bf3c95bf7082f65df71a504
+  - field: context.code[17].excerpt
+    category: retained_source_excerpt
+    bytes: 122
+    sha256: 9bd85a1cc9b495c8cd43cf0d4ec8c8bec9272fbce08ca062a2aa063e017521dc
+  - field: context.code[18].excerpt
+    category: retained_source_excerpt
+    bytes: 1335
+    sha256: 2b6f1ed2dc699b9cc79184498cc8e309c049019fdf769c82fafec07392ce44b9
+  - field: context.code[19].excerpt
+    category: retained_source_excerpt
+    bytes: 230
+    sha256: 4ceb0d60b5955b90825f703eb4cfa8b5fd9fdb7444a52cc9fa8271a8fc6f5834
+  - field: context.code[20].excerpt
+    category: retained_source_excerpt
+    bytes: 139
+    sha256: c225c5fe3cf7b09079a60963f997270e9cb89b4a489c79127b735e9ad1cbb558
+  - field: context.code[21].excerpt
+    category: retained_source_excerpt
+    bytes: 831
+    sha256: 55f75502f46fcf2247886a24394c9aef7dcf1285a474714ae8c736290d2464f0
+  - field: context.code[22].excerpt
+    category: retained_source_excerpt
+    bytes: 276
+    sha256: b02c84cfbb728bfa26ae074e36446306fb67fa839a58378cc048aa3bdb4c01df
+  - field: context.code[23].excerpt
+    category: retained_source_excerpt
+    bytes: 590
+    sha256: a7c09efa2e36f00e12626d1297b3e17e80bec4e2850fb6ad29ae31d82e80223c
+  - field: protections[0].text
+    category: protected_source_text
+    bytes: 1600
+    sha256: 7f9d52ab1c8036a1ec71b959524c56088e57703a00801ab4d75fd2bc614a5c20
+- path: records/proposals/bfs-campaign-preparation-20260925-a1.upstream-annotated.yaml
+  sha256: d8cffc3c1fe014830df2c0b5d504e130d17c2570265c40e06c96dbcfef53952a
+  bytes: 35067
+  kind: proposal
+  id: bfs-campaign-preparation-20260925-a1.upstream-annotated
+  embedded_source_fields:
+  - field: request.payload.content.files.src/bfs.cc
+    category: annotated_source
+    bytes: 19463
+    sha256: 20f8987f01d317dd60d4b593058e6dc9b2900063e36b570cd8c1d66a88971b17
+publication_boundary: This packet contains persisted SWDB records, including schema-required annotated source, generated patches, original context excerpts and protection text. Raw prompts, raw provider responses, source artifact files, binaries and logs remain on mbit10.

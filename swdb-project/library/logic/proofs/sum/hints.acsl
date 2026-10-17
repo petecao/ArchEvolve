@@ -1,0 +1,57 @@
+// Proof hints of logic.sum (Probata proof of concept ticket 26, 2026-10-14 ET). A C fragment of
+// WP annotations that `swdb prove-logic` places after the logic file. Map 13 item 5 kinds only:
+// prover strategies, Wp.induction (base -1, ticket 08) and one Wp.lemma instance. The scripts the
+// strategies generate are saved in script/ and replayed on every run (fresh session).
+// Provenance: agent (spike (d), ticket 08; carried over by ticket 26).
+
+//@ \wp::strategy Leaf: \prover("Alt-Ergo", 30), \prover("Z3", 30), \prover("CVC5", 30);
+
+/*@ \wp::strategy Ind_add:
+      \tactic("Wp.induction", \pattern(L_sum_n(_, _, _, _, m, k)), \select(k),
+              \param("base", -1), \children(Leaf)); */
+//@ \wp::proof Ind_add: ADD_N;
+
+/*@ \wp::strategy Ind_own:
+      \tactic("Wp.induction", \pattern(L_fsum_n(_, _, _, _, _, _, _, k)), \select(k),
+              \param("base", -1), \children(Leaf)); */
+//@ \wp::proof Ind_own: REGROUP_OWNER_N;
+
+/*@ \wp::strategy Ind_tot:
+      \tactic("Wp.induction", \pattern(L_vsum_n(_, _, _, _, _, k)), \select(k),
+              \param("base", -1), \children(Leaf)); */
+//@ \wp::proof Ind_tot: REGROUP_TOTAL;
+
+/*@ \wp::strategy Ind_row:
+      \tactic("Wp.induction", \pattern(L_row_n(_, _, _, _, _, _, k)), \select(k),
+              \param("base", -1), \children(Leaf)); */
+//@ \wp::proof Ind_row: ROW_PICK;
+
+/*@ \wp::strategy Ind_col:
+      \tactic("Wp.induction", \pattern(L_col_n(_, _, _, _, _, _, k)), \select(k),
+              \param("base", -1), \children(Leaf)); */
+//@ \wp::proof Ind_col: COL_PERM;
+
+/*@ \wp::strategy Ind_cols:
+      \tactic("Wp.induction", \pattern(L_cols_n(_, _, _, _, _, _, k)), \select(k),
+              \param("base", -1), \children(Leaf)); */
+//@ \wp::proof Ind_cols: COLS_ZERO;
+//@ \wp::proof Ind_cols: COLS_STEP;
+//@ \wp::proof Ind_cols: PERM_COLS;
+
+/*@ \wp::strategy Ind_rows:
+      \tactic("Wp.induction", \pattern(L_rows_n(_, _, _, _, _, _, k)), \select(k),
+              \param("base", -1), \children(Leaf)); */
+//@ \wp::proof Ind_rows: FUBINI;
+//@ \wp::proof Ind_rows: PERM_ROWS;
+
+// PERMUTATION: the goal holds no cols_n term, so the solvers' triggers miss the one lemma instance
+// it needs. The hint instantiates PERM_ROWS_R on the goal's own terms; PERM_COLS_R then fires.
+/*@ \wp::strategy Link:
+      \tactic("Wp.lemma",
+        \goal(L_range_sum(m1, m2, x, b, 0, n) == L_range_sum(m1, m2, x, a, 0, n)),
+        \incontext(P_is_perm(m2, p, q, n)),
+        \param("lemma", "PERM_ROWS_R"),
+        \param("P1", m1), \param("P2", m2), \param("P3", x), \param("P4", a),
+        \param("P5", b), \param("P6", p), \param("P7", q), \param("P8", n),
+        \children(Leaf)); */
+//@ \wp::proof Link: PERMUTATION;

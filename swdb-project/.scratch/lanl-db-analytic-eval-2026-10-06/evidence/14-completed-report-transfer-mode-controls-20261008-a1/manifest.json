@@ -1,0 +1,104 @@
+{
+  "format": "swdb.lanl14-completed-report-transfer-mode-controls-archival-custody.v1",
+  "canonical_ensure_ascii": true,
+  "archived_utc": "2026-10-08T00:18:56.306209+00:00",
+  "archived_et": "2026-10-07 20:18 ET",
+  "base_commit": "b255bb14e4604a99d2144f7be4fbf8ebc4c7cc85",
+  "base_tree": "f12f0237b2036da768195cdc1ba2bc75b3eee142",
+  "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-completed-report-transfer-mode-controls-20261008-a1/",
+  "original_count": 7,
+  "original_total_bytes": 49312,
+  "entries": [
+    {
+      "role": "source_only_mode_note",
+      "origin": "/private/tmp/lanl14-report-transfer-mode-preflight-source-note-20261008-a1.md",
+      "snapshot": "lanl14-report-transfer-mode-preflight-source-note-20261008-a1.md",
+      "bytes": 3047,
+      "sha256": "6c9b8e87888576ff40fbee3ae6387a34caf67ea3b64d32191c6f89ffd5da3115",
+      "original_policy": "Unsealed Markdown; source-only note, no permission action.",
+      "original_bytes_preserved": true
+    },
+    {
+      "role": "unexecuted_21_file_correction_source",
+      "origin": "/private/tmp/lanl14_correct_completed_report_transfer_modes_20261008_a1.py",
+      "snapshot": "lanl14_correct_completed_report_transfer_modes_20261008_a1.py",
+      "bytes": 29985,
+      "sha256": "ee12a535ea2c3e6976c920f483c72e8367cd36ec311bf26585137023a2d29ec7",
+      "original_policy": "Original source bytes; SOURCE ONLY / NOT RUN.",
+      "original_bytes_preserved": true
+    },
+    {
+      "role": "source_only_handoff",
+      "origin": "/private/tmp/lanl14-completed-report-transfer-mode-source-handoff-20261008-a1.md",
+      "snapshot": "lanl14-completed-report-transfer-mode-source-handoff-20261008-a1.md",
+      "bytes": 10448,
+      "sha256": "bf7c1cff09584ebd583fe3ec3cc234b2e1d2ecae0cfc324f3b42b63a6d508c96",
+      "original_policy": "Unsealed Markdown; SOURCE ONLY / NOT RUN handoff.",
+      "original_bytes_preserved": true
+    },
+    {
+      "role": "unsealed_source_preparation",
+      "origin": "/private/tmp/lanl14-completed-report-transfer-mode-source-preparation-20261008-a1.json",
+      "snapshot": "lanl14-completed-report-transfer-mode-source-preparation-20261008-a1.json",
+      "bytes": 1438,
+      "sha256": "da6bec24868994aa321cc8c912a9db144a7f01aeab6a9c7cc408ea1b583702d1",
+      "original_policy": "Original unsealed JSON; sealed=false, zero permission actions. No retroactive seal.",
+      "original_bytes_preserved": true
+    },
+    {
+      "role": "unsealed_actual_precompletion_mode_observation",
+      "origin": "/private/tmp/lanl14-report-transfer-mode-metadata-observed-20261008-a1.json",
+      "snapshot": "lanl14-report-transfer-mode-metadata-observed-20261008-a1.json",
+      "bytes": 574,
+      "sha256": "32a21b8f3804a20d52379c35c96db0a31055b4dd6e4c414fe50ec1bad6c27499",
+      "original_policy": "Original unsealed factual JSON, checked 2026-10-08T00:03:16.552526+00:00; no completion or admission.",
+      "original_bytes_preserved": true
+    },
+    {
+      "role": "separate_actual_reader_permission_producer",
+      "origin": "/private/tmp/lanl14-reviewed-reader-source-permission-20261007-a1.py",
+      "snapshot": "lanl14-reviewed-reader-source-permission-20261007-a1.py",
+      "bytes": 3136,
+      "sha256": "69115dc730b3fa55b383e5c2ad0654e104edae7c8a25db1aa01aa43a4118f4c7",
+      "original_policy": "Original source of the separate parent-performed reader permission correction; not rerun by this archive.",
+      "original_bytes_preserved": true
+    },
+    {
+      "role": "unsealed_actual_reader_permission_observation",
+      "origin": "/private/tmp/lanl14-selected-reader-source-permission-observed-20261007-a1.json",
+      "snapshot": "lanl14-selected-reader-source-permission-observed-20261007-a1.json",
+      "bytes": 684,
+      "sha256": "165f888e26dbc1c8e1a71b4960ffcda11c5bb5b3f5b2db897d2ff025ca7369d8",
+      "original_policy": "Original unsealed factual JSON, checked 2026-10-07T23:58:24.723034+00:00; byte-preserving physical mode administration, no scientific main.",
+      "original_bytes_preserved": true
+    }
+  ],
+  "README": {
+    "snapshot": "README.md",
+    "bytes": 3678,
+    "sha256": "bfb0fb796161916d102c523d77a236b37d61a946c8dfa9988280c59dcee23e91"
+  },
+  "scope": {
+    "additive_byte_retention_only": true,
+    "correction_source_executed": false,
+    "original_seals_added": false,
+    "permission_actions_by_archive": 0,
+    "scientific_admission": false,
+    "export_reader_admission_pending": true
+  },
+  "chronology": {
+    "reader_actual_checked_utc": "2026-10-07T23:58:24.723034+00:00",
+    "reader_actual_et": "2026-10-07 19:58 ET",
+    "raw_mode_observed_utc": "2026-10-08T00:03:16.552526+00:00",
+    "raw_mode_observed_et": "2026-10-07 20:03 ET",
+    "raw_21_correction": "SOURCE ONLY / NOT RUN"
+  },
+  "preserved_references": {
+    "scientific_source_commit": "f893fed400347ed23d92e917d8bde21b75e5375d",
+    "source_ref": "codex/lanl-ticket11-source-c",
+    "estimator_identity": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+    "prior_canonical_yaml_count": 686,
+    "previous_recipe_sha256": "468766d3f5597ae2bebf6765d861c6c785d9058f1f533ab1a4a82c232b68bb0f"
+  },
+  "identity_sha256": "d4fd8b32d57c54666017200f0664d79352b6c457b48c77693b6bc4b1e201c1d9"
+}

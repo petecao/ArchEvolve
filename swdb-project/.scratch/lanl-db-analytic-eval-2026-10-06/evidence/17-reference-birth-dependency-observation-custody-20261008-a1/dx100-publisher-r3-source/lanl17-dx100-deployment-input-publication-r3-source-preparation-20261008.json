@@ -1,0 +1,37 @@
+{
+  "change": "commands: node-only administrative read cap 128MiB; all other commands 64MiB",
+  "changed_top_level_ast_nodes": [
+    {
+      "index": 61,
+      "name": "commands"
+    }
+  ],
+  "complete_diff": {
+    "bytes": 797,
+    "path": "/private/tmp/lanl17-dx100-deployment-input-publication-r3-complete-r2-derivation-20261008.diff",
+    "sha256": "af4c57b7522b960ba4ed8871380a5b18f3073e477ecc32fa5ff49360dba24b66"
+  },
+  "derivation_chronology": "Initial static index assertion expected48 but observed61 after selected source publication; stopped, original exact source preserved; continued only static metadata comparison and packet publication. No target invocation.",
+  "format": "swdb.lanl17-dx100-publication-r3-source-preparation-original.v1",
+  "handoff": {
+    "bytes": 2462,
+    "path": "/private/tmp/lanl17-dx100-deployment-input-publication-r3-source-handoff-20261008.md",
+    "sha256": "1e12a7a005a7d1a9dedf59116caec319a4cbfe1bd6db6ed5b143d375a322e001"
+  },
+  "node_file_sha256": "UNOBSERVED; parent actual query R2 required",
+  "original": {
+    "bytes": 27860,
+    "path": "/private/tmp/lanl17_publish_checked_dx100_deployment_inputs_20261008_a1_r2.py",
+    "sha256": "4036c275fb5df7f345999c0b99144e0e1bbef84b4b94c262212a2f34c7539f7e"
+  },
+  "runtime_state": "NOT RUN",
+  "sealed": false,
+  "selected": {
+    "bytes": 27901,
+    "path": "/private/tmp/lanl17_publish_checked_dx100_deployment_inputs_20261008_a1_r3.py",
+    "sha256": "55558276d912c924df9a6701d1848829f42a758233c20ad6da1e06bc6b176f29"
+  },
+  "source_only": true,
+  "target_import_or_main_or_test_or_ssh_or_git_or_project_mutation": false,
+  "whole_byte_reversal_matches_original": true
+}

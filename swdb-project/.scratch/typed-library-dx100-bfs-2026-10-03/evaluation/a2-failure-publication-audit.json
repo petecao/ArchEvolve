@@ -1,0 +1,53 @@
+{
+  "format": "swdb.typed-library-a2-failure-publication-audit.v1",
+  "updated": "2026-10-03 14:56 ET",
+  "source_publication": "5827f3fccc773672adc2135b2d2cad4f9c19365f",
+  "physical_runtime_commit": "4c9bb01c190c20f3aa28ecc878cfc4d12ade6253",
+  "manifest": {
+    "path": ".scratch/typed-library-dx100-bfs-2026-10-03/evaluation/a2-aggregation-failure-summary.json",
+    "sha256": "c61cb65b657f4cc343de2662e2cfdc48433675ea83b5662efd1c816a276200a0"
+  },
+  "public_records_verified": 20,
+  "previous_test_receipt_hashes_verified": 29,
+  "root_stop_check": {
+    "observed_at": "2026-10-03T18:53:11.713273+00:00",
+    "source": "5827f3fccc773672adc2135b2d2cad4f9c19365f",
+    "branch": "yanrujhou_main",
+    "owned_processes": [],
+    "leases": [
+      {
+        "name": "mbit10-evaluation-node0",
+        "kernel_held": false,
+        "metadata_state": "released",
+        "generation": 444
+      },
+      {
+        "name": "mbit10-evaluation-node1",
+        "kernel_held": false,
+        "metadata_state": "released",
+        "generation": 506
+      },
+      {
+        "name": "mbit10-evaluation",
+        "kernel_held": false,
+        "metadata_state": "released",
+        "generation": 77
+      }
+    ],
+    "load_average": [
+      1.26,
+      1.24,
+      1.39
+    ],
+    "disk_free_human": [
+      "42G /data1",
+      "74G /data"
+    ],
+    "preserved_untracked": "records/.retention.lock"
+  },
+  "local_validation": "470 records valid",
+  "limitations": [
+    "This readback reopens published compact metadata and actual lease/process state. Full root raw artifact/coverage audit remains pending final measurement completion.",
+    "No ratio or new execution is asserted."
+  ]
+}

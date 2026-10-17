@@ -1,0 +1,63 @@
+{
+  "SSH": 0,
+  "actual_formal_admitted": false,
+  "audited_model_source": {
+    "bytes": 29179,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/std_models.py",
+    "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+  },
+  "axis": "Spec",
+  "baseline": {
+    "bytes": 14506,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-pair-pointer-resume-20261016/initializedness-repair-v1/original-bounded_std_initialization.py",
+    "sha256": "480bf38b3333639c62d8f89aff129208abccdc63351d63cfa6b23d7cb3d84607"
+  },
+  "blocking_findings": [],
+  "compiler_native_verifier_solver_calls": 0,
+  "control_scope_note": "The assignment-negative adds an uninitialized pointer VarDecl before the assignment, so it exercises whole-source unknown-storage refusal before the pair-field assignment branch. It is not claimed as isolated assignment-branch coverage; the actual assignment guard was reviewed statically.",
+  "created": "2026-10-16 ET",
+  "decision": "PASS scoped initialized pointer-value admission; no pointee/live-prefix/ownership extension",
+  "evidence_limits": [
+    "Clang-shaped AST controls are pure policy controls, not actual compiler AST/runtime/formal observations. The retained actual mixed-pair failure stays unchanged; a guarded real Clang/native/record successor is still required.",
+    "Source lifetime, actual pointer validity/CBMC memory safety and pointee initializedness remain separate checks. Safe but unsupported pointer operations may be conservatively refused.",
+    "No actual eight-record proof closure, full ticket25 acceptance or new caller proof is established by this review."
+  ],
+  "preparation": {
+    "bytes": 4899,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-pair-pointer-initializedness-preparation-v1-20261016.json",
+    "sha256": "3bf8e864f330c3bcb84687cb095f2bc20cfc9670b2338e15e0af40145bbf4741"
+  },
+  "project_imports": 0,
+  "public_tests": {
+    "bytes": 5181,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_pair_pointer_initialization.py",
+    "sha256": "2b0da40f71a56f892c5344b0defb45f8a312c080b0a8eef2383f11fb0129b06c"
+  },
+  "retained_GREEN": {
+    "bytes": 99,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-pair-pointer-resume-20261016/initializedness-repair-v1/probata-pair-pointer-initialization-green-v2.log",
+    "sha256": "6a840c9afb8c0e0e613d2f47dddba1dbba0efc79f3d678114250febb27d74362"
+  },
+  "retained_RED": {
+    "bytes": 1453,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-pair-pointer-resume-20261016/initializedness-repair-v1/probata-pair-pointer-initialization-red-v3.log",
+    "sha256": "490395673934a6478469822682554ead837d3d23cdcd5e537c94d96dcdc6d19b"
+  },
+  "reviewer": "/root/ticket25/caller_assess",
+  "reviewer_tests_rerun": false,
+  "source": {
+    "bytes": 19366,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/bounded_std_initialization.py",
+    "sha256": "7f4417d4d8ea8bcd8ef795259212e55052e333aa8ae320b4b7d06511cbab40ea"
+  },
+  "verified": [
+    "Only pairs whose elements are existing primitive scalar types or one-level pointers to those scalar types enter the expanded type set; pointer vectors remain excluded. Exact std_models content is still checked for constructor admission.",
+    "identity_pointer is a distinct Value kind. Its only new producers are null, the address of a bound initialized primitive local/parameter, audited pair member values, checked pair construction/copy and checked assignment. Initialized harness/model pointer arguments retain their existing separate exact initialized-input obligations.",
+    "Pair construction checks both scalar/pointer arguments; same-type checked local copies/assignments preserve initialized field representations. Unknown/uninitialized local storage remains refused and receives no initializedness fact from a copy.",
+    "Identity wrappers admit only structural parentheses/cleanup/materialization, same-type NoOp/LValueToRValue and nullptr-to-supported-pointer conversion. Explicit, type-changing or unsupported casts refuse.",
+    "Generic dereference and subscript dispatch reach Policy.read, which requires kind=pointer and a definite checked vector prefix; identity_pointer never satisfies it. Ordinary arithmetic/unary uses, calls and returns likewise refuse these Value objects. No pointee, allocation liveness, prefix, separation or escape fact is inferred.",
+    "Pair-field pointer assignment checks a known initialized pair member and a checked initialized right value, without a data-prefix/ownership grant. Pointer equality/inequality returns an initialized scalar after visiting operands exactly once; primitive comparisons also visit mutating operands exactly once, avoiding invented vector prefix length.",
+    "The exact model content remains cf708cf2. Existing bounded_initialization.identity includes this policy source and proof_semantics source, so changed initialization semantics invalidate old generated metadata despite stable human policy id.",
+    "Retained genuine RED shows the positive mixed-pair control refused while8negative cases passed; retained GREEN reports11passed. New negative tests assert safe setup acceptance first, default-null remains nondereferenceable, and the side-effect comparison/vector index1 control checks no double-counted prefix."
+  ]
+}

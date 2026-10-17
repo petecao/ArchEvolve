@@ -1,0 +1,104 @@
+{
+  "all18_pass": true,
+  "cases": [
+    {
+      "all_six_assembly_hashes_equal_to_V2": true,
+      "case": "covered_store_next_thread_load_positive",
+      "profile_physical_pin_equal": true
+    },
+    {
+      "all_six_assembly_hashes_equal_to_V2": true,
+      "case": "critical_end_wait_positive",
+      "profile_physical_pin_equal": true
+    },
+    {
+      "all_six_assembly_hashes_equal_to_V2": true,
+      "case": "critical_end_without_wait_negative",
+      "profile_physical_pin_equal": true
+    },
+    {
+      "all_six_assembly_hashes_equal_to_V2": true,
+      "case": "different_region_noncover_negative",
+      "profile_physical_pin_equal": true
+    },
+    {
+      "all_six_assembly_hashes_equal_to_V2": true,
+      "case": "disjoint_owned_tiles_positive",
+      "profile_physical_pin_equal": true
+    },
+    {
+      "all_six_assembly_hashes_equal_to_V2": true,
+      "case": "history_exact_issue_negative",
+      "profile_physical_pin_equal": true
+    },
+    {
+      "all_six_assembly_hashes_equal_to_V2": true,
+      "case": "history_latest_positive",
+      "profile_physical_pin_equal": true
+    },
+    {
+      "all_six_assembly_hashes_equal_to_V2": true,
+      "case": "other_thread_cpu_read_positive",
+      "profile_physical_pin_equal": true
+    },
+    {
+      "all_six_assembly_hashes_equal_to_V2": true,
+      "case": "outside_critical_store_positive",
+      "profile_physical_pin_equal": true
+    },
+    {
+      "all_six_assembly_hashes_equal_to_V2": true,
+      "case": "owned_tile_positive",
+      "profile_physical_pin_equal": true
+    },
+    {
+      "all_six_assembly_hashes_equal_to_V2": true,
+      "case": "pending_read_lifetime_end_negative",
+      "profile_physical_pin_equal": true
+    },
+    {
+      "all_six_assembly_hashes_equal_to_V2": true,
+      "case": "pending_store_cpu_read_negative",
+      "profile_physical_pin_equal": true
+    },
+    {
+      "all_six_assembly_hashes_equal_to_V2": true,
+      "case": "prior_cpu_store_visible_positive",
+      "profile_physical_pin_equal": true
+    },
+    {
+      "all_six_assembly_hashes_equal_to_V2": true,
+      "case": "same_region_read_read_noncover_negative",
+      "profile_physical_pin_equal": true
+    },
+    {
+      "all_six_assembly_hashes_equal_to_V2": true,
+      "case": "same_region_write_cover_positive",
+      "profile_physical_pin_equal": true
+    },
+    {
+      "all_six_assembly_hashes_equal_to_V2": true,
+      "case": "u32_disjoint_half_positive",
+      "profile_physical_pin_equal": true
+    },
+    {
+      "all_six_assembly_hashes_equal_to_V2": true,
+      "case": "u64_second_half_conflict_negative",
+      "profile_physical_pin_equal": true
+    },
+    {
+      "all_six_assembly_hashes_equal_to_V2": true,
+      "case": "wrong_owner_negative",
+      "profile_physical_pin_equal": true
+    }
+  ],
+  "keys": [
+    "source_c_sha256",
+    "receiver_c_sha256",
+    "combined_c_sha256",
+    "resource_profile_sha256",
+    "draw_binding_sha256",
+    "integration_sha256"
+  ],
+  "schema": "passive-cross-version-owned-artifacts-1"
+}

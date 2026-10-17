@@ -1,0 +1,11 @@
+{
+  "cause": "The compiler component manifest records paths relative to raw/component; the outer hash inventory records paths relative to raw. Both refer to the same exact physical file. The successor binds that exact prefix instead of comparing incompatible relative schemas.",
+  "date": "2026-10-16 ET",
+  "error": "AssertionError",
+  "function": "main",
+  "line": 76,
+  "original_stdout_metadata_unchanged": true,
+  "predicate": "assert all(current[key] == row[key] for key in ['relative', 'path', 'bytes', 'sha256'])",
+  "scope": "Local metadata reconciler only; no scientific or remote refusal",
+  "source_sha256": "1ca6e8456895946114848a8b5c64ffedb2e359272d9f4367861228d4275b4048"
+}

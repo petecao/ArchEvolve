@@ -1,0 +1,29 @@
+{
+  "created": "2026-10-16 ET",
+  "observed_utc": "2026-10-16T20:23:07.408190+00:00",
+  "operation": "passive metadata and short inert wrapper text only; neither driver nor wrapper executed",
+  "primary_branch": "yanrujhou_main",
+  "primary_commit": "c978393b119a3614229a37f0f2c8ca2a097c750b",
+  "wrappers": [
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang",
+      "exists": true,
+      "symlink": false,
+      "physical_path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang",
+      "bytes": 128,
+      "sha256": "cb1253820eb3815c92a98f20e384f1dc8350eb90839588cd567f4b3963ba0d78",
+      "mode": 493,
+      "inert_wrapper_text": "#!/bin/sh\nexec /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang --gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13 \"$@\"\n"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+      "exists": true,
+      "symlink": false,
+      "physical_path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+      "bytes": 145,
+      "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4",
+      "mode": 493,
+      "inert_wrapper_text": "#!/bin/sh\nexec /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang++ --gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13 -stdlib=libc++ \"$@\"\n"
+    }
+  ]
+}

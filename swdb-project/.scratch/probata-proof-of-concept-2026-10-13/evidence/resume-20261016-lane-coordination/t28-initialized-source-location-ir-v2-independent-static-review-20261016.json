@@ -1,0 +1,100 @@
+{
+  "author_retained_control_claim": {
+    "command": "python3 -I -B swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/source-location-ir-repair-proposal-v2/test_counter_guard_forms_v2.py",
+    "elapsed_s": 0.083,
+    "errors": 0,
+    "failures": 0,
+    "initial_fixture_correction": "Synthetic regex fixture did not escape parentheses; only test pattern corrected before final18pass",
+    "old_source_location_controls_included": 11,
+    "passed": 18,
+    "source_location_negative_mutations_included": 90
+  },
+  "boundaries": {
+    "actual_remote_IR_semantics_reconciled_by_reviewer": false,
+    "claim": "PASS permits parent to perform the separately authorized exact read-only retained replay. It does not promote the preserved refusal, supply proof results, attest unseen LLVM bytes or establish original source/body/hardware/public record acceptance.",
+    "compiler_native_verifier_solver_tests_SSH_executed_by_reviewer": false,
+    "fresh_public_proof_or_source_body_admission": false,
+    "project_or_helper_imported_by_reviewer": false,
+    "retained_replay_executed_by_reviewer": false,
+    "retained_replay_pending_parent": true,
+    "source_or_raw_modified_by_reviewer": false
+  },
+  "date": "2026-10-16 ET",
+  "files": {
+    "README.md": {
+      "bytes": 1966,
+      "path": "prototype/28-initialized-u32-resume-20261016/source-location-ir-repair-proposal-v2/README.md",
+      "sha256": "2c031b8400181e84321c24d1c09e57bec381c3158062b036f7cd082f50c3b115"
+    },
+    "base-source.py": {
+      "bytes": 47822,
+      "path": "prototype/28-initialized-u32-resume-20261016/source-location-ir-repair-proposal-v2/base-source.py",
+      "sha256": "c023a4a6298fab7a34f4213f888b6c0fb4fe5c405e5a53741942e3e2accb81cb"
+    },
+    "combined-repair.patch": {
+      "bytes": 8844,
+      "path": "prototype/28-initialized-u32-resume-20261016/source-location-ir-repair-proposal-v2/combined-repair.patch",
+      "sha256": "8438f543db4d443b8d643bda43a0efdf5b9c2c993ddae61512de15d3ddfb2274"
+    },
+    "ir-only-repair.patch": {
+      "bytes": 3551,
+      "path": "prototype/28-initialized-u32-resume-20261016/source-location-ir-repair-proposal-v2/ir-only-repair.patch",
+      "sha256": "df0b520e4cc14f17d6db3bd792050f7212da0dd0c6173a21965b4b35604c3d25"
+    },
+    "proposal-base.json": {
+      "bytes": 803,
+      "path": "prototype/28-initialized-u32-resume-20261016/source-location-ir-repair-proposal-v2/proposal-base.json",
+      "sha256": "8d830637051ab20814e7e63aca6cfea7a605dc298cf94085adb9961066d6a968"
+    },
+    "proposed-source.py": {
+      "bytes": 52100,
+      "path": "prototype/28-initialized-u32-resume-20261016/source-location-ir-repair-proposal-v2/proposed-source.py",
+      "sha256": "01c043e544e50c30fc3d92b6be5a8b097f4dfef0606f53c29068a2ba008ac145"
+    },
+    "replay_retained_observation_v2.py": {
+      "bytes": 12483,
+      "path": "prototype/28-initialized-u32-resume-20261016/source-location-ir-repair-proposal-v2/replay_retained_observation_v2.py",
+      "sha256": "698fc864703a8d838f25c96c41b63430e1cb0a9aaa35392fc2c6e6181b8e3f5a"
+    },
+    "source-location-v1-reviewed.py": {
+      "bytes": 50236,
+      "path": "prototype/28-initialized-u32-resume-20261016/source-location-ir-repair-proposal-v2/source-location-v1-reviewed.py",
+      "sha256": "63d8fff0599d409b7cd89af28d5a52ddc4fd38972057645abc5ede5b9a50237c"
+    },
+    "test_counter_guard_forms_v2.py": {
+      "bytes": 10158,
+      "path": "prototype/28-initialized-u32-resume-20261016/source-location-ir-repair-proposal-v2/test_counter_guard_forms_v2.py",
+      "sha256": "2c39dda33b70fbef19c3e42023716fd2dfc1fb9c91662774eb3425499ee39343"
+    }
+  },
+  "findings": [],
+  "independent_static_checks": {
+    "AST_inverse": "Only added function is _counter_bound_flow; only changed existing function is _operations. Restoring its bounded/caller call sites yields the identical previous _operations AST. Every other function/class and all top-level non-definition AST nodes are identical.",
+    "bounded_roles": "Bounded reload is the exact poststore i32 @REG_count load after store and mfence. Its bad block retains exact assert_rtn/assert_fail call line125 then unreachable; finish label and return phi retain original entry/good identities.",
+    "caller_roles": "Both caller guard reloads are exact poststore i32 @REG_count loads. First bad block retains abort/unreachable; first good block retains reload_first increment and exact same reload_first address offset for the second store. Second bad block retains abort/unreachable; second good block retains the full two-value reads, lifetime calls, fences, scaling and return. Every actual SSA operand and label is tied through unchanged _flow repeated bindings.",
+    "complete_flow": "Original _flow function is byte/AST unchanged: same ABI parameter shape, complete instruction/block count, regex full matches and repeated SSA/control identities. Helper only selects one of two complete instruction templates, does not normalize arbitrary predicates or drop instructions/effects. Caller mixed forms conservatively refuse.",
+    "controls": "Inspected author controls: old refusal and both exact guard forms, signed partition, wrong predicate/constant/type/operand/destinations, abort/effects/extra use, mixed forms, exact source/reader inverses plus inherited SourceLoc controls. No reviewer control execution.",
+    "exact_textual_inverse": "Removing only _counter_bound_flow and replacing its two exact call sites with the previous _flow calls reconstructs the complete SourceLoc-only predecessor byte-for-byte.",
+    "paired_destinations": "The alternate modifies each comparison and its immediately following branch together: original sgt32 takes true to bad and false to good; alternate slt33 takes true to good and false to bad. Reversing only predicate/constant/destinations cannot match either full template.",
+    "physical_pins": "All nine packet input size/SHA-256 rows match current bytes; packet separately physically pinned.",
+    "predecessor": "source-location-v1-reviewed.py is byte-identical to the preserved V1 proposed-source.py; both base-source.py files are byte-identical.",
+    "reader_exact_inverse": "Three narrow textual reversions (proposal SHA, helper extraction-set member, old-source expected-set exclusion) reconstruct V1 reader byte-for-byte. Exact result digest, 32-artifact complete membership and size/hash/stability checks, three project component pins, seven physical source input adapter, same-TU u32 variant, original exact refusal reproduction, pre/post checks, read-only audit hook and compact-only output are unchanged.",
+    "reader_execution_boundary": "Reader parses frozen AST definitions only, with a closed function set including the new helper. The future retained replay is read-only diagnostic observation, not proof or new compiler evidence; it still requires the complete new observation to pass.",
+    "signed_equivalence": "For every signed i32 x, x > 32 iff not(x < 33). Intervals [-2147483648,32] and [33,2147483647] partition that domain. Constants are exact signed i32 32/33; no new arithmetic or overflow assumption is introduced. Poison/undefined operands are not newly admitted: either predicate feeds the same conditional branch.",
+    "sole_consumer": "Each guard result SSA must appear exactly twice in the raw body: definition and one exact branch use. Escaped identifier with word/dot boundaries prevents numeric SSA-prefix collisions. Extra allowed-pattern uses still refuse. Comment/metadata coincidences can only conservatively refuse.",
+    "source_assertions_and_proof": "_assert_source_location_diagnostics, _assertion, _bodies, source checks, recipe/policy/check/certify/recheck functions, getter, owned source-model/MMIO TCB, answers and proof/frame clauses are unchanged from the SourceLoc-only predecessor."
+  },
+  "packet": {
+    "bytes": 2225,
+    "path": "prototype/28-initialized-u32-resume-20261016/source-location-ir-repair-proposal-v2/combined-repair-source-packet-v2.json",
+    "sha256": "6c46794dd4c663a54942ef0e9ab5b3dc687f71c5d23c68176b16406fb897f3af"
+  },
+  "preserved_original_refusal": {
+    "bytes": 782,
+    "path": "prototype/28-initialized-u32-resume-20261016/source-location-repair-proposal-v1/retained-replay-v1-refusal-20261016.json",
+    "sha256": "bd243d5f1b1106ab6e702e00b1044c01dd44066acbce728089ee902f5026acc9"
+  },
+  "reviewer": "/root/lane_coordination",
+  "scope": "Frozen combined SourceLoc/IR successor and exact retained-reader inverse only; no replay, compiler, native tool, verifier, solver, test or SSH execution by this reviewer.",
+  "status": "PASS_STATIC_SOURCE_AND_RETAINED_READER_READINESS"
+}

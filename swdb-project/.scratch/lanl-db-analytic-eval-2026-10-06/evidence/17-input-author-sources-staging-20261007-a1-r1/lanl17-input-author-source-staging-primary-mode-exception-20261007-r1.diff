@@ -1,0 +1,11 @@
+--- lanl-stage-reviewed17-input-author-sources-from-git-20261007-a1.py
++++ lanl-stage-reviewed17-input-author-sources-from-git-20261007-a1-r1.py
+@@ -100,7 +100,7 @@
+   assert p.resolve(strict=True)==p
+   s=p.stat();assert s.st_uid==os.getuid()
+   assert stat.S_ISDIR(s.st_mode) if directory else stat.S_ISREG(s.st_mode)
+-  assert not s.st_mode&0o022
++  assert not s.st_mode&0o022 or (p == P('/data1/yanruj/ArchEvolve') and p.parent.stat().st_uid==os.getuid() and stat.S_IMODE(p.parent.stat().st_mode)==0o700)
+   return p
+  base=checked('/data1/yanruj',True);repo=checked(base/'ArchEvolve',True)
+  def git(*args):

@@ -1,0 +1,154 @@
+{
+  "actual": {
+    "argv": [
+      "ssh",
+      "-T",
+      "-o",
+      "BatchMode=yes",
+      "-o",
+      "ConnectTimeout=10",
+      "mbit10",
+      "/usr/bin/timeout",
+      "--signal=TERM",
+      "--kill-after=5s",
+      "120s",
+      "/usr/bin/env",
+      "-i",
+      "HOME=/nonexistent",
+      "LANG=C",
+      "LC_ALL=C",
+      "PATH=/usr/bin:/bin",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "/usr/bin/python3",
+      "-I",
+      "-B",
+      "-"
+    ],
+    "elapsed_seconds": 0.7506124579813331,
+    "exit_code": 1,
+    "started_utc": "2026-10-17T00:01:06.521053+00:00",
+    "stderr": {
+      "bytes": 0,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-source9-math-ast-v1-actual-stderr-20261016.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdin_sha256": "43829597baf09a813e9b79bb715a36d0a17aa946e3d45518449e74d01946daa1",
+    "stdout": {
+      "bytes": 171,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-source9-math-ast-v1-actual-stdout-20261016.json",
+      "sha256": "293bc8d60a63b21c9c7e380eb9c21362dc653bd79b4699819b7dd821f2816ce3"
+    },
+    "within_output_cap": true
+  },
+  "admission": {
+    "bytes": 2538,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-source9-math-ast-root-once-admission-v1-20261016.json",
+    "sha256": "3047f7aa489012654348800d412ee7eb6aa5f6c357db1f14560d8287b1cc9adb"
+  },
+  "all29_content_and_nine_stat_pre_post_equal": false,
+  "all_scientific_source_Heap_Typed_caller_acceptance": false,
+  "classification": "REFUSED_COMPLETE26_MATH_METADATA_CAPTURE",
+  "command": {
+    "bytes": 1311,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-math-ast-v1/command.json",
+    "sha256": "1a2ef1c3de51e8bfa9ec34b6adb48b86cf91fb8d568d038b5e20515f29c0c505"
+  },
+  "complete": false,
+  "date": "2026-10-16 ET",
+  "entry": {
+    "bytes": 385219,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-math-ast-v1/entry.py",
+    "sha256": "43829597baf09a813e9b79bb715a36d0a17aa946e3d45518449e74d01946daa1"
+  },
+  "expected_metadata_exit2": false,
+  "postflight": {
+    "argv": [
+      "ssh",
+      "-T",
+      "-o",
+      "BatchMode=yes",
+      "-o",
+      "ConnectTimeout=10",
+      "mbit10",
+      "/usr/bin/env",
+      "-i",
+      "HOME=/nonexistent",
+      "PATH=/usr/bin:/bin",
+      "LANG=C",
+      "LC_ALL=C",
+      "/usr/bin/timeout",
+      "--signal=TERM",
+      "--kill-after=5s",
+      "35s",
+      "/usr/bin/python3",
+      "-I",
+      "-B",
+      "-"
+    ],
+    "elapsed_seconds": 0.7954824169864878,
+    "exit_code": 0,
+    "started_utc": "2026-10-17T00:01:07.273498+00:00",
+    "stderr": {
+      "bytes": 0,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-source9-math-ast-v1-postflight-stderr-20261016.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdin_sha256": "45256d3d124bde5d76f9b1df136e34f97cd456d977a245c52b7ad71c1528dbd9",
+    "stdout": {
+      "bytes": 2543,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-source9-math-ast-v1-postflight-stdout-20261016.json",
+      "sha256": "841ff0dcdc4f953560afba56a0431539de32d7cf04a3fa3722c9bb89dfc41eb4"
+    },
+    "within_output_cap": true
+  },
+  "postflight_passed": true,
+  "preflight": {
+    "argv": [
+      "ssh",
+      "-T",
+      "-o",
+      "BatchMode=yes",
+      "-o",
+      "ConnectTimeout=10",
+      "mbit10",
+      "/usr/bin/env",
+      "-i",
+      "HOME=/nonexistent",
+      "PATH=/usr/bin:/bin",
+      "LANG=C",
+      "LC_ALL=C",
+      "/usr/bin/timeout",
+      "--signal=TERM",
+      "--kill-after=5s",
+      "35s",
+      "/usr/bin/python3",
+      "-I",
+      "-B",
+      "-"
+    ],
+    "elapsed_seconds": 0.925750499998685,
+    "exit_code": 0,
+    "started_utc": "2026-10-17T00:01:05.594236+00:00",
+    "stderr": {
+      "bytes": 0,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-source9-math-ast-v1-preflight-stderr-20261016.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdin_sha256": "45256d3d124bde5d76f9b1df136e34f97cd456d977a245c52b7ad71c1528dbd9",
+    "stdout": {
+      "bytes": 2544,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-source9-math-ast-v1-preflight-stdout-20261016.json",
+      "sha256": "b91aaba81ab5ff2f42ddcdfe4825092c8e559f4ecb2241290b52058e9a01f65f"
+    },
+    "within_output_cap": true
+  },
+  "preflight_script": {
+    "bytes": 9163,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-cold/root-admitted-scoped-preflight-source9-v1.py",
+    "sha256": "45256d3d124bde5d76f9b1df136e34f97cd456d977a245c52b7ad71c1528dbd9"
+  },
+  "proof_native_compiler_verifier_solver_rerun": false,
+  "remote_raw_mutation": false,
+  "task_count": null,
+  "unique_math_commands": null
+}

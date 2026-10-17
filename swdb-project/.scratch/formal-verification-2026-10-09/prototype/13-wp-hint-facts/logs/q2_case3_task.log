@@ -1,0 +1,76 @@
+== q2_case3_task: frama-c q2_logic.c -cpp-extra-args=-DCASE=3 -wp -wp-cache none -wp-gen -wp-prover alt-ergo -wp-msg-key print-generated
+[kernel] Parsing q2_logic.c (with preprocessing)
+[wp] Running WP plugin...
+[wp] Warning: Missing RTE guards
+[wp] 3 goals scheduled
+[wp] [Generated] Goal typed_f_assigns (Qed)
+---------------------------------------------
+--- Context 'typed_f' Cluster 'Axiomatic' 
+---------------------------------------------
+theory Axiomatic
+  
+  (* use why3.BuiltIn.BuiltIn *)
+  
+  (* use bool.Bool *)
+  
+  (* use int.Int *)
+  
+  (* use int.ComputerDivision *)
+  
+  (* use real.RealInfix *)
+  
+  (* use frama_c_wp.qed.Qed *)
+  
+  (* use map.Map *)
+  
+  predicate P_pbad int
+  
+  axiom P_pbad_def : forall x:int. not P_pbad x <-> P_pbad x
+  
+end
+[wp:print-generated] 
+  theory WP
+    
+    (* use why3.BuiltIn.BuiltIn *)
+    
+    (* use bool.Bool *)
+    
+    (* use int.Int *)
+    
+    (* use int.ComputerDivision *)
+    
+    (* use real.RealInfix *)
+    
+    (* use frama_c_wp.qed.Qed *)
+    
+    (* use map.Map *)
+    
+    (* use Axiomatic *)
+    
+    goal wp_goal : P_pbad 0
+    
+  end
+[wp:print-generated] 
+  theory WP1
+    
+    (* use why3.BuiltIn.BuiltIn *)
+    
+    (* use bool.Bool *)
+    
+    (* use int.Int *)
+    
+    (* use int.ComputerDivision *)
+    
+    (* use real.RealInfix *)
+    
+    (* use frama_c_wp.qed.Qed *)
+    
+    (* use map.Map *)
+    
+    (* use Axiomatic *)
+    
+    goal wp_goal : not P_pbad 0
+    
+  end
+[wp] 3 goals generated
+exit=0

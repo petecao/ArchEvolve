@@ -1,0 +1,64 @@
+{
+  "boundaries": {
+    "SSH_compiler_native_verifier_solver_execution": false,
+    "actual_old_namespace_refusal_preserved": "V2 actual native125/zero goals remains RED; no retroactive grammar or theorem GREEN.",
+    "fresh_published_source_and_root_actual_admission_required": true,
+    "native_grammar_math_layout_or_source_caller_Typed_default_acceptance": false
+  },
+  "checks": {
+    "Heap_fresh_id_definition": "function fresh_id (h:heap) : int = h.next",
+    "all8_complete_original_C_and8_layout_C_views_byte_identical": true,
+    "all9_complete_statement_files_byte_identical": true,
+    "all_preparation_filepins_verified": 36,
+    "complete_manifest_payload_identical_except_component_identity": true,
+    "exact_two_site_byte_inverse": true,
+    "new_component_identity": "5639308d3b8db1a93071cd9d40cfa1aa025fe11c5435a303fff9fe783885a3cb",
+    "no_axiom_assumption_precondition_conclusion_or_import_change": true,
+    "old_component_identity": "0382237d65071740c30424fa8fbf7bb53848e0ef6421aebfc4e9de861bffc983",
+    "only_canonical_changes": [
+      "manifest.json",
+      "theory/vector_owned_effects.mlw"
+    ],
+    "same_canonical29file_membership": true,
+    "swap_evaluation_order_preserved": "Read original h frontier before begin_automatic; all five subsequent heap transitions unchanged.",
+    "swap_fresh_identity_expression": "let temporary = h.next -> let temporary = H.fresh_id h",
+    "world_frontier_expression": "O.valid s h.next -> O.valid s (H.fresh_id h)"
+  },
+  "date": "2026-10-16 ET",
+  "decision": "PASS_EXACT_DEFINITIONAL_NAMESPACE_REPAIR_SOURCE_ONLY",
+  "findings": [],
+  "heap_definition_source": {
+    "bytes": 8386,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/heap_reallocation.mlw",
+    "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+  },
+  "preparation": {
+    "bytes": 10946,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-effects-namespace-repair-preparation-v1-20261016.json",
+    "sha256": "90a7831205b45f8abaf5e82b63d0b7d146fcd8935debd9737a631ed253b0b410"
+  },
+  "reasoning": "The selected public Heap function is the exact total definition of the old record field expression at both sites. Its qualification resolves the intended imported Heap namespace without altering frontier arithmetic, fresh-identity observation, ownership premises or update/evaluation order. It proves no new freshness/history/Heap allocation fact.",
+  "retained_after": {
+    "bytes": 3128,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/namespace-repair-v1/vector_owned_effects.after.mlw",
+    "sha256": "6bfc13341d2faceb5a3fb64bd2d5bff22dd03c52a1fa3d5c4cb39b6e9c83f7f5"
+  },
+  "retained_before": {
+    "bytes": 3114,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/namespace-repair-v1/vector_owned_effects.before.mlw",
+    "sha256": "9db73c9cf698b6db29beabdf1e9b22d1da235971d6a21794a15c4f415cf6a6ce"
+  },
+  "retained_controls": {
+    "author_reported_pure_pass": 2,
+    "external_attempts": [],
+    "native_green": false,
+    "reviewer_executed_tests_or_tools": false
+  },
+  "reviewer": "lane_coordination",
+  "schema": "owned-effects-namespace-independent-spec-review-1",
+  "theory": {
+    "bytes": 3128,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_owned_effects.mlw",
+    "sha256": "6bfc13341d2faceb5a3fb64bd2d5bff22dd03c52a1fa3d5c4cb39b6e9c83f7f5"
+  }
+}

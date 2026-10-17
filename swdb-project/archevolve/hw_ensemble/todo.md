@@ -1,0 +1,1 @@
+ HW Ensemble Agent: takes in hotspots/metrics + HW Database, traverses decision tree to determine desired architecture->pass on to Evaluator Agent, then determine what code changes we need to expose to support (possibly a code library)? -> pass on to SW Ensemble Agent

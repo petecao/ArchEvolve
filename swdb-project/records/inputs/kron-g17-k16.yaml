@@ -1,0 +1,103 @@
+kind: input
+schema_version: '0.2'
+id: kron-g17-k16
+status: draft
+deprecated_by: null
+created: '2026-10-06'
+updated: '2026-10-06'
+provenance:
+- id: src-gapbs-generator
+  kind: source_code
+  description: 'gapbs src/generator.h (Generator: num_nodes = 2^scale, num_edges = num_nodes * degree,
+    then ID permutation for Kronecker) and src/command_line.h (-g/-u set symmetrize) and src/builder.h
+    (vertex count = largest ID + 1) at commit 2972aeb2703165bafd921222f4ed7196f542d3a8, read 2026-10-06
+    for this prospective registration.'
+  uri: https://github.com/sbeamer/gapbs/blob/2972aeb2703165bafd921222f4ed7196f542d3a8/src/generator.h
+- id: src-gapbs-fixed-seed
+  kind: source_code
+  description: 'Pinned GAPBS 2972aeb2703165bafd921222f4ed7196f542d3a8: src/util.h defines kRandSeed=27491095;
+    generator.h uses it for block reseeding and PermuteIDs; benchmark.h uses it for deterministic SourcePicker.
+    Read 2026-10-06; source inspection only.'
+  uri: https://github.com/sbeamer/gapbs/blob/2972aeb2703165bafd921222f4ed7196f542d3a8/src/util.h
+name: Prospective Kronecker (R-MAT a=0.57, b=c=0.19), scale 17, requested degree 16 (gapbs -g 17 -k 16)
+generator:
+  application: gapbs
+  tool: gapbs built-in generator and Builder (inside every gapbs kernel binary)
+  arguments: -g 17 -k 16
+properties:
+  scale:
+    value: 17
+    basis: code_reading
+    evidence_refs:
+    - src-gapbs-generator
+  requested_degree:
+    value: 16
+    basis: code_reading
+    evidence_refs:
+    - src-gapbs-generator
+  directed:
+    value: false
+    basis: code_reading
+    evidence_refs:
+    - src-gapbs-generator
+    note: CLBase::ParseArgs sets symmetrize for generated graphs, so the graph is undirected.
+  weighted:
+    value: false
+    basis: code_reading
+    evidence_refs:
+    - src-gapbs-generator
+    note: Unweighted as generated; sssp's WeightedBuilder adds its own weights to the same edges.
+  degree_distribution:
+    value: power_law
+    basis: inferred
+    evidence_refs:
+    - src-gapbs-generator
+    note: Source-family inference from R-MAT recursion with a=0.57 and b=c=0.19; no realized degree-skew
+      measurement is attached.
+  index_locality:
+    value: random
+    basis: inferred
+    evidence_refs:
+    - src-gapbs-generator
+    note: Kronecker vertex IDs are randomly permuted after generation (PermuteIDs).
+  num_nodes:
+    value: null
+    basis: unknown
+    note: Prospective registration; realized graph properties require a fresh execution receipt.
+  num_edges_undirected:
+    value: null
+    basis: unknown
+    note: Prospective registration; realized graph properties require a fresh execution receipt.
+  num_edges_directed:
+    value: null
+    basis: unknown
+    note: Prospective registration; realized graph properties require a fresh execution receipt.
+  input_density:
+    value: null
+    basis: unknown
+    note: Prospective registration; realized graph properties require a fresh execution receipt.
+notes:
+- Prospectively selected scale 17 for outcome-free native T1 BFS/BC characterization; no graph was generated
+  for this registration.
+- Generator family, requested degree, symmetry, weighting, fixed source seed and command-line flag family
+  match kron-g16-k16; only the selected scale changes.
+- Built-graph vertex count and deduplicated edge counts are unknown; scale does not establish realized
+  graph size.
+- No profile, native timing, PMU, calibration result or application collection evidence is attached.
+extensions:
+  prospective_generator_contract:
+    format: swdb.gapbs.prospective-generator.v1
+    reference_input: kron-g16-k16
+    selection: prospective
+    source_commit: 2972aeb2703165bafd921222f4ed7196f542d3a8
+    fixed_seed:
+      value: 27491095
+      basis: code_reading
+      evidence_refs:
+      - src-gapbs-fixed-seed
+    source_file_sha256:
+      util.h: a103e6c5767d724adc9b6b421ecade4b2d2c4351e5ea0da5d2c9bf16a9fcecf6
+      generator.h: 6c92c5bc9fc7903e2e1009fe9701683daf9096320930bd26f71ae59c5249b860
+      command_line.h: 4df78a89d4e4435500623bea2ab4a4cbd034586d85617ca1408041daebeb51a6
+      builder.h: 113e724b86bc7012d9eff83caeb0df4c30023645c36a10d099897c1f3fabd676
+      benchmark.h: a1a477adfee41eddf8fdc9781d776030ca40492f0e875205c23c85ec633d3c9f

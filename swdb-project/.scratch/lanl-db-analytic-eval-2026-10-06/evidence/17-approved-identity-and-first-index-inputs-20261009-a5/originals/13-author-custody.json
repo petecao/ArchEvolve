@@ -1,0 +1,159 @@
+{
+  "format": "swdb.lanl17-parent-record-index-request-author-custody.v1",
+  "canonical_ensure_ascii": true,
+  "checked_utc": "2026-10-09T17:40:52.046258+00:00",
+  "state": "parent_authored_unsealed_index_request_with_inherited_snapshot_review",
+  "actual_campaign_admission": false,
+  "request_sealed": false,
+  "bare_index_file_published_or_index_writer_executed": false,
+  "original_unsealed_specification_pin": {
+    "path": "/data1/yanruj/lanl17-p1-full-index-spec-preparation-20261009-a5-a1/index-author-specification.json",
+    "bytes": 50008,
+    "sha256": "29593e581481dfcc76daa2d40dd9c5d356e4df6f29fefef822fb931ad4cbb2d9"
+  },
+  "author_source_pin": {
+    "path": "/data1/yanruj/lanl17-input-author-source-20261007-a1/index_request_author.py",
+    "bytes": 38266,
+    "sha256": "a2e69aef10deb6186ac49401516ffba9a165b2f3cc94c8001646b6ac9a5b701d"
+  },
+  "author_parent_review_sha256": "199cc0a36b8fef47bf3a27f8e5dc39e70bc2da247357595503f659ed29ded8e1",
+  "original_index_writer_source_pin": {
+    "path": "/data1/yanruj/lanl17-index-source-20261007-a1/writer.py",
+    "bytes": 33445,
+    "sha256": "7a67d46f8ad7d453fe07bd458a21f663bd4dc7ec12e71de83ad8b5caaf28894b"
+  },
+  "writer_parent_review_sha256": "5d3ebe787c3d97ca2ba72e86442781d54a049a333047da83a9f5c103e4247930",
+  "original_context": {
+    "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+    "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+    "final_R": {
+      "commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+      "tree": "1ab2c8ab147251391a4af75e637114bdd5b0ff27"
+    },
+    "account": {
+      "host": "mbit10",
+      "platform": "linux",
+      "uid": 114316761,
+      "user": "yanruj"
+    },
+    "campaign": "extensa-gem5-bfs-20261006-p1",
+    "source_path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5",
+    "project": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project",
+    "records_directory": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p1/records",
+    "manifest_identity_sha256": "66194a7e99716f5b59ddf081dfec752c34b51f1805470a4514171c53323b06c7"
+  },
+  "original_eight_pins": {
+    "manifest_M2": {
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/manifest.json",
+      "bytes": 292401,
+      "sha256": "b86d78bac1d0a09e176114d1c23491ede098c4fcf5af5ab96f318ceabc29b8d1",
+      "identity_sha256": "66194a7e99716f5b59ddf081dfec752c34b51f1805470a4514171c53323b06c7",
+      "canonical_ensure_ascii": true
+    },
+    "helper_source": {
+      "path": "/data1/yanruj/lanl17-control-cleanup60-20261007-a4.py",
+      "bytes": 38195,
+      "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+    },
+    "auditor_source": {
+      "path": "/data1/yanruj/lanl17-custody-source-20261007-a3/auditor.py",
+      "bytes": 115130,
+      "sha256": "6a91ed1015bcc1caa771348e8bd1f591254ba130e55570ed18bc8121d67a06da"
+    },
+    "collector_source": {
+      "path": "/data1/yanruj/lanl17-custody-source-20261007-a2r1/collector.py",
+      "bytes": 24818,
+      "sha256": "b08db809b80cbebc6ce98dd8df8fdd4f327b170cdd7a545af0876ad68a832a5c"
+    },
+    "validation_argv": {
+      "bytes": 192,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-extensa-gem5-bfs-20261006-p1.argv.json",
+      "sha256": "72209ec5890b0ad7e38800c2a95f28271a3f4c585d4ec29046905ae0001e18d6"
+    },
+    "validation_exit": {
+      "bytes": 2,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-extensa-gem5-bfs-20261006-p1.exit-code.txt",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "validation_stderr": {
+      "bytes": 0,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-extensa-gem5-bfs-20261006-p1.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "validation_stdout": {
+      "bytes": 24,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-extensa-gem5-bfs-20261006-p1.stdout",
+      "sha256": "0d17a1d2aca7b10f8e7d07f115e2b9fbdb876235fcf7290c2d68e0dab76c08fd"
+    }
+  },
+  "source_identity": {
+    "commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+    "tree": "1ab2c8ab147251391a4af75e637114bdd5b0ff27",
+    "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+    "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+    "module_count": 185,
+    "source_clean": true
+  },
+  "catalog_inventory_sha256": "80415d563e504a0f58cd739ebb41c92eeb64a6ceb326ea8930f3fa8275cb6d91",
+  "catalog_record_count": 106,
+  "unique_one_catalog_source_bytes": 3224132,
+  "current_index_check_sha256": "b4defeb3b3fbe1d254d73254ee9f599def7a3b1914fcce77cf0eac966bee3c1c",
+  "original_summary_binding": {
+    "id": "extensa-gem5-bfs-20261006-p1.summary",
+    "path": "campaign_summaries/extensa-gem5-bfs-20261006-p1.summary.yaml",
+    "record_sha256": "fe6de83c57fb1cbbc4847564cf7b3d5b5163ecc40fa546b2aec2675aafb731d9",
+    "state": "present"
+  },
+  "original_summary_pin": {
+    "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p1/records/campaign_summaries/extensa-gem5-bfs-20261006-p1.summary.yaml",
+    "bytes": 25444,
+    "sha256": "e1c209d0c6e4a8c5830dd3452d2f70f8d23ff53423b11b041a3ace1a015eb1bf",
+    "id": "extensa-gem5-bfs-20261006-p1.summary",
+    "record_sha256": "fe6de83c57fb1cbbc4847564cf7b3d5b5163ecc40fa546b2aec2675aafb731d9"
+  },
+  "inherited_parent_validated_snapshot": {
+    "campaign": "extensa-gem5-bfs-20261006-p1",
+    "records_directory": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p1/records",
+    "catalog_inventory_sha256": "80415d563e504a0f58cd739ebb41c92eeb64a6ceb326ea8930f3fa8275cb6d91",
+    "validation_files_sha256": {
+      "validation_argv": "72209ec5890b0ad7e38800c2a95f28271a3f4c585d4ec29046905ae0001e18d6",
+      "validation_exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "validation_stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "validation_stdout": "0d17a1d2aca7b10f8e7d07f115e2b9fbdb876235fcf7290c2d68e0dab76c08fd"
+    },
+    "prior_validation_full_catalogue": true,
+    "catalog_unchanged_since_original_validation": true,
+    "all_campaign_processes_stopped": true,
+    "exclusive_snapshot_ownership_confirmed": true,
+    "observed_utc": "2026-10-09T17:31:02.254205+00:00"
+  },
+  "validation_boundary": "Original28d full validation and unchanged/exclusive/quiescent continuity are explicit parent review, not independently rerun or observed by this author. Current bytes/inventory/identity checks do not create that history.",
+  "limits": {
+    "catalog_record_count": 106,
+    "catalog_total_bytes": 3224132,
+    "max_catalog_file_bytes": 134217728,
+    "max_catalog_total_bytes": 2147483648,
+    "max_output_metadata_bytes": 8388608,
+    "metadata_deadline_seconds": 900
+  },
+  "author_metadata_deadline_seconds": 900,
+  "source_read_bound_scope": "128MiB per body and2GiB unique bytes for exactly ONE catalog; final rechecks reread originals. No cumulative-I/O or runtime promise.",
+  "output_exclusion_roots": [
+    "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5",
+    "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5",
+    "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p1",
+    "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p2",
+    "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p3",
+    "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p4"
+  ],
+  "request_file_pin": {
+    "path": "/data1/yanruj/lanl17-p1-full-index-author-20261009-a5-a1/index-request.json",
+    "bytes": 49094,
+    "sha256": "4395af5aac63e88fc1ea3674a86c3b8d9ad16aa38beef02044506446069f2b0d"
+  },
+  "unsealed_request_payload_sha256": "f9e977e3e55dbdc54b3a245cde2ad8e10f8c596040a1510b1033fda54b8194b2",
+  "original_input_or_control_rewritten": false,
+  "old_selected_or_scientific_bounds_changed": false,
+  "Store_validate_index_writer_collector_auditor_native_provider_campaign_remote_actions": 0,
+  "identity_sha256": "3270c884d2f475d1a9aa23f5fe15b63377ac158e2309577ba4d9a92ebaec03dd"
+}

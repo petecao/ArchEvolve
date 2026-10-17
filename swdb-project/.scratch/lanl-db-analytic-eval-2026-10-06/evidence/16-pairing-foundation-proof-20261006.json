@@ -1,0 +1,19 @@
+{
+  "format": "swdb.ticket16-foundation-proof.v1",
+  "created_et": "2026-10-06 21:31 ET",
+  "base": "4eaf95a95ed581f3b258d881a719a33f24c80ab2",
+  "public_test": "tests/test_extensa_pairing.py::test_fixture_freezes_each_artifact_input_before_pilot_and_comparison",
+  "red": {
+    "passed": 0,
+    "failed": 1,
+    "seconds": 178.41,
+    "reason": "KeyError paired_estimates"
+  },
+  "green": {
+    "passed": 1,
+    "failed": 0,
+    "seconds": 184.05
+  },
+  "scope": "contract fixture pilot/comparison, immutable typed records, validation; real adapter hooks next",
+  "application_agreement_evidence": false
+}

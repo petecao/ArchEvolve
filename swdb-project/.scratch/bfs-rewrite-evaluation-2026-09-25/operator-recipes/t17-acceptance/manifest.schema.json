@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "swdb.bfs.t17-prospective-acceptance.v1",
+  "description": "Prospective planning artifact only, dated2026-09-27. This schema cannot authorize dispatch.",
+  "type": "object",
+  "required": ["format", "created", "state", "dispatch_allowed", "automatic_retry_allowed", "acceptance_claim", "gain_claim", "historical_diagnostic", "scientific_scope", "remaining_diagnostic_prerequisite", "expected_outputs", "series", "budget_derivation", "remaining_bindings"],
+  "additionalProperties": false,
+  "properties": {
+    "format": {"const": "swdb.bfs.t17-prospective-acceptance.v1"},
+    "created": {"const": "2026-09-27"},
+    "state": {"const": "prospective_dependencies_unresolved"},
+    "dispatch_allowed": {"const": false},
+    "automatic_retry_allowed": {"const": false},
+    "acceptance_claim": {"const": false},
+    "gain_claim": {"const": false},
+    "historical_diagnostic": {"type": "object", "required": ["id", "state", "original_started", "original_deadline", "original_window_seconds", "driver", "launch", "independent_terminal", "closed_elapsed_seconds", "closed_retained_bytes", "cost_refund"], "properties": {"id": {"const": "bfs-t17-diagnostic-build-only-20260926-a1"}, "state": {"const": "failed_before_compile"}, "original_started": {"const": "2026-09-27T00:47:10.605637-04:00"}, "original_deadline": {"const": "2026-09-27T00:57:10.605637-04:00"}, "original_window_seconds": {"const": 600}, "cost_refund": {"const": false}}},
+    "scientific_scope": {"type": "object", "required": ["mode", "function", "roi", "primary_adapter", "guest_threads", "target", "repetitions", "warmups", "sources_per_family", "author_binary"], "properties": {"mode": {"const": "controlled_simulator"}, "function": {"const": "DOBFS"}, "roi": {"const": "bfs.complete_call.v1"}, "primary_adapter": {"const": "dx100.complete_call.v2"}, "guest_threads": {"const": 4}, "target": {"const": "dx100-e4fc4af-4c"}, "repetitions": {"const": 2}, "warmups": {"const": 0}, "sources_per_family": {"const": 3}, "author_binary": {"const": false}}},
+    "remaining_diagnostic_prerequisite": {"type": "object", "required": ["request_file", "request_sha256", "state", "primary_recompile", "provider_calls", "guest_executions", "public_compile_max_seconds", "compiler_max_seconds", "aggregate_charged_wall_seconds", "aggregate_charged_bytes"], "properties": {"state": {"const": "not_dispatched_no_allocation"}, "primary_recompile": {"const": false}, "provider_calls": {"const": 0}, "guest_executions": {"const": 0}, "public_compile_max_seconds": {"const": 240}, "compiler_max_seconds": {"const": 180}, "aggregate_charged_wall_seconds": {"type": "null"}, "aggregate_charged_bytes": {"type": "null"}}},
+    "expected_outputs": {"const": {"series": 4, "primary_executions": 24, "diagnostic_executions": 24, "profile_packages": 24, "primary_aggregates": 4, "family_comparisons": 2}},
+    "series": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"type": "object", "required": ["id", "family", "role", "candidate", "primary_build", "diagnostic_build", "accelerated", "workload", "ordered_sources", "protocol_id", "configuration_sha256", "series_wall_seconds", "series_retained_bytes"], "properties": {"family": {"enum": ["uniform_random", "kronecker"]}, "role": {"enum": ["baseline", "candidate"]}, "accelerated": {"type": "boolean"}, "workload": {"type": "null"}, "ordered_sources": {"type": "null"}, "protocol_id": {"type": "null"}, "configuration_sha256": {"type": "null"}, "series_wall_seconds": {"type": "null"}, "series_retained_bytes": {"type": "null"}}}},
+    "budget_derivation": {"type": "object", "required": ["state", "t15_selection_evidence", "t15_cost_evidence", "source_specific_adjustment_evidence", "aggregate_seconds", "aggregate_retained_bytes", "original_outer_started", "original_outer_deadline", "shared_cleanup_seconds", "wall_formula", "storage_formula", "policy"], "properties": {"state": {"const": "awaiting_actual_T15_cost_and_selection"}, "aggregate_seconds": {"type": "null"}, "aggregate_retained_bytes": {"type": "null"}, "original_outer_started": {"type": "null"}, "original_outer_deadline": {"type": "null"}, "shared_cleanup_seconds": {"const": 30}}},
+    "remaining_bindings": {"type": "array", "minItems": 1, "items": {"type": "string"}}
+  }
+}

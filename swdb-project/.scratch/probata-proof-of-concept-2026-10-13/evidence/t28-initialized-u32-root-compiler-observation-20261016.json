@@ -1,0 +1,371 @@
+{
+  "date_ET": "2026-10-16",
+  "at_utc": "2026-10-16T14:11:12.692147+00:00",
+  "root_entry": {
+    "path": "/private/tmp/probata-root-initialized-u32-compiler-observe-v1-20261016.py",
+    "bytes": 6915,
+    "sha256": "1e8fb9f9f6be91eb691efd45d4adddffebf3dc8a05f0345161d399d877672603"
+  },
+  "entry": {
+    "path": "/private/tmp/probata-t28-initialized-u32-compiler-observe-entry-v1-20261016.py",
+    "bytes": 7294,
+    "sha256": "a02d42beb40c2e66e7080f487fb7bd4c5b96006f835924b9ca5bb1fade8e49bc"
+  },
+  "plan": {
+    "path": "/private/tmp/probata-t28-initialized-u32-compiler-observe-plan-v1-20261016.json",
+    "bytes": 6812,
+    "sha256": "53ad237458c28cf1b5bc42a203e1cb70aa29577aef75aa4979f7a3ed30212f56"
+  },
+  "outer": {
+    "exit_code": 0,
+    "peak_rss_bytes": 171442176,
+    "out_of_memory": false,
+    "timed_out": false,
+    "wall_seconds": 2.391741707979236,
+    "cpu_seconds": 2.742854
+  },
+  "guard": {
+    "cmd": [
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+      "-I",
+      "-B",
+      "/private/tmp/probata-t28-initialized-u32-compiler-observe-entry-v1-20261016.py",
+      "--project",
+      "/private/tmp/probata-resume-t25-pair/swdb-project",
+      "--output",
+      "/private/tmp/probata-t28-initialized-u32-compiler-observe-v1-20261016/component"
+    ],
+    "exit_code": 0,
+    "wall_s": 2.3191558333928697,
+    "peak_rss_mb": 129.59375,
+    "cap_gb": 8.0,
+    "killed_by_watchdog": false,
+    "timed_out": false,
+    "queue_timed_out": false,
+    "timeout_s": 180.0,
+    "queue_timeout_s": 30.0,
+    "lock_wait_s": 0.00029191665817052126,
+    "runner_pid": 19302,
+    "clock": "continuous_monotonic",
+    "clock_info": {
+      "kind": "continuous_monotonic",
+      "implementation": "mach_continuous_time",
+      "includes_sleep": true,
+      "numer": 125,
+      "denom": 3
+    },
+    "log": "/private/tmp/probata-t28-initialized-u32-compiler-observe-v1-20261016/guard.log",
+    "inspection_events": [],
+    "inspection_failure": null,
+    "primary_inspection_failure": null,
+    "cleanup_inspection_failure": null,
+    "cleanup_inspection_failures": [],
+    "inspection_retry_boundary": "AccessDenied uses a 200 ms environ retry admission window and 21-attempt cap, or three attempts for other operations; only the exact proc_environ SystemError raised by the requested environ operation shares that policy; individual OS calls are not forcibly timed; all pauses count and RSS/deadline checks remain mandatory after inspection; only independently confirmed gone/zombie or changed birth is skipped; persistent live or unknown failure fails closed",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "unconfirmed_children": [],
+    "error": null,
+    "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment",
+    "rss_scope": "live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches; sampled, not a kernel quota",
+    "finished": "2026-10-16 10:11:12 EDT"
+  },
+  "result": {
+    "caller_acceptance": false,
+    "calls": [
+      {
+        "argv": [
+          "/opt/homebrew/opt/llvm/bin/clang++",
+          "-x",
+          "c++",
+          "-std=c++17",
+          "-fopenmp",
+          "-I/private/tmp/probata-t28-initialized-u32-compiler-observe-v1-20261016/component/includes",
+          "-I/private/tmp/probata-resume-t25-pair/swdb-project/apps/dx100/benchmarks/API",
+          "-###",
+          "-fsyntax-only",
+          "/private/tmp/probata-t28-initialized-u32-compiler-observe-v1-20261016/component/original.cc"
+        ],
+        "cwd": "/private/tmp/probata-resume-t25-pair/swdb-project",
+        "exit_code": 0,
+        "label": "driver-context",
+        "started_s": 2.1249987185001373e-05,
+        "stderr": {
+          "bytes": 3313,
+          "path": "/private/tmp/probata-t28-initialized-u32-compiler-observe-v1-20261016/component/driver-context.stderr",
+          "sha256": "afee2b9ebee2a9386b35382c1248de55cd4001fda3b7113da7ad3dff7f0dba51"
+        },
+        "stdout": {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-initialized-u32-compiler-observe-v1-20261016/component/driver-context.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/llvm/bin/clang++",
+          "-x",
+          "c++",
+          "-std=c++17",
+          "-fopenmp",
+          "-I/private/tmp/probata-t28-initialized-u32-compiler-observe-v1-20261016/component/includes",
+          "-I/private/tmp/probata-resume-t25-pair/swdb-project/apps/dx100/benchmarks/API",
+          "-E",
+          "-MD",
+          "-MF",
+          "/private/tmp/probata-t28-initialized-u32-compiler-observe-v1-20261016/component/original.d",
+          "/private/tmp/probata-t28-initialized-u32-compiler-observe-v1-20261016/component/original.cc"
+        ],
+        "cwd": "/private/tmp/probata-resume-t25-pair/swdb-project",
+        "exit_code": 0,
+        "label": "original-preprocess",
+        "started_s": 0.2106194999651052,
+        "stderr": {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-initialized-u32-compiler-observe-v1-20261016/component/original-preprocess.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 3490751,
+          "path": "/private/tmp/probata-t28-initialized-u32-compiler-observe-v1-20261016/component/original-preprocess.stdout",
+          "sha256": "20315eb2877f0182b9da42e0ba1376d4fb0f94c334fd7b2436c3ce072981bc04"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/llvm/bin/clang++",
+          "-x",
+          "c++-cpp-output",
+          "-std=c++17",
+          "-fopenmp",
+          "-fsyntax-only",
+          "-Xclang",
+          "-ast-dump=json",
+          "-Xclang",
+          "-ast-dump-filter=init_MAA",
+          "/private/tmp/probata-t28-initialized-u32-compiler-observe-v1-20261016/component/frozen-plus-probe.ii"
+        ],
+        "cwd": "/private/tmp/probata-resume-t25-pair/swdb-project",
+        "exit_code": 0,
+        "label": "ast-init_MAA",
+        "started_s": 0.5444781669648364,
+        "stderr": {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-initialized-u32-compiler-observe-v1-20261016/component/ast-init_MAA.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 12407,
+          "path": "/private/tmp/probata-t28-initialized-u32-compiler-observe-v1-20261016/component/ast-init_MAA.stdout",
+          "sha256": "971465b96aa042d4d511f88e7720041f4cafb0e4c0aa265e3c927cc9905c6d23"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/llvm/bin/clang++",
+          "-x",
+          "c++-cpp-output",
+          "-std=c++17",
+          "-fopenmp",
+          "-fsyntax-only",
+          "-Xclang",
+          "-ast-dump=json",
+          "-Xclang",
+          "-ast-dump-filter=get_new_reg",
+          "/private/tmp/probata-t28-initialized-u32-compiler-observe-v1-20261016/component/frozen-plus-probe.ii"
+        ],
+        "cwd": "/private/tmp/probata-resume-t25-pair/swdb-project",
+        "exit_code": 0,
+        "label": "ast-get_new_reg",
+        "started_s": 0.8069520829594694,
+        "stderr": {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-initialized-u32-compiler-observe-v1-20261016/component/ast-get_new_reg.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 361864,
+          "path": "/private/tmp/probata-t28-initialized-u32-compiler-observe-v1-20261016/component/ast-get_new_reg.stdout",
+          "sha256": "2acdc02a6e7de4b27401deea79785b1bd416e2e9d47fd7937c94944807457b65"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/llvm/bin/clang++",
+          "-x",
+          "c++-cpp-output",
+          "-std=c++17",
+          "-fopenmp",
+          "-fsyntax-only",
+          "-Xclang",
+          "-ast-dump=json",
+          "-Xclang",
+          "-ast-dump-filter=set_reg",
+          "/private/tmp/probata-t28-initialized-u32-compiler-observe-v1-20261016/component/frozen-plus-probe.ii"
+        ],
+        "cwd": "/private/tmp/probata-resume-t25-pair/swdb-project",
+        "exit_code": 0,
+        "label": "ast-set_reg",
+        "started_s": 1.0004337499849498,
+        "stderr": {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-initialized-u32-compiler-observe-v1-20261016/component/ast-set_reg.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 65532,
+          "path": "/private/tmp/probata-t28-initialized-u32-compiler-observe-v1-20261016/component/ast-set_reg.stdout",
+          "sha256": "0291c2166af3695ad83bcd97823a9192a24bb4ef37a3055b5136e0d571d92557"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/llvm/bin/clang++",
+          "-x",
+          "c++-cpp-output",
+          "-std=c++17",
+          "-fopenmp",
+          "-fsyntax-only",
+          "-Xclang",
+          "-ast-dump=json",
+          "-Xclang",
+          "-ast-dump-filter=get_reg",
+          "/private/tmp/probata-t28-initialized-u32-compiler-observe-v1-20261016/component/frozen-plus-probe.ii"
+        ],
+        "cwd": "/private/tmp/probata-resume-t25-pair/swdb-project",
+        "exit_code": 0,
+        "label": "ast-get_reg",
+        "started_s": 1.2018813329632394,
+        "stderr": {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-initialized-u32-compiler-observe-v1-20261016/component/ast-get_reg.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 73683,
+          "path": "/private/tmp/probata-t28-initialized-u32-compiler-observe-v1-20261016/component/ast-get_reg.stdout",
+          "sha256": "12cdecc4635474c568db714b2de66c5a851db1546a9a7bdd312545019a4fc84a"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/llvm/bin/clang++",
+          "-x",
+          "c++-cpp-output",
+          "-std=c++17",
+          "-fopenmp",
+          "-fsyntax-only",
+          "-Xclang",
+          "-ast-dump=json",
+          "-Xclang",
+          "-ast-dump-filter=trust_fixture",
+          "/private/tmp/probata-t28-initialized-u32-compiler-observe-v1-20261016/component/frozen-plus-probe.ii"
+        ],
+        "cwd": "/private/tmp/probata-resume-t25-pair/swdb-project",
+        "exit_code": 0,
+        "label": "ast-trust_fixture",
+        "started_s": 1.399781207961496,
+        "stderr": {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-initialized-u32-compiler-observe-v1-20261016/component/ast-trust_fixture.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 31473,
+          "path": "/private/tmp/probata-t28-initialized-u32-compiler-observe-v1-20261016/component/ast-trust_fixture.stdout",
+          "sha256": "df9f4e95c3faf071190d26ebd0cb7f088e3846c34f8e36c4bd86cd17f6847164"
+        },
+        "timeout_s": 30
+      },
+      {
+        "argv": [
+          "/opt/homebrew/opt/llvm/bin/clang++",
+          "-x",
+          "c++-cpp-output",
+          "-std=c++17",
+          "-fopenmp",
+          "-O2",
+          "-S",
+          "-emit-llvm",
+          "-o",
+          "-",
+          "/private/tmp/probata-t28-initialized-u32-compiler-observe-v1-20261016/component/frozen-plus-probe.ii"
+        ],
+        "cwd": "/private/tmp/probata-resume-t25-pair/swdb-project",
+        "exit_code": 0,
+        "label": "effects-llvm",
+        "started_s": 1.6099161669844761,
+        "stderr": {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-initialized-u32-compiler-observe-v1-20261016/component/effects-llvm.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 14244,
+          "path": "/private/tmp/probata-t28-initialized-u32-compiler-observe-v1-20261016/component/effects-llvm.stdout",
+          "sha256": "98d5e5997bfd30ece57f8e77e69b662db0a0a5b5287684d9d9c6f38a2f82b348"
+        },
+        "timeout_s": 30
+      }
+    ],
+    "complete": true,
+    "elapsed_s": 1.914955124957487,
+    "entry": {
+      "bytes": 7294,
+      "path": "/private/tmp/probata-t28-initialized-u32-compiler-observe-entry-v1-20261016.py",
+      "sha256": "a02d42beb40c2e66e7080f487fb7bd4c5b96006f835924b9ca5bb1fade8e49bc"
+    },
+    "error": null,
+    "full_original_context_before_probe": true,
+    "hardware_freshness": false,
+    "observed_poststore_reload": "UNCLASSIFIED; no expected emitted instruction shape is assumed",
+    "proof_acceptance": false,
+    "scope": "source/compiler observation only; no object/native/Frama/Why3/prover/public prove",
+    "selected_compiler": {
+      "bytes": 139144,
+      "path": "/opt/homebrew/Cellar/llvm/22.1.8/bin/clang-22",
+      "sha256": "305697d3868243dca6e4aabf4f628df7de135d701eb4fd78f6a5d7528fef4395"
+    },
+    "source_body_proof": false,
+    "source_unchanged": true
+  },
+  "selected_source_after": [
+    {
+      "path": "/private/tmp/probata-resume-t25-pair/swdb-project/swdb/dx100_initialized_register_model.py",
+      "bytes": 2351,
+      "sha256": "a568c08f6e8d928ecb46212b7120b29740d719c65ae7ae818b540bcf6790961f"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25-pair/swdb-project/apps/dx100/benchmarks/API/MAA_gem5.hpp",
+      "bytes": 27473,
+      "sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t25-pair/swdb-project/apps/dx100/benchmarks/API/MAA.hpp",
+      "bytes": 1323,
+      "sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd"
+    }
+  ],
+  "finite_settlement_sweeps": [
+    {
+      "active_selected_native_tools": [],
+      "inspection_denials": []
+    },
+    {
+      "active_selected_native_tools": [],
+      "inspection_denials": []
+    },
+    {
+      "active_selected_native_tools": [],
+      "inspection_denials": []
+    }
+  ],
+  "lease_paths_present_after": [],
+  "header_pin_timing": "Full used headers first pinned after original preprocessing and checked after capture. Selected originalheaders/model/compiler are pinned before and after; retained preprocessing is actual input to AST/LLVM. No invocation-time fullheader snapshot or atomic filesystem claim.",
+  "scope": "Compiler observation only; no executable, verifier, source-model correspondence, caller or hardware acceptance",
+  "proof_acceptance": false
+}

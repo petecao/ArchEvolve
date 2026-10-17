@@ -1,0 +1,159 @@
+{
+  "date_ET": "2026-10-16",
+  "at_utc": "2026-10-16T15:38:17.237879+00:00",
+  "user_requested_pause": true,
+  "root_inspector": {
+    "path": "/private/tmp/probata-root-pause-inspect-20261016.py",
+    "sha256": "63872508b73d81e385b729f1b4a04334dab54349681bba1ad64a1dbe1ad3320b",
+    "bytes": 5941
+  },
+  "Mac": {
+    "finite_scans": [
+      {
+        "at_utc": "2026-10-16T15:38:16.028969+00:00",
+        "selected_active": [],
+        "inspection_denials": [],
+        "same_uid_count": 671
+      },
+      {
+        "at_utc": "2026-10-16T15:38:16.103279+00:00",
+        "selected_active": [],
+        "inspection_denials": [],
+        "same_uid_count": 671
+      },
+      {
+        "at_utc": "2026-10-16T15:38:16.181783+00:00",
+        "selected_active": [],
+        "inspection_denials": [],
+        "same_uid_count": 671
+      }
+    ],
+    "lease_paths_present": [],
+    "B_flock_available": true,
+    "free_bytes": 58693210112,
+    "memory_available": 13356679168,
+    "scope": "finite metadata/selected-name and owned runner scans, not universal process absence"
+  },
+  "mbit10": {
+    "at_utc": "2026-10-16T15:38:17.153168+00:00",
+    "metadata": {
+      "mbit10-evaluation-node0.meta.json": {
+        "active_session": null,
+        "heartbeat_at": "2026-10-16T14:41:30Z",
+        "lease": {
+          "acquired_at": "2026-10-16T14:38:49Z",
+          "daemon_pid": 3881516,
+          "daemon_start_token": "sh3881516-1792161529",
+          "generation": 602,
+          "host": "mbit10",
+          "lease_name": "mbit10-evaluation-node0",
+          "mode": "measure",
+          "session_id": null
+        },
+        "attempt_pid": null,
+        "attempt_start_token": null,
+        "recovered_from_generation": null,
+        "released_at": "2026-10-16T14:41:30Z",
+        "session_note": null,
+        "session_state": "none",
+        "state": "released",
+        "writer": "hostlock.sh"
+      },
+      "mbit10-evaluation-node1.meta.json": {
+        "active_session": null,
+        "heartbeat_at": "2026-10-16T13:45:40Z",
+        "lease": {
+          "acquired_at": "2026-10-16T13:38:11Z",
+          "daemon_pid": 3877321,
+          "daemon_start_token": "sh3877321-1792157891",
+          "generation": 625,
+          "host": "mbit10",
+          "lease_name": "mbit10-evaluation-node1",
+          "mode": "measure",
+          "session_id": null
+        },
+        "attempt_pid": null,
+        "attempt_start_token": null,
+        "recovered_from_generation": null,
+        "released_at": "2026-10-16T13:45:40Z",
+        "session_note": null,
+        "session_state": "none",
+        "state": "released",
+        "writer": "hostlock.sh"
+      },
+      "mbit10-evaluation.meta.json": {
+        "active_session": null,
+        "heartbeat_at": "2026-09-12T04:49:11Z",
+        "lease": {
+          "acquired_at": "2026-09-12T01:35:42Z",
+          "daemon_pid": 209457,
+          "daemon_start_token": "sh209457-1789176942",
+          "generation": 77,
+          "host": "mbit10",
+          "lease_name": "mbit10-evaluation",
+          "mode": "measure",
+          "session_id": null
+        },
+        "attempt_pid": null,
+        "attempt_start_token": null,
+        "recovered_from_generation": null,
+        "released_at": "2026-09-12T04:49:11Z",
+        "session_note": null,
+        "session_state": "none",
+        "state": "released",
+        "writer": "hostlock.sh"
+      }
+    },
+    "kernel_lease_checks": {
+      "mbit10-evaluation": {
+        "exists": true,
+        "kernel_flock_available": true
+      },
+      "mbit10-evaluation-node0": {
+        "exists": true,
+        "kernel_flock_available": true
+      },
+      "mbit10-evaluation-node1": {
+        "exists": true,
+        "kernel_flock_available": true
+      }
+    },
+    "finite_scans": [
+      {
+        "at_utc": "2026-10-16T15:38:16.848661+00:00",
+        "selected_active": [],
+        "inspection_denials": [],
+        "same_uid_count": 13
+      },
+      {
+        "at_utc": "2026-10-16T15:38:16.976640+00:00",
+        "selected_active": [],
+        "inspection_denials": [],
+        "same_uid_count": 13
+      },
+      {
+        "at_utc": "2026-10-16T15:38:17.103040+00:00",
+        "selected_active": [],
+        "inspection_denials": [],
+        "same_uid_count": 13
+      }
+    ],
+    "free_bytes": {
+      "/data1": 24620388352,
+      "/data": 73056030720
+    },
+    "available_ram": 126900592640,
+    "uptime": "11:38:17 up 77 days,  3:57,  8 users,  load average: 0.07, 0.09, 0.04",
+    "primary_source": {
+      "branch": "yanrujhou_main",
+      "commit": "680298a3370b72ed2f8aed15cd29e67aa056229d",
+      "status": "?? swdb-project/records/.retention.lock"
+    },
+    "scope": "read-only selected-name finite scans and nonblocking kernel lease checks; no actual job/source synchronization or evidence/raw modification"
+  },
+  "ssh_exit": 0,
+  "ssh_stderr": "",
+  "finite_idle_closure_pass": true,
+  "no_new_evaluations": true,
+  "scope": "Pause settlement only; never a proof claim or universal process absence"
+}

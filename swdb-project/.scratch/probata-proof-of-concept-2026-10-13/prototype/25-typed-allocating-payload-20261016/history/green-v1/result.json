@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-16 ET",
+  "external_attempts_after_audit": [],
+  "failed": 0,
+  "input_pins": [
+    {
+      "bytes": 10602,
+      "path": "swdb/vector_allocating_payload.py",
+      "sha256": "94f30f1f0aaf144bf05786376ef26daf2ed794d2fb602b9ba3dbb889b487311a"
+    },
+    {
+      "bytes": 1786,
+      "path": "tests/test_vector_allocating_payload.py",
+      "sha256": "98ad0063428bda7e4e465892e3e7d8c6e6e99cd1f7371ea45406fc080147dd40"
+    },
+    {
+      "bytes": 29179,
+      "path": "swdb/std_models.py",
+      "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+    },
+    {
+      "bytes": 171522,
+      "path": "swdb/c_lowering.py",
+      "sha256": "8ede503e30cb6f57ead88ee622362d5a1c05290edcb6b4b157b9ca443f64925e"
+    }
+  ],
+  "native_or_formal_workflow": false,
+  "passed": 1,
+  "rows": [
+    {
+      "passed": true,
+      "test": "test_typed_allocating_constructors_preserve_all_nine_original_units"
+    }
+  ],
+  "source_only_artifact_seam": true,
+  "stage": "green-v1"
+}

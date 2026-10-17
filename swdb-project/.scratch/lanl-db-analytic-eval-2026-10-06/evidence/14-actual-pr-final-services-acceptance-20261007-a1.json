@@ -1,0 +1,51 @@
+{
+  "format": "swdb.lanl14-actual-pr-final-services-acceptance.v1",
+  "updated": "2026-10-07 ET",
+  "scope": "Actual immutable Jacobi g16/T1 counts and final CPU service descriptor; unsupported transfer remains unknown. No numerical retuning, native/provider execution or raw IR read.",
+  "source_commit": "dfb1e1c4c885b0ef95edd6742e2403526907eda9",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "target_description_sha256": "9fec46b1ab4c8ac2e8e501e61cf137c075ec40b6eef128a247cf28dd54fca76b",
+  "characterization_sha256": "73b9bd54b5e3a89f431325b4d6ac211c18a925aecafaba5fdd994cf9c2c70e18",
+  "protocol": {
+    "id": "generality.pagerank.cpu.kron-g16.t1.protocol.final-admission.a1.2fba4a33689c3b71",
+    "identity_sha256": "2fba4a33689c3b712d3d75f21c113debb5df4ec72a5dff774ae6ccbb97b7f3af",
+    "sha256": "6282a5b524dc0bb8a9e571e2bcdb85969f321cd31eca5142c093d818ca246faa"
+  },
+  "estimate": {
+    "id": "generality.pagerank.cpu.kron-g16.t1.estimate.final-admission.a1",
+    "sha256": "57d431a1f2dbddc23bd5ac64d6e7c80add9d4ea840f12bba61ec8e236f303eb5"
+  },
+  "result": {
+    "trials": 5,
+    "seconds": null,
+    "ratio": null,
+    "error_band": null,
+    "missing": [
+      "memory_scenario.characterization_allowlist",
+      "service_scope.characterization_allowlist"
+    ],
+    "four_scope_allowlist": [
+      {
+        "id": "bfs.kron-g16.t1.characterization.objects.a1",
+        "sha256": "535d43719d2e9269dc557e900886c625b80c5aa686e7682861a4f6d045e143bc"
+      },
+      {
+        "id": "bc.kron-g16.t1.characterization.objects.a1",
+        "sha256": "8561948088366aa18409da1db1f204ac2579cdb8ee90f1a2c76079a96e2eb4fd"
+      },
+      {
+        "id": "bfs.kron-g17.t1.characterization.objects.a1",
+        "sha256": "49b5c58f3551b065c91c49c1fb09f54de2d2d71f08b6a4e1eedf3aad5ec415c5"
+      },
+      {
+        "id": "bc.kron-g17.t1.characterization.objects.a1",
+        "sha256": "6b8d515b3f38a13bfd302993f8ac5e88bd77615da171c710b4ecd81d058c67db"
+      }
+    ]
+  },
+  "source_clean": true,
+  "application_execution": 0,
+  "provider_calls": 0,
+  "helper_sha256": "86df23903c131913cd952d3648cfed58e43824982308082bb235579d4b7da3bf",
+  "identity_sha256": "988f8c9e476711296835839fabc188461bcc510ea10ce6001e70efffba159989"
+}

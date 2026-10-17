@@ -1,0 +1,49 @@
+{
+  "date_ET": "2026-10-16",
+  "status": "INERT ROOT-ONLY PASSIVE READER; NO FORMAL/NATIVE/COMPILER",
+  "argv": [
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+    "-I",
+    "-B",
+    "/private/tmp/probata-t07-device-proof-cold-reader-v2-20261016.py",
+    "--settlement",
+    "/private/tmp/probata-root-t07-device-diagnostic-proof-execution-v1-20261016.json",
+    "--settlement-sha",
+    "1a34280a210040e44a7d2b2f00659a8e69de2f003bffe7330d0f27eb06c9893a",
+    "--guard-summary",
+    "/private/tmp/probata-t07-device-diagnostic-proof-v2-bd2610b6-20261016/guard.log.summary.json",
+    "--guard-sha",
+    "7b348d53544abc769a78c1c280a525bfd7a595643e8701405ac32464e15050df",
+    "--later-clearance",
+    "/private/tmp/probata-root-t07-device-proof-post-handoff-clearance-v1-20261016.json",
+    "--later-clearance-sha",
+    "6729a43a272a12225221cc9b9a104b045c6a6fe8a54b65f290e26ff606ba242d",
+    "--output",
+    "/private/tmp/probata-t07-device-proof-cold-v2-20261016-output"
+  ],
+  "reader": {
+    "path": "/private/tmp/probata-t07-device-proof-cold-reader-v2-20261016.py",
+    "bytes": 14353,
+    "sha256": "40b9ec010491cef0aaa7467bc6f3dc15bc2eb59f9ce3ab0ea760d0ab22fba0e7"
+  },
+  "helpers": {
+    "path": "/private/tmp/probata-t07-device-proof-cold-helpers-v2-20261016.py",
+    "bytes": 16552,
+    "sha256": "744c569a6a2b3d2e2037583c9965aa9c80272450fbde7ffe90d6c2a3670a2a37"
+  },
+  "output": "/private/tmp/probata-t07-device-proof-cold-v2-20261016-output",
+  "root_admission_required": true,
+  "no_auto_run": true,
+  "no_proof_acceptance": true,
+  "proposed_resources": {
+    "seconds": 60,
+    "RSS_cap_bytes": 1073741824,
+    "worker_count": 1,
+    "output_cap_bytes": 8388608,
+    "compiler_or_native_or_formal": false
+  },
+  "writes_only": [
+    "/private/tmp/probata-t07-device-proof-cold-v2-20261016-output"
+  ],
+  "preserved_raw_and_source_read_only": true
+}

@@ -1,0 +1,69 @@
+# Created: 2026-10-14 ET (Probata proof of concept ticket 11). A contract_fixture method-version file
+# with every section, for tests only. Tests copy it into library/methods/ beside a records folder.
+# Its values follow the map's decisions where they exist (budgets: 25 item 2, 13 item 11, 15 item 9;
+# lineup: 11 item 8 and the Mac installs of ticket 03) but it is NOT the method: the first real
+# method-version file is written by ticket 21 once the lineup is installed, and 59 freezes one.
+# Updated: 2026-10-14 ET (fix-21): status frozen, so it stays the current method version of test seeds
+# (current = the highest-sequence frozen version; a draft is used only when named). Still fixture evidence.
+id: method.contract-fixture-1
+kind: method_version
+sequence: 1
+status: frozen
+created: '2026-10-14'
+evidence_kind: contract_fixture
+description: Fixture method version with every section, for tests of swdb validate and swdb prove.
+lineup:
+  - {role: front_end, tool: clang, version: '22.1.8', flags: ['-c', '-emit-llvm', '-g', '-O0']}
+  - {role: bounded_verifier, tool: saw, version: '1.6', flags: []}
+  - {role: bounded_verifier_fallback, tool: crux-llvm, version: '0.12', flags: ['--no-compile']}
+  - {role: bounded_verifier_fallback, tool: cbmc, version: '6.11', flags: []}
+  - {role: concurrent_bounded_verifier, tool: civl, version: '1.23', flags: ['verify']}
+  - {role: second_refuter, tool: genmc, version: '0.19.0', flags: ['--rc11', '--disable-mm-detector', '--print-error-trace']}
+  - {role: unbounded_verifier, tool: frama-c-wp, version: '33.0', flags: ['-wp', '-wp-rte', '-wp-cache', 'none', '-wp-model', '+real']}
+  - {role: solver, tool: alt-ergo, version: '2.6.0', flags: []}
+  - {role: solver, tool: z3, version: '4.8.14', flags: []}
+  - {role: solver, tool: cvc5, version: '1.2.1', flags: []}
+  - {role: proof_assistant, tool: rocq, version: '9.3.0', flags: []}
+civl:
+  java: {tool: openjdk, version: '21.0.12.1', flags: ['-Xmx4g']}
+  memory_model: sequential_consistency
+  result_line: "All errors marked with '+' are absent"
+genmc:
+  memory_model: rc11
+  memory_model_detector: disabled
+  error_exit_code: 42
+openmp_runtime: {name: libomp, version: '22.1.8'}
+c_lowering:
+  subset: {id: fixture.cpp-subset, sha256: '1111111111111111111111111111111111111111111111111111111111111111'}
+  translators: [{id: fixture.c-lowering-tool, sha256: '2222222222222222222222222222222222222222222222222222222222222222'}]
+  naming_rules: {id: fixture.naming-rules, sha256: '3333333333333333333333333333333333333333333333333333333333333333'}
+acsl_version: '1.22'
+proof_hint_vocabulary: [loop_invariant, loop_assigns, loop_variant, assert, ghost_declaration, ghost_statement,
+                        non_recursive_definition, same_run_lemma, wp_strategy]
+checks:
+  proof_setup_check: {version: '0'}
+  proof_hint_check: {version: '0'}
+  verdict_reading: {version: '0'}
+budgets:
+  hint_rounds: 10
+  hint_loop_wall_minutes: 60
+  bounded_job_minutes: 15
+  counterexample_repair_rounds: 5
+  wp_seconds_per_solver: 30
+  civl_k: 3
+prompts: [{id: fixture.proof-hint-agent-prompt, sha256: '4444444444444444444444444444444444444444444444444444444444444444'}]
+shared_action_kinds: [claim, min_update, atomic_add_or, openmp_reduction, queue_reserve]
+sharing_classes: [read_only, thread_owned, shared_actions_only, lock_protected]
+logic_library:
+  id: fixture.logic-library
+  sha256: '5555555555555555555555555555555555555555555555555555555555555555'
+  sum_library: {id: fixture.sum-library, sha256: '6666666666666666666666666666666666666666666666666666666666666666'}
+models:
+  std_vector: {id: fixture.std-vector-model, sha256: '7777777777777777777777777777777777777777777777777777777777777777'}
+  std_pair: {id: fixture.std-pair-model, sha256: '8888888888888888888888888888888888888888888888888888888888888888'}
+rocq_development:
+  id: fixture.rocq-development
+  sha256: '9999999999999999999999999999999999999999999999999999999999999999'
+  composition_theorem: parallel_composition
+  dx100_reduction_lemma: dx100_reduction
+ghost_capacity_k: 8

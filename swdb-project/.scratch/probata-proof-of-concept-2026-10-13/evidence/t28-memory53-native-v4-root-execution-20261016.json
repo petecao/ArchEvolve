@@ -1,0 +1,140 @@
+{
+  "created": "2026-10-16 ET",
+  "scope": "C11/C++17 private preparation controls; not public/sourcebody/formal/hardware acceptance",
+  "root": {
+    "exit_code": 0,
+    "outer_timeout": false,
+    "wall_s": 3.887506333005149,
+    "raw": "/private/tmp/probata-resume-20261016-t28-memory53-native-v4",
+    "scope": "Mac private53 preparation controls per language; no public source/value/history/proof/hardware acceptance"
+  },
+  "guard_summary": {
+    "cmd": [
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+      "-I",
+      "-B",
+      "-X",
+      "pycache_prefix=/private/tmp/probata-resume-20261016-t28-memory53-native-v4/entry-cache",
+      "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/native_entry_v4.py",
+      "--output",
+      "/private/tmp/probata-resume-20261016-t28-memory53-native-v4/component",
+      "--source-policy",
+      "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-interface-memory-resume-20261016/source_policy_v2.json",
+      "--runtime-policy",
+      "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-public-v3-runtime-policy-with-python-packages.json"
+    ],
+    "exit_code": 0,
+    "wall_s": 3.6601385000394657,
+    "peak_rss_mb": 145.140625,
+    "cap_gb": 4.0,
+    "killed_by_watchdog": false,
+    "timed_out": false,
+    "queue_timed_out": false,
+    "timeout_s": 180.0,
+    "queue_timeout_s": 300.0,
+    "lock_wait_s": 0.0004212500061839819,
+    "runner_pid": 9907,
+    "clock": "continuous_monotonic",
+    "clock_info": {
+      "kind": "continuous_monotonic",
+      "implementation": "mach_continuous_time",
+      "includes_sleep": true,
+      "numer": 125,
+      "denom": 3
+    },
+    "log": "/private/tmp/probata-resume-20261016-t28-memory53-native-v4/guard.log",
+    "inspection_events": [
+      {
+        "stage": "supervision",
+        "operation": "environ",
+        "requested_operation": "environ",
+        "pid": 9918,
+        "expected_birth": 1792173069.63026,
+        "snapshot_birth": 1792173069.63026,
+        "exception": {
+          "type": "AccessDenied",
+          "module": "psutil",
+          "relation": "raised",
+          "pid": 9918
+        },
+        "exception_chain": [
+          {
+            "type": "AccessDenied",
+            "module": "psutil",
+            "relation": "raised",
+            "pid": 9918
+          },
+          {
+            "type": "PermissionError",
+            "module": "builtins",
+            "relation": "cause",
+            "errno": 13
+          }
+        ],
+        "traceback": [
+          {
+            "path": "/private/tmp/probata-resume-t07-private-array/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/counted_verifier.py",
+            "function": "_inspect",
+            "line": 156
+          },
+          {
+            "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/__init__.py",
+            "function": "environ",
+            "line": 921
+          },
+          {
+            "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil/_psosx.py",
+            "function": "wrapper",
+            "line": 353
+          }
+        ],
+        "known_native_environ_signature": false,
+        "exception_pid": 9918,
+        "observed_birth": 1792173069.63026,
+        "identity_state": "live",
+        "attempt": 1,
+        "retry_elapsed_s": 0.00012012501247227192,
+        "retry_window_s": 0.2,
+        "retry_limit_attempts": 21,
+        "clock_s": 415209.6114892083,
+        "wall_unix_s": 1792173071.413663,
+        "outcome": "denied"
+      }
+    ],
+    "inspection_failure": null,
+    "primary_inspection_failure": null,
+    "cleanup_inspection_failure": null,
+    "cleanup_inspection_failures": [],
+    "inspection_retry_boundary": "AccessDenied uses a 200 ms environ retry admission window and 21-attempt cap, or three attempts for other operations; only the exact proc_environ SystemError raised by the requested environ operation shares that policy; individual OS calls are not forcibly timed; all pauses count and RSS/deadline checks remain mandatory after inspection; only independently confirmed gone/zombie or changed birth is skipped; persistent live or unknown failure fails closed",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "unconfirmed_children": [],
+    "error": null,
+    "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment",
+    "rss_scope": "live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches; sampled, not a kernel quota",
+    "finished": "2026-10-16 13:51:12 EDT"
+  },
+  "component": {
+    "accepted": true,
+    "actual_formal_acceptance": false,
+    "actual_pair_acceptance": false,
+    "bytecode_cache_present": false,
+    "controls_by_language": {
+      "c11": 53,
+      "cpp17": 53
+    },
+    "current_0_2": false,
+    "error": null,
+    "full_ticket28": false,
+    "hardware_acceptance": false,
+    "header_dependency_timing_tcb": "Dependency files are emitted by original preprocessing; physical dependency hashes are first collected afterward, then checked after capture/compile/run. This does not reconstruct bytes read before the first capture or close concurrent modification-and-restoration/compiler-loader TCB.",
+    "input_pin_differences": [],
+    "raw_bytes_before_receipt": 2220931,
+    "scope": "memory53 private native preparation controls only; no source call/value/history/public/formal/hardware acceptance",
+    "source_body_proof": false,
+    "used_dependency_differences": [],
+    "wall_s": 3.203302582958713
+  },
+  "raw": "/private/tmp/probata-resume-20261016-t28-memory53-native-v4",
+  "result_sha256": "db99243212171986b235da8a15aadd38f90b45a0fc3633de39b4702698d57be6",
+  "independent_cold_pending": true
+}

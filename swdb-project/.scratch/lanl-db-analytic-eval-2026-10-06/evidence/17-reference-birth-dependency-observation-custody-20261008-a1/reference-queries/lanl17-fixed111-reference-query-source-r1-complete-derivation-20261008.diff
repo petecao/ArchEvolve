@@ -1,0 +1,36 @@
+--- /private/tmp/lanl17_read_111_unresolved_RAW_reference_contexts_20261008_a1.py
++++ /private/tmp/lanl17_read_111_unresolved_RAW_reference_contexts_20261008_a1_r1.py
+@@ -2397,6 +2397,11 @@
+         if visited % 1024 == 0:
+             check_time(deadline)
+         if isinstance(value,dict):
++            for key in value:
++                if PATTERN.search(key):
++                    context_add(out, {'JSON_field':keys+[key], 'JSON_context_kind':'dictionary_key',
++                        'matched_rows':labels(key), 'mechanical_context_category':json_category(keys+[key],key),
++                        'value':value_projection(key)}, result, deadline)
+             todo.extend((keys+[k],v) for k,v in value.items())
+         elif isinstance(value,list):
+             todo.extend((keys+[i],v) for i,v in enumerate(value))
+@@ -2483,8 +2488,8 @@
+         # environment, authentication or other private line contents.
+         record = {'line':number,'original_line_bytes':len(line.encode()),'original_line_sha256':sha(line.encode()),
+             'matched_rows':labels(line),'matched_path_literals':path_literals(line),
+-            'concrete_shell_code_line':line if suffix=='.sh' and len(line.encode())<=MAX_LINE else None,
+-            'mechanical_context_category':'shell_source_path_mention' if suffix=='.sh' else 'text_path_mention_only',
++            'concrete_source_code_line':line if suffix in ('.py','.sh') and len(line.encode())<=MAX_LINE else None,
++            'mechanical_context_category':'source_code_path_mention' if suffix in ('.py','.sh') else 'text_path_mention_only',
+             'line_exceeded_projection_bound':len(line.encode())>MAX_LINE}
+         context_add(out, record, result, deadline)
+     return out
+@@ -2531,7 +2536,9 @@
+                 if suffix=='.json':
+                     record['projection']=json_contexts(body,result,deadline)
+                 elif suffix=='.py':
+-                    record['projection']=python_contexts(body.decode('utf-8'),result,deadline)
++                    text=body.decode('utf-8')
++                    record['projection']=python_contexts(text,result,deadline)
++                    record['matching_source_lines']=line_contexts(text,suffix,result,deadline)
+                 else:
+                     record['projection']=line_contexts(body.decode('utf-8'),suffix,result,deadline)
+             except (json.JSONDecodeError,UnicodeError,SyntaxError) as exc:

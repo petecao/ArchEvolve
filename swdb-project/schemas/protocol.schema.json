@@ -1,0 +1,146 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "protocol",
+  "title": "Protocol",
+  "description": "Content-addressed BFS protocol/workload record. Introduced 2026-09-25.",
+  "properties": {
+    "schema_version": {
+      "const": "0.4"
+    },
+    "message_version": {
+      "const": "1.0"
+    },
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "enum": [
+            "sw",
+            "hw",
+            "operator",
+            "worker"
+          ]
+        },
+        "test_client": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name",
+        "role",
+        "test_client"
+      ]
+    },
+    "kind": {
+      "const": "protocol"
+    },
+    "requested_id": {
+      "$ref": "#/$defs/id"
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "supersedes": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "x-ref": "protocol"
+    },
+    "invalidated_comparisons": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "x-ref": "comparison_result"
+      }
+    },
+    "identity_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "settings": {
+      "type": "object"
+    },
+    "frozen_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "state": {
+      "const": "frozen"
+    },
+    "workload_identities": {
+      "type": "object",
+      "minProperties": 0,
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$"
+      }
+    },
+    "input_identities": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$"
+      }
+    },
+    "source_identities": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$"
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "message_version",
+    "producer",
+    "kind",
+    "requested_id",
+    "version",
+    "supersedes",
+    "invalidated_comparisons",
+    "identity_sha256",
+    "settings",
+    "frozen_at",
+    "state",
+    "workload_identities"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "settings": {
+            "properties": {
+              "mode": {
+                "const": "estimated"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "input_identities",
+          "source_identities"
+        ]
+      },
+      "else": {
+        "properties": {
+          "workload_identities": {
+            "minProperties": 1
+          }
+        }
+      }
+    }
+  ]
+}

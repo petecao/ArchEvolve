@@ -1,0 +1,494 @@
+{
+  "actual_plan_subset_role_review_test_staging_or_cleanup_generated": false,
+  "all_complete_diffs_full_byte_reverse_equal": true,
+  "caps_ordinary_references_actual_journal_and_original_metadata_scope_unchanged": true,
+  "format": "swdb.exact-portal-scoped-continuity-source-preparation.v1",
+  "helper_complete_diff": {
+    "bytes": 3299,
+    "path": "/private/tmp/lanl17-exact-portal-helper-scoped-continuity-complete-original-derivation-20261008-a1.diff",
+    "sha256": "e4662a78ac1726fdcf922a81629e2cd92a7b9589bcd396ff83daf3395201c8f8"
+  },
+  "original_helper": {
+    "bytes": 26331,
+    "path": "/private/tmp/lanl17_exact_portal_inode_role_helper_source_20261008_a1.txt",
+    "sha256": "36fc3b3fdede68b15fca931c199b649303cda4db559f1226ea13474ab5c0e44c"
+  },
+  "sealed": false,
+  "selected_control_definition_execution_import_compile_lift_main_test_Git_SSH_or_mutation": false,
+  "selected_helper": {
+    "bytes": 27033,
+    "path": "/private/tmp/lanl17_exact_portal_inode_role_helper_source_20261008_a1_r1.txt",
+    "sha256": "c195eccf8f728f7752dd89e0588af4fe6f0c05f50c7aa6cb47e5bd95f9ecb46b"
+  },
+  "selected_test_method_count": 16,
+  "sources": [
+    {
+      "complete_diff": {
+        "bytes": 6031,
+        "path": "/private/tmp/lanl17-exact-portal-guard-g7-complete-g6-derivation-20261008-a1.diff",
+        "sha256": "3a96c7b15ed39ba754b61b603488b6ec6eb60465951e2a0956d59bef9a61432f"
+      },
+      "full_byte_reverse_equal": true,
+      "literal_changes": [
+        {
+          "count": 1,
+          "new": null,
+          "new_bytes": 27033,
+          "new_sha256": "c195eccf8f728f7752dd89e0588af4fe6f0c05f50c7aa6cb47e5bd95f9ecb46b",
+          "old": null,
+          "old_bytes": 26331,
+          "old_sha256": "36fc3b3fdede68b15fca931c199b649303cda4db559f1226ea13474ab5c0e44c"
+        },
+        {
+          "count": 1,
+          "new": "c195eccf8f728f7752dd89e0588af4fe6f0c05f50c7aa6cb47e5bd95f9ecb46b",
+          "new_bytes": 64,
+          "new_sha256": "38759801539531449cad5c25d01a73385c3e5df8dcd199f97ba0e3506c2f60f5",
+          "old": "36fc3b3fdede68b15fca931c199b649303cda4db559f1226ea13474ab5c0e44c",
+          "old_bytes": 64,
+          "old_sha256": "10ff5c868a829781080d41919898a4f86711d87efd1310fb0f95808f27839715"
+        },
+        {
+          "count": 1,
+          "new": "    def process_references(self, continuity_rows=None):",
+          "new_bytes": 55,
+          "new_sha256": "533d05595d5b7dc8ce5fbce5f069d36f344861fa639e6952f2cfbd56389ed489",
+          "old": "    def process_references(self):",
+          "old_bytes": 33,
+          "old_sha256": "2d3b55c4fdc5c0cb1566dc6e5d3c27c071caa238549cdfab41a7592b939bf9c2"
+        },
+        {
+          "count": 1,
+          "new": "PORTAL_HELPER_SHA, self.left, charge_service_bytes, charge_portal_metadata,\n                    continuity_rows=continuity_rows)",
+          "new_bytes": 128,
+          "new_sha256": "e9578cbc63f6c8fe5e9f1b324961578938be7d49440c7b9751833c079bd13119",
+          "old": "PORTAL_HELPER_SHA, self.left, charge_service_bytes, charge_portal_metadata)",
+          "old_bytes": 75,
+          "old_sha256": "812f9593792aea021738cb431fc98aea3a03b43fe54f0ee105a18e7dfbbbeeb4"
+        },
+        {
+          "count": 1,
+          "new": "        self.process_references([name])\n        later = self.leases()",
+          "new_bytes": 69,
+          "new_sha256": "67ffe90d01379fa8b315c52e4759f67b81a1c520d5d5d0ffb5a38177160b44a2",
+          "old": "        self.process_references()\n        later = self.leases()",
+          "old_bytes": 63,
+          "old_sha256": "c47cf8efee1fd03262f2e240e607231b35b59408311bf3bb4c22b70e58a47645"
+        },
+        {
+          "count": 1,
+          "new": "            self.process_references([name])\n            # Sole destructive operation",
+          "new_bytes": 84,
+          "new_sha256": "7e14dd9dbe3daafc185395f35f43df74882d687eeea1ae3ebae963fd8f4f7bac",
+          "old": "            self.process_references()\n            # Sole destructive operation",
+          "old_bytes": 78,
+          "old_sha256": "d30dff80e76b75028660b69e59c21b982b11dccf121645b3c74dd6ea48a3857a"
+        }
+      ],
+      "original": {
+        "bytes": 116443,
+        "path": "/private/tmp/lanl_consumed_detached_source_guard_r6_20261008_a1.py",
+        "sha256": "6118592610fbff77a7da3ea8196c772331066d3188ded29627218486c106b326"
+      },
+      "selected": {
+        "bytes": 117232,
+        "path": "/private/tmp/lanl_consumed_detached_source_guard_r7_20261008_a1.py",
+        "sha256": "97219cdb326edf76e6d341aab4a2a8d58a4750e3da8d2e24a5f9e1097f4a69be"
+      }
+    },
+    {
+      "complete_diff": {
+        "bytes": 4474,
+        "path": "/private/tmp/lanl17-exact-portal-observer-o8-complete-o7r1-derivation-20261008-a1.diff",
+        "sha256": "e2fae3c651f967c8509ce545f645023787d97a41beaed89a2d23a6ed6368c189"
+      },
+      "full_byte_reverse_equal": true,
+      "literal_changes": [
+        {
+          "count": 1,
+          "new": null,
+          "new_bytes": 27033,
+          "new_sha256": "c195eccf8f728f7752dd89e0588af4fe6f0c05f50c7aa6cb47e5bd95f9ecb46b",
+          "old": null,
+          "old_bytes": 26331,
+          "old_sha256": "36fc3b3fdede68b15fca931c199b649303cda4db559f1226ea13474ab5c0e44c"
+        },
+        {
+          "count": 1,
+          "new": "c195eccf8f728f7752dd89e0588af4fe6f0c05f50c7aa6cb47e5bd95f9ecb46b",
+          "new_bytes": 64,
+          "new_sha256": "38759801539531449cad5c25d01a73385c3e5df8dcd199f97ba0e3506c2f60f5",
+          "old": "36fc3b3fdede68b15fca931c199b649303cda4db559f1226ea13474ab5c0e44c",
+          "old_bytes": 64,
+          "old_sha256": "10ff5c868a829781080d41919898a4f86711d87efd1310fb0f95808f27839715"
+        },
+        {
+          "count": 1,
+          "new": "lanl_consumed_detached_source_guard_r7_20261008_a1.py",
+          "new_bytes": 53,
+          "new_sha256": "4781972da15029a4ea57da71239769d531be36042fd0e16189d66328235fa953",
+          "old": "lanl_consumed_detached_source_guard_r6_20261008_a1.py",
+          "old_bytes": 53,
+          "old_sha256": "91cc073c6e55467d1e733cfd7b8fa47524af7f7d9a52641f72385651b0e7f500"
+        },
+        {
+          "count": 1,
+          "new": "R3_BYTES = 117232",
+          "new_bytes": 17,
+          "new_sha256": "76c0c5bc454aaed88ec5cf8058b7bb990eac5708c60a349af04b2abe41ea46e5",
+          "old": "R3_BYTES = 116443",
+          "old_bytes": 17,
+          "old_sha256": "42e22b27c7bc883d48179a7f76f99eaf927780b43612e14bab58395d18b56392"
+        },
+        {
+          "count": 1,
+          "new": "R3_SHA = '97219cdb326edf76e6d341aab4a2a8d58a4750e3da8d2e24a5f9e1097f4a69be'",
+          "new_bytes": 75,
+          "new_sha256": "0240baa232816ab748aea793082c56e692caa6db68016aefeaca83195ccacdfb",
+          "old": "R3_SHA = '6118592610fbff77a7da3ea8196c772331066d3188ded29627218486c106b326'",
+          "old_bytes": 75,
+          "old_sha256": "a552228005efd647e7d57d6f00ed68da65be74cb3431cf6c5f0a94d42c6eed66"
+        }
+      ],
+      "original": {
+        "bytes": 87833,
+        "path": "/private/tmp/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r7_r1.py",
+        "sha256": "83e3d4dbac5d2215d591e09c8dd01aa441c1b6b0151ff18ee8a494ed9826c524"
+      },
+      "selected": {
+        "bytes": 88535,
+        "path": "/private/tmp/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r8.py",
+        "sha256": "1188ea21138260a11c1b016b5080f509ece225338d98af1689e053306305ce1c"
+      }
+    },
+    {
+      "complete_diff": {
+        "bytes": 1230,
+        "path": "/private/tmp/lanl17-exact-portal-r4-wrapper-r6-complete-r5-derivation-20261008-a1.diff",
+        "sha256": "1ca1c5ebf4d16f59e13041d7f2551c175e5f6fe5bb27dd86d93dea61add418fc"
+      },
+      "full_byte_reverse_equal": true,
+      "literal_changes": [
+        {
+          "count": 1,
+          "new": "97219cdb326edf76e6d341aab4a2a8d58a4750e3da8d2e24a5f9e1097f4a69be",
+          "new_bytes": 64,
+          "new_sha256": "bfab3a5cf984f5ff31eb0db085542ee949fb59733512d1a826b3c7dae81840e4",
+          "old": "6118592610fbff77a7da3ea8196c772331066d3188ded29627218486c106b326",
+          "old_bytes": 64,
+          "old_sha256": "5712b7a3f7d296d6a7ab7402f8c127a147541038de31c43f48d7d53d30923090"
+        },
+        {
+          "count": 2,
+          "new": "117232",
+          "new_bytes": 6,
+          "new_sha256": "ca41d15071171383b961d9a068d5bef7371c4cb2913c4d9d9d371039f75f1bac",
+          "old": "116443",
+          "old_bytes": 6,
+          "old_sha256": "0507f52552e4c7447889ef0dd033b235dcd4ade0692a176ba7850b2033de541e"
+        }
+      ],
+      "original": {
+        "bytes": 24002,
+        "path": "/private/tmp/lanl17_detach_exact_R4_storage_administration_20261008_a1_r5.py",
+        "sha256": "63558833d2337681ba80d36c8048ce3c2e33c006740c88be4ea97cf583161091"
+      },
+      "selected": {
+        "bytes": 24002,
+        "path": "/private/tmp/lanl17_detach_exact_R4_storage_administration_20261008_a1_r6.py",
+        "sha256": "2b9b2200b002693fa79930822dee530ab9ecda17d3bd04be9f2a726e355ff5df"
+      }
+    },
+    {
+      "complete_diff": {
+        "bytes": 1445,
+        "path": "/private/tmp/lanl17-exact-portal-passive-wrapper-r8-complete-r7-derivation-20261008-a1.diff",
+        "sha256": "a66f829940e6776811983033da31e37180f99b42bda4abdeff9a1969d284fa9c"
+      },
+      "full_byte_reverse_equal": true,
+      "literal_changes": [
+        {
+          "count": 1,
+          "new": "1188ea21138260a11c1b016b5080f509ece225338d98af1689e053306305ce1c",
+          "new_bytes": 64,
+          "new_sha256": "96ecbbe0e6b33e0dc93cc2c645b6c2bbbe373df7ad424ebfc9d765fa7f3a432e",
+          "old": "83e3d4dbac5d2215d591e09c8dd01aa441c1b6b0151ff18ee8a494ed9826c524",
+          "old_bytes": 64,
+          "old_sha256": "a1c1cc7876f5a10277258daa2241bfe2b574acf67eb7e410378d9ce9c439f4f8"
+        },
+        {
+          "count": 2,
+          "new": "88535",
+          "new_bytes": 5,
+          "new_sha256": "41a5b79505d1aa0ecc57bd85c01b8510481afe7ef30777e9bcfb1453f473c79a",
+          "old": "87833",
+          "old_bytes": 5,
+          "old_sha256": "34280e3007c7553a500dcd78d6406e61a73cdd1892417454814362a2465521cd"
+        }
+      ],
+      "original": {
+        "bytes": 16091,
+        "path": "/private/tmp/lanl17_detach_passive_observer_administration_20261008_a1_r7.py",
+        "sha256": "ee885d56e99c591b2f1298153a97f43ab78687bdc7fecbc2e830349abae26669"
+      },
+      "selected": {
+        "bytes": 16091,
+        "path": "/private/tmp/lanl17_detach_passive_observer_administration_20261008_a1_r8.py",
+        "sha256": "0dd699118fd456afe3b0b2b6159fc807a3d4bd05940f0f8b304f3e2657179b82"
+      }
+    },
+    {
+      "complete_diff": {
+        "bytes": 2231,
+        "path": "/private/tmp/lanl17-exact-portal-passive-collector-a5r2-complete-a5r1-derivation-20261008.diff",
+        "sha256": "fc474c50789b873adfa0ef90df67e1977a5d4a6fa6265dabdfd50ccc608b6868"
+      },
+      "full_byte_reverse_equal": true,
+      "literal_changes": [
+        {
+          "count": 1,
+          "new": "1188ea21138260a11c1b016b5080f509ece225338d98af1689e053306305ce1c",
+          "new_bytes": 64,
+          "new_sha256": "96ecbbe0e6b33e0dc93cc2c645b6c2bbbe373df7ad424ebfc9d765fa7f3a432e",
+          "old": "83e3d4dbac5d2215d591e09c8dd01aa441c1b6b0151ff18ee8a494ed9826c524",
+          "old_bytes": 64,
+          "old_sha256": "a1c1cc7876f5a10277258daa2241bfe2b574acf67eb7e410378d9ce9c439f4f8"
+        },
+        {
+          "count": 1,
+          "new": "0dd699118fd456afe3b0b2b6159fc807a3d4bd05940f0f8b304f3e2657179b82",
+          "new_bytes": 64,
+          "new_sha256": "460f0aa6eb89ca42aeb06fbec20b13f0423b64ad47da30f630d9f6ef3c5b6feb",
+          "old": "ee885d56e99c591b2f1298153a97f43ab78687bdc7fecbc2e830349abae26669",
+          "old_bytes": 64,
+          "old_sha256": "c0ba51f3b12cc2c3422f13f7b2f4e3484c979889ff89f3f8b51907c2808d2afc"
+        },
+        {
+          "count": 1,
+          "new": "88535",
+          "new_bytes": 5,
+          "new_sha256": "41a5b79505d1aa0ecc57bd85c01b8510481afe7ef30777e9bcfb1453f473c79a",
+          "old": "87833",
+          "old_bytes": 5,
+          "old_sha256": "34280e3007c7553a500dcd78d6406e61a73cdd1892417454814362a2465521cd"
+        }
+      ],
+      "original": {
+        "bytes": 4820,
+        "path": "/private/tmp/lanl_read_detached_passive_observer_administration_originals_20261008_a5_r1.py",
+        "sha256": "d602cb25fd749eab4c62ed6d4acbd90346f3b653f2327a8e5640a81b6ca3e2c7"
+      },
+      "selected": {
+        "bytes": 4820,
+        "path": "/private/tmp/lanl_read_detached_passive_observer_administration_originals_20261008_a5_r2.py",
+        "sha256": "dee4d37d7abd2071d9ab9a536d9aa24bad075ebc96beedb44ffcf984347ea91d"
+      }
+    },
+    {
+      "complete_diff": {
+        "bytes": 2340,
+        "path": "/private/tmp/lanl17-exact-portal-passive-decoder-a5r2-complete-a5r1-derivation-20261008.diff",
+        "sha256": "4ccfd258cd24569f1c82002435759c71d1ebb5c47979640d8e4f144ef525080e"
+      },
+      "full_byte_reverse_equal": true,
+      "literal_changes": [
+        {
+          "count": 1,
+          "new": "1188ea21138260a11c1b016b5080f509ece225338d98af1689e053306305ce1c",
+          "new_bytes": 64,
+          "new_sha256": "96ecbbe0e6b33e0dc93cc2c645b6c2bbbe373df7ad424ebfc9d765fa7f3a432e",
+          "old": "83e3d4dbac5d2215d591e09c8dd01aa441c1b6b0151ff18ee8a494ed9826c524",
+          "old_bytes": 64,
+          "old_sha256": "a1c1cc7876f5a10277258daa2241bfe2b574acf67eb7e410378d9ce9c439f4f8"
+        },
+        {
+          "count": 1,
+          "new": "0dd699118fd456afe3b0b2b6159fc807a3d4bd05940f0f8b304f3e2657179b82",
+          "new_bytes": 64,
+          "new_sha256": "460f0aa6eb89ca42aeb06fbec20b13f0423b64ad47da30f630d9f6ef3c5b6feb",
+          "old": "ee885d56e99c591b2f1298153a97f43ab78687bdc7fecbc2e830349abae26669",
+          "old_bytes": 64,
+          "old_sha256": "c0ba51f3b12cc2c3422f13f7b2f4e3484c979889ff89f3f8b51907c2808d2afc"
+        },
+        {
+          "count": 1,
+          "new": "88535",
+          "new_bytes": 5,
+          "new_sha256": "41a5b79505d1aa0ecc57bd85c01b8510481afe7ef30777e9bcfb1453f473c79a",
+          "old": "87833",
+          "old_bytes": 5,
+          "old_sha256": "34280e3007c7553a500dcd78d6406e61a73cdd1892417454814362a2465521cd"
+        }
+      ],
+      "original": {
+        "bytes": 6361,
+        "path": "/private/tmp/lanl_decode_detached_passive_observer_original_custody_20261008_a5_r1.py",
+        "sha256": "3dccd5384a2cb2b73cb10f5c1d0213eb282ddf4703da4808c8052ea9392c26e2"
+      },
+      "selected": {
+        "bytes": 6361,
+        "path": "/private/tmp/lanl_decode_detached_passive_observer_original_custody_20261008_a5_r2.py",
+        "sha256": "fc9f60fafb8bdb4a0031c789d32a9530a1c24c99cd4dae5337c358d910e09249"
+      }
+    },
+    {
+      "complete_diff": {
+        "bytes": 2029,
+        "path": "/private/tmp/lanl17-exact-portal-r4-collector-r4-complete-r3-derivation-20261008.diff",
+        "sha256": "bd0134adb1a1fc3c5cc2f6205759de98c92238bc00def2e8f4ca7829d5fba7e5"
+      },
+      "full_byte_reverse_equal": true,
+      "literal_changes": [
+        {
+          "count": 1,
+          "new": "97219cdb326edf76e6d341aab4a2a8d58a4750e3da8d2e24a5f9e1097f4a69be",
+          "new_bytes": 64,
+          "new_sha256": "bfab3a5cf984f5ff31eb0db085542ee949fb59733512d1a826b3c7dae81840e4",
+          "old": "6118592610fbff77a7da3ea8196c772331066d3188ded29627218486c106b326",
+          "old_bytes": 64,
+          "old_sha256": "5712b7a3f7d296d6a7ab7402f8c127a147541038de31c43f48d7d53d30923090"
+        },
+        {
+          "count": 1,
+          "new": "2b9b2200b002693fa79930822dee530ab9ecda17d3bd04be9f2a726e355ff5df",
+          "new_bytes": 64,
+          "new_sha256": "dde3c4f59ebd60735a74791fb47fa21cad5574e7aa8985f549c57130620dbd05",
+          "old": "63558833d2337681ba80d36c8048ce3c2e33c006740c88be4ea97cf583161091",
+          "old_bytes": 64,
+          "old_sha256": "c95abab10cbd64f1474b595bb9e64481022052748419bdd424d27c9a4627cc5a"
+        },
+        {
+          "count": 1,
+          "new": "117232",
+          "new_bytes": 6,
+          "new_sha256": "ca41d15071171383b961d9a068d5bef7371c4cb2913c4d9d9d371039f75f1bac",
+          "old": "116443",
+          "old_bytes": 6,
+          "old_sha256": "0507f52552e4c7447889ef0dd033b235dcd4ade0692a176ba7850b2033de541e"
+        }
+      ],
+      "original": {
+        "bytes": 11462,
+        "path": "/private/tmp/lanl_read_detached_R4_administration_originals_20261008_a1_r3.py",
+        "sha256": "46aafdb60ae659e28b12c9a123682825e4f0e1efe4fe40f6df86b0758cf3e238"
+      },
+      "selected": {
+        "bytes": 11462,
+        "path": "/private/tmp/lanl_read_detached_R4_administration_originals_20261008_a1_r4.py",
+        "sha256": "97bb8f6464b1248a5a47cb676812452dc0c3ee717a24d98cbc8b85fc6d4c137e"
+      }
+    },
+    {
+      "complete_diff": {
+        "bytes": 1886,
+        "path": "/private/tmp/lanl17-exact-portal-r4-decoder-r4-complete-r3-derivation-20261008.diff",
+        "sha256": "d7abd0abe35439f8783ab63a717873d3dffbf39f9172ff14dc60e7670d726ec3"
+      },
+      "full_byte_reverse_equal": true,
+      "literal_changes": [
+        {
+          "count": 1,
+          "new": "97219cdb326edf76e6d341aab4a2a8d58a4750e3da8d2e24a5f9e1097f4a69be",
+          "new_bytes": 64,
+          "new_sha256": "bfab3a5cf984f5ff31eb0db085542ee949fb59733512d1a826b3c7dae81840e4",
+          "old": "6118592610fbff77a7da3ea8196c772331066d3188ded29627218486c106b326",
+          "old_bytes": 64,
+          "old_sha256": "5712b7a3f7d296d6a7ab7402f8c127a147541038de31c43f48d7d53d30923090"
+        },
+        {
+          "count": 1,
+          "new": "2b9b2200b002693fa79930822dee530ab9ecda17d3bd04be9f2a726e355ff5df",
+          "new_bytes": 64,
+          "new_sha256": "dde3c4f59ebd60735a74791fb47fa21cad5574e7aa8985f549c57130620dbd05",
+          "old": "63558833d2337681ba80d36c8048ce3c2e33c006740c88be4ea97cf583161091",
+          "old_bytes": 64,
+          "old_sha256": "c95abab10cbd64f1474b595bb9e64481022052748419bdd424d27c9a4627cc5a"
+        },
+        {
+          "count": 1,
+          "new": "117232",
+          "new_bytes": 6,
+          "new_sha256": "ca41d15071171383b961d9a068d5bef7371c4cb2913c4d9d9d371039f75f1bac",
+          "old": "116443",
+          "old_bytes": 6,
+          "old_sha256": "0507f52552e4c7447889ef0dd033b235dcd4ade0692a176ba7850b2033de541e"
+        }
+      ],
+      "original": {
+        "bytes": 13442,
+        "path": "/private/tmp/lanl_decode_detached_R4_original_custody_20261008_a1_r3.py",
+        "sha256": "5e74f841f758a8973294ad053f3fd22ce14e81d534bc97ec07aa6e8c6084b557"
+      },
+      "selected": {
+        "bytes": 13442,
+        "path": "/private/tmp/lanl_decode_detached_R4_original_custody_20261008_a1_r4.py",
+        "sha256": "ed051de51aa4c2d1a473bd77561c8149a25b6b6314174e24e396a571c9e26008"
+      }
+    },
+    {
+      "complete_diff": {
+        "bytes": 2557,
+        "path": "/private/tmp/lanl17-exact-portal-test-r1-complete-original-derivation-20261008-a1.diff",
+        "sha256": "5a8e0bf05edb49c8e683d0b9d8fc7147835419c870c12badc96c7dc55ece67dd"
+      },
+      "full_byte_reverse_equal": true,
+      "literal_changes": [
+        {
+          "count": 1,
+          "new": "lanl_consumed_detached_source_guard_r7_20261008_a1.py",
+          "new_bytes": 53,
+          "new_sha256": "4781972da15029a4ea57da71239769d531be36042fd0e16189d66328235fa953",
+          "old": "lanl_consumed_detached_source_guard_r6_20261008_a1.py",
+          "old_bytes": 53,
+          "old_sha256": "91cc073c6e55467d1e733cfd7b8fa47524af7f7d9a52641f72385651b0e7f500"
+        },
+        {
+          "count": 1,
+          "new": "97219cdb326edf76e6d341aab4a2a8d58a4750e3da8d2e24a5f9e1097f4a69be",
+          "new_bytes": 64,
+          "new_sha256": "bfab3a5cf984f5ff31eb0db085542ee949fb59733512d1a826b3c7dae81840e4",
+          "old": "6118592610fbff77a7da3ea8196c772331066d3188ded29627218486c106b326",
+          "old_bytes": 64,
+          "old_sha256": "5712b7a3f7d296d6a7ab7402f8c127a147541038de31c43f48d7d53d30923090"
+        },
+        {
+          "count": 1,
+          "new": "c195eccf8f728f7752dd89e0588af4fe6f0c05f50c7aa6cb47e5bd95f9ecb46b",
+          "new_bytes": 64,
+          "new_sha256": "38759801539531449cad5c25d01a73385c3e5df8dcd199f97ba0e3506c2f60f5",
+          "old": "36fc3b3fdede68b15fca931c199b649303cda4db559f1226ea13474ab5c0e44c",
+          "old_bytes": 64,
+          "old_sha256": "10ff5c868a829781080d41919898a4f86711d87efd1310fb0f95808f27839715"
+        },
+        {
+          "count": 2,
+          "new": "117232",
+          "new_bytes": 6,
+          "new_sha256": "ca41d15071171383b961d9a068d5bef7371c4cb2913c4d9d9d371039f75f1bac",
+          "old": "116443",
+          "old_bytes": 6,
+          "old_sha256": "0507f52552e4c7447889ef0dd033b235dcd4ade0692a176ba7850b2033de541e"
+        },
+        {
+          "count": 1,
+          "new": null,
+          "new_bytes": 858,
+          "new_sha256": "3aff9e472fc0bf6a530d07e4c7926ba2324f9cff80838a723bb2e5328861ad87",
+          "old": "class Contracts(unittest.TestCase):",
+          "old_bytes": 35,
+          "old_sha256": "1757ac75517588cb04cc7f3cdb2d7adf836133490b711f622e6d51c67a381114"
+        }
+      ],
+      "original": {
+        "bytes": 15288,
+        "path": "/private/tmp/lanl17_exact_portal_role_isolated_test_source_20261008_a1.py",
+        "sha256": "159cf3e14d06d6f8e3bb391cb3a6dfba3d998ea7eb4b07e19289ddebcfbd80ed"
+      },
+      "selected": {
+        "bytes": 16111,
+        "path": "/private/tmp/lanl17_exact_portal_role_isolated_test_source_20261008_a1_r1.py",
+        "sha256": "5c6171dff11e844288ff4865e976fd131eedf7677cd669a6330a545788ac5bd2"
+      }
+    }
+  ]
+}

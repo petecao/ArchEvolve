@@ -1,0 +1,37 @@
+{
+  "actual_run_by_review": false,
+  "conditions": [
+    "Fresh target+legacy lane leases/process/load/disk preflight and current wrapper equality.",
+    "Use exact reviewed V7 launcher and complete production diff identity; reuse existing clean032e checkout.",
+    "240s whole/360s outer,180s profile/150s leaf,8GiB one worker,512MiB raw/128MiB file and4MiB root headroom.",
+    "Retain complete failure or original compiler output; no body/model changes or proof/source/caller adoption."
+  ],
+  "date": "2026-10-16 ET",
+  "independent_spec": {
+    "bytes": 5311,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-move-compiler-observation-independent-spec-review-v1-20261016.json",
+    "sha256": "e5f1d765ddc8f9f8879cc578990a437eb1d5887639e2547487608abffb78c985"
+  },
+  "packet": {
+    "bytes": 3703,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/compiler-observation-v1/inert-032e1851-compiler-v1/packet.json",
+    "sha256": "f908b31432e537a76a2846c718ae4d4c177e7e53d3ffec1a5a06f9fa5d8b4325"
+  },
+  "proof_source_Typed_caller_or_ticket_acceptance": false,
+  "root_controls": {
+    "bytes": 764,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-move-compiler-v1-root-controls-20261016.txt",
+    "sha256": "a631d994434c2cca2c46a6f30955fd764817cf3894516f1c0441486944b7bfae"
+  },
+  "root_review": {
+    "embedded_entry_and_expected_exact_verified": true,
+    "no_child_controls_passed": 6,
+    "physical_pins_checked": 14,
+    "raw_root_headroom_and_settled_deadline_checks_retained": true,
+    "read_complete_entry_operational_functions_and_worker": true,
+    "source_runtime_guards_and_consumer_identity_inherited": true
+  },
+  "scope": "One unchanged public C lowering plus one original function AST parse, exact externally staged portable fixture; full C/AST/anchors remain remote. No verifier, native user execution or proof record.",
+  "source_commit": "032e1851eec7b195c7a3737997d5f5ea1d1343a5",
+  "verdict": "PASS_STANDARDS_ADMIT_ONCE_COMPILER_OBSERVATION_AFTER_FRESH_LANE_PREFLIGHT"
+}

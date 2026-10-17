@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-16 ET",
+  "entry_template_byte_identical": true,
+  "materializer_diff": [
+    "--- standalone-v2/materialize.py",
+    "+++ standalone-v3/materialize.py",
+    "@@ -42,7 +42,7 @@",
+    "     explicit = ['tests/testkit/standard_library.py', 'tests/conftest.py',",
+    "         'tests/fixtures/proof/lowering/vector_owned_transfer.cc',",
+    "         'tests/fixtures/proof/methods/contract-fixture-1.yaml', 'library/methods/probata-draft-1.yaml']",
+    "-    names = git('ls-tree', '-r', '-z', '--name-only', commit, '--',",
+    "+    names = git('ls-tree', '--full-tree', '-r', '-z', '--name-only', commit, '--',",
+    "                 *roots, *['swdb-project/'+name for name in explicit]).decode().split('\\0')",
+    "     rows = []",
+    "     for name in sorted(n for n in names if n):"
+  ],
+  "materializer_full_inverse_exact": true,
+  "only_change": "git('ls-tree', '--full-tree', ...) replaces git('ls-tree', ...)",
+  "predecessor": {
+    "bytes": 10603,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/standalone-v2/preparation-v2.json",
+    "sha256": "246ed734c88ece44fb49ff202f621f712c3bbd5c5ce8d474f99d32eecbec9b80"
+  },
+  "public_15_controls_byte_identical": true,
+  "readme_byte_identical": true
+}

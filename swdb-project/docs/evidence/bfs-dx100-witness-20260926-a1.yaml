@@ -1,0 +1,155 @@
+id: bfs-dx100-witness-20260926-a1
+created: '2026-09-26'
+updated: '2026-09-26'
+timezone: America/New_York
+host: mbit10
+role: single_author_v2_completion_observation
+state: failed
+correctness: unverified
+gain_claim: false
+actual_attempts: 1
+automatic_retry_allowed: false
+original_pilot_deadline: '2026-09-26T05:56:38-04:00'
+separate_continuation_deadline: '2026-09-26T10:00:00-04:00'
+repository_commit: 0236631b717d529852664d147d3c4200448c449c
+checkout: /data1/yanruj/EvolveSWDB_dx100_witness_20260926_a1
+evaluation: bfs-dx100-witness-20260926-a1
+evaluation_record_sha256: 9a941cdff315e283b13563bf81ef2f45ba0712bbcf6d31b92f6232488efa3b42
+lane:
+  aligned_cell_age_s: ''
+  aligned_to: no_gapbs_batch_running
+  command:
+  - bash
+  - -c
+  - 'set -e
+
+    cd /data1/yanruj/EvolveSWDB_dx100_witness_20260926_a1
+
+    python3 scripts/dx100_capacity.py --node 0 --output /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/witness-a1-dispatch1.capacity-inside.json
+
+    exec env PYTHONDONTWRITEBYTECODE=1 python3 scripts/dx100_witness_probe.py --runs-dir /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925
+    --lane 0'
+  cpus_allowed_list: 0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62
+  ended_utc: '2026-09-26T13:03:22Z'
+  exit_code: 1
+  host: mbit10
+  job: swdb-dx100-witness-a1
+  lease_generation: 315
+  lease_name: mbit10-evaluation-node0
+  load1_at_start: 0.02
+  load1_max: 32
+  node: 0
+  numa_memory_policy: bind:0
+  numactl: --cpunodebind=0 --membind=0
+  preregistration_sha256: null
+  started_utc: '2026-09-26T13:00:21Z'
+bounds:
+  outer_hard_seconds: 1200
+  term_after_seconds: 1170
+  cleanup_seconds: 30
+  adapter_seconds: 1100
+  simulation_seconds: 750
+  rss_gib: 48
+  raw_storage_gib: 2
+  post_roi_ticks: 10000000000
+outcome:
+  outer_exit: 1
+  simulation_exit: 1
+  simulation_host_wall_seconds: 139.95425732340664
+  sampled_peak_process_group_rss_kib: 33720364
+  resource_limit_hit: false
+  timing_samples: 0
+  reason: simulation exited with status 1; see /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-witness-20260926-a1/002-simulation.log
+observations:
+  roi_seal_observed: true
+  roi_exit_tick: 2187360749
+  ordered_author_output:
+  - 'Verification: PASS'
+  - Verification Time
+  - Average Time
+  exit_call_return_observed:
+    cpu: system.switch_cpus0
+    thread: 0
+    tick: 2222725680
+    call_line: 19
+    return_line: 20
+    status: 0
+    return_value: 0
+  normal_exit_observed: false
+  v2_completion_accepted: false
+  trace_lines: 30
+  unconditional_progress_rows: 4
+  first_rejected_line: 27
+  progress_tick: 3117142500
+  first_chunk_end_tick: 3187360749
+diagnosis:
+  error: 'WitnessError: invalid simulator trace format at line 27'
+  reproduced_against_retained_parser: true
+  cause: Pinned CPUProgressEvent uses unconditional DPRINTFN and shares the redirected simulator trace.
+    Four progress rows do not match the strict SyscallBase-only parser. The failed verdict is retained.
+  source_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  source_locations:
+  - src/cpu/base.cc:94-118
+  - src/base/trace.hh:238-242
+  - src/sim/eventq.cc:83-86
+  proposed_correction: Separately reviewed exact progress-record grammar with allowed-CPU, tick interval/order,
+    numeric bounds, and no syscall-witness authority; no source change or retry in this evidence.
+capacity:
+  before:
+    node: 0
+    estimated_available_kib: 60085452
+    global_available_kib: 123458048
+    eligible: true
+  inside:
+    node: 0
+    estimated_available_kib: 60072732
+    global_available_kib: 123444848
+    eligible: true
+audit:
+  receipt:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-witness-20260926-a1.audit/audit.json
+    sha256: 4d228a78527d7476af6ede038095cd06109b97a6bea616816925548b7baab989
+    bytes: 6665
+  checked_artifacts: 24
+  fresh_public_chain_records: 5
+  fresh_public_get_exit: 0
+retained_evidence:
+- path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/witness-a1-dispatch1.capacity-before.json
+  sha256: 0da8ead6c8a89a243ae48e20a7ab23f2d402352ed8f3f6569dcdf0847edc0cf7
+  bytes: 47308
+- path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/witness-a1-dispatch1.capacity-inside.json
+  sha256: 5bc196fdf07fb0c5203f552768a5c3c2cf193b4b745eafe9b6515325e4d61447
+  bytes: 47323
+- path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/witness-a1-dispatch1.lane.json
+  sha256: c9f30da9bcb1552e6cd245537c1e588a4091ba0487fef5c9c30d9217deb645af
+  bytes: 1012
+- path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/witness-a1-dispatch1.launch.json
+  sha256: d3b5a7757653c0467ee26e37b0ffb3351fa9c43742373fcad935005578b450f1
+  bytes: 1328
+- path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/witness-a1-dispatch1.log
+  sha256: 099a7d72a16b85c25a83364ff6d7c2cfd0995578756e8824a3477355cf93b104
+  bytes: 5276
+- path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/witness-a1-dispatch1.exit
+  sha256: 4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865
+  bytes: 2
+- path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-witness-20260926-a1/002-simulation.log
+  sha256: 607b6f6965f460f402af74f6ca75ee9357771148f3f02dbdf64cc554076e7964
+  bytes: 17649
+- path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-witness-20260926-a1/simulation/post-roi-syscalls.log
+  sha256: f6ad616e622bdd0d538d7b377bfe9f14c15ebbe8030e635c40dbfa90f74603de
+  bytes: 2761
+- path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-witness-20260926-a1/simulation/roi-seal.json
+  sha256: 888c1bfe013116cb8ae37b1c9355f551ccbb7f5834a5f5c59a9f3b05923c23d1
+  bytes: 1803
+- path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-witness-20260926-a1/simulation/host-memory-phases.jsonl
+  sha256: a1cbd50e5f22748b754f5b831cf3e1348b741033aebff6ef95c3ff95033d504e
+  bytes: 9569
+- path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-witness-20260926-a1.driver/driver.json
+  sha256: e8a49383b801492413098eef1cd9f981ff1b4c9c76ac88039a05cdd4a70b7bf6
+  bytes: 2306
+limits:
+- This is the original tiny ad hoc smoke graph with exact serialized hash/source/checkpoint binding; no
+  registered-workload or canonical comparison claim.
+- Guest PASS and an observed exit syscall pair do not override the failed simulator/unfinished v2 receipt.
+- No candidate performance, calibration, accelerator coverage, or artifact-reference acceptance is claimed.
+- Historical DX5802a5a and native41303ed7 checkouts remain unchanged.

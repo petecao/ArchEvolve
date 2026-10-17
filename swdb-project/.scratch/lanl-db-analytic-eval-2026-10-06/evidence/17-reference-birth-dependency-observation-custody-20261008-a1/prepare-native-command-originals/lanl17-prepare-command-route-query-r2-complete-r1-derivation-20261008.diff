@@ -1,0 +1,16 @@
+--- /private/tmp/lanl17-read-exact-prepare-command-route-facts-20261008-a1-r1.py
++++ /private/tmp/lanl17-read-exact-prepare-command-route-facts-20261008-a1-r2.py
+@@ -62,11 +62,11 @@
+         route=shutil.which(name,path=PREPARE_PATH); need(route is not None,'necessary_command_unavailable_'+name)
+         alias=Path(route); p=alias.resolve(strict=True)
+         need(p.is_relative_to(Path('/usr')),'native_command_outside_system')
+-        pin=read(p,64*1024*1024); need(pin['stat']['mode']&0o111,'command_not_executable')
++        pin=read(p,(128 if name=='node' else 64)*1024*1024); need(pin['stat']['mode']&0o111,'command_not_executable')
+         commands[name]={'configured_PATH_route':route,'resolved':pin}
+     need(commands['git']['resolved']==git and commands['python3']['resolved']==native,'native_PATH_resolution_changed')
+     after=source_state(); need(before==after,'source_context_changed')
+-    for row in commands.values(): need(read(Path(row['resolved']['path']),64*1024*1024)==row['resolved'],'command_postflight_changed')
++    for name,row in commands.items(): need(read(Path(row['resolved']['path']),(128 if name=='node' else 64)*1024*1024)==row['resolved'],'command_postflight_changed')
+     out={'format':'swdb.lanl17-necessary-prepare-command-route-original.v1','sealed':False,'observed_utc':datetime.now(timezone.utc).isoformat(),'explicit_prepare_PATH':PREPARE_PATH,'source_context_before':before,'source_context_after':after,'necessary_command_byte_pins':commands,'native_python':native,'native_git':git,'version_or_selected_main_test_provider_compiler_or_scientific_command_executed':False,'auth_read_or_remote_file_mutation':False}
+     b=json.dumps(out,sort_keys=True,ensure_ascii=True).encode(); need(len(b)<=16384,'output_cap'); print(b.decode())
+ if __name__=='__main__':

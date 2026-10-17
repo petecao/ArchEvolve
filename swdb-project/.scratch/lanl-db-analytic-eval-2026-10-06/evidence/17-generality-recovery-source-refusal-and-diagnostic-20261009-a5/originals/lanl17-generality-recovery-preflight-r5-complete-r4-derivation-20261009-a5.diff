@@ -1,0 +1,20 @@
+--- /private/tmp/lanl17_generality_recovery_candidate_preflight_20261009_a5_r4.py
++++ /private/tmp/lanl17_generality_recovery_candidate_preflight_20261009_a5_r5.py
+@@ -268,7 +268,7 @@
+     def target_parts(raw,base):
+         value=os.fsdecode(raw)
+         if value.startswith('/'):
+-            components=tuple(x for x in value.split('/') if x)
++            components=tuple(value.lstrip('/').split('/'))
+             need(components[:len(prefix)-1]==prefix[1:],'symlink_absolute_target_outside_candidate')
+             return [],list(components[len(prefix)-1:])
+         return list(base),value.split('/')
+@@ -288,7 +288,7 @@
+             nextbase,nextparts=target_parts(base64.b64decode(entry['target_base64'],validate=True),base)
+             base=nextbase;pending=nextparts+pending
+         else:
+-            need(entry['kind']=='directory' or not any(x not in ('','.') for x in pending),'symlink_nondirectory_component')
++            need(entry['kind']=='directory' or not pending,'symlink_nondirectory_component')
+             base.append(name)
+     relative='/'.join(base) or '.';entry=entries.get(relative)
+     need(entry is not None and entry['kind'] in ('directory','regular'),'symlink_final_target_not_closed')

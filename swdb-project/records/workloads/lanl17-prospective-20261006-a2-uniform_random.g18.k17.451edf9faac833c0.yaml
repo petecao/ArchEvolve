@@ -1,0 +1,99 @@
+kind: workload
+schema_version: '0.4'
+id: lanl17-prospective-20261006-a2-uniform_random.g18.k17.451edf9faac833c0
+status: draft
+created: '2026-10-06'
+updated: '2026-10-06'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+requested_id: lanl17-prospective-20261006-a2-uniform_random.g18.k17
+version: 1
+supersedes: null
+invalidated_comparisons: []
+definition:
+  kernel: gapbs-bfs
+  family: uniform_random
+  generator:
+    name: DX100 GAPBS converter
+    revision: e4fc4afdf894f295442cef3604667a469fab8e62
+    command:
+    - /data1/yanruj/EvolveSWDB_builds/lanl17-prospective-inputs-20261006-a2/converter
+    - -u
+    - '18'
+    - -k
+    - '17'
+    - -b
+    - /data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-uniform_random.g18.k17/graph-dx100.sg
+    parameters:
+      scale: 18
+      edge_factor: 17
+      seed: 27491095
+      symmetrize: true
+      explicit_symmetrize_flag: false
+      compiler: /usr/bin/g++-13
+      compile_flags: [-std=c++11, -O3, -fopenmp]
+      compiler_version_sha256: b240ade48d7a4743cb2e7940990dd5a8dbc15120543c7eadd9541435edd2efd2
+      environment:
+        OMP_NUM_THREADS: '1'
+        OMP_DYNAMIC: 'FALSE'
+      binary_sha256: a6cd0fd88a8de97decd087e9f1e43117ace95230f710b0bd7745f7bd33b492e6
+      source_sha256: 9b15a2ad58d672d534a14c808320a5d666af62cbe017f14703d955bea2279cc1
+  normalization:
+    remove_self_loops: true
+    deduplicate: true
+    sort_neighbors: true
+    symmetrize_undirected: true
+  sources: [0]
+  representations:
+  - id: lanl17-prospective-20261006-a2-uniform_random.g18.k17.dx100
+    path: /data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-uniform_random.g18.k17/graph-dx100.sg
+    sha256: d13ac3c69856dffb0f8cf4c7e46c7a2047b7d56483a76a03226e175a3b4d1a43
+    format: gapbs_sg32le
+    application: dx100-gapbs
+    canonical_sha256: ba748ecd829b1f8fee9402c6ea9356d9cacbe8472e150ddda97de3a59a851a2a
+    bytes: 36697701
+    loader: swdb.gapbs-representation.v1
+    adjacency_verified: true
+    verification:
+      method: exact_mmap_csr_transpose_membership
+      parser_sha256: ade4fb06fbef7f1947b0c1687ccebb99797773c3ea578611e57a10be36cfc893
+      compiler: /usr/bin/x86_64-linux-gnu-g++-13
+      budgets:
+        compile_timeout_s: 60
+        timeout_s: 900
+  - id: lanl17-prospective-20261006-a2-uniform_random.g18.k17.upstream
+    path: /data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-uniform_random.g18.k17/graph-upstream.sg
+    sha256: 6961434d06a2905e4daaacc700ebecdc2a89f1b9b5eb11e6413465c9d655dd29
+    format: gapbs_sg64le
+    application: gapbs
+    canonical_sha256: ba748ecd829b1f8fee9402c6ea9356d9cacbe8472e150ddda97de3a59a851a2a
+    bytes: 37746289
+    loader: swdb.gapbs-representation.v1
+    adjacency_verified: true
+    verification:
+      method: exact_mmap_csr_transpose_membership
+      parser_sha256: ade4fb06fbef7f1947b0c1687ccebb99797773c3ea578611e57a10be36cfc893
+      compiler: /usr/bin/x86_64-linux-gnu-g++-13
+      budgets:
+        compile_timeout_s: 60
+        timeout_s: 900
+  canonical_sha256: ba748ecd829b1f8fee9402c6ea9356d9cacbe8472e150ddda97de3a59a851a2a
+  canonical_format: swdb.bfs.adjacency.v1
+  realized:
+    num_vertices: 262144
+    num_directed_edges: 8912278
+    directed: false
+    isolated_vertices: 0
+    minimum_out_degree: 12
+    maximum_out_degree: 61
+  metadata_basis: operator_declared
+  adjacency_basis: parsed_representation
+identity_sha256: 451edf9faac833c0e0ceba0f41bd3e94fb55b2281a4cb6e5b5317128036fe998

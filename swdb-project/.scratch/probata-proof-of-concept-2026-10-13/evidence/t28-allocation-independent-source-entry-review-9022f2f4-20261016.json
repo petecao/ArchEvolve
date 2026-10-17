@@ -1,0 +1,39 @@
+{
+  "actual_formal_or_parser_acceptance": false,
+  "actual_requirements": "Root exact tool/config/header/source physical closure and one8GiB worker wholeguard; parser-only and later healthy actual pair remain unexecuted.",
+  "blockers": [],
+  "composed_code": "6aabd01feaa563aa5078e3e818ef4efbacc59944",
+  "created": "2026-10-16 ET",
+  "distinct_physical_paths": 116,
+  "hardware_or_whole28_acceptance": false,
+  "independent_reference_checks": 125,
+  "md": {
+    "path": "/private/tmp/probata-t28-allocation-independent-source-entry-review-9022f2f4-20261016.md",
+    "sha256": "3a5a1dcdd4f2348d68ffc4b4f58852ea5a4e34ad06aaa41992bef910b87a209c"
+  },
+  "new_compiler_or_native_run": false,
+  "new_frama_why3_solver_probe": false,
+  "new_project_code_or_tests_executed": false,
+  "new_ssh_or_remote_run": false,
+  "old0_1_and_api_unchanged": true,
+  "physical_pin_errors": [],
+  "pin_audit": {
+    "path": "/private/tmp/probata-t28-allocation-independent-pin-audit-9022f2f4-20261016.json",
+    "sha256": "17c3b6a6a63eace2bfebff07955bc215e7be465c559798f75edce2f6b1fcbe6d"
+  },
+  "production_checkpoint": "c32689f5",
+  "production_paths": [
+    "swdb/c_lowering.py",
+    "swdb/cbmc_adapter.py",
+    "swdb/dx100_allocation_source.py",
+    "swdb/proof_semantics.py",
+    "swdb/proof_setup.py",
+    "swdb/wp_adapter.py"
+  ],
+  "retained_scripted_records": 2,
+  "scope_repair": "c6ce2800617c352004fd50621dec645378ac0383",
+  "source_commit": "9022f2f4312266a18253d55e87f3fb045491211e",
+  "source_git_files": 6,
+  "tcbs": "Compiler equality is a trusted observation; source/model contract-body agreement remains explicit owned TCB duty pending59; no external compiler theorem prerequisite added.",
+  "verdict": "PASS scoped source and inert runner/parser preparation"
+}

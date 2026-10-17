@@ -1,0 +1,71 @@
+schema_version: "0.1"
+workload_id: sparta-sort-peter-example-1
+benchmark: Sparta
+function: sort()
+
+provenance:
+  - id: peter-example
+    kind: human_report
+    description: >-
+      Peter's handwritten/generalized example, shared by Josh on 2026-09-21.
+      No code, measurement output, or exact source revision was supplied.
+    uri: null
+
+code: null
+environment: null
+
+patterns:
+  - id: indirect-rmw-1
+    expression: A.B[A.C[i]]
+    memory_operation: read_modify_write
+    update:
+      kind: arbitrary_function
+      pseudocode: null
+      side_effects: null
+    arrays:
+      - name: A.B
+        role: target
+        element_type: null
+        element_bytes: null
+        element_count: null
+        layout: unknown
+      - name: A.C
+        role: index
+        element_type: null
+        element_bytes: null
+        element_count: null
+        layout: unknown
+    semantics:
+      duplicate_target_indices: null
+      index_modified_during_loop: null
+      loop_carried_dependencies: null
+      shared_target_between_threads: null
+      atomic_updates_required: null
+      ordering: unknown
+      numerical_requirement: unknown
+    evidence_refs: [peter-example]
+
+counts:
+  iterations:
+    value: 19471976073
+    scope: unknown
+    evidence_refs: [peter-example]
+  repetitions:
+    value: 50
+    meaning: unknown
+    evidence_refs: [peter-example]
+
+bottleneck:
+  classification: memory_bound
+  basis: reported
+  memory_limit: unknown
+  evidence_refs: [peter-example]
+
+# No actual profiler output or runtime measurements were supplied.
+metrics: []
+
+notes:
+  - General code patterns are the current focus, per Peter's discussion with Scott.
+  - The counts must not be multiplied or interpreted as array extents without clarification.
+  - Array roles above follow the supplied expression; their types and physical layout are unknown.
+  - Unknown semantic properties must not be treated as permission to reorder or parallelize updates.

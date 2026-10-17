@@ -1,0 +1,208 @@
+{
+  "actual_reader_module_names_distinct": true,
+  "date": "2026-10-16 ET",
+  "files": {
+    "linux_observation_envelope_v5.py": {
+      "basis": {
+        "bytes": 24760,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v4/linux_observation_envelope_v4.py",
+        "sha256": "4cc547facb4bf5609c63991392ee5f6bcfbadf1f9b0c7749a54c44b4630c09fa"
+      },
+      "replacements": [
+        {
+          "count": 1,
+          "new": "t28-unit-observation-2baf722f-v5",
+          "old": "t28-unit-observation-2baf722f-v4"
+        },
+        {
+          "count": 2,
+          "new": "control/linux_observation_envelope_v5.py",
+          "old": "control/linux_observation_envelope_v4.py"
+        },
+        {
+          "count": 2,
+          "new": "control/envelope-policy-v5.json",
+          "old": "control/envelope-policy-v4.json"
+        },
+        {
+          "count": 1,
+          "new": "observer/control/observe_entry_v3.py",
+          "old": "observer/control/observe_entry_v2.py"
+        },
+        {
+          "count": 1,
+          "new": "OBSERVER_SHA = '7ecdbffea04c87a2c198a17cf7b5fbd872bc4c663cc4d8da42a3c5e7bc1a088e'",
+          "old": "OBSERVER_SHA = '0d12e2ac33e5417abaac8c071a0d2d36492c6dc52651f23d0229dc94527e4fab'"
+        },
+        {
+          "count": 1,
+          "new": "OBSERVER_CONTROLS = ('abi_role_transport_v1.py', 'closed_python_surface.py', 'compiler_unit_adapter_v3.py', 'compiler_unit_adapter_v4.py', 'dx100_whole_checked_v2.py', 'fixed-modules-v3.json', 'lossless_gzip_v2.py', 'normalized_capture_ingress_v2.py', 'normalized_compiler_adapter_v1.py', 'normalized_unit_observation_v1.py', 'observation_source_bridge_v1.py', 'observe_entry_v3.py', 'receiver_state_draws_v2.py', 'role_normalized_gzip_v2.py', 'strict_minify_v2.py', 'whole_interface_v4.py')",
+          "old": "OBSERVER_CONTROLS = ('abi_role_transport_v1.py', 'closed_python_surface.py', 'compiler_unit_adapter_v3.py', 'dx100_whole_checked_v2.py', 'fixed-modules-v2.json', 'lossless_gzip_v2.py', 'normalized_capture_ingress_v2.py', 'normalized_compiler_adapter_v2.py', 'normalized_unit_observation_v1.py', 'observation_source_bridge_v1.py', 'observe_entry_v2.py', 'receiver_state_draws_v2.py', 'role_normalized_gzip_v2.py', 'strict_minify_v2.py', 'whole_interface_v4.py')"
+        }
+      ]
+    },
+    "observer/modules/normalized_capture_ingress_v2.py": {
+      "basis": {
+        "bytes": 26112,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v4/observer/modules/normalized_capture_ingress_v2.py",
+        "sha256": "c19691308f7ae20c8d08627e6f66b14b27898bbddb1f8d07f82dfa9c0d4957f8"
+      },
+      "replacements": [
+        {
+          "count": 1,
+          "new": "4bdeb0b2761fcc9b3721ee770d8eb8b33534ec7df22cc07cc42f1345b5bd285f",
+          "old": "8acf26651a1e682bb6857128f1a0d5e184b52f489cccd32ea60eb471c1a65ff3"
+        },
+        {
+          "count": 4,
+          "new": "source.semantic_compiler",
+          "old": "source.compiler"
+        },
+        {
+          "count": 1,
+          "new": "normalized_compiler.CONSUMER_SHA",
+          "old": "normalized_compiler.LEGACY_SHA"
+        },
+        {
+          "count": 1,
+          "new": "normalized_compiler.consumer",
+          "old": "normalized_compiler.legacy"
+        },
+        {
+          "count": 1,
+          "new": "same selected semantic compiler module",
+          "old": "same unchanged legacy compiler module"
+        }
+      ]
+    },
+    "observer/modules/normalized_unit_observation_v1.py": {
+      "basis": {
+        "bytes": 13336,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v4/observer/modules/normalized_unit_observation_v1.py",
+        "sha256": "53a0ca23280ee52d3a27942fe929584345950201e74e5cf9bf76417bd91d9125"
+      },
+      "replacements": [
+        {
+          "count": 4,
+          "new": "source.semantic_compiler",
+          "old": "source.compiler"
+        },
+        {
+          "count": 1,
+          "new": "normalized_compiler.CONSUMER_SHA",
+          "old": "normalized_compiler.LEGACY_SHA"
+        },
+        {
+          "count": 1,
+          "new": "normalized_compiler.consumer",
+          "old": "normalized_compiler.legacy"
+        },
+        {
+          "count": 1,
+          "new": "same selected semantic compiler module",
+          "old": "same unchanged legacy compiler module"
+        }
+      ]
+    },
+    "observer/modules/observation_source_bridge_v1.py": {
+      "basis": {
+        "bytes": 2774,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v4/observer/modules/observation_source_bridge_v1.py",
+        "sha256": "53edf556c0115bfff5307e9c6cec5969dcfe02e960c710ab26c0e676de17c72a"
+      },
+      "replacements": [
+        {
+          "count": 1,
+          "new": "from swdb._dx100_whole import compiler_unit_adapter_v3 as compiler\nfrom swdb._dx100_whole import compiler_unit_adapter_v4 as semantic_compiler",
+          "old": "from swdb._dx100_whole import compiler_unit_adapter_v3 as compiler"
+        }
+      ]
+    },
+    "observer/observe_entry_v3.py": {
+      "basis": {
+        "bytes": 11463,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v4/observer/observe_entry_v2.py",
+        "sha256": "0d12e2ac33e5417abaac8c071a0d2d36492c6dc52651f23d0229dc94527e4fab"
+      },
+      "replacements": [
+        {
+          "count": 1,
+          "new": "MANIFEST_SHA = '6c97194fed3a538916e14399f184d560322b80058e19418ac20c6fcad032bbb2'",
+          "old": "MANIFEST_SHA = 'c82d490d84b6ccb22b9824ee088c2e89339ab690c0cdddcc439acd43aad19a2f'"
+        },
+        {
+          "count": 1,
+          "new": "MODULE_NAMES = ('swdb._dx100_whole.whole_interface_v4', 'swdb._dx100_whole.compiler_unit_adapter_v3', 'swdb._dx100_whole.compiler_unit_adapter_v4', 'swdb._dx100_whole.receiver_state_draws_v2', 'swdb.dx100_whole_checked', 'swdb.dx100_checked_source', 'swdb._dx100_whole.lossless_gzip_v2', 'swdb._dx100_whole.role_normalized_gzip_v2', 'swdb._dx100_whole.closed_python_surface', 'swdb._dx100_whole.strict_minify_v2', 'swdb._dx100_whole.abi_role_transport_v1', 'swdb._dx100_whole.normalized_compiler_adapter_v1', 'swdb._dx100_whole.normalized_capture_ingress_v2', 'swdb._dx100_whole.normalized_unit_observation_v1')",
+          "old": "MODULE_NAMES = ('swdb._dx100_whole.whole_interface_v4', 'swdb._dx100_whole.compiler_unit_adapter_v3', 'swdb._dx100_whole.receiver_state_draws_v2', 'swdb.dx100_whole_checked', 'swdb.dx100_checked_source', 'swdb._dx100_whole.lossless_gzip_v2', 'swdb._dx100_whole.role_normalized_gzip_v2', 'swdb._dx100_whole.closed_python_surface', 'swdb._dx100_whole.strict_minify_v2', 'swdb._dx100_whole.abi_role_transport_v1', 'swdb._dx100_whole.normalized_compiler_adapter_v1', 'swdb._dx100_whole.normalized_capture_ingress_v2', 'swdb._dx100_whole.normalized_unit_observation_v1')"
+        },
+        {
+          "count": 2,
+          "new": "fixed-modules-v3.json",
+          "old": "fixed-modules-v2.json"
+        }
+      ]
+    },
+    "prepare_envelope_v5.py": {
+      "basis": {
+        "bytes": 13026,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-envelope-v4/prepare_envelope_v4.py",
+        "sha256": "3a9a922cce0a73b00a61ab799a853912c05beaae806663919ff999721ba9d145"
+      },
+      "replacements": [
+        {
+          "count": 1,
+          "new": "t28-unit-observation-2baf722f-v5",
+          "old": "t28-unit-observation-2baf722f-v4"
+        },
+        {
+          "count": 2,
+          "new": "linux_observation_envelope_v5.py",
+          "old": "linux_observation_envelope_v4.py"
+        },
+        {
+          "count": 2,
+          "new": "envelope-policy-v5.json",
+          "old": "envelope-policy-v4.json"
+        },
+        {
+          "count": 1,
+          "new": "envelope-policy-template-v5.json",
+          "old": "envelope-policy-template-v4.json"
+        },
+        {
+          "count": 1,
+          "new": "command-v5.json",
+          "old": "command-v4.json"
+        },
+        {
+          "count": 1,
+          "new": "command-template-v5.json",
+          "old": "command-template-v4.json"
+        },
+        {
+          "count": 2,
+          "new": "observation-policy-template-v3.json",
+          "old": "observation-policy-template-v2.json"
+        },
+        {
+          "count": 1,
+          "new": "'observe_entry_v3.py'",
+          "old": "'observe_entry_v2.py'"
+        }
+      ]
+    }
+  },
+  "first_adapter": {
+    "bytes": 4490,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-semantic-dependents-v1/proposed/swdb/_dx100_whole/normalized_compiler_adapter_v1.py",
+    "sha256": "4bdeb0b2761fcc9b3721ee770d8eb8b33534ec7df22cc07cc42f1345b5bd285f"
+  },
+  "generic_v3_reader_preserved": true,
+  "no_namespace_monkeypatch": true,
+  "root_launcher_and_runtime_science_profile_unchanged": true,
+  "semantic_reader": {
+    "bytes": 23873,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-semantic-dependents-v1/proposed/swdb/_dx100_whole/compiler_unit_adapter_v4.py",
+    "sha256": "b5bd7293259f69ffe4e5d6094cb6bd46c2d5527ef95cd28d0aaa95d88529e6c6"
+  }
+}

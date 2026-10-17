@@ -1,0 +1,41 @@
+{
+  "format": "swdb.timed-start-operator-readback.v1",
+  "observed_utc": "2026-10-03T15:19:46.419114+00:00",
+  "observed_et": "2026-10-03 11:19 ET",
+  "source_commit": "982d19b23eb0303ecacc938c5334e6479b861197",
+  "branch": "yanrujhou_main",
+  "driver_started_utc": "2026-10-03T15:18:31.624862+00:00",
+  "state": "running",
+  "current_public_stage": "timed.w0.baseline",
+  "public_started_utc": "2026-10-03T15:19:10.247939+00:00",
+  "public_request_id": "typed-library-bfs-gem5-20261003-a1.timed.w0.baseline.evaluation",
+  "public_timeout_seconds": 9060,
+  "driver_pid": 1583979,
+  "socket_wrapper_pid": 1583913,
+  "pids_observed_alive": true,
+  "lane": "node0",
+  "node0_lease": "held",
+  "node1_lease": "released",
+  "legacy_lease": "released",
+  "fresh_preflight": {
+    "state": "admitted",
+    "selected_node": 0,
+    "literal_free_memory_bytes": 35659182080,
+    "estimated_memory_capacity_bytes": 41537298432,
+    "inactive_file_credit_bytes": 10173083648,
+    "node_reserve_bytes": 4294967296,
+    "node_zone_reserve_bytes": 450916352,
+    "memory_budget_bytes": 38654705664,
+    "disk_free_bytes": 46237720576,
+    "planned_raw_bytes": 8589934592,
+    "disk_reserve_bytes": 21474836480
+  },
+  "outcome_scope": "Actual driver and first public request running; no completed timing/ratio is inferred.",
+  "evidence_origin": "Live root operator SSH output; mutable remote progress is unsealed, no raw copied or hash invented.",
+  "source_policy": "Freeze source and defer Git metadata publication until evaluation stops.",
+  "workload_label_correction": {
+    "updated_at_et": "2026-10-03 12:13 ET",
+    "actual_first_workload": "uniform18",
+    "reason": "w0 follows the actual frozen protocol workload order; earlier operator prose incorrectly labeled it Kronecker18. Historical running observations retain their original timestamp."
+  }
+}

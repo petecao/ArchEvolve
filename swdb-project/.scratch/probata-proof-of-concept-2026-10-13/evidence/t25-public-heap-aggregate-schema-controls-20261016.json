@@ -1,0 +1,170 @@
+{
+  "actual_status": "NOT RUN; corrected clean freeze and independent addendum/root admission pending.",
+  "blocked_source": "31798b274f896fb98d95547de0528697417fbe2e",
+  "created": "2026-10-16 ET",
+  "environment": {
+    "SWDB_CBMC": "none",
+    "SWDB_FRAMA_C": "none",
+    "child": "explicit stand-in command; actual test opt-in absent"
+  },
+  "finding": "B1: complete successful public proof could not persist because verdict_reading.heap_model_runs violates closed schema.",
+  "fix": "Keep top-level verdict_reading at existing check/verdict shape. Preserve individual fresh normal-reader outcomes in settings.heap_model_runs; remove unused duplicate accumulator.",
+  "green": "1 passed in7.02s; affected public suite9 passed/1 actual-only skipped in27.19s.",
+  "prior_review": {
+    "json": {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-heap-source-review-31798b27-20261016.json",
+      "sha256": "6e03ffd589371eff76200f4434d5ab8e157050be637460986faa3ba103025c9a"
+    },
+    "md": {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-heap-source-review-31798b27-20261016.md",
+      "sha256": "7dfe20345d7ea93200a8bfe146bcbc9d9610a5b4fadd7279a7b1dc2dbb53b487"
+    }
+  },
+  "red": "All11 synthetic destructor targets read proven, then public writer refused unknown verdict_reading.heap_model_runs; nothing written.",
+  "runs": {
+    "green": {
+      "command": {
+        "path": "/private/tmp/probata-t25-aggregate-schema-green-20261016/command.json",
+        "sha256": "f6a425aabd01f5073cd47f14bb44b31f3961986fb1d1f9a481a5f73c0e652460"
+      },
+      "log": {
+        "path": "/private/tmp/probata-t25-aggregate-schema-green-20261016/controls.log",
+        "sha256": "22df320f7d2f99c940c41a686acf2a8522ba855d91e6e9c22744e83a36bffea6"
+      },
+      "resource_values": {
+        "cpu_seconds": 7.167782,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 392036352,
+        "timed_out": false,
+        "wall_seconds": 7.3942145420005545
+      },
+      "resources": {
+        "path": "/private/tmp/probata-t25-aggregate-schema-green-20261016/resources.json",
+        "sha256": "6f9de14f64a719308894b90627b449c77d4962b81b2d8fb12ceb5880241ca1c2"
+      }
+    },
+    "public_final": {
+      "command": {
+        "path": "/private/tmp/probata-t25-aggregate-schema-public-final-20261016/command.json",
+        "sha256": "ac4be3217520ccc4be55b002d06059202990e3dca2bdbdc990be06fc8fade1d0"
+      },
+      "log": {
+        "path": "/private/tmp/probata-t25-aggregate-schema-public-final-20261016/controls.log",
+        "sha256": "e910dcf375e4d61dccf0c7ca9fa53d06823f5ff8d9461abea055221d9bf4e527"
+      },
+      "resource_values": {
+        "cpu_seconds": 23.203622,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 383221760,
+        "timed_out": false,
+        "wall_seconds": 27.570472833001986
+      },
+      "resources": {
+        "path": "/private/tmp/probata-t25-aggregate-schema-public-final-20261016/resources.json",
+        "sha256": "951689448bdfc0e9193bc9712e9c973172dd5f5f83c9bec8e4252c9c83fff57d"
+      }
+    },
+    "red": {
+      "command": {
+        "path": "/private/tmp/probata-t25-aggregate-schema-red-20261016/command.json",
+        "sha256": "d99a707dd66bba5a3b82727057549dd16d2bcbe1c61efd1fb9b98bc7707dd10a"
+      },
+      "log": {
+        "path": "/private/tmp/probata-t25-aggregate-schema-red-20261016/controls.log",
+        "sha256": "fc674f395c3288c4899293e2d80e402e259119507bf946cd5b54c23b945f2d76"
+      },
+      "resource_values": {
+        "cpu_seconds": 7.193585,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 383827968,
+        "timed_out": false,
+        "wall_seconds": 7.752618666971102
+      },
+      "resources": {
+        "path": "/private/tmp/probata-t25-aggregate-schema-red-20261016/resources.json",
+        "sha256": "90d792bc7b8a062cbcd6e4532961f57452f1252644df59e3bb243145b8ed2826"
+      }
+    }
+  },
+  "scope": "Ordinary public adapter orchestration and full record writer/schema only. Every formal response is an explicit external stand-in; zero actual WP/prover proof evidence. Native OCaml metadata/reader compilation runs under workerB.",
+  "source_boundary_note": "Test module descriptive docstring updated during final batch; executable test/adapter bytes were unchanged during that batch. Earlier40pass1skip receipt retained separately; no successful formal runs duplicated.",
+  "source_hashes": {
+    "swdb/heap_model_view.py": {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/swdb/heap_model_view.py",
+      "sha256": "53f680c24644ebec7a1d1071a9bd8d0b559ec310e4148e516e26c015e343b2d8"
+    },
+    "tests/test_heap_model_view.py": {
+      "path": "/private/tmp/probata-resume-t25/swdb-project/tests/test_heap_model_view.py",
+      "sha256": "133021dd66fa3cdf30ee404d7a7510c584f641ca0edb191bf6a570e02f451dbc"
+    }
+  },
+  "synthetic_success_records": [
+    {
+      "goal_count": 11,
+      "record": {
+        "path": "/private/tmp/probata-t25-aggregate-schema-public-final-20261016/pytest/test_complete_synthetic_heap_s0/records/proofs/proof.model.std_vector_int_dtor.20261016t042620z.71b9cc57.yaml",
+        "sha256": "b4cd6b8cdafea3ef76706f0e51d8084219f52f477e4570db7361bfc641cac4a2"
+      },
+      "retained_child_readings": 11,
+      "setup_count": 11,
+      "synthetic_markers": [
+        {
+          "path": "/private/tmp/probata-t25-aggregate-schema-public-final-20261016/pytest/test_complete_synthetic_heap_s0/runs/proof.model.std_vector_int_dtor.20261016t042620z.71b9cc57/wp/heap-job-control.dtor.premises_feasible/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-aggregate-schema-public-final-20261016/pytest/test_complete_synthetic_heap_s0/runs/proof.model.std_vector_int_dtor.20261016t042620z.71b9cc57/wp/heap-job-dtor.data.read/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-aggregate-schema-public-final-20261016/pytest/test_complete_synthetic_heap_s0/runs/proof.model.std_vector_int_dtor.20261016t042620z.71b9cc57/wp/heap-job-dtor.free.argument/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-aggregate-schema-public-final-20261016/pytest/test_complete_synthetic_heap_s0/runs/proof.model.std_vector_int_dtor.20261016t042620z.71b9cc57/wp/heap-job-dtor.null.no_op/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-aggregate-schema-public-final-20261016/pytest/test_complete_synthetic_heap_s0/runs/proof.model.std_vector_int_dtor.20261016t042620z.71b9cc57/wp/heap-job-dtor.alias.invalidated/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-aggregate-schema-public-final-20261016/pytest/test_complete_synthetic_heap_s0/runs/proof.model.std_vector_int_dtor.20261016t042620z.71b9cc57/wp/heap-job-dtor.post.old_invalid/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-aggregate-schema-public-final-20261016/pytest/test_complete_synthetic_heap_s0/runs/proof.model.std_vector_int_dtor.20261016t042620z.71b9cc57/wp/heap-job-dtor.frame.surviving/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-aggregate-schema-public-final-20261016/pytest/test_complete_synthetic_heap_s0/runs/proof.model.std_vector_int_dtor.20261016t042620z.71b9cc57/wp/heap-job-dtor.frame.other_live/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-aggregate-schema-public-final-20261016/pytest/test_complete_synthetic_heap_s0/runs/proof.model.std_vector_int_dtor.20261016t042620z.71b9cc57/wp/heap-job-dtor.receiver.overlap/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-aggregate-schema-public-final-20261016/pytest/test_complete_synthetic_heap_s0/runs/proof.model.std_vector_int_dtor.20261016t042620z.71b9cc57/wp/heap-job-control.reused_address.stale/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        },
+        {
+          "path": "/private/tmp/probata-t25-aggregate-schema-public-final-20261016/pytest/test_complete_synthetic_heap_s0/runs/proof.model.std_vector_int_dtor.20261016t042620z.71b9cc57/wp/heap-job-control.before_release.read/SYNTHETIC-ONLY.txt",
+          "sha256": "d629ad4fcc2487f067759aae84dbd8d48d749dedc9511c35d41b578142f61d64"
+        }
+      ],
+      "synthetic_only": true,
+      "target_count": 11,
+      "verdict_reading": {
+        "check": {
+          "sha256": "da9e1120e5dfc4ddf52c17e2e5f88a7f598627e8ce2fbe92f50d0e2242863d69",
+          "version": "1"
+        },
+        "verdict": "proven"
+      }
+    }
+  ]
+}

@@ -1,0 +1,228 @@
+{
+  "actual_cold_result_accepted": false,
+  "compiler_solver_or_native_execution": false,
+  "date": "2026-10-16 ET",
+  "default_or_generic_caller_or_full_ticket_admission": false,
+  "expected": {
+    "bytes": 778795,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/expected.json",
+    "sha256": "1fc969264f7dddc624ca5e27bfdeba7289045aa460125bcb335a5d6c9543da77"
+  },
+  "narrow_template_edits": [
+    {
+      "new_lines": [
+        "                elif stat.S_ISDIR(s.st_mode):\n",
+        "                    need(not (path.name=='scratch' and '/runs/' in '/'+str(path.relative_to(raw))+'/'),\n",
+        "                         'selected proof scratch directory survived successful settlement')\n",
+        "                    pending.append(path)\n"
+      ],
+      "new_range": [
+        110,
+        114
+      ],
+      "old_lines": [
+        "                elif stat.S_ISDIR(s.st_mode):pending.append(path)\n"
+      ],
+      "old_range": [
+        110,
+        111
+      ]
+    }
+  ],
+  "narrow_yaml_edits": [
+    {
+      "new_lines": [
+        "    need(text and not text.startswith(('!', '&', '*', '>', '|', '?', '%', '#', '@', '`', ',', ']', '}')), 'unsupported YAML scalar syntax')\n"
+      ],
+      "new_range": [
+        17,
+        18
+      ],
+      "old_lines": [
+        "    need(text and not text.startswith(('!', '&', '*', '>', '|', '?', '%', '#')), 'unsupported YAML scalar syntax')\n"
+      ],
+      "old_range": [
+        17,
+        18
+      ]
+    }
+  ],
+  "next": "Root may admit only this exact passive command after its independently confirmed generation619 settlement. Actual observer result and subsequent root scoped decision remain required.",
+  "observer": {
+    "bytes": 1088800,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/observer-v2.py",
+    "sha256": "55bfa4564acfcc387f28f8bb0dde57eeb4ea0ca6853e1b7071032111365d12d7"
+  },
+  "observer_main_executed": false,
+  "passive_command": {
+    "bytes": 1157,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/passive-command-v2.json",
+    "sha256": "c75394958b2d39da57124fce6edd039aca28dd59c5faba3c33839f5801976825"
+  },
+  "preparation": {
+    "bytes": 7495,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/preparation-v2.json",
+    "sha256": "e54c339314269dbe3702d84873162a4027f045b893b15216e0c0688f9bff06e7"
+  },
+  "remote_or_raw_inspection_by_reviewer": false,
+  "resource_boundary": "512MiB address-space/180second script alarm/8MiB metadata document/4MiB stdout; exact script streamed over SSH stdin; all tool/native/project imports/network/writable opens/mutations refused by audit hook before inspection.",
+  "retained_author_controls": {
+    "child_tool_native_network_attempts": [],
+    "errors": 0,
+    "failures": 0,
+    "reviewer_reran_tests": false,
+    "skips": 0,
+    "tests": 16
+  },
+  "review_findings_resolved": [
+    {
+      "finding": "Reserved-leading plain scalars lay outside the claimed strict YAML emitter subset",
+      "id": "COLD-YAML-01",
+      "resolution": "Only quoted representations admitted for reserved leading characters; direct control covers five reserved forms and corresponding quoted values"
+    },
+    {
+      "finding": "File-only snapshot check missed an empty scratch directory",
+      "id": "COLD-SCRATCH-01",
+      "resolution": "The physical directory census now refuses selected scratch itself, including empty; direct deterministic metadata control retained"
+    }
+  ],
+  "reviewer": "ticket25 parent independent static source review",
+  "runtime_and_integrity": "Read-only current physical package/source/helper/header/config/import/native/startup-role membership/hashes plus original producer before/after metadata; historical compiler/method/runtime/Why3 TCB remains distinct. No continuous immutability or dynamic loader selection claim.",
+  "science_and_controls": {
+    "consumer_roots": 13,
+    "current_source_rule_preflight": "checked independently with full inputs/contract/compiler/allocator and original-TU certificate binding",
+    "evidence_documents": 91,
+    "exact_public_cases": 5,
+    "native_original_and_projected_status": "not_proven preserved",
+    "no_new_WP_solver_or_current_model_record": true,
+    "original_frame_partitions": 13,
+    "original_ordinary": 24,
+    "original_smokes": 9,
+    "physical_YAML_semantics_independent": true,
+    "source_inputs": 597,
+    "supported_method": "only exact named reviewed fixture source route; four explicit unsupported controls",
+    "targets": 82,
+    "two_original_compound_timeouts": "unmodified/unproven"
+  },
+  "source_read": [
+    "complete observer template and physical stable read/no-follow/hash/Git-blob controls",
+    "complete independent YAML subset",
+    "full expected-context author and embedded-byte freezer",
+    "all16 pure public metadata controls and retained result log",
+    "V1/V2 complete source diff and retained refused/incomplete history"
+  ],
+  "source_typed_bridge_established": false,
+  "verdict": "PASS_FOR_EXACT_READ_ONLY_COLD_EXECUTION_ONLY",
+  "verified_distinct_pins": [
+    {
+      "bytes": 8928,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/record_yaml_subset.py",
+      "sha256": "467cef5049fc30f730f0176f7db336952f6ce006ec11a9b2872abec9ca53daf9"
+    },
+    {
+      "bytes": 6548,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/prepare_context.py",
+      "sha256": "4cbae28d3aa0ac802964b5559726e11f6c048cdcac45635b282e1349cf7a44e9"
+    },
+    {
+      "bytes": 2416,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/pure-controls-v2-final.log",
+      "sha256": "a4d0c2bf0479a8abfdd24e98a45fb1b6b79acd222fd1d326a2fc6c67f369f6ff"
+    },
+    {
+      "bytes": 12536,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/pure_controls.py",
+      "sha256": "8a06060211725d0f287f4d979079bf245514d681b6f06bf85ced01f58c6595a2"
+    },
+    {
+      "bytes": 778795,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/expected.json",
+      "sha256": "1fc969264f7dddc624ca5e27bfdeba7289045aa460125bcb335a5d6c9543da77"
+    },
+    {
+      "bytes": 940,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/freeze_observer.py",
+      "sha256": "7fad198cd35bb76a30c535cfbffe240c70c848394739ee08bec34f9062200634"
+    },
+    {
+      "bytes": 1088800,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/observer-v2.py",
+      "sha256": "55bfa4564acfcc387f28f8bb0dde57eeb4ea0ca6853e1b7071032111365d12d7"
+    },
+    {
+      "bytes": 2206,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/pure-controls-final.log",
+      "sha256": "d4af340cda283b7f1eb3186f2c65458e829b0a2201fb54e159fa4c0a2ba04ee7"
+    },
+    {
+      "bytes": 1871,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v3/preserved-draft-status.json",
+      "sha256": "912d90c952237320c33245dd262dae2f0be62e64210ac7736a6e2c335c8cf3be"
+    },
+    {
+      "bytes": 1088551,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/observer-v1.py",
+      "sha256": "626b66e400c184119f4f7bbf3bf63861e1f6a09099d0be2e6ecdecf506489fbb"
+    },
+    {
+      "bytes": 3016,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/pure-controls-initial.log",
+      "sha256": "aecb18a99695c3333ea5cf82d795484ba0cd4d0433ab8a12c55245fbcfec7e88"
+    },
+    {
+      "bytes": 11731,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/pure_controls-initial.py",
+      "sha256": "7afb85541d4e90963843b8c20ab6ea5e534a231de916c012ff3797265e685b75"
+    },
+    {
+      "bytes": 38434,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/observer_template.py",
+      "sha256": "e3960e2ee899737daecee4ceedb6f6015a1c42b7f00ed92fa05701a4775035d4"
+    },
+    {
+      "bytes": 18385,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/closed_python_surface.py",
+      "sha256": "748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af"
+    },
+    {
+      "bytes": 9610,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python_startup_roles_v2.py",
+      "sha256": "5e9d2e6dfa2aaa7999f4670a979d3cc32736b852a612f77d4e2f7c71bc229618"
+    },
+    {
+      "bytes": 2709,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/python_role_observer_v2.py",
+      "sha256": "9b100cbe2fdef3e7d429ccdf05d6489d44855a84328e2dd8532eb547beeaf43b"
+    },
+    {
+      "bytes": 116503,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t28-linux-runtime-observer-v2-actual-20261016.json",
+      "sha256": "092397608fe3a08c42d85e9c8e121ed139f0d94e345a12ae3aaa57ad6e93a5f0"
+    },
+    {
+      "bytes": 19781,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v4/reviewed_wp_gates.py",
+      "sha256": "76a0dc85050e70de0fbbc29099fa6cc50afa9e9edb085d991127c92f7f059151"
+    },
+    {
+      "bytes": 3637,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v4/reviewed_native_gates.py",
+      "sha256": "c13376db78d81e351486b3e0d44c295b6f679ee9863f21023639a9893b25d283"
+    },
+    {
+      "bytes": 9100,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v4/reviewed-function-lineage.json",
+      "sha256": "81534a7de64403203b758a008f7557941927eedafad35517141503539b028ec0"
+    },
+    {
+      "bytes": 29360,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v4/inert-1433b8f5-node0/entry.py",
+      "sha256": "77b4c2cedc85f3325bbd14d7b5a436e48b7d00940355c4fe93aa59bdac52ae01"
+    },
+    {
+      "bytes": 677005,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v4/inert-1433b8f5-node0/policy.json",
+      "sha256": "e84f56859b73e1237d9c8b40b9ea50917e23e98de74202a0ed858eb39bfd9cce"
+    }
+  ]
+}

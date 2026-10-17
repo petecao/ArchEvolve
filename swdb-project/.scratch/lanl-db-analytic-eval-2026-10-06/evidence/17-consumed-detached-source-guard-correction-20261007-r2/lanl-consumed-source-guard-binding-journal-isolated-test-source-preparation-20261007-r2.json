@@ -1,0 +1,51 @@
+{
+  "format": "swdb.consumed-detached-source-guard-r2-isolated-harness-source-preparation.v1",
+  "canonical_ensure_ascii": true,
+  "prepared_at": "2026-10-07T22:19:48.094681+00:00",
+  "state": "prepared_NOTRUN",
+  "pins": [
+    {
+      "path": "/private/tmp/lanl_consumed_source_guard_binding_journal_isolated_test_source_20261007_r2.py",
+      "bytes": 14456,
+      "sha256": "9376fd62312916d67fddd6f84b7398480c5efa9922e53ea907fa3aa996b768bf"
+    },
+    {
+      "path": "/private/tmp/lanl-consumed-source-guard-binding-journal-isolated-test-source-handoff-20261007-r2.md",
+      "bytes": 5100,
+      "sha256": "974cbf90c90244833e08320d361b6cf3980af776f093932318ad413756245797"
+    }
+  ],
+  "source_AST_projections_only": [
+    {
+      "label": "R1",
+      "source_path": "/private/tmp/lanl_consumed_detached_source_guard_r1_20261007.py",
+      "bytes": 64859,
+      "sha256": "66944bb04d05a690dc1c81ced7c203c0494cc028c6c9c1531e1fcb9cecd110e1",
+      "configuration_AST_statement_count": 2,
+      "configuration_AST_sha256": "60f3a2ffcc4c2f6a5beff47f2caeabe366b6d288db007af63abeb08f3545f9fb"
+    },
+    {
+      "label": "R2",
+      "source_path": "/private/tmp/lanl_consumed_detached_source_guard_r2_20261007.py",
+      "bytes": 65830,
+      "sha256": "3ff7bde67947adf524d0c4f556047fcf1377bc6ddb1e64c9ac58409c3e0acfeb",
+      "configuration_AST_statement_count": 8,
+      "configuration_AST_sha256": "1b1a6bc0169996c81367a17e9f058aa9d179a27084afb9fc489af44a1d0947b3"
+    }
+  ],
+  "test_method_names": [
+    "test_noncyclic_binding_r1_known_negative_r2_accepts_metadata_unchanged",
+    "test_every_non_backlink_configuration_leaf_remains_bound",
+    "test_each_excluded_backlink_is_checked_against_sealed_review_identity",
+    "test_non_whitelisted_nested_identity_name_is_not_stripped",
+    "test_original_r1_signal_boundary_loses_both_custody_channels",
+    "test_corrected_r2_every_signal_boundary_retains_completed_or_uncertain_row"
+  ],
+  "test_method_count": 6,
+  "exact_virtual_journal_failure_projection_prospective": true,
+  "original_R1_known_negative_selected_R2_observable_contracts": true,
+  "AST_parse_inventory_only_no_loader_lift_compile_exec_fixture_or_body_run": true,
+  "actual_guard_main_plan_subset_path_process_Git_removal_Store_native_provider_SSH_science": "NOT RUN",
+  "originals_and_bf77_unchanged": true,
+  "identity_sha256": "9a7b3e8413c4af1cc7ae748ec0bb55c8e4a7eeb07e8b60e94e6af63d95248d17"
+}

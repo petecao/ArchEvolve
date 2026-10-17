@@ -1,0 +1,554 @@
+"""Typed origins for the closed two-site vector relation; created 2026-10-15 ET.
+
+No validity-to-array inference and no generic field/model admission. Source registries
+must be coupled to the independently checked generated view before WP admission.
+"""
+import hashlib
+import json
+import re
+import subprocess
+import tempfile
+from pathlib import Path
+
+from swdb import standard_model_view, std_models
+
+MODEL_SHA256 = "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+DATA_TEXT_SHA256 = "ee4f867911135688f5b76932243b38aaff73a56d85ffeb24229725c7d4ec6f3f"
+ALLOCATOR_SHA256 = "30e4a75965ae91dd1c50fb23b4c6010fdd620b286f43d00b73ac559529139d74"
+VIEW_PREFIX_SHA256 = "7a0e60d25b448de2a498aa53628e7b2d75c35ca2d8188dae1dafd64c6f70b3f6"
+
+
+class Refused(ValueError):
+    pass
+
+
+def _sha(value):
+    return hashlib.sha256(value if isinstance(value, bytes) else value.encode()).hexdigest()
+
+
+def _digest(value):
+    return _sha(json.dumps(value, sort_keys=True, separators=(",", ":")))
+
+
+def identity():
+    return {"id": "closed-owner-model-domain-2", "sha256": _sha(
+        Path(__file__).read_bytes() + Path(standard_model_view.__file__).read_bytes()
+        + Path(__file__).with_name("vector_pipeline.py").read_bytes())}
+
+
+def children(node):
+    return [c for c in node.get("inner", []) if isinstance(c, dict) and c.get("kind")]
+
+
+def walk(node):
+    yield node
+    for child in children(node):
+        yield from walk(child)
+
+
+def span(node):
+    begin, end = (node.get("range") or {}).get("begin") or {}, (node.get("range") or {}).get("end") or {}
+    if "offset" not in begin or "offset" not in end:
+        raise Refused("closed-owner origin has macro or unknown source coordinates")
+    return begin["offset"], end["offset"] + end.get("tokLen", 0)
+
+
+def strip(node):
+    while node.get("kind") in {"ImplicitCastExpr", "ParenExpr", "ExprWithCleanups"} and len(children(node)) == 1:
+        if node.get("kind") == "ImplicitCastExpr" and node.get("castKind") not in {
+                "NoOp", "LValueToRValue", "FunctionToPointerDecay", "IntegralCast"}:
+            break
+        node = children(node)[0]
+    return node
+
+
+def reference(node):
+    node = strip(node)
+    return (node.get("referencedDecl") or {}).get("name") if node.get("kind") == "DeclRefExpr" else None
+
+
+def _at_relation():
+    """Exact model body/guard audit, with no incoming-domain exemption."""
+    from swdb import c_lowering
+    with tempfile.TemporaryDirectory(prefix="swdb-owner-at-model-") as directory:
+        try:
+            view = standard_model_view.wp_view("std_vector_int_at", c_lowering.model_text("std_vector_int_at"), directory)
+        except standard_model_view.Refused as exc:
+            raise Refused("closed at model relation: " + str(exc)) from None
+    return {"check": standard_model_view.identity(), "certificate": view.certificate,
+            "pins": view.pins, "scope": "closed caller source-to-view relation; no standalone model proof"}
+
+
+def _data_relation():
+    """Audit only the pinned pure data() body; no incoming field domain follows."""
+    from swdb import c_lowering
+    if std_models.identity()["sha256"] != MODEL_SHA256:
+        raise Refused("closed data model needs a new exact-content audit")
+    text = c_lowering.model_text("std_vector_int_data")
+    if text is None or _sha(text) != DATA_TEXT_SHA256:
+        raise Refused("the exact data model contract/body needs a new content audit")
+    with tempfile.TemporaryDirectory(prefix="swdb-owner-data-model-") as directory:
+        path = Path(directory) / "model.c"
+        path.write_text("\n".join([*c_lowering.HEADERS, text])+"\n")
+        result = subprocess.run([*c_lowering.locate().command, "-x", "c", "-std=c11", "-fsyntax-only",
+            "-Xclang", "-ast-dump=json", "-Xclang", "-ast-dump-filter=std_vector_int_data", str(path)],
+            capture_output=True, text=True, timeout=60)
+        if result.returncode:
+            raise Refused("the pinned data model cannot be independently parsed")
+        try:
+            function = json.loads(result.stdout)
+            owner, body = children(function)
+            returned, = children(body)
+            value, = children(returned)
+            value = strip(value)
+            receiver, = children(value)
+        except (ValueError, TypeError):
+            raise Refused("the data model lacks its exact pure-return AST") from None
+    if not (function.get("kind") == "FunctionDecl" and function.get("name") == "std_vector_int_data"
+            and owner.get("kind") == "ParmVarDecl" and owner.get("name") == "this"
+            and body.get("kind") == "CompoundStmt" and returned.get("kind") == "ReturnStmt"
+            and value.get("kind") == "MemberExpr" and value.get("name") == "data" and value.get("isArrow")
+            and (strip(receiver).get("referencedDecl") or {}).get("id") == owner.get("id")):
+        raise Refused("only the exact pure this->data return is admitted")
+    contract = text[text.index("/*@ requires std_vector_int_readable(this);"):text.index("static int *std_vector_int_data")]
+    return {"check": identity(), "model": std_models.identity(), "original_text_sha256": _sha(text),
+            "original_contract_sha256": _sha(contract), "view_contract_sha256": _sha(contract),
+            "source_ast": {"function": "std_vector_int_data", "return": "this->data", "effects": []},
+            "input_premises_added": [],
+            "scope": "closed current-owner source-to-view read; no standalone qualified model proof"}
+
+
+def _data_read(node):
+    parts = children(node)
+    if node.get("kind") != "UnaryOperator" or node.get("opcode") != "*" or len(parts) != 1:
+        return None
+    call = strip(parts[0])
+    arguments = children(call)
+    if call.get("kind") != "CXXMemberCallExpr" or len(arguments) != 1:
+        return None
+    member = arguments[0]
+    receivers = children(member)
+    if (member.get("kind") == "MemberExpr" and member.get("name") == "data"
+            and not member.get("isArrow") and len(receivers) == 1):
+        return call, receivers[0]
+    return None
+
+
+def bind_source_access(root, certificate, access):
+    """Bind one recorded observation to its exact source kind, span and receiver."""
+    if certificate.get("protocol") == "private-vector-copy-scan-1":
+        from swdb import vector_pipeline
+        try:
+            return vector_pipeline.bind_access(root, certificate, access)
+        except vector_pipeline.Refused as exc:
+            raise Refused(str(exc)) from None
+    kind = {"alias_read": "UnaryOperator", "owner_index": "CXXOperatorCallExpr",
+            "owner_at": "CXXMemberCallExpr", "owner_data_read": "UnaryOperator"}.get(access.get("kind"))
+    matches = [n for n in walk(root) if n.get("kind") == kind and
+               span(n) == (access["begin"], access["end"])]
+    if certificate.get("check") != identity() or len(matches) != 1:
+        raise Refused("closed-owner access has no unique current source AST binding")
+    node = matches[0]
+    declaration = certificate["declarations"][0] if access["kind"] == "alias_read" else certificate["owner"]
+    declarations = [n for n in walk(root) if n.get("kind") == "VarDecl" and
+                    n.get("name") == declaration["name"] and span(n) == (declaration["begin"], declaration["end"])]
+    if len(declarations) != 1:
+        raise Refused("closed-owner access has no unique persistent receiver declaration")
+    parts = children(node)
+    if access["kind"] == "alias_read":
+        receiver = parts[0] if len(parts) == 1 and node.get("opcode") == "*" else {}
+    elif access["kind"] == "owner_index":
+        receiver = parts[1] if len(parts) == 3 and reference(parts[0]) == "operator[]" else {}
+    elif access["kind"] == "owner_data_read":
+        observed = _data_read(node)
+        if observed is None:
+            raise Refused("closed data read lacks its exact immediate member-call binding")
+        call_node, receiver = observed
+        calls = [call for call in certificate["calls"] if (call["begin"], call["end"]) == span(call_node)
+                 and call["model"] == "std_vector_int_data"]
+        if (len(calls) != 1 or calls[0].get("qualified_domain", {}).get("model_relation") != _data_relation()
+                or calls[0]["qualified_domain"].get("receiver") != certificate["owner"]
+                or calls[0]["qualified_domain"].get("allocation_site") != "growth"):
+            raise Refused("closed data read lacks its exact audited current-owner model relation")
+    else:
+        member = parts[0] if len(parts) == 2 else {}
+        receiver = children(member)[0] if (member.get("kind") == "MemberExpr" and member.get("name") == "at"
+                    and not member.get("isArrow") and len(children(member)) == 1) else {}
+        calls = [call for call in certificate["calls"] if call["begin"] == access["begin"] and
+                 call["end"] == access["end"] and call["model"] == "std_vector_int_at"]
+        if (len(calls) != 1 or calls[0].get("qualified_domain", {}).get("model_relation") != _at_relation()
+                or calls[0]["qualified_domain"].get("receiver") != certificate["owner"]):
+            raise Refused("closed at access lacks its exact audited model/receiver relation")
+    if (strip(receiver).get("referencedDecl") or {}).get("id") != declarations[0].get("id"):
+        raise Refused("closed-owner access observes a different source declaration")
+    return node
+
+
+def source_owner(node, protocol, *, source_sha256, lowering_sha256, models, anchors, owner_check, allocator):
+    """Exact persistent declaration registry after the closed source grammar was checked."""
+    from swdb import c_lowering
+    if std_models.identity()["sha256"] != MODEL_SHA256 or allocator != {
+            "id": "vector-owner-private-allocator-1", "sha256": ALLOCATOR_SHA256}:
+        raise Refused("the closed owner typed allocator/model needs a new content audit")
+    function = node["name"]
+    body = next(c for c in children(node) if c.get("kind") == "CompoundStmt")
+    statements = children(body)
+    owner = children(statements[0])[0]
+    alias = children(statements[1])[0]
+    n = protocol["parameter"]
+    entry = rf"\at((integer){n},Pre)"
+    append_at = span(statements[-2])[0]
+    declarations = [{"function": function, "name": alias["name"], "begin": span(alias)[0], "end": span(alias)[1],
+                     "kind": "closed_vector_alias", "element_type": "int", "elements": entry,
+                     "relative_offset": 0, "allocation_site": "initial", "requires_liveness": True}]
+    accesses, calls = [], []
+    at_relation, data_relation = None, None
+    index, data_index = 0, 0
+    permitted = {p["id"] for p in children(node) if p.get("kind") == "ParmVarDecl"}
+    permitted.update(p["id"] for p in walk(body) if p.get("kind") == "VarDecl")
+    for part in walk(body):
+        kind = part.get("kind")
+        if kind == "DeclRefExpr" and (part.get("referencedDecl") or {}).get("kind") in {"VarDecl", "ParmVarDecl"} \
+                and (part.get("referencedDecl") or {}).get("id") not in permitted:
+            raise Refused("closed source observes an external object")
+        if kind == "CallExpr" or kind in {"CompoundAssignOperator", "BinaryConditionalOperator", "ConditionalOperator"} \
+                or kind == "BinaryOperator" and part.get("opcode") in {"=", ",", "&&", "||"} \
+                or kind == "UnaryOperator" and part.get("opcode") in {"&", "++", "--"}:
+            raise Refused("closed source has an unmodeled call, mutation or conditional effect")
+        if kind == "CXXMemberCallExpr":
+            callee = children(part)[0]
+            if callee.get("kind") != "MemberExpr" or callee.get("name") not in {"data", "push_back", "at"} \
+                    or len(children(callee)) != 1 or reference(children(callee)[0]) != owner["name"]:
+                raise Refused("closed source has an unmodeled member origin/effect")
+        if kind == "CXXOperatorCallExpr" and reference(children(part)[0]) != "operator[]":
+            raise Refused("closed source has an unmodeled operator origin/effect")
+        if kind == "UnaryOperator" and part.get("opcode") == "*":
+            observed = _data_read(part)
+            if observed:
+                call, receiver = observed
+                if reference(receiver) != owner["name"] or span(part)[0] <= append_at:
+                    raise Refused("data read must observe the unchanged current owner after growth")
+                data_index += 1
+                accesses.append({"kind": "owner_data_read", "begin": span(part)[0], "end": span(part)[1],
+                    "call_begin": span(call)[0], "call_end": span(call)[1],
+                    "allocation_site": "growth", "relative_offset": 0,
+                    "bounds_guard": f"owner_data_storage_{data_index}",
+                    "live_prefix_guard": f"owner_data_live_{data_index}", "liveness_guard": "owner_current_growth"})
+            else:
+                if len(children(part)) != 1 or reference(children(part)[0]) != alias["name"]:
+                    raise Refused("untracked source pointer read")
+                phase = "before" if span(part)[0] < append_at else "after"
+                accesses.append({"kind": "alias_read", "begin": span(part)[0], "end": span(part)[1],
+                    "allocation_site": "initial", "relative_offset": 0,
+                    "bounds_guard": f"owner_alias_{phase}_range", "liveness_guard": f"alias_live_{phase}"})
+        is_at = kind == "CXXMemberCallExpr" and children(part)[0].get("name") == "at"
+        if kind == "CXXOperatorCallExpr" or is_at:
+            index += 1
+            accesses.append({"kind": "owner_at" if is_at else "owner_index", "begin": span(part)[0], "end": span(part)[1],
+                "allocation_site": "growth", "bounds_guard": f"owner_storage_index_{index}",
+                "live_prefix_guard": f"owner_index_{index}", "liveness_guard": "owner_current_growth"})
+        if kind in {"CXXConstructExpr", "CXXMemberCallExpr", "CXXOperatorCallExpr"}:
+            model = "std_vector_int_" + ("ctor_count_value" if kind == "CXXConstructExpr" else
+                "operator_index" if kind == "CXXOperatorCallExpr" else children(part)[0]["name"])
+            calls.append({"kind": kind, "begin": span(part)[0], "end": span(part)[1], "model": model,
+                "model_sha256": _sha(c_lowering.model_text(model)), "receiver": owner["name"],
+                "allocation_in": None if kind == "CXXConstructExpr" else
+                                 "initial" if span(part)[0] <= append_at else "growth",
+                "allocation_out": "growth" if model.endswith("push_back") else
+                                  "initial" if span(part)[0] < append_at else "growth"})
+            if is_at:
+                if span(part)[0] <= append_at:
+                    raise Refused("qualified at is supported only after the checked growth")
+                if at_relation is None:
+                    at_relation = _at_relation()
+                calls[-1]["qualified_domain"] = {
+                    "id": "closed-vector-live-array-1", "check": identity(),
+                    "receiver": {"name": owner["name"], "begin": span(owner)[0], "end": span(owner)[1]},
+                    "allocation_site": "growth", "element_type": "int",
+                    "elements": f"(2 * {entry})", "live_elements": f"({entry} + 1)",
+                    "producer": {"model": "std_vector_int_push_back", "begin": span(statements[-2])[0],
+                                 "end": span(statements[-2])[1],
+                                 "model_sha256": _sha(c_lowering.model_text("std_vector_int_push_back"))},
+                    "model_relation": at_relation,
+                    "caller_discharge": {"guard": f"owner_at_guard_{index}",
+                        "live_prefix_guard": f"owner_index_{index}", "bounds_guard": f"owner_storage_index_{index}",
+                        "receiver_binding": "exact persistent local declaration; current growth allocation"},
+                    "input_premises_added": []}
+            elif model == "std_vector_int_data" and span(part)[0] > append_at:
+                observed = [a for a in accesses if a["kind"] == "owner_data_read"
+                            and (a["call_begin"], a["call_end"]) == span(part)]
+                if len(observed) != 1:
+                    raise Refused("post-growth data result must have one immediate checked value observation")
+                if data_relation is None:
+                    data_relation = _data_relation()
+                access = observed[0]
+                calls[-1]["qualified_domain"] = {
+                    "id": "closed-vector-live-array-1", "check": identity(),
+                    "receiver": {"name": owner["name"], "begin": span(owner)[0], "end": span(owner)[1]},
+                    "allocation_site": "growth", "element_type": "int", "relative_offset": 0,
+                    "elements": f"(2 * {entry})", "live_elements": f"({entry} + 1)",
+                    "producer": {"model": "std_vector_int_push_back", "begin": span(statements[-2])[0],
+                                 "end": span(statements[-2])[1],
+                                 "model_sha256": _sha(c_lowering.model_text("std_vector_int_push_back"))},
+                    "model_relation": data_relation,
+                    "caller_discharge": {"live_prefix_guard": access["live_prefix_guard"],
+                        "bounds_guard": access["bounds_guard"],
+                        "receiver_binding": "exact persistent local declaration; current growth allocation",
+                        "return_binding": "immediate element-zero value read from exact data() result"},
+                    "input_premises_added": []}
+    model_bodies = []
+    for name in sorted(set(models)):
+        text = c_lowering.model_text(name)
+        if text is not None:
+            model_bodies.append({"id": name, "sha256": _sha(text)})
+    out = {"check": identity(), "owner_check": owner_check, "source_sha256": source_sha256,
+           "lowering_sha256": lowering_sha256, "model": std_models.identity(), "allocator": allocator,
+           "function": function, "owner": {"name": owner["name"], "begin": span(owner)[0], "end": span(owner)[1]},
+           "declarations": declarations, "source_accesses": accesses, "calls": calls,
+           "allocations": [{"site": "initial", "element_type": "int", "elements": entry,
+                            "live_elements": entry, "executions": 1},
+                           {"site": "growth", "element_type": "int", "elements": f"(2 * {entry})",
+                            "live_elements": f"({entry} + 1)", "executions": 1}],
+           "aliases": [{"name": alias["name"], "allocation_site": "initial", "invalidated_by": "growth"}],
+           "model_bodies": model_bodies, "anchors_sha256": _digest(list(anchors)),
+           "binding_effects": "closed scalar protocol; count unchanged; no alias reassignment, escape, callback or hidden call",
+           "storage_boundary": "backing extents do not grant spare-capacity source reads; every source index checks current live size"}
+    out["certificate_sha256"] = _digest(out)
+    return out
+
+
+def _pointer(node):
+    return bool(re.search(r"\*\s*(?:(?:const|volatile|restrict)\s*)*$", str((node.get("type") or {}).get("qualType", ""))))
+
+
+def closed_owner_view(text, protocol, source_certificate):
+    """Independently inventory every C view access and its exact typed root and checked guard."""
+    from swdb import c_lowering
+    if not source_certificate or source_certificate.get("check") != identity():
+        raise Refused("closed owner has no current source origin certificate")
+    prefix, marker, _body = text.partition("  /* swdb-anchor ghost.globals */")
+    if not marker or _sha(prefix) != VIEW_PREFIX_SHA256:
+        raise Refused("the imported typed allocator contracts/layout need a new exact-content audit")
+    source = dict(source_certificate)
+    digest = source.pop("certificate_sha256", None)
+    if digest != _digest(source):
+        raise Refused("closed owner source origin certificate changed")
+    with tempfile.TemporaryDirectory(prefix="swdb-owner-domain-") as folder:
+        path = Path(folder) / "owner.c"
+        path.write_text(text)
+        done = subprocess.run([*c_lowering.locate().command, "-x", "c", "-std=gnu11", "-fsyntax-only",
+                               "-Xclang", "-ast-dump=json", str(path)], capture_output=True, text=True, timeout=60)
+        if done.returncode:
+            raise Refused("closed owner C view cannot be independently parsed: " + done.stderr[-500:])
+        try:
+            ast = json.loads(done.stdout)
+        except ValueError:
+            raise Refused("closed owner C view AST is malformed") from None
+    definitions = [n for n in walk(ast) if n.get("kind") == "FunctionDecl" and
+                   any(c.get("kind") == "CompoundStmt" for c in children(n))]
+    if len(definitions) != 1 or definitions[0].get("name") != source["function"]:
+        raise Refused("closed owner view has an untracked function body")
+    body = next(c for c in children(definitions[0]) if c.get("kind") == "CompoundStmt")
+    raw = text.encode()
+    expr = lambda n: raw[slice(*span(n))].decode()
+    compact = lambda s: re.sub(r"\s+", "", s)
+    # Clang ignores ACSL. Independently close the annotation language as well as
+    # the C scaffold, before the adapter inserts the separately checked contract.
+    suffix = text[len(prefix):]
+    annotations = re.findall(r"/\*@\s*(.*?)\*/", suffix, re.S)
+    if "//@" in suffix or suffix.count("/*@") != len(annotations):
+        raise Refused("closed owner view has an untracked ACSL annotation")
+    loops = {
+        compact(f"""loop invariant 0 <= swdb_owner_k0 <= swdb_owner_bound0;
+            loop invariant swdb_owner_bound0 == {protocol['parameter']};
+            loop invariant \\initialized(&swdb_owner_fresh0);
+            loop invariant \\initialized(swdb_owner_fresh0+(0..swdb_owner_k0-1));
+            loop invariant \\forall integer j; 0 <= j < swdb_owner_k0 ==> swdb_owner_fresh0[j] == {protocol['fill']};
+            loop assigns swdb_owner_k0, swdb_owner_fresh0[0..swdb_owner_bound0-1];
+            loop variant swdb_owner_bound0-swdb_owner_k0;"""),
+        compact(f"""loop invariant 0 <= swdb_owner_k1 <= swdb_owner_v.size;
+            loop invariant swdb_owner_v.size == {protocol['parameter']};
+            loop invariant \\initialized(&swdb_owner_fresh1);
+            loop invariant \\initialized(swdb_owner_fresh1+(0..swdb_owner_k1-1));
+            loop invariant \\forall integer j; 0 <= j < swdb_owner_v.size ==> swdb_owner_v.data[j] == {protocol['fill']};
+            loop invariant \\forall integer j; 0 <= j < swdb_owner_k1 ==> swdb_owner_fresh1[j] == {protocol['fill']};
+            loop assigns swdb_owner_k1, swdb_owner_fresh1[0..swdb_owner_bound1-1];
+            loop variant swdb_owner_v.size-swdb_owner_k1;""")}
+    for annotation in annotations:
+        if (re.fullmatch(r"assert\s+\w+\s*:\s*[^;]+;\s*", annotation, re.S)
+                or compact(annotation) in loops
+                or compact(annotation) in {"ghostintswdb_owner_alias_live=1;", "ghostswdb_owner_alias_live=0;"}):
+            continue
+        raise Refused("closed owner view has an untracked ACSL annotation")
+    windows = {}
+
+    def place(node, low=None, high=None):
+        if node.get("kind") == "CompoundStmt":
+            previous = span(node)[0] + 1
+            for statement in children(node):
+                place(statement, previous, span(statement)[0])
+                previous = span(statement)[1]
+        else:
+            windows[id(node)] = (low, high)
+            for child in children(node):
+                place(child, low, high)
+
+    place(body)
+    guards = {m.group(1): (m.start(), m.end(), compact(m.group(2)))
+              for m in re.finditer(r"/\*@\s*assert\s+(\w+)\s*:\s*(.*?);\s*\*/", text, re.S)}
+    guard_count = len(re.findall(r"/\*@\s*assert\s+", text))
+    if len(guards) != guard_count:
+        raise Refused("closed owner view repeats an assertion name")
+
+    def guarded(name, predicate, node):
+        low, high = windows.get(id(node), (None, None))
+        if (name not in guards or guards[name][2] != compact(predicate) or low is None or high is None
+                or not low <= guards[name][0] < guards[name][1] <= high):
+            raise Refused(f"closed owner view access lacks its exact preceding {name} obligation")
+        return name
+
+    def data(node):
+        node = strip(node)
+        return (node.get("kind") == "MemberExpr" and node.get("name") == "data" and
+                not node.get("isArrow") and len(children(node)) == 1 and reference(children(node)[0]) == "swdb_owner_v")
+
+    writes = []
+    for n in walk(body):
+        parts = children(n)
+        if n.get("kind") == "BinaryOperator" and n.get("opcode") == "=" and data(parts[0]):
+            writes.append((span(n)[0], reference(parts[1])))
+    if [name for _at, name in writes] != ["swdb_owner_fresh0", "swdb_owner_fresh1"]:
+        raise Refused("closed owner data binding does not follow the two fresh allocation sites")
+    growth_at = writes[1][0]
+    top = children(body)
+    expected_kinds = ["DeclStmt", "DeclStmt", "DeclStmt", "BinaryOperator", "ForStmt",
+        "BinaryOperator", "BinaryOperator", "BinaryOperator", "DeclStmt", "DeclStmt", "DeclStmt",
+        "DeclStmt", "BinaryOperator", "ForStmt", "BinaryOperator", "BinaryOperator", "BinaryOperator",
+        "UnaryOperator", "ReturnStmt"]
+    if [p.get("kind") for p in top] != expected_kinds:
+        raise Refused("the C view has a hidden statement/control transition")
+    initializers = {"swdb_owner_v": "{0,0,0}", "swdb_owner_bound0": "(size_t)"+protocol["parameter"],
+        "swdb_owner_k0": "0", "swdb_owner_fresh0": None, "swdb_owner_alias": "swdb_owner_v.data",
+        "swdb_owner_old": "*swdb_owner_alias" if protocol["old"] else "0",
+        "swdb_owner_bound1": "2*swdb_owner_v.capacity", "swdb_owner_k1": "0", "swdb_owner_fresh1": None}
+    declarations = [p for p in walk(body) if p.get("kind") == "VarDecl"]
+    if len(declarations) != len(initializers) or {p.get("name") for p in declarations} != set(initializers):
+        raise Refused("the C view has a hidden/shadowed local or alias")
+    for declaration in declarations:
+        init = children(declaration)
+        expected = initializers[declaration["name"]]
+        if (expected is None and init) or (expected is not None and
+                (len(init) != 1 or compact(expr(init[0])) != expected)):
+            raise Refused("the C view has an unmodeled pointer/count/scalar initializer")
+    expected_assignments = {3: "swdb_owner_fresh0=swdb_owner_allocate_initial", 5: "swdb_owner_v.data=swdb_owner_fresh0",
+        6: "swdb_owner_v.size=swdb_owner_bound0", 7: "swdb_owner_v.capacity=swdb_owner_bound0",
+        12: "swdb_owner_fresh1=swdb_owner_allocate_growth", 14: "swdb_owner_v.data=swdb_owner_fresh1",
+        15: "swdb_owner_v.capacity=swdb_owner_bound1",
+        16: "swdb_owner_v.data[swdb_owner_v.size]="+str(protocol["pushed"])}
+    for at, expected in expected_assignments.items():
+        actual = compact(expr(top[at]))
+        if not (actual.startswith(expected+"(") and actual.endswith(")+0") if at in {3,12} else actual == expected):
+            raise Refused("the C view has an unmodeled binding/write transition")
+    if compact(expr(top[17])) != "swdb_owner_v.size++" or compact(expr(children(top[18])[0])) != compact(protocol["return"]):
+        raise Refused("the C view has an unmodeled live-prefix/result transition")
+    for at, k, stop, assignment in ((4,"swdb_owner_k0","swdb_owner_bound0",
+            "swdb_owner_fresh0[swdb_owner_k0]="+str(protocol["fill"])),
+            (13,"swdb_owner_k1","swdb_owner_v.size",
+             "swdb_owner_fresh1[swdb_owner_k1]=swdb_owner_v.data[swdb_owner_k1]")):
+        parts = children(top[at])
+        if len(parts) != 4 or [compact(expr(p)) for p in parts[:3]] != [k+"=0",k+"<"+stop,"++"+k] \
+                or parts[3].get("kind") != "CompoundStmt" or len(children(parts[3])) != 1 \
+                or compact(expr(children(parts[3])[0])) != assignment:
+            raise Refused("the C view loop has an unmodeled condition/body/effect")
+    invalidation = text.find("/*@ ghost swdb_owner_alias_live=0; */")
+    capture = text.find("/*@ ghost int swdb_owner_alias_live=1; */")
+    ghost = [compact(m.group(1)) for m in re.finditer(r"/\*@\s*ghost\s+(.*?)\*/", text, re.S)]
+    if ghost != ["intswdb_owner_alias_live=1;", "swdb_owner_alias_live=0;"]:
+        raise Refused("the C view contains an extra liveness ghost effect")
+    if not span(top[8])[1] < capture < span(top[9])[0] or not span(top[13])[1] < invalidation < growth_at:
+        raise Refused("closed owner liveness guards are not at the exact capture/release transition")
+    if not 0 <= capture < invalidation < growth_at or text.count("swdb_owner_alias_live=0;") != 1:
+        raise Refused("closed owner alias capture/invalidation transition is absent or misplaced")
+    calls, accesses, index, data_index = [], [], 0, 0
+    n = protocol["parameter"]
+    expected_calls = {
+        "swdb_owner_allocate_initial": ["swdb_owner_bound0", "&swdb_owner_v", "&"+n,
+            "&swdb_owner_fresh0", "&swdb_owner_k0", "&swdb_owner_bound0"],
+        "swdb_owner_allocate_growth": ["swdb_owner_bound1", "&swdb_owner_v", "&"+n,
+            "&swdb_owner_alias", "&swdb_owner_old", "&swdb_owner_fresh1", "&swdb_owner_k1",
+            "&swdb_owner_bound1", "swdb_owner_v.data", "swdb_owner_v.capacity"]}
+    for node in walk(body):
+        kind, parts = node.get("kind"), children(node)
+        if kind == "CallExpr":
+            name = reference(parts[0])
+            if name not in expected_calls or [compact(expr(p)) for p in parts[1:]] != expected_calls[name]:
+                raise Refused("closed owner view has an untracked allocation/call effect")
+            calls.append(name)
+        if kind == "BinaryOperator" and node.get("opcode") in {"+", "-"} and _pointer(node):
+            if len(parts) != 2 or parts[0].get("kind") != "CallExpr" or parts[1].get("value") != "0":
+                raise Refused("closed owner view has untracked pointer formation")
+            site = "initial" if reference(children(parts[0])[0]) == "swdb_owner_allocate_initial" else "growth"
+            bound = "swdb_owner_bound0" if site == "initial" else "swdb_owner_bound1"
+            guard = guarded("owner_"+site+"_zero", f"0 <= {bound}", node)
+            accesses.append({"kind": "formation", "allocation_site": site, "relative_offset": 0,
+                             "bounds_guard": guard, "liveness_guard": "fresh_allocation"})
+        if kind == "ArraySubscriptExpr":
+            base, offset = parts
+            root, position = reference(base), compact(expr(offset))
+            if root == "swdb_owner_fresh0" and position == "swdb_owner_k0":
+                site, guard, predicate = "initial", "owner_initial_range", "0 <= swdb_owner_k0 < swdb_owner_bound0"
+            elif root == "swdb_owner_fresh1" and position == "swdb_owner_k1" or data(base) and span(node)[0] < growth_at and position == "swdb_owner_k1":
+                site = "growth" if root else "initial"
+                guard, predicate = "owner_copy_range", "0 <= swdb_owner_k1 < swdb_owner_bound0 && swdb_owner_k1 < swdb_owner_bound1"
+            elif data(base) and span(node)[0] > growth_at and position == "swdb_owner_v.size":
+                site, guard, predicate = "growth", "owner_append_range", "0 <= swdb_owner_v.size < swdb_owner_bound1"
+            elif data(base) and span(node)[0] > growth_at and position == "0":
+                data_index += 1
+                site, guard, predicate = "growth", f"owner_data_storage_{data_index}", "0 < swdb_owner_bound1"
+                live_guard = guarded(f"owner_data_live_{data_index}", "0 < swdb_owner_v.size", node)
+                accesses.append({"kind": "owner_data_read", "allocation_site": site, "relative_offset": 0,
+                    "bounds_guard": guarded(guard, predicate, node), "live_prefix_guard": live_guard,
+                    "liveness_guard": "current_owned_storage"})
+                continue
+            elif data(base) and span(node)[0] > growth_at:
+                index += 1
+                observations = protocol.get("observations", [])
+                if index > len(observations):
+                    raise Refused("closed owner view has an extra indexed observation")
+                observation = observations[index-1]
+                value = observation["index"]
+                if position != "(size_t)("+value+")":
+                    raise Refused("closed owner view index differs from its source observation")
+                if observation["member"] == "at":
+                    guarded(f"owner_at_guard_{index}", f"0 <= {value} < swdb_owner_v.size", node)
+                site, guard, predicate = "growth", f"owner_storage_index_{index}", f"0 <= {value} < swdb_owner_bound1"
+                guarded(f"owner_index_{index}", f"0 <= {value} < swdb_owner_v.size", node)
+            else:
+                raise Refused("closed owner view has an untracked array root/index")
+            accesses.append({"kind": "array_access", "allocation_site": site, "offset": expr(offset),
+                "bounds_guard": guarded(guard, predicate, node), "liveness_guard": "current_owned_storage"})
+        if kind == "UnaryOperator" and node.get("opcode") == "*":
+            if len(parts) != 1 or reference(parts[0]) != "swdb_owner_alias":
+                raise Refused("closed owner view has an untracked indirect read")
+            phase = "before" if span(node)[0] < invalidation else "after"
+            accesses.append({"kind": "alias_read", "allocation_site": "initial", "alias": True, "relative_offset": 0,
+                "bounds_guard": guarded(f"owner_alias_{phase}_range", "0 < swdb_owner_bound0", node),
+                "liveness_guard": guarded(f"alias_live_{phase}", "swdb_owner_alias_live == 1", node)})
+        if kind == "CompoundAssignOperator" and _pointer(node) or kind == "UnaryOperator" and node.get("opcode") in {"++", "--"} and _pointer(node):
+            raise Refused("closed owner view has untracked pointer mutation")
+    if calls != list(expected_calls):
+        raise Refused("closed owner view allocation site multiplicity differs")
+    guarded("owner_count", f"{n} >= 1", top[0])
+    if index != sum(a["kind"] in {"owner_index", "owner_at"} for a in source["source_accesses"]):
+        raise Refused("closed owner source/view indexed observations differ")
+    if data_index != sum(a["kind"] == "owner_data_read" for a in source["source_accesses"]):
+        raise Refused("closed owner source/view immediate data observations differ")
+    if sum(a["kind"] == "alias_read" for a in accesses) != sum(a["kind"] == "alias_read" for a in source["source_accesses"]):
+        raise Refused("closed owner source/view alias observations differ")
+    out = {"check": identity(), "complete": True, "source_certificate_sha256": digest,
+           "view_sha256": _sha(text), "allocations": source["allocations"], "aliases": source["aliases"],
+           "source_accesses": source["source_accesses"], "view_accesses": accesses,
+           "calls": calls, "qualified_calls": [call for call in source["calls"] if "qualified_domain" in call],
+           "boundaries": "exact closed two-site typed allocator relation; no generic field/parameter origin"}
+    out["certificate_sha256"] = _digest(out)
+    return out

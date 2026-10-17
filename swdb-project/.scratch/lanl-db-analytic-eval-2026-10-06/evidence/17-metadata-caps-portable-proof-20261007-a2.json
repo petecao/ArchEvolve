@@ -1,0 +1,25 @@
+{
+  "helper_sha256": "09136ee553984b2c0cf929a6746f037aa4e1874f863aa2e83e0e0842a8b65ed9",
+  "checks": [
+    "canonical_digest_matches_swdb_unicode",
+    "canonical_seal_roundtrip",
+    "tamper_refused",
+    "synthetic_login_path_no_auth_read",
+    "changed_login_path_refused",
+    "local_host_refused",
+    "mock_exact_wrapper_holder_admitted",
+    "mock_foreign_wrapper_refused",
+    "mock_foreign_generation_refused",
+    "mock_widened_affinity_refused",
+    "mock_unbound_numa_refused",
+    "mock_foreign_population_refused",
+    "mock_changed_child_command_refused",
+    "mock_foreign_lease_descriptor_refused"
+  ],
+  "remote_actions": 0,
+  "provider_calls": 0,
+  "campaigns": 0,
+  "population_freezes": 0,
+  "linux_cleanup_tested": false,
+  "scope": "Portable seals/synthetic auth and kernel-file mocks only. Actual Linux cleanup/live files remain parent-owned verification."
+}

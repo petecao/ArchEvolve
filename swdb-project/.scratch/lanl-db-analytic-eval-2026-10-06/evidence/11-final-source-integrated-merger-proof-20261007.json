@@ -1,0 +1,207 @@
+{
+  "format": "swdb.lanl11-final-source-integrated-merger.v1",
+  "integration_base": "8f0eda2c6ff6cce7097a91c1a1b7673ce9903918",
+  "final_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "integration_method": "exact_fast_forward_to_tested_C",
+  "generic_implementation_changed_after_C": false,
+  "scope": "Tested final CPU implementation and retained native calibration/count metadata; actual model/development/held-out admission remains pending.",
+  "all_changes_inside_swdb_project": true,
+  "source_changed_path_count": 188,
+  "prior_protected_blob_count": 905,
+  "prior_protected_manifest_sha256": "7743230d15d372b357fa89e375462dcf17bf5af6e01ce4f098b23494bb33337d",
+  "all_prior_record_library_app_tool_blobs_preserved": true,
+  "prior_canonical_yaml_count": 643,
+  "new_canonical_yaml_count": 22,
+  "canonical_yaml_count": 665,
+  "new_records": [
+    {
+      "path": "swdb-project/records/cpu_allocator_resource_calibrations/mbit10.cpu.lanl20261006.resource.allocator-extra.a1.yaml",
+      "bytes": 237316,
+      "file_sha256": "9556558f9d78e125352fce767adf47e8ee75ce1b417993c9f5dfca7d86dd9e7e"
+    },
+    {
+      "path": "swdb-project/records/cpu_allocator_resource_calibrations/mbit10.cpu.lanl20261006.resource.allocator.a1.yaml",
+      "bytes": 291034,
+      "file_sha256": "2133466f17fca9864a66c88137748a01cad27e8be1b58fa49b437c85f8a6cfa4"
+    },
+    {
+      "path": "swdb-project/records/cpu_bulk_resource_calibrations/mbit10.cpu.lanl20261006.resource.bulk-total.a1.yaml",
+      "bytes": 4620962,
+      "file_sha256": "d957e3b9d6f24d865e49ea0330200af1b6e5e33c4562420d8606d8011f25b1a0"
+    },
+    {
+      "path": "swdb-project/records/cpu_bulk_resource_calibrations/mbit10.cpu.lanl20261006.resource.bulk-total.a2.yaml",
+      "bytes": 3435593,
+      "file_sha256": "9974ed9efeb317e3f40569bfe1d3254028833ce889e1b7ee1a90b7d1ed4b3e83"
+    },
+    {
+      "path": "swdb-project/records/cpu_memory_resource_calibrations/mbit10.cpu.lanl20261006.resource.float-memory.a1.yaml",
+      "bytes": 22032,
+      "file_sha256": "c51013dba09ec5aada4c522ac07e8a71b99e1ae200333bb8bc87417966d3f8b9"
+    },
+    {
+      "path": "swdb-project/records/cpu_memory_resource_calibrations/mbit10.cpu.lanl20261006.resource.memory.a1.yaml",
+      "bytes": 485210,
+      "file_sha256": "c2685acbfb4fcbcbcca612c4cf601d51bb8f7cdb4ef2b7ba99d0e497659e4e93"
+    },
+    {
+      "path": "swdb-project/records/cpu_service_calibrations/mbit10.cpu.lanl20261006.service.allocator-extra.a1.yaml",
+      "bytes": 207613,
+      "file_sha256": "b68c95fb58105bd698435537e1afa2e777fcfff6a3542ed22d02fbf4c52e20d7"
+    },
+    {
+      "path": "swdb-project/records/cpu_service_calibrations/mbit10.cpu.lanl20261006.service.allocator.a1.yaml",
+      "bytes": 254533,
+      "file_sha256": "55981bcf596fdf22e29c0e160b511eee4c7631aae5c602702575db5e408bfe9f"
+    },
+    {
+      "path": "swdb-project/records/cpu_service_calibrations/mbit10.cpu.lanl20261006.service.bulk-total.a1.yaml",
+      "bytes": 4491685,
+      "file_sha256": "a5b3569a33ba3a5f8bedc22cc2a9868bc97b1191153e6b3c73964478e3c5ab78"
+    },
+    {
+      "path": "swdb-project/records/cpu_service_calibrations/mbit10.cpu.lanl20261006.service.bulk-total.a2.yaml",
+      "bytes": 3325603,
+      "file_sha256": "742ee237538f32f827c8af5cf0f102adf67bc922e28e4733fe4c8a43653da85b"
+    },
+    {
+      "path": "swdb-project/records/cpu_service_calibrations/mbit10.cpu.lanl20261006.service.byte-read.a1.yaml",
+      "bytes": 13339,
+      "file_sha256": "2cb08ae9519bde1a08ed151f30c755fd146ac5d6c685f4b6db55f93165ea42f3"
+    },
+    {
+      "path": "swdb-project/records/cpu_service_calibrations/mbit10.cpu.lanl20261006.service.clock.a1.yaml",
+      "bytes": 9933,
+      "file_sha256": "fb55f03225f70b3c7302448e211e59e8fcbdd6c3b5affd40ebd7e414b4b58aeb"
+    },
+    {
+      "path": "swdb-project/records/cpu_service_calibrations/mbit10.cpu.lanl20261006.service.clock.a2.yaml",
+      "bytes": 10401,
+      "file_sha256": "afc9ffac3e01059943978a12144f7eb71561cc7c928ba2df83a5f11e0e12f692"
+    },
+    {
+      "path": "swdb-project/records/cpu_service_calibrations/mbit10.cpu.lanl20261006.service.float-memory.a1.yaml",
+      "bytes": 18147,
+      "file_sha256": "f41d562d6839d83bb035e2d2f50bcd882ecd88fa1d2afebad0b1f2c90127ab49"
+    },
+    {
+      "path": "swdb-project/records/cpu_service_calibrations/mbit10.cpu.lanl20261006.service.memory.a1.yaml",
+      "bytes": 452232,
+      "file_sha256": "6c5c58473435acd7a394f6382f38facd191cc1f00aba81bf87a7123459cb4eca"
+    },
+    {
+      "path": "swdb-project/records/cpu_service_calibrations/mbit10.cpu.lanl20261006.service.openmp.a1.yaml",
+      "bytes": 1409442,
+      "file_sha256": "5a42507a23ef57642a4864f06f79dbafcf8def6fafa0a5aebe56fd5312ff1a32"
+    },
+    {
+      "path": "swdb-project/records/workload_characterizations/bc.kron-g16.t1.characterization.a1.yaml",
+      "bytes": 13382631,
+      "file_sha256": "c7230866c0b70e003fd6f3ec7523a11457d29f1efe142e08a2a9c358822a2bb0"
+    },
+    {
+      "path": "swdb-project/records/workload_characterizations/bc.kron-g16.t1.characterization.objects.a1.yaml",
+      "bytes": 17282501,
+      "file_sha256": "d12b5f57c61007219d367942ee554db1d27ee1d8614e2c1279e1164230f534e8"
+    },
+    {
+      "path": "swdb-project/records/workload_characterizations/bc.kron-g17.t1.characterization.objects.a1.yaml",
+      "bytes": 17343787,
+      "file_sha256": "e3e5d69e1d6a5310dad6c693112b7eb7d86dae9d533ee85ef86450d09831daf4"
+    },
+    {
+      "path": "swdb-project/records/workload_characterizations/bfs.kron-g16.t1.characterization.a1.yaml",
+      "bytes": 11161170,
+      "file_sha256": "875fa3fa7db2df2f77e41b72220ce257092014cf5c9e46a5c83f073762516e03"
+    },
+    {
+      "path": "swdb-project/records/workload_characterizations/bfs.kron-g16.t1.characterization.objects.a1.yaml",
+      "bytes": 14485038,
+      "file_sha256": "cda2c51423c167249fd760f359ee0ead180bcb2e2d4db2c722c9b724120458ba"
+    },
+    {
+      "path": "swdb-project/records/workload_characterizations/bfs.kron-g17.t1.characterization.objects.a1.yaml",
+      "bytes": 14548815,
+      "file_sha256": "3acba4d734334e61221ae6dd1856fffc9bbc231616fec805288c1a5d806c1033"
+    }
+  ],
+  "prior_observer_blob_count": 7,
+  "prior_observer_manifest_sha256": "fcf6f0dc010f5d42b304aae38cdf9f2a961315adbd5e73a956fe5defc7fb9000",
+  "all_prior_observer_runtime_header_blobs_preserved": true,
+  "frozen_campaign_provider_process_config_manifest_sha256": "94f76d6bf0738b2abe66da9c5253e83744e7f0195f206e4c2c7ffb722bb19322",
+  "frozen_campaign_provider_process_config_bytes_preserved": true,
+  "launch_helper_sha256": "31e1d71bc6e9ef4a5a5f1d5fbff136ceef249935f8f00601edf45277fce249ec",
+  "linux_smoke_helper_sha256": "4d0bdf1d4c8d2ce96d948085a785cde15c389a4c50413962bc7db14df57cf9d6",
+  "processes_py_sha256": "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289",
+  "single_linux_cleanup_receipt_preserved": true,
+  "parent_progress_map_other_ticket_issues_and_actual_six_count_receipts_preserved": true,
+  "portable_python_module_count": 185,
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "reused_worker_validation": {
+    "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-final-source-validation-proof-20261007.json",
+    "identity_sha256": "c7430c8ed161bd2f7da687d55b5a982d74dddb7f5f92b415ea8cc0f93243409b",
+    "canonical_validation": {
+      "valid_records": 665,
+      "log_sha256": "b4ab463830f79ecf373a4e4cb1a03258011defced97cf05530495ba6fc449f12"
+    },
+    "scope": "Identical exact C/source/record bytes; compiler and canonical gates were not repeated."
+  },
+  "reused_public_proofs": [
+    {
+      "path": "11-protected-cpu-public-proof-20261007.json",
+      "sha256": "d762dcafb9c85eb5e1c8d169980156bcdffad2186f02d273510eef3cc89e63ef",
+      "identity_sha256": "f041e220723b6aec2c9b4d64b680ae31fabb98f00a68546923686eefbea9bae4"
+    },
+    {
+      "path": "11-legacy-trial-scope-public-proof-20261007.json",
+      "sha256": "2b63541ffaab40d00d70ae0bc0ba0b315e5415917ad2ab280014075d4f62d9ff",
+      "identity_sha256": "b567d71c4039e6d91c0d64e8e0b1999edbcbb039bc735e8efd44b7f41a938e63"
+    },
+    {
+      "path": "11-per-kernel-dispatch-preparation-proof-20261007.json",
+      "sha256": "89f4667328842e6d38201568a74070b8ca46097962869e3dec272a5f9e805489",
+      "identity_sha256": "6921231c834dac3b2fcae6cf645338ce9a43b9e331a93903dd543a59eae933f2"
+    },
+    {
+      "path": "11-final-source-public-replay-20261007.json",
+      "sha256": "c20622b5e9c27b632e1154aeda0ef8e99a1020b72d7522d80a8cd7fbe7bc50be",
+      "identity_sha256": "a0ebfba2af3eafd150f29f17d7b573aa54153eee4a807cfb9f4bfa0a11e80f64"
+    }
+  ],
+  "reused_public_gates": {
+    "protected_driver": {
+      "passed": 1,
+      "seconds": 491.36
+    },
+    "strict_legacy_and_old_pair": {
+      "passed": 6,
+      "seconds": 370.51
+    },
+    "runtime_envelope": {
+      "passed": 3,
+      "seconds": 0.04
+    }
+  },
+  "read_only_cli_coexistence": {
+    "characterize_registered_cpu_gapbs_functional_help_exit": 0,
+    "agreement_freeze_help_exit": 0,
+    "agreement_report_help_exit": 0,
+    "evaluate_pair_help_exit": 0
+  },
+  "final_source_fixture_replay": {
+    "kernel_seconds": 7.92e-05,
+    "elapsed_seconds": null,
+    "error_band": null,
+    "accuracy_claim": false
+  },
+  "application_timings_opened_by_merger": false,
+  "no_count_or_native_or_provider_execution": true,
+  "no_ssh_actions": true,
+  "no_main_push": true,
+  "ticket11_state": "claimed",
+  "ticket14_state": "claimed",
+  "ticket17_state": "claimed",
+  "campaign_prepare_compatibility": "No helper/config/process API change; final prepare captures F6 dynamically. Live host SG/model/runtime/provider/lease/capacity checks remain mandatory.",
+  "D30": "No proved SG/FUNC-to-MMIO numeric bridge; actual fresh campaign receipts and unsupported/no-switch report still required.",
+  "identity_sha256": "5a7462e98f03353dc156edf62144e02e5cc2a810a8277c3c6186776d2aa2913c"
+}

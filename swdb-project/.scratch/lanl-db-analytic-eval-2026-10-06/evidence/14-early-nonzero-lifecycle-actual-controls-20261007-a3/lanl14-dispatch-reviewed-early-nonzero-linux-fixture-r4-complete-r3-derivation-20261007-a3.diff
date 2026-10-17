@@ -1,0 +1,15 @@
+--- lanl14-dispatch-reviewed-early-nonzero-linux-fixture-20261007-a2-r3.py
++++ lanl14-dispatch-reviewed-early-nonzero-linux-fixture-20261007-a3-r4.py
+@@ -34,10 +34,10 @@
+  '/usr/bin/timeout':[39880,'12690a043dfd555a6c14ccc1564f5649c18f1762c0d6ff66729948130898ec52'],
+  '/usr/bin/bash':[1446024,'bc5945feb8bd26203ebfafea5ce1878bb2e32cb8fb50ab7ae395cfb1e1aaaef1'],
+  '/usr/bin/git':[4019024,'06b2aa74919b1993f9fd7e47060ea98d98c27206f16ccc2d35f51ced7e7877eb']}
+-ROOT=Path('/data/yanruj/EvolveSWDB_runs/lanl14-lifecycle-administration-20261007-a2')
++ROOT=Path('/data/yanruj/EvolveSWDB_runs/lanl14-lifecycle-administration-20261007-a3')
+ DISPATCH=ROOT/'dispatch'
+ OUTPUT=ROOT/'lanl14-export-reader-control-early-nonzero-a1'
+-JOB='swdb-lanl14-lifecycle-early-nonzero-20261007-a2'
++JOB='swdb-lanl14-lifecycle-early-nonzero-20261007-a3'
+ REPORT=Path('/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1')
+ LEASE_ROOT=Path('/data1/yanruj/lact-host-lease')
+ STARTUP_ABSENT=('BASH_ENV','ENV','PYTHONHOME','LD_PRELOAD','LD_LIBRARY_PATH','SOCKET_LANE_REEXEC','SOCKET_LANE_NODE_DIR','LACT_LEASE_ROOT','LACT_LEASE_NAME','LACT_NUMACTL','LOCKDIR')

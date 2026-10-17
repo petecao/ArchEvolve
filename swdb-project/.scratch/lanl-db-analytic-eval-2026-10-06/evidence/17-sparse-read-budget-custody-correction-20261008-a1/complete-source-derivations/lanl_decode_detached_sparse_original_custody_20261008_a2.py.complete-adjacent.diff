@@ -1,0 +1,22 @@
+--- lanl_decode_detached_sparse_original_custody_20261008_a1.py
++++ lanl_decode_detached_sparse_original_custody_20261008_a2.py
+@@ -2,8 +2,8 @@
+ import argparse,pathlib,os,stat,json,hashlib,base64,re
+ P=pathlib.Path
+ PACKET_CAP=64*1024*1024
+-WRAPPER_SHA='1127d1fba8e004153cf086cace7d19ccd901e85902f9ad91924407922c85c6ca'
+-GUARD_SHA='4956a7453ae569d7ccf6e1a9ed98a1a933bee2e35cca1774932afbfba819bd26'
++WRAPPER_SHA='e16f1afa5a427d452504e7a759a7562dcc05a98014e2b4ece1663db6755d39ec'
++GUARD_SHA='d75baaf9dbe7192b02812cab525ccd6c50c81fd312d67cbfae7b9c8fdf955301'
+ CONTROL_PREFIX='lanl17-detached-sparse-'
+ TERMINAL_STATES=('guard_completed','guard_refused_or_failed','preflight_refused_no_guard_launch','administrative_postflight_failed','guard_launch_started','guard_running','GNU_supervision_not_returned_within_wrapper_wait')
+ FILES=[('status.json',16384),('configuration.json',16384),('tmux.conf',16384),('launch-status.json',16384),('launch.stdout',16384),('launch.stderr',16384),('guard.stdout',256*1024),('guard.stderr',256*1024)]
+@@ -43,7 +43,7 @@
+   if status.get('format')=='swdb.lanl17-detached-library-sparse-administration-status.v1' and status.get('sealed') is False and type(inputs) is dict:
+    wrapper=inputs.get('wrapper');guard=inputs.get('guard')
+    if type(wrapper) is dict and type(guard) is dict and all(k in wrapper and k in guard for k in ('sha256','bytes')):
+-    assert wrapper['sha256']==WRAPPER_SHA and wrapper['bytes']==24115 and guard['sha256']==GUARD_SHA and guard['bytes']==166145
++    assert wrapper['sha256']==WRAPPER_SHA and wrapper['bytes']==24114 and guard['sha256']==GUARD_SHA and guard['bytes']==180887
+     result['selected_source_pins_bound']=True
+     attempt=status.get('guard_attempt')
+     if type(attempt) is str and re.fullmatch('a[1-9][0-9]*',attempt):

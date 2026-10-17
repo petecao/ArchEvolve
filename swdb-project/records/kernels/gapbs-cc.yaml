@@ -1,0 +1,95 @@
+kind: kernel
+schema_version: '0.2'
+id: gapbs-cc
+status: draft
+deprecated_by: null
+created: '2026-09-22'
+updated: '2026-09-22'
+provenance:
+- id: src-gapbs-cc
+  kind: source_code
+  description: gapbs src/cc.cc (CCVerifier, lines 173-217; main, lines 220-229), src/cc_sv.cc (CCVerifier,
+    lines 105-149; main, lines 152-160), src/benchmark.h (BenchmarkKernel) and src/command_line.h at commit
+    2972aeb2703165bafd921222f4ed7196f542d3a8, read 2026-09-22 from the copy in apps/gapbs.
+  uri: https://github.com/sbeamer/gapbs/blob/2972aeb2703165bafd921222f4ed7196f542d3a8/src/cc.cc#L173-L217
+name: gapbs Connected Components
+application: gapbs
+computes: 'A component label (NodeID) for every vertex of a graph such that two vertices get the same
+  label exactly when they are connected, with directed edges treated as undirected. The label values themselves
+  are free: any labeling that induces the connected components is a correct result. No iteration count
+  or tolerance changes the result.'
+correctness_check:
+  command: '{binary} {input_args} -n 1 -v'
+  verifier:
+    description: 'CCVerifier: for each distinct label, a serial BFS from one vertex carrying it (following
+      out- and, on directed graphs, in-neighbors) must reach only vertices with that label; afterwards
+      every vertex must have been visited. So each label class is closed under edges and connected, and
+      two components cannot share a label.'
+    code:
+      root: application
+      path: src/cc.cc
+      lines: [173, 217]
+      excerpt: |-
+        // Verifies CC result by performing a BFS from a vertex in each component
+        // - Asserts search does not reach a vertex with a different component label
+        // - If the graph is directed, it performs the search as if it was undirected
+        // - Asserts every vertex is visited (degree-0 vertex should have own label)
+        bool CCVerifier(const Graph &g, const pvector<NodeID> &comp) {
+          unordered_map<NodeID, NodeID> label_to_source;
+          for (NodeID n : g.vertices())
+            label_to_source[comp[n]] = n;
+          Bitmap visited(g.num_nodes());
+          visited.reset();
+          vector<NodeID> frontier;
+          frontier.reserve(g.num_nodes());
+          for (auto label_source_pair : label_to_source) {
+            NodeID curr_label = label_source_pair.first;
+            NodeID source = label_source_pair.second;
+            frontier.clear();
+            frontier.push_back(source);
+            visited.set_bit(source);
+            for (auto it = frontier.begin(); it != frontier.end(); it++) {
+              NodeID u = *it;
+              for (NodeID v : g.out_neigh(u)) {
+                if (comp[v] != curr_label)
+                  return false;
+                if (!visited.get_bit(v)) {
+                  visited.set_bit(v);
+                  frontier.push_back(v);
+                }
+              }
+              if (g.directed()) {
+                for (NodeID v : g.in_neigh(u)) {
+                  if (comp[v] != curr_label)
+                    return false;
+                  if (!visited.get_bit(v)) {
+                    visited.set_bit(v);
+                    frontier.push_back(v);
+                  }
+                }
+              }
+            }
+          }
+          for (NodeID n=0; n < g.num_nodes(); n++)
+            if (!visited.get_bit(n))
+              return false;
+          return true;
+        }
+      sha256: null
+  pass_criterion: 'the run exits 0 and prints Verification: PASS'
+  pass_regex: Verification:\s+PASS
+  tolerance:
+    value: null
+    measure: 'exact: the labeling must induce exactly the connected components (label values are free)'
+    note: CCVerifier returns a boolean; there is no numerical tolerance.
+baseline_implementation: gapbs-cc-afforest
+notes:
+- 'One kernel, two implementations (ADR 0001): cc.cc (Afforest, the gapbs cc binary) and cc_sv.cc (Shiloach-Vishkin,
+  the gapbs cc_sv binary) are checked by the same CCVerifier. The two functions are textually identical:
+  cc.cc lines 173-217 and cc_sv.cc lines 105-149 compare equal with diff (checked 2026-09-22), and both
+  mains pass it to BenchmarkKernel with no extra arguments (cc.cc line 227, cc_sv.cc line 158). Ticket
+  13 says "kernel records" (plural); this record follows ADR 0001 instead, so gapbs-cc-afforest and gapbs-cc-sv
+  are two implementations of this one kernel.'
+- Afforest is the baseline because gapbs builds it as its cc binary; Shiloach-Vishkin is recorded as an
+  upstream alternative, as pr_spmv is for gapbs-pr.
+extensions: {}

@@ -1,0 +1,261 @@
+{
+  "format": "swdb.lanl14-lossless-gzip-source-preparation.v1",
+  "prepared_utc": "2026-10-07T21:00:48.715255+00:00",
+  "canonical_ensure_ascii": true,
+  "state": "SOURCE_ONLY_NOT_RUN_FULL_PACKET_AND_R1_HARNESS_ARGV_REVIEW_REQUIRED",
+  "selected_packet_pins": {
+    "selected_exporter": {
+      "path": "/private/tmp/lanl14_final_export_lossless_gzip_20261007_a1.py",
+      "bytes": 22967,
+      "sha256": "928af82facd9f36dfdbca6595d2c2e9d1091dd0064c9fe53fc41c163879e026e"
+    },
+    "selected_reader": {
+      "path": "/private/tmp/lanl14_readonly_nine_export_admission_lossless_gzip_20261007_a1.py",
+      "bytes": 37647,
+      "sha256": "6909c422990a071b1a8d08c634c1c086f0218c5851d38996b6f4798759499570"
+    },
+    "selected_R1_harness": {
+      "path": "/private/tmp/lanl14_lossless_report_codec_isolated_test_source_20261007_a1_r1.py",
+      "bytes": 9710,
+      "sha256": "3725c07a7b2ad96edfe187a3516a5904f0d12c92c68783885407d304e69acc27"
+    },
+    "exporter_complete_unsealed_diff": {
+      "path": "/private/tmp/lanl14-lossless-gzip-exporter-complete-derivation-20261007-a1.diff",
+      "bytes": 21755,
+      "sha256": "0386b6ef3fec0d24959a168bfb6b35e90de22f48de0be64d1fc2d166cefecb83"
+    },
+    "reader_complete_unsealed_diff": {
+      "path": "/private/tmp/lanl14-lossless-gzip-reader-complete-derivation-20261007-a1.diff",
+      "bytes": 19738,
+      "sha256": "76aaff7d80b9adca39f7606e074fc44f4e6a71ae3371e54646fa3f8e4c7a2310"
+    },
+    "harness_complete_unsealed_R1_diff": {
+      "path": "/private/tmp/lanl14-lossless-gzip-codec-harness-r1-complete-derivation-20261007-a1.diff",
+      "bytes": 1196,
+      "sha256": "e45261df3634374748c2831fb301a1c62e70a82c87680a2aea9a421bafd9861f"
+    },
+    "actual_fixed_embedded_codec_source": {
+      "path": "/private/tmp/lanl14-lossless-report-codec-fixed-source-20261007-a1.txt",
+      "bytes": 10938,
+      "sha256": "c5bf37148079ece83402e6c72c42258c8f31c6a1e7d10e8df3789ea9515b4bb5"
+    },
+    "selected_unsealed_static_comparison": {
+      "path": "/private/tmp/lanl14-lossless-gzip-source-static-comparison-r1-20261007-a1.json",
+      "bytes": 8468,
+      "sha256": "7cfffa847fa52a59f0adab33bf9edb41f5fdcc9ce75f2eb9a536102f48a93fc2"
+    },
+    "full_handoff": {
+      "path": "/private/tmp/lanl14-lossless-gzip-source-handoff-20261007-a1.md",
+      "bytes": 8361,
+      "sha256": "7405baf30fc85976654b7b1e867ecfd9a3792b5f212a076712b21861f756f6b5"
+    }
+  },
+  "preserved_originals_and_drafts": {
+    "original_bf5_exporter": {
+      "path": "/private/tmp/lanl14_final_export_catalog_caps_a4.py",
+      "bytes": 9036,
+      "sha256": "bf5add9eb35daa5402a0359f6ace5c542a289f9b60b14cbd00aa763097a9645d"
+    },
+    "original_3a_reader": {
+      "path": "/private/tmp/lanl14-readonly-nine-export-admission-20261007-a1.py",
+      "bytes": 25308,
+      "sha256": "3a0f1c59e63b8ff96ef42b84d0c4ce8e36e8059b49bc9c0bd17f2d95fa3e1101"
+    },
+    "initial0488_harness_NOT_RUN": {
+      "path": "/private/tmp/lanl14_lossless_report_codec_isolated_test_source_20261007_a1.py",
+      "bytes": 9421,
+      "sha256": "0488a233b41c2a78c835f46aaa5e9189851696c56b7a031a7a6a85a9a8b8a48a"
+    },
+    "initial_unselected_codec_source_NOT_RUN": {
+      "path": "/private/tmp/lanl14-lossless-report-codec-source-20261007-a1.txt",
+      "bytes": 10889,
+      "sha256": "84620b70976a1726af3a0b9b72704438dc2a6ba3ed590790d68643ba4075c2cf"
+    },
+    "initial_unsealed_static_comparison": {
+      "path": "/private/tmp/lanl14-lossless-gzip-source-static-comparison-20261007-a1.json",
+      "bytes": 6721,
+      "sha256": "eda48c14becb78d510ac6c91c79f0c3966e23e61cf5e75987305c5178a50ef46"
+    }
+  },
+  "authorization_scope": "Parent authorized one prospective conditional lossless-gzip export-layout codec seam under ongoing project approval. No actual report size/body, target control import/main, harness/lift/body, SSH, Store or project/Git action authorized in this source preparation.",
+  "mechanical_future_representation": {
+    "original_bytes_at_most100MiB": "Exact original JSON at -report.json; no gzip output.",
+    "original_bytes_greater100MiB_at_most1GiB": "Fresh exclusive0600 deterministic empty-filename/mtime0/level9 single-member gzip at -report.json.gz.",
+    "original_remote_pretty_bytes_unchanged": true,
+    "JSON_reserialization": false,
+    "original_and_exported_file_size_SHA_and_original_semantic_seal_in_existing_export_receipt": true,
+    "exact_Git_additions": {
+      "canonical_original_YAML": 18,
+      "metadata": 4,
+      "total": 22
+    },
+    "no_MD_request_or_canonical_byte_transformation": true
+  },
+  "prospective_administrative_limits": {
+    "Git_blob_bytes_max": 104857600,
+    "original_report_bytes_max": 1073741824,
+    "codec_between_operation_seconds": 3600,
+    "scientific_and_provider_and_native_and_existing_public_validation_caps_unchanged": true,
+    "17_compact_consumer_caps_unchanged": true,
+    "bounds_are_unproved_administration_not_runtime_prediction": true,
+    "parent_existing_outer_supervision_still_required": true
+  },
+  "pre_mutable_export_guards": [
+    "All18 selected canonical YAML SHA/size/stat pins <=100MiB verified before worktree creation.",
+    "Original report <=1GiB is pinned before/after checked parse; conditional gzip <=100MiB and full byte-for-byte decode comparison before mutable Git.",
+    "Original MD/request <=100MiB and pins checked before worktree.",
+    "Single-link owned absolute nonsymlink files, exact returned SHA and seven-field FD/path stamps.",
+    "Private fresh gzip is exclusive/O_NOFOLLOW0600 with fsync and directory fsync; partial/existing output is preserved/refused, not replayed."
+  ],
+  "reader_pre_parse_and_codec_refusals": [
+    "Exact receipt fileSHA/seal first, representation pathname and suffix from explicit pinned receipt.",
+    "Export file <=100MiB size/SHA, original decoded <=1GiB actual size/SHA and stream EOF verified before JSON parsing.",
+    "Deterministic header, one complete gzip member, CRC/footer, no trailing/concatenated bytes, decode/output overflow and source/output/inode changes refused.",
+    "Decoded original report semantic seal recomputed; all original3a scientific/trial/source/scope/null/ancestry checks then run."
+  ],
+  "honest_lineage_and_interfaces": {
+    "receipt_exporter_sha256": "928af82facd9f36dfdbca6595d2c2e9d1091dd0064c9fe53fc41c163879e026e",
+    "receipt_layout_exporter_base_sha256": "bf5add9eb35daa5402a0359f6ace5c542a289f9b60b14cbd00aa763097a9645d",
+    "admission_reader_sha256": "6909c422990a071b1a8d08c634c1c086f0218c5851d38996b6f4798759499570",
+    "receipt_format_unchanged": "swdb.lanl14-final-report-export.v1",
+    "admission_format_unchanged": "swdb.lanl14-selected-nine-export-admission.v1",
+    "unchanged6a_accepts_only_explicit_future_parent_approved_dynamic_source_receipt_pins": true,
+    "new17_control_family_or_new_source_copy_wrapper": false
+  },
+  "static_only_derivation": {
+    "exporter_full_forward_reverse_hunks": 5,
+    "reader_full_forward_reverse_hunks": 5,
+    "copied_codec_definition_class_ASTs": 12,
+    "copied_codec_Assign_ASTs": 5,
+    "original_reader_require_call_ASTs_preserved": 80,
+    "only_original_require_changed_line": 92,
+    "entire_original_nine_pair45trial_loop_AST_equal": true,
+    "original_public_validation3600_owned_cleanup_Try_AST_equal": true,
+    "whole_byte_harness_R1_forward_reverse_hunks": 1,
+    "only_changed_harness_test_method": "test_concatenated_second_gzip_member_is_refused",
+    "remaining12_test_body_and_fixture_loader_setup_ASTs_unchanged": true,
+    "method": "Stdlib byte/AST/literal and diff inspection only; no imported/lifted target callable or test body execution."
+  },
+  "unchanged_scientific_source_pins_in_original_guard_contract": {
+    "C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+    "F6": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+    "python_modules": 185,
+    "report_runner_e79": "e79e4b2e295f07967a1f4f67e7501c35d9d402101330ac9347f98cfb282bf63a",
+    "reporter26f6": "26f6d803d17381a70241e77bed5a28a3340f03549135100e475f550c4e252303",
+    "nine_pairs": 9,
+    "whole_trials": 45,
+    "D30_unchanged": true,
+    "no_current_runtime_or_source_tree_verification_claim": "These are preserved original explicit guard constants/ASTs, not an actual execution or new source/canonical audit."
+  },
+  "isolated_harness_preparation": {
+    "methods": [
+      {
+        "name": "test_small_report_keeps_exact_original_bytes_and_no_gzip_output",
+        "line": 70
+      },
+      {
+        "name": "test_conditional_gzip_is_deterministic_and_preserves_every_original_byte",
+        "line": 74
+      },
+      {
+        "name": "test_crc_corruption_is_refused_with_explicit_matching_transfer_pin",
+        "line": 82
+      },
+      {
+        "name": "test_trailing_bytes_are_refused",
+        "line": 86
+      },
+      {
+        "name": "test_concatenated_second_gzip_member_is_refused",
+        "line": 89
+      },
+      {
+        "name": "test_truncated_footer_is_refused",
+        "line": 97
+      },
+      {
+        "name": "test_malformed_header_is_refused",
+        "line": 100
+      },
+      {
+        "name": "test_decoded_size_overflow_is_refused_before_accepting_output",
+        "line": 104
+      },
+      {
+        "name": "test_wrong_original_hash_is_refused_after_lossless_decode",
+        "line": 107
+      },
+      {
+        "name": "test_incompressible_git_overflow_retains_original_and_bounded_partial",
+        "line": 110
+      },
+      {
+        "name": "test_original_administrative_overflow_refuses_before_open_or_gzip_creation",
+        "line": 114
+      },
+      {
+        "name": "test_same_size_inode_swap_during_read_is_refused",
+        "line": 119
+      },
+      {
+        "name": "test_symlink_input_and_existing_partial_output_are_not_replayed",
+        "line": 129
+      }
+    ],
+    "body_executions": 0,
+    "only_lifted_exact_codec_defs": [
+      "_report_require",
+      "_report_deadline",
+      "_report_remaining",
+      "_report_stamp",
+      "_report_chunks",
+      "_report_file_pin",
+      "_ReportCappedWriter",
+      "_report_transfer_contract",
+      "_report_decoded_chunks",
+      "read_report_transfer",
+      "_report_compare_original",
+      "prepare_report_transfer"
+    ],
+    "only_lifted_closed_assignments": [
+      "MAX_GIT_REPORT_BYTES",
+      "MAX_ORIGINAL_REPORT_BYTES",
+      "REPORT_CODEC_SECONDS",
+      "REPORT_TRANSFER_POLICY",
+      "REPORT_STAT_KEYS"
+    ],
+    "no_full_module_or_previous_control_imports": true,
+    "synthetic_namespace_caps_only": {
+      "Git_bytes": 256,
+      "original_bytes": 4096
+    },
+    "R1_concatenation_case": "Original gzip plus deterministic empty20B member; explicit total<=256 avoids accidentally proving only encoded-cap refusal.",
+    "prospective_exact_argv_NOT_RUN": [
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+      "-B",
+      "/private/tmp/lanl14_lossless_report_codec_isolated_test_source_20261007_a1_r1.py"
+    ],
+    "parent_actual_interpreter_pin_and_existing_bounded_private_runner_review_required": true,
+    "TDD_state": "Seam authorized; test sources prepared but no RED/GREEN/pass evidence exists. Original8/5/13 or other batches not repeated."
+  },
+  "required_future_gates": [
+    "Parent and independent04 FULL finalized packet/R1 harness review; exact actual harness argv/interpreter and finite runner authorization before one synthetic batch.",
+    "Completed original report actual size and successful original remote run/full catalogue/lane/release/cleanup acceptance before export selection.",
+    "Parent-reviewed actual exporter invocation from delivered archive, no guessed actualE/R/receipt/result pins.",
+    "New pure-E exact18+4 export full catalogue validation and prior-byte preservation, then actual explicitly pinned new selected reader admission.",
+    "Ticket14 remains claimed until real all-nine public reports and admitted export closeout; original3a remains historical NOTRUN."
+  ],
+  "not_performed": {
+    "target_control_import_compilation_main": 0,
+    "test_harness_import_lift_or_body": 0,
+    "actual_report_artifact_or_numeric_body_read": 0,
+    "Store_public_validation_freeze_estimate_or_export": 0,
+    "scientific_provider_native_compiler_execution": 0,
+    "SSH_remote_stage_or_Git_command": 0,
+    "project_worktree_source_or_canonical_edits": 0,
+    "actual_inputs_or_argv_result_pins_constructed": 0,
+    "original_active_report_attempt_changes": 0
+  },
+  "identity_semantics": "CanonicalTrue whole-object excluding identity_sha256; preparation only, not sealed scientific admission or execution/test result.",
+  "identity_sha256": "febc849346ccd751dea9aeecf49c6605864f748725946c82a67d8f6736df47ef"
+}

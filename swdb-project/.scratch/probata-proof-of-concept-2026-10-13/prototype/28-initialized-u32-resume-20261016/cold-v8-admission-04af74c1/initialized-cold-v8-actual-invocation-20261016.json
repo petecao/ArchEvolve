@@ -1,0 +1,29 @@
+{
+  "argv": [
+    "ssh",
+    "mbit10",
+    "/usr/bin/timeout --signal=TERM --kill-after=10 180 /usr/bin/env -i HOME=/data1/yanruj/probata-verifiers/home LANG=C LC_ALL=C PATH=/usr/bin:/bin PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/data1/yanruj/probata-resume-20261016-04af74c1/swdb-project PYTHONPYCACHEPREFIX=/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-cold-04af74c1-v8/cache /data1/yanruj/venvs/swdb-test/bin/python -I -B -X pycache_prefix=/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-cold-04af74c1-v8/reader-source-cache /data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-cold-04af74c1-v8/control/initialized_cold_audit_v8.py /data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-cold-04af74c1-v8/control/initialized-cold-policy-04af74c1-v8.json c4f0bd5ea71b59fe8672c378ac04f2de58c07434b237c4158d3a7750a831762a"
+  ],
+  "classification": "ACTUAL_PASSIVE_READER_INVOCATION_ONLY",
+  "date": "2026-10-16 ET",
+  "env_command_sha256": "b72b07fe4e009a51c98ee647183f61f959b4ee13fdb4bb368f0ed32d9c91109f",
+  "exit_code": 1,
+  "local_wall_seconds": 16.80970597267151,
+  "original_raw_untouched_by_reader": true,
+  "preflight": {
+    "bytes": 420089,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v8-admission-04af74c1/preflight-v8-actual-20261016.json",
+    "sha256": "6655c646700e766a03eec4797b41cb5344fc61a5f232b1cf8f94dfee84565279"
+  },
+  "scientific_reexecution": false,
+  "stderr": {
+    "bytes": 0,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v8-admission-04af74c1/initialized-cold-v8-actual-stderr-20261016.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 1228,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v8-admission-04af74c1/initialized-cold-v8-actual-stdout-20261016.json",
+    "sha256": "b31fd74c690dfde01ec0583a2bf239d549b03ea8f8fca2d2915c9d1cfc50f7b0"
+  }
+}

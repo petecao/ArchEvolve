@@ -1,0 +1,764 @@
+kind: cpu_memory_resource_calibration
+schema_version: '0.4'
+id: mbit10.cpu.lanl20261006.resource.memory-v2.a1
+status: draft
+created: '2026-10-12'
+updated: '2026-10-12'
+provenance:
+- id: total-cell-resource
+  kind: source_code
+  description: Prospective inferred total-cell recipe over independently measured/request-counted cells;
+    includes driver work, max composition, never application timing.
+  uri: null
+format: swdb.cpu-memory-resource-calibration.v1
+recipe:
+  id: gross_constructed_resource_v1
+  denominator: source_normalized_logical_requests
+  elapsed: gross_uninstrumented_native_cell
+  includes_driver_work: true
+  composition: max_with_compute
+  transfer_basis: inferred
+  physical_instruction_latency: false
+  proven_application_upper_bound: false
+source_calibration: mbit10.cpu.lanl20261006.service.memory-v2.a1
+source_calibration_sha256: 9f72ec8c71ab60fb739a47bdb4255b939a11a63e4672fb67b2f8ca3e09a2f05a
+source_receipt_sha256: 6a454d4fffba9a12cc3453fc990374199be5d7f46b9fc3876a2164da4beec791
+calibration_sources:
+- mbit10.cpu.lanl20261006.service.memory-v2.a1
+target: mbit10
+threads: 1
+backend: native
+evidence_kind: native
+context:
+  compiler_version: |-
+    clang version 22.1.8 (https://github.com/llvm/llvm-project ca7933e47d3a3451d81e72ac174dcb5aa28b59d1)
+    Target: x86_64-unknown-linux-gnu
+    Thread model: posix
+    InstalledDir: /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin
+  flags:
+  - -O3
+  - -std=c++11
+  - --gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13
+  host: mbit10
+  architecture: x86_64
+  source_sha256:
+    CpuMemoryWork.h: 02e71c52dc1be92db92bbf06501a8828a375975ab18e2054d39397ee5ef66daf
+    CpuMemoryTimer.cpp: c72b767e349128595b84582a191091af2c2e714a05dd106adc441d5bbb8da676
+    CpuMemoryCount.cpp: b20f1471936856fdb6bae890a4097f98e5b6593b9f42caa4a42c42832289f4f8
+  binary_sha256: a3fc366d410891e849ca838a374bfba039355bd962c5728c439f81a036be32d8
+  compiler_sha256: 31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113
+  instrumented_timer: false
+  optimized_work:
+    ir_sha256: 05b7ae4a0665aea99501a6a1b71c301fd992611bb02f5997821eb4d9658887f8
+    retained_primitives:
+      '1': [volatile_write]
+      '2': [volatile_write]
+    scope: Actual O3 typed wrapper lowering; normalized request numerator proof is independent.
+  control_environment:
+    GLIBC_TUNABLES: null
+    LD_PRELOAD: null
+    LD_AUDIT: null
+    LD_LIBRARY_PATH: /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu
+    DYLD_LIBRARY_PATH: null
+    DYLD_INSERT_LIBRARIES: null
+  control_environment_scope:
+    format: swdb.service-control-environment.v1
+    prefixes: [MALLOC_]
+    exact_variables: [GLIBC_TUNABLES, LD_PRELOAD, LD_AUDIT, LD_LIBRARY_PATH, DYLD_LIBRARY_PATH, DYLD_INSERT_LIBRARIES]
+    absence_semantics: null_or_absent_is_unset_under_declared_scope
+  lane: 'mbit10-evaluation-node1 (verified: affinity, bind:1, lease held, generation 559)'
+  cpus: [1]
+  machine_sha256: fcb0123f0bdb9bc004348eb8c6444f03304b6612e0cb2e26a82e621b07d82a79
+  system: Linux
+  start_state:
+    load: [8.0830078125, 8.08349609375, 7.75341796875]
+    time_ns: 1791820623532640690
+    available_memory: |-
+      MemTotal:       131426264 kB
+      MemFree:        28612568 kB
+      MemAvailable:   97062224 kB
+      Buffers:         7753076 kB
+      Cached:         33733192 kB
+      SwapCached:            0 kB
+      Active:         28575808 kB
+      Inactive:       39841512 kB
+      Active(anon):   26917940 kB
+      Inactive(anon):    43444 kB
+      Active(file):    1657868 kB
+      Inactive(file): 39798068 kB
+      Unevictable:       39252 kB
+      Mlocked:           36180 kB
+      SwapTotal:             0 kB
+      SwapFree:              0 kB
+      Zswap:                 0 kB
+      Zswapped:              0 kB
+      Dirty:               424 kB
+      Writeback:             0 kB
+      AnonPages:      26970724 kB
+      Mapped:           990808 kB
+      Shmem:             15416 kB
+      KReclaimable:   28312320 kB
+      Slab:           30803660 kB
+      SReclaimable:   28249236 kB
+      SUnreclaim:      2554424 kB
+      KernelStack:       21984 kB
+      PageTables:        73112 kB
+      SecPageTables:         0 kB
+      NFS_Unstable:          0 kB
+      Bounce:                0 kB
+      WritebackTmp:          0 kB
+      CommitLimit:    65713132 kB
+      Committed_AS:   30340344 kB
+      VmallocTotal:   13743895347199 kB
+      VmallocUsed:      428528 kB
+      VmallocChunk:          0 kB
+      Percpu:           396800 kB
+      HardwareCorrupted:     8 kB
+      AnonHugePages:         0 kB
+      ShmemHugePages:        0 kB
+      ShmemPmdMapped:        0 kB
+      FileHugePages:         0 kB
+      FilePmdMapped:         0 kB
+      Unaccepted:            0 kB
+      HugePages_Total:       0
+      HugePages_Free:        0
+      HugePages_Rsvd:        0
+      HugePages_Surp:        0
+      Hugepagesize:       2048 kB
+      Hugetlb:               0 kB
+      DirectMap4k:    40562660 kB
+      DirectMap2M:    90996736 kB
+      DirectMap1G:     4194304 kB
+    governor: null
+    no_turbo: null
+  free_disk_bytes: 90456096768
+  commit: 598232ca6969f4207d27b135f4c702019e4c1776
+  dirty: false
+  loaded_libraries:
+    libstdc++.so.6.0.33:
+      path: /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33
+      sha256: 1fd75fe70354a416d75aef22bcae68c47bd25d20e2d0568c30b1a9838cf62f11
+    libm.so.6:
+      path: /usr/lib/x86_64-linux-gnu/libm.so.6
+      sha256: fce00b6f25f459cf4ae0b7fae4257909a1a8a86f9149e7c029a5d617baf1ccd0
+    libgcc_s.so.1:
+      path: /usr/lib/x86_64-linux-gnu/libgcc_s.so.1
+      sha256: d93224d2b0dab4247598be683adca02f5cf00586f99c187579cd7e92058fb7cb
+    libc.so.6:
+      path: /usr/lib/x86_64-linux-gnu/libc.so.6
+      sha256: 3a15d66867d83762c7f2f1e37359cb8f6c5743edb369c65285cb0b1c4f7498bf
+    ld-linux-x86-64.so.2:
+      path: /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+      sha256: c20a2dc8917c755f02b94049356320fe1f62ac7d9f8994731f807d9df39302da
+  end_state:
+    load: [8.1689453125, 8.18994140625, 7.93701171875]
+    time_ns: 1791821013243217150
+    available_memory: |-
+      MemTotal:       131426264 kB
+      MemFree:        29128096 kB
+      MemAvailable:   97668760 kB
+      Buffers:         7755056 kB
+      Cached:         33819204 kB
+      SwapCached:            0 kB
+      Active:         25842028 kB
+      Inactive:       39928832 kB
+      Active(anon):   24183644 kB
+      Inactive(anon):    43296 kB
+      Active(file):    1658384 kB
+      Inactive(file): 39885536 kB
+      Unevictable:       39252 kB
+      Mlocked:           36180 kB
+      SwapTotal:             0 kB
+      SwapFree:              0 kB
+      Zswap:                 0 kB
+      Zswapped:              0 kB
+      Dirty:             28964 kB
+      Writeback:             0 kB
+      AnonPages:      24236224 kB
+      Mapped:           991524 kB
+      Shmem:             15416 kB
+      KReclaimable:   28315344 kB
+      Slab:           30806496 kB
+      SReclaimable:   28252260 kB
+      SUnreclaim:      2554236 kB
+      KernelStack:       22384 kB
+      PageTables:        69692 kB
+      SecPageTables:         0 kB
+      NFS_Unstable:          0 kB
+      Bounce:                0 kB
+      WritebackTmp:          0 kB
+      CommitLimit:    65713132 kB
+      Committed_AS:   27601672 kB
+      VmallocTotal:   13743895347199 kB
+      VmallocUsed:      429120 kB
+      VmallocChunk:          0 kB
+      Percpu:           396800 kB
+      HardwareCorrupted:     8 kB
+      AnonHugePages:         0 kB
+      ShmemHugePages:        0 kB
+      ShmemPmdMapped:        0 kB
+      FileHugePages:         0 kB
+      FilePmdMapped:         0 kB
+      Unaccepted:            0 kB
+      HugePages_Total:       0
+      HugePages_Free:        0
+      HugePages_Rsvd:        0
+      HugePages_Surp:        0
+      Hugepagesize:       2048 kB
+      Hugetlb:               0 kB
+      DirectMap4k:    40562660 kB
+      DirectMap2M:    90996736 kB
+      DirectMap1G:     4194304 kB
+    governor: null
+    no_turbo: null
+settings:
+  group: memory_v2
+  repetitions: 7
+  min_trial_s: 0.05
+  max_wall_s: 900.0
+  event_cap: 134217728
+  count_build_cap_bytes: 67108864
+  timed_data_cap_bytes: 26214400
+  live_payload_cap_bytes: 16777216
+  operations: [write]
+  element_bytes: [1, 2]
+  footprint_bytes: [8388608]
+  trial_resolution_scope: gross_aggregate_only; paired driver retained
+services:
+- id: memory.write.1.8388608
+  unit: seconds/request
+  event_definition: One exact logical source request; shared body gross minus conditional-loop driver.
+    Preparation is untimed; no application residency or physical latency claim.
+  scope:
+    worker_scope: serial
+    memory_regime: resident_serial_constructed_requests
+    operation: write
+    update_kind: write
+    element_bytes: 1
+    footprint_bytes: 8388608
+    transfer_basis: inferred
+    construction: dependent permuted-ring read; sequential volatile write; uncontended seq_cst add/CAS;
+      deterministic success/failure cells
+    cache_state: prepared buffers and repeated calls; physical cache level unverified
+    first_touch: preparation excluded
+  denominator:
+    level: source_normalized_work
+    basis: measured
+    proof:
+      format: swdb.cpu-memory-count-proof.v1
+      pipeline:
+        version: source-normalized-v2
+        passes:
+        - function(sroa,mem2reg),cgscc(inline),function(loop-simplify)
+      points:
+      - operation: write
+        element_bytes: 1
+        invoke: true
+        events: 3
+        requests: 3
+        opaque_events: 0
+        requests_by_kind_width:
+        - update_kind: write
+          element_bytes: 1
+          requests: 3
+        checked_success_events: null
+        characterization_sha256: e4518bf2be1b868d6bba890aca6c2b0ca4cef58395f2940da92e6ea8615a62e3
+        operation_counts:
+          integer: 17
+          floating_point: 0
+          branch: 14
+          atomic: 0
+      - operation: write
+        element_bytes: 1
+        invoke: true
+        events: 5
+        requests: 5
+        opaque_events: 0
+        requests_by_kind_width:
+        - update_kind: write
+          element_bytes: 1
+          requests: 5
+        checked_success_events: null
+        characterization_sha256: 048c6d0651b1f52a4c0905034e2ab20c135825d4502610b4879300275dfa3acf
+        operation_counts:
+          integer: 27
+          floating_point: 0
+          branch: 22
+          atomic: 0
+      - operation: write
+        element_bytes: 1
+        invoke: false
+        events: 3
+        requests: 0
+        opaque_events: 0
+        requests_by_kind_width: []
+        checked_success_events: null
+        characterization_sha256: 0d504f004f4e0d44dcee35f8f21491ba84c19418e64150b9fd09a9947ff40c74
+        operation_counts:
+          integer: 17
+          floating_point: 0
+          branch: 11
+          atomic: 0
+      - operation: write
+        element_bytes: 1
+        invoke: false
+        events: 5
+        requests: 0
+        opaque_events: 0
+        requests_by_kind_width: []
+        checked_success_events: null
+        characterization_sha256: cf168d5a5d811bb0c886a4072959c58a5ee52bd1e1173609286a5b14cedf43b8
+        operation_counts:
+          integer: 27
+          floating_point: 0
+          branch: 17
+          atomic: 0
+      - operation: write
+        element_bytes: 2
+        invoke: true
+        events: 3
+        requests: 3
+        opaque_events: 0
+        requests_by_kind_width:
+        - update_kind: write
+          element_bytes: 2
+          requests: 3
+        checked_success_events: null
+        characterization_sha256: a092eadc78b03623ba48da6db0b2d6174d8eea9288cce12d8d10a29d68c08d0e
+        operation_counts:
+          integer: 17
+          floating_point: 0
+          branch: 14
+          atomic: 0
+      - operation: write
+        element_bytes: 2
+        invoke: true
+        events: 5
+        requests: 5
+        opaque_events: 0
+        requests_by_kind_width:
+        - update_kind: write
+          element_bytes: 2
+          requests: 5
+        checked_success_events: null
+        characterization_sha256: d6350cff63115c972598a56ea5d39ed123e2a85c8225bf9f5c199948af0779c0
+        operation_counts:
+          integer: 27
+          floating_point: 0
+          branch: 22
+          atomic: 0
+      - operation: write
+        element_bytes: 2
+        invoke: false
+        events: 3
+        requests: 0
+        opaque_events: 0
+        requests_by_kind_width: []
+        checked_success_events: null
+        characterization_sha256: 9d977381a797e4498069b37a8630fe3acd464c4169cd9b2a6349e85facb269ba
+        operation_counts:
+          integer: 17
+          floating_point: 0
+          branch: 11
+          atomic: 0
+      - operation: write
+        element_bytes: 2
+        invoke: false
+        events: 5
+        requests: 0
+        opaque_events: 0
+        requests_by_kind_width: []
+        checked_success_events: null
+        characterization_sha256: 47c3cb44498e2df2bb6a529fb8a9f9cb8b9c1b0b66fc8bb6076dbfe522058175
+        operation_counts:
+          integer: 27
+          floating_point: 0
+          branch: 17
+          atomic: 0
+      source_sha256: 02e71c52dc1be92db92bbf06501a8828a375975ab18e2054d39397ee5ef66daf
+      count_driver_sha256: b20f1471936856fdb6bae890a4097f98e5b6593b9f42caa4a42c42832289f4f8
+      plugin_source_sha256: 3ccefd011f2d155832b7188b341c3f64a610cfc3c696b825afed01fd5c0a029f
+      runtime_source_sha256: 43762b5079564a7f2fbc930befbdde85a5498ca82b635e82f5cc0476ffa9099e
+  trials:
+  - events: 134217728
+    batch_events: 8388608
+    batches: 16
+    gross_seconds: 0.093055311
+    driver_seconds: 0.09307638500000001
+    order: service_first
+    checksum: 0
+    success_events: null
+    cycle_verified_elements: null
+  - events: 134217728
+    batch_events: 8388608
+    batches: 16
+    gross_seconds: 0.093206031
+    driver_seconds: 0.09314181299999999
+    order: driver_first
+    checksum: 0
+    success_events: null
+    cycle_verified_elements: null
+  - events: 134217728
+    batch_events: 8388608
+    batches: 16
+    gross_seconds: 0.093213541
+    driver_seconds: 0.09316307999999998
+    order: service_first
+    checksum: 0
+    success_events: null
+    cycle_verified_elements: null
+  - events: 134217728
+    batch_events: 8388608
+    batches: 16
+    gross_seconds: 0.093175356
+    driver_seconds: 0.093181006
+    order: driver_first
+    checksum: 0
+    success_events: null
+    cycle_verified_elements: null
+  - events: 134217728
+    batch_events: 8388608
+    batches: 16
+    gross_seconds: 0.093322824
+    driver_seconds: 0.09312598999999998
+    order: service_first
+    checksum: 0
+    success_events: null
+    cycle_verified_elements: null
+  - events: 134217728
+    batch_events: 8388608
+    batches: 16
+    gross_seconds: 0.09316128000000001
+    driver_seconds: 0.09314515799999999
+    order: driver_first
+    checksum: 0
+    success_events: null
+    cycle_verified_elements: null
+  - events: 134217728
+    batch_events: 8388608
+    batches: 16
+    gross_seconds: 0.093203418
+    driver_seconds: 0.08038498699999999
+    order: service_first
+    checksum: 0
+    success_events: null
+    cycle_verified_elements: null
+  seconds_per_event:
+    values: [6.933160945773125e-10, 6.944390460848808e-10, 6.944949999451637e-10, 6.942104995250702e-10,
+      6.953092217445373e-10, 6.94105625152588e-10, 6.94419577717781e-10]
+    median: 6.94419577717781e-10
+    min: 6.933160945773125e-10
+    max: 6.953092217445373e-10
+    spread: 1.9931271672248617e-12
+    repetitions: 7
+  missing: []
+  parameter:
+    value: 6.94419577717781e-10
+    basis: inferred
+    unit: seconds/request
+    source: Constructed total-cell resource mbit10.cpu.lanl20261006.resource.memory-v2.a1; mbit10.cpu.lanl20261006.service.memory-v2.a1/memory.write.1.8388608;
+      gross uninstrumented elapsed / exactly proved logical requests, includes driver work; inferred transfer
+      and max composition with compute, no physical latency or upper-bound claim.
+  paired_residual:
+    parameter:
+      value: null
+      basis: unknown
+      source: Service calibration mbit10.cpu.lanl20261006.service.memory-v2.a1; memory.write.1.8388608;
+        paired elapsed/work trials.
+      unit: seconds/request
+    seconds_per_event:
+      values: [-1.5701353549964582e-13, 4.784613847732899e-13, 3.7596374750148893e-13, -4.209578037258935e-14,
+        1.4665275812150591e-12, 1.2011826038376372e-13, 9.550475329160694e-11]
+      median: 3.7596374750148893e-13
+      min: -1.5701353549964582e-13
+      max: 9.550475329160694e-11
+      spread: 9.566176682710659e-11
+      repetitions: 7
+    missing:
+    - paired_driver_subtraction_resolution
+  cost_basis: gross_constructed_resource_v1
+  gross_seconds_per_request:
+    values: [6.933160945773125e-10, 6.944390460848808e-10, 6.944949999451637e-10, 6.942104995250702e-10,
+      6.953092217445373e-10, 6.94105625152588e-10, 6.94419577717781e-10]
+    median: 6.94419577717781e-10
+    min: 6.933160945773125e-10
+    max: 6.953092217445373e-10
+    spread: 1.9931271672248617e-12
+    repetitions: 7
+  driver_seconds_per_request:
+    values: [6.934731081128121e-10, 6.939605847001075e-10, 6.941190361976622e-10, 6.942525953054428e-10,
+      6.938426941633223e-10, 6.939855068922042e-10, 5.989148244261741e-10]
+    median: 6.939605847001075e-10
+    min: 5.989148244261741e-10
+    max: 6.942525953054428e-10
+    spread: 9.533777087926869e-11
+    repetitions: 7
+- id: memory.write.2.8388608
+  unit: seconds/request
+  event_definition: One exact logical source request; shared body gross minus conditional-loop driver.
+    Preparation is untimed; no application residency or physical latency claim.
+  scope:
+    worker_scope: serial
+    memory_regime: resident_serial_constructed_requests
+    operation: write
+    update_kind: write
+    element_bytes: 2
+    footprint_bytes: 8388608
+    transfer_basis: inferred
+    construction: dependent permuted-ring read; sequential volatile write; uncontended seq_cst add/CAS;
+      deterministic success/failure cells
+    cache_state: prepared buffers and repeated calls; physical cache level unverified
+    first_touch: preparation excluded
+  denominator:
+    level: source_normalized_work
+    basis: measured
+    proof:
+      format: swdb.cpu-memory-count-proof.v1
+      pipeline:
+        version: source-normalized-v2
+        passes:
+        - function(sroa,mem2reg),cgscc(inline),function(loop-simplify)
+      points:
+      - operation: write
+        element_bytes: 1
+        invoke: true
+        events: 3
+        requests: 3
+        opaque_events: 0
+        requests_by_kind_width:
+        - update_kind: write
+          element_bytes: 1
+          requests: 3
+        checked_success_events: null
+        characterization_sha256: e4518bf2be1b868d6bba890aca6c2b0ca4cef58395f2940da92e6ea8615a62e3
+        operation_counts:
+          integer: 17
+          floating_point: 0
+          branch: 14
+          atomic: 0
+      - operation: write
+        element_bytes: 1
+        invoke: true
+        events: 5
+        requests: 5
+        opaque_events: 0
+        requests_by_kind_width:
+        - update_kind: write
+          element_bytes: 1
+          requests: 5
+        checked_success_events: null
+        characterization_sha256: 048c6d0651b1f52a4c0905034e2ab20c135825d4502610b4879300275dfa3acf
+        operation_counts:
+          integer: 27
+          floating_point: 0
+          branch: 22
+          atomic: 0
+      - operation: write
+        element_bytes: 1
+        invoke: false
+        events: 3
+        requests: 0
+        opaque_events: 0
+        requests_by_kind_width: []
+        checked_success_events: null
+        characterization_sha256: 0d504f004f4e0d44dcee35f8f21491ba84c19418e64150b9fd09a9947ff40c74
+        operation_counts:
+          integer: 17
+          floating_point: 0
+          branch: 11
+          atomic: 0
+      - operation: write
+        element_bytes: 1
+        invoke: false
+        events: 5
+        requests: 0
+        opaque_events: 0
+        requests_by_kind_width: []
+        checked_success_events: null
+        characterization_sha256: cf168d5a5d811bb0c886a4072959c58a5ee52bd1e1173609286a5b14cedf43b8
+        operation_counts:
+          integer: 27
+          floating_point: 0
+          branch: 17
+          atomic: 0
+      - operation: write
+        element_bytes: 2
+        invoke: true
+        events: 3
+        requests: 3
+        opaque_events: 0
+        requests_by_kind_width:
+        - update_kind: write
+          element_bytes: 2
+          requests: 3
+        checked_success_events: null
+        characterization_sha256: a092eadc78b03623ba48da6db0b2d6174d8eea9288cce12d8d10a29d68c08d0e
+        operation_counts:
+          integer: 17
+          floating_point: 0
+          branch: 14
+          atomic: 0
+      - operation: write
+        element_bytes: 2
+        invoke: true
+        events: 5
+        requests: 5
+        opaque_events: 0
+        requests_by_kind_width:
+        - update_kind: write
+          element_bytes: 2
+          requests: 5
+        checked_success_events: null
+        characterization_sha256: d6350cff63115c972598a56ea5d39ed123e2a85c8225bf9f5c199948af0779c0
+        operation_counts:
+          integer: 27
+          floating_point: 0
+          branch: 22
+          atomic: 0
+      - operation: write
+        element_bytes: 2
+        invoke: false
+        events: 3
+        requests: 0
+        opaque_events: 0
+        requests_by_kind_width: []
+        checked_success_events: null
+        characterization_sha256: 9d977381a797e4498069b37a8630fe3acd464c4169cd9b2a6349e85facb269ba
+        operation_counts:
+          integer: 17
+          floating_point: 0
+          branch: 11
+          atomic: 0
+      - operation: write
+        element_bytes: 2
+        invoke: false
+        events: 5
+        requests: 0
+        opaque_events: 0
+        requests_by_kind_width: []
+        checked_success_events: null
+        characterization_sha256: 47c3cb44498e2df2bb6a529fb8a9f9cb8b9c1b0b66fc8bb6076dbfe522058175
+        operation_counts:
+          integer: 27
+          floating_point: 0
+          branch: 17
+          atomic: 0
+      source_sha256: 02e71c52dc1be92db92bbf06501a8828a375975ab18e2054d39397ee5ef66daf
+      count_driver_sha256: b20f1471936856fdb6bae890a4097f98e5b6593b9f42caa4a42c42832289f4f8
+      plugin_source_sha256: 3ccefd011f2d155832b7188b341c3f64a610cfc3c696b825afed01fd5c0a029f
+      runtime_source_sha256: 43762b5079564a7f2fbc930befbdde85a5498ca82b635e82f5cc0476ffa9099e
+  trials:
+  - events: 134217728
+    batch_events: 4194304
+    batches: 32
+    gross_seconds: 0.07719596700000002
+    driver_seconds: 0.07715867100000003
+    order: service_first
+    checksum: 0
+    success_events: null
+    cycle_verified_elements: null
+  - events: 134217728
+    batch_events: 4194304
+    batches: 32
+    gross_seconds: 0.07820127100000002
+    driver_seconds: 0.07753861199999999
+    order: driver_first
+    checksum: 0
+    success_events: null
+    cycle_verified_elements: null
+  - events: 134217728
+    batch_events: 4194304
+    batches: 32
+    gross_seconds: 0.07804034299999998
+    driver_seconds: 0.07732950200000001
+    order: service_first
+    checksum: 0
+    success_events: null
+    cycle_verified_elements: null
+  - events: 134217728
+    batch_events: 4194304
+    batches: 32
+    gross_seconds: 0.07718751499999998
+    driver_seconds: 0.077522798
+    order: driver_first
+    checksum: 0
+    success_events: null
+    cycle_verified_elements: null
+  - events: 134217728
+    batch_events: 4194304
+    batches: 32
+    gross_seconds: 0.07765235999999999
+    driver_seconds: 0.077422595
+    order: service_first
+    checksum: 0
+    success_events: null
+    cycle_verified_elements: null
+  - events: 134217728
+    batch_events: 4194304
+    batches: 32
+    gross_seconds: 0.07718451099999996
+    driver_seconds: 0.077171633
+    order: driver_first
+    checksum: 0
+    success_events: null
+    cycle_verified_elements: null
+  - events: 134217728
+    batch_events: 4194304
+    batches: 32
+    gross_seconds: 0.07720685199999998
+    driver_seconds: 0.07717698099999998
+    order: service_first
+    checksum: 0
+    success_events: null
+    cycle_verified_elements: null
+  seconds_per_event:
+    values: [5.751547738909723e-10, 5.826448723673822e-10, 5.814458653330802e-10, 5.750918015837668e-10,
+      5.785551667213439e-10, 5.750694200396534e-10, 5.752358734607695e-10]
+    median: 5.752358734607695e-10
+    min: 5.750694200396534e-10
+    max: 5.826448723673822e-10
+    spread: 7.575452327728726e-12
+    repetitions: 7
+  missing: []
+  parameter:
+    value: 5.752358734607695e-10
+    basis: inferred
+    unit: seconds/request
+    source: Constructed total-cell resource mbit10.cpu.lanl20261006.resource.memory-v2.a1; mbit10.cpu.lanl20261006.service.memory-v2.a1/memory.write.2.8388608;
+      gross uninstrumented elapsed / exactly proved logical requests, includes driver work; inferred transfer
+      and max composition with compute, no physical latency or upper-bound claim.
+  paired_residual:
+    parameter:
+      value: null
+      basis: unknown
+      source: Service calibration mbit10.cpu.lanl20261006.service.memory-v2.a1; memory.write.2.8388608;
+        paired elapsed/work trials.
+      unit: seconds/request
+    seconds_per_event:
+      values: [2.7787685394281316e-13, 4.937194287777124e-12, 5.296178162097752e-12, -2.4980530142785574e-12,
+        1.7118826508521504e-12, 9.594857692682979e-14, 2.2255629301071732e-13]
+      median: 2.7787685394281316e-13
+      min: -2.4980530142785574e-12
+      max: 5.296178162097752e-12
+      spread: 7.79423117637631e-12
+      repetitions: 7
+    missing:
+    - paired_driver_subtraction_resolution
+  cost_basis: gross_constructed_resource_v1
+  gross_seconds_per_request:
+    values: [5.751547738909723e-10, 5.826448723673822e-10, 5.814458653330802e-10, 5.750918015837668e-10,
+      5.785551667213439e-10, 5.750694200396534e-10, 5.752358734607695e-10]
+    median: 5.752358734607695e-10
+    min: 5.750694200396534e-10
+    max: 5.826448723673822e-10
+    spread: 7.575452327728726e-12
+    repetitions: 7
+  driver_seconds_per_request:
+    values: [5.748768970370295e-10, 5.77707678079605e-10, 5.761496871709824e-10, 5.775898545980454e-10,
+      5.768432840704918e-10, 5.749734714627266e-10, 5.750133171677588e-10]
+    median: 5.761496871709824e-10
+    min: 5.748768970370295e-10
+    max: 5.77707678079605e-10
+    spread: 2.8307810425755903e-12
+    repetitions: 7
+identity_sha256: 795692bb50886b921a0146cc2e5e94f03127d4c113e9532041b08510f3348f7c

@@ -1,0 +1,81 @@
+{
+  "created": "2026-09-26",
+  "observed_at": "2026-09-26T15:33:19-04:00",
+  "host": "mbit10",
+  "receipt": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926.dispatch/health-20260926-1533.json",
+    "bytes": 57146,
+    "sha256": "7f51f4c5da1bd844692414754b5651a1f61cfb5ef162560995e8e894eeeeff79"
+  },
+  "leases": {
+    "node0": {
+      "state": "released",
+      "generation": 325
+    },
+    "node1": {
+      "state": "held",
+      "generation": 402,
+      "owner_pid": 3060483,
+      "owner_start_ticks": 495158793
+    },
+    "legacy": {
+      "state": "released",
+      "generation": 77
+    },
+    "kernel_locks": "node1 FLOCK agrees with active owner; node0 and legacy empty"
+  },
+  "native": {
+    "commit": "319645eab0a25c815fa03fe1c372d32b4ba45d10",
+    "driver": {
+      "pid": 3060552,
+      "start_ticks": 495158817,
+      "state": "healthy"
+    },
+    "evaluator": {
+      "pid": 3060561,
+      "start_ticks": 495159028,
+      "state": "alive"
+    },
+    "first_pair": {
+      "family": "dx100.uniform-random",
+      "baseline_checked": 22,
+      "candidate_checked": 21,
+      "planned_total": 60
+    },
+    "remaining_pairs_started": 0,
+    "stderr_bytes": 0,
+    "recent_tree_rss_bytes": 987840512,
+    "recent_peak_tree_rss_bytes": 1119879168,
+    "failure": false,
+    "retry": false
+  },
+  "owned_processes": "Only the native one-thread pilot is active; all historical PID/start unions absent.",
+  "load_average": [
+    1.15,
+    1.08,
+    0.9
+  ],
+  "free_bytes": {
+    "/data1": 17587167232,
+    "/data": 195430019072
+  },
+  "estimated_available_gib": {
+    "node0": 57.3,
+    "node1": 57.37,
+    "global": 116.57
+  },
+  "historical_pins": "unchanged",
+  "receipt_hashes_verified": 15,
+  "workers": {
+    "host_dx100": "running",
+    "spec_postfix": "running",
+    "standards_postfix": "running"
+  },
+  "counts": {
+    "resolved_tickets": 13,
+    "claimed_tickets": 8,
+    "final_acceptance_cells": 0,
+    "required_cells": 8
+  },
+  "next_full_check_et": "2026-09-26 16:03 ET"
+}

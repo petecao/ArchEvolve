@@ -1,0 +1,49 @@
+{
+  "format": "swdb.cpu-holdout-diagnostic-preparation.v1",
+  "source_path": "/private/tmp/lanl-holdout-region-error-audit-20261007.py",
+  "source_sha256": "1d997bbc59c3b591adb6897386c3f20111325ef793f8c5047cc01594460f3b38",
+  "source_bytes": 5149,
+  "executed": false,
+  "base_executed_development_source_path": "/private/tmp/lanl-development-region-error-audit-20261007.py",
+  "base_sha256": "5284c86797b333ad19aef76d2bbe15748af24139a6c98c95e666ee6b1c9a4309",
+  "changes": [
+    {
+      "from": "/private/tmp/lanl-cpu-development-a3-local-admission-20261007.json",
+      "to": "/private/tmp/lanl-cpu-holdout-a3-local-admission-20261007.json"
+    },
+    {
+      "from": "a['phase']=='development'",
+      "to": "a['phase']=='holdout'"
+    },
+    {
+      "from": "'.g16.t1.estimate.v1.yaml'",
+      "to": "'.g17.t1.estimate.v1.yaml'"
+    },
+    {
+      "from": "swdb.cpu-development-region-diagnostic.v1",
+      "to": "swdb.cpu-holdout-region-diagnostic.v1"
+    },
+    {
+      "from": "actual_development_admission_identity",
+      "to": "actual_holdout_admission_identity"
+    },
+    {
+      "from": "after accepted development only;",
+      "to": "after accepted held-out admission only;"
+    },
+    {
+      "from": "or holdout outcome access.",
+      "to": "or additional outcome collection."
+    },
+    {
+      "from": "/private/tmp/lanl-cpu-development-region-error-diagnostic-20261007.json",
+      "to": "/private/tmp/lanl-cpu-holdout-region-error-diagnostic-20261007.json"
+    }
+  ],
+  "exact_byte_reversal_passed": true,
+  "syntax_ast_passed": true,
+  "scientific_decomposition_algorithm": "unchanged median whole forecast trial, regional maxima plus additive overheads, exact sum and original region hash assertions",
+  "actual_holdout_admission_identity": "5268ae186a7a0662205b6223d87d88f00a45f82609461f09625d4113a8edfae0",
+  "evidence_scope": "Preparation only; parent review required before once-only selected-record diagnostic execution. No fitting or new observations.",
+  "identity_sha256": "b2bf302c8494fc39851fa4ff9e69854e8c6de0f80d6b55bfecb39bfc5e880544"
+}

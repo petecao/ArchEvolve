@@ -1,0 +1,27 @@
+{
+  "action_draft": {
+    "bytes": 20817,
+    "path": "/private/tmp/lanl17-finalize-completion-reader-action-draft-r2-20261008-a5.json",
+    "sha256": "a41403bc73e64e49816a107c5ff99658b6bd824662ac3fcb4e2b31ac4d29062c"
+  },
+  "checks": {
+    "180_remote_300_local_preserved": true,
+    "US_catalog_spelling": true,
+    "eligible_YAML_filter_matches_access_record_files": true,
+    "executable_false": true,
+    "generic_source_pins_list_shape": true,
+    "inline_source_exact": true,
+    "scientific_admission_false": true,
+    "six_reader_function_ASTs_unchanged": true,
+    "supervisor_processes_source_SHA_checked": true
+  },
+  "format": "swdb.lanl17-finalize-completion-r2-narrow-peer-crosscheck.v1",
+  "reviewed_at_utc": "2026-10-09T00:31:42.033294+00:00",
+  "scope": "Exact R1 to R2 three material corrections plus US diagnostic spelling/config embedding. Audit_inputs owns full independent R2 source review. No import/runtime/SSH/tests; no actual completion or scientific admission.",
+  "source": {
+    "bytes": 18085,
+    "path": "/private/tmp/lanl17_read_finalize_completion_originals_20261008_a5_r2.py",
+    "sha256": "c00eec76805adbad8316143b5fb02f0cc7dbc1851cbd287662af80bbdad2de23"
+  },
+  "verdict": "PASS_SOURCE_ONLY_NARROW_CROSSCHECK"
+}

@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "<stdin>", line 276, in <module>
+  File "<stdin>", line 258, in main
+  File "<stdin>", line 220, in replay
+  File "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-abi-retained-replay-v1/control/compiler_unit_adapter_v3.py", line 131, in observed_abi
+    need(len(constants) == 1 and isinstance(constants[0].get("value"), str)
+  File "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-abi-retained-replay-v1/control/compiler_unit_adapter_v3.py", line 36, in need
+    if not condition: raise Refused(message)
+                      ^^^^^^^^^^^^^^^^^^^^^^
+_retained_exact_legacy_abi.Refused: one observed integer ConstantExpr required

@@ -1,0 +1,96 @@
+{
+  "actual_generations": 0,
+  "actual_proofs": 0,
+  "author": {
+    "bytes": 12588,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-private-lifetime-frame-20261016/author-public-v1.py",
+    "sha256": "3ee115c2bca8d037ab3a878aaae1e138f72871cf94aca3c6d8a2dea5fe3da2ef"
+  },
+  "body_acceptance": false,
+  "bootstrap_bytes": 74128,
+  "bootstrap_inverse_predecessor_equal": true,
+  "caller_acceptance": false,
+  "canonical_files": 12,
+  "canonical_manifest_sha256": "70bedf4ecb49e993719f4be3a480fcc1d29ab8e877a58a4b2cc427b9f706c346",
+  "check_lemmas": 9,
+  "compiler_or_native_or_verifier_calls": 0,
+  "compiler_recipe_predecessor_equal": true,
+  "complete_targets": 9,
+  "created": "2026-10-16 ET",
+  "embedded_roundtrip_exact": true,
+  "entry": {
+    "bytes": 32374,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-private-lifetime-frame-20261016/inert-f918f5d5-public-v1/entry.py",
+    "sha256": "7d1721e2e138dd7424e3a8aba8679609cfe7ea7e20b1783434a77d5ede28faa4"
+  },
+  "expected": {
+    "bytes": 133585,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-private-lifetime-frame-20261016/inert-f918f5d5-public-v1/expected.json",
+    "sha256": "6132a9f3da7dbeeae3a4807564b22650a7805134cf13653735c17c896f5a27d4"
+  },
+  "independent_entry_review_pending": true,
+  "predecessor_packets": [
+    {
+      "bytes": 3284,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-prefix10-resume-20261016/inert-c978393b/packet.json",
+      "sha256": "fed0e1ff46d33afbf38f032e2ef39481fb23378b7ebef711301582d38fad61c1"
+    },
+    {
+      "bytes": 7874,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-original-no-growth-generation-20261016/inert-c978393b-v3/packet.json",
+      "sha256": "13a0996a3bd3d9f079ee743d81014dd170ea54c75e07ff028ea4e42612900ae5"
+    }
+  ],
+  "project_runtime_imports": 0,
+  "proof_acceptance": false,
+  "public_proof_records_created": 0,
+  "pure_preparation_receipt": {
+    "bytes": 5475,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-private-lifetime-frame-preparation-20261016.json",
+    "sha256": "1b1d0c1460e225743d0284e1b8aaf87414d59a56f0099aed97ebeacb759fb889"
+  },
+  "remote_project": "/data1/yanruj/probata-resume-20261016-f918f5d5/swdb-project",
+  "resource_policy": {
+    "cap_bytes": 8589934592,
+    "leaf_timeout_seconds": 180,
+    "metadata_reserve_bytes": 4194304,
+    "output_budget_bytes": 2147483648,
+    "profile_seconds": 1300,
+    "root_outer_seconds": 1620,
+    "root_whole_seconds": 1500,
+    "workers": 1
+  },
+  "reviewed_guard_helpers_exact": [
+    "guarded_generation",
+    "raw_bytes",
+    "bounded_bytes",
+    "bounded_json"
+  ],
+  "reviewed_helpers_exact": [
+    "sha",
+    "pin",
+    "write",
+    "surface",
+    "linux_admission",
+    "consumer_closure",
+    "initialize_workspace"
+  ],
+  "root_admission_pending": true,
+  "root_command": {
+    "bytes": 74394,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-private-lifetime-frame-20261016/inert-f918f5d5-public-v1/root-command.json",
+    "sha256": "2332f9818a2b7b630647dbcb579ea091f8e6c094705502561e0fdf32063d4568"
+  },
+  "root_kind": "t25-private-frame9-public-v1",
+  "source_commit": "f918f5d52035fd99499280a0a8058efd0ed4ef55",
+  "source_package_count": 324,
+  "source_typed_bridge_established": false,
+  "status": "INERT / UNREVIEWED / NOT EXECUTED",
+  "template": {
+    "bytes": 19958,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-private-lifetime-frame-20261016/entry-template-public-v1.py",
+    "sha256": "6951fcc1ad127395db67c52c7956725e1cd020af030b687d6c1f7cd5522e3bd6"
+  },
+  "ticket_closure": false,
+  "universal_proof_setup_attested": false
+}

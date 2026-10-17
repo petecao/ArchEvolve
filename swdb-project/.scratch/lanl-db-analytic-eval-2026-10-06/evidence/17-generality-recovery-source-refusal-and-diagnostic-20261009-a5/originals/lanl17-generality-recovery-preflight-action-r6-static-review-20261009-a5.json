@@ -1,0 +1,38 @@
+{
+  "backup_removal_index_scientific_admission": false,
+  "format": "swdb.lanl17-generality-recovery-preflight-action-source-review.v1",
+  "inline_source_and_argv_digest_unchanged": true,
+  "inverse_restores_exact_r5_action": true,
+  "no_authentication_read_or_edit": true,
+  "old_action_preserved_not_selected_not_run": "/private/tmp/lanl17-generality-recovery-preflight-action-SOURCE-ONLY-draft-r5-20261009-a5.json",
+  "only_config_change": {
+    "environment": {
+      "CODEX_HOME": "/data1/yanruj/.codex"
+    }
+  },
+  "pins": [
+    {
+      "bytes": 43161,
+      "path": "/private/tmp/lanl17-generality-recovery-preflight-action-SOURCE-ONLY-draft-r6-20261009-a5.json",
+      "sha256": "39111ef03460ab9c712fdad8b91609532e34b29bcc1df8fdddc413a6b5099c96"
+    },
+    {
+      "bytes": 481,
+      "path": "/private/tmp/lanl17-generality-recovery-preflight-action-r6-complete-r5-derivation-20261009-a5.diff",
+      "sha256": "5606f54bd05b066d3f1bf468ca68c08d1225c4e9d34c226a7a36779f9903b3ab"
+    }
+  ],
+  "prepared_ET": "2026-10-09 00:38 ET",
+  "prepared_utc": "2026-10-09T04:38:19.302924+00:00",
+  "selected_action": {
+    "bytes": 43161,
+    "path": "/private/tmp/lanl17-generality-recovery-preflight-action-SOURCE-ONLY-draft-r6-20261009-a5.json",
+    "sha256": "39111ef03460ab9c712fdad8b91609532e34b29bcc1df8fdddc413a6b5099c96"
+  },
+  "source_only_not_run": true,
+  "source_unchanged": {
+    "bytes": 41183,
+    "path": "/private/tmp/lanl17_generality_recovery_candidate_preflight_20261009_a5_r5.py",
+    "sha256": "508b61d0ccad42a1fe52d4c82367f4f98d360b9df5edec6f4825acacbbc160fa"
+  }
+}

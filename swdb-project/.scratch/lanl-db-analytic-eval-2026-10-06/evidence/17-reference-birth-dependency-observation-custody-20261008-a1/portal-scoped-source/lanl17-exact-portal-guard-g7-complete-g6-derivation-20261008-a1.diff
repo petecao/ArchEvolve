@@ -1,0 +1,92 @@
+--- /private/tmp/lanl_consumed_detached_source_guard_r6_20261008_a1.py
++++ /private/tmp/lanl_consumed_detached_source_guard_r7_20261008_a1.py
+@@ -274,7 +274,7 @@
+             'other_consumers_parent_and_descendants_exempted':False,
+             'signal_blocked_mask_zero_or_nonzero_is_not_predicated':True}
+ 
+-PORTAL_HELPER_SHA = '36fc3b3fdede68b15fca931c199b649303cda4db559f1226ea13474ab5c0e44c'
++PORTAL_HELPER_SHA = 'c195eccf8f728f7752dd89e0588af4fe6f0c05f50c7aa6cb47e5bd95f9ecb46b'
+ 
+ def portal_inode_birth_rows(document, row_definitions, admin=False, check_deadline=None):
+     """Pure metadata validation. No path reads; symlink targets are not covered."""
+@@ -387,7 +387,7 @@
+ 
+ def exact_portal_autounmount_identification(review_pin, row_definitions, selected_rows, removed_rows,
+                                             enclosing_review_identity, helper_sha256,
+-                                            check_deadline, charge_bytes, charge_metadata):
++                                            check_deadline, charge_bytes, charge_metadata, continuity_rows=None):
+     """One exact protected helper under explicit OS-image/clock assumptions.
+ 
+     Caller ordinary reference, alias, Git retention and selection gates remain
+@@ -501,11 +501,20 @@
+             'portal_original_identity_policy_changed')
+     checkout=portal_inode_birth_rows(documents['checkout_birth'],row_definitions,check_deadline=check_deadline)
+     admin=portal_inode_birth_rows(documents['git_admin_birth'],row_definitions,True,check_deadline)
+-    require(isinstance(selected_rows,list) and len(set(selected_rows))==len(selected_rows)
+-            and set(selected_rows)<=set(row_definitions)
+-            and isinstance(removed_rows,list) and len(set(removed_rows))==len(removed_rows)
+-            and set(removed_rows)<=set(selected_rows), 'portal_removed_journal_scope_changed')
+-    remaining=sorted(set(selected_rows)-set(removed_rows)); evidence_stats={x['path']:x['stat'] for x in original_facts+[review_fact]}
++    def continuity_scope(selected_rows,removed_rows,continuity_rows):
++        require(isinstance(selected_rows,list) and len(set(selected_rows))==len(selected_rows)
++                and set(selected_rows)<=set(row_definitions)
++                and isinstance(removed_rows,list) and len(set(removed_rows))==len(removed_rows)
++                and set(removed_rows)<=set(selected_rows), 'portal_removed_journal_scope_changed')
++        remaining_rows=set(selected_rows)-set(removed_rows)
++        require(continuity_rows is None or (isinstance(continuity_rows,list)
++                and len(set(continuity_rows))==len(continuity_rows)
++                and bool(continuity_rows) and set(continuity_rows)<=remaining_rows),
++                'portal_continuity_scope_outside_actual_remaining')
++        return sorted(remaining_rows if continuity_rows is None else continuity_rows)
++
++    remaining=continuity_scope(selected_rows,removed_rows,continuity_rows)
++    evidence_stats={x['path']:x['stat'] for x in original_facts+[review_fact]}
+ 
+     def proc_read(path,cap):
+         check_deadline(); fd=os.open(path,os.O_RDONLY|os.O_NOFOLLOW|os.O_CLOEXEC)
+@@ -650,6 +659,8 @@
+         'remaining_checkout_inode_scopes':second_checkout,'remaining_git_admin_inode_scopes':second_admin,
+         'selected_rows_from_unchanged_caller_scope':list(selected_rows),
+         'already_removed_rows_only_from_completed_journal':list(removed_rows),
++        'fresh_inode_continuity_rows':remaining,
++        'all_eighteen_original_checkout_and_admin_metadata_rows_validated':True,
+         'strict_helper_birth_upper_bound_rational':{'numerator':179108888346,'denominator':100},
+         'protected_child_fields':review['protected_child_fields'],
+         'explicit_assumptions':review['explicit_assumptions'],
+@@ -1185,7 +1196,7 @@
+         except PermissionError:
+             raise Refused('relevant_proc_field_inaccessible')
+ 
+-    def process_references(self):
++    def process_references(self, continuity_rows=None):
+         pids = sorted(p for p in P('/proc').iterdir() if p.name.isdecimal())
+         require(len(pids) <= LIMITS['processes'], 'process_count_limit')
+         explicit = {int(x['pid']):x for x in self.plan['relevant_privileged_consumers']}
+@@ -1267,7 +1278,8 @@
+                     self.left()
+                 audit = exact_portal_autounmount_identification(portal_pin, ROWS, list(self.args.select),
+                     list(self.facts['removed_rows']), self.plan['parent_review_pin']['identity_sha256'],
+-                    PORTAL_HELPER_SHA, self.left, charge_service_bytes, charge_portal_metadata)
++                    PORTAL_HELPER_SHA, self.left, charge_service_bytes, charge_portal_metadata,
++                    continuity_rows=continuity_rows)
+                 require(int(start) == audit['start_ticks'], 'portal_snapshot_PID_changed')
+                 excluded.append(audit)
+                 self.facts['latest_exact_portal_service_classification'] = audit
+@@ -1504,7 +1516,7 @@
+         self.retain_git(); self.protect(); self.stable_inventory()
+         current = self.tree(BASE/name,ROWS[name]['head'])
+         require(current == self.baseline[name], 'pre_remove_checkout_changed')
+-        self.process_references()
++        self.process_references([name])
+         later = self.leases()
+         require({k:v['sha256'] for k,v in later.items()}=={k:v['sha256'] for k,v in leases.items()},
+                 'released_lease_generation_changed_during_check')
+@@ -1642,7 +1654,7 @@
+                     and sha(self.read(P(__file__).absolute(), LIMITS['plan_bytes'])[0]) == self.own_sha,
+                     'final_plan_or_own_source_changed')
+             self.leases()
+-            self.process_references()
++            self.process_references([name])
+             # Sole destructive operation; exact audited enum path, no force/prune/GC/branch deletion.
+             self.current_removal = {'row': name, 'started_at': now()}
+             self.git(PRIMARY, 'worktree', 'remove', str(BASE/name))

@@ -1,0 +1,247 @@
+{
+ "created": "2026-09-29",
+ "id": "bfs-t17-t20-routes-simulator-batch-20260928-a3",
+ "stop": null,
+ "groups": {
+  "t17.uniform18": {
+   "driver_state": "complete",
+   "reason": null,
+   "cleanup_ledger": {
+    "state": "settled_within_budget",
+    "spent_seconds": 5.66649673841893,
+    "settled_events": 83,
+    "dead_owner_charges": null
+   },
+   "series": [
+    {
+     "id": "bfs-t17-routes-20260928-a3.baseline.uniform18",
+     "state": "complete",
+     "reason": null,
+     "complete_pairs": [
+      [
+       0,
+       0,
+       0.019544523158
+      ]
+     ]
+    },
+    {
+     "id": "bfs-t17-routes-20260928-a3.candidate.uniform18",
+     "state": "complete",
+     "reason": null,
+     "complete_pairs": [
+      [
+       0,
+       0,
+       0.006344415474
+      ]
+     ]
+    }
+   ],
+   "exit": "0"
+  },
+  "t17.kronecker18": {
+   "driver_state": "complete",
+   "reason": null,
+   "cleanup_ledger": {
+    "state": "settled_within_budget",
+    "spent_seconds": 6.031438010372214,
+    "settled_events": 83,
+    "dead_owner_charges": null
+   },
+   "series": [
+    {
+     "id": "bfs-t17-routes-20260928-a3.baseline.kronecker18",
+     "state": "complete",
+     "reason": null,
+     "complete_pairs": [
+      [
+       0,
+       0,
+       0.018487688048
+      ]
+     ]
+    },
+    {
+     "id": "bfs-t17-routes-20260928-a3.candidate.kronecker18",
+     "state": "complete",
+     "reason": null,
+     "complete_pairs": [
+      [
+       0,
+       0,
+       0.006605155742
+      ]
+     ]
+    }
+   ],
+   "exit": "0"
+  },
+  "t20.uniform18": {
+   "driver_state": "complete",
+   "reason": null,
+   "cleanup_ledger": {
+    "state": "settled_within_budget",
+    "spent_seconds": 5.504372225701802,
+    "settled_events": 83,
+    "dead_owner_charges": null
+   },
+   "series": [
+    {
+     "id": "bfs-t20-routes-20260928-a3.baseline.uniform18",
+     "state": "complete",
+     "reason": null,
+     "complete_pairs": [
+      [
+       0,
+       0,
+       0.003351850644
+      ]
+     ]
+    },
+    {
+     "id": "bfs-t20-routes-20260928-a3.candidate.uniform18",
+     "state": "complete",
+     "reason": null,
+     "complete_pairs": [
+      [
+       0,
+       0,
+       0.006493390641
+      ]
+     ]
+    }
+   ],
+   "exit": "0"
+  },
+  "t20.kronecker18": {
+   "driver_state": "complete",
+   "reason": null,
+   "cleanup_ledger": {
+    "state": "settled_within_budget",
+    "spent_seconds": 5.985019446909421,
+    "settled_events": 83,
+    "dead_owner_charges": null
+   },
+   "series": [
+    {
+     "id": "bfs-t20-routes-20260928-a3.baseline.kronecker18",
+     "state": "complete",
+     "reason": null,
+     "complete_pairs": [
+      [
+       0,
+       0,
+       0.003600731029
+      ]
+     ]
+    },
+    {
+     "id": "bfs-t20-routes-20260928-a3.candidate.kronecker18",
+     "state": "complete",
+     "reason": null,
+     "complete_pairs": [
+      [
+       0,
+       0,
+       0.00873593329
+      ]
+     ]
+    }
+   ],
+   "exit": "0"
+  }
+ },
+ "identity_checks": [
+  {
+   "at": "2026-09-29T11:14:54.601729-04:00",
+   "identities": 436,
+   "live": [
+    [
+     748145,
+     514121966,
+     "Z"
+    ]
+   ],
+   "allocated_bytes": 11075420160
+  },
+  {
+   "at": "2026-09-29T11:14:59.631999-04:00",
+   "identities": 436,
+   "live": [],
+   "allocated_bytes": 11075420160
+  }
+ ],
+ "lease": {
+  "state": "held",
+  "generation": 483
+ },
+ "lane": {
+  "lease_generation": 482,
+  "started_utc": "2026-09-28T23:48:07Z",
+  "ended_utc": "2026-09-29T13:17:19Z",
+  "exit_code": 0
+ },
+ "outer_exit": "0",
+ "closed_at": "2026-09-29T11:15:04.648707-04:00",
+ "elapsed_seconds_since_admission": 55642,
+ "retained_bytes": 11075420160,
+ "storage_stable": true,
+ "outcome": "all four drivers complete; companions run after drivers",
+ "ac10_companions": {
+  "t17": {
+   "id": "bfs-t17-ac10-companion-20260928-a3",
+   "primary_build": "bfs-t17-build-only-20260926-a1",
+   "timed_binary_sha256": "852e62314b7114079975fe25d70da4e77596490bcfa89fb4f7c64af585485527",
+   "workload": "bfs-dx100-coverage-20260926-a2.workload.6b1e2f2dc16f6a0e",
+   "execute_returncode": 0,
+   "outcome": {
+    "state": "complete",
+    "stage": "execution",
+    "reason": "The exact timed guest passed its post-ROI structural verifier; complete profiling remains required."
+   },
+   "correctness": "passed",
+   "competing_parent_updates": {
+    "state": "observed",
+    "count": 14546
+   },
+   "parent_storage_attributed": true,
+   "passed": true,
+   "record_sha256": "fcd813e2b7dd4f79a9ff90b6a105527c0e5ec933211d171f75c2a6afc2e7a21c",
+   "started": "2026-09-29T09:11:30.349360-04:00",
+   "finished": "2026-09-29T09:16:41.441608-04:00",
+   "exit": "0"
+  },
+  "t20": {
+   "id": "bfs-t20-ac10-companion-20260928-a3",
+   "primary_build": "bfs-t20-context6-primary-build-20260927-c3",
+   "timed_binary_sha256": "25df930f07ef1632e12807ee5e88409342096dcde54ea1ca10cc9783e8dc7c9c",
+   "workload": "bfs-dx100-coverage-20260926-a2.workload.6b1e2f2dc16f6a0e",
+   "execute_returncode": 1,
+   "outcome": {
+    "state": "failed",
+    "stage": "execution_identity",
+    "reason": "workload needs exactly one serialized representation for the selected application"
+   },
+   "correctness": "unverified",
+   "competing_parent_updates": {
+    "state": null,
+    "count": null
+   },
+   "parent_storage_attributed": false,
+   "passed": false,
+   "record_sha256": "589cdc69bbe4960009f953acc4f28dbf3bee55068a97ef42a889dfddb41b7391",
+   "started": "2026-09-29T09:16:49.881444-04:00",
+   "finished": "2026-09-29T09:17:18.953416-04:00",
+   "exit": "1"
+  }
+ },
+ "updated": "2026-09-29",
+ "notes": [
+  "Closure run 2026-09-29 11:14 ET off-lane under nice after mbit10 SSH was unreachable from the Mac 07:59-11:14 ET (network path; the job was unaffected).",
+  "First identity pass saw one owned zero-RSS zombie (748145) that was reaped before the second pass; the second pass found no live owned identity.",
+  "The lease field is the node1 lease as observed at closure: generation 483 is the next holder (the owner MemAcc session, notified by root). a3 held generation 482 (lane block), exit 0 at 2026-09-29 09:17:19 ET.",
+  "Correction to observations/t17-t20-routes-a2-closure-20260928.json: its lease field read the node0 lease file (generation 389, another holder); a2 ran on node1 generation 479 as its lane block records.",
+  "AC10: the t17 companion passed (14,546 competing parent updates observed, parent storage attributed). The t20 companion failed at execution_identity before any guest run: the A2 coverage workload has no single serialized representation for the gapbs-bfs-do application. It is retained, not retried; no lane is available (root 2026-09-29)."
+ ]
+}

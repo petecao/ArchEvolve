@@ -1,0 +1,221 @@
+kind: machine
+schema_version: '0.3'
+id: mbit10
+status: draft
+deprecated_by: null
+created: '2026-09-22'
+updated: '2026-09-23'
+provenance:
+- id: capture
+  kind: measurement
+  description: Read-only capture by swdb capture-machine at 2026-09-24T02:37:29Z (UTC).
+  uri: null
+hostname: mbit10
+cpu:
+  model: Intel(R) Xeon(R) Gold 6326 CPU @ 2.90GHz
+  architecture: x86_64
+  sockets: 2
+  cores_per_socket: 16
+  threads_per_core: 2
+  logical_cpus: 64
+  max_mhz: null
+  flags:
+  - 3dnowprefetch
+  - abm
+  - acpi
+  - adx
+  - aes
+  - aperfmperf
+  - apic
+  - arat
+  - arch_capabilities
+  - arch_perfmon
+  - art
+  - avx
+  - avx2
+  - avx512_bitalg
+  - avx512_vbmi2
+  - avx512_vnni
+  - avx512_vpopcntdq
+  - avx512bw
+  - avx512cd
+  - avx512dq
+  - avx512f
+  - avx512ifma
+  - avx512vbmi
+  - avx512vl
+  - bmi1
+  - bmi2
+  - bts
+  - cat_l3
+  - clflush
+  - clflushopt
+  - clwb
+  - cmov
+  - constant_tsc
+  - cpuid
+  - cpuid_fault
+  - cqm
+  - cqm_llc
+  - cqm_mbm_local
+  - cqm_mbm_total
+  - cqm_occup_llc
+  - cx16
+  - cx8
+  - dca
+  - de
+  - ds_cpl
+  - dtes64
+  - dtherm
+  - dts
+  - epb
+  - ept
+  - ept_ad
+  - erms
+  - est
+  - f16c
+  - flexpriority
+  - flush_l1d
+  - fma
+  - fpu
+  - fsgsbase
+  - fsrm
+  - fxsr
+  - gfni
+  - ht
+  - ibpb
+  - ibrs
+  - ibrs_enhanced
+  - ida
+  - intel_ppin
+  - intel_pt
+  - invpcid
+  - la57
+  - lahf_lm
+  - lm
+  - mba
+  - mca
+  - mce
+  - md_clear
+  - mmx
+  - monitor
+  - movbe
+  - msr
+  - mtrr
+  - nonstop_tsc
+  - nopl
+  - nx
+  - ospke
+  - pae
+  - pat
+  - pbe
+  - pcid
+  - pclmulqdq
+  - pconfig
+  - pdcm
+  - pdpe1gb
+  - pebs
+  - pge
+  - pku
+  - pln
+  - pni
+  - popcnt
+  - pse
+  - pse36
+  - pts
+  - rdpid
+  - rdrand
+  - rdseed
+  - rdt_a
+  - rdtscp
+  - rep_good
+  - sdbg
+  - sep
+  - sha_ni
+  - smap
+  - smep
+  - smx
+  - split_lock_detect
+  - ss
+  - ssbd
+  - sse
+  - sse2
+  - sse4_1
+  - sse4_2
+  - ssse3
+  - stibp
+  - syscall
+  - tm
+  - tm2
+  - tme
+  - tpr_shadow
+  - tsc
+  - tsc_adjust
+  - tsc_deadline_timer
+  - umip
+  - vaes
+  - vme
+  - vmx
+  - vnmi
+  - vpclmulqdq
+  - vpid
+  - wbnoinvd
+  - x2apic
+  - xgetbv1
+  - xsave
+  - xsavec
+  - xsaveopt
+  - xsaves
+  - xtopology
+  - xtpr
+caches:
+- level: 1
+  type: data
+  size_bytes: 49152
+  instances: 32
+  shared_by: core
+- level: 1
+  type: instruction
+  size_bytes: 32768
+  instances: 32
+  shared_by: core
+- level: 2
+  type: unified
+  size_bytes: 1310720
+  instances: 32
+  shared_by: core
+- level: 3
+  type: unified
+  size_bytes: 25165824
+  instances: 2
+  shared_by: socket
+memory_bytes: 134580494336
+numa_nodes:
+- node: 0
+  cpus: 0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62
+  memory_bytes: 66950529024
+- node: 1
+  cpus: 1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63
+  memory_bytes: 67628957696
+os:
+  kernel: 6.8.0-136-generic
+  distribution: Ubuntu 24.04.4 LTS
+counters:
+  perf_event_paranoid: 4
+  hardware_counters_available:
+    value: false
+    basis: inferred
+    evidence_refs: [capture]
+    note: 'perf_event_paranoid is 4 (above 2, so unprivileged perf events are blocked); the user is not
+      in the vtune group. Rule: counters are available if paranoid <= 2 or the user is in the vtune group.'
+capture:
+  command: ssh mbit10 sh -s < (swdb capture-machine script)
+  date: '2026-09-24T02:37:29Z'
+lane_required: true
+notes:
+- Recaptured 2026-09-23 ET (2026-09-24T02:37:29Z) from the Mac over ssh at format 0.3, which adds cpu.flags;
+  nothing was started or written on the host. First captured 2026-09-22 17:03 ET.
+- The Xeon Gold 6326 max clock is not reported by lscpu on this host (max_mhz null).
+- 'lane_required is host policy (.claude/rules/remote_server.md: multi-threaded jobs only inside a socket
+  lane), added 2026-09-22 after review; it is not part of the capture.'
+extensions: {}

@@ -1,0 +1,59 @@
+--- /private/tmp/lanl17_generality_recovery_candidate_preflight_20261009_a5_r1.py
++++ /private/tmp/lanl17_generality_recovery_candidate_preflight_20261009_a5_r2.py
+@@ -2,7 +2,7 @@
+ Read-only candidate/source/native/consumer inspection; only fresh private metadata
+ may be written after separate parent execution approval. No backup/removal/index.
+ """
+-import argparse,datetime,hashlib,json,os,pwd,re,shutil,signal,socket,stat,subprocess,sys,time
++import argparse,base64,datetime,hashlib,json,os,pwd,re,shutil,signal,socket,stat,subprocess,sys,time
+ from pathlib import Path
+ UID=114316761
+ R='5e12a9796432654d88def24ecea617d16ca605b2'
+@@ -17,6 +17,7 @@
+ SUP=BASE/'lanl17-metadata-supervisor-cleanup60-20261007-a4.py'
+ CANDIDATE=BASE/'ArchEvolve-lanl-generality-final-20261007-a1'
+ CANDIDATE_HEAD='c4ab2fdbb0b0c57ee9f515522835897f24466d6b'
++GENERALITY_EXPORT='43256ee0300a59a03919833075fbb13fb3ba9ab3'
+ EXPECTED_ER='f5014746da61005be2d75cee16f8a834afa19321'
+ INPUT={'expected_ER_commit':EXPECTED_ER}
+ OUTPUT=Path('/data/yanruj/EvolveSWDB_runs/lanl17-generality-worktree-recovery-20261009-a1')
+@@ -254,14 +255,15 @@
+     need(len(matches)==1 and 'HEAD '+CANDIDATE_HEAD in matches[0] and 'detached' in matches[0] and not any(x.startswith(('locked','prunable')) for x in matches[0]),'exact_unlocked_registered_candidate')
+     # Git metadata only; c4 and its parent export must remain in protected common Git.
+     git('merge-base','--is-ancestor',CANDIDATE_HEAD,R)
++    need(git('rev-parse',GENERALITY_EXPORT+'^{commit}')==GENERALITY_EXPORT and git('rev-list','--parents','-n','1',GENERALITY_EXPORT).split()==[GENERALITY_EXPORT,CANDIDATE_HEAD],'original_generality_export_object_sole_c4_parent')
+     staged=git('ls-files','--stage','-z');need(not any(x.startswith('160000 ') for x in staged.split('\0')),'submodules_refused')
+-    return {'candidate':str(CANDIDATE),'head':CANDIDATE_HEAD,'detached':True,'clean_including_untracked':True,'common_git':str(common),'git_directory':str(gitdir),'pointer':pin,'backlink':bpin,'registration_HEAD':hpin,'merged_into_R':True,'registration_metadata_not_restore_instruction':True}
++    return {'candidate':str(CANDIDATE),'head':CANDIDATE_HEAD,'detached':True,'clean_including_untracked':True,'common_git':str(common),'git_directory':str(gitdir),'pointer':pin,'backlink':bpin,'registration_HEAD':hpin,'merged_into_R':True,'original_export_commit':GENERALITY_EXPORT,'original_export_sole_c4_parent':True,'registration_metadata_not_restore_instruction':True}
+ 
+ def protected_reference(p):
+     return any(p==q or p.is_relative_to(q) for q in PROTECTED)
+ 
+ def inventory_tree():
+-    rows=[];total=0;allocated=0;references=[];inodes=set()
++    rows=[];total=0;allocated=0;metadata_size=2;references=[];inodes=set()
+     todo=[CANDIDATE]
+     needles=[os.fsencode(p) for p in PROTECTED];overlap=max(map(len,needles))-1
+     while todo:
+@@ -296,10 +298,10 @@
+             route=Path(os.path.normpath(str(p.parent/target)));need(route.is_absolute(),'symlink_target_absolute_resolution')
+             # Never follow or copy a link target. Explicitly refuse external/protected links.
+             inside=route.is_relative_to(CANDIDATE) and not protected_reference(route)
+-            row.update(kind='symlink',target_base64=__import__('base64').b64encode(raw).decode(),target_bytes=len(raw),target_sha256=digest(raw),lexically_inside_candidate=inside)
++            row.update(kind='symlink',target_base64=base64.b64encode(raw).decode(),target_bytes=len(raw),target_sha256=digest(raw),lexically_inside_candidate=inside)
+             if not inside:references.append({'relative_path':relative,'kind':'external_or_protected_symlink','target_sha256':digest(raw)})
+         else:raise ValueError('nonregular_tree_entry_refused')
+-        rows.append(row);need(len(metadata_bytes(rows))<=METADATA_CAP,'tree_metadata_8MiB_cap')
++        metadata_size+=len(metadata_bytes(row));need(metadata_size<=METADATA_CAP,'tree_metadata_8MiB_cap');rows.append(row)
+     return {'entries':rows,'entry_count':len(rows),'regular_bytes':total,'allocated_regular_bytes':allocated,'all_regular_nlink1':True,'ignored_entries_included':True,'protected_reference_observations':references,'mandatory_root_Git_pointer_is_registration_provenance':True},inodes
+ 
+ def alias_bytes(p,cap):
+@@ -353,7 +355,7 @@
+                 q=p/name;s=q.stat();need(digest(os.fsencode(os.readlink(q)))==h and (s.st_dev,s.st_ino)==(dev,ino),'process_route_race')
+             nowfds=[]
+             for q in sorted((p/'fd').iterdir(),key=lambda q:q.name):
+-                target=os.readlink(q);s=q.stat();nowfds.append((q.name,digest(os.fsencode(target)),s.st_dev,s.st_ino))
++                tick();need(len(nowfds)<65536 and q.name.isdecimal(),'FD_continuity_count_cap');target=os.readlink(q);s=q.stat();nowfds.append((q.name,digest(os.fsencode(target)),s.st_dev,s.st_ino))
+             need(nowfds==fds and alias_bytes(p/'maps',4*1024**2)==maps,'FD_maps_continuity')
+         except (OSError,ValueError,IndexError,UnicodeError) as exc:
+             if isinstance(exc,(FileNotFoundError,ProcessLookupError)) and proof is None:continue

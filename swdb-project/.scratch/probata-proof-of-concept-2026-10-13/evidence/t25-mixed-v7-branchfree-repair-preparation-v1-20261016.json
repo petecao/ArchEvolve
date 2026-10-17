@@ -1,0 +1,45 @@
+{
+  "actual_raw": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-dcdecf31-mixed-pair-public-v7",
+  "baseline_git_blob": "74ca91e59183f7a64fa9d0786209ca22afdcb3bc",
+  "baseline_sha256": "c5f539209979d01270dfa48c35b7b5475d58b3899dbcef31a13afb65e8c14184",
+  "control_semantics": {
+    "arithmetic_combinations_checked": 4002,
+    "bounded_x": [
+      -1000,
+      1000
+    ],
+    "condition_false": 9,
+    "condition_true": 3,
+    "contract_result": "x+3",
+    "pure_arithmetic_only": true,
+    "wrong_distinct_local_pointer_result": "x+9"
+  },
+  "date": "2026-10-16 ET",
+  "diagnosis": "Four body records producer proven; safe caller all 24 ordinary Valid, one dead-code smoke at line65 native Valid on unreachable alternate ternary arm, therefore correctly not_proven/vacuous_pass. Wrong caller and two CBMC/replay records were not executed.",
+  "exact_inverse": "Only the two safe/wrong return ternaries become 9 - 6 * bool; reversing both substitutions recovers the complete baseline blob.",
+  "fixture": {
+    "bytes": 1165,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/fixtures/proof/lowering/pair_pointer.cc",
+    "sha256": "bf835eab316a9266e5733c1c1a2c1277ae983e83d496a1068a17490ac31c7fe1"
+  },
+  "native_or_formal_or_lowerer_rerun": false,
+  "new_scientific_acceptance": false,
+  "retained_metadata": [
+    {
+      "bytes": 38493,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-mixed-v7-passive-diagnosis-v2-20261016.json",
+      "sha256": "0ea0671cdaa735327d82c9fae65bd7da685803eb184ed00061b7729a7ca85def"
+    },
+    {
+      "bytes": 17555,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-mixed-v7-record-metadata-v3-20261016.json",
+      "sha256": "606737110b0b129ad5a9aabaeb9b4cd8630f82eede7dca6970722dad2d12dcb5"
+    },
+    {
+      "bytes": 439,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-mixed-v7-site-metadata-v4-20261016.json",
+      "sha256": "0c1ca80b6e9a90ce4409706876790c71f94441c53b211469c4a5e78f11f132db"
+    }
+  ],
+  "vacuity_policy_changed": false
+}

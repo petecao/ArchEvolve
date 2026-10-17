@@ -1,0 +1,56 @@
+{
+  "argv": [
+    "ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=10",
+    "mbit10",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "190s",
+    "/usr/bin/env",
+    "-i",
+    "HOME=/data1/yanruj",
+    "LANG=C",
+    "LC_ALL=C",
+    "PATH=/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "/data1/yanruj/venvs/swdb-test/bin/python",
+    "-I",
+    "-B",
+    "-",
+    "--generation",
+    "619",
+    "--ended-utc",
+    "2026-10-16T21:28:57Z"
+  ],
+  "created_utc": "2026-10-16T21:46:38.894912+00:00",
+  "decision": "ADMIT_ONCE_PASSIVE_METADATA_ONLY",
+  "fresh_preflight_required": "Exact original raw/source/process readers and original G619 ended lane evidence; later mixed-pair node0 generation is unrelated and must be preserved. Record preflight failures instead of continuing.",
+  "guards": {
+    "address_space_bytes": 536870912,
+    "environment": "explicit env -i, no Python search/loader injection variables",
+    "observer_alarm_seconds": 180,
+    "outer_seconds": 190,
+    "write_child_native_network": "observer audit hook forbids all"
+  },
+  "observer": {
+    "bytes": 1088800,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/observer-v2.py",
+    "sha256": "55bfa4564acfcc387f28f8bb0dde57eeb4ea0ca6853e1b7071032111365d12d7"
+  },
+  "once_only": true,
+  "parent_review": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-cold-observer-parent-static-review-v2-20261016.json",
+    "sha256": "d184b5584803e9c6ff79e28527007e7ac941860e15f923bb32b0718a73b99ee5"
+  },
+  "root_source_review": "Read observer template main, strict physical snapshot/runtime/source/record checks and source-module whitelist; exact 82-target historical contexts, full YAML/JSON and raw pre/post checks; original G619 settlement matched retained root observation.",
+  "schema": "t25-public-v4-root-passive-admission-v1",
+  "scope": "Read-only independent source-rule fixture audit; no scientific tool, generated/native code, project import, or source/record mutation. Every theorem/native/default/ticket boundary remains unchanged.",
+  "ssh_timeout_seconds": 210,
+  "stdin_file": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/observer-v2.py",
+  "stdout_max_bytes": 4194304
+}

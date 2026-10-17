@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-16 ET",
+  "scope": "Local admission receipt/sourceGit/hash preservation only; no remote rehash/jobs/probes; admissions are not results",
+  "admissions": [
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/reviewed-t25-qualified-grow21-public-v1-launch-2e01d27d-20261016.json",
+      "sha256": "a8a24e0f7af176f8ff0011af8439a710e26c252a50218d0a2d358414a26bbc01",
+      "source": "2e01d27d0aea7f3c2056d3abb06600b4cefa29be",
+      "source_change_Git_pins": 30,
+      "local_runtime_entry_auditor_refs": 6,
+      "module_pin_checks_attributed_to_root": 214,
+      "lane_generation": 591,
+      "mutable_lane_hash_at_snapshot_preserved": "88693a901226a421aa7d5d15ddc4f5e8a324badfd1c44c6ded01c367750fdf0f"
+    },
+    {
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/reviewed-t28-stream-v1-launch-e4cd1a6e-20261016.json",
+      "sha256": "3422bae3b1cbf508bc135a361fc221893a9248d670e190f949a0213f7bc3d966",
+      "source": "e4cd1a6ed78e61394275af297c25557e14a2d228",
+      "source_change_Git_pins": 28,
+      "local_runtime_entry_auditor_refs": 5,
+      "module_pin_checks_attributed_to_root": 213,
+      "lane_generation": 618,
+      "mutable_lane_hash_at_snapshot_preserved": "d166f81ab3b8e7949dba719eac8786955316fceea2670f4841358876aa7769ea"
+    }
+  ],
+  "current_root_report": "T25full21runningexact2e01/node0G591;streamG618settledprepublicfailure/wrongcaseunexecuted",
+  "status_counts": {
+    "resolved": 35,
+    "ready-for-agent": 25,
+    "claimed": 3
+  },
+  "last_user_full_table_ET": "05:27",
+  "next_user_full_table_ET": "05:53",
+  "runtime_boundary": "Admission runtime is source-monorepo snapshot; actual project-context runtime/records require independent cold binding; lane hash mutable and not final proof pin."
+}

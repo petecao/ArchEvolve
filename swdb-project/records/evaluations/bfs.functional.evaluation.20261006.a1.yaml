@@ -1,0 +1,244 @@
+kind: evaluation
+schema_version: '0.4'
+id: bfs.functional.evaluation.20261006.a1
+status: draft
+created: '2026-10-06'
+updated: '2026-10-06'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: bfs.functional.evaluation.20261006.a1
+  candidate: bfs-functional-read-offload-20261006-a1.proposal.candidate-1
+  certification: certification.23f81442358b4dcc8688140a394a1f08
+  characterization: bfs.functional.kron-g16.t4.characterization.objects.a2
+  target_description: dx100-e4fc4af-functional-analytic-v1.t4
+  protocol: bfs.functional.evaluation.protocol.20261006.a1.04ea188992780bf8
+candidate: bfs-functional-read-offload-20261006-a1.proposal.candidate-1
+proposal: bfs-functional-read-offload-20261006-a1.proposal
+source_snapshot: bfs-functional-read-offload-20261006-a1.source
+implementation: dx100-bfs-scalar
+outcome:
+  state: complete
+  stage: estimate
+  reason: null
+stages:
+- stage: certification
+  state: complete
+  started: '2026-10-07T02:15:37.684504+00:00'
+  finished: '2026-10-07T02:15:37.749071+00:00'
+- stage: estimate
+  state: complete
+  started: '2026-10-07T02:15:37.749082+00:00'
+  finished: '2026-10-07T02:16:14.477778+00:00'
+timing: []
+correctness:
+  state: passed
+  checks:
+  - passed: true
+    graph: kronecker-10
+    source: 0
+    tile_size: 16384
+    threads: 4
+    result_check:
+      passed: true
+      reason: null
+      reachable_vertices: 896
+  - passed: true
+    graph: kronecker-14
+    source: 0
+    tile_size: 16384
+    threads: 4
+    result_check:
+      passed: true
+      reason: null
+      reachable_vertices: 12543
+  - passed: true
+    graph: kronecker-16
+    source: 0
+    tile_size: 16384
+    threads: 4
+    result_check:
+      passed: true
+      reason: null
+      reachable_vertices: 46688
+  - passed: true
+    graph: uniform-14
+    source: 0
+    tile_size: 16384
+    threads: 4
+    result_check:
+      passed: true
+      reason: null
+      reachable_vertices: 16384
+  - passed: true
+    graph: two-level-degree-17000
+    source: 0
+    tile_size: 16384
+    threads: 4
+    result_check:
+      passed: true
+      reason: null
+      reachable_vertices: 21201
+  - passed: true
+    graph: kronecker-10
+    source: 0
+    tile_size: 1024
+    threads: 4
+    result_check:
+      passed: true
+      reason: null
+      reachable_vertices: 896
+  - passed: true
+    graph: kronecker-14
+    source: 0
+    tile_size: 1024
+    threads: 4
+    result_check:
+      passed: true
+      reason: null
+      reachable_vertices: 12543
+  - passed: true
+    graph: kronecker-16
+    source: 0
+    tile_size: 1024
+    threads: 4
+    result_check:
+      passed: true
+      reason: null
+      reachable_vertices: 46688
+  - passed: true
+    graph: uniform-14
+    source: 0
+    tile_size: 1024
+    threads: 4
+    result_check:
+      passed: true
+      reason: null
+      reachable_vertices: 16384
+  - passed: true
+    graph: two-level-degree-17000
+    source: 0
+    tile_size: 1024
+    threads: 4
+    result_check:
+      passed: true
+      reason: null
+      reachable_vertices: 21201
+profiling:
+  state: not_collected
+  reasons:
+  - Per-region analytic evidence is in the referenced estimate.
+raw_artifacts: []
+gain_claim: false
+evidence_kind: execution
+context:
+  evaluator: swdb.strict-functional-estimate.v1
+  target: dx100-e4fc4af-functional-analytic-v1
+  basis: estimated
+  threads: 4
+  candidate_sha256: 991de65287fe1fae3a20412704cccb6140a93f84cc11200032b20214f5174ff1
+  protocol: bfs.functional.evaluation.protocol.20261006.a1.04ea188992780bf8
+  roi: gapbs.functional_trial_lambda.v1
+  correctness_scope: functional-target
+  hardware_correctness_claim: false
+  performance_timing_collected: false
+  verifier: swdb.bfs.structural.v1
+  certification:
+    id: certification.23f81442358b4dcc8688140a394a1f08
+    sha256: bc26259cdb5a671dc364f6389b3a036a4ccf74c3ce68e25587a90886f23b8f90
+    basis: simulated
+    scope: finite strict-functional certification matrix, including the kernel correctness check
+    reuse: retained_exact_current_identity
+    created_at: '2026-10-06T23:22:44.469903+00:00'
+    command:
+      version: '1.6'
+      family: candidate
+      sources_sha256: 309d9cd5140bbb5bf87408ed5f1a4fba40271275704294003be8444829f61311
+      sources:
+      - path: swdb/certification.py
+        sha256: b7de18069b2bfc0d0e008c0c0e898a613cfcf9297e388d724f271eb9fa5299e7
+      - path: swdb/certification_common.py
+        sha256: bcda49503338fba874abb8612778b29a1a3bc0b19f2b128e85976a05e1d60c22
+      - path: swdb/certification_faults.py
+        sha256: e88b52e15589e20dd859a0d36d067047aae4d9f56d5928d024ee32e5766f9974
+      - path: swdb/certification_feedback.py
+        sha256: 3c0082229e6621e8312ce32d19b86a564377504daed8e47c1589f82f6849a0c0
+      - path: swdb/certification_isolation.py
+        sha256: 9097e28085fdab03e70078c10907eb6061fd1a91ad9f82e005a37f18f6a052eb
+      - path: swdb/certification_legality.py
+        sha256: 7f1769d570d2ad5d20513fe1270d3328653888ef52b0e51abff06eb6d411de72
+      - path: swdb/certification_blinding.py
+        sha256: cfd1e2db6656b4ca8428050b606e550a2abfd48af1d302e6d606b48d3cc622f9
+      - path: swdb/certification_process.py
+        sha256: d2a24ea28403c92dd00d1ef22848fd67e610a6db7e92905a331acaaaacf7f8ce
+      - path: library/dx100/strict/MAA_functional.hpp
+        sha256: e90354b14ab25ad232d916a5a1c07753a1bfb061e194170ea64878b36084121a
+      - path: library/dx100/strict/gem5/m5ops.h
+        sha256: b1eb7d074231782a943faa9cc249f6027152b6c727c5f70b71808e122e97867f
+      - path: library/dx100/dxc_lowering.hpp
+        sha256: 7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c
+      - path: library/dx100/certification/v1_4/prelude.hpp
+        sha256: dd5d2917aa093b91c2abecd0ecb7221289d9e3b8e9469c506f2392ec6db7f079
+      - path: library/dx100/certification/v1_4/record.cc
+        sha256: c0b0221c2080117761f82566c7801a457aa31d3dedd21ec2600670e61bdd4fa6
+      - path: library/dx100/certification/v1_4/seams.cc
+        sha256: 1a1deb79cff58ccae5ee5d9cc08bdae123c1c821b0a675e62d80c2033ec23eef
+      - path: library/dx100/certification/v1_5/prelude.hpp
+        sha256: d77698926a5fb528e666def15b5220749ac4c11e9b421ba654d3294d334dc1cf
+      - path: library/dx100/certification/v1_5/arena.hpp
+        sha256: 0a85a60e9f514b755ee05e0daba683c32682c97b67a31f22c911c2591f33ce42
+      - path: library/dx100/certification/v1_5/client.cc
+        sha256: f7917a984afd6b547c696f23300e1609400f4c045aefdb463a3987e8ae7a378c
+      - path: library/dx100/certification/v1_5/client_core.inc
+        sha256: b21188bb1067f3018ea2a0fa0bc2153b2177511800dbb211993c512369a352e8
+      - path: library/dx100/certification/v1_5/client/MAA_functional.hpp
+        sha256: cce4deff6692bbc1175ac61eca1b03a532f620915e999fc0c5e0f08e6d624ec0
+      - path: library/dx100/certification/v1_5/evaluator.cc
+        sha256: 89a025c0869bbebd155d7c207bed62dca669b35eb793a95d6c29950e482b695e
+      - path: library/dx100/certification/v1_5/evaluator_core.inc
+        sha256: d8a77bdb2b309e04c3acb27de7b8cb3547c45f53a09b2411d9997ee9eadd7ece
+      - path: library/dx100/certification/v1_5/evaluator_context.hpp
+        sha256: 3ff8432841d29f80aeec22df7be4a9330d7c6f2ab1f3578f3870e95516564fe0
+      - path: library/dx100/certification/v1_5/bfs_driver.inc
+        sha256: 8bb2ba0ab100fda0b73e39e667635f747378ce1b2a527228365a42a8d164eb3e
+      - path: library/dx100/certification/v1_5/bc_driver.inc
+        sha256: b8dd9d52400551247a8daf2818e86ad49022bac30f51ac2b39cf30a42a36ef4b
+      - path: swdb/certification_procedures.py#candidate/1.6
+        sha256: c93ec2555bfe0f59e4c2355f1ff373a1cd98d900a85a9928595d80ee1788cb15
+      sources_match_version: true
+      code:
+        git_commit: dcb66fc4b9564dc742b310e036e6ee5495330df8
+        sources_differ_from_commit: false
+      kernel_sources:
+      - path: swdb/kernels/__init__.py
+        sha256: 22b25e833489227e52a04d60243ff05161dca791ec81e956435a3136f2ba6d87
+      - path: swdb/kernels/bfs.py
+        sha256: 1c17cb82f14d87cf3e98607a374f3a99135c7768e7650e003584261c8a189893
+      - path: result_check:swdb.bfs.structural.v1
+        sha256: a4795008c733278f1baf898e295d081b0428da573c2634b1b7194af2f3479132
+    negative_controls: 20
+  analytic_estimate:
+    id: bfs.functional.evaluation.20261006.a1.estimate
+    sha256: b7dba3f6bea6acdb410fe92d1031b17c60fe31193c1ee1ba0a5486e4ea351b53
+    basis: estimated
+    seconds: null
+    ratio: null
+    verdict: within_error
+    error_band: null
+    baseline: null
+    characterization: bfs.functional.kron-g16.t4.characterization.objects.a2
+    characterization_sha256: 07d446f8b5f5932339d384f7faa8c8215e59e4dc4ee965945610d5425a09c6e8
+    target_description: dx100-e4fc4af-functional-analytic-v1.t4
+    target_description_sha256: 6351828a0ba1536f6862d428a2522ae36ea5a39753879abdb5b637b26d8ce211
+    protocol: bfs.functional.evaluation.protocol.20261006.a1.04ea188992780bf8
+    protocol_sha256: 04ea188992780bf82a226e8a6233b51023f49c904f4b9d78067d20d0b3c27b53
+    estimator_sha256: 5cecff8810524aa8ea145044a65c7d28eec362f9686237bad2610fdb4188a9e5

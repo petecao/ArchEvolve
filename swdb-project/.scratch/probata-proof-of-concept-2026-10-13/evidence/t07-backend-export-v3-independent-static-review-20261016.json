@@ -1,0 +1,147 @@
+{
+  "date": "2026-10-16 ET",
+  "verdict": "PASS scoped inert packet; root outer/admission required",
+  "reviewer": "merger independent of packet author",
+  "source_commit": "0cfaad70854eaf8c836445f3bc3db1e8e0378d6d",
+  "packet": {
+    "path": "/private/tmp/probata-t07-backend-export-packet-v3-20261016.json",
+    "sha256": "6e62c512b5410273c82d35b32d405b973438096cba520ecc482241fb459d3e1d"
+  },
+  "files": [
+    {
+      "path": "/private/tmp/probata-t07-backend-export-entry-v3-20261016.py",
+      "sha256": "87e865b3c2a34a5601b6ab63301cad4d1521edf668baef36a10b48965221e564",
+      "bytes": 52414
+    },
+    {
+      "path": "/private/tmp/probata-t07-backend-export-expected-v3-20261016.json",
+      "sha256": "ed7d202a594ef88ccb3f64f830fce94a45cf6d4b78835508bc6ee94c7c2c0fcd",
+      "bytes": 740667
+    },
+    {
+      "path": "/private/tmp/probata-t07-backend-export-command-v3-20261016.json",
+      "sha256": "e111d30b94265f9c3ec917d4be1ef0f93d1281d022e7f6a139674047ba05c1e8",
+      "bytes": 3021
+    },
+    {
+      "path": "/private/tmp/probata-t07-backend-export-plan-v3-20261016.md",
+      "sha256": "27edcd521d8d8ca49d7d754f93788320767321f19632c66612b38a4b56dbc3df",
+      "bytes": 5970
+    },
+    {
+      "path": "/private/tmp/probata-t07-reader-controls-v3-20261016.py",
+      "sha256": "b60d64338832cdc3482a4159324c0fa5899ee9ceed8a4cf01cebcf5ba9a37a1d",
+      "bytes": 8458
+    },
+    {
+      "path": "/private/tmp/probata-t07-reader-controls-v3-20261016.json",
+      "sha256": "3d70a9e417e3f11a1f490ae454569f7dfb28ee59c6c650651ecd43939d4c76da",
+      "bytes": 3294
+    },
+    {
+      "path": "/private/tmp/probata-t07-source-bijection-controls-v3-20261016.py",
+      "sha256": "9465289cd45d860fef41334e5209622ff57b53c8d92b35ddea9da056b34b73e2",
+      "bytes": 4744
+    },
+    {
+      "path": "/private/tmp/probata-t07-source-bijection-controls-v3-20261016.json",
+      "sha256": "26494af87ca12a856d8ad34f73b028265d8310376fddfac584a21f52cb96d412",
+      "bytes": 2110
+    },
+    {
+      "path": "/private/tmp/probata-t07-wrong-cell-reader-final-controls-v3-20261016.log",
+      "sha256": "7653a4f6df95e99e1197d946d6588f286d9782f24d9835080ebd4ce7b04ca1db",
+      "bytes": 54
+    },
+    {
+      "path": "/private/tmp/probata-t07-wrong-cell-reader-final-controls-v3-20261016.log.summary.json",
+      "sha256": "e10e1a2b4b0512e96c017caf9b87e89af10ddf14ba9fe1b3aa8e9d5ceb53aa4d",
+      "bytes": 2053
+    },
+    {
+      "path": "/private/tmp/probata-t07-backend-export-entry-v3-source-path-red-20261016.py",
+      "sha256": "c0be6e421535405e656257f6a744be6e3935fc3e3a4fe630866e2698456ae070",
+      "bytes": 51672
+    },
+    {
+      "path": "/private/tmp/probata-t07-registration-provenance-controls-v3-draft-20261016.log",
+      "sha256": "12c8d8ab683e744b1dfc85e05ab0e2c6ee95efa7c45033d8286e420bac3ede89",
+      "bytes": 592
+    },
+    {
+      "path": "/private/tmp/probata-t07-registration-provenance-controls-v3-draft-20261016.log.summary.json",
+      "sha256": "1997a1f70c7b8289975cc690ff80bffd4a9b64493bb51c9597e019ac36ffb1dc",
+      "bytes": 1940
+    }
+  ],
+  "source_git_blobs_verified": 32,
+  "runtime_regular_file_refs_verified": 1241,
+  "runtime_trees_verified": [
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core",
+      "kind": "compiled",
+      "files": 262
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c/kernel",
+      "kind": "compiled",
+      "files": 496
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/yojson",
+      "kind": "compiled",
+      "files": 22
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/why3",
+      "kind": "compiled",
+      "files": 29
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/share/frama-c/share/libc",
+      "kind": "full",
+      "files": 194
+    },
+    {
+      "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/lib/python3.12/site-packages/psutil",
+      "kind": "psutil",
+      "files": 11
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/share/why3/stdlib",
+      "kind": "full",
+      "files": 57
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/share/frama-c/share/wp/why3",
+      "kind": "full",
+      "files": 30
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/share/why3/drivers",
+      "kind": "full",
+      "files": 93
+    }
+  ],
+  "prior_raw_memberships": [
+    224,
+    136,
+    133
+  ],
+  "prior_physical_refs": [
+    231,
+    142,
+    141
+  ],
+  "fresh_output_absent_at_review": true,
+  "baseline_goals": 326,
+  "baseline_properties": 453,
+  "retained_pure_controls": 57,
+  "reviewer_executed_controls": false,
+  "reviewer_actual_tool_calls": false,
+  "blockers": [],
+  "actual_output_accepted": false,
+  "proof_acceptance": false,
+  "root_outer_and_fresh_admission_pending": true,
+  "md_sha256": "64e769147c1f9e5d14e7540b429a3f2f93956a4e5c7a7d8fda539ff09c2e1a74"
+}

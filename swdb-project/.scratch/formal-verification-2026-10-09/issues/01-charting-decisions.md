@@ -1,0 +1,73 @@
+# 01 — Charting decisions
+
+Created: 2026-10-09
+**Type:** grilling
+**Status:** resolved
+**Blocked by:** None — can start immediately
+**Map:** `../map.md`
+
+## Question
+
+What is this map finding its way to, and which standing decisions frame every later ticket?
+
+## Answer
+
+Decided with Yan-Ru in the charting session, 2026-10-09 ET.
+
+1. **Destination:** a research design spec for the "proven" certification level: claims, method,
+   DX100 BFS proof of concept, evaluation plan, positioning. Ready to cut into build tickets.
+   Running the proof of concept is the next effort.
+2. **Headline claim:** the method is (a) rewrite contracts proven once, reused by every candidate
+   artifact that applies them, plus (b) LLM proof hints when the formal verifier times out or
+   returns unknown. (c) Bugs found in expert rewrites are the motivating evidence, not the claim.
+3. **Modes:** both. Extensa mode is the core of the paper submission. ArchEvolve mode shows LANL
+   the novelty through the team (no direct LANL contact).
+4. **Deadline:** none; sooner is better.
+5. **Terms:** what we verify is a candidate artifact's change against the rewrite contract it
+   applies. The DX100 authors' accelerated BFS plays the role of a candidate artifact. "Proven
+   contract" is split into two meanings in ticket 10.
+6. **Two proven levels:** proven unbounded > proven within bounds > certified > uncertified.
+   Every proven-within-bounds verdict records its bounds.
+7. **Concurrency:** single-thread proofs first, then concurrency. Both are in scope.
+8. **Proof hints:** the agent may add only ghost variables, loop invariants, lemmas and
+   intermediate assertions, each itself proven. Never `assume`, never edits to the candidate's
+   code or the contract. A checker rejects anything else.
+9. **Proof-of-concept candidates (all three):**
+   1. DX100 authors' `TDStepMAA`: should be proven under a gem5-matching wait rule (amended
+      2026-10-09, see Comments; it was "must be refuted").
+   2. Peter's §5 read offload with fixes E1–E5 (`library/dx100/bfs_read_offload.inc`): should be proven.
+   3. Codex's native frontier-staging rewrite (`library/native/bfs-tdstep-frontier-staging.patch`): first rewrite actually produced by an LLM.
+
+   Must be refuted (added 2026-10-09): seeded real bugs, namely the contract's negative controls
+   and a deleted wait.
+10. **Out of scope:** compiler correctness; DX100 hardware versus its functional model (the strict
+    layer is the trusted semantics); speed; gem5.
+
+## Comments
+
+- 2026-10-09: ticket 14 found the authors' `wait_ready(tile3)` is safe on gem5; the "wrong-tile
+  bug" exists only under our stricter strict-layer rule. Decision 9.1 ("must be refuted") no
+  longer holds.
+- 2026-10-09: Yan-Ru chose the replacement: the authors' version moves to "should prove" under a
+  gem5-matching wait rule; seeded real bugs (negative controls, a deleted wait) must be refuted.
+  The strict layer's false alarm on a correct expert rewrite is paper evidence that hardware
+  semantics must be explicit and checked against the device model.
+- 2026-10-12 22:52 ET: ticket 10 (Yan-Ru) rewords decision 2(a) to "contract parts proven once, plus one small
+  proof per candidate artifact". Building-block proofs live with library entries (summaries);
+  the contract proof covers its unit postcondition or relational template on a reference
+  instance, its lifting lemma per kernel, and its negative controls refuted. Never say
+  "proven contract" alone (the split decision 5 promised).
+- 2026-10-13 16:09 ET: ticket 15 (Yan-Ru) settles decision 9.2 at threads > 1: Peter's read offload as
+  written proves at one thread and is refuted at threads > 1 (a plain store races with other
+  threads' CAS); its next version, without that store, should prove at every thread count. The authors'
+  version (9.1, its fallback path; 11 item 12) and Codex's (9.3, a plain read of `parent[v]`) are
+  likewise refuted at threads > 1 as written. Peter's and Josh's code
+  is preliminary: a proof-of-concept candidate, never ground truth.
+
+## Later changes
+
+- 2026-10-13 21:51 ET, recorded while writing the map's [spec](../spec.md): decision 10's "the strict
+  layer is the trusted semantics" was replaced by [12](12-dx100-proof-semantics.md) item 1. Proofs trust
+  the proof semantics, each rule cited to gem5 source or assumed with an owner; the strict layer is its
+  executable counterpart for certification. The out-of-scope item now reads "DX100 hardware versus its
+  proof semantics".

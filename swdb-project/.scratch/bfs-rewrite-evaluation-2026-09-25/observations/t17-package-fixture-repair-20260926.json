@@ -1,0 +1,87 @@
+{
+  "created": "2026-09-26",
+  "scope": "test-only T17 package-fixture correction",
+  "state": "repaired_and_independently_reviewed",
+  "diagnosis": "All seven exact full-suite failures reproduce at real profile_package.verify because the synthetic package only had an id and neither an explicit fixture identity nor a current assembly seal. Production rejection is correct.",
+  "correction": "Construct an explicitly contract-fixture package with shared test-local seal_package (which calls the real verifier), then bind its content-addressed ID into the proposal and pins before hashing. Preserve the exact public stage sequence and no-provider/no-retry budget assertions. Add expected semantic error text to adversarial cases and a real package-seal tamper/no-compile regression.",
+  "before": {
+    "path": "tests/test_bfs_t17_build_only.py",
+    "commit": "caca283e85da538cdf4899514ac90904fa9ffed4",
+    "bytes": 21967,
+    "sha256": "79e6346400809556a3601fc1abac9e195e6c470f2398861b52a276841dc698db"
+  },
+  "after": {
+    "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_t17_build_only.py",
+    "bytes": 23083,
+    "sha256": "cffc863b8f32dce38611c7d2596ccf1491deae5afbbf820851d2d3fb9e11ff32"
+  },
+  "helper_dependency": {
+    "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_native_campaign.py",
+    "bytes": 7303,
+    "sha256": "25ca9173144202d9929f00674cd57050da16d141353d2127f11bcb44914807bc"
+  },
+  "unchanged_production": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_t17_build_only.py",
+      "bytes": 29438,
+      "sha256": "4f602d03daf3763b22c82c5d6ff43522dbf1fc2a2e91cbe10a2091d83f8c8920"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/swdb/profile_package.py",
+      "bytes": 33633,
+      "sha256": "dc61800651d043a16b25b1a79903a6ed5553211684c60d2fb3bae99bfe12ba83"
+    }
+  ],
+  "author_receipt": {
+    "path": "/private/tmp/bfs-t17-package-fixture-repair-20260926.json",
+    "bytes": 3610,
+    "sha256": "1aea3e860cd558d6300e533f518391a5d9175e65eeecb94b76d0b621f642ee33"
+  },
+  "red": {
+    "command": [
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+      "-m",
+      "pytest",
+      "tests/test_bfs_t17_build_only.py",
+      "-k",
+      "fixed_sequence or changed-compiler or public_build_result",
+      "-q",
+      "--basetemp",
+      "/private/tmp/bfs-t17-package-seal-red-20260926"
+    ],
+    "result": "7 failed,42 deselected in0.34s",
+    "log": {
+      "path": "/private/tmp/bfs-t17-package-seal-red-20260926.log",
+      "bytes": 15598,
+      "sha256": "e1dbe238c8a920e4a87da4f221e02687ce307fd4fbb0ae14dd172788435135ed"
+    }
+  },
+  "green": {
+    "command": [
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+      "-m",
+      "pytest",
+      "tests/test_bfs_t17_build_only.py",
+      "-q",
+      "--basetemp",
+      "/private/tmp/bfs-t17-package-seal-green-20260926"
+    ],
+    "result": "48 passed,2 Linux-only skipped in1.47s",
+    "log": {
+      "path": "/private/tmp/bfs-t17-package-seal-green-20260926.log",
+      "bytes": 110,
+      "sha256": "ade7ddc3d4571630e92134cb87c801817b3b5bc3cb8fdcb60ad9e5279f1181dd"
+    }
+  },
+  "independent_spec_receipt": {
+    "path": "/private/tmp/bfs-t17-seal-spec-cross-20260926.json",
+    "bytes": 1595,
+    "sha256": "02025448869692334ccae809d9c444321b4c3752a9602952b2339cbc269ec636"
+  },
+  "independent_spec_result": "...........                                                              [100%]\n11 passed, 39 deselected in 0.08s",
+  "limitations": [
+    "Local contract fixtures only; no new actual T17 build, Linux admission, correctness, timing or acceptance.",
+    "Running full regression remains pinned to 7fe4c34 and retains its original failures.",
+    "Production validators and published supervisor 3f38a2b are unchanged."
+  ]
+}

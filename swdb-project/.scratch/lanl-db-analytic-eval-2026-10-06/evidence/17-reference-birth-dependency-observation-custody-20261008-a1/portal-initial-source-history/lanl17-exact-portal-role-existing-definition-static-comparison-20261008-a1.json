@@ -1,0 +1,47 @@
+{
+  "format": "swdb.exact-portal-existing-definition-static-comparison.v1",
+  "rows": [
+    {
+      "added_definitions": [
+        "portal_inode_birth_rows",
+        "exact_portal_autounmount_identification"
+      ],
+      "changed_existing_constants": [],
+      "changed_existing_definitions": [
+        "Guard.process_references"
+      ],
+      "f6_helper_bytes": 11151,
+      "f6_helper_sha256": "f6c4076013eaa487c0e810ba4329512657bef9b1b74a0c074a7231bcc0466883",
+      "imports_AST_equal": true,
+      "limits_ROWS_receipts_namespace_sources_and_all_other_constants_AST_equal": true,
+      "original": "lanl_consumed_detached_source_guard_r5_20261008_a1.py",
+      "selected": "lanl_consumed_detached_source_guard_r6_20261008_a1.py",
+      "unchanged_existing_definition_count": 39
+    },
+    {
+      "added_definitions": [
+        "portal_inode_birth_rows",
+        "exact_portal_autounmount_identification",
+        "Observer.portal_service_review"
+      ],
+      "changed_existing_constants": [
+        "R3",
+        "R3_BYTES",
+        "R3_SHA"
+      ],
+      "changed_existing_definitions": [
+        "Observer.owned_processes",
+        "main"
+      ],
+      "f6_helper_bytes": 11151,
+      "f6_helper_sha256": "f6c4076013eaa487c0e810ba4329512657bef9b1b74a0c074a7231bcc0466883",
+      "imports_AST_equal": true,
+      "limits_ROWS_receipts_namespace_sources_and_all_other_constants_AST_equal": true,
+      "original": "lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r6.py",
+      "selected": "lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r7.py",
+      "unchanged_existing_definition_count": 30
+    }
+  ],
+  "sealed": false,
+  "selected_definitions_not_executed": true
+}

@@ -1,0 +1,68 @@
+{
+  "format": "swdb.cpu-cleanup-grace-preparation.v1",
+  "source_commit": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "helpers": [
+    {
+      "predecessor": "lanl-dispatch-cpu-model-validation-a3-metadata2400.py",
+      "predecessor_sha256": "f1ddb874189abb28fecb7ef4431f6382d3c09442ae1a75afd0164f4562f276bc",
+      "helper": "lanl-dispatch-cpu-model-validation-a3-metadata2400-cleanup60.py",
+      "helper_sha256": "804fb08298bf1469c6098dfcd1a50710f2cc941f9478895482c1fe7d901e6ecb",
+      "runner": "lanl-cpu-model-validation-a3-metadata2400-cleanup60-runner.py",
+      "runner_sha256": "32ece041d91b51a83d7d682da3825e2eb0fe0f3acba9d325a415029e4a889eb4",
+      "exact_single_literal_reversal": true,
+      "decoded_runner_bytes_unchanged": true,
+      "normalized_outer_ast_unchanged": true,
+      "argv_hard_kill_after_s": 60
+    },
+    {
+      "predecessor": "lanl-dispatch-cpu-band-report-a3-metadata2400.py",
+      "predecessor_sha256": "83b2683b5bb21534d7dbd962555770842b8dd24748ba5119abec9339d53b0ad2",
+      "helper": "lanl-dispatch-cpu-band-report-a3-metadata2400-cleanup60.py",
+      "helper_sha256": "dd74dbbe238c1d0c8222d894acd94ef1d344049da257d2a0d744afefb3d2b120",
+      "runner": "lanl-cpu-band-report-a3-metadata2400-cleanup60-runner.py",
+      "runner_sha256": "38d75a7b4a89a20d5978ca860729fa4352506b085e8f91faa9af19595d0dcb47",
+      "exact_single_literal_reversal": true,
+      "decoded_runner_bytes_unchanged": true,
+      "normalized_outer_ast_unchanged": true,
+      "argv_hard_kill_after_s": 60
+    }
+  ],
+  "guard": {
+    "predecessor": "lanl-admit-cpu-future-phase-20261007.py",
+    "predecessor_sha256": "f461d5c36065ee4b31e6cb137a763ea95811940746117813fff4c0760ba1b3ac",
+    "helper": "lanl-admit-cpu-future-phase-cleanup60-20261007.py",
+    "helper_sha256": "b406d3d06b3bddb2cd433cf8f3c47fa80f03314b23795a4b40c045a9120a1e93",
+    "exact_path_and_expected_hash_reversal": true
+  },
+  "actual_model_admission_identity": "fe2890f8e7d8c95d6841ddd78b61762667e07c02688567676aca5d8fc4f4e3bd",
+  "prior_actual_linux_cleanup": {
+    "path": ".scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-linux-cleanup-smoke-mbit10-20261006-a1.json",
+    "file_sha256": "50b4b0bc44af1a8991227e00c8050ba472226dc0f6b562cd8a8eb2ffa9661613",
+    "receipt_helper_sha256": "31e1d71bc6e9ef4a5a5f1d5fbff136ceef249935f8f00601edf45277fce249ec",
+    "processes_py_sha256": "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289",
+    "passed": true,
+    "reuse_scope": "Unchanged cleanup primitives only; no new Linux execution and no claim that the old20s outer margin covered both sequential cleanup steps."
+  },
+  "sequential_declared_wait_s": {
+    "stop_group_grace": 15,
+    "stop_group_kill_wait": 5,
+    "cleanup_owned_term": 15,
+    "cleanup_owned_kill": 5,
+    "sum": 40,
+    "outer_hard_kill_after": 60
+  },
+  "unchanged_caps": {
+    "native_deadline_s": 900,
+    "metadata_s": 2400,
+    "native_enclosing_process_s": 3600,
+    "report_protocol_freeze_s": 3600,
+    "runner_s": 18000,
+    "outer_s": 18300
+  },
+  "portable_verification_pending": true,
+  "remote_dispatch_executed": false,
+  "application_performance_timings_collected": false,
+  "scope": "Exact hard-kill-margin control revision after independent model admission and before native development. Original controls and scientific source/recipes retained.",
+  "identity_sha256": "e5558f00a9c82400d65c6a15c5e732b4003380b1652e3f14e8770b1bce4997cf"
+}

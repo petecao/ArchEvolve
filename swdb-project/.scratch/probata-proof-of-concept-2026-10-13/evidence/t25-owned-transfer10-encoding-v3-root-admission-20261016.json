@@ -1,0 +1,71 @@
+{
+  "classification": "ROOT_ONCE_ADMISSION_G621_COMPLETE20_ENCODING_V3_READ_ONLY",
+  "closed_guards": {
+    "actual_executed": false,
+    "address_space_bytes": 536870912,
+    "argv_after_root_read_only_preflight": [
+      "/usr/bin/python3",
+      "-I",
+      "-B",
+      "-"
+    ],
+    "closed_environment": {
+      "HOME": "/nonexistent",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "PATH": "/usr/bin:/bin"
+    },
+    "cpu_limit_seconds": 30,
+    "date": "2026-10-16 ET",
+    "exit_scope": "Exit2 is bounded metadata only; every acceptance flag stays false. Exit1 refuses input/parser/budget boundaries. Root must independently review and admit the exact stdin bytes before invocation.",
+    "expected_completed_capture_exit": 2,
+    "host": "mbit10",
+    "inner_alarm_seconds": 60,
+    "max_input_bytes": 1048576,
+    "outer_kill_after_seconds": 5,
+    "outer_timeout_seconds": 90,
+    "remote_filesystem_writes": false,
+    "schema": "ownership10-g621-bounded-encoding-probe-v3",
+    "selected_aggregate_input_bytes_cap": 2097152,
+    "selected_tasks": 20,
+    "status": "INERT_REVIEW_AND_ROOT_ADMISSION_REQUIRED",
+    "stdin": {
+      "bytes": 247600,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v3/entry.py",
+      "sha256": "cd85933706b161b4611dbb6e04cf04a2018127f525bcf8f1da73751b4deee7c6"
+    },
+    "stdout_cap_bytes": 262144,
+    "subprocesses_or_native_helpers": false
+  },
+  "command": {
+    "bytes": 1341,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v3/command.json",
+    "sha256": "91623c301d14f635c55ea40ab6b44e064c860aa211a643ed629e860b1b7df19f"
+  },
+  "date": "2026-10-16 ET",
+  "entry": {
+    "bytes": 247600,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v3/entry.py",
+    "sha256": "cd85933706b161b4611dbb6e04cf04a2018127f525bcf8f1da73751b4deee7c6"
+  },
+  "original_refusals_and_mismatches_preserved": true,
+  "packet": {
+    "bytes": 8725,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/cold-g621-encoding-v3/source-packet.json",
+    "sha256": "e90e9b2ef762ef1ecb6c954524ce2a406f7edf9afc108fcb7c7eb1bb73498b4d"
+  },
+  "reviews": {
+    "Spec": {
+      "bytes": 3178,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-encoding-v3-parent-spec-review-20261016.json",
+      "sha256": "485c35f0c1862e64919a45e52fb6a9b8096f6fbc073a6ed8b2cc8a0171478327"
+    },
+    "Standards": {
+      "bytes": 2184,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-encoding-v3-root-standards-review-20261016.json",
+      "sha256": "3d0c863c2ffcc3d53e7bd6459338aa97a67c203dd0945582e8d7269f72410aa3"
+    }
+  },
+  "scientific_or_source_body_Typed_caller_default_public_record_acceptance": false,
+  "scope": "One complete20-task metadata comparison after fresh exact scopedG621/d7 source/process/leases preflight. Exact selected22files before/after; no compiler/verifier/native/solver/proof rerun; normal science adoption remains false."
+}

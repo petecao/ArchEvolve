@@ -1,0 +1,65 @@
+--- /private/tmp/lanl_consumed_detached_source_guard_r4_20261008_r1.py
++++ /private/tmp/lanl_consumed_detached_source_guard_r4_20261008_r2.py
+@@ -783,6 +783,7 @@
+             self.read_bytes += count
+             require(self.read_bytes <= LIMITS['total_file_bytes'], 'cumulative_account_service_read_limit')
+         excluded = []
++        terminal_zombies = []
+         relevant = 0
+         identified = 0
+         for pid,item in snapshots.items():
+@@ -808,9 +809,43 @@
+                 self.facts['latest_exact_account_service_classification'] = audit
+                 relevant -= 1
+                 continue
+-            if fields.get('State','').startswith('Z'):
+-                require(self.proc_read(proc/'maps', LIMITS['one_proc_bytes']) == b''
+-                        and not list((proc/'fd').iterdir()), 'zombie_retains_references')
++            if fields.get('State','').split()[:1] == ['Z']:
++                # Linux v6.8 do_exit clears task mm/files/fs before EXIT_ZOMBIE.
++                # A zombie leader with other threads is not covered by this branch.
++                before_values = before[before.rfind(b')')+2:].split()
++                require(before_values[0] == b'Z' and int(before_values[1]) == item['ppid']
++                        and int(fields['Pid']) == pid and int(fields['Threads']) == 1,
++                        'terminal_zombie_initial_public_identity_changed')
++                status = self.proc_read(proc/'status', LIMITS['one_proc_bytes'])
++                require(status is not None, 'terminal_zombie_status_disappeared')
++                terminal_fields = {}
++                for line in status.decode().splitlines():
++                    if ':' in line:
++                        key,value = line.split(':',1)
++                        require(key not in terminal_fields, 'terminal_zombie_duplicate_status')
++                        terminal_fields[key] = value.strip()
++                terminal_uids = [int(value) for value in terminal_fields['Uid'].split()]
++                require(terminal_fields['State'].split()[:1] == ['Z']
++                        and int(terminal_fields['Pid']) == pid
++                        and int(terminal_fields['PPid']) == item['ppid']
++                        and terminal_uids == item['uids'] and int(terminal_fields['Threads']) == 1,
++                        'terminal_zombie_fresh_public_identity_changed')
++                after = self.proc_read(proc/'stat', LIMITS['one_proc_bytes'])
++                require(after is not None, 'terminal_zombie_final_stat_disappeared')
++                after_values = after[after.rfind(b')')+2:].split()
++                require(after_values[0] == b'Z' and after_values[19] == start
++                        and int(after_values[1]) == item['ppid'],
++                        'terminal_zombie_final_state_PID_or_parent_changed')
++                terminal_zombies.append({'pid':pid, 'start_ticks':int(start),
++                    'ppid':item['ppid'], 'uids':terminal_uids, 'state':'Z', 'threads':1,
++                    'captured_status_and_fresh_before_after_stat_Z':True,
++                    'fresh_public_status_pin':{'bytes':len(status),'sha256':sha(status)},
++                    'protected_references':{key:'UNOBSERVED' for key in ('fd','cwd','root','exe','maps')},
++                    'kernel_terminal_resource_release_basis':
++                        'https://github.com/torvalds/linux/blob/v6.8/kernel/exit.c#L858-L891',
++                    'kernel_terminal_mm_files_fs_invariant_is_explicit_assumption':True,
++                    'other_threads_or_live_consumers_exempted':False,
++                    'global_reference_free_or_cleanup_clearance_claimed':False})
+                 continue
+             try:
+                 links = [proc/'cwd',proc/'root',proc/'exe']
+@@ -851,6 +886,7 @@
+                 'foreign_unidentified_daemons_not_invented_as_consumers':True,
+                 'inaccessible_ordinary_owned_or_identified_consumer_refuses':True,
+                 'excluded_exact_system_services':excluded,
++                'stable_single_thread_terminal_zombie_audits':terminal_zombies,
+                 'exact_service_unobserved_references_are_not_reference_free':True,
+                 'global_privileged_security_clearance_claimed':False,
+                 'raw_process_args_maps_auth_environment_not_serialized':True}

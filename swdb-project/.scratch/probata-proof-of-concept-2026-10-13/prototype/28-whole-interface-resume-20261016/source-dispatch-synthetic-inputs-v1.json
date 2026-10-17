@@ -1,0 +1,118 @@
+{
+  "abi": {
+    "alignments": [
+      4,
+      4,
+      4,
+      8,
+      8,
+      8
+    ],
+    "byte_order": "little",
+    "canonical_types": {
+      "double": "double",
+      "float": "float",
+      "int32_t": "int",
+      "int64_t": "long",
+      "uint32_t": "unsigned int",
+      "uint64_t": "unsigned long"
+    },
+    "int_bits": 32,
+    "pointer_bits": 64,
+    "sizes": [
+      4,
+      4,
+      4,
+      8,
+      8,
+      8
+    ]
+  },
+  "actual_compiler_abi": false,
+  "atlas": {
+    "cells": [
+      {
+        "cell": 0,
+        "dtype": 0,
+        "physical_begin": 65536,
+        "physical_end": 65540
+      },
+      {
+        "cell": 1,
+        "dtype": 0,
+        "physical_begin": 65540,
+        "physical_end": 65544
+      },
+      {
+        "cell": 2,
+        "dtype": 1,
+        "physical_begin": 69632,
+        "physical_end": 69636
+      },
+      {
+        "cell": 3,
+        "dtype": 1,
+        "physical_begin": 69636,
+        "physical_end": 69640
+      }
+    ],
+    "history_events_added": 0,
+    "initialization_granted": false,
+    "objects": [
+      {
+        "base_cell": 0,
+        "cell_ids": [
+          0,
+          1
+        ],
+        "dtype": 0,
+        "extent": 2,
+        "guest_base": 65536,
+        "object_id": "whole_interface_source_fixture::data",
+        "physical_base": 65536,
+        "source_pin": "2615d8f0571e9966b3d625094034eebb5bb65ec9942c0f1baacf642d2adf6d8b"
+      },
+      {
+        "base_cell": 2,
+        "cell_ids": [
+          2,
+          3
+        ],
+        "dtype": 1,
+        "extent": 2,
+        "guest_base": 69632,
+        "object_id": "whole_interface_source_fixture::limits",
+        "physical_base": 69632,
+        "source_pin": "2615d8f0571e9966b3d625094034eebb5bb65ec9942c0f1baacf642d2adf6d8b"
+      }
+    ],
+    "owned_premises": [
+      "source object identity/lifetime",
+      "guest\u2192physical projection",
+      "complete CPU-access instrumentation"
+    ],
+    "public_admission": false,
+    "schema": "source-ordinary-cell-atlas-1"
+  },
+  "line_bytes": 64,
+  "objects": [
+    {
+      "dtype": 0,
+      "extent": 2,
+      "guest_base": 65536,
+      "object_id": "whole_interface_source_fixture::data",
+      "physical_base": 65536,
+      "source_pin": "2615d8f0571e9966b3d625094034eebb5bb65ec9942c0f1baacf642d2adf6d8b"
+    },
+    {
+      "dtype": 1,
+      "extent": 2,
+      "guest_base": 69632,
+      "object_id": "whole_interface_source_fixture::limits",
+      "physical_base": 69632,
+      "source_pin": "2615d8f0571e9966b3d625094034eebb5bb65ec9942c0f1baacf642d2adf6d8b"
+    }
+  ],
+  "page_bytes": 4096,
+  "synthetic_only": true
+}

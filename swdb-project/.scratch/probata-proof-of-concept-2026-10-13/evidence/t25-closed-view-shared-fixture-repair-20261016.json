@@ -1,0 +1,51 @@
+{
+  "actual_compiler_or_verifier_calls": 0,
+  "all_public_test_function_asts_unchanged": true,
+  "baseline_existing_files_matched_HEAD_before_edit": {
+    "tests/conftest.py": "f70dea4668fc1c2a2234b3bed4d8630734e8eec4f756fbb9be0e8d79a66b6a7a",
+    "tests/test_vector_reallocation_caller_view.py": "b2bec084f1f3f9386b3e81a39c2772473b4ee7560e439143aea99a87c002f3c1"
+  },
+  "caller_acceptance": false,
+  "conftest_scope": "append only testkit.vector_reallocation to pytest_plugins",
+  "created": "2026-10-16 ET",
+  "current_files": [
+    {
+      "path": "swdb/vector_reallocation_closed_view.py",
+      "sha256": "758092d5997274b29e22f2196c46af361b7cfdfd5c9eb83ee328ae6a877eb757"
+    },
+    {
+      "path": "tests/test_vector_reallocation_closed_view.py",
+      "sha256": "7fd7be64c9b99903a152793ff5c6263423fd3aaa99fde7d922c1f95107398d7b"
+    },
+    {
+      "path": "tests/test_vector_reallocation_caller_view.py",
+      "sha256": "97abc42871a367f380e7aa3ea518449b2130cc1387e34446df471cf1c4c27ec3"
+    },
+    {
+      "path": "tests/testkit/vector_reallocation.py",
+      "sha256": "57c8477de43d129c3fc7426548eed35ee7be106680f684787285d14bb7cff908"
+    },
+    {
+      "path": "tests/conftest.py",
+      "sha256": "7c3d36f8c0b6e23e6eacf622b31ce3e051fc31af1c494d1dfab97bf1012165bb"
+    }
+  ],
+  "independent_standards_recheck": "pending",
+  "production_module_unchanged": true,
+  "pure_controls": [
+    {
+      "external_native_attempts": [],
+      "passed": 5,
+      "path": "/private/tmp/probata-resume-20261016-t25-closed-view-green-v3/result.json",
+      "sha256": "01508ee836ee831991405b1674b555d6f92bd7225f2bbfd220bd95005c99e5f5"
+    },
+    {
+      "external_native_attempts": [],
+      "passed": 5,
+      "path": "/private/tmp/probata-resume-20261016-t25-caller-view-green-v5/result.json",
+      "sha256": "71b0d4827132d0eff27720c147bd8e32186f2cfbc4bd9100ccdc7c4c134e3a26"
+    }
+  ],
+  "review_finding": "duplicate no-growth source/contract/compiler seed; move to registered shared testkit fixture",
+  "shared_fixture_function_ast_unchanged": true
+}

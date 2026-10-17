@@ -1,0 +1,103 @@
+{
+  "actual_subset_capacity_or_scientific_admission": false,
+  "checks": [
+    {
+      "added_definitions": [],
+      "changed_definitions": [
+        "Guard.process_references"
+      ],
+      "closed_full_diff_reversal_matches_original": true,
+      "complete_diff": {
+        "bytes": 4355,
+        "path": "/private/tmp/lanl-consumed-detached-source-guard-r4r2-complete-r4r1-derivation-20261008.diff",
+        "sha256": "f4aa5938a824141e5502409cc6dc5e0f9b29f07f92826681ffb9c66c72504ce2"
+      },
+      "imports_assignments_exact": true,
+      "original": {
+        "bytes": 81694,
+        "path": "/private/tmp/lanl_consumed_detached_source_guard_r4_20261008_r1.py",
+        "sha256": "d30481a540a40f0c4b4695e105dc25f6febf152e391b5a34861b817d0d6960a6"
+      },
+      "reversed_sha256": "d30481a540a40f0c4b4695e105dc25f6febf152e391b5a34861b817d0d6960a6",
+      "selected": {
+        "bytes": 84381,
+        "path": "/private/tmp/lanl_consumed_detached_source_guard_r4_20261008_r2.py",
+        "sha256": "78a0c850e515f6ebb589a28f53a2c99d7a6430dcf5da46aea4869368d2cd3df9"
+      },
+      "shared_helper_bytes": 11151,
+      "shared_helper_sha256": "f6c4076013eaa487c0e810ba4329512657bef9b1b74a0c074a7231bcc0466883"
+    },
+    {
+      "added_definitions": [],
+      "changed_definitions": [
+        "Observer.owned_processes"
+      ],
+      "closed_full_diff_reversal_matches_original": true,
+      "complete_diff": {
+        "bytes": 5077,
+        "path": "/private/tmp/lanl17-passive-consumed-source-metadata-acquisition-r3-complete-r2-derivation-20261008.diff",
+        "sha256": "f51286ef5d8f53ab400148981defe7e3c82e4639c0db256358fc432c522571e9"
+      },
+      "imports_assignments_exact": true,
+      "original": {
+        "bytes": 51132,
+        "path": "/private/tmp/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r2.py",
+        "sha256": "c85df7ccad501a3e1cc5ea01d0e4da1c36c031db48f4af9e32d9e278bb585572"
+      },
+      "reversed_sha256": "c85df7ccad501a3e1cc5ea01d0e4da1c36c031db48f4af9e32d9e278bb585572",
+      "selected": {
+        "bytes": 54009,
+        "path": "/private/tmp/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r3.py",
+        "sha256": "5a52e36ea84122cd303c540d6c177d014e36d22c70b2d9cdcd210d863e177cc8"
+      },
+      "shared_helper_bytes": 11151,
+      "shared_helper_sha256": "f6c4076013eaa487c0e810ba4329512657bef9b1b74a0c074a7231bcc0466883"
+    }
+  ],
+  "format": "swdb.terminal-zombie-handling-source-preparation.v1",
+  "kernel_v6_8_exit_ordering_is_explicit_assumption": true,
+  "original_public_role_observation": {
+    "bytes": 7121,
+    "path": "/private/tmp/lanl-inaccessible-owned-process-public-role-original-20261008-a1.json",
+    "sha256": "83d88e0c3ba7a414d42b3b96bbf63a7ffa8c76e3393da5d53363ce946d01f732"
+  },
+  "originals_modified": false,
+  "primary_source_research": [
+    {
+      "URL": "https://raw.githubusercontent.com/torvalds/linux/v6.8/kernel/exit.c",
+      "bytes": 48977,
+      "path": "/private/tmp/lanl-linux-v6.8-zombie-research-exit.c",
+      "sha256": "c7a2878deada686a04be224f8b5185ad022a995a297229ff8b43e8c3b53f2af9"
+    },
+    {
+      "URL": "https://raw.githubusercontent.com/torvalds/linux/v6.8/fs/proc/array.c",
+      "bytes": 23234,
+      "path": "/private/tmp/lanl-linux-v6.8-zombie-research-proc-array.c",
+      "sha256": "23fa35a9e22158c2bee2bf183c748b82438e4919571eac9c04a4028d24764549"
+    },
+    {
+      "URL": "https://raw.githubusercontent.com/torvalds/linux/v6.8/include/linux/sched.h",
+      "bytes": 62909,
+      "path": "/private/tmp/lanl-linux-v6.8-zombie-research-sched.h",
+      "sha256": "be70b3be89004663fc7a2a242d8ad38bdc9fc31a4870a42a9a8c159b214b5409"
+    },
+    {
+      "URL": "https://raw.githubusercontent.com/torvalds/linux/v6.8/fs/file.c",
+      "bytes": 36885,
+      "path": "/private/tmp/lanl-linux-v6.8-zombie-research-file.c",
+      "sha256": "c129e331b9042443bcd516d8fda58f58c755da41b70b94097d5ad7a9412acf43"
+    },
+    {
+      "URL": "https://raw.githubusercontent.com/torvalds/linux/v6.8/fs/fs_struct.c",
+      "bytes": 3458,
+      "path": "/private/tmp/lanl-linux-v6.8-zombie-research-fs-struct.c",
+      "sha256": "83cb6db3dfbd1fa224bac3f9d5211d943ed2ea9387da6fd53720ace3c9610c53"
+    }
+  ],
+  "research_acquisition": "Web tool exact-version opens failed; official torvalds v6.8 raw HTTPS bounded reads succeeded. Current master search results not used as version evidence.",
+  "runtime_kernel_identity_or_unpatched_invariant_verified": false,
+  "sealed": false,
+  "source_preparation_only": true,
+  "target_definition_or_module_compiled_imported_called": false,
+  "tests_SSH_Git_guard_main_or_cleanup_run": false
+}

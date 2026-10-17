@@ -1,0 +1,53 @@
+{
+  "actual_stat_path_chmod_proc_Git_SSH_Store_removal": false,
+  "canonical_ensure_ascii": true,
+  "fixture": {
+    "bytes": 12189,
+    "path": "/private/tmp/lanl_consumed_source_guard_r3_permission_isolated_test_source_20261008.py",
+    "sha256": "cda7f3cdc0ca496e85ab6addd90a1a8688f47460cd1732455a3c0623866a47f4"
+  },
+  "fixture_lift_or_compile_or_main_or_tests_run": false,
+  "format": "swdb.consumed-source-guard-r3-permission-fixture-source-preparation.v1",
+  "handoff": {
+    "bytes": 3956,
+    "path": "/private/tmp/lanl-consumed-source-guard-r3-permission-isolated-test-source-handoff-20261008-a1.md",
+    "sha256": "42d0933615c2d343f7dc26ba0dd4ee039775aa4650086b5e02c51be424cefded"
+  },
+  "identity_sha256": "903b32c9b88d70fdf792ac69672d239662ca38f923d828c111c549b419e84ff9",
+  "lifted_Guard_methods": [
+    "check_private_root",
+    "private_ancestor",
+    "privacy_gate",
+    "path"
+  ],
+  "lifted_module_definitions": [
+    "Refused",
+    "require",
+    "stamp",
+    "inside",
+    "tracked_mode_equivalent"
+  ],
+  "old_R2_six_cases_repeated": false,
+  "preparation_AST_parse_only": true,
+  "prepared_at": "2026-10-08T00:19:32.239867+00:00",
+  "production_UID_not_used": 114316761,
+  "scientific_or_live_guard_admission": false,
+  "selected_R3": {
+    "bytes": 69303,
+    "path": "/private/tmp/lanl_consumed_detached_source_guard_r3_20261008.py",
+    "sha256": "552cd7424138adcf025db119e0a132e0bc70d733d61aaaddda0effe2932c5371"
+  },
+  "synthetic_namespace_UID": 424242,
+  "target_import_or_main": false,
+  "test_body_count": 8,
+  "test_methods": [
+    "test_literal_private_700_admits_existing_write_modes_and_records_roots",
+    "test_701_and_755_private_roots_refuse_even_a_readonly_target",
+    "test_foreign_root_and_foreign_leaf_remain_refused",
+    "test_symlink_root_ancestor_and_leaf_are_never_privacy_proofs",
+    "test_replaced_root_inode_refuses_and_captured_facts_are_independent",
+    "test_private_scope_does_not_cover_data_siblings_or_unrelated_paths",
+    "test_special_bits_auth_denials_and_exact_primary_exception_stay_intact",
+    "test_tracked_git_modes_accept_only_optional_022_with_a_privacy_proof"
+  ]
+}

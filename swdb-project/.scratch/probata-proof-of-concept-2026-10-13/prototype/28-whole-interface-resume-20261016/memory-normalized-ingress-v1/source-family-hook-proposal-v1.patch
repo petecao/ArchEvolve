@@ -1,0 +1,47 @@
+--- a/swdb-project/swdb/dx100_checked_source.py
++++ b/swdb-project/swdb/dx100_checked_source.py
+@@ -172,17 +172,22 @@
+ 
+ def producer_paths():
+     """Actual fixed imported/read/exec consumers, including transport and aliases."""
+-    from swdb._dx100_whole import normalized_capture_ingress_v2 as ingress
++    from swdb._dx100_whole import capture_family_dispatch_v1 as ingress
+     from swdb._dx100_whole import closed_python_surface, role_normalized_gzip_v2, lossless_gzip_v2
+     from swdb._dx100_whole import runtime_projection_v3, normalized_compiler_adapter_v1
++    from swdb._dx100_whole import normalized_capture_ingress_v2, memory_normalized_capture_ingress_v1
++    from swdb._dx100_whole import memory_normalized_compiler_adapter_v1, memory_source_preparation_v1
+     modules = (compiler, codec, model, receiver, memory_receiver, staging, dispatch,
+         globals_observer, statements, binder, unit_registry, memory_selection, memory_runtime, resources,
+-        ingress, closed_python_surface, role_normalized_gzip_v2, lossless_gzip_v2, runtime_projection_v3, normalized_compiler_adapter_v1)
++        ingress, normalized_capture_ingress_v2, memory_normalized_capture_ingress_v1,
++        memory_normalized_compiler_adapter_v1, memory_source_preparation_v1,
++        closed_python_surface, role_normalized_gzip_v2, lossless_gzip_v2, runtime_projection_v3, normalized_compiler_adapter_v1)
+     rows = [(Path(module.__file__).name, Path(module.__file__)) for module in modules]
+     need(len({name for name, _path in rows}) == len(rows), 'producer module names must be unique')
+     paths = dict(rows)
+     fixed = {
+         'dx100_checked_source.py': Path(__file__), 'dx100_whole_checked.py': Path(contracts.__file__),
++        'memory_capture_facts_v1.json': Path(__file__).parent / '_dx100_whole/memory_capture_facts_v1.json',
+         'package/__init__.py': Path(__file__).with_name('__init__.py'),
+         '_dx100_whole/__init__.py': Path(__file__).parent / '_dx100_whole/__init__.py',
+         'runtime_projection_v2.py': Path(__file__).parent / '_dx100_whole/runtime_projection_v2.py',
+@@ -214,8 +219,8 @@
+     need(type(capture) is dict, 'typed complete capture selection required')
+     if capture.get('kind') == CAPTURE_KIND:
+         return capture['compressed_tu'], capture['observation']
+-    from swdb._dx100_whole import normalized_capture_ingress_v2 as ingress
+-    need(capture.get('kind') == ingress.KIND, 'unknown complete capture input roles')
++    from swdb._dx100_whole import capture_family_dispatch_v1 as ingress
++    need(capture.get('kind') in ingress.NORMALIZED_KINDS, 'unknown complete capture input roles')
+     return capture['transform']['normalized_gzip'], capture['original']['observation']
+ 
+ 
+@@ -393,7 +398,7 @@
+     requested = reads.portable(policy['proof_source'])
+     need(Path(source).resolve(strict=True) == Path(selection.library.resolve(policy['proof_source']))
+          and sha(requested) == source_sha, 'exact selected registered proof buffer required')
+-    from swdb._dx100_whole import normalized_capture_ingress_v2 as ingress
++    from swdb._dx100_whole import capture_family_dispatch_v1 as ingress
+     captured_path, original, tu, declarations, prepared, stream_receipt = ingress.complete_capture(policy, reads, selection.project)
+     need(requested == original, 'explicit first-fixture identical-buffer projection differs')
+     expected = policy['expected']

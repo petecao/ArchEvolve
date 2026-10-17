@@ -1,0 +1,89 @@
+{
+  "author_controls": {
+    "bytes": 7097,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/test_source_04af_packets_v1.py",
+    "sha256": "b7526e9b47db1a71b18c8ac694b0095683eea4cd875ab98bd2a4eea857516a95"
+  },
+  "basis": {
+    "command": {
+      "bytes": 11261,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/linux_trace_command_57c22ba6_v2.json",
+      "sha256": "9f339b928d42496826f7a305bc5147eb645801c816f1f31369aa2474fb1a95b7"
+    },
+    "policy": {
+      "bytes": 531529,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/linux_trace_policy_57c22ba6_v2.json",
+      "sha256": "130a1569e75c1bee434270dc964c0771d8b4c3b1cce278e0cb193a7d25a8feca"
+    }
+  },
+  "boundaries": {
+    "actual25public_results_or_cold_acceptance": false,
+    "actual_launched": false,
+    "fresh_root_host_lane_runtime_admission_still_required": true,
+    "full_ticket28_original_header_body_hardware_caller_admitted": false,
+    "proof_acceptance": false
+  },
+  "bounds_integration_review": {
+    "bytes": 2114,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/bounds-repair-independent-integration-review-v1-20261016.json",
+    "sha256": "1d4c5e9f3c5e293a5bac42169d87c2ed52703801c69c97bb89ca83b89e5f8adc"
+  },
+  "builder": {
+    "bytes": 9093,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/prepare_source_04af_packets_v1.py",
+    "sha256": "37ef92a97fa9d29e85190a5c2985b176e6153c1fcca5baedfa9d6ab15e7346d7"
+  },
+  "checks": {
+    "bounds_fixture_delta": "Independently read exact two-file diff: trace_cases adds only bounds={threads:1} to the existing public fixture call. Shared dx100_trust adds optional bounds=None and serializes old default whenNone,otherwise suppliedbounds. All source generation,predicates,trace cases,model/evidence transforms and public prove call remain otherwise identical. This changes the invalid blanket input_size declaration,not production bounds checks orcase semantics.",
+    "builder": "Finite read-only Gitmetadata/blob selection; no payload semantic analysis oractualtool/prover/dispatch. Exact old bases/entry/helper membership pinned. Author5purecontrols inspected,not rerun. Original actual bounds refusal remains separately retained.",
+    "command_inverse": "Replacing only source bindings,consumer roots,source count,controller-input metadata,totalbytes,status,argv tail and remote controller paths restores exact prior V2 command. Same opam exec/switch andPython-I-B prefix,node1,1200swhole/1320souter,8GiB1worker256MiBraw. Names added to controller rows are exact basenames; helpers retain same path,size,hash.",
+    "complete_trace_source_membership": "New selected set is exactly the prior557names union the complete113regular-file Git trace-prototype tree at04af,adding52files. No prior selected name dropped; no added name outside that prototype tree. Allentries regular100644/100755blobs.",
+    "entry_and_criteria": "Actual entry unchanged d319185131bd708c57229fe16e269da6e6298d1afba3c057a8fcc0f89aa43c93. Complete property/native reachability,case census,negative counterexample/native replay,incremental fsync,JUnit/zero-skip,source/control/runtime pre/post checks andoriginal assumptions are inherited byte-identically. No hardcoded57c source selector blocks04af rebind.",
+    "fresh_source_pins": "trace_cases exactly2db304123fc8a35faeac4bbbd9d569907670cfc6f4acbef21ddb84537f4da3ee; sharedhelper4d55a093a7a92eeb57c9878760bc48ae71c6d5683bbdbf50760be15997cb0982; combinedsourceobserver01c043e5. Staged runtime helpers retain reviewed finalphysicalpins despite historical source57c having earlier helper drafts.",
+    "physical_staging": "All9controls physical regular nonsymlink files match current size/hash. Unique basenames,total741903B<1MiB. All7helper/control-record rows after entry/policy retain prior exact bytes.",
+    "policy_inverse": "Replacing only source_commit,source_root,raw_name,source_files,source_consumer_trees,status and python_startup_roles_v2.source_project restores exactly prior V2 policy. All25admitted selections,positive/negative verdict expectations,exact CBMC6.11.0 stdout/family6.11,compiler/Frama/runtime/import/header/parser/META/Python/link/startup and normal guard gates are identical.",
+    "source_blob_and_consumer_rehash": "Independent read-only Git--no-replace-objects hashes match all609selected immutable04af blobs (7944736B),and all11consumer-root OIDs match exactcommit. No record/catalog payload selected/read; no native tools run."
+  },
+  "command": {
+    "bytes": 11294,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/linux_trace_command_04af74c1_v3.json",
+    "sha256": "c97559d11049d2a534332e5bfb8d1a877dbb8163597735cb0e3010b32c8c1d80"
+  },
+  "date": "2026-10-16 ET",
+  "decision": "Static PASS for exact source04af trace V3 rebind. Root owns fresh guard/lane/runtime admission and actual evaluation. Old failures remain failures and no new public result exists from this review.",
+  "entry": {
+    "bytes": 35681,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/linux_trace_entry_v2.py",
+    "sha256": "d319185131bd708c57229fe16e269da6e6298d1afba3c057a8fcc0f89aa43c93"
+  },
+  "findings": [],
+  "manifest": {
+    "bytes": 2981,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/fresh-source-04af-packets-source-manifest-v1.json",
+    "sha256": "57ac235d0b50fde85af7836c4416a37c04590bfe483bb07edbc0b1b7aaa6b62f"
+  },
+  "policy": {
+    "bytes": 542216,
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/linux_trace_policy_04af74c1_v3.json",
+    "sha256": "47629d9c974d9352f208764a2c93186da119b810b8750980461ac6de1600e214"
+  },
+  "reviewer": "/root/lane_coordination",
+  "root_guard": {
+    "external_timeout_seconds": 1320,
+    "raw_budget_bytes": 268435456,
+    "rss_cap_bytes": 8589934592,
+    "whole_tree_seconds": 1200,
+    "workers": 1
+  },
+  "scope": "Fresh04af source binding to unchanged reviewed trace V2 entry, runtime and25criteria; no compiler/native/verifier/solver/test/SSH/actual launch.",
+  "source_binding": {
+    "consumer_roots": 11,
+    "control_bytes": 741903,
+    "node": 1,
+    "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v3",
+    "selected_files": 609,
+    "source": "/data1/yanruj/probata-resume-20261016-04af74c1/swdb-project",
+    "source_commit": "04af74c121a733589fbe1a2087ad602deaef598b"
+  },
+  "status": "PASS_STATIC_TRACE_V3_SOURCE_REBIND"
+}

@@ -1,0 +1,212 @@
+--- /private/tmp/lanl17_exact_checkout_inode_birth_readonly_query_20261008_a1.py
++++ /private/tmp/lanl17_exact_worktree_administration_inode_birth_readonly_query_20261008_a1.py
+@@ -1,8 +1,8 @@
+-"""Fixed read-only inode-birth query; SOURCE PREPARATION, NOT RUN.
+-
+-All 18 G5 rows, including protected O1, are queried without a removal selection.
+-Original UNSEALED metadata only: this neither classifies a daemon nor admits
+-cleanup, capacity, ancestry visibility, scientific evidence, or a final plan.
++"""Fixed read-only Git-worktree administration inode-birth query; NOT RUN.
++
++Only the 18 exact administration routes observed in the genuine checkout-birth
++original and their anchors are walked. No checkout rewalk, ordinary file bodies,
++Git command, control import, cleanup or process-role admission is performed.
+ """
+ import ctypes
+ import datetime
+@@ -19,6 +19,11 @@
+ P = pathlib.Path
+ UID = 114316761
+ BASE = P('/data1/yanruj')
++ADMIN_ROOT = BASE/'ArchEvolve'/'.git'/'worktrees'
++ADMIN_ANCHORS = (P('/'), P('/data1'), BASE, BASE/'ArchEvolve',
++                 BASE/'ArchEvolve'/'.git', ADMIN_ROOT)
++CHECKOUT_BIRTH_ORIGINAL_PIN = {'path': '/private/tmp/lanl17-exact-checkout-inode-birth-query-original-20261008-a1.json', 'bytes': 14762700, 'sha256': 'e228811f4b119a7e0c97b666b7da249374f3637cef8b17c0b10b54c4ff422fb7', 'policy': 'Original UNSEALED genuine checkout-birth observation; no administration target walk there'}
++ADMIN_ROUTES = {'ArchEvolve-lanl-allocator-a2-20261006': {'path': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-allocator-a2-20261006', 'original_pointer_route': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-allocator-a2-20261006', 'original_checkout_path': '/data1/yanruj/ArchEvolve-lanl-allocator-a2-20261006', 'original_pointer_file_pin': {'bytes': 86, 'sha256': '9626ee8cf9d39610c1c866ab9ffe4406b3eb0913c72d700d282b8d628826abe6', 'stat': {'blocks': 8, 'ctime_ns': 1791329486063564771, 'dev': 2097, 'gid': 114316761, 'ino': 60329743, 'mode': 33204, 'mtime_ns': 1791329486063564771, 'nlink': 1, 'size': 86, 'uid': 114316761}}, 'original_birth_receipt_jsonpath': '$.rows[0].git_indirection', 'original_target_birth_unwalked_in_checkout_query': True}, 'ArchEvolve-lanl-bulk-services-20261006-a1': {'path': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-bulk-services-20261006-a1', 'original_pointer_route': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-bulk-services-20261006-a1', 'original_checkout_path': '/data1/yanruj/ArchEvolve-lanl-bulk-services-20261006-a1', 'original_pointer_file_pin': {'bytes': 90, 'sha256': 'dce4cfb852f67d543b28b923cd081fa6b934e845d11d7a3eb9688b789d60978f', 'stat': {'blocks': 8, 'ctime_ns': 1791335068456470687, 'dev': 2097, 'gid': 114316761, 'ino': 68310817, 'mode': 33204, 'mtime_ns': 1791335068456470687, 'nlink': 1, 'size': 90, 'uid': 114316761}}, 'original_birth_receipt_jsonpath': '$.rows[1].git_indirection', 'original_target_birth_unwalked_in_checkout_query': True}, 'ArchEvolve-lanl-bulk-total-services-20261006-a1': {'path': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-bulk-total-services-20261006-a1', 'original_pointer_route': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-bulk-total-services-20261006-a1', 'original_checkout_path': '/data1/yanruj/ArchEvolve-lanl-bulk-total-services-20261006-a1', 'original_pointer_file_pin': {'bytes': 96, 'sha256': '0a7fdbf05859ab09efe4d84c7b7a860632a73ea1d4c8524661b84f6f8eda555a', 'stat': {'blocks': 8, 'ctime_ns': 1791337259122407440, 'dev': 2097, 'gid': 114316761, 'ino': 68963140, 'mode': 33204, 'mtime_ns': 1791337259122407440, 'nlink': 1, 'size': 96, 'uid': 114316761}}, 'original_birth_receipt_jsonpath': '$.rows[2].git_indirection', 'original_target_birth_unwalked_in_checkout_query': True}, 'ArchEvolve-lanl-clock-a2-20261006': {'path': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-clock-a2-20261006', 'original_pointer_route': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-clock-a2-20261006', 'original_checkout_path': '/data1/yanruj/ArchEvolve-lanl-clock-a2-20261006', 'original_pointer_file_pin': {'bytes': 82, 'sha256': '042d137a70a2f9f48013c51e9bd9c767306b144033ccb389f23fd0e357183e1a', 'stat': {'blocks': 8, 'ctime_ns': 1791330871700772045, 'dev': 2097, 'gid': 114316761, 'ino': 65051033, 'mode': 33204, 'mtime_ns': 1791330871700772045, 'nlink': 1, 'size': 82, 'uid': 114316761}}, 'original_birth_receipt_jsonpath': '$.rows[3].git_indirection', 'original_target_birth_unwalked_in_checkout_query': True}, 'ArchEvolve-lanl-float-memory-services-20261006-a1': {'path': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-float-memory-services-20261006-a1', 'original_pointer_route': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-float-memory-services-20261006-a1', 'original_checkout_path': '/data1/yanruj/ArchEvolve-lanl-float-memory-services-20261006-a1', 'original_pointer_file_pin': {'bytes': 98, 'sha256': 'f698a65ae32d74240698fd4f25d8e3fda1c327dae593b28bf886f73fbc8e39a8', 'stat': {'blocks': 8, 'ctime_ns': 1791343636183379319, 'dev': 2097, 'gid': 114316761, 'ino': 69086370, 'mode': 33204, 'mtime_ns': 1791343636183379319, 'nlink': 1, 'size': 98, 'uid': 114316761}}, 'original_birth_receipt_jsonpath': '$.rows[4].git_indirection', 'original_target_birth_unwalked_in_checkout_query': True}, 'ArchEvolve-lanl-independent-services-20261006-a1': {'path': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-independent-services-20261006-a1', 'original_pointer_route': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-independent-services-20261006-a1', 'original_checkout_path': '/data1/yanruj/ArchEvolve-lanl-independent-services-20261006-a1', 'original_pointer_file_pin': {'bytes': 97, 'sha256': '86a38a2283ec5fb83538b7924302caa07389480379e911a64a47e3708f85723c', 'stat': {'blocks': 8, 'ctime_ns': 1791340352458868143, 'dev': 2097, 'gid': 114316761, 'ino': 69082718, 'mode': 33204, 'mtime_ns': 1791340352458868143, 'nlink': 1, 'size': 97, 'uid': 114316761}}, 'original_birth_receipt_jsonpath': '$.rows[5].git_indirection', 'original_target_birth_unwalked_in_checkout_query': True}, 'ArchEvolve-lanl-memory-a1-20261006': {'path': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-memory-a1-20261006', 'original_pointer_route': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-memory-a1-20261006', 'original_checkout_path': '/data1/yanruj/ArchEvolve-lanl-memory-a1-20261006', 'original_pointer_file_pin': {'bytes': 83, 'sha256': 'ee2ab21ffe5fa99c179c9e108761e74e854d17b998bf1fcd24b99dac5988f530', 'stat': {'blocks': 8, 'ctime_ns': 1791332237198903545, 'dev': 2097, 'gid': 114316761, 'ino': 65575325, 'mode': 33204, 'mtime_ns': 1791332237198903545, 'nlink': 1, 'size': 83, 'uid': 114316761}}, 'original_birth_receipt_jsonpath': '$.rows[6].git_indirection', 'original_target_birth_unwalked_in_checkout_query': True}, 'ArchEvolve-lanl-estimation-role-20261006-a1': {'path': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-estimation-role-20261006-a1', 'original_pointer_route': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-estimation-role-20261006-a1', 'original_checkout_path': '/data1/yanruj/ArchEvolve-lanl-estimation-role-20261006-a1', 'original_pointer_file_pin': {'bytes': 92, 'sha256': '036c9397b3e41305271e30b6176d771ce4cc415a8a4f4fb7ac5721959ab6c9f1', 'stat': {'blocks': 8, 'ctime_ns': 1791339282290649804, 'dev': 2097, 'gid': 114316761, 'ino': 68977246, 'mode': 33204, 'mtime_ns': 1791339282290649804, 'nlink': 1, 'size': 92, 'uid': 114316761}}, 'original_birth_receipt_jsonpath': '$.rows[7].git_indirection', 'original_target_birth_unwalked_in_checkout_query': True}, 'ArchEvolve-lanl-estimation-role-20261006-a2': {'path': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-estimation-role-20261006-a2', 'original_pointer_route': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-estimation-role-20261006-a2', 'original_checkout_path': '/data1/yanruj/ArchEvolve-lanl-estimation-role-20261006-a2', 'original_pointer_file_pin': {'bytes': 92, 'sha256': 'b96bd590a8fed55182c127ae9ac197430ccde176f6e1faf2d16a72313e22cabf', 'stat': {'blocks': 8, 'ctime_ns': 1791339676718785921, 'dev': 2097, 'gid': 114316761, 'ino': 69079266, 'mode': 33204, 'mtime_ns': 1791339676718785921, 'nlink': 1, 'size': 92, 'uid': 114316761}}, 'original_birth_receipt_jsonpath': '$.rows[8].git_indirection', 'original_target_birth_unwalked_in_checkout_query': True}, 'ArchEvolve-lanl-openmp-projections-20261006-a1': {'path': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-openmp-projections-20261006-a1', 'original_pointer_route': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-openmp-projections-20261006-a1', 'original_checkout_path': '/data1/yanruj/ArchEvolve-lanl-openmp-projections-20261006-a1', 'original_pointer_file_pin': {'bytes': 95, 'sha256': '4b8b5299e3594358c7c881a163923b2dcbf9dcb504b9c83b8f53ee0e33d721b8', 'stat': {'blocks': 8, 'ctime_ns': 1791334950645236626, 'dev': 2097, 'gid': 114316761, 'ino': 68050305, 'mode': 33204, 'mtime_ns': 1791334950645236626, 'nlink': 1, 'size': 95, 'uid': 114316761}}, 'original_birth_receipt_jsonpath': '$.rows[9].git_indirection', 'original_target_birth_unwalked_in_checkout_query': True}, 'ArchEvolve-lanl-native-object-counts-20261006-a1': {'path': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-native-object-counts-20261006-a1', 'original_pointer_route': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-native-object-counts-20261006-a1', 'original_checkout_path': '/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1', 'original_pointer_file_pin': {'bytes': 97, 'sha256': 'fd7f7e497d68715834857a0fabbd0eb66b3915fd0508b435c3bce633edb0f9ae', 'stat': {'blocks': 8, 'ctime_ns': 1791333248482400339, 'dev': 2097, 'gid': 114316761, 'ino': 65837473, 'mode': 33204, 'mtime_ns': 1791333248482400339, 'nlink': 1, 'size': 97, 'uid': 114316761}}, 'original_birth_receipt_jsonpath': '$.rows[10].git_indirection', 'original_target_birth_unwalked_in_checkout_query': True}, 'ArchEvolve-lanl-count-20261006': {'path': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-count-20261006', 'original_pointer_route': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-count-20261006', 'original_checkout_path': '/data1/yanruj/ArchEvolve-lanl-count-20261006', 'original_pointer_file_pin': {'bytes': 79, 'sha256': '42946a42590c7d926d9a68a02e14ddb5af65a38b104c5d2d8e5aa4d7436f4bfa', 'stat': {'blocks': 8, 'ctime_ns': 1791321249126756662, 'dev': 2097, 'gid': 114316761, 'ino': 55604671, 'mode': 33204, 'mtime_ns': 1791321249126756662, 'nlink': 1, 'size': 79, 'uid': 114316761}}, 'original_birth_receipt_jsonpath': '$.rows[11].git_indirection', 'original_target_birth_unwalked_in_checkout_query': True}, 'ArchEvolve-lanl-estimates-20261006': {'path': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-estimates-20261006', 'original_pointer_route': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-estimates-20261006', 'original_checkout_path': '/data1/yanruj/ArchEvolve-lanl-estimates-20261006', 'original_pointer_file_pin': {'bytes': 83, 'sha256': '03b6752dfbbc6d52ac7934ab83ddc3634a87bcffaaaa700ae56d9d6af4bb4de6', 'stat': {'blocks': 8, 'ctime_ns': 1791323569112568158, 'dev': 2097, 'gid': 114316761, 'ino': 55612891, 'mode': 33204, 'mtime_ns': 1791323569112568158, 'nlink': 1, 'size': 83, 'uid': 114316761}}, 'original_birth_receipt_jsonpath': '$.rows[12].git_indirection', 'original_target_birth_unwalked_in_checkout_query': True}, 'ArchEvolve-lanl-functional-evaluation-20261006-a1': {'path': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-functional-evaluation-20261006-a1', 'original_pointer_route': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-functional-evaluation-20261006-a1', 'original_checkout_path': '/data1/yanruj/ArchEvolve-lanl-functional-evaluation-20261006-a1', 'original_pointer_file_pin': {'bytes': 98, 'sha256': '11f978a737741abbcbb274dab110675de0cd9cccd5acf547fa6b786a42ad558a', 'stat': {'blocks': 8, 'ctime_ns': 1791339153999304072, 'dev': 2097, 'gid': 114316761, 'ino': 68970244, 'mode': 33204, 'mtime_ns': 1791339153999304072, 'nlink': 1, 'size': 98, 'uid': 114316761}}, 'original_birth_receipt_jsonpath': '$.rows[13].git_indirection', 'original_target_birth_unwalked_in_checkout_query': True}, 'ArchEvolve-lanl-functional-object-counts-20261006-a2': {'path': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-functional-object-counts-20261006-a2', 'original_pointer_route': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-functional-object-counts-20261006-a2', 'original_checkout_path': '/data1/yanruj/ArchEvolve-lanl-functional-object-counts-20261006-a2', 'original_pointer_file_pin': {'bytes': 101, 'sha256': '4860a184553942d28d82cc1cb26976aea1f5f7a1efb786da189b535ed5d7ee8a', 'stat': {'blocks': 8, 'ctime_ns': 1791334275696169885, 'dev': 2097, 'gid': 114316761, 'ino': 66230689, 'mode': 33204, 'mtime_ns': 1791334275696169885, 'nlink': 1, 'size': 101, 'uid': 114316761}}, 'original_birth_receipt_jsonpath': '$.rows[14].git_indirection', 'original_target_birth_unwalked_in_checkout_query': True}, 'ArchEvolve-lanl-functional-strict-20261006': {'path': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-functional-strict-20261006', 'original_pointer_route': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-functional-strict-20261006', 'original_checkout_path': '/data1/yanruj/ArchEvolve-lanl-functional-strict-20261006', 'original_pointer_file_pin': {'bytes': 91, 'sha256': 'c38a6c034aaddbb0cd92daa53a703cadb5fa04d50500e00d78dcf2bfd0069c86', 'stat': {'blocks': 8, 'ctime_ns': 1791328845014042935, 'dev': 2097, 'gid': 114316761, 'ino': 57315654, 'mode': 33204, 'mtime_ns': 1791328845014042935, 'nlink': 1, 'size': 91, 'uid': 114316761}}, 'original_birth_receipt_jsonpath': '$.rows[15].git_indirection', 'original_target_birth_unwalked_in_checkout_query': True}, 'ArchEvolve-lanl-prospective-inputs-20261006-a2': {'path': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-prospective-inputs-20261006-a2', 'original_pointer_route': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-prospective-inputs-20261006-a2', 'original_checkout_path': '/data1/yanruj/ArchEvolve-lanl-prospective-inputs-20261006-a2', 'original_pointer_file_pin': {'bytes': 95, 'sha256': 'ce8de2e398c4fc1d92fac357a05402aa4bd1df2a6cd076d537d70aa5386b16ab', 'stat': {'blocks': 8, 'ctime_ns': 1791335164388474942, 'dev': 2097, 'gid': 114316761, 'ino': 68562737, 'mode': 33204, 'mtime_ns': 1791335164388474942, 'nlink': 1, 'size': 95, 'uid': 114316761}}, 'original_birth_receipt_jsonpath': '$.rows[16].git_indirection', 'original_target_birth_unwalked_in_checkout_query': True}, 'ArchEvolve-lanl-root-projection-20261006': {'path': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-root-projection-20261006', 'original_pointer_route': '/data1/yanruj/ArchEvolve/.git/worktrees/ArchEvolve-lanl-root-projection-20261006', 'original_checkout_path': '/data1/yanruj/ArchEvolve-lanl-root-projection-20261006', 'original_pointer_file_pin': {'bytes': 89, 'sha256': 'f0dc8a10be2e4327bfdd928921e6b24245f8691f60086e35a61b240428c2e482', 'stat': {'blocks': 8, 'ctime_ns': 1791329404082729875, 'dev': 2097, 'gid': 114316761, 'ino': 59019139, 'mode': 33204, 'mtime_ns': 1791329404082729875, 'nlink': 1, 'size': 89, 'uid': 114316761}}, 'original_birth_receipt_jsonpath': '$.rows[17].git_indirection', 'original_target_birth_unwalked_in_checkout_query': True}}
+ CHILD = 1654291
+ PARENT = 1654279
+ START = 559081545
+@@ -382,34 +387,6 @@
+         return 'birth_within_boot_epoch_and_tick_resolution_margin'
+     return 'birth_after_reported_start_plus_resolution_margin'
+ 
+-def git_pointer(q, root_fd, root, expected):
+-    fd = os.open('.git', os.O_RDONLY|os.O_NOFOLLOW|os.O_CLOEXEC, dir_fd=root_fd)
+-    try:
+-        require(stamp(os.fstat(fd)) == expected['stat'], 'git_pointer_identity')
+-        q.tick()
+-        if LIMITS['file_bytes_total']-q.bytes_read < LIMITS['git_pointer']+1:
+-            raise LimitReached('git_pointer_read_remaining')
+-        with os.fdopen(fd, 'rb', closefd=False) as f:
+-            raw = f.read(LIMITS['git_pointer']+1)
+-        q.bytes_read += len(raw)
+-        require(len(raw) <= LIMITS['git_pointer'] and len(raw) == expected['stat']['size'],
+-                'git_pointer_size')
+-        require(stamp(os.fstat(fd)) == expected['stat'] ==
+-                stamp(os.stat('.git', dir_fd=root_fd, follow_symlinks=False)),
+-                'git_pointer_changed')
+-        line = raw.decode('utf-8')
+-        require(line.startswith('gitdir: ') and line.endswith('\n') and
+-                '\n' not in line[:-1] and '\x00' not in line, 'git_pointer_shape')
+-        target = line[8:-1]
+-        require(target and len(os.fsencode(target)) <= LIMITS['path_bytes'], 'git_pointer_route')
+-        lexical = P(os.path.normpath(str(root/target))) if not P(target).is_absolute() else P(target)
+-        # Shared Git administration is recorded separately, never traversed/hashed.
+-        observed = {'lexical_target': str(lexical), 'dereferenced_or_walked': False,
+-                    'target_birth_times_not_in_checkout_inode_scope': True}
+-        return {'file_stat': expected['stat'], 'bytes': len(raw), 'sha256': sha(raw),
+-                'original_pointer_route': target, 'separate_git_administration': observed}
+-    finally:
+-        os.close(fd)
+ 
+ def encode_object(item):
+     x = item['statx']
+@@ -422,14 +399,38 @@
+             item.get('directory_names_count'), item.get('directory_names_bytes_digest'),
+             OBJECT_ENCODING['type_codes'][item['type']]]
+ 
++def query_anchors(q):
++    observed = []
++    for path in ADMIN_ANCHORS:
++        q.tick()
++        fd, chain = open_directory_chain(path)
++        try:
++            item = q.inode(fd)
++            require(stat.S_ISDIR(item['stat']['mode']), 'anchor_not_real_directory')
++            expected_uid = UID if path == BASE or BASE in path.parents else 0
++            require(item['stat']['uid'] == expected_uid and item['stat']['nlink'] > 0,
++                    'anchor_owner_or_unlinked')
++            if path == BASE:
++                require(stat.S_IMODE(item['stat']['mode']) == 0o700, 'base_privacy')
++            require(item['stat'] == chain[-1][1], 'anchor_chain_statx_identity')
++            check_chain(path, chain)
++            observed.append({'path': str(path), 'original_inode_metadata': item,
++                             'not_a_removed_administration_object': True})
++        finally:
++            os.close(fd)
++    return observed
++
+ def query_row(q, name, definition, clock, portal_device):
+     root = P(definition['path'])
+-    require(root == BASE/name, 'exact_g5_row_route')
+-    result = {'row': name, 'path': str(root), 'g5_definition': definition,
++    require(root == ADMIN_ROOT/name and definition == ADMIN_ROUTES[name],
++            'exact_original_administration_route')
++    result = {'row': name, 'path': str(root), 'g5_definition': ROWS[name],
++              'original_pointer_route': definition['original_pointer_route'],
++              'fixed_administration_definition': definition,
+               'historical_g5_head_and_allocation_not_revalidated': True,
+               'counts': {}, 'observed_device_counts': {}, 'birth_class_counts': {},
+               'minimum_positive_birth': None,
+-              'failure_witnesses': [], 'git_indirection': None,
++              'failure_witnesses': [],
+               'original_objects': [], 'last_attempted_object': None,
+               'first_pass_completed': False, 'second_pass_completed': False,
+               'metadata_equal_between_passes': False,
+@@ -495,8 +496,6 @@
+                 if concerns:
+                     q.witness(result['failure_witnesses'], [len(result['original_objects'])-1,
+                               [OBJECT_ENCODING['concern_codes'][code] for code in concerns]])
+-                if rel == '.git' and item['type'] == 'regular':
+-                    result['git_indirection'] = git_pointer(q, parent_fd, root, item)
+             else:
+                 second_seen.add(rel)
+                 second_hash.update(len(key).to_bytes(8, 'big')+key)
+@@ -517,32 +516,25 @@
+             os.close(fd)
+     base_fd = None
+     try:
+-        base_fd, anchors = open_directory_chain(BASE)
+-        bs = os.fstat(base_fd)
+-        require(bs.st_uid == UID and stat.S_IMODE(bs.st_mode) == 0o700, 'base_privacy')
+-        result['base_directory_anchors_before'] = anchors
++        base_fd, anchors = open_directory_chain(ADMIN_ROOT)
++        bs = next(st for path, st in anchors if path == str(BASE))
++        require(bs['uid'] == UID and stat.S_IMODE(bs['mode']) == 0o700, 'base_privacy')
++        require(os.fstat(base_fd).st_uid == UID, 'administration_parent_owner')
++        result['administration_directory_anchors_before'] = anchors
+         observe(base_fd, name, '.', 0, 1)
+         result['first_pass_completed'] = True
+-        check_chain(BASE, anchors)
++        check_chain(ADMIN_ROOT, anchors)
+         observe(base_fd, name, '.', 0, 2)
+         result['second_pass_completed'] = True
+         for rel in sorted(set(first)-second_seen, key=os.fsencode):
+             q.witness(result['failure_witnesses'], {'path': str(root/rel),
+                       'concerns': ['missing_in_second_pass'],
+                       'first_original_inode_metadata': first[rel]})
+-        check_chain(BASE, anchors)
++        check_chain(ADMIN_ROOT, anchors)
+         result['canonical_nonsymlink_root_route'] = str(root)
+         result['root_original_statx_metadata'] = first['.']
+         result['metadata_equal_between_passes'] = (first_hash.digest() == second_hash.digest()
+                                                    and set(first) == second_seen)
+-        if result['git_indirection'] is not None:
+-            root_fd = os.open(name, os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW|os.O_CLOEXEC,
+-                              dir_fd=base_fd)
+-            try:
+-                require(git_pointer(q, root_fd, root, first['.git']) == result['git_indirection'],
+-                        'git_pointer_or_target_stat_changed')
+-            finally:
+-                os.close(root_fd)
+     except Exception as exc:
+         result['error'] = {'type': type(exc).__name__,
+                            'code': str(exc) if isinstance(exc, Refused) else None,
+@@ -559,13 +551,17 @@
+ 
+ def main():
+     q = Query()
+-    output = {'format': 'swdb.exact-portal-helper-checkout-inode-birth-query.v1',
++    output = {'format': 'swdb.exact-portal-helper-worktree-administration-inode-birth-query.v1',
+               'sealed': False, 'source_preparation_runtime_inputs_fixed': True,
+               'g5_source_sha256': G5_SOURCE_SHA256,
+               'prior_public_identity_file_sha256': PUBLIC_ORIGINAL_SHA256,
++              'genuine_prior_checkout_birth_original_pin': CHECKOUT_BIRTH_ORIGINAL_PIN,
++              'fixed_administration_parent': str(ADMIN_ROOT),
+               'limits': LIMITS, 'object_encoding': OBJECT_ENCODING, 'rows': [],
+               'ordinary_file_bodies_read': False,
+-              'symlink_targets_and_shared_git_admin_not_traversed': True,
++              'symlink_targets_not_traversed': True,
++              'checkout_objects_rewalked': False,
++              'shared_git_objects_refs_and_other_administration_rows_not_traversed': True,
+               'new_root_birth_alone_is_not_inherited_handle_evidence': True,
+               'parent_consumer_exclusion': False, 'helper_role_exclusion': False,
+               'cleanup_capacity_or_scientific_admission': False}
+@@ -575,7 +571,8 @@
+                 socket.gethostname().split('.')[0] == 'mbit10' and
+                 os.getuid() == os.geteuid() == UID and UID != 0 and
+                 sys.dont_write_bytecode and not sys.flags.optimize, 'native_execution_context')
+-        require(len(ROWS) == 18, 'exact_eighteen_rows')
++        require(len(ROWS) == len(ADMIN_ROUTES) == 18 and set(ROWS) == set(ADMIN_ROUTES),
++                'exact_eighteen_original_administration_routes')
+         def expired(signum, frame): raise LimitReached('elapsed_alarm')
+         old_alarm = signal.signal(signal.SIGALRM, expired)
+         signal.alarm(LIMITS['seconds'])
+@@ -591,12 +588,16 @@
+                 {'numerator': output['clock_before']['boot_epoch_seconds']*hz+hz+START+1,
+                  'denominator': hz},
+             'wall_clock_history_correspondence_is_an_assumption_not_measured': True}
++        output['administration_anchors_before'] = query_anchors(q)
+         portal_device = output['public_identity_before']['portal_mount']['exact_route']['device']
+-        for name, definition in ROWS.items():
++        for name, definition in ADMIN_ROUTES.items():
+             q.tick()
+             row = query_row(q, name, definition, output['clock_before'], portal_device)
+             output['rows'].append(row)
+             if row.get('query_limit_reached'): break
++        output['administration_anchors_after'] = query_anchors(q)
++        output['administration_anchor_metadata_interval_equal'] = (
++            output['administration_anchors_before'] == output['administration_anchors_after'])
+         output['clock_after'] = boot(q)
+         output['public_identity_after'] = identity(q)
+         output['public_identity_interval_equal'] = identity_key(output['public_identity_before']) == \
+@@ -606,7 +607,8 @@
+         output['all_eighteen_walks_completed_and_metadata_stable'] = (len(output['rows']) == 18 and
+                 all(r['first_pass_completed'] and r['second_pass_completed'] and
+                     r['metadata_equal_between_passes'] and 'error' not in r for r in output['rows']) and
+-                output['public_identity_interval_equal'] and output['boot_clock_interval_equal'])
++                output['public_identity_interval_equal'] and output['boot_clock_interval_equal'] and
++                output['administration_anchor_metadata_interval_equal'])
+     except Exception as exc:
+         output['error'] = {'type': type(exc).__name__,
+                            'code': str(exc) if isinstance(exc, Refused) else None,

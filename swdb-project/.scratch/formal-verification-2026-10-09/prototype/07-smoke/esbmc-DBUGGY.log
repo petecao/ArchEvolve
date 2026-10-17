@@ -1,0 +1,155 @@
+Target: 64-bit little-endian aarch64-unknown-macos with esbmclibc
+Parsing smoke.cpp
+Converting
+WARNING: no definition for external symbol stdin declared at file /esbmc-vfs/libc/headers/stdio.h line 29 column 1
+WARNING: no definition for external symbol stdout declared at file /esbmc-vfs/libc/headers/stdio.h line 30 column 1
+WARNING: no definition for external symbol stderr declared at file /esbmc-vfs/libc/headers/stdio.h line 31 column 1
+WARNING: no definition for external symbol errno declared at file /esbmc-vfs/libc/library/stdlib.c line 13 column 1
+Generating GOTO Program
+GOTO program creation time: 0.237s
+GOTO program processing time: 0.006s
+Starting Bounded Model Checking
+WARNING: no body for function allocator#
+Unwinding loop 70 iteration 1   file /esbmc-vfs/cpp/vector line 444 column 5 function vector
+Symex completed in: 0.005s (292 assignments)
+Caching time: 0.000s (removed 2 assertions)
+Slicing time: 0.000s (removed 257 assignments)
+Generated 197 VCC(s), 11 remaining after simplification (33 assignments)
+No solver specified; defaulting to bitwuzla
+Encoding remaining VCC(s) using bit-vector/floating-point arithmetic
+Encoding to solver time: 0.001s
+Solving with solver Bitwuzla 0.9.1
+Runtime decision procedure: 0.001s
+Building error trace
+
+[Counterexample]
+
+
+State 1 file smoke.cpp line 10 column 3 function main thread 0
+----------------------------------------------------
+  x = 41 (00000000 00000000 00000000 00101001)
+
+State 2 file /esbmc-vfs/cpp/vector line 441 column 5 function vector thread 0
+----------------------------------------------------
+  this->buf = { .buf=(signed int *)(&dynamic_1_array[0]), ._size=0,
+    ._capacity=1 }
+
+State 8 file /esbmc-vfs/cpp/vector line 1045 column 5 function __construct_at thread 0
+----------------------------------------------------
+  *(signed int *)((void *)p::0) = 41 (00101001)
+
+State 9 file /esbmc-vfs/cpp/vector line 1045 column 5 function __construct_at thread 0
+----------------------------------------------------
+  *(signed int *)((void *)p::0) = 41 (00101001)
+
+State 10 file /esbmc-vfs/cpp/vector line 1045 column 5 function __construct_at thread 0
+----------------------------------------------------
+  *(signed int *)((void *)p::0) = 41 (00101001)
+
+State 11 file /esbmc-vfs/cpp/vector line 1045 column 5 function __construct_at thread 0
+----------------------------------------------------
+  *(signed int *)((void *)p::0) = 41 (00101001)
+
+State 16 file smoke.cpp line 13 column 3 function main thread 0
+----------------------------------------------------
+  y = 42 (00000000 00000000 00000000 00101010)
+
+State 17 file smoke.cpp line 15 column 3 function main thread 0
+----------------------------------------------------
+Violated property:
+  file smoke.cpp line 15 column 3 function main
+  assertion y != 42
+  !((_Bool)((signed long int)(!(y != 42))))
+
+
+** Results:
+/esbmc-vfs/cpp/initializer_list, function begin
+  PASSED       [begin.object-out-of-bounds.1]                 line   47  dereference failure: Access to object out of bounds
+  PASSED       [begin.assertion.1]                            line   47  dereference failure: Incorrect alignment when accessing data object
+/esbmc-vfs/cpp/initializer_list, function size
+  PASSED       [size.object-out-of-bounds.1]                  line   43  dereference failure: Access to object out of bounds
+  PASSED       [size.assertion.1]                             line   43  dereference failure: Incorrect alignment when accessing data object
+/esbmc-vfs/cpp/ios, function ios
+  PASSED       [ios.object-out-of-bounds.1]                   line  166  dereference failure: Access to object out of bounds
+  PASSED       [ios.assertion.1]                              line  166  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [ios.object-out-of-bounds.2]                   line  167  dereference failure: Access to object out of bounds
+  PASSED       [ios.assertion.2]                              line  167  dereference failure: Incorrect alignment when accessing data object
+/esbmc-vfs/cpp/ios, function ios_base
+  PASSED       [ios_base.object-out-of-bounds.1]              line  209  dereference failure: Access to object out of bounds
+  PASSED       [ios_base.assertion.1]                         line  209  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [ios_base.object-out-of-bounds.2]              line  210  dereference failure: Access to object out of bounds
+  PASSED       [ios_base.assertion.2]                         line  210  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [ios_base.object-out-of-bounds.3]              line  211  dereference failure: Access to object out of bounds
+  PASSED       [ios_base.assertion.3]                         line  211  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [ios_base.object-out-of-bounds.4]              line  213  dereference failure: Access to object out of bounds
+  PASSED       [ios_base.assertion.4]                         line  213  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [ios_base.object-out-of-bounds.5]              line  214  dereference failure: Access to object out of bounds
+  PASSED       [ios_base.assertion.5]                         line  214  dereference failure: Incorrect alignment when accessing data object
+/esbmc-vfs/cpp/istream, function istream
+  PASSED       [istream.object-out-of-bounds.1]               line   37  dereference failure: Access to object out of bounds
+  PASSED       [istream.assertion.1]                          line   37  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [istream.object-out-of-bounds.2]               line   39  dereference failure: Access to object out of bounds
+  PASSED       [istream.assertion.2]                          line   39  dereference failure: Incorrect alignment when accessing data object
+/esbmc-vfs/cpp/ostream, function ostream
+  PASSED       [ostream.object-out-of-bounds.1]               line   35  dereference failure: Access to object out of bounds
+  PASSED       [ostream.assertion.1]                          line   35  dereference failure: Incorrect alignment when accessing data object
+/esbmc-vfs/cpp/vector, function __construct_at
+  PASSED       [__construct_at.assertion.1]                   line 1045  dereference failure: Incorrect alignment when accessing data object
+  NOT CHECKED  [__construct_at.null-pointer-dereference.1]    line 1045  dereference failure: NULL pointer
+  PASSED       [__construct_at.array-bounds-violated.1]       line 1045  dereference failure: array bounds violated
+  NOT CHECKED  [__construct_at.heap-array-bounds-violated.1]  line 1045  dereference failure: array bounds violated: heap object
+  NOT CHECKED  [__construct_at.invalidated-dynamic-object.1]  line 1045  dereference failure: invalidated dynamic object
+/esbmc-vfs/cpp/vector, function operator[]
+  PASSED       [operator[].assertion.1]                       line  723  assertion 0 <= i
+  PASSED       [operator[].assertion.2]                       line  724  assertion i < _size
+  PASSED       [operator[].object-out-of-bounds.1]            line  724  dereference failure: Access to object out of bounds
+  PASSED       [operator[].assertion.3]                       line  724  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [operator[].assertion.4]                       line  725  assertion _size <= VECTOR_CAPACITY
+  PASSED       [operator[].object-out-of-bounds.2]            line  725  dereference failure: Access to object out of bounds
+  PASSED       [operator[].assertion.5]                       line  725  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [operator[].object-out-of-bounds.3]            line  726  dereference failure: Access to object out of bounds
+  PASSED       [operator[].assertion.6]                       line  726  dereference failure: Incorrect alignment when accessing data object
+/esbmc-vfs/cpp/vector, function vector
+  PASSED       [vector.object-out-of-bounds.1]                line  440  dereference failure: Access to object out of bounds
+  PASSED       [vector.assertion.1]                           line  440  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [vector.object-out-of-bounds.2]                line  441  dereference failure: Access to object out of bounds
+  PASSED       [vector.assertion.2]                           line  441  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [vector.object-out-of-bounds.3]                line  442  dereference failure: Access to object out of bounds
+  PASSED       [vector.assertion.3]                           line  442  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [vector.object-out-of-bounds.4]                line  443  dereference failure: Access to object out of bounds
+  PASSED       [vector.assertion.4]                           line  443  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [vector.object-out-of-bounds.5]                line  444  dereference failure: Access to object out of bounds
+  PASSED       [vector.assertion.5]                           line  444  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [vector.object-out-of-bounds.6]                line  445  dereference failure: Access to object out of bounds
+  PASSED       [vector.assertion.6]                           line  445  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [vector.object-out-of-bounds.7]                line  446  dereference failure: Access to object out of bounds
+  PASSED       [vector.assertion.7]                           line  446  dereference failure: Incorrect alignment when accessing data object
+/esbmc-vfs/cpp/vector, function ~vector
+  PASSED       [~vector.object-out-of-bounds.1]               line  348  dereference failure: Access to object out of bounds
+  PASSED       [~vector.assertion.1]                          line  348  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [~vector.free-non-zero-offset.1]               line  350  Operand of free must have zero pointer offset
+  PASSED       [~vector.object-out-of-bounds.2]               line  350  dereference failure: Access to object out of bounds
+  PASSED       [~vector.assertion.2]                          line  350  dereference failure: Incorrect alignment when accessing data object
+  NOT CHECKED  [~vector.invalidated-dynamic-object.1]         line  350  dereference failure: invalidated dynamic object
+  NOT CHECKED  [~vector.invalidated-dynamic-object-freed.1]   line  350  dereference failure: invalidated dynamic object freed
+  PASSED       [~vector.object-out-of-bounds.3]               line  351  dereference failure: Access to object out of bounds
+  PASSED       [~vector.assertion.3]                          line  351  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [~vector.object-out-of-bounds.4]               line  352  dereference failure: Access to object out of bounds
+  PASSED       [~vector.assertion.4]                          line  352  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [~vector.object-out-of-bounds.5]               line  353  dereference failure: Access to object out of bounds
+  PASSED       [~vector.assertion.5]                          line  353  dereference failure: Incorrect alignment when accessing data object
+smoke.cpp, function main
+  NOT CHECKED  [main.assertion.1]                             line   13  dereference failure: Incorrect alignment when accessing data object
+  NOT CHECKED  [main.null-pointer-dereference.1]              line   13  dereference failure: NULL pointer
+  NOT CHECKED  [main.heap-array-bounds-violated.1]            line   13  dereference failure: array bounds violated: heap object
+  NOT CHECKED  [main.invalidated-dynamic-object.1]            line   13  dereference failure: invalidated dynamic object
+  FAILED       [main.assertion.2]                             line   15  assertion y != 42
+
+** 1 of 70 properties failed, 60 passed, 9 not checked
+   (this mode stops at the first violation; use --multi-property for a verdict on every property)
+
+VERIFICATION FAILED
+ESBMC version 8.5.0 64-bit aarch64 macos
+real 0.30
+user 0.28
+sys 0.01

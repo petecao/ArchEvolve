@@ -1,0 +1,456 @@
+{
+  "admission": {
+    "Typed": false,
+    "caller": false,
+    "default": false,
+    "mathematical": false,
+    "member": false,
+    "native_thirteen": false,
+    "original_timeout_preserved": true,
+    "source_Heap": false,
+    "source_canonical_only": true
+  },
+  "canonical_file_count": 42,
+  "canonical_files": [
+    {
+      "bytes": 51510,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/manifest.json",
+      "sha256": "520a5da81000b2e84cede1f3d6485a0edd7e877ffeb74ae96936580ca59909b5"
+    },
+    {
+      "bytes": 683,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/obligations/000-t25_owned_swap_parts_heap_frontier.c",
+      "sha256": "de7506a9928a31a9290695b14c6244b3758ffe5a10b8334e1799e42072c6ee37"
+    },
+    {
+      "bytes": 773,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/obligations/001-t25_owned_swap_parts_heap_issued.c",
+      "sha256": "577021bbdc5bce95e7861daaa2d80e72bd822c4431997a101cd79cf616bb42ca"
+    },
+    {
+      "bytes": 888,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/obligations/002-t25_owned_swap_parts_heap_live.c",
+      "sha256": "806766b3af5538e84ae61799caad3f42f3819104436737965a6b2687f10b1f59"
+    },
+    {
+      "bytes": 978,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/obligations/003-t25_owned_swap_parts_heap_separated.c",
+      "sha256": "0be5ee6a9366980694a0d3cb3a4c6380114a6767742bec2a4787c5d3dc36485c"
+    },
+    {
+      "bytes": 685,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/obligations/004-t25_owned_swap_parts_owners_frontier.c",
+      "sha256": "80565a0bf3742b825898da1622becf44d36d5afb4ff3f76a8a619a59f7916cfa"
+    },
+    {
+      "bytes": 965,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/obligations/005-t25_owned_swap_parts_owners_exclusive.c",
+      "sha256": "d1d52a61951853876e90ae0f102505874762c35b37cfcdddea8c701603956e5e"
+    },
+    {
+      "bytes": 884,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/obligations/006-t25_owned_swap_parts_owners_ranges.c",
+      "sha256": "272b0399efb6111291e45b7676bfd67a9bc59047ead196f7821a07442a5c95a2"
+    },
+    {
+      "bytes": 902,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/obligations/007-t25_owned_swap_parts_owners_disjoint.c",
+      "sha256": "a574c9ce37a28084f810ff6873af317d7da540108e6e3ce759e217af02843ede"
+    },
+    {
+      "bytes": 781,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/obligations/008-t25_owned_swap_parts_receiver_0.c",
+      "sha256": "8a067f5a46397ea59dc26e9c78b180aab6f9c42972a79d7a0fd730fc15637ea3"
+    },
+    {
+      "bytes": 781,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/obligations/009-t25_owned_swap_parts_receiver_8.c",
+      "sha256": "d84cf02c807d5939732a6bcb84847c32434ea426b3bc7c2d980e9d35e258b97c"
+    },
+    {
+      "bytes": 783,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/obligations/010-t25_owned_swap_parts_receiver_16.c",
+      "sha256": "517271da87f5f3baa7c105b1ae2638474583181c86d63745883c8b3364893938"
+    },
+    {
+      "bytes": 918,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/obligations/011-t25_owned_swap_parts_header_ready.c",
+      "sha256": "9f45f81235e57d8332a430c2256327234dbddbc2cb5dff8adabf00d385486bb3"
+    },
+    {
+      "bytes": 876,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/obligations/012-t25_owned_swap_parts_freeable_buffer.c",
+      "sha256": "8386dd2b7892338b5ff76efe9a4ce1ac4d3138dab13f1465efe6e4ad9b575891"
+    },
+    {
+      "bytes": 1685,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/original/std_vector_double_move_ctor.c",
+      "sha256": "977e6275f008c2469b59efc0f72b79d4ba39d7f7c8919cbd9e7151f4a9291b24"
+    },
+    {
+      "bytes": 1788,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/original/std_vector_double_swap.c",
+      "sha256": "4a8527cbf4937fd2b47823b9d22c9274b7c2319a1af088d50f32a5d7e743a4eb"
+    },
+    {
+      "bytes": 1668,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/original/std_vector_float_move_ctor.c",
+      "sha256": "1299df3bee8f039786fb55413f26c4b11209ce610cbf7e38b2bb6dbee8a247d0"
+    },
+    {
+      "bytes": 1769,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/original/std_vector_float_swap.c",
+      "sha256": "7dcb086471a30e8cea6fe36e108a80f1f0e04506500b0f1687474f6064a220f3"
+    },
+    {
+      "bytes": 1634,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/original/std_vector_int_move_ctor.c",
+      "sha256": "2275b2a0533c16643f1ea7ae324aae852c9e2509e4e05085107636e172e3e676"
+    },
+    {
+      "bytes": 1696,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/original/std_vector_int_ptr_move_ctor.c",
+      "sha256": "0fe29734b41543041a896eb9483add235ae0c37c97e34f389fca7823a16268af"
+    },
+    {
+      "bytes": 1801,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/original/std_vector_int_ptr_swap.c",
+      "sha256": "01f06406a2b174bbe84db6c7c1232d80f1ef0c51aae52fbfd1aed1c9237b7931"
+    },
+    {
+      "bytes": 1731,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/original/std_vector_int_swap.c",
+      "sha256": "0bb1a1ee04c3643ff68edac876d827c1429326f24bdd01890bf35b4a2b64d83d"
+    },
+    {
+      "bytes": 586,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/reference-obligations/000-t25_owned_effect_move_destination_header.c",
+      "sha256": "60240fa742a147d78bc54c512420d9a85e4e6ecd790711562db8bc985d9da689"
+    },
+    {
+      "bytes": 580,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/reference-obligations/001-t25_owned_effect_move_source_empty.c",
+      "sha256": "9b1806c057f87725d1978aef31a8d25e0dd37bd9d14d3b9a2d924032629bc941"
+    },
+    {
+      "bytes": 588,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/reference-obligations/002-t25_owned_effect_move_incoming_frame.c",
+      "sha256": "55331d638d52fd11561b52cb9d88dfa8f6f3e20890462c10e7a462ed6bc0b2ad"
+    },
+    {
+      "bytes": 642,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/reference-obligations/003-t25_owned_effect_move_owner_correspondence.c",
+      "sha256": "3340e52d4ed852b8c8a69d14be4692d6d6245b093f8bb31c5bf4a292bcf90d9d"
+    },
+    {
+      "bytes": 693,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/reference-obligations/004-t25_owned_effect_swap_left_header.c",
+      "sha256": "3fab57b9196b55b86cf20cc0ea6181a38e0bdbbe8ecf6f06865dd59d0935d3fa"
+    },
+    {
+      "bytes": 694,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/reference-obligations/005-t25_owned_effect_swap_right_header.c",
+      "sha256": "9e6d0dda572705cdf5b4c2469a4dd0d66015ccefe102b49a87bf32ff0a1fde11"
+    },
+    {
+      "bytes": 761,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/reference-obligations/006-t25_owned_effect_swap_temporary_lifetime.c",
+      "sha256": "bff552ceb0d7b09b213e6585683c7e7c3c3b5140b14f3b31697257574cfaf20f"
+    },
+    {
+      "bytes": 699,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/reference-obligations/007-t25_owned_effect_swap_incoming_frame.c",
+      "sha256": "8d4f8ec024986bc2c12f8a10f152ac9a0ab87abb248b957e7d74b8ffe1a1ad6b"
+    },
+    {
+      "bytes": 721,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/reference-obligations/008-t25_owned_effect_swap_owner_correspondence.c",
+      "sha256": "f59232cf9139d28b313913dadeb9c0455aec0a022359dd2c67148d3e66f1b2a3"
+    },
+    {
+      "bytes": 8386,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/theory/heap_reallocation.mlw",
+      "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+    },
+    {
+      "bytes": 3128,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/theory/vector_owned_effects.mlw",
+      "sha256": "6bfc13341d2faceb5a3fb64bd2d5bff22dd03c52a1fa3d5c4cb39b6e9c83f7f5"
+    },
+    {
+      "bytes": 2389,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/theory/vector_owned_state.mlw",
+      "sha256": "a2c295d2c6720a9c8c522f05e19723c2d2d2a32b63f9b198aab03f195269e4b6"
+    },
+    {
+      "bytes": 2230,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/views/std_vector_double_move_ctor.c",
+      "sha256": "85a02f1c4bdd4c3d678b9e68811cc86e01f3e0c20040965fa336b2a69d4e72fc"
+    },
+    {
+      "bytes": 2333,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/views/std_vector_double_swap.c",
+      "sha256": "f9b1de63f63ca58083aee5cb013553cc187171e639a3d9c43ae26c9ff9af6587"
+    },
+    {
+      "bytes": 2208,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/views/std_vector_float_move_ctor.c",
+      "sha256": "67f0078944d65d0dc6ec013226fe868ac5a37d1be589fab2a2343c17d1254eba"
+    },
+    {
+      "bytes": 2309,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/views/std_vector_float_swap.c",
+      "sha256": "d3c9b081d9f6fc1eef5d9b5cdd9fe1c2e87a7dbe8b6394cea95c22e1d5a44a42"
+    },
+    {
+      "bytes": 2164,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/views/std_vector_int_move_ctor.c",
+      "sha256": "2d6e21a0fcf10945cfb84debd6483a926060acdb54d907c4362561ad2cf48278"
+    },
+    {
+      "bytes": 2246,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/views/std_vector_int_ptr_move_ctor.c",
+      "sha256": "2ef113564e37137ce8a7e47ba098b8225d37cd4cc425b1e8beef8e08e6116cf0"
+    },
+    {
+      "bytes": 2351,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/views/std_vector_int_ptr_swap.c",
+      "sha256": "6b976113b22ba6372b252ebd2dc4d3c4dbb7612fc7d657caf7f234d7e952d7d7"
+    },
+    {
+      "bytes": 2261,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/inert-all-types-v1/views/std_vector_int_swap.c",
+      "sha256": "3d115e18d34d416019f05283463f33b2b80274599fb080064a83eb57d8f6398a"
+    }
+  ],
+  "canonical_scope": "All four original scalar element domains, matching retained original9 source fixture; initial default-int 30-file packet is retained as pure public-seam history only.",
+  "classification": "PURE_PREPARATION_EXACT_ORIGINAL_SWAP_CONCLUSION_PARTS",
+  "complete_source_antecedent": "OwnedEffects::world(h,owners,ready) && Owners::active_owner(owners,l) && Owners::active_owner(owners,r) && OwnedEffects::is_ready(ready,l) && OwnedEffects::is_ready(ready,r) && OwnedEffects::header(h,l,bl,nl,cl) && OwnedEffects::header(h,r,br,nr,cr) && Heap::automatic_available(h,24,8,a)",
+  "date": "2026-10-16 ET",
+  "elements": [
+    "int",
+    "float",
+    "double",
+    "int *"
+  ],
+  "groups": {
+    "freeable": 1,
+    "header": 1,
+    "heap": 4,
+    "owners": 4,
+    "receiver": 3
+  },
+  "next_gate": "Independent source Standards and Spec review, publication, reviewed normal thirteen-target WP entry and root-admitted actual run; never rerun eight successes or layout.",
+  "obligations": 13,
+  "original_statement": "\\forall Heap::heap h; \\forall Owners::state owners; \\forall OwnedEffects::phases ready; \\forall integer l,r,a,bl,nl,cl,br,nr,cr; OwnedEffects::world(h,owners,ready) && Owners::active_owner(owners,l) && Owners::active_owner(owners,r) && OwnedEffects::is_ready(ready,l) && OwnedEffects::is_ready(ready,r) && OwnedEffects::header(h,l,bl,nl,cl) && OwnedEffects::header(h,r,br,nr,cr) && Heap::automatic_available(h,24,8,a) ==> OwnedEffects::world(OwnedEffects::swap(h,l,r,a),Owners::swap(owners,l,r),ready)",
+  "prior_preparation": {
+    "bytes": 20901,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-swap13-source-preparation-v1-20261016.json",
+    "sha256": "87ac1d34bdc85d422370a69720ce74061c53cea338c963f645d055a385586615"
+  },
+  "reconstruction": "Thirteen clauses are equivalent to the one exact original conclusion under source definitions and universal/conjunction distribution. The exact complete original antecedent is retained in every leaf; no sibling theorem, desired post or new axiom is a premise.",
+  "red_green": {
+    "external_native_attempts": [],
+    "green-v1": {
+      "failed": 0,
+      "passed": 1
+    },
+    "green-v2": {
+      "failed": 0,
+      "passed": 2
+    },
+    "raw_history": [
+      {
+        "bytes": 2191,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/history/green-v1-public-tests.py",
+        "sha256": "21989c4737448cda4ca701eca5421c8688fc990434d92ca9d25699070cbb5d40"
+      },
+      {
+        "bytes": 1420,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/history/green-v1-result.json",
+        "sha256": "0498db0066ae778acb2a1a74e5a8ba80a04ee7c9429e45a521383f0a6dc19e66"
+      },
+      {
+        "bytes": 11992,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/history/green-v1-source.py",
+        "sha256": "99783303b973a29b55d9f6f9e562295a41248699062982c105ac0a97e18a4f6b"
+      },
+      {
+        "bytes": 4112,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/history/green-v2-public-tests.py",
+        "sha256": "86722c8db91ca6fa9964f1f19c65c34c0753290c346bc2f4fe1c85cad963d235"
+      },
+      {
+        "bytes": 1542,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/history/green-v2-result.json",
+        "sha256": "0ef73d975b0a5e518b16ef3a6125a1753dc3a2431c3d49cac76cbc6a55a29f3e"
+      },
+      {
+        "bytes": 11992,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/history/green-v2-source.py",
+        "sha256": "99783303b973a29b55d9f6f9e562295a41248699062982c105ac0a97e18a4f6b"
+      },
+      {
+        "bytes": 2191,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/history/red-v1-public-tests.py",
+        "sha256": "21989c4737448cda4ca701eca5421c8688fc990434d92ca9d25699070cbb5d40"
+      },
+      {
+        "bytes": 2010,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/history/red-v1-result.json",
+        "sha256": "bed99776a2bde0355a9f3f2a5ac924b31df3c2d3d890257b41790a1029975022"
+      }
+    ],
+    "red-v1": {
+      "cause": "new public module absent",
+      "failed": 1,
+      "passed": 0
+    },
+    "solver_compiler_or_actual_run": false
+  },
+  "seam": "Existing public prepare/check/check_launch, authorized under user delegated routine seam choice; observations are exact source/premise/target coverage and artifact refusal, not scientific outcomes.",
+  "source_definition_bindings": {
+    "active_owner": {
+      "begin": 536,
+      "container_sha256": "a2c295d2c6720a9c8c522f05e19723c2d2d2a32b63f9b198aab03f195269e4b6",
+      "end": 599,
+      "path": "theory/vector_owned_state.mlw",
+      "sha256": "7ef2243d2746cd357fd3a196e2c7113834f124ee4107e9bac1baa3a1f09b45d9"
+    },
+    "buffer": {
+      "begin": 600,
+      "container_sha256": "a2c295d2c6720a9c8c522f05e19723c2d2d2a32b63f9b198aab03f195269e4b6",
+      "end": 656,
+      "path": "theory/vector_owned_state.mlw",
+      "sha256": "2326ef19933b4c525e158c3e40d8243fe7347660d63689f565a9671ffd01ca42"
+    },
+    "bytes": {
+      "begin": 2275,
+      "container_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+      "end": 2328,
+      "path": "theory/heap_reallocation.mlw",
+      "sha256": "860fd281e045019dc1a9556b0d0e6f7dfcbbe27c611325303bcb670bf711a19d"
+    },
+    "exclusive": {
+      "begin": 658,
+      "container_sha256": "a2c295d2c6720a9c8c522f05e19723c2d2d2a32b63f9b198aab03f195269e4b6",
+      "end": 819,
+      "path": "theory/vector_owned_state.mlw",
+      "sha256": "eb108459f9e5477050ac2ebd6b707c439f54020dfa50710b01659bdd7bd78da7"
+    },
+    "fresh_id": {
+      "begin": 2231,
+      "container_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+      "end": 2274,
+      "path": "theory/heap_reallocation.mlw",
+      "sha256": "3091155bae169cf65bae3d99bac07dd220aaf3470bceb391a4aded69c66a99b9"
+    },
+    "is_ready": {
+      "begin": 451,
+      "container_sha256": "6bfc13341d2faceb5a3fb64bd2d5bff22dd03c52a1fa3d5c4cb39b6e9c83f7f5",
+      "end": 512,
+      "path": "theory/vector_owned_effects.mlw",
+      "sha256": "62d9aea6680bf74ac8452ec9528ef624281e1c43654e53f37068a990641c1a83"
+    },
+    "numerical_address": {
+      "begin": 2329,
+      "container_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+      "end": 2395,
+      "path": "theory/heap_reallocation.mlw",
+      "sha256": "e9bbfb6093f6baedae96b56f2d5552fe4d891e66362879eecf28393b9d8ccb21"
+    },
+    "receiver": {
+      "begin": 772,
+      "container_sha256": "6bfc13341d2faceb5a3fb64bd2d5bff22dd03c52a1fa3d5c4cb39b6e9c83f7f5",
+      "end": 903,
+      "path": "theory/vector_owned_effects.mlw",
+      "sha256": "0c60adc4b6f25069e79eac95fe015ffd89e2542a1485e2756745a67f95e3d194"
+    },
+    "valid": {
+      "begin": 821,
+      "container_sha256": "a2c295d2c6720a9c8c522f05e19723c2d2d2a32b63f9b198aab03f195269e4b6",
+      "end": 1111,
+      "path": "theory/vector_owned_state.mlw",
+      "sha256": "73733aa1224ce1f3f1d7871245fb62df9d65666880bcfc4352bb5249e654e7e2"
+    },
+    "well_formed": {
+      "begin": 1485,
+      "container_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+      "end": 1791,
+      "path": "theory/heap_reallocation.mlw",
+      "sha256": "289cfb2e3308fbb6fa989a743ae8876273e926c4d428fd12dd094715fa7ea720"
+    },
+    "world": {
+      "begin": 1469,
+      "container_sha256": "6bfc13341d2faceb5a3fb64bd2d5bff22dd03c52a1fa3d5c4cb39b6e9c83f7f5",
+      "end": 1815,
+      "path": "theory/vector_owned_effects.mlw",
+      "sha256": "68f179a1aebc4df777ba5c5d8d3b227c286343184c658a438ed6e469897b8c54"
+    }
+  },
+  "source_files": [
+    {
+      "bytes": 29179,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/std_models.py",
+      "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+    },
+    {
+      "bytes": 170578,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/c_lowering.py",
+      "sha256": "37201a198250021e3d9912a7fbaafa2b8dd9377db8d87027e51045897a246243"
+    },
+    {
+      "bytes": 14594,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_owned_transfer.py",
+      "sha256": "6fa50d3b0ff6610c541bfa787179b37c6c8b50e4155fb2b0605d00e1eaffd085"
+    },
+    {
+      "bytes": 2389,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_owned_state.mlw",
+      "sha256": "a2c295d2c6720a9c8c522f05e19723c2d2d2a32b63f9b198aab03f195269e4b6"
+    },
+    {
+      "bytes": 8386,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/heap_reallocation.mlw",
+      "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+    },
+    {
+      "bytes": 10583,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_owned_source_view.py",
+      "sha256": "c76c45afc64a84f6d1cbe1e23e05c175dc1b612abb5f23679d40e7db6c43f8f2"
+    },
+    {
+      "bytes": 3128,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_owned_effects.mlw",
+      "sha256": "6bfc13341d2faceb5a3fb64bd2d5bff22dd03c52a1fa3d5c4cb39b6e9c83f7f5"
+    },
+    {
+      "bytes": 11992,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_owned_swap_parts.py",
+      "sha256": "99783303b973a29b55d9f6f9e562295a41248699062982c105ac0a97e18a4f6b"
+    },
+    {
+      "bytes": 4112,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_owned_swap_parts.py",
+      "sha256": "86722c8db91ca6fa9964f1f19c65c34c0753290c346bc2f4fe1c85cad963d235"
+    },
+    {
+      "bytes": 3108,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/run_public_controls.py",
+      "sha256": "4dd3d397f5a8499acb73e9b0e6648e18958eaa61ff81b0d68bd143e2949c0dc5"
+    },
+    {
+      "bytes": 1155,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-swap-parts-20261016/README.md",
+      "sha256": "f6a6db07f7a1240babcb8708e106e8776b50c330ad1b3017294c07c989a54497"
+    }
+  ],
+  "source_member_count": 8,
+  "source_paths_overlap": [],
+  "source_paths_owned": [
+    "swdb/vector_owned_swap_parts.py",
+    "tests/test_vector_owned_swap_parts.py"
+  ],
+  "unchanged_dependencies": 8,
+  "unchanged_original_reference_duties": 9
+}

@@ -1,0 +1,186 @@
+{
+  "format": "swdb.lanl14-planned-closure-and-reuse.v1",
+  "updated": "2026-10-06 ET",
+  "state": "prospective_metadata_only",
+  "source_count_prerequisite": "c52237b7bc840081a6c0c87267461f9b186c945e",
+  "parent_count_source": "821023a86e6c3bb3bf9b2e4fca3722b0edddb4e2",
+  "expected_new_canonical_records": [
+    {
+      "case": "pr-cpu",
+      "kind": "workload_characterization",
+      "id": "pagerank.jacobi.kron-g16.cpu.t1.characterization.generality.a1",
+      "threads": 1,
+      "roi": "gapbs.functional_trial_lambda.v1",
+      "input": "kron-g16-k16",
+      "run_arguments": [
+        "-g",
+        "16",
+        "-k",
+        "16",
+        "-n",
+        "5"
+      ]
+    },
+    {
+      "case": "pr-cpu",
+      "kind": "source_snapshot",
+      "id": "pagerank-jacobi-20261006.cpu.t1.a1.source",
+      "implementation": "gapbs-pr-jacobi-analytic-v1"
+    },
+    {
+      "case": "pr-dx100",
+      "kind": "workload_characterization",
+      "id": "pagerank.jacobi.kron-g16.dx100.t4.characterization.generality.a1",
+      "threads": 4,
+      "roi": "gapbs.functional_trial_lambda.v1",
+      "input": "kron-g16-k16",
+      "run_arguments": [
+        "-g",
+        "16",
+        "-k",
+        "16",
+        "-n",
+        "5"
+      ]
+    },
+    {
+      "case": "pr-dx100",
+      "kind": "source_snapshot",
+      "id": "pagerank-jacobi-20261006.dx100.t4.a1.source",
+      "implementation": "gapbs-pr-jacobi-analytic-v1"
+    },
+    {
+      "case": "pr-maple",
+      "kind": "workload_characterization",
+      "id": "pagerank.jacobi.kron-g16.maple.t2.characterization.generality.a1",
+      "threads": 2,
+      "roi": "gapbs.functional_trial_lambda.v1",
+      "input": "kron-g16-k16",
+      "run_arguments": [
+        "-g",
+        "16",
+        "-k",
+        "16",
+        "-n",
+        "5"
+      ]
+    },
+    {
+      "case": "pr-maple",
+      "kind": "source_snapshot",
+      "id": "pagerank-jacobi-20261006.maple.t2.a1.source",
+      "implementation": "gapbs-pr-jacobi-analytic-v1"
+    },
+    {
+      "case": "bfs-maple",
+      "kind": "workload_characterization",
+      "id": "bfs.kron-g16.bfs-maple.t2.characterization.generality.a1",
+      "threads": 2,
+      "roi": "gapbs.trial_lambda.v1",
+      "input": "kron-g16-k16",
+      "run_arguments": [
+        "-g",
+        "16",
+        "-k",
+        "16",
+        "-n",
+        "5"
+      ]
+    },
+    {
+      "case": "bc-maple",
+      "kind": "workload_characterization",
+      "id": "bc.kron-g16.bc-maple.t2.characterization.generality.a1",
+      "threads": 2,
+      "roi": "gapbs.trial_lambda.v1",
+      "input": "kron-g16-k16",
+      "run_arguments": [
+        "-g",
+        "16",
+        "-k",
+        "16",
+        "-n",
+        "5",
+        "-i",
+        "1"
+      ]
+    },
+    {
+      "case": "bc-dx100",
+      "kind": "workload_characterization",
+      "id": "bc.kron-g16.bc-dx100.t4.characterization.generality.a1",
+      "threads": 4,
+      "roi": "gapbs.functional_trial_lambda.v1",
+      "input": "dx100-functional-kron-g16-k16",
+      "run_arguments": [
+        "-g",
+        "16",
+        "-k",
+        "16",
+        "-n",
+        "5"
+      ]
+    },
+    {
+      "case": "bc-dx100",
+      "kind": "source_snapshot",
+      "id": "dx100-bc-scalar-generality-20261006.t4.a1.source",
+      "implementation": "dx100-bc-scalar"
+    }
+  ],
+  "existing_counted_pairs": [
+    {
+      "pair": "bfs/cpu",
+      "id": "bfs.kron-g16.t1.characterization.objects.a1",
+      "characterization_identity_sha256": "4379d1ed06e37b58eacc5bee61b568e47c4e9c03ed363f8240df6c1fea16dd2c",
+      "file_sha256": "cda2c51423c167249fd760f359ee0ead180bcb2e2d4db2c722c9b724120458ba",
+      "threads": 1,
+      "roi": "gapbs.trial_lambda.v1",
+      "evidence_commit": "e361e83b64578890003ac001e7d6e344556a1876",
+      "state": "immutable_count_receipt; final policy admission pending"
+    },
+    {
+      "pair": "bc/cpu",
+      "id": "bc.kron-g16.t1.characterization.objects.a1",
+      "characterization_identity_sha256": "2cf2bb052911835c28ad092c3257e835e3fb2c72b12ea6604467247579222081",
+      "file_sha256": "d12b5f57c61007219d367942ee554db1d27ee1d8614e2c1279e1164230f534e8",
+      "threads": 1,
+      "roi": "gapbs.trial_lambda.v1",
+      "evidence_commit": "e361e83b64578890003ac001e7d6e344556a1876",
+      "state": "immutable_count_receipt; final policy admission pending"
+    },
+    {
+      "pair": "bfs/dx100",
+      "id": "bfs.functional.kron-g16.t4.characterization.objects.a2",
+      "characterization_identity_sha256": "2b68d09d5b7de821913ccabe03230785d89b9c99591d303558e796b1ee3dacfe",
+      "file_sha256": "dfbb5791ebe8bf63b544a548541fd8b5a7eeb8e033fe3aef2316c4c7467e325a",
+      "canonical_sha256": "07d446f8b5f5932339d384f7faa8c8215e59e4dc4ee965945610d5425a09c6e8",
+      "threads": 4,
+      "roi": "gapbs.functional_trial_lambda.v1",
+      "counted_target_description_sha256": "6351828a0ba1536f6862d428a2522ae36ea5a39753879abdb5b637b26d8ce211",
+      "counted_observation_policy_sha256": "51126925c6bbe20df4cd4a5805c752691fb26dddbd175d9cec55a923eee7a180",
+      "state": "immutable_count_receipt; final policy admission pending"
+    }
+  ],
+  "shared_reuse_predicates": [
+    "Original canonical/count-seal/execution-receipt bytes and hashes remain immutable. Validate raw source/count/pipeline hashes where artifacts are available.",
+    "Exact registered source/subject, canonical input identity, original run arguments, whole lambda ROI, five trial positions/source selections and T1/T4 stay unchanged.",
+    "LLVM normalization recipe, pass/runtime/object-scope/primitive semantics, ABI/source-view, compiler flags/runtime libraries and relevant observation budgets/configuration are unchanged; a changed observer premise requires fresh counts.",
+    "Every final protocol is freshly frozen to the complete final Python bundle and exact target/calibration/dependency/source/input identities. Old estimate/protocol records are historical only.",
+    "Final public estimate/binding validation must admit the count under the final policy; a matching record ID or successful old estimate alone is insufficient."
+  ],
+  "cpu_specific_predicates": [
+    "Final 11 strict sealed legacy trial-scope adapter must prove the per_run-labelled facts are individual sealed trial facts without altering their values, original records or receipts. No silent per_run-to-per_trial relabel.",
+    "CPU measured service compatibility and error band remain the four exact admitted BF/BC g16/g17 T1 characterizations with actual source/compiler/runtime/worker/context/primitive premises. These two g16 pairs must pass that exact allowlist/binder; PR receives no transfer."
+  ],
+  "dx100_specific_predicates": [
+    "Use analytic_count_reuse.resolve on the final target. The exact counted target hash is accepted, or the complete swdb.observation-policy.v1 digest must equal the sealed counted snapshot.",
+    "Only explicitly classified numeric rates/costs and metadata may differ. Models/selectors/accounting, commands/source roles/type widths, layout/window/placement, source-view/backend, unknown fields and rate-dependent policy remain in the digest. Unsupported or changed premises require a fresh count.",
+    "Preserve actual T4 FUNC read-offload source and source-picker behavior. Fresh final DX BFS estimate/reference must satisfy the same complete policy; it is not a CPU T1 relabel."
+  ],
+  "reuse_admitted_now": false,
+  "historical_records_mutated": false,
+  "actual_new_counts_claimed": 0,
+  "final_reports": "Nine independent final-bundle public freezes/estimates; all per-region/trial reports and exact estimator/mechanism equality against the fresh DX BFS reference.",
+  "identity_sha256": "2f05714bc80b0b6b5ad1bf852b3a178d15138f20e187ab6e093ee2b44d30647e"
+}

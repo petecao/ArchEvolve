@@ -1,0 +1,591 @@
+{
+  "contracts": [
+    {
+      "builder": "dxw_alu",
+      "closed_route": "dxw_call_maa_alu_scalar",
+      "effective_dtype": "actual source type",
+      "name": "maa_alu_scalar",
+      "owned_mmio_normal_return_premise": true,
+      "public_support": false,
+      "requested_types": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "source_body_sha256": "67c0e5afc67ecbd9257fb7beff1189d197d41009c89d329fb69bafa7b3b181d9",
+      "source_header": "MAA_gem5.hpp",
+      "source_line": 175,
+      "source_packet": {
+        "base_parameter": null,
+        "dtype": "T1",
+        "memory_access": 0,
+        "opcode": 8,
+        "opcode_name": "ALU_SCALAR",
+        "operands": {
+          "condition": {
+            "optional": true,
+            "parameter": "cond_tile"
+          },
+          "dst1": {
+            "optional": false,
+            "parameter": "dst_tile"
+          },
+          "dst2": null,
+          "rdst1": null,
+          "rdst2": null,
+          "rsrc1": {
+            "optional": false,
+            "parameter": "src2_reg"
+          },
+          "rsrc2": null,
+          "rsrc3": null,
+          "src1": {
+            "optional": false,
+            "parameter": "src1_tile"
+          },
+          "src2": null
+        },
+        "operation": "op"
+      },
+      "state": "SOURCE_IMPLEMENTED_UNCOMPILED_UNEXECUTED"
+    },
+    {
+      "builder": "dxw_alu",
+      "closed_route": "dxw_call_maa_alu_vector",
+      "effective_dtype": "actual source type",
+      "name": "maa_alu_vector",
+      "owned_mmio_normal_return_premise": true,
+      "public_support": false,
+      "requested_types": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "source_body_sha256": "b6d4c8344077a0e537608da84c935732e2538d7a516fc33c37b0331ce3d9c4e6",
+      "source_header": "MAA_gem5.hpp",
+      "source_line": 194,
+      "source_packet": {
+        "base_parameter": null,
+        "dtype": "T1",
+        "memory_access": 0,
+        "opcode": 9,
+        "opcode_name": "ALU_VECTOR",
+        "operands": {
+          "condition": {
+            "optional": true,
+            "parameter": "cond_tile"
+          },
+          "dst1": {
+            "optional": false,
+            "parameter": "dst_tile"
+          },
+          "dst2": null,
+          "rdst1": null,
+          "rdst2": null,
+          "rsrc1": null,
+          "rsrc2": null,
+          "rsrc3": null,
+          "src1": {
+            "optional": false,
+            "parameter": "src1_tile"
+          },
+          "src2": {
+            "optional": false,
+            "parameter": "src2_tile"
+          }
+        },
+        "operation": "op"
+      },
+      "state": "SOURCE_IMPLEMENTED_UNCOMPILED_UNEXECUTED"
+    },
+    {
+      "builder": "dxw_alu",
+      "closed_route": "dxw_call_maa_alu_reduce",
+      "effective_dtype": "actual source type",
+      "name": "maa_alu_reduce",
+      "owned_mmio_normal_return_premise": true,
+      "public_support": false,
+      "requested_types": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "source_body_sha256": "582596b95879529fee61e1ce1ccc611986137cff2cdcd5256f8f11150ff2ed3e",
+      "source_header": "MAA_gem5.hpp",
+      "source_line": 213,
+      "source_packet": {
+        "base_parameter": null,
+        "dtype": "T1",
+        "memory_access": 0,
+        "opcode": 10,
+        "opcode_name": "ALU_REDUCE",
+        "operands": {
+          "condition": {
+            "optional": true,
+            "parameter": "cond_tile"
+          },
+          "dst1": null,
+          "dst2": null,
+          "rdst1": {
+            "optional": false,
+            "parameter": "dst_reg"
+          },
+          "rdst2": null,
+          "rsrc1": null,
+          "rsrc2": null,
+          "rsrc3": null,
+          "src1": {
+            "optional": false,
+            "parameter": "src1_tile"
+          },
+          "src2": null
+        },
+        "operation": "op"
+      },
+      "state": "SOURCE_IMPLEMENTED_UNCOMPILED_UNEXECUTED"
+    },
+    {
+      "builder": "dxw_stream",
+      "closed_route": "dxw_call_maa_stream_load",
+      "effective_dtype": "actual source type",
+      "name": "maa_stream_load",
+      "owned_mmio_normal_return_premise": true,
+      "public_support": false,
+      "requested_types": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "source_body_sha256": "e3a9243c3bfa56750b355782879cbf944b5290f76e83ebade2e474c1c6146ef1",
+      "source_header": "MAA_gem5.hpp",
+      "source_line": 232,
+      "source_packet": {
+        "base_parameter": "data",
+        "dtype": "T1",
+        "memory_access": 1,
+        "opcode": 0,
+        "opcode_name": "STREAM_LD",
+        "operands": {
+          "condition": {
+            "optional": true,
+            "parameter": "cond_tile"
+          },
+          "dst1": {
+            "optional": false,
+            "parameter": "dst_tile"
+          },
+          "dst2": null,
+          "rdst1": null,
+          "rdst2": null,
+          "rsrc1": {
+            "optional": false,
+            "parameter": "min_reg"
+          },
+          "rsrc2": {
+            "optional": false,
+            "parameter": "max_reg"
+          },
+          "rsrc3": {
+            "optional": false,
+            "parameter": "stride_reg"
+          },
+          "src1": null,
+          "src2": null
+        },
+        "operation": null
+      },
+      "state": "SOURCE_IMPLEMENTED_UNCOMPILED_UNEXECUTED"
+    },
+    {
+      "builder": "dxw_stream",
+      "closed_route": "dxw_call_maa_stream_store",
+      "effective_dtype": "actual source type",
+      "name": "maa_stream_store",
+      "owned_mmio_normal_return_premise": true,
+      "public_support": false,
+      "requested_types": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "source_body_sha256": "33fa1f356097231df32e67c60699b1b2f292a46c87fbb77fc513c3e2748f047e",
+      "source_header": "MAA_gem5.hpp",
+      "source_line": 251,
+      "source_packet": {
+        "base_parameter": "data",
+        "dtype": "T1",
+        "memory_access": 2,
+        "opcode": 1,
+        "opcode_name": "STREAM_ST",
+        "operands": {
+          "condition": {
+            "optional": true,
+            "parameter": "cond_tile"
+          },
+          "dst1": null,
+          "dst2": null,
+          "rdst1": null,
+          "rdst2": null,
+          "rsrc1": {
+            "optional": false,
+            "parameter": "min_reg"
+          },
+          "rsrc2": {
+            "optional": false,
+            "parameter": "max_reg"
+          },
+          "rsrc3": {
+            "optional": false,
+            "parameter": "stride_reg"
+          },
+          "src1": {
+            "optional": false,
+            "parameter": "src_tile"
+          },
+          "src2": null
+        },
+        "operation": null
+      },
+      "state": "SOURCE_IMPLEMENTED_UNCOMPILED_UNEXECUTED"
+    },
+    {
+      "builder": "dxw_indirect",
+      "closed_route": "dxw_call_maa_indirect_load",
+      "effective_dtype": "actual source type",
+      "name": "maa_indirect_load",
+      "owned_mmio_normal_return_premise": true,
+      "public_support": false,
+      "requested_types": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "source_body_sha256": "6edae64375800e942b42272a20f459a3d8e65095d23227c394ecdd9807900fd8",
+      "source_header": "MAA_gem5.hpp",
+      "source_line": 270,
+      "source_packet": {
+        "base_parameter": "data",
+        "dtype": "T1",
+        "memory_access": 1,
+        "opcode": 2,
+        "opcode_name": "INDIR_LD",
+        "operands": {
+          "condition": {
+            "optional": true,
+            "parameter": "cond_tile"
+          },
+          "dst1": {
+            "optional": false,
+            "parameter": "dst_tile"
+          },
+          "dst2": null,
+          "rdst1": null,
+          "rdst2": null,
+          "rsrc1": null,
+          "rsrc2": null,
+          "rsrc3": null,
+          "src1": {
+            "optional": false,
+            "parameter": "idx_tile"
+          },
+          "src2": null
+        },
+        "operation": null
+      },
+      "state": "SOURCE_IMPLEMENTED_UNCOMPILED_UNEXECUTED"
+    },
+    {
+      "builder": "dxw_indirect",
+      "closed_route": "dxw_call_maa_indirect_store_vector",
+      "effective_dtype": "actual source type",
+      "name": "maa_indirect_store_vector",
+      "owned_mmio_normal_return_premise": true,
+      "public_support": false,
+      "requested_types": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "source_body_sha256": "42b43b7340c0fd4a2045a744c160502866c4348ef5c4c73044fddc0be6e946b6",
+      "source_header": "MAA_gem5.hpp",
+      "source_line": 289,
+      "source_packet": {
+        "base_parameter": "data",
+        "dtype": "T1",
+        "memory_access": 2,
+        "opcode": 4,
+        "opcode_name": "INDIR_ST_VECTOR",
+        "operands": {
+          "condition": {
+            "optional": true,
+            "parameter": "cond_tile"
+          },
+          "dst1": {
+            "optional": true,
+            "parameter": "dst_tile"
+          },
+          "dst2": null,
+          "rdst1": null,
+          "rdst2": null,
+          "rsrc1": null,
+          "rsrc2": null,
+          "rsrc3": null,
+          "src1": {
+            "optional": false,
+            "parameter": "idx_tile"
+          },
+          "src2": {
+            "optional": false,
+            "parameter": "src_tile"
+          }
+        },
+        "operation": null
+      },
+      "state": "SOURCE_IMPLEMENTED_UNCOMPILED_UNEXECUTED"
+    },
+    {
+      "builder": "dxw_indirect",
+      "closed_route": "dxw_call_maa_indirect_store_scalar",
+      "effective_dtype": "actual source type",
+      "name": "maa_indirect_store_scalar",
+      "owned_mmio_normal_return_premise": true,
+      "public_support": false,
+      "requested_types": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "source_body_sha256": "cdbf1df1e471fe7b73eca3dd1411dc88c268f627352157f8ac1f36f22f725832",
+      "source_header": "MAA_gem5.hpp",
+      "source_line": 308,
+      "source_packet": {
+        "base_parameter": "data",
+        "dtype": "T1",
+        "memory_access": 2,
+        "opcode": 3,
+        "opcode_name": "INDIR_ST_SCALAR",
+        "operands": {
+          "condition": {
+            "optional": true,
+            "parameter": "cond_tile"
+          },
+          "dst1": {
+            "optional": true,
+            "parameter": "dst_tile"
+          },
+          "dst2": null,
+          "rdst1": null,
+          "rdst2": null,
+          "rsrc1": {
+            "optional": false,
+            "parameter": "src_reg"
+          },
+          "rsrc2": null,
+          "rsrc3": null,
+          "src1": {
+            "optional": false,
+            "parameter": "idx_tile"
+          },
+          "src2": null
+        },
+        "operation": null
+      },
+      "state": "SOURCE_IMPLEMENTED_UNCOMPILED_UNEXECUTED"
+    },
+    {
+      "builder": "dxw_indirect",
+      "closed_route": "dxw_call_maa_indirect_rmw_vector",
+      "effective_dtype": "actual source type",
+      "name": "maa_indirect_rmw_vector",
+      "owned_mmio_normal_return_premise": true,
+      "public_support": false,
+      "requested_types": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "source_body_sha256": "6398c1caf415fdaee7e9ddb0bec972c4d781f4a84ed456e29b85962f1a16484e",
+      "source_header": "MAA_gem5.hpp",
+      "source_line": 327,
+      "source_packet": {
+        "base_parameter": "data",
+        "dtype": "T1",
+        "memory_access": 2,
+        "opcode": 6,
+        "opcode_name": "INDIR_RMW_VECTOR",
+        "operands": {
+          "condition": {
+            "optional": true,
+            "parameter": "cond_tile"
+          },
+          "dst1": {
+            "optional": true,
+            "parameter": "dst_tile"
+          },
+          "dst2": null,
+          "rdst1": null,
+          "rdst2": null,
+          "rsrc1": null,
+          "rsrc2": null,
+          "rsrc3": null,
+          "src1": {
+            "optional": false,
+            "parameter": "idx_tile"
+          },
+          "src2": {
+            "optional": false,
+            "parameter": "src_tile"
+          }
+        },
+        "operation": "o_type"
+      },
+      "state": "SOURCE_IMPLEMENTED_UNCOMPILED_UNEXECUTED"
+    },
+    {
+      "builder": "dxw_indirect",
+      "closed_route": "dxw_call_maa_indirect_rmw_scalar",
+      "effective_dtype": "actual source type",
+      "name": "maa_indirect_rmw_scalar",
+      "owned_mmio_normal_return_premise": true,
+      "public_support": false,
+      "requested_types": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "source_body_sha256": "544a52719043a0adbb130d101607b2a450725b5d17e377072e7e7c4097c295b5",
+      "source_header": "MAA_gem5.hpp",
+      "source_line": 346,
+      "source_packet": {
+        "base_parameter": "data",
+        "dtype": "T1",
+        "memory_access": 2,
+        "opcode": 5,
+        "opcode_name": "INDIR_RMW_SCALAR",
+        "operands": {
+          "condition": {
+            "optional": true,
+            "parameter": "cond_tile"
+          },
+          "dst1": {
+            "optional": true,
+            "parameter": "dst_tile"
+          },
+          "dst2": null,
+          "rdst1": null,
+          "rdst2": null,
+          "rsrc1": {
+            "optional": false,
+            "parameter": "src_reg"
+          },
+          "rsrc2": null,
+          "rsrc3": null,
+          "src1": {
+            "optional": false,
+            "parameter": "idx_tile"
+          },
+          "src2": null
+        },
+        "operation": "o_type"
+      },
+      "state": "SOURCE_IMPLEMENTED_UNCOMPILED_UNEXECUTED"
+    },
+    {
+      "builder": "dxw_range",
+      "closed_route": "dxw_call_maa_range_loop",
+      "effective_dtype": 1,
+      "name": "maa_range_loop",
+      "owned_mmio_normal_return_premise": true,
+      "public_support": false,
+      "requested_types": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "source_body_sha256": "6c625e3ff40317fedb980bb7ea78449e5ac916e1cc371b6b92a47a3c8d991191",
+      "source_header": "MAA_gem5.hpp",
+      "source_line": 366,
+      "source_packet": {
+        "base_parameter": null,
+        "dtype": "int32_t",
+        "memory_access": 0,
+        "opcode": 7,
+        "opcode_name": "RANGE_LOOP",
+        "operands": {
+          "condition": {
+            "optional": true,
+            "parameter": "cond_tile"
+          },
+          "dst1": {
+            "optional": false,
+            "parameter": "dst_i_tile"
+          },
+          "dst2": {
+            "optional": false,
+            "parameter": "dst_j_tile"
+          },
+          "rdst1": {
+            "optional": false,
+            "parameter": "last_i_reg"
+          },
+          "rdst2": {
+            "optional": false,
+            "parameter": "last_j_reg"
+          },
+          "rsrc1": {
+            "optional": false,
+            "parameter": "stride_reg"
+          },
+          "rsrc2": null,
+          "rsrc3": null,
+          "src1": {
+            "optional": false,
+            "parameter": "min_tile"
+          },
+          "src2": {
+            "optional": false,
+            "parameter": "max_tile"
+          }
+        },
+        "operation": null
+      },
+      "state": "SOURCE_IMPLEMENTED_UNCOMPILED_UNEXECUTED"
+    }
+  ],
+  "date": "2026-10-16",
+  "domain_document": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/README-values-v1.md",
+  "native_harness": "INERT_86_CONTROLS_NOT_EXECUTED"
+}

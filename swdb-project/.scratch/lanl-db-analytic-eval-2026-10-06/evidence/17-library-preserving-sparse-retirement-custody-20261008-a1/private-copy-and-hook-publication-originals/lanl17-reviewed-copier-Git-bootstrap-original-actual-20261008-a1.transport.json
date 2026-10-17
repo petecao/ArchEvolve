@@ -1,0 +1,38 @@
+{
+  "argv": [
+    "ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "mbit10",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=10",
+    "90",
+    "/usr/bin/python3.12",
+    "-B",
+    "-s",
+    "-"
+  ],
+  "elapsed_seconds": 0.6936362909618765,
+  "finished_utc": "2026-10-08T08:17:02.996427+00:00",
+  "format": "swdb.parent-reviewed-copier-Git-bootstrap-original-transport.v1",
+  "returncode": 0,
+  "sealed": false,
+  "source": {
+    "bytes": 4047,
+    "path": "/private/tmp/lanl17-bootstrap-reviewed-copier-from-delivered-Git-20261008-a1.py",
+    "sha256": "0e9e24fa3539d35cf55a76e7353a050b1aa23d6a3bb2e6695652563ca9db6117"
+  },
+  "started_utc": "2026-10-08T08:17:02.302894+00:00",
+  "stderr": {
+    "bytes": 0,
+    "path": "/private/tmp/lanl17-reviewed-copier-Git-bootstrap-original-actual-20261008-a1.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 1871,
+    "path": "/private/tmp/lanl17-reviewed-copier-Git-bootstrap-original-actual-20261008-a1.stdout",
+    "sha256": "3db66f256dd559eecd30becd265360f117aeb7dc5e48fab7bda99e51cacede00"
+  }
+}

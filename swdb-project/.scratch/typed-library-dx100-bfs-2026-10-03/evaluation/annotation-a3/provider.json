@@ -1,0 +1,473 @@
+{
+  "provider": {
+    "kind": "codex",
+    "command": [
+      "/data1/yanruj/.npm-global/bin/codex"
+    ],
+    "workspace": true,
+    "timeout_s": 900,
+    "total_seconds": 900,
+    "max_repairs": 0,
+    "budget_usd": 5,
+    "resolved_kind": "codex",
+    "model": "gpt-5.6-sol",
+    "effort": "xhigh",
+    "budget_usd_enforced": false
+  },
+  "command": [
+    "/data1/yanruj/.npm-global/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/bin/codex",
+    "exec",
+    "--model",
+    "gpt-5.6-sol",
+    "-c",
+    "model_reasoning_effort=\"xhigh\"",
+    "-c",
+    "web_search=\"disabled\"",
+    "-c",
+    "sqlite_home=\"/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.annotation-a3/guard/ephemeral-state\"",
+    "-c",
+    "analytics.enabled=false",
+    "-c",
+    "otel.exporter=\"none\"",
+    "-c",
+    "otel.trace_exporter=\"none\"",
+    "-c",
+    "otel.metrics_exporter=\"none\"",
+    "-c",
+    "skills.bundled.enabled=false",
+    "-c",
+    "skills.include_instructions=false",
+    "-c",
+    "features.code_mode.direct_only_tool_namespaces=[\"functions\"]",
+    "-c",
+    "project_doc_max_bytes=0",
+    "--ignore-user-config",
+    "--ignore-rules",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--dangerously-bypass-approvals-and-sandbox",
+    "--json",
+    "--output-schema",
+    "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.annotation-a3/provider-home/output-schema.json",
+    "--output-last-message",
+    "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.annotation-a3/provider-home/final-message.json",
+    "--disable",
+    "apps",
+    "--disable",
+    "plugins",
+    "--disable",
+    "remote_plugin",
+    "--disable",
+    "memories",
+    "--disable",
+    "multi_agent",
+    "--disable",
+    "multi_agent_v2",
+    "--disable",
+    "hooks",
+    "--disable",
+    "image_generation",
+    "--disable",
+    "view_image",
+    "--disable",
+    "browser_use",
+    "--disable",
+    "browser_use_external",
+    "--disable",
+    "browser_use_full_cdp_access",
+    "--disable",
+    "computer_use",
+    "--disable",
+    "in_app_browser",
+    "--disable",
+    "skill_search",
+    "--disable",
+    "skill_mcp_dependency_install",
+    "--disable",
+    "workspace_dependencies",
+    "--disable",
+    "shell_snapshot",
+    "--disable",
+    "shell_snapshot_v2",
+    "--disable",
+    "unified_exec",
+    "Use direct local shell and edit tool calls. Do not use the JavaScript exec or wait tools: their additional runtime exceeds this session's 16-thread budget. Agent role: profiling. Read only the explicit files in this workspace. Do not edit input files or run profiling collectors. Return the requested JSON.\nRead statement-context.json and statement-source.cc. Annotate every declared statement with its pattern class (one entry per access pattern), index provenance as statement IDs in chain order, and a unique expected cost rank from 1 to N. Rank 1 means most expected last-level data misses (reads plus writes). Keep code_reading and inferred separate. Read source only; do not run profilers, builds, tests or tools that evaluate the code. Existing per-line ground truth is hidden. Return the structured schema."
+  ],
+  "timeout_s": 900,
+  "classification": "rewrite_provider",
+  "prompt_sha256": "d383db6057c92d0e2761d49f4aff7ec6f211494f0ebe31183d2d4908ea8633e8",
+  "state": "completed",
+  "executable_sha256": "fce635028842bfe9257140e8b7d53162732945e2f356fc35225be0702b4974be",
+  "resolved_kind": "codex",
+  "model": "gpt-5.6-sol",
+  "effort": "xhigh",
+  "workspace": true,
+  "budget_usd_enforced": false,
+  "guard_policy": {
+    "enforced": true,
+    "landlock_abi": 4,
+    "lane": "mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 439)",
+    "selected_install_root": "/data1/yanruj/.npm-global/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64",
+    "read_roots": [
+      "/data1/yanruj/.npm-global/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64",
+      "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.annotation-a3/guard",
+      "/dev/null",
+      "/dev/random",
+      "/dev/urandom",
+      "/dev/zero",
+      "/etc/hosts",
+      "/etc/ld.so.cache",
+      "/etc/nsswitch.conf",
+      "/etc/passwd",
+      "/etc/ssl/certs",
+      "/etc/ssl/openssl.cnf",
+      "/proc/sys/vm/mmap_min_addr",
+      "/run/systemd/resolve/stub-resolv.conf",
+      "/usr",
+      "/usr/bin",
+      "/usr/lib",
+      "/usr/lib64",
+      "/usr/share/zoneinfo/America/Detroit"
+    ],
+    "runtime_self_reads": [
+      "maps",
+      "cgroup",
+      "stat",
+      "statm",
+      "status"
+    ],
+    "device_write_roots": [
+      "/dev/null"
+    ],
+    "execution_cpus": [
+      0
+    ],
+    "resource_scope": "provider process tree including its external strace launcher",
+    "write_roots": [
+      "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.annotation-a3/workspace",
+      "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.annotation-a3/provider-home"
+    ],
+    "tcp_connect_ports": [
+      443
+    ],
+    "inner_tcp_connect_ports": [],
+    "tcp_bind_ports": [],
+    "model_api": {
+      "hosts": [
+        "chatgpt.com",
+        "api.openai.com",
+        "auth.openai.com"
+      ],
+      "addresses": [
+        "104.18.32.47",
+        "104.18.41.241",
+        "162.159.140.245",
+        "172.64.146.15",
+        "172.64.155.209",
+        "172.66.0.243",
+        "2606:4700:4400::6812:29f1",
+        "2606:4700:4408::ac40:9bd1",
+        "2606:4700:7::f3",
+        "2a06:98c1:3101::6812:202f",
+        "2a06:98c1:310c::ac40:920f",
+        "2a06:98c1:58::f3"
+      ]
+    },
+    "login_path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.annotation-a3/provider-home/auth.json",
+    "limits": {
+      "threads": 16,
+      "memory_bytes": 34359738368,
+      "command_seconds": 120,
+      "workspace_bytes": 5368709120
+    },
+    "limit_enforcement": {
+      "threads": "observed: aggregate tree count polled every 0.1 s; attempt stopped on overrun",
+      "memory_bytes": "observed: aggregate resident memory polled every 0.1 s; inner tool commands also get a kernel RLIMIT_AS of the same size",
+      "command_seconds": "observed wall-time watchdog for every tool process; inner tool commands also get timeout(1) and RLIMIT_CPU",
+      "workspace_bytes": "observed: workspace plus provider home polled every 0.1 s; kernel RLIMIT_FSIZE per file"
+    },
+    "residual_risks": [
+      "Landlock ABI 4 does not restrict UDP",
+      "login copy readable during session",
+      "supervisor filter covers listed native signal APIs, not general hostile-process isolation",
+      "model API addresses are matched by IP; a shared CDN address cannot distinguish hosts",
+      "thread and memory caps are polled, so a burst can overshoot for one interval"
+    ],
+    "command_network_wrapper": false,
+    "untraced_network_filter": [
+      "io_uring_setup",
+      "sendto+MSG_FASTOPEN",
+      "sendmsg+MSG_FASTOPEN",
+      "sendmmsg+MSG_FASTOPEN"
+    ],
+    "process_ownership": {
+      "subreaper": true,
+      "bootstrap": "outside Landlock; execs strace in the same PID",
+      "original_cli_identity": "observer-owned read-only PID and kernel start-time handshake",
+      "cleanup": "pidfd or checked kernel start time; detached descendants before tracer",
+      "subreaper_record": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.annotation-a3/guard/subreaper.json",
+      "provider_record": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.annotation-a3/guard/provider-process.json",
+      "filter_marker": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.annotation-a3/guard/supervisor-filter.ready",
+      "nonce": "995160a2640404ecd6357a6041f34ba6"
+    },
+    "supervisor_protection": {
+      "required": true,
+      "observer": {
+        "pid": 1573230,
+        "start_time_ticks": 553470349,
+        "tids": [
+          1573230
+        ],
+        "process_group": 1573230,
+        "session": 1573230
+      },
+      "architecture": "x86_64",
+      "compat_abi_allowed": false,
+      "scope": "listed native signal APIs and direct pidfd_open; not general hostile-process isolation",
+      "provider_session": "separate from both supervisor sessions; preserves ordinary kill(0)",
+      "pidfd_signals": "ordinary child pidfds allowed; supervisor pidfds not inherited or openable"
+    },
+    "session_state": {
+      "sqlite_home": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.annotation-a3/guard/ephemeral-state",
+      "writable": false,
+      "ephemeral": true
+    },
+    "persistent_services": [
+      {
+        "executable": "/data1/yanruj/.npm-global/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/bin/codex-code-mode-host",
+        "parent_executable": "/data1/yanruj/.npm-global/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/bin/codex",
+        "direct_parent_required": true,
+        "resource_accounting": "included"
+      }
+    ]
+  },
+  "version": "codex-cli 0.153.0",
+  "cli_version": "codex-cli 0.153.0",
+  "guard_command": [
+    "/usr/bin/python3",
+    "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.annotation-a3/guard/launch.py",
+    "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.annotation-a3/guard/policy.json",
+    "--subreaper",
+    "--",
+    "/usr/bin/strace",
+    "-f",
+    "-qq",
+    "-yy",
+    "-e",
+    "trace=connect",
+    "-o",
+    "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.annotation-a3/network.trace",
+    "/usr/bin/python3",
+    "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.annotation-a3/guard/launch.py",
+    "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.annotation-a3/guard/policy.json",
+    "--provider-root",
+    "--",
+    "/data1/yanruj/.npm-global/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/bin/codex",
+    "exec",
+    "--model",
+    "gpt-5.6-sol",
+    "-c",
+    "model_reasoning_effort=\"xhigh\"",
+    "-c",
+    "web_search=\"disabled\"",
+    "-c",
+    "sqlite_home=\"/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.annotation-a3/guard/ephemeral-state\"",
+    "-c",
+    "analytics.enabled=false",
+    "-c",
+    "otel.exporter=\"none\"",
+    "-c",
+    "otel.trace_exporter=\"none\"",
+    "-c",
+    "otel.metrics_exporter=\"none\"",
+    "-c",
+    "skills.bundled.enabled=false",
+    "-c",
+    "skills.include_instructions=false",
+    "-c",
+    "features.code_mode.direct_only_tool_namespaces=[\"functions\"]",
+    "-c",
+    "project_doc_max_bytes=0",
+    "--ignore-user-config",
+    "--ignore-rules",
+    "--ephemeral",
+    "--skip-git-repo-check",
+    "--dangerously-bypass-approvals-and-sandbox",
+    "--json",
+    "--output-schema",
+    "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.annotation-a3/provider-home/output-schema.json",
+    "--output-last-message",
+    "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.annotation-a3/provider-home/final-message.json",
+    "--disable",
+    "apps",
+    "--disable",
+    "plugins",
+    "--disable",
+    "remote_plugin",
+    "--disable",
+    "memories",
+    "--disable",
+    "multi_agent",
+    "--disable",
+    "multi_agent_v2",
+    "--disable",
+    "hooks",
+    "--disable",
+    "image_generation",
+    "--disable",
+    "view_image",
+    "--disable",
+    "browser_use",
+    "--disable",
+    "browser_use_external",
+    "--disable",
+    "browser_use_full_cdp_access",
+    "--disable",
+    "computer_use",
+    "--disable",
+    "in_app_browser",
+    "--disable",
+    "skill_search",
+    "--disable",
+    "skill_mcp_dependency_install",
+    "--disable",
+    "workspace_dependencies",
+    "--disable",
+    "shell_snapshot",
+    "--disable",
+    "shell_snapshot_v2",
+    "--disable",
+    "unified_exec",
+    "Use direct local shell and edit tool calls. Do not use the JavaScript exec or wait tools: their additional runtime exceeds this session's 16-thread budget. Agent role: profiling. Read only the explicit files in this workspace. Do not edit input files or run profiling collectors. Return the requested JSON.\nRead statement-context.json and statement-source.cc. Annotate every declared statement with its pattern class (one entry per access pattern), index provenance as statement IDs in chain order, and a unique expected cost rank from 1 to N. Rank 1 means most expected last-level data misses (reads plus writes). Keep code_reading and inferred separate. Read source only; do not run profilers, builds, tests or tools that evaluate the code. Existing per-line ground truth is hidden. Return the structured schema."
+  ],
+  "returncode": 0,
+  "host_wall_s": 142.6172464704141,
+  "stream": {
+    "first_output_s": 0.7182708848267794,
+    "last_output_s": 142.4479814870283,
+    "events": 11,
+    "unparsed_lines": 0,
+    "event_types": {
+      "thread.started": 1,
+      "turn.started": 1,
+      "item.completed": 5,
+      "item.started": 3,
+      "turn.completed": 1
+    },
+    "delta_counts": {},
+    "delta_chars": {},
+    "estimated_thinking_tokens": null,
+    "model": null,
+    "result": null,
+    "partial_output": {
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.annotation-a3/partial_output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "guard_result": {
+    "passed": true,
+    "reasons": [],
+    "trace": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.annotation-a3/network.trace",
+    "process_cleanup": {
+      "passed": true,
+      "tracer_pid": 1573273,
+      "processes_observed": [
+        {
+          "pid": 1573273,
+          "start_time_ticks": 553471295,
+          "pidfd": false
+        },
+        {
+          "pid": 1573278,
+          "start_time_ticks": 553471301,
+          "pidfd": false
+        }
+      ],
+      "survivors": [],
+      "errors": [],
+      "wall_s": 0.06783738266676664
+    },
+    "supervisor_protection": {
+      "architecture": "x86_64",
+      "supervisors": [
+        {
+          "pid": 1573230,
+          "start_time_ticks": 553470349,
+          "tids": [
+            1573230
+          ],
+          "process_group": 1573230,
+          "session": 1573230
+        },
+        {
+          "pid": 1573273,
+          "start_time_ticks": 553471295,
+          "tids": [
+            1573273
+          ],
+          "process_group": 1573273,
+          "session": 1573273
+        }
+      ],
+      "provider_session": 1573278,
+      "filtered_syscalls": [
+        "kill",
+        "tkill",
+        "tgkill",
+        "rt_sigqueueinfo",
+        "rt_tgsigqueueinfo",
+        "pidfd_open"
+      ],
+      "compat_abi_allowed": false,
+      "kill_all_allowed": false,
+      "untraced_network_filter": true,
+      "enforced": true
+    },
+    "original_provider": {
+      "pid": 1573278,
+      "start_time_ticks": 553471301
+    }
+  },
+  "role": "profiling",
+  "lane": "mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 439)",
+  "workspace_manifest": {
+    "format": "swdb.provider-role-workspace.v1",
+    "role": "profiling",
+    "root": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.annotation-a3/workspace",
+    "home": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.annotation-a3/provider-home",
+    "read_only": true,
+    "source_files": [],
+    "visible_files": [
+      "statement-context.json",
+      "statement-source.cc"
+    ],
+    "immutable_files": [
+      "statement-context.json",
+      "statement-source.cc"
+    ],
+    "input_sha256s": {
+      "statement-context.json": "8d1b2787e6f5fdc0d6daf58097dbb56489f6544f61d3bfd6825de54a592d4214",
+      "statement-source.cc": "7ef7bdfd13f3b117665e7a4698a56d7a16368d46a32caa349eb9bf5c56b8955c"
+    },
+    "output_schema_sha256": "aa1aec6a43285f16c7815cad29bb99d151a661caea506071b7c90a1d78de4507",
+    "login_copy_deleted": true,
+    "dropped_build_outputs": [],
+    "login_copies_removed": []
+  },
+  "output_schema_sha256": "aa1aec6a43285f16c7815cad29bb99d151a661caea506071b7c90a1d78de4507",
+  "audit": {
+    "format": "swdb.provider-audit.v1",
+    "state": "passed",
+    "passed": true,
+    "events": 11,
+    "commands": 6,
+    "file_accesses": 14,
+    "reasons": [],
+    "violations": [],
+    "raw_log": {
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.annotation-a3/stdout.txt",
+      "sha256": "db9613f45097bbd882de6825585eadb928905bca849008aebf9d893d4b4d2f6a",
+      "bytes": 35571
+    }
+  }
+}

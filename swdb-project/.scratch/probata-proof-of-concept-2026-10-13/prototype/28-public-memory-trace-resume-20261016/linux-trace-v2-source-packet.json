@@ -1,0 +1,165 @@
+{
+  "control_files": {
+    "cbmc_release_gate.py": "681ad7be43312e224529a03d42b939305010795becd2fc203724a59c63db3dfc",
+    "closed_python_surface.py": "748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af",
+    "python-physical-metadata-v2.json": "9d90835f12dfb89a43ac0e0661681159ec8ab563e9cf664548162a7357299eda",
+    "python_role_observer_v2.py": "9b100cbe2fdef3e7d429ccdf05d6489d44855a84328e2dd8532eb547beeaf43b",
+    "python_startup_roles_v2.py": "5e9d2e6dfa2aaa7999f4670a979d3cc32736b852a612f77d4e2f7c71bc229618",
+    "t28-linux-runtime-observer-v2-actual-20261016.json": "092397608fe3a08c42d85e9c8e121ed139f0d94e345a12ae3aaa57ad6e93a5f0",
+    "trace_pytest_child_v2.py": "e3957b2f358b7e446a6a61e80d3d761539e14a9fd1fae5323c2abfd7937f3493"
+  },
+  "control_files_schema": "exact seven basename keys -> lower-case SHA256 string; no paths, additional names or omissions accepted",
+  "control_total_bytes": 164006,
+  "controls": {
+    "actual_observer_compiler_native_verifier_ssh_executed": false,
+    "all_pass": true,
+    "audit": "deny subprocess/exec/spawn/fork/system/ctypes.dlopen",
+    "future_child_text_compile_only": true,
+    "new_controller_controls": 8,
+    "new_role_controls": 7
+  },
+  "date": "2026-10-16 ET",
+  "evidence_boundaries": [
+    "raw root observer records post-package paths only; no retroactive initial-path or timing claim",
+    "future guarded role observations required separately for initial and post-package states",
+    "interpreter/frozen startup remains TCB; physical source pin is not frozen-source equivalence",
+    "25 synthetic abstract model witnesses only; no hardware/source/current0.2/whole28 acceptance"
+  ],
+  "guard": {
+    "rss_cap_bytes": 8589934592,
+    "timeout_seconds": 1200,
+    "workers": 1
+  },
+  "junit": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 25
+  },
+  "owned_scope": "new shared role helpers and traceV2 only; initializedV4 owned by parent; no production, frozen fixture, old entry or global manifest changes",
+  "policy_required_fields": [
+    "admitted",
+    "source_commit",
+    "source_root",
+    "raw_name",
+    "guard",
+    "source_consumer_trees",
+    "source_files",
+    "runtime_files",
+    "control_files",
+    "portable_import_surfaces",
+    "ocaml_packages",
+    "linux_clang_components",
+    "tools",
+    "accepted_cbmc_release_family",
+    "cbmc_version_output",
+    "junit",
+    "junit_classname",
+    "selection",
+    "linux_launch_binding",
+    "config",
+    "wp_artifacts",
+    "naming",
+    "python_startup_roles_v2",
+    "linux_header_surfaces",
+    "linux_parser_physical"
+  ],
+  "preserved_byte_exact_helpers": [
+    "consumer_closure",
+    "pin",
+    "ambient_check",
+    "validate_linux_launch",
+    "verified_linux_lane",
+    "import_surface",
+    "compiler_preflight",
+    "compiler_components",
+    "normalize_compiler_selector",
+    "junit_census",
+    "header_surface_check_v4 copied exactly from parent initializedV4"
+  ],
+  "preserved_cbmc_helper_sha256": "681ad7be43312e224529a03d42b939305010795becd2fc203724a59c63db3dfc",
+  "preserved_closed_helper_sha256": "748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af",
+  "root_fills": [
+    "policy admitted=true",
+    "source_commit/source_root/raw_name/source_files/source_consumer_trees",
+    "startup plan admitted=true/source_project",
+    "remaining tools/runtime including Frama kernel parent META",
+    "selected compiler, naming, config, OCaml/Why3/WP identities",
+    "lane launch binding and wrappers",
+    "final serialized policy SHA"
+  ],
+  "root_meta_passive_pin": {
+    "bytes": 2318,
+    "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c/META",
+    "provenance": "Root passive observation via /root/ticket28 on 2026-10-16 ET; query unexecuted",
+    "sha256": "1d41605b5220bc71779ffac319ff9b06950245f5eab9f61894e865ddd9658002"
+  },
+  "source_files": {
+    "linux-entry-source-v2.json": {
+      "bytes": 663,
+      "sha256": "3b511506e4c49dd6c447278433c0d6985c909337fd7c1908cd70b6bc159f377b"
+    },
+    "linux_trace_command_template_v2.json": {
+      "bytes": 2505,
+      "sha256": "494bfbd176caaf865b22617bfa29f616a6664deadd886c62ce110f2f01f92386"
+    },
+    "linux_trace_entry_v2.py": {
+      "bytes": 35681,
+      "sha256": "d319185131bd708c57229fe16e269da6e6298d1afba3c057a8fcc0f89aa43c93"
+    },
+    "linux_trace_main_v2.py.inc": {
+      "bytes": 22655,
+      "sha256": "1f7e1373cb203aaa9ceab9a5a02e92d5dc9075319651aa697512ee3928e40864"
+    },
+    "linux_trace_plan_v2.md": {
+      "bytes": 3888,
+      "sha256": "7af7891fc9c0b13c170389a947fce75e489b494189af3187c4f0905089f4b4fb"
+    },
+    "linux_trace_policy_template_v2.json": {
+      "bytes": 13510,
+      "sha256": "449df3c01be847e2137db28252e892b86ce6bd91bb2aa916ad5579c972762264"
+    },
+    "prepare_linux_entry_v2.py": {
+      "bytes": 2181,
+      "sha256": "2b0b3c0dc79c1a10de60fd387a821f2482e156d4da6a4b1b5077f164bfdae9cb"
+    },
+    "pure-linux-packet-v2.log": {
+      "bytes": 1208,
+      "sha256": "2d0ae01f2ea119d7572a16d6f8fc2124b9b91aed5f629d9204d48d89239abb91"
+    },
+    "pure-python-startup-roles-v2.log": {
+      "bytes": 993,
+      "sha256": "90c2a3bd893a7c8075b09f1d1e293459633d1416d0fc81fd9dcf2897b5b3eb63"
+    },
+    "python-physical-metadata-v2.json": {
+      "bytes": 9416,
+      "sha256": "9d90835f12dfb89a43ac0e0661681159ec8ab563e9cf664548162a7357299eda"
+    },
+    "python_role_observer_v2.py": {
+      "bytes": 2709,
+      "sha256": "9b100cbe2fdef3e7d429ccdf05d6489d44855a84328e2dd8532eb547beeaf43b"
+    },
+    "python_startup_roles_plan_template_v2.json": {
+      "bytes": 3452,
+      "sha256": "d1e84b1472e215bef6c0f365c96a251920223a80778a633467fb4c1feb522460"
+    },
+    "python_startup_roles_v2.py": {
+      "bytes": 9610,
+      "sha256": "5e9d2e6dfa2aaa7999f4670a979d3cc32736b852a612f77d4e2f7c71bc229618"
+    },
+    "test_linux_packet_v2.py": {
+      "bytes": 13761,
+      "sha256": "7c0191a3d35fc6aeb9118946f7fd1230bbb88c63a2491cc50f0cbcd566d435cc"
+    },
+    "test_python_startup_roles_v2.py": {
+      "bytes": 8311,
+      "sha256": "37b68bf16be733aca44d78cc170c06deddc009da911291da3a1d223e90ce0c18"
+    },
+    "trace_pytest_child_v2.py": {
+      "bytes": 5478,
+      "sha256": "e3957b2f358b7e446a6a61e80d3d761539e14a9fd1fae5323c2abfd7937f3493"
+    }
+  },
+  "source_total_bytes": 136021,
+  "status": "SOURCE_READY_FOR_ROOT_CONTROLLER_REVIEW; INERT unadmitted templates; actual runtime/tests unknown"
+}

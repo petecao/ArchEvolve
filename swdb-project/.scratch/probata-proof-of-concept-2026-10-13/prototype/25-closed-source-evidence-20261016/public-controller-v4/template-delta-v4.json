@@ -1,0 +1,303 @@
+{
+  "added_functions": [
+    "progress_records",
+    "transient_lock_missing"
+  ],
+  "changed_functions": [
+    "main",
+    "policy_gate",
+    "raw_extent"
+  ],
+  "child": {
+    "bytes": 29296,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v4/entry_template.py",
+    "sha256": "c152d780c9d6dd3f96340c0df5cd6323e9c8f3114d21e8471861e0928182f44a"
+  },
+  "date": "2026-10-16 ET",
+  "line_edits": [
+    {
+      "new_lines": [
+        "    need(expected[\"source_files\"][\"swdb/verifier_lock.py\"] == LOCK_SOURCE_SHA256\n",
+        "         and expected[\"transient_lock_policy\"] == {\n",
+        "             \"lock_relative\": str(LOCK_RELATIVE), \"source_sha256\": LOCK_SOURCE_SHA256,\n",
+        "             \"active_poll_only\": True, \"settled_missing_entries_refused\": True,\n",
+        "             \"queue_ticket_pattern\": \"[0-9]{20}-[1-9][0-9]*\",\n",
+        "             \"slots\": 1, \"nested\": False}, \"exact source-derived transient lock protocol differs\")\n"
+      ],
+      "new_range": [
+        58,
+        64
+      ],
+      "old_lines": [],
+      "old_range": [
+        58,
+        58
+      ]
+    },
+    {
+      "new_lines": [
+        "LOCK_RELATIVE = Path(\"closed-source-profile/verifier.lock\")\n",
+        "LOCK_SOURCE_SHA256 = \"35329946b838d80edd842d235ad477b6727d08eeebd66f28a0adc47ecb8bbeb8\"\n",
+        "\n",
+        "\n",
+        "def transient_lock_missing(raw, path, physical_directories):\n",
+        "    \"\"\"Only the checked one-slot lock protocol may remove these exact entries.\"\"\"\n",
+        "    lock = raw / LOCK_RELATIVE\n",
+        "    queue = lock.with_name(\"verifier.queue\")\n",
+        "    profile = lock.parent\n",
+        "    if not (path == lock or path == lock / \"owner\" or\n",
+        "            (path.parent == queue and re.fullmatch(r\"[0-9]{20}-[1-9][0-9]*\", path.name))):\n",
+        "        return False\n",
+        "    if path.parent not in physical_directories:\n",
+        "        return False\n",
+        "    # The immutable profile ancestor must still be physical. A removed owner\n",
+        "    # may have a now-absent lock parent that this same walk already saw as a\n",
+        "    # physical directory; no arbitrary parent resolution or links are admitted.\n",
+        "    return (stat.S_ISDIR(profile.lstat().st_mode)\n",
+        "            and profile.resolve(strict=True) == profile)\n",
+        "\n",
+        "\n",
+        "def raw_extent(raw, *, require_aliases=False, reserve=None, active_poll=False):\n"
+      ],
+      "new_range": [
+        100,
+        122
+      ],
+      "old_lines": [
+        "def raw_extent(raw, *, require_aliases=False, reserve=None):\n"
+      ],
+      "old_range": [
+        94,
+        95
+      ]
+    },
+    {
+      "new_lines": [
+        "    need(not (active_poll and require_aliases), \"settled census cannot tolerate active lock races\")\n",
+        "    pending, physical_directories, vanished = [raw], {raw}, []\n"
+      ],
+      "new_range": [
+        127,
+        129
+      ],
+      "old_lines": [
+        "    pending = [raw]\n"
+      ],
+      "old_range": [
+        100,
+        101
+      ]
+    },
+    {
+      "new_lines": [
+        "        try:\n",
+        "            entries = os.scandir(parent)\n",
+        "        except FileNotFoundError:\n",
+        "            if not active_poll or not transient_lock_missing(raw, parent, physical_directories):\n",
+        "                raise\n",
+        "            vanished.append(str(parent.relative_to(raw)))\n",
+        "            continue\n",
+        "        with entries:\n"
+      ],
+      "new_range": [
+        131,
+        139
+      ],
+      "old_lines": [
+        "        with os.scandir(parent) as entries:\n"
+      ],
+      "old_range": [
+        103,
+        104
+      ]
+    },
+    {
+      "new_lines": [
+        "                try:\n",
+        "                    observed = item.stat(follow_symlinks=False)\n",
+        "                except FileNotFoundError:\n",
+        "                    if not active_poll or not transient_lock_missing(raw, path, physical_directories):\n",
+        "                        raise\n",
+        "                    vanished.append(str(path.relative_to(raw)))\n",
+        "                    continue\n"
+      ],
+      "new_range": [
+        141,
+        148
+      ],
+      "old_lines": [
+        "                observed = item.stat(follow_symlinks=False)\n"
+      ],
+      "old_range": [
+        106,
+        107
+      ]
+    },
+    {
+      "new_lines": [
+        "                    physical_directories.add(path)\n"
+      ],
+      "new_range": [
+        170,
+        171
+      ],
+      "old_lines": [],
+      "old_range": [
+        129,
+        129
+      ]
+    },
+    {
+      "new_lines": [
+        "        lock = raw / LOCK_RELATIVE\n",
+        "        queue = lock.with_name(\"verifier.queue\")\n",
+        "        need(not os.path.lexists(lock), \"completed public workflow retains an active verifier lock\")\n",
+        "        need(not os.path.lexists(queue) or not list(queue.iterdir()), \"completed public workflow retains queued verifier work\")\n"
+      ],
+      "new_range": [
+        179,
+        183
+      ],
+      "old_lines": [],
+      "old_range": [
+        137,
+        137
+      ]
+    },
+    {
+      "new_lines": [
+        "    return {\"bytes\": total, \"regular_files\": regular_files, \"aliases\": aliases,\n",
+        "            \"transient_lock_disappearances\": sorted(vanished)}\n"
+      ],
+      "new_range": [
+        191,
+        193
+      ],
+      "old_lines": [
+        "    return {\"bytes\": total, \"regular_files\": regular_files, \"aliases\": aliases}\n"
+      ],
+      "old_range": [
+        145,
+        146
+      ]
+    },
+    {
+      "new_lines": [
+        "\n",
+        "\n",
+        "def progress_records(base):\n",
+        "    \"\"\"One physical five-directory census per poll, independent of file order.\"\"\"\n",
+        "    result = []\n",
+        "    for index in range(len(CASE_IDS)):\n",
+        "        path = base / (CASE_PREFIX + str(index)) / \"retained-public-record.json\"\n",
+        "        try:\n",
+        "            record = json.loads(path.read_bytes())\n",
+        "        except (OSError, ValueError):\n",
+        "            continue\n",
+        "        result.append((record[\"id\"], record[\"verdict\"]))\n",
+        "    return sorted(result)\n"
+      ],
+      "new_range": [
+        194,
+        207
+      ],
+      "old_lines": [],
+      "old_range": [
+        147,
+        147
+      ]
+    },
+    {
+      "new_lines": [
+        "    transient_lock_races = {}\n"
+      ],
+      "new_range": [
+        428,
+        429
+      ],
+      "old_lines": [],
+      "old_range": [
+        368,
+        368
+      ]
+    },
+    {
+      "new_lines": [
+        "                    extent = raw_extent(output, active_poll=True)\n",
+        "                    for relative in extent[\"transient_lock_disappearances\"]:\n",
+        "                        transient_lock_races[relative] = transient_lock_races.get(relative, 0) + 1\n",
+        "                    need(len(transient_lock_races) <= 64, \"too many distinct transient verifier lock entries\")\n",
+        "                    state = progress_records(profile / \"pytest\")\n",
+        "                    if state != seen:\n",
+        "                        progress.write(json.dumps({\"records\": len(state), \"observed\": state}, sort_keys=True) + \"\\n\")\n",
+        "                        progress.flush(); os.fsync(progress.fileno()); seen = state\n"
+      ],
+      "new_range": [
+        438,
+        446
+      ],
+      "old_lines": [
+        "                    raw_extent(output)\n",
+        "                    for path in (profile / \"pytest\").rglob(\"retained-public-record.json\"):\n",
+        "                        try:\n",
+        "                            rows = [json.loads(path.read_bytes())]\n",
+        "                        except (OSError, ValueError):\n",
+        "                            continue\n",
+        "                        state = [(row[\"id\"], row[\"verdict\"]) for row in rows]\n",
+        "                        if state != seen:\n",
+        "                            progress.write(json.dumps({\"records\": len(rows), \"observed\": state}, sort_keys=True) + \"\\n\")\n",
+        "                            progress.flush(); os.fsync(progress.fileno()); seen = state\n"
+      ],
+      "old_range": [
+        377,
+        387
+      ]
+    },
+    {
+      "new_lines": [
+        "        save(output / \"closed-transient-lock-races.json\", {\"active_poll_only\": True,\n",
+        "             \"source_sha256\": LOCK_SOURCE_SHA256, \"disappearances\": transient_lock_races,\n",
+        "             \"settled_census_is_strict\": True})\n"
+      ],
+      "new_range": [
+        466,
+        469
+      ],
+      "old_lines": [],
+      "old_range": [
+        407,
+        407
+      ]
+    }
+  ],
+  "native_or_solver_executed": false,
+  "parent": {
+    "bytes": 25997,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-controller-v3/entry_template.py",
+    "sha256": "b443f44c4729daefa70c55bcfa62da92bf7949e88f7eea838009e98f66e14536"
+  },
+  "preserved_failure": {
+    "completed_physical_records": 3,
+    "no_complete_cold_acceptance": true,
+    "raw": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-1433b8f5-t25-closed-source-public-v3",
+    "status": "INCOMPLETE_REFUSED"
+  },
+  "scientific_record_gates_unchanged": true,
+  "source_lifecycle": {
+    "bytes": 6049,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/verifier_lock.py",
+    "sha256": "35329946b838d80edd842d235ad477b6727d08eeebd66f28a0adc47ecb8bbeb8"
+  },
+  "unchanged_functions": [
+    "check_records",
+    "final_payload",
+    "finalize_result",
+    "junit_census",
+    "need",
+    "pytest_alias_policy",
+    "pytest_source_check",
+    "save",
+    "sha",
+    "stop_tree"
+  ]
+}

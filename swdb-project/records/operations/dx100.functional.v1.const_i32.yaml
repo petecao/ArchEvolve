@@ -1,0 +1,67 @@
+kind: operation
+schema_version: '0.4'
+id: dx100.functional.v1.const_i32
+status: draft
+created: '2026-10-06'
+updated: '2026-10-06'
+provenance:
+- id: functional-source
+  kind: source_code
+  description: Fresh functional-source/configuration identity; no output, calibration,
+    build-readiness or performance evidence imported.
+  uri: https://github.com/arkhadem/DX100/tree/e4fc4afdf894f295442cef3604667a469fab8e62
+name: __dxc_const_i32
+interface:
+  id: dx100-functional-source
+  version: 1.0-e4fc4af
+model:
+  id: dx100-source-configuration
+  revision: e4fc4afdf894f295442cef3604667a469fab8e62
+backend: functional-source
+support: source_supported
+signature: void __dxc_const_i32(int32_t value,int reg)
+types:
+- declared wrapper operands
+memory_effects: No application-memory load/store; private functional state and control
+  only.
+masks: Normalized wrapper has no condition-mask operand.
+repeated_indices: Not a scatter or atomic application-memory update.
+ordering: Preserve normalized caller order and waits; no physical scheduling or cross-worker
+  ordering is established.
+completion: Functional-source semantics only; target completion latency and overlap
+  remain unknown.
+resources:
+  tiles: 0
+  scalar_registers: 1
+  allocation: Declared operand slots per wrapper; source sharing and runtime lifetimes
+    are counted separately.
+build:
+  headers:
+  - library/dx100/dxc_lowering.hpp
+  - benchmarks/API/MAA_functional.hpp
+  defines:
+  - FUNC
+  dependencies:
+  - Pinned functional API source at e4fc4afdf894f295442cef3604667a469fab8e62
+  - OpenMP runtime for the functional execution
+semantics:
+  reads_application_memory:
+    state: supported
+    value: false
+    basis: code_reading
+    description: Shipped wrapper delegates to the selected functional source; private
+      emulator work is not CPU target work.
+declaration_evidence:
+- uri: project-file:library/dx100/dxc_lowering.hpp
+  path: library/dx100/dxc_lowering.hpp
+  sha256: 7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c
+  lines:
+  - 39
+  - 39
+implementation_evidence:
+- uri: https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/benchmarks/API/MAA_functional.hpp
+  path: benchmarks/API/MAA_functional.hpp
+  sha256: ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc
+  lines:
+  - 1
+  - 774

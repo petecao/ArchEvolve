@@ -1,0 +1,15 @@
+{
+  "rows": [
+    {
+      "test": "test_closed_move_binds_all59_exact_conditional_targets_without_source_admission",
+      "passed": false,
+      "error": "all three retained solver-family task contexts required",
+      "traceback": "Traceback (most recent call last):\n  File \"<stdin>\", line 13, in <module>\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_owned_move_binding.py\", line 16, in test_closed_move_binds_all59_exact_conditional_targets_without_source_admission\n    result, files = packets.mathematical_dependencies(BASE, MOVE)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_owned_move_binding.py\", line 177, in mathematical_dependencies\n    _need(len(selected) == 3, 'all three retained solver-family task contexts required')\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/vector_owned_move_binding.py\", line 38, in _need\n    raise Refused(reason)\nswdb.vector_owned_move_binding.Refused: all three retained solver-family task contexts required\n"
+    },
+    {
+      "test": "test_move_binding_rejects_changed_missing_extra_or_redirected_scientific_evidence",
+      "passed": true
+    }
+  ],
+  "external_attempts": []
+}

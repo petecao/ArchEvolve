@@ -1,0 +1,96 @@
+{
+  "MemAvailable_before": 126007164928,
+  "accepted_original_pin": {
+    "bytes": 115510,
+    "path": "/data1/yanruj/lanl17-actual-template-author-source-20261008-a5-r1/actual-accepted-pins-20261009-a5-a1/accepted-pins.json",
+    "sha256": "c808f38d20a1a607df17d5d04c0dce4d31ac87a564fcae1a2fab9653f098d240",
+    "stat": {
+      "ctime_ns": 1791577292525948167,
+      "dev": 2097,
+      "gid": 114316761,
+      "ino": 59513038,
+      "mode": 33152,
+      "mtime_ns": 1791577292525948167,
+      "nlink": 1,
+      "size": 115510,
+      "uid": 114316761
+    }
+  },
+  "auditor_or_original_input_modified": false,
+  "auditor_original_pin": {
+    "bytes": 115130,
+    "path": "/data1/yanruj/lanl17-custody-source-20261007-a3/auditor.py",
+    "sha256": "6a91ed1015bcc1caa771348e8bd1f591254ba130e55570ed18bc8121d67a06da",
+    "stat": {
+      "ctime_ns": 1791384841582450771,
+      "dev": 2097,
+      "gid": 114316761,
+      "ino": 55712668,
+      "mode": 33152,
+      "mtime_ns": 1791384841582450771,
+      "nlink": 1,
+      "size": 115130,
+      "uid": 114316761
+    }
+  },
+  "bounded_argv": [
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=60s",
+    "300s",
+    "/usr/bin/python3.12",
+    "-B",
+    "/data1/yanruj/lanl17-custody-source-20261007-a3/auditor.py",
+    "--repository",
+    "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5",
+    "--accepted-pins",
+    "/data1/yanruj/lanl17-actual-template-author-source-20261008-a5-r1/actual-accepted-pins-20261009-a5-a1/accepted-pins.json",
+    "--accepted-pins-sha256",
+    "c808f38d20a1a607df17d5d04c0dce4d31ac87a564fcae1a2fab9653f098d240"
+  ],
+  "capture_success_is_not_audit_success": true,
+  "ended_utc": "2026-10-09T20:30:47.053087+00:00",
+  "format": "swdb.lanl17-original-strict-audit-administrative-capture.v1",
+  "free_bytes_before": {
+    "/data": 103613100032,
+    "/data1": 24695644160
+  },
+  "load_after": [
+    1.4443359375,
+    1.11181640625,
+    1.0322265625
+  ],
+  "load_before": [
+    1.0166015625,
+    1.0146484375,
+    1.0
+  ],
+  "original_auditor_argv": [
+    "/usr/bin/python3.12",
+    "-B",
+    "/data1/yanruj/lanl17-custody-source-20261007-a3/auditor.py",
+    "--repository",
+    "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5",
+    "--accepted-pins",
+    "/data1/yanruj/lanl17-actual-template-author-source-20261008-a5-r1/actual-accepted-pins-20261009-a5-a1/accepted-pins.json",
+    "--accepted-pins-sha256",
+    "c808f38d20a1a607df17d5d04c0dce4d31ac87a564fcae1a2fab9653f098d240"
+  ],
+  "original_auditor_exit_code": 3,
+  "original_stderr_pin": {
+    "bytes": 0,
+    "path": "/data1/yanruj/lanl17-actual-template-author-source-20261008-a5-r1/actual-strict-audit-capture-20261009-a5-a1/audit-original.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "original_stdout_pin": {
+    "bytes": 110,
+    "path": "/data1/yanruj/lanl17-actual-template-author-source-20261008-a5-r1/actual-strict-audit-capture-20261009-a5-a1/audit-original.json",
+    "sha256": "55f422a431174bd566d62b41da9eb0915f51d727f8a8fd3b1e8ed65d0cefa0f7"
+  },
+  "output_directory_created_before_original_auditor": true,
+  "repository_HEAD_R_clean_before_after": true,
+  "scientific_admission_inferred": false,
+  "started_utc": "2026-10-09T20:30:26.433129+00:00",
+  "stream_bound_enforced_by_kernel_RLIMIT_FSIZE": true,
+  "stream_capture_bound_bytes": 8388608
+}

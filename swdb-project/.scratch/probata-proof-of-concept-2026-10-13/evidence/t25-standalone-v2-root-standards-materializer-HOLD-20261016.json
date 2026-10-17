@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-16 ET",
+  "classification": "HOLD_BEFORE_MATERIALIZATION",
+  "materializer": {
+    "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/standalone-v2/materialize.py",
+    "sha256": "0ad561812278ef0687cf8a66f0c2db87ec7ba853b847b230108adce7a5ee2adf"
+  },
+  "finding": "Git ls-tree pathspec is relative to nested working directory; repository-root paths require --full-tree. Existing materializer selects zero paths and refuses.",
+  "actual_readonly_reproductions": [
+    {
+      "argv": [
+        "git",
+        "-C",
+        "swdb-project",
+        "ls-tree",
+        "-r",
+        "--name-only",
+        "HEAD",
+        "--",
+        "swdb-project/swdb"
+      ],
+      "exit": 0,
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "selected_paths": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "swdb-project",
+        "ls-tree",
+        "--full-tree",
+        "-r",
+        "--name-only",
+        "HEAD",
+        "--",
+        "swdb-project/swdb"
+      ],
+      "exit": 0,
+      "stdout_bytes": 16582,
+      "stdout_sha256": "32595f31e4e96a74b50f881566cdb04cefe24af3936882ac3bbb11c791057a71",
+      "selected_paths": 384,
+      "stderr": ""
+    }
+  ],
+  "compiler_native_verifier_or_source_materialization": false,
+  "entry_otherwise_full_read": true,
+  "repair_requested": "Narrow successor materializer with --full-tree and real nested-cwd metadata regression; frozen V2 unchanged."
+}

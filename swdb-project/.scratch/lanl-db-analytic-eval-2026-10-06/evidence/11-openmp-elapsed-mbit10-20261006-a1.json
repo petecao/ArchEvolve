@@ -1,0 +1,68 @@
+{
+  "format": "swdb.independent-service-compact-receipt.v1",
+  "updated": "2026-10-06 ET",
+  "kind": "openmp",
+  "phase": "elapsed",
+  "source_commit": "1703c98717ff303fdaa83b8044ac9b4060fedb78",
+  "source_clean": true,
+  "raw_directory": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-openmp-elapsed-20261006-a1",
+  "raw_transferred": false,
+  "lane": {
+    "aligned_cell_age_s": "",
+    "aligned_to": "no_gapbs_batch_running",
+    "command": [
+      "python3",
+      "/data/yanruj/EvolveSWDB_runs/lanl-analytic-openmp-elapsed-20261006-a1/runner.py"
+    ],
+    "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+    "ended_utc": "2026-10-07T02:48:33Z",
+    "exit_code": 0,
+    "host": "mbit10",
+    "job": "swdb-lanl-openmp-elapsed-20261006-a1",
+    "lease_generation": 494,
+    "lease_name": "mbit10-evaluation-node0",
+    "load1_at_start": 1.55,
+    "load1_max": 32,
+    "node": 0,
+    "numa_memory_policy": "bind:0",
+    "numactl": "--cpunodebind=0 --membind=0",
+    "preregistration_sha256": null,
+    "started_utc": "2026-10-07T02:38:28Z"
+  },
+  "new_records": [
+    {
+      "id": "mbit10.cpu.lanl20261006.service.openmp.a1",
+      "kind": "cpu_service_calibration",
+      "path": "cpu_service_calibrations/mbit10.cpu.lanl20261006.service.openmp.a1.yaml",
+      "sha256": "ced0d3ee5501e26532eca3682e1d041642cf4f211a114cd4409dd9839c79c067",
+      "identity_sha256": "80b7a554e97b1d61f25a28066d9fcbc12e7bd7e88dde7d6bab1200b8b15f67e7",
+      "file_sha256": "5a42507a23ef57642a4864f06f79dbafcf8def6fafa0a5aebe56fd5312ff1a32",
+      "bytes": 1409442,
+      "service_cells": 22,
+      "evidence_kind": "native"
+    }
+  ],
+  "preregistration_sha256": "fb46311993a5d0c37f95bfb2add1637d93d06f7fbba49a679de72cf76a623469",
+  "validation": "OK: 630 record(s) valid",
+  "completed_utc": "2026-10-07T02:48:33.799491+00:00",
+  "prior_record_bytes_preserved": true,
+  "scope": "Exact independent service construction; no application accuracy or physical latency claim.",
+  "receipt": {
+    "identity_sha256": "f72400c4649f18866b809d085e5c49ded07b5713f5faf6199e9891512ed0381d",
+    "file_sha256": "4de0fb766dafdafe94f90e5458e33a4afd153f752747b880b7ec61a32b0b42b2",
+    "bytes": 2218202,
+    "service_cells": 22,
+    "settings": {
+      "group": "openmp_v1",
+      "repetitions": 7,
+      "min_trial_s": 0.05,
+      "max_wall_s": 900.0,
+      "event_cap": 16777216,
+      "count_build_cap_bytes": 67108864,
+      "timed_data_cap_bytes": 26214400,
+      "requested_helper_payload_cap_bytes": 4096
+    },
+    "context_sha256": "50b05dc9ee767fa75ffe6a98164056ccbfafe93a3240ec24044402b13486f8eb"
+  },
+  "identity_sha256": "b64a9858a335dfc237f8a31dd315249d9c16781a75a4cee345baeff0cddee5af"
+}

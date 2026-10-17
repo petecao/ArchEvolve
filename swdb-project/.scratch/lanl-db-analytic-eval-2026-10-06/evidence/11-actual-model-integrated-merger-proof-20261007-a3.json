@@ -1,0 +1,135 @@
+{
+  "format": "swdb.lanl11-actual-model-integrated-merger-proof.v1",
+  "updated": "2026-10-07 ET",
+  "integration_base": "99997aaad0b5f05a6b42f4833af48e38889c60b3",
+  "incoming_model_export": "887d9bfd319a08df20d6f6cf3571bde8db71406c",
+  "incoming_parent_source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "ordinary_merge_tree": "caa09392c6b6bcbc8a019941c17964d1c46f6e5a",
+  "prior_tracked_blobs": 3580,
+  "all_prior_blobs_preserved": true,
+  "prior_blob_map_sha256": "df381c7fbe540f06ddd58501fe6ad5a6c853da04099c7562e6dd421f0fa22dc2",
+  "exact_eight_added_paths": [
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-cpu-model-mbit10-20261006-a3.json",
+    "swdb-project/records/estimates/lanl.cpu.bc.g16.t1.estimate.v1.yaml",
+    "swdb-project/records/estimates/lanl.cpu.bc.g17.t1.estimate.v1.yaml",
+    "swdb-project/records/estimates/lanl.cpu.bfs.g16.t1.estimate.v1.yaml",
+    "swdb-project/records/estimates/lanl.cpu.bfs.g17.t1.estimate.v1.yaml",
+    "swdb-project/records/protocols/lanl.cpu.bc.t1.native-model.v1.35eaffdaadffeea0.yaml",
+    "swdb-project/records/protocols/lanl.cpu.bfs.t1.native-model.v1.c74c7a1046e0e5f1.yaml",
+    "swdb-project/records/target_descriptions/mbit10.cpu.lanl20261006.t1.services.v1.yaml"
+  ],
+  "incoming_parent_all_blobs_preserved": true,
+  "new_canonical_pins": [
+    {
+      "id": "lanl.cpu.bc.g16.t1.estimate.v1",
+      "kind": "estimate",
+      "path": "estimates/lanl.cpu.bc.g16.t1.estimate.v1.yaml",
+      "sha256": "adb4a93491f6dab2d6f85935ec36830e5ac135f65cec32663224dd36b206b749",
+      "file_sha256": "896b4edeb91917cec165401419192ab3851b32818f567cbb438fc231a8de1bb8",
+      "bytes": 70540153,
+      "repository_path": "swdb-project/records/estimates/lanl.cpu.bc.g16.t1.estimate.v1.yaml"
+    },
+    {
+      "id": "lanl.cpu.bc.g17.t1.estimate.v1",
+      "kind": "estimate",
+      "path": "estimates/lanl.cpu.bc.g17.t1.estimate.v1.yaml",
+      "sha256": "9f3c912fbb00e9746acd420da69e03be189a813aca879ddf8a1d6e4db762907a",
+      "file_sha256": "8881f27316ab856e15c7ce099a32855021f897283158d016aff7dfb42a39da76",
+      "bytes": 70599282,
+      "repository_path": "swdb-project/records/estimates/lanl.cpu.bc.g17.t1.estimate.v1.yaml"
+    },
+    {
+      "id": "lanl.cpu.bfs.g16.t1.estimate.v1",
+      "kind": "estimate",
+      "path": "estimates/lanl.cpu.bfs.g16.t1.estimate.v1.yaml",
+      "sha256": "91141811b3bf23102552104b85a64663803201fcd29e3c412fb2f36f3c783407",
+      "file_sha256": "dc4035f1a48302f13ae0e22ad29865b2ade2aa43ba42f924e9252c1cb0ae9269",
+      "bytes": 53583441,
+      "repository_path": "swdb-project/records/estimates/lanl.cpu.bfs.g16.t1.estimate.v1.yaml"
+    },
+    {
+      "id": "lanl.cpu.bfs.g17.t1.estimate.v1",
+      "kind": "estimate",
+      "path": "estimates/lanl.cpu.bfs.g17.t1.estimate.v1.yaml",
+      "sha256": "0e915796ee04ac829f2d97b382c12923a00a0a75d85b612175a961d13ab50328",
+      "file_sha256": "ee39a6d578cf38cb0cd1d86caaa9e9d6135ba3b0179e3060a40732bf318a159e",
+      "bytes": 53717401,
+      "repository_path": "swdb-project/records/estimates/lanl.cpu.bfs.g17.t1.estimate.v1.yaml"
+    },
+    {
+      "id": "lanl.cpu.bc.t1.native-model.v1.35eaffdaadffeea0",
+      "kind": "protocol",
+      "path": "protocols/lanl.cpu.bc.t1.native-model.v1.35eaffdaadffeea0.yaml",
+      "sha256": "26462e09eec81c71c63c2ea3d080e9c6ab760b53756c3abcacabc3fe127964ed",
+      "file_sha256": "4140edcbc930859ea7f05f78772c29e3cc752632c9d44aaeae57ed8201da3f33",
+      "bytes": 692249,
+      "repository_path": "swdb-project/records/protocols/lanl.cpu.bc.t1.native-model.v1.35eaffdaadffeea0.yaml"
+    },
+    {
+      "id": "lanl.cpu.bfs.t1.native-model.v1.c74c7a1046e0e5f1",
+      "kind": "protocol",
+      "path": "protocols/lanl.cpu.bfs.t1.native-model.v1.c74c7a1046e0e5f1.yaml",
+      "sha256": "e5058d50462a65ede57fdbf219273df46d884fa5d507f4ee84edafbe5734b58a",
+      "file_sha256": "ff538076ca2048c03672e7dcd1a7046895bed05b41be05979ec3e7493f8f4d5b",
+      "bytes": 692147,
+      "repository_path": "swdb-project/records/protocols/lanl.cpu.bfs.t1.native-model.v1.c74c7a1046e0e5f1.yaml"
+    },
+    {
+      "id": "mbit10.cpu.lanl20261006.t1.services.v1",
+      "kind": "target_description",
+      "path": "target_descriptions/mbit10.cpu.lanl20261006.t1.services.v1.yaml",
+      "sha256": "9fec46b1ab4c8ac2e8e501e61cf137c075ec40b6eef128a247cf28dd54fca76b",
+      "file_sha256": "cee03869aa2ab624d0eb1ef54b8807603d2a222d749113c7d65d847549c45c6d",
+      "bytes": 597632,
+      "repository_path": "swdb-project/records/target_descriptions/mbit10.cpu.lanl20261006.t1.services.v1.yaml"
+    }
+  ],
+  "actual_receipt_file_sha256": "7d268358c581a0c7f52aa4f29acc629c3d067c41d2c49f8e8dec9179b5035bea",
+  "actual_receipt_identity_sha256": "ea12a575bf4c70cf77dbc436f1f1df17b54b03cfc944f11627424b1c45521fec",
+  "sealed_receipt_objects": [
+    {
+      "path": "receipt",
+      "identity_sha256": "ea12a575bf4c70cf77dbc436f1f1df17b54b03cfc944f11627424b1c45521fec"
+    },
+    {
+      "path": "receipt.acceptance",
+      "identity_sha256": "eccdcfca3b0e5d41fcd95c5e73db63c716bfe9cb79bc319bf2ae51979af3bf1a"
+    },
+    {
+      "path": "receipt.failure_custody",
+      "identity_sha256": "f12b499ff1a82dc31e5b03411ee90458ba12411c11dece9b066420be0b30f0a7"
+    },
+    {
+      "path": "receipt.original_a1_failure_custody",
+      "identity_sha256": "8ddb9825fb7ccefff7088ea550af290379f8ea48744065b9d156196b7947db5a"
+    }
+  ],
+  "old_canonical_yaml": 665,
+  "new_canonical_yaml": 7,
+  "result_canonical_yaml": 672,
+  "old_canonical_blob_map_sha256": "81558bb11dad9732ba79d35c9b0f520efcc0a51c07953ba64bbf9149d2023629",
+  "library_tracked_blobs": 147,
+  "library_blob_map_sha256": "09065cfec7bac71b6c5e518c28887c87a2d75693b41a2f7c4c79819dc40056fe",
+  "root_tracked_blobs": 450,
+  "root_blob_map_sha256": "87ea7cee17918f3ad081af2ff1c3ae4633ed2a253ee1f0735d82ee86585a18ef",
+  "python_modules": 185,
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "target_description_semantic_sha256": "9fec46b1ab4c8ac2e8e501e61cf137c075ec40b6eef128a247cf28dd54fca76b",
+  "actual_model_validation_reused": "OK: 672 record(s) valid",
+  "actual_model_cli_phases_reused": true,
+  "native_application_outcomes_collected": false,
+  "model_only": true,
+  "no_source_control_observer_protocol_template_helper_change": true,
+  "no_progress_map_issue_root_change": true,
+  "no_full_store_or_repeated_test_execution": true,
+  "no_ssh": true,
+  "scope": "Exact model-only forecasts/protocol/target and actual processing receipt custody. CPU/native accuracy band, timing, generality and D30 admission remain separate.",
+  "retained_premerge_check_identity_sha256": "3dee5bdea0e254e48949d6501b813314a0c272ec481f6761cff96052ad772109",
+  "ordinary_merge_commit": "d7f5f9489d26aa8cbf670d741cad3d10d430b938",
+  "ordinary_merge_parents": [
+    "99997aaad0b5f05a6b42f4833af48e38889c60b3",
+    "887d9bfd319a08df20d6f6cf3571bde8db71406c"
+  ],
+  "proof_publication": "One additive custody proof after ordinary merge; all prior blobs remain exact.",
+  "identity_sha256": "2174927a7d2f411bf3a79016b550ca24f616d85f2f040e7b04d6e05fddfd3287"
+}

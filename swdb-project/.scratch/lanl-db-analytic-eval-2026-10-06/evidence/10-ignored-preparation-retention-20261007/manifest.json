@@ -1,0 +1,65 @@
+{
+  "format": "swdb.ignored-preparation-retention.v1",
+  "created_utc": "2026-10-07T11:14:17.517491+00:00",
+  "base_integration_commit": "f35cf2760d936a3e72dd230672a6be0ca7341894",
+  "owned_branch": "codex/lanl-ticket17",
+  "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "entries": [
+    {
+      "path": "ticket10-compatible-preparation-receipt-a1.json",
+      "source_path": "/Users/yanrujhou/.codex/worktrees/lanl-ticket10/ArchEvolve/swdb-project/build/ticket10-compatible-preparation-receipt-a1.json",
+      "retained_copy_source_path": "/private/tmp/lanl-owned-worktree-ignored-retention-20261007/lanl-ticket10/build/ticket10-compatible-preparation-receipt-a1.json",
+      "bytes": 12643,
+      "sha256": "4a0a53660222552a9e164114a5e09d5471a6ff0e135be310ba23dad4116aa16e",
+      "state": "prepared",
+      "provider_launched": false,
+      "custody": "exact original bytes"
+    },
+    {
+      "path": "ticket10-compatible-preparation-a1/plan.json",
+      "source_path": "/Users/yanrujhou/.codex/worktrees/lanl-ticket10/ArchEvolve/swdb-project/build/ticket10-compatible-preparation-a1/plan.json",
+      "retained_copy_source_path": "/private/tmp/lanl-owned-worktree-ignored-retention-20261007/lanl-ticket10/build/ticket10-compatible-preparation-a1/plan.json",
+      "bytes": 12642,
+      "sha256": "141190de4102be58bd86fd905d2af3c1f4ff563f5c48f41984da3f1c513d6404",
+      "state": "prepared",
+      "provider_launched": false,
+      "custody": "exact original bytes"
+    },
+    {
+      "path": "original-unsealed-inventory.json",
+      "source_path": "/private/tmp/lanl-owned-worktree-ignored-retention-20261007/lanl-ticket10/build/manifest.json",
+      "bytes": 1005,
+      "sha256": "98acc7de07ab4ce3d68e56c179a2d11054a6641c7d0241772e46a7b4a6c1e339",
+      "original_seal": "absent",
+      "canonical_document_sha256": "52bd132e13fe1dfd94152b6fe540a1a51618db02fe7f792abb6ea78f077d3e0a",
+      "custody": "exact original unsealed inventory bytes"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1995,
+      "sha256": "567f44f42b36f14107111ccc38b0d46467988f57e7f0505bcb23b10b29af9c91",
+      "custody": "dated retention context"
+    }
+  ],
+  "original_ignored_sources_and_retained_copies_unchanged": true,
+  "historical_actual_postfill_reference": {
+    "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/10-estimation-role-postfill-custody-mbit10-20261006-a2.json",
+    "file_sha256": "371fd88f9aad6a889ee37fa28d93cf5ef1365f2249f07294be16be9defd7d24d",
+    "preparation_receipt_sha256": "4a0a53660222552a9e164114a5e09d5471a6ff0e135be310ba23dad4116aa16e",
+    "matching_document_paths": [
+      [
+        "preserved_artifact_sha256s",
+        "prepare.stdout"
+      ]
+    ],
+    "scope": "Existing historical actual success pin; local retained preparation remains unlaunched"
+  },
+  "state": "retention only; historical preparations unchanged",
+  "provider_launched": false,
+  "new_run_or_acceptance": false,
+  "worktree_archive_or_cleanup_executed": false,
+  "tests_Store_native_provider_or_remote_actions": false,
+  "manifest_identity_semantics": "Canonical JSON digest excluding identity_sha256; exact original inventory remains unsealed",
+  "identity_sha256": "281c951ce2e3f889deae2ed5ff8e40755783463775b9ccb15002345c67164852"
+}

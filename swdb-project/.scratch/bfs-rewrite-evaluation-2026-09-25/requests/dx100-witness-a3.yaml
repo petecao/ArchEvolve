@@ -1,0 +1,38 @@
+# Prepared: 2026-09-26 ET. Fresh post-batch continuation; a2 remains expired and unused.
+message_version: '1.0'
+id: bfs-dx100-witness-20260926-a3
+machine: mbit10
+hardware_target: dx100-e4fc4af-4c
+model_root: /data1/yanruj/DX100-bfs-e4fc4af
+build_evaluation: bfs-dx100-build-20260925-a2
+simulator:
+  path: /data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt
+  sha256: f4038c88318ee09085b6c07f163094a07a31a256f21b652d4f3cfa046feb1f6b
+binary:
+  path: /data1/yanruj/DX100-bfs-e4fc4af/benchmarks/gapbs/bfs_maa
+  sha256: 6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d
+workload:
+  id: bfs-dx100-smoke-20260925-a4.uniform64-diagnostic
+  source: 0
+  representation:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-smoke-20260925-a4.driver/uniform64.sg
+    sha256: 00d156b95baa9806c8e7623400e0347770942aee64dbed227309886ee605f78b
+configuration:
+  mode: MAA
+  l3_size_mb: 8
+  l3_assoc: 16
+  tile_elements: 16384
+verification:
+  checker: dx100.bfs.verifier.v2
+  max_ticks: 10000000000
+  post_roi_trace: SyscallBase
+budget:
+  total_seconds: 1100
+  memory_gib: 48
+  storage_gib: 2
+  checkpoint_seconds: 300
+  run_seconds: 750
+checkpoint_manifest:
+  path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-smoke-20260925-a4/checkpoint-manifest.json
+  sha256: e3ddfe24fc06bdf8a5d36fdcfbd2a940c49e8b3500b45fa027e53576c4199601
+checkpoint_evaluation: bfs-dx100-smoke-20260925-a4

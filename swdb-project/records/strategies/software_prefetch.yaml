@@ -1,0 +1,56 @@
+kind: strategy
+schema_version: '0.3'
+id: software_prefetch
+status: draft
+deprecated_by: null
+created: '2026-09-23'
+updated: '2026-09-23'
+provenance:
+- id: ainsworth-2017
+  kind: paper
+  description: 'S. Ainsworth and T. M. Jones, "Software prefetching for indirect memory accesses," CGO
+    2017, pp. 305-317. Targets "indirect memory accesses, where the addresses loaded are based on
+    indices stored in arrays", prefetching A[B[i + offset]] (and B[i + 2 offset]) a look-ahead
+    distance ahead; proceeds "only ... if we do not find stores to data structures that are used to
+    generate load addresses"; adds bounds checks on the look-ahead index; "the cost of generating the
+    address and issuing the prefetch load must be outweighed by the latency saved". Reports average
+    speedups of 1.3x (Intel Haswell) and 1.1x (ARM Cortex-A57), and 2.1x and 2.7x on the in-order
+    Cortex-A53 and Xeon Phi.'
+  uri: https://doi.org/10.1109/CGO.2017.7863749
+name: Software prefetch (indirect)
+target: access_pattern
+effect:
+- kind: hint
+  step: -1
+  note: The target element is prefetched distance iterations ahead; what the loop computes is
+    unchanged. Implementations record the added prefetch as an access pattern with update kind prefetch.
+parameters:
+- name: distance
+  meaning: How many iterations of the pattern's loop ahead the prefetch runs (the look-ahead distance).
+  unit: iterations
+preconditions:
+  requires_shapes:
+  - single_valued_indirect
+  requires_semantics:
+  - field: index_modified_during_loop
+    value: false
+  unchecked:
+  - The look-ahead index (i + distance) is checked against the index array's bounds, or reading past the
+    end is known to be safe.
+  - The loads that produce the prefetched address are not conditional on loop-variant values other than
+    the induction variable.
+  - The index array is read with the induction variable as a direct index (index[i], not index[f(i)]).
+common_intrinsics:
+- mm_prefetch
+benefits_when:
+- condition: The indirect accesses miss in the caches often enough that the latency saved outweighs the
+    cost of computing the address and issuing the prefetch.
+  terms:
+  - sim_ll_miss_rate
+  - sim_d1_miss_rate
+  basis: reported
+  source: ainsworth-2017
+notes:
+- Ainsworth and Jones set the distance as c(t - l)/t with c = 64 on every system they tested (t loads in
+  the prefetch sequence, l the position of a load in it); stride-only accesses are left to the hardware
+  prefetcher, which is why this strategy requires an indirect step.

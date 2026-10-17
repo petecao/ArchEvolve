@@ -1,0 +1,7 @@
+name: timer_formats
+description: How the profiler reads per-call time from a benchmark's own output.
+values:
+  - value: gapbs_trial_time
+    meaning: One line per trial, "Trial Time" then the seconds, printed by gapbs BenchmarkKernel.
+  - value: gem5_roi_ticks
+    meaning: Sealed gem5 ROI simTicks divided by simFreq, consumed only by the DX100 evaluation backend; added 2026-09-25.

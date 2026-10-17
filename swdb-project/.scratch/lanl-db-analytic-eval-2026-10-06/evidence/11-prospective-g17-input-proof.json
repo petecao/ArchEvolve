@@ -1,0 +1,85 @@
+{
+  "format": "swdb.prospective-input-proof.v1",
+  "updated": "2026-10-06 20:25 ET",
+  "state": "source_registration_validated_no_application_execution",
+  "tested_base_commit": "003b890988eeccd84cbf0720440870ed0b921390",
+  "source_foundation_commit": "9cd07a8",
+  "integration_commit": "31898b605642111974f90e8f41c02fb6dc1dad21",
+  "input": {
+    "id": "kron-g17-k16",
+    "file_sha256": "09b3f257e80fb3de4de2bbf0b904110a42f83f25360b537abf60dfa7225625d9",
+    "identity_sha256": "c12b8577876b62c9e94ff3191e0b8bf2471dae73779dec97a96b218fef72a4a2",
+    "arguments": "-g 17 -k 16",
+    "fixed_seed": 27491095,
+    "source_commit": "2972aeb2703165bafd921222f4ed7196f542d3a8",
+    "source_file_sha256": {
+      "util.h": "a103e6c5767d724adc9b6b421ecade4b2d2c4351e5ea0da5d2c9bf16a9fcecf6",
+      "generator.h": "6c92c5bc9fc7903e2e1009fe9701683daf9096320930bd26f71ae59c5249b860",
+      "command_line.h": "4df78a89d4e4435500623bea2ab4a4cbd034586d85617ca1408041daebeb51a6",
+      "builder.h": "113e724b86bc7012d9eff83caeb0df4c30023645c36a10d099897c1f3fabd676",
+      "benchmark.h": "a1a477adfee41eddf8fdc9781d776030ca40492f0e875205c23c85ec633d3c9f"
+    },
+    "realized_properties": {
+      "num_nodes": {
+        "value": null,
+        "basis": "unknown",
+        "note": "Prospective registration; realized graph properties require a fresh execution receipt."
+      },
+      "num_edges_undirected": {
+        "value": null,
+        "basis": "unknown",
+        "note": "Prospective registration; realized graph properties require a fresh execution receipt."
+      },
+      "num_edges_directed": {
+        "value": null,
+        "basis": "unknown",
+        "note": "Prospective registration; realized graph properties require a fresh execution receipt."
+      },
+      "input_density": {
+        "value": null,
+        "basis": "unknown",
+        "note": "Prospective registration; realized graph properties require a fresh execution receipt."
+      }
+    }
+  },
+  "public_gates": {
+    "red": {
+      "cases": 2,
+      "seconds": 37.63,
+      "reason": "both registered baseline paths rejected missing input"
+    },
+    "first_green": {
+      "passed": 6,
+      "seconds": 104.15
+    },
+    "final_integrated": {
+      "passed": 6,
+      "seconds": 106.63,
+      "scope": "both public registered adapters stop at intentionally missing LLVM; source-only input/view metadata; normal and exceptional object/command coexistence; actual OpenMP view"
+    },
+    "runbook_parser": {
+      "commands": 4,
+      "execution": "help-only",
+      "status": "passed"
+    },
+    "canonical_validation": {
+      "records": 614,
+      "status": "passed"
+    }
+  },
+  "preservation": {
+    "reference_g16_file_sha256": "a134f404c5817a7fbdc269f50dc19c1cac0853f010d8b5e829bdb2cc0dd6f569",
+    "reference_g16_bytes_unchanged": true,
+    "previous_records_git_tree_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "previous_record_bytes_unchanged": true,
+    "issues_and_map_unchanged": true,
+    "runtime_object_source_unchanged_from": "8bbb89076b767aae8aa8e894498eff38da140194"
+  },
+  "execution": {
+    "g17_graph_generated": false,
+    "g17_application_executed": false,
+    "application_timings_collected": false,
+    "real_g16_g17_counts": "pending parent dispatch"
+  },
+  "identity_sha256": "e0798788d3a1bf50df2cdacf0d59dd0ee14c549b22a726a0ab678ea834296dfd"
+}

@@ -1,0 +1,169 @@
+test_01_inventory_and_all_instances (__main__.Controls) ... ok
+test_02_defaults_overloads_and_exact_type_identity (__main__.Controls) ... ok
+test_03_binding_refusals (__main__.Controls) ... ok
+test_04_literal_roles_and_all_66_dtype_maps (__main__.Controls) ... ok
+test_05_width_counted_and_refused_domains (__main__.Controls) ... ok
+test_06_emitted_wrapper_routes_and_pinned_backend (__main__.Controls) ... ok
+test_07_complete_scoped_source_preserves_calls_writes_assertion_and_cleanup (__main__.Controls) ... ERROR
+test_08_assertion_predicate_diagnostics_and_failure_effect_mutations_refuse (__main__.Controls) ... ERROR
+test_09_missing_call_unknown_effect_and_source_change_do_not_succeed (__main__.Controls) ... ERROR
+test_10_copied_descriptor_cannot_outlive_its_exact_object_scope (__main__.Controls) ... ERROR
+test_11_pointer_assignment_is_refused_before_it_can_escape (__main__.Controls) ... ERROR
+test_12_scalar_if_while_and_loop_exits_preserve_explicit_control (__main__.Controls) ... ERROR
+test_13_assertion_lexical_inventory_ignores_comment_tokens_and_rejects_quoted_predicates (__main__.Controls) ... ok
+
+======================================================================
+ERROR: test_07_complete_scoped_source_preserves_calls_writes_assertion_and_cleanup (__main__.Controls)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/test_source_statements_v1.py", line 112, in test_07_complete_scoped_source_preserves_calls_writes_assertion_and_cleanup
+    lower,_=self.make();out=lower.lower()
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/test_source_statements_v1.py", line 105, in make
+    binding=API['bind_call'](tu,**kwargs)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 218, in bind_call
+    walk(tu)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 217, in walk
+    walk(child, namespace, owner, node)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 217, in walk
+    walk(child, namespace, owner, node)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 217, in walk
+    walk(child, namespace, owner, node)
+  [Previous line repeated 2 more times]
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 213, in walk
+    if kind == "CallExpr" and owner is not None and owner.get("mangledName") == caller and _span(node) == call_range:
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 180, in _span
+    _need(all(type(point.get("offset")) is int and point["offset"] >= 0 for point in (begin, end))
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 48, in _need
+    raise Refused(message)
+inert_statement_fixture.Refused: direct compiler spans required
+
+======================================================================
+ERROR: test_08_assertion_predicate_diagnostics_and_failure_effect_mutations_refuse (__main__.Controls)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/test_source_statements_v1.py", line 130, in test_08_assertion_predicate_diagnostics_and_failure_effect_mutations_refuse
+    lower,_=self.make(mutate)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/test_source_statements_v1.py", line 105, in make
+    binding=API['bind_call'](tu,**kwargs)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 218, in bind_call
+    walk(tu)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 217, in walk
+    walk(child, namespace, owner, node)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 217, in walk
+    walk(child, namespace, owner, node)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 217, in walk
+    walk(child, namespace, owner, node)
+  [Previous line repeated 2 more times]
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 213, in walk
+    if kind == "CallExpr" and owner is not None and owner.get("mangledName") == caller and _span(node) == call_range:
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 180, in _span
+    _need(all(type(point.get("offset")) is int and point["offset"] >= 0 for point in (begin, end))
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 48, in _need
+    raise Refused(message)
+inert_statement_fixture.Refused: direct compiler spans required
+
+======================================================================
+ERROR: test_09_missing_call_unknown_effect_and_source_change_do_not_succeed (__main__.Controls)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/test_source_statements_v1.py", line 144, in test_09_missing_call_unknown_effect_and_source_change_do_not_succeed
+    lower,_=self.make(lambda tu,i:i['nodes'].remove(next(n for n in i['nodes'] if n.get('kind')=='DeclStmt' and n['inner'][0]['id']=='tile')))
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/test_source_statements_v1.py", line 105, in make
+    binding=API['bind_call'](tu,**kwargs)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 218, in bind_call
+    walk(tu)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 217, in walk
+    walk(child, namespace, owner, node)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 217, in walk
+    walk(child, namespace, owner, node)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 217, in walk
+    walk(child, namespace, owner, node)
+  [Previous line repeated 2 more times]
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 213, in walk
+    if kind == "CallExpr" and owner is not None and owner.get("mangledName") == caller and _span(node) == call_range:
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 180, in _span
+    _need(all(type(point.get("offset")) is int and point["offset"] >= 0 for point in (begin, end))
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 48, in _need
+    raise Refused(message)
+inert_statement_fixture.Refused: direct compiler spans required
+
+======================================================================
+ERROR: test_10_copied_descriptor_cannot_outlive_its_exact_object_scope (__main__.Controls)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/test_source_statements_v1.py", line 153, in test_10_copied_descriptor_cannot_outlive_its_exact_object_scope
+    lower,info=self.make()
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/test_source_statements_v1.py", line 105, in make
+    binding=API['bind_call'](tu,**kwargs)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 218, in bind_call
+    walk(tu)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 217, in walk
+    walk(child, namespace, owner, node)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 217, in walk
+    walk(child, namespace, owner, node)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 217, in walk
+    walk(child, namespace, owner, node)
+  [Previous line repeated 2 more times]
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 213, in walk
+    if kind == "CallExpr" and owner is not None and owner.get("mangledName") == caller and _span(node) == call_range:
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 180, in _span
+    _need(all(type(point.get("offset")) is int and point["offset"] >= 0 for point in (begin, end))
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 48, in _need
+    raise Refused(message)
+inert_statement_fixture.Refused: direct compiler spans required
+
+======================================================================
+ERROR: test_11_pointer_assignment_is_refused_before_it_can_escape (__main__.Controls)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/test_source_statements_v1.py", line 166, in test_11_pointer_assignment_is_refused_before_it_can_escape
+    lower,_=self.make();lower.frames=[{'ids':set(),'arrays':[]}]
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/test_source_statements_v1.py", line 105, in make
+    binding=API['bind_call'](tu,**kwargs)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 218, in bind_call
+    walk(tu)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 217, in walk
+    walk(child, namespace, owner, node)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 217, in walk
+    walk(child, namespace, owner, node)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 217, in walk
+    walk(child, namespace, owner, node)
+  [Previous line repeated 2 more times]
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 213, in walk
+    if kind == "CallExpr" and owner is not None and owner.get("mangledName") == caller and _span(node) == call_range:
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 180, in _span
+    _need(all(type(point.get("offset")) is int and point["offset"] >= 0 for point in (begin, end))
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 48, in _need
+    raise Refused(message)
+inert_statement_fixture.Refused: direct compiler spans required
+
+======================================================================
+ERROR: test_12_scalar_if_while_and_loop_exits_preserve_explicit_control (__main__.Controls)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/test_source_statements_v1.py", line 184, in test_12_scalar_if_while_and_loop_exits_preserve_explicit_control
+    lower,_=self.make(mutate);text=lower.lower()['text']
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/test_source_statements_v1.py", line 105, in make
+    binding=API['bind_call'](tu,**kwargs)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 218, in bind_call
+    walk(tu)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 217, in walk
+    walk(child, namespace, owner, node)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 217, in walk
+    walk(child, namespace, owner, node)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 217, in walk
+    walk(child, namespace, owner, node)
+  [Previous line repeated 2 more times]
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 213, in walk
+    if kind == "CallExpr" and owner is not None and owner.get("mangledName") == caller and _span(node) == call_range:
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 180, in _span
+    _need(all(type(point.get("offset")) is int and point["offset"] >= 0 for point in (begin, end))
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py", line 48, in _need
+    raise Refused(message)
+inert_statement_fixture.Refused: direct compiler spans required
+
+----------------------------------------------------------------------
+Ran 13 tests in 1.546s
+
+FAILED (errors=6)
+{"actual_compiler_or_project_child": false, "date": "2026-10-16 ET", "errors": 6, "failures": 0, "skips": 0, "tests": 13}

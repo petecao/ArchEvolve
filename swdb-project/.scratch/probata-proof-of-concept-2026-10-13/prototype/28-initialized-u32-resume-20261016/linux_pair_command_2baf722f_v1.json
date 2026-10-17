@@ -1,0 +1,92 @@
+{
+  "Mac_counted_token_required": false,
+  "actual_pair_launched": false,
+  "argv": [
+    "/data1/yanruj/probata-verifiers/opam-2.6.1/opam",
+    "exec",
+    "--switch=framac-33",
+    "--",
+    "/data1/yanruj/venvs/swdb-test/bin/python",
+    "-I",
+    "-B",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-2baf722f-v1/control/linux_pair_entry_v1.py",
+    "/data1/yanruj/probata-resume-20261016-2baf722f/swdb-project",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-2baf722f-v1",
+    "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-2baf722f-v1/control/linux_pair_policy_2baf722f_v1.json",
+    "574e8fba725e65cb8113795b784e7869005801cb2dc4dc5cd5adc21c2b3ed7f0"
+  ],
+  "consumer_roots": {
+    "apps/dx100/benchmarks/API": {
+      "oid": "737ac6eaf0a51804715f0a26b3aa73a74689fb44"
+    },
+    "library": {
+      "oid": "2a499122a756b457333d6619d28f8893a38e839d"
+    },
+    "pyproject.toml": {
+      "oid": "b8cacc5b150c2364224e0168e149cd0bc1791f99"
+    },
+    "records": {
+      "oid": "f2158ba461f694c93f39b782b76981b52de08471"
+    },
+    "schemas": {
+      "oid": "ae703dc49a3cb939fbe493b1b991b7bc0d52a731"
+    },
+    "swdb": {
+      "oid": "6192969868e5b8ec2e1b5c09f1ccfff806882b98"
+    },
+    "tests/conftest.py": {
+      "oid": "78e60cb652f52d2a14433c645f7c89d92d85ca32"
+    },
+    "tests/fixtures": {
+      "oid": "ac1c300d1c7e6093e66a3e84516a2bb2e4e7ae79"
+    },
+    "tests/test_dx100_initialized_register_actual.py": {
+      "oid": "f3c8d4b1598eee1fcdc7526b13bd05db0db7a81b"
+    },
+    "tests/testkit": {
+      "oid": "64f7c1aa5319817737d4718573307c673d23dbde"
+    },
+    "vocab": {
+      "oid": "4534a8a7d09e9b500caad1e6a13a3fe17823ce41"
+    }
+  },
+  "controller_inputs": [
+    {
+      "bytes": 20760,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/linux_pair_entry_v1.py",
+      "sha256": "615f6c867a29101e1dee2072893fea212f6c2843c77f6bbd3d18538fc891300a"
+    },
+    {
+      "bytes": 84621,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/linux_pair_policy_2baf722f_v1.json",
+      "sha256": "574e8fba725e65cb8113795b784e7869005801cb2dc4dc5cd5adc21c2b3ed7f0"
+    }
+  ],
+  "current_0_2": false,
+  "date": "2026-10-16 ET",
+  "full_ticket28": false,
+  "independent_review_pending": true,
+  "linux_role": "entry validates exact launch.json, execute/watch hashes, PROBATA_OUTPUT+lock+RSS and live socket ancestor/leasegeneration/fd9/CPU+NUMA; derives Linux compatibility marker only afterward",
+  "native_caller": false,
+  "node": 1,
+  "proof_acceptance": false,
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-2baf722f-v1",
+  "root_creates_fresh_raw_root": true,
+  "root_guard": {
+    "external_timeout_seconds": 1320,
+    "raw_budget_bytes": 268435456,
+    "rss_cap_bytes": 8589934592,
+    "whole_tree_seconds": 1200,
+    "workers": 1
+  },
+  "root_places_exact_controller_metadata": {
+    "entry_remote": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-2baf722f-v1/control/linux_pair_entry_v1.py",
+    "policy_remote": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-initialized-pair-2baf722f-v1/control/linux_pair_policy_2baf722f_v1.json"
+  },
+  "root_socket_lane_only": true,
+  "selected_source_count": 496,
+  "source": "/data1/yanruj/probata-resume-20261016-2baf722f/swdb-project",
+  "source_body_or_hardware": false,
+  "source_commit": "2baf722fdaa6cba24b859eae3172a6f597417d72",
+  "status": "INERT/UNLAUNCHED; root fresh admission pending"
+}

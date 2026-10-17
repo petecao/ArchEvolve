@@ -1,0 +1,61 @@
+{
+  "created": "2026-10-16 00:43 ET",
+  "decision": "PASS STATIC EXACT-BYTE REVIEW",
+  "base": "52d89469fc876f70e23de0f9e4972782b7229e34",
+  "source_worktree": "/private/tmp/probata-resume-t07-supported-domains",
+  "source_state": "root-owned frozen dirty two-file repair plus scoped docs/evidence; not yet committed",
+  "comparisons": [
+    {
+      "file": "gapbs_models.h",
+      "sha256": "eccc1c111f32698043682509be8effad02e8cec82957a889f7a4fb6c54ff490c",
+      "exact_proposed_eight_conjunct_transform": true,
+      "C_lexically_equal_to_old": true,
+      "removed_predicate_occurrences": 6
+    },
+    {
+      "file": "tdstep_standin.c",
+      "sha256": "f24d4fbac9646f3eb28637c591c8cef83a529d96907b1d3071bfadccc3a24de7",
+      "exact_proposed_eight_conjunct_transform": true,
+      "C_lexically_equal_to_old": true,
+      "removed_predicate_occurrences": 2
+    }
+  ],
+  "source_read_pins": [
+    {
+      "path": "/private/tmp/probata-resume-t07-supported-domains/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/gapbs_models.h",
+      "sha256": "eccc1c111f32698043682509be8effad02e8cec82957a889f7a4fb6c54ff490c"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-supported-domains/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/tdstep_standin.c",
+      "sha256": "f24d4fbac9646f3eb28637c591c8cef83a529d96907b1d3071bfadccc3a24de7"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-source-domains/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/gapbs_models.h",
+      "sha256": "62c482f54d2ed6771d0f91bbff5c807226ee2b9f5d53c9a2047f4dc63424bfd2"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-source-domains/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/tdstep_standin.c",
+      "sha256": "3cee3cb2062bbd07d7f1c42b769d967ae739824ef0cf5cc97ff7a534fc12a9b6"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-supported-domains/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/SUPPORTED-DOMAINS-20261016.md",
+      "sha256": "6783658aad39e6cf633b7eb4ae4cd275f9f5cbbd1c1ffd83920d05fc5165c1a4"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-supported-domains/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/probata-t07-stage1-v2-boundary-research-20261016.md",
+      "sha256": "8cd1eb69768a0c0f57fe2733d154e133088a585cf09700dd63d8d14b8517ed12"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-supported-domains/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/probata-t07-stage1-v2-boundary-research-20261016.json",
+      "sha256": "9eda4de905d2f81260c46b22da1e2da144d47728724c1120b9fb37e39d6a8cde"
+    },
+    {
+      "path": "/private/tmp/probata-t07-pointer-domain-replacement-proposal-20261016.py",
+      "sha256": "5165da8a951b983f233b1259d3e319788b5ab6cc7939e8fe2cac834fe0f9fc03"
+    }
+  ],
+  "capability_boundary": "alignment residual explicitly unresolved; indirect-call inapplicability conditional on exact direct-call-only source/census; no full RTE claim",
+  "actual_execution": false,
+  "proof_acceptance": false,
+  "errors": []
+}

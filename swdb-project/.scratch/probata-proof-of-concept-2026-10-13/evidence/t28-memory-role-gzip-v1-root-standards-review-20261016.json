@@ -1,0 +1,74 @@
+{
+  "actual_transform_or_source_ABI_call_public_ticket_admission": false,
+  "bootstrap": {
+    "bytes": 3470,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-role-gzip-v1/bootstrap_v1.py",
+    "sha256": "50c2e8f88370b6e4a07f913ea55c2d9f360011ad462a90612a9e4973f2fcc48c"
+  },
+  "classification": "PASS_MEMORY_ROLE_GZIP_V1_STANDARDS_SOURCE_REVIEW",
+  "command": {
+    "bytes": 14738,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-role-gzip-v1/command_v1.json",
+    "sha256": "6768d0c5c80a37b130f693bdb3f3ca931ec5373f839e04eea555d8ec75a35bf9"
+  },
+  "controls": 10,
+  "controls_log": {
+    "bytes": 1541,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-memory-role-gzip-v1-root-controls-20261016.log",
+    "sha256": "8a89ad4617ea40890de97bab19d3689e8bd0abd1e730a707962dd91d16eedf36"
+  },
+  "date": "2026-10-16 ET",
+  "entry": {
+    "bytes": 322473,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-role-gzip-v1/memory_role_controller_v1.py",
+    "sha256": "356424b0c07e79aa535f507c2ab7a42947f656e6959bdb41baf2c015c25e0a0c"
+  },
+  "exact_rendered_entry": true,
+  "exact_template_inverse_edits": 19,
+  "findings": [],
+  "guards": {
+    "CPU_seconds": 950,
+    "address_space_bytes": 536870912,
+    "aggregate_bytes": 268435456,
+    "data_free_floor_bytes": 53687091200,
+    "expanded_bytes": 201326592,
+    "new_files": 14,
+    "outer_seconds": 960,
+    "per_file_bytes": 134217728,
+    "settled_seconds": 900,
+    "work_seconds": 885
+  },
+  "packet": {
+    "bytes": 7367,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-role-gzip-v1/source-packet-v1.json",
+    "sha256": "22f5b80c9a414eb565128f3693b7bd5192f36487ec3d46cbb5749f33e670e2a7"
+  },
+  "policy": {
+    "bytes": 192569,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-role-gzip-v1/source_policy_v1.json",
+    "sha256": "335769de4bdb0a2c35573198db2d63177d2378d8b0d3692eb74d91efd0ebac15"
+  },
+  "reviewer": "root, complementary to lead28 Spec",
+  "scope": "One complete strict role-normalizer pass derives full observed census and rejects all unknown duplicates; full inverse separately verifies. No assumed116 or normalized hash. Exact911 selected raw/source/runtime inputs plus full physical runtime/dependency pre/post closure. G642 successful observation-only boundary stays separate.",
+  "unchanged_guard_helpers": [
+    "Refused",
+    "need",
+    "sha",
+    "canonical",
+    "document",
+    "stable",
+    "pin",
+    "check",
+    "audit",
+    "extent",
+    "write_gate",
+    "Sink",
+    "save",
+    "stage",
+    "load",
+    "read_input",
+    "input_check",
+    "settled_success"
+  ],
+  "verified_declared_pins": 19
+}

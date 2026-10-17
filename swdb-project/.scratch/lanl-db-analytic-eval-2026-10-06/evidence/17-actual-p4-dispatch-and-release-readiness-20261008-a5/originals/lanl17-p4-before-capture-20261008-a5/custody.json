@@ -1,0 +1,64 @@
+{
+  "format": "swdb.lanl17-attempt-control-custody.v2",
+  "phase": "before",
+  "checked_utc": "2026-10-08T23:41:39.646912+00:00",
+  "campaign": "extensa-gem5-bfs-20261006-p4",
+  "attempt": 1,
+  "source_commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "helper_sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414",
+  "source_clean": true,
+  "actual_project_directory": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project",
+  "actual_git_worktree_root": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5",
+  "source_path_scope": "Exact canonical M2.source/swdb-project; every lexical component symlink-refused",
+  "execution_account": {
+    "platform": "linux",
+    "host": "mbit10",
+    "hostname": "mbit10",
+    "uid": 114316761,
+    "effective_uid": 114316761,
+    "user": "yanruj",
+    "scope": "Actual host/account check; remote-only state remains a separate handling rule"
+  },
+  "projection_contract": "swdb.lanl17-safe-control-projection.v1",
+  "manifest_identity_sha256": "66194a7e99716f5b59ddf081dfec752c34b51f1805470a4514171c53323b06c7",
+  "manifest_file_pin": {
+    "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/manifest.json",
+    "bytes": 292401,
+    "sha256": "b86d78bac1d0a09e176114d1c23491ede098c4fcf5af5ab96f318ceabc29b8d1",
+    "uid": 114316761,
+    "identity_sha256": "66194a7e99716f5b59ddf081dfec752c34b51f1805470a4514171c53323b06c7"
+  },
+  "policy": {
+    "frozen_at": "2026-10-08T16:05:25.347884+00:00",
+    "id": "extensa-gem5-bfs-20261006-p1.agreement.5bae2f42d9078864",
+    "identity_sha256": "5bae2f42d9078864caad73e81a16007edb6458f0b101628ded04a7ef3aedbf7d"
+  },
+  "collector_sha256": "b08db809b80cbebc6ce98dd8df8fdd4f327b170cdd7a545af0876ad68a832a5c",
+  "freeze_publication_pin": {
+    "path": "/data/yanruj/EvolveSWDB_runs/lanl17-first-publication-custody-20261008-a5.json",
+    "bytes": 7701,
+    "sha256": "e1fa63af665bea9937375b4be17fe3de7f013a1da0e1106e36817c828fc3d5e1",
+    "uid": 114316761,
+    "identity_sha256": "8ec6987cc6d8c8e9d74df60cfa3e40e5bafbbdfdb0dd87747af645bf82436220"
+  },
+  "resume": false,
+  "baselines_only": false,
+  "state": {
+    "present": false,
+    "file": null,
+    "projection": null
+  },
+  "invocation_inventory": {
+    "provider_directories": [],
+    "names_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "synthesis_directory_present": false,
+    "provider_receipts_prompts_commands_inputs_opened": false,
+    "scope": "Existence only; directory presence does not prove a provider launch or outcome"
+  },
+  "raw_state_snapshots_transferred": false,
+  "provider_prompts_auth_logs_argv_read": false,
+  "state_control_scope": "Retained state/ledger only; not independent completeness of unsaved provider calls or step-time/DU events",
+  "dispatch_to_state_time_of_check_gap": "Parent must immediately corroborate unchanged state before unchanged helper dispatch; this collector does not own a lane lock",
+  "identity_sha256": "36948e2eb271e29ac11d8f33fc8f3dc55946f8a51504b875932b94e8888e6a42"
+}

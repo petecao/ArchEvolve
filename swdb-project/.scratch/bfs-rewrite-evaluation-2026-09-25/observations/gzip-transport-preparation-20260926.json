@@ -1,0 +1,146 @@
+{
+  "format": "swdb.bfs.dx100-gzip-preparation.v1",
+  "created": "2026-09-26T21:07:16.435888-04:00",
+  "state": "locally_verified",
+  "scope": "lossless native gzip artifact encoding only; no model, guest, flags, ROI, frozen semantic instrumentation, fixed plan or budget change",
+  "files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/swdb/dx100.py",
+      "bytes": 57955,
+      "sha256": "2fc67143bacd480189003bbf6b471b8d9b1d36239bbb7a2d6aac40e0f1bc771f"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/swdb/dx100_coverage.py",
+      "bytes": 12197,
+      "sha256": "9881c5460d73af490a1b530424e6ea579330d8b7a9e239815a63d1b60a427e95"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/swdb/dx100_profile.py",
+      "bytes": 25334,
+      "sha256": "c361893384b96511e0de05d2b7ab01b895b638c3ab364cf6212b2776fd064595"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/swdb/bfs_protocol.py",
+      "bytes": 79485,
+      "sha256": "db9001407504e31d41a33b12c2730ccb43005c2c50ab43724e47540b126ffeac"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/swdb/profile_package.py",
+      "bytes": 35157,
+      "sha256": "8eae9ba6ae289c332d4dd113b364dcff381969d8c5806db9a6aede7d374a5665"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_freeze_pilot.py",
+      "bytes": 54917,
+      "sha256": "04c0ad1de4c7d67cb3b58ed37cd177cb6542952d7dd4419f6ba30f4b56b3989f"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_dx100_coverage_execution.py",
+      "bytes": 44653,
+      "sha256": "baf1d58946c218b870df0bc6c8e25f6d5284ccf465f57f8725263b10c61364aa"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_simulator_series.py",
+      "bytes": 30410,
+      "sha256": "074e00af2b48617355cb135f84065f9fa417a9846b58a116f0c6f004087a2a28"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_dx100_gzip_trace.py",
+      "bytes": 18848,
+      "sha256": "414525f9039e702ab56b4a3c977e5eb83c56ec13744b3c1e64d1de20539f1e6e"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_simulator_series.py",
+      "bytes": 33265,
+      "sha256": "19f5808f46f57f8887c6fb999933f3350415954544e0aff1c5af813f0a6f4b07"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-dx100-gzip-trace-20260926.md",
+      "bytes": 4093,
+      "sha256": "5f138fd9e4302968911e39e79d931e4bdafa53b8be123349dc98e96a79cafe39"
+    }
+  ],
+  "tests": [
+    {
+      "name": "integrated_prior_final_guards",
+      "passed": 210,
+      "deselected": 0,
+      "log": {
+        "path": "/private/tmp/bfs-gzip-integrated-20260926.log",
+        "bytes": 272,
+        "sha256": "f4ce5f89cb89be878880736f9599990252ac7f42768ad4efe9a1a22b9ed21be8"
+      }
+    },
+    {
+      "name": "coverage_and_package_compatibility",
+      "passed": 50,
+      "deselected": 0,
+      "log": {
+        "path": "/private/tmp/bfs-gzip-reader-compatibility-20260926.log",
+        "bytes": 110,
+        "sha256": "8d96aae29f752b4ac6a692929a182263b6d606bb6ca13e09dff990299749b8da"
+      }
+    },
+    {
+      "name": "final_public_gzip_file",
+      "passed": 31,
+      "deselected": 0,
+      "log": {
+        "path": "/private/tmp/bfs-gzip-public-final-20260926.log",
+        "bytes": 100,
+        "sha256": "253eecf04ee515ade9d620fd648904a2dd39f1ea79f317f09f448184729a7b24"
+      }
+    },
+    {
+      "name": "final_series_marker",
+      "passed": 4,
+      "deselected": 37,
+      "log": {
+        "path": "/private/tmp/bfs-gzip-series-marker-20260926.log",
+        "bytes": 113,
+        "sha256": "9e5bf57955c1cb91549a9624c18264147fe2b45c414e0e4a2fb592e308f5ee16"
+      }
+    }
+  ],
+  "test_commands": [
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest tests/test_dx100_gzip_trace.py tests/test_dx100_coverage.py tests/test_dx100_profile.py tests/test_dx100_v2.py tests/test_bfs_simulator_series.py tests/test_bfs_freeze_pilot.py -q --basetemp /private/tmp/bfs-gzip-integrated-20260926",
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest tests/test_bfs_dx100_coverage_execution.py tests/test_profile_package_identity.py tests/test_profile_package_freshness.py -q --basetemp /private/tmp/bfs-gzip-reader-compatibility-20260926",
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest tests/test_dx100_gzip_trace.py -q --basetemp /private/tmp/bfs-gzip-public-final-20260926",
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest tests/test_bfs_simulator_series.py -k emits_actual_trial -q --basetemp /private/tmp/bfs-gzip-series-marker-20260926"
+  ],
+  "preserved_intermediate_fixture_failures": [
+    {
+      "path": "/private/tmp/bfs-gzip-profile-first-20260926.log",
+      "bytes": 6212,
+      "sha256": "54ec45ff6b690b8ef847ebcb8a551794b7d0c3d66452d593fcdbd4465f5ac4e2"
+    },
+    {
+      "path": "/private/tmp/bfs-gzip-profile-second-20260926.log",
+      "bytes": 7453,
+      "sha256": "bfe811a562512fb468cefad9a1ab6aed726ad47d4a7064a7d7223ee67dac1ce7"
+    },
+    {
+      "path": "/private/tmp/bfs-gzip-freeze-first-20260926.log",
+      "bytes": 6671,
+      "sha256": "57b72cdbe129c2a7e0e2b54cbbaf718aedd550c7d445ec277b61ba72050836ca"
+    }
+  ],
+  "intermediate_failure_explanation": "Test construction omitted required runs-dir, named the profile query incorrectly, then expected a downstream message instead of the earlier strict correctness rejection; all retained, no production guard relaxed.",
+  "reviewer_probes": [
+    "/private/tmp/test_gzip_deflate_standards_20260926.py",
+    "/private/tmp/test_gzip_stage_binding_standards_20260926.py",
+    "/private/tmp/bfs-gzip-stage-binding-red-20260926.log",
+    "/private/tmp/bfs-gzip-downgrade-red-20260926.log"
+  ],
+  "real_transport_smoke": {
+    "path": "/private/tmp/bfs-gem5-gzip-actual-20260926.json",
+    "bytes": 4612,
+    "sha256": "abc0bf86f2893a2ddd2d9f42dd5639ab69c1d15a93168ca3093a85178ba818aa"
+  },
+  "limits": [
+    "All local public fake-gem5 evaluations are contract_fixture with no gain claim.",
+    "Actual native smoke has no System/CPU/guest/BFS and proves transport only.",
+    "Full compressed/decoded streams can exhaust unchanged caller time and storage budgets; no compression ratio or workload feasibility assumed.",
+    "No source/model/binary/protocol record/active host checkout was modified; no host dispatch/provider/export in this task."
+  ]
+}

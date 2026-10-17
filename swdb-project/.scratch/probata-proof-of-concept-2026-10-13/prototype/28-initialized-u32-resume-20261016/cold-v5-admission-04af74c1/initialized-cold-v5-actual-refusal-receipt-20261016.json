@@ -1,0 +1,48 @@
+{
+  "classification": "ACTUAL_PASSIVE_COLD_V5_REFUSED",
+  "complete_cold_acceptance": false,
+  "date": "2026-10-16 ET",
+  "exact_env_command": {
+    "bytes": 1752,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v5-admission-04af74c1/initialized-cold-env-command-v5.json",
+    "sha256": "7f7ce21a574d370c3fdbdfba458c9d94274c9549817b089e91602b914952fa89"
+  },
+  "exit_code": 1,
+  "failure_location": "Not emitted by the frozen reader; no guessed failing assertion. Error-report-only successor requires review/admission.",
+  "local_outer_wall_seconds": 15.762466192245483,
+  "measurement_raw_write_operations_in_reader": false,
+  "no_payload_transfer": true,
+  "original_scientific_verdicts": "711 proven;1107 not_proven normal ensures timeout, never refuted",
+  "policy": {
+    "bytes": 50301,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v5-admission-04af74c1/initialized-cold-policy-04af74c1-v5.json",
+    "sha256": "394a57ec433e19866c022471597165d7083b2c461ff4f986e579cc0bb04a8ccb"
+  },
+  "preflight": {
+    "bytes": 420089,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v5-admission-04af74c1/preflight-settlement-v5-actual-20261016.json",
+    "sha256": "b0c0ba8986558774b6b26dd68392f2bb57dd8552209ee82bfb0c20afaab6e039"
+  },
+  "reader": {
+    "bytes": 51625,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v5-admission-04af74c1/initialized_cold_audit_v5.py",
+    "sha256": "17fbffb48d689a9c6ead2d15fd6968184fd85d0c78ca46f3287e4d9b90abb894"
+  },
+  "result": {
+    "classification": "REFUSED",
+    "error_type": "AssertionError",
+    "failure": "",
+    "scientific_acceptance": false
+  },
+  "scientific_reexecution": false,
+  "stderr": {
+    "bytes": 0,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v5-admission-04af74c1/initialized-cold-v5-actual-stderr-20261016.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 109,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/cold-v5-admission-04af74c1/initialized-cold-v5-actual-stdout-20261016.json",
+    "sha256": "d1c3e10f3f5a2fe40f8c3f606a0c80a5f7606c5a22ccc9530b4e237ff504eafe"
+  }
+}

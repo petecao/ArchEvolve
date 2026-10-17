@@ -1,0 +1,388 @@
+kind: protocol
+schema_version: '0.4'
+id: bfs-t20-controlled-simulator-20260928.b504c267f86b65b5
+status: draft
+created: '2026-09-28'
+updated: '2026-09-28'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+requested_id: bfs-t20-controlled-simulator-20260928
+version: 1
+supersedes: null
+invalidated_comparisons: []
+settings:
+  mode: controlled_simulator
+  kernel: gapbs-bfs
+  workloads:
+  - bfs-20260925-uniform18.cd2169a5c421baf7
+  - bfs-20260925-kronecker18.48de8267ac2098d5
+  targets:
+    baseline:
+      id: dx100-e4fc4af-4c
+      configuration:
+        cache:
+          cacheline_bytes: 64
+          l1_assoc: 8
+          l1d_kib: 32
+          l1i_kib: 32
+          l2_assoc: 4
+          l2_kib: 256
+          l3_assoc: 16
+          l3_mib: 8
+          prefetcher: StridePrefetcher
+        clock_hz: 3200000000
+        command_arguments:
+        - --cpu-type
+        - X86O3CPU
+        - -n
+        - '4'
+        - --mem-size
+        - 16GB
+        - --sys-clock
+        - 3.2GHz
+        - --cpu-clock
+        - 3.2GHz
+        - --caches
+        - --l1d_size=32kB
+        - --l1d_assoc=8
+        - --l1d-hwp-type=StridePrefetcher
+        - --l1d_mshrs=16
+        - --l1d_write_buffers=8
+        - --l1i_size=32kB
+        - --l1i_assoc=8
+        - --l1i-hwp-type=StridePrefetcher
+        - --l1i_mshrs=16
+        - --l1i_write_buffers=8
+        - --l2cache
+        - --l2_size=256kB
+        - --l2_assoc=4
+        - --l2-hwp-type=StridePrefetcher
+        - --l2_mshrs=32
+        - --l2_write_buffers=16
+        - --l3cache
+        - --l3_size=8MB
+        - --l3_assoc=16
+        - --l3_mshrs=256
+        - --l3_write_buffers=128
+        - --l3_ports
+        - '4'
+        - --cacheline_size=64
+        - --mem-type
+        - Ramulator2
+        - --ramulator-config
+        - /data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/example_gem5_config.yaml
+        - --mem-channels
+        - '2'
+        - --maa_ncbus_width
+        - '32'
+        - --prog-interval=1000
+        cpu: X86O3CPU
+        cpu_clock: 3.2GHz
+        guest_cores: 4
+        guest_memory: 16GB
+        l3_assoc: 16
+        l3_size_mb: 8
+        memory:
+          channels: 2
+          configuration_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+          model: Ramulator2
+          size: 16GB
+        mode: BASE
+        model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        ramulator_config_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+        tile_elements: 16384
+    candidate:
+      id: dx100-e4fc4af-4c
+      configuration:
+        cache:
+          cacheline_bytes: 64
+          l1_assoc: 8
+          l1d_kib: 32
+          l1i_kib: 32
+          l2_assoc: 4
+          l2_kib: 256
+          l3_assoc: 16
+          l3_mib: 8
+          prefetcher: StridePrefetcher
+        clock_hz: 3200000000
+        command_arguments:
+        - --cpu-type
+        - X86O3CPU
+        - -n
+        - '4'
+        - --mem-size
+        - 16GB
+        - --sys-clock
+        - 3.2GHz
+        - --cpu-clock
+        - 3.2GHz
+        - --caches
+        - --l1d_size=32kB
+        - --l1d_assoc=8
+        - --l1d-hwp-type=StridePrefetcher
+        - --l1d_mshrs=16
+        - --l1d_write_buffers=8
+        - --l1i_size=32kB
+        - --l1i_assoc=8
+        - --l1i-hwp-type=StridePrefetcher
+        - --l1i_mshrs=16
+        - --l1i_write_buffers=8
+        - --l2cache
+        - --l2_size=256kB
+        - --l2_assoc=4
+        - --l2-hwp-type=StridePrefetcher
+        - --l2_mshrs=32
+        - --l2_write_buffers=16
+        - --l3cache
+        - --l3_size=8MB
+        - --l3_assoc=16
+        - --l3_mshrs=256
+        - --l3_write_buffers=128
+        - --l3_ports
+        - '4'
+        - --cacheline_size=64
+        - --mem-type
+        - Ramulator2
+        - --ramulator-config
+        - /data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/example_gem5_config.yaml
+        - --mem-channels
+        - '2'
+        - --maa_ncbus_width
+        - '32'
+        - --prog-interval=1000
+        - --maa
+        - --maa_num_maas
+        - '1'
+        - --maa_num_tile_elements
+        - '16384'
+        - --maa_l2_uncacheable
+        - --maa_l3_uncacheable
+        - --maa_num_initial_row_table_slices
+        - '32'
+        cpu: X86O3CPU
+        cpu_clock: 3.2GHz
+        guest_cores: 4
+        guest_memory: 16GB
+        l3_assoc: 16
+        l3_size_mb: 8
+        memory:
+          channels: 2
+          configuration_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+          model: Ramulator2
+          size: 16GB
+        mode: MAA
+        model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        ramulator_config_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+        tile_elements: 16384
+  simulation_identity:
+    version: '1.0'
+    model_build:
+      evaluation: bfs-dx100-build-20260925-a2
+      sha256: 13d277a961e44fe0ee254b4685126572fb06394fea455e3e1d450626cc535cea
+    simulator:
+      path: /data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt
+      sha256: f4038c88318ee09085b6c07f163094a07a31a256f21b652d4f3cfa046feb1f6b
+  builds:
+    baseline:
+      compiler: /usr/bin/g++-13
+      compiler_version:
+      - g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+      - Copyright (C) 2023 Free Software Foundation, Inc.
+      adapter: dx100.complete_call.v2
+      flags:
+      - -std=c++11
+      - -O3
+      - -Wall
+      - -g
+      - -fopenmp
+      - -DGEM5
+      - -DNUM_CORES=4
+      - -DTILE_SIZE=16384
+    candidate:
+      compiler: /usr/bin/g++-13
+      compiler_version:
+      - g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+      - Copyright (C) 2023 Free Software Foundation, Inc.
+      adapter: dx100.complete_call.v2
+      flags:
+      - -std=c++11
+      - -O3
+      - -Wall
+      - -g
+      - -fopenmp
+      - -DGEM5
+      - -DNUM_CORES=4
+      - -DTILE_SIZE=16384
+      - -DMAA
+  instrumentation:
+    baseline:
+      treatment: primary
+      roi: bfs.complete_call.v1
+      suppressed_internal_events: [m5_reset_stats, m5_dump_stats, m5_work_begin, m5_work_end, m5_exit]
+      verification: same_guest_post_roi
+      debug_flags: MAATrace
+      verifier_runtime:
+        driver_sha256: 1e8c048dc2155708429f86e58761032b22d73dd2dcdb6da089063a768693484b
+        parser_sha256: 0eed08d570ed6ce2a5728e7d51c1e86268096eaa21aa3acfeeb38b9dcf7e5a26
+        observer_sha256: 655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd
+      post_roi_trace:
+        flag: SyscallBase
+        scope: post-seal verifier continuation only
+        output: separate_simulator_trace
+        format_flags: [FmtFlag]
+        disabled_format_flags: [FmtTicksOff, FmtStackTrace]
+        disabled_roi_flags: [MAATrace, MAARangeFuser, MAAIndirect]
+        chunk_ticks: 1000000000
+      graph_verification:
+        contract: swdb.bfs.original-adjacency.v1
+        input_format: gapbs.sg64
+        byte_order: little
+        adjacency: outgoing CSR from exact registered serialized input
+        maximum_extra_bytes: 2147483648
+        preload: before checkpoint and ROI
+        verification: after ROI on exact returned parent buffer
+        allocation: all oracle adjacency and checker work arrays allocated before ROI
+    candidate:
+      treatment: primary
+      roi: bfs.complete_call.v1
+      suppressed_internal_events: [m5_reset_stats, m5_dump_stats, m5_work_begin, m5_work_end, m5_exit]
+      verification: same_guest_post_roi
+      debug_flags: MAATrace,MAARangeFuser,MAAIndirect
+      verifier_runtime:
+        driver_sha256: 1e8c048dc2155708429f86e58761032b22d73dd2dcdb6da089063a768693484b
+        parser_sha256: 0eed08d570ed6ce2a5728e7d51c1e86268096eaa21aa3acfeeb38b9dcf7e5a26
+        observer_sha256: 655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd
+      post_roi_trace:
+        flag: SyscallBase
+        scope: post-seal verifier continuation only
+        output: separate_simulator_trace
+        format_flags: [FmtFlag]
+        disabled_format_flags: [FmtTicksOff, FmtStackTrace]
+        disabled_roi_flags: [MAATrace, MAARangeFuser, MAAIndirect]
+        chunk_ticks: 1000000000
+      graph_verification:
+        contract: swdb.bfs.original-adjacency.v1
+        input_format: gapbs.sg64
+        byte_order: little
+        adjacency: outgoing CSR from exact registered serialized input
+        maximum_extra_bytes: 2147483648
+        preload: before checkpoint and ROI
+        verification: after ROI on exact returned parent buffer
+        allocation: all oracle adjacency and checker work arrays allocated before ROI
+  threads: 4
+  roi: bfs.complete_call.v1
+  correctness:
+    coverage: every_timed_trial
+    verifier: dx100.bfs.verifier.v2
+    required_cases: []
+    required_accelerator_cases:
+      baseline: []
+      candidate: [executed, full_tiles, tail_tiles]
+    companion_cases:
+    - id: bfs.dx100.competing-parent-case.v1
+      role: candidate
+      requirement: Before any gain claim, one correctness-only public dx100-execute of the exact candidate
+        primary (timed) binary and frozen MAA configuration on workload bfs-dx100-coverage-20260926-a2.workload.6b1e2f2dc16f6a0e
+        (source 0) must pass the v2 verifier and observe competing_parent_updates with parent storage
+        attributed. Diagnostic builds never satisfy it.
+      workload: bfs-dx100-coverage-20260926-a2.workload.6b1e2f2dc16f6a0e
+      required_accelerator_cases: [executed, full_tiles, tail_tiles, competing_parent_updates]
+      basis:
+        path: .scratch/bfs-rewrite-evaluation-2026-09-25/observations/t15-ac10-parent-case-20260928.json
+        sha256: ed74b47aba938dfe28bd70047cdafa6dd7008ee6224ec0ef6edb3f61c6cc4ec9
+  sampling:
+    repetitions: 1
+    warmups: 0
+    aggregation: geomean_source_median_ratio
+    determinism:
+      basis: deterministic_simulator_replay.v1
+      evidence: .scratch/bfs-rewrite-evaluation-2026-09-25/observations/t16-r11-replay-determinism-20260927.json
+        sha256:166688506e4b05080164afc10950e1ef88aa7b726449011f112a66fbcf5c3a27
+  profitability:
+    minimum_speedup: 1.05
+    maximum_relative_spread: 0.1
+    confidence: 0.95
+    bootstrap_resamples: 2000
+    bootstrap_seed: 20260925
+  differences:
+    software:
+    - Unchanged gapbs-bfs-do DOBFS versus the T20 upstream rewrite (DX100Prepare/TDStepDX100 called from
+      DOBFS; TDStep retained as fallback).
+    accelerator:
+    - MAA enabled only for the candidate role.
+    configuration:
+    - Both roles use LLC 8MiB/16-way and identical CPU, caches, memory and clock; accelerator presence
+      differs.
+  region_pairs:
+  - semantic_region: bfs.complete_call
+    baseline: function:bfs.cc:3477:2152911a89faaaf1
+    candidate: function:bfs.cc:9645:c5933781d13e31de
+    scope: accumulated
+    attribution: inclusive
+    evidence: simulated_diagnostic_profile
+    collector:
+      backend: libclang-cindex
+      collector: dx100.m5_rpns.source_scopes.v1
+      library_sha256: 27b38bfdb37d164878767c40c8ce9538c96e801a37d2a67234bee043945de139
+      pass_sha256: 6f5414eb9844688dfe5f651cb030d5885f6b70ad6c7e10b4ddf1d7cd04e60021
+      runtime_sha256: 618d8e874eccaf2914a87462e46a1d36a42194e98f1bbfde1f91eadd3818c31d
+  - semantic_region: bfs.top_down_step
+    baseline: function:bfs.cc:2004:ffc8e4d681ba23b5
+    candidate: function:bfs.cc:4522:cc91f2b43ef677b1
+    scope: accumulated
+    attribution: inclusive
+    evidence: simulated_diagnostic_profile
+    collector:
+      backend: libclang-cindex
+      collector: dx100.m5_rpns.source_scopes.v1
+      library_sha256: 27b38bfdb37d164878767c40c8ce9538c96e801a37d2a67234bee043945de139
+      pass_sha256: 6f5414eb9844688dfe5f651cb030d5885f6b70ad6c7e10b4ddf1d7cd04e60021
+      runtime_sha256: 618d8e874eccaf2914a87462e46a1d36a42194e98f1bbfde1f91eadd3818c31d
+  calibration:
+    pilot: bfs-t15-pilot-simulator-batch-20260927-b3
+    analysis:
+      path: .scratch/bfs-rewrite-evaluation-2026-09-25/observations/t15-pilot-analysis-20260928.json
+      sha256: b78f84ef4ffafd940aeaa55f85299c2812bba95b46696caf53be222a4fe34046
+    rejected_or_incomplete:
+    - bfs-t15-pilot-simulator-batch-20260927-b1 (120-s profile gate)
+    - bfs-t15-pilot-simulator-batch-20260927-b2 (180-s package timeout)
+    - 'bfs-t15-ac10-parent-case-20260928-a1 (author binary: parent storage unattributable)'
+    - earlier T15 attempts retained in ticket 15
+    size_selection: 'Scale-18 uniform and Kronecker graphs: every T15 execution completed with correctness
+      and accelerator full/tail coverage within a one-lane 48-h allocation (about 35-42 min simulation
+      per execution); no candidate gain was used to choose them.'
+    change_rule: Any change to settings requires a new protocol version with supersedes; comparisons bound
+      to a superseded version are invalidated and must be re-collected.
+    quantities: simulated_roi_seconds only; host wall time and diagnostic intervals are cost evidence,
+      never timing samples.
+  route:
+    ticket: 20
+    baseline_candidate: bfs-upstream-compile-20260925-a1.candidate
+    candidate: bfs-campaign-preparation-20260925-a1.upstream-annotated-context6.candidate-1
+    builds:
+      baseline_primary:
+        id: bfs-scalar-v2-preparation-20260926-a1.upstream.primary.build
+        sha256: 9f96e78f271a373c1c81a06d05096a4e9477bc839a82fa437a4a8e4cefcb7a00
+      baseline_diagnostic:
+        id: bfs-scalar-v2-preparation-20260926-a1.upstream.diagnostic.build
+        sha256: 23ee7e212f40fa1d60ebf5bb23430b26e3bffb1491da55d4504c99e7d8d88799
+      candidate_primary:
+        id: bfs-t20-context6-primary-build-20260927-c3
+        sha256: db256d852e59bd6c5f098be370bb7072f098318a5d523acdf00c1576c102e405
+      candidate_diagnostic:
+        id: bfs-t20-context6-diagnostic-build-20260927-c3
+        sha256: c9cb4b859b99add1e2fb8ca0f731ab245e1a3ba9228b4610e8a06df4fce31518
+workload_identities:
+  bfs-20260925-uniform18.cd2169a5c421baf7: cd2169a5c421baf7a2c03febab6d8d86edcd74860c887c83a0d5a2c9d28bc49b
+  bfs-20260925-kronecker18.48de8267ac2098d5: 48de8267ac2098d5e5d6085c49c63da4fac6f2d143330bc4a35058d5db0536cb
+frozen_at: '2026-09-28T15:29:10.606650+00:00'
+state: frozen
+identity_sha256: b504c267f86b65b5e7ddd9a3f29e3e69a9a1dabd20fbf246e2c9bf2ec45220f1

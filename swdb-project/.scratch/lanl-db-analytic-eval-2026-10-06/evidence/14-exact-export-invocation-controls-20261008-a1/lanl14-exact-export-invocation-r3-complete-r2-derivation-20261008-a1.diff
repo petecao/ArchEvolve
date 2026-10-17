@@ -1,0 +1,27 @@
+--- /private/tmp/lanl14_invoke_reviewed_supervised_export_20261008_a1_r2.py
++++ /private/tmp/lanl14_invoke_reviewed_supervised_export_20261008_a1_r3.py
+@@ -147,6 +147,7 @@
+ 
+ 
+ def stream_pin(path, maximum, budget):
++    budget.check()
+     path = h.checked(path)
+     before = path.lstat()
+     if before.st_size:
+@@ -157,6 +158,7 @@
+                 os.read(fd, 1) == b"", "empty_original_stream")
+     finally:
+         os.close(fd)
++    budget.check()
+     return {"path":str(path),"bytes":0,"sha256":hashlib.sha256(b"").hexdigest(),"stat":h.stamp(before)}
+ 
+ 
+@@ -433,7 +435,7 @@
+         out_pin, out_body = h.read_file(ADMIN / "supervisor.stdout", MAX_RETURN, after, retain=True)
+         err_pin = stream_pin(ADMIN / "supervisor.stderr", MAX_JSON, after)
+         compact, cleanup_success = supervisor_result(after)
+-        original_stdout = json.loads(out_body, object_pairs_hook=object_pairs, parse_constant=constant_refused)
++        original_stdout = json.loads(out_body, object_pairs_hook=h.object_pairs, parse_constant=h.constant_refused)
+         require(original_stdout == {"receipt_sha256":compact["receipt"]["sha256"],
+             "identity_sha256":compact["identity_sha256"],"action":compact["action"],"state":compact["state"],
+             "supervisor_exit":compact["supervisor_exit"],"cleanup_survivor_count":compact["cleanup_survivor_count"],

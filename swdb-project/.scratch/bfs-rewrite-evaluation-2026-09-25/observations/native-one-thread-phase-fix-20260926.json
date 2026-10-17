@@ -1,0 +1,60 @@
+{
+  "created": "2026-09-26",
+  "scope": "Pre-dispatch native monitor/phase consistency correction",
+  "reproduced_error": "phase storage allowance exhausted",
+  "prior_export": "d484afb2e25dfd2c235433883436916cdb884d04",
+  "prior_export_dispatched": false,
+  "files": [
+    {
+      "path": "scripts/bfs_native_one_thread_pilot.py",
+      "bytes": 55244,
+      "sha256": "5b0dd95f73a5166bad3b602b07274af4915e8c08070769e9e989ddf00e27ab0a"
+    },
+    {
+      "path": "tests/test_bfs_native_one_thread_pilot.py",
+      "bytes": 39866,
+      "sha256": "17bed4ac4bf91c35cece355c5ea40e71952793a98d3f7d89700f3f2fcab6f222"
+    },
+    {
+      "path": "docs/bfs-native-one-thread-pilot-20260926.md",
+      "bytes": 22864,
+      "sha256": "0c9d8455ed28e7aa8a4bbaca93f8f2050a5e618208802360b14a79c5b38e42a6"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/private/tmp/bfs-native-phase-race-red-20260926.log",
+      "bytes": 2862,
+      "sha256": "3c78d824adfcb5602e8a20ec85b9012448d25a7afb5087f66ba65d2ee6b0ddd9"
+    },
+    {
+      "path": "/private/tmp/bfs-native-phase-race-fixed-20260926.log",
+      "bytes": 114,
+      "sha256": "ef54d9a376945d6c89fd506f4f28d9adba93d328ef480fe733d4149e1769cc66"
+    },
+    {
+      "path": "/private/tmp/bfs-native-phase-fix-full-20260926.log",
+      "bytes": 111,
+      "sha256": "0d61317301451060dd2e2560799dd2d6e7849badf88f7ef3ec3f120b7677c9a6"
+    }
+  ],
+  "validation": {
+    "focused": {
+      "passed": 15,
+      "deselected": 56,
+      "seconds": 1.92
+    },
+    "full_client": {
+      "passed": 69,
+      "linux_skipped": 2,
+      "seconds": 47.22
+    },
+    "independent_review": {
+      "state": "clean",
+      "repeated_cases": 2,
+      "seconds": 0.17
+    }
+  },
+  "plan_or_budget_changed": false,
+  "actual_pilot_attempted": false
+}

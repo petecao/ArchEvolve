@@ -1,0 +1,39 @@
+{
+  "argv": [
+    "ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "mbit10",
+    "/usr/bin/env",
+    "GIT_OPTIONAL_LOCKS=0",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=60",
+    "180",
+    "/usr/bin/python3.12",
+    "-B",
+    "-"
+  ],
+  "elapsed_seconds": 0.6798856660025194,
+  "finished_utc": "2026-10-08T09:07:04.618346+00:00",
+  "format": "swdb.parent-readonly-status-original-transport.v1",
+  "returncode": 0,
+  "sealed": false,
+  "source": {
+    "bytes": 2712,
+    "path": "/private/tmp/lanl14-readonly-final-report-status-20261007-a2.py",
+    "sha256": "9157fe1ca50222a5f572e9556d0426306c499062acd6d612e3f9148423b0125e"
+  },
+  "started_utc": "2026-10-08T09:07:03.938322+00:00",
+  "stderr": {
+    "bytes": 0,
+    "path": "/private/tmp/lanl14-final-report-status-observed-20261008-a8.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 4887,
+    "path": "/private/tmp/lanl14-final-report-status-observed-20261008-a8.json",
+    "sha256": "8a76c4f179f06c059805a4c7836c3702a79d29216fe88a19ca26e257e0c28984"
+  }
+}

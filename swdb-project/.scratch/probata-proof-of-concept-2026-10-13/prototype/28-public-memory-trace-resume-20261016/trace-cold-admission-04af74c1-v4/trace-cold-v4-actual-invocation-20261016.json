@@ -1,0 +1,24 @@
+{
+  "argv": [
+    "ssh",
+    "mbit10",
+    "/usr/bin/timeout --signal=TERM --kill-after=10 180 /usr/bin/env -i LANG=C LC_ALL=C PATH=/usr/bin:/bin PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/data1/yanruj/probata-resume-20261016-04af74c1/swdb-project PYTHONPYCACHEPREFIX=/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v4/cache /data1/yanruj/venvs/swdb-test/bin/python -I -B -X pycache_prefix=/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v4/reader-source-cache /data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v4/control/trace_cold_audit_v4.py /data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-trace-cold-04af74c1-v4/control/trace-cold-policy-04af74c1-v4.json 71168a009a546c8aed54a141145f8472c7bbfe0a2791f20c2355993b1872f89f"
+  ],
+  "classification": "ACTUAL_PASSIVE_READER_INVOCATION_ONLY",
+  "date": "2026-10-16 ET",
+  "env_command_sha256": "3c54f38fc8305eb173106c50dcd953feb402b3e7a87d8d602253cf3bb70d90ff",
+  "exit_code": 0,
+  "local_wall_seconds": 23.877522945404053,
+  "original_raw_untouched_by_reader": true,
+  "scientific_reexecution": false,
+  "stderr": {
+    "bytes": 0,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-admission-04af74c1-v4/trace-cold-v4-actual-stderr-20261016.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 9165,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace-cold-admission-04af74c1-v4/trace-cold-v4-actual-stdout-20261016.json",
+    "sha256": "b130aa6ce2568627a480d155612d3dab86f28421a421eccfc9101c6511dd690b"
+  }
+}

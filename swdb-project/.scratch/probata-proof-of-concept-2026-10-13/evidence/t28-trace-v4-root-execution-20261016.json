@@ -1,0 +1,777 @@
+{
+  "created": "2026-10-16 ET",
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v4",
+  "actual": {
+    "lane.json": {
+      "socket_lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "command": [
+          "timeout",
+          "--signal=TERM",
+          "--kill-after=60",
+          "1320",
+          "bash",
+          "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v4/run.sh"
+        ],
+        "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+        "ended_utc": "2026-10-16T19:54:40Z",
+        "exit_code": 0,
+        "host": "mbit10",
+        "job": "probata-resume-20261016-04af74c1-t28-memory-trace-v4",
+        "lease_generation": 635,
+        "lease_name": "mbit10-evaluation-node1",
+        "load1_at_start": 0.07,
+        "load1_max": 32,
+        "node": 1,
+        "numa_memory_policy": "bind:1",
+        "numactl": "--cpunodebind=1 --membind=1",
+        "preregistration_sha256": null,
+        "started_utc": "2026-10-16T19:50:35Z"
+      }
+    },
+    "outer-resources.json": {
+      "exit_code": 0,
+      "peak_rss_bytes": 438173696,
+      "out_of_memory": false,
+      "timed_out": false,
+      "wall_seconds": 245.01353721134365,
+      "cpu_seconds": 296.26370199999997
+    },
+    "resources.json": {
+      "cpu_seconds": 244.739956,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 379027456,
+      "timed_out": false,
+      "wall_seconds": 242.95745311770588
+    },
+    "source-after.json": {
+      "commit": "04af74c121a733589fbe1a2087ad602deaef598b",
+      "source_unchanged": true,
+      "tracked_changes": ""
+    }
+  },
+  "records": [
+    {
+      "pin": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v4/memory-trace-profile/pytest/test_actual_public_abstract_me0/records/proofs/proof.contract.dx100_trust_fixture.20261016t195110z.2d11ab39.yaml",
+        "bytes": 77983,
+        "sha256": "a3d8b4905ffcc6edad3d3757cb030be7cf9122b07ae833bc622cf096c68f68b5"
+      },
+      "id": "proof.contract.dx100_trust_fixture.20261016t195110z.2d11ab39",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.dx100_trust_fixture"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "bounds": {
+        "threads": 1
+      },
+      "evidence_kind": "contract_fixture",
+      "agreement": "agree",
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "counterexample_replayed": null,
+      "goals": {
+        "success": 153,
+        "failure": 1
+      }
+    },
+    {
+      "pin": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v4/memory-trace-profile/pytest/test_actual_public_abstract_me1/records/proofs/proof.contract.dx100_trust_fixture.20261016t195117z.a1ef2d51.yaml",
+        "bytes": 69938,
+        "sha256": "6a6c1b053ff7be19728739980c734a8491e7156cd6d480a0c98dfd41ae02f09f"
+      },
+      "id": "proof.contract.dx100_trust_fixture.20261016t195117z.a1ef2d51",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.dx100_trust_fixture"
+      },
+      "verdict": "refuted",
+      "failure_class": null,
+      "bounds": {
+        "threads": 1
+      },
+      "evidence_kind": "contract_fixture",
+      "agreement": "agree",
+      "forms": {
+        "c_lowering": "refuted",
+        "cxx": "refuted (counterexample replayed)"
+      },
+      "counterexample_replayed": true,
+      "goals": {
+        "success": 153,
+        "failure": 1
+      }
+    },
+    {
+      "pin": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v4/memory-trace-profile/pytest/test_actual_public_abstract_me10/records/proofs/proof.contract.dx100_trust_fixture.20261016t195229z.b37a7a73.yaml",
+        "bytes": 82495,
+        "sha256": "0aa20777d9da9f4e3635c2f8cafbaf16451e444190512bfbb98242b6d290249d"
+      },
+      "id": "proof.contract.dx100_trust_fixture.20261016t195229z.b37a7a73",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.dx100_trust_fixture"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "bounds": {
+        "threads": 1
+      },
+      "evidence_kind": "contract_fixture",
+      "agreement": "agree",
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "counterexample_replayed": null,
+      "goals": {
+        "success": 153,
+        "failure": 1
+      }
+    },
+    {
+      "pin": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v4/memory-trace-profile/pytest/test_actual_public_abstract_me11/records/proofs/proof.contract.dx100_trust_fixture.20261016t195236z.84e26fbb.yaml",
+        "bytes": 83119,
+        "sha256": "b42f03dc99e65d207023add93d0587bc02cbd4f19404b8eb5433472d9207a6eb"
+      },
+      "id": "proof.contract.dx100_trust_fixture.20261016t195236z.84e26fbb",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.dx100_trust_fixture"
+      },
+      "verdict": "refuted",
+      "failure_class": null,
+      "bounds": {
+        "threads": 1
+      },
+      "evidence_kind": "contract_fixture",
+      "agreement": "agree",
+      "forms": {
+        "c_lowering": "refuted",
+        "cxx": "refuted (counterexample replayed)"
+      },
+      "counterexample_replayed": true,
+      "goals": {
+        "success": 152,
+        "failure": 2
+      }
+    },
+    {
+      "pin": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v4/memory-trace-profile/pytest/test_actual_public_abstract_me12/records/proofs/proof.contract.dx100_trust_fixture.20261016t195244z.fc32e0ab.yaml",
+        "bytes": 83119,
+        "sha256": "b3a821bf66629273355398390ef47037cfbd97678b9b27ced7bb2af3afa783d5"
+      },
+      "id": "proof.contract.dx100_trust_fixture.20261016t195244z.fc32e0ab",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.dx100_trust_fixture"
+      },
+      "verdict": "refuted",
+      "failure_class": null,
+      "bounds": {
+        "threads": 1
+      },
+      "evidence_kind": "contract_fixture",
+      "agreement": "agree",
+      "forms": {
+        "c_lowering": "refuted",
+        "cxx": "refuted (counterexample replayed)"
+      },
+      "counterexample_replayed": true,
+      "goals": {
+        "success": 152,
+        "failure": 2
+      }
+    },
+    {
+      "pin": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v4/memory-trace-profile/pytest/test_actual_public_abstract_me13/records/proofs/proof.contract.dx100_trust_fixture.20261016t195251z.ad73fe38.yaml",
+        "bytes": 65432,
+        "sha256": "1dec9316be11ada3a14e89eb1a386ef3749166ec9fad31c67f703e67f6dc83c6"
+      },
+      "id": "proof.contract.dx100_trust_fixture.20261016t195251z.ad73fe38",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.dx100_trust_fixture"
+      },
+      "verdict": "refuted",
+      "failure_class": null,
+      "bounds": {
+        "threads": 1
+      },
+      "evidence_kind": "contract_fixture",
+      "agreement": "agree",
+      "forms": {
+        "c_lowering": "refuted",
+        "cxx": "refuted (counterexample replayed)"
+      },
+      "counterexample_replayed": true,
+      "goals": {
+        "success": 153,
+        "failure": 1
+      }
+    },
+    {
+      "pin": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v4/memory-trace-profile/pytest/test_actual_public_abstract_me14/records/proofs/proof.contract.dx100_trust_fixture.20261016t195300z.ad4d376c.yaml",
+        "bytes": 60971,
+        "sha256": "ac0ab980bc72047cf7479d4a028532904d9306a1c7f579aff874ecb1c1271088"
+      },
+      "id": "proof.contract.dx100_trust_fixture.20261016t195300z.ad4d376c",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.dx100_trust_fixture"
+      },
+      "verdict": "refuted",
+      "failure_class": null,
+      "bounds": {
+        "threads": 1
+      },
+      "evidence_kind": "contract_fixture",
+      "agreement": "agree",
+      "forms": {
+        "c_lowering": "refuted",
+        "cxx": "refuted (counterexample replayed)"
+      },
+      "counterexample_replayed": true,
+      "goals": {
+        "success": 153,
+        "failure": 1
+      }
+    },
+    {
+      "pin": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v4/memory-trace-profile/pytest/test_actual_public_abstract_me15/records/proofs/proof.contract.dx100_trust_fixture.20261016t195309z.bf52b242.yaml",
+        "bytes": 86927,
+        "sha256": "f756c00f54c3f920cff34f5467e3938090626bea3bb1afef9169753e4501ec84"
+      },
+      "id": "proof.contract.dx100_trust_fixture.20261016t195309z.bf52b242",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.dx100_trust_fixture"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "bounds": {
+        "threads": 1
+      },
+      "evidence_kind": "contract_fixture",
+      "agreement": "agree",
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "counterexample_replayed": null,
+      "goals": {
+        "success": 153,
+        "failure": 1
+      }
+    },
+    {
+      "pin": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v4/memory-trace-profile/pytest/test_actual_public_abstract_me16/records/proofs/proof.contract.dx100_trust_fixture.20261016t195317z.de5a7008.yaml",
+        "bytes": 69928,
+        "sha256": "73f5d8f91eddb370c47eddec5ba44145f07801bf97e70d4e3941158be05fde48"
+      },
+      "id": "proof.contract.dx100_trust_fixture.20261016t195317z.de5a7008",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.dx100_trust_fixture"
+      },
+      "verdict": "refuted",
+      "failure_class": null,
+      "bounds": {
+        "threads": 1
+      },
+      "evidence_kind": "contract_fixture",
+      "agreement": "agree",
+      "forms": {
+        "c_lowering": "refuted",
+        "cxx": "refuted (counterexample replayed)"
+      },
+      "counterexample_replayed": true,
+      "goals": {
+        "success": 153,
+        "failure": 1
+      }
+    },
+    {
+      "pin": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v4/memory-trace-profile/pytest/test_actual_public_abstract_me17/records/proofs/proof.contract.dx100_trust_fixture.20261016t195326z.a4b3aa97.yaml",
+        "bytes": 69171,
+        "sha256": "e7c3ee9f0f1dabb0c8041d5338f92931df62b0df18397f909873661234f8655c"
+      },
+      "id": "proof.contract.dx100_trust_fixture.20261016t195326z.a4b3aa97",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.dx100_trust_fixture"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "bounds": {
+        "threads": 1
+      },
+      "evidence_kind": "contract_fixture",
+      "agreement": "agree",
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "counterexample_replayed": null,
+      "goals": {
+        "success": 153,
+        "failure": 1
+      }
+    },
+    {
+      "pin": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v4/memory-trace-profile/pytest/test_actual_public_abstract_me18/records/proofs/proof.contract.dx100_trust_fixture.20261016t195334z.002b91e9.yaml",
+        "bytes": 74351,
+        "sha256": "c648337c079cf754f04cf1ca08d7639778eebdc5803873bff740cd181f2ac6ee"
+      },
+      "id": "proof.contract.dx100_trust_fixture.20261016t195334z.002b91e9",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.dx100_trust_fixture"
+      },
+      "verdict": "refuted",
+      "failure_class": null,
+      "bounds": {
+        "threads": 1
+      },
+      "evidence_kind": "contract_fixture",
+      "agreement": "agree",
+      "forms": {
+        "c_lowering": "refuted",
+        "cxx": "refuted (counterexample replayed)"
+      },
+      "counterexample_replayed": true,
+      "goals": {
+        "success": 153,
+        "failure": 1
+      }
+    },
+    {
+      "pin": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v4/memory-trace-profile/pytest/test_actual_public_abstract_me19/records/proofs/proof.contract.dx100_trust_fixture.20261016t195342z.d8192b8b.yaml",
+        "bytes": 73603,
+        "sha256": "e5ead61e6198134171ac8c8067c9003dcd292d38bc1c2736292b7adf713206e0"
+      },
+      "id": "proof.contract.dx100_trust_fixture.20261016t195342z.d8192b8b",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.dx100_trust_fixture"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "bounds": {
+        "threads": 1
+      },
+      "evidence_kind": "contract_fixture",
+      "agreement": "agree",
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "counterexample_replayed": null,
+      "goals": {
+        "success": 153,
+        "failure": 1
+      }
+    },
+    {
+      "pin": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v4/memory-trace-profile/pytest/test_actual_public_abstract_me2/records/proofs/proof.contract.dx100_trust_fixture.20261016t195126z.3c0a86e5.yaml",
+        "bytes": 69889,
+        "sha256": "8f4e5456fe0f36ec77fc95b4d7b2114bc730f7eb5685de2e69e985ff72533176"
+      },
+      "id": "proof.contract.dx100_trust_fixture.20261016t195126z.3c0a86e5",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.dx100_trust_fixture"
+      },
+      "verdict": "refuted",
+      "failure_class": null,
+      "bounds": {
+        "threads": 1
+      },
+      "evidence_kind": "contract_fixture",
+      "agreement": "agree",
+      "forms": {
+        "c_lowering": "refuted",
+        "cxx": "refuted (counterexample replayed)"
+      },
+      "counterexample_replayed": true,
+      "goals": {
+        "success": 153,
+        "failure": 1
+      }
+    },
+    {
+      "pin": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v4/memory-trace-profile/pytest/test_actual_public_abstract_me20/records/proofs/proof.contract.dx100_trust_fixture.20261016t195349z.f7a6193d.yaml",
+        "bytes": 65433,
+        "sha256": "c8676ce8780f626f195ebff663524c5962f0f4e6b1b9eca219e8adf3d6432972"
+      },
+      "id": "proof.contract.dx100_trust_fixture.20261016t195349z.f7a6193d",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.dx100_trust_fixture"
+      },
+      "verdict": "refuted",
+      "failure_class": null,
+      "bounds": {
+        "threads": 1
+      },
+      "evidence_kind": "contract_fixture",
+      "agreement": "agree",
+      "forms": {
+        "c_lowering": "refuted",
+        "cxx": "refuted (counterexample replayed)"
+      },
+      "counterexample_replayed": true,
+      "goals": {
+        "success": 153,
+        "failure": 1
+      }
+    },
+    {
+      "pin": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v4/memory-trace-profile/pytest/test_actual_public_abstract_me21/records/proofs/proof.contract.dx100_trust_fixture.20261016t195358z.f1957419.yaml",
+        "bytes": 64705,
+        "sha256": "098c82d6d8147445a6aa9313b2ac7ddcb570698ea9d5c889dd26486ae214aa61"
+      },
+      "id": "proof.contract.dx100_trust_fixture.20261016t195358z.f1957419",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.dx100_trust_fixture"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "bounds": {
+        "threads": 1
+      },
+      "evidence_kind": "contract_fixture",
+      "agreement": "agree",
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "counterexample_replayed": null,
+      "goals": {
+        "success": 153,
+        "failure": 1
+      }
+    },
+    {
+      "pin": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v4/memory-trace-profile/pytest/test_actual_public_abstract_me22/records/proofs/proof.contract.dx100_trust_fixture.20261016t195405z.372b4696.yaml",
+        "bytes": 69102,
+        "sha256": "fb8c77d61aeeed0a6bff9865c6d6f09a79742b9119bf4fbc8bfd8a60db5689c9"
+      },
+      "id": "proof.contract.dx100_trust_fixture.20261016t195405z.372b4696",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.dx100_trust_fixture"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "bounds": {
+        "threads": 1
+      },
+      "evidence_kind": "contract_fixture",
+      "agreement": "agree",
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "counterexample_replayed": null,
+      "goals": {
+        "success": 153,
+        "failure": 1
+      }
+    },
+    {
+      "pin": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v4/memory-trace-profile/pytest/test_actual_public_abstract_me23/records/proofs/proof.contract.dx100_trust_fixture.20261016t195413z.35da28ab.yaml",
+        "bytes": 73475,
+        "sha256": "7efc123e4350609d7a1b0dddc65aca8d0e7ae2f369da530d2be098673fdcc332"
+      },
+      "id": "proof.contract.dx100_trust_fixture.20261016t195413z.35da28ab",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.dx100_trust_fixture"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "bounds": {
+        "threads": 1
+      },
+      "evidence_kind": "contract_fixture",
+      "agreement": "agree",
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "counterexample_replayed": null,
+      "goals": {
+        "success": 153,
+        "failure": 1
+      }
+    },
+    {
+      "pin": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v4/memory-trace-profile/pytest/test_actual_public_abstract_me24/records/proofs/proof.contract.dx100_trust_fixture.20261016t195421z.a580f105.yaml",
+        "bytes": 69801,
+        "sha256": "906f920011644e411329434c3884a519214542ff67e7289dd4ae2ff535f0d4ed"
+      },
+      "id": "proof.contract.dx100_trust_fixture.20261016t195421z.a580f105",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.dx100_trust_fixture"
+      },
+      "verdict": "refuted",
+      "failure_class": null,
+      "bounds": {
+        "threads": 1
+      },
+      "evidence_kind": "contract_fixture",
+      "agreement": "agree",
+      "forms": {
+        "c_lowering": "refuted",
+        "cxx": "refuted (counterexample replayed)"
+      },
+      "counterexample_replayed": true,
+      "goals": {
+        "success": 152,
+        "failure": 2
+      }
+    },
+    {
+      "pin": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v4/memory-trace-profile/pytest/test_actual_public_abstract_me3/records/proofs/proof.contract.dx100_trust_fixture.20261016t195134z.a617fade.yaml",
+        "bytes": 69887,
+        "sha256": "a461eaaa2e3abb57eaf694380941a1119367ad030d0ea9f52af2d3ef602bb26e"
+      },
+      "id": "proof.contract.dx100_trust_fixture.20261016t195134z.a617fade",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.dx100_trust_fixture"
+      },
+      "verdict": "refuted",
+      "failure_class": null,
+      "bounds": {
+        "threads": 1
+      },
+      "evidence_kind": "contract_fixture",
+      "agreement": "agree",
+      "forms": {
+        "c_lowering": "refuted",
+        "cxx": "refuted (counterexample replayed)"
+      },
+      "counterexample_replayed": true,
+      "goals": {
+        "success": 153,
+        "failure": 1
+      }
+    },
+    {
+      "pin": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v4/memory-trace-profile/pytest/test_actual_public_abstract_me4/records/proofs/proof.contract.dx100_trust_fixture.20261016t195142z.7e228bec.yaml",
+        "bytes": 78039,
+        "sha256": "da7652aa429181c72e2a1d10bd480a41295e5f6743e2e3d31f1edf56b67b63a6"
+      },
+      "id": "proof.contract.dx100_trust_fixture.20261016t195142z.7e228bec",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.dx100_trust_fixture"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "bounds": {
+        "threads": 1
+      },
+      "evidence_kind": "contract_fixture",
+      "agreement": "agree",
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "counterexample_replayed": null,
+      "goals": {
+        "success": 153,
+        "failure": 1
+      }
+    },
+    {
+      "pin": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v4/memory-trace-profile/pytest/test_actual_public_abstract_me5/records/proofs/proof.contract.dx100_trust_fixture.20261016t195149z.e0322b37.yaml",
+        "bytes": 78763,
+        "sha256": "ed61cf6633fab42ed25226aff6c5456e15dc232cf26815b13f0f620024510b87"
+      },
+      "id": "proof.contract.dx100_trust_fixture.20261016t195149z.e0322b37",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.dx100_trust_fixture"
+      },
+      "verdict": "refuted",
+      "failure_class": null,
+      "bounds": {
+        "threads": 1
+      },
+      "evidence_kind": "contract_fixture",
+      "agreement": "agree",
+      "forms": {
+        "c_lowering": "refuted",
+        "cxx": "refuted (counterexample replayed)"
+      },
+      "counterexample_replayed": true,
+      "goals": {
+        "success": 152,
+        "failure": 2
+      }
+    },
+    {
+      "pin": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v4/memory-trace-profile/pytest/test_actual_public_abstract_me6/records/proofs/proof.contract.dx100_trust_fixture.20261016t195158z.49ab72d7.yaml",
+        "bytes": 78040,
+        "sha256": "29b3fa462b6dae3af7a195dfc539d0348d5223f20d50b61adaf39b0764851a0c"
+      },
+      "id": "proof.contract.dx100_trust_fixture.20261016t195158z.49ab72d7",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.dx100_trust_fixture"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "bounds": {
+        "threads": 1
+      },
+      "evidence_kind": "contract_fixture",
+      "agreement": "agree",
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "counterexample_replayed": null,
+      "goals": {
+        "success": 153,
+        "failure": 1
+      }
+    },
+    {
+      "pin": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v4/memory-trace-profile/pytest/test_actual_public_abstract_me7/records/proofs/proof.contract.dx100_trust_fixture.20261016t195205z.ff7057c3.yaml",
+        "bytes": 77998,
+        "sha256": "97acfb18697f5acdca4a190212659262ef65b043430b641a7ed8c39bd96e5c77"
+      },
+      "id": "proof.contract.dx100_trust_fixture.20261016t195205z.ff7057c3",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.dx100_trust_fixture"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "bounds": {
+        "threads": 1
+      },
+      "evidence_kind": "contract_fixture",
+      "agreement": "agree",
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "counterexample_replayed": null,
+      "goals": {
+        "success": 153,
+        "failure": 1
+      }
+    },
+    {
+      "pin": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v4/memory-trace-profile/pytest/test_actual_public_abstract_me8/records/proofs/proof.contract.dx100_trust_fixture.20261016t195213z.d2420a0c.yaml",
+        "bytes": 78703,
+        "sha256": "b4a171dba201bc5d4d305c664fb9eb2ebdd2dbacd79061c1f0a47254cf6a191b"
+      },
+      "id": "proof.contract.dx100_trust_fixture.20261016t195213z.d2420a0c",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.dx100_trust_fixture"
+      },
+      "verdict": "refuted",
+      "failure_class": null,
+      "bounds": {
+        "threads": 1
+      },
+      "evidence_kind": "contract_fixture",
+      "agreement": "agree",
+      "forms": {
+        "c_lowering": "refuted",
+        "cxx": "refuted (counterexample replayed)"
+      },
+      "counterexample_replayed": true,
+      "goals": {
+        "success": 152,
+        "failure": 2
+      }
+    },
+    {
+      "pin": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v4/memory-trace-profile/pytest/test_actual_public_abstract_me9/records/proofs/proof.contract.dx100_trust_fixture.20261016t195222z.f95e46b4.yaml",
+        "bytes": 86818,
+        "sha256": "57fcd41724f33ab2382912c43267d737fd8e60c19d3eba34db5519af3ee3c634"
+      },
+      "id": "proof.contract.dx100_trust_fixture.20261016t195222z.f95e46b4",
+      "subject": {
+        "kind": "library_summary",
+        "id": "contract.dx100_trust_fixture"
+      },
+      "verdict": "proven",
+      "failure_class": null,
+      "bounds": {
+        "threads": 1
+      },
+      "evidence_kind": "contract_fixture",
+      "agreement": "agree",
+      "forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "counterexample_replayed": null,
+      "goals": {
+        "success": 153,
+        "failure": 1
+      }
+    }
+  ],
+  "verdict_counts": {
+    "proven": 12,
+    "refuted": 13
+  },
+  "junit": [
+    {
+      "pin": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-trace-04af74c1-v4/memory-trace-profile/junit.xml",
+        "bytes": 6003,
+        "sha256": "1d2b200c00b3c8a66208b0f458708c90f4556c4470b0058840475b8c42687dcd"
+      },
+      "cases": 25,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0
+    }
+  ],
+  "raw_files": 1409,
+  "raw_bytes": 42682114,
+  "scope": "All25 actual abstract-memory public workflow cases matched expected12proven13refuted, with C++ counterexample replay for every refutation. Independent complete source/runtime/native/reachability/replay/assumption cold audit pending. No whole-interface/current0.2/full ticket acceptance."
+}

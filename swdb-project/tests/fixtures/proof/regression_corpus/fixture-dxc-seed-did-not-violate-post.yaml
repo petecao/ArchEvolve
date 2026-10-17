@@ -1,0 +1,24 @@
+# Created: 2026-10-15 ET. Native fixture control, not solver/DX100 semantics.
+id: fixture-dxc-seed-did-not-violate-post
+adapter: native_fixture_control
+input:
+  source: tests/fixtures/proof/lowering/summaries.cc
+  implementation: tests/fixtures/proof/lowering/summary_impls.cc
+  function: swdb_dxc_unit
+  safe: 'return __dxc_tile_size(tile) + 1;'
+  rejected_seed: 'return __dxc_tile_size(tile) + 2;'
+  corrected_seed: 'return __dxc_tile_size(tile) + 4;'
+  witness_tile: 0
+  original_result_bounds: [1, 3]
+historical_failure: >-
+  The stand-in returns tile&1. The old +2 seed therefore returns2/3 and satisfies
+  the unchanged postcondition, so solver nonproof from a loose modular summary
+  cannot qualify it as a concrete seeded semantic bug. Retain frozen717 evidence
+  as historical summary-precision behavior only.
+correction: >-
+  Only the shared seeded replacement changes to +4. The original safe source,
+  stand-in body, contract and summary remain intact. At the in-domain tile0,
+  both original C++ and lowered C return4 and violate the original1..3 post.
+  This native witness does not constitute a solver refutation or real DX100 semantics.
+evidence: .scratch/probata-proof-of-concept-2026-10-13/evidence/t24-dxc-native-negative-control-20261015.json
+replay: tests/test_dxc_seeded_control.py::test_the_shared_dxc_seed_violates_the_original_postcondition_on_its_native_fixture_body

@@ -1,0 +1,31 @@
+{
+  "all_four_pins_physically_verified": true,
+  "classification": "INDEPENDENT_NARROW_WRAPPER_IDENTITY_DELTA_SOURCE_PASS",
+  "date": "2026-10-16 ET",
+  "fresh_pure_controls": {
+    "external_workflows": false,
+    "mutation_subcases": 8,
+    "passed": true,
+    "stderr": {
+      "bytes": 102,
+      "path": "/private/tmp/probata-header3-preflight-v2-parent-controls.stderr",
+      "sha256": "b6a161abed43b9a0dba9259cd451b39b20b10425ac13cc14786554c0e6fac7f1"
+    },
+    "stdout": {
+      "bytes": 0,
+      "path": "/private/tmp/probata-header3-preflight-v2-parent-controls.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "tests": 4
+  },
+  "full_preflight_inverse_exact": true,
+  "packet": {
+    "bytes": 1795,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/header3-local-actual-v1/preflight-review-packet-v2.json",
+    "sha256": "347015a85089770f98cdc1890e9d434e28e82815d8063393ce0c8eb627b5a84f"
+  },
+  "remote_state_observation_or_dispatch_by_reviewer": false,
+  "reviewed_semantics": "Distinct exact physical checkout HEAD76cca359 and fetched reviewed41f22 identities, with each socket_lane/hostlock physical script hash and equality to both complete selected Git blobs; clean selected status. No process/PAM/SSH scan rule or unreadable exception changed. Only attempt-prefix and exact preflight path/hash changed in runner; science argv remains exact. Original refusal preserved.",
+  "root_final_admission_required": true,
+  "scientific_admission": false
+}

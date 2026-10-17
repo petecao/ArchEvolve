@@ -1,0 +1,9 @@
+# Register formal-half namespace repair
+
+2026-10-16 ET. The original register caller's two-cell assigns frame names model state that is absent from its declaration-only C lowering. The root-owned 2e2 run stopped before solver launch on that unbound name; no register proof record or wrong-case result follows.
+
+`formal_frame._typecheck` now prepends only the admitted register semantics namespace (`wp_prelude` with no called helpers). Existing `_entry` policy validation runs before enqueueing this typecheck. The original frame/postcondition and source/model/certificate remain unchanged. Unknown bank, absent policy and unknown semantics controls remain refused; no helper contracts are injected into this parser context.
+
+Public `swdb validate` with an explicitly scripted declaration-visibility parser reproduced the exact unbound-name symptom RED, then passed GREEN. Final selected controls: 15 passed under the 8 GiB/300-second guard in 167.753 s (2,389,458,944 B peak), followed by one appended unknown-semantics refusal control in 1.216 s (170,590,208 B). The 15-case batch includes both 711/1107 clauses, two namespace refusals and 11 existing source/policy refusals. Original RED and targeted GREEN artifacts remain outside the checkout; JSON pins all command/log/JUnit/resource receipts. The RED version of the test is retained in its failure traceback; no pre-run test-source hash was captured.
+
+These are compiler/scripted prelaunch controls, with a deliberately failing verifier stand-in. They establish the namespace regression behavior, not real Frama-C parsing or any ACSL/prover/hardware result. A generated 303-byte corrected formal half is retained externally for a separate root-owned parser admission. Original G598 raw and prior four-input parser packet remain immutable. Root owns independent review, publication, fresh actual admission and tracker updates; ticket 28 remains open.

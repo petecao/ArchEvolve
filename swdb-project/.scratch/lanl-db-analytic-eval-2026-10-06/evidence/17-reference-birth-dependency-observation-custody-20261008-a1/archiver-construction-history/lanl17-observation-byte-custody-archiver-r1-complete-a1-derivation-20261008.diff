@@ -1,0 +1,112 @@
+--- /private/tmp/lanl17_archive_reviewed_observation_source_byte_custody_20261008_a1.py
++++ /private/tmp/lanl17_archive_reviewed_observation_source_byte_custody_20261008_a1_r1.py
+@@ -89,7 +89,11 @@
+                 and not s['mode'] & 0o7000 and 0 <= s['size'] <= cap,
+                 'original_type_owner_link_size')
+         fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_CLOEXEC)
+-        require(stamp(os.fstat(fd)) == s, 'original_changed_before_open')
++        try:
++            require(stamp(os.fstat(fd)) == s, 'original_changed_before_open')
++        except BaseException:
++            os.close(fd)
++            raise
+         return path, fd, s
+ 
+     def read_pin(self, path, cap, expected=None):
+@@ -209,6 +213,30 @@
+         self.written.append(PREFIX+'/'+relative)
+         return target,fd
+ 
++    def stored_digest(self, path, expected_stat, cap, gzip_decode=False):
++        self.tick()
++        require(stamp(path.lstat()) == expected_stat and not path.is_symlink(),
++                'stored_path_changed_before_readback')
++        fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_CLOEXEC)
++        h = hashlib.sha256(); n = 0
++        try:
++            require(stamp(os.fstat(fd)) == expected_stat, 'stored_fd_changed_before_readback')
++            with os.fdopen(fd, 'rb', closefd=False) as raw:
++                stream = gzip.GzipFile(fileobj=raw, mode='rb') if gzip_decode else raw
++                try:
++                    while True:
++                        self.tick(); block = stream.read(min(1024*1024, cap-n+1))
++                        if not block: break
++                        self.charge(len(block)); n += len(block)
++                        require(n <= cap, 'stored_readback_byte_limit'); h.update(block)
++                finally:
++                    if stream is not raw: stream.close()
++            require(stamp(os.fstat(fd)) == expected_stat == stamp(path.lstat()),
++                    'stored_identity_changed_during_readback')
++        finally:
++            os.close(fd)
++        return n, h.hexdigest()
++
+     def copy(self, row):
+         path, fd, before = self.open_original(row['original_path'], MAX_ORIGINAL)
+         target, outfd = self.fresh_file(row['stored_relative_path'])
+@@ -231,29 +259,17 @@
+         require(n==row['original_bytes'] and h.hexdigest()==row['original_sha256'],'stored_source_byte_mismatch')
+         stored=target.lstat();require(stat.S_ISREG(stored.st_mode) and stored.st_uid==os.getuid()
+               and stored.st_nlink==1 and stat.S_IMODE(stored.st_mode)==0o600,'stored_file_type_owner_mode')
+-        sh=hashlib.sha256(); seen=0
+-        with target.open('rb') as f:
+-            while True:
+-                self.tick();part=f.read(1024*1024)
+-                if not part:break
+-                self.charge(len(part));seen+=len(part);sh.update(part)
+-        require(stamp(target.lstat())==stamp(stored),'stored_file_changed_during_hash')
+-        dh=hashlib.sha256(); dn=0
+-        with target.open('rb') as f:
+-            stream=gzip.GzipFile(fileobj=f,mode='rb') if row['storage_codec']=='gzip_mtime0' else f
+-            try:
+-                while True:
+-                    self.tick();part=stream.read(min(1024*1024,row['original_bytes']-dn+1))
+-                    if not part:break
+-                    self.charge(len(part));dn+=len(part);require(dn<=row['original_bytes'],'decompression_excess')
+-                    dh.update(part)
+-            finally:
+-                if stream is not f:stream.close()
+-        require(dn==row['original_bytes'] and dh.hexdigest()==row['original_sha256']
+-                and stamp(target.lstat())==stamp(stored),'stored_original_decode_mismatch')
+-        return {**row,'stored_bytes':seen,'stored_sha256':sh.hexdigest(),
++        expected_stored = stamp(stored)
++        seen, stored_sha = self.stored_digest(target, expected_stored,
++                                              row['original_bytes']+GZIP_THRESHOLD)
++        dn, decoded_sha = self.stored_digest(target, expected_stored,
++                                             row['original_bytes'],
++                                             row['storage_codec']=='gzip_mtime0')
++        require(dn==row['original_bytes'] and decoded_sha==row['original_sha256'],
++                'stored_original_decode_mismatch')
++        return {**row,'stored_bytes':seen,'stored_sha256':stored_sha,
+                 'stored_stat':stamp(stored),'decompressed_original_bytes':dn,
+-                'decompressed_original_sha256':dh.hexdigest(),'decompression_equals_original_byte_pin':True}
++                'decompressed_original_sha256':decoded_sha,'decompression_equals_original_byte_pin':True}
+ 
+     def write_metadata(self, name, body):
+         require(name in {'README.md','manifest.json'} and len(body)<=MAX_METADATA,'archive_metadata_limit')
+@@ -262,7 +278,13 @@
+         try:
+             with os.fdopen(fd,'wb',closefd=False) as out:out.write(body);out.flush();os.fsync(fd)
+         finally:os.close(fd)
+-        require((self.dest/name).read_bytes()==body,'archive_metadata_readback')
++        target=self.dest/name; before=stamp(target.lstat())
++        require(stat.S_ISREG(before['mode']) and before['uid']==os.getuid()
++                and before['nlink']==1 and stat.S_IMODE(before['mode'])==0o600,
++                'archive_metadata_type_owner_mode')
++        n,digest=self.stored_digest(target,before,MAX_METADATA)
++        require(n==len(body) and digest==hashlib.sha256(body).hexdigest(),
++                'archive_metadata_readback')
+ 
+     def perform(self):
+         self_raw,self_pin=self.read_pin(Path(__file__),MAX_METADATA)
+@@ -308,7 +330,9 @@
+         originals=[self.copy(row) for row in rows]
+         for p,pin in self.inputs.items():
+             require(stamp(Path(p).lstat())==pin['stat'],'original_or_control_changed_before_publication')
+-        require(hashlib.sha256(Path(__file__).read_bytes()).hexdigest()==self.args.source_sha256,'final_archiver_source_recheck')
++        _, final_source=self.read_pin(Path(__file__),MAX_METADATA,
++                {'bytes':self_pin['bytes'],'sha256':self.args.source_sha256})
++        require(final_source['stat']==self_pin['stat'],'final_archiver_source_recheck')
+         after=self.source_state()
+         now=datetime.now(timezone.utc); eastern=now.astimezone(ZoneInfo('America/Detroit'))
+         readme=(f'# Reference, inode-birth and dependency observation byte custody\n\nDate: {eastern:%Y-%m-%d %H:%M:%S} (ET). Created UTC: {now.isoformat()}.\n\n'

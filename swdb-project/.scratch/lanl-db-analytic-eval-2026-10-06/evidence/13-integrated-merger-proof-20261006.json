@@ -1,0 +1,62 @@
+{
+  "format": "swdb.ticket13.integrated-merger-proof.v1",
+  "created_utc": "2026-10-07T03:23:37.227235+00:00",
+  "base": "0e4ac9b76de4146bcd58e7652e352dc84f689559",
+  "ticket13_done_tip": "381dbea43de2fd11dfddd7e83ba5b0bd95a7f6f2",
+  "integration_merge_tip": "381dbea43de2fd11dfddd7e83ba5b0bd95a7f6f2",
+  "merge": "clean fast-forward; no source changes or conflicts",
+  "focused_public_tests": {
+    "command": "python3 -m pytest -q tests/test_paper_sanity_check.py",
+    "passed": 9,
+    "elapsed_s": 4.12,
+    "exit_code": 0
+  },
+  "preservation": {
+    "protected_prefixes": [
+      "swdb-project/records",
+      "swdb-project/library",
+      "swdb-project/apps",
+      "swdb-project/swdb"
+    ],
+    "protected_prior_blob_count": 1059,
+    "all_prior_blobs_equal": true,
+    "canonical_record_yaml_count": 631,
+    "canonical_additions": 0,
+    "campaign_blobs_equal": true,
+    "swdb_source_bytes_unchanged": true,
+    "only_ticket13_map_row_changed": true,
+    "scope_only_swdb_project": true,
+    "base_2c50e5f_ancestor": true,
+    "root_idea_resurrected": false,
+    "changed_paths": [
+      "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/13-dx100-paper-sanity-20261006-a1/report.json",
+      "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/13-dx100-paper-sanity-20261006-a1/report.md",
+      "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/13-dx100-paper-sanity-request-20261006-a1.json",
+      "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/13-paper-sanity-closeout-20261006.json",
+      "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/issues/13-dx100-sanity-check.md",
+      "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/map.md",
+      "swdb-project/docs/reference/paper-sanity-check.md",
+      "swdb-project/scripts/paper_sanity_check.py",
+      "swdb-project/tests/test_paper_sanity_check.py"
+    ]
+  },
+  "reported_paper_sanity": {
+    "report_identity_sha256": "8d23f9b59f49ae261849c7c11f644f92c8af1b2f91e9a7c7e2fb215e51c3d324",
+    "accuracy_validation": false,
+    "estimated_bfs_ratio": null,
+    "basis": "reported approximate paper bars; weak scope-qualified sanity comparison only"
+  },
+  "checks_not_repeated": {
+    "canonical_validation": "Exact authoritative store blobs unchanged; inherited631valid remains applicable.",
+    "broad_llvm_regression": "No estimator/compiler/runtime source edits."
+  },
+  "boundary": {
+    "push": false,
+    "main_change": false,
+    "ssh": false,
+    "provider_inference": false,
+    "native_execution": false,
+    "own_ticket11_untouched": true
+  },
+  "identity_sha256": "754f41322cbd5056801bc1852e5866ae77ea026b6a39d3b47f7c37886cfe809e"
+}

@@ -1,0 +1,65 @@
+{
+  "actual_author_outputs_parent_reviewed": true,
+  "author_custody_original": {
+    "bytes": 8631,
+    "path": "/data1/yanruj/lanl17-p4-full-index-author-20261009-a5-a1/author-custody.json",
+    "sha256": "e94dfea2e737f426dc241c0c649bff82026351d5eb8e297ff114176abbbbe11b"
+  },
+  "author_preparation_plan": {
+    "bytes": 5795,
+    "path": "/data1/yanruj/lanl17-p4-full-index-specification-preparation-20261009-a5-a1/index-author-action-plan.json",
+    "sha256": "6b0f3ebb2557f7d27a480385edcf905362ce5a690fd60435ef3232aa03fb4e5c"
+  },
+  "bootstrap_parent_local_seconds": 1800,
+  "bootstrap_parent_remote_seconds": 1680,
+  "campaign": "extensa-gem5-bfs-20261006-p4",
+  "format": "swdb.lanl17-full-index-parent-preparation-input.v1",
+  "parent_attestation": {
+    "HOME_and_public_auth_preserved": true,
+    "actual_inputs_parent_approved": true,
+    "all_campaign_processes_stopped": true,
+    "all_four_normal_custodies_root_and_peer_reviewed": true,
+    "all_native_leases_currently_released_no_kernel_holder_or_FD9": true,
+    "all_outputs_currently_fresh_owned_and_disjoint": true,
+    "campaign": "extensa-gem5-bfs-20261006-p4",
+    "catalog_inventory_sha256": "c9b4c6cbe4b6811e1519d19dba76473a20a2776948b83716de121d09c6fd2c57",
+    "catalog_unchanged_since_original_validation": true,
+    "exclusive_snapshot_ownership_confirmed": true,
+    "fixtures_or_replays_allowed": false,
+    "native_Bash_startup_and_1024_byte_ulimit_units_reviewed": true,
+    "native_executable_sha256": {
+      "/usr/bin/bash": "bc5945feb8bd26203ebfafea5ce1878bb2e32cb8fb50ab7ae395cfb1e1aaaef1",
+      "/usr/bin/mkdir": "430c3f949d7d328cd835722f5bbddeac0956fbdfbbb6a197e0abb1def3ed27e2",
+      "/usr/bin/python3.12": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+      "/usr/bin/sha256sum": "4d2db56c867e5324e0084c9e897f6360d37517de77ac96f2bd31494223d69a60",
+      "/usr/bin/timeout": "12690a043dfd555a6c14ccc1564f5649c18f1762c0d6ff66729948130898ec52",
+      "/usr/bin/wc": "9005273a966c875547a4317288bdd92e7b2aa49ad86bc9978121242106405e6b"
+    },
+    "native_tools_current_owned_regular_byte_pins_reviewed": true,
+    "no_catalog_consumers_confirmed": true,
+    "observed_utc": "2026-10-09T19:19:49.301278+00:00",
+    "prior_validation_full_catalogue": true,
+    "records_directory": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p4/records",
+    "reviewed_utc": "2026-10-09T19:19:54.891267+00:00",
+    "source_R_F6_current_and_clean": true,
+    "valid_until_utc": "2026-10-09T19:24:49.301278+00:00",
+    "validation_files_sha256": {
+      "validation_argv": "b3766a64344f162a0860c7e463f1fd5589b9b9e39e5fc6c3013f882f60a9f731",
+      "validation_exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "validation_stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "validation_stdout": "824bf2ba02fb5053d4e31c06019216ff5d4a86e92ff829bc78131e501671b2e6"
+    }
+  },
+  "preparation_output": "/data1/yanruj/lanl17-p4-full-index-bootstrap-preparation-20261009-a5-a1",
+  "request_original": {
+    "bytes": 46540,
+    "path": "/data1/yanruj/lanl17-p4-full-index-author-20261009-a5-a1/index-request.json",
+    "sha256": "f13904e3493ea8200c78e5a5cbd0f42721d946e44b0a77aa90e81fc7547d74f9"
+  },
+  "specification_original": {
+    "bytes": 47454,
+    "path": "/data1/yanruj/lanl17-p4-full-index-specification-preparation-20261009-a5-a1/index-author-specification.json",
+    "sha256": "3f17034df58aa2a12f65e4cea69cb72f741a23273cd97d3185866148d54db91f"
+  },
+  "stage": "bootstrap"
+}

@@ -1,0 +1,73 @@
+--- /private/tmp/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r2.py
++++ /private/tmp/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r3.py
+@@ -558,7 +558,8 @@
+                 inaccessible_foreign+=1;continue
+             fields=dict(line.split(':',1) for line in raw.decode().splitlines() if ':' in line)
+             snapshots[int(proc.name)]={'path':proc,'uids':[int(x) for x in fields['Uid'].split()],
+-                                       'ppid':int(fields['PPid']),'state':fields['State'].split()[0]}
++                                       'ppid':int(fields['PPid']),'state':fields['State'].split()[0],
++                                       'threads':int(fields['Threads'])}
+         owned={pid for pid,row in snapshots.items() if UID in row['uids']}
+         relevant=set(owned)
+         for pid,row in snapshots.items():
+@@ -571,7 +572,7 @@
+         def charge_service_bytes(count):
+             self.g.read_bytes+=count
+             require(self.g.read_bytes<=LIMITS['total_file_bytes'],'cumulative_account_service_read_limit')
+-        records=[];excluded=[]
++        records=[];excluded=[];terminal_zombies=[]
+         for pid in sorted(relevant):
+             self.left();r=snapshots[pid];proc=r['path']
+             before=self.g.proc_read(proc/'stat',LIMITS['one_proc_bytes'])
+@@ -583,6 +584,43 @@
+                 audit=helper(identification_pin,review_identity,self.left,charge_service_bytes)
+                 require(start==audit['start_ticks'],'account_service_snapshot_PID_changed')
+                 self.charge(audit);excluded.append(audit)
++                continue
++            if r['state']=='Z':
++                # Linux v6.8 do_exit clears task mm/files/fs before EXIT_ZOMBIE.
++                # Require one thread so a dead leader cannot hide live siblings.
++                before_values=before[before.rfind(b')')+2:].split()
++                require(before_values[0]==b'Z' and int(before_values[1])==r['ppid']
++                        and r['threads']==1,'terminal_zombie_initial_public_identity_changed')
++                status=self.g.proc_read(proc/'status',LIMITS['one_proc_bytes'])
++                require(status is not None,'terminal_zombie_status_disappeared')
++                terminal_fields={}
++                for line in status.decode().splitlines():
++                    if ':' in line:
++                        key,value=line.split(':',1)
++                        require(key not in terminal_fields,'terminal_zombie_duplicate_status')
++                        terminal_fields[key]=value.strip()
++                terminal_uids=[int(value) for value in terminal_fields['Uid'].split()]
++                require(terminal_fields['State'].split()[:1]==['Z']
++                        and int(terminal_fields['Pid'])==pid
++                        and int(terminal_fields['PPid'])==r['ppid']
++                        and terminal_uids==r['uids'] and int(terminal_fields['Threads'])==1,
++                        'terminal_zombie_fresh_public_identity_changed')
++                after=self.g.proc_read(proc/'stat',LIMITS['one_proc_bytes'])
++                require(after is not None,'terminal_zombie_final_stat_disappeared')
++                after_values=after[after.rfind(b')')+2:].split()
++                require(after_values[0]==b'Z' and int(after_values[19])==start
++                        and int(after_values[1])==r['ppid'],
++                        'terminal_zombie_final_state_PID_or_parent_changed')
++                audit={'pid':pid,'start_ticks':start,'ppid':r['ppid'],'uids':terminal_uids,
++                    'state':'Z','threads':1,'captured_status_and_fresh_before_after_stat_Z':True,
++                    'fresh_public_status_pin':{'bytes':len(status),'sha256':sha(status)},
++                    'protected_references':{key:'UNOBSERVED' for key in ('fd','cwd','root','exe','maps')},
++                    'kernel_terminal_resource_release_basis':
++                        'https://github.com/torvalds/linux/blob/v6.8/kernel/exit.c#L858-L891',
++                    'kernel_terminal_mm_files_fs_invariant_is_explicit_assumption':True,
++                    'other_threads_or_live_consumers_exempted':False,
++                    'global_reference_free_or_cleanup_clearance_claimed':False}
++                self.charge(audit);terminal_zombies.append(audit)
+                 continue
+             try:
+                 links=[proc/'cwd',proc/'root',proc/'exe',*sorted((proc/'fd').iterdir())]
+@@ -607,6 +645,7 @@
+                 if proc.exists():raise Refused('relevant_process_field_missing')
+         return {'owned_or_owned_descendant_snapshots':records,'process_links_observed':self.fds,
+                 'excluded_exact_system_services':excluded,
++                'stable_single_thread_terminal_zombie_audits':terminal_zombies,
+                 'excluded_service_protected_references_unobserved_not_reference_free':True,
+                 'other_owned_or_owned_descendant_inaccessible_references_still_refuse':True,
+                 'inaccessible_unidentified_process_count':inaccessible_foreign,

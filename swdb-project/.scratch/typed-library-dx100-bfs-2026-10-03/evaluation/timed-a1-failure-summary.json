@@ -1,0 +1,772 @@
+{
+  "format": "swdb.typed-library-timed-failure-summary.v1",
+  "generated_at": "2026-10-03T15:48:22.963759+00:00",
+  "generated_at_et": "2026-10-03T11:48:22.963759-04:00",
+  "id": "typed-library-bfs-gem5-20261003-a1",
+  "attempt": "timed",
+  "runtime_commit": "982d19b23eb0303ecacc938c5334e6479b861197",
+  "source_frozen": true,
+  "evidence_basis": "simulated",
+  "disposition": "incomplete baseline attempt; no candidate assessment or valid point ratio",
+  "driver": {
+    "format": "swdb.typed-library-gem5-driver.v1",
+    "state": "failed",
+    "started": "2026-10-03T15:18:31.624862+00:00",
+    "finished": "2026-10-03T15:44:06.936164+00:00",
+    "reason": "timed.w0.baseline failed its verifier; retained evaluation typed-library-bfs-gem5-20261003-a1.timed.w0.baseline.evaluation",
+    "runtime_commit": "982d19b23eb0303ecacc938c5334e6479b861197",
+    "runtime_branch": "yanrujhou_main",
+    "tracked_changes": [],
+    "lane": "mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 441)",
+    "approval_reference": "typed-library-related-approval-20261003",
+    "authoring_session": "codex-typed-library-dx100-bfs-20261003",
+    "memory_gib": 36,
+    "storage_gib": 8,
+    "driver_sha256": "edb212d0640abe0276c70eeb799969a1bd9bfb4431f1275e19abe9d4dbfaf1ac",
+    "preflight": {
+      "disk": "/data1",
+      "runs_folder": "/data1/yanruj/EvolveSWDB_runs",
+      "free_bytes": 46237720576,
+      "memory_node": 0,
+      "free_memory_bytes": 35659182080,
+      "secondary_free_bytes": 78837571584,
+      "node_memory_stats_bytes": {
+        "MemTotal": 66951016448,
+        "MemFree": 35659182080,
+        "Inactive(file)": 21365223424,
+        "Mapped": 972066816,
+        "Shmem": 6594560,
+        "Dirty": 389120,
+        "Writeback": 0,
+        "Unevictable": 40005632
+      },
+      "node_zone_reserve_bytes": 450916352,
+      "node_managed_memory_bytes": 66951016448,
+      "estimated_memory_capacity_bytes": 41537298432,
+      "memory_capacity_basis": "node_memfree_plus_conservative_inactive_file.v1",
+      "inactive_file_credit_bytes": 10173083648,
+      "node_memory_reserve_bytes": 4294967296,
+      "format": "swdb.dispatch-preflight.v1",
+      "observed_at": "2026-10-03T15:18:31.729667+00:00",
+      "planned_raw_bytes": 8589934592,
+      "reserve_bytes": 21474836480,
+      "memory_budget_bytes": 38654705664,
+      "state": "admitted"
+    }
+  },
+  "outer_exitcode": 1,
+  "dispatcher": {
+    "socket_lane": {
+      "aligned_cell_age_s": "",
+      "aligned_to": "none",
+      "command": [
+        "python3",
+        "/data1/yanruj/ArchEvolve/swdb-project/tools/typed_library_gem5_driver.py",
+        "--stage",
+        "timed",
+        "--id",
+        "typed-library-bfs-gem5-20261003-a1",
+        "--runs-dir",
+        "/data1/yanruj/EvolveSWDB_runs",
+        "--records",
+        "/data1/yanruj/ArchEvolve/swdb-project/records",
+        "--authoring-session",
+        "codex-typed-library-dx100-bfs-20261003",
+        "--approval-reference",
+        "typed-library-related-approval-20261003",
+        "--memory-gib",
+        "36",
+        "--storage-gib",
+        "8"
+      ],
+      "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+      "ended_utc": "2026-10-03T15:44:07Z",
+      "exit_code": 1,
+      "host": "mbit10",
+      "job": "typed-library-bfs-gem5-20261003-a1.timed",
+      "lease_generation": 441,
+      "lease_name": "mbit10-evaluation-node0",
+      "load1_at_start": 1.49,
+      "load1_max": 8,
+      "node": 0,
+      "numa_memory_policy": "bind:0",
+      "numactl": "--cpunodebind=0 --membind=0",
+      "preregistration_sha256": null,
+      "started_utc": "2026-10-03T15:18:31Z"
+    }
+  },
+  "protocol": {
+    "id": "typed-library-bfs-gem5-20261003-a1.protocol.8de9b516796360dc",
+    "sha256": "052470b18a37ced014f10ffbb3fa18625e5a4ad755cf39b89fa4685a21152e4f"
+  },
+  "protocol_version": 1,
+  "supersedes": null,
+  "region_pairs": [],
+  "actual_evaluation": {
+    "pin": {
+      "id": "typed-library-bfs-gem5-20261003-a1.timed.w0.baseline.evaluation",
+      "sha256": "013e7c5a5d0520022902f231ed1294b096fe63d4017c5dd26482f31c645f9743"
+    },
+    "record_path": "records/evaluations/typed-library-bfs-gem5-20261003-a1.timed.w0.baseline.evaluation.yaml",
+    "outcome": {
+      "state": "missing_observation",
+      "stage": "simulation",
+      "reason": "missing, ambiguous, interrupted, or incomplete post-ROI verifier outcome"
+    },
+    "correctness_state": "unverified",
+    "request_verification": {
+      "checker": "dx100.bfs.verifier.v2",
+      "max_ticks": 10000000000,
+      "coverage": false,
+      "post_roi_trace": "SyscallBase",
+      "trace_transport": "gem5-gzip.v1",
+      "read_only": false
+    },
+    "continuation": {
+      "checker": "dx100.bfs.verifier.v2",
+      "chunk_ticks": 1000000000,
+      "exit_cause": "simulate() limit reached",
+      "exit_code": 0,
+      "exit_tick": 188336722944,
+      "max_ticks": 10000000000,
+      "normal_exit_observed": false,
+      "parser_sha256": "89a48e42389a47c0f8466093c52dea7c032bf276d8470172fbe88199767c65de",
+      "post_roi_trace": {
+        "bytes": 5830,
+        "disabled_format_flags": [
+          "FmtTicksOff",
+          "FmtStackTrace"
+        ],
+        "disabled_roi_flags": [
+          "MAATrace",
+          "MAARangeFuser",
+          "MAAIndirect"
+        ],
+        "enabled_tick": 178336722944,
+        "flag": "SyscallBase",
+        "format_flags": [
+          "FmtFlag"
+        ],
+        "output": "separate_simulator_trace",
+        "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.timed.w0.baseline.evaluation/simulation/post-roi-syscalls.log",
+        "scope": "post-seal verifier continuation only",
+        "sha256": "2ad2e4d103714defeffaaa92f8e0450d223cfac0f2f7233bf25bb201462fc9c8"
+      },
+      "simulated_ticks": 10000000000,
+      "state": "finished",
+      "stop_reason": "tick_limit"
+    },
+    "observed_verdicts": [],
+    "parent_results": [],
+    "stages": [
+      {
+        "stage": "execution_identity",
+        "state": "complete",
+        "started": "2026-10-03T15:19:22.253621+00:00",
+        "finished": "2026-10-03T15:19:26.576872+00:00"
+      },
+      {
+        "stage": "checkpoint",
+        "state": "complete",
+        "started": "2026-10-03T15:19:29.191919+00:00",
+        "command": [
+          "/data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt",
+          "--outdir=/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.timed.w0.baseline.evaluation/checkpoint",
+          "/data1/yanruj/DX100-bfs-e4fc4af/configs/deprecated/example/se.py",
+          "--cpu-type",
+          "AtomicSimpleCPU",
+          "-n",
+          "4",
+          "--mem-size",
+          "16GB",
+          "--max-checkpoints",
+          "1",
+          "--cmd",
+          "/data1/yanruj/EvolveSWDB_builds/typed-library-bfs-gem5-20261003-a1.baseline.primary.build/bfs",
+          "--options",
+          "-f /data1/yanruj/EvolveSWDB_runs/dx100-loader-inputs/dx100-gapbs-c6a430be5cf64a1b144d01f9bcbaeab2fcb45e0fac2359da36de8087b1b4790d.sg -l -n 1 -v -r 0"
+        ],
+        "timeout_s": 1800,
+        "log": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.timed.w0.baseline.evaluation/001-checkpoint.log",
+        "finished": "2026-10-03T15:22:57.092010+00:00",
+        "host_wall_s": 205.29388950020075,
+        "returncode": 0,
+        "log_sha256": "edf176d663893bdb53efb9c98d11a343a7d690091ebd06be98ae764c0e22d020",
+        "reason": null,
+        "sampled_peak_process_group_rss_kib": 259740
+      },
+      {
+        "stage": "simulation",
+        "state": "complete",
+        "started": "2026-10-03T15:23:03.274102+00:00",
+        "command": [
+          "/data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt",
+          "--debug-flags=MAATrace",
+          "--debug-file=/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.timed.w0.baseline.evaluation/simulation/roi-debug.trace.gz",
+          "--outdir=/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.timed.w0.baseline.evaluation/simulation",
+          "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.timed.w0.baseline.evaluation/verification-runtime/scripts/dx100_verify.py",
+          "--cpu-type",
+          "X86O3CPU",
+          "-n",
+          "4",
+          "--mem-size",
+          "16GB",
+          "--sys-clock",
+          "3.2GHz",
+          "--cpu-clock",
+          "3.2GHz",
+          "--caches",
+          "--l1d_size=32kB",
+          "--l1d_assoc=8",
+          "--l1d-hwp-type=StridePrefetcher",
+          "--l1d_mshrs=16",
+          "--l1d_write_buffers=8",
+          "--l1i_size=32kB",
+          "--l1i_assoc=8",
+          "--l1i-hwp-type=StridePrefetcher",
+          "--l1i_mshrs=16",
+          "--l1i_write_buffers=8",
+          "--l2cache",
+          "--l2_size=256kB",
+          "--l2_assoc=4",
+          "--l2-hwp-type=StridePrefetcher",
+          "--l2_mshrs=32",
+          "--l2_write_buffers=16",
+          "--l3cache",
+          "--l3_size=8MB",
+          "--l3_assoc=16",
+          "--l3_mshrs=256",
+          "--l3_write_buffers=128",
+          "--l3_ports",
+          "4",
+          "--cacheline_size=64",
+          "--mem-type",
+          "Ramulator2",
+          "--ramulator-config",
+          "/data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/example_gem5_config.yaml",
+          "--mem-channels",
+          "2",
+          "--maa_ncbus_width",
+          "32",
+          "--prog-interval=1000",
+          "--cmd",
+          "/data1/yanruj/EvolveSWDB_builds/typed-library-bfs-gem5-20261003-a1.baseline.primary.build/bfs",
+          "--options",
+          "-f /data1/yanruj/EvolveSWDB_runs/dx100-loader-inputs/dx100-gapbs-c6a430be5cf64a1b144d01f9bcbaeab2fcb45e0fac2359da36de8087b1b4790d.sg -l -n 1 -v -r 0",
+          "--checkpoint-dir",
+          "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.timed.w0.baseline.evaluation/checkpoint",
+          "-r",
+          "1"
+        ],
+        "timeout_s": 7140,
+        "log": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.timed.w0.baseline.evaluation/002-simulation.log",
+        "finished": "2026-10-03T15:43:57.867450+00:00",
+        "host_wall_s": 1251.9720955556259,
+        "returncode": 0,
+        "log_sha256": "822bfb0989faec973c5c6a52133d90c569ef862b979594e10e0f5a98d50057d3",
+        "reason": null,
+        "sampled_peak_process_group_rss_kib": 32084980
+      }
+    ],
+    "sealed_roi": {
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.timed.w0.baseline.evaluation/simulation/roi-seal.json",
+      "sha256": "373fbddf926279e2070ff971fa44ed714b4c71251343b06f620fb1cc097afaca",
+      "driver_sha256": "1e8c048dc2155708429f86e58761032b22d73dd2dcdb6da089063a768693484b",
+      "execution_binding_sha256": "d85e9deb53e47265d11b690707365905efd205d4f9c5f44a191cf0b1a4f8ed93",
+      "format": "swdb.dx100.roi-seal.v1",
+      "host_memory_observer_sha256": "655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd",
+      "roi_exit_cause": "m5_exit instruction encountered",
+      "roi_exit_tick": 178336722944,
+      "statistics": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.timed.w0.baseline.evaluation/simulation/roi-stats.txt",
+        "sha256": "de6bbf9f8309e047488c385b7efb272f848168299d69d02f7a9eb29a18a9c7e4"
+      },
+      "verification": {
+        "checker": "dx100.bfs.verifier.v2",
+        "chunk_ticks": 1000000000,
+        "exit_cause": "simulate() limit reached",
+        "exit_code": 0,
+        "exit_tick": 188336722944,
+        "max_ticks": 10000000000,
+        "normal_exit_observed": false,
+        "parser_sha256": "89a48e42389a47c0f8466093c52dea7c032bf276d8470172fbe88199767c65de",
+        "post_roi_trace": {
+          "bytes": 5830,
+          "disabled_format_flags": [
+            "FmtTicksOff",
+            "FmtStackTrace"
+          ],
+          "disabled_roi_flags": [
+            "MAATrace",
+            "MAARangeFuser",
+            "MAAIndirect"
+          ],
+          "enabled_tick": 178336722944,
+          "flag": "SyscallBase",
+          "format_flags": [
+            "FmtFlag"
+          ],
+          "output": "separate_simulator_trace",
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.timed.w0.baseline.evaluation/simulation/post-roi-syscalls.log",
+          "scope": "post-seal verifier continuation only",
+          "sha256": "2ad2e4d103714defeffaaa92f8e0450d223cfac0f2f7233bf25bb201462fc9c8"
+        },
+        "simulated_ticks": 10000000000,
+        "state": "finished",
+        "stop_reason": "tick_limit"
+      },
+      "verification_parser": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.timed.w0.baseline.evaluation/verification-runtime/swdb/dx100_witness.py",
+        "sha256": "89a48e42389a47c0f8466093c52dea7c032bf276d8470172fbe88199767c65de"
+      }
+    },
+    "checkpoint_manifest": {
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.timed.w0.baseline.evaluation/checkpoint-manifest.json",
+      "sha256": "1b89487fea335b3309099573cd511aaeb5c24289e0dfedc5fac998bd1e51ce75"
+    }
+  },
+  "sample_matrix": [
+    {
+      "workload": "bfs-20260928-uniform18-s0.8c7e69dfa516e53c",
+      "role": "baseline",
+      "state": "missing_observation",
+      "correctness": "unverified",
+      "reason": "Post-ROI continuation exhausted10**10ticks without structural verdict/returned-parent result/exit witness."
+    },
+    {
+      "workload": "bfs-20260928-uniform18-s0.8c7e69dfa516e53c",
+      "role": "candidate",
+      "state": "not_run"
+    },
+    {
+      "workload": "bfs-20260928-kronecker18-s0.cf4283236c5cb50c",
+      "role": "baseline",
+      "state": "not_run"
+    },
+    {
+      "workload": "bfs-20260928-kronecker18-s0.cf4283236c5cb50c",
+      "role": "candidate",
+      "state": "not_run"
+    }
+  ],
+  "aggregates": [],
+  "comparisons": [],
+  "point_ratios": [],
+  "performance_claim": false,
+  "retained_failed_checkpoint": {
+    "state": "verified",
+    "artifact": {
+      "files": [
+        {
+          "bytes": 4664,
+          "executable": false,
+          "path": "citations.bib",
+          "sha256": "107591e44a9aaf00921aa25e1ff6542570e2a7eb81536764c828f6646f2a8dd5"
+        },
+        {
+          "bytes": 21057,
+          "executable": false,
+          "path": "config.ini",
+          "sha256": "f392a2e0ba2f15341893a2571de06cfc073bda8ce7e3c2e521f9e99c74690406"
+        },
+        {
+          "bytes": 63505,
+          "executable": false,
+          "path": "config.json",
+          "sha256": "188c1551805f7cc1ba58d097fadfc9fa984eed28c6046f9305863402efba3c86"
+        },
+        {
+          "bytes": 5468115,
+          "executable": false,
+          "path": "cpt.158779844500/m5.cpt",
+          "sha256": "90dc94e595a33aed5d87a3a36c5508b5c9d581e1c5ada58cabb13ef366705927"
+        },
+        {
+          "bytes": 67595139,
+          "executable": false,
+          "path": "cpt.158779844500/system.physmem.store0.pmem",
+          "sha256": "7ecca73bfaaec7726a0f17e57e918086037cc618c11f72703778f042d355f736"
+        },
+        {
+          "bytes": 1580,
+          "executable": false,
+          "path": "fs/proc/cpuinfo",
+          "sha256": "dd54b96851250c297b943eda4273783818507a6dd6fcd2fa34fa62b70f2d00c4"
+        },
+        {
+          "bytes": 94,
+          "executable": false,
+          "path": "fs/proc/stat",
+          "sha256": "77f984b7e5466538244ea688c0225d6ce4be8c9571c181dd59f63990e028ea51"
+        },
+        {
+          "bytes": 3,
+          "executable": false,
+          "path": "fs/sys/devices/system/cpu/online",
+          "sha256": "f0e7dd3ebbfd0bb1bfeca50048635775fe0cc4eae4280a9a924de9450351064b"
+        },
+        {
+          "bytes": 3,
+          "executable": false,
+          "path": "fs/sys/devices/system/cpu/possible",
+          "sha256": "f0e7dd3ebbfd0bb1bfeca50048635775fe0cc4eae4280a9a924de9450351064b"
+        },
+        {
+          "bytes": 125462,
+          "executable": false,
+          "path": "stats.txt",
+          "sha256": "4133b43d31280c6bab52743c75b776cca85e0026729633434f978b595f4b7f12"
+        }
+      ],
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.timed.w0.baseline.evaluation/checkpoint",
+      "sha256": "2ede0db4c53fc236dfe316ab469d6cf6be5d07efb1baf76a556a723bb64b9cf4"
+    }
+  },
+  "public_companion_acceptance": {
+    "case": "parent_gather_race",
+    "outcome": "observed",
+    "evaluations": {
+      "timed": {
+        "evaluation": "typed-library-bfs-gem5-20261003-a1.companion.timed.evaluation",
+        "sha256": "1fddaf2f5b7f3d41f0212edc8dfedd409e484aff4cf043b9a06dd13afe8e5c7b",
+        "frontier_sizes": {
+          "state": "passed",
+          "observed": [
+            1,
+            4097,
+            4113
+          ],
+          "oracle": [
+            1,
+            4097,
+            4113
+          ],
+          "lines": [
+            {
+              "count": 1,
+              "line": 75
+            },
+            {
+              "count": 4097,
+              "line": 88
+            },
+            {
+              "count": 4113,
+              "line": 90
+            }
+          ],
+          "output": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.companion.timed.evaluation/002-simulation.log",
+            "sha256": "c97520994f84a53e0c8d4495ee0329c94527cd78a8d6666b54fb3d010824a46a"
+          },
+          "basis": "trusted original-adjacency BFS per-depth counts"
+        }
+      },
+      "diagnostic": {
+        "evaluation": "typed-library-bfs-gem5-20261003-a1.companion.diagnostic.evaluation",
+        "sha256": "2b33a68ef26c5174c16a6a455812688d9826efafc03aefcfcd11d86bafa70dbc",
+        "frontier_sizes": {
+          "state": "passed",
+          "observed": [
+            1,
+            4097,
+            4113
+          ],
+          "oracle": [
+            1,
+            4097,
+            4113
+          ],
+          "lines": [
+            {
+              "count": 1,
+              "line": 75
+            },
+            {
+              "count": 4097,
+              "line": 88
+            },
+            {
+              "count": 4113,
+              "line": 90
+            }
+          ],
+          "output": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.companion.diagnostic.evaluation/002-simulation.log",
+            "sha256": "3fd98b9e5ece025e6dab85050130cab339b8a927c6e53dfae67efb80a5fa7b66"
+          },
+          "basis": "trusted original-adjacency BFS per-depth counts"
+        },
+        "parent_gather_race": {
+          "outcome": "observed",
+          "probes": [
+            {
+              "cas_negative_hint_failures": 14546,
+              "l3_violations": 0,
+              "line": 94
+            }
+          ],
+          "output": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.companion.diagnostic.evaluation/002-simulation.log",
+            "sha256": "3fd98b9e5ece025e6dab85050130cab339b8a927c6e53dfae67efb80a5fa7b66"
+          },
+          "scope": "finite diagnostic execution; observed means race exercised without an L3 violation"
+        }
+      }
+    }
+  },
+  "library_states": {
+    "contract.bfs_read_offload": {
+      "tier": "shared",
+      "status": "evaluated_on_target"
+    },
+    "intrinsic.dxc_alu_scalar": {
+      "tier": "shared",
+      "status": "certified"
+    },
+    "intrinsic.dxc_const_i32": {
+      "tier": "shared",
+      "status": "evaluated_on_target"
+    },
+    "intrinsic.dxc_gather": {
+      "tier": "shared",
+      "status": "evaluated_on_target"
+    },
+    "intrinsic.dxc_range_loop": {
+      "tier": "shared",
+      "status": "evaluated_on_target"
+    },
+    "intrinsic.dxc_session_begin": {
+      "tier": "shared",
+      "status": "evaluated_on_target"
+    },
+    "intrinsic.dxc_stream_load": {
+      "tier": "shared",
+      "status": "evaluated_on_target"
+    },
+    "intrinsic.dxc_thread_context": {
+      "tier": "shared",
+      "status": "evaluated_on_target"
+    },
+    "intrinsic.dxc_tile_pointer": {
+      "tier": "shared",
+      "status": "evaluated_on_target"
+    },
+    "intrinsic.dxc_tile_size": {
+      "tier": "shared",
+      "status": "evaluated_on_target"
+    },
+    "intrinsic.dxc_wait": {
+      "tier": "shared",
+      "status": "evaluated_on_target"
+    },
+    "lowering.dxc_alu_scalar.dx100-mmio.1.0-e4fc4af": {
+      "tier": "shared",
+      "status": "certified"
+    },
+    "lowering.dxc_const_i32.dx100-mmio.1.0-e4fc4af": {
+      "tier": "shared",
+      "status": "evaluated_on_target"
+    },
+    "lowering.dxc_gather.dx100-mmio.1.0-e4fc4af": {
+      "tier": "shared",
+      "status": "evaluated_on_target"
+    },
+    "lowering.dxc_range_loop.dx100-mmio.1.0-e4fc4af": {
+      "tier": "shared",
+      "status": "evaluated_on_target"
+    },
+    "lowering.dxc_session_begin.dx100-mmio.1.0-e4fc4af": {
+      "tier": "shared",
+      "status": "evaluated_on_target"
+    },
+    "lowering.dxc_stream_load.dx100-mmio.1.0-e4fc4af": {
+      "tier": "shared",
+      "status": "evaluated_on_target"
+    },
+    "lowering.dxc_thread_context.dx100-mmio.1.0-e4fc4af": {
+      "tier": "shared",
+      "status": "evaluated_on_target"
+    },
+    "lowering.dxc_tile_pointer.dx100-mmio.1.0-e4fc4af": {
+      "tier": "shared",
+      "status": "evaluated_on_target"
+    },
+    "lowering.dxc_tile_size.dx100-mmio.1.0-e4fc4af": {
+      "tier": "shared",
+      "status": "evaluated_on_target"
+    },
+    "lowering.dxc_wait.dx100-mmio.1.0-e4fc4af": {
+      "tier": "shared",
+      "status": "evaluated_on_target"
+    }
+  },
+  "stop_audit": {
+    "observed_at": "2026-10-03T15:48:22.963759+00:00",
+    "owned_processes": [],
+    "named_tmux_alive": false,
+    "leases": {
+      "mbit10-evaluation-node0": {
+        "kernel": "free",
+        "metadata": {
+          "active_session": null,
+          "heartbeat_at": "2026-10-03T15:44:07Z",
+          "lease": {
+            "acquired_at": "2026-10-03T15:18:31Z",
+            "daemon_pid": 1583913,
+            "daemon_start_token": "sh1583913-1791040711",
+            "generation": 441,
+            "host": "mbit10",
+            "lease_name": "mbit10-evaluation-node0",
+            "mode": "measure",
+            "session_id": null
+          },
+          "attempt_pid": null,
+          "attempt_start_token": null,
+          "recovered_from_generation": null,
+          "released_at": "2026-10-03T15:44:07Z",
+          "session_note": null,
+          "session_state": "none",
+          "state": "released",
+          "writer": "hostlock.sh"
+        }
+      },
+      "mbit10-evaluation-node1": {
+        "kernel": "free",
+        "metadata": {
+          "active_session": null,
+          "heartbeat_at": "2026-10-03T12:51:22Z",
+          "lease": {
+            "acquired_at": "2026-10-03T12:48:39Z",
+            "daemon_pid": 1568990,
+            "daemon_start_token": "sh1568990-1791031719",
+            "generation": 506,
+            "host": "mbit10",
+            "lease_name": "mbit10-evaluation-node1",
+            "mode": "measure",
+            "session_id": null
+          },
+          "attempt_pid": null,
+          "attempt_start_token": null,
+          "recovered_from_generation": null,
+          "released_at": "2026-10-03T12:51:22Z",
+          "session_note": null,
+          "session_state": "none",
+          "state": "released",
+          "writer": "hostlock.sh"
+        }
+      },
+      "mbit10-evaluation": {
+        "kernel": "free",
+        "metadata": {
+          "active_session": null,
+          "heartbeat_at": "2026-09-12T04:49:11Z",
+          "lease": {
+            "acquired_at": "2026-09-12T01:35:42Z",
+            "daemon_pid": 209457,
+            "daemon_start_token": "sh209457-1789176942",
+            "generation": 77,
+            "host": "mbit10",
+            "lease_name": "mbit10-evaluation",
+            "mode": "measure",
+            "session_id": null
+          },
+          "attempt_pid": null,
+          "attempt_start_token": null,
+          "recovered_from_generation": null,
+          "released_at": "2026-09-12T04:49:11Z",
+          "session_note": null,
+          "session_state": "none",
+          "state": "released",
+          "writer": "hostlock.sh"
+        }
+      }
+    }
+  },
+  "public_record_validation": {
+    "state": "passed",
+    "records": 450,
+    "method": "driver._require_valid after full stop"
+  },
+  "raw_artifacts": [
+    {
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.dispatch-timed/dispatch.json",
+      "sha256": "76fd5c402656f61d824eca5f0639febb9d2f60c03aeb38b7020c422fd8f38f71",
+      "bytes": 9780,
+      "availability": "present"
+    },
+    {
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.dispatch-timed/lane.json",
+      "sha256": "63251042d6b6561cebb56f71362c1ef719f3251f8752457e01bcb632e6f9739c",
+      "bytes": 1114,
+      "availability": "present"
+    },
+    {
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.dispatch-timed/exitcode.txt",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "bytes": 2,
+      "availability": "present"
+    },
+    {
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.dispatch-timed/status-monitor.jsonl",
+      "sha256": "431c33cfd2542cfdb68c94df5922d3f02f83f596dd8e70d60a00dbeb0dd7642a",
+      "bytes": 78400,
+      "availability": "present"
+    },
+    {
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.driver-timed/driver.json",
+      "sha256": "488f488e91d3d0ac41a3c3295a9df077b2de46a1f7f172a318af2c01446ad757",
+      "bytes": 5166,
+      "availability": "present"
+    },
+    {
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.driver-timed/progress.json",
+      "sha256": "f5fa3fd2251715cc269a0904ba367cbe36066f10dd1385accafc83afa919e849",
+      "bytes": 740,
+      "availability": "present"
+    },
+    {
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.driver-timed/host-observation.json",
+      "sha256": "aedb07f4e5087b02d95014e00d4b4cf3408f086dc76752ad818a4112c3698b7f",
+      "bytes": 10831,
+      "availability": "present"
+    },
+    {
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.driver-timed/timed.w0.baseline.request.json",
+      "sha256": "9bde09efe67372c729ec57171ddaa5582baad0cdef8220f629514c491715f4f8",
+      "bytes": 1765,
+      "availability": "present"
+    },
+    {
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.timed.w0.baseline.evaluation/001-checkpoint.memory.jsonl",
+      "sha256": "adaac1d64b8859a3e941b178f1506b8b11496b95757c8b8e344801aa1503caea",
+      "bytes": 11699,
+      "availability": "present"
+    },
+    {
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.timed.w0.baseline.evaluation/002-simulation.memory.jsonl",
+      "sha256": "0f1135ee9c7607e3ff07e76fc39307824a27ef489dc1604f2e7d813b709f15af",
+      "bytes": 75245,
+      "availability": "present"
+    },
+    {
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.timed.w0.baseline.evaluation/simulation/roi-seal.json",
+      "sha256": "373fbddf926279e2070ff971fa44ed714b4c71251343b06f620fb1cc097afaca",
+      "bytes": 2047,
+      "availability": "present"
+    },
+    {
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.timed.w0.baseline.evaluation/simulation/post-roi-syscalls.log",
+      "sha256": "2ad2e4d103714defeffaaa92f8e0450d223cfac0f2f7233bf25bb201462fc9c8",
+      "bytes": 5830,
+      "availability": "present"
+    },
+    {
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.timed.w0.baseline.evaluation/002-simulation.log",
+      "sha256": "822bfb0989faec973c5c6a52133d90c569ef862b979594e10e0f5a98d50057d3",
+      "bytes": 26568,
+      "availability": "present"
+    }
+  ],
+  "next_dependency": "Review a uniformly larger bounded post-ROI verification budget and fresh attempt identity, preserving this invalid attempt; no performance tuning or threshold/model/binary change."
+}

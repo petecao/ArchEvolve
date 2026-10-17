@@ -1,0 +1,213 @@
+{
+  "TD_or_counted_admissible": false,
+  "blockers": [],
+  "created": "2026-10-16 ET",
+  "diagnostic_expectations": {
+    "failure_interpretation": "Unknown/timeout alone is not a semantic refutation or causal diagnosis.",
+    "missing_index": "May also leave base-index validity/value/domain goals open; no causal Init conclusion from aggregate nonproof.",
+    "native_negative_execution": "Forbidden",
+    "weak_output_outcome": "Unconstrained. Retain actual success if transfer semantics derive initializedness despite omitted clause.",
+    "wrong_prefix": "Second allocated cell is outside the promised one-cell produced prefix; no tail init/value guarantee is invented."
+  },
+  "generation_admission": false,
+  "helper_definitions": {
+    "bytes_unchanged_from_prior649": true,
+    "count": 20,
+    "header_sha256": "eb71f37abca6accc9d50242e50f6affd5e1621508f0529cecadda9fb746b5ddb",
+    "names": [
+      "swdb_bind_private_NodeID_array",
+      "compare_and_swap_out",
+      "fetch_and_add_size_t_out",
+      "std_min_size_t_out",
+      "omp_get_thread_num_out",
+      "pvector_NodeID_operator_index_out",
+      "pvector_NodeID_data_out",
+      "pvector_NodeID_beginp_out",
+      "pvector_NodeID_endp_out",
+      "pvector_SGOffset_operator_index_out",
+      "pvector_SGOffset_data_out",
+      "pvector_SGOffset_beginp_out",
+      "pvector_SGOffset_endp_out",
+      "SlidingQueue_NodeID_beginp_out",
+      "SlidingQueue_NodeID_endp_out",
+      "SlidingQueue_NodeID_size_out",
+      "QueueBuffer_NodeID_QueueBuffer",
+      "QueueBuffer_NodeID_destroy",
+      "QueueBuffer_NodeID_flush",
+      "QueueBuffer_NodeID_push_back"
+    ],
+    "normal_total_bodies": 25,
+    "not_a_new_helper_proof_or_reuse": true,
+    "weak_total_bodies": 21
+  },
+  "inspection_only": "Passive Git/source/hash/retained metadata. No project imports/tests/compiler/native/formal/prover/SSH or source edits.",
+  "normal_roots": [
+    "swdb_device_pipeline_safe",
+    "swdb_device_missing_source",
+    "swdb_device_wrong_prefix",
+    "swdb_device_index_safe",
+    "swdb_device_missing_index"
+  ],
+  "premise_boundary": {
+    "aliasing_scope": "These are diagnostic input domains, not a new proof that every arbitrary device/global aliasing state is representable or safe.",
+    "canonical_dimensions_remain_symbolic": true,
+    "fixture_TILE_SIZE": 2,
+    "no_payload_initializedness_or_desired_Init_reset_havoc_premise": true,
+    "requirements": "Valid output/two-cell backing ranges, intertile separation, output/metadata separation, idle hazards; index roots additionally length0=1.",
+    "stores": "Positive source/upper/base/index values are real C stores. Output guarantee remains actual assertions/postconditions, never requires."
+  },
+  "prior_contract_source": "649b8cd222ad5a82ae60c0de9d6bba8b28a2020d",
+  "proof_acceptance": false,
+  "remaining": [
+    "Root-admitted complete parsing/backend generation for both TUs, full unfiltered roots/helpers, ordinary/RTE/init/smoke/Extern/dependency/formula inventories with unit-qualified IDs.",
+    "Independent generated-task/runtime/source/import closure before any separately admitted bounded proof.",
+    "No actual proof outcome, whole TD/source/count admission or device hardware visibility theorem follows."
+  ],
+  "retained_evidence": {
+    "compiler_only_controls": 6,
+    "external_ref_instances_checked": 17,
+    "git_path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t07-device-init-diagnostic-sites-20261016.json",
+    "references": [
+      {
+        "bytes": 1935,
+        "path": "/private/tmp/probata-t07-device-init-site-compiler-controls-20261016.log.summary.json",
+        "sha256": "00c8cc19b8c49cdcd958e9a7faa4c23a152fe196293ef6cfc54d2cf2449a3134"
+      },
+      {
+        "bytes": 68,
+        "path": "/private/tmp/probata-t07-device-init-site-compiler-controls-20261016.log",
+        "sha256": "82ad66a4a65725ee1e39f03e6f4dc286f6642a2e1a2b501bd60f11fe9d3f7f2c"
+      },
+      {
+        "bytes": 274,
+        "path": "/private/tmp/probata-t07-device-init-site-compiler-controls-20261016.log.wait.json",
+        "sha256": "bbe5b1d13d84932a8a78dad37c08207bf7c629a527b2fde795b6b057e4832344"
+      },
+      {
+        "bytes": 2599,
+        "path": "/private/tmp/probata-t07-device-init-site-compiler-controls-20261016.py",
+        "sha256": "95817a75172947a154e915053fe0963ff2fc16152e5fb567ddfb03b66911804c"
+      },
+      {
+        "bytes": 1256,
+        "path": "/private/tmp/probata-t07-device-init-site-compiler-controls-20261016/controls.json",
+        "sha256": "c92e221110c835741907bbe03ee4dcf4241ed785ff28c88fefa59625ae5d6925"
+      },
+      {
+        "bytes": 2077,
+        "path": "/private/tmp/probata-t07-device-init-site-compiler-controls-20261016/normal/bfs_unit.h",
+        "sha256": "a9f3bb9954057676acd2216e05c4051f0782198ed44c7f3088cb309d09eb1d69"
+      },
+      {
+        "bytes": 0,
+        "path": "/private/tmp/probata-t07-device-init-site-compiler-controls-20261016/normal/compile.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 0,
+        "path": "/private/tmp/probata-t07-device-init-site-compiler-controls-20261016/normal/compile.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 12694,
+        "path": "/private/tmp/probata-t07-device-init-site-compiler-controls-20261016/normal/dxc_summaries.h",
+        "sha256": "5bd692de0323ee209304ffdc9e9ca477ae809aad88761ed1815622e1caeb9f24"
+      },
+      {
+        "bytes": 17905,
+        "path": "/private/tmp/probata-t07-device-init-site-compiler-controls-20261016/normal/gapbs_models.h",
+        "sha256": "eb71f37abca6accc9d50242e50f6affd5e1621508f0529cecadda9fb746b5ddb"
+      },
+      {
+        "bytes": 6693,
+        "path": "/private/tmp/probata-t07-device-init-site-compiler-controls-20261016/normal/site.c",
+        "sha256": "b976afd644468e0b30a4930d5c3f65b61342b0c55a51f52d17b1c9359c359806"
+      },
+      {
+        "bytes": 2077,
+        "path": "/private/tmp/probata-t07-device-init-site-compiler-controls-20261016/omitted-output/bfs_unit.h",
+        "sha256": "a9f3bb9954057676acd2216e05c4051f0782198ed44c7f3088cb309d09eb1d69"
+      },
+      {
+        "bytes": 0,
+        "path": "/private/tmp/probata-t07-device-init-site-compiler-controls-20261016/omitted-output/compile.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 0,
+        "path": "/private/tmp/probata-t07-device-init-site-compiler-controls-20261016/omitted-output/compile.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 12617,
+        "path": "/private/tmp/probata-t07-device-init-site-compiler-controls-20261016/omitted-output/dxc_summaries.h",
+        "sha256": "cadb31112edaaddf288b758696249de799bc19e9ab82387570940f00387626ca"
+      },
+      {
+        "bytes": 17905,
+        "path": "/private/tmp/probata-t07-device-init-site-compiler-controls-20261016/omitted-output/gapbs_models.h",
+        "sha256": "eb71f37abca6accc9d50242e50f6affd5e1621508f0529cecadda9fb746b5ddb"
+      },
+      {
+        "bytes": 1582,
+        "path": "/private/tmp/probata-t07-device-init-site-compiler-controls-20261016/omitted-output/site.c",
+        "sha256": "ec40b6cffe51039cd794fe35e0c64a44e2d294b9cc8161e49c1a874ad40732f4"
+      }
+    ],
+    "reviewer_rerun": false,
+    "sha256": "cffb602dce50b14757331f2952f5358d379258f5c0d54abfe0ef874c625a4c0b",
+    "source_pin_rows_checked": 4,
+    "syntax_not_ACSL_parse_or_proof": true
+  },
+  "source_commit": "65f0950813f3399f1dd0100ac234b85959cf1202",
+  "source_pins": [
+    {
+      "blob": "96a6ca17444dd19cfe9dceca8f014258b26095dd",
+      "bytes": 3132,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/checks/device_init/README.md",
+      "sha256": "8611775b69624603c3086d5e7097b82ba8a0b3630e13adb3f46c36b482c25077"
+    },
+    {
+      "blob": "1924140771459212ad98f6bfb9bd59665113b82b",
+      "bytes": 6693,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/checks/device_init/normal.c",
+      "sha256": "b976afd644468e0b30a4930d5c3f65b61342b0c55a51f52d17b1c9359c359806"
+    },
+    {
+      "blob": "1f8c94cbe38bda75e1b98bc1a20aba71a2ea8cb0",
+      "bytes": 12617,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/checks/device_init/omitted-output-dxc_summaries.h",
+      "sha256": "cadb31112edaaddf288b758696249de799bc19e9ab82387570940f00387626ca"
+    },
+    {
+      "blob": "1759fe29ee58ced913c58056796fd85246672b2b",
+      "bytes": 1582,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/checks/device_init/omitted-output.c",
+      "sha256": "ec40b6cffe51039cd794fe35e0c64a44e2d294b9cc8161e49c1a874ad40732f4"
+    },
+    {
+      "blob": "bdb41ef0077b87fca2677a78e40c9525e29f5ee5",
+      "bytes": 2015,
+      "path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/checks/device_init/sites-map.json",
+      "sha256": "073bcf4a2de3101ec0e5b09b94085656ec3620779187c56b2ee79cdc813fc37c"
+    }
+  ],
+  "source_relationships": {
+    "all_functional_effects_hazards_and_other_clauses_byte_preserved": true,
+    "missing_index_body_delta": "Only real dxc_tile_data[0][0]=0 store replaced by omission comment.",
+    "missing_source_body_delta": "Only source[0] real store replaced by omission comment.",
+    "negative_contract_scope": "Negative roots retain storage/idle/frame requirements but omit positive value ensures; never claim their complete contracts are identical to positive roots.",
+    "safe_pipeline_body_and_contract_byteidentical_in_normal_weak": true,
+    "sole_weak_header_delta": {
+      "function": "__dxc_gather",
+      "removed": "    ensures \\initialized(dxc_tile_data[dst] + (0 .. dxc_tile_len[dst] - 1));\n"
+    },
+    "strong_header_sha256": "5bd692de0323ee209304ffdc9e9ca477ae809aad88761ed1815622e1caeb9f24",
+    "weak_header_sha256": "cadb31112edaaddf288b758696249de799bc19e9ab82387570940f00387626ca",
+    "wrong_prefix_body_delta": "Only check/read moves from produced[0] to produced[1]."
+  },
+  "verdict": "PASS_SCOPED_FORMAL_DIAGNOSTIC_SOURCE_PREPARATION",
+  "weak_roots": [
+    "swdb_device_pipeline_safe"
+  ]
+}

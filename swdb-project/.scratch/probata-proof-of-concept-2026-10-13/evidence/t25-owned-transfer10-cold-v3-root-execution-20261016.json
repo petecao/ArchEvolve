@@ -1,0 +1,19 @@
+{
+  "command": "/usr/bin/timeout --signal=TERM --kill-after=5 200 /usr/bin/env -i PATH=/usr/bin:/bin HOME=/nonexistent LANG=C LC_ALL=C /usr/bin/python3 -I -B -",
+  "date": "2026-10-16 ET",
+  "elapsed_seconds": 4.719980082998518,
+  "entry_sha256": "6898a2de2267ce14288deaee7c27a6a8c3d17b3bdc6879fcf51a2ad589781bc8",
+  "exit_code": 2,
+  "scientific_acceptance": false,
+  "started_utc": "2026-10-16T22:22:50.757494+00:00",
+  "stderr": {
+    "bytes": 0,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-cold-v3-root-stderr-20261016.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 792560,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-transfer10-cold-v3-root-stdout-20261016.json",
+    "sha256": "cf62bd6a0bf73a171fc8e7ddd68f32c1bb38dcc4f7e8a055264cbc6a2f8e5f5e"
+  }
+}

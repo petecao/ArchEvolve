@@ -1,0 +1,7 @@
+# Public heap entry v1 static review — 2026-10-16 ET
+
+PASS for the supplied static entry and exact command. The embedded command source is byte-identical to the Python file. All 16 admitted source hashes independently match committed `cea5652b06a20696b59b643527c951ccc13122d3` blobs; zero mismatches. No entry, collection, tool, compiler, prover, or SSH command was executed.
+
+Read the committed profile and actual-only test. The profile selects precisely the actual vector heap test, expects two original `c_model` records (27 constructor targets and 11 destructor targets), shares a 4200-second deadline across public calls capped at 1800 seconds, and keeps original body checks, contract-fixture classification, per-target setup/readers and source checks. The exact single-item collection gate is retained in the external entry. Captured Linux project-context lowerer/runtime is the required cold-audit identity; no Mac composite equality is imposed.
+
+This command is not a standalone admission or watchdog. Publication, fresh v3 preflight, clean detached exact-source checkout, one naturally free lane, one worker, 8 GiB process-tree limit and planned 4500/4620-second whole/outer caps remain coordinator requirements. Complete goals, dependencies, fresh runtime identity and two retained records require independent cold audit. No proof, generic caller adoption or full ticket25 result is established by this review.

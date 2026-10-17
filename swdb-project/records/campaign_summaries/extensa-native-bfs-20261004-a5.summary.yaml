@@ -1,0 +1,624 @@
+kind: campaign_summary
+schema_version: '0.4'
+id: extensa-native-bfs-20261004-a5.summary
+status: draft
+created: '2026-10-04'
+updated: '2026-10-04'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+mode: extensa
+campaign: extensa-native-bfs-20261004-a5
+campaign_file:
+  path: campaigns/extensa/extensa-native-bfs-20261004-a5.yaml
+  sha256: 95fc14bc5b7fece49c284f37edaba4ff5295e98ce5fcba6185b7e323200031a3
+swdb_commit: aa245de9ed6ef5ee704105cea112ef7756b3984c
+extensa_source:
+  repository: MaizeHPC/MemAcc
+  commit: af3d6d7f7a69a72facdc3b95b42e78c952f44a76
+target: native_cpu
+evidence_basis: measured
+evidence_kind: execution
+protocol:
+  id: extensa-native-bfs-20261004-a5.protocol.fork_scalar_tdstep.d14eab38b6e07020
+  identity_sha256: d14eab38b6e0702021b4db6379fcc92296759b121aa928785c1ba413b61566d2
+  settings:
+    target: native_cpu
+    roi: bfs.complete_call.v1
+    threads: 1
+    repetitions: 10
+    sources: [0, 1234, 7777]
+    region_pairs: []
+    differences: 'Extensa campaign extensa-native-bfs-20261004-a5: provider rewrites of the fork''s scalar
+      TDStep (scalar-only snapshot plus patch) versus the unchanged full-source dx100-bfs-scalar DOBFS,
+      and separately versus upstream direction-optimizing GAPBS BFS. Native evaluator v2 (mmap SG driver,
+      compiled structural verifier).'
+    evidence_basis: measured
+    profitability:
+      minimum_speedup: 1.05
+      maximum_relative_spread: 0.1
+      rule: lower bound strictly above the minimum; every spread at most the maximum
+    workloads:
+      kronecker: bfs-20261004-kronecker22.0b2b1e1555d0a1e8
+      uniform_random: bfs-20261004-uniform22.2f83a134a6bef789
+  by_role:
+    fork_scalar_tdstep:
+      id: extensa-native-bfs-20261004-a5.protocol.fork_scalar_tdstep.d14eab38b6e07020
+      identity_sha256: d14eab38b6e0702021b4db6379fcc92296759b121aa928785c1ba413b61566d2
+    upstream_do_bfs:
+      id: extensa-native-bfs-20261004-a5.protocol.upstream_do_bfs.d473de4f0ce93ac3
+      identity_sha256: d473de4f0ce93ac3726c1156233ba1a4acbb5d6439aa669d5db2f8ff19bfbe55
+      aa: extensa-native-bfs-20261004-a5.protocol.upstream_do_bfs.aa.6ce0fb1975b44d4a
+baselines:
+- role: fork_scalar_tdstep
+  candidate: bfs-native-pilot-20260925-dx10018-a1.baseline
+  evaluation_ids_by_class: {}
+- role: upstream_do_bfs
+  candidate: bfs-native-pilot-20260925-upstream18-a2.baseline
+  evaluation_ids_by_class: {}
+workload_classes:
+- class: kronecker
+  workload: bfs-20261004-kronecker22.0b2b1e1555d0a1e8
+  sources: [0, 1234, 7778]
+  source_policy:
+    policy: swdb.sources.next_positive_out_degree.v1
+    requested_sources: [0, 1234, 7777]
+    replacements:
+    - requested: 7777
+      requested_out_degree: 0
+      selected: 7778
+      selected_out_degree: 16
+    rule: GAPBS SourcePicker skips out-degree 0; the next vertex (ascending, wrapping) with positive out-degree
+      that is not already a source replaces it
+- class: uniform_random
+  workload: bfs-20261004-uniform22.2f83a134a6bef789
+  sources: [0, 1234, 7777]
+  source_policy:
+    policy: swdb.sources.next_positive_out_degree.v1
+    requested_sources: [0, 1234, 7777]
+    replacements: []
+    rule: GAPBS SourcePicker skips out-degree 0; the next vertex (ascending, wrapping) with positive out-degree
+      that is not already a source replaces it
+label: single graph per class
+provider:
+  name: codex
+  model: gpt-5.6-sol
+  effort: xhigh
+pilot:
+  spreads_by_class_and_role:
+    kronecker:
+      fork_scalar_tdstep: 0.13119979129036174
+      upstream_do_bfs: 0.008434102839086025
+    uniform_random:
+      fork_scalar_tdstep: 0.0839404110599094
+      upstream_do_bfs: 0.011769488237718078
+  passed: false
+  unstable_classes: [kronecker]
+  isolation_by_class_and_role:
+    kronecker:
+      fork_scalar_tdstep:
+        other_socket: released
+        waited_s: 0.0
+        load_average: [1.40234375, 1.4189453125, 1.720703125]
+        other_socket_at_end: released
+        load_average_at_end: [2.14697265625, 2.02978515625, 1.9384765625]
+      upstream_do_bfs:
+        other_socket: released
+        waited_s: 0.0
+        load_average: [2.14697265625, 2.02978515625, 1.9384765625]
+        other_socket_at_end: released
+        load_average_at_end: [2.13671875, 2.06982421875, 2.009765625]
+    uniform_random:
+      fork_scalar_tdstep:
+        other_socket: released
+        waited_s: 0.0
+        load_average: [2.13671875, 2.06982421875, 2.009765625]
+        other_socket_at_end: released
+        load_average_at_end: [2.2392578125, 2.25244140625, 2.1669921875]
+      upstream_do_bfs:
+        other_socket: released
+        waited_s: 0.0
+        load_average: [2.2392578125, 2.25244140625, 2.1669921875]
+        other_socket_at_end: released
+        load_average_at_end: [2.427734375, 2.37158203125, 2.29248046875]
+setup:
+  provider_calls:
+  - role: profiling
+    invocation: extensa-native-bfs-20261004-a5.call1
+    outcome: completed
+    counted: true
+    model: gpt-5.6-sol
+    effort: xhigh
+    classification: rewrite_provider
+iterations:
+- index: 1
+  started: '2026-10-04T23:08:06.227546+00:00'
+  ended: '2026-10-04T23:44:57.095381+00:00'
+  regions:
+  - id: dx100-bfs-scalar/TDStep:240-241
+    reason: 'operation.gather_staging_executor (library_operation): pattern key 2/2 matched by td-frontier-read,
+      td-row-bounds-read on statements bfs-td-frontier, bfs-td-row-bounds; the entry declares no legality
+      clause'
+    why:
+      query_sha256: 9a3a2f0d7fd80dccdfd808cc09e29e78a48030014a9e984dcba2aa4402677ec9
+      statements: [bfs-td-frontier, bfs-td-row-bounds]
+      source:
+        path: benchmarks/gapbs/src/bfs.cc
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        lines: [240, 241]
+      applications:
+      - entry: operation.gather_staging_executor
+        contract: null
+        kind: library_operation
+        content_sha256: a544e7b8ac0f91ef322eeb305214402061d253909a8bf12aec443724c0088bc7
+        pattern_key:
+        - key_position: 0
+          key: 'target:stream : read'
+          patterns: [td-frontier-read]
+          assigned: td-frontier-read
+        - key_position: 1
+          key: 'index:stream > target:single_valued_indirect : read'
+          patterns: [td-row-bounds-read, td-row-end-read]
+          assigned: td-row-bounds-read
+        statements: [bfs-td-frontier, bfs-td-row-bounds]
+        legality: []
+  - id: dx100-bfs-scalar/TDStep:241-241
+    reason: 'operation.regroup_executor (library_operation): pattern key 2/2 matched by td-row-bounds-read,
+      td-row-end-read on statements bfs-td-row-bounds; the entry declares no legality clause'
+    why:
+      query_sha256: 9a3a2f0d7fd80dccdfd808cc09e29e78a48030014a9e984dcba2aa4402677ec9
+      statements: [bfs-td-row-bounds]
+      source:
+        path: benchmarks/gapbs/src/bfs.cc
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        lines: [241, 241]
+      applications:
+      - entry: operation.regroup_executor
+        contract: null
+        kind: library_operation
+        content_sha256: 53db40f427799f4aba14a6d08d0da779938953d4a6ef16d76c2e82cff7423624
+        pattern_key:
+        - key_position: 0
+          key: 'index:stream > target:single_valued_indirect : read'
+          patterns: [td-row-bounds-read, td-row-end-read]
+          assigned: td-row-bounds-read
+        - key_position: 1
+          key: 'index:stream > target:single_valued_indirect : read'
+          patterns: [td-row-bounds-read, td-row-end-read]
+          assigned: td-row-end-read
+        statements: [bfs-td-row-bounds]
+        legality: []
+  provider_calls:
+  - role: rewriting
+    invocation: extensa-native-bfs-20261004-a5.call2
+    outcome: completed
+    counted: true
+    model: gpt-5.6-sol
+    effort: xhigh
+    classification: rewrite_provider
+  candidates:
+  - id: extensa-native-bfs-20261004-a5.it1.uniform_random.a0
+    class: uniform_random
+    patch_sha256: 1491a22bed94cffee42ed1fe8ed85a66d576d0eb2fc4d7a1d422cad47677b64c
+    knobs: {}
+    contracts: []
+    certification: null
+    comparisons:
+    - baseline_role: fork_scalar_tdstep
+      comparison: extensa-native-bfs-20261004-a5.it1.uniform_random.a0.fork_scalar_tdstep.comparison
+      ratio: 1.283658545346097
+      lower: 1.2699408351241281
+      spread: 0.1173606784497957
+      verdict: inconclusive
+      baseline_evaluation: extensa-native-bfs-20261004-a5.it1.uniform_random.a0.fork_scalar_tdstep.baseline-eval
+    - baseline_role: upstream_do_bfs
+      comparison: extensa-native-bfs-20261004-a5.it1.uniform_random.a0.upstream_do_bfs.comparison
+      ratio: 0.12736481267653332
+      lower: 0.12093303409547859
+      spread: 0.14895364946607628
+      verdict: inconclusive
+      baseline_evaluation: extensa-native-bfs-20261004-a5.it1.uniform_random.a0.upstream_do_bfs.baseline-eval
+    level: uncertified
+    selection:
+      lower: 1.2699408351241281
+      verdict: inconclusive
+      ratio: 1.283658545346097
+    artifact_sha256: 86501967c6d60d7294992ba782a3eefd957e8c88f4c4e7ee7378947a428a8013
+  feedback_reasons: [uncertified_edit, verdict_inconclusive]
+  improved_classes: []
+  site_finder:
+    format: swdb.site-finder.v1
+    query_sha256: 9a3a2f0d7fd80dccdfd808cc09e29e78a48030014a9e984dcba2aa4402677ec9
+    parameters:
+      kernel: gapbs-bfs
+      target: native_cpu
+      interfaces: []
+      tiers: [experimental, shared]
+      contracts: []
+    database:
+      fingerprint: 560cee46a2cb57ed63694cbb265d2a340875d03b0653c5e6fd102c512f84c295
+      builder: c6d683f1c2503d7ab7b64d1d8654d2d41205bb69603c5ed45fdd58753238a632
+    rejected:
+    - entry: operation.update_binning_executor
+      region: dx100-bfs-scalar/TDStep:240-240
+      reason: 'key pattern(s) 1 (index:stream > target:single_valued_indirect : add_update) match no access
+        pattern of the region'
+    - entry: operation.vertex_relabel_executor
+      region: dx100-bfs-scalar/TDStep:240-240
+      reason: 'key pattern(s) 1 (offsets:stream > target:ranged_indirect : read) match no access pattern
+        of the region'
+- index: 2
+  started: '2026-10-04T23:44:57.096190+00:00'
+  ended: '2026-10-04T23:45:51.220013+00:00'
+  regions:
+  - id: dx100-bfs-scalar/TDStep:240-241
+    reason: 'operation.gather_staging_executor (library_operation): pattern key 2/2 matched by td-frontier-read,
+      td-row-bounds-read on statements bfs-td-frontier, bfs-td-row-bounds; the entry declares no legality
+      clause'
+    why:
+      query_sha256: 9a3a2f0d7fd80dccdfd808cc09e29e78a48030014a9e984dcba2aa4402677ec9
+      statements: [bfs-td-frontier, bfs-td-row-bounds]
+      source:
+        path: benchmarks/gapbs/src/bfs.cc
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        lines: [240, 241]
+      applications:
+      - entry: operation.gather_staging_executor
+        contract: null
+        kind: library_operation
+        content_sha256: a544e7b8ac0f91ef322eeb305214402061d253909a8bf12aec443724c0088bc7
+        pattern_key:
+        - key_position: 0
+          key: 'target:stream : read'
+          patterns: [td-frontier-read]
+          assigned: td-frontier-read
+        - key_position: 1
+          key: 'index:stream > target:single_valued_indirect : read'
+          patterns: [td-row-bounds-read, td-row-end-read]
+          assigned: td-row-bounds-read
+        statements: [bfs-td-frontier, bfs-td-row-bounds]
+        legality: []
+  - id: dx100-bfs-scalar/TDStep:241-241
+    reason: 'operation.regroup_executor (library_operation): pattern key 2/2 matched by td-row-bounds-read,
+      td-row-end-read on statements bfs-td-row-bounds; the entry declares no legality clause'
+    why:
+      query_sha256: 9a3a2f0d7fd80dccdfd808cc09e29e78a48030014a9e984dcba2aa4402677ec9
+      statements: [bfs-td-row-bounds]
+      source:
+        path: benchmarks/gapbs/src/bfs.cc
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        lines: [241, 241]
+      applications:
+      - entry: operation.regroup_executor
+        contract: null
+        kind: library_operation
+        content_sha256: 53db40f427799f4aba14a6d08d0da779938953d4a6ef16d76c2e82cff7423624
+        pattern_key:
+        - key_position: 0
+          key: 'index:stream > target:single_valued_indirect : read'
+          patterns: [td-row-bounds-read, td-row-end-read]
+          assigned: td-row-bounds-read
+        - key_position: 1
+          key: 'index:stream > target:single_valued_indirect : read'
+          patterns: [td-row-bounds-read, td-row-end-read]
+          assigned: td-row-end-read
+        statements: [bfs-td-row-bounds]
+        legality: []
+  provider_calls:
+  - role: rewriting
+    invocation: extensa-native-bfs-20261004-a5.call3
+    outcome: completed
+    counted: true
+    model: gpt-5.6-sol
+    effort: xhigh
+    classification: rewrite_provider
+  candidates:
+  - id: null
+    class: uniform_random
+    patch_sha256: 12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126
+    knobs: {}
+    contracts: []
+    certification: null
+    comparisons: []
+    level: rejected
+    selection: null
+    rejection: The patch does not apply to the base source.
+  feedback_reasons: [build_failed]
+  improved_classes: []
+  site_finder:
+    format: swdb.site-finder.v1
+    query_sha256: 9a3a2f0d7fd80dccdfd808cc09e29e78a48030014a9e984dcba2aa4402677ec9
+    parameters:
+      kernel: gapbs-bfs
+      target: native_cpu
+      interfaces: []
+      tiers: [experimental, shared]
+      contracts: []
+    database:
+      fingerprint: 560cee46a2cb57ed63694cbb265d2a340875d03b0653c5e6fd102c512f84c295
+      builder: c6d683f1c2503d7ab7b64d1d8654d2d41205bb69603c5ed45fdd58753238a632
+    rejected:
+    - entry: operation.update_binning_executor
+      region: dx100-bfs-scalar/TDStep:240-240
+      reason: 'key pattern(s) 1 (index:stream > target:single_valued_indirect : add_update) match no access
+        pattern of the region'
+    - entry: operation.vertex_relabel_executor
+      region: dx100-bfs-scalar/TDStep:240-240
+      reason: 'key pattern(s) 1 (offsets:stream > target:ranged_indirect : read) match no access pattern
+        of the region'
+- index: 3
+  started: '2026-10-04T23:45:51.221148+00:00'
+  ended: '2026-10-05T00:22:59.988500+00:00'
+  regions:
+  - id: dx100-bfs-scalar/TDStep:240-241
+    reason: 'operation.gather_staging_executor (library_operation): pattern key 2/2 matched by td-frontier-read,
+      td-row-bounds-read on statements bfs-td-frontier, bfs-td-row-bounds; the entry declares no legality
+      clause'
+    why:
+      query_sha256: 9a3a2f0d7fd80dccdfd808cc09e29e78a48030014a9e984dcba2aa4402677ec9
+      statements: [bfs-td-frontier, bfs-td-row-bounds]
+      source:
+        path: benchmarks/gapbs/src/bfs.cc
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        lines: [240, 241]
+      applications:
+      - entry: operation.gather_staging_executor
+        contract: null
+        kind: library_operation
+        content_sha256: a544e7b8ac0f91ef322eeb305214402061d253909a8bf12aec443724c0088bc7
+        pattern_key:
+        - key_position: 0
+          key: 'target:stream : read'
+          patterns: [td-frontier-read]
+          assigned: td-frontier-read
+        - key_position: 1
+          key: 'index:stream > target:single_valued_indirect : read'
+          patterns: [td-row-bounds-read, td-row-end-read]
+          assigned: td-row-bounds-read
+        statements: [bfs-td-frontier, bfs-td-row-bounds]
+        legality: []
+  - id: dx100-bfs-scalar/TDStep:241-241
+    reason: 'operation.regroup_executor (library_operation): pattern key 2/2 matched by td-row-bounds-read,
+      td-row-end-read on statements bfs-td-row-bounds; the entry declares no legality clause'
+    why:
+      query_sha256: 9a3a2f0d7fd80dccdfd808cc09e29e78a48030014a9e984dcba2aa4402677ec9
+      statements: [bfs-td-row-bounds]
+      source:
+        path: benchmarks/gapbs/src/bfs.cc
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        lines: [241, 241]
+      applications:
+      - entry: operation.regroup_executor
+        contract: null
+        kind: library_operation
+        content_sha256: 53db40f427799f4aba14a6d08d0da779938953d4a6ef16d76c2e82cff7423624
+        pattern_key:
+        - key_position: 0
+          key: 'index:stream > target:single_valued_indirect : read'
+          patterns: [td-row-bounds-read, td-row-end-read]
+          assigned: td-row-bounds-read
+        - key_position: 1
+          key: 'index:stream > target:single_valued_indirect : read'
+          patterns: [td-row-bounds-read, td-row-end-read]
+          assigned: td-row-end-read
+        statements: [bfs-td-row-bounds]
+        legality: []
+  provider_calls:
+  - role: rewriting
+    invocation: extensa-native-bfs-20261004-a5.call4
+    outcome: completed
+    counted: true
+    model: gpt-5.6-sol
+    effort: xhigh
+    classification: rewrite_provider
+  candidates:
+  - id: extensa-native-bfs-20261004-a5.it3.uniform_random.a0
+    class: uniform_random
+    patch_sha256: f3b1ef494d834d6e115487e13f723f3fe7380c1f51e0eddcb2753d78ec656f24
+    knobs: {}
+    contracts: []
+    certification: null
+    comparisons:
+    - baseline_role: fork_scalar_tdstep
+      comparison: extensa-native-bfs-20261004-a5.it3.uniform_random.a0.fork_scalar_tdstep.comparison
+      ratio: 1.317508412889151
+      lower: 1.2906102390592697
+      spread: 0.1586448649242896
+      verdict: inconclusive
+      baseline_evaluation: extensa-native-bfs-20261004-a5.it3.uniform_random.a0.fork_scalar_tdstep.baseline-eval
+    - baseline_role: upstream_do_bfs
+      comparison: extensa-native-bfs-20261004-a5.it3.uniform_random.a0.upstream_do_bfs.comparison
+      ratio: 0.1331995784791879
+      lower: 0.1267852901861297
+      spread: 0.13638666240152478
+      verdict: inconclusive
+      baseline_evaluation: extensa-native-bfs-20261004-a5.it3.uniform_random.a0.upstream_do_bfs.baseline-eval
+    level: uncertified
+    selection:
+      lower: 1.2906102390592697
+      verdict: inconclusive
+      ratio: 1.317508412889151
+    artifact_sha256: dc8404b4ff669ca7e7dd52bc1a15eb3579c66b44bbb391fb15d791f577c56140
+  feedback_reasons: [uncertified_edit, verdict_inconclusive]
+  improved_classes: []
+  site_finder:
+    format: swdb.site-finder.v1
+    query_sha256: 9a3a2f0d7fd80dccdfd808cc09e29e78a48030014a9e984dcba2aa4402677ec9
+    parameters:
+      kernel: gapbs-bfs
+      target: native_cpu
+      interfaces: []
+      tiers: [experimental, shared]
+      contracts: []
+    database:
+      fingerprint: 560cee46a2cb57ed63694cbb265d2a340875d03b0653c5e6fd102c512f84c295
+      builder: c6d683f1c2503d7ab7b64d1d8654d2d41205bb69603c5ed45fdd58753238a632
+    rejected:
+    - entry: operation.update_binning_executor
+      region: dx100-bfs-scalar/TDStep:240-240
+      reason: 'key pattern(s) 1 (index:stream > target:single_valued_indirect : add_update) match no access
+        pattern of the region'
+    - entry: operation.vertex_relabel_executor
+      region: dx100-bfs-scalar/TDStep:240-240
+      reason: 'key pattern(s) 1 (offsets:stream > target:ranged_indirect : read) match no access pattern
+        of the region'
+- index: 4
+  started: '2026-10-05T00:22:59.989753+00:00'
+  ended: '2026-10-05T00:24:18.801945+00:00'
+  regions:
+  - id: dx100-bfs-scalar/TDStep:240-241
+    reason: 'operation.gather_staging_executor (library_operation): pattern key 2/2 matched by td-frontier-read,
+      td-row-bounds-read on statements bfs-td-frontier, bfs-td-row-bounds; the entry declares no legality
+      clause'
+    why:
+      query_sha256: 9a3a2f0d7fd80dccdfd808cc09e29e78a48030014a9e984dcba2aa4402677ec9
+      statements: [bfs-td-frontier, bfs-td-row-bounds]
+      source:
+        path: benchmarks/gapbs/src/bfs.cc
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        lines: [240, 241]
+      applications:
+      - entry: operation.gather_staging_executor
+        contract: null
+        kind: library_operation
+        content_sha256: a544e7b8ac0f91ef322eeb305214402061d253909a8bf12aec443724c0088bc7
+        pattern_key:
+        - key_position: 0
+          key: 'target:stream : read'
+          patterns: [td-frontier-read]
+          assigned: td-frontier-read
+        - key_position: 1
+          key: 'index:stream > target:single_valued_indirect : read'
+          patterns: [td-row-bounds-read, td-row-end-read]
+          assigned: td-row-bounds-read
+        statements: [bfs-td-frontier, bfs-td-row-bounds]
+        legality: []
+  - id: dx100-bfs-scalar/TDStep:241-241
+    reason: 'operation.regroup_executor (library_operation): pattern key 2/2 matched by td-row-bounds-read,
+      td-row-end-read on statements bfs-td-row-bounds; the entry declares no legality clause'
+    why:
+      query_sha256: 9a3a2f0d7fd80dccdfd808cc09e29e78a48030014a9e984dcba2aa4402677ec9
+      statements: [bfs-td-row-bounds]
+      source:
+        path: benchmarks/gapbs/src/bfs.cc
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        lines: [241, 241]
+      applications:
+      - entry: operation.regroup_executor
+        contract: null
+        kind: library_operation
+        content_sha256: 53db40f427799f4aba14a6d08d0da779938953d4a6ef16d76c2e82cff7423624
+        pattern_key:
+        - key_position: 0
+          key: 'index:stream > target:single_valued_indirect : read'
+          patterns: [td-row-bounds-read, td-row-end-read]
+          assigned: td-row-bounds-read
+        - key_position: 1
+          key: 'index:stream > target:single_valued_indirect : read'
+          patterns: [td-row-bounds-read, td-row-end-read]
+          assigned: td-row-end-read
+        statements: [bfs-td-row-bounds]
+        legality: []
+  provider_calls:
+  - role: rewriting
+    invocation: extensa-native-bfs-20261004-a5.call5
+    outcome: completed
+    counted: true
+    model: gpt-5.6-sol
+    effort: xhigh
+    classification: rewrite_provider
+  candidates:
+  - id: null
+    class: uniform_random
+    patch_sha256: ce3099b1e8e9b8ecaf091f313e951b5dbd6d5f1bc767ae28dbffc5c9417f7143
+    knobs: {}
+    contracts:
+    - operation.gather_staging_executor
+    certification: null
+    comparisons: []
+    level: rejected
+    selection: null
+    rejection: contract operation.gather_staging_executor is outside the campaign's contracts
+  feedback_reasons: [provider_output_invalid]
+  improved_classes: []
+  site_finder:
+    format: swdb.site-finder.v1
+    query_sha256: 9a3a2f0d7fd80dccdfd808cc09e29e78a48030014a9e984dcba2aa4402677ec9
+    parameters:
+      kernel: gapbs-bfs
+      target: native_cpu
+      interfaces: []
+      tiers: [experimental, shared]
+      contracts: []
+    database:
+      fingerprint: 560cee46a2cb57ed63694cbb265d2a340875d03b0653c5e6fd102c512f84c295
+      builder: c6d683f1c2503d7ab7b64d1d8654d2d41205bb69603c5ed45fdd58753238a632
+    rejected:
+    - entry: operation.update_binning_executor
+      region: dx100-bfs-scalar/TDStep:240-240
+      reason: 'key pattern(s) 1 (index:stream > target:single_valued_indirect : add_update) match no access
+        pattern of the region'
+    - entry: operation.vertex_relabel_executor
+      region: dx100-bfs-scalar/TDStep:240-240
+      reason: 'key pattern(s) 1 (offsets:stream > target:ranged_indirect : read) match no access pattern
+        of the region'
+per_class:
+- class: kronecker
+  verdict: baseline_unstable
+  best: null
+  best_level: null
+  best_selection_baseline: null
+  best_other_baseline: null
+  faster_uncertified: []
+  label: single graph per class
+- class: uniform_random
+  verdict: inconclusive
+  best: null
+  best_level: null
+  best_selection_baseline: null
+  best_other_baseline: null
+  faster_uncertified: []
+  label: single graph per class
+budgets:
+  limits:
+    max_iterations: 8
+    plateau_iterations: 4
+    lane_hours: 24
+    provider_calls_per_iteration: 3
+    provider_calls_setup: 1
+    disk_gb: 20
+    lanes: 1
+  used:
+    iterations: 4
+    lane_hours: 2.29351
+    provider_calls_counted: 5
+    provider_calls_uncounted: 0
+    disk_gb_peak: 6.037406
+pauses: []
+stop_reason: plateau
+stop_detail: null
+artifacts:
+- path: records/candidates/extensa-native-bfs-20261004-a5.it1.uniform_random.a0.yaml
+  sha256: 86501967c6d60d7294992ba782a3eefd957e8c88f4c4e7ee7378947a428a8013
+  retained: true
+- path: records/candidates/extensa-native-bfs-20261004-a5.it3.uniform_random.a0.yaml
+  sha256: dc8404b4ff669ca7e7dd52bc1a15eb3579c66b44bbb391fb15d791f577c56140
+  retained: true
+retentions: []
+library_entries: []
+site_finder:
+  format: swdb.site-finder.v1
+  query_sha256: 9a3a2f0d7fd80dccdfd808cc09e29e78a48030014a9e984dcba2aa4402677ec9
+  parameters:
+    kernel: gapbs-bfs
+    target: native_cpu
+    interfaces: []
+    tiers: [experimental, shared]
+    contracts: []

@@ -1,0 +1,62 @@
+{
+  "date_et": "2026-10-16 03:00 ET",
+  "source_commit": "770df40eeb5e3034862f61b79b6bcaad5fa620a7",
+  "scope": "exact public selector fixture caller workflow under source-certificate/Extern TCB only",
+  "positive": {
+    "id": "proof.contract.dx100_trust_fixture.20261016t060824z.9cc082e7",
+    "sha256": "5ed8c1c4fc0efd21989ae53f19038fd8f5681111511a2df47b29cee09f3a64b2",
+    "ordinary_valid": 7,
+    "ordinary_total": 7,
+    "verdict": "proven"
+  },
+  "negative": {
+    "id": "proof.contract.dx100_trust_fixture.20261016t060909z.42d1da40",
+    "sha256": "e6824f87ab209d343e52bbc31b4e6dc3523430588644a903b522b633dfee89a7",
+    "ordinary_valid": 6,
+    "ordinary_total": 7,
+    "verdict": "not_proven",
+    "failure_class": "timeout",
+    "refuted": false
+  },
+  "smoke": {
+    "count": 4,
+    "raw_best": "timeout",
+    "raw_passed": true,
+    "direct_valid_claim": false,
+    "native_stats_smoke_normalization": true,
+    "satisfiability_theorem": false
+  },
+  "helper_implicit_clauses": {
+    "exits_false": "Unknown",
+    "terminates_true": "Unknown",
+    "extern": false,
+    "selected": false,
+    "generated_goals": 0,
+    "implementation_verified": false
+  },
+  "root_physical_checks": 6005,
+  "root_unique_files": 2589,
+  "root_raw_files": 146,
+  "root_raw_bytes": 17364662,
+  "no_errors_reported": true,
+  "runtime": {
+    "node": 1,
+    "generation": 616,
+    "end_et": "2026-10-16 02:10:40 ET",
+    "guard_exit": 0,
+    "guard_wall_s": 156.99512154143304,
+    "guard_peak_rss_bytes": 1811578880,
+    "outer_wall_s": 159.01692126784474,
+    "outer_peak_rss_bytes": 1864515584,
+    "oom": false,
+    "timeout": false
+  },
+  "raw_copied": false,
+  "full_ticket_acceptance": false,
+  "evidence": {
+    "t28-selector-root-settlement-v1-770df40e-20261016.json": "cc02a0221e710bcbba289b8dfdc7dcdb079dc5f783393e48357846815a7eace0",
+    "t28-selector-supplemental-actual-v5-770df40e-20261016.json": "a015147776a94f79a1208ef393e8f5d5cbd7ba5e57b78fd5ac3ff4a64ac64e94",
+    "t28-selector-cold-readers-execution-v5-770df40e-20261016.json": "ffcdbf0c801ef746fd68b8de0d079023199517a3059ae15f2ab86fb0b3531683",
+    "t28-selector-supplement-v5-20261016.py": "04c777729fd08a25239c2baf98a3990fb1916d299c7c0f76cf5a2a67a97936bb"
+  }
+}

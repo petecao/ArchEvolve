@@ -1,0 +1,184 @@
+{
+  "attempt": 1,
+  "campaign": "extensa-gem5-bfs-20261006-p3",
+  "checks": [
+    "pin:lanl17-p3-release-request-finalized-20261008-a5.json",
+    "pin:lanl17-p3-release-action-finalized-20261008-a5.json",
+    "canonicalTrue_seal:release_request",
+    "pin:native-observation-original.json",
+    "pin:terminal-original.json",
+    "terminal_closed_four_originals_ready",
+    "pin:lane.json",
+    "terminal_exact_base64:lane.json",
+    "terminal_all9stat_descriptor_matches_native:lane.json",
+    "pin:runner.exit-code.txt",
+    "terminal_exact_base64:runner.exit-code.txt",
+    "terminal_all9stat_descriptor_matches_native:runner.exit-code.txt",
+    "pin:stopped-receipt.json",
+    "terminal_exact_base64:stopped-receipt.json",
+    "terminal_all9stat_descriptor_matches_native:stopped-receipt.json",
+    "pin:wrapper.exit-code.txt",
+    "terminal_exact_base64:wrapper.exit-code.txt",
+    "terminal_all9stat_descriptor_matches_native:wrapper.exit-code.txt",
+    "canonicalTrue_seal:stopped",
+    "pin:dispatch-preregistration.json",
+    "canonicalTrue_seal:dispatch",
+    "pin:manifest.json",
+    "canonicalTrue_seal:M2",
+    "stop_exact_original_context_and_global_policy",
+    "normal_stop_clean_source_noinfra_nosurvivors",
+    "four_integer_zero_exits",
+    "final_lane_actual_generation513_no_record_errors",
+    "native_whole_second_precision_bin_and_start_chronology",
+    "native_release_ready_normal513:earlier_staged",
+    "native_no_kernelholder_noFD9:earlier_stagedbefore",
+    "native_no_kernelholder_noFD9:earlier_stagedafter",
+    "native_exact_final_attempt_and_poststop:earlier_staged",
+    "native_raw_metadata_pin:earlier_staged",
+    "native_release_ready_normal513:fresh_before32",
+    "native_no_kernelholder_noFD9:fresh_before32before",
+    "native_no_kernelholder_noFD9:fresh_before32after",
+    "native_exact_final_attempt_and_poststop:fresh_before32",
+    "native_raw_metadata_pin:fresh_before32",
+    "live_sourceR_clean_S_retention_preserved",
+    "native_wrapper_exact_owned0777_preserved",
+    "pin:lanl17_finalize_p3_normal_release_request_20261008_a5_r4.py",
+    "pin:lanl17-p3-release-request-draft-r1-20261008-a5.json",
+    "fixed_request_schema_context_policy",
+    "exact_seven_inputs",
+    "fixed_control:auditor_sha256",
+    "fixed_control:capture",
+    "fixed_control:collector_sha256",
+    "fixed_control:format",
+    "fixed_control:producer_sha256",
+    "fixed_control:source_plan_sha256",
+    "fixed_original_descriptor:manifest_M2",
+    "fixed_original_descriptor:dispatch",
+    "actual_terminal_input:stopped",
+    "stopped_original_canonical_writer_H28",
+    "actual_terminal_input:lane",
+    "actual_terminal_input:runner_exit",
+    "actual_terminal_input:wrapper_exit",
+    "actual_native_snapshot_query_writer_descriptor",
+    "actual_release_obs_chronology",
+    "native_lane_writer_retained",
+    "exact_stage_original_bytes:/data1/yanruj/lanl17-p3-native-release-observation-20261008-a5.json",
+    "exact_stage_original_bytes:/data/yanruj/EvolveSWDB_runs/lanl17-p3-release-request-20261008-a5.json",
+    "exact_producer_argv_selected_routes_finite_caps",
+    "only_private_sourcepins_native0777wrapper_omitted",
+    "local_author_once0_no_remote",
+    "author_bounded300s_attestation",
+    "original_capture_transport_inner0_exact_decoded:lanl17-p3-terminal-originals-capture-20261008-a5",
+    "original_capture_transport_inner0_exact_decoded:lanl17-p3-native-release-query-capture-20261008-1932-a5",
+    "original_capture_transport_inner0_exact_decoded:lanl17-p3-native-release-query-capture-before32-20261008-a5",
+    "original_capture_transport_inner0_exact_decoded:lanl17-p3-normal-source-check-capture-20261008-a5",
+    "original_capture_transport_inner0_exact_decoded:lanl17-native-wrapper-physical-metadata-capture-p3-before32-20261008-a5",
+    "advisory_monitor_normal4iterations8rows_no_scientific_admission"
+  ],
+  "files": [
+    {
+      "bytes": 7836,
+      "path": "/private/tmp/lanl17-p3-release-request-finalized-20261008-a5.json",
+      "sha256": "52021810a29e4bbfb84da4bbb081da8513fcd6420b286da7ca56e7315cbac590"
+    },
+    {
+      "bytes": 19142,
+      "path": "/private/tmp/lanl17-p3-release-action-finalized-20261008-a5.json",
+      "sha256": "ccb00bc34232a14c11e09dddecc19611cbe3e14936f0a16f5979a2bbfbca8920"
+    },
+    {
+      "bytes": 5403,
+      "path": "/private/tmp/lanl17-p3-native-release-query-capture-20261008-1932-a5/native-observation-original.json",
+      "sha256": "1e0933b29c605f75d8b2ed66a410f5635c4e64b206eb2e6c0362284810f88468"
+    },
+    {
+      "bytes": 5349,
+      "path": "/private/tmp/lanl17-p3-terminal-originals-capture-20261008-a5/terminal-original.json",
+      "sha256": "5ed969a32ceacda67c47e7ccaec35dd63cc8363cf1ac9789e79be4fe7a1389c0"
+    },
+    {
+      "bytes": 5403,
+      "path": "/private/tmp/lanl17-p3-native-release-query-capture-before32-20261008-a5/native-observation-original.json",
+      "sha256": "208aa7b5fcc32f332d9d7f22a4f2e2f3cafa62126a0773b704b35a033cf64f3b"
+    },
+    {
+      "bytes": 1084,
+      "path": "/private/tmp/lanl17-p3-terminal-originals-capture-20261008-a5/decoded-originals/lane.json",
+      "sha256": "336b320a809fc773da0f1f49a34f516a8f15e29b3f9244d49fe48408eef09cca"
+    },
+    {
+      "bytes": 2,
+      "path": "/private/tmp/lanl17-p3-terminal-originals-capture-20261008-a5/decoded-originals/runner.exit-code.txt",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "bytes": 1355,
+      "path": "/private/tmp/lanl17-p3-terminal-originals-capture-20261008-a5/decoded-originals/stopped-receipt.json",
+      "sha256": "e030cba330a1bba1beae016e8f19422b8d1a2bb131d1d214ed47c4d1e461cf25"
+    },
+    {
+      "bytes": 2,
+      "path": "/private/tmp/lanl17-p3-terminal-originals-capture-20261008-a5/decoded-originals/wrapper.exit-code.txt",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "bytes": 44079,
+      "path": "/private/tmp/lanl17-p3-dispatch-original-collect-capture-20261008-a5/dispatch-preregistration.json",
+      "sha256": "a098059f1f5c60ab342555026ab72fbfca1b84497cdf2d86dd9f62fb17f61da1"
+    },
+    {
+      "bytes": 292401,
+      "path": "/private/tmp/lanl17-prepare-completion-decoded-originals-20261008-a1/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/manifest.json",
+      "sha256": "b86d78bac1d0a09e176114d1c23491ede098c4fcf5af5ab96f318ceabc29b8d1"
+    },
+    {
+      "bytes": 470,
+      "path": "/private/tmp/lanl17-p3-normal-source-check-capture-20261008-a5/source-original.json",
+      "sha256": "8d036a49eedf85d26eb37fda8386c5b14a2c6eed044b4a2425fc1c18f566aa52"
+    },
+    {
+      "bytes": 574,
+      "path": "/private/tmp/lanl17-native-wrapper-physical-metadata-capture-p3-before32-20261008-a5/wrapper-original.json",
+      "sha256": "f05619f3b6be2ccd6605a305d058e4fa213f0121ee0099e75340717ef9bcb27f"
+    },
+    {
+      "bytes": 18684,
+      "path": "/private/tmp/lanl17_finalize_p3_normal_release_request_20261008_a5_r4.py",
+      "sha256": "3eb0a1cff54c25e384a858abad8e1cc0d914399cbe95f8f66bf9836c3f9aa90e"
+    },
+    {
+      "bytes": 12469,
+      "path": "/private/tmp/lanl17-p3-release-request-draft-r1-20261008-a5.json",
+      "sha256": "9ba6c8a5ce9c0c4ead20214781dcaaeead268ef6d6da84d374b2da96f4401763"
+    },
+    {
+      "bytes": 1624,
+      "path": "/private/tmp/lanl17-p3-release-author-local-capture-20261008-a5/argv.json",
+      "sha256": "08a4d70ddacfddf0e0968f409b59cb4b637d7e1561267f9e829338f9d609f2fa"
+    },
+    {
+      "bytes": 763,
+      "path": "/private/tmp/lanl17-p3-release-author-local-capture-20261008-a5/stdout",
+      "sha256": "b2e3af1bbe76baf6db4e952477c6fbcfda2c4ded4cdd5f4dd7732790b7dc8714"
+    },
+    {
+      "bytes": 5455,
+      "path": "/private/tmp/lanl17-campaign-status-capture-20261008-1932-a5/monitor-original.json",
+      "sha256": "a2aecb7b8df950f6e7432d9b60747a7e1734956b1701caaac39989f2fb293d2d"
+    }
+  ],
+  "format": "swdb.lanl17-peer-normal-terminal-release-request-review.v1",
+  "generation": 513,
+  "no_remote_execution": true,
+  "no_target_imports_or_tests": true,
+  "remaining_parent_obligations": [
+    "Fresh preexec selected513/released/no FD9/no kernelholder/normal/native wrapper query before32 within current valid interval; preserve unused originals and regenerate if expired.",
+    "Reserve node0 through original32 and B08 AFTER, freshly query before/after B08; actual release32 and AFTER originals need independent custody review.",
+    "No unique-pair or D30 scientific admission from normal trajectory or exit codes."
+  ],
+  "request_identity_sha256": "cf14e3ffdd029dd49d064d3e55a1ceab39a85e50589b0e6244fbfec8b2d68296",
+  "result": "PASS",
+  "reviewed_utc": "2026-10-08T23:35:10.196835+00:00",
+  "scientific_admission": false,
+  "valid_until_utc": "2026-10-08T23:38:55.180365+00:00"
+}

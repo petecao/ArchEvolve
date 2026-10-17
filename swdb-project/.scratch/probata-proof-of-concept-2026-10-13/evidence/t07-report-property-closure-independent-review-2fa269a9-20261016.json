@@ -1,0 +1,18 @@
+{
+  "date_et": "2026-10-16",
+  "source_commit": "2fa269a9c06bc627f3c08bb4ced339973eb0f049",
+  "reporter_sha256": "22919544d02fc3fdc628ee44984852787043e61f82ed8613074e21751e9d1d6d",
+  "reporter_static_disposition": "PASS root-owned native compilation gate may proceed",
+  "consumer_disposition": "REQUEST_CHANGES explicit dependencies/origin/targets required",
+  "review_md_sha256": "8f7a593b0ae4827d8d4b875284499d087afe7e9e7a29eab9ea33d188728cc2cc",
+  "pincheck": "/private/tmp/probata-t07-report-closure-independent-pincheck-2fa269a9-20261016.json",
+  "actual_tools_or_jobs_or_ssh_by_reviewer": false,
+  "proof_or_semantic_qualification": false,
+  "blockers": [
+    {
+      "priority": "P2",
+      "scope": "consumer",
+      "issue": "Missing reference fields default to empty edges"
+    }
+  ]
+}

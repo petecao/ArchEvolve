@@ -1,0 +1,57 @@
+{
+  "date_ET": "2026-10-16",
+  "at_utc": "2026-10-16T15:08:36.736807+00:00",
+  "root_entry": {
+    "path": "/private/tmp/probata-root-t07-device-proof-cold-dispatch-v2-20261016.py",
+    "sha256": "6b28c22035cc8056a555995843854ca1629b9f9900f60c3c3d9471175bc24130",
+    "bytes": 3423
+  },
+  "packet": {
+    "path": "/private/tmp/probata-t07-device-proof-cold-v2-20261016-packet.json",
+    "sha256": "442c632fe83dc2b07f352497962691473c29c0545ff126409a8848b37360ef7e",
+    "bytes": 5773
+  },
+  "independent_static_review": {
+    "path": "/private/tmp/probata-t07-device-proof-cold-independent-static-review-v2-20261016.md",
+    "sha256": "dc98a4389bdeeeeb9085be39f3636f8cd05a031404b2d13ffe3fad5b3e05424c",
+    "bytes": 3044
+  },
+  "resources": {
+    "exit_code": 0,
+    "peak_rss_bytes": 190889984,
+    "out_of_memory": false,
+    "timed_out": false,
+    "wall_seconds": 0.8909623330109753,
+    "cpu_seconds": 0.63928
+  },
+  "output": "/private/tmp/probata-t07-device-proof-cold-v2-20261016-output",
+  "output_bytes": 588084,
+  "output_files": [
+    {
+      "path": "/private/tmp/probata-t07-device-proof-cold-v2-20261016-output/normal-partial-journal-observations.json",
+      "sha256": "acc2afc4f8e373535e42de9629b24b72cf5a20f4f69e03d178b099341074a9f1",
+      "bytes": 413097
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-proof-cold-v2-20261016-output/summary.json",
+      "sha256": "d442ec73aa9c29be6918e20992b52312a39e41bde4d1f9f8c294595feed49f78",
+      "bytes": 29093
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-proof-cold-v2-20261016-output/settled-raw-after.json",
+      "sha256": "697fd281a7f8fe91ce59547bc142608749f35361ce1adbb8751ad14672bab2f9",
+      "bytes": 72947
+    },
+    {
+      "path": "/private/tmp/probata-t07-device-proof-cold-v2-20261016-output/settled-raw-before.json",
+      "sha256": "697fd281a7f8fe91ce59547bc142608749f35361ce1adbb8751ad14672bab2f9",
+      "bytes": 72947
+    }
+  ],
+  "reader_log": {
+    "path": "/private/tmp/probata-root-t07-device-proof-cold-v2-20261016/reader.log",
+    "sha256": "ad8657b7cf7806977bacd363d4025814a9747cecbcfd2bc4d698e96ad9377700",
+    "bytes": 10659
+  },
+  "scope": "Passive partial-capture integrity only; original normal timeout/weak-unexecuted and all six guard events remain; no proof/source/Init/TD/count acceptance."
+}

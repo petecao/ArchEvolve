@@ -1,0 +1,39 @@
+{
+  "command": {
+    "path": "/private/tmp/probata-t25-public-heap-command-v1-cea5652b-20261016.json",
+    "sha256": "22b97944bab9cef792aca31b46b6ee49da9e469da1e7759962f6104341c9bc29"
+  },
+  "date": "2026-10-16 ET",
+  "disposition": "PASS for static entry review; external coordinator admission required",
+  "embedded_entry_byte_identical": true,
+  "entry": {
+    "path": "/private/tmp/probata-t25-public-heap-entry-v1-cea5652b-20261016.py",
+    "sha256": "7fff6761b03c0eaa86fddb4dba031f9a4aaec145ce35cb244df9f67513751c8e"
+  },
+  "external_requirements": [
+    "Exact source must be published and clean detached in coordinator checkout",
+    "Fresh v3 admission, free lane, one worker, 8 GiB whole process-tree watchdog",
+    "4500 second whole / 4620 second outer planned bounds remain external to this command",
+    "Cold audit must compare every actual record to captured Linux project-context composite/runtime and independently inspect complete goals/dependencies"
+  ],
+  "mismatches": 0,
+  "not_executed": [
+    "entry",
+    "test collection",
+    "compiler",
+    "prover",
+    "tool version",
+    "SSH",
+    "remote dispatch"
+  ],
+  "review_basis": [
+    "Exact entry/JSON AST read without execution; embedded bytes exactly match entry",
+    "16 physical source hashes independently checked via git show, zero mismatch",
+    "Committed profile and actual-only test read; 4200 profile and 1800 per-public caps with remaining-time sharing; two expected records",
+    "Exact selected pytest collection gate, original model texts and naming pin; no Mac composite equality",
+    "Tool/config/plugin/stdlib/package guards retained from reviewed recipe; source recheck before exec"
+  ],
+  "scope": "Two prospective original vector c_model records; 27 constructor and 11 destructor targets. No actual proof or generic caller adoption.",
+  "source_commit": "cea5652b06a20696b59b643527c951ccc13122d3",
+  "source_hashes_checked_against_committed_blobs": 16
+}

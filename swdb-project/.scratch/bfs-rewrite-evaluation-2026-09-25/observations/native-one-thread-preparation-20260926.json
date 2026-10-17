@@ -1,0 +1,295 @@
+{
+  "created_at": "2026-09-26T14:39:37.637520-04:00",
+  "role": "local_contract_preparation_not_empirical",
+  "head": "f35eba9e3bab50f73eb15060bf273f68d29a517e",
+  "files": {
+    "scripts/bfs_native_one_thread_pilot.py": {
+      "sha256": "f0aa68ef66ce024c22761edf7ca5594b85242f326049d2a9d7a6fcff21f2dc28",
+      "bytes": 54043
+    },
+    "tests/test_bfs_native_one_thread_pilot.py": {
+      "sha256": "bb7ea12156dd1db076d3f54cd5c123515e25f278b8028c06408efea27df0bda7",
+      "bytes": 38046
+    },
+    "docs/bfs-native-one-thread-pilot-20260926.md": {
+      "sha256": "f82e755c52224448dacf0cad771389da2bbff5008ef545840dcbac9d8983bc73",
+      "bytes": 21882
+    },
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/native-one-thread-pilot-20260926-a1.json": {
+      "sha256": "3c778b4cfc3429e1f22543fb8eafae5e8bd1dca87b916dcb6ac56315a3abc7ed",
+      "bytes": 10812
+    }
+  },
+  "validation": {
+    "command": "python3 -m pytest tests/test_bfs_native_one_thread_pilot.py -q",
+    "result": "68 passed, 2 skipped in 46.29s",
+    "log": {
+      "path": "/private/tmp/bfs-one-thread-final-review-20260926.log",
+      "sha256": "74d4ddeb71120888d2bcee598338567cb813f5ec7d84448863a7b9ae0b3374da"
+    },
+    "py_compile": "passed",
+    "diff_check": "passed",
+    "linux_required_selection": "tests/test_bfs_native_one_thread_pilot.py::test_linux_one_thread_stage_reaps_detached_grandchild",
+    "linux_status": "not executed locally; two actual Linux cases required before long dispatch"
+  },
+  "plan_canonical_sha256": "a96b98b86d2f90eb1de3e3daa1464589e9ee909a7a0128e7913b82eabc5530db",
+  "independent_review": {
+    "spec": {
+      "passed": 49,
+      "deselected": 21,
+      "seconds": 25.21,
+      "review": {
+        "path": "/private/tmp/bfs-one-thread-spec-independent-20260926/review.json",
+        "sha256": "7a7b65e7da5236f4e2c120d4978104b4b67d2aa734a9bced9a6ea4502e64880a"
+      },
+      "original_wrong_compiler_reproduction": "now rejected"
+    },
+    "host_cleanup_resource_review": {
+      "state": "clean",
+      "focused_cases_passed": 18,
+      "seconds": 13.2,
+      "scope": "ownership, guard, shutdown, elapsed intervals, serialized sampler/cleanup/remember"
+    },
+    "root": "Direct readback of client, exact plan, public APIs, resource bounds and cleanup; no remaining finding in reviewed scope."
+  },
+  "remote_execution": false,
+  "export": {
+    "branch": "codex/bfs-native-one-thread-20260926",
+    "commit": "d484afb2e25dfd2c235433883436916cdb884d04",
+    "parent": "a53e619de11278e2763c7a22576308d1a23f19bf",
+    "files": [
+      {
+        "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/observations/native-one-thread-preparation-20260926.json",
+        "bytes": 2677,
+        "sha256": "2ff3a929ae43317f02b29f1d396cfcfa11c711cd5915fed6851a10cd758bba68"
+      },
+      {
+        "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/native-one-thread-pilot-20260926-a1.json",
+        "bytes": 10812,
+        "sha256": "3c778b4cfc3429e1f22543fb8eafae5e8bd1dca87b916dcb6ac56315a3abc7ed"
+      },
+      {
+        "path": "docs/bfs-native-one-thread-pilot-20260926.md",
+        "bytes": 21882,
+        "sha256": "f82e755c52224448dacf0cad771389da2bbff5008ef545840dcbac9d8983bc73"
+      },
+      {
+        "path": "docs/bfs-native-paired.md",
+        "bytes": 6134,
+        "sha256": "7e931812c47851ed7286aa76963358f78ba19c83c79dab956e1f7243998fc1ff"
+      },
+      {
+        "path": "docs/bfs-native-runtime-20260926.md",
+        "bytes": 4946,
+        "sha256": "e6215c787995acbca962e4244db494e7348c7c84958c077b34fa19b2befb9e24"
+      },
+      {
+        "path": "docs/bfs-pilot-freeze.md",
+        "bytes": 10151,
+        "sha256": "6f430a9c51f7151ba8b1f7a82c6c36f6501f06bd04f134de004d770d503be4b4"
+      },
+      {
+        "path": "docs/bfs-protocol.md",
+        "bytes": 12755,
+        "sha256": "889b3514fac7b9deb72b0cc396d3bed49469e4f15dda5bdab14f6e2d52892732"
+      },
+      {
+        "path": "records/evaluation_pairs/bfs-native-paired-pilot-20260926-a1.dx100.kronecker.pair.yaml",
+        "bytes": 53670,
+        "sha256": "13a8361b5883d67461acd6d2c8c6dda5eba83384ea0e8b4edc5ed331884b6fc6"
+      },
+      {
+        "path": "records/evaluation_pairs/bfs-native-paired-pilot-20260926-a1.dx100.uniform-random.pair.yaml",
+        "bytes": 54306,
+        "sha256": "6d1c7f71fef9619223570f9b727ef818f8806ad4269d134e7bdedbbb3372de24"
+      },
+      {
+        "path": "records/evaluation_pairs/bfs-native-paired-pilot-20260926-a1.upstream.kronecker.pair.yaml",
+        "bytes": 54016,
+        "sha256": "b7a5185eb7ab440cb84bf7a9e48ccd54eafaf3dd092f1a0eb0aaf15043b5fdd3"
+      },
+      {
+        "path": "records/evaluation_pairs/bfs-native-paired-pilot-20260926-a1.upstream.uniform-random.pair.yaml",
+        "bytes": 54652,
+        "sha256": "92890e0b8d64823299e805a7343f874bb83d3d54069909baf395c0af07c8cb70"
+      },
+      {
+        "path": "records/evaluations/bfs-native-paired-pilot-20260926-a1.dx100.kronecker.baseline.yaml",
+        "bytes": 103367,
+        "sha256": "e48770de3f4b2c42fb2182254fc9aa25b9133ef1f8ce8e446a31108b977d018f"
+      },
+      {
+        "path": "records/evaluations/bfs-native-paired-pilot-20260926-a1.dx100.kronecker.candidate.yaml",
+        "bytes": 102466,
+        "sha256": "8f5fb66f14a9796cacc873c86de3c13f90306c01b2f07267d9f7216aaf417caa"
+      },
+      {
+        "path": "records/evaluations/bfs-native-paired-pilot-20260926-a1.dx100.uniform-random.baseline.yaml",
+        "bytes": 104792,
+        "sha256": "76ffe2af2f83d995771dfc7e6efbbe05bc7f07119e316b7520312cfc90311a55"
+      },
+      {
+        "path": "records/evaluations/bfs-native-paired-pilot-20260926-a1.dx100.uniform-random.candidate.yaml",
+        "bytes": 103871,
+        "sha256": "f498f5942f88a194929a5a1e172ecdec770e23876a76407da5ef072c64785b3e"
+      },
+      {
+        "path": "records/evaluations/bfs-native-paired-pilot-20260926-a1.upstream.kronecker.baseline.yaml",
+        "bytes": 103890,
+        "sha256": "eabe241347dd29a1d02e4fd1e6bb7e16305420eb36b52b2fc5bed3b108ab2530"
+      },
+      {
+        "path": "records/evaluations/bfs-native-paired-pilot-20260926-a1.upstream.kronecker.candidate.yaml",
+        "bytes": 103110,
+        "sha256": "9afbc577e21ea5352207c4196132361510ac6b11da16f312b5051c53259f0387"
+      },
+      {
+        "path": "records/evaluations/bfs-native-paired-pilot-20260926-a1.upstream.uniform-random.baseline.yaml",
+        "bytes": 105321,
+        "sha256": "83b2e6b1bdec79ebdd76b44935059a3c42832a7ebf77107cf6582293f58872f5"
+      },
+      {
+        "path": "records/evaluations/bfs-native-paired-pilot-20260926-a1.upstream.uniform-random.candidate.yaml",
+        "bytes": 104526,
+        "sha256": "6f9e67937ef329b5d9172f15c9b6ec9883fdb0c8e47be109037672bee34927c2"
+      },
+      {
+        "path": "records/evaluations/bfs-native-repeatability-20260926-a1.dx100.kronecker.evaluation.yaml",
+        "bytes": 39741,
+        "sha256": "f5d79fe652842bc7fa204106d52e515fe3c0f44618a0f46a37abe9d938f071bf"
+      },
+      {
+        "path": "records/evaluations/bfs-native-repeatability-20260926-a1.dx100.uniform-random.evaluation.yaml",
+        "bytes": 40179,
+        "sha256": "ed9b33588118cf04f287b129f4d94a54b1e462332c66fc2ede6dae400122ce38"
+      },
+      {
+        "path": "records/evaluations/bfs-native-repeatability-20260926-a1.upstream.kronecker.evaluation.yaml",
+        "bytes": 39670,
+        "sha256": "f0dae564373743ec9ac3c708c65f193bed7197036bf8e96cf01c067cc8e235ce"
+      },
+      {
+        "path": "records/evaluations/bfs-native-repeatability-20260926-a1.upstream.uniform-random.evaluation.yaml",
+        "bytes": 40114,
+        "sha256": "01224898fba05682c4545230d3139dd222a0acd06c2506247b693464c388f967"
+      },
+      {
+        "path": "scripts/bfs_freeze_pilot.py",
+        "bytes": 52282,
+        "sha256": "0e2bbba5f48f656ea205dc9e1d284ae15ce2ec842c4d389df747a5a789c9e378"
+      },
+      {
+        "path": "scripts/bfs_native_campaign.py",
+        "bytes": 36687,
+        "sha256": "0c286602b602bca1de248c6c07132376bf123627df2124eba6a070c8265327e4"
+      },
+      {
+        "path": "scripts/bfs_native_one_thread_pilot.py",
+        "bytes": 54043,
+        "sha256": "f0aa68ef66ce024c22761edf7ca5594b85242f326049d2a9d7a6fcff21f2dc28"
+      },
+      {
+        "path": "swdb/bfs_native.py",
+        "bytes": 42346,
+        "sha256": "e385e50961b9c96ea7c6018aaa09a30df4c49f3286e56500e7ed3f1376a6e942"
+      },
+      {
+        "path": "swdb/bfs_profiling.py",
+        "bytes": 34097,
+        "sha256": "b622f49ee228f6ff63cdd112f61cf965187f39ed4aed1fe3d6ebd90880a87443"
+      },
+      {
+        "path": "swdb/bfs_protocol.py",
+        "bytes": 79345,
+        "sha256": "cb75a06225e090abdb4bffc88352b2fdefdcecc418d74911806b523f969cb88f"
+      },
+      {
+        "path": "swdb/bfs_region_comparison.py",
+        "bytes": 24058,
+        "sha256": "dc047b2893bbd65b5b4354a749af5580fbacd1f392b5e5892b9f21c85d152b94"
+      },
+      {
+        "path": "swdb/profile_package.py",
+        "bytes": 33186,
+        "sha256": "c2479b4d646ecfb06f57ab1ef1fe2d0c400758ae9b4a4ffc8a33e9e01ade164a"
+      },
+      {
+        "path": "tests/test_bfs_aggregation.py",
+        "bytes": 10294,
+        "sha256": "0a88d8197e5a4c83459ba3d609472e193d2aefd022ba72d15f3312c5382f0c40"
+      },
+      {
+        "path": "tests/test_bfs_campaign_reuse.py",
+        "bytes": 11724,
+        "sha256": "cd20c5cff6d095c31decdbc38f1d053afa1562fc2ea7f3b883651b4e2a51bacd"
+      },
+      {
+        "path": "tests/test_bfs_native_campaign.py",
+        "bytes": 6513,
+        "sha256": "e2d57a211dcf34a1ae88ca9f70ef05de707d754dff6d67fb3b73b66ba1a1db8c"
+      },
+      {
+        "path": "tests/test_bfs_native_one_thread_pilot.py",
+        "bytes": 38046,
+        "sha256": "bb7ea12156dd1db076d3f54cd5c123515e25f278b8028c06408efea27df0bda7"
+      },
+      {
+        "path": "tests/test_bfs_native_region_comparison.py",
+        "bytes": 20364,
+        "sha256": "efd841bc1aa8d270a4bf7bed16ecb59837b0928e6d6cf7e062a2b38268794b76"
+      },
+      {
+        "path": "tests/test_bfs_native_runtime.py",
+        "bytes": 13712,
+        "sha256": "3fac8f5804b79f4831f35114eeb61a5b6caff8743d0500b11a67cb62c1982518"
+      },
+      {
+        "path": "tests/test_bfs_paired_freeze.py",
+        "bytes": 21609,
+        "sha256": "66a3a8d76281a3c586031e2976c3bb1da0cf4c11585a90d2320d3460cdf63c94"
+      },
+      {
+        "path": "tests/test_bfs_profiling.py",
+        "bytes": 27972,
+        "sha256": "30a278ce90c630ca9f52453ae3bc1a2efe8a24cfda56935c18022ef98c8547a1"
+      },
+      {
+        "path": "tests/test_bfs_protocol.py",
+        "bytes": 45453,
+        "sha256": "e755b33b6e82f6929b023babe749c11964740e6693c758929fb9e201072bd62f"
+      },
+      {
+        "path": "tests/test_profile_packages.py",
+        "bytes": 23405,
+        "sha256": "784f46882a56818b05c42fa189b894a6d1406e874b4484839b40a493aebfb87f"
+      }
+    ],
+    "total_bytes": 1852184,
+    "ls_remote_verified": true
+  },
+  "commit": "cbfce757849d081923598785b86dc29902b76d9f",
+  "limitations": [
+    "Local tests are fixtures, not empirical qualification.",
+    "The two Linux detached-stage cleanup cases on the final code pin are required before dispatch.",
+    "Historical four-thread calibration and serial failure remain unqualified and unchanged."
+  ],
+  "exact_export_validation": {
+    "passed": 127,
+    "linux_skipped": 5,
+    "seconds": 44.69,
+    "log": {
+      "path": "/private/tmp/bfs-native-one-thread-exact-export-20260926.log",
+      "sha256": "b47759a41cc32f746816c218053a5ebdde788684fd383ef022982cd85423c599"
+    }
+  },
+  "superseding_phase_export": {
+    "commit": "319645eab0a25c815fa03fe1c372d32b4ba45d10",
+    "parent": "d484afb2e25dfd2c235433883436916cdb884d04",
+    "branch": "codex/bfs-native-one-thread-20260926",
+    "ls_remote_verified": true,
+    "root_commit": "a593bd9248af752d200b38c0e9132324dcfb7c2d",
+    "receipt": "native-one-thread-phase-fix-20260926.json",
+    "historical_export_dispatched": false,
+    "linux_required_before_dispatch": true
+  }
+}

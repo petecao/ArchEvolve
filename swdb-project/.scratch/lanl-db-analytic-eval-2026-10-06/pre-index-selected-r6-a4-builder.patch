@@ -1,0 +1,33 @@
+--- /private/tmp/lanl17_build_actual_p1_pre_index_input_20261009_r2.py
++++ SELECTED-pre-index-R6-a4-builder-IN-MEMORY
+@@ -1,7 +1,7 @@
+ """2026-10-09 ET: local actual metadata author; no remote execution or default approval."""
+ import json,hashlib,os,secrets,datetime,sys
+ from pathlib import Path
+-SHA='be2f68c21a72b4de5deee05f17f48a8cd09342cf3a6e7e17280ff72414dc3fd4'
++SHA='3698d1a2a34bc6be2585a8e5a9c0029882101268dbf9df5a9a0007823d4ece00'
+ def digest(b):return hashlib.sha256(b).hexdigest()
+ def canonical(v):return json.dumps(v,sort_keys=True,separators=(',',':'),allow_nan=False).encode()
+ def save(p,b):
+@@ -21,13 +21,15 @@
+ for name in ['validate-extensa-gem5-bfs-20261006-p'+str(i) for i in range(1,5)]+['validate-final-export']:
+  for role,suffix in [('argv','argv.json'),('exit','exit-code.txt'),('stdout','stdout'),('stderr','stderr')]:roles[name+':'+role]=RAW+'/'+name+'.'+suffix
+ originals={k:pins[v] for k,v in roles.items()};assert len(originals)==29 and all(set(v)=={'path','bytes','sha256','stat'} for v in originals.values())
+-payload={'format':'swdb.lanl17-pre-full-index-host-observation-input.v1','campaign':'extensa-gem5-bfs-20261006-p1','nonce':secrets.token_hex(16),'completion_originals':originals,'expected_ER_commit':d['observations']['ER']['commit'],'fresh_routes':{'inventory_output':B+'/lanl17-p1-full-catalog-inventory-20261009-a5-a1'}}
++payload={'format':'swdb.lanl17-pre-full-index-host-observation-input.v1','campaign':'extensa-gem5-bfs-20261006-p1','nonce':secrets.token_hex(16),'completion_originals':originals,'expected_ER_commit':d['observations']['ER']['commit'],'fresh_routes':{'inventory_output':B+'/lanl17-p1-full-catalog-inventory-20261009-a5-a4'}}
+ now=datetime.datetime.now(datetime.timezone.utc);payload['parent_review']={'basis':'explicit_parent_review_of_genuine_completed_FINALIZE_and_next_full_index_metadata_routes','source_sha256':SHA,'payload_sha256':digest(canonical(payload)),'completion_packet_sha256':digest(raw),'completion_root_review_sha256':digest(rr),'completion_peer_review_sha256':digest(peerraw),'actual_completion_originals_reviewed':True,'fixtures':False,'checked_utc':now.isoformat(),'valid_until_utc':(now+datetime.timedelta(seconds=300)).isoformat()}
+-b=(json.dumps(payload,sort_keys=True,indent=2,allow_nan=False)+'\n').encode();local=Path('/private/tmp/lanl17-p1-pre-full-index-host-input-actual-20261009-a5-a2.json');save(local,b)
++b=(json.dumps(payload,sort_keys=True,indent=2,allow_nan=False)+'\n').encode();local=Path('/private/tmp/lanl17-p1-pre-full-index-host-input-actual-20261009-a5-a4.json');save(local,b)
+ action=Path('/private/tmp/lanl17-pre-full-index-host-action-SOURCE-ONLY-draft-r7-20261008-a5.json');ar=action.read_bytes();assert len(ar)==38106 and digest(ar)=='3ebd67b8b1691c45fa40739d95f9d913d30a77b34f750eabb18a628f5ce3dfd7'
+-c=json.loads(ar)['config_template'];source=Path('/private/tmp/lanl17_pre_full_index_host_observation_20261008_a5_r5.py').read_bytes();assert len(source)==36052 and digest(source)==SHA and c['argv'][4]==source.decode()
+-remote=B+'/lanl17-p1-pre-full-index-host-input-20261009-a5-a2.json';c['argv'][6]=remote;c['argv'][8]=digest(b)
++c=json.loads(ar)['config_template'];source=Path('/private/tmp/lanl17_pre_full_index_host_observation_20261008_a5_r5.py').read_bytes();assert len(source)==36052 and digest(source)=='be2f68c21a72b4de5deee05f17f48a8cd09342cf3a6e7e17280ff72414dc3fd4' and c['argv'][4]==source.decode()
++selected=Path('/private/tmp/lanl17_pre_full_index_host_observation_selected_20261009_a5_r6.py').read_bytes();assert len(selected)==38694 and digest(selected)==SHA
++c['argv'][4]=selected.decode();c['argv'][10]=SHA
++remote=B+'/lanl17-p1-pre-full-index-host-input-20261009-a5-a4.json';c['argv'][6]=remote;c['argv'][8]=digest(b)
+ import base64
+ c['stage']=[{'path':remote,'bytes':len(b),'sha256':digest(b),'base64':base64.b64encode(b).decode()}]
+-config=Path('/private/tmp/lanl17-p1-pre-full-index-host-action-actual-20261009-a5-a2.json');cb=(json.dumps(c,sort_keys=True,indent=2,allow_nan=False)+'\n').encode();save(config,cb)
+-print(json.dumps({'input':str(local),'input_bytes':len(b),'input_sha256':digest(b),'config':str(config),'config_bytes':len(cb),'config_sha256':digest(cb),'review_expires_utc':payload['parent_review']['valid_until_utc'],'source_and_pins_unmodified':True,'remote_stage_only_actual_metadata_input':remote}))
++config=Path('/private/tmp/lanl17-p1-pre-full-index-host-action-actual-20261009-a5-a4.json');cb=(json.dumps(c,sort_keys=True,indent=2,allow_nan=False)+'\n').encode();save(config,cb)
++print(json.dumps({'input':str(local),'input_bytes':len(b),'input_sha256':digest(b),'config':str(config),'config_bytes':len(cb),'config_sha256':digest(cb),'review_expires_utc':payload['parent_review']['valid_until_utc'],'original_R5_and_completion_pins_unmodified':True,'selected_pre_index_source_sha256':SHA,'remote_stage_only_actual_metadata_input':remote}))

@@ -1,0 +1,529 @@
+{
+  "date_ET": "2026-10-16 11:36 ET",
+  "user_stop": true,
+  "status": "INCOMPLETE / UNREVIEWED future recipes; NOT EXECUTED",
+  "source_freeze": "9a59528d78f5af18e2e34f0f959873da6d6d2955",
+  "merged_published_integration": "3ed7291f",
+  "branch_before_checkpoint": "codex/probata-t07-device-index-20261016",
+  "merged_head_before_checkpoint": "89aa3170fb1ea61b214aba761ccd325ecf49714b",
+  "copied_text_files": [
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-timeout-triage-design-v1-20261016.md",
+        "bytes": 11108,
+        "sha256": "84df8bb64004571831aa7fc3528da894f014104997a0f4e4de8e327ef30862ba"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/00-probata-t07-device-timeout-triage-design-v1-20261016.md",
+        "bytes": 11108,
+        "sha256": "84df8bb64004571831aa7fc3528da894f014104997a0f4e4de8e327ef30862ba"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-timeout-triage-design-v1-20261016.json",
+        "bytes": 31990,
+        "sha256": "dc522bcfb53a6de4daf7a6794df2531bf6be8a73d71725bd0d7b06a37f9d6345"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/01-probata-t07-device-timeout-triage-design-v1-20261016.json",
+        "bytes": 31990,
+        "sha256": "dc522bcfb53a6de4daf7a6794df2531bf6be8a73d71725bd0d7b06a37f9d6345"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-timeout-triage-v1-20261016.py",
+        "bytes": 7182,
+        "sha256": "e6a8ff30f03cf43b5a9010d30648dce4435cc2eb4dc211d7149589b0f4b2df6c"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/02-probata-t07-device-timeout-triage-v1-20261016.py",
+        "bytes": 7182,
+        "sha256": "e6a8ff30f03cf43b5a9010d30648dce4435cc2eb4dc211d7149589b0f4b2df6c"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-timeout-triage-dispatch-v1-20261016.py",
+        "bytes": 1866,
+        "sha256": "fc1d8adf959fa181a24a967694afc788c970f35cee63fd061c8dcead08a2e6c8"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/03-probata-t07-device-timeout-triage-dispatch-v1-20261016.py",
+        "bytes": 1866,
+        "sha256": "fc1d8adf959fa181a24a967694afc788c970f35cee63fd061c8dcead08a2e6c8"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-timeout-triage-v1-20261016/analysis/triage.json",
+        "bytes": 127551,
+        "sha256": "7f5e64dc110ca7649760f9212057673634bd2f876467de8986bff97333747e1c"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/04-triage.json",
+        "bytes": 127551,
+        "sha256": "7f5e64dc110ca7649760f9212057673634bd2f876467de8986bff97333747e1c"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-timeout-triage-v1-20261016/resources.json",
+        "bytes": 499,
+        "sha256": "e8144db03e1457016c4c311e636cba0303ffde50f4e7f81218cf8f044b80724c"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/05-resources.json",
+        "bytes": 499,
+        "sha256": "e8144db03e1457016c4c311e636cba0303ffde50f4e7f81218cf8f044b80724c"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-proof-cold-reader-v2-20261016.py",
+        "bytes": 14353,
+        "sha256": "40b9ec010491cef0aaa7467bc6f3dc15bc2eb59f9ce3ab0ea760d0ab22fba0e7"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/06-probata-t07-device-proof-cold-reader-v2-20261016.py",
+        "bytes": 14353,
+        "sha256": "40b9ec010491cef0aaa7467bc6f3dc15bc2eb59f9ce3ab0ea760d0ab22fba0e7"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-proof-cold-helpers-v2-20261016.py",
+        "bytes": 16552,
+        "sha256": "744c569a6a2b3d2e2037583c9965aa9c80272450fbde7ffe90d6c2a3670a2a37"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/07-probata-t07-device-proof-cold-helpers-v2-20261016.py",
+        "bytes": 16552,
+        "sha256": "744c569a6a2b3d2e2037583c9965aa9c80272450fbde7ffe90d6c2a3670a2a37"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-proof-cold-v2-20261016-command.json",
+        "bytes": 1879,
+        "sha256": "00ca82adb547e630619b46a5b0c24cee0966c0ed9482a243d7c9b933cd035240"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/08-probata-t07-device-proof-cold-v2-20261016-command.json",
+        "bytes": 1879,
+        "sha256": "00ca82adb547e630619b46a5b0c24cee0966c0ed9482a243d7c9b933cd035240"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-proof-cold-v2-20261016-packet.json",
+        "bytes": 5773,
+        "sha256": "442c632fe83dc2b07f352497962691473c29c0545ff126409a8848b37360ef7e"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/09-probata-t07-device-proof-cold-v2-20261016-packet.json",
+        "bytes": 5773,
+        "sha256": "442c632fe83dc2b07f352497962691473c29c0545ff126409a8848b37360ef7e"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-proof-cold-v2-20261016-plan.md",
+        "bytes": 3078,
+        "sha256": "ee8111adf2c9c524b56b59687207f1c1880e697faf7d8ef5b8d0b140adacf3e7"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/10-probata-t07-device-proof-cold-v2-20261016-plan.md",
+        "bytes": 3078,
+        "sha256": "ee8111adf2c9c524b56b59687207f1c1880e697faf7d8ef5b8d0b140adacf3e7"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-index-controls-v1-20261016.py",
+        "bytes": 5137,
+        "sha256": "338f82e78e00fd14ddc6b29b46ef15242c7c13bed399c0bb904805a78dae386b"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/11-probata-t07-device-index-controls-v1-20261016.py",
+        "bytes": 5137,
+        "sha256": "338f82e78e00fd14ddc6b29b46ef15242c7c13bed399c0bb904805a78dae386b"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-index-controls-v2-20261016.py",
+        "bytes": 5372,
+        "sha256": "7dc1a756bf0b075bcb99c0f8ad5e1d11811ccb32b8d2dc54616a67fa5b8cf023"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/12-probata-t07-device-index-controls-v2-20261016.py",
+        "bytes": 5372,
+        "sha256": "7dc1a756bf0b075bcb99c0f8ad5e1d11811ccb32b8d2dc54616a67fa5b8cf023"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-index-controls-v3-20261016.py",
+        "bytes": 5388,
+        "sha256": "009e55e3cf2467da67b971c61b791eb1368cf7b4440c0af6011c4f8a986a42ae"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/13-probata-t07-device-index-controls-v3-20261016.py",
+        "bytes": 5388,
+        "sha256": "009e55e3cf2467da67b971c61b791eb1368cf7b4440c0af6011c4f8a986a42ae"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-index-control-dispatch-v1-20261016.py",
+        "bytes": 1925,
+        "sha256": "083628f0ac1ad6fec209b11b09213b228ffbc1c6d0cb9984e53fdd055bc1ffdc"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/14-probata-t07-device-index-control-dispatch-v1-20261016.py",
+        "bytes": 1925,
+        "sha256": "083628f0ac1ad6fec209b11b09213b228ffbc1c6d0cb9984e53fdd055bc1ffdc"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-index-control-dispatch-v2-20261016.py",
+        "bytes": 1925,
+        "sha256": "ac3709452198d88f1b260ccfe0164f74fc301d96af618a9b776a068bafed6396"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/15-probata-t07-device-index-control-dispatch-v2-20261016.py",
+        "bytes": 1925,
+        "sha256": "ac3709452198d88f1b260ccfe0164f74fc301d96af618a9b776a068bafed6396"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-index-control-dispatch-v3-20261016.py",
+        "bytes": 1925,
+        "sha256": "ac4c0c069ea62f4c754f5e4bf576ce5aa22146ec336abb27c9814f67b9fd8450"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/16-probata-t07-device-index-control-dispatch-v3-20261016.py",
+        "bytes": 1925,
+        "sha256": "ac4c0c069ea62f4c754f5e4bf576ce5aa22146ec336abb27c9814f67b9fd8450"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-index-control-dispatch-v4-20261016.py",
+        "bytes": 1925,
+        "sha256": "17697fa8a56a7aeefc40011c9f62338e507864099090ba344a4e531293343ac6"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/17-probata-t07-device-index-control-dispatch-v4-20261016.py",
+        "bytes": 1925,
+        "sha256": "17697fa8a56a7aeefc40011c9f62338e507864099090ba344a4e531293343ac6"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-index-source-evidence-author-v1-20261016.py",
+        "bytes": 3887,
+        "sha256": "95c64390c4a6f1c43cbceb279d242e8884e3ce40c7acf67510b7c9379dd68bfe"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/18-probata-t07-device-index-source-evidence-author-v1-20261016.py",
+        "bytes": 3887,
+        "sha256": "95c64390c4a6f1c43cbceb279d242e8884e3ce40c7acf67510b7c9379dd68bfe"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-index-red-v1-20261016/preflight.json",
+        "bytes": 791,
+        "sha256": "002638b4db82c7422e8f99f516f3ff128ea9e11859840022e49945fcaf3bc20b"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/19-preflight.json",
+        "bytes": 791,
+        "sha256": "002638b4db82c7422e8f99f516f3ff128ea9e11859840022e49945fcaf3bc20b"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-index-red-v1-20261016/resources.json",
+        "bytes": 514,
+        "sha256": "d1f5611144ff6acd3485f6c2d507270c9e3051203ab2cf3a1f88ef016c402e38"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/20-resources.json",
+        "bytes": 514,
+        "sha256": "d1f5611144ff6acd3485f6c2d507270c9e3051203ab2cf3a1f88ef016c402e38"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-index-red-v1-20261016/control/receipt.json",
+        "bytes": 343,
+        "sha256": "90919206e3293381f8cfaf0439922377c1f5d7aae3e79f5eab03d40e5de100f9"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/21-receipt.json",
+        "bytes": 343,
+        "sha256": "90919206e3293381f8cfaf0439922377c1f5d7aae3e79f5eab03d40e5de100f9"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-index-red-v1-20261016/control.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/22-control.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-index-green-v1-20261016/preflight.json",
+        "bytes": 793,
+        "sha256": "b53bd0cff988c846ed141a5bebd02103b81db1ee3bde628ba2a2370df74cdf64"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/23-preflight.json",
+        "bytes": 793,
+        "sha256": "b53bd0cff988c846ed141a5bebd02103b81db1ee3bde628ba2a2370df74cdf64"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-index-green-v1-20261016/resources.json",
+        "bytes": 506,
+        "sha256": "1b7ed66e534cc4ad3e8b03ab27582737518786c8f3d4c44ce42361d3c8999212"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/24-resources.json",
+        "bytes": 506,
+        "sha256": "1b7ed66e534cc4ad3e8b03ab27582737518786c8f3d4c44ce42361d3c8999212"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-index-green-v1-20261016/control.log",
+        "bytes": 1048,
+        "sha256": "647f29849dc2a6bf98128615f324bc051d2ee9939f662f46f815f2c914698304"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/25-control.log",
+        "bytes": 1048,
+        "sha256": "647f29849dc2a6bf98128615f324bc051d2ee9939f662f46f815f2c914698304"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-index-green-v2-20261016/preflight.json",
+        "bytes": 793,
+        "sha256": "b3fb07969fe0e9d2b894b3bf5aa5c74363581b6face6b7d33706aadd0eefad26"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/26-preflight.json",
+        "bytes": 793,
+        "sha256": "b3fb07969fe0e9d2b894b3bf5aa5c74363581b6face6b7d33706aadd0eefad26"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-index-green-v2-20261016/resources.json",
+        "bytes": 508,
+        "sha256": "21e3a8e1a8fbdd33f32c63dac36b92599eab888cb4cbf168f1c488c1f384529f"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/27-resources.json",
+        "bytes": 508,
+        "sha256": "21e3a8e1a8fbdd33f32c63dac36b92599eab888cb4cbf168f1c488c1f384529f"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-index-green-v2-20261016/control/receipt.json",
+        "bytes": 1571,
+        "sha256": "f5e14a62c54a4c9bcb7c68447e2eb2a90de9779594f5d601952d2b7509e4cfbe"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/28-receipt.json",
+        "bytes": 1571,
+        "sha256": "f5e14a62c54a4c9bcb7c68447e2eb2a90de9779594f5d601952d2b7509e4cfbe"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-index-green-v2-20261016/control.log",
+        "bytes": 15,
+        "sha256": "db8b2f76a965bc89bdbfe20b14dee0cea166f976fa4789198a275c2a2fea136d"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/29-control.log",
+        "bytes": 15,
+        "sha256": "db8b2f76a965bc89bdbfe20b14dee0cea166f976fa4789198a275c2a2fea136d"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-index-green-v3-20261016/preflight.json",
+        "bytes": 793,
+        "sha256": "ae592047fecc29bf9c7e6d5e617cf5779f2ac45e47d9c283e3bf23bd05dc88ee"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/30-preflight.json",
+        "bytes": 793,
+        "sha256": "ae592047fecc29bf9c7e6d5e617cf5779f2ac45e47d9c283e3bf23bd05dc88ee"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-index-green-v3-20261016/resources.json",
+        "bytes": 521,
+        "sha256": "5e37892a261e11fc53b2566b59a44bea929d7bbcd352351e04a5fa087af1040f"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/31-resources.json",
+        "bytes": 521,
+        "sha256": "5e37892a261e11fc53b2566b59a44bea929d7bbcd352351e04a5fa087af1040f"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-index-green-v3-20261016/control/receipt.json",
+        "bytes": 1700,
+        "sha256": "7c9b5617fa6f93225d580297b8f7559c981d8be5f423ab80d3dee7ec8a105ab0"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/32-receipt.json",
+        "bytes": 1700,
+        "sha256": "7c9b5617fa6f93225d580297b8f7559c981d8be5f423ab80d3dee7ec8a105ab0"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-index-green-v3-20261016/control.log",
+        "bytes": 15,
+        "sha256": "eb87b9f92d180438bd17e6d8f65f7efc8626cc2dc678fa5d738fa5e685ebe9db"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/33-control.log",
+        "bytes": 15,
+        "sha256": "eb87b9f92d180438bd17e6d8f65f7efc8626cc2dc678fa5d738fa5e685ebe9db"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-index-green-v4-20261016/preflight.json",
+        "bytes": 793,
+        "sha256": "e2fedb71984fe789277051d87be24b9caf604d515eb7b3f353ac6fa4c636812f"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/34-preflight.json",
+        "bytes": 793,
+        "sha256": "e2fedb71984fe789277051d87be24b9caf604d515eb7b3f353ac6fa4c636812f"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-index-green-v4-20261016/resources.json",
+        "bytes": 520,
+        "sha256": "49b103970e8f79686a9b26aabb2a69764dc8201ebdd26aa2556bf6b857742977"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/35-resources.json",
+        "bytes": 520,
+        "sha256": "49b103970e8f79686a9b26aabb2a69764dc8201ebdd26aa2556bf6b857742977"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-index-green-v4-20261016/control/receipt.json",
+        "bytes": 1756,
+        "sha256": "dc419f1f15893c083f0ec8af0b7bd5287b602f1457121a0901e41c527c387a6e"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/36-receipt.json",
+        "bytes": 1756,
+        "sha256": "dc419f1f15893c083f0ec8af0b7bd5287b602f1457121a0901e41c527c387a6e"
+      }
+    },
+    {
+      "original": {
+        "path": "/private/tmp/probata-t07-device-index-green-v4-20261016/control.log",
+        "bytes": 15,
+        "sha256": "eb87b9f92d180438bd17e6d8f65f7efc8626cc2dc678fa5d738fa5e685ebe9db"
+      },
+      "tracked_copy": {
+        "relative": "prototype/07-wp-hints/stop-20261016-1136/retained-text/37-control.log",
+        "bytes": 15,
+        "sha256": "eb87b9f92d180438bd17e6d8f65f7efc8626cc2dc678fa5d738fa5e685ebe9db"
+      }
+    }
+  ],
+  "remaining_required_tmp_paths": [
+    "/private/tmp/probata-resume-t07-private-array",
+    "/private/tmp/probata-t07-device-index-source",
+    "/private/tmp/probata-t07-device-diagnostic-proof-v2-bd2610b6-20261016",
+    "/private/tmp/probata-t07-device-proof-cold-v2-20261016-output",
+    "/private/tmp/probata-t07-device-init-generation-v1-bd2610b6-20261016",
+    "/private/tmp/probata-t07-device-weak-continuation-v2-bd2610b6-20261016",
+    "/private/tmp/probata-t07-device-normal-cold-v4-20261016",
+    "/private/tmp/probata-t07-device-weak-cold-v1-20261016",
+    "/private/tmp/probata-root-t07-device-diagnostic-proof-execution-v1-20261016.json",
+    "/private/tmp/probata-root-t07-device-proof-post-handoff-clearance-v1-20261016.json",
+    "/private/tmp/probata-root-t07-device-proof-cold-v2-20261016",
+    "/private/tmp/probata-t07-device-proof-cold-independent-static-review-v2-20261016.md",
+    "/private/tmp/probata-t07-device-proof-cold-controls-v2-20261016",
+    "/private/tmp/probata-t07-device-timeout-triage-v1-20261016",
+    "/private/tmp/probata-t07-device-index-red-v1-20261016",
+    "/private/tmp/probata-t07-device-index-green-v1-20261016",
+    "/private/tmp/probata-t07-device-index-green-v2-20261016",
+    "/private/tmp/probata-t07-device-index-green-v3-20261016",
+    "/private/tmp/probata-t07-device-index-green-v4-20261016",
+    "/private/tmp/probata-t07-helper-result-journal-v2-20261016.ml",
+    "/private/tmp/probata-t07-ipc-output-accounting-v1-20261016.py",
+    "/private/tmp/probata-mac-compiler-worker-b.py",
+    "/private/tmp/probata-t07-device-diagnostic-proof-v2-20261016-entry.py",
+    "/private/tmp/probata-t07-device-diagnostic-proof-v2-20261016-expected.json",
+    "/private/tmp/probata-t07-device-diagnostic-proof-v2-20261016-command.json",
+    "/private/tmp/probata-t07-device-diagnostic-proof-v2-20261016-packet.json",
+    "/private/tmp/probata-root-t07-device-diagnostic-proof-launch-v1-20261016.py",
+    "/private/tmp/probata-t07-device-proof-cold-reader-v1-20261016.py",
+    "/private/tmp/probata-t07-device-proof-cold-independent-static-review-v1-20261016.md"
+  ],
+  "new_generation_or_proof_recipe_files_authored": [],
+  "draft_budget_notes_only": {
+    "prior_consumed_diagnostic_seconds": 807.67746625,
+    "new_generation_whole_internal_seconds": [
+      120,
+      110
+    ],
+    "new_generation_per_root_seconds": 45,
+    "new_proof_whole_internal_seconds": [
+      360,
+      330
+    ],
+    "new_proof_per_root_seconds": 150,
+    "actual_new_attempts": 0,
+    "root_review_and_admission_still_required": true
+  },
+  "known_author_jobs_or_leases_owned": [],
+  "live_process_or_lease_scan_performed_at_stop": false,
+  "claim_released_to": "ready-for-agent",
+  "root_owns_final_main_merge_and_cleanup": true,
+  "no_proof_or_status_promotion": true,
+  "README": {
+    "path": "/private/tmp/probata-t07-device-index-source/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/stop-20261016-1136/README.md",
+    "bytes": 4544,
+    "sha256": "43c5256d7ebb6564291e8dc7815fd7c15ddbf94702358d9b56df43502b7d3323"
+  },
+  "ticket": {
+    "path": "/private/tmp/probata-t07-device-index-source/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/issues/07-spike-wp-agent-hints.md",
+    "bytes": 144638,
+    "sha256": "0dcf0d973b9707308c70c48b0f5b3758fb3ff583e661a0ff2ffd66eb60e7794b"
+  }
+}

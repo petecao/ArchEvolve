@@ -1,0 +1,13 @@
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+// Ported 2026-10-03 from MaizeHPC/MemAcc af3d6d7f7a69a72facdc3b95b42e78c952f44a76
+// Source: AgenticRefiner/refiner/synthesis/drivers/gather_{ref,cand,run}.cpp.tmpl
+// SWDB changes: SWDB addition (ticket 51): the gather templates adapted to vertex relabeling (out[perm[v]] = in[v]); no timing; input frame check (2026-10-03 ET)
+// Two-binary certification CANDIDATE TU for family relabel: includes a cleanroom
+// copy of the candidate header (a synthesized `SynthBackend`); its macros and
+// includes stay in this TU.
+#include "{{BACKEND_HEADER}}"
+#include <cstddef>
+#include <cstdint>
+extern "C" void swdb_cand_relabel(double* out, const double* in, const std::int32_t* perm, std::size_t n) {
+  SynthBackend::relabel_apply<double, std::int32_t>(out, in, perm, n);
+}

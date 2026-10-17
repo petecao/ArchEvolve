@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="2.836" timestamp="2026-10-03T14:38:27.921256-04:00" hostname="YanRus-Mac-Studio.local"><testcase classname="tests.test_typed_gem5_driver" name="test_timed_postprocessing_has_a_separate_bound_for_real_trace_revalidation" time="2.705"><failure message="swdb.cli.Failure: timed.w0.candidate-aggregate exceeded 300 seconds">source_store = &lt;swdb.store.Store object at 0x10ac57230&gt;
+published_first_attempt = (namespace(id='typed-library-bfs-gem5-20261003-a1', memory_gib=36, storage_gib=8, records=PosixPath('/Users/yanrujhou/...hema_version': '0.4', 'id': 'typed-library-bfs-gem5-20261003-a1.baseline.primary.build', 'status': 'draft', ...}, ...})
+tmp_path = PosixPath('/private/var/folders/x0/g9dhnccj0jjbxh_gblp35zvr0000gn/T/pytest-of-yanrujhou/pytest-106/test_timed_postprocessing_has_0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x10b3676f0&gt;
+
+    def test_timed_postprocessing_has_a_separate_bound_for_real_trace_revalidation(
+            source_store, published_first_attempt, tmp_path, monkeypatch):
+        """Reach the observed candidate-aggregate timeout without replaying 177M lines."""
+        import json
+        args, rows = published_first_attempt
+        args.records, args.runs_dir = source_store.dir, tmp_path
+        lane = 'mbit10-evaluation-node0 fixture'
+        companions = {name: driver.reference(source_store.get(
+            args.id + '.companion.' + name + '.evaluation', 'evaluation'))
+            for name in ('timed', 'diagnostic')}
+        acceptance = {'outcome': 'observed'}
+        monkeypatch.setattr(driver, 'prepared_records', lambda args: (source_store, rows))
+        monkeypatch.setattr(driver, 'load_stage', lambda args, stage: {
+            'l3_outcome': 'observed', 'timed_admitted': True,
+            'companion_evaluations': companions, 'acceptance': acceptance})
+        monkeypatch.setattr(driver.read_only_checks, 'companion_acceptance', lambda *args: acceptance)
+        monkeypatch.setattr(driver.provider_guard, '_lane', lambda: lane)
+        monkeypatch.setattr(driver, 'lease_snapshot', lambda lane: [])
+        monkeypatch.setattr(driver, '_require_valid', lambda path: source_store)
+        monkeypatch.setattr(driver.library.Library, 'state', lambda *args: {'tier': 'shared', 'status': 'certified'})
+        calls = []
+        def command(argv, folder, stage, *, timeout, environment=None):
+            request = json.loads(Path(next(value for value in argv if str(value).endswith('.request.json'))).read_text())
+            calls.append((argv[3], stage, timeout))
+            if stage == 'timed.w0.candidate-aggregate' and timeout &lt; 1082:
+                raise Failure(f'{stage} exceeded {timeout} seconds')
+            if argv[3] == 'dx100-execute':
+                return {'id': request['id'], 'outcome': {'state': 'complete'},
+                        'correctness': {'state': 'passed', 'checks': [{'coverage': {
+                            key: {'state': 'observed'} for key in ('read_only_executed', 'full_tiles', 'tail_tiles')}}]}}
+            if argv[3] == 'aggregate-evaluations':
+                return {'id': request['id'], 'outcome': {'state': 'complete'}}
+            return {'id': request['id'], 'decision': {'state': 'accepted'}, 'metrics': {'roi_speedup': 1.0}}
+        monkeypatch.setattr(driver, 'checked_command', command)
+&gt;       result = driver.timed_stage(args, tmp_path, lane, {})
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_typed_gem5_driver.py:227: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tools/typed_library_gem5_driver.py:438: in timed_stage
+    aggregate = public(args, folder, 'aggregate-evaluations', label+'-aggregate', aggregate_request,
+tools/typed_library_gem5_driver.py:186: in public
+    result = checked_command(argv, folder, stage, timeout=timeout, environment=environment)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+argv = ['/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.venv/bin/python', '-m', 'swdb', 'aggregate-evaluations', '--records', '/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/records', ...]
+folder = PosixPath('/private/var/folders/x0/g9dhnccj0jjbxh_gblp35zvr0000gn/T/pytest-of-yanrujhou/pytest-106/test_timed_postprocessing_has_0')
+stage = 'timed.w0.candidate-aggregate', timeout = 300, environment = {}
+
+    def command(argv, folder, stage, *, timeout, environment=None):
+        request = json.loads(Path(next(value for value in argv if str(value).endswith('.request.json'))).read_text())
+        calls.append((argv[3], stage, timeout))
+        if stage == 'timed.w0.candidate-aggregate' and timeout &lt; 1082:
+&gt;           raise Failure(f'{stage} exceeded {timeout} seconds')
+E           swdb.cli.Failure: timed.w0.candidate-aggregate exceeded 300 seconds
+
+tests/test_typed_gem5_driver.py:218: Failure</failure></testcase></testsuite></testsuites>

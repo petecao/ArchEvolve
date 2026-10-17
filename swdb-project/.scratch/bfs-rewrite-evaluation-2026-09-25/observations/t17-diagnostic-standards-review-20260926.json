@@ -1,0 +1,90 @@
+{
+  "format": "swdb.bfs.t17-diagnostic-build-standards-review.v1",
+  "created": "2026-09-26",
+  "observed_at": "2026-09-26T21:47:10.335086-04:00",
+  "state": "scoped_review_clean_after_repair",
+  "files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_t17_diagnostic_build.py",
+      "bytes": 19903,
+      "sha256": "d58d70b0743725a413254e49cc89bd509b1dedb6370930809b082fa4277f99b8"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_t17_diagnostic_build.py",
+      "bytes": 14539,
+      "sha256": "a81c2f5c813f12bdbaba42d2a16f3b0ed0eca230e39f620c07f098e506ed6873"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-t17-diagnostic-build-20260926.md",
+      "bytes": 4890,
+      "sha256": "c0a940859cc895587f29158c434245ceb3d3a21b3d8f5896f824508132411941"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/requests/t17-diagnostic-build-only-20260926-a1.json",
+      "bytes": 561,
+      "sha256": "272def5a75dd974d8fa46b3ccdd56016ea1ddf0f2af545990fc02cc25405e5c1"
+    }
+  ],
+  "finding": {
+    "priority": "P2",
+    "file": "scripts/bfs_t17_diagnostic_build.py",
+    "lines": "224-227",
+    "issue": "A valid hashed admission outside the accounted dispatch root was accepted through the full admitted synthetic flow.",
+    "rule": "docs/bfs-t17-diagnostic-build-20260926.md: original2GiB envelope includes the exact dispatch sibling and admission input.",
+    "resolution": "Require exact canonical DISPATCH/admission.json with no symlink before read; original normal flow preserved."
+  },
+  "evidence": [
+    {
+      "path": "/private/tmp/test_t17_admission_path_standards_20260926.py",
+      "bytes": 908,
+      "sha256": "656561ba3113e061cd1f774cab1c70a2e118c8eb666ba0d42899253f8511cef9"
+    },
+    {
+      "path": "/private/tmp/bfs-t17-admission-path-red-20260926.log",
+      "bytes": 1948,
+      "sha256": "a506c030e7e0db973912e7966a914f229d1ac3135b54a09e9030993a346ca3bd"
+    },
+    {
+      "path": "/private/tmp/bfs-t17-standards-focused-20260926.log",
+      "bytes": 114,
+      "sha256": "6d918faf4cc4d11a115f765300facacf48a1e084bf70f608ae5fc00dab726efe"
+    },
+    {
+      "path": "/private/tmp/bfs-t17-admission-path-green-20260926.log",
+      "bytes": 1994,
+      "sha256": "a354da9a4343ef63780008e99bcd0e4729e4b8af9085cc87fb669cef2fa3bc4d"
+    },
+    {
+      "path": "/private/tmp/test_t17_admission_path_standards_v2_20260926.py",
+      "bytes": 914,
+      "sha256": "26422eaa416885f428ab101ea6613a037a60c8dd2bd7e53f8e41319233dd64c3"
+    },
+    {
+      "path": "/private/tmp/bfs-t17-admission-path-green-v2-20260926.log",
+      "bytes": 113,
+      "sha256": "2fa6992dcdf5794a9c107f8ae30db7446bcb300c8f24bd15ede7e38b93f2edb7"
+    }
+  ],
+  "results": {
+    "original": "1 failed0.14s: DID NOT RAISE",
+    "focused": "15 passed12deselected0.31s",
+    "first_recheck": "1 failed4passed: independent probe used old author-fixture signature after author added admission_fault parameter; no product regression asserted",
+    "adapted_recheck": "5 passed23deselected0.22s; only fixture invocation adapted with admission_fault=None, original probe and all logs preserved"
+  },
+  "readback": [
+    "Original600-second outer clock and570work/shared30cleanup; public240/compiler180 unchanged.",
+    "Actual public compilation field shapes match swdb/dx100_candidate.py; original primary852e and canonical record are rehashed before/after, request only new ID plus diagnostic_regions.",
+    "One public compile/get-only sequence, original provider budget/protections/source/model/target fixed, no guest/provider/repair routes.",
+    "Inherited reviewed Owned/Monitor/finalizer preserve initial error and shared deadline; process-free accounting includes record view/cache/sidecars/buildsubset.",
+    "Existing proof reuse binds identical ownership primitives and Python, retaining distinct actual proof and driver commits.",
+    "Same-host Git record view requires exact initial manifest and unchanged original canonical rows; no held metadata export authorized."
+  ],
+  "limitations": [
+    "Local fixture/actualshortprocess review only, not an empirical diagnostic compile or a new Linux ownership proof.",
+    "Git materialization provenance is operator-sealed metadata; real same-host commit/tree/archive inventory and final admission remain to be reviewed.",
+    "Independent post-helper closure and final allocated-byte recount remain necessary; driver does not attest its own reap.",
+    "No new actionable Standards smell beyond the repaired concrete accounting gap; no final all-ticket review claim."
+  ],
+  "production_edits": false,
+  "host_actions": false
+}

@@ -1,0 +1,76 @@
+{
+  "date": "2026-10-16 ET",
+  "findings": [
+    {
+      "id": "STD-01",
+      "issue": "New public test imports _public_seed from another test module. tests/conftest.py lines3\u20137 explicitly forbid test-module imports and require shared builders in tests/testkit.",
+      "line": 121,
+      "path": "tests/test_standard_vector_member_view.py",
+      "priority": "P2",
+      "repair": "Move the existing unchanged _public_seed plain builder into a testkit module, update both test modules to import it there, and retain all public assertions and builder behavior."
+    }
+  ],
+  "next": "Recheck exact fixture extraction and affected test imports only, after root repair; frozen production pins remain separate.",
+  "physical_inputs": [
+    {
+      "bytes": 10126,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/standard_vector_member_view.py",
+      "sha256": "6636e5857616e8b93e26c1f0b9c0fed26ef5e9ec565e116586c683625c6fe966"
+    },
+    {
+      "bytes": 104308,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/wp_adapter.py",
+      "sha256": "56231cad5a34d866c274086ffb16cd004966e5c1cf5c3224b145144b8a91c229"
+    },
+    {
+      "bytes": 64171,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/wp_pointer_bounds.py",
+      "sha256": "62215cc74768061aff3ded4b449b0f4ec776c0243c15194bfefcf064dc737241"
+    },
+    {
+      "bytes": 53397,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/proof_setup.py",
+      "sha256": "e65f083540d0c4aafca8c2a2183f71dad644fd314aff02ff04cd2331fabcc79d"
+    },
+    {
+      "bytes": 36527,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/schemas/proof.schema.json",
+      "sha256": "e803f92837d52035f09d1281aa43ce334fcea81942d3f0bd4a16959383a487f8"
+    },
+    {
+      "bytes": 10576,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_standard_vector_member_view.py",
+      "sha256": "66c7bbc252021b94e8c9d6e7b52aefaa76d6ecd874ebf5285896564b241a4879"
+    },
+    {
+      "bytes": 8597,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_standard_member_contracts.py",
+      "sha256": "b3ef0fedebcdba67e7c2f8800bc3f2a770c2207b6299cc241281f8702656547a"
+    },
+    {
+      "bytes": 11887,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_standard_range_model.py",
+      "sha256": "62609a231e8393e87d96521133d90299e76af487b336970edc6341dd83f92ca5"
+    }
+  ],
+  "remaining_source_review": [
+    "Exact opt-in source/domain module and all32 original contract/type preservation read; no unsafe admission fallback found",
+    "Shared adapter, pointer-analysis and setup edits are narrow, regenerate complete pinned view/report before launch, and retain caller-domain refusal",
+    "Schema changes are two optional typed pin fields; generic proof outcome/version/dependency semantics remain untouched",
+    "Public controls use complete generated-source/record/prelaunch seams with actual parser-error stand-in explicitly not a proof; changed legacy tests preserve existing origin refusal",
+    "No additional Standards blocker in current eight-file scope"
+  ],
+  "reviewer": "ticket25 independent Standards source review",
+  "reviewer_tests_native_compiler_solver_SSH_or_shared_edits": false,
+  "scientific_source_body_caller_or_ticket_acceptance": false,
+  "spec_receipt": {
+    "path": ".scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t25-standard-vector-member-final-refusal-delta-independent-spec-review-20261016.json",
+    "sha256": "ecfc9fa2177691fd03b388dcfe93eb7cd158b96ca52bdc5dbead6b91d0cf4da0"
+  },
+  "standards_read": [
+    "Root AGENTS and swdb-project/AGENTS scope/date/US-language rules",
+    ".claude/rules/miscellaneous.md and learned-workflow.md",
+    "tests/conftest.py shared testkit convention"
+  ],
+  "verdict": "FINDING_ONE_SHARED_TEST_BUILDER_LOCATION"
+}

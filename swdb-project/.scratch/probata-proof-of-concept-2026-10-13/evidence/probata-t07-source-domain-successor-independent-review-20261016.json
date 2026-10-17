@@ -1,0 +1,123 @@
+{
+  "created": "2026-10-16 00:20 ET",
+  "decision": "PASS STATIC REVIEW",
+  "actual_admission": false,
+  "base": "13225a825aa1be9882d9031787ebf939991c0cb0",
+  "source_state": "two-file dirty frozen source; root owns future commit",
+  "source_pins": [
+    {
+      "path": "/private/tmp/probata-resume-t07-source-domains/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/gapbs_models.h",
+      "sha256": "62c482f54d2ed6771d0f91bbff5c807226ee2b9f5d53c9a2047f4dc63424bfd2",
+      "expected": "62c482f54d2ed6771d0f91bbff5c807226ee2b9f5d53c9a2047f4dc63424bfd2"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-source-domains/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/tdstep_standin.c",
+      "sha256": "3cee3cb2062bbd07d7f1c42b769d967ae739824ef0cf5cc97ff7a534fc12a9b6",
+      "expected": "3cee3cb2062bbd07d7f1c42b769d967ae739824ef0cf5cc97ff7a534fc12a9b6"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-source-domains/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/dxc_summaries.h",
+      "sha256": "d708c0ef974e5ede1aaadd2b5e66dd785affa5e1dc6ef37419bf9e72517ae0d2"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-source-domains/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/bfs_unit.h",
+      "sha256": "1bcbf4dac683d6a46269fcd5f896fefc2571adc49d059b46f93fb25eb0f7b235"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-source-domains/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/wp_run.sh",
+      "sha256": "97130fcc3d087961484cddaad7b4ab798f7cf00920eab8b94ecdb64a285f9f1f"
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-source-domains/swdb-project/library/dx100/bfs_read_offload.inc",
+      "sha256": "3c5867a2b8919806f681603836bd0cff448f21634485abf84e49ed71f25515ef"
+    },
+    {
+      "path": "/private/tmp/probata-t07-pinned-headers-20261016/pins.json",
+      "sha256": "88554fb3e9b4d21ceaa9d4cb4697d7ee3f70b237fd5b0570dbf80a15b383a4b6"
+    },
+    {
+      "path": "/private/tmp/probata-t07-pinned-headers-20261016/benchmarks/gapbs/src/sliding_queue.h",
+      "sha256": "3d5a1d3cff924737c2fc7c6b4fcbb859270f1fcc626c25aac4c780b7b6f4c02c"
+    },
+    {
+      "path": "/private/tmp/probata-t07-pinned-headers-20261016/benchmarks/gapbs/src/pvector.h",
+      "sha256": "b3280b03eb774fdd27bbc1967c4f274e46d42179f149275e1b2c394986ebe03d"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/MemLoader.ml",
+      "sha256": "b59407d1220f7c0871bc556aaebf4748e9229053463881467ca6a3da851c9fe8"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/MemVar.ml",
+      "sha256": "43b8979a169ccfb7c6e7183970a8d3022d27d410487f139b397073f06a7476f6"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/LogicSemantics.ml",
+      "sha256": "7612c77530d4fe9bb89ec0b28460685f801b10e9b32fc9bfa479548d1b6e9e03"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/wpRTE.ml",
+      "sha256": "965ef16094a23b6ce6efd849820ee818843d94d079bbe9e00c02374084d4c030"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/wp_parameters.ml",
+      "sha256": "a4ace79d1262461ea14f73275db17eb332f76b265059fc238a6bc9538a81df2b"
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/Cvalues.ml",
+      "sha256": "c04b39f6a15932715d694b9679a4fcae88c4b8ae45979ee60977efebf9fb6b80"
+    }
+  ],
+  "canonical_C_comparisons": [
+    {
+      "file": "gapbs_models.h",
+      "noncomment_nonwhitespace_C_equal_to_base": true,
+      "base_canonical_C_sha256": "b30faad3033aca6eb1142cd32801bec6348e29c8c75e4928400d03e69d295598",
+      "current_canonical_C_sha256": "b30faad3033aca6eb1142cd32801bec6348e29c8c75e4928400d03e69d295598"
+    },
+    {
+      "file": "tdstep_standin.c",
+      "noncomment_nonwhitespace_C_equal_to_base": true,
+      "base_canonical_C_sha256": "eae45cf34caa33ecc8f080e096029a00a54a297e8c11b5660b3d0789d913c96e",
+      "current_canonical_C_sha256": "eae45cf34caa33ecc8f080e096029a00a54a297e8c11b5660b3d0789d913c96e"
+    }
+  ],
+  "helper_body_inventory": [
+    "compare_and_swap",
+    "fetch_and_add_size_t",
+    "std_min_size_t",
+    "omp_get_thread_num",
+    "pvector_NodeID_operator_index",
+    "pvector_NodeID_data",
+    "pvector_NodeID_beginp",
+    "pvector_NodeID_endp",
+    "pvector_SGOffset_operator_index",
+    "pvector_SGOffset_data",
+    "pvector_SGOffset_beginp",
+    "pvector_SGOffset_endp",
+    "SlidingQueue_NodeID_beginp",
+    "SlidingQueue_NodeID_endp",
+    "SlidingQueue_NodeID_size",
+    "QueueBuffer_NodeID_QueueBuffer",
+    "QueueBuffer_NodeID_destroy",
+    "QueueBuffer_NodeID_flush",
+    "QueueBuffer_NodeID_push_back"
+  ],
+  "bodyless_assumption_allowlist": [
+    "__sync_bool_compare_and_swap_NodeID",
+    "__atomic_load_n_NodeID",
+    "__sync_fetch_and_add_size_t",
+    "swdb_new_NodeID_array",
+    "swdb_delete_NodeID_array",
+    "std_copy_NodeID"
+  ],
+  "review_fixes": {
+    "full_storage_named_API": "closed against exact pinned modified fork",
+    "subtraction_domain": "closed by common-base and pre-subtraction offset bound",
+    "input_initializedness": "closed by precise fields/cells, no padding premise",
+    "output_initializedness": "closed by exact primitive/wrapper/flush/push guarantees",
+    "single_buffer_lifetime": "explicit restricted model boundary, no general allocator theorem"
+  },
+  "errors": [],
+  "reviewer_executed_jobs": []
+}

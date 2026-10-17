@@ -1,0 +1,59 @@
+{
+  "artifacts": [
+    {
+      "bytes": 42171,
+      "path": "/private/tmp/probata-root-allocation-cold-execution-v1-6216fc94-20261016.json",
+      "sha256": "b7144792af7db3c54f18076669f3ae9f6652a45d5bb67c3fc07b5234e664884d"
+    },
+    {
+      "bytes": 1803,
+      "path": "/private/tmp/probata-t28-allocation-independent-cold-reconciliation-v1-6216fc94-20261016.md",
+      "sha256": "653d8dc52f8d71f9192e4d6b126f0ab08b5c42a0e684805bfb2322eb284fc49c"
+    },
+    {
+      "bytes": 6692,
+      "path": "/private/tmp/probata-t28-allocation-independent-cold-reconciliation-v1-6216fc94-20261016.json",
+      "sha256": "bd7e5d4b6656b1a0710871f24553be75709df397cea97d4cdfce6b640c004040"
+    }
+  ],
+  "boundaries": [
+    "Helper default exits and termination remain Unknown and unverified.",
+    "Unused initialized-u32 overload requires false/Ignored is unsupported, not an admitted call or body.",
+    "Original scratch/compiled modules absent; no reconstruction of submitted SMT or binary posthash.",
+    "Smoke normalization is display evidence, not direct Valid or measured external solver time."
+  ],
+  "counts": {
+    "checks": 13303,
+    "csv_rows_each": 50,
+    "dag_edges": [
+      175,
+      159
+    ],
+    "errors": 0,
+    "extern_properties_each": 11,
+    "goals_each": 43,
+    "healthy_attempted_nonvalid_smokes_each": 10,
+    "negative_open_ensures": [
+      "timeout",
+      "unknown",
+      "timeout"
+    ],
+    "negative_ordinary_valid": 32,
+    "positive_ordinary_valid": 33,
+    "properties_each": 67
+  },
+  "current02_acceptance": false,
+  "date_ET": "2026-10-16",
+  "decided_utc": "2026-10-16T14:31:59.553437+00:00",
+  "full_ticket28_acceptance": false,
+  "hardware_liveness": false,
+  "initialized_u32_acceptance": false,
+  "model_contract_body_refinement": false,
+  "negative_clean_not_proven": true,
+  "negative_refuted": false,
+  "pair_diagnostic_acceptance": true,
+  "positive_scoped_acceptance": true,
+  "scope": "Original TOTAL closed software-counter caller fixture only, original three-counter frame, five selected source-certified helpers; positive102 and wrong101. Conditional declared compiler/ABI/source-model/Extern TCB.",
+  "source_commit": "6216fc9440897bebc16a09eeb124ce76f202f185",
+  "ticket_status": "claimed"
+}

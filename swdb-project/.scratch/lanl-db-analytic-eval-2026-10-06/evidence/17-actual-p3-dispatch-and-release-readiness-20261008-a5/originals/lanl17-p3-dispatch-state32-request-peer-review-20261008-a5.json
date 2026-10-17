@@ -1,0 +1,108 @@
+{
+  "format": "swdb.lanl17-peer-local-original-review.v1",
+  "reviewed_utc": "2026-10-08T21:51:00.068177+00:00",
+  "result": "PASS",
+  "scope": "p3 finalized dispatch-state32 request/action linked to actual BEFORE/dispatch/acquired lane originals; producer NOTRUN at review",
+  "scientific_admission": false,
+  "independent_remote_verification": false,
+  "SSH_control_tests_imports_or_scientific_execution": false,
+  "originals_mutated": false,
+  "request_identity_sha256": "80bf37ce5597d7f434bb2c32ef4f962de5ab8904aaecca125eb23ea6cecbfbe7",
+  "BEFORE_identity_sha256": "b06e4ec30f4491c67f20b5b8a9e3dd5e7053441584e692e4d808e24479c2c0a5",
+  "dispatch_identity_sha256": "330ffec6a3d1b53d77dd0142b7ed26d9fdd3d8e11eae50a4727a51b1bb6f6bed",
+  "actual_acquired_generation": 513,
+  "native_state": "held",
+  "call_or_release_completion_not_inferred": true,
+  "checks": [
+    "request_originalTrue_seal",
+    "BEFORE_originalTrue_seal",
+    "dispatch_originalTrue_seal",
+    "unchanged_context_R_C_F6_H_shared_policy",
+    "exact_32_request_schema",
+    "fixed_M2_and_controls",
+    "actual_pin_before_custody",
+    "fixed_original_writers_before_custody",
+    "actual_pin_dispatch",
+    "fixed_original_writers_dispatch",
+    "actual_absent_before_source_flags",
+    "fullhost_source_and_prelaunch_absence",
+    "original_dispatcher_explicit_exclusive_flag",
+    "null_prestate_and_honest_attestation_chronology",
+    "exact_capture_lanl17-p3-before-capture-20261008-a5",
+    "exact_capture_lanl17-p3-dispatch-original-collect-capture-20261008-a5",
+    "actual_acquired_generation_not_release_admission",
+    "two_exact_acquired_originals",
+    "actual_initial_native_byte_stat_pin",
+    "actual_initial_native_byte_stat_pin",
+    "lane_native_measured513",
+    "exact_action_argv_pins_caps",
+    "exact_stage_bytes_routes"
+  ],
+  "exact_original_pins": [
+    {
+      "path": "/private/tmp/lanl17-p3-dispatch-state-request-finalized-20261008-a5.json",
+      "bytes": 5584,
+      "sha256": "f380bc4069f71c5e2ababdc98c4774253baf1e9653a69bf48d17125bd2421305"
+    },
+    {
+      "path": "/private/tmp/lanl17-p3-dispatch-state-action-config-finalized-20261008-a5.json",
+      "bytes": 8510,
+      "sha256": "e033853e2336b78b668be1e61c713bc0f60a58656ff3d9ddab13f43afca483cc"
+    },
+    {
+      "path": "/private/tmp/lanl17-p3-before-capture-20261008-a5/custody.json",
+      "bytes": 3148,
+      "sha256": "85e2c9f6262a627e0f6007699e1762e6806420bd8ae870d6dd102823e9ee6f8b"
+    },
+    {
+      "path": "/private/tmp/lanl17-p3-dispatch-original-collect-capture-20261008-a5/dispatch-preregistration.json",
+      "bytes": 44079,
+      "sha256": "a098059f1f5c60ab342555026ab72fbfca1b84497cdf2d86dd9f62fb17f61da1"
+    },
+    {
+      "path": "/private/tmp/lanl17-p3-acquired-generation-originals-capture-r1-20261008-a5/generation-original.json",
+      "bytes": 3274,
+      "sha256": "3ddd962eb24c5d0400ff2e92f7ce97278f4c0f947aa0f002a27249d3c25f8983"
+    },
+    {
+      "path": "/private/tmp/lanl17-p3-parent-pre-dispatch-readonly-capture-20261008-a5-r1/host-original.json",
+      "bytes": 17387,
+      "sha256": "fb7c30fa18319b90fec27fc6d9cd8e7b633d3c98b165559ee5d25ba05ad99a8d"
+    },
+    {
+      "path": "/private/tmp/lanl17-p3-dispatch-parent-argv-finalized-20261008-a5-a2.json",
+      "bytes": 1893,
+      "sha256": "9fd92eea75d597c243ece514fa5bc748db6ba4374d3b2d35cffaa0ca8d06116d"
+    },
+    {
+      "path": "/private/tmp/lanl17-p3-dispatch-state-request-draft-r1-20261008-a5.json",
+      "bytes": 8285,
+      "sha256": "26ec0692f2ab3f0e8c1ab9cd4c60e882a071d380b5f0c2efc37625b645452913"
+    },
+    {
+      "path": "/private/tmp/lanl17-p1-dispatch-state-request-20261008-a5.json",
+      "bytes": 5584,
+      "sha256": "b5198085b8da79dbdf311cdaffcf2bc733904bb85799c5d8ed8b950310cc3eb2"
+    },
+    {
+      "path": "/private/tmp/lanl17-p3-before-capture-20261008-a5/stdout",
+      "bytes": 6312,
+      "sha256": "9b2766feeef0c6361359bc40cf77bb00315b94e5c8b783855889ee2b973b1ebe"
+    },
+    {
+      "path": "/private/tmp/lanl17-p3-before-capture-20261008-a5/transport.json",
+      "bytes": 418,
+      "sha256": "1a7a91a73e3b98029469a6fc66d655e0993fe385951e2446d6bdeac462cb526c"
+    },
+    {
+      "path": "/private/tmp/lanl17-p3-dispatch-original-collect-capture-20261008-a5/stdout",
+      "bytes": 59472,
+      "sha256": "5ead9debf93ea36d427deb8f9873c3884d45efd8be3070d5d77f71e6125dedb1"
+    },
+    {
+      "path": "/private/tmp/lanl17-p3-dispatch-original-collect-capture-20261008-a5/transport.json",
+      "bytes": 419,
+      "sha256": "9f0617c3b69719ba5bf5c56f1b5e057f3ee26f7abc8400c5115d285c85a19b3d"
+    }
+  ]
+}

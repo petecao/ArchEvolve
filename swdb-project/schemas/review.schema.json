@@ -1,0 +1,318 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review",
+  "type": "object",
+  "properties": {
+    "kind": {
+      "const": "review"
+    },
+    "target_kind": {
+      "enum": [
+        "library_entry",
+        "candidate",
+        "review"
+      ],
+      "description": "Absent means library_entry. candidate reviews promote an Extensa candidate artifact (ticket 48, 2026-10-03 ET). review: an attribution correction of an earlier review, whose target pins that review's canonical JSON (spec review C1, 2026-10-05 ET)."
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "content_sha256"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "content_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "reviewer": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reviewed_at": {
+      "type": "string"
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "origin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "campaign"
+      ],
+      "properties": {
+        "mode": {
+          "const": "extensa"
+        },
+        "campaign": {
+          "$ref": "#/$defs/extensa_campaign_id"
+        }
+      }
+    },
+    "reevaluation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "team_protocol",
+        "protocol",
+        "workload_class",
+        "workloads",
+        "requests"
+      ],
+      "properties": {
+        "team_protocol": {
+          "type": "string",
+          "x-ref": "protocol"
+        },
+        "protocol": {
+          "type": "string",
+          "x-ref": "protocol"
+        },
+        "workload_class": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workloads": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "x-ref": "workload"
+          }
+        },
+        "requests": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "sha256"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        }
+      }
+    },
+    "proof_records": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "x-ref": "proof"},
+      "description": "Probata ticket 12 (2026-10-14 ET), candidate reviews only: the candidate artifact's proof records that count at promotion (empty when it has none). swdb promote fills it from the level rule; each must be about the target candidate artifact."
+    },
+    "level_snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["level", "at", "level_rule", "records"],
+      "x-required-reasons": {
+        "level": "a level snapshot names the level",
+        "at": "a level snapshot is dated (YYYY-MM-DD HH:MM ET)",
+        "level_rule": "a level snapshot names the level-rule version that computed it",
+        "records": "a level snapshot lists the proof records that set the level (empty when none)"
+      },
+      "properties": {
+        "level": {"enum": ["uncertified", "certified", "rejected", "proven_within_bounds_threads_1",
+                           "proven_within_bounds_threads_k", "proven_unbounded"]},
+        "at": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2} ET$",
+               "x-reason": "a snapshot's time is YYYY-MM-DD HH:MM ET"},
+        "level_rule": {"type": "string", "minLength": 1},
+        "records": {"type": "array", "items": {"type": "string", "x-ref": "proof"}}
+      },
+      "description": "Probata ticket 12 (2026-10-14 ET), candidate reviews only: the level snapshot at promotion (swdb.level_rule.snapshot; 26 item 11). Never recomputed: `swdb candidate-level` shows it beside the current level, so a later drop shows against what was approved."
+    },
+    "performed_by": {
+      "enum": [
+        "human",
+        "agent"
+      ],
+      "description": "Who did the reviewing. Absent means human (records before 2026-10-05). reviewer names the maintainer on whose authority the review counts (ADR 0007)."
+    },
+    "delegated_by": {
+      "type": "string",
+      "minLength": 1,
+      "description": "An agent review: the maintainer who delegated it."
+    },
+    "delegation": {
+      "type": "string",
+      "minLength": 1,
+      "description": "An agent review: what was delegated and when (a dated instruction and ticket)."
+    },
+    "review_document": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Repository path of the review's written findings."
+    },
+    "attribution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "performed_by"
+      ],
+      "properties": {
+        "performed_by": {
+          "enum": [
+            "human",
+            "agent"
+          ],
+          "description": "Who did the reviewing. Absent means human (records before 2026-10-05). reviewer names the maintainer on whose authority the review counts (ADR 0007)."
+        },
+        "delegated_by": {
+          "type": "string",
+          "minLength": 1,
+          "description": "An agent review: the maintainer who delegated it."
+        },
+        "delegation": {
+          "type": "string",
+          "minLength": 1,
+          "description": "An agent review: what was delegated and when (a dated instruction and ticket)."
+        },
+        "review_document": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Repository path of the review's written findings."
+        }
+      },
+      "description": "An attribution correction: who actually performed the target review."
+    }
+  },
+  "required": [
+    "target",
+    "reviewer",
+    "reviewed_at",
+    "evidence"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "required": [
+          "target_kind"
+        ],
+        "properties": {
+          "target_kind": {
+            "const": "candidate"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "origin",
+          "reevaluation"
+        ]
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "target_kind"
+        ],
+        "properties": {
+          "target_kind": {
+            "const": "review"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "attribution"
+        ],
+        "properties": {
+          "evidence": {
+            "maxItems": 1,
+            "items": {
+              "x-ref": "review"
+            }
+          }
+        }
+      },
+      "else": {
+        "not": {
+          "required": [
+            "attribution"
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "anyOf": [
+          {
+            "not": {
+              "required": [
+                "target_kind"
+              ]
+            }
+          },
+          {
+            "required": [
+              "target_kind"
+            ],
+            "properties": {
+              "target_kind": {
+                "const": "library_entry"
+              }
+            }
+          }
+        ]
+      },
+      "then": {
+        "properties": {
+          "evidence": {
+            "items": {
+              "x-ref": "certification"
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "performed_by"
+        ],
+        "properties": {
+          "performed_by": {
+            "const": "agent"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "delegated_by",
+          "delegation",
+          "review_document"
+        ]
+      }
+    },
+    {
+      "if": {"required": ["target_kind"], "properties": {"target_kind": {"const": "candidate"}}},
+      "else": {
+        "properties": {
+          "proof_records": {"not": {}, "x-reason": "only a candidate review cites proof records"},
+          "level_snapshot": {"not": {}, "x-reason": "only a candidate review holds a level snapshot"}
+        }
+      }
+    }
+  ],
+  "dependentRequired": {"proof_records": ["level_snapshot"], "level_snapshot": ["proof_records"]}
+}

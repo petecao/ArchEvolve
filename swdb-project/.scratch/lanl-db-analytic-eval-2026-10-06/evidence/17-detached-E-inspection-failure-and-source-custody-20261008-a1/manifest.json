@@ -1,0 +1,640 @@
+{
+  "archival_invokes_selected_control_mains": false,
+  "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1",
+  "archive_supplies_cleanup_capacity_plan_or_scientific_admission": false,
+  "archiver_source_pin": {
+    "bytes": 27623,
+    "path": "/private/tmp/lanl_archive_failed_detached_E_and_reviewed_source_custody_20261008_a1_r1.py",
+    "sha256": "688fce08a5a3e12c86d6b8ab0706b863175ea53e51d422bf781e38d5821dd427"
+  },
+  "canonical_ensure_ascii": true,
+  "created_utc": "2026-10-08T03:53:39.717051+00:00",
+  "extension_inventory_pin": {
+    "bytes": 12364,
+    "original_policy": "original_unsealed_archival_list",
+    "path": "/private/tmp/lanl-reviewed-sidecar-source-archive-explicit-extension-20261008-a1.json",
+    "sha256": "b24fa7dc26e6a328755d3726ce1b8d441de57a2af0917931c44b6c9468b1f0d8",
+    "stat": [
+      16777229,
+      349909005,
+      33152,
+      1,
+      501,
+      0,
+      12364,
+      1791431231952391798,
+      1791431231952391798
+    ]
+  },
+  "fixed_original_count": 34,
+  "format": "swdb.detached-E-failure-and-reviewed-source-byte-custody.v1",
+  "identity_sha256": "5746c0485836afcb81f5732461874a6854b5fe6ff1b2a084922e8a0b9fa979d3",
+  "original_bytes": 542589,
+  "original_count": 66,
+  "original_failed_inspection": {
+    "ended_utc": "2026-10-08T03:11:17.671215+00:00",
+    "guard_exit_code": 1,
+    "remove_requested": false,
+    "started_utc": "2026-10-08T03:11:16.727776+00:00"
+  },
+  "originals": [
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/failed-originals/status.json",
+      "bytes": 5251,
+      "group": "failed_inspection_and_original_custody",
+      "original_path": "/private/tmp/lanl-detached-E-default-originals-20261008-a1/status.json",
+      "original_policy": "original_unsealed_json",
+      "relative_path": "failed-originals/status.json",
+      "sha256": "e723a2ea379155b89c47502658602c6ca0becc84e2d1771cfe090cb4639eedf8"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/failed-originals/configuration.json",
+      "bytes": 4687,
+      "group": "failed_inspection_and_original_custody",
+      "original_path": "/private/tmp/lanl-detached-E-default-originals-20261008-a1/configuration.json",
+      "original_policy": "original_unsealed_json",
+      "relative_path": "failed-originals/configuration.json",
+      "sha256": "51ebd75c968c7fe6fd9a8b530009837cea508ec486071c208e4eb11131c20a1d"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/failed-originals/tmux.conf",
+      "bytes": 106,
+      "group": "failed_inspection_and_original_custody",
+      "original_path": "/private/tmp/lanl-detached-E-default-originals-20261008-a1/tmux.conf",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "failed-originals/tmux.conf",
+      "sha256": "a6b69cdfa58f10a0f62697e88a619fffa06b5956bb515ba5200fa2e77c7c31df"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/failed-originals/launch-status.json",
+      "bytes": 2097,
+      "group": "failed_inspection_and_original_custody",
+      "original_path": "/private/tmp/lanl-detached-E-default-originals-20261008-a1/launch-status.json",
+      "original_policy": "original_unsealed_json",
+      "relative_path": "failed-originals/launch-status.json",
+      "sha256": "7379eb89d1c18a3b8b7b0a1aa7dee9e1aa79bca3db4cb7afa9d730946c71e9f2"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/failed-originals/launch.stdout",
+      "bytes": 0,
+      "group": "failed_inspection_and_original_custody",
+      "original_path": "/private/tmp/lanl-detached-E-default-originals-20261008-a1/launch.stdout",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "failed-originals/launch.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/failed-originals/launch.stderr",
+      "bytes": 0,
+      "group": "failed_inspection_and_original_custody",
+      "original_path": "/private/tmp/lanl-detached-E-default-originals-20261008-a1/launch.stderr",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "failed-originals/launch.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/failed-originals/guard.stdout",
+      "bytes": 0,
+      "group": "failed_inspection_and_original_custody",
+      "original_path": "/private/tmp/lanl-detached-E-default-originals-20261008-a1/guard.stdout",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "failed-originals/guard.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/failed-originals/guard.stderr",
+      "bytes": 727,
+      "group": "failed_inspection_and_original_custody",
+      "original_path": "/private/tmp/lanl-detached-E-default-originals-20261008-a1/guard.stderr",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "failed-originals/guard.stderr",
+      "sha256": "318551da812cabda621fb6fa5f3600826195a8e389da3663e7d1443560f27a1f"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/failed-originals/local-custody.json",
+      "bytes": 5083,
+      "group": "failed_inspection_and_original_custody",
+      "original_path": "/private/tmp/lanl-detached-E-default-originals-20261008-a1/local-custody.json",
+      "original_policy": "original_unsealed_json",
+      "relative_path": "failed-originals/local-custody.json",
+      "sha256": "804fd01dee30e2b2bd275aa29f0ca405d9ac58ef65774d050eb76df67583d5d4"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/original-custody/lanl_read_detached_E_administration_originals_20261008_a1_r1.py",
+      "bytes": 2849,
+      "group": "failed_inspection_and_original_custody",
+      "original_path": "/private/tmp/lanl_read_detached_E_administration_originals_20261008_a1_r1.py",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "original-custody/lanl_read_detached_E_administration_originals_20261008_a1_r1.py",
+      "sha256": "70aea2815b329c160ba3aaa7c48d1ad48448a03bec1d7ab63707d1ddc1b2a853"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/original-custody/lanl_decode_detached_E_original_custody_20261008_a1.py",
+      "bytes": 2977,
+      "group": "failed_inspection_and_original_custody",
+      "original_path": "/private/tmp/lanl_decode_detached_E_original_custody_20261008_a1.py",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "original-custody/lanl_decode_detached_E_original_custody_20261008_a1.py",
+      "sha256": "5ad38e9d0c40446daafbfda5323567c8fdf40029953cf7fb3ae3a566c3d7db8a"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/original-custody/lanl-RAW-top-LANL-namespace-original-20261008-a1.json",
+      "bytes": 29403,
+      "group": "failed_inspection_and_original_custody",
+      "original_path": "/private/tmp/lanl-RAW-top-LANL-namespace-original-20261008-a1.json",
+      "original_policy": "original_unsealed_json",
+      "relative_path": "original-custody/lanl-RAW-top-LANL-namespace-original-20261008-a1.json",
+      "sha256": "48c02d1a1332e213077d19f7268ffd59f63334fe6657a1931c2dff26638c9b28"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/original-custody/lanl-RAW-top-LANL-namespace-original-20261008-a1.stderr",
+      "bytes": 0,
+      "group": "failed_inspection_and_original_custody",
+      "original_path": "/private/tmp/lanl-RAW-top-LANL-namespace-original-20261008-a1.stderr",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "original-custody/lanl-RAW-top-LANL-namespace-original-20261008-a1.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/original-custody/lanl-original-top-lane-sidecar-readonly-custody-20261008-a1.json",
+      "bytes": 1506,
+      "group": "failed_inspection_and_original_custody",
+      "original_path": "/private/tmp/lanl-original-top-lane-sidecar-readonly-custody-20261008-a1.json",
+      "original_policy": "original_unsealed_json",
+      "relative_path": "original-custody/lanl-original-top-lane-sidecar-readonly-custody-20261008-a1.json",
+      "sha256": "1697dc07d42fb8239aaea2ddd6de9d2048d4a0e4891606ea48d129d039e2515a"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/original-custody/lanl-original-top-lane-sidecar-readonly-custody-20261008-a1.stderr",
+      "bytes": 0,
+      "group": "failed_inspection_and_original_custody",
+      "original_path": "/private/tmp/lanl-original-top-lane-sidecar-readonly-custody-20261008-a1.stderr",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "original-custody/lanl-original-top-lane-sidecar-readonly-custody-20261008-a1.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/original-custody/lanl_read_original_top_lane_sidecar_20261008_a1.py",
+      "bytes": 1058,
+      "group": "failed_inspection_and_original_custody",
+      "original_path": "/private/tmp/lanl_read_original_top_lane_sidecar_20261008_a1.py",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "original-custody/lanl_read_original_top_lane_sidecar_20261008_a1.py",
+      "sha256": "61687eb49f2441436b38c1f04a603c0cf25cab7c4a95d18dd8c8cde852635181"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/original-custody/lanl-detached-E-default-launch-original-20261008-a1.json",
+      "bytes": 400,
+      "group": "failed_inspection_and_original_custody",
+      "original_path": "/private/tmp/lanl-detached-E-default-launch-original-20261008-a1.json",
+      "original_policy": "original_unsealed_json",
+      "relative_path": "original-custody/lanl-detached-E-default-launch-original-20261008-a1.json",
+      "sha256": "4267f114bb9891dfb6a7e62052629cbe5f59fe70cbd090a51bc94edbea4f3d72"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/original-custody/lanl-detached-E-default-launch-original-20261008-a1.stderr",
+      "bytes": 0,
+      "group": "failed_inspection_and_original_custody",
+      "original_path": "/private/tmp/lanl-detached-E-default-launch-original-20261008-a1.stderr",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "original-custody/lanl-detached-E-default-launch-original-20261008-a1.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/reviewed-source-history/lanl17_detach_passive_observer_administration_20261008_a1_r2.py",
+      "bytes": 15359,
+      "group": "reviewed_source_history",
+      "original_path": "/private/tmp/lanl17_detach_passive_observer_administration_20261008_a1_r2.py",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "reviewed-source-history/lanl17_detach_passive_observer_administration_20261008_a1_r2.py",
+      "sha256": "f303c3b6a3ef909224d6c693b846b47f5755f587bc105acea0dfac3c9e504405"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/reviewed-source-history/lanl17-detached-passive-observer-administration-r2-complete-r1-derivation-20261008.diff",
+      "bytes": 828,
+      "group": "reviewed_source_history",
+      "original_path": "/private/tmp/lanl17-detached-passive-observer-administration-r2-complete-r1-derivation-20261008.diff",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "reviewed-source-history/lanl17-detached-passive-observer-administration-r2-complete-r1-derivation-20261008.diff",
+      "sha256": "08b20a02716432ed941a895e528d6a37da11adff37cc28f9d1d6a3e4e1b8893e"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/reviewed-source-history/lanl17-detached-passive-observer-administration-r2-source-handoff-20261008.md",
+      "bytes": 3633,
+      "group": "reviewed_source_history",
+      "original_path": "/private/tmp/lanl17-detached-passive-observer-administration-r2-source-handoff-20261008.md",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "reviewed-source-history/lanl17-detached-passive-observer-administration-r2-source-handoff-20261008.md",
+      "sha256": "cad2049b33f65608bea5032c5afe2d57f0957c1337bd801733dd63d0f7db5a32"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/reviewed-source-history/lanl17-detached-passive-observer-administration-r2-source-comparison-20261008.json",
+      "bytes": 1440,
+      "group": "reviewed_source_history",
+      "original_path": "/private/tmp/lanl17-detached-passive-observer-administration-r2-source-comparison-20261008.json",
+      "original_policy": "original_unsealed_json",
+      "relative_path": "reviewed-source-history/lanl17-detached-passive-observer-administration-r2-source-comparison-20261008.json",
+      "sha256": "b06ab8559762d9f4a31377128d5086f7fdbbc6cf94c4da184a6112db86b8cad5"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/reviewed-source-history/lanl17-detached-passive-observer-r2-independent-source-review-20261008.md",
+      "bytes": 3260,
+      "group": "reviewed_source_history",
+      "original_path": "/private/tmp/lanl17-detached-passive-observer-r2-independent-source-review-20261008.md",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "reviewed-source-history/lanl17-detached-passive-observer-r2-independent-source-review-20261008.md",
+      "sha256": "6202ae5d737adf896d33533e800d66e29512a888b190a9709e4433636e4341eb"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/reviewed-source-history/lanl17_detach_exact_R4_storage_administration_20261008_a1_r1.py",
+      "bytes": 23849,
+      "group": "reviewed_source_history",
+      "original_path": "/private/tmp/lanl17_detach_exact_R4_storage_administration_20261008_a1_r1.py",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "reviewed-source-history/lanl17_detach_exact_R4_storage_administration_20261008_a1_r1.py",
+      "sha256": "af93b23d2cbee7caaa8dd0199b3cb6f425fe91a2df840444c6f09641232a87eb"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/reviewed-source-history/lanl17-detached-R4-administration-r1-complete-EwrapperR2-derivation-20261008.diff",
+      "bytes": 20322,
+      "group": "reviewed_source_history",
+      "original_path": "/private/tmp/lanl17-detached-R4-administration-r1-complete-EwrapperR2-derivation-20261008.diff",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "reviewed-source-history/lanl17-detached-R4-administration-r1-complete-EwrapperR2-derivation-20261008.diff",
+      "sha256": "8dc857a2e93ce440bcd2b0d626995e3a9dc136940f239c1a19065a8ad6615e1f"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/reviewed-source-history/lanl17-detached-R4-administration-r1-source-handoff-20261008.md",
+      "bytes": 8656,
+      "group": "reviewed_source_history",
+      "original_path": "/private/tmp/lanl17-detached-R4-administration-r1-source-handoff-20261008.md",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "reviewed-source-history/lanl17-detached-R4-administration-r1-source-handoff-20261008.md",
+      "sha256": "67dd75f611c88b39463782f6ca6c077dad85959a5c4583f09676fa4afcde6daa"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/reviewed-source-history/lanl17-detached-R4-administration-r1-source-comparison-20261008.json",
+      "bytes": 2782,
+      "group": "reviewed_source_history",
+      "original_path": "/private/tmp/lanl17-detached-R4-administration-r1-source-comparison-20261008.json",
+      "original_policy": "original_unsealed_json",
+      "relative_path": "reviewed-source-history/lanl17-detached-R4-administration-r1-source-comparison-20261008.json",
+      "sha256": "aadde1a3d9701e699ffe84e9df0ba0d4e415f6b8e574d7f9405c126d788a612b"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/reviewed-source-history/lanl17-detached-R4-administration-r1-independent-source-review-20261008.md",
+      "bytes": 7426,
+      "group": "reviewed_source_history",
+      "original_path": "/private/tmp/lanl17-detached-R4-administration-r1-independent-source-review-20261008.md",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "reviewed-source-history/lanl17-detached-R4-administration-r1-independent-source-review-20261008.md",
+      "sha256": "d3b3d619cb37d0405018a29b25f167b5cbf4f14c5794086a6a36b798edd2f368"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/reviewed-source-history/lanl17_detach_exact_R4_storage_administration_20261008_a1_r2.py",
+      "bytes": 24000,
+      "group": "reviewed_source_history",
+      "original_path": "/private/tmp/lanl17_detach_exact_R4_storage_administration_20261008_a1_r2.py",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "reviewed-source-history/lanl17_detach_exact_R4_storage_administration_20261008_a1_r2.py",
+      "sha256": "deb59a340c92892336282f85697158b7b1181a33a288201fe6e2746c15c9a9be"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/reviewed-source-history/lanl17-detached-R4-administration-r2-complete-r1-derivation-20261008.diff",
+      "bytes": 816,
+      "group": "reviewed_source_history",
+      "original_path": "/private/tmp/lanl17-detached-R4-administration-r2-complete-r1-derivation-20261008.diff",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "reviewed-source-history/lanl17-detached-R4-administration-r2-complete-r1-derivation-20261008.diff",
+      "sha256": "e0bd89a2fb0dcd8d575b05ea0b5ebff2d3ee94bcc04ee34b7da95eca60f12aba"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/reviewed-source-history/lanl17-detached-R4-administration-r2-source-handoff-20261008.md",
+      "bytes": 3706,
+      "group": "reviewed_source_history",
+      "original_path": "/private/tmp/lanl17-detached-R4-administration-r2-source-handoff-20261008.md",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "reviewed-source-history/lanl17-detached-R4-administration-r2-source-handoff-20261008.md",
+      "sha256": "68526f64844d0e0b2a71c110e98e5c094fa9a91b93e58814f27d6e5209f11e56"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/reviewed-source-history/lanl17-detached-R4-administration-r2-source-comparison-20261008.json",
+      "bytes": 1334,
+      "group": "reviewed_source_history",
+      "original_path": "/private/tmp/lanl17-detached-R4-administration-r2-source-comparison-20261008.json",
+      "original_policy": "original_unsealed_json",
+      "relative_path": "reviewed-source-history/lanl17-detached-R4-administration-r2-source-comparison-20261008.json",
+      "sha256": "6227828e2e5a47adcc01eb51f89d34ff394034f1168674500f87713c36838707"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/reviewed-source-history/lanl17-detached-R4-administration-r2-independent-source-review-20261008.md",
+      "bytes": 2967,
+      "group": "reviewed_source_history",
+      "original_path": "/private/tmp/lanl17-detached-R4-administration-r2-independent-source-review-20261008.md",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "reviewed-source-history/lanl17-detached-R4-administration-r2-independent-source-review-20261008.md",
+      "sha256": "73817a23522645e6593748c9d79f6d47b1971e7b4b9cb0047dc662c9c9a77b6f"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/reviewed-source-history/lanl17-passive-raw-hash-scope-and-plan-seam-source-note-20261008-a1.md",
+      "bytes": 3385,
+      "group": "reviewed_source_history",
+      "original_path": "/private/tmp/lanl17-passive-raw-hash-scope-and-plan-seam-source-note-20261008-a1.md",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "reviewed-source-history/lanl17-passive-raw-hash-scope-and-plan-seam-source-note-20261008-a1.md",
+      "sha256": "9326f483faa66cadd2717710356b02268268f760c17d4c5b68085de9d11efde3"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/corrected-source-package/lanl14_remove_consumed_export_checkout_20261008_a1_r3.py",
+      "bytes": 26370,
+      "group": "explicit_parent_reviewed_correction_originals",
+      "original_path": "/private/tmp/lanl14_remove_consumed_export_checkout_20261008_a1_r3.py",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "corrected-source-package/lanl14_remove_consumed_export_checkout_20261008_a1_r3.py",
+      "sha256": "7f92b6f85f4e0c574f3ade7a806c2d6de02108fb8f32579f2e37343e9dc566f9"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/corrected-source-package/lanl14_detach_exact_E_cleanup_administration_20261008_a1_r3.py",
+      "bytes": 18369,
+      "group": "explicit_parent_reviewed_correction_originals",
+      "original_path": "/private/tmp/lanl14_detach_exact_E_cleanup_administration_20261008_a1_r3.py",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "corrected-source-package/lanl14_detach_exact_E_cleanup_administration_20261008_a1_r3.py",
+      "sha256": "a04486d04c8f3a5f0ceee1d6ff58aeeacdb5aa2f4a9dec9e6befa8f40056cfaf"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/corrected-source-package/lanl_consumed_detached_source_guard_r4_20261008_r3.py",
+      "bytes": 88521,
+      "group": "explicit_parent_reviewed_correction_originals",
+      "original_path": "/private/tmp/lanl_consumed_detached_source_guard_r4_20261008_r3.py",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "corrected-source-package/lanl_consumed_detached_source_guard_r4_20261008_r3.py",
+      "sha256": "96e033426d492fab3be2a07757ab1e89665a7a67d0f06d3941f274b1214dd294"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/corrected-source-package/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r4.py",
+      "bytes": 58634,
+      "group": "explicit_parent_reviewed_correction_originals",
+      "original_path": "/private/tmp/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r4.py",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "corrected-source-package/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r4.py",
+      "sha256": "1c5a39575e66bb1deea654a586e11a4f9c7437e06547144bdb0347375e1542cf"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/corrected-source-package/lanl17_detach_exact_R4_storage_administration_20261008_a1_r3.py",
+      "bytes": 24000,
+      "group": "explicit_parent_reviewed_correction_originals",
+      "original_path": "/private/tmp/lanl17_detach_exact_R4_storage_administration_20261008_a1_r3.py",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "corrected-source-package/lanl17_detach_exact_R4_storage_administration_20261008_a1_r3.py",
+      "sha256": "3f5cc9397c9be47232f0c070ca70def25c55a3c69af404af257da992ad105e01"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/corrected-source-package/lanl17_detach_passive_observer_administration_20261008_a1_r3.py",
+      "bytes": 15359,
+      "group": "explicit_parent_reviewed_correction_originals",
+      "original_path": "/private/tmp/lanl17_detach_passive_observer_administration_20261008_a1_r3.py",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "corrected-source-package/lanl17_detach_passive_observer_administration_20261008_a1_r3.py",
+      "sha256": "f26a2f7790ccf5df117acf19496e7510be778deb44892b4d54b15245efa317b2"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/corrected-source-package/lanl-RAW-top-sidecar-Eguard-complete-foundation-derivation-20261008-a1.diff",
+      "bytes": 8657,
+      "group": "explicit_parent_reviewed_correction_originals",
+      "original_path": "/private/tmp/lanl-RAW-top-sidecar-Eguard-complete-foundation-derivation-20261008-a1.diff",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "corrected-source-package/lanl-RAW-top-sidecar-Eguard-complete-foundation-derivation-20261008-a1.diff",
+      "sha256": "f2784023cac87bff0f9b57eec3aef4bd9986eb53ba3e9e8f3a84a5d40fa13e17"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/corrected-source-package/lanl-RAW-top-sidecar-Ewrapper-complete-foundation-derivation-20261008-a1.diff",
+      "bytes": 1877,
+      "group": "explicit_parent_reviewed_correction_originals",
+      "original_path": "/private/tmp/lanl-RAW-top-sidecar-Ewrapper-complete-foundation-derivation-20261008-a1.diff",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "corrected-source-package/lanl-RAW-top-sidecar-Ewrapper-complete-foundation-derivation-20261008-a1.diff",
+      "sha256": "3391a4ebdb0ef65a5dc96bc33d28e4a5adb549eb2ee45a98af3bb5666da06103"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/corrected-source-package/lanl-RAW-top-sidecar-R4guard-complete-foundation-derivation-20261008-a1.diff",
+      "bytes": 5327,
+      "group": "explicit_parent_reviewed_correction_originals",
+      "original_path": "/private/tmp/lanl-RAW-top-sidecar-R4guard-complete-foundation-derivation-20261008-a1.diff",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "corrected-source-package/lanl-RAW-top-sidecar-R4guard-complete-foundation-derivation-20261008-a1.diff",
+      "sha256": "6daa27da19a6371401dd4ef91ba61655df71c1450902e6a6927757832166091a"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/corrected-source-package/lanl-RAW-top-sidecar-observer-complete-foundation-derivation-20261008-a1.diff",
+      "bytes": 6541,
+      "group": "explicit_parent_reviewed_correction_originals",
+      "original_path": "/private/tmp/lanl-RAW-top-sidecar-observer-complete-foundation-derivation-20261008-a1.diff",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "corrected-source-package/lanl-RAW-top-sidecar-observer-complete-foundation-derivation-20261008-a1.diff",
+      "sha256": "ca35c79582e70e254b5467869c98b90a0c2fb540513635259aac5843befab7ce"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/corrected-source-package/lanl-RAW-top-sidecar-R4wrapper-complete-foundation-derivation-20261008-a1.diff",
+      "bytes": 1226,
+      "group": "explicit_parent_reviewed_correction_originals",
+      "original_path": "/private/tmp/lanl-RAW-top-sidecar-R4wrapper-complete-foundation-derivation-20261008-a1.diff",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "corrected-source-package/lanl-RAW-top-sidecar-R4wrapper-complete-foundation-derivation-20261008-a1.diff",
+      "sha256": "76c862e134098cdc5f367fff547c5015ef7c8370909553af4c4afaa870f50498"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/corrected-source-package/lanl-RAW-top-sidecar-passivewrapper-complete-foundation-derivation-20261008-a1.diff",
+      "bytes": 1259,
+      "group": "explicit_parent_reviewed_correction_originals",
+      "original_path": "/private/tmp/lanl-RAW-top-sidecar-passivewrapper-complete-foundation-derivation-20261008-a1.diff",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "corrected-source-package/lanl-RAW-top-sidecar-passivewrapper-complete-foundation-derivation-20261008-a1.diff",
+      "sha256": "efd9393136bbb037f01de47e522d5528433e4ba0e3d09b39e178bbfe422e0054"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/corrected-source-package/lanl-RAW-top-sidecar-Eguard-Ewrapper-source-comparison-20261008-a1-r1.json",
+      "bytes": 3050,
+      "group": "explicit_parent_reviewed_correction_originals",
+      "original_path": "/private/tmp/lanl-RAW-top-sidecar-Eguard-Ewrapper-source-comparison-20261008-a1-r1.json",
+      "original_policy": "original_unsealed_json",
+      "relative_path": "corrected-source-package/lanl-RAW-top-sidecar-Eguard-Ewrapper-source-comparison-20261008-a1-r1.json",
+      "sha256": "baf32664d1b4c37861d2e7f0f634d1674d4880ca0eb927f948c3df0d124e3345"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/corrected-source-package/lanl-RAW-top-sidecar-Eguard-Ewrapper-source-handoff-20261008-a1.md",
+      "bytes": 4693,
+      "group": "explicit_parent_reviewed_correction_originals",
+      "original_path": "/private/tmp/lanl-RAW-top-sidecar-Eguard-Ewrapper-source-handoff-20261008-a1.md",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "corrected-source-package/lanl-RAW-top-sidecar-Eguard-Ewrapper-source-handoff-20261008-a1.md",
+      "sha256": "78238dd831e67422cb1fe886b84bf4ac7691e48eecf248ec6ae214121e46a825"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/corrected-source-package/lanl-RAW-top-sidecar-R4-observer-wrapper-source-comparison-20261008-a1.json",
+      "bytes": 4217,
+      "group": "explicit_parent_reviewed_correction_originals",
+      "original_path": "/private/tmp/lanl-RAW-top-sidecar-R4-observer-wrapper-source-comparison-20261008-a1.json",
+      "original_policy": "original_unsealed_json",
+      "relative_path": "corrected-source-package/lanl-RAW-top-sidecar-R4-observer-wrapper-source-comparison-20261008-a1.json",
+      "sha256": "9ef947b8450bad9935d095084b37e1fcf9eb95d787b81990925282f26eb8fb7b"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/corrected-source-package/lanl-RAW-top-sidecar-R4-observer-wrapper-source-handoff-20261008-a1.md",
+      "bytes": 8008,
+      "group": "explicit_parent_reviewed_correction_originals",
+      "original_path": "/private/tmp/lanl-RAW-top-sidecar-R4-observer-wrapper-source-handoff-20261008-a1.md",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "corrected-source-package/lanl-RAW-top-sidecar-R4-observer-wrapper-source-handoff-20261008-a1.md",
+      "sha256": "ad2af87eef2624ec8af1e90a9f9f01bbf271436f8718a7327fda4c63a6a707c8"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/corrected-source-package/lanl-exact-original-top-lane-sidecar-helper-source-20261008-a1.txt",
+      "bytes": 3261,
+      "group": "explicit_parent_reviewed_correction_originals",
+      "original_path": "/private/tmp/lanl-exact-original-top-lane-sidecar-helper-source-20261008-a1.txt",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "corrected-source-package/lanl-exact-original-top-lane-sidecar-helper-source-20261008-a1.txt",
+      "sha256": "ee59736d54f9ccfbd7eb779689c641fd54e5793f7ee19507101d6072824bba55"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/corrected-source-package/lanl-RAW-top-sidecar-Eguard-Ewrapper-independent-source-review-20261008-a1.md",
+      "bytes": 5807,
+      "group": "explicit_parent_reviewed_correction_originals",
+      "original_path": "/private/tmp/lanl-RAW-top-sidecar-Eguard-Ewrapper-independent-source-review-20261008-a1.md",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "corrected-source-package/lanl-RAW-top-sidecar-Eguard-Ewrapper-independent-source-review-20261008-a1.md",
+      "sha256": "e701739e2d4136257784ba8d2a4e322de2bf51a2e74f7b4b7c6c72bdd8a8f9a8"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/corrected-source-package/lanl-RAW-top-sidecar-R4-observer-wrapper-independent-source-review-20261008-a1.md",
+      "bytes": 8059,
+      "group": "explicit_parent_reviewed_correction_originals",
+      "original_path": "/private/tmp/lanl-RAW-top-sidecar-R4-observer-wrapper-independent-source-review-20261008-a1.md",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "corrected-source-package/lanl-RAW-top-sidecar-R4-observer-wrapper-independent-source-review-20261008-a1.md",
+      "sha256": "3bf4f968a6f0565048ed94a8acd1014e873bcf6892464b9ee602641da63e0f74"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/corrected-source-package/lanl_archive_failed_detached_E_and_reviewed_source_custody_20261008_a1_r1.py",
+      "bytes": 27623,
+      "group": "explicit_parent_reviewed_correction_originals",
+      "original_path": "/private/tmp/lanl_archive_failed_detached_E_and_reviewed_source_custody_20261008_a1_r1.py",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "corrected-source-package/lanl_archive_failed_detached_E_and_reviewed_source_custody_20261008_a1_r1.py",
+      "sha256": "688fce08a5a3e12c86d6b8ab0706b863175ea53e51d422bf781e38d5821dd427"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/corrected-source-package/lanl-detached-E-failure-archive-date-r1-complete-a1-derivation-20261008.diff",
+      "bytes": 2535,
+      "group": "explicit_parent_reviewed_correction_originals",
+      "original_path": "/private/tmp/lanl-detached-E-failure-archive-date-r1-complete-a1-derivation-20261008.diff",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "corrected-source-package/lanl-detached-E-failure-archive-date-r1-complete-a1-derivation-20261008.diff",
+      "sha256": "e646bef12843aeb9e693ff240e076e44d243e7b79dbc2ceed254a290dfdd7480"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/corrected-source-package/lanl-detached-E-failure-archive-date-r1-source-handoff-20261008.md",
+      "bytes": 1947,
+      "group": "explicit_parent_reviewed_correction_originals",
+      "original_path": "/private/tmp/lanl-detached-E-failure-archive-date-r1-source-handoff-20261008.md",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "corrected-source-package/lanl-detached-E-failure-archive-date-r1-source-handoff-20261008.md",
+      "sha256": "4335e90ec9df10c5d66824e537f9c0092406a73b6f18c7681f9f87875bb6d39e"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/corrected-source-package/lanl-detached-E-failure-archive-date-r1-source-comparison-20261008.json",
+      "bytes": 4509,
+      "group": "explicit_parent_reviewed_correction_originals",
+      "original_path": "/private/tmp/lanl-detached-E-failure-archive-date-r1-source-comparison-20261008.json",
+      "original_policy": "original_unsealed_json",
+      "relative_path": "corrected-source-package/lanl-detached-E-failure-archive-date-r1-source-comparison-20261008.json",
+      "sha256": "fc0e4eb371f3e51bd56abaa3a42a8afe2e4378925f58b3eb349b9d08782da586"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/corrected-source-package/lanl_read_detached_E_administration_originals_20261008_a2.py",
+      "bytes": 2849,
+      "group": "explicit_parent_reviewed_correction_originals",
+      "original_path": "/private/tmp/lanl_read_detached_E_administration_originals_20261008_a2.py",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "corrected-source-package/lanl_read_detached_E_administration_originals_20261008_a2.py",
+      "sha256": "3fa2d341eab668d12d9d0addd5e8dc3370de072557952f71378dfb03e92102a9"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/corrected-source-package/lanl_read_detached_E_administration_originals_20261008_a2.py.diff",
+      "bytes": 1365,
+      "group": "explicit_parent_reviewed_correction_originals",
+      "original_path": "/private/tmp/lanl_read_detached_E_administration_originals_20261008_a2.py.diff",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "corrected-source-package/lanl_read_detached_E_administration_originals_20261008_a2.py.diff",
+      "sha256": "cefde5db4fe7cb25c2f0c51e0d73c04d383053e5a7e411e607488921b67ecc53"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/corrected-source-package/lanl_decode_detached_E_original_custody_20261008_a2.py",
+      "bytes": 2977,
+      "group": "explicit_parent_reviewed_correction_originals",
+      "original_path": "/private/tmp/lanl_decode_detached_E_original_custody_20261008_a2.py",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "corrected-source-package/lanl_decode_detached_E_original_custody_20261008_a2.py",
+      "sha256": "804232e27cc4484d84a267f3146feeb29336c9b0d3a40b26016a60aca6c481ce"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/corrected-source-package/lanl_decode_detached_E_original_custody_20261008_a2.py.diff",
+      "bytes": 1761,
+      "group": "explicit_parent_reviewed_correction_originals",
+      "original_path": "/private/tmp/lanl_decode_detached_E_original_custody_20261008_a2.py.diff",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "corrected-source-package/lanl_decode_detached_E_original_custody_20261008_a2.py.diff",
+      "sha256": "1404c2ee8b7875989336c17a20ef4208014bda6138b2808abb01e4f30cf8fb5e"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/corrected-source-package/lanl-RAW-top-sidecar-source-only-selected-packet-inventory-20261008-a1.json",
+      "bytes": 3931,
+      "group": "explicit_parent_reviewed_correction_originals",
+      "original_path": "/private/tmp/lanl-RAW-top-sidecar-source-only-selected-packet-inventory-20261008-a1.json",
+      "original_policy": "original_unsealed_json",
+      "relative_path": "corrected-source-package/lanl-RAW-top-sidecar-source-only-selected-packet-inventory-20261008-a1.json",
+      "sha256": "c09933fac667a8a008eec955205f72b49e4bd6a019c7564d99f81b2b8ef2046b"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/corrected-source-package/lanl_copy_reviewed_sidecar_corrected_storage_sources_from_git_20261008_a1_r1.py",
+      "bytes": 6961,
+      "group": "explicit_parent_reviewed_correction_originals",
+      "original_path": "/private/tmp/lanl_copy_reviewed_sidecar_corrected_storage_sources_from_git_20261008_a1_r1.py",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "corrected-source-package/lanl_copy_reviewed_sidecar_corrected_storage_sources_from_git_20261008_a1_r1.py",
+      "sha256": "3194781debc6fac3be2ad2defd40365dc7adb3aec3a2cac012ab79cb2ee74dd6"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/corrected-source-package/lanl-sidecar-corrected-storage-source-copy-r1-complete-a1-derivation-20261008.diff",
+      "bytes": 5553,
+      "group": "explicit_parent_reviewed_correction_originals",
+      "original_path": "/private/tmp/lanl-sidecar-corrected-storage-source-copy-r1-complete-a1-derivation-20261008.diff",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "corrected-source-package/lanl-sidecar-corrected-storage-source-copy-r1-complete-a1-derivation-20261008.diff",
+      "sha256": "fc3760253312032f2409ce97f545e184c069651211b236a8697160890b8e9799"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/corrected-source-package/lanl-sidecar-corrected-storage-source-copy-r1-source-handoff-20261008.md",
+      "bytes": 4265,
+      "group": "explicit_parent_reviewed_correction_originals",
+      "original_path": "/private/tmp/lanl-sidecar-corrected-storage-source-copy-r1-source-handoff-20261008.md",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "corrected-source-package/lanl-sidecar-corrected-storage-source-copy-r1-source-handoff-20261008.md",
+      "sha256": "2df300db24c0c05e5e87112d8bc513a4ec40ae938c0840dabf4ef37e7edafd54"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1/corrected-source-package/lanl-sidecar-corrected-storage-source-copy-r1-independent-source-review-20261008.md",
+      "bytes": 3171,
+      "group": "explicit_parent_reviewed_correction_originals",
+      "original_path": "/private/tmp/lanl-sidecar-corrected-storage-source-copy-r1-independent-source-review-20261008.md",
+      "original_policy": "opaque_original_bytes",
+      "relative_path": "corrected-source-package/lanl-sidecar-corrected-storage-source-copy-r1-independent-source-review-20261008.md",
+      "sha256": "5f545d7845e6dddf0f8341e31f00969b8db509f72251e7f9eeb550397710aa34"
+    }
+  ],
+  "parent_commit": "323285e9acff05943a346df213ea349eaf50c2bf",
+  "prior_tracked_tree_SHA256": "3614bf13983341fe59df09f6c88ac8190e265693cf01c9d12dbc3654ff66f2e9",
+  "scope": "Byte custody only; original policies and creation-time NOTRUN labels preserved. Actual failed default custody is separate from prospective corrected sources.",
+  "source_extension_pending": false
+}

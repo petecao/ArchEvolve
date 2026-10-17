@@ -1,0 +1,573 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "campaign_summary",
+  "title": "Extensa campaign summary",
+  "description": "Created 2026-10-03 ET (ticket 52, decision D6). Written once when an Extensa campaign stops; the only Extensa campaign record always copied to the team store.",
+  "type": "object",
+  "properties": {
+    "kind": {
+      "const": "campaign_summary"
+    },
+    "message_version": {
+      "type": "string"
+    },
+    "producer": {
+      "type": "object"
+    },
+    "campaign_file": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "swdb_commit": {
+      "type": "string"
+    },
+    "extensa_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository",
+        "commit"
+      ],
+      "properties": {
+        "repository": {
+          "type": "string"
+        },
+        "commit": {
+          "type": "string"
+        }
+      }
+    },
+    "target": {
+      "enum": [
+        "native_cpu",
+        "dx100_gem5"
+      ]
+    },
+    "evidence_basis": {
+      "enum": [
+        "measured",
+        "simulated"
+      ]
+    },
+    "evidence_kind": {
+      "enum": [
+        "execution",
+        "contract_fixture"
+      ]
+    },
+    "protocol": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "baselines": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "workload_classes": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "label": {
+      "const": "single graph per class"
+    },
+    "provider": {
+      "type": "object"
+    },
+    "pilot": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "iterations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "index",
+          "started",
+          "ended",
+          "regions",
+          "provider_calls",
+          "candidates",
+          "feedback_reasons",
+          "improved_classes"
+        ],
+        "properties": {
+          "candidates": {
+            "type": "array",
+            "items": {"type": "object", "properties": {"level_snapshot": {"$ref": "#/$defs/level_snapshot"}}},
+            "description": "Probata PoC 15 (2026-10-14 ET): in the summary every entry with an ID carries `level_snapshot`, its level when the summary was written."
+          },
+          "winners": {
+            "type": "array", "items": {"$ref": "#/$defs/winner_row"},
+            "description": "Probata PoC 15 (2026-10-14 ET): both winners of every class after this iteration, from the levels known then (never proven unbounded); one row per distinct candidate artifact, each with `class`."
+          },
+          "improved_winners": {
+            "type": "array",
+            "items": {"type": "object", "additionalProperties": false, "required": ["class", "winner"],
+                      "properties": {"class": {"type": "string"}, "winner": {"enum": ["fastest", "best_proven"]}}},
+            "description": "Probata PoC 15: each winner whose key rose in this iteration; an iteration improves when either winner of a class improves (the plateau test)."
+          }
+        }
+      }
+    },
+    "per_class": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "class",
+          "verdict",
+          "best",
+          "best_level"
+        ],
+        "properties": {
+          "class": {
+            "type": "string"
+          },
+          "verdict": {
+            "enum": [
+              "gain",
+              "no_gain",
+              "inconclusive",
+              "baseline_unstable"
+            ],
+            "description": "baseline_unstable (2026-10-04 ET, ticket 64): the class failed the native A/A pilot and was not timed."
+          },
+          "best": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "best_level": {
+            "enum": [
+              "certified",
+              "uncertified",
+              null
+            ]
+          },
+          "best_selection_baseline": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "best_other_baseline": {
+            "type": [
+              "object",
+              "null"
+            ]
+          },
+          "faster_uncertified": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "label": {
+            "const": "single graph per class"
+          },
+          "winners": {
+            "type": "array", "maxItems": 2, "items": {"$ref": "#/$defs/winner_row"},
+            "description": "Probata PoC 15 (2026-10-14 ET): the fastest winner and the best-proven winner, one row per distinct candidate artifact (`both` when one wins both). Neither is marked as the one to promote: Yan-Ru chooses."
+          },
+          "best_proven": {
+            "type": ["string", "null"],
+            "description": "Probata PoC 15: the best-proven winner (highest proven level, then the fastest), or null when no gain candidate artifact reached a proven level."
+          },
+          "best_proven_note": {
+            "type": "string",
+            "description": "Probata PoC 15: present when `best_proven` is null; says why in plain words."
+          }
+        }
+      }
+    },
+    "budgets": {
+      "type": "object",
+      "required": [
+        "limits",
+        "used"
+      ],
+      "properties": {
+        "limits": {
+          "type": "object"
+        },
+        "used": {
+          "type": "object"
+        }
+      }
+    },
+    "pauses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "at",
+          "reason"
+        ],
+        "properties": {
+          "at": {
+            "type": "string"
+          },
+          "reason": {
+            "enum": [
+              "usage_limit",
+              "login",
+              "provider_capacity",
+              "guard_infrastructure"
+            ],
+            "description": "Ticket 74 (2026-10-05 ET): a synthesis call at capacity (ticket 73) or stopped by the guard's own runtime limit also pauses."
+          },
+          "resumed_at": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "stop_reason": {
+      "enum": [
+        "max_iterations",
+        "plateau",
+        "lane_hours",
+        "provider_calls",
+        "disk",
+        "baseline_unstable",
+        "infrastructure_failure",
+        "stopped_by_yanru"
+      ]
+    },
+    "interrupted_iteration": {
+      "type": "object",
+      "description": "Ticket 73 (2026-10-05 ET): the iteration a stop interrupted, with its provider calls; not a completed iteration."
+    },
+    "stop_detail": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "retentions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "library_entries": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "setup": {
+      "type": "object",
+      "description": "The setup allowance's provider calls (the profiling agent), before iteration 1."
+    },
+    "site_finder": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "description": "Ticket 55 (2026-10-04 ET): the query site finder's format, query sha256 and parameters; null for a fixed region list.",
+      "required": [
+        "format",
+        "query_sha256",
+        "parameters"
+      ],
+      "properties": {
+        "format": {
+          "const": "swdb.site-finder.v1"
+        },
+        "query_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "parameters": {
+          "type": "object"
+        }
+      }
+    },
+    "paired_estimates": {
+      "$ref": "#/$defs/pairing_ledger"
+    },
+    "wp_phase": {
+      "type": "object",
+      "description": "Probata PoC 16 (2026-10-14 ET): present with bounded_gate. The WP phase after the campaign stopped: not_started in the stop-time summary, ended in the summary rewritten once at its end.",
+      "required": ["state"],
+      "properties": {
+        "state": {"enum": ["not_started", "running", "ended"]},
+        "started": {"type": "string"},
+        "ended": {"type": "string"},
+        "end_reason": {"enum": ["classes_done", "lane_hours", "no_proof_call_budget", "failure"]},
+        "end_detail": {"type": "string"},
+        "method_version": {"type": "object", "required": ["id", "sha256"]},
+        "budgets": {"type": "object"},
+        "waits": {"type": "array", "items": {"type": "object", "required": ["for", "seconds", "until"]}},
+        "provider_calls": {"type": "array", "items": {"type": "object"}},
+        "classes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["class", "order", "state", "proven", "tried", "jobs"],
+            "properties": {
+              "class": {"type": "string"},
+              "order": {"type": "array", "items": {"type": "string"}},
+              "state": {"enum": ["running", "proven_unbounded", "order_spent", "unfinished"]},
+              "proven": {"type": ["string", "null"]},
+              "tried": {"type": "array", "items": {"type": "string"}},
+              "jobs": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["candidate", "contract", "position"],
+                  "properties": {
+                    "candidate": {"type": "string"}, "contract": {"type": "string"},
+                    "position": {"type": "integer", "minimum": 1},
+                    "record": {"type": "string"}, "verdict": {"enum": ["proven", "refuted", "not_proven"]},
+                    "failure_class": {"type": "string"}, "skip_reason": {"type": "string"},
+                    "stages": {"type": "array", "items": {"type": ["string", "integer"]}},
+                    "hint_calls": {"type": "integer", "minimum": 0},
+                    "started": {"type": "string"}, "ended": {"type": "string"},
+                    "lane_hours": {"type": "number", "minimum": 0}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "rewrite_workspace": {
+      "enum": ["v1", "v2"],
+      "description": "Probata PoC 17 (2026-10-14 ET; map decision 28 item 1): the rewrite workspace version, a record of the loop, never a campaign-file setting. `v2`: from iteration 2 every rewrite and repair workspace holds `LADDER.json` (the iteration ladder). A summary without it reads as `v1` (D8's workspace, no iteration ladder)."
+    },
+    "bounded_gate": {
+      "type": "object",
+      "description": "Probata PoC 14 (2026-10-14 ET): present when the campaign's library held a method version, so every certified candidate artifact passed the bounded gate before evaluation. The pinned method version, its budget per bounded job and k, the rungs, the proof jobs' wall hours, and the two repair counters.",
+      "required": ["method_version", "budget_minutes", "k", "rungs", "proof_job_hours", "repair_counters"],
+      "properties": {
+        "method_version": {
+          "type": "object",
+          "required": ["id", "sha256"]
+        },
+        "budget_minutes": {"type": "number", "exclusiveMinimum": 0},
+        "k": {"type": "integer", "minimum": 2},
+        "rungs": {"type": "array", "items": {"enum": ["threads_1", "threads_k"]}},
+        "proof_job_hours": {"type": "number", "minimum": 0},
+        "repair_counters": {
+          "type": "object",
+          "required": ["certification_repairs", "counterexample_repair_rounds", "repairs", "reverted_repairs"],
+          "properties": {
+            "certification_repairs": {"type": "integer", "minimum": 0},
+            "counterexample_repair_rounds": {"type": "integer", "minimum": 0},
+            "repairs": {"type": "array", "items": {"type": "string"}},
+            "reverted_repairs": {"type": "array", "items": {"type": "string"}}
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "mode",
+    "campaign",
+    "campaign_file",
+    "swdb_commit",
+    "extensa_source",
+    "target",
+    "evidence_basis",
+    "evidence_kind",
+    "protocol",
+    "baselines",
+    "workload_classes",
+    "label",
+    "provider",
+    "iterations",
+    "per_class",
+    "budgets",
+    "pauses",
+    "stop_reason",
+    "artifacts",
+    "retentions"
+  ],
+  "$defs": {
+    "level_snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["level", "at", "level_rule", "records"],
+      "description": "Probata PoC 15 (2026-10-14 ET; map 26 items 2, 9): a dated level snapshot, never recomputed; a later read may give another level.",
+      "x-required-reasons": {
+        "level": "a level snapshot names the level",
+        "at": "a level snapshot is dated (YYYY-MM-DD HH:MM ET)",
+        "level_rule": "a level snapshot names the level-rule version that computed it",
+        "records": "a level snapshot lists the proof records that set the level (empty when none)"
+      },
+      "properties": {
+        "level": {"enum": ["uncertified", "certified", "rejected", "proven_within_bounds_threads_1",
+                           "proven_within_bounds_threads_k", "proven_unbounded"]},
+        "at": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2} ET$"},
+        "level_rule": {"type": "string", "minLength": 1},
+        "records": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "winner_row": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate", "winner", "level_snapshot", "ratio", "lower"],
+      "description": "Probata PoC 15 (2026-10-14 ET): one winner of one class: the candidate artifact, its mark (map 28 item 4), its dated level snapshot and its speed against the base-source baseline.",
+      "properties": {
+        "class": {"type": "string"},
+        "candidate": {"type": "string"},
+        "winner": {"enum": ["fastest", "best_proven", "both"]},
+        "level_snapshot": {"$ref": "#/$defs/level_snapshot"},
+        "ratio": {"type": "number"},
+        "lower": {"type": "number"}
+      }
+    },
+    "pairing_ledger": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "format",
+        "enabled",
+        "records",
+        "outcome_accesses",
+        "eligible_application_estimates",
+        "selection_policy"
+      ],
+      "properties": {
+        "format": {
+          "const": "swdb.extensa-pairing-ledger.v1"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "records": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "outcome_accesses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "stage",
+              "paired_estimates",
+              "outcome_access_started_at"
+            ],
+            "properties": {
+              "stage": {
+                "type": "string",
+                "minLength": 1
+              },
+              "paired_estimates": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/$defs/id"
+                }
+              },
+              "outcome_access_started_at": {
+                "type": "string"
+              },
+              "timing_contexts": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "subject",
+                    "input",
+                    "execution"
+                  ],
+                  "properties": {
+                    "subject": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "artifact_sha256"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "artifact_sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        }
+                      }
+                    },
+                    "input": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "identity_sha256"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "identity_sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        }
+                      }
+                    },
+                    "execution": {
+                      "type": "object"
+                    },
+                    "prior_outcome_exposure": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "eligible_application_estimates": {
+          "const": 0
+        },
+        "selection_policy": {
+          "const": "unchanged_timing_only"
+        }
+      }
+    }
+  }
+}

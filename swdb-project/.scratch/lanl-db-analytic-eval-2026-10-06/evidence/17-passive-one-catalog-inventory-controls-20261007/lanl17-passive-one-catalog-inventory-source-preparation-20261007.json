@@ -1,0 +1,143 @@
+{
+  "format": "swdb.lanl17-passive-one-catalog-inventory-source-preparation.v1",
+  "prepared_date_ET": "2026-10-07",
+  "state": "source_only_NOT_RUN",
+  "source_pin": {
+    "path": "/private/tmp/lanl17_read_passive_one_catalog_inventory_20261007.py",
+    "bytes": 29653,
+    "sha256": "76b86959ceca7a162a34b7a2d1e633ee9523d0b9cc7f629e9fbeeb4e101aa176"
+  },
+  "handoff_pin": {
+    "path": "/private/tmp/lanl17-passive-one-catalog-inventory-source-handoff-20261007.md",
+    "bytes": 9237,
+    "sha256": "5f28d42b208dd1ed288fd5c732215679d789ec9546aef816d702cece978a36cc"
+  },
+  "original_supplier_pins": [
+    {
+      "path": "/private/tmp/lanl17_write_parent_full_record_index_20261007.py",
+      "bytes": 33445,
+      "sha256": "7a67d46f8ad7d453fe07bd458a21f663bd4dc7ec12e71de83ad8b5caaf28894b"
+    },
+    {
+      "path": "/private/tmp/lanl17_author_parent_full_record_index_request_r1_20261007.py",
+      "bytes": 38266,
+      "sha256": "a2e69aef10deb6186ac49401516ffba9a165b2f3cc94c8001646b6ac9a5b701d"
+    },
+    {
+      "path": "/private/tmp/lanl17_parent_helpers_cleanup60_a4.py",
+      "bytes": 38195,
+      "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+    },
+    {
+      "path": "/private/tmp/lanl17_compact_attempt_custody_a2r1_20261007.py",
+      "bytes": 24818,
+      "sha256": "b08db809b80cbebc6ce98dd8df8fdd4f327b170cdd7a545af0876ad68a832a5c"
+    },
+    {
+      "path": "/private/tmp/lanl17-actual-parent-template-capture-field-checklist-20261007.md",
+      "bytes": 13484,
+      "sha256": "45313085d7d010be749f9b9aec7c9aadf0b5b8d1e7c385bfb9f79fd384cc6fe0"
+    }
+  ],
+  "AST_source_inspection": {
+    "exact_shared_helpers_or_classes": [
+      "RecordLoader",
+      "Refused",
+      "checked_path",
+      "digest",
+      "exact",
+      "file_pin",
+      "fresh_output",
+      "full_hash",
+      "no_duplicates",
+      "original_seal",
+      "plain_record",
+      "recheck_catalog",
+      "recheck_originals",
+      "record_relative",
+      "remaining",
+      "require",
+      "require_inventory_equal",
+      "returned_bytes",
+      "scan_catalog",
+      "scientific_source",
+      "sha",
+      "stamp",
+      "strict_json",
+      "token",
+      "utc"
+    ],
+    "exact_shared_count": 25,
+    "changed_shared_helper": "git",
+    "git_change": "only stderr=subprocess.DEVNULL; removing exact keyword restores original AST",
+    "exact_constant_assignments": [
+      "C",
+      "F6",
+      "HELPER",
+      "AUDITOR",
+      "COLLECTOR",
+      "CIDS",
+      "MAX_CATALOG_FILE",
+      "MAX_CATALOG_TOTAL",
+      "MAX_METADATA",
+      "MAX_RECORDS",
+      "MAX_DEADLINE",
+      "STAMP_KEYS"
+    ],
+    "exact_loader_setup_nodes": 2,
+    "yaml_load_call_count": 1,
+    "source_AST_parsed_only": true
+  },
+  "output_contract": {
+    "format": "swdb.lanl17-passive-one-catalog-inventory.v1",
+    "sealed": false,
+    "catalog_inventory_row_fields": [
+      "path",
+      "bytes",
+      "sha256",
+      "stat"
+    ],
+    "stat7_fields": [
+      "dev",
+      "ino",
+      "mode",
+      "uid",
+      "size",
+      "mtime_ns",
+      "ctime_ns"
+    ],
+    "summary_selection_choices": [
+      "present",
+      "parent-binding-required"
+    ],
+    "unresolved_route_summary_binding": null,
+    "only_explicit_present_summary_YAML_parsed": true,
+    "no_ID_absence_or_parent_attestation_generated": true
+  },
+  "unchanged_limits": {
+    "max_catalog_file_bytes": 134217728,
+    "max_catalog_total_unique_one_catalog_bytes": 2147483648,
+    "max_records": 16384,
+    "max_metadata_bytes": 8388608,
+    "explicit_reader_and_writer_allowance_seconds_each": [
+      60,
+      3600
+    ]
+  },
+  "actions_executed": {
+    "target_imports": 0,
+    "target_main_or_helpers": 0,
+    "test_bodies": 0,
+    "actual_input_or_catalog_construction": 0,
+    "SWDB_Store_or_public_validation": 0,
+    "auditor_collector_index_writer": 0,
+    "campaign_native_provider_compiler": 0,
+    "SSH": 0,
+    "Git_commands_or_mutation": 0,
+    "tracked_edits": 0
+  },
+  "original_controls_or_science_changed": false,
+  "actual_inputs_parent_review_and_authorization_still_required": true,
+  "ticket14_approved_reader_3a_unchanged_NOT_RUN": true,
+  "identity_sha256": "ebd42ae1579b4aeaa439f97fd1d14edec598afff5941371e1f704585058da5b6"
+}

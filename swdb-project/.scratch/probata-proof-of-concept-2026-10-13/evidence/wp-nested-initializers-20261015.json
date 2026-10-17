@@ -1,0 +1,852 @@
+{
+  "date": "2026-10-15 ET",
+  "manifest": {
+    "date": "2026-10-15 ET",
+    "commit": "f9ace980f0a55f1384c19ce2bfea4e1afe48495a",
+    "files": {
+      "swdb/nested_entry_reads.py": "39b1ea0d2280c46ce73f73fd43bb241810ea4f4c30f94985a62381d3663a5829",
+      "swdb/helper_windows.py": "32090754c67722f1b36d80a3d5913a7825c34ab8beaeb9d8b6e509903f59eeb9",
+      "swdb/wp_pointer_bounds.py": "aac4def6847c76a8e1a4925aa29c43bef13876a1e3438e9d2a728d93be239fc7",
+      "swdb/c_lowering.py": "be64403fb590c610d40bed5d039aad193ee2e9ffb62244a5c1ecd8da659339d6",
+      "swdb/proof_setup.py": "e31b7b0c9d40efaa47ec6b58a4878f6acff035c683297ae4bd76652ee7037d75",
+      "swdb/wp_adapter.py": "c162b0be794c55067bbb75f071353109a98a8d2021106fc20dd79ee22223c119",
+      "tests/test_wp_nested_local.py": "d06b8ae2ab9a3ef131f797769643c1e0ac909f1fcb384d753e7cc1ce3a436fce"
+    },
+    "selection": "tests/test_wp_nested_local.py::test_actual_initializer_scope_and_independent_read_obligations",
+    "cap_gib": 8,
+    "shared_slots": 2,
+    "timeout_s": 1500,
+    "storage": {
+      "output": "/private/tmp/probata-nested-local-actual-20261015",
+      "mount": "/System/Volumes/Data",
+      "free_bytes": 58572800000,
+      "budget_bytes": 2147483648,
+      "readers": [
+        "coordinator",
+        "ticket27/36 acceptance",
+        "independent review"
+      ]
+    },
+    "boundary": "Four actual cases on frozen initializer transformation; no whole-ticket or new source-callee binding acceptance."
+  },
+  "source_runtime_unchanged": true,
+  "pytest": "3 passed, 1 test goal-spelling assertion failure in 130.33s; all four actual verdicts and semantic property assertions pass offline after correcting only that assertion.",
+  "watchdog": {
+    "cmd": [
+      "/Users/yanrujhou/.pyenv/shims/python3",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/test_wp_nested_local.py::test_actual_initializer_scope_and_independent_read_obligations",
+      "--maxfail=1",
+      "--basetemp=/private/tmp/probata-nested-local-actual-20261015/pytest",
+      "--report-log=/private/tmp/probata-nested-local-actual-20261015/pytest.jsonl"
+    ],
+    "exit_code": 1,
+    "wall_s": 130.75,
+    "peak_rss_mb": 705.0,
+    "cap_gb": 8.0,
+    "killed_by_watchdog": false,
+    "timed_out": false,
+    "timeout_s": 1500.0,
+    "log": "/private/tmp/probata-nested-local-actual-20261015/pytest.log",
+    "log_sha256": "2237ab4e92fdf325c902694e83f9b86ccc46eca5c817ae80cbbd40d602ed7c87",
+    "lock_wait_s": 0.0,
+    "finished": "2026-10-15 11:17:10 EDT"
+  },
+  "records": [
+    {
+      "case": "safe",
+      "record": "proof.contract.fixture_nested_local.20261015t151503z.ee34bc03",
+      "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_0/records/proofs/proof.contract.fixture_nested_local.20261015t151503z.ee34bc03.yaml",
+      "sha256": "28916f4626883281cf87fb6a092444549a2e76c1d2bec92b938733ddedde13c5",
+      "verdict": "proven",
+      "ordinary_statuses": {
+        "valid": 14
+      },
+      "smoke_statuses": {
+        "valid": 1
+      },
+      "proof_setup_check": {
+        "check": {
+          "version": "1",
+          "sha256": "4b46761a3150890baf72a3df2f190d55c9dc80699496bfd0ffb25fb77b3e018a"
+        },
+        "verdict": "passed",
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "24173f023b573a6a2bcc75e730165d2629d6cf971fe373545a694eac2d87a511"
+        },
+        "hashes": {
+          "contract": "8dc79ffdddfbe37f922a8033b3dcfb393320e90d1a63aa93ccd8fd2907918860",
+          "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "run_plan": "2640d01f79179c2cc704dc819ebaa6c97fa6fb363625271f75b3eac8bca4d9bd",
+          "stdlib_provenance": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "wp_input.c": "c2b94744af5c4e76ab0f8ef4f23e970b493764947064d42c1b202bb0c79a79d0",
+          "vector_ownership.cc": "3047be85f9372951144121d686e11570b637f232c7a9fe7088c7e9b45ad4334c",
+          "nested_local.c": "b54eff4f4024d70c88157d295fb995e043b4af13e357a3915319c8b826201930",
+          "source.cc": "b2f837240a17004ef4c8b3289e16b67efc8ca29ccf0ec31a30ae9f60cb335a18",
+          "nested_entry_reads.json": "fa4e05d783fff183f2b3d629806887bb1b9e7826a429d5bee6728510a58683f8",
+          "lowering": "c625819af99eac32bb21a8e14279d08f0ab47a4cb7ba482909842093de808ce1"
+        },
+        "runs": [
+          {
+            "verdict": "passed",
+            "hashes": {
+              "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "stdlib_provenance": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+              "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "wp_input.c": "c2b94744af5c4e76ab0f8ef4f23e970b493764947064d42c1b202bb0c79a79d0",
+              "vector_ownership.cc": "3047be85f9372951144121d686e11570b637f232c7a9fe7088c7e9b45ad4334c",
+              "nested_local.c": "b54eff4f4024d70c88157d295fb995e043b4af13e357a3915319c8b826201930",
+              "source.cc": "b2f837240a17004ef4c8b3289e16b67efc8ca29ccf0ec31a30ae9f60cb335a18",
+              "nested_entry_reads.json": "fa4e05d783fff183f2b3d629806887bb1b9e7826a429d5bee6728510a58683f8",
+              "lowering": "c625819af99eac32bb21a8e14279d08f0ab47a4cb7ba482909842093de808ce1"
+            },
+            "run_plan_sha256": "f4af51dd10dee7b3b89f1b6c5e20c3364c33f1e729311a0f5566ff71f80b735d",
+            "tool": "wp"
+          }
+        ]
+      },
+      "pins": {
+        "code": {
+          "id": "contract.fixture_nested_local",
+          "sha256": "8dc79ffdddfbe37f922a8033b3dcfb393320e90d1a63aa93ccd8fd2907918860"
+        },
+        "contract": {
+          "id": "contract.fixture_nested_local",
+          "sha256": "8dc79ffdddfbe37f922a8033b3dcfb393320e90d1a63aa93ccd8fd2907918860"
+        },
+        "baseline_function": {
+          "not_applicable": "A library summary is proven on the entry's own code."
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "not_applicable": "No proof-semantics version exists before ticket 27."
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "24173f023b573a6a2bcc75e730165d2629d6cf971fe373545a694eac2d87a511"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "A library summary has no predecessor."
+        },
+        "build_constants": [],
+        "c_lowering": {
+          "id": "nested_local.c",
+          "sha256": "c625819af99eac32bb21a8e14279d08f0ab47a4cb7ba482909842093de808ce1"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "nested_read_check": {
+          "id": "swdb-nested-entry-reads-1",
+          "sha256": "39b1ea0d2280c46ce73f73fd43bb241810ea4f4c30f94985a62381d3663a5829"
+        },
+        "nested_read_certificate": {
+          "id": "swdb-nested-read-certificate-1",
+          "sha256": "8514f7ec476ae4b2be67de749a6a24ce0611dd0241124764da82bd1b31fe01d6"
+        },
+        "nested_read_original_lowering": {
+          "id": "nested_local.c",
+          "sha256": "b54eff4f4024d70c88157d295fb995e043b4af13e357a3915319c8b826201930"
+        },
+        "nested_read_original_source": {
+          "id": "vector_ownership.cc",
+          "sha256": "3047be85f9372951144121d686e11570b637f232c7a9fe7088c7e9b45ad4334c"
+        },
+        "nested_read_view_source": {
+          "id": "source.cc",
+          "sha256": "b2f837240a17004ef4c8b3289e16b67efc8ca29ccf0ec31a30ae9f60cb335a18"
+        }
+      },
+      "open_goals": [],
+      "reports": [
+        {
+          "name": "nested_original_source",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_0/library/proof_units/vector_ownership.cc",
+          "sha256": "3047be85f9372951144121d686e11570b637f232c7a9fe7088c7e9b45ad4334c"
+        },
+        {
+          "name": "nested_original_lowering",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_0/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151503z.ee34bc03/wp/nested-original/nested_local.c",
+          "sha256": "b54eff4f4024d70c88157d295fb995e043b4af13e357a3915319c8b826201930"
+        },
+        {
+          "name": "nested_original_anchors",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_0/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151503z.ee34bc03/wp/nested-original/nested_local.anchors.json",
+          "sha256": "246a1c941a35f8f5e74d910146634a6676633201585d762c6f17c9fbedcfa28f"
+        },
+        {
+          "name": "nested_view_source",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_0/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151503z.ee34bc03/wp/nested-source/nested-read-9vfw_xyg/source.cc",
+          "sha256": "b2f837240a17004ef4c8b3289e16b67efc8ca29ccf0ec31a30ae9f60cb335a18"
+        },
+        {
+          "name": "nested_entry_reads_certificate",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_0/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151503z.ee34bc03/wp/nested_entry_reads.json",
+          "sha256": "fa4e05d783fff183f2b3d629806887bb1b9e7826a429d5bee6728510a58683f8"
+        },
+        {
+          "name": "c_lowering",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_0/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151503z.ee34bc03/wp/nested_local.c",
+          "sha256": "c625819af99eac32bb21a8e14279d08f0ab47a4cb7ba482909842093de808ce1"
+        },
+        {
+          "name": "anchors",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_0/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151503z.ee34bc03/wp/nested_local.anchors.json",
+          "sha256": "4785127025ddeacbb2017af8faef8bedd5bf06edaac226a05b4408609221f32d"
+        },
+        {
+          "name": "wp_input",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_0/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151503z.ee34bc03/wp/wp_input.c",
+          "sha256": "c2b94744af5c4e76ab0f8ef4f23e970b493764947064d42c1b202bb0c79a79d0"
+        },
+        {
+          "name": "wp_log",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_0/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151503z.ee34bc03/wp/frama-c.log",
+          "sha256": "7305abbf4e6d16be7d9eb76309d63e9ab81c6b86647a9df3d024553ea3b66119"
+        },
+        {
+          "name": "wp_goals",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_0/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151503z.ee34bc03/wp/wp-goals.json",
+          "sha256": "f42e56e58422ba9df554386bb952f91802408d93df356f3f9d46a4dafd1b428e"
+        },
+        {
+          "name": "wp_properties",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_0/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151503z.ee34bc03/wp/wp-properties.csv",
+          "sha256": "311ee2faab5197fc5ddc02fd962398fd6dcedd71bedc8ef6de71ae44013aaac5"
+        },
+        {
+          "name": "wp_inventory",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_0/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151503z.ee34bc03/wp/wp-inventory.json",
+          "sha256": "8a5e1bc906c55609f9680a548bf7de2334cf799f6cb4be9ebd4d80a92d043653"
+        },
+        {
+          "name": "wp_normalized",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_0/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151503z.ee34bc03/wp/wp-normalized.c",
+          "sha256": "795cc3ac47d4435ce0e878044c0ce4e195a7055fa1e05ebde12b52edb89d4e30"
+        }
+      ]
+    },
+    {
+      "case": "inner_window",
+      "record": "proof.contract.fixture_nested_local.20261015t151511z.a34b827d",
+      "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_1/records/proofs/proof.contract.fixture_nested_local.20261015t151511z.a34b827d.yaml",
+      "sha256": "3fbb8731524022f5cfe469d3919a954d6d22e97cfc62bd13d4fe6effffbab1b6",
+      "verdict": "not_proven",
+      "ordinary_statuses": {
+        "valid": 13,
+        "timeout": 1
+      },
+      "smoke_statuses": {
+        "valid": 1
+      },
+      "proof_setup_check": {
+        "check": {
+          "version": "1",
+          "sha256": "4b46761a3150890baf72a3df2f190d55c9dc80699496bfd0ffb25fb77b3e018a"
+        },
+        "verdict": "passed",
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "24173f023b573a6a2bcc75e730165d2629d6cf971fe373545a694eac2d87a511"
+        },
+        "hashes": {
+          "contract": "ebde133794be00072ed01b1a5f443cf7aa8c091969085b4f5fea323bd5b651db",
+          "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "run_plan": "39f4263379a9ffc2b0c0fc04c8c8deb06a54784d4d091226393c3780381b64a8",
+          "stdlib_provenance": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "wp_input.c": "28273ab42189fb0f8dbcd9ef58cb09757d32aaaca09e86f242abe776b2876562",
+          "vector_ownership.cc": "3047be85f9372951144121d686e11570b637f232c7a9fe7088c7e9b45ad4334c",
+          "nested_local.c": "b54eff4f4024d70c88157d295fb995e043b4af13e357a3915319c8b826201930",
+          "source.cc": "b2f837240a17004ef4c8b3289e16b67efc8ca29ccf0ec31a30ae9f60cb335a18",
+          "nested_entry_reads.json": "44748dddbfefc63cb568f6e1dbb8838267ebb3d88142af912f8c7c069d043e62",
+          "lowering": "c625819af99eac32bb21a8e14279d08f0ab47a4cb7ba482909842093de808ce1"
+        },
+        "runs": [
+          {
+            "verdict": "passed",
+            "hashes": {
+              "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "stdlib_provenance": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+              "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "wp_input.c": "28273ab42189fb0f8dbcd9ef58cb09757d32aaaca09e86f242abe776b2876562",
+              "vector_ownership.cc": "3047be85f9372951144121d686e11570b637f232c7a9fe7088c7e9b45ad4334c",
+              "nested_local.c": "b54eff4f4024d70c88157d295fb995e043b4af13e357a3915319c8b826201930",
+              "source.cc": "b2f837240a17004ef4c8b3289e16b67efc8ca29ccf0ec31a30ae9f60cb335a18",
+              "nested_entry_reads.json": "44748dddbfefc63cb568f6e1dbb8838267ebb3d88142af912f8c7c069d043e62",
+              "lowering": "c625819af99eac32bb21a8e14279d08f0ab47a4cb7ba482909842093de808ce1"
+            },
+            "run_plan_sha256": "2f390bb8642af79578491165f49417972cf66e5e553219559a53a9d04ada1781",
+            "tool": "wp"
+          }
+        ]
+      },
+      "pins": {
+        "code": {
+          "id": "contract.fixture_nested_local",
+          "sha256": "ebde133794be00072ed01b1a5f443cf7aa8c091969085b4f5fea323bd5b651db"
+        },
+        "contract": {
+          "id": "contract.fixture_nested_local",
+          "sha256": "ebde133794be00072ed01b1a5f443cf7aa8c091969085b4f5fea323bd5b651db"
+        },
+        "baseline_function": {
+          "not_applicable": "A library summary is proven on the entry's own code."
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "not_applicable": "No proof-semantics version exists before ticket 27."
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "24173f023b573a6a2bcc75e730165d2629d6cf971fe373545a694eac2d87a511"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "A library summary has no predecessor."
+        },
+        "build_constants": [],
+        "c_lowering": {
+          "id": "nested_local.c",
+          "sha256": "c625819af99eac32bb21a8e14279d08f0ab47a4cb7ba482909842093de808ce1"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "nested_read_check": {
+          "id": "swdb-nested-entry-reads-1",
+          "sha256": "39b1ea0d2280c46ce73f73fd43bb241810ea4f4c30f94985a62381d3663a5829"
+        },
+        "nested_read_certificate": {
+          "id": "swdb-nested-read-certificate-1",
+          "sha256": "e8e48827fc60e35599653259fd13bde3f02abb190b5eb843a10c970a5dcaa7c6"
+        },
+        "nested_read_original_lowering": {
+          "id": "nested_local.c",
+          "sha256": "b54eff4f4024d70c88157d295fb995e043b4af13e357a3915319c8b826201930"
+        },
+        "nested_read_original_source": {
+          "id": "vector_ownership.cc",
+          "sha256": "3047be85f9372951144121d686e11570b637f232c7a9fe7088c7e9b45ad4334c"
+        },
+        "nested_read_view_source": {
+          "id": "source.cc",
+          "sha256": "b2f837240a17004ef4c8b3289e16b67efc8ca29ccf0ec31a30ae9f60cb335a18"
+        }
+      },
+      "open_goals": [
+        {
+          "goal": "typed_real_nested_local_assert_swdb_window_access_1",
+          "property": "nested_local_assert_swdb_window_access_1",
+          "function": "nested_local",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "reports": [
+        {
+          "name": "nested_original_source",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_1/library/proof_units/vector_ownership.cc",
+          "sha256": "3047be85f9372951144121d686e11570b637f232c7a9fe7088c7e9b45ad4334c"
+        },
+        {
+          "name": "nested_original_lowering",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_1/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151511z.a34b827d/wp/nested-original/nested_local.c",
+          "sha256": "b54eff4f4024d70c88157d295fb995e043b4af13e357a3915319c8b826201930"
+        },
+        {
+          "name": "nested_original_anchors",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_1/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151511z.a34b827d/wp/nested-original/nested_local.anchors.json",
+          "sha256": "62f9cf97979eee3a019ef9fab63b7aef1d7bdcb189da86ad6f541e3cb86bba2b"
+        },
+        {
+          "name": "nested_view_source",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_1/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151511z.a34b827d/wp/nested-source/nested-read-tyq_cv12/source.cc",
+          "sha256": "b2f837240a17004ef4c8b3289e16b67efc8ca29ccf0ec31a30ae9f60cb335a18"
+        },
+        {
+          "name": "nested_entry_reads_certificate",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_1/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151511z.a34b827d/wp/nested_entry_reads.json",
+          "sha256": "44748dddbfefc63cb568f6e1dbb8838267ebb3d88142af912f8c7c069d043e62"
+        },
+        {
+          "name": "c_lowering",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_1/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151511z.a34b827d/wp/nested_local.c",
+          "sha256": "c625819af99eac32bb21a8e14279d08f0ab47a4cb7ba482909842093de808ce1"
+        },
+        {
+          "name": "anchors",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_1/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151511z.a34b827d/wp/nested_local.anchors.json",
+          "sha256": "15d7c63095b82af0a8b89342d655ea4b6d5fead606d7d18e137d5934da307560"
+        },
+        {
+          "name": "wp_input",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_1/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151511z.a34b827d/wp/wp_input.c",
+          "sha256": "28273ab42189fb0f8dbcd9ef58cb09757d32aaaca09e86f242abe776b2876562"
+        },
+        {
+          "name": "wp_log",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_1/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151511z.a34b827d/wp/frama-c.log",
+          "sha256": "7a99b2637121ab914aa27dc5a715c62537b5401f27b4a2aec1a71ce03ce4e180"
+        },
+        {
+          "name": "wp_goals",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_1/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151511z.a34b827d/wp/wp-goals.json",
+          "sha256": "1d973f9976f94b3da167f487096361985ffebcdfdcb1c0f251bff7f80b8a6d41"
+        },
+        {
+          "name": "wp_properties",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_1/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151511z.a34b827d/wp/wp-properties.csv",
+          "sha256": "dd0bc0e0ee4f5678fc5ebf9b6f76d834bb6f86356054a6eb0207e370613beea3"
+        },
+        {
+          "name": "wp_inventory",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_1/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151511z.a34b827d/wp/wp-inventory.json",
+          "sha256": "755faea0b180527c37e046017deeec918b43623e2ff661537c9d6c71a378bfa4"
+        },
+        {
+          "name": "wp_normalized",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_1/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151511z.a34b827d/wp/wp-normalized.c",
+          "sha256": "d3321970a04029e1494fae555c537c519638884f57b1610620384884e8957788"
+        },
+        {
+          "name": "handler",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_1/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151511z.a34b827d/wp/handler.json",
+          "sha256": "61729755b5a5ca5c4cd5a4b4a5f201f98f20ee608a86f744b931072835562de9"
+        }
+      ]
+    },
+    {
+      "case": "outer_window",
+      "record": "proof.contract.fixture_nested_local.20261015t151552z.24a34ce0",
+      "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_2/records/proofs/proof.contract.fixture_nested_local.20261015t151552z.24a34ce0.yaml",
+      "sha256": "e335d9e32adb12076dd099b5bd9143041269db71f812f80071563d8245243627",
+      "verdict": "not_proven",
+      "ordinary_statuses": {
+        "valid": 13,
+        "timeout": 1
+      },
+      "smoke_statuses": {
+        "valid": 1
+      },
+      "proof_setup_check": {
+        "check": {
+          "version": "1",
+          "sha256": "4b46761a3150890baf72a3df2f190d55c9dc80699496bfd0ffb25fb77b3e018a"
+        },
+        "verdict": "passed",
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "24173f023b573a6a2bcc75e730165d2629d6cf971fe373545a694eac2d87a511"
+        },
+        "hashes": {
+          "contract": "e9fda74cb148adead03030b1acb501e7672e43afcb45a0a28ebaac9ec6d5545a",
+          "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "run_plan": "25ec9a4809c91c6adffab379d0536320fb4751e8fe9b4a18998da50a446d9d1c",
+          "stdlib_provenance": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "wp_input.c": "40fe89a224c2f39cdd218c688b72e71ac08f65baa0d15a6597ab3fcd35a5fffb",
+          "vector_ownership.cc": "3047be85f9372951144121d686e11570b637f232c7a9fe7088c7e9b45ad4334c",
+          "nested_local.c": "b54eff4f4024d70c88157d295fb995e043b4af13e357a3915319c8b826201930",
+          "source.cc": "b2f837240a17004ef4c8b3289e16b67efc8ca29ccf0ec31a30ae9f60cb335a18",
+          "nested_entry_reads.json": "d3f109c98f832d2c9ffab465b9e3946d2f7050e4f14b0e4cb8139032d0c218ca",
+          "lowering": "c625819af99eac32bb21a8e14279d08f0ab47a4cb7ba482909842093de808ce1"
+        },
+        "runs": [
+          {
+            "verdict": "passed",
+            "hashes": {
+              "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "stdlib_provenance": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+              "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "wp_input.c": "40fe89a224c2f39cdd218c688b72e71ac08f65baa0d15a6597ab3fcd35a5fffb",
+              "vector_ownership.cc": "3047be85f9372951144121d686e11570b637f232c7a9fe7088c7e9b45ad4334c",
+              "nested_local.c": "b54eff4f4024d70c88157d295fb995e043b4af13e357a3915319c8b826201930",
+              "source.cc": "b2f837240a17004ef4c8b3289e16b67efc8ca29ccf0ec31a30ae9f60cb335a18",
+              "nested_entry_reads.json": "d3f109c98f832d2c9ffab465b9e3946d2f7050e4f14b0e4cb8139032d0c218ca",
+              "lowering": "c625819af99eac32bb21a8e14279d08f0ab47a4cb7ba482909842093de808ce1"
+            },
+            "run_plan_sha256": "3df101bc4a0bd85dc11fb05b6ea6d7ec4a16d2b2a55193bbed4c83bd6a80d02b",
+            "tool": "wp"
+          }
+        ]
+      },
+      "pins": {
+        "code": {
+          "id": "contract.fixture_nested_local",
+          "sha256": "e9fda74cb148adead03030b1acb501e7672e43afcb45a0a28ebaac9ec6d5545a"
+        },
+        "contract": {
+          "id": "contract.fixture_nested_local",
+          "sha256": "e9fda74cb148adead03030b1acb501e7672e43afcb45a0a28ebaac9ec6d5545a"
+        },
+        "baseline_function": {
+          "not_applicable": "A library summary is proven on the entry's own code."
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "not_applicable": "No proof-semantics version exists before ticket 27."
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "24173f023b573a6a2bcc75e730165d2629d6cf971fe373545a694eac2d87a511"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "A library summary has no predecessor."
+        },
+        "build_constants": [],
+        "c_lowering": {
+          "id": "nested_local.c",
+          "sha256": "c625819af99eac32bb21a8e14279d08f0ab47a4cb7ba482909842093de808ce1"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "nested_read_check": {
+          "id": "swdb-nested-entry-reads-1",
+          "sha256": "39b1ea0d2280c46ce73f73fd43bb241810ea4f4c30f94985a62381d3663a5829"
+        },
+        "nested_read_certificate": {
+          "id": "swdb-nested-read-certificate-1",
+          "sha256": "4703878d0ed7e9a153cf0954d7201f45d34afe380054c0f65abd1e1cde0952d8"
+        },
+        "nested_read_original_lowering": {
+          "id": "nested_local.c",
+          "sha256": "b54eff4f4024d70c88157d295fb995e043b4af13e357a3915319c8b826201930"
+        },
+        "nested_read_original_source": {
+          "id": "vector_ownership.cc",
+          "sha256": "3047be85f9372951144121d686e11570b637f232c7a9fe7088c7e9b45ad4334c"
+        },
+        "nested_read_view_source": {
+          "id": "source.cc",
+          "sha256": "b2f837240a17004ef4c8b3289e16b67efc8ca29ccf0ec31a30ae9f60cb335a18"
+        }
+      },
+      "open_goals": [
+        {
+          "goal": "typed_real_nested_local_assert_swdb_window_access_2",
+          "property": "nested_local_assert_swdb_window_access_2",
+          "function": "nested_local",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "reports": [
+        {
+          "name": "nested_original_source",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_2/library/proof_units/vector_ownership.cc",
+          "sha256": "3047be85f9372951144121d686e11570b637f232c7a9fe7088c7e9b45ad4334c"
+        },
+        {
+          "name": "nested_original_lowering",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_2/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151552z.24a34ce0/wp/nested-original/nested_local.c",
+          "sha256": "b54eff4f4024d70c88157d295fb995e043b4af13e357a3915319c8b826201930"
+        },
+        {
+          "name": "nested_original_anchors",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_2/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151552z.24a34ce0/wp/nested-original/nested_local.anchors.json",
+          "sha256": "f2094652019e2b23e1c6773dd8f4c050950d6be14158944b39021335455cf4e0"
+        },
+        {
+          "name": "nested_view_source",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_2/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151552z.24a34ce0/wp/nested-source/nested-read-xl3slrcu/source.cc",
+          "sha256": "b2f837240a17004ef4c8b3289e16b67efc8ca29ccf0ec31a30ae9f60cb335a18"
+        },
+        {
+          "name": "nested_entry_reads_certificate",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_2/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151552z.24a34ce0/wp/nested_entry_reads.json",
+          "sha256": "d3f109c98f832d2c9ffab465b9e3946d2f7050e4f14b0e4cb8139032d0c218ca"
+        },
+        {
+          "name": "c_lowering",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_2/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151552z.24a34ce0/wp/nested_local.c",
+          "sha256": "c625819af99eac32bb21a8e14279d08f0ab47a4cb7ba482909842093de808ce1"
+        },
+        {
+          "name": "anchors",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_2/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151552z.24a34ce0/wp/nested_local.anchors.json",
+          "sha256": "6d5a7734bf8e5e08ce8ad379b749f3cf0dbc83c058132b8df9c90ce433734f1c"
+        },
+        {
+          "name": "wp_input",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_2/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151552z.24a34ce0/wp/wp_input.c",
+          "sha256": "40fe89a224c2f39cdd218c688b72e71ac08f65baa0d15a6597ab3fcd35a5fffb"
+        },
+        {
+          "name": "wp_log",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_2/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151552z.24a34ce0/wp/frama-c.log",
+          "sha256": "cfa238c285ce9200025aaed0cb146f102118fbe0909f57e4be6787fe7a510579"
+        },
+        {
+          "name": "wp_goals",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_2/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151552z.24a34ce0/wp/wp-goals.json",
+          "sha256": "e8e37941b239c9b97329a5256ca6fb3e9dd26a3db7d3799fa5529a09cdc2d14e"
+        },
+        {
+          "name": "wp_properties",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_2/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151552z.24a34ce0/wp/wp-properties.csv",
+          "sha256": "a937926f73d42304f7e41f2fc6b8169bd1b9b840f945723d9c7c7113c412591b"
+        },
+        {
+          "name": "wp_inventory",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_2/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151552z.24a34ce0/wp/wp-inventory.json",
+          "sha256": "53716054f37480fbb6f7b501321a7a9444c670db8452eab51b1bde9e2034b520"
+        },
+        {
+          "name": "wp_normalized",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_2/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151552z.24a34ce0/wp/wp-normalized.c",
+          "sha256": "103c4a08ef3c785f9c98f2dd5db0a64dcf085aa36ad09ab798817952df416bfa"
+        },
+        {
+          "name": "handler",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_2/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151552z.24a34ce0/wp/handler.json",
+          "sha256": "5ba2a92cedf4ffbd9173ddff27d072e07e4d17111356b8cf58d79db700267331"
+        }
+      ]
+    },
+    {
+      "case": "uninitialized_inner",
+      "record": "proof.contract.fixture_nested_local.20261015t151632z.c1cc383f",
+      "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_3/records/proofs/proof.contract.fixture_nested_local.20261015t151632z.c1cc383f.yaml",
+      "sha256": "cd3ee598900cbc642b9e29d3e09769dd546312ca894dd03d20654de46cbe169c",
+      "verdict": "not_proven",
+      "ordinary_statuses": {
+        "valid": 13,
+        "timeout": 1
+      },
+      "smoke_statuses": {
+        "valid": 1
+      },
+      "proof_setup_check": {
+        "check": {
+          "version": "1",
+          "sha256": "4b46761a3150890baf72a3df2f190d55c9dc80699496bfd0ffb25fb77b3e018a"
+        },
+        "verdict": "passed",
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "24173f023b573a6a2bcc75e730165d2629d6cf971fe373545a694eac2d87a511"
+        },
+        "hashes": {
+          "contract": "0d6ebb3ee74e08f3612a2aee0298a9ceff72466b1b723ab53f1eb8f79feb51b1",
+          "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "run_plan": "875a6e0ec5c35423b3069ae771deafd3afbef7c858efe058dd8c150a52f429e0",
+          "stdlib_provenance": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "wp_input.c": "c57afb6aa27197e0ef3c35ca1b761a4b77b415e6fabe1c168307f1b4ef239e58",
+          "vector_ownership.cc": "3047be85f9372951144121d686e11570b637f232c7a9fe7088c7e9b45ad4334c",
+          "nested_local.c": "b54eff4f4024d70c88157d295fb995e043b4af13e357a3915319c8b826201930",
+          "source.cc": "b2f837240a17004ef4c8b3289e16b67efc8ca29ccf0ec31a30ae9f60cb335a18",
+          "nested_entry_reads.json": "ba5c5af687c9ac3647f0bb511a3de0c589aa2d0f1816c67dbc8efc17b4c578a8",
+          "lowering": "c625819af99eac32bb21a8e14279d08f0ab47a4cb7ba482909842093de808ce1"
+        },
+        "runs": [
+          {
+            "verdict": "passed",
+            "hashes": {
+              "summaries": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "stdlib_provenance": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+              "summary_bindings": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "wp_input.c": "c57afb6aa27197e0ef3c35ca1b761a4b77b415e6fabe1c168307f1b4ef239e58",
+              "vector_ownership.cc": "3047be85f9372951144121d686e11570b637f232c7a9fe7088c7e9b45ad4334c",
+              "nested_local.c": "b54eff4f4024d70c88157d295fb995e043b4af13e357a3915319c8b826201930",
+              "source.cc": "b2f837240a17004ef4c8b3289e16b67efc8ca29ccf0ec31a30ae9f60cb335a18",
+              "nested_entry_reads.json": "ba5c5af687c9ac3647f0bb511a3de0c589aa2d0f1816c67dbc8efc17b4c578a8",
+              "lowering": "c625819af99eac32bb21a8e14279d08f0ab47a4cb7ba482909842093de808ce1"
+            },
+            "run_plan_sha256": "1a83107b8f688137216492daf4bc0f3df07f9408f90d5b643fd6159f112aa598",
+            "tool": "wp"
+          }
+        ]
+      },
+      "pins": {
+        "code": {
+          "id": "contract.fixture_nested_local",
+          "sha256": "0d6ebb3ee74e08f3612a2aee0298a9ceff72466b1b723ab53f1eb8f79feb51b1"
+        },
+        "contract": {
+          "id": "contract.fixture_nested_local",
+          "sha256": "0d6ebb3ee74e08f3612a2aee0298a9ceff72466b1b723ab53f1eb8f79feb51b1"
+        },
+        "baseline_function": {
+          "not_applicable": "A library summary is proven on the entry's own code."
+        },
+        "reference_semantics": {
+          "not_applicable": "No reference-semantics definition is pinned before ticket 30."
+        },
+        "proof_semantics": {
+          "not_applicable": "No proof-semantics version exists before ticket 27."
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "24173f023b573a6a2bcc75e730165d2629d6cf971fe373545a694eac2d87a511"
+        },
+        "summaries": [],
+        "minimum_bounds": {
+          "not_applicable": "No minimum-bounds version exists before ticket 33."
+        },
+        "predecessor_snapshot": {
+          "not_applicable": "A library summary has no predecessor."
+        },
+        "build_constants": [],
+        "c_lowering": {
+          "id": "nested_local.c",
+          "sha256": "c625819af99eac32bb21a8e14279d08f0ab47a4cb7ba482909842093de808ce1"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        },
+        "nested_read_check": {
+          "id": "swdb-nested-entry-reads-1",
+          "sha256": "39b1ea0d2280c46ce73f73fd43bb241810ea4f4c30f94985a62381d3663a5829"
+        },
+        "nested_read_certificate": {
+          "id": "swdb-nested-read-certificate-1",
+          "sha256": "b70192919f8c3bed289611a07601d6de2964b1a1bef635354054e4b513116c8d"
+        },
+        "nested_read_original_lowering": {
+          "id": "nested_local.c",
+          "sha256": "b54eff4f4024d70c88157d295fb995e043b4af13e357a3915319c8b826201930"
+        },
+        "nested_read_original_source": {
+          "id": "vector_ownership.cc",
+          "sha256": "3047be85f9372951144121d686e11570b637f232c7a9fe7088c7e9b45ad4334c"
+        },
+        "nested_read_view_source": {
+          "id": "source.cc",
+          "sha256": "b2f837240a17004ef4c8b3289e16b67efc8ca29ccf0ec31a30ae9f60cb335a18"
+        }
+      },
+      "open_goals": [
+        {
+          "goal": "typed_real_nested_local_assert_rte_initialization",
+          "property": "nested_local_assert_rte_initialization",
+          "function": "nested_local",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "reports": [
+        {
+          "name": "nested_original_source",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_3/library/proof_units/vector_ownership.cc",
+          "sha256": "3047be85f9372951144121d686e11570b637f232c7a9fe7088c7e9b45ad4334c"
+        },
+        {
+          "name": "nested_original_lowering",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_3/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151632z.c1cc383f/wp/nested-original/nested_local.c",
+          "sha256": "b54eff4f4024d70c88157d295fb995e043b4af13e357a3915319c8b826201930"
+        },
+        {
+          "name": "nested_original_anchors",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_3/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151632z.c1cc383f/wp/nested-original/nested_local.anchors.json",
+          "sha256": "ef86c757ddc3377bac93aa86e76f584fcc25c9a2a5ff62744c1dbbfadf1f3966"
+        },
+        {
+          "name": "nested_view_source",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_3/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151632z.c1cc383f/wp/nested-source/nested-read-dqlia09l/source.cc",
+          "sha256": "b2f837240a17004ef4c8b3289e16b67efc8ca29ccf0ec31a30ae9f60cb335a18"
+        },
+        {
+          "name": "nested_entry_reads_certificate",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_3/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151632z.c1cc383f/wp/nested_entry_reads.json",
+          "sha256": "ba5c5af687c9ac3647f0bb511a3de0c589aa2d0f1816c67dbc8efc17b4c578a8"
+        },
+        {
+          "name": "c_lowering",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_3/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151632z.c1cc383f/wp/nested_local.c",
+          "sha256": "c625819af99eac32bb21a8e14279d08f0ab47a4cb7ba482909842093de808ce1"
+        },
+        {
+          "name": "anchors",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_3/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151632z.c1cc383f/wp/nested_local.anchors.json",
+          "sha256": "6797b770d4ce64d592757b02a3da873ddd382431cb62bc7264e5baf40ccd78c9"
+        },
+        {
+          "name": "wp_input",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_3/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151632z.c1cc383f/wp/wp_input.c",
+          "sha256": "c57afb6aa27197e0ef3c35ca1b761a4b77b415e6fabe1c168307f1b4ef239e58"
+        },
+        {
+          "name": "wp_log",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_3/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151632z.c1cc383f/wp/frama-c.log",
+          "sha256": "3ad6b4c58577abd30d3cd5447d80e3d601fc75187ddc49f295736b7766fe5283"
+        },
+        {
+          "name": "wp_goals",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_3/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151632z.c1cc383f/wp/wp-goals.json",
+          "sha256": "921adaad7518e612f17b51cda1c82482ffb67ba91b18dccf5d307c3a582502b1"
+        },
+        {
+          "name": "wp_properties",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_3/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151632z.c1cc383f/wp/wp-properties.csv",
+          "sha256": "d4623052b483967bee743ef7b523b5cabfdec5d377b706398bd15b31f68b5834"
+        },
+        {
+          "name": "wp_inventory",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_3/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151632z.c1cc383f/wp/wp-inventory.json",
+          "sha256": "8208e1f6301557ce450c7c8c93b7274ab5c71d623e986e26753804eef650f56c"
+        },
+        {
+          "name": "wp_normalized",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_3/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151632z.c1cc383f/wp/wp-normalized.c",
+          "sha256": "1548c3d8bba454e3502502deecaa00c5b67d4541ec17a04db51f211c47bf713f"
+        },
+        {
+          "name": "handler",
+          "path": "/private/tmp/probata-nested-local-actual-20261015/pytest/test_actual_initializer_scope_3/runs-outside-repo/proof.contract.fixture_nested_local.20261015t151632z.c1cc383f/wp/handler.json",
+          "sha256": "31051e2af4a6c8626d8f9839d176a2f231e914afdb51b40d7dd20f643ca0989d"
+        }
+      ]
+    }
+  ],
+  "earlier_test_errors": "Initial two attempts used nonexistent Seed.read and did not reach semantic assertions; corrected original-policy RED3.66s and corrected implementation stand-in GREEN retained separately.",
+  "boundary": "Checked sibling capture initializations preserve original declaration scope/bindings; positive and independent window/initializedness negatives, not whole-ticket acceptance.",
+  "compiler_sources": [
+    "https://eel.is/c++draft/stmt.dcl",
+    "https://eel.is/c++draft/intro.execution"
+  ],
+  "focused_controls": {
+    "count": 31,
+    "passed": 31,
+    "seconds": 22.8,
+    "log": "/private/tmp/probata-nested-local-controls.jsonl",
+    "sha256": "9f6247ae3349857b12d19f995b7651cae7099eaceb3fc7762d8df7730f7cf88e"
+  },
+  "corrected_test_sha256": "427c3b752000819809503292ef5b0a3b07bf38cd8fa8840a5e10ddbe6cb7c3ac"
+}

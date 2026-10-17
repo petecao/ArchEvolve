@@ -1,0 +1,1345 @@
+{
+ "format": "swdb.bfs.t16-m-c1-stop-closure.v1",
+ "created": "2026-09-28",
+ "run": "bfs-t16-reference-m-simulator-batch-20260928-c1",
+ "outer_exit": "1",
+ "outer_finished": "2026-09-29T02:42:07,455117413-04:00",
+ "driver_exits": {
+  "maa": "1"
+ },
+ "drivers": {
+  "maa": {
+   "batch_state": "failed",
+   "batch_reason": "InterruptedError: driver interrupted by signal 15",
+   "series_state": "failed",
+   "series_reason": "InterruptedError: driver interrupted by signal 15",
+   "batch_cleanup": "all_owned_descendants_absent",
+   "series_cleanup": "all_owned_descendants_absent",
+   "cleanup_accounting": {
+    "format": "swdb.bfs.shared-cleanup.v1",
+    "budget_seconds": 30,
+    "absolute_end": "2026-09-30T17:04:37.260479-04:00",
+    "created": "2026-09-28T21:03:37.797756-04:00",
+    "creator": {
+     "pid": 767514,
+     "parent_pid": 767513,
+     "start_ticks": 514575036,
+     "state": "R",
+     "rss_bytes": 39784448
+    },
+    "spent_seconds": 20.446270038373815,
+    "monotonic_end": 5304210.14944991,
+    "reservations": {
+     "b28a5aad2fcd48cb90580b3219d25256": {
+      "pid": 767514,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:06.568505-04:00",
+      "purpose": "cleanup_or_finalization",
+      "start_ticks": 514575036
+     }
+    },
+    "events": [
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-28T21:04:07.355135-04:00",
+      "purpose": "cleanup_or_finalization",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.05467684399336577,
+      "finished": "2026-09-28T21:04:07.359188-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-28T21:04:07.360295-04:00",
+      "purpose": "cleanup_or_finalization",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.0529290821403265,
+      "finished": "2026-09-28T21:04:07.362794-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-28T21:04:14.120383-04:00",
+      "purpose": "cleanup_or_finalization",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.054909076727926734,
+      "finished": "2026-09-28T21:04:14.124731-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-28T21:04:14.125916-04:00",
+      "purpose": "cleanup_or_finalization",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.053019356168806556,
+      "finished": "2026-09-28T21:04:14.128541-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-28T21:04:21.085338-04:00",
+      "purpose": "cleanup_or_finalization",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.055121561698615554,
+      "finished": "2026-09-28T21:04:21.089848-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-28T21:04:21.091153-04:00",
+      "purpose": "cleanup_or_finalization",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.053262071870267394,
+      "finished": "2026-09-28T21:04:21.093994-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-28T21:04:27.529483-04:00",
+      "purpose": "cleanup_or_finalization",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.05578177068382502,
+      "finished": "2026-09-28T21:04:27.534627-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-28T21:04:27.536017-04:00",
+      "purpose": "cleanup_or_finalization",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.05318223237991333,
+      "finished": "2026-09-28T21:04:27.538810-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-28T21:04:34.196612-04:00",
+      "purpose": "cleanup_or_finalization",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.055702495574951175,
+      "finished": "2026-09-28T21:04:34.201670-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-28T21:04:34.203191-04:00",
+      "purpose": "cleanup_or_finalization",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.05326105579733849,
+      "finished": "2026-09-28T21:04:34.206004-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-28T21:04:40.977696-04:00",
+      "purpose": "cleanup_or_finalization",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.05611279904842377,
+      "finished": "2026-09-28T21:04:40.983184-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-28T21:04:40.984107-04:00",
+      "purpose": "cleanup_or_finalization",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.052294321544468406,
+      "finished": "2026-09-28T21:04:40.986146-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-28T21:04:47.545173-04:00",
+      "purpose": "cleanup_or_finalization",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.056741774268448356,
+      "finished": "2026-09-28T21:04:47.551236-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-28T21:04:47.553164-04:00",
+      "purpose": "cleanup_or_finalization",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.05276663806289435,
+      "finished": "2026-09-28T21:04:47.555387-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-28T21:04:54.793329-04:00",
+      "purpose": "cleanup_or_finalization",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.05692301243543625,
+      "finished": "2026-09-28T21:04:54.799602-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-28T21:04:54.801454-04:00",
+      "purpose": "cleanup_or_finalization",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.05271018594503403,
+      "finished": "2026-09-28T21:04:54.803713-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-29T02:41:59.271846-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.19186335913836955,
+      "finished": "2026-09-29T02:41:59.413007-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 5,
+      "started": "2026-09-29T02:41:59.266392-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.2037029705941677,
+      "finished": "2026-09-29T02:41:59.419380-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-29T02:41:59.415378-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.1876189040020108,
+      "finished": "2026-09-29T02:41:59.552433-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 5,
+      "started": "2026-09-29T02:41:59.421612-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.1932409333065152,
+      "finished": "2026-09-29T02:41:59.564288-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-29T02:41:59.554664-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.1872661981731653,
+      "finished": "2026-09-29T02:41:59.691430-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 5,
+      "started": "2026-09-29T02:41:59.566192-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.19073755498975514,
+      "finished": "2026-09-29T02:41:59.706451-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-29T02:41:59.693971-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.18711593486368655,
+      "finished": "2026-09-29T02:41:59.830518-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 5,
+      "started": "2026-09-29T02:41:59.708304-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.18984758500009774,
+      "finished": "2026-09-29T02:41:59.847731-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-29T02:41:59.833185-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.18767052628099917,
+      "finished": "2026-09-29T02:41:59.970254-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 5,
+      "started": "2026-09-29T02:41:59.849325-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.19201672840863465,
+      "finished": "2026-09-29T02:41:59.991002-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-29T02:41:59.972994-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.1876657523214817,
+      "finished": "2026-09-29T02:42:00.110067-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 5,
+      "started": "2026-09-29T02:41:59.993140-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.19202501531690358,
+      "finished": "2026-09-29T02:42:00.134712-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:00.112688-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.189367563650012,
+      "finished": "2026-09-29T02:42:00.251512-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:00.137150-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.1913498856127262,
+      "finished": "2026-09-29T02:42:00.277991-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:00.254512-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.18774186838418244,
+      "finished": "2026-09-29T02:42:00.391632-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:00.280289-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.19060682896524667,
+      "finished": "2026-09-29T02:42:00.420388-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:00.395479-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.1867342248558998,
+      "finished": "2026-09-29T02:42:00.531566-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:00.422470-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.19236829336732625,
+      "finished": "2026-09-29T02:42:00.564440-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:00.534508-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.18899914547801017,
+      "finished": "2026-09-29T02:42:00.672923-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:00.567142-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.1916636938229203,
+      "finished": "2026-09-29T02:42:00.708271-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:00.676154-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.18966360967606305,
+      "finished": "2026-09-29T02:42:00.815157-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:00.710581-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.19150705747306346,
+      "finished": "2026-09-29T02:42:00.851596-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:00.818662-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.18753465376794337,
+      "finished": "2026-09-29T02:42:00.955486-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:00.854412-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.19128576405346392,
+      "finished": "2026-09-29T02:42:00.994942-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:00.959051-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.18776962552219628,
+      "finished": "2026-09-29T02:42:01.096179-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:00.997614-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.19017487876117228,
+      "finished": "2026-09-29T02:42:01.137271-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:01.099949-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.18820985704660415,
+      "finished": "2026-09-29T02:42:01.237425-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:01.140020-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.1900940828025341,
+      "finished": "2026-09-29T02:42:01.279602-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:01.241345-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.1874038904905319,
+      "finished": "2026-09-29T02:42:01.377992-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:01.282292-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.19085862226784228,
+      "finished": "2026-09-29T02:42:01.422665-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:01.381961-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.1876571264117956,
+      "finished": "2026-09-29T02:42:01.518870-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:01.425988-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.1905797693878412,
+      "finished": "2026-09-29T02:42:01.565956-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:01.522760-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.18738364912569522,
+      "finished": "2026-09-29T02:42:01.659487-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:01.568617-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.19079904370009898,
+      "finished": "2026-09-29T02:42:01.708939-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:01.663645-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.18830442633479832,
+      "finished": "2026-09-29T02:42:01.801168-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:01.711858-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.19049709402024745,
+      "finished": "2026-09-29T02:42:01.851829-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:01.805430-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.1865732755511999,
+      "finished": "2026-09-29T02:42:01.941208-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:01.854450-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.19048902876675128,
+      "finished": "2026-09-29T02:42:01.994480-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:01.945843-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.18703366741538047,
+      "finished": "2026-09-29T02:42:02.082146-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:01.998245-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.1911228496581316,
+      "finished": "2026-09-29T02:42:02.138694-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:02.086509-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.18826069887727498,
+      "finished": "2026-09-29T02:42:02.224008-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:02.141965-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.19057936426252126,
+      "finished": "2026-09-29T02:42:02.281952-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:02.228624-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.18634332828223704,
+      "finished": "2026-09-29T02:42:02.364176-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:02.284957-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.19012410677969455,
+      "finished": "2026-09-29T02:42:02.424585-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:02.368721-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.18703237194567918,
+      "finished": "2026-09-29T02:42:02.504973-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:02.428131-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.19692139904946088,
+      "finished": "2026-09-29T02:42:02.574390-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:02.509633-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.18726127799600362,
+      "finished": "2026-09-29T02:42:02.646133-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:02.577947-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.19146080426871775,
+      "finished": "2026-09-29T02:42:02.718818-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:02.650759-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.18747528567910193,
+      "finished": "2026-09-29T02:42:02.787588-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:02.723742-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.19212408382445573,
+      "finished": "2026-09-29T02:42:02.865019-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 4.830602145753797,
+      "started": "2026-09-29T02:42:02.792596-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.18745035044848918,
+      "finished": "2026-09-29T02:42:02.929197-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 4.8078759161755436,
+      "started": "2026-09-29T02:42:02.869520-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.1920494308695197,
+      "finished": "2026-09-29T02:42:03.010812-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 4.643151795305307,
+      "started": "2026-09-29T02:42:02.933770-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.18841998390853404,
+      "finished": "2026-09-29T02:42:03.071513-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 4.615826485306023,
+      "started": "2026-09-29T02:42:03.014684-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.19177202153950929,
+      "finished": "2026-09-29T02:42:03.155809-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 4.454731811396773,
+      "started": "2026-09-29T02:42:03.076786-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.1866245113313198,
+      "finished": "2026-09-29T02:42:03.212542-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 4.424054463766513,
+      "started": "2026-09-29T02:42:03.160499-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.1910098187625408,
+      "finished": "2026-09-29T02:42:03.300720-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 4.268107300065452,
+      "started": "2026-09-29T02:42:03.217504-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.18651593774557113,
+      "finished": "2026-09-29T02:42:03.353468-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 4.233044645003972,
+      "started": "2026-09-29T02:42:03.304746-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.19013014547526835,
+      "finished": "2026-09-29T02:42:03.444186-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 4.08159136231988,
+      "started": "2026-09-29T02:42:03.358478-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.18829121366143226,
+      "finished": "2026-09-29T02:42:03.496129-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 4.0429144995287025,
+      "started": "2026-09-29T02:42:03.447624-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.1905065283179283,
+      "finished": "2026-09-29T02:42:03.587592-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 3.8933001486584473,
+      "started": "2026-09-29T02:42:03.501651-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.18619749713689088,
+      "finished": "2026-09-29T02:42:03.636945-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 3.8524079712107735,
+      "started": "2026-09-29T02:42:03.592309-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.19098302833735942,
+      "finished": "2026-09-29T02:42:03.732743-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 3.7071026515215557,
+      "started": "2026-09-29T02:42:03.642143-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.18778821192681788,
+      "finished": "2026-09-29T02:42:03.779325-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 3.6614249428734134,
+      "started": "2026-09-29T02:42:03.736934-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.191546624712646,
+      "finished": "2026-09-29T02:42:03.877827-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 3.519314439594737,
+      "started": "2026-09-29T02:42:03.784982-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.18700947910547255,
+      "finished": "2026-09-29T02:42:03.921095-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 3.4698783181607666,
+      "started": "2026-09-29T02:42:03.883145-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.19104245789349078,
+      "finished": "2026-09-29T02:42:04.023671-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 3.332304960489264,
+      "started": "2026-09-29T02:42:03.926541-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.18791037164628505,
+      "finished": "2026-09-29T02:42:04.063762-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 3.278835860267275,
+      "started": "2026-09-29T02:42:04.028371-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.19118399191647767,
+      "finished": "2026-09-29T02:42:04.169052-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 3.144394588842978,
+      "started": "2026-09-29T02:42:04.069875-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.18734927866607903,
+      "finished": "2026-09-29T02:42:04.206269-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 3.0876518683507967,
+      "started": "2026-09-29T02:42:04.174743-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.19093507826328276,
+      "finished": "2026-09-29T02:42:04.315110-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 2.9570453101768983,
+      "started": "2026-09-29T02:42:04.211701-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.1877673065289855,
+      "finished": "2026-09-29T02:42:04.348753-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 2.8967167900875133,
+      "started": "2026-09-29T02:42:04.321067-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.19156975410878657,
+      "finished": "2026-09-29T02:42:04.461746-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 2.769278003647912,
+      "started": "2026-09-29T02:42:04.354866-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.18663001265376805,
+      "finished": "2026-09-29T02:42:04.490518-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 2.705147035978726,
+      "started": "2026-09-29T02:42:04.466388-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.1915060795843601,
+      "finished": "2026-09-29T02:42:04.607236-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 2.5826479909941433,
+      "started": "2026-09-29T02:42:04.496142-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.18823686819523572,
+      "finished": "2026-09-29T02:42:04.633679-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 2.513640956394365,
+      "started": "2026-09-29T02:42:04.611789-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.19121921639889478,
+      "finished": "2026-09-29T02:42:04.752456-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 2.394411122798907,
+      "started": "2026-09-29T02:42:04.639950-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.18721161801367997,
+      "finished": "2026-09-29T02:42:04.776639-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 2.3224217399954696,
+      "started": "2026-09-29T02:42:04.758125-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.19073961973190307,
+      "finished": "2026-09-29T02:42:04.898224-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 2.207199504785226,
+      "started": "2026-09-29T02:42:04.783237-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.1876646254211664,
+      "finished": "2026-09-29T02:42:04.919866-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 2.131682120263566,
+      "started": "2026-09-29T02:42:04.903004-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.19097386505454778,
+      "finished": "2026-09-29T02:42:05.043471-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 2.019534879364059,
+      "started": "2026-09-29T02:42:04.925665-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.1874680371955037,
+      "finished": "2026-09-29T02:42:05.062474-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 1.9407082552090174,
+      "started": "2026-09-29T02:42:05.049198-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.19137328695505856,
+      "finished": "2026-09-29T02:42:05.189890-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 1.8320668421685546,
+      "started": "2026-09-29T02:42:05.069245-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.1873584698885679,
+      "finished": "2026-09-29T02:42:05.205545-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 1.749334968253958,
+      "started": "2026-09-29T02:42:05.195113-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.1923203870654106,
+      "finished": "2026-09-29T02:42:05.336896-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 1.644708372279986,
+      "started": "2026-09-29T02:42:05.211742-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.18851210474967955,
+      "finished": "2026-09-29T02:42:05.349387-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 1.5570145811885467,
+      "started": "2026-09-29T02:42:05.341712-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.1906349381431937,
+      "finished": "2026-09-29T02:42:05.481850-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 1.4561962675303057,
+      "started": "2026-09-29T02:42:05.355400-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.1884401312097907,
+      "finished": "2026-09-29T02:42:05.493245-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 1.3663796430453523,
+      "started": "2026-09-29T02:42:05.487646-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.19073384273797273,
+      "finished": "2026-09-29T02:42:05.627854-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 1.2677561363205143,
+      "started": "2026-09-29T02:42:05.500383-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.18783006649464368,
+      "finished": "2026-09-29T02:42:05.637142-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 1.1756458003073789,
+      "started": "2026-09-29T02:42:05.632577-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.19118199795484542,
+      "finished": "2026-09-29T02:42:05.773264-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 1.07992606982587,
+      "started": "2026-09-29T02:42:05.643906-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.19353684615343808,
+      "finished": "2026-09-29T02:42:05.786384-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 0.9844638023525327,
+      "started": "2026-09-29T02:42:05.780040-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.19105853717774152,
+      "finished": "2026-09-29T02:42:05.920529-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 0.8863892236724311,
+      "started": "2026-09-29T02:42:05.793517-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.19232493098825215,
+      "finished": "2026-09-29T02:42:05.934946-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 0.7934052651747905,
+      "started": "2026-09-29T02:42:05.926908-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.19085021149367093,
+      "finished": "2026-09-29T02:42:06.067197-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 0.6940642926841782,
+      "started": "2026-09-29T02:42:05.941965-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.18820213638246058,
+      "finished": "2026-09-29T02:42:06.079260-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 0.6025550536811188,
+      "started": "2026-09-29T02:42:06.073462-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.19003657735884188,
+      "finished": "2026-09-29T02:42:06.212911-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 0.5058621563017169,
+      "started": "2026-09-29T02:42:06.086270-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.18827156461775302,
+      "finished": "2026-09-29T02:42:06.223967-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 0.41251847632227623,
+      "started": "2026-09-29T02:42:06.218002-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.19173239655792712,
+      "finished": "2026-09-29T02:42:06.359190-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 0.3175905916839632,
+      "started": "2026-09-29T02:42:06.231559-04:00",
+      "purpose": "grace",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.1929533828049898,
+      "finished": "2026-09-29T02:42:06.373482-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:06.380645-04:00",
+      "purpose": "cleanup_or_finalization",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.07616085484623909,
+      "finished": "2026-09-29T02:42:06.406232-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:06.409488-04:00",
+      "purpose": "cleanup_or_finalization",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.05452567730098963,
+      "finished": "2026-09-29T02:42:06.413229-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:06.417255-04:00",
+      "purpose": "cleanup_or_finalization",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.057386664859950545,
+      "finished": "2026-09-29T02:42:06.424290-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:06.426586-04:00",
+      "purpose": "cleanup_or_finalization",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.05290386844426394,
+      "finished": "2026-09-29T02:42:06.429158-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767556,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:06.431470-04:00",
+      "purpose": "cleanup_or_finalization",
+      "start_ticks": 514576849,
+      "elapsed_seconds": 0.1141598217189312,
+      "finished": "2026-09-29T02:42:06.495299-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 0.2207860797643484,
+      "started": "2026-09-29T02:42:06.364619-04:00",
+      "purpose": "grace",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.1907354502007365,
+      "finished": "2026-09-29T02:42:06.504831-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:06.512107-04:00",
+      "purpose": "cleanup_or_finalization",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.07770069800317288,
+      "finished": "2026-09-29T02:42:06.539301-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:06.543006-04:00",
+      "purpose": "cleanup_or_finalization",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.055663950927555564,
+      "finished": "2026-09-29T02:42:06.547861-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:06.552037-04:00",
+      "purpose": "cleanup_or_finalization",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.05949682667851448,
+      "finished": "2026-09-29T02:42:06.561176-04:00",
+      "exceeded_grant": false
+     },
+     {
+      "pid": 767514,
+      "seconds": 5,
+      "started": "2026-09-29T02:42:06.563544-04:00",
+      "purpose": "cleanup_or_finalization",
+      "start_ticks": 514575036,
+      "elapsed_seconds": 0.05295951403677464,
+      "finished": "2026-09-29T02:42:06.566158-04:00",
+      "exceeded_grant": false
+     }
+    ]
+   },
+   "final_accounting_error": null,
+   "executions": [
+    [
+     "bfs-t16-reference-m-simulator-batch-20260928-c1.maa.s0.r0.primary.evaluation.request.json",
+     "failed"
+    ]
+   ],
+   "samples": 0
+  }
+ },
+ "pane_identity": {
+  "pid": 767430,
+  "start_ticks": 514574977
+ },
+ "identity_observations": [
+  {
+   "at": "2026-09-29T02:42:15-0400",
+   "identities": 130,
+   "live": []
+  },
+  {
+   "at": "2026-09-29T02:42:17-0400",
+   "identities": 130,
+   "live": []
+  }
+ ],
+ "storage_allocated_bytes": [
+  [
+   584085504,
+   1286144
+  ],
+  [
+   584085504,
+   1286144
+  ]
+ ],
+ "storage_stable": true,
+ "lane": {
+  "job": "bfs-t16-reference-m-simulator-batch-20260928-c1",
+  "node": 0,
+  "lease_generation": 392,
+  "exit_code": 1,
+  "started_utc": "2026-09-29T01:03:37Z",
+  "ended_utc": "2026-09-29T06:42:07Z"
+ },
+ "node0_lease_now": {
+  "state": "released",
+  "generation": 392
+ },
+ "observed_at": "2026-09-29 02:42 ET",
+ "interpretation": "Root/user-approved stop of T16 M c1 (one identity-checked SIGTERM to batch driver 767514/514575036 at 02:41:59 ET, sent by Stream D). Cause: the R12 post-ROI switch (m5.switchCpus) never finished draining. host-memory-phases shows post_roi_cpu_switch_begin at tick 235,227,694,027 (01:50:34 ET) with no end; post-roi-syscalls.log held only switch_cpus progress events with 0 committed instructions to tick ~16.9e12. The MAA primary ROI had completed and been sealed at 01:50:34 (ROI stats retained on host), but the verifier never ran, so no sample can be claimed. All 130 retained identities were absent twice; storage was stable at 584,085,504 + 1,286,144 bytes; lease generation 392 was released with exit 1. Retained as interrupted; never resumed."
+}

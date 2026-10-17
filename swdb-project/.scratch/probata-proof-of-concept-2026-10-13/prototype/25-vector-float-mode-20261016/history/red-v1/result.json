@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-16 ET",
+  "external_attempts_after_audit": [],
+  "failed": 5,
+  "input_pins": [
+    {
+      "bytes": 5543,
+      "path": "tests/test_vector_float_mode.py",
+      "sha256": "1f11f677f8dddfac0099b464765ffe931387868586d57eebb19562c8ad637add"
+    },
+    {
+      "bytes": 29179,
+      "path": "swdb/std_models.py",
+      "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+    }
+  ],
+  "native_or_formal_or_remote_execution": false,
+  "passed": 0,
+  "rows": [
+    {
+      "error": "cannot import name 'vector_float_mode' from 'swdb' (/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/__init__.py)",
+      "passed": false,
+      "test": "test_old_methods_keep_the_existing_real_model_selection",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-vector-float-mode-20261016/run_pure.py\", line 47, in <module>\n    function()\n    ~~~~~~~~^^\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_float_mode.py\", line 20, in test_old_methods_keep_the_existing_real_model_selection\n    from swdb import vector_float_mode as mode\nImportError: cannot import name 'vector_float_mode' from 'swdb' (/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/__init__.py)\n"
+    },
+    {
+      "error": "cannot import name 'vector_float_mode' from 'swdb' (/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/__init__.py)",
+      "passed": false,
+      "test": "test_symbolic_mode_preserves_all_six_original_copy_only_units_and_contracts",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-vector-float-mode-20261016/run_pure.py\", line 47, in <module>\n    function()\n    ~~~~~~~~^^\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_float_mode.py\", line 29, in test_symbolic_mode_preserves_all_six_original_copy_only_units_and_contracts\n    from swdb import vector_float_mode as mode\nImportError: cannot import name 'vector_float_mode' from 'swdb' (/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/__init__.py)\n"
+    },
+    {
+      "error": "cannot import name 'vector_float_mode' from 'swdb' (/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/__init__.py)",
+      "passed": false,
+      "test": "test_explicit_method_and_current_checker_model_and_version_pins_are_mandatory",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-vector-float-mode-20261016/run_pure.py\", line 47, in <module>\n    function()\n    ~~~~~~~~^^\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_float_mode.py\", line 52, in test_explicit_method_and_current_checker_model_and_version_pins_are_mandatory\n    from swdb import vector_float_mode as mode\nImportError: cannot import name 'vector_float_mode' from 'swdb' (/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/__init__.py)\n"
+    },
+    {
+      "error": "cannot import name 'vector_float_mode' from 'swdb' (/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/__init__.py)",
+      "passed": false,
+      "test": "test_model_flags_refuse_erasure_duplicates_mixed_overrides_and_pseudo_values",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-vector-float-mode-20261016/run_pure.py\", line 47, in <module>\n    function()\n    ~~~~~~~~^^\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_float_mode.py\", line 78, in test_model_flags_refuse_erasure_duplicates_mixed_overrides_and_pseudo_values\n    from swdb import vector_float_mode as mode\nImportError: cannot import name 'vector_float_mode' from 'swdb' (/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/__init__.py)\n"
+    },
+    {
+      "error": "cannot import name 'vector_float_mode' from 'swdb' (/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/__init__.py)",
+      "passed": false,
+      "test": "test_source_certificate_cannot_expand_to_arithmetic_other_types_or_changed_clauses",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-vector-float-mode-20261016/run_pure.py\", line 47, in <module>\n    function()\n    ~~~~~~~~^^\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_float_mode.py\", line 93, in test_source_certificate_cannot_expand_to_arithmetic_other_types_or_changed_clauses\n    from swdb import vector_float_mode as mode\nImportError: cannot import name 'vector_float_mode' from 'swdb' (/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/__init__.py)\n"
+    }
+  ],
+  "stage": "red-v1"
+}

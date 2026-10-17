@@ -1,0 +1,155 @@
+{
+  "format": "swdb.lanl14-completed-source-copy-archival-custody.v1",
+  "canonical_ensure_ascii": true,
+  "base_commit": "6eb76f800c43fd79e1b6da53e44fa6e994801c17",
+  "base_tree": "490874b30e2fc5d011c65d4c7fbaa10a019645e8",
+  "archived_utc": "2026-10-08T00:56:53.084330+00:00",
+  "archived_et": "2026-10-07 20:56 ET",
+  "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-completed-source-controls-copy-custody-20261008-a1/",
+  "original_count": 9,
+  "original_total_bytes": 96083,
+  "entries": [
+    {
+      "role": "source_copy_producer",
+      "origin": "/private/tmp/lanl14_copy_completed_source_controls_from_git_20261008_a1.py",
+      "snapshot": "lanl14_copy_completed_source_controls_from_git_20261008_a1.py",
+      "bytes": 15934,
+      "sha256": "07e7fc5b946f5c1588226d8c3ff6833934188e9b73f7b23f1b9c4b7fce311f3f",
+      "original_policy": "Original unsealed source/text bytes; EOF and whitespace preserved.",
+      "original_bytes_preserved": true
+    },
+    {
+      "role": "original_NOTRUN_handoff",
+      "origin": "/private/tmp/lanl14-completed-source-controls-copy-producer-source-handoff-20261008-a1.md",
+      "snapshot": "lanl14-completed-source-controls-copy-producer-source-handoff-20261008-a1.md",
+      "bytes": 7187,
+      "sha256": "c00efbe7a627bb717d97c6880f82b1e749bd771444848b398ee877a0b420a2d3",
+      "original_policy": "Original unsealed source/text bytes; EOF and whitespace preserved.",
+      "original_bytes_preserved": true
+    },
+    {
+      "role": "original_NOTRUN_unsealed_preparation",
+      "origin": "/private/tmp/lanl14-completed-source-controls-copy-producer-source-preparation-20261008-a1.json",
+      "snapshot": "lanl14-completed-source-controls-copy-producer-source-preparation-20261008-a1.json",
+      "bytes": 1536,
+      "sha256": "61f15d95a4b29ea7fea77a50b291d5b856ad0835c9a5e3395c2cc787c80f4ade",
+      "original_policy": "Original UNSEALED JSON/stream bytes; original labels, absent canonical/identity fields and EOF preserved.",
+      "original_bytes_preserved": true
+    },
+    {
+      "role": "initial_transport_NOTRUN_draft",
+      "origin": "/private/tmp/lanl14-stage-and-run-source-copy-producer-20261008-a1.py",
+      "snapshot": "lanl14-stage-and-run-source-copy-producer-20261008-a1.py",
+      "bytes": 24908,
+      "sha256": "609fa4ac9890ca904735bb7c28db71256bd94de08dd98cecfc71c9b4cfea13a4",
+      "original_policy": "Original unsealed source/text bytes; EOF and whitespace preserved.",
+      "original_bytes_preserved": true
+    },
+    {
+      "role": "selected_transport_R1_executed_once",
+      "origin": "/private/tmp/lanl14-stage-and-run-source-copy-producer-20261008-a1-r1.py",
+      "snapshot": "lanl14-stage-and-run-source-copy-producer-20261008-a1-r1.py",
+      "bytes": 25044,
+      "sha256": "0eb4e1ebf447f01347d9e8682f2cc49a3057310e181bc7465bf9907c81d5092b",
+      "original_policy": "Original unsealed source/text bytes; EOF and whitespace preserved.",
+      "original_bytes_preserved": true
+    },
+    {
+      "role": "complete_transport_R1_derivation",
+      "origin": "/private/tmp/lanl14-source-copy-transport-r1-complete-derivation-20261008-a1.diff",
+      "snapshot": "lanl14-source-copy-transport-r1-complete-derivation-20261008-a1.diff",
+      "bytes": 2046,
+      "sha256": "7bcc0839352e90dc0e8aa95ead0e695eba340499d6dbd67478cb4ccf40025e3a",
+      "original_policy": "Original unsealed source/text bytes; EOF and whitespace preserved.",
+      "original_bytes_preserved": true
+    },
+    {
+      "role": "actual_unsealed_transport_custody",
+      "origin": "/private/tmp/lanl14-completed-source-controls-copy-transport-actual-20261008-a1.json",
+      "snapshot": "lanl14-completed-source-controls-copy-transport-actual-20261008-a1.json",
+      "bytes": 13547,
+      "sha256": "c8e5ae7a97267cb5032aeea2dd89fd2a4c215ea71097bf539a46c0f56a4f7078",
+      "original_policy": "Original UNSEALED JSON/stream bytes; original labels, absent canonical/identity fields and EOF preserved.",
+      "original_bytes_preserved": true
+    },
+    {
+      "role": "original_exact_unsealed_producer_stdout",
+      "origin": "/private/tmp/lanl14-completed-source-controls-copy-producer-actual-stdout-20261008-a1.json",
+      "snapshot": "lanl14-completed-source-controls-copy-producer-actual-stdout-20261008-a1.json",
+      "bytes": 5881,
+      "sha256": "50ec88489fbc748a776fda41618f20ac1edf9a888d3bb58db6ed4d3446b4f7c0",
+      "original_policy": "Original UNSEALED JSON/stream bytes; original labels, absent canonical/identity fields and EOF preserved.",
+      "original_bytes_preserved": true
+    },
+    {
+      "role": "original_exact_empty_producer_stderr",
+      "origin": "/private/tmp/lanl14-completed-source-controls-copy-producer-actual-stderr-20261008-a1.txt",
+      "snapshot": "lanl14-completed-source-controls-copy-producer-actual-stderr-20261008-a1.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "original_policy": "Original unsealed source/text bytes; EOF and whitespace preserved.",
+      "original_bytes_preserved": true
+    }
+  ],
+  "original_JSON_policy": {
+    "count": 3,
+    "all_original_unsealed": true,
+    "original_absent_canonical_identity_fields_and_labels_preserved": true,
+    "no_original_reseal": true
+  },
+  "README": {
+    "snapshot": "README.md",
+    "bytes": 3618,
+    "sha256": "a19eaad4a53c5b9e9240d562c3432eca003a6eebfdb8c51df4ccc98046f71f17"
+  },
+  "chronology": {
+    "original_producer_handoff_and_preparation_NOTRUN_at_creation": true,
+    "initial_transport_NOTRUN": true,
+    "selected_R1_transport_one_actual_run": true,
+    "started_utc": "2026-10-08T00:54:55.808765+00:00",
+    "ended_utc": "2026-10-08T00:54:56.124361+00:00",
+    "child_returncode": 0,
+    "producer_checked_utc": "2026-10-08T00:54:56.111177+00:00",
+    "two_target_mains_NOTRUN": true
+  },
+  "actual_stream_custody": {
+    "original_stdout_bytes": 5881,
+    "original_stdout_sha256": "50ec88489fbc748a776fda41618f20ac1edf9a888d3bb58db6ed4d3446b4f7c0",
+    "original_stderr_bytes": 0,
+    "original_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transport_utf8_and_base64_exact": true,
+    "stream_JSON_reserialization": false
+  },
+  "actual_copy_scope": {
+    "directory": "/data1/yanruj/lanl14-completed-source-controls-20261008-a1",
+    "directory_mode": "0700",
+    "target_modes": [
+      "0644",
+      "0644"
+    ],
+    "copied_bytes": 57534,
+    "target_source_SHA256s": [
+      "62808f732d3ca492c102bbeb0b0ccab5fcb6ed2c63efd088d8ccdac845d362b7",
+      "0e8ad57fe58f631298502215732a3425ace0264e7348ecea51e6258ebf85f911"
+    ],
+    "source_identity_before_after_equal": true,
+    "targets_imported_or_executed": false,
+    "existing_permissions_repaired_or_overwritten": false,
+    "scientific_admission": false
+  },
+  "archive_operation_scope": {
+    "only_byte_retention_and_local_Git_stage_commit": true,
+    "producer_or_transport_repeat": false,
+    "target_import_main_lift_test_SSH_remote_staging_permissions_cleanup_science": false,
+    "integration_merge_or_push": false
+  },
+  "preserved_references": {
+    "source_C_ref": "codex/lanl-ticket11-source-c",
+    "source_C_commit": "f893fed400347ed23d92e917d8bde21b75e5375d",
+    "F6": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+    "canonical_yaml_count": 686,
+    "R5_source_archive": "../14-exact-export-invocation-controls-20261008-a1/README.md",
+    "supplier_R1_source_archive": "../14-completed-metadata-pin-supplier-controls-20261008-a1-r1/README.md"
+  },
+  "identity_sha256": "ca98e2ba2d179930da82ae02f0bd17984912153f5fb5444e28f3c4719cd0e378"
+}

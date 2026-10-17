@@ -1,0 +1,99 @@
+{
+  "SSH_executed": false,
+  "atime_deliberately_excluded": true,
+  "canonical_ensure_ascii": false,
+  "complete_r1_derivation": {
+    "bytes": 2885,
+    "path": "/private/tmp/lanl14-dispatch-reviewed-early-nonzero-linux-fixture-r2-complete-r1-derivation-20261007-a1.diff",
+    "sha256": "2a86011864b075ac8446e0fe914167d67b2617d76f522a80b9015cebd8cc590e"
+  },
+  "decoded_remote_program": {
+    "bytes": 22601,
+    "sha256": "3888a1a58fb8800f6e7645b5e651f4ad62e8d5c67222ed987d8a920f8b243ebe"
+  },
+  "format": "swdb.lanl14-one-fixture-dispatch-r2-source-preparation.v1",
+  "handoff": {
+    "bytes": 2814,
+    "path": "/private/tmp/lanl14-dispatch-reviewed-early-nonzero-linux-fixture-r2-source-handoff-20261007-a1.md",
+    "sha256": "28f5ba63f1c8ec845bd7f4977fe582d3b17058467826872faf26028b7b401b49"
+  },
+  "identity_sha256": "ee37cb385344c402dc87853e3caf50cbdadac4c13c2d95cefd244ad8bfa0e02a",
+  "main_executed": false,
+  "originals_preserved": [
+    {
+      "bytes": 27376,
+      "path": "/private/tmp/lanl14-dispatch-reviewed-early-nonzero-linux-fixture-20261007-a1.py",
+      "sha256": "dc4c1f1111a7339414e83cd8faaa4f4922439ab502258e6baecc17e59642ee53"
+    },
+    {
+      "bytes": 28246,
+      "path": "/private/tmp/lanl14-dispatch-reviewed-early-nonzero-linux-fixture-20261007-a1-r1.py",
+      "sha256": "4eee5b64037081ef844c6f9efbb0d7d6ac923b5b533dec531f621fe9d228d86f"
+    },
+    {
+      "bytes": 8972,
+      "path": "/private/tmp/lanl14-dispatch-reviewed-early-nonzero-linux-fixture-source-handoff-20261007-a1.md",
+      "sha256": "1118682f29f624c9f14faea7c86e6d4a1b5886474ecb3cb418d3353295ce9093"
+    },
+    {
+      "bytes": 3880,
+      "path": "/private/tmp/lanl14-dispatch-reviewed-early-nonzero-linux-fixture-source-preparation-20261007-a1.json",
+      "sha256": "ac808c8fa5cb99616e900a00fdf67508cb5df5a078cce43639bcc90a10a42ca2"
+    },
+    {
+      "bytes": 2041,
+      "path": "/private/tmp/lanl14-dispatch-reviewed-early-nonzero-linux-fixture-r1-complete-derivation-20261007-a1.diff",
+      "sha256": "6adedd149ab7c9a322516346fbcebf2ae9ad7d68d3c8b7a682d947f993a921b8"
+    },
+    {
+      "bytes": 2670,
+      "path": "/private/tmp/lanl14-dispatch-reviewed-early-nonzero-linux-fixture-r1-source-handoff-20261007-a1.md",
+      "sha256": "58346730fa26e2806177fb668c76d4543357d7348ece2dfd71b1b3948962b81e"
+    },
+    {
+      "bytes": 2423,
+      "path": "/private/tmp/lanl14-dispatch-reviewed-early-nonzero-linux-fixture-r1-source-preparation-20261007-a1.json",
+      "sha256": "119aa9d412a569997cb20a61feaa3b5e3a9c85b5898aa6ca4625ddd81673c8bb"
+    }
+  ],
+  "prepared_utc": "2026-10-07T23:36:07.703793+00:00",
+  "scientific_admission": false,
+  "scope": "Two exact source-only stable-stat predicate replacements; prior NOT RUN histories unchanged.",
+  "source": {
+    "bytes": 28967,
+    "path": "/private/tmp/lanl14-dispatch-reviewed-early-nonzero-linux-fixture-20261007-a1-r2.py",
+    "sha256": "cbaaef6a8f7f324502357daacc1ffa27b3245c0e23ebbaa9f827bdebdf7dc9b1"
+  },
+  "source_program_imported": false,
+  "source_review_chronology": {
+    "parent_corrected_structural_AST_check_passed": true,
+    "parent_original_checker_initial_guessed_AST_index_failed_before_body": true,
+    "runtime_occurred": false
+  },
+  "source_staged": false,
+  "stable_read_stat_fields": [
+    "st_dev",
+    "st_ino",
+    "st_mode",
+    "st_nlink",
+    "st_uid",
+    "st_gid",
+    "st_size",
+    "st_mtime_ns",
+    "st_ctime_ns"
+  ],
+  "static_scope": {
+    "after_stat_captured_once_per_predicate": true,
+    "all_other_local_AST_exact": true,
+    "all_other_remote_AST_exact": true,
+    "changed_remote_AST_symbols": [
+      "read_json",
+      "source_state"
+    ],
+    "fields_controls_argv_caps_unchanged": true,
+    "full_r1_byte_reversal": true,
+    "no_new_helper": true,
+    "predicate_replacements": 2
+  },
+  "tests_executed": false
+}

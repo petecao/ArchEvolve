@@ -1,0 +1,80 @@
+{
+  "format": "swdb.a2-companion-start-operator-readback.v1",
+  "observed_et": "2026-10-03 12:26 ET",
+  "observed_utc": "2026-10-03T16:26:15.802601+00:00",
+  "source_commit": "4c9bb01c190c20f3aa28ecc878cfc4d12ade6253",
+  "branch": "yanrujhou_main",
+  "driver": {
+    "state": "running",
+    "started": "2026-10-03T16:24:56.828856+00:00",
+    "runtime_commit": "4c9bb01c190c20f3aa28ecc878cfc4d12ade6253",
+    "tracked_changes": [],
+    "lane": "mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 443)",
+    "preflight": {
+      "disk": "/data1",
+      "runs_folder": "/data1/yanruj/EvolveSWDB_runs",
+      "free_bytes": 46084681728,
+      "memory_node": 0,
+      "free_memory_bytes": 35468795904,
+      "secondary_free_bytes": 78837571584,
+      "node_memory_stats_bytes": {
+        "MemTotal": 66951016448,
+        "MemFree": 35468795904,
+        "Inactive(file)": 21518278656,
+        "Mapped": 972201984,
+        "Shmem": 6610944,
+        "Dirty": 446464,
+        "Writeback": 0,
+        "Unevictable": 40005632
+      },
+      "node_zone_reserve_bytes": 450916352,
+      "node_managed_memory_bytes": 66951016448,
+      "estimated_memory_capacity_bytes": 41423335424,
+      "memory_capacity_basis": "node_memfree_plus_conservative_inactive_file.v1",
+      "inactive_file_credit_bytes": 10249506816,
+      "node_memory_reserve_bytes": 4294967296,
+      "format": "swdb.dispatch-preflight.v1",
+      "observed_at": "2026-10-03T16:24:56.939248+00:00",
+      "planned_raw_bytes": 8589934592,
+      "reserve_bytes": 21474836480,
+      "memory_budget_bytes": 38654705664,
+      "state": "admitted"
+    },
+    "driver_sha256": "22d0a845472c218fb738669af8822d8449b4afe6422783a6f20b9c20e110aa91"
+  },
+  "progress": {
+    "stage": "companion-timed",
+    "command": "dx100-execute",
+    "started": "2026-10-03T16:25:06.651531+00:00",
+    "state": "running",
+    "request_id": "typed-library-bfs-gem5-20261003-a2.companion.timed.evaluation",
+    "timeout_seconds": 3660,
+    "lane": "mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 443)"
+  },
+  "leases": {
+    "mbit10-evaluation-node0": {
+      "kernel_held": true,
+      "metadata_state": "held",
+      "generation": 443
+    },
+    "mbit10-evaluation-node1": {
+      "kernel_held": false,
+      "metadata_state": "released",
+      "generation": 506
+    },
+    "mbit10-evaluation": {
+      "kernel_held": false,
+      "metadata_state": "released",
+      "generation": 77
+    }
+  },
+  "owned_processes": [
+    "1590331 1590329      79 S     2092 timeout --signal=TERM --kill-after=90s 7800s bash /data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh 0 typed-library-bfs-gem5-20261003-a2-companion --record /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.dispatch-companion/lane.json --no-align --load1-max 8 --lease-timeout-s 30 -- python3 tools/typed_library_gem5_driver.py --stage companion --id typed-library-bfs-gem5-20261003-a2 --runs-dir /data1/yanruj/EvolveSWDB_runs --memory-gib 36 --storage-gib 8 --authoring-session codex-typed-library-dx100-bfs-20261003 --approval-reference typed-library-related-approval-20261003",
+    "1590332 1590331      79 S     3840 bash /data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh 0 typed-library-bfs-gem5-20261003-a2-companion --record /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.dispatch-companion/lane.json --no-align --max-cell-age-s 900 --load1-max 8 --lease-timeout-s 30 -- python3 tools/typed_library_gem5_driver.py --stage companion --id typed-library-bfs-gem5-20261003-a2 --runs-dir /data1/yanruj/EvolveSWDB_runs --memory-gib 36 --storage-gib 8 --authoring-session codex-typed-library-dx100-bfs-20261003 --approval-reference typed-library-related-approval-20261003",
+    "1590398 1590332      79 S    206672 python3 tools/typed_library_gem5_driver.py --stage companion --id typed-library-bfs-gem5-20261003-a2 --runs-dir /data1/yanruj/EvolveSWDB_runs --memory-gib 36 --storage-gib 8 --authoring-session codex-typed-library-dx100-bfs-20261003 --approval-reference typed-library-related-approval-20261003"
+  ],
+  "actual_lease_suffix": ".lease",
+  "evidence_origin": "Live independent root SSH tool output; mutable driver/progress metadata is unsealed, no raw copied or raw hash invented.",
+  "result_scope": "Actual fresh companion running after a2 prepare completed12:22:57 ET. New companion acceptance, timing and point ratios remain pending.",
+  "publication": "Local compact readback pending until all measurements stop; source4c9 frozen during serial stages."
+}

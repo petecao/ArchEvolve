@@ -1,0 +1,29 @@
+--- /private/tmp/lanl17_author_parent_full_record_index_request_20261007.py
++++ /private/tmp/lanl17_author_parent_full_record_index_request_r1_20261007.py
+@@ -11,7 +11,8 @@
+ It emits only an original UNSEALED request and separately sealed author custody.
+ 128MiB/file,2GiB unique ONE-catalog,16384 records,8MiB metadata,60..3600 seconds
+ are original7a bounds; no selected input or scientific budget is enlarged.
+-All copied closed helpers/loader policy are exact original7a source AST/text.
++R1 deliberately captures Git stderr for privacy; all other copied helpers
++retain exact original7a source AST/text and loader policy.
+ """
+ import argparse
+ 
+@@ -313,7 +314,7 @@
+                        GIT_OPTIONAL_LOCKS='0', GIT_PAGER='cat')
+     return subprocess.check_output(['git', '-c', 'protocol.allow=never', '-c', 'core.fsmonitor=false',
+                                     '-C', str(source), *args],
+-                                   timeout=min(60, remaining(deadline)), env=environment)
++                                   timeout=min(60, remaining(deadline)), env=environment, stderr=subprocess.PIPE)
+ 
+ def scientific_source(source, revision, tree, deadline):
+     source = checked_path(source, directory=True)
+@@ -594,6 +595,7 @@
+         if folder.exists():
+             checked_path(folder,directory=True)
+     records = checked_path(context['records_directory'], directory=True)
++    require(context['records_directory'] == str(records), 'exact_canonical_records_directory_string_required')
+     require(records == folders[CIDS.index(campaign)]/'records', 'exact_original28d_one_catalog_routing_required')
+     forbidden=(source,raw_root,*folders)
+     output = fresh_output(args.output_directory,forbidden)

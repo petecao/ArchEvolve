@@ -1,0 +1,18 @@
+{
+  "SSH_calls": 0,
+  "actual_auditor_executions": 0,
+  "auditor_sha256": "9a373fe5a32bd11c36149d65f1470c98def984dec10c35465ac7d198f7f8651b",
+  "caller_acceptance": false,
+  "compiler_solver_runs": 0,
+  "created": "2026-10-16 ET",
+  "prior_source_variant_review_sha256": "bfdde8ba7789062008554e36d3b52da76eb34c25510d0c9f60c756894c963a38",
+  "review": [
+    "Exact AST inverse changes only source-definition census and passes the already checked actual goal to it.",
+    "Only the unused exact L_t25_closed_positive definition may be omitted, only in the two positive goals, and only after complete actual goal equality to the independently reduced source variant. Its symbol must be absent from that actual goal.",
+    "Every remaining recursive source definition is still required and compared by full formula; all printed common source declarations remain required. Every other omission or extra source definition is refused.",
+    "Eight scripted controls retain accepted exact closures and reject every other missing definition, an omitted still-referenced L and foreign definitions.",
+    "No goal, hypothesis, scientific outcome, runtime/source/import guard or admission boundary is changed. All original refusals and both timeouts remain preserved."
+  ],
+  "source_typed_bridge_established": false,
+  "status": "PASS_FOR_SCOPED_PASSIVE_COLD_INSPECTION"
+}

@@ -1,0 +1,199 @@
+"""Immutable service bindings through the separate public module CLI (2026-10-06 ET)."""
+import json
+
+import yaml
+
+from conftest import run_swdb
+from testkit.cpu_service import fixture_receipt, save_receipt, bind, allocator_v2_estimate
+from testkit.analytic import target_description, fixture_characterization, digest
+
+
+def test_binding_pins_typed_receipt_and_preserves_original_target(records,tmp_path):
+    records.add_stub()
+    original=yaml.safe_load(target_description(tmp_path).read_text())
+    original['id']='fixture.cpu.base';original['target']='testhost'
+    records.write('target_descriptions/fixture.cpu.base.yaml',original)
+    before=(records.path/'target_descriptions/fixture.cpu.base.yaml').read_bytes()
+    char=fixture_characterization(records.path,subject_id='stub-impl',input_id='tiny-sym')
+    raw=fixture_receipt();raw['machine']='testhost'
+    raw['services'][0]['denominator']['proof']={'event_abi':'fixture.clock.abi'}
+    result=run_swdb('import-cpu-service-calibration','--records',records.path,'--receipt',save_receipt(tmp_path,raw),
+        '--id','fixture.clock.cost','--fixture','--format','json')
+    assert result.returncode==0,result.stderr+result.stdout
+    outcome=bind(records,'--target-description','fixture.cpu.base','--characterization','fixture.counts',
+        '--calibration','fixture.clock.cost','--id','fixture.cpu.services','--fixture')
+    assert outcome.returncode==0,outcome.stderr+outcome.stdout
+    data=json.loads(outcome.stdout)
+    assert data['calibration_sources']==['fixture.clock.cost','fixture.counts']
+    # No memory cells: streaming_bandwidth stays an estimate mechanism, so nothing is floor-only.
+    assert [m['model'] for m in data['mechanisms']][:2]==['compute_throughput','streaming_bandwidth']
+    assert 'resource_floor_mechanisms' not in data
+    model=data['mechanisms'][-1]
+    assert model['model']=='native_service_costs' and model['parameters']['service_0']['value']==.1
+    assert model['parameters']['service_0']['basis']=='reported'
+    assert model['selector']['calls']==[{'name':'fixture.clock.abi','parameter':'service_0','unit':'seconds/call'}]
+    snapshot=data['extensions']['cpu_services_binding']
+    assert snapshot['characterization']=={'id':'fixture.counts','sha256':digest(char)}
+    assert snapshot['calibrations'][0]['id']=='fixture.clock.cost'
+    assert (records.path/'target_descriptions/fixture.cpu.base.yaml').read_bytes()==before
+    assert records.validate().returncode==0
+    refused=bind(records,'--target-description','fixture.cpu.base','--characterization','fixture.counts',
+        '--calibration','fixture.clock.cost','--id','fixture.cpu.false.native')
+    assert refused.returncode!=0 and 'fixture' in refused.stderr
+    assert not (records.path/'target_descriptions/fixture.cpu.false.native.yaml').exists()
+
+
+def test_native_cost_with_unproven_workload_runtime_stays_unknown(records,tmp_path):
+    from conftest import REPO
+    records.add_stub()
+    original=yaml.safe_load(target_description(tmp_path).read_text());original['id']='fixture.cpu.base'
+    records.write('target_descriptions/fixture.cpu.base.yaml',original)
+    fixture_characterization(records.path,subject_id='stub-impl',input_id='tiny-sym')
+    name='mbit10.cpu.lanl20261006.service.clock.a1'
+    actual=yaml.safe_load((REPO/'records/cpu_service_calibrations'/f'{name}.yaml').read_text())
+    records.write('cpu_service_calibrations/'+name+'.yaml',actual)
+    outcome=bind(records,'--target-description','fixture.cpu.base','--characterization','fixture.counts',
+        '--calibration',name,'--id','fixture.cpu.unmatched','--fixture')
+    assert outcome.returncode==0,outcome.stderr+outcome.stdout
+    data=json.loads(outcome.stdout)
+    assert data['mechanisms'][-1]['parameters']['service_0']['value'] is None
+    assert data['mechanisms'][-1]['parameters']['service_0']['basis']=='unknown'
+    reasons=data['extensions']['cpu_services_binding']['compatibility'][0]['missing']
+    assert 'service_compiler_identity' in reasons and 'service_runtime.libc.so' in reasons
+    assert 'service_interposer_control_absence_scope' in reasons
+    assert data['mechanisms'][-1]['selector']['calibration_admission']=={'service_0':reasons}
+    assert actual['services'][0]['parameter']['basis']=='measured'
+
+
+def test_duplicate_exact_abi_cannot_create_an_ambiguous_cost(records,tmp_path):
+    records.add_stub()
+    original=yaml.safe_load(target_description(tmp_path).read_text());original['id']='fixture.cpu.base'
+    original['target']='testhost';records.write('target_descriptions/fixture.cpu.base.yaml',original)
+    fixture_characterization(records.path,subject_id='stub-impl',input_id='tiny-sym')
+    raw=fixture_receipt();raw['machine']='testhost'
+    raw['services'][0]['denominator']['proof']={'event_abi':'fixture.clock.abi'}
+    result=run_swdb('import-cpu-service-calibration','--records',records.path,'--receipt',save_receipt(tmp_path,raw),
+        '--id','fixture.clock.cost','--fixture')
+    assert result.returncode==0,result.stderr+result.stdout
+    outcome=bind(records,'--target-description','fixture.cpu.base','--characterization','fixture.counts',
+        '--calibration','fixture.clock.cost','--calibration','fixture.clock.cost','--id','fixture.cpu.ambiguous','--fixture')
+    assert outcome.returncode!=0 and 'ambiguous duplicate' in outcome.stderr
+    assert not (records.path/'target_descriptions/fixture.cpu.ambiguous.yaml').exists()
+
+
+def test_binding_freezes_exact_outcome_free_characterization_allowlist_and_checks_every_member(records,tmp_path):
+    import copy
+    records.add_stub()
+    original=yaml.safe_load(target_description(tmp_path).read_text());original.update(id='fixture.cpu.base',target='testhost')
+    records.write('target_descriptions/fixture.cpu.base.yaml',original)
+    first=fixture_characterization(records.path,subject_id='stub-impl',input_id='tiny-sym')
+    second=copy.deepcopy(first);second['id']='fixture.holdout.counts'
+    second.pop('identity_sha256');second['identity_sha256']=digest(second)
+    records.write('workload_characterizations/fixture.holdout.counts.yaml',second)
+    raw=fixture_receipt();raw['machine']='testhost';raw['services'][0]['denominator']['proof']={'event_abi':'fixture.clock.abi'}
+    imported=run_swdb('import-cpu-service-calibration','--records',records.path,'--receipt',save_receipt(tmp_path,raw),
+        '--id','fixture.clock.cost','--fixture')
+    assert imported.returncode==0,imported.stderr+imported.stdout
+    outcome=bind(records,'--target-description','fixture.cpu.base','--characterization','fixture.counts',
+        '--scope-characterization','fixture.holdout.counts','--calibration','fixture.clock.cost',
+        '--id','fixture.cpu.allowed','--fixture')
+    assert outcome.returncode==0,outcome.stderr+outcome.stdout
+    target=json.loads(outcome.stdout);expected=[{'id':c['id'],'sha256':digest(c)} for c in (first,second)]
+    assert target['mechanisms'][-1]['selector']['characterization_allowlist']==expected
+    assert 'characterization_sha256' not in target['mechanisms'][-1]['selector']
+    assert target['extensions']['cpu_services_binding']['characterization_allowlist']==expected
+    assert all(c['id'] in target['calibration_sources'] for c in (first,second))
+    assert target['mechanisms'][-1]['parameters']['service_0']['basis']=='reported'
+    assert records.validate().returncode==0
+    third=copy.deepcopy(first);third.update(id='fixture.wrong.thread.counts');third['binding']['threads']=2
+    third.pop('identity_sha256');third['identity_sha256']=digest(third)
+    records.write('workload_characterizations/fixture.wrong.thread.counts.yaml',third)
+    unknown=bind(records,'--target-description','fixture.cpu.base','--characterization','fixture.counts',
+        '--scope-characterization','fixture.wrong.thread.counts','--calibration','fixture.clock.cost',
+        '--id','fixture.cpu.partly.unmatched','--fixture')
+    assert unknown.returncode==0,unknown.stderr+unknown.stdout
+    assert json.loads(unknown.stdout)['mechanisms'][-1]['parameters']['service_0']['basis']=='unknown'
+
+
+def test_extensa_tagged_native_service_record_never_enters_team_binding(records,tmp_path):
+    records.add_stub()
+    base=yaml.safe_load(target_description(tmp_path).read_text());base.update(id='fixture.cpu.base',target='testhost')
+    records.write('target_descriptions/fixture.cpu.base.yaml',base)
+    fixture_characterization(records.path,subject_id='stub-impl',input_id='tiny-sym')
+    raw=fixture_receipt();raw['machine']='testhost';raw['services'][0]['denominator']['proof']={'event_abi':'fixture.clock.abi'}
+    created=run_swdb('import-cpu-service-calibration','--records',records.path,'--receipt',save_receipt(tmp_path,raw),
+        '--id','fixture.research.service','--fixture')
+    assert created.returncode==0,created.stderr+created.stdout
+    data=records.read('cpu_service_calibrations/fixture.research.service.yaml')
+    data.update(mode='extensa',campaign='extensa-native-bfs-20261004-a1')
+    data.pop('identity_sha256');data['identity_sha256']=digest(data)
+    records.write('cpu_service_calibrations/fixture.research.service.yaml',data)
+    result=bind(records,'--target-description','fixture.cpu.base','--characterization','fixture.counts',
+        '--calibration',data['id'],'--id','fixture.cpu.research.mixed','--fixture')
+    assert result.returncode!=0 and 'Extensa campaign' in result.stderr and 'never enter team' in result.stderr
+    assert not (records.path/'target_descriptions/fixture.cpu.research.mixed.yaml').exists()
+
+
+def test_memory_cells_move_the_measured_bandwidth_rate_to_the_floor_only_carrier(records,tmp_path):
+    # C11 (cpu-description ticket 03, 2026-10-12 ET): memory cells supersede streaming_bandwidth as an
+    # estimate mechanism; its rate is kept, pinned to its source, for the attribution resource floor only.
+    # Review F6 (2026-10-12 ET): `carried_from.calibrations` pins only the base calibration that
+    # produced `bytes_per_s` (the CPU calibration whose receipt the rate's source names), not every
+    # base calibration source. Here the base also lists an unrelated service calibration.
+    from conftest import REPO
+    from test_cpu_memory_service_binding import setup,run_bind
+    setup(records,tmp_path)
+    producer='mbit10.cpu.lanl20261006a2.v2.calibration.t1'
+    cpu=yaml.safe_load((REPO/'records/cpu_calibrations'/f'{producer}.yaml').read_text())
+    records.write(f'cpu_calibrations/{producer}.yaml',cpu)
+    records.copy_repo('machines')
+    source=f"CPU calibration {cpu['receipt_sha256']}; threads=1; useful source-element bytes"
+    base=records.read('target_descriptions/fixture.memory.base.yaml')
+    base['calibration_sources']=[producer,'fixture.memory.costs']
+    bandwidth=next(m for m in base['mechanisms'] if m['model']=='streaming_bandwidth')
+    bandwidth['parameters']['bytes_per_s']['source']=source
+    records.write('target_descriptions/fixture.memory.base.yaml',base)
+    outcome=run_bind(records,'--target-description','fixture.memory.base','--characterization','fixture.counts',
+        '--calibration','fixture.memory.costs','--memory-footprint-bytes','8388608',
+        '--memory-cas-policy','max_constructed_success_failure_median','--id','fixture.memory.floor','--fixture')
+    assert outcome.returncode==0,outcome.stderr+outcome.stdout
+    target=json.loads(outcome.stdout)
+    assert all(m['model']!='streaming_bandwidth' for m in target['mechanisms'])
+    rate={'value':32.0,'basis':'reported','source':source,'unit':'bytes/s'}
+    assert target['resource_floor_mechanisms']==[{'model':'streaming_bandwidth','parameters':{'bytes_per_s':rate},
+        'carried_from':{'description':{'id':'fixture.memory.base','sha256':digest(base)},
+                        'calibrations':[{'id':producer,'sha256':digest(cpu)}]}}]
+    assert records.validate().returncode==0
+
+
+def test_the_committed_services_v2_floor_only_carrier_is_what_the_binder_still_produces():
+    # Review F6 (2026-10-12 ET): pinning only the producer must not change the committed services.v2.
+    from conftest import REPO
+    from swdb import yamlio
+    from swdb.cpu_service_binding import _floor_only_bandwidth
+    v2=yamlio.load(REPO/'records/target_descriptions/mbit10.cpu.lanl20261006.t1.services.v2.yaml')
+    base_id=v2['resource_floor_mechanisms'][0]['carried_from']['description']['id']
+    base=yamlio.load(REPO/'records/target_descriptions'/f'{base_id}.yaml')
+    calibrations={c:yamlio.load(REPO/'records/cpu_calibrations'/f'{c}.yaml') for c in base['calibration_sources']}
+
+    class Store:
+        get=staticmethod(calibrations.get)
+    assert _floor_only_bandwidth(Store,base)==v2['resource_floor_mechanisms']
+
+
+# Allocator v2 (2026-10-12 ET, cpu-description ticket 04): malloc and exact large bins.
+def test_malloc_and_16_mib_array_bins_bind_beside_v1_cells_and_price_exact_sizes(records,tmp_path):
+    import pytest
+    bound,resource=allocator_v2_estimate(records,tmp_path,[(64,2)])
+    calls={c['name']:sorted(b['bytes'] for b in c['bins']) for c in bound['mechanisms'][-1]['selector']['calls']}
+    assert calls=={'_Znam':[65536,16777216],'malloc':[64],'_ZdaPv':[16777216]}
+    # malloc 2 x .2 s + new[] (.4 s at 16 MiB + .2 s at 64 KiB) + delete[] .1 s at 16 MiB.
+    assert resource['seconds']==pytest.approx(1.1)
+    assert sorted(c['site'] for c in resource['inputs']['covered_calls'])==[29,30,31]
+    assert records.validate().returncode==0
+
+
+def test_an_allocator_size_without_an_exact_bin_stays_unknown(records,tmp_path):
+    _,resource=allocator_v2_estimate(records,tmp_path,[(64,1),(128,1)])
+    assert resource['seconds'] is None
+    assert 'call_shape.cost.malloc.128' in resource['missing']

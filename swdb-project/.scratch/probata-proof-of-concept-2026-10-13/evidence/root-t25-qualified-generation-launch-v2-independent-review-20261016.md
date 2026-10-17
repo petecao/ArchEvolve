@@ -1,0 +1,5 @@
+# Independent root generation launcher v2 review
+
+Date: 2026-10-16 ET. PASS for prospective source-only admission. Exact launcher SHA b4c79b2177fa6385d4e3932d4be499d78bf4c9756b7c1c295c0b7dfd3396796e. V1 remains unchanged. The sole executable correction asserts no preflight inspection_denial_pids before actual admission; receipt prefix separately becomesv2. This closes the prior P2 unknown-process idleness gap. All earlier exact command/entry/expected, c6guard/staged_search/Python/psutil, clean017/published ancestry, shared leases, disk/memory,600s8GiB/720s/token/strict cleanup and finite postscan boundaries remain unchanged.
+
+No actual entry/preflight/compiler/formal/probe/SSH or repository mutation by reviewer. No live host-idleness, native parser/generation success, theorem or ticket acceptance claim. Root must execute fresh counted admission and independently audit complete settled outputs. The paired entryv3 static review remains20d033d5724b77b611ff2a1f504ba2bb8859322dd4de2913461ccaeb6525cda5. No additional blocker found.

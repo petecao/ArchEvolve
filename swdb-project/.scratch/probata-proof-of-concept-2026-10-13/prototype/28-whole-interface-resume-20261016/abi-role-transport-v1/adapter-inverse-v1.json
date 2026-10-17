@@ -1,0 +1,29 @@
+{
+  "basis": {
+    "bytes": 3640,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/normalized-unit-observation-v1/modules/normalized_compiler_adapter_v1.py",
+    "sha256": "0bbf572196677dbc926bb5d331022c2766e44c287bd1ea3cce0ef077153a8a01"
+  },
+  "generic_decoder_and_legacy_prepare_unit_changed": false,
+  "raw_ABI_identity": "Original ABI remains in separate original_raw_probe_sha256/transport fields. legacy raw_probe_sha256 identifies the derived strict input it actually consumed.",
+  "replacements": [
+    {
+      "new": "from swdb._dx100_whole import compiler_unit_adapter_v3 as legacy\nfrom swdb._dx100_whole import abi_role_transport_v1 as abi_transport",
+      "old": "from swdb._dx100_whole import compiler_unit_adapter_v3 as legacy"
+    },
+    {
+      "new": "    derived_abi, abi_receipt=abi_transport.normalize_abi(abi_raw)\n    need(abi_receipt['selected_family']=='first-source-v10','exact first-source original ABI family required')\n    prepared=legacy.prepare_unit(api,full_tu_raw=full_tu_raw,abi_raw=derived_abi,source_path=source_path,source_bytes=source_bytes,",
+      "old": "    prepared=legacy.prepare_unit(api,full_tu_raw=full_tu_raw,abi_raw=abi_raw,source_path=source_path,source_bytes=source_bytes,"
+    },
+    {
+      "new": "    need(prepared['abi_observation']['raw_probe_sha256']==abi_receipt['derived_strict_sha256'],\n        'unchanged legacy ABI reader must identify its actual derived strict input')\n    return {**prepared,'schema':'whole-interface-normalized-original-tu-preparation-1',\n        'abi_observation':{**prepared['abi_observation'],\n            'original_raw_probe_sha256':abi_receipt['original_sha256'],\n            'paired_type_role_transport':abi_receipt},",
+      "old": "    return {**prepared,'schema':'whole-interface-normalized-original-tu-preparation-1',"
+    },
+    {
+      "new": "are the same already checked full-TU object. The ABI inlet separately retains\n    its original identity and passes an explicitly derived strict stream. The\n    legacy function is not modified.",
+      "old": "are the same already checked object. The legacy function is not modified."
+    }
+  ],
+  "schema": "normalized-compiler-ABI-inlet-exact-inverse-1",
+  "unchanged_legacy_consumer_sha256": "775ab2ecf6068153a6167473129dcd416dc2727c9afe0ef6e0846bab62d3085c"
+}

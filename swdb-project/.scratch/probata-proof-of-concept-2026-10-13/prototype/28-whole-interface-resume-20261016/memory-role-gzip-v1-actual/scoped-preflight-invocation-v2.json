@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "ssh",
+    "mbit10",
+    "/usr/bin/timeout --signal=TERM --kill-after=5s 35s /usr/bin/python3 -I -B -"
+  ],
+  "date": "2026-10-16 ET",
+  "returncode": 0,
+  "scope": "G642 scoped preflight with exact inherited PAM/current SSH ancestry identity; no transform",
+  "source_sha256": "7f79b9c2264f300ba049003e59354ed071c5658c409a61cb8283080607220628",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "d413947f95a70ebb0d1fa9dd28a614c07573c6b42682a410919aeac96eee977d",
+  "wall_seconds": 1.8388999159797095
+}

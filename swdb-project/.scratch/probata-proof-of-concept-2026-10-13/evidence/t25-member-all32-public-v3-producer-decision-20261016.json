@@ -1,0 +1,847 @@
+{
+  "admission": {
+    "all_possible_scalar_or_pointer_instantiations": false,
+    "caller": false,
+    "full_ticket25": false,
+    "source_storage_lifetime_bridge": false
+  },
+  "classification": "ALL32_QUALIFIED_ORIGINAL_C_MEMBER_BODIES_PRODUCER_PROVEN_COLD_INTERPRETATION_PENDING",
+  "date": "2026-10-16 ET",
+  "driver_output": {
+    "bytes": 12658,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-member-all32-public-v3-driver-stdout-20261016.json",
+    "sha256": "b79bfc50e1799c3b0dd5f2748e48b42725426284c6bd4caabe545bad555dd173"
+  },
+  "driver_source": {
+    "bytes": 7112,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/member_all32_public_v3.py",
+    "sha256": "062e7976f9fe3539aaa80ed57998aafd644d0d04f76c3b30e0d1c2b5b762c3d5"
+  },
+  "independent_complete_cold_interpretation_pending": true,
+  "manifest": {
+    "bytes": 150998,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-member-all32-public-v3-complete-local-manifest-20261016.json",
+    "sha256": "8dd34e032e5cf6347133d1256803f261fb3c5d585ac09d8f6d8387b5cc2798f6"
+  },
+  "members": [
+    {
+      "all_evidence_reports_physically_rehashed": true,
+      "caller_discharge_required": true,
+      "healthy_smokes": 1,
+      "member": "std_vector_int_data",
+      "method": {
+        "id": "method.wp-vector-member-source-v1",
+        "sha256": "f0177fd311f5c5ce329690406ba443afc509d0efdd88ad232b89d89bfc9e86c0"
+      },
+      "native_files": 5,
+      "ordinary_goals": 6,
+      "physical_YAML_JSON_exact_canonical_equal": true,
+      "qualified_certificate_checked": true,
+      "record_id": "proof.model.std_vector_int_data.20261016t231511z.09613379",
+      "record_path": "proofs/proof.model.std_vector_int_data.20261016t231511z.09613379.yaml",
+      "resources": {
+        "cpu_seconds": 7.630272,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 462028800,
+        "timed_out": false,
+        "wall_seconds": 8.35042999999132
+      },
+      "verdict": "proven"
+    },
+    {
+      "all_evidence_reports_physically_rehashed": true,
+      "caller_discharge_required": true,
+      "healthy_smokes": 1,
+      "member": "std_vector_int_size",
+      "method": {
+        "id": "method.wp-vector-member-source-v1",
+        "sha256": "f0177fd311f5c5ce329690406ba443afc509d0efdd88ad232b89d89bfc9e86c0"
+      },
+      "native_files": 5,
+      "ordinary_goals": 6,
+      "physical_YAML_JSON_exact_canonical_equal": true,
+      "qualified_certificate_checked": true,
+      "record_id": "proof.model.std_vector_int_size.20261016t231520z.84e7138f",
+      "record_path": "proofs/proof.model.std_vector_int_size.20261016t231520z.84e7138f.yaml",
+      "resources": {
+        "cpu_seconds": 7.424448999999999,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 462684160,
+        "timed_out": false,
+        "wall_seconds": 7.6110422919737175
+      },
+      "verdict": "proven"
+    },
+    {
+      "all_evidence_reports_physically_rehashed": true,
+      "caller_discharge_required": true,
+      "healthy_smokes": 1,
+      "member": "std_vector_int_empty",
+      "method": {
+        "id": "method.wp-vector-member-source-v1",
+        "sha256": "f0177fd311f5c5ce329690406ba443afc509d0efdd88ad232b89d89bfc9e86c0"
+      },
+      "native_files": 5,
+      "ordinary_goals": 6,
+      "physical_YAML_JSON_exact_canonical_equal": true,
+      "qualified_certificate_checked": true,
+      "record_id": "proof.model.std_vector_int_empty.20261016t231527z.d4aee971",
+      "record_path": "proofs/proof.model.std_vector_int_empty.20261016t231527z.d4aee971.yaml",
+      "resources": {
+        "cpu_seconds": 7.291364000000001,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 466206720,
+        "timed_out": false,
+        "wall_seconds": 7.469694291998167
+      },
+      "verdict": "proven"
+    },
+    {
+      "all_evidence_reports_physically_rehashed": true,
+      "caller_discharge_required": true,
+      "healthy_smokes": 1,
+      "member": "std_vector_int_begin",
+      "method": {
+        "id": "method.wp-vector-member-source-v1",
+        "sha256": "f0177fd311f5c5ce329690406ba443afc509d0efdd88ad232b89d89bfc9e86c0"
+      },
+      "native_files": 5,
+      "ordinary_goals": 6,
+      "physical_YAML_JSON_exact_canonical_equal": true,
+      "qualified_certificate_checked": true,
+      "record_id": "proof.model.std_vector_int_begin.20261016t231535z.28171506",
+      "record_path": "proofs/proof.model.std_vector_int_begin.20261016t231535z.28171506.yaml",
+      "resources": {
+        "cpu_seconds": 7.360904,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 465403904,
+        "timed_out": false,
+        "wall_seconds": 7.622253249981441
+      },
+      "verdict": "proven"
+    },
+    {
+      "all_evidence_reports_physically_rehashed": true,
+      "caller_discharge_required": true,
+      "healthy_smokes": 3,
+      "member": "std_vector_int_end",
+      "method": {
+        "id": "method.wp-vector-member-source-v1",
+        "sha256": "f0177fd311f5c5ce329690406ba443afc509d0efdd88ad232b89d89bfc9e86c0"
+      },
+      "native_files": 16,
+      "ordinary_goals": 14,
+      "physical_YAML_JSON_exact_canonical_equal": true,
+      "qualified_certificate_checked": true,
+      "record_id": "proof.model.std_vector_int_end.20261016t231542z.a4b46e4b",
+      "record_path": "proofs/proof.model.std_vector_int_end.20261016t231542z.a4b46e4b.yaml",
+      "resources": {
+        "cpu_seconds": 18.074986000000003,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 494043136,
+        "timed_out": false,
+        "wall_seconds": 18.283303332980722
+      },
+      "verdict": "proven"
+    },
+    {
+      "all_evidence_reports_physically_rehashed": true,
+      "caller_discharge_required": true,
+      "healthy_smokes": 1,
+      "member": "std_vector_int_operator_index",
+      "method": {
+        "id": "method.wp-vector-member-source-v1",
+        "sha256": "f0177fd311f5c5ce329690406ba443afc509d0efdd88ad232b89d89bfc9e86c0"
+      },
+      "native_files": 6,
+      "ordinary_goals": 7,
+      "physical_YAML_JSON_exact_canonical_equal": true,
+      "qualified_certificate_checked": true,
+      "record_id": "proof.model.std_vector_int_operator_index.20261016t231601z.b26d77b2",
+      "record_path": "proofs/proof.model.std_vector_int_operator_index.20261016t231601z.b26d77b2.yaml",
+      "resources": {
+        "cpu_seconds": 7.655882,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 524304384,
+        "timed_out": false,
+        "wall_seconds": 7.9366373749799095
+      },
+      "verdict": "proven"
+    },
+    {
+      "all_evidence_reports_physically_rehashed": true,
+      "caller_discharge_required": true,
+      "healthy_smokes": 1,
+      "member": "std_vector_int_at",
+      "method": {
+        "id": "method.wp-vector-member-source-v1",
+        "sha256": "f0177fd311f5c5ce329690406ba443afc509d0efdd88ad232b89d89bfc9e86c0"
+      },
+      "native_files": 6,
+      "ordinary_goals": 8,
+      "physical_YAML_JSON_exact_canonical_equal": true,
+      "qualified_certificate_checked": true,
+      "record_id": "proof.model.std_vector_int_at.20261016t231609z.9fca101b",
+      "record_path": "proofs/proof.model.std_vector_int_at.20261016t231609z.9fca101b.yaml",
+      "resources": {
+        "cpu_seconds": 7.707376,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 524402688,
+        "timed_out": false,
+        "wall_seconds": 8.021798791945912
+      },
+      "verdict": "proven"
+    },
+    {
+      "all_evidence_reports_physically_rehashed": true,
+      "caller_discharge_required": true,
+      "healthy_smokes": 1,
+      "member": "std_vector_int_clear",
+      "method": {
+        "id": "method.wp-vector-member-source-v1",
+        "sha256": "f0177fd311f5c5ce329690406ba443afc509d0efdd88ad232b89d89bfc9e86c0"
+      },
+      "native_files": 5,
+      "ordinary_goals": 5,
+      "physical_YAML_JSON_exact_canonical_equal": true,
+      "qualified_certificate_checked": true,
+      "record_id": "proof.model.std_vector_int_clear.20261016t231617z.ddc4c6ed",
+      "record_path": "proofs/proof.model.std_vector_int_clear.20261016t231617z.ddc4c6ed.yaml",
+      "resources": {
+        "cpu_seconds": 6.04198,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 472055808,
+        "timed_out": false,
+        "wall_seconds": 6.358187792007811
+      },
+      "verdict": "proven"
+    },
+    {
+      "all_evidence_reports_physically_rehashed": true,
+      "caller_discharge_required": true,
+      "healthy_smokes": 1,
+      "member": "std_vector_float_data",
+      "method": {
+        "id": "method.wp-vector-member-source-v1",
+        "sha256": "f0177fd311f5c5ce329690406ba443afc509d0efdd88ad232b89d89bfc9e86c0"
+      },
+      "native_files": 5,
+      "ordinary_goals": 6,
+      "physical_YAML_JSON_exact_canonical_equal": true,
+      "qualified_certificate_checked": true,
+      "record_id": "proof.model.std_vector_float_data.20261016t231623z.bf4bb3cc",
+      "record_path": "proofs/proof.model.std_vector_float_data.20261016t231623z.bf4bb3cc.yaml",
+      "resources": {
+        "cpu_seconds": 7.440729,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 458604544,
+        "timed_out": false,
+        "wall_seconds": 7.602979583025444
+      },
+      "verdict": "proven"
+    },
+    {
+      "all_evidence_reports_physically_rehashed": true,
+      "caller_discharge_required": true,
+      "healthy_smokes": 1,
+      "member": "std_vector_float_size",
+      "method": {
+        "id": "method.wp-vector-member-source-v1",
+        "sha256": "f0177fd311f5c5ce329690406ba443afc509d0efdd88ad232b89d89bfc9e86c0"
+      },
+      "native_files": 5,
+      "ordinary_goals": 6,
+      "physical_YAML_JSON_exact_canonical_equal": true,
+      "qualified_certificate_checked": true,
+      "record_id": "proof.model.std_vector_float_size.20261016t231631z.a24bbb02",
+      "record_path": "proofs/proof.model.std_vector_float_size.20261016t231631z.a24bbb02.yaml",
+      "resources": {
+        "cpu_seconds": 7.453919000000001,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 465649664,
+        "timed_out": false,
+        "wall_seconds": 7.571617709007114
+      },
+      "verdict": "proven"
+    },
+    {
+      "all_evidence_reports_physically_rehashed": true,
+      "caller_discharge_required": true,
+      "healthy_smokes": 1,
+      "member": "std_vector_float_empty",
+      "method": {
+        "id": "method.wp-vector-member-source-v1",
+        "sha256": "f0177fd311f5c5ce329690406ba443afc509d0efdd88ad232b89d89bfc9e86c0"
+      },
+      "native_files": 5,
+      "ordinary_goals": 6,
+      "physical_YAML_JSON_exact_canonical_equal": true,
+      "qualified_certificate_checked": true,
+      "record_id": "proof.model.std_vector_float_empty.20261016t231638z.9a8994a1",
+      "record_path": "proofs/proof.model.std_vector_float_empty.20261016t231638z.9a8994a1.yaml",
+      "resources": {
+        "cpu_seconds": 7.394074999999999,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 463945728,
+        "timed_out": false,
+        "wall_seconds": 7.480163250002079
+      },
+      "verdict": "proven"
+    },
+    {
+      "all_evidence_reports_physically_rehashed": true,
+      "caller_discharge_required": true,
+      "healthy_smokes": 1,
+      "member": "std_vector_float_begin",
+      "method": {
+        "id": "method.wp-vector-member-source-v1",
+        "sha256": "f0177fd311f5c5ce329690406ba443afc509d0efdd88ad232b89d89bfc9e86c0"
+      },
+      "native_files": 5,
+      "ordinary_goals": 6,
+      "physical_YAML_JSON_exact_canonical_equal": true,
+      "qualified_certificate_checked": true,
+      "record_id": "proof.model.std_vector_float_begin.20261016t231646z.6f7cdf99",
+      "record_path": "proofs/proof.model.std_vector_float_begin.20261016t231646z.6f7cdf99.yaml",
+      "resources": {
+        "cpu_seconds": 7.396305999999999,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 463798272,
+        "timed_out": false,
+        "wall_seconds": 7.576424458005931
+      },
+      "verdict": "proven"
+    },
+    {
+      "all_evidence_reports_physically_rehashed": true,
+      "caller_discharge_required": true,
+      "healthy_smokes": 3,
+      "member": "std_vector_float_end",
+      "method": {
+        "id": "method.wp-vector-member-source-v1",
+        "sha256": "f0177fd311f5c5ce329690406ba443afc509d0efdd88ad232b89d89bfc9e86c0"
+      },
+      "native_files": 16,
+      "ordinary_goals": 14,
+      "physical_YAML_JSON_exact_canonical_equal": true,
+      "qualified_certificate_checked": true,
+      "record_id": "proof.model.std_vector_float_end.20261016t231653z.5b9480c5",
+      "record_path": "proofs/proof.model.std_vector_float_end.20261016t231653z.5b9480c5.yaml",
+      "resources": {
+        "cpu_seconds": 18.321406,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 492027904,
+        "timed_out": false,
+        "wall_seconds": 18.376139540981967
+      },
+      "verdict": "proven"
+    },
+    {
+      "all_evidence_reports_physically_rehashed": true,
+      "caller_discharge_required": true,
+      "healthy_smokes": 1,
+      "member": "std_vector_float_operator_index",
+      "method": {
+        "id": "method.wp-vector-member-source-v1",
+        "sha256": "f0177fd311f5c5ce329690406ba443afc509d0efdd88ad232b89d89bfc9e86c0"
+      },
+      "native_files": 6,
+      "ordinary_goals": 7,
+      "physical_YAML_JSON_exact_canonical_equal": true,
+      "qualified_certificate_checked": true,
+      "record_id": "proof.model.std_vector_float_operator_index.20261016t231712z.471d18fb",
+      "record_path": "proofs/proof.model.std_vector_float_operator_index.20261016t231712z.471d18fb.yaml",
+      "resources": {
+        "cpu_seconds": 7.723235,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 526909440,
+        "timed_out": false,
+        "wall_seconds": 7.932759417046327
+      },
+      "verdict": "proven"
+    },
+    {
+      "all_evidence_reports_physically_rehashed": true,
+      "caller_discharge_required": true,
+      "healthy_smokes": 1,
+      "member": "std_vector_float_at",
+      "method": {
+        "id": "method.wp-vector-member-source-v1",
+        "sha256": "f0177fd311f5c5ce329690406ba443afc509d0efdd88ad232b89d89bfc9e86c0"
+      },
+      "native_files": 6,
+      "ordinary_goals": 8,
+      "physical_YAML_JSON_exact_canonical_equal": true,
+      "qualified_certificate_checked": true,
+      "record_id": "proof.model.std_vector_float_at.20261016t231720z.e7f32dc3",
+      "record_path": "proofs/proof.model.std_vector_float_at.20261016t231720z.e7f32dc3.yaml",
+      "resources": {
+        "cpu_seconds": 7.9012649999999995,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 525254656,
+        "timed_out": false,
+        "wall_seconds": 8.233680041041225
+      },
+      "verdict": "proven"
+    },
+    {
+      "all_evidence_reports_physically_rehashed": true,
+      "caller_discharge_required": true,
+      "healthy_smokes": 1,
+      "member": "std_vector_float_clear",
+      "method": {
+        "id": "method.wp-vector-member-source-v1",
+        "sha256": "f0177fd311f5c5ce329690406ba443afc509d0efdd88ad232b89d89bfc9e86c0"
+      },
+      "native_files": 5,
+      "ordinary_goals": 5,
+      "physical_YAML_JSON_exact_canonical_equal": true,
+      "qualified_certificate_checked": true,
+      "record_id": "proof.model.std_vector_float_clear.20261016t231728z.50cd3989",
+      "record_path": "proofs/proof.model.std_vector_float_clear.20261016t231728z.50cd3989.yaml",
+      "resources": {
+        "cpu_seconds": 6.1008119999999995,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 473808896,
+        "timed_out": false,
+        "wall_seconds": 6.427779417019337
+      },
+      "verdict": "proven"
+    },
+    {
+      "all_evidence_reports_physically_rehashed": true,
+      "caller_discharge_required": true,
+      "healthy_smokes": 1,
+      "member": "std_vector_double_data",
+      "method": {
+        "id": "method.wp-vector-member-source-v1",
+        "sha256": "f0177fd311f5c5ce329690406ba443afc509d0efdd88ad232b89d89bfc9e86c0"
+      },
+      "native_files": 5,
+      "ordinary_goals": 6,
+      "physical_YAML_JSON_exact_canonical_equal": true,
+      "qualified_certificate_checked": true,
+      "record_id": "proof.model.std_vector_double_data.20261016t231734z.c7c94743",
+      "record_path": "proofs/proof.model.std_vector_double_data.20261016t231734z.c7c94743.yaml",
+      "resources": {
+        "cpu_seconds": 7.437725,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 463323136,
+        "timed_out": false,
+        "wall_seconds": 7.619845082983375
+      },
+      "verdict": "proven"
+    },
+    {
+      "all_evidence_reports_physically_rehashed": true,
+      "caller_discharge_required": true,
+      "healthy_smokes": 1,
+      "member": "std_vector_double_size",
+      "method": {
+        "id": "method.wp-vector-member-source-v1",
+        "sha256": "f0177fd311f5c5ce329690406ba443afc509d0efdd88ad232b89d89bfc9e86c0"
+      },
+      "native_files": 5,
+      "ordinary_goals": 6,
+      "physical_YAML_JSON_exact_canonical_equal": true,
+      "qualified_certificate_checked": true,
+      "record_id": "proof.model.std_vector_double_size.20261016t231742z.54231dbb",
+      "record_path": "proofs/proof.model.std_vector_double_size.20261016t231742z.54231dbb.yaml",
+      "resources": {
+        "cpu_seconds": 7.453077,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 464453632,
+        "timed_out": false,
+        "wall_seconds": 7.643374375009444
+      },
+      "verdict": "proven"
+    },
+    {
+      "all_evidence_reports_physically_rehashed": true,
+      "caller_discharge_required": true,
+      "healthy_smokes": 1,
+      "member": "std_vector_double_empty",
+      "method": {
+        "id": "method.wp-vector-member-source-v1",
+        "sha256": "f0177fd311f5c5ce329690406ba443afc509d0efdd88ad232b89d89bfc9e86c0"
+      },
+      "native_files": 5,
+      "ordinary_goals": 6,
+      "physical_YAML_JSON_exact_canonical_equal": true,
+      "qualified_certificate_checked": true,
+      "record_id": "proof.model.std_vector_double_empty.20261016t231750z.e40692e8",
+      "record_path": "proofs/proof.model.std_vector_double_empty.20261016t231750z.e40692e8.yaml",
+      "resources": {
+        "cpu_seconds": 7.39818,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 458424320,
+        "timed_out": false,
+        "wall_seconds": 7.697916249977425
+      },
+      "verdict": "proven"
+    },
+    {
+      "all_evidence_reports_physically_rehashed": true,
+      "caller_discharge_required": true,
+      "healthy_smokes": 1,
+      "member": "std_vector_double_begin",
+      "method": {
+        "id": "method.wp-vector-member-source-v1",
+        "sha256": "f0177fd311f5c5ce329690406ba443afc509d0efdd88ad232b89d89bfc9e86c0"
+      },
+      "native_files": 5,
+      "ordinary_goals": 6,
+      "physical_YAML_JSON_exact_canonical_equal": true,
+      "qualified_certificate_checked": true,
+      "record_id": "proof.model.std_vector_double_begin.20261016t231757z.79efc87b",
+      "record_path": "proofs/proof.model.std_vector_double_begin.20261016t231757z.79efc87b.yaml",
+      "resources": {
+        "cpu_seconds": 7.432137,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 461406208,
+        "timed_out": false,
+        "wall_seconds": 7.516539041011129
+      },
+      "verdict": "proven"
+    },
+    {
+      "all_evidence_reports_physically_rehashed": true,
+      "caller_discharge_required": true,
+      "healthy_smokes": 3,
+      "member": "std_vector_double_end",
+      "method": {
+        "id": "method.wp-vector-member-source-v1",
+        "sha256": "f0177fd311f5c5ce329690406ba443afc509d0efdd88ad232b89d89bfc9e86c0"
+      },
+      "native_files": 16,
+      "ordinary_goals": 14,
+      "physical_YAML_JSON_exact_canonical_equal": true,
+      "qualified_certificate_checked": true,
+      "record_id": "proof.model.std_vector_double_end.20261016t231805z.849e1cec",
+      "record_path": "proofs/proof.model.std_vector_double_end.20261016t231805z.849e1cec.yaml",
+      "resources": {
+        "cpu_seconds": 18.199674,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 492077056,
+        "timed_out": false,
+        "wall_seconds": 18.31389745901106
+      },
+      "verdict": "proven"
+    },
+    {
+      "all_evidence_reports_physically_rehashed": true,
+      "caller_discharge_required": true,
+      "healthy_smokes": 1,
+      "member": "std_vector_double_operator_index",
+      "method": {
+        "id": "method.wp-vector-member-source-v1",
+        "sha256": "f0177fd311f5c5ce329690406ba443afc509d0efdd88ad232b89d89bfc9e86c0"
+      },
+      "native_files": 6,
+      "ordinary_goals": 7,
+      "physical_YAML_JSON_exact_canonical_equal": true,
+      "qualified_certificate_checked": true,
+      "record_id": "proof.model.std_vector_double_operator_index.20261016t231823z.7ff711b5",
+      "record_path": "proofs/proof.model.std_vector_double_operator_index.20261016t231823z.7ff711b5.yaml",
+      "resources": {
+        "cpu_seconds": 7.872835,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 529514496,
+        "timed_out": false,
+        "wall_seconds": 8.09176345798187
+      },
+      "verdict": "proven"
+    },
+    {
+      "all_evidence_reports_physically_rehashed": true,
+      "caller_discharge_required": true,
+      "healthy_smokes": 1,
+      "member": "std_vector_double_at",
+      "method": {
+        "id": "method.wp-vector-member-source-v1",
+        "sha256": "f0177fd311f5c5ce329690406ba443afc509d0efdd88ad232b89d89bfc9e86c0"
+      },
+      "native_files": 6,
+      "ordinary_goals": 8,
+      "physical_YAML_JSON_exact_canonical_equal": true,
+      "qualified_certificate_checked": true,
+      "record_id": "proof.model.std_vector_double_at.20261016t231831z.39a68396",
+      "record_path": "proofs/proof.model.std_vector_double_at.20261016t231831z.39a68396.yaml",
+      "resources": {
+        "cpu_seconds": 7.731531,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 527515648,
+        "timed_out": false,
+        "wall_seconds": 8.042616708029527
+      },
+      "verdict": "proven"
+    },
+    {
+      "all_evidence_reports_physically_rehashed": true,
+      "caller_discharge_required": true,
+      "healthy_smokes": 1,
+      "member": "std_vector_double_clear",
+      "method": {
+        "id": "method.wp-vector-member-source-v1",
+        "sha256": "f0177fd311f5c5ce329690406ba443afc509d0efdd88ad232b89d89bfc9e86c0"
+      },
+      "native_files": 5,
+      "ordinary_goals": 5,
+      "physical_YAML_JSON_exact_canonical_equal": true,
+      "qualified_certificate_checked": true,
+      "record_id": "proof.model.std_vector_double_clear.20261016t231839z.7d8acd5c",
+      "record_path": "proofs/proof.model.std_vector_double_clear.20261016t231839z.7d8acd5c.yaml",
+      "resources": {
+        "cpu_seconds": 6.507767,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 473399296,
+        "timed_out": false,
+        "wall_seconds": 6.775322125002276
+      },
+      "verdict": "proven"
+    },
+    {
+      "all_evidence_reports_physically_rehashed": true,
+      "caller_discharge_required": true,
+      "healthy_smokes": 1,
+      "member": "std_vector_int_ptr_data",
+      "method": {
+        "id": "method.wp-vector-member-source-v1",
+        "sha256": "f0177fd311f5c5ce329690406ba443afc509d0efdd88ad232b89d89bfc9e86c0"
+      },
+      "native_files": 5,
+      "ordinary_goals": 6,
+      "physical_YAML_JSON_exact_canonical_equal": true,
+      "qualified_certificate_checked": true,
+      "record_id": "proof.model.std_vector_int_ptr_data.20261016t231846z.5d118e34",
+      "record_path": "proofs/proof.model.std_vector_int_ptr_data.20261016t231846z.5d118e34.yaml",
+      "resources": {
+        "cpu_seconds": 7.412344,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 467124224,
+        "timed_out": false,
+        "wall_seconds": 7.713388582982589
+      },
+      "verdict": "proven"
+    },
+    {
+      "all_evidence_reports_physically_rehashed": true,
+      "caller_discharge_required": true,
+      "healthy_smokes": 1,
+      "member": "std_vector_int_ptr_size",
+      "method": {
+        "id": "method.wp-vector-member-source-v1",
+        "sha256": "f0177fd311f5c5ce329690406ba443afc509d0efdd88ad232b89d89bfc9e86c0"
+      },
+      "native_files": 5,
+      "ordinary_goals": 6,
+      "physical_YAML_JSON_exact_canonical_equal": true,
+      "qualified_certificate_checked": true,
+      "record_id": "proof.model.std_vector_int_ptr_size.20261016t231854z.f5a36e01",
+      "record_path": "proofs/proof.model.std_vector_int_ptr_size.20261016t231854z.f5a36e01.yaml",
+      "resources": {
+        "cpu_seconds": 7.536479,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 468451328,
+        "timed_out": false,
+        "wall_seconds": 7.651258166995831
+      },
+      "verdict": "proven"
+    },
+    {
+      "all_evidence_reports_physically_rehashed": true,
+      "caller_discharge_required": true,
+      "healthy_smokes": 1,
+      "member": "std_vector_int_ptr_empty",
+      "method": {
+        "id": "method.wp-vector-member-source-v1",
+        "sha256": "f0177fd311f5c5ce329690406ba443afc509d0efdd88ad232b89d89bfc9e86c0"
+      },
+      "native_files": 5,
+      "ordinary_goals": 6,
+      "physical_YAML_JSON_exact_canonical_equal": true,
+      "qualified_certificate_checked": true,
+      "record_id": "proof.model.std_vector_int_ptr_empty.20261016t231902z.ba240a7c",
+      "record_path": "proofs/proof.model.std_vector_int_ptr_empty.20261016t231902z.ba240a7c.yaml",
+      "resources": {
+        "cpu_seconds": 7.529745,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 465010688,
+        "timed_out": false,
+        "wall_seconds": 7.7615590839996
+      },
+      "verdict": "proven"
+    },
+    {
+      "all_evidence_reports_physically_rehashed": true,
+      "caller_discharge_required": true,
+      "healthy_smokes": 1,
+      "member": "std_vector_int_ptr_begin",
+      "method": {
+        "id": "method.wp-vector-member-source-v1",
+        "sha256": "f0177fd311f5c5ce329690406ba443afc509d0efdd88ad232b89d89bfc9e86c0"
+      },
+      "native_files": 5,
+      "ordinary_goals": 6,
+      "physical_YAML_JSON_exact_canonical_equal": true,
+      "qualified_certificate_checked": true,
+      "record_id": "proof.model.std_vector_int_ptr_begin.20261016t231909z.d6eaf35d",
+      "record_path": "proofs/proof.model.std_vector_int_ptr_begin.20261016t231909z.d6eaf35d.yaml",
+      "resources": {
+        "cpu_seconds": 7.771514,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 465371136,
+        "timed_out": false,
+        "wall_seconds": 7.887156958982814
+      },
+      "verdict": "proven"
+    },
+    {
+      "all_evidence_reports_physically_rehashed": true,
+      "caller_discharge_required": true,
+      "healthy_smokes": 3,
+      "member": "std_vector_int_ptr_end",
+      "method": {
+        "id": "method.wp-vector-member-source-v1",
+        "sha256": "f0177fd311f5c5ce329690406ba443afc509d0efdd88ad232b89d89bfc9e86c0"
+      },
+      "native_files": 16,
+      "ordinary_goals": 14,
+      "physical_YAML_JSON_exact_canonical_equal": true,
+      "qualified_certificate_checked": true,
+      "record_id": "proof.model.std_vector_int_ptr_end.20261016t231917z.e2877ed4",
+      "record_path": "proofs/proof.model.std_vector_int_ptr_end.20261016t231917z.e2877ed4.yaml",
+      "resources": {
+        "cpu_seconds": 18.862648999999998,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 461586432,
+        "timed_out": false,
+        "wall_seconds": 18.77793241699692
+      },
+      "verdict": "proven"
+    },
+    {
+      "all_evidence_reports_physically_rehashed": true,
+      "caller_discharge_required": true,
+      "healthy_smokes": 1,
+      "member": "std_vector_int_ptr_operator_index",
+      "method": {
+        "id": "method.wp-vector-member-source-v1",
+        "sha256": "f0177fd311f5c5ce329690406ba443afc509d0efdd88ad232b89d89bfc9e86c0"
+      },
+      "native_files": 6,
+      "ordinary_goals": 7,
+      "physical_YAML_JSON_exact_canonical_equal": true,
+      "qualified_certificate_checked": true,
+      "record_id": "proof.model.std_vector_int_ptr_operator_index.20261016t231936z.73e68bd5",
+      "record_path": "proofs/proof.model.std_vector_int_ptr_operator_index.20261016t231936z.73e68bd5.yaml",
+      "resources": {
+        "cpu_seconds": 8.308133999999999,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 527761408,
+        "timed_out": false,
+        "wall_seconds": 8.591261417022906
+      },
+      "verdict": "proven"
+    },
+    {
+      "all_evidence_reports_physically_rehashed": true,
+      "caller_discharge_required": true,
+      "healthy_smokes": 1,
+      "member": "std_vector_int_ptr_at",
+      "method": {
+        "id": "method.wp-vector-member-source-v1",
+        "sha256": "f0177fd311f5c5ce329690406ba443afc509d0efdd88ad232b89d89bfc9e86c0"
+      },
+      "native_files": 6,
+      "ordinary_goals": 8,
+      "physical_YAML_JSON_exact_canonical_equal": true,
+      "qualified_certificate_checked": true,
+      "record_id": "proof.model.std_vector_int_ptr_at.20261016t231945z.9775c27d",
+      "record_path": "proofs/proof.model.std_vector_int_ptr_at.20261016t231945z.9775c27d.yaml",
+      "resources": {
+        "cpu_seconds": 8.041673,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 528023552,
+        "timed_out": false,
+        "wall_seconds": 8.253522041952237
+      },
+      "verdict": "proven"
+    },
+    {
+      "all_evidence_reports_physically_rehashed": true,
+      "caller_discharge_required": true,
+      "healthy_smokes": 1,
+      "member": "std_vector_int_ptr_clear",
+      "method": {
+        "id": "method.wp-vector-member-source-v1",
+        "sha256": "f0177fd311f5c5ce329690406ba443afc509d0efdd88ad232b89d89bfc9e86c0"
+      },
+      "native_files": 5,
+      "ordinary_goals": 5,
+      "physical_YAML_JSON_exact_canonical_equal": true,
+      "qualified_certificate_checked": true,
+      "record_id": "proof.model.std_vector_int_ptr_clear.20261016t231953z.d0bee443",
+      "record_path": "proofs/proof.model.std_vector_int_ptr_clear.20261016t231953z.d0bee443.yaml",
+      "resources": {
+        "cpu_seconds": 6.637612,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 476692480,
+        "timed_out": false,
+        "wall_seconds": 6.773334250028711
+      },
+      "verdict": "proven"
+    }
+  ],
+  "method_SHA256": "f0177fd311f5c5ce329690406ba443afc509d0efdd88ad232b89d89bfc9e86c0",
+  "output_budget_scope": "128MiB planned and checked between leaves, not a filesystem quota; all leaf guards8GiBRSS/240souter/180sjob, whole1200s.",
+  "runtime_boundary": "Observed normal method/tool/version/setup/report pins and retained actual task bytes. No complete before/after physical Mac runtime closure, continuous loader identity or source-to-binary attestation is inferred. Native Frama-C skipped alignment and function-pointer RTE categories are retained; selected bodies contain no function-pointer calls and remain in their explicit typed live-array domain.",
+  "source_commit": "1c45737f6cff9b43731d8da530be869a7e5d745e",
+  "source_element_payload_types_or_values_transformed": false,
+  "totals": {
+    "healthy_smokes": 40,
+    "native_files": 212,
+    "native_raw_verdicts": {
+      "ordinary.valid": 168,
+      "smoke.timeout": 40
+    },
+    "ordinary_normalized_goals": 232,
+    "peak_leaf_RSS_bytes": 529514496,
+    "raw_bytes": 9045675,
+    "raw_regular_files": 665,
+    "records": 32,
+    "whole_seconds": 288.2282685840037
+  }
+}

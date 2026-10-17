@@ -1,0 +1,45 @@
+{
+  "kind": "independent_narrow_review",
+  "observed_at": "2026-09-26T23:52:36.042287-04:00",
+  "state": "no_remaining_scoped_finding",
+  "scope": "Owned.identity confirmed ESRCH/ENOENT absence and pidfd signal error boundary",
+  "files_and_evidence": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_owned_execution.py",
+      "bytes": 22595,
+      "sha256": "66d2636b705f6a1ca29c01850b21ef5b3f7a941ca30277d6f4d4da8c9c3b88fb"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_owned_execution.py",
+      "bytes": 21069,
+      "sha256": "b522507bdef8ef31715955033af2c128f119f64d2a51a30f31c25d99edf909a9"
+    },
+    {
+      "path": "/private/tmp/test_bfs_owned_identity_standards_20260926.py",
+      "bytes": 1212,
+      "sha256": "12548098ec3d7a09c8cb7fa0568d0e0efdd875c1566db222b9f4cbd7de6142c2"
+    },
+    {
+      "path": "/private/tmp/bfs-owned-identity-standards-red-20260926.log",
+      "bytes": 2045,
+      "sha256": "d520900b3137e6e8e05e622c2e2e0c66bb615c935c5caff6a46b768061c214d1"
+    },
+    {
+      "path": "/private/tmp/bfs-owned-identity-standards-green-20260926.log",
+      "bytes": 114,
+      "sha256": "236b12812f5dedd94ca6b77b3db2c269c1b9223108bb4a3bf1bc8fdb8afc1613"
+    }
+  ],
+  "red": "Original independent fixture:1 failed/2 passed; exact old58b36373 source retained.",
+  "green": "..............                                                           [100%]\n14 passed, 25 deselected in 0.36s",
+  "source_readback": [
+    "At most two reads through already-reviewed RSS primitive; independent folder absence is required for None.",
+    "Actual reopened PID/start/RSS returned; repeated live telemetry failure/permission/EIO/malformed/ambiguous confirmation propagates.",
+    "Owned.signal suppresses ESRCH only from pidfd_send_signal after verified PID/start, not from identity confirmation; fd always closes."
+  ],
+  "limitations": [
+    "Injected procfs contracts on macOS, no actual Linux execution or process signaling claimed.",
+    "Provider manifest/commit must advance if it consumes corrected Owned bytes; old0dc recipe review is retained checkpoint only."
+  ],
+  "production_edits_by_reviewer": false
+}

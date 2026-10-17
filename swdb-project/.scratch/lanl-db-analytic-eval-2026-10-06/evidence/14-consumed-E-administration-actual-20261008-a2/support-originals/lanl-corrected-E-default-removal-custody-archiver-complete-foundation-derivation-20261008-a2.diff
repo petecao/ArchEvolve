@@ -1,0 +1,434 @@
+--- /private/tmp/lanl_archive_failed_detached_E_and_reviewed_source_custody_20261008_a1_r1.py
++++ /private/tmp/lanl_archive_corrected_E_default_and_removal_custody_20261008_a2.py
+@@ -1,19 +1,94 @@
+-"""Local byte-custody archiver; SOURCE PREPARATION ONLY until parent invokes main.
+-
+-Copies fixed original files and optional explicitly reviewed correction originals.
+-Never imports or calls selected controls, SSH, guard, observer, Store or tests.
+-No commit/push, issue edit, mode change to existing files, cleanup or admission.
++"""Local BYTE-CUSTODY archiver preparation; main has NOT RUN at source creation.
++
++Archives exact corrected E default/removal originals only after parent supplies
++reviewed final inventory and executed worktree HEAD. Never imports/calls selected
++controls, executes remote actions, removes files, commits or grants admission.
+ """
+ import argparse, datetime, hashlib, json, os, pathlib, re, stat, subprocess, time
+ P = pathlib.Path
+ DEFAULT_W = P('/Users/yanrujhou/.codex/worktrees/lanl-analytic-eval/ArchEvolve')
+-REL = 'swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1'
++REL = 'swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-consumed-E-administration-actual-20261008-a2'
++DEFAULT_ROOT = P('/private/tmp/lanl-detached-E-default-originals-20261008-a2')
++REMOVAL_ROOT = P('/private/tmp/lanl-detached-E-removal-originals-20261008-a2')
++EXPECTED_PRIMARY = '0a2d41ceff5d7a9a6c0732f692ae3c679539289d'
++E = '/data1/yanruj/ArchEvolve-lanl-generality-final-export-20261007-a1'
++PURE_E = '43256ee0300a59a03919833075fbb13fb3ba9ab3'
++GUARD_SHA = '7f92b6f85f4e0c574f3ade7a806c2d6de02108fb8f32579f2e37343e9dc566f9'
++WRAPPER_SHA = 'a04486d04c8f3a5f0ceee1d6ff58aeeacdb5aa2f4a9dec9e6befa8f40056cfaf'
++REVIEW_PATH = '/data1/yanruj/lanl-account-pam-service-identification-20261008-a1/parent-review.json'
++REVIEW_SHA = 'fcf92eee1c4b8bdfaed979dc8bedab004c6c4b7e2b1410c7614bc92d60349f4a'
+ MAX_FILE = 2 * 1024 * 1024
+ MAX_TOTAL = 8 * 1024 * 1024
+-MAX_EXTRA = 32
++MAX_ORIGINALS = 32
+ SECONDS = 180
+-# Fixed originals were read/hash-pinned during preparation. No future pin is guessed.
+-FIXED = [{'bytes': 5251, 'group': 'failed_inspection_and_original_custody', 'original_path': '/private/tmp/lanl-detached-E-default-originals-20261008-a1/status.json', 'original_policy': 'original_unsealed_json', 'relative_path': 'failed-originals/status.json', 'sha256': 'e723a2ea379155b89c47502658602c6ca0becc84e2d1771cfe090cb4639eedf8'}, {'bytes': 4687, 'group': 'failed_inspection_and_original_custody', 'original_path': '/private/tmp/lanl-detached-E-default-originals-20261008-a1/configuration.json', 'original_policy': 'original_unsealed_json', 'relative_path': 'failed-originals/configuration.json', 'sha256': '51ebd75c968c7fe6fd9a8b530009837cea508ec486071c208e4eb11131c20a1d'}, {'bytes': 106, 'group': 'failed_inspection_and_original_custody', 'original_path': '/private/tmp/lanl-detached-E-default-originals-20261008-a1/tmux.conf', 'original_policy': 'opaque_original_bytes', 'relative_path': 'failed-originals/tmux.conf', 'sha256': 'a6b69cdfa58f10a0f62697e88a619fffa06b5956bb515ba5200fa2e77c7c31df'}, {'bytes': 2097, 'group': 'failed_inspection_and_original_custody', 'original_path': '/private/tmp/lanl-detached-E-default-originals-20261008-a1/launch-status.json', 'original_policy': 'original_unsealed_json', 'relative_path': 'failed-originals/launch-status.json', 'sha256': '7379eb89d1c18a3b8b7b0a1aa7dee9e1aa79bca3db4cb7afa9d730946c71e9f2'}, {'bytes': 0, 'group': 'failed_inspection_and_original_custody', 'original_path': '/private/tmp/lanl-detached-E-default-originals-20261008-a1/launch.stdout', 'original_policy': 'opaque_original_bytes', 'relative_path': 'failed-originals/launch.stdout', 'sha256': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'}, {'bytes': 0, 'group': 'failed_inspection_and_original_custody', 'original_path': '/private/tmp/lanl-detached-E-default-originals-20261008-a1/launch.stderr', 'original_policy': 'opaque_original_bytes', 'relative_path': 'failed-originals/launch.stderr', 'sha256': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'}, {'bytes': 0, 'group': 'failed_inspection_and_original_custody', 'original_path': '/private/tmp/lanl-detached-E-default-originals-20261008-a1/guard.stdout', 'original_policy': 'opaque_original_bytes', 'relative_path': 'failed-originals/guard.stdout', 'sha256': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'}, {'bytes': 727, 'group': 'failed_inspection_and_original_custody', 'original_path': '/private/tmp/lanl-detached-E-default-originals-20261008-a1/guard.stderr', 'original_policy': 'opaque_original_bytes', 'relative_path': 'failed-originals/guard.stderr', 'sha256': '318551da812cabda621fb6fa5f3600826195a8e389da3663e7d1443560f27a1f'}, {'bytes': 5083, 'group': 'failed_inspection_and_original_custody', 'original_path': '/private/tmp/lanl-detached-E-default-originals-20261008-a1/local-custody.json', 'original_policy': 'original_unsealed_json', 'relative_path': 'failed-originals/local-custody.json', 'sha256': '804fd01dee30e2b2bd275aa29f0ca405d9ac58ef65774d050eb76df67583d5d4'}, {'bytes': 2849, 'group': 'failed_inspection_and_original_custody', 'original_path': '/private/tmp/lanl_read_detached_E_administration_originals_20261008_a1_r1.py', 'original_policy': 'opaque_original_bytes', 'relative_path': 'original-custody/lanl_read_detached_E_administration_originals_20261008_a1_r1.py', 'sha256': '70aea2815b329c160ba3aaa7c48d1ad48448a03bec1d7ab63707d1ddc1b2a853'}, {'bytes': 2977, 'group': 'failed_inspection_and_original_custody', 'original_path': '/private/tmp/lanl_decode_detached_E_original_custody_20261008_a1.py', 'original_policy': 'opaque_original_bytes', 'relative_path': 'original-custody/lanl_decode_detached_E_original_custody_20261008_a1.py', 'sha256': '5ad38e9d0c40446daafbfda5323567c8fdf40029953cf7fb3ae3a566c3d7db8a'}, {'bytes': 29403, 'group': 'failed_inspection_and_original_custody', 'original_path': '/private/tmp/lanl-RAW-top-LANL-namespace-original-20261008-a1.json', 'original_policy': 'original_unsealed_json', 'relative_path': 'original-custody/lanl-RAW-top-LANL-namespace-original-20261008-a1.json', 'sha256': '48c02d1a1332e213077d19f7268ffd59f63334fe6657a1931c2dff26638c9b28'}, {'bytes': 0, 'group': 'failed_inspection_and_original_custody', 'original_path': '/private/tmp/lanl-RAW-top-LANL-namespace-original-20261008-a1.stderr', 'original_policy': 'opaque_original_bytes', 'relative_path': 'original-custody/lanl-RAW-top-LANL-namespace-original-20261008-a1.stderr', 'sha256': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'}, {'bytes': 1506, 'group': 'failed_inspection_and_original_custody', 'original_path': '/private/tmp/lanl-original-top-lane-sidecar-readonly-custody-20261008-a1.json', 'original_policy': 'original_unsealed_json', 'relative_path': 'original-custody/lanl-original-top-lane-sidecar-readonly-custody-20261008-a1.json', 'sha256': '1697dc07d42fb8239aaea2ddd6de9d2048d4a0e4891606ea48d129d039e2515a'}, {'bytes': 0, 'group': 'failed_inspection_and_original_custody', 'original_path': '/private/tmp/lanl-original-top-lane-sidecar-readonly-custody-20261008-a1.stderr', 'original_policy': 'opaque_original_bytes', 'relative_path': 'original-custody/lanl-original-top-lane-sidecar-readonly-custody-20261008-a1.stderr', 'sha256': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'}, {'bytes': 1058, 'group': 'failed_inspection_and_original_custody', 'original_path': '/private/tmp/lanl_read_original_top_lane_sidecar_20261008_a1.py', 'original_policy': 'opaque_original_bytes', 'relative_path': 'original-custody/lanl_read_original_top_lane_sidecar_20261008_a1.py', 'sha256': '61687eb49f2441436b38c1f04a603c0cf25cab7c4a95d18dd8c8cde852635181'}, {'bytes': 400, 'group': 'failed_inspection_and_original_custody', 'original_path': '/private/tmp/lanl-detached-E-default-launch-original-20261008-a1.json', 'original_policy': 'original_unsealed_json', 'relative_path': 'original-custody/lanl-detached-E-default-launch-original-20261008-a1.json', 'sha256': '4267f114bb9891dfb6a7e62052629cbe5f59fe70cbd090a51bc94edbea4f3d72'}, {'bytes': 0, 'group': 'failed_inspection_and_original_custody', 'original_path': '/private/tmp/lanl-detached-E-default-launch-original-20261008-a1.stderr', 'original_policy': 'opaque_original_bytes', 'relative_path': 'original-custody/lanl-detached-E-default-launch-original-20261008-a1.stderr', 'sha256': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'}, {'bytes': 15359, 'group': 'reviewed_source_history', 'original_path': '/private/tmp/lanl17_detach_passive_observer_administration_20261008_a1_r2.py', 'original_policy': 'opaque_original_bytes', 'relative_path': 'reviewed-source-history/lanl17_detach_passive_observer_administration_20261008_a1_r2.py', 'sha256': 'f303c3b6a3ef909224d6c693b846b47f5755f587bc105acea0dfac3c9e504405'}, {'bytes': 828, 'group': 'reviewed_source_history', 'original_path': '/private/tmp/lanl17-detached-passive-observer-administration-r2-complete-r1-derivation-20261008.diff', 'original_policy': 'opaque_original_bytes', 'relative_path': 'reviewed-source-history/lanl17-detached-passive-observer-administration-r2-complete-r1-derivation-20261008.diff', 'sha256': '08b20a02716432ed941a895e528d6a37da11adff37cc28f9d1d6a3e4e1b8893e'}, {'bytes': 3633, 'group': 'reviewed_source_history', 'original_path': '/private/tmp/lanl17-detached-passive-observer-administration-r2-source-handoff-20261008.md', 'original_policy': 'opaque_original_bytes', 'relative_path': 'reviewed-source-history/lanl17-detached-passive-observer-administration-r2-source-handoff-20261008.md', 'sha256': 'cad2049b33f65608bea5032c5afe2d57f0957c1337bd801733dd63d0f7db5a32'}, {'bytes': 1440, 'group': 'reviewed_source_history', 'original_path': '/private/tmp/lanl17-detached-passive-observer-administration-r2-source-comparison-20261008.json', 'original_policy': 'original_unsealed_json', 'relative_path': 'reviewed-source-history/lanl17-detached-passive-observer-administration-r2-source-comparison-20261008.json', 'sha256': 'b06ab8559762d9f4a31377128d5086f7fdbbc6cf94c4da184a6112db86b8cad5'}, {'bytes': 3260, 'group': 'reviewed_source_history', 'original_path': '/private/tmp/lanl17-detached-passive-observer-r2-independent-source-review-20261008.md', 'original_policy': 'opaque_original_bytes', 'relative_path': 'reviewed-source-history/lanl17-detached-passive-observer-r2-independent-source-review-20261008.md', 'sha256': '6202ae5d737adf896d33533e800d66e29512a888b190a9709e4433636e4341eb'}, {'bytes': 23849, 'group': 'reviewed_source_history', 'original_path': '/private/tmp/lanl17_detach_exact_R4_storage_administration_20261008_a1_r1.py', 'original_policy': 'opaque_original_bytes', 'relative_path': 'reviewed-source-history/lanl17_detach_exact_R4_storage_administration_20261008_a1_r1.py', 'sha256': 'af93b23d2cbee7caaa8dd0199b3cb6f425fe91a2df840444c6f09641232a87eb'}, {'bytes': 20322, 'group': 'reviewed_source_history', 'original_path': '/private/tmp/lanl17-detached-R4-administration-r1-complete-EwrapperR2-derivation-20261008.diff', 'original_policy': 'opaque_original_bytes', 'relative_path': 'reviewed-source-history/lanl17-detached-R4-administration-r1-complete-EwrapperR2-derivation-20261008.diff', 'sha256': '8dc857a2e93ce440bcd2b0d626995e3a9dc136940f239c1a19065a8ad6615e1f'}, {'bytes': 8656, 'group': 'reviewed_source_history', 'original_path': '/private/tmp/lanl17-detached-R4-administration-r1-source-handoff-20261008.md', 'original_policy': 'opaque_original_bytes', 'relative_path': 'reviewed-source-history/lanl17-detached-R4-administration-r1-source-handoff-20261008.md', 'sha256': '67dd75f611c88b39463782f6ca6c077dad85959a5c4583f09676fa4afcde6daa'}, {'bytes': 2782, 'group': 'reviewed_source_history', 'original_path': '/private/tmp/lanl17-detached-R4-administration-r1-source-comparison-20261008.json', 'original_policy': 'original_unsealed_json', 'relative_path': 'reviewed-source-history/lanl17-detached-R4-administration-r1-source-comparison-20261008.json', 'sha256': 'aadde1a3d9701e699ffe84e9df0ba0d4e415f6b8e574d7f9405c126d788a612b'}, {'bytes': 7426, 'group': 'reviewed_source_history', 'original_path': '/private/tmp/lanl17-detached-R4-administration-r1-independent-source-review-20261008.md', 'original_policy': 'opaque_original_bytes', 'relative_path': 'reviewed-source-history/lanl17-detached-R4-administration-r1-independent-source-review-20261008.md', 'sha256': 'd3b3d619cb37d0405018a29b25f167b5cbf4f14c5794086a6a36b798edd2f368'}, {'bytes': 24000, 'group': 'reviewed_source_history', 'original_path': '/private/tmp/lanl17_detach_exact_R4_storage_administration_20261008_a1_r2.py', 'original_policy': 'opaque_original_bytes', 'relative_path': 'reviewed-source-history/lanl17_detach_exact_R4_storage_administration_20261008_a1_r2.py', 'sha256': 'deb59a340c92892336282f85697158b7b1181a33a288201fe6e2746c15c9a9be'}, {'bytes': 816, 'group': 'reviewed_source_history', 'original_path': '/private/tmp/lanl17-detached-R4-administration-r2-complete-r1-derivation-20261008.diff', 'original_policy': 'opaque_original_bytes', 'relative_path': 'reviewed-source-history/lanl17-detached-R4-administration-r2-complete-r1-derivation-20261008.diff', 'sha256': 'e0bd89a2fb0dcd8d575b05ea0b5ebff2d3ee94bcc04ee34b7da95eca60f12aba'}, {'bytes': 3706, 'group': 'reviewed_source_history', 'original_path': '/private/tmp/lanl17-detached-R4-administration-r2-source-handoff-20261008.md', 'original_policy': 'opaque_original_bytes', 'relative_path': 'reviewed-source-history/lanl17-detached-R4-administration-r2-source-handoff-20261008.md', 'sha256': '68526f64844d0e0b2a71c110e98e5c094fa9a91b93e58814f27d6e5209f11e56'}, {'bytes': 1334, 'group': 'reviewed_source_history', 'original_path': '/private/tmp/lanl17-detached-R4-administration-r2-source-comparison-20261008.json', 'original_policy': 'original_unsealed_json', 'relative_path': 'reviewed-source-history/lanl17-detached-R4-administration-r2-source-comparison-20261008.json', 'sha256': '6227828e2e5a47adcc01eb51f89d34ff394034f1168674500f87713c36838707'}, {'bytes': 2967, 'group': 'reviewed_source_history', 'original_path': '/private/tmp/lanl17-detached-R4-administration-r2-independent-source-review-20261008.md', 'original_policy': 'opaque_original_bytes', 'relative_path': 'reviewed-source-history/lanl17-detached-R4-administration-r2-independent-source-review-20261008.md', 'sha256': '73817a23522645e6593748c9d79f6d47b1971e7b4b9cb0047dc662c9c9a77b6f'}, {'bytes': 3385, 'group': 'reviewed_source_history', 'original_path': '/private/tmp/lanl17-passive-raw-hash-scope-and-plan-seam-source-note-20261008-a1.md', 'original_policy': 'opaque_original_bytes', 'relative_path': 'reviewed-source-history/lanl17-passive-raw-hash-scope-and-plan-seam-source-note-20261008-a1.md', 'sha256': '9326f483faa66cadd2717710356b02268268f760c17d4c5b68085de9d11efde3'}]
++NAMES = ('status.json', 'configuration.json', 'tmux.conf', 'launch-status.json',
++         'launch.stdout', 'launch.stderr', 'guard.stdout', 'guard.stderr', 'local-custody.json')
++# Only default originals are known at preparation time. No later removal pin is guessed.
++DEFAULT_PINS = [
++  {
++    "original_path": "/private/tmp/lanl-detached-E-default-originals-20261008-a2/status.json",
++    "relative_path": "default-originals/status.json",
++    "bytes": 5309,
++    "sha256": "0d5c2652ca982d053cffe44294490d6eda8a59ee4ebcd4d989e2407e0a0ac081",
++    "original_policy": "original_unsealed_json"
++  },
++  {
++    "original_path": "/private/tmp/lanl-detached-E-default-originals-20261008-a2/configuration.json",
++    "relative_path": "default-originals/configuration.json",
++    "bytes": 4684,
++    "sha256": "46c5b18e0c71d3fc7886335989f904688974d1586d78e49ae974f77af27e5f7c",
++    "original_policy": "original_unsealed_json"
++  },
++  {
++    "original_path": "/private/tmp/lanl-detached-E-default-originals-20261008-a2/tmux.conf",
++    "relative_path": "default-originals/tmux.conf",
++    "bytes": 106,
++    "sha256": "a6b69cdfa58f10a0f62697e88a619fffa06b5956bb515ba5200fa2e77c7c31df",
++    "original_policy": "opaque_original_bytes"
++  },
++  {
++    "original_path": "/private/tmp/lanl-detached-E-default-originals-20261008-a2/launch-status.json",
++    "relative_path": "default-originals/launch-status.json",
++    "bytes": 2097,
++    "sha256": "b920ac82935add2d9fe1592a683bd0754cc97a699236488a7df9c2140476f8db",
++    "original_policy": "original_unsealed_json"
++  },
++  {
++    "original_path": "/private/tmp/lanl-detached-E-default-originals-20261008-a2/launch.stdout",
++    "relative_path": "default-originals/launch.stdout",
++    "bytes": 0,
++    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
++    "original_policy": "opaque_original_bytes"
++  },
++  {
++    "original_path": "/private/tmp/lanl-detached-E-default-originals-20261008-a2/launch.stderr",
++    "relative_path": "default-originals/launch.stderr",
++    "bytes": 0,
++    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
++    "original_policy": "opaque_original_bytes"
++  },
++  {
++    "original_path": "/private/tmp/lanl-detached-E-default-originals-20261008-a2/guard.stdout",
++    "relative_path": "default-originals/guard.stdout",
++    "bytes": 10434,
++    "sha256": "5f17f45a303dcb7475800f136e0c8b70c558f6e9ea846869eb5e85a685d29e9e",
++    "original_policy": "original_unsealed_json"
++  },
++  {
++    "original_path": "/private/tmp/lanl-detached-E-default-originals-20261008-a2/guard.stderr",
++    "relative_path": "default-originals/guard.stderr",
++    "bytes": 0,
++    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
++    "original_policy": "opaque_original_bytes"
++  },
++  {
++    "original_path": "/private/tmp/lanl-detached-E-default-originals-20261008-a2/local-custody.json",
++    "relative_path": "default-originals/local-custody.json",
++    "bytes": 5087,
++    "sha256": "94aeeaebb8397a92f86e8c441654179ad66b53299442c2236e52c14f7ca0f8ee",
++    "original_policy": "original_unsealed_json"
++  }
++]
+ 
+ def require(value, code):
+     if not value:
+@@ -32,7 +107,11 @@
+             require(key not in result, 'duplicate_JSON_key')
+             result[key] = value
+         return result
+-    return json.loads(raw, object_pairs_hook=pairs,
++    def finite_float(value):
++        number = float(value)
++        require(number == number and abs(number) != float('inf'), 'nonfinite_JSON')
++        return number
++    return json.loads(raw, object_pairs_hook=pairs, parse_float=finite_float,
+                       parse_constant=lambda value: (_ for _ in ()).throw(ValueError('nonfinite_JSON')))
+ 
+ def stamp(s):
+@@ -100,19 +179,150 @@
+     with p.open('rb') as f:
+         require(f.read(len(raw) + 1) == raw, 'archive_readback')
+ 
++def utc(value):
++    require(isinstance(value, str), 'original_time_string')
++    parsed = datetime.datetime.fromisoformat(value.replace('Z', '+00:00'))
++    require(parsed.utcoffset() == datetime.timedelta(0), 'original_UTC_time')
++    return parsed
++
++
++def receipt_pin(pin, raw, expected_path):
++    require(isinstance(pin, dict) and pin['path'] == expected_path
++            and type(pin['bytes']) is int and pin['bytes'] == len(raw)
++            and pin['sha256'] == sha(raw), 'original_remote_pin_byte_link')
++    return pin
++
++
++def observation(phase, materialized):
++    is_remove = phase == 'removal'
++    body = {P(row['relative_path']).name: raw for row, raw, _ in materialized
++            if row['relative_path'].startswith(phase + '-originals/')}
++    require(set(body) == set(NAMES), 'nine_originals_per_observation')
++    status, cfg, result, launch, custody = (strict(body[name]) for name in
++        ('status.json', 'configuration.json', 'guard.stdout', 'launch-status.json', 'local-custody.json'))
++    for value in (status, cfg, result, launch, custody):
++        require(isinstance(value, dict) and value.get('sealed') is False
++                and 'identity_sha256' not in value, 'original_unsealed_policy')
++    require(status['format'] == 'swdb.lanl14-detached-exact-E-administration-status.v1'
++            and status['state'] == 'guard_completed' and status['guard_exit_code'] == 0
++            and 'error_class' not in status and 'error_sha256' not in status
++            and status['scientific_admission'] is False and status['capacity_admission'] is False
++            and status['SSH_role_exemption'] is False
++            and status['global_consumer_clearance_claimed'] is False
++            and status['expected_primary'] == EXPECTED_PRIMARY
++            and status['remove_requested'] is is_remove, 'original_successful_administrative_status')
++    require(cfg['format'] == 'swdb.lanl14-detached-exact-E-administration-configuration.v1'
++            and cfg['expected_primary'] == EXPECTED_PRIMARY and cfg['remove_requested'] is is_remove
++            and cfg['scientific_action'] is False and cfg['inputs'] == status['inputs']
++            and cfg['transport_wait_seconds'] == 60 and cfg['guard_timeout_seconds'] == 660
++            and cfg['guard_KILL_after_seconds'] == 60 and cfg['worker_wait_seconds'] == 735,
++            'original_configuration_scope')
++    folder = P(cfg['control_directory'])
++    require(folder.is_absolute() and str(folder) == os.path.normpath(str(folder))
++            and folder.parent == P('/data1/yanruj')
++            and folder.name.startswith('lanl14-detached-e-'), 'original_remote_control_route')
++    inputs = cfg['inputs']
++    require(inputs['guard']['bytes'] == 26370 and inputs['guard']['sha256'] == GUARD_SHA
++            and inputs['wrapper']['bytes'] == 18369 and inputs['wrapper']['sha256'] == WRAPPER_SHA
++            and inputs['service_review']['path'] == REVIEW_PATH
++            and inputs['service_review']['bytes'] == 3258
++            and inputs['service_review']['sha256'] == REVIEW_SHA, 'original_selected_input_pins')
++    receipt_pin(status['configuration'], body['configuration.json'], str(folder / 'configuration.json'))
++    receipt_pin(status['guard_stdout'], body['guard.stdout'], str(folder / 'guard.stdout'))
++    receipt_pin(status['guard_stderr'], body['guard.stderr'], str(folder / 'guard.stderr'))
++    argv = ['/usr/bin/timeout', '--signal=TERM', '--kill-after=60s', '660s',
++            '/usr/bin/python3.12', '-B', inputs['guard']['path'], '--expected-primary', EXPECTED_PRIMARY,
++            '--account-service-review', REVIEW_PATH, '--account-service-review-sha256', REVIEW_SHA]
++    if is_remove:
++        argv.append('--remove')
++    require(status['guard_argv'] == argv, 'original_closed_administrative_argv')
++    require(result['format'] == 'swdb.lanl14-consumed-pure-E-checkout-removal.v1'
++            and result['expected_primary'] == EXPECTED_PRIMARY and result['path'] == E
++            and result['commit'] == PURE_E
++            and result['branch'] == 'codex/lanl-generality-estimate-evidence-20261007-a1'
++            and result['removed'] is is_remove
++            and result['scientific_admission'] is False and result['capacity_admission'] is False
++            and result['raw_and_original_controls_and_execution_sources_and_Git_refs_retained'] is True
++            and result['account_service_review']['sha256'] == REVIEW_SHA,
++            'original_result_scope_and_preservation_flag')
++    require(type(result['recovered_bytes']) is int and result['recovered_bytes'] >= 0
++            and (is_remove or result['recovered_bytes'] == 0), 'original_recovered_bytes')
++    require(launch['format'] == 'swdb.lanl14-detached-exact-E-launch.v1'
++            and launch['tmux_client_exit_code'] == 0 and launch['scientific_action'] is False
++            and launch['transport_termination_or_guard_completion_claimed'] is False,
++            'original_launch_boundary')
++    require(launch['configuration'] == status['configuration'], 'launch_configuration_pin')
++    receipt_pin(launch['tmux_configuration'], body['tmux.conf'], str(folder / 'tmux.conf'))
++    require(custody['format'] == 'swdb.detached-E-original-local-byte-custody.v1'
++            and custody['semantic_or_success_or_capacity_admission'] is False,
++            'original_local_transport_custody_boundary')
++    local_root = REMOVAL_ROOT if is_remove else DEFAULT_ROOT
++    original_rows = custody['originals']
++    require(isinstance(original_rows, list) and len(original_rows) == 8, 'eight_remote_original_custody_rows')
++    seen = set()
++    for item in original_rows:
++        local = P(item['local_path'])
++        require(local.parent == local_root and local.name in NAMES[:-1]
++                and local.name not in seen, 'original_remote_custody_route_or_duplicate')
++        seen.add(local.name)
++        require(item['remote_original_path'] == str(folder / local.name)
++                and item['bytes'] == len(body[local.name])
++                and item['sha256'] == sha(body[local.name]), 'original_remote_local_byte_reconciliation')
++    require(seen == set(NAMES[:-1]), 'complete_eight_original_custody_names')
++    require(utc(status['started_utc']) <= utc(status['guard_started_utc'])
++            <= utc(result['checked_utc']) <= utc(status['ended_utc']), 'original_observation_chronology')
++    return {'status': status, 'configuration': cfg, 'result': result, 'body': body, 'custody': custody}
++
++
++def reconcile_pair(materialized):
++    default = observation('default', materialized)
++    removal = observation('removal', materialized)
++    require(default['configuration']['prior_reviewed_inspection'] is None,
++            'original_default_has_no_prior_request')
++    prior = removal['configuration']['prior_reviewed_inspection']
++    require(isinstance(prior, dict) and set(prior) ==
++            {'status', 'stdout', 'parent_review_is_inherited_explicit_invocation_authority'}
++            and prior['parent_review_is_inherited_explicit_invocation_authority'] is True,
++            'original_removal_explicit_prior_inspection')
++    folder = default['configuration']['control_directory']
++    receipt_pin(prior['status'], default['body']['status.json'], folder + '/status.json')
++    receipt_pin(prior['stdout'], default['body']['guard.stdout'], folder + '/guard.stdout')
++    default_status_custody = next(item for item in default['custody']['originals']
++                                 if P(item['local_path']).name == 'status.json')
++    require(prior['status']['stat'] == default_status_custody['remote_original_stat']
++            and prior['stdout'] == default['status']['guard_stdout'], 'original_default_full_stat_pins')
++    require(default['configuration']['control_directory'] != removal['configuration']['control_directory']
++            and utc(default['status']['ended_utc']) <= utc(removal['status']['started_utc']),
++            'separate_later_removal_observation')
++    for name in ('original_reader', 'original_receipt'):
++        require(default['result'][name] == removal['result'][name], 'same_original_E_reader_and_export_receipt')
++    return {'default': {'started_utc': default['status']['started_utc'],
++                        'ended_utc': default['status']['ended_utc'], 'guard_exit_code': 0, 'removed': False,
++                        'status_sha256': sha(default['body']['status.json']),
++                        'stdout_sha256': sha(default['body']['guard.stdout'])},
++            'removal': {'started_utc': removal['status']['started_utc'],
++                        'ended_utc': removal['status']['ended_utc'], 'guard_exit_code': 0, 'removed': True,
++                        'status_sha256': sha(removal['body']['status.json']),
++                        'stdout_sha256': sha(removal['body']['guard.stdout']),
++                        'original_reported_recovered_bytes': removal['result']['recovered_bytes']},
++            'interpretation': 'Original administrative result metadata reconciled locally; original consumer visibility and preservation facts are inherited from those exact originals, not newly observed by archival.'}
++
++
+ def main():
+     parser = argparse.ArgumentParser(description=__doc__)
+     parser.add_argument('--expected-head', required=True)
+     parser.add_argument('--source-sha256', required=True)
+     parser.add_argument('--worktree', default=str(DEFAULT_W))
+-    parser.add_argument('--extension-inventory')
+-    parser.add_argument('--extension-inventory-sha256')
++    parser.add_argument('--inventory', required=True)
++    parser.add_argument('--inventory-sha256', required=True)
+     args = parser.parse_args()
+     deadline = time.monotonic() + SECONDS
+     os.umask(0o077)
++    # Avoid Git's optional index refresh; no Git mutation command is present.
++    os.environ['GIT_OPTIONAL_LOCKS'] = '0'
+     require(re.fullmatch('[0-9a-f]{40}', args.expected_head), 'exact_parent_supplied_HEAD40')
+-    require(re.fullmatch('[0-9a-f]{64}', args.source_sha256), 'own_source_SHA64')
+-    require(bool(args.extension_inventory) == bool(args.extension_inventory_sha256), 'paired_extension_arguments')
++    require(re.fullmatch('[0-9a-f]{64}', args.source_sha256)
++            and re.fullmatch('[0-9a-f]{64}', args.inventory_sha256), 'explicit_source_and_inventory_SHA64')
+     own = P(__file__).absolute()
+     own_raw, own_stat = read(own, MAX_FILE, deadline)
+     require(sha(own_raw) == args.source_sha256, 'own_source_pin')
+@@ -122,109 +332,113 @@
+             and git(w, deadline, 'branch', '--show-current').decode().strip() == 'codex/lanl-analytic-eval'
+             and not git(w, deadline, 'status', '--porcelain'), 'expected_clean_parent_worktree')
+     before_tree = git(w, deadline, 'ls-tree', '-r', '-z', 'HEAD')
+-    originals = [dict(row) for row in FIXED]
+-    extension_pin = None
+-    if args.extension_inventory:
+-        require(re.fullmatch('[0-9a-f]{64}', args.extension_inventory_sha256), 'extension_SHA64')
+-        ext_path = route(P(args.extension_inventory))
+-        require(ext_path.parent == P('/private/tmp'), 'private_explicit_extension_metadata')
+-        raw, s = read(ext_path, 256 * 1024, deadline)
+-        require(sha(raw) == args.extension_inventory_sha256, 'extension_metadata_pin')
+-        extra = strict(raw)
+-        # This is only an archival list, not a receipt, plan, admission or review.
+-        require(isinstance(extra, list) and 1 <= len(extra) <= MAX_EXTRA, 'explicit_extension_list')
+-        for row in extra:
+-            allowed = {'original_path', 'relative_path', 'bytes', 'sha256', 'original_policy',
+-                       'original_canonical_ensure_ascii'}
+-            require(isinstance(row, dict) and set(row) <= allowed
+-                    and {'original_path', 'relative_path', 'bytes', 'sha256', 'original_policy'} <= set(row),
+-                    'extension_row_fields')
+-            require(row['relative_path'].startswith('corrected-source-package/'), 'separate_correction_package')
+-            originals.append(dict(row, group='explicit_parent_reviewed_correction_originals'))
+-        extension_pin = {'path': str(ext_path), 'bytes': len(raw), 'sha256': sha(raw),
+-                         'original_policy': 'original_unsealed_archival_list', 'stat': list(s)}
++    inventory = route(P(args.inventory))
++    require(inventory.parent == P('/private/tmp'), 'private_explicit_archival_inventory')
++    inventory_raw, inventory_stat = read(inventory, 256 * 1024, deadline)
++    require(sha(inventory_raw) == args.inventory_sha256, 'explicit_inventory_byte_pin')
++    originals = strict(inventory_raw)
++    require(isinstance(originals, list) and 18 <= len(originals) <= MAX_ORIGINALS,
++            'explicit_18_to_32_original_inventory')
++    allowed = {'original_path', 'relative_path', 'bytes', 'sha256', 'original_policy',
++               'original_canonical_ensure_ascii'}
++    required = {'original_path', 'relative_path', 'bytes', 'sha256', 'original_policy'}
+     seen_paths, seen_names = set(), set()
+     materialized = []
+     total = 0
+     for row in originals:
++        require(isinstance(row, dict) and required <= set(row) <= allowed, 'explicit_inventory_row_fields')
+         rel = P(row['relative_path'])
+         require(not rel.is_absolute() and '..' not in rel.parts and str(rel) == row['relative_path']
++                and len(rel.parts) == 2 and rel.parts[0] in
++                ('default-originals', 'removal-originals', 'support-originals')
+                 and re.fullmatch('[A-Za-z0-9_./-]+', str(rel)), 'closed_relative_archive_path')
+         p = route(P(row['original_path']))
+         require(p.is_relative_to(P('/private/tmp')) and str(p) not in seen_paths
+                 and str(rel) not in seen_names, 'original_path_scope_or_duplicate')
+         require(type(row['bytes']) is int and 0 <= row['bytes'] <= MAX_FILE
+                 and re.fullmatch('[0-9a-f]{64}', row['sha256']), 'explicit_original_size_SHA')
++        if rel.parts[0] in ('default-originals', 'removal-originals'):
++            root = DEFAULT_ROOT if rel.parts[0] == 'default-originals' else REMOVAL_ROOT
++            require(p == root / rel.name and rel.name in NAMES, 'exact_original_observation_path')
++            policy = 'original_unsealed_json' if rel.name.endswith('.json') or rel.name == 'guard.stdout' else 'opaque_original_bytes'
++            require(row['original_policy'] == policy and 'original_canonical_ensure_ascii' not in row,
++                    'original_observation_policy_unchanged')
+         seen_paths.add(str(p)); seen_names.add(str(rel))
+         total += row['bytes']; require(total <= MAX_TOTAL, 'cumulative_archive_original_bound')
+         raw, s = read(p, MAX_FILE, deadline)
+         validate_pin(row, raw)
+         materialized.append((row, raw, s))
+-    status = strict(next(raw for row, raw, _ in materialized if row['relative_path'] == 'failed-originals/status.json'))
+-    require(status['state'] == 'guard_refused_or_failed' and status['guard_exit_code'] == 1
+-            and status['remove_requested'] is False and status['scientific_admission'] is False,
+-            'original_failed_default_inspection_boundary')
++    actual_default = {row['relative_path']: row for row, _, _ in materialized
++                      if row['relative_path'].startswith('default-originals/')}
++    require(actual_default == {row['relative_path']: row for row in DEFAULT_PINS},
++            'known_default_original_pins_unchanged')
++    observations = reconcile_pair(materialized)
+     dest = w / REL
+     route(dest.parent)
+     require(dest.parent.is_dir() and not os.path.lexists(dest), 'fresh_archive_destination')
+     dest.mkdir(mode=0o700)
+     pins = []
+     try:
+-        for row, raw, s in materialized:
++        for row, raw, _ in materialized:
+             out = dest / row['relative_path']
+             out.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
+             write_original(out, raw)
+             pins.append(dict(row, archive_path=REL + '/' + row['relative_path']))
+-        # Recheck original returned bytes and source after copying, not only hashes of metadata.
+         for row, old_raw, old_stat in materialized:
+             later, s = read(P(row['original_path']), MAX_FILE, deadline)
+             require(later == old_raw and s == old_stat, 'original_changed_during_archive')
+         later, s = read(own, MAX_FILE, deadline)
+         require(later == own_raw and s == own_stat, 'archiver_source_changed')
+-        if extension_pin:
+-            later, s = read(P(extension_pin['path']), 256 * 1024, deadline)
+-            require(sha(later) == extension_pin['sha256'] and list(s) == extension_pin['stat'], 'extension_changed')
++        later, s = read(inventory, 256 * 1024, deadline)
++        require(later == inventory_raw and s == inventory_stat, 'explicit_inventory_changed')
+         require(git(w, deadline, 'rev-parse', 'HEAD').decode().strip() == args.expected_head
+                 and git(w, deadline, 'ls-tree', '-r', '-z', 'HEAD') == before_tree
+                 and not git(w, deadline, 'diff', '--name-only', 'HEAD'), 'prior_tracked_tree_or_HEAD_changed')
+-        manifest = {'format': 'swdb.detached-E-failure-and-reviewed-source-byte-custody.v1',
++        manifest = {'format': 'swdb.consumed-E-administration-original-byte-custody.v1',
+                     'canonical_ensure_ascii': True,
+                     'created_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                     'parent_commit': args.expected_head, 'archive': REL,
+                     'archiver_source_pin': {'path': str(own), 'bytes': len(own_raw), 'sha256': sha(own_raw)},
+-                    'fixed_original_count': len(FIXED), 'extension_inventory_pin': extension_pin,
++                    'explicit_inventory_pin': {'path': str(inventory), 'bytes': len(inventory_raw),
++                                               'sha256': sha(inventory_raw)},
+                     'originals': pins, 'original_count': len(pins), 'original_bytes': total,
+-                    'original_failed_inspection': {'guard_exit_code': 1, 'remove_requested': False,
+-                                                  'started_utc': status['started_utc'], 'ended_utc': status['ended_utc']},
+-                    'source_extension_pending': extension_pin is None,
++                    'original_observation_reconciliation': observations,
+                     'archival_invokes_selected_control_mains': False,
+                     'archive_supplies_cleanup_capacity_plan_or_scientific_admission': False,
+                     'prior_tracked_tree_SHA256': sha(before_tree),
+-                    'scope': 'Byte custody only; original policies and creation-time NOTRUN labels preserved. Actual failed default custody is separate from prospective corrected sources.'}
++                    'scope': 'BYTE-CUSTODY ONLY. Original default/removal observations and unsealed policies are preserved; no fresh consumer visibility, capacity, plan or scientific admission.'}
+         manifest['identity_sha256'] = sha(canonical(manifest))
+         manifest_raw = (json.dumps(manifest, sort_keys=True, indent=2, ensure_ascii=True, allow_nan=False) + '\n').encode()
+-        write_original(dest/'manifest.json', manifest_raw)
+-        readme = ('# Failed detached E inspection and reviewed source custody\n\n'
+-                  'The original detached default inspection ran on 2026-10-07 at 23:11 ET (original machine custody 03:11:16–17 UTC on 2026-10-08) and returned guard exit 1 with removal not requested. Its stdout was empty; original stderr reports `original raw root`. This archive supplies neither removal nor plan/capacity/scientific admission. Later events remain separate.\n\n'
+-                  'The eight remote originals, exact local decoding custody, original launch/namespace/sidecar observations, and their reader/collector/decoder sources are copied unchanged. The base64 transfer packet is not duplicated; original local-custody retains its exact packet pin. Namespace top-level size/allocation metadata is not recursive RAW volume or source clearance. The sidecar observation is original unsealed metadata, not a rewritten lane receipt.\n\n'
+-                  'Reviewed passive R2 and detached R4 R1/R2 source/diff/handoff/static-review originals retain their immutable creation-time SOURCE ONLY / NOT RUN statements. Their presence proves byte custody and source review only. The corrected-source-package, if explicitly supplied by the parent after review, is separately listed; its absent extension remains pending. No selected source was imported or invoked by this archiver.\n\n'
+-                  'Only this manifest uses a new explicit canonical True whole-object-minus-identity custody seal. Original unsealed JSON, opaque streams and any explicitly supplied original seal policy are preserved byte for byte. This source archiver does not commit, push, edit an issue, modify an existing file or conduct a remote action. Parent owns archive execution, subsequent issue history, review and delivery.\n')
+-        write_original(dest/'README.md', readme.encode())
++        write_original(dest / 'manifest.json', manifest_raw)
++        readme = ('# Corrected consumed E default and removal original custody\n\n'
++                  'This archive retains two separately observed administrative steps: the successful default inspection with removed=false, followed by a separately captured successful explicit removal with removed=true. The exact original times, status/stdout pins, original recovered-byte report, and the removal configuration prior-inspection links are recorded in the manifest. Archival reconciles original metadata locally and does not reacquire host visibility or perform cleanup.\n\n'
++                  'All nine originals per observation are copied byte for byte, including their original UNSEALED status/configuration/result/launch/local-decoding custody and opaque streams. Explicit support originals, if supplied by the parent, retain their declared original policies and creation-time source-only/NOTRUN labels. The old failed inspection and earlier 66-original archive are untouched. No base64 transport envelope is manufactured or original seal field invented.\n\n'
++                  'The manifest alone has a new explicit canonical True whole-object-minus-identity BYTE-CUSTODY seal. It is not a source of fresh capacity, parent completeness, plan, cleanup eligibility or scientific admission. Original retention/reference claims remain inherited from the exact original administrative receipts; they are not independent archival observations. The selected guard, wrapper, observers and scientific sources are never imported or called here.\n\n'
++                  'Only this fresh evidence folder is written. Prior tracked blobs/modes and HEAD are checked; no issue, map, progress, record, source, existing file, commit, push or remote action is changed by this archiver. Any copied partials on failure remain for parent review without cleanup or retry.\n')
++        write_original(dest / 'README.md', readme.encode())
+         require(git(w, deadline, 'status', '--porcelain').decode().splitlines() == ['?? ' + REL + '/'],
+                 'archive_only_untracked_scope')
+         require(git(w, deadline, 'rev-parse', 'HEAD').decode().strip() == args.expected_head
+                 and git(w, deadline, 'ls-tree', '-r', '-z', 'HEAD') == before_tree
+                 and not git(w, deadline, 'diff', '--name-only', 'HEAD'), 'final_parent_tree_changed')
++        # Close source/request/input stability after publication too.
++        for row, old_raw, old_stat in materialized:
++            later, s = read(P(row['original_path']), MAX_FILE, deadline)
++            require(later == old_raw and s == old_stat, 'original_changed_before_success')
++        require(read(own, MAX_FILE, deadline) == (own_raw, own_stat), 'final_archiver_source_changed')
++        require(read(inventory, 256 * 1024, deadline) == (inventory_raw, inventory_stat),
++                'final_inventory_changed')
+         print(json.dumps({'archive': REL, 'expected_head': args.expected_head, 'originals': len(pins),
+                           'original_bytes': total, 'new_files': len(pins) + 2,
+                           'manifest_identity_sha256': manifest['identity_sha256'],
+                           'manifest_bytes': len(manifest_raw), 'manifest_sha256': sha(manifest_raw),
+                           'README_bytes': len(readme.encode()), 'README_sha256': sha(readme.encode()),
+-                          'corrected_source_extension_pending': extension_pin is None,
+-                          'no_selected_main_or_remote_action': True}, sort_keys=True))
++                          'selected_mains_or_remote_actions_invoked': False,
++                          'fresh_capacity_plan_or_scientific_admission': False}, sort_keys=True))
+     except BaseException:
+-        # Retain original copied partials for parent inspection; never remove/retry them.
++        # Retain copied partials; no deletion, repair, retry or original rewrite.
+         raise
++
+ 
+ if __name__ == '__main__':
+     main()

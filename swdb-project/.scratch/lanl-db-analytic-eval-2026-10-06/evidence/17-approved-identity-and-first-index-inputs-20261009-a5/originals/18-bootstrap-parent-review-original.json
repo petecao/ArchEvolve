@@ -1,0 +1,57 @@
+{
+  "actual_parent_attestation": {
+    "HOME_and_public_auth_preserved": true,
+    "actual_inputs_parent_approved": true,
+    "all_campaign_processes_stopped": true,
+    "all_four_normal_custodies_root_and_peer_reviewed": true,
+    "all_native_leases_currently_released_no_kernel_holder_or_FD9": true,
+    "all_outputs_currently_fresh_owned_and_disjoint": true,
+    "campaign": "extensa-gem5-bfs-20261006-p1",
+    "catalog_inventory_sha256": "80415d563e504a0f58cd739ebb41c92eeb64a6ceb326ea8930f3fa8275cb6d91",
+    "catalog_unchanged_since_original_validation": true,
+    "exclusive_snapshot_ownership_confirmed": true,
+    "fixtures_or_replays_allowed": false,
+    "native_Bash_startup_and_1024_byte_ulimit_units_reviewed": true,
+    "native_executable_sha256": {
+      "/usr/bin/bash": "bc5945feb8bd26203ebfafea5ce1878bb2e32cb8fb50ab7ae395cfb1e1aaaef1",
+      "/usr/bin/mkdir": "430c3f949d7d328cd835722f5bbddeac0956fbdfbbb6a197e0abb1def3ed27e2",
+      "/usr/bin/python3.12": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+      "/usr/bin/sha256sum": "4d2db56c867e5324e0084c9e897f6360d37517de77ac96f2bd31494223d69a60",
+      "/usr/bin/timeout": "12690a043dfd555a6c14ccc1564f5649c18f1762c0d6ff66729948130898ec52",
+      "/usr/bin/wc": "9005273a966c875547a4317288bdd92e7b2aa49ad86bc9978121242106405e6b"
+    },
+    "native_tools_current_owned_regular_byte_pins_reviewed": true,
+    "no_catalog_consumers_confirmed": true,
+    "observed_utc": "2026-10-09T17:52:19.481750+00:00",
+    "prior_validation_full_catalogue": true,
+    "records_directory": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p1/records",
+    "reviewed_utc": "2026-10-09T17:53:57.390237+00:00",
+    "source_R_F6_current_and_clean": true,
+    "valid_until_utc": "2026-10-09T17:56:36.694930+00:00",
+    "validation_files_sha256": {
+      "validation_argv": "72209ec5890b0ad7e38800c2a95f28271a3f4c585d4ec29046905ae0001e18d6",
+      "validation_exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "validation_stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "validation_stdout": "0d17a1d2aca7b10f8e7d07f115e2b9fbdb876235fcf7290c2d68e0dab76c08fd"
+    }
+  },
+  "format": "swdb.lanl17-actual-original-bootstrap-parent-review.v1",
+  "fresh_host_original": {
+    "bytes": 26578,
+    "path": "/private/tmp/lanl17-p1-pre-full-index-host-capture-selected-r6-20261009-a5-a9/host-original.json",
+    "sha256": "b7a6b0a8e77e6a8e9889d9d36299baaaca31c984cb25fc55504b15392e005640"
+  },
+  "historical_continuity_basis": "original full validation/custody, all106 inventory mtimes/ctimes preceding validation, reviewed frozen CID write scope, stopped-state and parent no-edit coordination; no historical hash snapshot invented",
+  "independent_bootstrap_full_plan_review": "review_plan actual in-chat PASS before this parent decision",
+  "independent_fresh_host_review": "campaign_readiness actual in-chat PASS before this parent decision",
+  "native_Bash_units_original_sha256": "17f709cd6c51a658ccb0f8d17c86d036ea663b0e04b1a27168fe9832d5581e53",
+  "original_controls_and_scientific_limits_unchanged": true,
+  "scientific_admission": false,
+  "scope": "p1 original bootstrap0d/outer59/envelope1ee/writer7a once; no campaign replay/measurement lane/process action",
+  "selected_action_config": {
+    "bytes": 4458,
+    "path": "/private/tmp/lanl17-p1-original-full-index-bootstrap-action-actual-20261009-a5-a1.json",
+    "sha256": "28ce8736516f603043ea6e014384432458043d5ea25153cfc1bd42981b81ec55"
+  },
+  "selected_for_single_original_dispatch": true
+}

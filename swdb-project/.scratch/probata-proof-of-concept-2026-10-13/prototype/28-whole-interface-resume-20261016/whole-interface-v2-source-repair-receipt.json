@@ -1,0 +1,55 @@
+{
+  "compiler_native_project_import_child_execution": false,
+  "counts": {
+    "errors": 0,
+    "failures": 0,
+    "literal_role_dtype_cases": 66,
+    "pure_cases": 9,
+    "refusals": 79,
+    "skips": 0,
+    "synthetic_bindings": 132
+  },
+  "date": "2026-10-16",
+  "native86_uses_binder": false,
+  "origin": {
+    "bytes": 33171,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface.py",
+    "sha256": "b859035b88dd267a7515e208c5a524ea7bd2cacde147e43b6723e2067303b44c"
+  },
+  "original_gap_reproduced": "CXXNewExpr array allocation with builtin element has no CallExpr and passes V1 denylist; V2 closed grammar refuses",
+  "original_packets_unchanged": true,
+  "pins": [
+    {
+      "bytes": 3571,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/prepare_whole_interface_v2.py",
+      "sha256": "436144c574174b6d1c9591a9d5a28c08edf59611d60e7681fbb1456b7039e471"
+    },
+    {
+      "bytes": 34661,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v2.py",
+      "sha256": "dbcb5d35c6a575884265f0e6c0e49e5603a71f6d392cff1915d6aeda61e1159b"
+    },
+    {
+      "bytes": 3383,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole-interface-v2-inverse-delta.json",
+      "sha256": "d0ee6b9b236ec1292859b71476efd3153495064b0592babd7d70f662e131d2c8"
+    },
+    {
+      "bytes": 5256,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/test_whole_interface_v2.py",
+      "sha256": "a88e14c2cf0c17f8a5d1a19766a28df862f6b9622f3b45911406ceebff886503"
+    },
+    {
+      "bytes": 1037,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/pure-whole-interface-v2.log",
+      "sha256": "571b1375fd8dd40f4ab5123f169c1aeb93e8f7e9e591a5a1ab9d34fac4fd0a20"
+    },
+    {
+      "bytes": 1617,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/README-binder-v2.md",
+      "sha256": "f3eeb460aa162445e6ecf5f1b46448302b277829815b962367069f11ea43d812"
+    }
+  ],
+  "public_admission": false,
+  "status": "AUTHOR_CLOSED_GRAMMAR_REPAIR_READY_FOR_INDEPENDENT_REVIEW"
+}

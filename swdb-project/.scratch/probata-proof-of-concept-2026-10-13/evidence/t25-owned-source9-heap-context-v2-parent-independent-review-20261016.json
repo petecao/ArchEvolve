@@ -1,0 +1,73 @@
+{
+  "classification": "PASS_SCOPED_SOURCE_ENCODING_AND_POSITIONAL_DEFINITION_REVIEW",
+  "date": "2026-10-16 ET",
+  "findings": [],
+  "history": "V1 c0b3973e remains HOLD: universally permuting same-sort function parameters was unsound. V2 fixes comparison by positional alpha-renaming; original genuine RED and V1 file are retained. No scientific adoption occurred under V1.",
+  "inputs": [
+    {
+      "bytes": 18821,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/heap_reader_v2.py",
+      "sha256": "66fb703fd3b2a0503ca834613081740527d54f53b05d3b2e38fd81b477983bf2"
+    },
+    {
+      "bytes": 8248,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/test_heap_context_v2.py",
+      "sha256": "9302409e2078fcd5e0f3f42b7e5124fec5355bb7f3a7ff9771ab71bcd1d2e966"
+    },
+    {
+      "bytes": 16429,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/heap_reader.py",
+      "sha256": "c0b3973ec47da0071e58247e54ac91373d312bd9740491c3a14b631ef7ec7134"
+    },
+    {
+      "bytes": 8386,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/heap_reallocation.mlw",
+      "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+    },
+    {
+      "bytes": 94919,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-source9-heap-context-preparation-v2-20261016.json",
+      "sha256": "67ab2ad3a2aedac33615b90c6190f03230047361e61fa76b5307dcee86e12eb8"
+    },
+    {
+      "bytes": 500042,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-source9-math-ast-v3-actual-stdout-20261016.json",
+      "sha256": "9924e02166c0613047bf750b31a06508b67d5eb8853fec79a59c8f1d926b5a72"
+    },
+    {
+      "bytes": 22718,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-cold/semantic_terms.py",
+      "sha256": "eb0265a44d147f062292bd32c299edd58dd3045cec252cfbe0369eb4726948fa"
+    },
+    {
+      "bytes": 2218,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/owners-effects-history-v1/heap-independent-green-v1.log",
+      "sha256": "9ec95692a741ecac18c27b93dcf726a81ed94a12f3ed349089ee8c8ef8e53518"
+    }
+  ],
+  "mathematical_or_source_Heap_Typed_body_lifetime_caller_default_admission": false,
+  "observed_independent_controls": {
+    "child_native_network_attempts": [],
+    "command": "python3 -B /Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/source9-offline-interpretation-v1/test_heap_context_v2.py",
+    "errors": 0,
+    "exit_code": 0,
+    "failures": 0,
+    "tests": 15
+  },
+  "review": {
+    "V1_to_V2_full_diff_only_new_positional_body_and_two_comparison_inputs": true,
+    "all22_typed_dictionary_rows_manually_reconciled_to_exact_source": true,
+    "cell_and_map_support_instances": 158,
+    "complete18821_byte_V2_and8248_byte_tests_read": true,
+    "complete8386_byte_original_Heap_source_read": true,
+    "entire_selected_projection_match_and_typed_false_map_equation_checked": true,
+    "full_462_definition_instances_match26_contexts": true,
+    "inner_forall_exists_simultaneous_let_and_match_pattern_bindings_protected": true,
+    "native_algebraic_sum_or_complete_eight_polymorphic_sum_laws_required": true,
+    "ordered_parameter_sorts_and_argument_positions_preserved": true,
+    "sole_record_constructor_all9_heap_and2_state_field_types_order_preserved": true,
+    "unknown_added_false_assertion_not_consumed": true
+  },
+  "reviewer": "ticket25, independent of root author",
+  "scope": "Only actual pinned source/type/cell/map/Heap definitions. Owners/Effects, goals, complete standard support, native outcomes, source correspondence and caller integration remain separate."
+}

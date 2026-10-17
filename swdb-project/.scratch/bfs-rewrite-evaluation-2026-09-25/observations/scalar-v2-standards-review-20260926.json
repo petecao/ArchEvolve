@@ -1,0 +1,55 @@
+{
+  "created": "2026-09-26 ET",
+  "result": "clean_after_clock_race_repair",
+  "scope": "Independent scalar-v2 finite build driver/test/doc review; no host builds, provider calls, guest execution, or source edits by reviewer",
+  "files": {
+    "scripts/bfs_scalar_v2_builds.py": {
+      "sha256": "4d2af07f5cf161f3a18e266532216ec725492207f7ac7a1fa077b8893e2a43c7",
+      "bytes": 25240
+    },
+    "tests/test_bfs_scalar_v2_builds.py": {
+      "sha256": "1816e590f5e11aaa60091f2b8af9b913457e65f85961fc09b5303f7b489685dc",
+      "bytes": 21108
+    },
+    "docs/bfs-scalar-v2-builds-20260926.md": {
+      "sha256": "d5f39deafd3cdeea248e71ac19e9195a4bf4360d626b83f42e7008ae014f4f84",
+      "bytes": 8229
+    }
+  },
+  "manifest": {
+    "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/scalar-v2-20260926-a1.preparation.json",
+    "sha256": "055f1b4ef92f74c9d04b24ea6b9542998802686253caebd28d0ee5837e814383"
+  },
+  "finding": {
+    "priority": "P2",
+    "description": "Concurrent monitor ancillary read could observe compiling cleared between two loads and raise TypeError. Lock now serializes coherent snapshots, compile transitions and finalization. Critical sections contain clock/arithmetic/state operations only.",
+    "red_probe": {
+      "path": "/private/tmp/test_scalar_clock_transition_standards_20260926.py",
+      "sha256": "cdb741a5c37b026acee8fb8102b12ad897d3a334e84e2a244feb4d8327051970"
+    },
+    "red_log": {
+      "path": "/private/tmp/bfs-scalar-clock-transition-standards-red-20260926.log",
+      "sha256": "0e1b474a7924b92b87ea9e520d859ee9aad803f6efc5443534b452bd421b4b3e"
+    },
+    "red_result": "1 failed in0.19s",
+    "pre_fix_source_snapshot": "Not captured; exact original Clock text retained in tool transcript, no reconstructed-source provenance claim.",
+    "recheck": "Two-thread permanent test releases paused snapshot after proving transition is serialized; original blocking unlocked-schedule probe is preserved rather than rerun incompatibly."
+  },
+  "validation": {
+    "log": "/private/tmp/bfs-scalar-standards-final-20260926.log",
+    "sha256": "e8b8787b89a653c56dbf84344ba4b871b8358be3ca36bab85e40905612cdce82",
+    "stdout": "..................................                                       [100%]\n34 passed, 16 deselected in 10.03s",
+    "selection": "coherent or loader or shared_cleanup or failure_is_retained or preserves_ancillary or original_clock or prior_proof or build_binding or real_swdb_get",
+    "additional_actual_entrypoint": "Actual python -s -m swdb get mbit10 returns exact current Store record and uses accounted RAW/swdb.sqlite; fixture owner is not Linux ownership evidence."
+  },
+  "source_readback": [
+    "Actual standard Linux fixture/pending/auditor producer fields match reused proof reader",
+    "Four real retained v1 compile records and actual A2 v2 compile shape match verify_build fields; no claimed host artifact validation",
+    "Same1200 outer=1170work+single30cleanup; 240public-work deadlines with teardown charged shared reserve and ancillary210 unchanged",
+    "Fixed four source-baseline compile requests/public gets only; no provider, guest, retry or history mutation",
+    "Raw/.dispatch/newbuild/temp/records/database sidecars under16GiB with4GiBbuild subset; post-helper external final count remains required",
+    "Loader overrides removed before parent startup and rejected at entry, also removed from children",
+    "Ownership proof reuse restricted to identical four helper/test files and exact resolved Python, retains original proof commit and does not attest this new driver"
+  ],
+  "limitations": "Independent checks are local contract tests and source/record metadata readback. Host capacity, exact runtime/receipt/path pins, compiler/library availability, owned cleanup and actual successful builds remain prelaunch/terminal obligations."
+}

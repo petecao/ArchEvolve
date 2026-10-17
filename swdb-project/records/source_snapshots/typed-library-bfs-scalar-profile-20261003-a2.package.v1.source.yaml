@@ -1,0 +1,1747 @@
+kind: source_snapshot
+schema_version: '0.4'
+id: typed-library-bfs-scalar-profile-20261003-a2.package.v1.source
+status: draft
+created: '2026-10-03'
+updated: '2026-10-03'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+implementation: dx100-bfs-scalar
+application: dx100-gapbs
+revision: e4fc4afdf894f295442cef3604667a469fab8e62
+artifact:
+  path: /data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source
+  sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  files:
+  - path: LICENSE
+    sha256: b8c77da160595e378d8fa7635b1c777c7a84c56c79a24efbbbcd9203375231c2
+    bytes: 1208
+    executable: false
+  - path: PROVENANCE.md
+    sha256: 3009aa7f259294b67bfbbee311ead96d66050a86f1a7bfde715556f10174e6c6
+    bytes: 619
+    executable: false
+  - path: benchmarks/API/MAA.hpp
+    sha256: 4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd
+    bytes: 1323
+    executable: false
+  - path: benchmarks/API/MAA_atomics.hpp
+    sha256: 896459489ded4a790a2b52da62b337f00b7310a4bafc6d3ceaa9d8c4f1eb026a
+    bytes: 845
+    executable: false
+  - path: benchmarks/API/MAA_functional.hpp
+    sha256: ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc
+    bytes: 25345
+    executable: false
+  - path: benchmarks/API/MAA_gem5.hpp
+    sha256: 5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174
+    bytes: 27473
+    executable: false
+  - path: benchmarks/API/MAA_gem5_magic.hpp
+    sha256: e3353661cce76167a2f986385e448c2a6aef471fc8424762183bae11ba769c32
+    bytes: 9802
+    executable: false
+  - path: benchmarks/API/MAA_utility.hpp
+    sha256: 3fb818fff3a37e14d77ea009a2246788213c1e938a05515b361aceb010a2b10e
+    bytes: 786
+    executable: false
+  - path: benchmarks/gapbs/LICENSE
+    sha256: bc33e6a6a2571d48fde7fc7d30be3aa11fb0558edd46173861274ac7a1f74fc3
+    bytes: 1499
+    executable: false
+  - path: benchmarks/gapbs/src/benchmark.h
+    sha256: 87c20752c8437dd5152d00e7c995bedfab15b8929219f85846f47e0f9a4b339f
+    bytes: 3565
+    executable: false
+  - path: benchmarks/gapbs/src/bfs.cc
+    sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+    bytes: 9326
+    executable: false
+  - path: benchmarks/gapbs/src/bitmap.h
+    sha256: 6f6e444c82b0e7d797cc9218ba85be7f5f702e95d4c134715c90e6a5b1288465
+    bytes: 1706
+    executable: false
+  - path: benchmarks/gapbs/src/builder.h
+    sha256: 2d3646e12dc2ae9776cfa429aaec699d031b4826c79a356983cf109753f1eb01
+    bytes: 16778
+    executable: false
+  - path: benchmarks/gapbs/src/command_line.h
+    sha256: de1415dfe29eb6ba436d57523b2dee8fa3268a0785ae690bde9e94e9444172b2
+    bytes: 8511
+    executable: false
+  - path: benchmarks/gapbs/src/generator.h
+    sha256: 24bfdab312afdf6e552ef9a23d124332984761cdb94f109bb15009710d1dbafe
+    bytes: 6418
+    executable: false
+  - path: benchmarks/gapbs/src/graph.h
+    sha256: 79a271a3e3b01d6f02750b2b828ad94b3696eff080eb068bc3fcf80bc81139e0
+    bytes: 8276
+    executable: false
+  - path: benchmarks/gapbs/src/platform_atomics.h
+    sha256: 9c8dbe6419b34d850af33ef14ea724c1c64de369d052a8f3c6e20038dcabe9cd
+    bytes: 4198
+    executable: false
+  - path: benchmarks/gapbs/src/pvector.h
+    sha256: b3280b03eb774fdd27bbc1967c4f274e46d42179f149275e1b2c394986ebe03d
+    bytes: 4265
+    executable: false
+  - path: benchmarks/gapbs/src/reader.h
+    sha256: 951fb6e82df079389b953f35363e8a502d79da4f3c56b8ce6eab7faac38800e1
+    bytes: 9268
+    executable: false
+  - path: benchmarks/gapbs/src/sliding_queue.h
+    sha256: 3d5a1d3cff924737c2fc7c6b4fcbb859270f1fcc626c25aac4c780b7b6f4c02c
+    bytes: 2502
+    executable: false
+  - path: benchmarks/gapbs/src/timer.h
+    sha256: 3337a59a57341585d296ed01b3eb64ca7f5e02d8c0871f4920ab9d1cd7e63bcb
+    bytes: 1161
+    executable: false
+  - path: benchmarks/gapbs/src/util.h
+    sha256: a103e6c5767d724adc9b6b421ecade4b2d2c4351e5ea0da5d2c9bf16a9fcecf6
+    bytes: 1953
+    executable: false
+  - path: benchmarks/gapbs/src/writer.h
+    sha256: 3fd16ac75a8c069c7cf09d540ca35b66ec51813406b5fd2f8149253bebd9ebea
+    bytes: 2898
+    executable: false
+  - path: include/gem5/asm/generic/m5ops.h
+    sha256: 28efe83deb0cd19d5d15b73d3544c7f45238c2744531657f5aa881da643e868d
+    bytes: 5479
+    executable: false
+  - path: include/gem5/m5ops.h
+    sha256: bbef6be56e1fb63a820da56fe4306fbce67ee7bedbb43b6e72e0281c947f07e8
+    bytes: 3937
+    executable: false
+context:
+  application: dx100-gapbs
+  source:
+    origin: upstream
+    uri: https://github.com/arkhadem/DX100
+    commit: e4fc4afdf894f295442cef3604667a469fab8e62
+    local_path: apps/dx100
+  code:
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [64, 96]
+    excerpt: |-
+      void TDStep(const Graph &g, pvector<SGOffset> &VertexOffsets, pvector<NodeID> &parent, SlidingQueue<NodeID> &queue, int num_nodes, int num_edges) {
+      #ifdef GEM5
+          clear_mem_region();
+          add_mem_region(queue.beginp(), queue.endp());                   // 6
+          add_mem_region(VertexOffsets.beginp(), VertexOffsets.endp());   // 7
+          add_mem_region(g.out_neighbors_, &g.out_neighbors_[num_edges]); // 8
+          add_mem_region(parent.beginp(), parent.endp());                 // 9
+      #endif
+      #pragma omp parallel
+          {
+              QueueBuffer<NodeID> lqueue(queue);
+      #pragma omp for nowait
+              for (size_t i = queue.shared_out_start; i < queue.shared_out_end; i++) {
+                  NodeID u = queue.shared[i];
+                  for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+                      NodeID v = g.out_neighbors_[j];
+                      NodeID curr_val = parent[v];
+                      if (curr_val < 0) {
+                          // indirect write (parent, v_tile, u_tile)
+                          // core fetch v tile
+                          if (compare_and_swap(parent[v], curr_val, u)) {
+                              parent[v] = u;
+                              lqueue.push_back(v);
+                          }
+                      }
+                  }
+              }
+              lqueue.flush();
+          }
+      #ifdef GEM5
+          clear_mem_region();
+      #endif
+      }
+    sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [76, 90]
+    excerpt: |-
+      for (size_t i = queue.shared_out_start; i < queue.shared_out_end; i++) {
+                  NodeID u = queue.shared[i];
+                  for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+                      NodeID v = g.out_neighbors_[j];
+                      NodeID curr_val = parent[v];
+                      if (curr_val < 0) {
+                          // indirect write (parent, v_tile, u_tile)
+                          // core fetch v tile
+                          if (compare_and_swap(parent[v], curr_val, u)) {
+                              parent[v] = u;
+                              lqueue.push_back(v);
+                          }
+                      }
+                  }
+              }
+    sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [78, 89]
+    excerpt: |-
+      for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+                      NodeID v = g.out_neighbors_[j];
+                      NodeID curr_val = parent[v];
+                      if (curr_val < 0) {
+                          // indirect write (parent, v_tile, u_tile)
+                          // core fetch v tile
+                          if (compare_and_swap(parent[v], curr_val, u)) {
+                              parent[v] = u;
+                              lqueue.push_back(v);
+                          }
+                      }
+                  }
+    sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [98, 119]
+    excerpt: |-
+      int64_t TDStep2(const Graph &g, pvector<NodeID> &parent, SlidingQueue<NodeID> &queue) {
+          int64_t scout_count = 0;
+      #pragma omp parallel
+          {
+              QueueBuffer<NodeID> lqueue(queue);
+      #pragma omp for reduction(+ : scout_count) nowait
+              for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+                  NodeID u = *q_iter;
+                  for (NodeID v : g.out_neigh(u)) {
+                      NodeID curr_val = parent[v];
+                      if (curr_val < 0) {
+                          if (compare_and_swap(parent[v], curr_val, u)) {
+                              lqueue.push_back(v);
+                              scout_count += -curr_val;
+                          }
+                      }
+                  }
+              }
+              lqueue.flush();
+          }
+          return scout_count;
+      }
+    sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [104, 115]
+    excerpt: |-
+      for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+                  NodeID u = *q_iter;
+                  for (NodeID v : g.out_neigh(u)) {
+                      NodeID curr_val = parent[v];
+                      if (curr_val < 0) {
+                          if (compare_and_swap(parent[v], curr_val, u)) {
+                              lqueue.push_back(v);
+                              scout_count += -curr_val;
+                          }
+                      }
+                  }
+              }
+    sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [106, 114]
+    excerpt: |-
+      for (NodeID v : g.out_neigh(u)) {
+                      NodeID curr_val = parent[v];
+                      if (curr_val < 0) {
+                          if (compare_and_swap(parent[v], curr_val, u)) {
+                              lqueue.push_back(v);
+                              scout_count += -curr_val;
+                          }
+                      }
+                  }
+    sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [121, 127]
+    excerpt: |-
+      void QueueToBitmap(const SlidingQueue<NodeID> &queue, Bitmap &bm) {
+      #pragma omp parallel for
+          for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+              NodeID u = *q_iter;
+              bm.set_bit_atomic(u);
+          }
+      }
+    sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [123, 126]
+    excerpt: |-
+      for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+              NodeID u = *q_iter;
+              bm.set_bit_atomic(u);
+          }
+    sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [129, 141]
+    excerpt: |-
+      void BitmapToQueue(const Graph &g, const Bitmap &bm,
+                         SlidingQueue<NodeID> &queue) {
+      #pragma omp parallel
+          {
+              QueueBuffer<NodeID> lqueue(queue);
+      #pragma omp for nowait
+              for (NodeID n = 0; n < g.num_nodes(); n++)
+                  if (bm.get_bit(n))
+                      lqueue.push_back(n);
+              lqueue.flush();
+          }
+          queue.slide_window();
+      }
+    sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [135, 137]
+    excerpt: |-
+      for (NodeID n = 0; n < g.num_nodes(); n++)
+                  if (bm.get_bit(n))
+                      lqueue.push_back(n);
+    sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [143, 149]
+    excerpt: |-
+      pvector<NodeID> InitParent(const Graph &g) {
+          pvector<NodeID> parent(g.num_nodes());
+      #pragma omp parallel for
+          for (NodeID n = 0; n < g.num_nodes(); n++)
+              parent[n] = g.out_degree(n) != 0 ? -g.out_degree(n) : -1;
+          return parent;
+      }
+    sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [146, 147]
+    excerpt: |-
+      for (NodeID n = 0; n < g.num_nodes(); n++)
+              parent[n] = g.out_degree(n) != 0 ? -g.out_degree(n) : -1;
+    sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [151, 201]
+    excerpt: |-
+      pvector<NodeID> DOBFS(const Graph &g, NodeID source, bool logging_enabled = false,
+                            int alpha = 1, int beta = 18) {
+          int num_nodes = g.num_nodes();
+          int num_edges = g.num_edges_directed();
+          if (logging_enabled)
+              PrintStep("Source", static_cast<int64_t>(source));
+          pvector<SGOffset> VertexOffsetsOut = g.VertexOffsets();
+          Timer t;
+          alloc_MAA();
+          init_MAA();
+          t.Start();
+          pvector<NodeID> parent = InitParent(g);
+          t.Stop();
+          if (logging_enabled)
+              PrintStep("i", t.Seconds());
+          parent[source] = source;
+          SlidingQueue<NodeID> queue(g.num_nodes());
+          queue.push_back(source);
+          queue.slide_window();
+          Bitmap curr(g.num_nodes());
+          curr.reset();
+          Bitmap front(g.num_nodes());
+          front.reset();
+
+      #ifdef GEM5
+          std::cout << "ROI started: " << omp_get_num_threads() << " threads" << std::endl;
+          m5_work_begin(0, 0);
+          m5_reset_stats(0, 0);
+      #endif
+          while (!queue.empty()) {
+              std::cout << "Starting TDStep: " << queue.size() << " elements" << std::endl;
+              t.Start();
+              TDStep(g, VertexOffsetsOut, parent, queue, num_nodes, num_edges);
+              queue.slide_window();
+              t.Stop();
+              if (logging_enabled) {
+                  PrintStep("td", t.Seconds());
+              }
+          }
+      #pragma omp parallel for
+          for (NodeID n = 0; n < g.num_nodes(); n++)
+              if (parent[n] < -1)
+                  parent[n] = -1;
+      #ifdef GEM5
+          m5_dump_stats(0, 0);
+          m5_work_end(0, 0);
+          std::cout << "ROI End!!!" << std::endl;
+          m5_exit(0);
+      #endif
+          return parent;
+      }
+    sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [180, 189]
+    excerpt: |-
+      while (!queue.empty()) {
+              std::cout << "Starting TDStep: " << queue.size() << " elements" << std::endl;
+              t.Start();
+              TDStep(g, VertexOffsetsOut, parent, queue, num_nodes, num_edges);
+              queue.slide_window();
+              t.Stop();
+              if (logging_enabled) {
+                  PrintStep("td", t.Seconds());
+              }
+          }
+    sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [191, 193]
+    excerpt: |-
+      for (NodeID n = 0; n < g.num_nodes(); n++)
+              if (parent[n] < -1)
+                  parent[n] = -1;
+    sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [204, 215]
+    excerpt: |-
+      void PrintBFSStats(const Graph &g, const pvector<NodeID> &bfs_tree) {
+          int64_t tree_size = 0;
+          int64_t n_edges = 0;
+          for (NodeID n : g.vertices()) {
+              if (bfs_tree[n] >= 0) {
+                  n_edges += g.out_degree(n);
+                  tree_size++;
+              }
+          }
+          cout << "BFS Tree has " << tree_size << " nodes and ";
+          cout << n_edges << " edges" << endl;
+      }
+    sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [207, 212]
+    excerpt: |-
+      for (NodeID n : g.vertices()) {
+              if (bfs_tree[n] >= 0) {
+                  n_edges += g.out_degree(n);
+                  tree_size++;
+              }
+          }
+    sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [222, 268]
+    excerpt: |-
+      bool BFSVerifier(const Graph &g, NodeID source,
+                       const pvector<NodeID> &parent) {
+          pvector<int> depth(g.num_nodes(), -1);
+          depth[source] = 0;
+          vector<NodeID> to_visit;
+          to_visit.reserve(g.num_nodes());
+          to_visit.push_back(source);
+          for (auto it = to_visit.begin(); it != to_visit.end(); it++) {
+              NodeID u = *it;
+              for (NodeID v : g.out_neigh(u)) {
+                  if (depth[v] == -1) {
+                      depth[v] = depth[u] + 1;
+                      to_visit.push_back(v);
+                  }
+              }
+          }
+          for (NodeID u : g.vertices()) {
+              if ((depth[u] != -1) && (parent[u] != -1)) {
+                  if (u == source) {
+                      if (!((parent[u] == u) && (depth[u] == 0))) {
+                          cout << "Source wrong" << endl;
+                          return false;
+                      }
+                      continue;
+                  }
+                  bool parent_found = false;
+                  for (NodeID v : g.in_neigh(u)) {
+                      if (v == parent[u]) {
+                          if (depth[v] != depth[u] - 1) {
+                              cout << "Wrong depths for " << u << " & " << v << endl;
+                              return false;
+                          }
+                          parent_found = true;
+                          break;
+                      }
+                  }
+                  if (!parent_found) {
+                      cout << "Couldn't find edge from " << parent[u] << " to " << u << endl;
+                      return false;
+                  }
+              } else if (depth[u] != parent[u]) {
+                  cout << "Reachability mismatch" << endl;
+                  return false;
+              }
+          }
+          return true;
+      }
+    sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [229, 237]
+    excerpt: |-
+      for (auto it = to_visit.begin(); it != to_visit.end(); it++) {
+              NodeID u = *it;
+              for (NodeID v : g.out_neigh(u)) {
+                  if (depth[v] == -1) {
+                      depth[v] = depth[u] + 1;
+                      to_visit.push_back(v);
+                  }
+              }
+          }
+    sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [231, 236]
+    excerpt: |-
+      for (NodeID v : g.out_neigh(u)) {
+                  if (depth[v] == -1) {
+                      depth[v] = depth[u] + 1;
+                      to_visit.push_back(v);
+                  }
+              }
+    sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [238, 266]
+    excerpt: |-
+      for (NodeID u : g.vertices()) {
+              if ((depth[u] != -1) && (parent[u] != -1)) {
+                  if (u == source) {
+                      if (!((parent[u] == u) && (depth[u] == 0))) {
+                          cout << "Source wrong" << endl;
+                          return false;
+                      }
+                      continue;
+                  }
+                  bool parent_found = false;
+                  for (NodeID v : g.in_neigh(u)) {
+                      if (v == parent[u]) {
+                          if (depth[v] != depth[u] - 1) {
+                              cout << "Wrong depths for " << u << " & " << v << endl;
+                              return false;
+                          }
+                          parent_found = true;
+                          break;
+                      }
+                  }
+                  if (!parent_found) {
+                      cout << "Couldn't find edge from " << parent[u] << " to " << u << endl;
+                      return false;
+                  }
+              } else if (depth[u] != parent[u]) {
+                  cout << "Reachability mismatch" << endl;
+                  return false;
+              }
+          }
+    sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [248, 257]
+    excerpt: |-
+      for (NodeID v : g.in_neigh(u)) {
+                      if (v == parent[u]) {
+                          if (depth[v] != depth[u] - 1) {
+                              cout << "Wrong depths for " << u << " & " << v << endl;
+                              return false;
+                          }
+                          parent_found = true;
+                          break;
+                      }
+                  }
+    sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [270, 291]
+    excerpt: |-
+      int main(int argc, char *argv[]) {
+          CLApp cli(argc, argv, "breadth-first search");
+          if (!cli.ParseArgs())
+              return -1;
+          Builder b(cli);
+          Graph g = b.MakeGraph();
+          SourcePicker<Graph> sp(g, cli.start_vertex());
+      #ifdef GEM5
+          std::cout << "Fake Checkpoint started" << std::endl;
+          m5_checkpoint(0, 0);
+          std::cout << "Fake Checkpoint ended" << std::endl;
+      #endif
+          auto BFSBound = [&sp, &cli](const Graph &g) {
+              return DOBFS(g, sp.PickNext(), cli.logging_en());
+          };
+          SourcePicker<Graph> vsp(g, cli.start_vertex());
+          auto VerifierBound = [&vsp](const Graph &g, const pvector<NodeID> &parent) {
+              return BFSVerifier(g, vsp.PickNext(), parent);
+          };
+          BenchmarkKernel(cli, g, BFSBound, PrintBFSStats, VerifierBound);
+          return 0;
+      }
+    sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+  function: DOBFS
+  build:
+    compiler: g++
+    flags: -std=c++11 -O3 -Wall -fopenmp -pthread -DFUNC
+    command: '{cxx} {flags} -I{app}/benchmarks/API -I{app}/benchmarks/gapbs/src {source} -o {binary}'
+  run:
+    command: '{binary} {input_args} -n {trials}'
+    timer: gapbs_trial_time
+    threads_env: OMP_NUM_THREADS
+    kernel_symbols: [DOBFS, TDStep, InitParent]
+    index_stream: null
+  evaluator:
+    backend: native
+    command: '{binary} {input_args} -n 1 -v'
+    pass_regex: Verification:\s+PASS
+    verifier:
+      description: DX100 BFSVerifier structurally checks parent edges, depths and reachability from the
+        same source. Native FUNC binding; GEM5 post-ROI correctness requires its own evaluator.
+      code:
+        root: application
+        path: benchmarks/gapbs/src/bfs.cc
+        sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+        lines: [217, 268]
+  source_ancestor: null
+  source_baseline: dx100-bfs-scalar
+  comparison_baseline: null
+  verification:
+    status: passed
+    evidence:
+    - /data1/yanruj/EvolveSWDB_runs/provider-scalar-20260929-a1/bfs-dx100-scalar-only-20260929-a1.source/correctness.json
+    scope: Native correctness smoke on two small synthetic graph families; no performance claim.
+    receipt_sha256: afb88d837f2645f378af6942d9c64116957c1097dcbc156ad6f00ca19082b427
+  context_resolution: explicit
+  source_derivation:
+    date: '2026-09-29'
+    decision: docs/adr/0006-rewrite-providers-work-in-a-guarded-workspace.md
+    upstream_bfs_sha256: 6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465
+    removed_functions: [TDStepMAA, DOBFSMAA]
+    removed_pinned_line_ranges:
+    - [63, 225]
+    - [366, 443]
+    removed_main_selection: MAA branch calling DOBFSMAA
+    excluded_material: Other benchmark translation units, API examples/scripts, and old manifests.
+    purpose: From-scratch proposals cannot read the authors' accelerator BFS answer key.
+    full_snapshot: bfs-dx100-compile-20260925-a1.source
+    full_source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+regions:
+- id: function:bfs.cc:1841:92351720b886b03a
+  kind: function
+  name: TDStep
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [64, 96]
+  byte_range: [1841, 3137]
+  insertion_range: [1988, 3137]
+  source_sha256: 92351720b886b03a3170e3ce91ef579321c5cdaa516f5c6e38a7ba4c9b706aca
+  text: |-
+    void TDStep(const Graph &g, pvector<SGOffset> &VertexOffsets, pvector<NodeID> &parent, SlidingQueue<NodeID> &queue, int num_nodes, int num_edges) {
+    #ifdef GEM5
+        clear_mem_region();
+        add_mem_region(queue.beginp(), queue.endp());                   // 6
+        add_mem_region(VertexOffsets.beginp(), VertexOffsets.endp());   // 7
+        add_mem_region(g.out_neighbors_, &g.out_neighbors_[num_edges]); // 8
+        add_mem_region(parent.beginp(), parent.endp());                 // 9
+    #endif
+    #pragma omp parallel
+        {
+            QueueBuffer<NodeID> lqueue(queue);
+    #pragma omp for nowait
+            for (size_t i = queue.shared_out_start; i < queue.shared_out_end; i++) {
+                NodeID u = queue.shared[i];
+                for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+                    NodeID v = g.out_neighbors_[j];
+                    NodeID curr_val = parent[v];
+                    if (curr_val < 0) {
+                        // indirect write (parent, v_tile, u_tile)
+                        // core fetch v tile
+                        if (compare_and_swap(parent[v], curr_val, u)) {
+                            parent[v] = u;
+                            lqueue.push_back(v);
+                        }
+                    }
+                }
+            }
+            lqueue.flush();
+        }
+    #ifdef GEM5
+        clear_mem_region();
+    #endif
+    }
+  function: TDStep
+  usr: c:@F@TDStep#&1$@S@CSRGraph>#I#I#Vb1#&$@S@pvector>#I#S2_#&$@S@SlidingQueue>#I#I#I#
+  helpers: [QueueBuffer, 'operator[]', compare_and_swap, push_back, flush]
+  callers: [DOBFS]
+  referenced_types:
+  - Graph
+  - pvector
+  - SGOffset
+  - NodeID
+  - SlidingQueue
+  - QueueBuffer
+  - size_t
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.066095512
+    exclusive_thread_cpu_seconds: 0.013774622
+    invocations: 7
+    exclusive_function_thread_cpu_seconds: 0.198838717
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:1841:92351720b886b03a
+  source_association: verified_current_candidate
+- id: loop:bfs.cc:2425:784979f83d8fbb08
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [76, 90]
+  byte_range: [2425, 3062]
+  insertion_range: [2496, 3062]
+  source_sha256: 784979f83d8fbb081a978ab6f74bad01b784baf4380ab6818607f1ac77a4794d
+  text: |-
+    for (size_t i = queue.shared_out_start; i < queue.shared_out_end; i++) {
+                NodeID u = queue.shared[i];
+                for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+                    NodeID v = g.out_neighbors_[j];
+                    NodeID curr_val = parent[v];
+                    if (curr_val < 0) {
+                        // indirect write (parent, v_tile, u_tile)
+                        // core fetch v tile
+                        if (compare_and_swap(parent[v], curr_val, u)) {
+                            parent[v] = u;
+                            lqueue.push_back(v);
+                        }
+                    }
+                }
+            }
+  function: TDStep
+  usr: null
+  helpers: []
+  callers: [DOBFS]
+  referenced_types:
+  - Graph
+  - pvector
+  - SGOffset
+  - NodeID
+  - SlidingQueue
+  - QueueBuffer
+  - size_t
+  invocation_unit: OpenMP loop iteration on the executing worker thread
+  metrics:
+    inclusive_thread_cpu_seconds: 0.185064095
+    exclusive_thread_cpu_seconds: 0.1031745
+    invocations: 173900
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:1841:92351720b886b03a
+  source_association: verified_current_candidate
+- id: loop:bfs.cc:2550:4abc496fc9c3ddd0
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [78, 89]
+  byte_range: [2550, 3052]
+  insertion_range: [2550, 3052]
+  source_sha256: 4abc496fc9c3ddd0d8780135931ee02616204e21a8656a076cd73f747d04dc1c
+  text: |-
+    for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+                    NodeID v = g.out_neighbors_[j];
+                    NodeID curr_val = parent[v];
+                    if (curr_val < 0) {
+                        // indirect write (parent, v_tile, u_tile)
+                        // core fetch v tile
+                        if (compare_and_swap(parent[v], curr_val, u)) {
+                            parent[v] = u;
+                            lqueue.push_back(v);
+                        }
+                    }
+                }
+  function: TDStep
+  usr: null
+  helpers: []
+  callers: [DOBFS]
+  referenced_types:
+  - Graph
+  - pvector
+  - SGOffset
+  - NodeID
+  - SlidingQueue
+  - QueueBuffer
+  - size_t
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.081889595
+    exclusive_thread_cpu_seconds: 0.081889595
+    invocations: 173900
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:1841:92351720b886b03a
+  source_association: verified_current_candidate
+- id: function:bfs.cc:3139:cd1ef9d28c8c62ca
+  kind: function
+  name: TDStep2
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [98, 119]
+  byte_range: [3139, 3893]
+  insertion_range: [3226, 3893]
+  source_sha256: cd1ef9d28c8c62ca8a2c340177951a7dbaa740ce3e9302ea3b9ce763851a50a1
+  text: |-
+    int64_t TDStep2(const Graph &g, pvector<NodeID> &parent, SlidingQueue<NodeID> &queue) {
+        int64_t scout_count = 0;
+    #pragma omp parallel
+        {
+            QueueBuffer<NodeID> lqueue(queue);
+    #pragma omp for reduction(+ : scout_count) nowait
+            for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+                NodeID u = *q_iter;
+                for (NodeID v : g.out_neigh(u)) {
+                    NodeID curr_val = parent[v];
+                    if (curr_val < 0) {
+                        if (compare_and_swap(parent[v], curr_val, u)) {
+                            lqueue.push_back(v);
+                            scout_count += -curr_val;
+                        }
+                    }
+                }
+            }
+            lqueue.flush();
+        }
+        return scout_count;
+    }
+  function: TDStep2
+  usr: c:@F@TDStep2#&1$@S@CSRGraph>#I#I#Vb1#&$@S@pvector>#I#&$@S@SlidingQueue>#I#
+  helpers:
+  - QueueBuffer
+  - begin
+  - end
+  - out_neigh
+  - operator[]
+  - compare_and_swap
+  - push_back
+  - flush
+  callers: []
+  referenced_types: [int64_t, Graph, pvector, NodeID, SlidingQueue, QueueBuffer]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+    exclusive_function_thread_cpu_seconds: 0.0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:3139:cd1ef9d28c8c62ca
+  source_association: verified_current_candidate
+- id: loop:bfs.cc:3384:ee8a2407c2e768df
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [104, 115]
+  byte_range: [3384, 3837]
+  insertion_range: [3450, 3837]
+  source_sha256: ee8a2407c2e768dff49d6ca1d8d0f638495c6952159f63bc01e4c62e9e94565a
+  text: |-
+    for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+                NodeID u = *q_iter;
+                for (NodeID v : g.out_neigh(u)) {
+                    NodeID curr_val = parent[v];
+                    if (curr_val < 0) {
+                        if (compare_and_swap(parent[v], curr_val, u)) {
+                            lqueue.push_back(v);
+                            scout_count += -curr_val;
+                        }
+                    }
+                }
+            }
+  function: TDStep2
+  usr: null
+  helpers: []
+  callers: []
+  referenced_types: [int64_t, Graph, pvector, NodeID, SlidingQueue, QueueBuffer]
+  invocation_unit: OpenMP loop iteration on the executing worker thread
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:3139:cd1ef9d28c8c62ca
+  source_association: verified_current_candidate
+- id: loop:bfs.cc:3496:d3f90fae3543181f
+  kind: loop
+  name: range_for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [106, 114]
+  byte_range: [3496, 3827]
+  insertion_range: [3496, 3827]
+  source_sha256: d3f90fae3543181f3ce5df866bea21d3b3bb2ecd044103944273db1e4c30ff71
+  text: |-
+    for (NodeID v : g.out_neigh(u)) {
+                    NodeID curr_val = parent[v];
+                    if (curr_val < 0) {
+                        if (compare_and_swap(parent[v], curr_val, u)) {
+                            lqueue.push_back(v);
+                            scout_count += -curr_val;
+                        }
+                    }
+                }
+  function: TDStep2
+  usr: null
+  helpers: []
+  callers: []
+  referenced_types: [int64_t, Graph, pvector, NodeID, SlidingQueue, QueueBuffer]
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:3139:cd1ef9d28c8c62ca
+  source_association: verified_current_candidate
+- id: function:bfs.cc:3895:3e560c996879193b
+  kind: function
+  name: QueueToBitmap
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [121, 127]
+  byte_range: [3895, 4125]
+  insertion_range: [3962, 4125]
+  source_sha256: 3e560c996879193bc6c4b1bda8a34996b8b542c9231ad8fc5af16b7977999f4b
+  text: |-
+    void QueueToBitmap(const SlidingQueue<NodeID> &queue, Bitmap &bm) {
+    #pragma omp parallel for
+        for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+            NodeID u = *q_iter;
+            bm.set_bit_atomic(u);
+        }
+    }
+  function: QueueToBitmap
+  usr: c:@F@QueueToBitmap#&1$@S@SlidingQueue>#I#&$@S@Bitmap#
+  helpers: [begin, end, set_bit_atomic]
+  callers: []
+  referenced_types: [SlidingQueue, NodeID, Bitmap]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+    exclusive_function_thread_cpu_seconds: 0.0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:3895:3e560c996879193b
+  source_association: verified_current_candidate
+- id: loop:bfs.cc:3992:6fce0a8bf1585475
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [123, 126]
+  byte_range: [3992, 4123]
+  insertion_range: [4058, 4123]
+  source_sha256: 6fce0a8bf158547509cbb72c209724fe846ba3ee42c4c6f59f2c2bcb42bab441
+  text: |-
+    for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+            NodeID u = *q_iter;
+            bm.set_bit_atomic(u);
+        }
+  function: QueueToBitmap
+  usr: null
+  helpers: []
+  callers: []
+  referenced_types: [SlidingQueue, NodeID, Bitmap]
+  invocation_unit: OpenMP loop iteration on the executing worker thread
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:3895:3e560c996879193b
+  source_association: verified_current_candidate
+- id: function:bfs.cc:4127:9ca128eb96d3fcc8
+  kind: function
+  name: BitmapToQueue
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [129, 141]
+  byte_range: [4127, 4499]
+  insertion_range: [4229, 4499]
+  source_sha256: 9ca128eb96d3fcc8f69d73fee58e9fcd06cf8627e0d3b1dee4b8c9ee5226697a
+  text: |-
+    void BitmapToQueue(const Graph &g, const Bitmap &bm,
+                       SlidingQueue<NodeID> &queue) {
+    #pragma omp parallel
+        {
+            QueueBuffer<NodeID> lqueue(queue);
+    #pragma omp for nowait
+            for (NodeID n = 0; n < g.num_nodes(); n++)
+                if (bm.get_bit(n))
+                    lqueue.push_back(n);
+            lqueue.flush();
+        }
+        queue.slide_window();
+    }
+  function: BitmapToQueue
+  usr: c:@F@BitmapToQueue#&1$@S@CSRGraph>#I#I#Vb1#&1$@S@Bitmap#&$@S@SlidingQueue>#I#
+  helpers: [QueueBuffer, num_nodes, get_bit, push_back, flush, slide_window]
+  callers: []
+  referenced_types: [Graph, Bitmap, SlidingQueue, NodeID, QueueBuffer]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+    exclusive_function_thread_cpu_seconds: 0.0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:4127:9ca128eb96d3fcc8
+  source_association: verified_current_candidate
+- id: loop:bfs.cc:4331:ec35536f223b52f4
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [135, 137]
+  byte_range: [4331, 4441]
+  insertion_range: [4386, 4441]
+  source_sha256: ec35536f223b52f4377c50e849b0d1edb09134486bb9fc5a82f3ea97301015e9
+  text: |-
+    for (NodeID n = 0; n < g.num_nodes(); n++)
+                if (bm.get_bit(n))
+                    lqueue.push_back(n);
+  function: BitmapToQueue
+  usr: null
+  helpers: []
+  callers: []
+  referenced_types: [Graph, Bitmap, SlidingQueue, NodeID, QueueBuffer]
+  invocation_unit: OpenMP loop iteration on the executing worker thread
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:4127:9ca128eb96d3fcc8
+  source_association: verified_current_candidate
+- id: function:bfs.cc:4501:a64d92c2d52fcfe5
+  kind: function
+  name: InitParent
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [143, 149]
+  byte_range: [4501, 4747]
+  insertion_range: [4545, 4747]
+  source_sha256: a64d92c2d52fcfe583c71a23b2ca992cac0cdd0549e8a92b0fb5cf331a91ee1a
+  text: |-
+    pvector<NodeID> InitParent(const Graph &g) {
+        pvector<NodeID> parent(g.num_nodes());
+    #pragma omp parallel for
+        for (NodeID n = 0; n < g.num_nodes(); n++)
+            parent[n] = g.out_degree(n) != 0 ? -g.out_degree(n) : -1;
+        return parent;
+    }
+  function: InitParent
+  usr: c:@F@InitParent#&1$@S@CSRGraph>#I#I#Vb1#
+  helpers: [pvector, num_nodes, 'operator[]', out_degree]
+  callers: [DOBFS]
+  referenced_types: [pvector, NodeID, Graph]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.038687582
+    exclusive_thread_cpu_seconds: 0.022408002
+    invocations: 1
+    exclusive_function_thread_cpu_seconds: 0.098602766
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:4501:a64d92c2d52fcfe5
+  source_association: verified_current_candidate
+- id: loop:bfs.cc:4618:7429be52f28ee4f6
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [146, 147]
+  byte_range: [4618, 4726]
+  insertion_range: [4669, 4726]
+  source_sha256: 7429be52f28ee4f605b59b8f8f8963bc23d10594fb262ed1fa032c095231adca
+  text: |-
+    for (NodeID n = 0; n < g.num_nodes(); n++)
+            parent[n] = g.out_degree(n) != 0 ? -g.out_degree(n) : -1;
+  function: InitParent
+  usr: null
+  helpers: []
+  callers: [DOBFS]
+  referenced_types: [pvector, NodeID, Graph]
+  invocation_unit: OpenMP loop iteration on the executing worker thread
+  metrics:
+    inclusive_thread_cpu_seconds: 0.076194764
+    exclusive_thread_cpu_seconds: 0.076194764
+    invocations: 262143
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:4501:a64d92c2d52fcfe5
+  source_association: verified_current_candidate
+- id: function:bfs.cc:4749:76a956649bfe9705
+  kind: function
+  name: DOBFS
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [151, 201]
+  byte_range: [4749, 6300]
+  insertion_range: [4885, 6300]
+  source_sha256: 76a956649bfe97051a02af951fec5f4bc552440d0fb952c642fa4a5968d9cae5
+  text: |-
+    pvector<NodeID> DOBFS(const Graph &g, NodeID source, bool logging_enabled = false,
+                          int alpha = 1, int beta = 18) {
+        int num_nodes = g.num_nodes();
+        int num_edges = g.num_edges_directed();
+        if (logging_enabled)
+            PrintStep("Source", static_cast<int64_t>(source));
+        pvector<SGOffset> VertexOffsetsOut = g.VertexOffsets();
+        Timer t;
+        alloc_MAA();
+        init_MAA();
+        t.Start();
+        pvector<NodeID> parent = InitParent(g);
+        t.Stop();
+        if (logging_enabled)
+            PrintStep("i", t.Seconds());
+        parent[source] = source;
+        SlidingQueue<NodeID> queue(g.num_nodes());
+        queue.push_back(source);
+        queue.slide_window();
+        Bitmap curr(g.num_nodes());
+        curr.reset();
+        Bitmap front(g.num_nodes());
+        front.reset();
+
+    #ifdef GEM5
+        std::cout << "ROI started: " << omp_get_num_threads() << " threads" << std::endl;
+        m5_work_begin(0, 0);
+        m5_reset_stats(0, 0);
+    #endif
+        while (!queue.empty()) {
+            std::cout << "Starting TDStep: " << queue.size() << " elements" << std::endl;
+            t.Start();
+            TDStep(g, VertexOffsetsOut, parent, queue, num_nodes, num_edges);
+            queue.slide_window();
+            t.Stop();
+            if (logging_enabled) {
+                PrintStep("td", t.Seconds());
+            }
+        }
+    #pragma omp parallel for
+        for (NodeID n = 0; n < g.num_nodes(); n++)
+            if (parent[n] < -1)
+                parent[n] = -1;
+    #ifdef GEM5
+        m5_dump_stats(0, 0);
+        m5_work_end(0, 0);
+        std::cout << "ROI End!!!" << std::endl;
+        m5_exit(0);
+    #endif
+        return parent;
+    }
+  function: DOBFS
+  usr: c:@F@DOBFS#&1$@S@CSRGraph>#I#I#Vb1#I#b#I#I#
+  helpers:
+  - num_nodes
+  - num_edges_directed
+  - PrintStep
+  - basic_string
+  - VertexOffsets
+  - Timer
+  - alloc_MAA
+  - init_MAA
+  - Start
+  - InitParent
+  - Stop
+  - Seconds
+  - operator[]
+  - SlidingQueue
+  - push_back
+  - slide_window
+  - Bitmap
+  - reset
+  - empty
+  - operator<<
+  - size
+  - TDStep
+  - pvector
+  callers: [main]
+  referenced_types:
+  - pvector
+  - NodeID
+  - Graph
+  - int64_t
+  - SGOffset
+  - Timer
+  - SlidingQueue
+  - Bitmap
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.14269003
+    exclusive_thread_cpu_seconds: 0.021784619
+    invocations: 1
+    exclusive_function_thread_cpu_seconds: 0.085662264
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:4749:76a956649bfe9705
+  source_association: verified_current_candidate
+- id: loop:bfs.cc:5684:db5227d6bf4ba808
+  kind: loop
+  name: while
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [180, 189]
+  byte_range: [5684, 6024]
+  insertion_range: [5684, 6024]
+  source_sha256: db5227d6bf4ba80839e6e815da4a5de5020fd6be3e1147e55f92927b50c3b430
+  text: |-
+    while (!queue.empty()) {
+            std::cout << "Starting TDStep: " << queue.size() << " elements" << std::endl;
+            t.Start();
+            TDStep(g, VertexOffsetsOut, parent, queue, num_nodes, num_edges);
+            queue.slide_window();
+            t.Stop();
+            if (logging_enabled) {
+                PrintStep("td", t.Seconds());
+            }
+        }
+  function: DOBFS
+  usr: null
+  helpers: []
+  callers: [main]
+  referenced_types:
+  - pvector
+  - NodeID
+  - Graph
+  - int64_t
+  - SGOffset
+  - Timer
+  - SlidingQueue
+  - Bitmap
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0662245
+    exclusive_thread_cpu_seconds: 0.000128988
+    invocations: 1
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:4749:76a956649bfe9705
+  source_association: verified_current_candidate
+- id: loop:bfs.cc:6054:01da7bd21c1235d7
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [191, 193]
+  byte_range: [6054, 6152]
+  insertion_range: [6105, 6152]
+  source_sha256: 01da7bd21c1235d7332ac2bf4123b457ff5757c5477c545eca47d07fb8f67c63
+  text: |-
+    for (NodeID n = 0; n < g.num_nodes(); n++)
+            if (parent[n] < -1)
+                parent[n] = -1;
+  function: DOBFS
+  usr: null
+  helpers: []
+  callers: [main]
+  referenced_types:
+  - pvector
+  - NodeID
+  - Graph
+  - int64_t
+  - SGOffset
+  - Timer
+  - SlidingQueue
+  - Bitmap
+  invocation_unit: OpenMP loop iteration on the executing worker thread
+  metrics:
+    inclusive_thread_cpu_seconds: 0.063748657
+    exclusive_thread_cpu_seconds: 0.063748657
+    invocations: 262143
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:4749:76a956649bfe9705
+  source_association: verified_current_candidate
+- id: function:bfs.cc:6303:660ca89daefffcee
+  kind: function
+  name: PrintBFSStats
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [204, 215]
+  byte_range: [6303, 6675]
+  insertion_range: [6372, 6675]
+  source_sha256: 660ca89daefffcee213996f21b5338c0cd52f823457bf58e3a994bee95d05a04
+  text: |-
+    void PrintBFSStats(const Graph &g, const pvector<NodeID> &bfs_tree) {
+        int64_t tree_size = 0;
+        int64_t n_edges = 0;
+        for (NodeID n : g.vertices()) {
+            if (bfs_tree[n] >= 0) {
+                n_edges += g.out_degree(n);
+                tree_size++;
+            }
+        }
+        cout << "BFS Tree has " << tree_size << " nodes and ";
+        cout << n_edges << " edges" << endl;
+    }
+  function: PrintBFSStats
+  usr: c:@F@PrintBFSStats#&1$@S@CSRGraph>#I#I#Vb1#&1$@S@pvector>#I#
+  helpers: [operator*, vertices, 'operator[]', out_degree, operator<<]
+  callers: []
+  referenced_types: [Graph, pvector, NodeID, int64_t]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+    exclusive_function_thread_cpu_seconds: 0.0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:6303:660ca89daefffcee
+  source_association: verified_current_candidate
+- id: loop:bfs.cc:6429:a8105cce278141c3
+  kind: loop
+  name: range_for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [207, 212]
+  byte_range: [6429, 6573]
+  insertion_range: [6429, 6573]
+  source_sha256: a8105cce278141c3759b9973c40c12789eb0f32462d9e43ba7ce4242d825b6ce
+  text: |-
+    for (NodeID n : g.vertices()) {
+            if (bfs_tree[n] >= 0) {
+                n_edges += g.out_degree(n);
+                tree_size++;
+            }
+        }
+  function: PrintBFSStats
+  usr: null
+  helpers: []
+  callers: []
+  referenced_types: [Graph, pvector, NodeID, int64_t]
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:6303:660ca89daefffcee
+  source_association: verified_current_candidate
+- id: function:bfs.cc:6941:546ec83dfdeaf3fe
+  kind: function
+  name: BFSVerifier
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [222, 268]
+  byte_range: [6941, 8542]
+  insertion_range: [7038, 8542]
+  source_sha256: 546ec83dfdeaf3fec444ebfcc1c70b72588f13dd21194e0d19146a5d6f5f5d96
+  text: |-
+    bool BFSVerifier(const Graph &g, NodeID source,
+                     const pvector<NodeID> &parent) {
+        pvector<int> depth(g.num_nodes(), -1);
+        depth[source] = 0;
+        vector<NodeID> to_visit;
+        to_visit.reserve(g.num_nodes());
+        to_visit.push_back(source);
+        for (auto it = to_visit.begin(); it != to_visit.end(); it++) {
+            NodeID u = *it;
+            for (NodeID v : g.out_neigh(u)) {
+                if (depth[v] == -1) {
+                    depth[v] = depth[u] + 1;
+                    to_visit.push_back(v);
+                }
+            }
+        }
+        for (NodeID u : g.vertices()) {
+            if ((depth[u] != -1) && (parent[u] != -1)) {
+                if (u == source) {
+                    if (!((parent[u] == u) && (depth[u] == 0))) {
+                        cout << "Source wrong" << endl;
+                        return false;
+                    }
+                    continue;
+                }
+                bool parent_found = false;
+                for (NodeID v : g.in_neigh(u)) {
+                    if (v == parent[u]) {
+                        if (depth[v] != depth[u] - 1) {
+                            cout << "Wrong depths for " << u << " & " << v << endl;
+                            return false;
+                        }
+                        parent_found = true;
+                        break;
+                    }
+                }
+                if (!parent_found) {
+                    cout << "Couldn't find edge from " << parent[u] << " to " << u << endl;
+                    return false;
+                }
+            } else if (depth[u] != parent[u]) {
+                cout << "Reachability mismatch" << endl;
+                return false;
+            }
+        }
+        return true;
+    }
+  function: BFSVerifier
+  usr: c:@F@BFSVerifier#&1$@S@CSRGraph>#I#I#Vb1#I#&1$@S@pvector>#I#
+  helpers:
+  - pvector
+  - num_nodes
+  - operator[]
+  - vector
+  - reserve
+  - push_back
+  - begin
+  - operator!=
+  - end
+  - operator++
+  - operator*
+  - out_neigh
+  - vertices
+  - operator<<
+  - in_neigh
+  callers: [main]
+  referenced_types: [Graph, NodeID, pvector, vector]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+    exclusive_function_thread_cpu_seconds: 0.0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:6941:546ec83dfdeaf3fe
+  source_association: verified_current_candidate
+- id: loop:bfs.cc:7207:859f5c781239d2af
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [229, 237]
+  byte_range: [7207, 7479]
+  insertion_range: [7207, 7479]
+  source_sha256: 859f5c781239d2afa384246228ba88c634694e7be3bfb36835a19fd12fa81a8a
+  text: |-
+    for (auto it = to_visit.begin(); it != to_visit.end(); it++) {
+            NodeID u = *it;
+            for (NodeID v : g.out_neigh(u)) {
+                if (depth[v] == -1) {
+                    depth[v] = depth[u] + 1;
+                    to_visit.push_back(v);
+                }
+            }
+        }
+  function: BFSVerifier
+  usr: null
+  helpers: []
+  callers: [main]
+  referenced_types: [Graph, NodeID, pvector, vector]
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:6941:546ec83dfdeaf3fe
+  source_association: verified_current_candidate
+- id: loop:bfs.cc:7302:696dcb82ce1ee80d
+  kind: loop
+  name: range_for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [231, 236]
+  byte_range: [7302, 7473]
+  insertion_range: [7302, 7473]
+  source_sha256: 696dcb82ce1ee80df7e1500bbf764349585ad5968d8f45e5aac89c3ce28c0175
+  text: |-
+    for (NodeID v : g.out_neigh(u)) {
+                if (depth[v] == -1) {
+                    depth[v] = depth[u] + 1;
+                    to_visit.push_back(v);
+                }
+            }
+  function: BFSVerifier
+  usr: null
+  helpers: []
+  callers: [main]
+  referenced_types: [Graph, NodeID, pvector, vector]
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:6941:546ec83dfdeaf3fe
+  source_association: verified_current_candidate
+- id: loop:bfs.cc:7484:5688108067948590
+  kind: loop
+  name: range_for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [238, 266]
+  byte_range: [7484, 8523]
+  insertion_range: [7484, 8523]
+  source_sha256: 568810806794859013d79d3866031532944edd5e06bf0ef002028cde36deb171
+  text: |-
+    for (NodeID u : g.vertices()) {
+            if ((depth[u] != -1) && (parent[u] != -1)) {
+                if (u == source) {
+                    if (!((parent[u] == u) && (depth[u] == 0))) {
+                        cout << "Source wrong" << endl;
+                        return false;
+                    }
+                    continue;
+                }
+                bool parent_found = false;
+                for (NodeID v : g.in_neigh(u)) {
+                    if (v == parent[u]) {
+                        if (depth[v] != depth[u] - 1) {
+                            cout << "Wrong depths for " << u << " & " << v << endl;
+                            return false;
+                        }
+                        parent_found = true;
+                        break;
+                    }
+                }
+                if (!parent_found) {
+                    cout << "Couldn't find edge from " << parent[u] << " to " << u << endl;
+                    return false;
+                }
+            } else if (depth[u] != parent[u]) {
+                cout << "Reachability mismatch" << endl;
+                return false;
+            }
+        }
+  function: BFSVerifier
+  usr: null
+  helpers: []
+  callers: [main]
+  referenced_types: [Graph, NodeID, pvector, vector]
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:6941:546ec83dfdeaf3fe
+  source_association: verified_current_candidate
+- id: loop:bfs.cc:7857:61928faa9fc30778
+  kind: loop
+  name: range_for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [248, 257]
+  byte_range: [7857, 8219]
+  insertion_range: [7857, 8219]
+  source_sha256: 61928faa9fc30778009b87fb9807969ac3532e62625421b22b79cd25b03ac08c
+  text: |-
+    for (NodeID v : g.in_neigh(u)) {
+                    if (v == parent[u]) {
+                        if (depth[v] != depth[u] - 1) {
+                            cout << "Wrong depths for " << u << " & " << v << endl;
+                            return false;
+                        }
+                        parent_found = true;
+                        break;
+                    }
+                }
+  function: BFSVerifier
+  usr: null
+  helpers: []
+  callers: [main]
+  referenced_types: [Graph, NodeID, pvector, vector]
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:6941:546ec83dfdeaf3fe
+  source_association: verified_current_candidate
+- id: function:bfs.cc:8544:b8910255bbc0a83f
+  kind: function
+  name: main
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [270, 291]
+  byte_range: [8544, 9325]
+  insertion_range: [8578, 9325]
+  source_sha256: b8910255bbc0a83f712aeea1d7fe3a01bbade5870c570405697a878360c5dad6
+  text: |-
+    int main(int argc, char *argv[]) {
+        CLApp cli(argc, argv, "breadth-first search");
+        if (!cli.ParseArgs())
+            return -1;
+        Builder b(cli);
+        Graph g = b.MakeGraph();
+        SourcePicker<Graph> sp(g, cli.start_vertex());
+    #ifdef GEM5
+        std::cout << "Fake Checkpoint started" << std::endl;
+        m5_checkpoint(0, 0);
+        std::cout << "Fake Checkpoint ended" << std::endl;
+    #endif
+        auto BFSBound = [&sp, &cli](const Graph &g) {
+            return DOBFS(g, sp.PickNext(), cli.logging_en());
+        };
+        SourcePicker<Graph> vsp(g, cli.start_vertex());
+        auto VerifierBound = [&vsp](const Graph &g, const pvector<NodeID> &parent) {
+            return BFSVerifier(g, vsp.PickNext(), parent);
+        };
+        BenchmarkKernel(cli, g, BFSBound, PrintBFSStats, VerifierBound);
+        return 0;
+    }
+  function: main
+  usr: c:@F@main#I#**C#
+  helpers:
+  - CLApp
+  - basic_string
+  - ParseArgs
+  - BuilderBase
+  - MakeGraph
+  - SourcePicker
+  - start_vertex
+  - DOBFS
+  - PickNext
+  - logging_en
+  - BFSVerifier
+  - BenchmarkKernel
+  - (lambda at /data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src/bfs.cc:282:21)
+  - (lambda at /data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src/bfs.cc:286:26)
+  callers: []
+  referenced_types: [CLApp, Builder, Graph, SourcePicker, pvector, NodeID]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+    exclusive_function_thread_cpu_seconds: 0.0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:8544:b8910255bbc0a83f
+  source_association: verified_current_candidate
+protections:
+- path: benchmarks/gapbs/src/bfs.cc
+  kind: verifier
+  text: |
+    // BFS verifier does a serial BFS from same source and asserts:
+    // - parent[source] = source
+    // - parent[v] = u  =>  depth[v] = depth[u] + 1 (except for source)
+    // - parent[v] = u  => there is edge from u to v
+    // - all vertices reachable from source have a parent
+    bool BFSVerifier(const Graph &g, NodeID source,
+                     const pvector<NodeID> &parent) {
+        pvector<int> depth(g.num_nodes(), -1);
+        depth[source] = 0;
+        vector<NodeID> to_visit;
+        to_visit.reserve(g.num_nodes());
+        to_visit.push_back(source);
+        for (auto it = to_visit.begin(); it != to_visit.end(); it++) {
+            NodeID u = *it;
+            for (NodeID v : g.out_neigh(u)) {
+                if (depth[v] == -1) {
+                    depth[v] = depth[u] + 1;
+                    to_visit.push_back(v);
+                }
+            }
+        }
+        for (NodeID u : g.vertices()) {
+            if ((depth[u] != -1) && (parent[u] != -1)) {
+                if (u == source) {
+                    if (!((parent[u] == u) && (depth[u] == 0))) {
+                        cout << "Source wrong" << endl;
+                        return false;
+                    }
+                    continue;
+                }
+                bool parent_found = false;
+                for (NodeID v : g.in_neigh(u)) {
+                    if (v == parent[u]) {
+                        if (depth[v] != depth[u] - 1) {
+                            cout << "Wrong depths for " << u << " & " << v << endl;
+                            return false;
+                        }
+                        parent_found = true;
+                        break;
+                    }
+                }
+                if (!parent_found) {
+                    cout << "Couldn't find edge from " << parent[u] << " to " << u << endl;
+                    return false;
+                }
+            } else if (depth[u] != parent[u]) {
+                cout << "Reachability mismatch" << endl;
+                return false;
+            }
+        }
+        return true;
+    }
+- path: benchmarks/gapbs/src/benchmark.h
+  kind: file
+  sha256: 87c20752c8437dd5152d00e7c995bedfab15b8929219f85846f47e0f9a4b339f
+- path: benchmarks/gapbs/src/bfs.cc
+  kind: roi_calls
+  calls: ['m5_work_begin(0, 0);', 'm5_reset_stats(0, 0);', 'm5_dump_stats(0, 0);', 'm5_work_end(0, 0);',
+    m5_exit(0);]
+- path: benchmarks/gapbs/src/command_line.h
+  kind: file
+  sha256: de1415dfe29eb6ba436d57523b2dee8fa3268a0785ae690bde9e94e9444172b2
+- path: benchmarks/gapbs/src/timer.h
+  kind: file
+  sha256: 3337a59a57341585d296ed01b3eb64ca7f5e02d8c0871f4920ab9d1cd7e63bcb
+- path: include/gem5/m5ops.h
+  kind: roi_calls
+  calls:
+  - m5_exit(uint64_t ns_delay);
+  - m5_reset_stats(uint64_t ns_delay, uint64_t ns_period);
+  - m5_dump_stats(uint64_t ns_delay, uint64_t ns_period);
+  - m5_work_begin(uint64_t workid, uint64_t threadid);
+  - m5_work_end(uint64_t workid, uint64_t threadid);

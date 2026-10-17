@@ -1,0 +1,35 @@
+{
+  "acceptance": false,
+  "all_actual_goal_terms_unchanged": true,
+  "auditor": {
+    "bytes": 46019,
+    "path": "prototype/25-closed-lifetime-glue-20261016/cold-auditor-v5.py",
+    "sha256": "121761cf8e8298417a38271662262e2ab1fc155152c5ddc4d23e1805d8dfd17d"
+  },
+  "author_remote_execution": false,
+  "classification": "INERT_PASSIVE_EXACT_POSITIVE_SOURCE_REDUCTION",
+  "controls_external_processes_executed": 0,
+  "created": "2026-10-16 ET",
+  "defining_equality_discharged_only_by_universal_substitution": true,
+  "each_positive_goal_retained_antecedents": 9,
+  "exact_inverse_to_v4": true,
+  "previous_actual_refusal": {
+    "bytes": 334,
+    "checks_before_refusal": 93632,
+    "goal": "positive.exit_image",
+    "sha256": "034e9cb658ed6b51eb64665d7fa644e4cf9dfcbee9b3cf100e08f49b319544be"
+  },
+  "previous_auditor_sha256": "aed8c5402047f13f4a02aa371eef80499accef8b490ae4feadc1883b2bc1d3dc",
+  "pure_controls": [
+    "positive.exit_image: nine retained antecedents individually tamper checked",
+    "positive.exit_image: fresh_equality_missing_refused",
+    "positive.exit_image: fresh_term_changed_refused",
+    "positive.exit_image: buffer_binder_sort_changed_refused",
+    "positive.cleanup: nine retained antecedents individually tamper checked",
+    "positive.cleanup: fresh_equality_missing_refused",
+    "positive.cleanup: fresh_term_changed_refused",
+    "positive.cleanup: buffer_binder_sort_changed_refused"
+  ],
+  "scope": "Only additional full source-goal variants for the two positive cases. No actual goal rewriting, missing antecedent, sibling theorem, new caller premise or proof-result change.",
+  "source_function_unfolded": "L_t25_closed_positive(loop,r,n) = put_integer(loop,r,8,n)"
+}

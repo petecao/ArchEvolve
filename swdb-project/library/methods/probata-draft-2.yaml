@@ -1,0 +1,173 @@
+# Created: 2026-10-15 ET. Immutable draft checkpoint; ticket 59 alone freezes the method.
+# New revisions use a new sequence/file. Draft 1 remains unchanged.
+# ACSL 1.24 corresponds to Frama-C 33 Arsenic: https://frama-c.com/acsl.html
+# The development pin includes the pending Reduction.v; naming its theorem does not assert it is proven.
+# Solver order changed; versions and per-solver budgets did not. No speed claim follows.
+id: method.probata-draft-2
+kind: method_version
+sequence: 2
+status: draft
+created: '2026-10-15'
+evidence_kind: execution
+description: 'Probata draft checkpoint: current C lowering, std models, fail-closed
+  setup and fresh verdict reader, and the checked composition development. Allocation
+  lifetime, the DX100 reduction theorem and downstream acceptance remain incomplete;
+  this is not a method freeze.'
+lineup:
+- role: front_end
+  tool: clang
+  version: 22.1.8
+  flags:
+  - -std=c++17
+  - -fopenmp
+- role: bounded_verifier
+  tool: cbmc
+  version: '6.11'
+  flags:
+  - --sat-solver
+  - cadical
+- role: concurrent_bounded_verifier
+  tool: civl
+  version: '1.23'
+  flags:
+  - verify
+- role: second_refuter
+  tool: genmc
+  version: 0.19.0
+  flags:
+  - --rc11
+  - --disable-mm-detector
+  - --print-error-trace
+- role: unbounded_verifier
+  tool: frama-c-wp
+  version: '33.0'
+  flags:
+  - -wp
+  - -wp-rte
+  - -wp-cache
+  - none
+  - -wp-model
+  - +real
+  - -wp-par
+  - '1'
+  - -machdep
+  - x86_64
+- role: solver
+  tool: z3
+  version: 5.1.0
+  flags: []
+- role: solver
+  tool: cvc5
+  version: 1.2.1
+  flags: []
+- role: solver
+  tool: alt-ergo
+  version: 2.6.4
+  flags: []
+- role: proof_assistant
+  tool: rocq
+  version: 9.3.0
+  flags: []
+civl:
+  java:
+    tool: openjdk
+    version: 21.0.12.1
+    flags:
+    - -Xmx4g
+  memory_model: sequential_consistency
+  result_line: All errors marked with '+' are absent
+  exit_code: CIVL exits 0 even on a bug; the verdict is read from its result line
+    (ticket 03)
+genmc:
+  memory_model: rc11
+  memory_model_detector: disabled
+  error_exit_code: 42
+openmp_runtime:
+  name: libomp
+  version: 22.1.8
+c_lowering:
+  subset:
+    id: swdb-c-lowering-3.subset
+    sha256: c79525bd9920b2647ab8c3c9bd1a365eaa5e2fbcd2ab66111d42daca1fd65593
+  translators:
+  - id: swdb-c-lowering-3
+    sha256: c79525bd9920b2647ab8c3c9bd1a365eaa5e2fbcd2ab66111d42daca1fd65593
+  - id: swdb-cbmc-translator-3
+    sha256: 342318cd069c8f1f21f1d0e869cddb0c30e11415b4477004adf90455c2f21813
+  naming_rules:
+    id: kept-names.3
+    sha256: 64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4
+acsl_version: '1.24'
+proof_hint_vocabulary:
+- loop_invariant
+- loop_assigns
+- loop_variant
+- assert
+- ghost
+- predicate
+- logic
+- lemma
+- wp_strategy
+checks:
+  proof_setup_check:
+    version: '1'
+    sha256: 5f5b3e343880fe65990a3aa47b335415cb2fee9cfa6e74fa8ceb7f80f9afe71f
+  verdict_reading:
+    version: '1'
+    sha256: 5f5b3e343880fe65990a3aa47b335415cb2fee9cfa6e74fa8ceb7f80f9afe71f
+  proof_hint_check:
+    version: '1'
+    sha256: 5eb1f8185f940f7bded3614155409a26c5bd6bc3b7b91c9041500ffbb28e49a0
+budgets:
+  hint_rounds: 10
+  hint_loop_wall_minutes: 60
+  bounded_job_minutes: 15
+  counterexample_repair_rounds: 5
+  wp_seconds_per_solver: 30
+  civl_k: 3
+prompts:
+  not_yet_built: Tickets 34 and 37 write the proof-hint agent prompts.
+shared_action_kinds:
+- claim
+- min_update
+- atomic_add_or
+- openmp_reduction
+- queue_reserve
+sharing_classes:
+- read_only
+- thread_owned
+- shared_actions_only
+- lock_protected
+logic_library:
+  id: library-logic-1.0
+  sha256: 42893946b3419945e742e225662c730c106c0b4f57f753d2efd07f53ee4e1b9c
+  files:
+  - id: logic.access
+    version: '1.0'
+    sha256: 5dc8759e19002173e6a04422900ab178f4871391380b1981837bdeb8d058b379
+  - id: logic.csr_graph
+    version: '1.0'
+    sha256: 3149c52daf3b6d3196a456e0b636cd9ff2390574694dd660322a61a6cf1efc60
+  - id: logic.sets
+    version: '1.0'
+    sha256: 90d7762042cbfc8976a7f4dc1176d5c5bea659064512fc44c5880f65cabf9de9
+  - id: logic.sum
+    version: '1.0'
+    sha256: aaf0b33061b4883106d0d71e58d9f67da2f3538acd09290e0fd921100da04c26
+  sum_library:
+    id: logic.sum
+    version: '1.0'
+    sha256: aaf0b33061b4883106d0d71e58d9f67da2f3538acd09290e0fd921100da04c26
+models:
+  std_vector:
+    id: swdb-std-models-1
+    sha256: 2b8d6a9a918c4c0ff71fc03f4652bda050df3abe877ac4b073677551cf6ff3b7
+  std_pair:
+    id: swdb-std-models-1
+    sha256: 2b8d6a9a918c4c0ff71fc03f4652bda050df3abe877ac4b073677551cf6ff3b7
+rocq_development:
+  id: rocq.probata
+  sha256: 80f8f8434ed6faf65dcdd65abf0b8913923c26c73c75935332ff42f6087b3f66
+  composition_theorem: Composition.parallel_composition
+  dx100_reduction_lemma: Reduction.dx100_reduction
+ghost_capacity_k: 32

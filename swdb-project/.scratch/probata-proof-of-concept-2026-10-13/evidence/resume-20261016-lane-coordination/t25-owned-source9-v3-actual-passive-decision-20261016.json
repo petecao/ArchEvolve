@@ -1,0 +1,496 @@
+{
+  "all_nine_leaves": [
+    {
+      "failure_class": null,
+      "id": "move.destination_header",
+      "native_exit": 0,
+      "native_status_snippet": [],
+      "ordinary_count": 1,
+      "ordinary_goals": [
+        {
+          "function": null,
+          "goal": "typed_real_check_lemma_t25_owned_effect_move_destination_header",
+          "property": "check_lemma_t25_owned_effect_move_destination_header",
+          "seconds": 0.471,
+          "smoke": false,
+          "solver": "alt-ergo",
+          "source": "wp_json",
+          "status": "valid"
+        }
+      ],
+      "outcome_pin": {
+        "bytes": 678,
+        "sha256": "fde84e741a2fd89c66390e7050c38b8c1efe26ec3ec2d091f527b5fe16fb0f80"
+      },
+      "peak_rss_bytes": 172994560,
+      "producer_verdict": "proven",
+      "smoke_count": 0,
+      "task_census_pin": {
+        "bytes": 2271,
+        "sha256": "8683b7f109a546d0953a4b8df40a69ff11e592b4f6111d8ea739e83f4b330d73"
+      },
+      "wall_seconds": 1.5879103690385818
+    },
+    {
+      "failure_class": null,
+      "id": "move.source_empty",
+      "native_exit": 0,
+      "native_status_snippet": [],
+      "ordinary_count": 1,
+      "ordinary_goals": [
+        {
+          "function": null,
+          "goal": "typed_real_check_lemma_t25_owned_effect_move_source_empty",
+          "property": "check_lemma_t25_owned_effect_move_source_empty",
+          "seconds": 0.468,
+          "smoke": false,
+          "solver": "alt-ergo",
+          "source": "wp_json",
+          "status": "valid"
+        }
+      ],
+      "outcome_pin": {
+        "bytes": 666,
+        "sha256": "0baa02b011c71d1f5060a3688688304573bf18eeef92aacf508ee2e67239b752"
+      },
+      "peak_rss_bytes": 172969984,
+      "producer_verdict": "proven",
+      "smoke_count": 0,
+      "task_census_pin": {
+        "bytes": 2241,
+        "sha256": "bc136a1cba064cee8d27d7a4315649bad2973ec5bf52026a89f9f5b60269aace"
+      },
+      "wall_seconds": 1.5838725212961435
+    },
+    {
+      "failure_class": null,
+      "id": "move.incoming_frame",
+      "native_exit": 0,
+      "native_status_snippet": [],
+      "ordinary_count": 1,
+      "ordinary_goals": [
+        {
+          "function": null,
+          "goal": "typed_real_check_lemma_t25_owned_effect_move_incoming_frame",
+          "property": "check_lemma_t25_owned_effect_move_incoming_frame",
+          "seconds": 0.274,
+          "smoke": false,
+          "solver": "alt-ergo",
+          "source": "wp_json",
+          "status": "valid"
+        }
+      ],
+      "outcome_pin": {
+        "bytes": 670,
+        "sha256": "a6346bd099362f2d470147b6a27b07d05e30ce0669573c48fc7762535c7d6ab0"
+      },
+      "peak_rss_bytes": 171421696,
+      "producer_verdict": "proven",
+      "smoke_count": 0,
+      "task_census_pin": {
+        "bytes": 2251,
+        "sha256": "c1db3b98362c8f7c5eda187864390e6623acc3815fb9950299f1eb135670489b"
+      },
+      "wall_seconds": 1.414206770248711
+    },
+    {
+      "failure_class": null,
+      "id": "move.owner_correspondence",
+      "native_exit": 0,
+      "native_status_snippet": [],
+      "ordinary_count": 1,
+      "ordinary_goals": [
+        {
+          "function": null,
+          "goal": "typed_real_check_lemma_t25_owned_effect_move_owner_correspondence",
+          "property": "check_lemma_t25_owned_effect_move_owner_correspondence",
+          "seconds": 19.3,
+          "smoke": false,
+          "solver": "z3",
+          "source": "wp_json",
+          "status": "valid"
+        }
+      ],
+      "outcome_pin": {
+        "bytes": 675,
+        "sha256": "979487a4f863c38f984c2dd207e149b6efc7627b19aafd19c4be434c09659323"
+      },
+      "peak_rss_bytes": 724180992,
+      "producer_verdict": "proven",
+      "smoke_count": 0,
+      "task_census_pin": {
+        "bytes": 3923,
+        "sha256": "a996b3651b698b8d5d2a5f52935fcdba784ec8ac787f7ad7a37e8d5f0b35f4da"
+      },
+      "wall_seconds": 52.377622541971505
+    },
+    {
+      "failure_class": null,
+      "id": "swap.left_header",
+      "native_exit": 0,
+      "native_status_snippet": [],
+      "ordinary_count": 1,
+      "ordinary_goals": [
+        {
+          "function": null,
+          "goal": "typed_real_check_lemma_t25_owned_effect_swap_left_header",
+          "property": "check_lemma_t25_owned_effect_swap_left_header",
+          "seconds": 17.5,
+          "smoke": false,
+          "solver": "alt-ergo",
+          "source": "wp_json",
+          "status": "valid"
+        }
+      ],
+      "outcome_pin": {
+        "bytes": 663,
+        "sha256": "269eb61279533020779be117d4c853492f644f54a3864dffc8e66dec8c0e36fa"
+      },
+      "peak_rss_bytes": 277327872,
+      "producer_verdict": "proven",
+      "smoke_count": 0,
+      "task_census_pin": {
+        "bytes": 2236,
+        "sha256": "de528a2d3aca101ba4c8bad586860b0eca492d85dcbbb99b2c498f971fd8a681"
+      },
+      "wall_seconds": 18.49891743902117
+    },
+    {
+      "failure_class": null,
+      "id": "swap.right_header",
+      "native_exit": 0,
+      "native_status_snippet": [],
+      "ordinary_count": 1,
+      "ordinary_goals": [
+        {
+          "function": null,
+          "goal": "typed_real_check_lemma_t25_owned_effect_swap_right_header",
+          "property": "check_lemma_t25_owned_effect_swap_right_header",
+          "seconds": 2.13,
+          "smoke": false,
+          "solver": "alt-ergo",
+          "source": "wp_json",
+          "status": "valid"
+        }
+      ],
+      "outcome_pin": {
+        "bytes": 665,
+        "sha256": "32e10a6d7e543c242c2bf371f5328d6a7f113c5f0052acb93542c6326832254d"
+      },
+      "peak_rss_bytes": 196059136,
+      "producer_verdict": "proven",
+      "smoke_count": 0,
+      "task_census_pin": {
+        "bytes": 2241,
+        "sha256": "d1292f6a51fa03ca1739ee27b2fe6ca162f86bac07103f0054fe3fdc651e6d5f"
+      },
+      "wall_seconds": 3.2783267684280872
+    },
+    {
+      "failure_class": null,
+      "id": "swap.temporary_lifetime",
+      "native_exit": 0,
+      "native_status_snippet": [],
+      "ordinary_count": 1,
+      "ordinary_goals": [
+        {
+          "function": null,
+          "goal": "typed_real_check_lemma_t25_owned_effect_swap_temporary_lifetime",
+          "property": "check_lemma_t25_owned_effect_swap_temporary_lifetime",
+          "seconds": 0.0941,
+          "smoke": false,
+          "solver": "alt-ergo",
+          "source": "wp_json",
+          "status": "valid"
+        }
+      ],
+      "outcome_pin": {
+        "bytes": 679,
+        "sha256": "f5dadce8095704b0894bdfdfae0edd05d38b2d7bec9226339caffa780a8093f4"
+      },
+      "peak_rss_bytes": 161984512,
+      "producer_verdict": "proven",
+      "smoke_count": 0,
+      "task_census_pin": {
+        "bytes": 2271,
+        "sha256": "bf070746c2c11891b0df5681ef98a383368fb8bdb7dc8fbdc4e3c8d8e892dbbb"
+      },
+      "wall_seconds": 1.1987303523346782
+    },
+    {
+      "failure_class": null,
+      "id": "swap.incoming_frame",
+      "native_exit": 0,
+      "native_status_snippet": [],
+      "ordinary_count": 1,
+      "ordinary_goals": [
+        {
+          "function": null,
+          "goal": "typed_real_check_lemma_t25_owned_effect_swap_incoming_frame",
+          "property": "check_lemma_t25_owned_effect_swap_incoming_frame",
+          "seconds": 0.914,
+          "smoke": false,
+          "solver": "alt-ergo",
+          "source": "wp_json",
+          "status": "valid"
+        }
+      ],
+      "outcome_pin": {
+        "bytes": 670,
+        "sha256": "45a6c9ac34f051cfdf24c0468801888df1873a4c019beeceb3c250a7e333535a"
+      },
+      "peak_rss_bytes": 182427648,
+      "producer_verdict": "proven",
+      "smoke_count": 0,
+      "task_census_pin": {
+        "bytes": 2251,
+        "sha256": "d8479968788923ab41200c0ddcf3d88146449ba4331079c46f371f9ffdd0722d"
+      },
+      "wall_seconds": 1.9988967552781105
+    },
+    {
+      "failure_class": "timeout",
+      "id": "swap.owner_correspondence",
+      "native_exit": 0,
+      "native_status_snippet": [
+        "[wp] [Timeout] typed_real_check_lemma_t25_owned_effect_swap_owner_correspondence (Qed 0.69ms) (Alt-Ergo)",
+        "[wp] Proved goals:    0 / 1",
+        "  Timeout:         1",
+        "Prover Alt-Ergo 2.6.4 returns Timeout (Qed:0.69ms) (30s)",
+        "Prover CVC5 1.2.1 returns Timeout (Qed:0.69ms) (30s)",
+        "Prover Z3 5.1.0 returns Timeout (Qed:0.69ms) (30s)"
+      ],
+      "ordinary_count": 1,
+      "ordinary_goals": [
+        {
+          "function": null,
+          "goal": "typed_real_check_lemma_t25_owned_effect_swap_owner_correspondence",
+          "property": "check_lemma_t25_owned_effect_swap_owner_correspondence",
+          "seconds": null,
+          "smoke": false,
+          "solver": null,
+          "source": "wp_json",
+          "status": "timeout"
+        }
+      ],
+      "outcome_pin": {
+        "bytes": 900,
+        "sha256": "e6f02a9fca760ddb45711dd3a50df44c2f18627cd26be2d1f83d7f83698095ef"
+      },
+      "peak_rss_bytes": 378454016,
+      "producer_verdict": "not_proven",
+      "smoke_count": 0,
+      "task_census_pin": {
+        "bytes": 3923,
+        "sha256": "6e223013ddf4908542bcfacbd4e5dfb616df55675f3356d4acfc4c658e49909e"
+      },
+      "wall_seconds": 91.69494948722422
+    }
+  ],
+  "classification": "SETTLED_PRODUCER_COMPLETE_8_OF_9_VALID_ONE_NORMAL_TIMEOUT_COLD_ACCEPTANCE_PENDING",
+  "collector": {
+    "bytes": 9950,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/collect_source9_v3_passive_v1.py",
+    "sha256": "c392896acf0d9f7c7b47be5550fe7b522c0cc14353dbc62ee1bf9e749fe188f3"
+  },
+  "complete_metadata_reconciliation": {
+    "all_task_census_pins_match_result": true,
+    "each_input_matches_pinned_canonical_obligation": true,
+    "exact_resolved_command_equals_frozen_command_substitution": true,
+    "frozen_command_file_sha256": "08b0067565913912d90344c830d6b5c1de82f44a919c0a9560233a855d1a5214",
+    "native_goals": 9,
+    "native_properties": 36,
+    "no_generated_smoke_nonvacuity_claim": true,
+    "ordinary_timeout": 1,
+    "ordinary_valid": 8,
+    "resolved_command_canonical_sha256": "38325d9f0c0890d23044022b721143c20252ee5dbdbbf7565e54579c3051492a",
+    "result_runs_equal_all_nine_independently_read_leaf_outcomes_resources": true,
+    "smokes": 0,
+    "staged_entry_expected_hashes_match_frozen_packet": true
+  },
+  "current_host_state": {
+    "disk": "Filesystem         1B-blocks          Used   Available Use% Mounted on\n/dev/sdd1      1967300780032 1854906167296 12385734656 100% /data1\n/dev/sdb1      1967300780032 1795264217088 72027684864  97% /data",
+    "lease_states": {
+      "mbit10-evaluation": {
+        "generation": 77,
+        "state": "released"
+      },
+      "mbit10-evaluation-node0": {
+        "generation": 623,
+        "state": "released"
+      },
+      "mbit10-evaluation-node1": {
+        "generation": 640,
+        "state": "released"
+      }
+    },
+    "primary_checkout": {
+      "branch": "yanrujhou_main",
+      "commit": "c978393b119a3614229a37f0f2c8ca2a097c750b",
+      "dirty": true
+    },
+    "scope": "A current observation, not proof-run acceptance or authorization for another job. Primary checkout dirty state was observed only; not modified.",
+    "uptime": "19:05:53 up 77 days, 11:24,  8 users,  load average: 0.10, 0.09, 0.19"
+  },
+  "date": "2026-10-16 ET",
+  "first_native_failure": null,
+  "first_unproven": {
+    "failure_class": "timeout",
+    "id": "swap.owner_correspondence",
+    "native_exit": 0,
+    "native_status_snippet": [
+      "[wp] [Timeout] typed_real_check_lemma_t25_owned_effect_swap_owner_correspondence (Qed 0.69ms) (Alt-Ergo)",
+      "[wp] Proved goals:    0 / 1",
+      "  Timeout:         1",
+      "Prover Alt-Ergo 2.6.4 returns Timeout (Qed:0.69ms) (30s)",
+      "Prover CVC5 1.2.1 returns Timeout (Qed:0.69ms) (30s)",
+      "Prover Z3 5.1.0 returns Timeout (Qed:0.69ms) (30s)"
+    ],
+    "ordinary_count": 1,
+    "ordinary_goals": [
+      {
+        "function": null,
+        "goal": "typed_real_check_lemma_t25_owned_effect_swap_owner_correspondence",
+        "property": "check_lemma_t25_owned_effect_swap_owner_correspondence",
+        "seconds": null,
+        "smoke": false,
+        "solver": null,
+        "source": "wp_json",
+        "status": "timeout"
+      }
+    ],
+    "outcome_pin": {
+      "bytes": 900,
+      "sha256": "e6f02a9fca760ddb45711dd3a50df44c2f18627cd26be2d1f83d7f83698095ef"
+    },
+    "peak_rss_bytes": 378454016,
+    "producer_verdict": "not_proven",
+    "smoke_count": 0,
+    "task_census_pin": {
+      "bytes": 3923,
+      "sha256": "6e223013ddf4908542bcfacbd4e5dfb616df55675f3356d4acfc4c658e49909e"
+    },
+    "wall_seconds": 91.69494948722422
+  },
+  "lane": {
+    "aligned_cell_age_s": "",
+    "aligned_to": "no_gapbs_batch_running",
+    "command": [
+      "timeout",
+      "--signal=TERM",
+      "--kill-after=60",
+      "2520",
+      "bash",
+      "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-032e1851-owned-source9-public-v3/run.sh"
+    ],
+    "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+    "ended_utc": "2026-10-16T22:45:42Z",
+    "exit_code": 0,
+    "host": "mbit10",
+    "job": "probata-resume-20261016-032e1851-owned-source9-public-v3",
+    "lease_generation": 623,
+    "lease_name": "mbit10-evaluation-node0",
+    "load1_at_start": 0.14,
+    "load1_max": 32,
+    "node": 0,
+    "numa_memory_policy": "bind:0",
+    "numactl": "--cpunodebind=0 --membind=0",
+    "preregistration_sha256": null,
+    "started_utc": "2026-10-16T22:42:27Z"
+  },
+  "metadata": {
+    "bytes": 222283,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t25-owned-source9-v3-actual-passive-metadata-20261016.json",
+    "sha256": "ab83d73c77965b8699889bb0db49d417d907d9a54297864907cfd0b17241e196"
+  },
+  "native_failure_interpretation": "All nine Frama-C leaf processes exited0. The sole failure is a normal property timeout, not the old namespace/grammar failure, process wall timeout, OOM or output-cap failure. Alt-Ergo/CVC5/Z3 each retain their normal30s limit.",
+  "nonadmission": {
+    "complete_task_hypothesis_cold_review_pending": true,
+    "mathematical_or_scientific_acceptance": false,
+    "native_compiler_verifier_solver_execution": false,
+    "no_smoke_consistency_or_reachability_inference": true,
+    "prior_layout_observations_adopted": false,
+    "proof_rerun": false,
+    "raw_C_AST_SMT_binary_transferred": false,
+    "raw_mutated_or_removed": false,
+    "runtime": "Selected prospective runtime/package/guard source checks are producer claims with retained metadata pins; this finite status collection does not establish total dynamic-loader/Python/OS closure or historical continuous byte identity.",
+    "source_Heap_Typed_body_caller_default_public_record_acceptance": false
+  },
+  "observed_utc": "2026-10-16T23:05:53.415925+00:00",
+  "producer": {
+    "all_nine_producer_proven": false,
+    "executed": 9,
+    "layout": {
+      "C_layout_assertions_adopted": false,
+      "executed": false,
+      "scope": "Math-only namespace repair; previous V2 layout observations remain separate and require complete dependency cold closure.",
+      "units": 0
+    },
+    "not_proven": 1,
+    "producer_complete": true,
+    "profile_elapsed_seconds": 191.33630489557981,
+    "proven": 8,
+    "targets": 9,
+    "unexecuted": [],
+    "within_profile_budget": true
+  },
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-032e1851-owned-source9-public-v3",
+  "resources": {
+    "outer-resources.json": {
+      "cpu_seconds": 306.647901,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 880279552,
+      "timed_out": false,
+      "wall_seconds": 194.6545813586563
+    },
+    "resources.json": {
+      "cpu_seconds": 267.954819,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 826802176,
+      "timed_out": false,
+      "wall_seconds": 192.55800138320774
+    }
+  },
+  "retention": {
+    "bytes": 21450336,
+    "directories": 51,
+    "manifest_sha256": "db49a8f6dfa99b3e0734993b41ff6703505cbf609ae5121233aea689c9d03e34",
+    "pre_post_equal": true,
+    "regular_files": 188,
+    "specials": [],
+    "symlinks": []
+  },
+  "reviewed_packet": {
+    "bytes": 5399,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-source-view-20261016/public9-v3/inert-032e1851-public9-v3/packet.json",
+    "sha256": "b80164a7d869593b5c4fafbaebf291d8294170e1e8b256c6e9d685d33428e378"
+  },
+  "source": {
+    "actual_source": {
+      "branch": "HEAD",
+      "commit": "032e1851eec7b195c7a3737997d5f5ea1d1343a5",
+      "dirty": false
+    },
+    "before_after_source_consumer_physical_sha_equal": true,
+    "scope": "Fresh Git and retained producer source receipts; complete semantic source/import/hypothesis/solver-submission interpretation is separate.",
+    "source_after": {
+      "commit": "032e1851eec7b195c7a3737997d5f5ea1d1343a5",
+      "source_unchanged": true,
+      "tracked_changes": ""
+    },
+    "source_consumer_receipts": [
+      {
+        "bytes": 141871,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-032e1851-owned-source9-public-v3/owned-source9-public-v3-profile/source-consumers-0.json",
+        "sha256": "ff0d998f9b8c5bd67ab638152d94bdb9bdae0eb9f93c68391c240359fe0cbfe4"
+      },
+      {
+        "bytes": 141871,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-032e1851-owned-source9-public-v3/owned-source9-public-v3-profile/source-consumers-1.json",
+        "sha256": "ff0d998f9b8c5bd67ab638152d94bdb9bdae0eb9f93c68391c240359fe0cbfe4"
+      }
+    ]
+  }
+}

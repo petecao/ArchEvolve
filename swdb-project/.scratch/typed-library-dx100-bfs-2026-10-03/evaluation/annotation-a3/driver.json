@@ -1,0 +1,53 @@
+{
+  "format": "swdb.typed-library-profile-driver.v1",
+  "stage": "annotate",
+  "started": "2026-10-03T13:06:08.358871+00:00",
+  "approval_reference": "typed-library-related-approval-20261003",
+  "host": "mbit10",
+  "lane": "mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 439)",
+  "source_snapshot": "bfs-dx100-scalar-only-20260929-a1.source",
+  "source_sha256": "2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af",
+  "workload": "bfs-20260928-kronecker18-s0.cf4283236c5cb50c",
+  "workload_sha256": "cf4283236c5cb50c245b7e5c883ce2f9a0f548287eb072707b49bbf3376deea2",
+  "threads": 4,
+  "build_parallel_jobs": 1,
+  "state": "complete",
+  "gain_claim": false,
+  "preflight": {
+    "disk": "/data1",
+    "runs_folder": "/data1/yanruj/EvolveSWDB_runs",
+    "free_bytes": 46269673472,
+    "memory_node": 0,
+    "free_memory_bytes": 31985717248,
+    "secondary_free_bytes": 78837571584,
+    "format": "swdb.dispatch-preflight.v1",
+    "observed_at": "2026-10-03T13:06:08.359281+00:00",
+    "planned_raw_bytes": 4294967296,
+    "reserve_bytes": 21474836480,
+    "memory_budget_bytes": 8589934592,
+    "state": "admitted"
+  },
+  "host_observation": {
+    "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.driver-annotate-a3/host-observation.json",
+    "sha256": "fbcecaf6043d2d6d0ddad2b71f35edcf59d84ac72feef600573674ee24308da4",
+    "host_wall_s": 0.08117531333118677,
+    "evidence_kind": "execution",
+    "unavailable_commands": 2
+  },
+  "runtime_commit": "f642a94ba41e79f79b28a540cb8d758e15bec633",
+  "runtime_branch": "yanrujhou_main",
+  "tracked_changes": [],
+  "result": {
+    "receipt": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.annotation-a3/provider.json",
+    "model": "gpt-5.6-sol",
+    "effort": "xhigh",
+    "spearman_rank_correlation": 0.4925690038994379,
+    "top_3_overlap": 0.6666666666666666,
+    "statement_table": {
+      "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.driver-annotate-a3/josh-statement-table.md",
+      "sha256": "5772ad33d4525bd5cce94682d1e01e8c1afaa2ac646b5b0847db4eb2ee6623a7"
+    },
+    "gain_claim": false
+  },
+  "finished": "2026-10-03T13:08:57.162161+00:00"
+}

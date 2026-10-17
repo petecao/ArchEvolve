@@ -1,0 +1,153 @@
+{
+  "campaign": "extensa-gem5-bfs-20261006-p4",
+  "executable": false,
+  "format": "swdb.lanl17-four-full-index-metadata-actions-source-only.v1",
+  "helper_config_templates": {
+    "bootstrap": {
+      "argv": [
+        "/usr/bin/python3.12",
+        "-I",
+        "-B",
+        "/data1/yanruj/lanl17-full-index-parent-preparer-20261008-a5-r3.py",
+        "--input",
+        "/data1/yanruj/lanl17-p4-full-index-parent-input-bootstrap-20261008-a5.json",
+        "--input-sha256",
+        {
+          "future_type": "hex64",
+          "required_actual_parent_input": "Actual input JSON file SHA after every typed future is replaced and root+peer reviewed"
+        },
+        "--helper-sha256",
+        "b27ca6f053fbad92347cd045fe6144168ae011a045a96a37343c81716bc92ca8"
+      ],
+      "collect": [],
+      "local_seconds": 180,
+      "remote_seconds": 60,
+      "source_pins": [
+        {
+          "bytes": 28658,
+          "path": "/data1/yanruj/lanl17-full-index-parent-preparer-20261008-a5-r3.py",
+          "sha256": "b27ca6f053fbad92347cd045fe6144168ae011a045a96a37343c81716bc92ca8"
+        }
+      ]
+    },
+    "specification": {
+      "argv": [
+        "/usr/bin/python3.12",
+        "-I",
+        "-B",
+        "/data1/yanruj/lanl17-full-index-parent-preparer-20261008-a5-r3.py",
+        "--input",
+        "/data1/yanruj/lanl17-p4-full-index-parent-input-specification-20261008-a5.json",
+        "--input-sha256",
+        {
+          "future_type": "hex64",
+          "required_actual_parent_input": "Actual input JSON file SHA after every typed future is replaced and root+peer reviewed"
+        },
+        "--helper-sha256",
+        "b27ca6f053fbad92347cd045fe6144168ae011a045a96a37343c81716bc92ca8"
+      ],
+      "collect": [],
+      "local_seconds": 180,
+      "remote_seconds": 60,
+      "source_pins": [
+        {
+          "bytes": 28658,
+          "path": "/data1/yanruj/lanl17-full-index-parent-preparer-20261008-a5-r3.py",
+          "sha256": "b27ca6f053fbad92347cd045fe6144168ae011a045a96a37343c81716bc92ca8"
+        }
+      ]
+    }
+  },
+  "inventory_config_template": {
+    "argv": [
+      "/usr/bin/python3.12",
+      "-B",
+      "/data1/yanruj/lanl17-input-author-source-20261007-a1/passive_inventory.py",
+      "--manifest",
+      "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/manifest.json",
+      "--manifest-bytes",
+      "292401",
+      "--manifest-sha256",
+      "b86d78bac1d0a09e176114d1c23491ede098c4fcf5af5ab96f318ceabc29b8d1",
+      "--manifest-identity-sha256",
+      "66194a7e99716f5b59ddf081dfec752c34b51f1805470a4514171c53323b06c7",
+      "--source-sha",
+      "5e12a9796432654d88def24ecea617d16ca605b2",
+      "--source-tree",
+      "1ab2c8ab147251391a4af75e637114bdd5b0ff27",
+      "--campaign",
+      "extensa-gem5-bfs-20261006-p4",
+      "--index-writer-source",
+      "/data1/yanruj/lanl17-index-source-20261007-a1/writer.py",
+      "--index-writer-source-sha256",
+      "7a67d46f8ad7d453fe07bd458a21f663bd4dc7ec12e71de83ad8b5caaf28894b",
+      "--reader-sha256",
+      "76b86959ceca7a162a34b7a2d1e633ee9523d0b9cc7f629e9fbeeb4e101aa176",
+      "--account-user",
+      "yanruj",
+      "--account-uid",
+      "114316761",
+      "--metadata-deadline-seconds",
+      {
+        "future_type": "int:60..3600",
+        "required_actual_parent_input": "Explicit inventory metadata deadline"
+      },
+      "--writer-metadata-deadline-seconds",
+      {
+        "future_type": "int:60..3600",
+        "required_actual_parent_input": "Exact same writer W used later in inventory/a2/bootstrap"
+      },
+      "--output-directory",
+      {
+        "future_type": "fresh absolute remote route",
+        "required_actual_parent_input": "Original inventory metadata output outside S/RAW/campaigns"
+      },
+      "--summary-selection",
+      "present",
+      "--summary-relative-path",
+      "campaign_summaries/extensa-gem5-bfs-20261006-p4.summary.yaml"
+    ],
+    "collect": [],
+    "local_seconds": {
+      "future_type": "int",
+      "required_actual_parent_input": "Finite independent parent custody allowance"
+    },
+    "remote_seconds": {
+      "future_type": "int",
+      "required_actual_parent_input": "Finite parent allowance for explicitly selected inventory deadline; no writer/science widening"
+    },
+    "source_pins": [
+      {
+        "bytes": 29653,
+        "path": "/data1/yanruj/lanl17-input-author-source-20261007-a1/passive_inventory.py",
+        "sha256": "76b86959ceca7a162a34b7a2d1e633ee9523d0b9cc7f629e9fbeeb4e101aa176"
+      },
+      {
+        "bytes": 33445,
+        "path": "/data1/yanruj/lanl17-index-source-20261007-a1/writer.py",
+        "sha256": "7a67d46f8ad7d453fe07bd458a21f663bd4dc7ec12e71de83ad8b5caaf28894b"
+      },
+      {
+        "bytes": 38195,
+        "path": "/data1/yanruj/lanl17-control-cleanup60-20261007-a4.py",
+        "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+      },
+      {
+        "bytes": 292401,
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/manifest.json",
+        "sha256": "b86d78bac1d0a09e176114d1c23491ede098c4fcf5af5ab96f318ceabc29b8d1"
+      }
+    ]
+  },
+  "remote_helper": {
+    "bytes": 28658,
+    "path": "/data1/yanruj/lanl17-full-index-parent-preparer-20261008-a5-r3.py",
+    "sha256": "b27ca6f053fbad92347cd045fe6144168ae011a045a96a37343c81716bc92ca8"
+  },
+  "scientific_admission": false,
+  "source": {
+    "bytes": 28658,
+    "path": "/private/tmp/lanl17_prepare_four_full_index_metadata_20261008_a5_r3.py",
+    "sha256": "b27ca6f053fbad92347cd045fe6144168ae011a045a96a37343c81716bc92ca8"
+  }
+}

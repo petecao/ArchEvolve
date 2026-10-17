@@ -1,0 +1,143 @@
+{
+  "format": "swdb.lanl14-readonly-supplier-actual-archival-custody.v1",
+  "canonical_ensure_ascii": true,
+  "base_commit": "de2a137c77bbc2ad5f5856e5e456617c47e51d21",
+  "base_tree": "c4467790cefcf6a971d09bbe974b770b2e3e9465",
+  "archived_utc": "2026-10-08T01:13:57.862471+00:00",
+  "archived_et": "2026-10-07 21:13 ET",
+  "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-completed-metadata-supplier-readonly-actual-custody-20261008-a1/",
+  "original_count": 8,
+  "original_total_bytes": 41599,
+  "entries": [
+    {
+      "role": "actual_native_bootstrap_source",
+      "origin": "/private/tmp/lanl14-invoke-completed-metadata-supplier-r1-20261008-a1.py",
+      "snapshot": "lanl14-invoke-completed-metadata-supplier-r1-20261008-a1.py",
+      "bytes": 3215,
+      "sha256": "8ed2b16a14882a01ae26641e626ecd05c026ea11b4a054bb35406d2ff077b581",
+      "original_policy": "Original unsealed source/text bytes; EOF/whitespace preserved.",
+      "original_bytes_preserved": true
+    },
+    {
+      "role": "initial_NOTRUN_capture_source",
+      "origin": "/private/tmp/lanl14-capture-completed-metadata-supplier-once-20261008-a1.py",
+      "snapshot": "lanl14-capture-completed-metadata-supplier-once-20261008-a1.py",
+      "bytes": 3042,
+      "sha256": "d525c5142b5f9a4f06e436af23780ad412e009f85135c52596277a23290ef262",
+      "original_policy": "Original unsealed source/text bytes; EOF/whitespace preserved.",
+      "original_bytes_preserved": true
+    },
+    {
+      "role": "selected_R1_once_capture_source",
+      "origin": "/private/tmp/lanl14-capture-completed-metadata-supplier-once-20261008-a1-r1.py",
+      "snapshot": "lanl14-capture-completed-metadata-supplier-once-20261008-a1-r1.py",
+      "bytes": 3165,
+      "sha256": "3acfb24a36d32c33aaa766ad4a3285c7649ec62c1386594c09078c2c803b16ef",
+      "original_policy": "Original unsealed source/text bytes; EOF/whitespace preserved.",
+      "original_bytes_preserved": true
+    },
+    {
+      "role": "complete_capture_R1_derivation",
+      "origin": "/private/tmp/lanl14-completed-metadata-supplier-parent-capture-r1-complete-derivation-20261008-a1.diff",
+      "snapshot": "lanl14-completed-metadata-supplier-parent-capture-r1-complete-derivation-20261008-a1.diff",
+      "bytes": 1272,
+      "sha256": "8cfaffeff2ebf46a9c4924672b5b16e94d128e083446284ec4015cf8b83b0f12",
+      "original_policy": "Original unsealed source/text bytes; EOF/whitespace preserved.",
+      "original_bytes_preserved": true
+    },
+    {
+      "role": "original_UNSEALED_actual_start",
+      "origin": "/private/tmp/lanl14-completed-metadata-supplier-r1-actual-20261008-a1/start.json",
+      "snapshot": "actual/start.json",
+      "bytes": 1153,
+      "sha256": "ccb36c29efb61dd5564a23e9fea3b62a59cd4a80d12e84cfd937590c5cb9e98e",
+      "original_policy": "Original UNSEALED factual JSON; sealed:false and absent canonical/identity fields preserved.",
+      "original_bytes_preserved": true
+    },
+    {
+      "role": "original_UNSEALED_actual_stdout",
+      "origin": "/private/tmp/lanl14-completed-metadata-supplier-r1-actual-20261008-a1/stdout.json",
+      "snapshot": "actual/stdout.json",
+      "bytes": 29107,
+      "sha256": "62d3f72960c96084840c03382b9057d06d9d43d90d249d0c6d1390ebc9a15ada",
+      "original_policy": "Original UNSEALED factual JSON; sealed:false and absent canonical/identity fields preserved.",
+      "original_bytes_preserved": true
+    },
+    {
+      "role": "original_UNSEALED_empty_actual_stderr",
+      "origin": "/private/tmp/lanl14-completed-metadata-supplier-r1-actual-20261008-a1/stderr.txt",
+      "snapshot": "actual/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "original_policy": "Original unsealed source/text bytes; EOF/whitespace preserved.",
+      "original_bytes_preserved": true
+    },
+    {
+      "role": "original_UNSEALED_actual_exit",
+      "origin": "/private/tmp/lanl14-completed-metadata-supplier-r1-actual-20261008-a1/exit.json",
+      "snapshot": "actual/exit.json",
+      "bytes": 645,
+      "sha256": "54f1de3d077964ed4136454af688ce9494290d648702bc76bfc0fad391590d8e",
+      "original_policy": "Original UNSEALED factual JSON; sealed:false and absent canonical/identity fields preserved.",
+      "original_bytes_preserved": true
+    }
+  ],
+  "original_JSON_policy": {
+    "count": 3,
+    "all_original_unsealed": true,
+    "original_sealed_false_absent_canonical_identity_fields_preserved": true,
+    "no_original_reseal": true
+  },
+  "README": {
+    "snapshot": "README.md",
+    "bytes": 3803,
+    "sha256": "a34635f6a5b91467dc3697aedc74893a4f0694e8da60738cc8324e2e8f2e5f1d"
+  },
+  "actual_observation": {
+    "started_utc": "2026-10-08T01:07:52.776043+00:00",
+    "ended_utc": "2026-10-08T01:07:54.034531+00:00",
+    "returncode": 0,
+    "failure_type": null,
+    "stdout_bytes": 29107,
+    "stdout_sha256": "62d3f72960c96084840c03382b9057d06d9d43d90d249d0c6d1390ebc9a15ada",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stream_pins_reconciled": true,
+    "stream_JSON_reserialization": false,
+    "observed_primary": "03ff330d5843eec4951fed0dbd61a7f91af64cd6",
+    "supplier_deadline_s": 600,
+    "readonly_ee12a_import_main_false": true,
+    "YAML_bodies_opened_parsed_transferred": false,
+    "report_body_parsed_transferred": false,
+    "guard_or_permission_actions": 0,
+    "scientific_admission": false,
+    "native_scientific_CLI_Store_creation": false,
+    "raw_canonical_count": 704,
+    "prior_raw_canonical_count": 686,
+    "new_raw_canonical_count": 18,
+    "report_bytes": 68324111,
+    "original_plaintext_cutoff_bytes": 104857600
+  },
+  "chronology": {
+    "initial_capture_NOTRUN": true,
+    "selected_R1_capture_one_actual_readonly_run": true,
+    "old_source_only_creation_history_unchanged": true,
+    "mode_export_reader_NOTRUN_at_that_observation_only": true,
+    "later_operations_unknown_to_this_archival_snapshot_and_must_be_recorded_separately": true
+  },
+  "archive_scope": {
+    "only_original_byte_retention_and_local_Git_stage_commit": true,
+    "supplier_bootstrap_capture_helper_repeat_import_main_lift_test": false,
+    "SSH_permission_export_reader_cleanup_science": false,
+    "integration_merge_push": false
+  },
+  "preserved_references": {
+    "source_C_ref": "codex/lanl-ticket11-source-c",
+    "source_C_commit": "f893fed400347ed23d92e917d8bde21b75e5375d",
+    "F6": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+    "durable_canonical_yaml_count": 686,
+    "original_supplier_source_archive": "../14-completed-metadata-pin-supplier-controls-20261008-a1-r1/README.md",
+    "original_source_copy_archive": "../14-completed-source-controls-copy-custody-20261008-a1/README.md"
+  },
+  "identity_sha256": "08ec4afcbee51a559a23e8f79ea2645a825b04023b78120c81809390614a76eb"
+}

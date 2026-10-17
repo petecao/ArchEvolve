@@ -1,0 +1,47 @@
+{
+  "created": "2026-09-26",
+  "id": "bfs-t17-build-only-20260926-a1",
+  "state": "complete",
+  "host": "mbit10",
+  "lane": 0,
+  "orchestration_commit": "a53e619de11278e2763c7a22576308d1a23f19bf",
+  "public_checkout_commit": "5f1b8028619976b36df5fa24b8aacb91bf488168",
+  "public_code_parent": "6346189b55132f195b02544b729f34100d10ba92",
+  "started_at_et": "2026-09-26 14:41:29.717 ET",
+  "finished_at_et": "2026-09-26 14:42:25.595 ET",
+  "host_wall_seconds": 55.878,
+  "compile_seconds": 32.908,
+  "public_stages": 9,
+  "all_public_stage_exits_zero": true,
+  "fresh_evaluation_and_chain_matched": true,
+  "lease_generation": 324,
+  "lease_released_at_et": "2026-09-26 14:42:25 ET",
+  "all_15_owned_process_identities_absent": true,
+  "sample_count": 18,
+  "sampled_peak_rss_bytes": 160116736,
+  "binary_sha256": "852e62314b7114079975fe25d70da4e77596490bcfa89fb4f7c64af585485527",
+  "correctness": "unverified",
+  "profiling": "incomplete",
+  "timing_samples": 0,
+  "provider_budget_unchanged": true,
+  "provider_calls": 0,
+  "retry_performed": false,
+  "gain_claim": false,
+  "terminal": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-t17-build-only-20260926.dispatch/terminal-validation.json",
+    "bytes": 4265,
+    "sha256": "4495783bea9d86bc5095e917540abef7b65bef6b94c158adaa41dc88f78fe625"
+  },
+  "driver": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-t17-build-only-20260926/driver.json",
+    "bytes": 61958,
+    "sha256": "7d2dfbbeca1eec734071d89d7ed532b4433c7528e01d43eb5ead9b79903988cf"
+  },
+  "evaluation": {
+    "path": "/data1/yanruj/EvolveSWDB_provider_20260926_a1/records/evaluations/bfs-t17-build-only-20260926-a1.yaml",
+    "bytes": 17230,
+    "sha256": "d5ed1ec5b43665379a2b8d59cc2b4cbc582502beb62f5184041079e606229215"
+  },
+  "canonical_record_imported": false,
+  "acceptance": "Build only; candidate guest correctness, both graph families, accelerated coverage and frozen comparisons remain outstanding."
+}

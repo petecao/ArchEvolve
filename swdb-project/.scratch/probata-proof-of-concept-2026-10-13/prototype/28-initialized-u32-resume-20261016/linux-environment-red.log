@@ -1,0 +1,131 @@
+FFFFFFFFF..FFFFF..
+======================================================================
+FAIL: test_compiler_pytest_and_ocaml_overrides_refuse (__main__.LinuxEnvironmentTests.test_compiler_pytest_and_ocaml_overrides_refuse) (name='CPATH')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/test_linux_environment.py", line 40, in test_compiler_pytest_and_ocaml_overrides_refuse
+    with self.subTest(name=name), self.assertRaises(ValueError): check({name: 'override'}, CONFIG)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_compiler_pytest_and_ocaml_overrides_refuse (__main__.LinuxEnvironmentTests.test_compiler_pytest_and_ocaml_overrides_refuse) (name='CPLUS_INCLUDE_PATH')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/test_linux_environment.py", line 40, in test_compiler_pytest_and_ocaml_overrides_refuse
+    with self.subTest(name=name), self.assertRaises(ValueError): check({name: 'override'}, CONFIG)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_compiler_pytest_and_ocaml_overrides_refuse (__main__.LinuxEnvironmentTests.test_compiler_pytest_and_ocaml_overrides_refuse) (name='C_INCLUDE_PATH')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/test_linux_environment.py", line 40, in test_compiler_pytest_and_ocaml_overrides_refuse
+    with self.subTest(name=name), self.assertRaises(ValueError): check({name: 'override'}, CONFIG)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_compiler_pytest_and_ocaml_overrides_refuse (__main__.LinuxEnvironmentTests.test_compiler_pytest_and_ocaml_overrides_refuse) (name='OBJC_INCLUDE_PATH')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/test_linux_environment.py", line 40, in test_compiler_pytest_and_ocaml_overrides_refuse
+    with self.subTest(name=name), self.assertRaises(ValueError): check({name: 'override'}, CONFIG)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_compiler_pytest_and_ocaml_overrides_refuse (__main__.LinuxEnvironmentTests.test_compiler_pytest_and_ocaml_overrides_refuse) (name='INCLUDE')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/test_linux_environment.py", line 40, in test_compiler_pytest_and_ocaml_overrides_refuse
+    with self.subTest(name=name), self.assertRaises(ValueError): check({name: 'override'}, CONFIG)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_compiler_pytest_and_ocaml_overrides_refuse (__main__.LinuxEnvironmentTests.test_compiler_pytest_and_ocaml_overrides_refuse) (name='SDKROOT')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/test_linux_environment.py", line 40, in test_compiler_pytest_and_ocaml_overrides_refuse
+    with self.subTest(name=name), self.assertRaises(ValueError): check({name: 'override'}, CONFIG)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_compiler_pytest_and_ocaml_overrides_refuse (__main__.LinuxEnvironmentTests.test_compiler_pytest_and_ocaml_overrides_refuse) (name='PYTEST_ADDOPTS')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/test_linux_environment.py", line 40, in test_compiler_pytest_and_ocaml_overrides_refuse
+    with self.subTest(name=name), self.assertRaises(ValueError): check({name: 'override'}, CONFIG)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_compiler_pytest_and_ocaml_overrides_refuse (__main__.LinuxEnvironmentTests.test_compiler_pytest_and_ocaml_overrides_refuse) (name='PYTEST_PLUGINS')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/test_linux_environment.py", line 40, in test_compiler_pytest_and_ocaml_overrides_refuse
+    with self.subTest(name=name), self.assertRaises(ValueError): check({name: 'override'}, CONFIG)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_compiler_pytest_and_ocaml_overrides_refuse (__main__.LinuxEnvironmentTests.test_compiler_pytest_and_ocaml_overrides_refuse) (name='OCAMLPATH')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/test_linux_environment.py", line 40, in test_compiler_pytest_and_ocaml_overrides_refuse
+    with self.subTest(name=name), self.assertRaises(ValueError): check({name: 'override'}, CONFIG)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_python_assertion_and_import_overrides_refuse_before_child (__main__.LinuxEnvironmentTests.test_python_assertion_and_import_overrides_refuse_before_child) (name='PYTHONOPTIMIZE')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/test_linux_environment.py", line 35, in test_python_assertion_and_import_overrides_refuse_before_child
+    with self.subTest(name=name), self.assertRaises(ValueError): check({name: '1'}, CONFIG)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_python_assertion_and_import_overrides_refuse_before_child (__main__.LinuxEnvironmentTests.test_python_assertion_and_import_overrides_refuse_before_child) (name='PYTHONPATH')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/test_linux_environment.py", line 35, in test_python_assertion_and_import_overrides_refuse_before_child
+    with self.subTest(name=name), self.assertRaises(ValueError): check({name: '1'}, CONFIG)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_python_assertion_and_import_overrides_refuse_before_child (__main__.LinuxEnvironmentTests.test_python_assertion_and_import_overrides_refuse_before_child) (name='PYTHONHOME')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/test_linux_environment.py", line 35, in test_python_assertion_and_import_overrides_refuse_before_child
+    with self.subTest(name=name), self.assertRaises(ValueError): check({name: '1'}, CONFIG)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_python_assertion_and_import_overrides_refuse_before_child (__main__.LinuxEnvironmentTests.test_python_assertion_and_import_overrides_refuse_before_child) (name='PYTHONSTARTUP')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/test_linux_environment.py", line 35, in test_python_assertion_and_import_overrides_refuse_before_child
+    with self.subTest(name=name), self.assertRaises(ValueError): check({name: '1'}, CONFIG)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_python_assertion_and_import_overrides_refuse_before_child (__main__.LinuxEnvironmentTests.test_python_assertion_and_import_overrides_refuse_before_child) (name='PYTHONUSERBASE')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-initialized-u32-resume-20261016/test_linux_environment.py", line 35, in test_python_assertion_and_import_overrides_refuse_before_child
+    with self.subTest(name=name), self.assertRaises(ValueError): check({name: '1'}, CONFIG)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.001s
+
+FAILED (failures=14)

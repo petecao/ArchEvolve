@@ -1,0 +1,439 @@
+{
+  "actual_parent_facts_required": [
+    "Original successful complete FINALIZE and all-four normal custody/source/tool provenance root+peer review.",
+    "Exclusive ownership and no external writers/resumes from each validated CID through current inventory/index.",
+    "Full eligible record file-set and byte continuity plus relevant input/library/config continuity.",
+    "Fresh complete owned-consumer and all-three native generation/inode/FD9/kernel-lock observations, with partial unknowns never clear."
+  ],
+  "bounds": [
+    "Frozen Git objects and original H28 source inspected with text/AST only; no target import/main/test/SSH/source or Git mutation.",
+    "Validator entrypoint/write-call census distinguishes read validation from separate writer/collector APIs; not a sandboxed whole-program proof against arbitrary external filesystem actors.",
+    "Actual namespace disjointness, no aliases and writer ownership require the parent actual-route and historical evidence review."
+  ],
+  "current_quiescence_or_exclusive_ownership_inferred": false,
+  "findings": [
+    "No intended CID records YAML/YML write in the reviewed original FINALIZE command path.",
+    "Mutable base/team records and base generated SQLite are written; per-CID exports receipts are sibling metadata outputs.",
+    "CID summary/state/history are not persisted by reviewed FINALIZE paths.",
+    "Public campaign-export/report revalidate CID stores; they do not hold an exclusive source-store lock or provide historical no-write proof.",
+    "H28 all_free checks native metadata state once and is not a kernel-holder or generation-continuity proof.",
+    "Store/access and certification-library caches are process-local memory, not on-disk CID cache writes.",
+    "H28 final ER copy glob is YAML only; public validation eligible-file discovery includes YAML and YML."
+  ],
+  "format": "swdb.lanl17-frozen-FINALIZE-CID-store-write-scope-source-review.v1",
+  "frozen_public_source_pins": [
+    {
+      "bytes": 28526,
+      "functions": [
+        {
+          "end_line": 284,
+          "name": "main",
+          "start_line": 25
+        },
+        {
+          "end_line": 499,
+          "name": "_dispatch",
+          "start_line": 296
+        },
+        {
+          "end_line": 520,
+          "name": "_validate",
+          "start_line": 502
+        },
+        {
+          "end_line": 531,
+          "name": "_require_valid",
+          "start_line": 523
+        }
+      ],
+      "git_blob": "ef36b71a8d511cced6910d51aaeec34bf00a00be",
+      "git_commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+      "path": "swdb-project/swdb/cli.py",
+      "sha256": "50023a90f3e25d089483d1ebaa98335c7768de9bf8af43c0fd57280242ecd0c1"
+    },
+    {
+      "bytes": 4746,
+      "functions": [
+        {
+          "end_line": 33,
+          "name": "validate_records",
+          "start_line": 23
+        },
+        {
+          "end_line": 68,
+          "name": "_validate_store",
+          "start_line": 36
+        }
+      ],
+      "git_blob": "be8bf04b5c279eabbf0aa763529dd443ed9e205d",
+      "git_commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+      "path": "swdb-project/swdb/validate.py",
+      "sha256": "cd26143cb2627951de6ea32ad33a38812d09b81116adf664c989149cd830a85b"
+    },
+    {
+      "bytes": 7364,
+      "functions": [
+        {
+          "end_line": 139,
+          "name": "Store",
+          "start_line": 42
+        },
+        {
+          "end_line": 149,
+          "name": "_parse",
+          "start_line": 147
+        },
+        {
+          "end_line": 154,
+          "name": "record_files",
+          "start_line": 152
+        }
+      ],
+      "git_blob": "60f98cddb09645236e4df8622cc0bc60bf9a7d70",
+      "git_commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+      "path": "swdb-project/swdb/store.py",
+      "sha256": "8c4a750318215a90e26ba6f07c1f007fa3297f337da638c52a0319bfd947ea86"
+    },
+    {
+      "bytes": 3744,
+      "functions": [
+        {
+          "end_line": 20,
+          "name": "read_record_bytes",
+          "start_line": 18
+        },
+        {
+          "end_line": 25,
+          "name": "record_hash",
+          "start_line": 23
+        },
+        {
+          "end_line": 92,
+          "name": "read_record",
+          "start_line": 69
+        },
+        {
+          "end_line": 100,
+          "name": "record_files",
+          "start_line": 95
+        }
+      ],
+      "git_blob": "563424f8105df1e0d5aaced75ad83aa111456b8b",
+      "git_commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+      "path": "swdb-project/swdb/access.py",
+      "sha256": "b068908472747d7c6c5afc8ee7af8067c667e9bb4ef6d45db5d1e1a860154b40"
+    },
+    {
+      "bytes": 11441,
+      "functions": [
+        {
+          "end_line": 46,
+          "name": "_campaign_store",
+          "start_line": 39
+        },
+        {
+          "end_line": 95,
+          "name": "plan",
+          "start_line": 67
+        },
+        {
+          "end_line": 175,
+          "name": "export",
+          "start_line": 98
+        },
+        {
+          "end_line": 180,
+          "name": "run_cli",
+          "start_line": 178
+        }
+      ],
+      "git_blob": "915bf6f14c0f6193fa71daf9f2adf5c10147567e",
+      "git_commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+      "path": "swdb-project/swdb/campaign_export.py",
+      "sha256": "9f48b090186bc7679d5c9b3f4e937be0fdc2bcce7cc8988fcd38167a5d039953"
+    },
+    {
+      "bytes": 26057,
+      "functions": [
+        {
+          "end_line": 323,
+          "name": "_analyse",
+          "start_line": 234
+        },
+        {
+          "end_line": 343,
+          "name": "report",
+          "start_line": 326
+        },
+        {
+          "end_line": 409,
+          "name": "validate_record",
+          "start_line": 346
+        }
+      ],
+      "git_blob": "c53d85d892002a8b365fc387eeb90023132312b4",
+      "git_commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+      "path": "swdb-project/swdb/extensa_agreement.py",
+      "sha256": "d078cf8a26fbbd65f0d27d0a64dbde56e4f190e1ec4c07b9e4eb311ad3a5174f"
+    },
+    {
+      "bytes": 38336,
+      "functions": [
+        {
+          "end_line": 79,
+          "name": "record",
+          "start_line": 73
+        },
+        {
+          "end_line": 96,
+          "name": "persist",
+          "start_line": 82
+        }
+      ],
+      "git_blob": "4b28f19b66a6035cb1a3f053907d86e12edada65",
+      "git_commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+      "path": "swdb-project/swdb/workflow.py",
+      "sha256": "ea89348f41e1af4def9c1cbdbd1dd304200cb0a9a9bb03525b1cff4f3bfc8a34"
+    },
+    {
+      "bytes": 6199,
+      "functions": [
+        {
+          "end_line": 82,
+          "name": "commit",
+          "start_line": 75
+        },
+        {
+          "end_line": 93,
+          "name": "_locked",
+          "start_line": 86
+        },
+        {
+          "end_line": 135,
+          "name": "_commit",
+          "start_line": 96
+        }
+      ],
+      "git_blob": "18ec9d3643523a7136ab959c5f6eb1f16101c97e",
+      "git_commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+      "path": "swdb-project/swdb/writer.py",
+      "sha256": "9ded1641c3c5909d8b99addf69f41af8980faa6940ccc338e740befeb1a0cbe3"
+    },
+    {
+      "bytes": 33540,
+      "functions": [
+        {
+          "end_line": 87,
+          "name": "default_path",
+          "start_line": 82
+        },
+        {
+          "end_line": 116,
+          "name": "fingerprint",
+          "start_line": 106
+        },
+        {
+          "end_line": 183,
+          "name": "build",
+          "start_line": 150
+        }
+      ],
+      "git_blob": "184a1c586f40648738c8db8011f0fc7deac74ca0",
+      "git_commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+      "path": "swdb-project/swdb/db.py",
+      "sha256": "435eec9df8eab5ef06b5ab806ec8cf084e13ee95956046742ac682ad6a7f82cf"
+    },
+    {
+      "bytes": 23490,
+      "functions": [
+        {
+          "end_line": 60,
+          "name": "_library_for",
+          "start_line": 49
+        },
+        {
+          "end_line": 96,
+          "name": "candidate_certifications",
+          "start_line": 70
+        },
+        {
+          "end_line": 117,
+          "name": "certification_level",
+          "start_line": 99
+        },
+        {
+          "end_line": 201,
+          "name": "closure",
+          "start_line": 192
+        }
+      ],
+      "git_blob": "44fb4be27ec889bc6916052caa23ef50535089d4",
+      "git_commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+      "path": "swdb-project/swdb/extensa_boundary.py",
+      "sha256": "dd1fac537f90a555850a74a232053580d4464188c6a03d14c0280ffa8065d890"
+    },
+    {
+      "bytes": 79456,
+      "functions": [
+        {
+          "end_line": 210,
+          "name": "load_campaign",
+          "start_line": 201
+        },
+        {
+          "end_line": 237,
+          "name": "validate_campaign_dir",
+          "start_line": 220
+        }
+      ],
+      "git_blob": "6fcf7607c06c4a111d362cdec95441bd30917dcd",
+      "git_commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+      "path": "swdb-project/swdb/campaign.py",
+      "sha256": "13e3e66a469c3934dee2f0f372a5c17812f5a680cb451f63766ad889d13c3d1d"
+    },
+    {
+      "bytes": 2336,
+      "functions": [
+        {
+          "end_line": 47,
+          "name": "load",
+          "start_line": 44
+        }
+      ],
+      "git_blob": "3c5aedd0d06a4665dc7d258ff4c3bedcad00c06f",
+      "git_commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+      "path": "swdb-project/swdb/yamlio.py",
+      "sha256": "8c92d644f5abca0f7031ce52e1577892cf1b7c79bc730484112eedb3e39439c0"
+    },
+    {
+      "bytes": 45318,
+      "functions": [
+        {
+          "end_line": 645,
+          "name": "Library",
+          "start_line": 220
+        }
+      ],
+      "git_blob": "4259ddd9318f64408867d73212ad780a9630d37b",
+      "git_commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+      "path": "swdb-project/swdb/library.py",
+      "sha256": "dd0f34ea83d56141fe87de1be48fa0d8c71aacce8ece7aba1af9d6003fa7fb03"
+    },
+    {
+      "bytes": 25104,
+      "functions": [
+        {
+          "end_line": 150,
+          "name": "check",
+          "start_line": 68
+        }
+      ],
+      "git_blob": "5c93ddcc21f05a713921f2e266757fe0beb805ac",
+      "git_commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+      "path": "swdb-project/swdb/rules.py",
+      "sha256": "8785a1d6ffdb528c4a09e87b284cbdbb2039589117b063f8ea56a8ca43a82f49"
+    },
+    {
+      "bytes": 17550,
+      "functions": [
+        {
+          "end_line": 66,
+          "name": "validate_record",
+          "start_line": 51
+        },
+        {
+          "end_line": 128,
+          "name": "validate_summary",
+          "start_line": 110
+        }
+      ],
+      "git_blob": "ca5fd75f861d39b3d0bcc9a980a30813a0694bfb",
+      "git_commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+      "path": "swdb-project/swdb/extensa_pairing.py",
+      "sha256": "30a62539769c21f5d0ecbc3fb2800bd60c935332f13a6c6c1eba638558a1896a"
+    },
+    {
+      "bytes": 14587,
+      "functions": [
+        {
+          "end_line": 213,
+          "name": "verify",
+          "start_line": 147
+        },
+        {
+          "end_line": 221,
+          "name": "validate_record",
+          "start_line": 216
+        }
+      ],
+      "git_blob": "1c85c7e997d826ddd93dc21d1a236d6032ed1660",
+      "git_commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+      "path": "swdb-project/swdb/functional_evaluation.py",
+      "sha256": "b4cc95ccd75178cc919f2c09fd54aea631abc8a7190c01b38c6fc3d0799582f4"
+    },
+    {
+      "bytes": 59482,
+      "functions": [
+        {
+          "end_line": 822,
+          "name": "validate_record",
+          "start_line": 796
+        }
+      ],
+      "git_blob": "a6bf3bf38a97fd32c5a0e0a702ea79ed97016665",
+      "git_commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+      "path": "swdb-project/swdb/analytic.py",
+      "sha256": "3061fe9a8b3f22872cfc3081595e4449a8ed0975b9da5a299673250503c50ac4"
+    },
+    {
+      "bytes": 35541,
+      "functions": [
+        {
+          "end_line": 62,
+          "name": "verify",
+          "start_line": 48
+        }
+      ],
+      "git_blob": "9854befb20552b4b5e6b254ff82c0e6275533c21",
+      "git_commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+      "path": "swdb-project/swdb/profile_package.py",
+      "sha256": "a165a28b4bddfbe95f4ebfc2aa1b0c8a943cfe081ae625472b0a5b0081b075a6"
+    }
+  ],
+  "helper": {
+    "bytes": 38195,
+    "function_ranges": {
+      "all_free": [
+        105,
+        108
+      ],
+      "export_records": [
+        230,
+        261
+      ],
+      "finalize": [
+        596,
+        637
+      ],
+      "load_manifest": [
+        368,
+        392
+      ],
+      "run_cli": [
+        171,
+        185
+      ]
+    },
+    "path": "/private/tmp/lanl17_parent_helpers_cleanup60_a4.py",
+    "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+  },
+  "historical_no_write_inferred": false,
+  "prepared_utc": "2026-10-09T03:03:58.193247+00:00",
+  "scientific_admission": false,
+  "source_note": {
+    "bytes": 4661,
+    "path": "/private/tmp/lanl17-finalize-CID-store-historical-continuity-source-review-20261008-a5.md",
+    "sha256": "9a52bc0b9fc871db9a8d94fdfcd8c5946ddc1eee6ce9815372bf4d4f0ea10ee4"
+  },
+  "source_only": true
+}

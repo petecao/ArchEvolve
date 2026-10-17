@@ -1,0 +1,75 @@
+{
+  "created": "2026-09-26",
+  "observed_at_et": "2026-09-26 11:33:07 ET",
+  "actual_timestamp_note": "Host receipt filename says 1132; actual observation was 11:33:07 ET.",
+  "source_receipt": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-paired-pilot-20260926-a1.dispatch/health-20260926-1132.json",
+    "sha256": "9fe914ed5e3dd08153efa80a0deec3de5bce30933a38e2217db85c29541aed17"
+  },
+  "tickets": {
+    "resolved": 13,
+    "claimed": 8,
+    "final_cells_accepted": 0,
+    "final_cells_required": 8,
+    "qualified_gain": false,
+    "empirical_freeze": false
+  },
+  "leases": {
+    "socket0": {
+      "state": "released",
+      "generation": 318
+    },
+    "socket1": {
+      "state": "held",
+      "generation": 400
+    },
+    "legacy": {
+      "state": "released",
+      "generation": 77
+    }
+  },
+  "paired": {
+    "state": "running",
+    "cell": "dx100.uniform-random",
+    "observations": 37,
+    "cell_required": 60,
+    "all_required": 240,
+    "remaining_cells": "prepared",
+    "driver_pid": 3034830,
+    "driver_start_ticks": 493754313,
+    "evaluator_pid": 3034854,
+    "evaluator_start_ticks": 493754584,
+    "helper_pid": 3034761,
+    "started_at_et": "2026-09-26 11:13:30 ET",
+    "active_code": "98b5f50e93f531ce0395fe7e161f812a406d6d9d",
+    "sampled_rss_gib_latest": 0.9,
+    "sampled_rss_gib_peak": 0.99,
+    "resource_samples": 235,
+    "max_guard_seconds": 0.0107,
+    "raw_mib": 272,
+    "stderr_or_failure_observed": false
+  },
+  "host": {
+    "load": [
+      1.1,
+      1.07,
+      0.86
+    ],
+    "estimated_node_available_gib": [
+      57.33,
+      57.45
+    ],
+    "global_available_gib": 116.68,
+    "memory_pressure_averages": 0,
+    "data1_free_gib": 16.47,
+    "data_free_gib": 183.45
+  },
+  "helper": {
+    "commit": "42ce8dce1ecfb949d6e5d4ee3c98c078bc7ddc65",
+    "script_sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8",
+    "active_checkout_unchanged": true
+  },
+  "history": "Native/T14/a1/provider receipt hashes unchanged; a2 remains absent. Historical checkouts unchanged.",
+  "workers": "All responsive; prior reviewer completion was normal and worker was reassigned. No dead or stranded worker.",
+  "next_full_health_due_et": "2026-09-26 12:03 ET"
+}

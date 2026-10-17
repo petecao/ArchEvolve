@@ -1,0 +1,39 @@
+kind: intrinsic
+schema_version: '0.3'
+id: mm_prefetch
+status: draft
+deprecated_by: null
+created: '2026-09-23'
+updated: '2026-09-23'
+provenance:
+- id: intel-guide
+  kind: vendor_reference
+  description: Intel Intrinsics Guide entry for _mm_prefetch (instruction PREFETCHh, header xmmintrin.h).
+    The guide page could not be fetched automatically on 2026-09-23, so the facts were checked against
+    the two sources below.
+  uri: https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm_prefetch
+- id: gcc-header
+  kind: source_code
+  description: 'GCC gcc/config/i386/xmmintrin.h (master, read 2026-09-23): void _mm_prefetch (const void
+    *__P, enum _mm_hint __I), hints _MM_HINT_T0=3, _MM_HINT_T1=2, _MM_HINT_T2=1, _MM_HINT_NTA=0.'
+  uri: https://github.com/gcc-mirror/gcc/blob/master/gcc/config/i386/xmmintrin.h
+- id: rust-core-arch
+  kind: vendor_reference
+  description: Rust core::arch::x86_64::_mm_prefetch documentation (target feature sse), which says the
+    prefetch is a hint the CPU may ignore and does not trap on invalid pointers.
+  uri: https://doc.rust-lang.org/core/arch/x86_64/fn._mm_prefetch.html
+name: _mm_prefetch
+isa_family: x86
+isa_extensions:
+- sse
+header: xmmintrin.h
+memory_kind: prefetch
+address_shape: null
+element_bits: null
+lanes: null
+notes:
+- address_shape is null because the instruction takes one address the caller computed; the
+  access pattern that calls it records the shape (update kind prefetch).
+- PREFETCHh (T0, T1, T2, NTA) moves one cache line; it returns no data and never faults.
+- GCC declares _mm_prefetch outside its target("sse") block, so GCC accepts it without -msse;
+  SSE is part of the x86-64 baseline in any case.

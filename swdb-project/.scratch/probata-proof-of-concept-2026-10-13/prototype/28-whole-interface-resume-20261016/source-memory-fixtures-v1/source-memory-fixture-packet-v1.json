@@ -1,0 +1,56 @@
+{
+  "abstract25_relabelled": false,
+  "actual_compiler_native_verifier_execution": false,
+  "controls": {
+    "child_events": [],
+    "errors": 0,
+    "failures": 0,
+    "skips": 0,
+    "tests": 3
+  },
+  "date": "2026-10-16 ET",
+  "files": [
+    {
+      "bytes": 4109,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source-memory-fixtures-v1/README.md",
+      "sha256": "dfc79199e0b647b72018da9a7e517afe992a91df2937abd9436133f724cdb79b"
+    },
+    {
+      "bytes": 4730,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source-memory-fixtures-v1/prospective-local-request-v1.json",
+      "sha256": "de679bf9e64310ed4d1502d68317316a3e352a42851cab5e2ac675d94a3a2ca6"
+    },
+    {
+      "bytes": 3258,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source-memory-fixtures-v1/same_thread_memory_v1.cpp",
+      "sha256": "55b9fe4033e80c4c151a743744ccf745082ada5e408aaa782d6ccbb30d88d887"
+    },
+    {
+      "bytes": 5711,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source-memory-fixtures-v1/source_memory_profiles_v1.py",
+      "sha256": "26c817b46c4c6bbd92d461710b709d5c7051cb20183ed2592d4db7f48caad253"
+    },
+    {
+      "bytes": 3364,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source-memory-fixtures-v1/test_source_memory_profiles_v1.py",
+      "sha256": "30cf5f199b264f8136c2395290f5486a07870943c974808a054eb8c193bff52c"
+    }
+  ],
+  "future_source_policy": "separately reviewed exact three-name/file-hash profile; no change to old3148 or79/80 policy",
+  "mandatory_context": "root-owned physical/object mapping with source-declared16-element allocation and explicit64-byte physical alignment; no actual alignment or ownership inferred here",
+  "old_fixed_profile_changed": false,
+  "predicted_verdicts": [
+    "refuted",
+    "refuted",
+    "proven"
+  ],
+  "schema": "same-thread-original-source-fixture-packet-1",
+  "shared_production_changed": false,
+  "source_functions": [
+    "whole_same_thread_read_during_store",
+    "whole_same_thread_write_during_gather",
+    "whole_same_thread_read_during_gather"
+  ],
+  "source_or_receiver_admission_granted": false,
+  "status": "FROZEN_SOURCE_PREPARATION_PENDING_INDEPENDENT_REVIEW_AND_ROOT_ADMISSION"
+}

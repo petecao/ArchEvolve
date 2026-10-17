@@ -1,0 +1,304 @@
+{
+  "bootstrap_source": "9d8ca7645546ce3b282b2a51005392ceb78ff609",
+  "created": "2026-10-15 ET",
+  "goals": [
+    {
+      "file": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-wp-representative-v2/lemma/wp_input.c",
+      "goal": "typed_check_lemma_t25_control_ctor_premises_feasible",
+      "line": 34,
+      "passed": true,
+      "property": "check_lemma_t25_control_ctor_premises_feasible",
+      "proved": 1,
+      "provers": [
+        {
+          "prover": "qed",
+          "success": 0,
+          "time": 0
+        },
+        {
+          "prover": "CVC5:1.2.1",
+          "success": 1,
+          "time": 0.0359
+        }
+      ],
+      "smoke": false,
+      "verdict": "valid"
+    }
+  ],
+  "import_hypothesis_semantic_audit": "independent review pending; task-file existence alone not sufficient",
+  "inventory": {
+    "complete": true,
+    "goals": [
+      {
+        "function": null,
+        "goal": "typed_check_lemma_t25_control_ctor_premises_feasible",
+        "line": 34,
+        "passed": true,
+        "property": "check_lemma_t25_control_ctor_premises_feasible",
+        "results": [
+          "timeout",
+          "valid"
+        ],
+        "smoke": false,
+        "targets": []
+      }
+    ],
+    "properties": [
+      {
+        "dependencies": [],
+        "description": "check lemma\nt25_control_ctor_premises_feasible",
+        "emitter": "",
+        "extern": false,
+        "function": null,
+        "generated_smoke_failure": false,
+        "kind": "lemma",
+        "line": 34,
+        "origin": null,
+        "property": "check_lemma_t25_control_ctor_premises_feasible"
+      },
+      {
+        "dependencies": [],
+        "description": "module\nheap_bridge::Heap",
+        "emitter": "",
+        "extern": false,
+        "function": null,
+        "generated_smoke_failure": false,
+        "kind": "other",
+        "line": 0,
+        "origin": null,
+        "property": ""
+      }
+    ],
+    "version": "1"
+  },
+  "leaf_resources": {
+    "cpu_seconds": 10.955281999999999,
+    "exit_code": 0,
+    "out_of_memory": false,
+    "peak_rss_bytes": 382287872,
+    "timed_out": false,
+    "wall_seconds": 11.302608324214816
+  },
+  "metadata_pins": [
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-wp-representative-v2/resources.json",
+      "sha256": "b7c774e42fba8031438f6330c11689e4f18886cabed0be668e0d4bd93b8a805b"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-wp-representative-v2/outer-resources.json",
+      "sha256": "2c4c66d6f3beec973115a34cb8af2dd39ae675aa4d492c0e041351655d6e3f6b"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-wp-representative-v2/source-after.json",
+      "sha256": "98f83a3b46d0e48c8fabb477d5c11e2dfd0b1481eb0cd0a2d2a9c50246b6b766"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-wp-representative-v2/lane.json",
+      "sha256": "46731430942b6f9db7a4f8d7d0ac180d333145d2007b67b05a8612b6dbc10b2b"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-wp-representative-v2/representative-profile.json",
+      "sha256": "9027048972d67aeea84271c6cab51727754a2da2fdf4614665197f59f2ae9910"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-wp-representative-v2/launch.json",
+      "sha256": "c6f79d483103558731ea9c05921c2e8e40f809d4ba906c8a93f200a5bc72f9f8"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-wp-representative-v2/runtime-provenance.json",
+      "sha256": "986abb85fcaaa0e1b61b02a3537c5ddd73f206c832c217cd6aa49563d4b3c762"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-wp-representative-v2/execute.py",
+      "sha256": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612"
+    }
+  ],
+  "option_recognition": {
+    "known_boolean_inverse": [],
+    "missing": [],
+    "requested": [
+      "-wp",
+      "-wp-cache",
+      "-wp-library",
+      "-wp-msg-key",
+      "-wp-no-filter-init",
+      "-wp-out",
+      "-wp-par",
+      "-wp-print",
+      "-wp-prop",
+      "-wp-prover",
+      "-wp-report-json",
+      "-wp-rte",
+      "-wp-smoke-tests",
+      "-wp-status-all",
+      "-wp-timeout"
+    ]
+  },
+  "physical_hash_errors": [],
+  "physical_reference_checks": 30,
+  "prepared_task_count": 4,
+  "producer": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-wp-representative-v2",
+  "prospective_runner_not_executed": "9881fff2fcb558365dc1c61b65d72f7ada707de4 (not executed here)",
+  "reading": {
+    "assumptions": [],
+    "failure_class": null,
+    "goals": [
+      {
+        "function": null,
+        "goal": "typed_check_lemma_t25_control_ctor_premises_feasible",
+        "property": "check_lemma_t25_control_ctor_premises_feasible",
+        "seconds": 0.0359,
+        "smoke": false,
+        "solver": "cvc5",
+        "source": "wp_json",
+        "status": "valid"
+      }
+    ],
+    "reading": {
+      "check": {
+        "sha256": "76e1a83ace53083ab1f1cb01dde39700ea3bbd59a4783cc997149321413e2eb2",
+        "version": "1"
+      },
+      "verdict": "proven"
+    },
+    "unproven": [],
+    "verdict": "proven",
+    "why": "every generated goal passed; every Extern belongs to a pinned contract"
+  },
+  "references": [
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-wp-representative-v2/lemma/wp-properties.csv",
+      "sha256": "e80744db37896e1ca09718363ee8d52b497fb4614a19d542a94d10d9eb8f5653"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-wp-representative-v2/lemma/frama-c.log",
+      "sha256": "cebe0eeefc1337a5d2cd3139a6806b4e62fdbe6e904144e3ecf1d2c705d154bd"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-wp-representative-v2/lemma/wp_input.c",
+      "sha256": "54b7b254e0d1b4884e8303054036f73e15704c4cb2aaf3a589df08aa932467d6"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-wp-representative-v2/lemma/wp-normalized.c",
+      "sha256": "f4c8c563dbba66d0d43a6f512c55b53547da41fa1325be41ed480558c24bd8d9"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-wp-representative-v2/lemma/wp-inventory.json",
+      "sha256": "ff8dbe1125eb3a1a75a9cbea852f4271c2627c409b69a5c23f5117044192cad8"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-wp-representative-v2/lemma/wp-goals.json",
+      "sha256": "b522eb903e3d219ae08ef692f5ebf83340f140ab0e4e0e4dca42608e012a6758"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-wp-representative-v2/lemma/prover-files/typed/check_lemma_t25_control_ctor_premises_feasible_Why3_Alt_Ergo_2_6_4.psmt2",
+      "sha256": "15fc8a0372eec9f63e8720962f3aaa5e901abbc4b9a09cce87d83d99f8d85530"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-wp-representative-v2/lemma/prover-files/typed/zilch-typed_check_lemma_t25_control_ctor_premises_feasible_CVC5_1dt2dt1-wp_goal.smt2",
+      "sha256": "563017ae988cfb3827173544745e2a02e7aa59e622fd61e88e3bed80b2cd9dde"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-wp-representative-v2/lemma/prover-files/typed/check_lemma_t25_control_ctor_premises_feasible_Why3_CVC5_1_2_1.smt2",
+      "sha256": "27a0b35b8b4140c1e5333f199751bd3154fe65ea974c59239a47d04b4be4ba88"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-wp-representative-v2/lemma/prover-files/typed/zilch-typed_check_lemma_t25_control_ctor_premises_feasible_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+      "sha256": "4edfe2f4e49e002d0c9c7467e5e1961bfdc66ccc78729e70571ae816dcb1fd70"
+    },
+    {
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/bin/alt-ergo",
+      "sha256": "ef5b893597fedd2bc5b215a40118b6a2297e1d9293d3a5296f4fe5bf7e43b6af"
+    },
+    {
+      "path": "/data1/yanruj/probata-verifiers/cvc5-1.2.1/cvc5-Linux-x86_64-static/bin/cvc5",
+      "sha256": "ee4c6787a95218a571080a599bdf579aca5b0f1e4f27687f70f46d4d12148974"
+    },
+    {
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/bin/frama-c",
+      "sha256": "39368e41f6a0edbd3902fa0e7b119689a7281fd25965c74b53abd88adeca9ea7"
+    },
+    {
+      "path": "/usr/bin/x86_64-linux-gnu-gcc-13",
+      "sha256": "1b99826121ae6682a634e5efe09bd3e3df58ce58e0b28f849114ab5b89139c26"
+    },
+    {
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/bin/ocamlfind",
+      "sha256": "285b6b308c7dd042bd87d918a67fecbb3346435c86d9da49c06c8b815f8beddc"
+    },
+    {
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/bin/ocamlopt.opt",
+      "sha256": "f8976bb7b53ca30ec4bda901dda00ca354abf571ab292aea70cf29f984e06d0d"
+    },
+    {
+      "path": "/data1/yanruj/probata-verifiers/opam-2.6.1/opam",
+      "sha256": "b533d393a6967150d6ef41cb3d71e147e93ecbabeb59e921aa412c0ae79ebe3d"
+    },
+    {
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/bin/why3",
+      "sha256": "98c58e874b1e3ac0baef8d288f4ce93f1333907995f1db2844116521fd3ce858"
+    },
+    {
+      "path": "/data1/yanruj/probata-verifiers/z3-5.1.0/z3-5.1.0-x64-glibc-2.39/bin/z3",
+      "sha256": "b4e0b3483ce37817230b20d6cad48390eb6a3aefde1d93342ad6dc763f24bc23"
+    },
+    {
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/META",
+      "sha256": "625b065287acb2a364e9579e11ab0b9716e30265fa4c8bfc5f8be9dce7063873"
+    },
+    {
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/wp.cmxs",
+      "sha256": "223ac46a1fb7cf6ce142d9621c5e9a06cc328d241f9a82309be4b8d64215c86d"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-capability-v4/capability-inputs/manifest.json",
+      "sha256": "390a2d3a89720fab8a5b1fb1f5cd96093aae23a9c1714143b57caa8681a4c065"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-capability-v4/capability-inputs/000-t25_control_ctor_premises_feasible.c",
+      "sha256": "54b7b254e0d1b4884e8303054036f73e15704c4cb2aaf3a589df08aa932467d6"
+    },
+    {
+      "path": "/data1/yanruj/probata-verifiers/home/.why3.conf",
+      "sha256": "50061c22ad10615b4cd0103721869646155b681e0317a679682aed719f0967c9"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-wp-representative-v2/help/wp-help.log",
+      "sha256": "051337a562f95851c374a902a44c0874cdf846ffc1e9f8d4ff65c125d2a08adb"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-wp-representative-v2/reader/proof_report.cmxs",
+      "sha256": "235984a4ff26cf0baf8ffcd228878410f754d01cc87cc7f5c44526d833e587d4"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-wp-representative-v2/lemma/prover-files/typed/check_lemma_t25_control_ctor_premises_feasible_Why3_Alt_Ergo_2_6_4.psmt2",
+      "sha256": "15fc8a0372eec9f63e8720962f3aaa5e901abbc4b9a09cce87d83d99f8d85530"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-wp-representative-v2/lemma/prover-files/typed/zilch-typed_check_lemma_t25_control_ctor_premises_feasible_CVC5_1dt2dt1-wp_goal.smt2",
+      "sha256": "563017ae988cfb3827173544745e2a02e7aa59e622fd61e88e3bed80b2cd9dde"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-wp-representative-v2/lemma/prover-files/typed/check_lemma_t25_control_ctor_premises_feasible_Why3_CVC5_1_2_1.smt2",
+      "sha256": "27a0b35b8b4140c1e5333f199751bd3154fe65ea974c59239a47d04b4be4ba88"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-9d8ca764-t25-heap-wp-representative-v2/lemma/prover-files/typed/zilch-typed_check_lemma_t25_control_ctor_premises_feasible_AltmnErgo_2dt6dt4-wp_goal.psmt2",
+      "sha256": "4edfe2f4e49e002d0c9c7467e5e1961bfdc66ccc78729e70571ae816dcb1fd70"
+    }
+  ],
+  "resources": {
+    "cpu_seconds": 14.832316,
+    "exit_code": 0,
+    "out_of_memory": false,
+    "peak_rss_bytes": 436568064,
+    "timed_out": false,
+    "wall_seconds": 12.83643278107047
+  },
+  "scope": "One representative source-entry feasibility lemma only; not full42 or model-body proof acceptance.",
+  "source_after": {
+    "commit": "9d8ca7645546ce3b282b2a51005392ceb78ff609",
+    "source_unchanged": true,
+    "tracked_changes": ""
+  }
+}

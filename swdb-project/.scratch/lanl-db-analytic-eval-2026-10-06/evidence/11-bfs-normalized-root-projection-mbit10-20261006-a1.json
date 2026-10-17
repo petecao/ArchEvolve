@@ -1,0 +1,2303 @@
+{
+  "accesses": [
+    {
+      "address_shape": "constant",
+      "column": 3,
+      "element_bytes": 4,
+      "function": "BUStep",
+      "ir_lanes": 1,
+      "line": 51,
+      "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bfs.cc",
+      "read_write": false,
+      "region": "loop:bfs.cc:1717:6e2a9b58e359bcfa",
+      "region_index": 18,
+      "root_id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:argument:0",
+      "site": 114,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 8,
+      "element_bytes": 4,
+      "function": "BUStep",
+      "ir_lanes": 1,
+      "line": 51,
+      "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bfs.cc",
+      "read_write": false,
+      "region": "loop:bfs.cc:1717:6e2a9b58e359bcfa",
+      "region_index": 18,
+      "root_id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:instruction:2",
+      "site": 118,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 8,
+      "element_bytes": 4,
+      "function": "BUStep",
+      "ir_lanes": 1,
+      "line": 51,
+      "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bfs.cc",
+      "read_write": false,
+      "region": "loop:bfs.cc:1717:6e2a9b58e359bcfa",
+      "region_index": 19,
+      "root_id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:instruction:3",
+      "site": 119,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 12,
+      "element_bytes": 8,
+      "function": "BUStep",
+      "ir_lanes": 1,
+      "line": 116,
+      "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/pvector.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:1717:6e2a9b58e359bcfa",
+      "region_index": 19,
+      "root_id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:argument:3",
+      "site": 120,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 28,
+      "element_bytes": 8,
+      "function": "BUStep",
+      "ir_lanes": 1,
+      "line": 220,
+      "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/graph.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:1717:6e2a9b58e359bcfa",
+      "region_index": 19,
+      "root_id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:argument:2",
+      "site": 122,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 0,
+      "element_bytes": 8,
+      "function": "BUStep",
+      "ir_lanes": 1,
+      "line": 0,
+      "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bfs.cc",
+      "read_write": false,
+      "region": "loop:bfs.cc:1717:6e2a9b58e359bcfa",
+      "region_index": 19,
+      "root_id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:instruction:0",
+      "site": 123,
+      "stride_bytes": 0,
+      "update_kind": "write"
+    },
+    {
+      "address_shape": "constant",
+      "column": 9,
+      "element_bytes": 4,
+      "function": "BUStep",
+      "ir_lanes": 1,
+      "line": 110,
+      "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/graph.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:1717:6e2a9b58e359bcfa",
+      "region_index": 19,
+      "root_id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:instruction:7",
+      "site": 124,
+      "stride_bytes": 0,
+      "update_kind": "write"
+    },
+    {
+      "address_shape": "constant",
+      "column": 16,
+      "element_bytes": 8,
+      "function": "BUStep",
+      "ir_lanes": 1,
+      "line": 110,
+      "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/graph.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:1717:6e2a9b58e359bcfa",
+      "region_index": 19,
+      "root_id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:instruction:7",
+      "site": 125,
+      "stride_bytes": 0,
+      "update_kind": "write"
+    },
+    {
+      "address_shape": "constant",
+      "column": 35,
+      "element_bytes": 8,
+      "function": "BUStep",
+      "ir_lanes": 1,
+      "line": 110,
+      "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/graph.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:1717:6e2a9b58e359bcfa",
+      "region_index": 19,
+      "root_id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:instruction:7",
+      "site": 126,
+      "stride_bytes": 0,
+      "update_kind": "write"
+    },
+    {
+      "address_shape": "constant",
+      "column": 31,
+      "element_bytes": 8,
+      "function": "BUStep",
+      "ir_lanes": 1,
+      "line": 116,
+      "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/graph.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:1717:6e2a9b58e359bcfa",
+      "region_index": 19,
+      "root_id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:instruction:7",
+      "site": 127,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 40,
+      "element_bytes": 4,
+      "function": "BUStep",
+      "ir_lanes": 1,
+      "line": 116,
+      "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/graph.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:1717:6e2a9b58e359bcfa",
+      "region_index": 19,
+      "root_id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:instruction:7",
+      "site": 128,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 31,
+      "element_bytes": 8,
+      "function": "BUStep",
+      "ir_lanes": 1,
+      "line": 115,
+      "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/graph.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:1717:6e2a9b58e359bcfa",
+      "region_index": 19,
+      "root_id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:instruction:7",
+      "site": 130,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 40,
+      "element_bytes": 4,
+      "function": "BUStep",
+      "ir_lanes": 1,
+      "line": 115,
+      "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/graph.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:1717:6e2a9b58e359bcfa",
+      "region_index": 19,
+      "root_id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:instruction:7",
+      "site": 131,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 46,
+      "element_bytes": 8,
+      "function": "BUStep",
+      "ir_lanes": 1,
+      "line": 115,
+      "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/graph.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:1717:6e2a9b58e359bcfa",
+      "region_index": 19,
+      "root_id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:instruction:7",
+      "site": 133,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 15,
+      "element_bytes": 8,
+      "function": "BUStep",
+      "ir_lanes": 1,
+      "line": 111,
+      "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/graph.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:1717:6e2a9b58e359bcfa",
+      "region_index": 19,
+      "root_id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:instruction:1",
+      "site": 134,
+      "stride_bytes": 0,
+      "update_kind": "write"
+    },
+    {
+      "address_shape": "constant",
+      "column": 11,
+      "element_bytes": 8,
+      "function": "BUStep",
+      "ir_lanes": 1,
+      "line": 238,
+      "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "path": "/usr/include/c++/13/bits/stl_algobase.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:1717:6e2a9b58e359bcfa",
+      "region_index": 19,
+      "root_id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:instruction:1",
+      "site": 135,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 17,
+      "element_bytes": 8,
+      "function": "BUStep",
+      "ir_lanes": 1,
+      "line": 238,
+      "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "path": "/usr/include/c++/13/bits/stl_algobase.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:1717:6e2a9b58e359bcfa",
+      "region_index": 19,
+      "root_id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:instruction:0",
+      "site": 136,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "data_dependent_merge",
+      "column": 23,
+      "element_bytes": 8,
+      "function": "BUStep",
+      "ir_lanes": 1,
+      "line": 112,
+      "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/graph.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:1717:6e2a9b58e359bcfa",
+      "region_index": 19,
+      "root_id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:instruction:92",
+      "site": 137,
+      "stride_bytes": null,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 21,
+      "element_bytes": 8,
+      "function": "BUStep",
+      "ir_lanes": 1,
+      "line": 112,
+      "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/graph.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:1717:6e2a9b58e359bcfa",
+      "region_index": 19,
+      "root_id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:instruction:7",
+      "site": 138,
+      "stride_bytes": 0,
+      "update_kind": "write"
+    },
+    {
+      "address_shape": "constant",
+      "column": 31,
+      "element_bytes": 8,
+      "function": "BUStep",
+      "ir_lanes": 1,
+      "line": 115,
+      "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/graph.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:1717:6e2a9b58e359bcfa",
+      "region_index": 19,
+      "root_id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:instruction:7",
+      "site": 139,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 40,
+      "element_bytes": 4,
+      "function": "BUStep",
+      "ir_lanes": 1,
+      "line": 115,
+      "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/graph.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:1717:6e2a9b58e359bcfa",
+      "region_index": 19,
+      "root_id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:instruction:7",
+      "site": 140,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 46,
+      "element_bytes": 8,
+      "function": "BUStep",
+      "ir_lanes": 1,
+      "line": 115,
+      "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/graph.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:1717:6e2a9b58e359bcfa",
+      "region_index": 19,
+      "root_id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:instruction:7",
+      "site": 142,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 31,
+      "element_bytes": 8,
+      "function": "BUStep",
+      "ir_lanes": 1,
+      "line": 116,
+      "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/graph.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:1717:6e2a9b58e359bcfa",
+      "region_index": 19,
+      "root_id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:instruction:7",
+      "site": 143,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 40,
+      "element_bytes": 4,
+      "function": "BUStep",
+      "ir_lanes": 1,
+      "line": 116,
+      "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/graph.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:1717:6e2a9b58e359bcfa",
+      "region_index": 19,
+      "root_id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:instruction:7",
+      "site": 144,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 13,
+      "element_bytes": 8,
+      "function": "BUStep",
+      "ir_lanes": 1,
+      "line": 52,
+      "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bitmap.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:1791:c91be0a18a4752c0",
+      "region_index": 20,
+      "root_id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:argument:4",
+      "site": 147,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 12,
+      "element_bytes": 8,
+      "function": "BUStep",
+      "ir_lanes": 1,
+      "line": 116,
+      "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/pvector.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:1791:c91be0a18a4752c0",
+      "region_index": 20,
+      "root_id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:argument:3",
+      "site": 149,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 22,
+      "element_bytes": 8,
+      "function": "BUStep",
+      "ir_lanes": 1,
+      "line": 56,
+      "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bfs.cc",
+      "read_write": false,
+      "region": "loop:bfs.cc:1791:c91be0a18a4752c0",
+      "region_index": 20,
+      "root_id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:instruction:6",
+      "site": 151,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 22,
+      "element_bytes": 8,
+      "function": "BUStep",
+      "ir_lanes": 1,
+      "line": 56,
+      "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bfs.cc",
+      "read_write": false,
+      "region": "loop:bfs.cc:1791:c91be0a18a4752c0",
+      "region_index": 20,
+      "root_id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:instruction:6",
+      "site": 152,
+      "stride_bytes": 0,
+      "update_kind": "write"
+    },
+    {
+      "address_shape": "constant",
+      "column": 5,
+      "element_bytes": 8,
+      "function": "BUStep",
+      "ir_lanes": 1,
+      "line": 40,
+      "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bitmap.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:1791:c91be0a18a4752c0",
+      "region_index": 20,
+      "root_id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:argument:6",
+      "site": 153,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 10,
+      "element_bytes": 4,
+      "function": "BitmapToQueue",
+      "ir_lanes": 1,
+      "line": 106,
+      "llvm_function": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bfs.cc",
+      "read_write": false,
+      "region": "loop:bfs.cc:3093:d28ec09d2dd27686",
+      "region_index": 33,
+      "root_id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:4",
+      "site": 317,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 13,
+      "element_bytes": 8,
+      "function": "BitmapToQueue",
+      "ir_lanes": 1,
+      "line": 52,
+      "llvm_function": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bitmap.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:3093:d28ec09d2dd27686",
+      "region_index": 33,
+      "root_id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:argument:4",
+      "site": 319,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 9,
+      "element_bytes": 8,
+      "function": "BitmapToQueue",
+      "ir_lanes": 1,
+      "line": 98,
+      "llvm_function": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/sliding_queue.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:3093:d28ec09d2dd27686",
+      "region_index": 33,
+      "root_id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:2",
+      "site": 321,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 15,
+      "element_bytes": 8,
+      "function": "BitmapToQueue",
+      "ir_lanes": 1,
+      "line": 98,
+      "llvm_function": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/sliding_queue.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:3093:d28ec09d2dd27686",
+      "region_index": 33,
+      "root_id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:2",
+      "site": 322,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 23,
+      "element_bytes": 8,
+      "function": "BitmapToQueue",
+      "ir_lanes": 1,
+      "line": 104,
+      "llvm_function": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/sliding_queue.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:3093:d28ec09d2dd27686",
+      "region_index": 33,
+      "root_id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:2",
+      "site": 323,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "unknown",
+      "column": 26,
+      "element_bytes": 8,
+      "function": "BitmapToQueue",
+      "ir_lanes": 1,
+      "line": 104,
+      "llvm_function": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/sliding_queue.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:3093:d28ec09d2dd27686",
+      "region_index": 33,
+      "root_id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:76",
+      "site": 324,
+      "stride_bytes": null,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 39,
+      "element_bytes": 8,
+      "function": "BitmapToQueue",
+      "ir_lanes": 1,
+      "line": 105,
+      "llvm_function": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/sliding_queue.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:3093:d28ec09d2dd27686",
+      "region_index": 33,
+      "root_id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:2",
+      "site": 325,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 53,
+      "element_bytes": 8,
+      "function": "BitmapToQueue",
+      "ir_lanes": 1,
+      "line": 105,
+      "llvm_function": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/sliding_queue.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:3093:d28ec09d2dd27686",
+      "region_index": 33,
+      "root_id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:2",
+      "site": 326,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "unknown",
+      "column": 14,
+      "element_bytes": 8,
+      "function": "BitmapToQueue",
+      "ir_lanes": 1,
+      "line": 26,
+      "llvm_function": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/platform_atomics.h",
+      "read_write": true,
+      "region": "loop:bfs.cc:3093:d28ec09d2dd27686",
+      "region_index": 33,
+      "root_id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:79",
+      "site": 327,
+      "stride_bytes": null,
+      "update_kind": "add-update"
+    },
+    {
+      "address_shape": "constant",
+      "column": 15,
+      "element_bytes": 8,
+      "function": "BitmapToQueue",
+      "ir_lanes": 1,
+      "line": 106,
+      "llvm_function": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/sliding_queue.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:3093:d28ec09d2dd27686",
+      "region_index": 33,
+      "root_id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:2",
+      "site": 328,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 28,
+      "element_bytes": 8,
+      "function": "BitmapToQueue",
+      "ir_lanes": 1,
+      "line": 106,
+      "llvm_function": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/sliding_queue.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:3093:d28ec09d2dd27686",
+      "region_index": 33,
+      "root_id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:2",
+      "site": 329,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 40,
+      "element_bytes": 8,
+      "function": "BitmapToQueue",
+      "ir_lanes": 1,
+      "line": 106,
+      "llvm_function": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/sliding_queue.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:3093:d28ec09d2dd27686",
+      "region_index": 33,
+      "root_id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:2",
+      "site": 330,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 0,
+      "element_bytes": 8,
+      "function": "BitmapToQueue",
+      "ir_lanes": 1,
+      "line": 0,
+      "llvm_function": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bfs.cc",
+      "read_write": false,
+      "region": "loop:bfs.cc:3093:d28ec09d2dd27686",
+      "region_index": 33,
+      "root_id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:1",
+      "site": 331,
+      "stride_bytes": 0,
+      "update_kind": "write"
+    },
+    {
+      "address_shape": "constant",
+      "column": 29,
+      "element_bytes": 8,
+      "function": "BitmapToQueue",
+      "ir_lanes": 1,
+      "line": 543,
+      "llvm_function": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+      "path": "/usr/include/c++/13/bits/stl_algobase.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:3093:d28ec09d2dd27686",
+      "region_index": 33,
+      "root_id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:1",
+      "site": 332,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "unknown",
+      "column": 12,
+      "element_bytes": 4,
+      "function": "BitmapToQueue",
+      "ir_lanes": 1,
+      "line": 398,
+      "llvm_function": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+      "path": "/usr/include/c++/13/bits/stl_algobase.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:3093:d28ec09d2dd27686",
+      "region_index": 33,
+      "root_id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:84",
+      "site": 333,
+      "stride_bytes": null,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "unknown",
+      "column": 10,
+      "element_bytes": 4,
+      "function": "BitmapToQueue",
+      "ir_lanes": 1,
+      "line": 398,
+      "llvm_function": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+      "path": "/usr/include/c++/13/bits/stl_algobase.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:3093:d28ec09d2dd27686",
+      "region_index": 33,
+      "root_id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:92",
+      "site": 334,
+      "stride_bytes": null,
+      "update_kind": "write"
+    },
+    {
+      "address_shape": "constant",
+      "column": 8,
+      "element_bytes": 8,
+      "function": "BitmapToQueue",
+      "ir_lanes": 1,
+      "line": 107,
+      "llvm_function": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/sliding_queue.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:3093:d28ec09d2dd27686",
+      "region_index": 33,
+      "root_id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:2",
+      "site": 335,
+      "stride_bytes": 0,
+      "update_kind": "write"
+    },
+    {
+      "address_shape": "constant",
+      "column": 5,
+      "element_bytes": 8,
+      "function": "BitmapToQueue",
+      "ir_lanes": 1,
+      "line": 100,
+      "llvm_function": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/sliding_queue.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:3093:d28ec09d2dd27686",
+      "region_index": 33,
+      "root_id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:2",
+      "site": 336,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 19,
+      "element_bytes": 8,
+      "function": "BitmapToQueue",
+      "ir_lanes": 1,
+      "line": 100,
+      "llvm_function": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/sliding_queue.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:3093:d28ec09d2dd27686",
+      "region_index": 33,
+      "root_id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:2",
+      "site": 337,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 19,
+      "element_bytes": 8,
+      "function": "BitmapToQueue",
+      "ir_lanes": 1,
+      "line": 100,
+      "llvm_function": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/sliding_queue.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:3093:d28ec09d2dd27686",
+      "region_index": 33,
+      "root_id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:2",
+      "site": 338,
+      "stride_bytes": 0,
+      "update_kind": "write"
+    },
+    {
+      "address_shape": "constant",
+      "column": 8,
+      "element_bytes": 4,
+      "function": "InitParent",
+      "ir_lanes": 1,
+      "line": 117,
+      "llvm_function": "_Z10InitParentRK8CSRGraphIiiLb1EE.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bfs.cc",
+      "read_write": false,
+      "region": "loop:bfs.cc:3354:4fc081ce5a20fcdd",
+      "region_index": 36,
+      "root_id": "_Z10InitParentRK8CSRGraphIiiLb1EE.omp_outlined:instruction:1",
+      "site": 372,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 12,
+      "element_bytes": 8,
+      "function": "InitParent",
+      "ir_lanes": 1,
+      "line": 206,
+      "llvm_function": "_Z10InitParentRK8CSRGraphIiiLb1EE.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/graph.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:3354:4fc081ce5a20fcdd",
+      "region_index": 36,
+      "root_id": "_Z10InitParentRK8CSRGraphIiiLb1EE.omp_outlined:argument:2",
+      "site": 374,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 30,
+      "element_bytes": 8,
+      "function": "InitParent",
+      "ir_lanes": 1,
+      "line": 206,
+      "llvm_function": "_Z10InitParentRK8CSRGraphIiiLb1EE.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/graph.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:3354:4fc081ce5a20fcdd",
+      "region_index": 36,
+      "root_id": "_Z10InitParentRK8CSRGraphIiiLb1EE.omp_outlined:argument:2",
+      "site": 376,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 12,
+      "element_bytes": 8,
+      "function": "InitParent",
+      "ir_lanes": 1,
+      "line": 206,
+      "llvm_function": "_Z10InitParentRK8CSRGraphIiiLb1EE.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/graph.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:3354:4fc081ce5a20fcdd",
+      "region_index": 36,
+      "root_id": "_Z10InitParentRK8CSRGraphIiiLb1EE.omp_outlined:argument:2",
+      "site": 378,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 30,
+      "element_bytes": 8,
+      "function": "InitParent",
+      "ir_lanes": 1,
+      "line": 206,
+      "llvm_function": "_Z10InitParentRK8CSRGraphIiiLb1EE.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/graph.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:3354:4fc081ce5a20fcdd",
+      "region_index": 36,
+      "root_id": "_Z10InitParentRK8CSRGraphIiiLb1EE.omp_outlined:argument:2",
+      "site": 380,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 12,
+      "element_bytes": 8,
+      "function": "InitParent",
+      "ir_lanes": 1,
+      "line": 116,
+      "llvm_function": "_Z10InitParentRK8CSRGraphIiiLb1EE.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/pvector.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:3354:4fc081ce5a20fcdd",
+      "region_index": 36,
+      "root_id": "_Z10InitParentRK8CSRGraphIiiLb1EE.omp_outlined:argument:3",
+      "site": 382,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 8,
+      "element_bytes": 4,
+      "function": "DOBFS",
+      "ir_lanes": 1,
+      "line": 175,
+      "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bfs.cc",
+      "read_write": false,
+      "region": "loop:bfs.cc:5199:82c2122db9c90924",
+      "region_index": 44,
+      "root_id": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii.omp_outlined:instruction:1",
+      "site": 661,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 12,
+      "element_bytes": 8,
+      "function": "DOBFS",
+      "ir_lanes": 1,
+      "line": 116,
+      "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/pvector.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:5199:82c2122db9c90924",
+      "region_index": 44,
+      "root_id": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii.omp_outlined:argument:3",
+      "site": 663,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    },
+    {
+      "address_shape": "constant",
+      "column": 12,
+      "element_bytes": 8,
+      "function": "DOBFS",
+      "ir_lanes": 1,
+      "line": 116,
+      "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii.omp_outlined",
+      "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/pvector.h",
+      "read_write": false,
+      "region": "loop:bfs.cc:5199:82c2122db9c90924",
+      "region_index": 44,
+      "root_id": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii.omp_outlined:argument:3",
+      "site": 665,
+      "stride_bytes": 0,
+      "update_kind": "read"
+    }
+  ],
+  "all_source_json_sites_cross_checked": true,
+  "calls": [
+    {
+      "alias_proof_scope": "LLVM default AA on normalized IR; not observed runtime address/allocator regime",
+      "body_counted": false,
+      "constant_length_bytes": null,
+      "cost_accounting": "opaque_callee",
+      "destination_alignment_bytes": 4,
+      "destination_root_id": "_Z6TDStepRK8CSRGraphIiiLb1EER7pvectorIiER12SlidingQueueIiE.omp_outlined:instruction:265",
+      "event": "bulk_memory",
+      "length_kind": "runtime_value",
+      "line": 437,
+      "name": "llvm.memmove.p0.p0.i64",
+      "region": "gapbs-bfs-do/serial.433918642650629990",
+      "site": 73,
+      "source_alignment_bytes": 4,
+      "source_location": {
+        "column": 6,
+        "line": 437,
+        "llvm_function": "_Z6TDStepRK8CSRGraphIiiLb1EER7pvectorIiER12SlidingQueueIiE.omp_outlined",
+        "path": "/usr/include/c++/13/bits/stl_algobase.h"
+      },
+      "source_root_id": "_Z6TDStepRK8CSRGraphIiiLb1EER7pvectorIiER12SlidingQueueIiE.omp_outlined:instruction:257",
+      "static_alias_result": "MayAlias"
+    },
+    {
+      "alias_proof_scope": "LLVM default AA on normalized IR; not observed runtime address/allocator regime",
+      "body_counted": false,
+      "constant_length_bytes": null,
+      "cost_accounting": "opaque_callee",
+      "destination_alignment_bytes": 4,
+      "destination_root_id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:141",
+      "event": "bulk_memory",
+      "length_kind": "runtime_value",
+      "line": 437,
+      "name": "llvm.memmove.p0.p0.i64",
+      "region": "gapbs-bfs-do/serial.292787490577224610",
+      "site": 89,
+      "source_alignment_bytes": 4,
+      "source_location": {
+        "column": 6,
+        "line": 437,
+        "llvm_function": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+        "path": "/usr/include/c++/13/bits/stl_algobase.h"
+      },
+      "source_root_id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:133",
+      "static_alias_result": "MayAlias"
+    },
+    {
+      "alias_proof_scope": "LLVM default AA on normalized IR; not observed runtime address/allocator regime",
+      "body_counted": false,
+      "constant_length_bytes": 8,
+      "cost_accounting": "opaque_callee",
+      "destination_alignment_bytes": 8,
+      "destination_root_id": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii:instruction:61",
+      "event": "bulk_memory",
+      "length_kind": "constant",
+      "line": 23,
+      "name": "llvm.memcpy.p0.p0.i64",
+      "region": "gapbs-bfs-do/serial.995486541436624707",
+      "site": 105,
+      "source_alignment_bytes": 8,
+      "source_location": {
+        "column": 19,
+        "line": 23,
+        "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+        "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/timer.h"
+      },
+      "source_root_id": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii:instruction:61",
+      "static_alias_result": "NoAlias"
+    },
+    {
+      "alias_proof_scope": "LLVM default AA on normalized IR; not observed runtime address/allocator regime",
+      "body_counted": false,
+      "constant_length_bytes": 8,
+      "cost_accounting": "opaque_callee",
+      "destination_alignment_bytes": 8,
+      "destination_root_id": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii:instruction:61",
+      "event": "bulk_memory",
+      "length_kind": "constant",
+      "line": 23,
+      "name": "llvm.memcpy.p0.p0.i64",
+      "region": "loop:bfs.cc:4143:f22f36344da32b9b",
+      "site": 125,
+      "source_alignment_bytes": 8,
+      "source_location": {
+        "column": 19,
+        "line": 23,
+        "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+        "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/timer.h"
+      },
+      "source_root_id": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii:instruction:61",
+      "static_alias_result": "NoAlias"
+    },
+    {
+      "alias_proof_scope": "LLVM default AA on normalized IR; not observed runtime address/allocator regime",
+      "body_counted": false,
+      "constant_length_bytes": 8,
+      "cost_accounting": "opaque_callee",
+      "destination_alignment_bytes": 8,
+      "destination_root_id": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii:instruction:61",
+      "event": "bulk_memory",
+      "length_kind": "constant",
+      "line": 23,
+      "name": "llvm.memcpy.p0.p0.i64",
+      "region": "loop:bfs.cc:4439:e30e02362196352a",
+      "site": 136,
+      "source_alignment_bytes": 8,
+      "source_location": {
+        "column": 19,
+        "line": 23,
+        "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+        "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/timer.h"
+      },
+      "source_root_id": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii:instruction:61",
+      "static_alias_result": "NoAlias"
+    },
+    {
+      "alias_proof_scope": "LLVM default AA on normalized IR; not observed runtime address/allocator regime",
+      "body_counted": false,
+      "constant_length_bytes": 8,
+      "cost_accounting": "opaque_callee",
+      "destination_alignment_bytes": 8,
+      "destination_root_id": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii:instruction:61",
+      "event": "bulk_memory",
+      "length_kind": "constant",
+      "line": 23,
+      "name": "llvm.memcpy.p0.p0.i64",
+      "region": "loop:bfs.cc:4143:f22f36344da32b9b",
+      "site": 148,
+      "source_alignment_bytes": 8,
+      "source_location": {
+        "column": 19,
+        "line": 23,
+        "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+        "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/timer.h"
+      },
+      "source_root_id": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii:instruction:61",
+      "static_alias_result": "NoAlias"
+    },
+    {
+      "alias_proof_scope": "LLVM default AA on normalized IR; not observed runtime address/allocator regime",
+      "body_counted": false,
+      "constant_length_bytes": 8,
+      "cost_accounting": "opaque_callee",
+      "destination_alignment_bytes": 8,
+      "destination_root_id": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii:instruction:61",
+      "event": "bulk_memory",
+      "length_kind": "constant",
+      "line": 23,
+      "name": "llvm.memcpy.p0.p0.i64",
+      "region": "loop:bfs.cc:4143:f22f36344da32b9b",
+      "site": 159,
+      "source_alignment_bytes": 8,
+      "source_location": {
+        "column": 19,
+        "line": 23,
+        "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+        "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/timer.h"
+      },
+      "source_root_id": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii:instruction:61",
+      "static_alias_result": "NoAlias"
+    }
+  ],
+  "data_layout": "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128",
+  "date": "2026-10-06 ET",
+  "enumerated_access_sites": 4436,
+  "enumerated_call_sites": 1319,
+  "format": "swdb.normalized-root-projection.v1",
+  "normalized_ir_sha256": "a65f27c06439fbf5212d2ec42bf0647e8b3538ebe2382bec52e31fdf05e3126a",
+  "roots": [
+    {
+      "argument_index": 2,
+      "caller_producers": [
+        {
+          "binding": "kmpc_micro_shared_argument",
+          "call_argument_index": 3,
+          "caller": "_Z10InitParentRK8CSRGraphIiiLb1EE",
+          "root_id": "_Z10InitParentRK8CSRGraphIiiLb1EE:argument:1",
+          "source_location": {
+            "column": 3,
+            "line": 116,
+            "llvm_function": "_Z10InitParentRK8CSRGraphIiiLb1EE",
+            "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bfs.cc"
+          }
+        },
+        {
+          "binding": "kmpc_micro_shared_argument",
+          "call_argument_index": 3,
+          "caller": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+          "root_id": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii:argument:1",
+          "source_location": {
+            "column": 3,
+            "line": 116,
+            "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+            "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bfs.cc"
+          }
+        }
+      ],
+      "full_allocation_identity_proven": false,
+      "id": "_Z10InitParentRK8CSRGraphIiiLb1EE.omp_outlined:argument:2",
+      "lifetime_status": "depends_on_caller_or_explicit_abi_view; not inferred from pointer width",
+      "producer": "_Z10InitParentRK8CSRGraphIiiLb1EE.omp_outlined",
+      "root_class": "argument"
+    },
+    {
+      "argument_index": 3,
+      "caller_producers": [
+        {
+          "binding": "kmpc_micro_shared_argument",
+          "call_argument_index": 4,
+          "caller": "_Z10InitParentRK8CSRGraphIiiLb1EE",
+          "root_id": "_Z10InitParentRK8CSRGraphIiiLb1EE:argument:0",
+          "source_location": {
+            "column": 3,
+            "line": 116,
+            "llvm_function": "_Z10InitParentRK8CSRGraphIiiLb1EE",
+            "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bfs.cc"
+          }
+        },
+        {
+          "binding": "kmpc_micro_shared_argument",
+          "call_argument_index": 4,
+          "caller": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+          "root_id": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii:argument:0",
+          "source_location": {
+            "column": 3,
+            "line": 116,
+            "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+            "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bfs.cc"
+          }
+        }
+      ],
+      "full_allocation_identity_proven": false,
+      "id": "_Z10InitParentRK8CSRGraphIiiLb1EE.omp_outlined:argument:3",
+      "lifetime_status": "depends_on_caller_or_explicit_abi_view; not inferred from pointer width",
+      "producer": "_Z10InitParentRK8CSRGraphIiiLb1EE.omp_outlined",
+      "root_class": "argument"
+    },
+    {
+      "alignment_bytes": 4,
+      "allocated_type": "i32",
+      "array_count_constant": 1,
+      "constant_extent_bytes": 4,
+      "element_alloc_bytes": 4,
+      "extent_status": "fixed_target_data_layout",
+      "full_allocation_identity_proven": false,
+      "id": "_Z10InitParentRK8CSRGraphIiiLb1EE.omp_outlined:instruction:1",
+      "lifetime_markers": {
+        "end_sites": 1,
+        "function_resume_sites": 0,
+        "function_return_sites": 1,
+        "function_stackrestore_sites": 0,
+        "start_sites": 1
+      },
+      "lifetime_status": "static_markers_and_frame_exits_only; runtime_registration_not_present",
+      "producer": "_Z10InitParentRK8CSRGraphIiiLb1EE.omp_outlined",
+      "root_class": "alloca",
+      "source_location": {
+        "column": 0,
+        "line": 0,
+        "llvm_function": "_Z10InitParentRK8CSRGraphIiiLb1EE.omp_outlined",
+        "path": ""
+      },
+      "source_variables": [
+        {
+          "line": 0,
+          "name": ".omp.ub",
+          "path": "",
+          "scope": "debug variable annotation; allocation bounds come from target DataLayout"
+        }
+      ]
+    },
+    {
+      "argument_index": 0,
+      "caller_producers": [],
+      "full_allocation_identity_proven": false,
+      "id": "_Z10InitParentRK8CSRGraphIiiLb1EE:argument:0",
+      "lifetime_status": "depends_on_caller_or_explicit_abi_view; not inferred from pointer width",
+      "producer": "_Z10InitParentRK8CSRGraphIiiLb1EE",
+      "root_class": "argument"
+    },
+    {
+      "argument_index": 1,
+      "caller_producers": [],
+      "full_allocation_identity_proven": false,
+      "id": "_Z10InitParentRK8CSRGraphIiiLb1EE:argument:1",
+      "lifetime_status": "depends_on_caller_or_explicit_abi_view; not inferred from pointer width",
+      "producer": "_Z10InitParentRK8CSRGraphIiiLb1EE",
+      "root_class": "argument"
+    },
+    {
+      "argument_index": 4,
+      "caller_producers": [
+        {
+          "binding": "kmpc_micro_shared_argument",
+          "call_argument_index": 5,
+          "caller": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE",
+          "root_id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE:argument:1",
+          "source_location": {
+            "column": 3,
+            "line": 102,
+            "llvm_function": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE",
+            "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bfs.cc"
+          }
+        },
+        {
+          "binding": "kmpc_micro_shared_argument",
+          "call_argument_index": 5,
+          "caller": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+          "root_id": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii:instruction:66",
+          "source_location": {
+            "column": 3,
+            "line": 102,
+            "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+            "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bfs.cc"
+          }
+        }
+      ],
+      "full_allocation_identity_proven": false,
+      "id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:argument:4",
+      "lifetime_status": "depends_on_caller_or_explicit_abi_view; not inferred from pointer width",
+      "producer": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+      "root_class": "argument"
+    },
+    {
+      "alignment_bytes": 8,
+      "allocated_type": "ptr",
+      "array_count_constant": 1,
+      "constant_extent_bytes": 8,
+      "element_alloc_bytes": 8,
+      "extent_status": "fixed_target_data_layout",
+      "full_allocation_identity_proven": false,
+      "id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:0",
+      "lifetime_markers": {
+        "end_sites": 1,
+        "function_resume_sites": 0,
+        "function_return_sites": 1,
+        "function_stackrestore_sites": 0,
+        "start_sites": 1
+      },
+      "lifetime_status": "static_markers_and_frame_exits_only; runtime_registration_not_present",
+      "producer": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+      "root_class": "alloca",
+      "source_location": {
+        "column": 0,
+        "line": 0,
+        "llvm_function": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+        "path": ""
+      },
+      "source_variables": [
+        {
+          "line": 538,
+          "name": "__result",
+          "path": "/usr/include/c++/13/bits/stl_algobase.h",
+          "scope": "debug variable annotation; allocation bounds come from target DataLayout"
+        }
+      ]
+    },
+    {
+      "alignment_bytes": 8,
+      "allocated_type": "ptr",
+      "array_count_constant": 1,
+      "constant_extent_bytes": 8,
+      "element_alloc_bytes": 8,
+      "extent_status": "fixed_target_data_layout",
+      "full_allocation_identity_proven": false,
+      "id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:1",
+      "lifetime_markers": {
+        "end_sites": 1,
+        "function_resume_sites": 0,
+        "function_return_sites": 1,
+        "function_stackrestore_sites": 0,
+        "start_sites": 1
+      },
+      "lifetime_status": "static_markers_and_frame_exits_only; runtime_registration_not_present",
+      "producer": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+      "root_class": "alloca",
+      "source_location": {
+        "column": 0,
+        "line": 0,
+        "llvm_function": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+        "path": ""
+      },
+      "source_variables": [
+        {
+          "line": 538,
+          "name": "__result",
+          "path": "/usr/include/c++/13/bits/stl_algobase.h",
+          "scope": "debug variable annotation; allocation bounds come from target DataLayout"
+        }
+      ]
+    },
+    {
+      "full_allocation_identity_proven": false,
+      "id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:133",
+      "pointee_extent_status": "unknown; container extent does not bound loaded pointee",
+      "pointer_field_storage_root_id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:2",
+      "producer": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+      "root_class": "loaded_pointer",
+      "source_location": {
+        "column": 15,
+        "line": 106,
+        "llvm_function": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+        "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/sliding_queue.h"
+      }
+    },
+    {
+      "full_allocation_identity_proven": false,
+      "id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:141",
+      "pointee_extent_status": "unknown; container extent does not bound loaded pointee",
+      "pointer_field_storage_root_id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:0",
+      "producer": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+      "root_class": "loaded_pointer",
+      "source_location": {
+        "column": 29,
+        "line": 543,
+        "llvm_function": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+        "path": "/usr/include/c++/13/bits/stl_algobase.h"
+      }
+    },
+    {
+      "alignment_bytes": 8,
+      "allocated_type": "%class.QueueBuffer = type { i64, ptr, ptr, i64 }",
+      "array_count_constant": 1,
+      "constant_extent_bytes": 32,
+      "element_alloc_bytes": 32,
+      "extent_status": "fixed_target_data_layout",
+      "full_allocation_identity_proven": false,
+      "id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:2",
+      "lifetime_markers": {
+        "end_sites": 1,
+        "function_resume_sites": 0,
+        "function_return_sites": 1,
+        "function_stackrestore_sites": 0,
+        "start_sites": 1
+      },
+      "lifetime_status": "static_markers_and_frame_exits_only; runtime_registration_not_present",
+      "producer": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+      "root_class": "alloca",
+      "source_location": {
+        "column": 0,
+        "line": 0,
+        "llvm_function": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+        "path": ""
+      },
+      "source_variables": [
+        {
+          "line": 104,
+          "name": "lqueue",
+          "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bfs.cc",
+          "scope": "debug variable annotation; allocation bounds come from target DataLayout"
+        }
+      ]
+    },
+    {
+      "alignment_bytes": 4,
+      "allocated_type": "i32",
+      "array_count_constant": 1,
+      "constant_extent_bytes": 4,
+      "element_alloc_bytes": 4,
+      "extent_status": "fixed_target_data_layout",
+      "full_allocation_identity_proven": false,
+      "id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:4",
+      "lifetime_markers": {
+        "end_sites": 1,
+        "function_resume_sites": 0,
+        "function_return_sites": 1,
+        "function_stackrestore_sites": 0,
+        "start_sites": 1
+      },
+      "lifetime_status": "static_markers_and_frame_exits_only; runtime_registration_not_present",
+      "producer": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+      "root_class": "alloca",
+      "source_location": {
+        "column": 0,
+        "line": 0,
+        "llvm_function": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+        "path": ""
+      },
+      "source_variables": [
+        {
+          "line": 0,
+          "name": ".omp.ub",
+          "path": "",
+          "scope": "debug variable annotation; allocation bounds come from target DataLayout"
+        }
+      ]
+    },
+    {
+      "full_allocation_identity_proven": false,
+      "id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:76",
+      "pointee_extent_status": "unknown; container extent does not bound loaded pointee",
+      "pointer_field_storage_root_id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:2",
+      "producer": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+      "root_class": "loaded_pointer",
+      "source_location": {
+        "column": 23,
+        "line": 104,
+        "llvm_function": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+        "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/sliding_queue.h"
+      }
+    },
+    {
+      "full_allocation_identity_proven": false,
+      "id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:79",
+      "pointee_extent_status": "unknown; container extent does not bound loaded pointee",
+      "pointer_field_storage_root_id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:2",
+      "producer": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+      "root_class": "loaded_pointer",
+      "source_location": {
+        "column": 39,
+        "line": 105,
+        "llvm_function": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+        "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/sliding_queue.h"
+      }
+    },
+    {
+      "full_allocation_identity_proven": false,
+      "id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:84",
+      "pointee_extent_status": "unknown; container extent does not bound loaded pointee",
+      "pointer_field_storage_root_id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:2",
+      "producer": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+      "root_class": "loaded_pointer",
+      "source_location": {
+        "column": 15,
+        "line": 106,
+        "llvm_function": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+        "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/sliding_queue.h"
+      }
+    },
+    {
+      "full_allocation_identity_proven": false,
+      "id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:92",
+      "pointee_extent_status": "unknown; container extent does not bound loaded pointee",
+      "pointer_field_storage_root_id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined:instruction:1",
+      "producer": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+      "root_class": "loaded_pointer",
+      "source_location": {
+        "column": 29,
+        "line": 543,
+        "llvm_function": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE.omp_outlined",
+        "path": "/usr/include/c++/13/bits/stl_algobase.h"
+      }
+    },
+    {
+      "argument_index": 1,
+      "caller_producers": [],
+      "full_allocation_identity_proven": false,
+      "id": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE:argument:1",
+      "lifetime_status": "depends_on_caller_or_explicit_abi_view; not inferred from pointer width",
+      "producer": "_Z13BitmapToQueueRK8CSRGraphIiiLb1EERK6BitmapR12SlidingQueueIiE",
+      "root_class": "argument"
+    },
+    {
+      "argument_index": 3,
+      "caller_producers": [
+        {
+          "binding": "kmpc_micro_shared_argument",
+          "call_argument_index": 4,
+          "caller": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+          "root_id": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii:argument:0",
+          "source_location": {
+            "column": 3,
+            "line": 174,
+            "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+            "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bfs.cc"
+          }
+        }
+      ],
+      "full_allocation_identity_proven": false,
+      "id": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii.omp_outlined:argument:3",
+      "lifetime_status": "depends_on_caller_or_explicit_abi_view; not inferred from pointer width",
+      "producer": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii.omp_outlined",
+      "root_class": "argument"
+    },
+    {
+      "alignment_bytes": 4,
+      "allocated_type": "i32",
+      "array_count_constant": 1,
+      "constant_extent_bytes": 4,
+      "element_alloc_bytes": 4,
+      "extent_status": "fixed_target_data_layout",
+      "full_allocation_identity_proven": false,
+      "id": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii.omp_outlined:instruction:1",
+      "lifetime_markers": {
+        "end_sites": 1,
+        "function_resume_sites": 0,
+        "function_return_sites": 1,
+        "function_stackrestore_sites": 0,
+        "start_sites": 1
+      },
+      "lifetime_status": "static_markers_and_frame_exits_only; runtime_registration_not_present",
+      "producer": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii.omp_outlined",
+      "root_class": "alloca",
+      "source_location": {
+        "column": 0,
+        "line": 0,
+        "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii.omp_outlined",
+        "path": ""
+      },
+      "source_variables": [
+        {
+          "line": 0,
+          "name": ".omp.ub",
+          "path": "",
+          "scope": "debug variable annotation; allocation bounds come from target DataLayout"
+        }
+      ]
+    },
+    {
+      "argument_index": 0,
+      "caller_producers": [
+        {
+          "binding": "direct_call_argument",
+          "call_argument_index": 0,
+          "caller": "main",
+          "root_id": "main:instruction:39",
+          "source_location": {
+            "column": 12,
+            "line": 258,
+            "llvm_function": "main",
+            "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bfs.cc"
+          }
+        }
+      ],
+      "full_allocation_identity_proven": false,
+      "id": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii:argument:0",
+      "lifetime_status": "depends_on_caller_or_explicit_abi_view; not inferred from pointer width",
+      "producer": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+      "root_class": "argument"
+    },
+    {
+      "argument_index": 1,
+      "caller_producers": [
+        {
+          "binding": "direct_call_argument",
+          "call_argument_index": 1,
+          "caller": "main",
+          "root_id": "main:instruction:56",
+          "source_location": {
+            "column": 12,
+            "line": 258,
+            "llvm_function": "main",
+            "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bfs.cc"
+          }
+        }
+      ],
+      "full_allocation_identity_proven": false,
+      "id": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii:argument:1",
+      "lifetime_status": "depends_on_caller_or_explicit_abi_view; not inferred from pointer width",
+      "producer": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+      "root_class": "argument"
+    },
+    {
+      "alignment_bytes": 8,
+      "allocated_type": "%class.Timer = type { %\"class.std::chrono::time_point\", %\"class.std::chrono::time_point\" }",
+      "array_count_constant": 1,
+      "constant_extent_bytes": 16,
+      "element_alloc_bytes": 16,
+      "extent_status": "fixed_target_data_layout",
+      "full_allocation_identity_proven": false,
+      "id": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii:instruction:61",
+      "lifetime_markers": {
+        "end_sites": 2,
+        "function_resume_sites": 1,
+        "function_return_sites": 1,
+        "function_stackrestore_sites": 0,
+        "start_sites": 1
+      },
+      "lifetime_status": "static_markers_and_frame_exits_only; runtime_registration_not_present",
+      "producer": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+      "root_class": "alloca",
+      "source_location": {
+        "column": 0,
+        "line": 0,
+        "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+        "path": ""
+      },
+      "source_variables": [
+        {
+          "line": 126,
+          "name": "t",
+          "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bfs.cc",
+          "scope": "debug variable annotation; allocation bounds come from target DataLayout"
+        }
+      ]
+    },
+    {
+      "alignment_bytes": 8,
+      "allocated_type": "%class.Bitmap = type { ptr, ptr }",
+      "array_count_constant": 1,
+      "constant_extent_bytes": 16,
+      "element_alloc_bytes": 16,
+      "extent_status": "fixed_target_data_layout",
+      "full_allocation_identity_proven": false,
+      "id": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii:instruction:65",
+      "lifetime_markers": {
+        "end_sites": 2,
+        "function_resume_sites": 1,
+        "function_return_sites": 1,
+        "function_stackrestore_sites": 0,
+        "start_sites": 1
+      },
+      "lifetime_status": "static_markers_and_frame_exits_only; runtime_registration_not_present",
+      "producer": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+      "root_class": "alloca",
+      "source_location": {
+        "column": 0,
+        "line": 0,
+        "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+        "path": ""
+      },
+      "source_variables": [
+        {
+          "line": 136,
+          "name": "curr",
+          "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bfs.cc",
+          "scope": "debug variable annotation; allocation bounds come from target DataLayout"
+        }
+      ]
+    },
+    {
+      "alignment_bytes": 8,
+      "allocated_type": "%class.Bitmap = type { ptr, ptr }",
+      "array_count_constant": 1,
+      "constant_extent_bytes": 16,
+      "element_alloc_bytes": 16,
+      "extent_status": "fixed_target_data_layout",
+      "full_allocation_identity_proven": false,
+      "id": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii:instruction:66",
+      "lifetime_markers": {
+        "end_sites": 2,
+        "function_resume_sites": 1,
+        "function_return_sites": 1,
+        "function_stackrestore_sites": 0,
+        "start_sites": 1
+      },
+      "lifetime_status": "static_markers_and_frame_exits_only; runtime_registration_not_present",
+      "producer": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+      "root_class": "alloca",
+      "source_location": {
+        "column": 0,
+        "line": 0,
+        "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+        "path": ""
+      },
+      "source_variables": [
+        {
+          "line": 138,
+          "name": "front",
+          "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bfs.cc",
+          "scope": "debug variable annotation; allocation bounds come from target DataLayout"
+        }
+      ]
+    },
+    {
+      "abi_role": "kmpc_micro_global_tid",
+      "abi_typed_referent_bytes": 4,
+      "abi_view_scope": "microtask_execution_only; not full libomp allocation",
+      "argument_index": 0,
+      "caller_producers": [],
+      "full_allocation_identity_proven": false,
+      "id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:argument:0",
+      "lifetime_status": "depends_on_caller_or_explicit_abi_view; not inferred from pointer width",
+      "producer": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "root_class": "argument"
+    },
+    {
+      "argument_index": 2,
+      "caller_producers": [
+        {
+          "binding": "kmpc_micro_shared_argument",
+          "call_argument_index": 3,
+          "caller": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_",
+          "root_id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_:argument:0",
+          "source_location": {
+            "column": 3,
+            "line": 50,
+            "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_",
+            "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bfs.cc"
+          }
+        },
+        {
+          "binding": "kmpc_micro_shared_argument",
+          "call_argument_index": 3,
+          "caller": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+          "root_id": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii:argument:1",
+          "source_location": {
+            "column": 3,
+            "line": 50,
+            "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+            "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bfs.cc"
+          }
+        }
+      ],
+      "full_allocation_identity_proven": false,
+      "id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:argument:2",
+      "lifetime_status": "depends_on_caller_or_explicit_abi_view; not inferred from pointer width",
+      "producer": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "root_class": "argument"
+    },
+    {
+      "argument_index": 3,
+      "caller_producers": [
+        {
+          "binding": "kmpc_micro_shared_argument",
+          "call_argument_index": 4,
+          "caller": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_",
+          "root_id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_:argument:1",
+          "source_location": {
+            "column": 3,
+            "line": 50,
+            "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_",
+            "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bfs.cc"
+          }
+        },
+        {
+          "binding": "kmpc_micro_shared_argument",
+          "call_argument_index": 4,
+          "caller": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+          "root_id": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii:argument:0",
+          "source_location": {
+            "column": 3,
+            "line": 50,
+            "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+            "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bfs.cc"
+          }
+        }
+      ],
+      "full_allocation_identity_proven": false,
+      "id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:argument:3",
+      "lifetime_status": "depends_on_caller_or_explicit_abi_view; not inferred from pointer width",
+      "producer": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "root_class": "argument"
+    },
+    {
+      "argument_index": 4,
+      "caller_producers": [
+        {
+          "binding": "kmpc_micro_shared_argument",
+          "call_argument_index": 5,
+          "caller": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_",
+          "root_id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_:argument:2",
+          "source_location": {
+            "column": 3,
+            "line": 50,
+            "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_",
+            "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bfs.cc"
+          }
+        },
+        {
+          "binding": "kmpc_micro_shared_argument",
+          "call_argument_index": 5,
+          "caller": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+          "root_id": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii:instruction:66",
+          "source_location": {
+            "column": 3,
+            "line": 50,
+            "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+            "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bfs.cc"
+          }
+        }
+      ],
+      "full_allocation_identity_proven": false,
+      "id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:argument:4",
+      "lifetime_status": "depends_on_caller_or_explicit_abi_view; not inferred from pointer width",
+      "producer": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "root_class": "argument"
+    },
+    {
+      "argument_index": 6,
+      "caller_producers": [
+        {
+          "binding": "kmpc_micro_shared_argument",
+          "call_argument_index": 7,
+          "caller": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_",
+          "root_id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_:argument:3",
+          "source_location": {
+            "column": 3,
+            "line": 50,
+            "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_",
+            "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bfs.cc"
+          }
+        },
+        {
+          "binding": "kmpc_micro_shared_argument",
+          "call_argument_index": 7,
+          "caller": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+          "root_id": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii:instruction:65",
+          "source_location": {
+            "column": 3,
+            "line": 50,
+            "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+            "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bfs.cc"
+          }
+        }
+      ],
+      "full_allocation_identity_proven": false,
+      "id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:argument:6",
+      "lifetime_status": "depends_on_caller_or_explicit_abi_view; not inferred from pointer width",
+      "producer": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "root_class": "argument"
+    },
+    {
+      "alignment_bytes": 8,
+      "allocated_type": "i64",
+      "array_count_constant": 1,
+      "constant_extent_bytes": 8,
+      "element_alloc_bytes": 8,
+      "extent_status": "fixed_target_data_layout",
+      "full_allocation_identity_proven": false,
+      "id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:instruction:0",
+      "lifetime_markers": {
+        "end_sites": 1,
+        "function_resume_sites": 0,
+        "function_return_sites": 1,
+        "function_stackrestore_sites": 0,
+        "start_sites": 1
+      },
+      "lifetime_status": "static_markers_and_frame_exits_only; runtime_registration_not_present",
+      "producer": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "root_class": "alloca",
+      "source_location": {
+        "column": 0,
+        "line": 0,
+        "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+        "path": ""
+      },
+      "source_variables": [
+        {
+          "line": 109,
+          "name": "start_offset",
+          "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/graph.h",
+          "scope": "debug variable annotation; allocation bounds come from target DataLayout"
+        }
+      ]
+    },
+    {
+      "alignment_bytes": 8,
+      "allocated_type": "i64",
+      "array_count_constant": 1,
+      "constant_extent_bytes": 8,
+      "element_alloc_bytes": 8,
+      "extent_status": "fixed_target_data_layout",
+      "full_allocation_identity_proven": false,
+      "id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:instruction:1",
+      "lifetime_markers": {
+        "end_sites": 1,
+        "function_resume_sites": 0,
+        "function_return_sites": 1,
+        "function_stackrestore_sites": 0,
+        "start_sites": 1
+      },
+      "lifetime_status": "static_markers_and_frame_exits_only; runtime_registration_not_present",
+      "producer": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "root_class": "alloca",
+      "source_location": {
+        "column": 0,
+        "line": 0,
+        "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+        "path": ""
+      },
+      "source_variables": [
+        {
+          "line": 111,
+          "name": "max_offset",
+          "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/graph.h",
+          "scope": "debug variable annotation; allocation bounds come from target DataLayout"
+        }
+      ]
+    },
+    {
+      "alignment_bytes": 4,
+      "allocated_type": "i32",
+      "array_count_constant": 1,
+      "constant_extent_bytes": 4,
+      "element_alloc_bytes": 4,
+      "extent_status": "fixed_target_data_layout",
+      "full_allocation_identity_proven": false,
+      "id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:instruction:2",
+      "lifetime_markers": {
+        "end_sites": 1,
+        "function_resume_sites": 0,
+        "function_return_sites": 1,
+        "function_stackrestore_sites": 0,
+        "start_sites": 1
+      },
+      "lifetime_status": "static_markers_and_frame_exits_only; runtime_registration_not_present",
+      "producer": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "root_class": "alloca",
+      "source_location": {
+        "column": 0,
+        "line": 0,
+        "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+        "path": ""
+      },
+      "source_variables": [
+        {
+          "line": 0,
+          "name": ".omp.lb",
+          "path": "",
+          "scope": "debug variable annotation; allocation bounds come from target DataLayout"
+        }
+      ]
+    },
+    {
+      "alignment_bytes": 4,
+      "allocated_type": "i32",
+      "array_count_constant": 1,
+      "constant_extent_bytes": 4,
+      "element_alloc_bytes": 4,
+      "extent_status": "fixed_target_data_layout",
+      "full_allocation_identity_proven": false,
+      "id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:instruction:3",
+      "lifetime_markers": {
+        "end_sites": 1,
+        "function_resume_sites": 0,
+        "function_return_sites": 1,
+        "function_stackrestore_sites": 0,
+        "start_sites": 1
+      },
+      "lifetime_status": "static_markers_and_frame_exits_only; runtime_registration_not_present",
+      "producer": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "root_class": "alloca",
+      "source_location": {
+        "column": 0,
+        "line": 0,
+        "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+        "path": ""
+      },
+      "source_variables": [
+        {
+          "line": 0,
+          "name": ".omp.ub",
+          "path": "",
+          "scope": "debug variable annotation; allocation bounds come from target DataLayout"
+        }
+      ]
+    },
+    {
+      "alignment_bytes": 8,
+      "allocated_type": "i64",
+      "array_count_constant": 1,
+      "constant_extent_bytes": 8,
+      "element_alloc_bytes": 8,
+      "extent_status": "fixed_target_data_layout",
+      "full_allocation_identity_proven": false,
+      "id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:instruction:6",
+      "lifetime_markers": {
+        "end_sites": 1,
+        "function_resume_sites": 0,
+        "function_return_sites": 1,
+        "function_stackrestore_sites": 0,
+        "start_sites": 1
+      },
+      "lifetime_status": "static_markers_and_frame_exits_only; runtime_registration_not_present",
+      "producer": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "root_class": "alloca",
+      "source_location": {
+        "column": 0,
+        "line": 0,
+        "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+        "path": ""
+      },
+      "source_variables": [
+        {
+          "line": 0,
+          "name": "awake_count",
+          "path": "",
+          "scope": "debug variable annotation; allocation bounds come from target DataLayout"
+        }
+      ]
+    },
+    {
+      "alignment_bytes": 8,
+      "allocated_type": "%\"class.CSRGraph<int>::Neighborhood\" = type { i32, ptr, i64 }",
+      "array_count_constant": 1,
+      "constant_extent_bytes": 24,
+      "element_alloc_bytes": 24,
+      "extent_status": "fixed_target_data_layout",
+      "full_allocation_identity_proven": false,
+      "id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:instruction:7",
+      "lifetime_markers": {
+        "end_sites": 1,
+        "function_resume_sites": 0,
+        "function_return_sites": 1,
+        "function_stackrestore_sites": 0,
+        "start_sites": 1
+      },
+      "lifetime_status": "static_markers_and_frame_exits_only; runtime_registration_not_present",
+      "producer": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+      "root_class": "alloca",
+      "source_location": {
+        "column": 0,
+        "line": 0,
+        "llvm_function": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined",
+        "path": ""
+      },
+      "source_variables": []
+    },
+    {
+      "full_allocation_identity_proven": false,
+      "id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:instruction:92",
+      "incoming_roots": [
+        "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:instruction:1",
+        "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_.omp_outlined:instruction:0"
+      ],
+      "root_class": "phi_pointer"
+    },
+    {
+      "argument_index": 0,
+      "caller_producers": [],
+      "full_allocation_identity_proven": false,
+      "id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_:argument:0",
+      "lifetime_status": "depends_on_caller_or_explicit_abi_view; not inferred from pointer width",
+      "producer": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_",
+      "root_class": "argument"
+    },
+    {
+      "argument_index": 1,
+      "caller_producers": [],
+      "full_allocation_identity_proven": false,
+      "id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_:argument:1",
+      "lifetime_status": "depends_on_caller_or_explicit_abi_view; not inferred from pointer width",
+      "producer": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_",
+      "root_class": "argument"
+    },
+    {
+      "argument_index": 2,
+      "caller_producers": [],
+      "full_allocation_identity_proven": false,
+      "id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_:argument:2",
+      "lifetime_status": "depends_on_caller_or_explicit_abi_view; not inferred from pointer width",
+      "producer": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_",
+      "root_class": "argument"
+    },
+    {
+      "argument_index": 3,
+      "caller_producers": [],
+      "full_allocation_identity_proven": false,
+      "id": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_:argument:3",
+      "lifetime_status": "depends_on_caller_or_explicit_abi_view; not inferred from pointer width",
+      "producer": "_Z6BUStepRK8CSRGraphIiiLb1EER7pvectorIiER6BitmapS7_",
+      "root_class": "argument"
+    },
+    {
+      "alignment_bytes": 8,
+      "allocated_type": "ptr",
+      "array_count_constant": 1,
+      "constant_extent_bytes": 8,
+      "element_alloc_bytes": 8,
+      "extent_status": "fixed_target_data_layout",
+      "full_allocation_identity_proven": false,
+      "id": "_Z6TDStepRK8CSRGraphIiiLb1EER7pvectorIiER12SlidingQueueIiE.omp_outlined:instruction:0",
+      "lifetime_markers": {
+        "end_sites": 1,
+        "function_resume_sites": 0,
+        "function_return_sites": 1,
+        "function_stackrestore_sites": 0,
+        "start_sites": 1
+      },
+      "lifetime_status": "static_markers_and_frame_exits_only; runtime_registration_not_present",
+      "producer": "_Z6TDStepRK8CSRGraphIiiLb1EER7pvectorIiER12SlidingQueueIiE.omp_outlined",
+      "root_class": "alloca",
+      "source_location": {
+        "column": 0,
+        "line": 0,
+        "llvm_function": "_Z6TDStepRK8CSRGraphIiiLb1EER7pvectorIiER12SlidingQueueIiE.omp_outlined",
+        "path": ""
+      },
+      "source_variables": [
+        {
+          "line": 538,
+          "name": "__result",
+          "path": "/usr/include/c++/13/bits/stl_algobase.h",
+          "scope": "debug variable annotation; allocation bounds come from target DataLayout"
+        }
+      ]
+    },
+    {
+      "full_allocation_identity_proven": false,
+      "id": "_Z6TDStepRK8CSRGraphIiiLb1EER7pvectorIiER12SlidingQueueIiE.omp_outlined:instruction:257",
+      "pointee_extent_status": "unknown; container extent does not bound loaded pointee",
+      "pointer_field_storage_root_id": "_Z6TDStepRK8CSRGraphIiiLb1EER7pvectorIiER12SlidingQueueIiE.omp_outlined:instruction:4",
+      "producer": "_Z6TDStepRK8CSRGraphIiiLb1EER7pvectorIiER12SlidingQueueIiE.omp_outlined",
+      "root_class": "loaded_pointer",
+      "source_location": {
+        "column": 15,
+        "line": 106,
+        "llvm_function": "_Z6TDStepRK8CSRGraphIiiLb1EER7pvectorIiER12SlidingQueueIiE.omp_outlined",
+        "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/sliding_queue.h"
+      }
+    },
+    {
+      "full_allocation_identity_proven": false,
+      "id": "_Z6TDStepRK8CSRGraphIiiLb1EER7pvectorIiER12SlidingQueueIiE.omp_outlined:instruction:265",
+      "pointee_extent_status": "unknown; container extent does not bound loaded pointee",
+      "pointer_field_storage_root_id": "_Z6TDStepRK8CSRGraphIiiLb1EER7pvectorIiER12SlidingQueueIiE.omp_outlined:instruction:0",
+      "producer": "_Z6TDStepRK8CSRGraphIiiLb1EER7pvectorIiER12SlidingQueueIiE.omp_outlined",
+      "root_class": "loaded_pointer",
+      "source_location": {
+        "column": 29,
+        "line": 543,
+        "llvm_function": "_Z6TDStepRK8CSRGraphIiiLb1EER7pvectorIiER12SlidingQueueIiE.omp_outlined",
+        "path": "/usr/include/c++/13/bits/stl_algobase.h"
+      }
+    },
+    {
+      "alignment_bytes": 8,
+      "allocated_type": "%class.QueueBuffer = type { i64, ptr, ptr, i64 }",
+      "array_count_constant": 1,
+      "constant_extent_bytes": 32,
+      "element_alloc_bytes": 32,
+      "extent_status": "fixed_target_data_layout",
+      "full_allocation_identity_proven": false,
+      "id": "_Z6TDStepRK8CSRGraphIiiLb1EER7pvectorIiER12SlidingQueueIiE.omp_outlined:instruction:4",
+      "lifetime_markers": {
+        "end_sites": 1,
+        "function_resume_sites": 0,
+        "function_return_sites": 1,
+        "function_stackrestore_sites": 0,
+        "start_sites": 1
+      },
+      "lifetime_status": "static_markers_and_frame_exits_only; runtime_registration_not_present",
+      "producer": "_Z6TDStepRK8CSRGraphIiiLb1EER7pvectorIiER12SlidingQueueIiE.omp_outlined",
+      "root_class": "alloca",
+      "source_location": {
+        "column": 0,
+        "line": 0,
+        "llvm_function": "_Z6TDStepRK8CSRGraphIiiLb1EER7pvectorIiER12SlidingQueueIiE.omp_outlined",
+        "path": ""
+      },
+      "source_variables": [
+        {
+          "line": 72,
+          "name": "lqueue",
+          "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bfs.cc",
+          "scope": "debug variable annotation; allocation bounds come from target DataLayout"
+        }
+      ]
+    },
+    {
+      "alignment_bytes": 8,
+      "allocated_type": "%class.pvector = type { ptr, ptr, ptr }",
+      "array_count_constant": 1,
+      "constant_extent_bytes": 24,
+      "element_alloc_bytes": 24,
+      "extent_status": "fixed_target_data_layout",
+      "full_allocation_identity_proven": false,
+      "id": "main:instruction:39",
+      "lifetime_markers": {
+        "end_sites": 2,
+        "function_resume_sites": 1,
+        "function_return_sites": 1,
+        "function_stackrestore_sites": 0,
+        "start_sites": 1
+      },
+      "lifetime_status": "static_markers_and_frame_exits_only; runtime_registration_not_present",
+      "producer": "main",
+      "root_class": "alloca",
+      "source_location": {
+        "column": 0,
+        "line": 0,
+        "llvm_function": "main",
+        "path": ""
+      },
+      "source_variables": [
+        {
+          "line": 108,
+          "name": "result",
+          "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/benchmark.h",
+          "scope": "debug variable annotation; allocation bounds come from target DataLayout"
+        }
+      ]
+    },
+    {
+      "alignment_bytes": 8,
+      "allocated_type": "%class.CSRGraph = type { i8, i64, i64, ptr, ptr, ptr, ptr }",
+      "array_count_constant": 1,
+      "constant_extent_bytes": 56,
+      "element_alloc_bytes": 56,
+      "extent_status": "fixed_target_data_layout",
+      "full_allocation_identity_proven": false,
+      "id": "main:instruction:56",
+      "lifetime_markers": {
+        "end_sites": 2,
+        "function_resume_sites": 1,
+        "function_return_sites": 1,
+        "function_stackrestore_sites": 0,
+        "start_sites": 1
+      },
+      "lifetime_status": "static_markers_and_frame_exits_only; runtime_registration_not_present",
+      "producer": "main",
+      "root_class": "alloca",
+      "source_location": {
+        "column": 0,
+        "line": 0,
+        "llvm_function": "main",
+        "path": ""
+      },
+      "source_variables": [
+        {
+          "line": 255,
+          "name": "g",
+          "path": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006/swdb-project/apps/gapbs/src/bfs.cc",
+          "scope": "debug variable annotation; allocation bounds come from target DataLayout"
+        }
+      ]
+    }
+  ],
+  "scope": "read-only static projection; no addresses, runtime counts, timings or cost conclusions",
+  "source_json_sha256": "1e743800d737bd1688b6b94a9494c3fd7746ba5105ad423d3eb8659cca0734ae"
+}

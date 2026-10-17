@@ -1,0 +1,28 @@
+# Tickets 12-14, created 2026-09-22: the other gapbs kernels on the four pilot inputs.
+# <implementation> <input> [swdb profile options]
+# tc on kron-g22-k16: gapbs's serial TCVerifier did not finish in 30 min (2026-09-22), so that
+# run records an unverified, incomplete profile after 900 s (the recorded run used these options).
+gapbs-bfs-do       kron-g16-k16  --cachegrind yes
+gapbs-bfs-do       urand-u16-k16 --cachegrind yes
+gapbs-bc-brandes   kron-g16-k16  --cachegrind yes
+gapbs-bc-brandes   urand-u16-k16 --cachegrind yes
+gapbs-sssp-delta   kron-g16-k16  --cachegrind yes
+gapbs-sssp-delta   urand-u16-k16 --cachegrind yes
+gapbs-cc-afforest  kron-g16-k16  --cachegrind yes
+gapbs-cc-afforest  urand-u16-k16 --cachegrind yes
+gapbs-cc-sv        kron-g16-k16  --cachegrind yes
+gapbs-cc-sv        urand-u16-k16 --cachegrind yes
+gapbs-tc-ordered   kron-g16-k16  --cachegrind yes
+gapbs-tc-ordered   urand-u16-k16 --cachegrind yes
+gapbs-bfs-do       kron-g22-k16  --cachegrind yes --cachegrind-timeout 3600
+gapbs-bfs-do       urand-u22-k16 --cachegrind yes --cachegrind-timeout 3600
+gapbs-bc-brandes   kron-g22-k16  --cachegrind yes --cachegrind-timeout 3600
+gapbs-bc-brandes   urand-u22-k16 --cachegrind yes --cachegrind-timeout 3600
+gapbs-sssp-delta   kron-g22-k16  --cachegrind yes --cachegrind-timeout 3600
+gapbs-sssp-delta   urand-u22-k16 --cachegrind yes --cachegrind-timeout 3600
+gapbs-cc-afforest  kron-g22-k16  --cachegrind yes --cachegrind-timeout 3600
+gapbs-cc-afforest  urand-u22-k16 --cachegrind yes --cachegrind-timeout 3600
+gapbs-cc-sv        kron-g22-k16  --cachegrind yes --cachegrind-timeout 3600
+gapbs-cc-sv        urand-u22-k16 --cachegrind yes --cachegrind-timeout 3600
+gapbs-tc-ordered   kron-g22-k16  --cachegrind yes --cachegrind-timeout 3600 --trials 3 --timeout 1800 --correctness-timeout 900 --allow-unverified
+gapbs-tc-ordered   urand-u22-k16 --cachegrind yes --cachegrind-timeout 3600 --trials 3 --timeout 1800

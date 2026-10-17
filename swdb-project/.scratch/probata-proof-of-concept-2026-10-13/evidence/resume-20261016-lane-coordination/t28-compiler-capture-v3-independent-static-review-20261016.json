@@ -1,0 +1,88 @@
+{
+  "SSH": 0,
+  "actual_admission": false,
+  "additional_metadata_precision": {
+    "lines": [
+      260,
+      265,
+      302
+    ],
+    "observation": "The first preprocessing depfile is parsed into a retained physical dependency snapshot but is not separately pinned in group metadata/rechecked like ast_dependency; its final bytes are covered only by the final artifact manifest. Adding that pin would make retained depfile timing lineage explicit. This is not treated as another blocker because the required physical used-input snapshot and independent AST membership are checked, and source capture still requires root raw reconciliation."
+  },
+  "axis": "Independent static safety/resource/runtime and compiler-unit Spec",
+  "command": {
+    "bytes": 12322,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v3/linux_compiler_capture_command_v3.json",
+    "sha256": "2a43d97f89e8844ae02c618fed7fc3bef0038bd2133c17551970fa6949090fdf"
+  },
+  "compiler_native_verifier_solver_calls": 0,
+  "controls_scope": "Read six retained pure source/control tests and exact packet/recipe fields. They intentionally never invoke main or a compiler, so they do not cover the newly identified final budget/deadline boundaries. This reviewer did not execute them.",
+  "created": "2026-10-16 ET",
+  "current_0_2": false,
+  "decision": "FIX REQUIRED BEFORE ACTUAL ADMISSION: source/compiler/runtime meaning consistent; final resource verdict closure incomplete",
+  "entry": {
+    "bytes": 18777,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v3/linux_compiler_capture_v3.py",
+    "sha256": "90b60b564b5c5babec63f6fc663c36d03f8b43444ef52f8147f9997fa03bc34d"
+  },
+  "findings": [
+    {
+      "description": "accepted is computed using the raw extent before writing result.json and artifact-manifest.json. Both writes consume the same256MiB budget. Near the cap, result.accepted can remain true even though the post-write return predicate exits1 or the final raw exceeds the budget. This is the author-noted edge, confirmed in the fixed V3 source.",
+      "id": "final_output_acceptance_precedes_own_metadata",
+      "lines": [
+        309,
+        318
+      ],
+      "needed": "Bound/project the complete own final metadata before publishing acceptance, with an explicit reserve for root-owned settlement metadata; preserve partial/refusal evidence and keep accepted/exit/budget meanings consistent. Do not raise the128MiB/256MiB caps. Add a pure no-child near-cap finalization control.",
+      "priority": "required before launch"
+    },
+    {
+      "description": "The165s deadline controls only stage scheduling/polling. Full-TU JSON consumption, source preparation, complete runtime/input rechecks and final serialization occur after the last stage and are not tested against ENTRY_SECONDS in accepted or return. Slow postprocessing may be accepted beyond165s while still under the180s outer guard.",
+      "id": "postprocessing_acceptance_has_no_entry_deadline_test",
+      "lines": [
+        94,
+        223,
+        310,
+        318
+      ],
+      "needed": "Apply the declared entry budget to postprocessing/final acceptance as well, and make root settlement use actual whole-guard status. Add a pure mocked-clock boundary control. Keep the180s whole guard and all compiler/resource caps unchanged.",
+      "priority": "required before launch"
+    }
+  ],
+  "full_ticket28": false,
+  "packet": {
+    "bytes": 6603,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v3/compiler-capture-source-packet-v3.json",
+    "sha256": "06daf8fef90d8ef826e1b4d325a2bc3b4d7435ddcad04a56f7eab254631afa17"
+  },
+  "physical_pin_checks": {
+    "all_current_size_sha256_equal": true,
+    "controls": 12,
+    "controls_bytes": 909049,
+    "rows": 19
+  },
+  "policy": {
+    "bytes": 664401,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v3/linux_compiler_capture_policy_v3.json",
+    "sha256": "726c8c4de06d0446d2665238c03dcec2dfe96e32976a5d3f2fc8428fac13f0e2"
+  },
+  "project_imports": 0,
+  "public_proof": false,
+  "pure_tests_rerun": false,
+  "raw_transferred": false,
+  "reviewer": "/root/ticket25/caller_assess",
+  "safety_runtime_checks": [
+    "Inherited runtime core is byte-for-value identical to reviewed native V4: selected Python, runtime files, native loader closure and aliases/absence/trees,1983LLVM resource/libc++ headers, startup roles, guard hashes, compiler, budgets, path/home/node/disk floor. Only capture-specific fields changed.",
+    "Actual entry requires isolated nonoptimized -I -B Python, exact closed staged control membership/pins, actual root command/source/lane/guard metadata, live socket-lane ancestor/fd9 lease/NUMA affinity, no bytecode cache and repeated selected runtime/header/tool checks.",
+    "Child environment is reconstructed from exact PATH/HOME/LANG/LC_ALL/TMPDIR plus pinned loader environment. Ambient compiler/loader/sanitizer overrides refuse; root dispatch must unset LIBRARY_PATH as the command requires.",
+    "Each frontend stage has at most45s, child per-file RLIMIT_FSIZE128MiB, live aggregate-output polling and error-path process-group kill/reap. Whole-tree4GiB/180s enforcement remains the exact reviewed root execute/watch responsibility; this review does not newly attest those external guard sources or a held advisory verifier lock.",
+    "Fresh raw/control/component paths and source/control/runtime before-after checks are preserved. Policy/command root admission stays pending and no actual process is delegated by this static review."
+  ],
+  "scientific_execution": false,
+  "source_compiler_checks": [
+    "Exact original V2 four-phase recipe is unchanged: preprocess original caller .cpp; one unfiltered full caller TU from the same original .cpp; preprocess the separate ABI .cpp; then29literal-only filtered ABI roots. No AST is parsed from .ii and no cross-parse declaration IDs are joined.",
+    "Both AST phases independently emit depfiles. Canonical physical preprocessing membership and required original source/header/stub paths must match the AST membership; original physical bytes and frozen preprocessing pins are checked around use and at final capture. Initial used-header pins only arise after preprocessing and between-check changes remain explicit timing TCB.",
+    "Reviewed adapter and V3 source consumer remain exact. Actual call preparation requires all26source names and both get_new_reg overload arities. Compiler capture is attribution only, not inferred execution or public proof; caller configuration/expression/CPU/model/source/public gates remain pending.",
+    "Closed derived include tree contains only exact declaration-only gem5/m5ops.h bytes. Driver/wrapper are selected absolutely with --no-default-config and original macros. Four invocations are Clang frontend/preprocessing observations only, with no version, link, executable, verifier, solver or project import."
+  ]
+}

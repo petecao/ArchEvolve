@@ -1,0 +1,1090 @@
+{
+  "CBMC_contexts": [
+    {
+      "bounded49_input_pairs_per_C_and_Cpp_form": {
+        "c_output_sha256": "d0820b9d60246c9abb7e6988eab8d617f8a757345cb425e848fd4c2e395f8b97",
+        "cxx_output_sha256": "d0820b9d60246c9abb7e6988eab8d617f8a757345cb425e848fd4c2e395f8b97",
+        "domain": {
+          "x": {
+            "role": "value",
+            "values": [
+              -2,
+              -1,
+              0,
+              1,
+              2,
+              -2147483648,
+              2147483647
+            ]
+          },
+          "y": {
+            "role": "value",
+            "values": [
+              -2,
+              -1,
+              0,
+              1,
+              2,
+              -2147483648,
+              2147483647
+            ]
+          }
+        },
+        "runs": 49,
+        "sampled": false,
+        "verdict": "agree"
+      },
+      "failed_property_labels": [
+        "swdb_reach.end"
+      ],
+      "independent_trace_to_original_source_reconstruction_admitted": false,
+      "normal_forms": {
+        "c_lowering": "proven",
+        "cxx": "agrees on the bounded domain"
+      },
+      "original_Cpp_replay_reported": false,
+      "physical_outputs": [
+        {
+          "bytes": 1192,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_values.20261016t221103z.bb5ec3b2/cbmc/differential_c.out",
+          "sha256": "d0820b9d60246c9abb7e6988eab8d617f8a757345cb425e848fd4c2e395f8b97"
+        },
+        {
+          "bytes": 1192,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_values.20261016t221103z.bb5ec3b2/cbmc/differential_cxx.out",
+          "sha256": "d0820b9d60246c9abb7e6988eab8d617f8a757345cb425e848fd4c2e395f8b97"
+        }
+      ],
+      "properties": 70,
+      "record": "proof.contract.fixture_pair_pointer_values.20261016t221103z.bb5ec3b2",
+      "source_artifacts": [
+        {
+          "bytes": 9392,
+          "direct_include_spellings": [
+            "stddef.h",
+            "stdint.h",
+            "stdbool.h",
+            "crucible.h",
+            "setjmp.h",
+            "stdio.h",
+            "stdlib.h",
+            "stdexcept",
+            "cmath",
+            "stdbool.h",
+            "stddef.h",
+            "stdint.h"
+          ],
+          "name": "job.c",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_values.20261016t221103z.bb5ec3b2/cbmc/job.c",
+          "sha256": "21aa02eec9ba668ca09f4593a92246df0bc86e8c81248b9e21a19bf32053f4ad",
+          "source_text_exported": false
+        },
+        {
+          "bytes": 9392,
+          "direct_include_spellings": [
+            "stddef.h",
+            "stdint.h",
+            "stdbool.h",
+            "crucible.h",
+            "setjmp.h",
+            "stdio.h",
+            "stdlib.h",
+            "stdexcept",
+            "cmath",
+            "stdbool.h",
+            "stddef.h",
+            "stdint.h"
+          ],
+          "name": "differential_c.c",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_values.20261016t221103z.bb5ec3b2/cbmc/differential_c.c",
+          "sha256": "21aa02eec9ba668ca09f4593a92246df0bc86e8c81248b9e21a19bf32053f4ad",
+          "source_text_exported": false
+        },
+        {
+          "bytes": 6396,
+          "direct_include_spellings": [
+            "stddef.h",
+            "stdint.h",
+            "stdbool.h",
+            "crucible.h",
+            "setjmp.h",
+            "stdio.h",
+            "stdlib.h",
+            "stdexcept",
+            "cmath",
+            "cstddef",
+            "cstdint",
+            "stdexcept",
+            "utility",
+            "vector"
+          ],
+          "name": "differential_cxx.cc",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_values.20261016t221103z.bb5ec3b2/cbmc/differential_cxx.cc",
+          "sha256": "84cf8eedc393abf47a00c0c85a0bc65b7fded3019c5fc354e6496ba984e12ee7",
+          "source_text_exported": false
+        }
+      ],
+      "status_counts": {
+        "FAILURE": 1,
+        "SUCCESS": 69
+      },
+      "structured_output": {
+        "bytes": 587430,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_values.20261016t221103z.bb5ec3b2/cbmc/cbmc.json",
+        "sha256": "d235beb20f4e41e59e471a9c53ddfc1223a838e0b30d9b8437073ceae3b20db4"
+      }
+    },
+    {
+      "bounded49_input_pairs_per_C_and_Cpp_form": {
+        "c_output_sha256": "7f41213d492b8a9c61b5019d0998dab0f05175a1e0088be23b75ce9cd155a3a0",
+        "cxx_output_sha256": "7f41213d492b8a9c61b5019d0998dab0f05175a1e0088be23b75ce9cd155a3a0",
+        "domain": {
+          "x": {
+            "role": "value",
+            "values": [
+              -2,
+              -1,
+              0,
+              1,
+              2,
+              -2147483648,
+              2147483647
+            ]
+          },
+          "y": {
+            "role": "value",
+            "values": [
+              -2,
+              -1,
+              0,
+              1,
+              2,
+              -2147483648,
+              2147483647
+            ]
+          }
+        },
+        "runs": 49,
+        "sampled": false,
+        "verdict": "agree"
+      },
+      "failed_property_labels": [
+        "contract.fixture_pair_pointer_wrong_identity#post.ensures1",
+        "swdb_reach.end"
+      ],
+      "independent_trace_to_original_source_reconstruction_admitted": false,
+      "normal_forms": {
+        "c_lowering": "refuted",
+        "cxx": "refuted (counterexample replayed)"
+      },
+      "original_Cpp_replay_reported": true,
+      "physical_outputs": [
+        {
+          "bytes": 2802,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_wrong_identity.20261016t221128z.bb05f168/cbmc/differential_c.out",
+          "sha256": "7f41213d492b8a9c61b5019d0998dab0f05175a1e0088be23b75ce9cd155a3a0"
+        },
+        {
+          "bytes": 2802,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_wrong_identity.20261016t221128z.bb05f168/cbmc/differential_cxx.out",
+          "sha256": "7f41213d492b8a9c61b5019d0998dab0f05175a1e0088be23b75ce9cd155a3a0"
+        }
+      ],
+      "properties": 70,
+      "record": "proof.contract.fixture_pair_pointer_wrong_identity.20261016t221128z.bb05f168",
+      "source_artifacts": [
+        {
+          "bytes": 9601,
+          "direct_include_spellings": [
+            "stddef.h",
+            "stdint.h",
+            "stdbool.h",
+            "crucible.h",
+            "setjmp.h",
+            "stdio.h",
+            "stdlib.h",
+            "stdexcept",
+            "cmath",
+            "stdbool.h",
+            "stddef.h",
+            "stdint.h"
+          ],
+          "name": "job.c",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_wrong_identity.20261016t221128z.bb05f168/cbmc/job.c",
+          "sha256": "c64bbe3ad5aec8d0d62ce10f5ecc0749ac51aadacfe746925cc1fa4c2eda13a3",
+          "source_text_exported": false
+        },
+        {
+          "bytes": 9601,
+          "direct_include_spellings": [
+            "stddef.h",
+            "stdint.h",
+            "stdbool.h",
+            "crucible.h",
+            "setjmp.h",
+            "stdio.h",
+            "stdlib.h",
+            "stdexcept",
+            "cmath",
+            "stdbool.h",
+            "stddef.h",
+            "stdint.h"
+          ],
+          "name": "differential_c.c",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_wrong_identity.20261016t221128z.bb05f168/cbmc/differential_c.c",
+          "sha256": "c64bbe3ad5aec8d0d62ce10f5ecc0749ac51aadacfe746925cc1fa4c2eda13a3",
+          "source_text_exported": false
+        },
+        {
+          "bytes": 6461,
+          "direct_include_spellings": [
+            "stddef.h",
+            "stdint.h",
+            "stdbool.h",
+            "crucible.h",
+            "setjmp.h",
+            "stdio.h",
+            "stdlib.h",
+            "stdexcept",
+            "cmath",
+            "cstddef",
+            "cstdint",
+            "stdexcept",
+            "utility",
+            "vector"
+          ],
+          "name": "differential_cxx.cc",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_wrong_identity.20261016t221128z.bb05f168/cbmc/differential_cxx.cc",
+          "sha256": "db5e218ac5aed4bce287e274c523da4b91375e86555f8fb7856886330c080b68",
+          "source_text_exported": false
+        },
+        {
+          "bytes": 6461,
+          "direct_include_spellings": [
+            "stddef.h",
+            "stdint.h",
+            "stdbool.h",
+            "crucible.h",
+            "setjmp.h",
+            "stdio.h",
+            "stdlib.h",
+            "stdexcept",
+            "cmath",
+            "cstddef",
+            "cstdint",
+            "stdexcept",
+            "utility",
+            "vector"
+          ],
+          "name": "replay_cxx.cc",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_wrong_identity.20261016t221128z.bb05f168/cbmc/replay_cxx.cc",
+          "sha256": "db5e218ac5aed4bce287e274c523da4b91375e86555f8fb7856886330c080b68",
+          "source_text_exported": false
+        }
+      ],
+      "status_counts": {
+        "FAILURE": 2,
+        "SUCCESS": 68
+      },
+      "structured_output": {
+        "bytes": 1087119,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_wrong_identity.20261016t221128z.bb05f168/cbmc/cbmc.json",
+        "sha256": "331444ff10962bb774197393b6862e836a74863da892756d9b8cb786e6f094ca"
+      }
+    }
+  ],
+  "WP_contexts": [
+    {
+      "CSV_rows": 8,
+      "Extern_flagged_properties": [],
+      "exact_reconciliation": {
+        "complete_native_normal_record_IDs_exact": true,
+        "exact_source_bound_dual_owner_smokes": [],
+        "inventory_only_CFG_goals": [
+          {
+            "function": "std_pair_int_int_ptr_ctor_default",
+            "goal": "typed_real_std_pair_int_int_ptr_ctor_default_exits",
+            "normal_status": "valid",
+            "property": "std_pair_int_int_ptr_ctor_default_exits",
+            "source": "wp_inventory"
+          },
+          {
+            "function": "std_pair_int_int_ptr_ctor_default",
+            "goal": "typed_real_std_pair_int_int_ptr_ctor_default_terminates",
+            "normal_status": "valid",
+            "property": "std_pair_int_int_ptr_ctor_default_terminates",
+            "source": "wp_inventory"
+          }
+        ],
+        "scientific_or_full_task_closure_accepted": false,
+        "standard_is_exact_expected_subset": true
+      },
+      "native_count": 9,
+      "nonvalid_ordinary": [],
+      "ordinary_count": 8,
+      "ordinary_observations": [
+        {
+          "count": 8,
+          "results": [
+            "valid"
+          ]
+        }
+      ],
+      "physical_reports": {
+        "CSV": {
+          "bytes": 786,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_ctor_default.20261016t220530z.47341640/wp/wp-properties.csv",
+          "sha256": "06b04deb9b18d3a81f2d67bccc3d33619e347aa194d0fa6e69827752a710c93a"
+        },
+        "log": {
+          "bytes": 2028,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_ctor_default.20261016t220530z.47341640/wp/frama-c.log",
+          "sha256": "8d913e6343bd9471745778584fcf02b656ba00862aa166030028f29bfbbebe15"
+        },
+        "native": {
+          "bytes": 9676,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_ctor_default.20261016t220530z.47341640/wp/wp-inventory.json",
+          "sha256": "e3f52ab20885fc10f90ff144efcec7002088d78c406a95a2e839e4ca05baa6d0"
+        },
+        "query": {
+          "bytes": 503,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_ctor_default.20261016t220530z.47341640/wp/wp_input.c",
+          "sha256": "720762600742e15743c74aab15602f34f13b3ac1b8374ea428bf32f914eca364"
+        },
+        "standard": {
+          "bytes": 4549,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_ctor_default.20261016t220530z.47341640/wp/wp-goals.json",
+          "sha256": "2482ed39a0b78ae3b89cf708f9a84199aa05e9b02985631f1d76623978f4e30e"
+        }
+      },
+      "property_closure": {
+        "exported_count": 10,
+        "initial_registered_snapshot_count": 10,
+        "registered_snapshot_count": 10,
+        "registration_membership_refreshed_after_consolidation": true,
+        "unregistered_status_lookup_performed": false,
+        "unregistered_wp_call_instances": [],
+        "unregistered_wp_smoke_properties": []
+      },
+      "property_count": 10,
+      "property_dependency_origin_membership_closed": true,
+      "property_variants": {
+        "IPAssigns": 1,
+        "IPBehavior": 1,
+        "IPCodeAnnot": 2,
+        "IPOther": 1,
+        "IPPredicate": 5
+      },
+      "recognized_common_export_IDs": [],
+      "recognized_printed_import_names": [],
+      "record": "proof.model.std_pair_int_int_ptr_ctor_default.20261016t220530z.47341640",
+      "retained_standalone_task_files": [],
+      "smoke_count": 1,
+      "smoke_observations": [
+        {
+          "count": 1,
+          "results": [
+            "timeout",
+            "unknown",
+            "timeout"
+          ]
+        }
+      ],
+      "standard_count": 7
+    },
+    {
+      "CSV_rows": 8,
+      "Extern_flagged_properties": [],
+      "exact_reconciliation": {
+        "complete_native_normal_record_IDs_exact": true,
+        "exact_source_bound_dual_owner_smokes": [],
+        "inventory_only_CFG_goals": [
+          {
+            "function": "std_pair_int_int_ptr_ctor",
+            "goal": "typed_real_std_pair_int_int_ptr_ctor_exits",
+            "normal_status": "valid",
+            "property": "std_pair_int_int_ptr_ctor_exits",
+            "source": "wp_inventory"
+          },
+          {
+            "function": "std_pair_int_int_ptr_ctor",
+            "goal": "typed_real_std_pair_int_int_ptr_ctor_terminates",
+            "normal_status": "valid",
+            "property": "std_pair_int_int_ptr_ctor_terminates",
+            "source": "wp_inventory"
+          }
+        ],
+        "scientific_or_full_task_closure_accepted": false,
+        "standard_is_exact_expected_subset": true
+      },
+      "native_count": 9,
+      "nonvalid_ordinary": [],
+      "ordinary_count": 8,
+      "ordinary_observations": [
+        {
+          "count": 8,
+          "results": [
+            "valid"
+          ]
+        }
+      ],
+      "physical_reports": {
+        "CSV": {
+          "bytes": 727,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_ctor.20261016t220550z.3d1e3981/wp/wp-properties.csv",
+          "sha256": "cb22f329488eda43964fcef0d6e7e0b2b9b0b874969f43199369785cc410861c"
+        },
+        "log": {
+          "bytes": 2009,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_ctor.20261016t220550z.3d1e3981/wp/frama-c.log",
+          "sha256": "e7c2ec39163e993e62582d15605403fbd1b9aca9c901931ed2946f059a1ab1e5"
+        },
+        "native": {
+          "bytes": 9131,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_ctor.20261016t220550z.3d1e3981/wp/wp-inventory.json",
+          "sha256": "b6f18c48262473da6a9308a2f1c0dd8f318cbc121f35cd934eeaee82a642c5de"
+        },
+        "query": {
+          "bytes": 511,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_ctor.20261016t220550z.3d1e3981/wp/wp_input.c",
+          "sha256": "89fb167980c9d5a5998e0058c9ccb7173b316042e668b1fec4b6aa1f9796cdb4"
+        },
+        "standard": {
+          "bytes": 4323,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_ctor.20261016t220550z.3d1e3981/wp/wp-goals.json",
+          "sha256": "70e0821a38ccd7f0242ec3580552c150a54ba60918acf012b75b6c26dda69e45"
+        }
+      },
+      "property_closure": {
+        "exported_count": 10,
+        "initial_registered_snapshot_count": 10,
+        "registered_snapshot_count": 10,
+        "registration_membership_refreshed_after_consolidation": true,
+        "unregistered_status_lookup_performed": false,
+        "unregistered_wp_call_instances": [],
+        "unregistered_wp_smoke_properties": []
+      },
+      "property_count": 10,
+      "property_dependency_origin_membership_closed": true,
+      "property_variants": {
+        "IPAssigns": 1,
+        "IPBehavior": 1,
+        "IPCodeAnnot": 2,
+        "IPOther": 1,
+        "IPPredicate": 5
+      },
+      "recognized_common_export_IDs": [],
+      "recognized_printed_import_names": [],
+      "record": "proof.model.std_pair_int_int_ptr_ctor.20261016t220550z.3d1e3981",
+      "retained_standalone_task_files": [],
+      "smoke_count": 1,
+      "smoke_observations": [
+        {
+          "count": 1,
+          "results": [
+            "timeout",
+            "unknown",
+            "timeout"
+          ]
+        }
+      ],
+      "standard_count": 7
+    },
+    {
+      "CSV_rows": 8,
+      "Extern_flagged_properties": [],
+      "exact_reconciliation": {
+        "complete_native_normal_record_IDs_exact": true,
+        "exact_source_bound_dual_owner_smokes": [],
+        "inventory_only_CFG_goals": [
+          {
+            "function": "std_pair_int_int_ptr_copy_ctor",
+            "goal": "typed_real_std_pair_int_int_ptr_copy_ctor_exits",
+            "normal_status": "valid",
+            "property": "std_pair_int_int_ptr_copy_ctor_exits",
+            "source": "wp_inventory"
+          },
+          {
+            "function": "std_pair_int_int_ptr_copy_ctor",
+            "goal": "typed_real_std_pair_int_int_ptr_copy_ctor_terminates",
+            "normal_status": "valid",
+            "property": "std_pair_int_int_ptr_copy_ctor_terminates",
+            "source": "wp_inventory"
+          }
+        ],
+        "scientific_or_full_task_closure_accepted": false,
+        "standard_is_exact_expected_subset": true
+      },
+      "native_count": 8,
+      "nonvalid_ordinary": [],
+      "ordinary_count": 7,
+      "ordinary_observations": [
+        {
+          "count": 7,
+          "results": [
+            "valid"
+          ]
+        }
+      ],
+      "physical_reports": {
+        "CSV": {
+          "bytes": 826,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_copy_ctor.20261016t220611z.3ba534ec/wp/wp-properties.csv",
+          "sha256": "53afd59b85c845f089480bbacccd09ce92b5bc76840aace742559a7cc6f9210b"
+        },
+        "log": {
+          "bytes": 2019,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_copy_ctor.20261016t220611z.3ba534ec/wp/frama-c.log",
+          "sha256": "341f03b8043829599e673985f7a0022e50cd6dda82e9a53c79cc5c07f1a9015f"
+        },
+        "native": {
+          "bytes": 9299,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_copy_ctor.20261016t220611z.3ba534ec/wp/wp-inventory.json",
+          "sha256": "ea383b47b729292bd952078f0f1b3e14e0df4ec4419354b905cfa61357c5eb51"
+        },
+        "query": {
+          "bytes": 592,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_copy_ctor.20261016t220611z.3ba534ec/wp/wp_input.c",
+          "sha256": "1ec8c54c65a50a2ade9b7105a4fc56ea74863cf066786a3948f6e66b696ceb79"
+        },
+        "standard": {
+          "bytes": 3793,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_copy_ctor.20261016t220611z.3ba534ec/wp/wp-goals.json",
+          "sha256": "5de3f36be525f2a72a67a392e06263e6a4a6242b5569e85d98d85245499a5e6b"
+        }
+      },
+      "property_closure": {
+        "exported_count": 10,
+        "initial_registered_snapshot_count": 10,
+        "registered_snapshot_count": 10,
+        "registration_membership_refreshed_after_consolidation": true,
+        "unregistered_status_lookup_performed": false,
+        "unregistered_wp_call_instances": [],
+        "unregistered_wp_smoke_properties": []
+      },
+      "property_count": 10,
+      "property_dependency_origin_membership_closed": true,
+      "property_variants": {
+        "IPAssigns": 1,
+        "IPBehavior": 1,
+        "IPCodeAnnot": 2,
+        "IPOther": 1,
+        "IPPredicate": 5
+      },
+      "recognized_common_export_IDs": [],
+      "recognized_printed_import_names": [],
+      "record": "proof.model.std_pair_int_int_ptr_copy_ctor.20261016t220611z.3ba534ec",
+      "retained_standalone_task_files": [],
+      "smoke_count": 1,
+      "smoke_observations": [
+        {
+          "count": 1,
+          "results": [
+            "timeout",
+            "unknown",
+            "unknown"
+          ]
+        }
+      ],
+      "standard_count": 6
+    },
+    {
+      "CSV_rows": 9,
+      "Extern_flagged_properties": [],
+      "exact_reconciliation": {
+        "complete_native_normal_record_IDs_exact": true,
+        "exact_source_bound_dual_owner_smokes": [],
+        "inventory_only_CFG_goals": [
+          {
+            "function": "std_pair_int_int_ptr_operator_assign",
+            "goal": "typed_real_std_pair_int_int_ptr_operator_assign_exits",
+            "normal_status": "valid",
+            "property": "std_pair_int_int_ptr_operator_assign_exits",
+            "source": "wp_inventory"
+          },
+          {
+            "function": "std_pair_int_int_ptr_operator_assign",
+            "goal": "typed_real_std_pair_int_int_ptr_operator_assign_terminates",
+            "normal_status": "valid",
+            "property": "std_pair_int_int_ptr_operator_assign_terminates",
+            "source": "wp_inventory"
+          }
+        ],
+        "scientific_or_full_task_closure_accepted": false,
+        "standard_is_exact_expected_subset": true
+      },
+      "native_count": 9,
+      "nonvalid_ordinary": [],
+      "ordinary_count": 8,
+      "ordinary_observations": [
+        {
+          "count": 8,
+          "results": [
+            "valid"
+          ]
+        }
+      ],
+      "physical_reports": {
+        "CSV": {
+          "bytes": 971,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_operator_assign.20261016t220629z.d0aadf56/wp/wp-properties.csv",
+          "sha256": "e0d79a45859a96fe65c38f5402e1223e77480c7e4c22f219832e09180fcd7b25"
+        },
+        "log": {
+          "bytes": 2330,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_operator_assign.20261016t220629z.d0aadf56/wp/frama-c.log",
+          "sha256": "f3c2c159b31923c1be5f09d9281c134df2103c0a3e4339e5f984740af00cb3f0"
+        },
+        "native": {
+          "bytes": 10764,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_operator_assign.20261016t220629z.d0aadf56/wp/wp-inventory.json",
+          "sha256": "9b61072f886ed80b5531d26442212c953b3de640b31bfed70f1dabc394b303ae"
+        },
+        "query": {
+          "bytes": 699,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_operator_assign.20261016t220629z.d0aadf56/wp/wp_input.c",
+          "sha256": "b2f88dcc5ebeb64c8ab36a514f02f682a19920b4762c60f96d28ad958985d990"
+        },
+        "standard": {
+          "bytes": 4530,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.model.std_pair_int_int_ptr_operator_assign.20261016t220629z.d0aadf56/wp/wp-goals.json",
+          "sha256": "aae7d02dbf790d7bc94481b78c6bae6ce3c3b2c714d84e07f21c79481064f3ab"
+        }
+      },
+      "property_closure": {
+        "exported_count": 11,
+        "initial_registered_snapshot_count": 11,
+        "registered_snapshot_count": 11,
+        "registration_membership_refreshed_after_consolidation": true,
+        "unregistered_status_lookup_performed": false,
+        "unregistered_wp_call_instances": [],
+        "unregistered_wp_smoke_properties": []
+      },
+      "property_count": 11,
+      "property_dependency_origin_membership_closed": true,
+      "property_variants": {
+        "IPAssigns": 1,
+        "IPBehavior": 1,
+        "IPCodeAnnot": 2,
+        "IPOther": 1,
+        "IPPredicate": 6
+      },
+      "recognized_common_export_IDs": [],
+      "recognized_printed_import_names": [],
+      "record": "proof.model.std_pair_int_int_ptr_operator_assign.20261016t220629z.d0aadf56",
+      "retained_standalone_task_files": [],
+      "smoke_count": 1,
+      "smoke_observations": [
+        {
+          "count": 1,
+          "results": [
+            "timeout",
+            "unknown",
+            "unknown"
+          ]
+        }
+      ],
+      "standard_count": 7
+    },
+    {
+      "CSV_rows": 41,
+      "Extern_flagged_properties": [],
+      "exact_reconciliation": {
+        "complete_native_normal_record_IDs_exact": true,
+        "exact_source_bound_dual_owner_smokes": [
+          {
+            "callee": "std_pair_int_int_ptr_copy_ctor",
+            "caller": "swdb_pair_pointer_values",
+            "goal": "typed_real_std_pair_int_int_ptr_copy_ctor_wp_smoke_dead_call_s20",
+            "line": 53,
+            "statement_id": 20
+          },
+          {
+            "callee": "std_pair_int_int_ptr_ctor_default",
+            "caller": "swdb_pair_pointer_values",
+            "goal": "typed_real_std_pair_int_int_ptr_ctor_default_wp_smoke_dead_call_s18",
+            "line": 45,
+            "statement_id": 18
+          },
+          {
+            "callee": "std_pair_int_int_ptr_ctor",
+            "caller": "swdb_pair_pointer_values",
+            "goal": "typed_real_std_pair_int_int_ptr_ctor_wp_smoke_dead_call_s19",
+            "line": 49,
+            "statement_id": 19
+          },
+          {
+            "callee": "std_pair_int_int_ptr_operator_assign",
+            "caller": "swdb_pair_pointer_values",
+            "goal": "typed_real_std_pair_int_int_ptr_operator_assign_wp_smoke_dead_call_s21",
+            "line": 56,
+            "statement_id": 21
+          }
+        ],
+        "inventory_only_CFG_goals": [],
+        "scientific_or_full_task_closure_accepted": false,
+        "standard_is_exact_expected_subset": true
+      },
+      "native_count": 34,
+      "nonvalid_ordinary": [],
+      "ordinary_count": 25,
+      "ordinary_observations": [
+        {
+          "count": 25,
+          "results": [
+            "valid"
+          ]
+        }
+      ],
+      "physical_reports": {
+        "CSV": {
+          "bytes": 4265,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_values.20261016t220647z.7ab10e81/wp/wp-properties.csv",
+          "sha256": "f39e1e20bab1125ba8bafdcf9a6ead3578b233ec3e403f2bafee6d064c5c12c0"
+        },
+        "log": {
+          "bytes": 6923,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_values.20261016t220647z.7ab10e81/wp/frama-c.log",
+          "sha256": "0c884beba028d6e0fac446e319bff3472a77036513999c95c100c56a72ad1630"
+        },
+        "native": {
+          "bytes": 49005,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_values.20261016t220647z.7ab10e81/wp/wp-inventory.json",
+          "sha256": "e0aa054a25ed1caddb120887db6e6ddacdb75e0c775ffc8420e1c6b239b367b3"
+        },
+        "query": {
+          "bytes": 3634,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_values.20261016t220647z.7ab10e81/wp/wp_input.c",
+          "sha256": "820ee4aeb9cd55b8ef5d4112aa9d85cc94f27d02bcfe6c66e64ee5df74005ef6"
+        },
+        "standard": {
+          "bytes": 20905,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_values.20261016t220647z.7ab10e81/wp/wp-goals.json",
+          "sha256": "451ee2a0d6ff166681db5d587f900cffe962d9dd2df23be71fcb3e89dbb223f4"
+        }
+      },
+      "property_closure": {
+        "exported_count": 55,
+        "initial_registered_snapshot_count": 55,
+        "registered_snapshot_count": 55,
+        "registration_membership_refreshed_after_consolidation": true,
+        "unregistered_status_lookup_performed": false,
+        "unregistered_wp_call_instances": [],
+        "unregistered_wp_smoke_properties": []
+      },
+      "property_count": 55,
+      "property_dependency_origin_membership_closed": true,
+      "property_variants": {
+        "IPAssigns": 5,
+        "IPBehavior": 5,
+        "IPCodeAnnot": 7,
+        "IPOther": 9,
+        "IPPredicate": 25,
+        "IPPropertyInstance": 4
+      },
+      "recognized_common_export_IDs": [],
+      "recognized_printed_import_names": [],
+      "record": "proof.contract.fixture_pair_pointer_values.20261016t220647z.7ab10e81",
+      "retained_standalone_task_files": [],
+      "smoke_count": 9,
+      "smoke_observations": [
+        {
+          "count": 6,
+          "results": [
+            "timeout",
+            "timeout",
+            "timeout"
+          ]
+        },
+        {
+          "count": 3,
+          "results": [
+            "timeout",
+            "unknown",
+            "timeout"
+          ]
+        }
+      ],
+      "standard_count": 34
+    },
+    {
+      "CSV_rows": 41,
+      "Extern_flagged_properties": [],
+      "exact_reconciliation": {
+        "complete_native_normal_record_IDs_exact": true,
+        "exact_source_bound_dual_owner_smokes": [
+          {
+            "callee": "std_pair_int_int_ptr_copy_ctor",
+            "caller": "swdb_pair_pointer_wrong_identity",
+            "goal": "typed_real_std_pair_int_int_ptr_copy_ctor_wp_smoke_dead_call_s20",
+            "line": 53,
+            "statement_id": 20
+          },
+          {
+            "callee": "std_pair_int_int_ptr_ctor_default",
+            "caller": "swdb_pair_pointer_wrong_identity",
+            "goal": "typed_real_std_pair_int_int_ptr_ctor_default_wp_smoke_dead_call_s18",
+            "line": 45,
+            "statement_id": 18
+          },
+          {
+            "callee": "std_pair_int_int_ptr_ctor",
+            "caller": "swdb_pair_pointer_wrong_identity",
+            "goal": "typed_real_std_pair_int_int_ptr_ctor_wp_smoke_dead_call_s19",
+            "line": 49,
+            "statement_id": 19
+          },
+          {
+            "callee": "std_pair_int_int_ptr_operator_assign",
+            "caller": "swdb_pair_pointer_wrong_identity",
+            "goal": "typed_real_std_pair_int_int_ptr_operator_assign_wp_smoke_dead_call_s21",
+            "line": 56,
+            "statement_id": 21
+          }
+        ],
+        "inventory_only_CFG_goals": [],
+        "scientific_or_full_task_closure_accepted": false,
+        "standard_is_exact_expected_subset": true
+      },
+      "native_count": 34,
+      "nonvalid_ordinary": [
+        {
+          "function": "swdb_pair_pointer_wrong_identity",
+          "goal": "typed_real_swdb_pair_pointer_wrong_identity_ensures",
+          "line": 37,
+          "passed": false,
+          "property": "swdb_pair_pointer_wrong_identity_ensures",
+          "results": [
+            "timeout",
+            "timeout",
+            "timeout"
+          ],
+          "smoke": false,
+          "targets": []
+        }
+      ],
+      "ordinary_count": 25,
+      "ordinary_observations": [
+        {
+          "count": 1,
+          "results": [
+            "timeout",
+            "timeout",
+            "timeout"
+          ]
+        },
+        {
+          "count": 24,
+          "results": [
+            "valid"
+          ]
+        }
+      ],
+      "physical_reports": {
+        "CSV": {
+          "bytes": 4399,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_wrong_identity.20261016t220809z.820de8b5/wp/wp-properties.csv",
+          "sha256": "1f474494eb9f1056c313881cc70c8b88a4510c7a7d85984e225348598f3c899b"
+        },
+        "log": {
+          "bytes": 7066,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_wrong_identity.20261016t220809z.820de8b5/wp/frama-c.log",
+          "sha256": "fb8ad4adeea85af98198bcc750d5ce02012571df037a2a63684fad20251791a4"
+        },
+        "native": {
+          "bytes": 50420,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_wrong_identity.20261016t220809z.820de8b5/wp/wp-inventory.json",
+          "sha256": "e43c97bf4bd4db217fc40cf05882d96f3519cb1c8d93b21e76fff840bc68790b"
+        },
+        "query": {
+          "bytes": 3803,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_wrong_identity.20261016t220809z.820de8b5/wp/wp_input.c",
+          "sha256": "8cba72b8ff707a4da2b1bbbdfda4e9f2485496fb1b0e19637105ad37f5969c74"
+        },
+        "standard": {
+          "bytes": 21812,
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/runs/proof.contract.fixture_pair_pointer_wrong_identity.20261016t220809z.820de8b5/wp/wp-goals.json",
+          "sha256": "fb084f8ca992f1ce00c119987543c8fcea7d4a8e2ae37eecf21a7345aecd77af"
+        }
+      },
+      "property_closure": {
+        "exported_count": 55,
+        "initial_registered_snapshot_count": 55,
+        "registered_snapshot_count": 55,
+        "registration_membership_refreshed_after_consolidation": true,
+        "unregistered_status_lookup_performed": false,
+        "unregistered_wp_call_instances": [],
+        "unregistered_wp_smoke_properties": []
+      },
+      "property_count": 55,
+      "property_dependency_origin_membership_closed": true,
+      "property_variants": {
+        "IPAssigns": 5,
+        "IPBehavior": 5,
+        "IPCodeAnnot": 7,
+        "IPOther": 9,
+        "IPPredicate": 25,
+        "IPPropertyInstance": 4
+      },
+      "recognized_common_export_IDs": [],
+      "recognized_printed_import_names": [],
+      "record": "proof.contract.fixture_pair_pointer_wrong_identity.20261016t220809z.820de8b5",
+      "retained_standalone_task_files": [],
+      "smoke_count": 9,
+      "smoke_observations": [
+        {
+          "count": 6,
+          "results": [
+            "timeout",
+            "timeout",
+            "timeout"
+          ]
+        },
+        {
+          "count": 3,
+          "results": [
+            "timeout",
+            "unknown",
+            "timeout"
+          ]
+        }
+      ],
+      "standard_count": 34
+    }
+  ],
+  "actual_execution": {
+    "bytes": 6874,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-mixed-v8-cold-v2-actual-execution-20261016.json",
+    "sha256": "35f74c5d583961c77fce622c6faeeb1f99af59bd0b475a53766cbf95eb4f085c"
+  },
+  "actual_stdout": {
+    "bytes": 413339,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-mixed-v8-cold-v2-actual-stdout-20261016.json",
+    "sha256": "2a1f385427994688e9eda0f8639d65a6522d7d6b723b063666e58bfe6cb84c59"
+  },
+  "command": {
+    "bytes": 1222,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/mixed-v8-cold-v2/command.json",
+    "sha256": "86bba4d6c76b40b4e035861175380e5151df3468233036a9461318b7ef567a48"
+  },
+  "complete_census": {
+    "CBMC_contexts": 2,
+    "CBMC_property_IDs_per_context": 70,
+    "WP_contexts": 6,
+    "WP_native_goals": 103,
+    "WP_ordinary": 81,
+    "WP_properties": 151,
+    "WP_standard_goals": 95,
+    "healthy_nonvalid_smoke_observations": 22,
+    "ordinary_direct_Valid_observations": 80,
+    "ordinary_three_solver_Timeout_observations": 1,
+    "original_solver_task_files_retained": 0,
+    "raw_bytes_bound_to_original_fixed_manifest": 10897771,
+    "raw_closed_aliases": 1,
+    "raw_regular_files_rechecked_before_after_by_entry": 144,
+    "records": 8
+  },
+  "complete_original_task_hypothesis_import_semantics_admitted": false,
+  "date": "2026-10-16 ET",
+  "decision": "AVAILABLE_EIGHT_RECORD_CONTEXT_RECONCILIATION_COMPLETE_SCIENTIFIC_TASK_CLOSURE_UNAVAILABLE",
+  "entry": {
+    "bytes": 84221,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/mixed-v8-cold-v2/entry.py",
+    "sha256": "0f67a9ba2392976608431f8fff7ebfe3702b36b825529ff76867e710ef4cba42"
+  },
+  "interpretation": [
+    "The exact native/normal record union is reconciled in all six contexts. Four model contexts each contain only their two observed terminates/exits inventory-only goals; shared standard rows and exact normal provenance remain binding.",
+    "Both callers have four exact callee-property versus caller-report smoke owner labels, now tied to direct callee tokens in the unique pinned original query caller body at lines45/49/53/56. No unlisted label difference was waived.",
+    "Four model contexts and the safe WP caller have all direct Valid ordinary observations. The wrong-identity WP caller retains one intended ordinary postcondition with three solver Timeouts; no timeout was converted into a proof or refutation.",
+    "All22 smoke observations are attempted healthy nonvalid outcomes. This is operational vacuity checking, never a satisfiability/consistency theorem.",
+    "Both CBMC contexts retain every70 actual property IDs/statuses. Safe has only intentional end-reachability failure; wrong retains exactly the intended negative postcondition plus reachability, no failed unwind.49 concrete input pairs per C/C++ form have exact equal output pins. The original C++ wrong replay remains reported with its physical source artifact; independent source/trace/ABI/UB interpretation stays pending.",
+    "The exact complete raw content/member census, original source/consumer receipts, current declared runtime pins, stored producer pre/post snapshots and eight YAML/progress records were checked by the reviewed passive entry before/after. These are current point observations under original producer/OS/Python/SSH/library/compiler/runtime TCB."
+  ],
+  "new_native_compiler_verifier_solver_or_proof_rerun": false,
+  "not_accepted": [
+    "There are no retained original standalone WP solver-task files; native property membership and normal status reports do not supply complete ordinary term/hypothesis/import/source closure. Recognized printed exports/imports are empty in this capture, not an invented proof of absence of all logical premises.",
+    "Zero Extern flags is a reporter census, not absence of modular contracts, prior model dependencies, library/allocator assumptions or source TCB.",
+    "No historical continuous source/runtime/loader/dlopen/source-to-binary identity or retroactive missing Why3server byte closure.",
+    "No universal original C++ result from49 draw agreement; no independent original counterexample expression/ABI/UB reconstruction.",
+    "No scientific cold certificate, source/Heap/Typed/body/caller/default/public-record or ticket acceptance. Original cold V1 refusal remains retained."
+  ],
+  "physical_records": [
+    {
+      "bytes": 240302,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/records/proofs/proof.contract.fixture_pair_pointer_values.20261016t220647z.7ab10e81.yaml",
+      "sha256": "83cf778a129ce2edf212a449c70778a0181c1330a9bc37b24976e96c8922f4bc"
+    },
+    {
+      "bytes": 245527,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/records/proofs/proof.contract.fixture_pair_pointer_values.20261016t221103z.bb5ec3b2.yaml",
+      "sha256": "bfa837ea9148a1b1b218ad6c6a61ccd6dda569797432a4726136bfbb86f9de76"
+    },
+    {
+      "bytes": 241943,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/records/proofs/proof.contract.fixture_pair_pointer_wrong_identity.20261016t220809z.820de8b5.yaml",
+      "sha256": "e0ec27bc97e8249532f79b4878186d2f4a48e55db279a642c3f2990abc0eb80f"
+    },
+    {
+      "bytes": 246447,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/records/proofs/proof.contract.fixture_pair_pointer_wrong_identity.20261016t221128z.bb05f168.yaml",
+      "sha256": "64fb9baf3ba13b322d21a1bfb5b4ce04b22293b8fe8f1de42ae662019ff4ea4d"
+    },
+    {
+      "bytes": 13872,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/records/proofs/proof.model.std_pair_int_int_ptr_copy_ctor.20261016t220611z.3ba534ec.yaml",
+      "sha256": "282cbf3bb673fe75db4ac1194722053daf8e79d0a6f8127973b91aa28a83b6b5"
+    },
+    {
+      "bytes": 13915,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/records/proofs/proof.model.std_pair_int_int_ptr_ctor.20261016t220550z.3d1e3981.yaml",
+      "sha256": "c61e49a7747c5f731400bdfc8cebefe9fdf2aadf5a87564814bfe0c6e17c4321"
+    },
+    {
+      "bytes": 14247,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/records/proofs/proof.model.std_pair_int_int_ptr_ctor_default.20261016t220530z.47341640.yaml",
+      "sha256": "28bcb1f2a8fb3ee1e21787fb5861d2ce689f59db54ab747c9d4b4935da5a7a50"
+    },
+    {
+      "bytes": 14344,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8/mixed-pair-profile/pytest/test_actual_mixed_pair_bodies_0/records/proofs/proof.model.std_pair_int_int_ptr_operator_assign.20261016t220629z.d0aadf56.yaml",
+      "sha256": "4999d4919a90e6ba0d9edb38bbfe50b25b9eb627971373f4abd9f89d80a7abb8"
+    }
+  ],
+  "producer_record_gate": {
+    "CBMC_callers": 2,
+    "WP_callers": 2,
+    "independent_cold_acceptance": false,
+    "models": 4,
+    "records": 8,
+    "verdicts": [
+      "proven",
+      "proven",
+      "proven",
+      "proven",
+      "proven",
+      "not_proven",
+      "proven",
+      "refuted"
+    ]
+  },
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-36266e10-mixed-pair-public-v8",
+  "remote_raw_or_source_mutation": false,
+  "root_once_admission": {
+    "bytes": 2165,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-mixed-v8-cold-v2-root-once-admission-20261016.json",
+    "sha256": "33397b1d1abdecdde54c4754fa064381b87e30afc6272d63b70d421c5db9e506"
+  },
+  "scientific_cold_acceptance": false,
+  "settlement": {
+    "actual_elapsed_seconds": 7.083553000004031,
+    "actual_exit_code": 2,
+    "checks": 225622,
+    "postflight_exit_code": 0,
+    "preflight_exit_code": 0,
+    "protected_SSH_window_released": true,
+    "reader_elapsed_seconds": 6.331222635693848,
+    "stderr_bytes": 0
+  },
+  "source_Heap_Typed_body_caller_default_public_record_ticket_acceptance": false,
+  "source_commit": "36266e101e0484f3c2cf5f3fae4322d5de648d85"
+}

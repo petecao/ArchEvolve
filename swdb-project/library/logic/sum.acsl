@@ -1,0 +1,150 @@
+// version: 1.0
+// logic.sum: the sum library (Probata proof of concept ticket 26, 2026-10-14 ET). A method-level
+// part: the method version lists it with the shared logic library (formal-verification map 24
+// item 4; map 16 item 9).
+//
+// Definitions over reals: a range sum and a filtered sum by an offsets array (the flattening
+// case), each over a count argument (a sum from lo over n elements, recursing on n under the base
+// case n <= 0, map 16 item 2). Three lemmas: ADDITIVITY, regrouping a flat edge range by owner
+// vertex (REGROUP_OWNER per vertex, REGROUP_TOTAL over all vertices) and PERMUTATION of a finite
+// sum. Every lemma is proven by WP with -wp-model +real (`swdb prove-logic`); the induction and
+// lemma-instance hints and their saved scripts are in proofs/sum/.
+//
+// Origin: spike (d), prototype/08-sums-over-reals/sum_logic.h, written from scratch from the
+// ticket text; nothing comes from the fork's PR, BC or SSSP code. Changes from the spike:
+// clip_lo/clip_hi use conditionals (the subset refuses \max and \min); term, pick and owns are
+// renamed sum_term, perm_pick and owns_edge.
+//
+// Library rule (from ticket 08): WP adds an is_sint32 premise for every int memory read at the top
+// of a lemma statement, which blocks reusing that lemma inside another proof. Lemma statements
+// therefore read int memory only inside the non-recursive wrappers sum_term, col_val, perm_pick,
+// clip_lo and clip_hi.
+
+// ---- Definitions ----------------------------------------------------------------------------
+
+// sum_{j in [lo, lo + n)} x[a[j]]   (primitive recursive on n)
+logic real sum_n{L}(float *x, int *a, integer lo, integer n) =
+  n <= 0 ? 0.0 : sum_n(x, a, lo, n - 1) + x[a[lo + n - 1]];
+
+// RANGE SUM: sum_{j in [lo, hi)} x[a[j]]; 0 when hi <= lo   (non-recursive)
+logic real range_sum{L}(float *x, int *a, integer lo, integer hi) =
+  sum_n(x, a, lo, hi - lo);
+
+// edge j belongs to vertex v under the offsets array off
+predicate owns_edge{L}(int *off, integer v, integer j) = off[v] <= j < off[v + 1];
+
+// sum_{j in [lo, lo + n), owns_edge(off, v, j)} x[a[j]]   (primitive recursive on n)
+logic real fsum_n{L}(float *x, int *a, int *off, integer v, integer lo, integer n) =
+  n <= 0 ? 0.0 :
+    fsum_n(x, a, off, v, lo, n - 1) + (owns_edge(off, v, lo + n - 1) ? x[a[lo + n - 1]] : 0.0);
+
+// FILTERED SUM by an offsets array: the part of the flat edge range [lo, hi) that vertex v owns
+// (non-recursive)
+logic real filtered_sum{L}(float *x, int *a, int *off, integer v, integer lo, integer hi) =
+  fsum_n(x, a, off, v, lo, hi - lo);
+
+// sum_{u in [0, n)} range_sum(x, a, off[u], off[u + 1])   (primitive recursive on n)
+logic real vsum_n{L}(float *x, int *a, int *off, integer n) =
+  n <= 0 ? 0.0 : vsum_n(x, a, off, n - 1) + range_sum(x, a, off[n - 1], off[n]);
+
+// Permutation helpers: a double sum over the 0/1 matrix [p[j] == i].
+// row_n(j, n) = sum_{i in [0, n)} (p[j] == i ? x[a[i]] : 0)
+logic real row_n{L}(float *x, int *a, int *p, integer j, integer n) =
+  n <= 0 ? 0.0 : row_n(x, a, p, j, n - 1) + (p[j] == n - 1 ? x[a[n - 1]] : 0.0);
+
+// col_n(i, n) = sum_{j in [0, n)} (p[j] == i ? x[a[i]] : 0)
+logic real col_n{L}(float *x, int *a, int *p, integer i, integer n) =
+  n <= 0 ? 0.0 : col_n(x, a, p, i, n - 1) + (p[n - 1] == i ? x[a[i]] : 0.0);
+
+// rows_n(m, n) = sum_{j in [0, n)} row_n(j, m)
+logic real rows_n{L}(float *x, int *a, int *p, integer m, integer n) =
+  n <= 0 ? 0.0 : rows_n(x, a, p, m, n - 1) + row_n(x, a, p, n - 1, m);
+
+// cols_n(m, n) = sum_{i in [0, n)} col_n(i, m)
+logic real cols_n{L}(float *x, int *a, int *p, integer m, integer n) =
+  n <= 0 ? 0.0 : cols_n(x, a, p, m, n - 1) + col_n(x, a, p, n - 1, m);
+
+// p is a bijection of [0, n) and q is its inverse
+predicate is_perm{L}(int *p, int *q, integer n) =
+  (\forall integer j; 0 <= j < n ==> 0 <= p[j] < n && q[p[j]] == j) &&
+  (\forall integer i; 0 <= i < n ==> 0 <= q[i] < n && p[q[i]] == i);
+
+// Non-recursive wrappers used in lemma statements (the library rule above).
+logic real sum_term{L}(float *x, int *a, integer j) = x[a[j]];
+logic real col_val{L}(float *x, int *a, int *q, integer i, integer m) =
+  q[i] < m ? x[a[i]] : 0.0;
+logic real perm_pick{L}(float *x, int *a, int *p, integer j, integer n) =
+  0 <= p[j] < n ? x[a[p[j]]] : 0.0;
+logic integer clip_lo{L}(int *off, integer v, integer lo) = lo >= off[v] ? lo : off[v];
+logic integer clip_hi{L}(int *off, integer v, integer hi) = hi <= off[v + 1] ? hi : off[v + 1];
+
+// ---- Lemma 1: ADDITIVITY --------------------------------------------------------------------
+
+lemma ADD_N: \forall float *x, int *a, integer lo, mid, n;
+  lo <= mid && 0 <= n ==>
+  sum_n(x, a, mid, n) + sum_n(x, a, lo, mid - lo) == sum_n(x, a, lo, mid - lo + n);
+
+lemma ADDITIVITY: \forall float *x, int *a, integer lo, mid, hi;
+  lo <= mid <= hi ==>
+  range_sum(x, a, lo, hi) == range_sum(x, a, lo, mid) + range_sum(x, a, mid, hi);
+
+lemma RANGE_SNOC: \forall float *x, int *a, integer lo, hi;
+  lo <= hi ==> range_sum(x, a, lo, hi + 1) == range_sum(x, a, lo, hi) + sum_term(x, a, hi);
+
+lemma RANGE_EMPTY: \forall float *x, int *a, integer lo, hi;
+  hi <= lo ==> range_sum(x, a, lo, hi) == 0.0;
+
+// ---- Lemma 2: REGROUPING a flat edge range by owner vertex ----------------------------------
+
+lemma REGROUP_OWNER_N: \forall float *x, int *a, int *off, integer v, lo, n;
+  0 <= n ==>
+  fsum_n(x, a, off, v, lo, n) == range_sum(x, a, clip_lo(off, v, lo), clip_hi(off, v, lo + n));
+
+lemma REGROUP_OWNER: \forall float *x, int *a, int *off, integer v, lo, hi;
+  lo <= hi ==>
+  filtered_sum(x, a, off, v, lo, hi) == range_sum(x, a, clip_lo(off, v, lo), clip_hi(off, v, hi));
+
+lemma REGROUP_TOTAL: \forall float *x, int *a, int *off, integer n;
+  0 <= n && (\forall integer u, w; 0 <= u <= w <= n ==> off[u] <= off[w]) ==>
+  vsum_n(x, a, off, n) == range_sum(x, a, off[0], off[n]);
+
+// ---- Lemma 3: PERMUTATION of a finite sum ---------------------------------------------------
+// sum_j x[a[p[j]]] == sum_i x[a[i]] for a bijection p of [0, n) with inverse q, through the double
+// sum sum_j sum_i [p[j] == i] x[a[i]] summed in both orders.
+
+lemma ROW_PICK: \forall float *x, int *a, int *p, integer j, n;
+  0 <= n ==> row_n(x, a, p, j, n) == perm_pick(x, a, p, j, n);
+
+lemma COL_PERM: \forall float *x, int *a, int *p, int *q, integer i, n, m;
+  0 <= m <= n && is_perm(p, q, n) && 0 <= i < n ==>
+  col_n(x, a, p, i, m) == col_val(x, a, q, i, m);
+
+lemma COLS_ZERO: \forall float *x, int *a, int *p, integer n;
+  0 <= n ==> cols_n(x, a, p, 0, n) == 0.0;
+
+lemma COLS_STEP: \forall float *x, int *a, int *p, integer m, n;
+  0 <= m && 0 <= n ==>
+  cols_n(x, a, p, m + 1, n) == cols_n(x, a, p, m, n) + row_n(x, a, p, m, n);
+
+lemma FUBINI: \forall float *x, int *a, int *p, integer m, n;
+  0 <= m && 0 <= n ==> rows_n(x, a, p, n, m) == cols_n(x, a, p, m, n);
+
+lemma PERM_ROWS: \forall float *x, int *a, int *b, int *p, int *q, integer n, m;
+  0 <= m <= n && is_perm(p, q, n) &&
+  (\forall integer j; 0 <= j < n ==> b[j] == a[p[j]]) ==>
+  rows_n(x, a, p, n, m) == sum_n(x, b, 0, m);
+
+lemma PERM_COLS: \forall float *x, int *a, int *p, int *q, integer n, m;
+  0 <= m <= n && is_perm(p, q, n) ==> cols_n(x, a, p, n, m) == sum_n(x, a, 0, m);
+
+// Chain lemmas: each equates a range_sum, the term the final goal holds, with the same cols_n term.
+lemma PERM_ROWS_R: \forall float *x, int *a, int *b, int *p, int *q, integer n;
+  0 <= n && is_perm(p, q, n) && (\forall integer j; 0 <= j < n ==> b[j] == a[p[j]]) ==>
+  range_sum(x, b, 0, n) == cols_n(x, a, p, n, n);
+
+lemma PERM_COLS_R: \forall float *x, int *a, int *p, int *q, integer n;
+  0 <= n && is_perm(p, q, n) ==> range_sum(x, a, 0, n) == cols_n(x, a, p, n, n);
+
+lemma PERMUTATION: \forall float *x, int *a, int *b, int *p, int *q, integer n;
+  0 <= n && is_perm(p, q, n) && (\forall integer j; 0 <= j < n ==> b[j] == a[p[j]]) ==>
+  range_sum(x, b, 0, n) == range_sum(x, a, 0, n);

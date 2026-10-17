@@ -1,0 +1,69 @@
+{
+  "actual_retained_ABI_replay_or_observer_executed": false,
+  "changed_source_replacements": {
+    "integration-source/dx100_checked_source.py": [
+      {
+        "new": "    from swdb._dx100_whole import memory_normalized_compiler_adapter_v1, memory_source_preparation_v1\n    from swdb._dx100_whole import abi_role_transport_v1, strict_minify_v2\n",
+        "old": "    from swdb._dx100_whole import memory_normalized_compiler_adapter_v1, memory_source_preparation_v1\n"
+      },
+      {
+        "new": "        memory_normalized_compiler_adapter_v1, memory_source_preparation_v1,\n        abi_role_transport_v1, strict_minify_v2,\n",
+        "old": "        memory_normalized_compiler_adapter_v1, memory_source_preparation_v1,\n"
+      }
+    ],
+    "observer/observe_memory_entry_v1.py": [
+      {
+        "new": "MANIFEST_SHA = '791319838f360682ac1e75225bcbd792e65f84f422544a26c696b72cac6ba94d'",
+        "old": "MANIFEST_SHA = 'fe8810658f2d04b8036f73f93e2028ac81b34e252343febbfd4912ec5000a9eb'"
+      },
+      {
+        "new": "MODULE_NAMES = ('swdb._dx100_whole.whole_interface_v4', 'swdb._dx100_whole.compiler_unit_adapter_v3', 'swdb._dx100_whole.receiver_state_draws_v2', 'swdb.dx100_whole_checked', 'swdb.dx100_checked_source', 'swdb._dx100_whole.lossless_gzip_v2', 'swdb._dx100_whole.role_normalized_gzip_v2', 'swdb._dx100_whole.closed_python_surface', 'swdb._dx100_whole.strict_minify_v2', 'swdb._dx100_whole.abi_role_transport_v1', 'swdb._dx100_whole.memory_normalized_compiler_adapter_v1', 'swdb._dx100_whole.memory_normalized_capture_ingress_v1', 'swdb._dx100_whole.source_memory_selection_v1', 'swdb._dx100_whole.memory_source_preparation_v1')",
+        "old": "MODULE_NAMES = ('swdb._dx100_whole.whole_interface_v4', 'swdb._dx100_whole.compiler_unit_adapter_v3', 'swdb._dx100_whole.receiver_state_draws_v2', 'swdb.dx100_whole_checked', 'swdb.dx100_checked_source', 'swdb._dx100_whole.lossless_gzip_v2', 'swdb._dx100_whole.role_normalized_gzip_v2', 'swdb._dx100_whole.closed_python_surface', 'swdb._dx100_whole.memory_normalized_compiler_adapter_v1', 'swdb._dx100_whole.memory_normalized_capture_ingress_v1', 'swdb._dx100_whole.source_memory_selection_v1', 'swdb._dx100_whole.memory_source_preparation_v1')"
+      }
+    ],
+    "proposed/memory_normalized_capture_ingress_v1.py": [
+      {
+        "new": "MEMORY_COMPILER_SHA='e5b4b27cda6c1ace50bbde3d3118d016db09e4631a7d3e4ac0073fa4deb4c313'",
+        "old": "MEMORY_COMPILER_SHA='1315ebef75dc4219bcb012aa2a5f85cbcaeb82c54bb625fdad6f18ea397a6e62'"
+      }
+    ],
+    "proposed/memory_normalized_compiler_adapter_v1.py": [
+      {
+        "new": "from swdb._dx100_whole import compiler_unit_adapter_v3 as legacy\nfrom swdb._dx100_whole import abi_role_transport_v1 as abi_transport",
+        "old": "from swdb._dx100_whole import compiler_unit_adapter_v3 as legacy"
+      },
+      {
+        "new": "    derived_abi, abi_receipt = abi_transport.normalize_abi(abi_raw)\n    need(abi_receipt['selected_family'] == 'three-memory-g642', 'exact genuine G642 original ABI family required')\n    prepared = legacy.prepare_unit(api, full_tu_raw=full_tu_raw, abi_raw=derived_abi, source_path=source_path,",
+        "old": "    prepared = legacy.prepare_unit(api, full_tu_raw=full_tu_raw, abi_raw=abi_raw, source_path=source_path,"
+      },
+      {
+        "new": "    check_cases(prepared)\n    need(prepared['abi_observation']['raw_probe_sha256'] == abi_receipt['derived_strict_sha256'],\n         'unchanged legacy ABI reader must identify its actual derived strict memory input')\n    return {**prepared, 'abi_observation': {**prepared['abi_observation'],\n        'original_raw_probe_sha256': abi_receipt['original_sha256'],\n        'paired_type_role_transport': abi_receipt}, 'normalized_transport':",
+        "old": "    check_cases(prepared)\n    return {**prepared, 'normalized_transport':"
+      }
+    ]
+  },
+  "memory_ingress_function_bodies_unchanged": true,
+  "new_source_copies": {
+    "abi_role_transport_v1.py": {
+      "bytes": 7892,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-role-transport-v2/abi_role_transport_v1.py",
+      "sha256": "ea2e7e26ae154ccb9bd40204f75571ddca8fe50591a862d36abb140ec0893f8e"
+    },
+    "strict_minify_v2.py": {
+      "bytes": 7959,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/streaming-minify-v1/strict_minify_v2.py",
+      "sha256": "b866e14fe3ca210de178aab71f5c8a662e15f818a5ca485095487b005ae51897"
+    }
+  },
+  "predecessor": {
+    "bytes": 23303,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-normalized-ingress-v1/source-packet-v1.json",
+    "sha256": "ac04c216bbd1a2a9bc4f40108db0f5810286bdece522295fd4bfec8f3a25eb4b"
+  },
+  "schema": "memory-ABI-inlet-successor-exact-source-inverse-2",
+  "unchanged_semantic_sources": [
+    "proposed/memory_source_preparation_v1.py",
+    "proposed/capture_family_dispatch_v1.py",
+    "proposed/memory_capture_facts_v1.json"
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "created": "2026-10-16 ET",
+  "status": "INERT v2; independent entry re-review and root admission pending",
+  "source_commit": "c978393b119a3614229a37f0f2c8ca2a097c750b",
+  "packet": {
+    "path": "../prototype/25-original-no-growth-generation-20261016/inert-c978393b-v2/packet.json",
+    "sha256": "0c94a7a757749f383cb8e4491455b2b075d55ff17f2508f118f0c579d9a311f8"
+  },
+  "entry_sha256": "20fd7729f8e17c1766accb283a24cc8a725a69c6b38ff44a8642c86ea19a377c",
+  "expected_sha256": "1deab3e496cefa645950e22033860602aa7d13f95518962e7b48abf0e00c8a7b",
+  "root_command_sha256": "e52e83ee3afa14731a908880b151e654cd49696cb8f9660c3bfdff6d22f6a24f",
+  "review_findings_repaired": [
+    "Every post-spawn path now reaches unconditional session/known-descendant cleanup and bounded reap; primary exceptions are retained",
+    "Output-size census tolerates concurrent FileNotFoundError only; other I/O errors stop the observation",
+    "Projected aggregate output size is checked before each common-task fragment and census metadata write",
+    "One MiB is reserved within the unchanged one GiB raw allowance for bounded final result/artifact metadata"
+  ],
+  "scripted_controls": {
+    "script": "../prototype/25-original-no-growth-generation-20261016/guard-controls-v2.py",
+    "receipt": "../prototype/25-original-no-growth-generation-20261016/guard-controls-v2.json",
+    "tests_run": 9,
+    "failures": 0,
+    "errors": 0,
+    "scope": "Extracted stdlib function definitions with fully fake Popen/watchdog/OS-signal boundaries and disposable small text fixtures",
+    "real_child_processes_started": 0,
+    "real_os_signals_sent": 0,
+    "actual_resource_or_generation_or_proof_acceptance": false
+  },
+  "metadata_verification": {
+    "v1_original_entry_expected_bootstrap_author_template_hashes_unchanged": true,
+    "v2_primary_file_hashes_match": true,
+    "v1_and_v2_embedded_entry_expected_roundtrip_exact": true,
+    "entry_and_bootstrap_ast_parse": true,
+    "source_contract_generation_flags_unchanged": true,
+    "only_expectation_change_from_v1": "one MiB metadata reserve within unchanged raw allowance"
+  },
+  "project_imports": 0,
+  "compiler_or_native_project_helper_calls": 0,
+  "frama_c_or_generation_calls": 0,
+  "solver_calls": 0,
+  "ssh_calls": 0,
+  "public_proof_records_created": 0,
+  "source_runtime_correspondence_proved": false,
+  "model_or_caller_acceptance": false,
+  "ticket_closure": false
+}

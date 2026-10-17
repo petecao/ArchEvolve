@@ -1,0 +1,23 @@
+--- /private/tmp/lanl17_diagnose_exact_generality_unknown_process_metadata_SOURCE_ONLY_20261009_a5_r1.py
++++ /private/tmp/lanl17_diagnose_exact_generality_unknown_process_metadata_SOURCE_ONLY_20261009_a5_r2.py
+@@ -227,16 +227,16 @@
+             if b==b'\0':terminated=True;break
+             raw.extend(b)
+         need(len(raw)<=4096 and (terminated or not raw) and stamp(os.fstat(f.fileno()))==stamp(s)==stamp(q.lstat()),'selected_argv0_cap_stat_race')
+-    return {'state':'observed','argv0_bytes':len(raw),'argv0_sha256':digest(raw),'argv0_public_classification':public_class(raw) if raw else 'empty_argv0_observation_only','first_argument_only_no_later_arguments_read':True,'file_stat':stamp(s)}
++    return {'state':'observed','argv0_bytes':len(raw),'argv0_sha256':digest(raw),'argv0_public_classification':public_class(bytes(raw)) if raw else 'empty_argv0_observation_only','first_argument_only_no_later_arguments_read':True,'file_stat':stamp(s)}
+ 
+ def alias_metadata(p,name):
+-    need(name in ('cwd','root','exe'),'selected_alias_name');q=p/name;tick()
++    need(name in ('cwd','root','exe'),'selected_alias_name');q=p/name;tick();link_stat=None
+     try:
+-        s=q.lstat();need(stat.S_ISLNK(s.st_mode),'selected_kernel_alias_symlink');target=os.readlink(q);need(len(os.fsencode(target))<=4096 and stamp(q.lstat())==stamp(s),'selected_alias_cap_stat_race')
++        s=q.lstat();link_stat=stamp(s);need(stat.S_ISLNK(s.st_mode),'selected_kernel_alias_symlink');target=os.readlink(q);need(len(os.fsencode(target))<=4096 and stamp(q.lstat())==stamp(s),'selected_alias_cap_stat_race')
+         out={'state':'observed','alias':name,'link_stat':stamp(s),'target_path_sha256':digest(os.fsencode(target)),'target_body_or_stat_followed':False}
+         if name=='exe':out['exe_public_classification']=public_class(os.fsencode(target))
+         return out
+-    except (OSError,ValueError,UnicodeError) as exc:return error_metadata(exc,q)|{'alias':name}
++    except (OSError,ValueError,UnicodeError) as exc:return error_metadata(exc,q)|{'alias':name,'link_stat_if_lstat_succeeded':link_stat}
+ 
+ def operation(p,name,parse,pid):
+     try:

@@ -1,0 +1,23 @@
+name: input_properties
+description: Properties an input record may state; element-count formulas may use the numeric ones as symbols.
+values:
+  - value: num_nodes
+    meaning: Number of vertices in the graph as built (integer); for gapbs, the largest vertex ID in the edge list + 1.
+  - value: num_edges_undirected
+    meaning: Number of undirected edges after building (self loops and duplicates removed); gapbs prints it for symmetrized graphs (integer).
+  - value: num_edges_directed
+    meaning: Number of directed edges stored in one CSR neighbor array; twice the undirected count for a symmetrized graph (integer).
+  - value: requested_degree
+    meaning: The average degree asked of the generator (gapbs -k), before duplicate and self-loop removal (integer).
+  - value: scale
+    meaning: log2 of the vertex count asked of the generator (gapbs -g or -u) (integer).
+  - value: directed
+    meaning: Whether the graph as built is directed (boolean).
+  - value: weighted
+    meaning: Whether the graph as built carries edge weights (boolean).
+  - value: degree_distribution
+    meaning: Shape of the vertex degree distribution (a value from vocabulary degree_distributions).
+  - value: index_locality
+    meaning: How neighbor IDs relate to the vertex that lists them (a value from vocabulary index_localities).
+  - value: input_density
+    meaning: How full the data is, independent of storage format (a value from vocabulary input_densities).

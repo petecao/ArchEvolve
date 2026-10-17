@@ -1,0 +1,250 @@
+kind: comparison_result
+schema_version: '0.4'
+id: bfs-t17-handoff-20260929-a1.uniform18
+status: draft
+created: '2026-09-29'
+updated: '2026-09-29'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: bfs-t17-handoff-20260929-a1.uniform18
+  protocol: bfs-t17-controlled-simulator-20260928.952dead4468b86d7
+  comparison_baseline: dx100-bfs-scalar
+  baseline_evaluation: bfs-t17-routes-20260928-a3.baseline.uniform18.aggregate
+  candidate_evaluation: bfs-t17-routes-20260928-a3.candidate.uniform18.aggregate
+  region_packages:
+    bfs-t17-routes-20260928-a3.baseline.uniform18.s0.r0.primary.evaluation: bfs-t17-routes-20260928-a3.baseline.uniform18.s0.r0.package.v1.66a4d38d4776349a
+    bfs-t17-routes-20260928-a3.candidate.uniform18.s0.r0.primary.evaluation: bfs-t17-routes-20260928-a3.candidate.uniform18.s0.r0.package.v1.1d8e180ac3ff3e02
+  claim_scope: Strategy existing-dx100-top-down-offload reuses the DX100 authors' TDStepMAA path with
+    the wait_ready(tile5) correctness fix. These are simulated joint hardware/software comparisons against
+    scalar TDStep, restricted to source vertex 0, one repetition per graph family under declared deterministic
+    replay; they do not establish a new accelerator algorithm discovered by a rewrite provider or general-source
+    coverage.
+  companion_acceptance:
+    evaluation: bfs-t17-ac10-companion-20260928-a3.execute
+    sha256: fcd813e2b7dd4f79a9ff90b6a105527c0e5ec933211d171f75c2a6afc2e7a21c
+    binary_sha256: 852e62314b7114079975fe25d70da4e77596490bcfa89fb4f7c64af585485527
+    competing_parent_updates: 14546
+decision:
+  state: gain
+  reasons: []
+gain_claim: true
+evidence_kind: execution
+metrics:
+  roi_speedup: 3.0805868937958523
+  per_source_position_speedup:
+    '0': 3.0805868937958523
+  confidence_interval:
+    confidence: 0.95
+    lower: 3.0805868937958523
+    upper: 3.0805868937958523
+    method: independent per-source bootstrap of median ratios
+    resamples: 2000
+  relative_spread:
+    baseline:
+      '0': 0.0
+    candidate:
+      '0': 0.0
+  workload: bfs-20260928-uniform18-s0.8c7e69dfa516e53c
+  attribution: joint_hardware_software
+  disclosed_differences:
+    software:
+    - Unchanged dx100-bfs-scalar DOBFS versus the T17 rewrite of the DX100 source (TDStepMAA called from
+      DOBFS).
+    accelerator:
+    - MAA enabled only for the candidate role.
+    configuration:
+    - Both roles use LLC 8MiB/16-way and identical CPU, caches, memory and clock; accelerator presence
+      differs.
+region_comparisons:
+- semantic_region: bfs.complete_call
+  baseline: function:bfs.cc:13304:76a956649bfe9705
+  candidate: function:bfs.cc:13347:4d66411f1e0ed09c
+  scope: accumulated
+  attribution: inclusive
+  evidence: simulated_diagnostic_profile
+  collector:
+    backend: libclang-cindex
+    collector: dx100.m5_rpns.source_scopes.v1
+    library_sha256: 27b38bfdb37d164878767c40c8ce9538c96e801a37d2a67234bee043945de139
+    pass_sha256: 6f5414eb9844688dfe5f651cb030d5885f6b70ad6c7e10b4ddf1d7cd04e60021
+    runtime_sha256: 618d8e874eccaf2914a87462e46a1d36a42194e98f1bbfde1f91eadd3818c31d
+  duration_ratio: 1.988871829364087
+  per_source_position_ratio:
+    '0': 1.988871829364087
+  samples:
+    baseline:
+    - source: 0
+      source_position: 0
+      repetition: 0
+      duration_s: 0.050517249
+      invocations: 1
+      primary_evaluation: bfs-t17-routes-20260928-a3.baseline.uniform18.s0.r0.primary.evaluation
+      primary_binary_sha256: 643f9d68d95157e402772b0aec59b1bc970f54e94d844e380c718ba725cffe2e
+      diagnostic_evaluation: bfs-t17-routes-20260928-a3.baseline.uniform18.s0.r0.diagnostic.evaluation
+      diagnostic_evaluation_sha256: 447c364d828762f109df1d9b7c5fde77e1774760ec2a0aa5f7fd30765fba0a98
+      diagnostic_build: bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build
+      diagnostic_build_sha256: d5f619274d39e4b519c722e2dc81326c931928e354ad61165016e55c746155a6
+      diagnostic_binary_sha256: a673e39cb190dc578a53e8e6f34f64f7df287e49c60331de377f8644330c0b3f
+      profile_package: bfs-t17-routes-20260928-a3.baseline.uniform18.s0.r0.package.v1.66a4d38d4776349a
+      package_sha256: 66a4d38d4776349a04d7a699181814b0af1b6aed1fd6d82191e47e8ad101f39a
+      region_profile: bfs-t17-routes-20260928-a3.baseline.uniform18.s0.r0.profile
+      region_profile_sha256: d99354b5b1cc5359d7cdaa184cfcb73fddbd2d8b9a0529e10a188d2663547d14
+      raw_report:
+        path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.uniform18/bfs-t17-routes-20260928-a3.baseline.uniform18/bfs-t17-routes-20260928-a3.baseline.uniform18.s0.r0.diagnostic.evaluation/002-simulation.log
+        sha256: 1b5164de2179e0f52dd73d930956eed1797b3277631d34c2fbadaefaa927fdc4
+      source_sha256: 76a956649bfe97051a02af951fec5f4bc552440d0fb952c642fa4a5968d9cae5
+      source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+      quantity: per-thread simulated elapsed intervals summed across threads; includes waiting and overlap
+      timing_scope: accumulated simulated elapsed per executing thread within bfs.complete_call.v1
+      attribution:
+        inclusive: true
+        exclusive: nested guarded intervals subtracted on the same thread
+        whole_lexical_region: true
+        clock: m5_rpns
+        quantity: per-thread simulated elapsed intervals summed across threads; includes waiting and overlap
+        limitations: scope guards, m5_rpns reads, thread-local stacks and atomic counters; diagnostic
+          times cannot replace primary timing
+    candidate:
+    - source: 0
+      source_position: 0
+      repetition: 0
+      duration_s: 0.025399952
+      invocations: 1
+      primary_evaluation: bfs-t17-routes-20260928-a3.candidate.uniform18.s0.r0.primary.evaluation
+      primary_binary_sha256: 852e62314b7114079975fe25d70da4e77596490bcfa89fb4f7c64af585485527
+      diagnostic_evaluation: bfs-t17-routes-20260928-a3.candidate.uniform18.s0.r0.diagnostic.evaluation
+      diagnostic_evaluation_sha256: c12ebcacedec0849a179cf7467dff99d25c7b00a6b0e92f31d43c56e950c652d
+      diagnostic_build: bfs-t17-diagnostic-build-only-20260927-a2
+      diagnostic_build_sha256: 32f2087f61c1f8d75c235a661963eff8287f1a0c9f6123103ba83a2632747cc7
+      diagnostic_binary_sha256: f0656762f6d666892f461ba900d265bf7cecea370d16ffb7dde85ff569ab1b9a
+      profile_package: bfs-t17-routes-20260928-a3.candidate.uniform18.s0.r0.package.v1.1d8e180ac3ff3e02
+      package_sha256: 1d8e180ac3ff3e028446d8f5a5279fa05749c47d7e1d99a7c5c380ff7ecacf91
+      region_profile: bfs-t17-routes-20260928-a3.candidate.uniform18.s0.r0.profile
+      region_profile_sha256: 462d8fb121f60a2ea8fad9ade64741ad36ac199bb7e7dccd9dff31aa0b6ac1f6
+      raw_report:
+        path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.uniform18/bfs-t17-routes-20260928-a3.candidate.uniform18/bfs-t17-routes-20260928-a3.candidate.uniform18.s0.r0.diagnostic.evaluation/002-simulation.log
+        sha256: 8e6c073b296ce085c321451e2c303404d87b91c5155ed806a67f78eccc7a0536
+      source_sha256: 4d66411f1e0ed09cd3704a01d87459ce8afaa99773b4e1afa159a2e54286cfaa
+      source_artifact_sha256: ca09d2f439a56f295c5ccdc5e18a5fd5a4c2c9726005365f8125cc1d8979740a
+      quantity: per-thread simulated elapsed intervals summed across threads; includes waiting and overlap
+      timing_scope: accumulated simulated elapsed per executing thread within bfs.complete_call.v1
+      attribution:
+        inclusive: true
+        exclusive: nested guarded intervals subtracted on the same thread
+        whole_lexical_region: true
+        clock: m5_rpns
+        quantity: per-thread simulated elapsed intervals summed across threads; includes waiting and overlap
+        limitations: scope guards, m5_rpns reads, thread-local stacks and atomic counters; diagnostic
+          times cannot replace primary timing
+  primary_bfs_roi: false
+  gain_claim: false
+  note: Diagnostic per-thread elapsed ratio; includes waiting and overlap and cannot replace primary BFS
+    timing.
+- semantic_region: bfs.top_down_step.maa
+  baseline: function:bfs.cc:2157:ba2f8e639d5daef5
+  candidate: function:bfs.cc:2157:6e2df14488cc294c
+  scope: accumulated
+  attribution: inclusive
+  evidence: simulated_diagnostic_profile
+  collector:
+    backend: libclang-cindex
+    collector: dx100.m5_rpns.source_scopes.v1
+    library_sha256: 27b38bfdb37d164878767c40c8ce9538c96e801a37d2a67234bee043945de139
+    pass_sha256: 6f5414eb9844688dfe5f651cb030d5885f6b70ad6c7e10b4ddf1d7cd04e60021
+    runtime_sha256: 618d8e874eccaf2914a87462e46a1d36a42194e98f1bbfde1f91eadd3818c31d
+  state: baseline_not_invoked
+  duration_ratio: null
+  baseline_invocations: 0
+  candidate_invocations: [6]
+  candidate_duration_s:
+    '0': 0.006233948
+  samples:
+    baseline:
+    - source: 0
+      source_position: 0
+      repetition: 0
+      duration_s: null
+      invocations: 0
+      primary_evaluation: bfs-t17-routes-20260928-a3.baseline.uniform18.s0.r0.primary.evaluation
+      primary_binary_sha256: 643f9d68d95157e402772b0aec59b1bc970f54e94d844e380c718ba725cffe2e
+      diagnostic_evaluation: bfs-t17-routes-20260928-a3.baseline.uniform18.s0.r0.diagnostic.evaluation
+      diagnostic_evaluation_sha256: 447c364d828762f109df1d9b7c5fde77e1774760ec2a0aa5f7fd30765fba0a98
+      diagnostic_build: bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build
+      diagnostic_build_sha256: d5f619274d39e4b519c722e2dc81326c931928e354ad61165016e55c746155a6
+      diagnostic_binary_sha256: a673e39cb190dc578a53e8e6f34f64f7df287e49c60331de377f8644330c0b3f
+      profile_package: bfs-t17-routes-20260928-a3.baseline.uniform18.s0.r0.package.v1.66a4d38d4776349a
+      package_sha256: 66a4d38d4776349a04d7a699181814b0af1b6aed1fd6d82191e47e8ad101f39a
+      region_profile: bfs-t17-routes-20260928-a3.baseline.uniform18.s0.r0.profile
+      region_profile_sha256: d99354b5b1cc5359d7cdaa184cfcb73fddbd2d8b9a0529e10a188d2663547d14
+      raw_report:
+        path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.uniform18/bfs-t17-routes-20260928-a3.baseline.uniform18/bfs-t17-routes-20260928-a3.baseline.uniform18.s0.r0.diagnostic.evaluation/002-simulation.log
+        sha256: 1b5164de2179e0f52dd73d930956eed1797b3277631d34c2fbadaefaa927fdc4
+      source_sha256: ba2f8e639d5daef5d58debef79db66fcac1e5296a5f53c207e3a80b92280725f
+      source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+      quantity: per-thread simulated elapsed intervals summed across threads; includes waiting and overlap
+      timing_scope: accumulated simulated elapsed per executing thread within bfs.complete_call.v1
+      attribution:
+        inclusive: true
+        exclusive: nested guarded intervals subtracted on the same thread
+        whole_lexical_region: true
+        clock: m5_rpns
+        quantity: per-thread simulated elapsed intervals summed across threads; includes waiting and overlap
+        limitations: scope guards, m5_rpns reads, thread-local stacks and atomic counters; diagnostic
+          times cannot replace primary timing
+    candidate:
+    - source: 0
+      source_position: 0
+      repetition: 0
+      duration_s: 0.006233948
+      invocations: 6
+      primary_evaluation: bfs-t17-routes-20260928-a3.candidate.uniform18.s0.r0.primary.evaluation
+      primary_binary_sha256: 852e62314b7114079975fe25d70da4e77596490bcfa89fb4f7c64af585485527
+      diagnostic_evaluation: bfs-t17-routes-20260928-a3.candidate.uniform18.s0.r0.diagnostic.evaluation
+      diagnostic_evaluation_sha256: c12ebcacedec0849a179cf7467dff99d25c7b00a6b0e92f31d43c56e950c652d
+      diagnostic_build: bfs-t17-diagnostic-build-only-20260927-a2
+      diagnostic_build_sha256: 32f2087f61c1f8d75c235a661963eff8287f1a0c9f6123103ba83a2632747cc7
+      diagnostic_binary_sha256: f0656762f6d666892f461ba900d265bf7cecea370d16ffb7dde85ff569ab1b9a
+      profile_package: bfs-t17-routes-20260928-a3.candidate.uniform18.s0.r0.package.v1.1d8e180ac3ff3e02
+      package_sha256: 1d8e180ac3ff3e028446d8f5a5279fa05749c47d7e1d99a7c5c380ff7ecacf91
+      region_profile: bfs-t17-routes-20260928-a3.candidate.uniform18.s0.r0.profile
+      region_profile_sha256: 462d8fb121f60a2ea8fad9ade64741ad36ac199bb7e7dccd9dff31aa0b6ac1f6
+      raw_report:
+        path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.uniform18/bfs-t17-routes-20260928-a3.candidate.uniform18/bfs-t17-routes-20260928-a3.candidate.uniform18.s0.r0.diagnostic.evaluation/002-simulation.log
+        sha256: 8e6c073b296ce085c321451e2c303404d87b91c5155ed806a67f78eccc7a0536
+      source_sha256: 6e2df14488cc294ca6a0ff41d6a6fe647de9f476bde446ad364f19c646634a6d
+      source_artifact_sha256: ca09d2f439a56f295c5ccdc5e18a5fd5a4c2c9726005365f8125cc1d8979740a
+      quantity: per-thread simulated elapsed intervals summed across threads; includes waiting and overlap
+      timing_scope: accumulated simulated elapsed per executing thread within bfs.complete_call.v1
+      attribution:
+        inclusive: true
+        exclusive: nested guarded intervals subtracted on the same thread
+        whole_lexical_region: true
+        clock: m5_rpns
+        quantity: per-thread simulated elapsed intervals summed across threads; includes waiting and overlap
+        limitations: scope guards, m5_rpns reads, thread-local stacks and atomic counters; diagnostic
+          times cannot replace primary timing
+  primary_bfs_roi: false
+  gain_claim: false
+  note: The baseline never executes this region (zero invocations and time, checked against the raw report
+    wherever it is reachable); no regional ratio exists. Candidate time is reported alone; the primary
+    BFS result is separate.
+finished_at: '2026-09-30T00:59:43.135554+00:00'
+protocol: bfs-t17-controlled-simulator-20260928.952dead4468b86d7
+protocol_sha256: 952dead4468b86d796172d7dfb2ef9fb8170bec1591b4160c562df660ce181ff
+baseline_evaluation: bfs-t17-routes-20260928-a3.baseline.uniform18.aggregate
+candidate_evaluation: bfs-t17-routes-20260928-a3.candidate.uniform18.aggregate
+comparison_baseline: dx100-bfs-scalar
+source_ancestor: dx100-bfs-scalar
+evaluation_identities:
+  bfs-t17-routes-20260928-a3.baseline.uniform18.aggregate: 0c22b3155bdfa7f2fe912ab8bc0c54a935b00929cc562f3381a5dcc35bc715c0
+  bfs-t17-routes-20260928-a3.candidate.uniform18.aggregate: 009789ac4a15006098277078f3e3756eec2c079367c15fafcbdd150d25ab9cb3

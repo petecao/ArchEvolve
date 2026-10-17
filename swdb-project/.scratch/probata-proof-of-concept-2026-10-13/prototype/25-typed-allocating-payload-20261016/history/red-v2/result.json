@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-16 ET",
+  "external_attempts_after_audit": [],
+  "failed": 1,
+  "input_pins": [
+    {
+      "bytes": 10602,
+      "path": "swdb/vector_allocating_payload.py",
+      "sha256": "94f30f1f0aaf144bf05786376ef26daf2ed794d2fb602b9ba3dbb889b487311a"
+    },
+    {
+      "bytes": 4341,
+      "path": "tests/test_vector_allocating_payload.py",
+      "sha256": "4b53fd531b6d2c478626541741edc70d938bfb6e7f5609ababd565ddfb357d6d"
+    },
+    {
+      "bytes": 29179,
+      "path": "swdb/std_models.py",
+      "sha256": "cf708cf2debd8abc525bd97c8fd30c6117ebff98dddd24978f97d34cbf2ad9c2"
+    },
+    {
+      "bytes": 171522,
+      "path": "swdb/c_lowering.py",
+      "sha256": "8ede503e30cb6f57ead88ee622362d5a1c05290edcb6b4b157b9ca443f64925e"
+    }
+  ],
+  "native_or_formal_workflow": false,
+  "passed": 1,
+  "rows": [
+    {
+      "passed": true,
+      "test": "test_typed_allocating_constructors_preserve_all_nine_original_units"
+    },
+    {
+      "error": "'typed_payload'",
+      "passed": false,
+      "test": "test_typed_payload_transport_keeps_bits_categories_and_nan_equality_distinct",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-typed-allocating-payload-20261016/run_pure.py\", line 56, in <module>\n    function(**{key: available[key] for key in inspect.signature(function).parameters})\n    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_vector_allocating_payload.py\", line 43, in test_typed_payload_transport_keeps_bits_categories_and_nan_equality_distinct\n    semantics = plan['typed_payload']\n                ~~~~^^^^^^^^^^^^^^^^^\nKeyError: 'typed_payload'\n"
+    }
+  ],
+  "source_only_artifact_seam": true,
+  "stage": "red-v2"
+}

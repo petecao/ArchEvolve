@@ -1,0 +1,97 @@
+{
+  "observed_utc": "2026-10-16T21:30:21.581589+00:00",
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8",
+  "actual": {
+    "lane.json": {
+      "socket_lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "command": [
+          "timeout",
+          "--signal=TERM",
+          "--kill-after=60",
+          "300",
+          "bash",
+          "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v8/run.sh"
+        ],
+        "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+        "ended_utc": "2026-10-16T21:29:19Z",
+        "exit_code": 1,
+        "host": "mbit10",
+        "job": "probata-resume-20261016-2baf722f-t28-full-tu-v8",
+        "lease_generation": 638,
+        "lease_name": "mbit10-evaluation-node1",
+        "load1_at_start": 1.77,
+        "load1_max": 32,
+        "node": 1,
+        "numa_memory_policy": "bind:1",
+        "numactl": "--cpunodebind=1 --membind=1",
+        "preregistration_sha256": null,
+        "started_utc": "2026-10-16T21:28:31Z"
+      }
+    },
+    "resources.json": {
+      "cpu_seconds": 51.024656,
+      "exit_code": 1,
+      "out_of_memory": false,
+      "peak_rss_bytes": 196685824,
+      "timed_out": false,
+      "wall_seconds": 45.691572384908795
+    },
+    "outer-resources.json": {
+      "exit_code": 1,
+      "peak_rss_bytes": 249638912,
+      "out_of_memory": false,
+      "timed_out": false,
+      "wall_seconds": 47.61776088736951,
+      "cpu_seconds": 61.867723999999995
+    },
+    "component/result.json": {
+      "accepted": false,
+      "after_input_errors": [],
+      "bytecode_cache_present": false,
+      "current_0_2": false,
+      "error": {
+        "message": "expanded compiler stream limit exceeded",
+        "type": "Refused"
+      },
+      "full_ticket28": false,
+      "native_or_solver_executed": false,
+      "public_proof": false,
+      "scope": "Actual Clang source/ABI preparation only; source/CPU/model/public admission remains required",
+      "source_call_count": 0,
+      "source_names": [],
+      "wall_seconds": 45.52834878396243
+    },
+    "acceptance.log": {
+      "bytes": 0,
+      "tail": ""
+    },
+    "worker.log": {
+      "bytes": 0,
+      "tail": ""
+    }
+  },
+  "metadata_pins": [
+    {
+      "relative": "lane.json",
+      "bytes": 815,
+      "sha256": "ce9e589f866fb2e73a2ceeec91a6b49bd0ea14ece2829244ccf2215a99594eb6"
+    },
+    {
+      "relative": "resources.json",
+      "bytes": 166,
+      "sha256": "cbb376204e7003ec05bd4a995e86f700dffc428aa97af534c797352e36fabdb7"
+    },
+    {
+      "relative": "outer-resources.json",
+      "bytes": 174,
+      "sha256": "63170c0a9a226c04a47feb10a2ce26001da64502c63785ff2a5ed481dfcead5b"
+    },
+    {
+      "relative": "component/result.json",
+      "bytes": 490,
+      "sha256": "0a69e629be67e57e94d03f699947c9b6b8a7475cf9e99763be29ffbca4cc7365"
+    }
+  ]
+}

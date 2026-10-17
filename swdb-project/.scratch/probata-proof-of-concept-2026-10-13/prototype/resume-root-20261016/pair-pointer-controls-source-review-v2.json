@@ -1,0 +1,34 @@
+{
+  "created": "2026-10-16 ET",
+  "source_commit": "dcdecf317a0e9b34f3ce12d5b914eb823c439fbc",
+  "baseline": "c978393b119a3614229a37f0f2c8ca2a097c750b",
+  "files_after": {
+    "swdb-project/swdb/bounded_initialization.py": "d6586a771548f46423595eb971a63bffb00f23e559cfe576adee5a2abeb6b3cc",
+    "swdb-project/swdb/bounded_std_initialization.py": "7f4417d4d8ea8bcd8ef795259212e55052e333aa8ae320b4b7d06511cbab40ea",
+    "swdb-project/swdb/cbmc_adapter.py": "2ef59469412c287b174f085e2c08c8a969435ccf1bc129fe34ea89bbb78cac4a",
+    "swdb-project/swdb/dx100_initialized_register_source.py": "01c043e544e50c30fc3d92b6be5a8b097f4dfef0606f53c29068a2ba008ac145",
+    "swdb-project/swdb/proof_setup.py": "08f5e9807522cc2418e59ac9b6ecd43855a6a5ed4693c0295333abf6b8563d16",
+    "swdb-project/swdb/vector_reallocation_caller_packets.py": "a30b633404723d99c84ee3473eb0a352fe6641274e036524451826940abc59f0",
+    "swdb-project/swdb/vector_reallocation_caller_view.py": "47c286034927b11db471c45ebce061856c4bc73008f0baf2cbdae255a2293413",
+    "swdb-project/swdb/vector_reallocation_closed_binding.py": "075f557a22a34b03fcebe2699d3a21c4ebe44ff3b8afddf9cb585d6ff090d0b2",
+    "swdb-project/swdb/vector_reallocation_closed_evidence.py": "5d997dfbb1f2bef48ca07126d3a98697756254af1fc26d8f18a94aef009fc77f",
+    "swdb-project/swdb/vector_reallocation_closed_lifetime.py": "ac631823afe598629032482b9383a4bfb8f6673ca71f1f7795a55c6d905361ee",
+    "swdb-project/swdb/vector_reallocation_closed_lifetime_parts.py": "ce98fdba6a2439a72997cbc956daa1854a722cab3d8681897557384122f229f9",
+    "swdb-project/swdb/vector_reallocation_closed_route.py": "429895c2a7b9bedaaa14f0dc8bdd5a76cede173f6a9a5a82d33713c988881d81",
+    "swdb-project/swdb/vector_reallocation_closed_view.py": "758092d5997274b29e22f2196c46af361b7cfdfd5c9eb83ee328ae6a877eb757",
+    "swdb-project/swdb/vector_reallocation_composition.py": "fbce29f010d92be33b09a0f31c440f8db97c7f0dfd0769a41a59e71bdfe6e108",
+    "swdb-project/swdb/vector_reallocation_private_frame.py": "062c68a138b4aeb0887f50490d405f3b1fdd50284e6e8404e096df02568982da",
+    "swdb-project/swdb/wp_adapter.py": "e30ac5b1b05666db401bce03726f78a336926b47807d729ec1d11a080a5389af"
+  },
+  "readers": [
+    "root",
+    "ticket25"
+  ],
+  "planned_raw_budget_bytes": 2147483648,
+  "review_evidence": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t25-pair-pointer-controls-v2-template-independent-static-review-20261016.json",
+    "bytes": 5107,
+    "sha256": "3ed118814294a6cc0363a7963533ac1ef6475f32bc0b90ca2fa4e310972bd1d3"
+  },
+  "scope": "30 public controls:11 pure initializedness and19 Clang/native or explicit parser-error stand-ins; actual WP/CBMC disabled. Exact template substitution only after both-axes source reviews."
+}

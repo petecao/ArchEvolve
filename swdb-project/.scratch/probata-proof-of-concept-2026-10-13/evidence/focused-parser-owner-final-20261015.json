@@ -1,0 +1,514 @@
+{
+  "created": "2026-10-15 ET",
+  "audit_utc": "2026-10-15T16:12:33.332195+00:00",
+  "source": "d3a5dd4813ec0d6bbd9ee35f2feb45392c9725f3",
+  "runs": [
+    {
+      "node": 0,
+      "directory": "/data/yanruj/EvolveSWDB_runs/probata-focused-parser-owner-20261015-1156-node0",
+      "lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "command": [
+          "timeout",
+          "7000",
+          "bash",
+          "/data/yanruj/EvolveSWDB_runs/probata-focused-parser-owner-20261015-1156-node0/run.sh"
+        ],
+        "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+        "ended_utc": "2026-10-15T16:04:29Z",
+        "exit_code": 0,
+        "host": "mbit10",
+        "job": "probata-focused-parser-owner-20261015-node0",
+        "lease_generation": 561,
+        "lease_name": "mbit10-evaluation-node0",
+        "load1_at_start": 0,
+        "load1_max": 32,
+        "node": 0,
+        "numa_memory_policy": "bind:0",
+        "numactl": "--cpunodebind=0 --membind=0",
+        "preregistration_sha256": null,
+        "started_utc": "2026-10-15T15:55:56Z"
+      },
+      "call_counts": {
+        "passed": 167
+      },
+      "sessionfinish": [
+        {
+          "exitstatus": 0,
+          "$report_type": "SessionFinish"
+        }
+      ],
+      "resources": {
+        "exit_code": 0,
+        "peak_rss_bytes": 385536000,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 512.9614226417616,
+        "cpu_seconds": 517.714784
+      },
+      "source_after": {
+        "commit": "d3a5dd4813ec0d6bbd9ee35f2feb45392c9725f3",
+        "tracked_changes": "",
+        "source_unchanged": true
+      },
+      "runtime_source_pins": 196,
+      "source_manifest_sha256": "0775d555e9060ec798d0a37cc9427fb48887ff93c6f7dd0e8d6eaa3bd9af3390",
+      "source_pins_match_git_and_current": true,
+      "records": [
+        {
+          "id": "proof.contract.fixture_vector_owner_data_safe.20261015t160036z.6b3cd108",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-focused-parser-owner-20261015-1156-node0/pytest/test_a_local_standard_header_w1/records/proofs/proof.contract.fixture_vector_owner_data_safe.20261015t160036z.6b3cd108.yaml",
+          "sha256": "50b71bac123a16aeee8ec28527f0bc9203aec86b0c3f2566e43d0c3415078486",
+          "verdict": "not_proven",
+          "failure_class": "unsupported_construct",
+          "verifier_launched": false,
+          "ordinary": {},
+          "smoke": {},
+          "nonvalid": [],
+          "report_refs": 1,
+          "adapter_log_refs": 1,
+          "artifact_set_sha256": "55a9c8e8928e92e868f5ac125b4484eab86a098351860e29e531d9b08b7ba947"
+        },
+        {
+          "id": "proof.contract.fixture_vector_owner_data_safe.20261015t160307z.7ccd34f2",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-focused-parser-owner-20261015-1156-node0/pytest/test_wp_launch_metadata_matche0/records/proofs/proof.contract.fixture_vector_owner_data_safe.20261015t160307z.7ccd34f2.yaml",
+          "sha256": "f7f29e224d9ada18864f99e843e68595a4c0e88af742429cb73e046a743221a3",
+          "verdict": "not_proven",
+          "failure_class": "unknown",
+          "verifier_launched": true,
+          "ordinary": {
+            "unknown": 1
+          },
+          "smoke": {},
+          "nonvalid": [
+            {
+              "goal": "typed_real_swdb_vector_owner_data_safe_ensures",
+              "status": "unknown",
+              "smoke": false
+            }
+          ],
+          "report_refs": 11,
+          "adapter_log_refs": 1,
+          "artifact_set_sha256": "265e536cc1821af90e2fc9e872715e8fcd72f92fb0f3e8c48d6abc189d661854"
+        },
+        {
+          "id": "proof.contract.fixture_vector_owner_data_safe.20261015t160119z.4d4d6a58",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-focused-parser-owner-20261015-1156-node0/pytest/test_a_transitive_header_new_h1/records/proofs/proof.contract.fixture_vector_owner_data_safe.20261015t160119z.4d4d6a58.yaml",
+          "sha256": "3ab450d54d5f413fa46b000b019c6aa0172375e9778ac413b6ecd6185aed39b9",
+          "verdict": "not_proven",
+          "failure_class": "unsupported_construct",
+          "verifier_launched": false,
+          "ordinary": {},
+          "smoke": {},
+          "nonvalid": [],
+          "report_refs": 1,
+          "adapter_log_refs": 1,
+          "artifact_set_sha256": "c9ef7427dea618ecec7235519a711cb0badf752331b3182981526fe557c7d844"
+        },
+        {
+          "id": "proof.contract.fixture_vector_owner_data_safe.20261015t160423z.3f4135ba",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-focused-parser-owner-20261015-1156-node0/pytest/test_wp_launch_metadata_matche1/records/proofs/proof.contract.fixture_vector_owner_data_safe.20261015t160423z.3f4135ba.yaml",
+          "sha256": "ad6466958468e78519f1ea0e92ace6f6013a19f7475ca54b06a0d2ced6445980",
+          "verdict": "not_proven",
+          "failure_class": "unsupported_construct",
+          "verifier_launched": false,
+          "ordinary": {},
+          "smoke": {},
+          "nonvalid": [],
+          "report_refs": 1,
+          "adapter_log_refs": 1,
+          "artifact_set_sha256": "20bbc9d08d3229f9f8c391f1a12ddd2ad8e8ff0a0ffe9359efa6a5daabae9015"
+        },
+        {
+          "id": "proof.contract.fixture_vector_owner_data_safe.20261015t160023z.ff8e3e8e",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-focused-parser-owner-20261015-1156-node0/pytest/test_a_local_standard_header_w0/records/proofs/proof.contract.fixture_vector_owner_data_safe.20261015t160023z.ff8e3e8e.yaml",
+          "sha256": "2130c7fc96eb6a82d86258f9996003741ffe5c5808ac517aafabc903efb9ca87",
+          "verdict": "not_proven",
+          "failure_class": "unsupported_construct",
+          "verifier_launched": false,
+          "ordinary": {},
+          "smoke": {},
+          "nonvalid": [],
+          "report_refs": 1,
+          "adapter_log_refs": 1,
+          "artifact_set_sha256": "49609182c23614ea4fdfe198728e6bb567c64293b6d8928f266b37e1ec9e9b28"
+        },
+        {
+          "id": "proof.contract.fixture_vector_owner_data_safe.20261015t160055z.5505bbc6",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-focused-parser-owner-20261015-1156-node0/pytest/test_a_transitive_header_new_h0/records/proofs/proof.contract.fixture_vector_owner_data_safe.20261015t160055z.5505bbc6.yaml",
+          "sha256": "2d1ae00f0916556e66efb6c0ef4d81dff6596ebf664e6acc7976cf1e40f67e52",
+          "verdict": "not_proven",
+          "failure_class": "unsupported_construct",
+          "verifier_launched": false,
+          "ordinary": {},
+          "smoke": {},
+          "nonvalid": [],
+          "report_refs": 1,
+          "adapter_log_refs": 1,
+          "artifact_set_sha256": "297afbd2c30ac254314670e4a3cc83e37473ba0b4609c79370146230b0e42d00"
+        }
+      ],
+      "report_references": 16,
+      "adapter_log_references": 6,
+      "unique_artifact_files": 22,
+      "artifact_references_sha256": "0b9cd41a5224b6cdbc716abe3e0e56dc6bdfb98b3e8351c7828f2fc6e11bedd5",
+      "declared_absolute_file_pin_references": 6416,
+      "unique_declared_pin_files": 718,
+      "declared_pin_table_sha256": "fcda4d6b083516e3c5446dfc965ac6df8c897dd013f3302017560d039fc36e85",
+      "certificate_self_hashes": 6,
+      "artifact_sha256": {
+        "source-manifest.json": "0775d555e9060ec798d0a37cc9427fb48887ff93c6f7dd0e8d6eaa3bd9af3390",
+        "lane.json": "b07737fefde697d6c26e0bed54ac31054a9b3836ca2abe2e730234accd89c41b",
+        "resources.json": "c0e75b0062d31fd944f997fe5562c9a37abb1e57aa91e6234e64859563bdb478",
+        "run.sh": "d79601a61bf9e03aedb1934da432ea032e5bbfe0b393ca4ce23a1d86c5f67e9d",
+        "launcher.log": "64c975c197a780e22c93e6f4e10645ffabc6b6fc9d2cb3966b84663d53011965",
+        "source-after.json": "485db9911a3b36168d40f11135d17b4dda5c4fd3cb3f49cf03d310bba6440164",
+        "junit.xml": "2bbed7a1d78648946da8985858cbd361f9b65c60f6e4c6c05c01bb2f05ced199",
+        "preflight.txt": "28068b02eab1cef719e3efa3ff2ddd1446917ef036a7f28a1fd7f006056dd217",
+        "finished-at.txt": "1a45dfe623b996812d57894df3768d14e3906ac387fa3332719c2e36e09a58ba",
+        "source-commit.txt": "07fb51dc16b49cc97908444de44ed47eec5b035a77350e869ea4702d78ae41d3",
+        "report.jsonl": "005e9a4059a09ece7c806cb9b3662c71329cc70fc3be18b250fb79f8c2b28cbc",
+        "environment.txt": "e87eec2282726e9342770695b38bc3fe9c5e195b14df9dcf8dc4cbb5a444c195",
+        "retention.json": "9477bc9ae66e6a4f2b603eff8dcf0ff537b059da47479690319612104b8176ef",
+        "tests.json": "6dd301dbe1e8c0ae9b6fe839f27cc883d7b1983d0387fcfc181f881a0fdb0fd0",
+        "execute.py": "70bce53291ad341623ffbc7c620ce7f36d2ebf8d45108a3bd7295066ab2494a8",
+        "exit-code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "selection.json": "673de3cbf4d4fabc8f93a2d4c2cacfd67d50f39b36eee300a1f82525b232c462",
+        "pytest.log": "9e07d26a289af9a4858cc699f10ba09a6cc5e29475b9184477a8bc95652025a5"
+      },
+      "output_bytes": 32128172,
+      "errors": []
+    },
+    {
+      "node": 1,
+      "directory": "/data/yanruj/EvolveSWDB_runs/probata-focused-parser-owner-20261015-1156-node1",
+      "lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "command": [
+          "timeout",
+          "7000",
+          "bash",
+          "/data/yanruj/EvolveSWDB_runs/probata-focused-parser-owner-20261015-1156-node1/run.sh"
+        ],
+        "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+        "ended_utc": "2026-10-15T16:10:55Z",
+        "exit_code": 0,
+        "host": "mbit10",
+        "job": "probata-focused-parser-owner-20261015-node1",
+        "lease_generation": 599,
+        "lease_name": "mbit10-evaluation-node1",
+        "load1_at_start": 0,
+        "load1_max": 32,
+        "node": 1,
+        "numa_memory_policy": "bind:1",
+        "numactl": "--cpunodebind=1 --membind=1",
+        "preregistration_sha256": null,
+        "started_utc": "2026-10-15T15:55:56Z"
+      },
+      "call_counts": {
+        "passed": 20
+      },
+      "sessionfinish": [
+        {
+          "exitstatus": 0,
+          "$report_type": "SessionFinish"
+        }
+      ],
+      "resources": {
+        "exit_code": 0,
+        "peak_rss_bytes": 708300800,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 898.6373149370775,
+        "cpu_seconds": 928.011211
+      },
+      "source_after": {
+        "commit": "d3a5dd4813ec0d6bbd9ee35f2feb45392c9725f3",
+        "tracked_changes": "",
+        "source_unchanged": true
+      },
+      "runtime_source_pins": 196,
+      "source_manifest_sha256": "0775d555e9060ec798d0a37cc9427fb48887ff93c6f7dd0e8d6eaa3bd9af3390",
+      "source_pins_match_git_and_current": true,
+      "records": [
+        {
+          "id": "proof.contract.fixture_vector_owner_data_safe.20261015t155611z.4d61bb09",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-focused-parser-owner-20261015-1156-node1/pytest/test_a_current_owner_data_valu0/records/proofs/proof.contract.fixture_vector_owner_data_safe.20261015t155611z.4d61bb09.yaml",
+          "sha256": "6acb9dc5fbe0c651fb18af6d823e8a322d5d28149bf042f48b1451343cfdf15f",
+          "verdict": "proven",
+          "failure_class": null,
+          "verifier_launched": true,
+          "ordinary": {
+            "valid": 105
+          },
+          "smoke": {
+            "valid": 11
+          },
+          "nonvalid": [],
+          "report_refs": 11,
+          "adapter_log_refs": 1,
+          "artifact_set_sha256": "70f071328175ef0cdcd6136c48e6cfb78d089e374597768dfad36dac94e8949a"
+        },
+        {
+          "id": "proof.contract.fixture_bounded_std_header.20261015t160259z.896591be",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-focused-parser-owner-20261015-1156-node1/pytest/test_public_consumers_refuse_m2/records/proofs/proof.contract.fixture_bounded_std_header.20261015t160259z.896591be.yaml",
+          "sha256": "cc5cb83c1362d7938afe9e4cc2579784928871a9e3e9c4f2772b21973fe8fd9b",
+          "verdict": "not_proven",
+          "failure_class": "unsupported_construct",
+          "verifier_launched": false,
+          "ordinary": {},
+          "smoke": {},
+          "nonvalid": [],
+          "report_refs": 1,
+          "adapter_log_refs": 1,
+          "artifact_set_sha256": "e09c44dbbac9bf15d3faa0ed0bf827c4ead318c5413e6075a338e21b21d0fc23"
+        },
+        {
+          "id": "proof.contract.fixture_vector_owner_data_safe.20261015t155836z.5c7b41bc",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-focused-parser-owner-20261015-1156-node1/pytest/test_a_fresh_data_value_read_c0/records/proofs/proof.contract.fixture_vector_owner_data_safe.20261015t155836z.5c7b41bc.yaml",
+          "sha256": "ac65e6ff89e6a7dc4f0c461981cb88685c85c0515c26aa3e981d085a034c19e5",
+          "verdict": "not_proven",
+          "failure_class": "timeout",
+          "verifier_launched": true,
+          "ordinary": {
+            "valid": 111,
+            "timeout": 1
+          },
+          "smoke": {
+            "valid": 11
+          },
+          "nonvalid": [
+            {
+              "goal": "typed_real_swdb_vector_owner_data_safe_assert_alias_live_after",
+              "status": "timeout",
+              "smoke": false
+            }
+          ],
+          "report_refs": 12,
+          "adapter_log_refs": 1,
+          "artifact_set_sha256": "e2fd26ec3d4fce3946fa2888082b8de0f67d799dd8d05abe617e10ab1ecf2af2"
+        },
+        {
+          "id": "proof.contract.fixture_bounded_std_header.20261015t160316z.47c68519",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-focused-parser-owner-20261015-1156-node1/pytest/test_public_consumers_refuse_m3/records/proofs/proof.contract.fixture_bounded_std_header.20261015t160316z.47c68519.yaml",
+          "sha256": "6f6618bb51ac4f365f7685d1cb245fd2a7220d55c98dfd79ae497ddb7f276799",
+          "verdict": "not_proven",
+          "failure_class": "unsupported_construct",
+          "verifier_launched": false,
+          "ordinary": {},
+          "smoke": {},
+          "nonvalid": [],
+          "report_refs": 2,
+          "adapter_log_refs": 1,
+          "artifact_set_sha256": "b8e5626ee82c503a5ba5174751a2d1f7b500a9d17eef1ff01153bd68b77c92a6"
+        },
+        {
+          "id": "proof.contract.fixture_bounded_std_header.20261015t160242z.ee876258",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-focused-parser-owner-20261015-1156-node1/pytest/test_public_consumers_refuse_m1/records/proofs/proof.contract.fixture_bounded_std_header.20261015t160242z.ee876258.yaml",
+          "sha256": "804e83ebbab0a11cb82ce8613f2f00807682102970055779263fb22fc0d48533",
+          "verdict": "not_proven",
+          "failure_class": "unsupported_construct",
+          "verifier_launched": false,
+          "ordinary": {},
+          "smoke": {},
+          "nonvalid": [],
+          "report_refs": 1,
+          "adapter_log_refs": 1,
+          "artifact_set_sha256": "6faf67ee3682f80a8153a4afcf59f1b807d3ce80d4e1aeef82547b8085dd9b35"
+        },
+        {
+          "id": "proof.contract.fixture_copy_empty.20261015t160706z.f3ef23b7",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-focused-parser-owner-20261015-1156-node1/pytest/qualified-copy-callers0/records/proofs/proof.contract.fixture_copy_empty.20261015t160706z.f3ef23b7.yaml",
+          "sha256": "8ae95ba46244edb29f0f03e0621299c1d79ab612366ef8abc89488348feb74fa",
+          "verdict": "proven",
+          "failure_class": null,
+          "verifier_launched": true,
+          "ordinary": {
+            "valid": 13
+          },
+          "smoke": {
+            "valid": 2
+          },
+          "nonvalid": [],
+          "report_refs": 9,
+          "adapter_log_refs": 1,
+          "artifact_set_sha256": "355a7f6efad9b3b245ac8258801136e6a27e085d5f104a0ae8231813d3797c42"
+        },
+        {
+          "id": "proof.contract.fixture_copy_capacity.20261015t160952z.45c200c9",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-focused-parser-owner-20261015-1156-node1/pytest/qualified-copy-callers0/records/proofs/proof.contract.fixture_copy_capacity.20261015t160952z.45c200c9.yaml",
+          "sha256": "97bf6063e7dbcc1a4491a9d23c1bba0fec14e7833786b78d4168d68ee7448fb4",
+          "verdict": "not_proven",
+          "failure_class": "vacuous_pass",
+          "verifier_launched": true,
+          "ordinary": {
+            "valid": 14,
+            "timeout": 1
+          },
+          "smoke": {
+            "valid": 1,
+            "failed_smoke": 2
+          },
+          "nonvalid": [
+            {
+              "goal": "typed_real_capacity_wp_smoke_dead_code_s25",
+              "status": "failed_smoke",
+              "smoke": true
+            },
+            {
+              "goal": "typed_real_std_copy_int_wp_smoke_dead_call_s24",
+              "status": "failed_smoke",
+              "smoke": true
+            },
+            {
+              "goal": "typed_real_capacity_assert_swdb_window_copy_2",
+              "status": "timeout",
+              "smoke": false
+            }
+          ],
+          "report_refs": 10,
+          "adapter_log_refs": 1,
+          "artifact_set_sha256": "b019ff9ac443b6fb543891392efa3e509b6bb62e32f787027d4821d9cbaa20f5"
+        },
+        {
+          "id": "proof.contract.fixture_copy_uninitialized.20261015t160814z.c025a0c1",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-focused-parser-owner-20261015-1156-node1/pytest/qualified-copy-callers0/records/proofs/proof.contract.fixture_copy_uninitialized.20261015t160814z.c025a0c1.yaml",
+          "sha256": "86dd055681df05c13c2b045b76c79eb2da03656109f0ce6f906c7689d594eb5e",
+          "verdict": "not_proven",
+          "failure_class": "timeout",
+          "verifier_launched": true,
+          "ordinary": {
+            "valid": 13,
+            "timeout": 1
+          },
+          "smoke": {
+            "valid": 2
+          },
+          "nonvalid": [
+            {
+              "goal": "typed_real_uninitialized_call_std_copy_int_requires_4",
+              "status": "timeout",
+              "smoke": false
+            }
+          ],
+          "report_refs": 10,
+          "adapter_log_refs": 1,
+          "artifact_set_sha256": "ce29269c3f32fd79cd38b5cfd369a923c3f1b7144ff1344c8f064dba457bacfd"
+        },
+        {
+          "id": "proof.contract.fixture_copy_safe.20261015t160549z.a223dab7",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-focused-parser-owner-20261015-1156-node1/pytest/qualified-copy-callers0/records/proofs/proof.contract.fixture_copy_safe.20261015t160549z.a223dab7.yaml",
+          "sha256": "c4c39f91d617414fe1ea0fecbf81ead4f1182a614b3688d199dfed6124269cb7",
+          "verdict": "proven",
+          "failure_class": null,
+          "verifier_launched": true,
+          "ordinary": {
+            "valid": 15
+          },
+          "smoke": {
+            "valid": 2
+          },
+          "nonvalid": [],
+          "report_refs": 9,
+          "adapter_log_refs": 1,
+          "artifact_set_sha256": "2821fff73496ed279e9c30f5f4f3e9c7253c32482f11fb01a8d9c170362c6c78"
+        },
+        {
+          "id": "proof.model.std_copy_int.20261015t160438z.2a7fc460",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-focused-parser-owner-20261015-1156-node1/pytest/qualified-copy-callers0/records/proofs/proof.model.std_copy_int.20261015t160438z.2a7fc460.yaml",
+          "sha256": "2e36788f97161d16a1a28f531efea6f16b97598bbfcf504fa6172327d803f8e9",
+          "verdict": "proven",
+          "failure_class": null,
+          "verifier_launched": true,
+          "ordinary": {
+            "valid": 36
+          },
+          "smoke": {
+            "valid": 7
+          },
+          "nonvalid": [],
+          "report_refs": 8,
+          "adapter_log_refs": 1,
+          "artifact_set_sha256": "0bed3b290459043531237a1ac216c52675c8ed8eff5939395d8b3eee59534349"
+        },
+        {
+          "id": "proof.contract.fixture_bounded_std_header.20261015t160225z.7df48470",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-focused-parser-owner-20261015-1156-node1/pytest/test_public_consumers_refuse_m0/records/proofs/proof.contract.fixture_bounded_std_header.20261015t160225z.7df48470.yaml",
+          "sha256": "e2da2d462db9f4b8ba7dca0d3063e0f50b5b54252ab95c65b96b04bc2612df39",
+          "verdict": "not_proven",
+          "failure_class": "unsupported_construct",
+          "verifier_launched": false,
+          "ordinary": {},
+          "smoke": {},
+          "nonvalid": [],
+          "report_refs": 1,
+          "adapter_log_refs": 1,
+          "artifact_set_sha256": "6a2f6916d4ece0767232e18d11a8abd68f5e81600a39d3a1e9c9a5d6eb252909"
+        }
+      ],
+      "report_references": 74,
+      "adapter_log_references": 11,
+      "unique_artifact_files": 85,
+      "artifact_references_sha256": "b5c6868ebb4092a0e2d7c3ea292f7a25cb02128fb0c15d22ec6be1d4d010bccc",
+      "declared_absolute_file_pin_references": 13530,
+      "unique_declared_pin_files": 720,
+      "declared_pin_table_sha256": "2d0b11da587ed7c928548c590bbb5f3ce274537a45fd3fbca8ab029633d6c4cb",
+      "certificate_self_hashes": 10,
+      "artifact_sha256": {
+        "source-manifest.json": "0775d555e9060ec798d0a37cc9427fb48887ff93c6f7dd0e8d6eaa3bd9af3390",
+        "lane.json": "048735082ad29362b843029ba8ef86e8a99ca4bb4d4bd5c1ed201cf1574ab4b2",
+        "resources.json": "dcba2a98c453ef70000625bd3d8693e295a77504df5b3d485c0cc3c1aefdcf11",
+        "run.sh": "cfa21c7fb96b9e319e30fabce99589b96e6c12f07a3da24939f34edb34bedcd8",
+        "launcher.log": "72f533000277074443bf4e323a04bce1fdb884d3183a93595cc4ff23417e161b",
+        "source-after.json": "485db9911a3b36168d40f11135d17b4dda5c4fd3cb3f49cf03d310bba6440164",
+        "junit.xml": "0bb4cd3e073a26e651a97ab5bd8e725de7d40edb1c6d95dc9365dac87cad0c69",
+        "preflight.txt": "28068b02eab1cef719e3efa3ff2ddd1446917ef036a7f28a1fd7f006056dd217",
+        "finished-at.txt": "0d2e30db25e3c2172ce3090b6fc13da87ddde4e0c5eec0c941f3ccb67a74940d",
+        "source-commit.txt": "07fb51dc16b49cc97908444de44ed47eec5b035a77350e869ea4702d78ae41d3",
+        "report.jsonl": "44bb6d83f6abaf758393c2074421fbde1bd5c30742f0b8039274a3afd8600598",
+        "environment.txt": "e87eec2282726e9342770695b38bc3fe9c5e195b14df9dcf8dc4cbb5a444c195",
+        "retention.json": "5903920cda5ac12f0b3067c5246dcae9145c0be392b0470389ef4bd16591f89a",
+        "tests.json": "19858e12844e529245f86a1b4be0d403106581b62174d8d5de42d036e6a94cc5",
+        "execute.py": "70bce53291ad341623ffbc7c620ce7f36d2ebf8d45108a3bd7295066ab2494a8",
+        "exit-code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "selection.json": "5ea2a2c26faa130c7bd311662e44f4f604c10d3fa6baf83324d85b54c3e2430f",
+        "pytest.log": "5070f188927df81bd2385108a65ab77830a25369391f08d5dffc3a4477d88422"
+      },
+      "output_bytes": 9516810,
+      "errors": []
+    }
+  ],
+  "unique_files_hashed": 1081,
+  "checkout_commit": "d3a5dd4813ec0d6bbd9ee35f2feb45392c9725f3",
+  "checkout_tracked_changes": "",
+  "boundary": "Focused fixture acceptance at frozen d3a only. Node0 uses compiler/explicit stand-ins; node1 includes actual owner and qualified-copy proofs plus intended negative and prelaunch controls. Passing tests do not mean every subject proved. Later entry-hint/assignment source checkpoints retain separate identities; no method3/whole-ticket acceptance.",
+  "remote_audit_file": "/data/yanruj/EvolveSWDB_runs/probata-focused-parser-owner-final-audit-20261015.json",
+  "remote_audit_sha256": "187d0c678b23b2fa12447037b657de9aabf238f407329817bf8603cb0cb6167a",
+  "final_host_snapshot": {
+    "time": "2026-10-15 12:14:20 ET",
+    "node0": {
+      "generation": 561,
+      "state": "released"
+    },
+    "node1": {
+      "generation": 599,
+      "state": "released"
+    },
+    "legacy": {
+      "generation": 77,
+      "state": "released"
+    },
+    "load": [
+      0.15,
+      0.94,
+      1.25
+    ],
+    "free_gib": {
+      "data1": 21,
+      "data": 95
+    }
+  },
+  "reference_counting": "report_references excludes adapter_log_references; count both for the complete evidence-reference total."
+}

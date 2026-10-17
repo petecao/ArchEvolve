@@ -1,0 +1,1516 @@
+{
+  "format": "swdb.reported-input-acceptance.v1",
+  "created": "2026-10-06",
+  "tool": {
+    "estimator_python_bundle_sha256": "8ee09724bd7941b85ef18a83c08022dfb879ea9975656675bc157ad41831ee7b",
+    "feature_report_module_sha256": "540b2ce4acfd44c559a674f7e2cca6fdac0c33d1e53f0cd3336eb8ddec6f3b39"
+  },
+  "scope": "Local public CLI imports against copied immutable mbit10 BFS a2 counts; no new performance evaluation",
+  "native_source_record": {
+    "id": "bfs.kron-g16.t4.characterization.a2",
+    "identity_sha256": "063085ba4121fbbfff6734131fd6d33e1186fb22e80cac10a0895f534c19f813",
+    "source_bytes_sha256": "0a19aff6b3dc0716c09ec474a8da078ef06079c66fe0dce227c36a4e40049542",
+    "native_facts_sha256": "fb818880050c9d5a291efd559fa0d6fc7cb2756cc41fcca9773654c613abfdd1"
+  },
+  "validation": {
+    "exit_code": 0,
+    "output": "OK: 579 record(s) valid"
+  },
+  "commands": [
+    [
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+      "-m",
+      "swdb",
+      "import-feature-report",
+      "--records",
+      "/private/tmp/lanl-ticket08-acceptance-20261006-a2/records",
+      "--characterization",
+      "bfs.kron-g16.t4.characterization.a2",
+      "--report",
+      "/Users/yanrujhou/.codex/worktrees/lanl-ticket08/ArchEvolve/examples/received/bfs-sparse.features.v1.2.yaml",
+      "--methodology",
+      "/Users/yanrujhou/.codex/worktrees/lanl-ticket08/ArchEvolve/examples/received/peter-measurement-methods.v1.2.yaml",
+      "--methodology-text",
+      "/Users/yanrujhou/.codex/worktrees/lanl-ticket08/ArchEvolve/examples/received/peter-measurement-methodology.v1.2.txt",
+      "--manifest",
+      "/Users/yanrujhou/.codex/worktrees/lanl-ticket08/ArchEvolve/examples/received/manifest.json",
+      "--array-alias",
+      "VertexOffsets=g.out_index_",
+      "--id",
+      "bfs.a2.reported.sparse",
+      "--format",
+      "json"
+    ],
+    [
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+      "-m",
+      "swdb",
+      "import-feature-report",
+      "--records",
+      "/private/tmp/lanl-ticket08-acceptance-20261006-a2/records",
+      "--characterization",
+      "bfs.kron-g16.t4.characterization.a2",
+      "--report",
+      "/Users/yanrujhou/.codex/worktrees/lanl-ticket08/ArchEvolve/examples/received/bfs-fully-connected.features.v1.2.yaml",
+      "--methodology",
+      "/Users/yanrujhou/.codex/worktrees/lanl-ticket08/ArchEvolve/examples/received/peter-measurement-methods.v1.2.yaml",
+      "--methodology-text",
+      "/Users/yanrujhou/.codex/worktrees/lanl-ticket08/ArchEvolve/examples/received/peter-measurement-methodology.v1.2.txt",
+      "--manifest",
+      "/Users/yanrujhou/.codex/worktrees/lanl-ticket08/ArchEvolve/examples/received/manifest.json",
+      "--array-alias",
+      "VertexOffsets=g.out_index_",
+      "--id",
+      "bfs.a2.reported.dense",
+      "--format",
+      "json"
+    ],
+    [
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+      "-m",
+      "swdb",
+      "validate",
+      "--records",
+      "/private/tmp/lanl-ticket08-acceptance-20261006-a2/records"
+    ]
+  ],
+  "inputs": [
+    {
+      "report": "bfs-sparse.features.v1.2.yaml",
+      "output_id": "bfs.a2.reported.sparse",
+      "identity_sha256": "99bb05cf307f530a0d6751909ea3007f3be7bdd4f9f97a63a177c82ab40ff1bc",
+      "source_report": {
+        "path": "/Users/yanrujhou/.codex/worktrees/lanl-ticket08/ArchEvolve/examples/received/bfs-sparse.features.v1.2.yaml",
+        "sha256": "379fd11addd1dc681bc39a40867b7b4c6e5baf7517cac03362ab00d01ba267a3",
+        "filename_version": "1.2",
+        "schema_version": "1.1",
+        "sanitized_sha256": "5cf7b09f98fedc20ac09107aaa7440714d99f12c32370c58aeeb0dbf1d1155a9",
+        "sanitizer_version": "swdb.feature-report-sanitizer.v1"
+      },
+      "base_characterization": {
+        "id": "bfs.kron-g16.t4.characterization.a2",
+        "sha256": "0a758ce5ac2297bdf03fbf6492f5fd56c87530fc4d580bf0a76eca49eb828e18"
+      },
+      "native_facts_sha256": "fb818880050c9d5a291efd559fa0d6fc7cb2756cc41fcca9773654c613abfdd1",
+      "native_facts_unchanged": true,
+      "original_bytes_unchanged": true,
+      "native_trials_preserved": 5,
+      "binding_preserved": true,
+      "execution_receipt_preserved": true,
+      "reported_namespace_sha256": "22b1060ff814c217d6efb38d4fbb4b00fed5c1b6df64d24219c8719818496f68",
+      "reported_field_names": [
+        "schema_version",
+        "kernel",
+        "loop_structure",
+        "indirect_access_distances",
+        "profiling_provenance",
+        "frontier_evolution_profile",
+        "data_structures",
+        "operations",
+        "memory_streams",
+        "working_set"
+      ],
+      "conflicts": [
+        {
+          "kind": "version_mismatch",
+          "path": "/schema_version",
+          "reported": "1.1",
+          "other": "1.2",
+          "reason": "Report content and filename declare different versions; neither is rewritten."
+        },
+        {
+          "kind": "source_scope_mismatch",
+          "path": "/kernel",
+          "reason": "Reported function/source/input/host scope is not bound to these native counts. A TDStep report is not automatically the complete counted call.",
+          "reported": {
+            "function": "TDStep",
+            "source_revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+            "source_file": "benchmarks/gapbs/src/bfs.cc",
+            "graph": "Kronecker scale 18 (|V|=262,143, |E|=7,610,898 directed)",
+            "command_line": "OMP_NUM_THREADS=16 ./bfs -g 18 -k 16 -n 5",
+            "compiler_toolchain": "g++ (Ubuntu 11.4.0) -std=c++11 -O3 -fopenmp",
+            "host": "16-core Intel Xeon Gold 6226R @ 2.90GHz, 125 GB RAM"
+          },
+          "swdb": {
+            "function": null,
+            "source_revision": "2972aeb2703165bafd921222f4ed7196f542d3a8",
+            "input": "kron-g16-k16",
+            "roi": "gapbs.trial_lambda.v1",
+            "threads": 4,
+            "source_sha256": "7c32c3c8dc43bf7be417fc5c530b4578bfe3697d8eb47a161cdb142487823f73",
+            "host": {
+              "machine": "mbit10",
+              "architecture": "x86_64",
+              "system": "Linux-6.8.0-136-generic-x86_64-with-glibc2.39"
+            }
+          },
+          "comparison_scope": "unresolved_source_and_access_binding"
+        },
+        {
+          "kind": "array_unmapped",
+          "path": "/data_structures/queue.shared",
+          "reason": "No explicit array alias was supplied; names and numeric statistics are retained without matching a native access site.",
+          "reported": "queue.shared",
+          "swdb": null
+        },
+        {
+          "kind": "element_size_mismatch",
+          "path": "/data_structures/VertexOffsets/element_size_bytes",
+          "reason": "Explicitly aliased reported/catalog widths differ. Source revisions and concrete access bindings remain unresolved; neither width is repaired.",
+          "reported": {
+            "value": 4,
+            "unit": "bytes",
+            "basis": "reported"
+          },
+          "swdb": {
+            "value": 8,
+            "unit": "bytes",
+            "basis": "code_reading"
+          },
+          "comparison_scope": "unresolved_source_and_access_binding"
+        },
+        {
+          "kind": "array_unmapped",
+          "path": "/data_structures/g.out_neighbors_",
+          "reason": "No explicit array alias was supplied; names and numeric statistics are retained without matching a native access site.",
+          "reported": "g.out_neighbors_",
+          "swdb": null
+        },
+        {
+          "kind": "array_unmapped",
+          "path": "/data_structures/parent",
+          "reason": "No explicit array alias was supplied; names and numeric statistics are retained without matching a native access site.",
+          "reported": "parent",
+          "swdb": null
+        },
+        {
+          "kind": "array_unmapped",
+          "path": "/data_structures/lqueue",
+          "reason": "No explicit array alias was supplied; names and numeric statistics are retained without matching a native access site.",
+          "reported": "lqueue",
+          "swdb": null
+        },
+        {
+          "kind": "unit_ambiguity",
+          "path": "/working_set/scale_examples/small_scale_g18/parent_footprint_mb",
+          "reason": "KB/MB labels do not establish decimal versus binary units. Logical capacity is not active working set; no unit is selected or value converted.",
+          "reported": {
+            "value": 1.05,
+            "unit": "MB",
+            "basis": "reported"
+          },
+          "expected_logical_capacity_bytes": 1048572,
+          "reported_unit_claim": "binary",
+          "resolved_unit": null
+        },
+        {
+          "kind": "unit_ambiguity",
+          "path": "/working_set/scale_examples/small_scale_g18/offsets_footprint_mb",
+          "reason": "KB/MB labels do not establish decimal versus binary units. Logical capacity is not active working set; no unit is selected or value converted.",
+          "reported": {
+            "value": 1.05,
+            "unit": "MB",
+            "basis": "reported"
+          },
+          "expected_logical_capacity_bytes": 1048576,
+          "reported_unit_claim": "binary",
+          "resolved_unit": null
+        },
+        {
+          "kind": "unit_ambiguity",
+          "path": "/working_set/scale_examples/small_scale_g18/neighbors_footprint_mb",
+          "reason": "KB/MB labels do not establish decimal versus binary units. Logical capacity is not active working set; no unit is selected or value converted.",
+          "reported": {
+            "value": 30.44,
+            "unit": "MB",
+            "basis": "reported"
+          },
+          "expected_logical_capacity_bytes": 30443592,
+          "reported_unit_claim": "binary",
+          "resolved_unit": null
+        },
+        {
+          "kind": "unit_ambiguity",
+          "path": "/working_set/scale_examples/large_scale_g24/parent_footprint_mb",
+          "reason": "KB/MB labels do not establish decimal versus binary units. Logical capacity is not active working set; no unit is selected or value converted.",
+          "reported": {
+            "value": 67.11,
+            "unit": "MB",
+            "basis": "reported"
+          },
+          "expected_logical_capacity_bytes": 67108848,
+          "reported_unit_claim": "binary",
+          "resolved_unit": null
+        },
+        {
+          "kind": "unit_ambiguity",
+          "path": "/working_set/scale_examples/large_scale_g24/offsets_footprint_mb",
+          "reason": "KB/MB labels do not establish decimal versus binary units. Logical capacity is not active working set; no unit is selected or value converted.",
+          "reported": {
+            "value": 67.11,
+            "unit": "MB",
+            "basis": "reported"
+          },
+          "expected_logical_capacity_bytes": 67108852,
+          "reported_unit_claim": "binary",
+          "resolved_unit": null
+        },
+        {
+          "kind": "unit_ambiguity",
+          "path": "/working_set/scale_examples/large_scale_g24/neighbors_footprint_mb",
+          "reason": "KB/MB labels do not establish decimal versus binary units. Logical capacity is not active working set; no unit is selected or value converted.",
+          "reported": {
+            "value": 2083.01,
+            "unit": "MB",
+            "basis": "reported"
+          },
+          "expected_logical_capacity_bytes": 2083013680,
+          "reported_unit_claim": "binary",
+          "resolved_unit": null
+        },
+        {
+          "kind": "methodology_internal_conflict",
+          "path": "/methodology_text/lines/26",
+          "reason": "The methodology table declares an offset width different from its structured/type declaration. Both statements remain reported.",
+          "reported": {
+            "element_size_bytes": [
+              8,
+              8,
+              8,
+              8
+            ],
+            "basis": "reported"
+          },
+          "structured": {
+            "element_size_bytes": 4,
+            "basis": "reported"
+          }
+        },
+        {
+          "kind": "methodology_internal_conflict",
+          "path": "/methodology_text/lines/54",
+          "reason": "The methodology table declares an offset width different from its structured/type declaration. Both statements remain reported.",
+          "reported": {
+            "element_size_bytes": [
+              8
+            ],
+            "basis": "reported"
+          },
+          "structured": {
+            "element_size_bytes": 4,
+            "basis": "reported"
+          }
+        },
+        {
+          "kind": "manifest_scope_conflict",
+          "path": "/manifest/handling_notes/1",
+          "reason": "Historical handling note conflicts with the selected updated report; it is retained but not applied as a repair.",
+          "reported": "Neither file supplies the exact profiled source revision or raw profiler output."
+        },
+        {
+          "kind": "manifest_scope_conflict",
+          "path": "/manifest/handling_notes/2",
+          "reason": "Historical handling note conflicts with the selected updated report; it is retained but not applied as a repair.",
+          "reported": "Both report 64-bit VertexOffsets; the locally pinned DX100 source defines SGOffset as int32_t. Do not silently reconcile them."
+        }
+      ],
+      "redactions": [
+        {
+          "path": "/hardware_performance_profile",
+          "reason": "Timing/PMU/performance outcomes are withheld from estimation inputs"
+        }
+      ],
+      "methodology": {
+        "path": "/Users/yanrujhou/.codex/worktrees/lanl-ticket08/ArchEvolve/examples/received/peter-measurement-methods.v1.2.yaml",
+        "sha256": "c1dc5b86c68c5bd0c16eab522b57690ba3131af70d3f5ed78c6f909fe0ac2d9a",
+        "sanitized_sha256": "8c2a89ca7b87d477aa91c8e42f33dfa5eff22969d5f83fd30f9c02a7b6f866ad",
+        "sanitizer_version": "swdb.feature-report-sanitizer.v1",
+        "redactions": [],
+        "basis": "reported"
+      },
+      "methodology_text": {
+        "path": "/Users/yanrujhou/.codex/worktrees/lanl-ticket08/ArchEvolve/examples/received/peter-measurement-methodology.v1.2.txt",
+        "sha256": "0f8d421aed3aa68e85e258c8f7eb844a6d8f5c5f98d4a1d6f39f9e4e1e3ba385",
+        "sanitized_sha256": "7323282e49bf8dce416c8e5bed71cf085c008a9b0bb10945c6e7cdbb82b192c4",
+        "sanitizer_version": "swdb.feature-report-sanitizer.v1",
+        "basis": "reported",
+        "redactions": [
+          {
+            "path": "/lines/1",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/2",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/3",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/4",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/5",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/6",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/7",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/8",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/9",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/10",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/11",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/12",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/13",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/14",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/15",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/16",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/17",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/18",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/19",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/20",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/21",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/22",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/23",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/24",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/25",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/27",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/28",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/29",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/30",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/31",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/32",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/33",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/34",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/35",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/36",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/37",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/38",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/39",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/40",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/41",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/42",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/43",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/44",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/45",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/46",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/47",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/48",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/49",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/50",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/51",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/52",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/53",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/55",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/56",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/57",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/58",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/59",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/60",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/61",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/62",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/63",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/64",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/65",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/66",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/67",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/68",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/69",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/70",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/71",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/72",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/73",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/74",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/75",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/76",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/77",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/78",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/79",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/80",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/81",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/82",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/83",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/84",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/85",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/86",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/87",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/88",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/89",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/90",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/91",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/92",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/93",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/94",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/95",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/96",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/97",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/98",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/99",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/100",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/101",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/102",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/103",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/104",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/105",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/106",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/107",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/108",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/109",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/110",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/111",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/112",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/113",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          }
+        ]
+      },
+      "manifest": {
+        "path": "/Users/yanrujhou/.codex/worktrees/lanl-ticket08/ArchEvolve/examples/received/manifest.json",
+        "sha256": "cfb430482956276ca652d04308f8a2b3c21bb7434a35b0d99864eb66546c418b",
+        "sanitized_sha256": "682f0d86f117a0cf12fa76e96fd8e61c56a253efadd0da6509f0d474f048f73d",
+        "sanitizer_version": "swdb.feature-report-sanitizer.v1",
+        "redactions": [],
+        "basis": "reported"
+      },
+      "duplicate_id_refused_without_change": true
+    },
+    {
+      "report": "bfs-fully-connected.features.v1.2.yaml",
+      "output_id": "bfs.a2.reported.dense",
+      "identity_sha256": "f5b6b07045fade478fca581d5922fdcdea773fd2bff8b0b8c1aa9b0a54e59e03",
+      "source_report": {
+        "path": "/Users/yanrujhou/.codex/worktrees/lanl-ticket08/ArchEvolve/examples/received/bfs-fully-connected.features.v1.2.yaml",
+        "sha256": "1feea79b029f21b12b763e7276b9925fa2ed295545efa4b6fe99605d9e08d750",
+        "filename_version": "1.2",
+        "schema_version": "1.1",
+        "sanitized_sha256": "44e4dc2c491ef54ef2a9bf8a11a199f543bbd2b965fa1492a52cd284924502b2",
+        "sanitizer_version": "swdb.feature-report-sanitizer.v1"
+      },
+      "base_characterization": {
+        "id": "bfs.kron-g16.t4.characterization.a2",
+        "sha256": "0a758ce5ac2297bdf03fbf6492f5fd56c87530fc4d580bf0a76eca49eb828e18"
+      },
+      "native_facts_sha256": "fb818880050c9d5a291efd559fa0d6fc7cb2756cc41fcca9773654c613abfdd1",
+      "native_facts_unchanged": true,
+      "original_bytes_unchanged": true,
+      "native_trials_preserved": 5,
+      "binding_preserved": true,
+      "execution_receipt_preserved": true,
+      "reported_namespace_sha256": "f3d45b6683b8c4cd489e48707973426f7aa63fc5226ee32ef1cabfc4fd77268b",
+      "reported_field_names": [
+        "schema_version",
+        "kernel",
+        "topology_characteristics",
+        "loop_structure",
+        "indirect_access_distances",
+        "data_structures",
+        "operations",
+        "memory_streams",
+        "working_set"
+      ],
+      "conflicts": [
+        {
+          "kind": "version_mismatch",
+          "path": "/schema_version",
+          "reported": "1.1",
+          "other": "1.2",
+          "reason": "Report content and filename declare different versions; neither is rewritten."
+        },
+        {
+          "kind": "source_scope_mismatch",
+          "path": "/kernel",
+          "reason": "Reported function/source/input/host scope is not bound to these native counts. A TDStep report is not automatically the complete counted call.",
+          "reported": {
+            "function": "TDStep",
+            "source_revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+            "source_file": "benchmarks/gapbs/src/bfs.cc",
+            "graph": "fully_connected_graph (K_N, complete clique without self-loops)",
+            "command_line": null,
+            "compiler_toolchain": null,
+            "host": "Intel Xeon Gold 6226R (16 threads, 2.90 GHz)"
+          },
+          "swdb": {
+            "function": null,
+            "source_revision": "2972aeb2703165bafd921222f4ed7196f542d3a8",
+            "input": "kron-g16-k16",
+            "roi": "gapbs.trial_lambda.v1",
+            "threads": 4,
+            "source_sha256": "7c32c3c8dc43bf7be417fc5c530b4578bfe3697d8eb47a161cdb142487823f73",
+            "host": {
+              "machine": "mbit10",
+              "architecture": "x86_64",
+              "system": "Linux-6.8.0-136-generic-x86_64-with-glibc2.39"
+            }
+          },
+          "comparison_scope": "unresolved_source_and_access_binding"
+        },
+        {
+          "kind": "array_unmapped",
+          "path": "/data_structures/queue.shared",
+          "reason": "No explicit array alias was supplied; names and numeric statistics are retained without matching a native access site.",
+          "reported": "queue.shared",
+          "swdb": null
+        },
+        {
+          "kind": "element_size_mismatch",
+          "path": "/data_structures/VertexOffsets/element_size_bytes",
+          "reason": "Explicitly aliased reported/catalog widths differ. Source revisions and concrete access bindings remain unresolved; neither width is repaired.",
+          "reported": {
+            "value": 4,
+            "unit": "bytes",
+            "basis": "reported"
+          },
+          "swdb": {
+            "value": 8,
+            "unit": "bytes",
+            "basis": "code_reading"
+          },
+          "comparison_scope": "unresolved_source_and_access_binding"
+        },
+        {
+          "kind": "array_unmapped",
+          "path": "/data_structures/g.out_neighbors_",
+          "reason": "No explicit array alias was supplied; names and numeric statistics are retained without matching a native access site.",
+          "reported": "g.out_neighbors_",
+          "swdb": null
+        },
+        {
+          "kind": "array_unmapped",
+          "path": "/data_structures/parent",
+          "reason": "No explicit array alias was supplied; names and numeric statistics are retained without matching a native access site.",
+          "reported": "parent",
+          "swdb": null
+        },
+        {
+          "kind": "unit_ambiguity",
+          "path": "/working_set/scale_example_k25000/parent_footprint_kb",
+          "reason": "KB/MB labels do not establish decimal versus binary units. Logical capacity is not active working set; no unit is selected or value converted.",
+          "reported": {
+            "value": 97.66,
+            "unit": "KB",
+            "basis": "reported"
+          },
+          "expected_logical_capacity_bytes": 100000,
+          "reported_unit_claim": "binary",
+          "resolved_unit": null
+        },
+        {
+          "kind": "unit_ambiguity",
+          "path": "/working_set/scale_example_k25000/offsets_footprint_kb",
+          "reason": "KB/MB labels do not establish decimal versus binary units. Logical capacity is not active working set; no unit is selected or value converted.",
+          "reported": {
+            "value": 97.66,
+            "unit": "KB",
+            "basis": "reported"
+          },
+          "expected_logical_capacity_bytes": 100004,
+          "reported_unit_claim": "binary",
+          "resolved_unit": null
+        },
+        {
+          "kind": "unit_ambiguity",
+          "path": "/working_set/scale_example_k25000/neighbors_footprint_mb",
+          "reason": "KB/MB labels do not establish decimal versus binary units. Logical capacity is not active working set; no unit is selected or value converted.",
+          "reported": {
+            "value": 2384.09,
+            "unit": "MB",
+            "basis": "reported"
+          },
+          "expected_logical_capacity_bytes": 2499900000,
+          "reported_unit_claim": "binary",
+          "resolved_unit": null
+        },
+        {
+          "kind": "methodology_internal_conflict",
+          "path": "/methodology_text/lines/26",
+          "reason": "The methodology table declares an offset width different from its structured/type declaration. Both statements remain reported.",
+          "reported": {
+            "element_size_bytes": [
+              8,
+              8,
+              8,
+              8
+            ],
+            "basis": "reported"
+          },
+          "structured": {
+            "element_size_bytes": 4,
+            "basis": "reported"
+          }
+        },
+        {
+          "kind": "methodology_internal_conflict",
+          "path": "/methodology_text/lines/54",
+          "reason": "The methodology table declares an offset width different from its structured/type declaration. Both statements remain reported.",
+          "reported": {
+            "element_size_bytes": [
+              8
+            ],
+            "basis": "reported"
+          },
+          "structured": {
+            "element_size_bytes": 4,
+            "basis": "reported"
+          }
+        },
+        {
+          "kind": "manifest_scope_conflict",
+          "path": "/manifest/handling_notes/1",
+          "reason": "Historical handling note conflicts with the selected updated report; it is retained but not applied as a repair.",
+          "reported": "Neither file supplies the exact profiled source revision or raw profiler output."
+        },
+        {
+          "kind": "manifest_scope_conflict",
+          "path": "/manifest/handling_notes/2",
+          "reason": "Historical handling note conflicts with the selected updated report; it is retained but not applied as a repair.",
+          "reported": "Both report 64-bit VertexOffsets; the locally pinned DX100 source defines SGOffset as int32_t. Do not silently reconcile them."
+        }
+      ],
+      "redactions": [
+        {
+          "path": "/hardware_performance_profile",
+          "reason": "Timing/PMU/performance outcomes are withheld from estimation inputs"
+        }
+      ],
+      "methodology": {
+        "path": "/Users/yanrujhou/.codex/worktrees/lanl-ticket08/ArchEvolve/examples/received/peter-measurement-methods.v1.2.yaml",
+        "sha256": "c1dc5b86c68c5bd0c16eab522b57690ba3131af70d3f5ed78c6f909fe0ac2d9a",
+        "sanitized_sha256": "8c2a89ca7b87d477aa91c8e42f33dfa5eff22969d5f83fd30f9c02a7b6f866ad",
+        "sanitizer_version": "swdb.feature-report-sanitizer.v1",
+        "redactions": [],
+        "basis": "reported"
+      },
+      "methodology_text": {
+        "path": "/Users/yanrujhou/.codex/worktrees/lanl-ticket08/ArchEvolve/examples/received/peter-measurement-methodology.v1.2.txt",
+        "sha256": "0f8d421aed3aa68e85e258c8f7eb844a6d8f5c5f98d4a1d6f39f9e4e1e3ba385",
+        "sanitized_sha256": "7323282e49bf8dce416c8e5bed71cf085c008a9b0bb10945c6e7cdbb82b192c4",
+        "sanitizer_version": "swdb.feature-report-sanitizer.v1",
+        "basis": "reported",
+        "redactions": [
+          {
+            "path": "/lines/1",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/2",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/3",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/4",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/5",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/6",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/7",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/8",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/9",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/10",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/11",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/12",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/13",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/14",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/15",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/16",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/17",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/18",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/19",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/20",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/21",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/22",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/23",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/24",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/25",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/27",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/28",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/29",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/30",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/31",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/32",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/33",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/34",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/35",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/36",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/37",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/38",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/39",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/40",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/41",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/42",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/43",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/44",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/45",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/46",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/47",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/48",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/49",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/50",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/51",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/52",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/53",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/55",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/56",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/57",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/58",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/59",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/60",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/61",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/62",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/63",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/64",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/65",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/66",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/67",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/68",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/69",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/70",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/71",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/72",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/73",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/74",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/75",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/76",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/77",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/78",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/79",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/80",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/81",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/82",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/83",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/84",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/85",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/86",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/87",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/88",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/89",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/90",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/91",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/92",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/93",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/94",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/95",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/96",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/97",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/98",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/99",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/100",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/101",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/102",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/103",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/104",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/105",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/106",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/107",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/108",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/109",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/110",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/111",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/112",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          },
+          {
+            "path": "/lines/113",
+            "reason": "Full narrative remains in evaluator source; only concrete array/type rows enter this input"
+          }
+        ]
+      },
+      "manifest": {
+        "path": "/Users/yanrujhou/.codex/worktrees/lanl-ticket08/ArchEvolve/examples/received/manifest.json",
+        "sha256": "cfb430482956276ca652d04308f8a2b3c21bb7434a35b0d99864eb66546c418b",
+        "sanitized_sha256": "1024ccb41e71008fa8d313b863f6571ce7455bc2fcdd0e0c6a86a841d9532290",
+        "sanitizer_version": "swdb.feature-report-sanitizer.v1",
+        "redactions": [],
+        "basis": "reported"
+      },
+      "duplicate_id_refused_without_change": true
+    }
+  ],
+  "storage": "Expanded derived count records are reproducible in the temporary copied store; compact metadata alone is committed. Original source reports and native counts remain authoritative.",
+  "post_review_validation": {
+    "scope": "Validate the exact stored import outputs and canonical history under the final parser-error handling/boolean-policy repair; original import tool identities above remain unchanged.",
+    "estimator_python_bundle_sha256": "51cdc13ce074fe6702714d1f19e3b0a2de364ce1d6c0d17d37251b91a6c9b242",
+    "feature_report_module_sha256": "a9353c3946604f86d477977a6fe7628b0ffd3b0ab60ca731cf5677f7d9f1056c",
+    "checks": [
+      {
+        "command": [
+          "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+          "-m",
+          "swdb",
+          "validate",
+          "--records",
+          "/private/tmp/lanl-ticket08-acceptance-20261006-a2/records"
+        ],
+        "exit_code": 0,
+        "output": "OK: 579 record(s) valid"
+      },
+      {
+        "command": [
+          "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+          "-m",
+          "swdb",
+          "validate",
+          "--records",
+          "/Users/yanrujhou/.codex/worktrees/lanl-ticket08/ArchEvolve/swdb-project/records"
+        ],
+        "exit_code": 0,
+        "output": "OK: 584 record(s) valid"
+      }
+    ]
+  },
+  "final_public_regression": {
+    "command": [
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+      "-m",
+      "pytest",
+      "tests/test_feature_reports.py",
+      "tests/test_analytic_estimator.py::test_estimated_fact_validates_without_changing_existing_records",
+      "tests/test_analytic_protocol.py::test_estimate_uses_frozen_protocol_and_preserves_fixture_state",
+      "tests/test_analytic_protocol.py::test_changed_estimator_bundle_refuses_execution_but_history_validates",
+      "-q",
+      "-x"
+    ],
+    "exit_code": 0,
+    "passed": 15,
+    "elapsed_seconds": 337.29,
+    "environment": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "scope": "12 public reported-input cases and 3 existing estimated-fact/frozen-protocol compatibility cases under the post_review_validation source hashes. No new native performance measurements."
+  }
+}

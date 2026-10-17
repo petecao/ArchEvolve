@@ -1,0 +1,38 @@
+{
+  "format": "swdb.lanl17-prospective-certification-local-test-observation.v1",
+  "recorded_utc": "2026-10-09T00:49:23.093671+00:00",
+  "source_patch": {
+    "path": "/private/tmp/lanl17-certification-classification-prospective-r3-20261008-a5.diff",
+    "bytes": 23678,
+    "sha256": "d8d44eb826470f0331e5aabcc882fbdb226e23a010ca94b7888a3535d5b0910d"
+  },
+  "local_base_commit": "34094e33798bab06ea382ff0fe5af16ba6513d75",
+  "local_only_patch_applied": true,
+  "frozen_remote_R_unchanged": true,
+  "remote_source_synchronization_deferred": true,
+  "custody_guard_review": "Original c360 bootstrap/guard/185F6 bindings use remote C/S/PRIMARY/originR; pinned local ticket17 processes.py is unchanged and independent of local primary product files.",
+  "focused_tests": {
+    "python": "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+    "argv": [
+      "-B",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/test_extensa_targets.py",
+      "-k",
+      "certification_infrastructure or expected_candidate_certificate or authored_source_refusals or native_authored_frontier or blinded_instrumentation_distinguishes"
+    ],
+    "observed_exit_code": 0,
+    "passed": 18,
+    "deselected": 28,
+    "seconds": 17.88,
+    "provenance": "Observed completed tool output; separately redirected original stdout was not captured."
+  },
+  "earlier_default_python_attempt": {
+    "python": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "observed_exit_code": 1,
+    "reason": "No module named pytest; no tests ran."
+  },
+  "broader_tests_state": "RUNNING; original redirected stdout/stderr/exit-code routes retained, outcome not inferred",
+  "scientific_evaluation_or_admission": false
+}

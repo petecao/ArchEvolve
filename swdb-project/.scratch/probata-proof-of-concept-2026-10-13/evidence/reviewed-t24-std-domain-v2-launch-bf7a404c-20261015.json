@@ -1,0 +1,164 @@
+{
+  "at_utc": "2026-10-15T23:09:42.316469+00:00",
+  "audit_script": {
+    "path": "/private/tmp/probata-reviewed-launch-audit-v2.py",
+    "sha256": "faa1c32f04616e939cc2af74873e8908154b6e33b43a7540bb83e10debe94b34"
+  },
+  "date_et": "2026-10-15",
+  "errors": [],
+  "files": {
+    "dispatch-argv.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/dispatch-argv.json",
+      "sha256": "4e080495fb92fbf0f53f6a5d4c3127463bfa275c5dd19b4b4488482ca27b6536"
+    },
+    "execute.py": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/execute.py",
+      "sha256": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612"
+    },
+    "lane.json": {
+      "mutable_until_exit": true,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/lane.json",
+      "sha256_at_snapshot": "f3198e5fdc2dc2c18bba5d8440ad860a38f113241977e0636cf3ef23de0a03d9"
+    },
+    "launch.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/launch.json",
+      "sha256": "9ade1b3094510179d1de8b8153fdddb3dc658692172a3d5fb5531cb0e653f572"
+    },
+    "preflight.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/preflight.json",
+      "sha256": "f2ebbd8c19e63f080f2342fbd3fd07f3903120e66aab574e90c3f987ed7daf3b"
+    },
+    "run.sh": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/run.sh",
+      "sha256": "2344c6a43ac8c77d9cae59fdb8f088d91a97c00d19f4225702c76eb85079a718"
+    },
+    "runtime-provenance.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/runtime-provenance.json",
+      "sha256": "42d8992de63d5fe69c5a35a3d819c5889ccac81aaf38aef7a5d95ed7e4eb4ef0"
+    },
+    "source-manifest.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/source-manifest.json",
+      "sha256": "2f4e30d04a99eaddd7cff2361f591ac065491dbe01b52e7025ba82e1c9d06f1d"
+    },
+    "watch.py": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/watch.py",
+      "sha256": "4485ae66aa50c65f2b579f84836576aa67b54431978da71cac6eea6a68ecd07c"
+    }
+  },
+  "lane": {
+    "socket_lane": {
+      "aligned_cell_age_s": "",
+      "aligned_to": "no_gapbs_batch_running",
+      "command": [
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=60",
+        "4320",
+        "bash",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/run.sh"
+      ],
+      "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+      "ended_utc": "",
+      "exit_code": -1,
+      "host": "mbit10",
+      "job": "probata-reviewed-bf7a404c-t24-std-domain-v2",
+      "lease_generation": 578,
+      "lease_name": "mbit10-evaluation-node0",
+      "load1_at_start": 2.07,
+      "load1_max": 32,
+      "node": 0,
+      "numa_memory_policy": "bind:0",
+      "numactl": "--cpunodebind=0 --membind=0",
+      "preregistration_sha256": null,
+      "started_utc": "2026-10-15T23:09:05Z"
+    }
+  },
+  "launch": {
+    "command": [
+      "/data1/yanruj/venvs/swdb-test/bin/python",
+      "/data1/yanruj/probata-reviewed-bf7a404c/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/t24-std-object-domain.py",
+      "--expected-commit",
+      "bf7a404c65694a18d83635c4f6f56105b005fb59",
+      "--from-seed",
+      "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/matrix/seed",
+      "--output",
+      "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/matrix",
+      "--public-timeout-seconds",
+      "1800"
+    ],
+    "created_utc": "2026-10-15T23:09:05.289206+00:00",
+    "log_name": "acceptance.log",
+    "node": 0,
+    "planned_raw_budget_bytes": 8589934592,
+    "raw_budget_enforcement": "coordinator monitors; not a filesystem quota",
+    "readers": [
+      "root",
+      "ticket24",
+      "ticket27"
+    ],
+    "reviewed_wrapper_reuse": {
+      "execute.py": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612",
+      "watch.py": "4485ae66aa50c65f2b579f84836576aa67b54431978da71cac6eea6a68ecd07c"
+    },
+    "rss_cap_bytes": 8589934592,
+    "rss_scope": "outer watchdog covers worker bootstrap, compiler provenance probes, inner monitor and proof process tree; trusted outer monitor excluded",
+    "source": "/data1/yanruj/probata-reviewed-bf7a404c",
+    "source_commit": "bf7a404c65694a18d83635c4f6f56105b005fb59",
+    "timeout_seconds": 4200,
+    "workers": 1
+  },
+  "launcher": {
+    "path": "/private/tmp/probata-launch-reviewed-profile-v2.py",
+    "sha256": "17996bd6e3c18419a9e48b7fdf06df043bbfdf87491ff3de225ef12a01fa413e"
+  },
+  "module_physical_and_git_checks": 197,
+  "runtime": {
+    "lowering_identity": {
+      "c_lowering": {
+        "id": "swdb-c-lowering-9",
+        "sha256": "b1ddaa111bec5d19843b69fd7571530859acb1382947d96692894bfc29b0b993"
+      },
+      "clang": {
+        "id": "clang-22.1.8",
+        "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+      },
+      "naming_rules": {
+        "id": "kept-names.3",
+        "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+      }
+    },
+    "runtime": {
+      "check": {
+        "id": "swdb-stdlib-provenance-1",
+        "sha256": "4aee5a271a2f92fced7a94c04807cd2d94d36da24ea3d163f2364048bc79d937"
+      },
+      "command_executable": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+        "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+      },
+      "driver": {
+        "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang-22",
+        "sha256": "31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113"
+      },
+      "headers": {
+        "files": 1983,
+        "id": "llvm-standard-resource-headers",
+        "sha256": "d37aec646b1e6e1748d40690c60436f905f55852ee578e79c43a3199c4a16e23"
+      },
+      "parser": {
+        "id": "libclang-22.1.8",
+        "sha256": "8b03ee2c60f0699651869fea5135cb5a144777a10c6e4b9b7835283ac9ca3f7d"
+      }
+    },
+    "tool": {
+      "command": [
+        "clang++"
+      ],
+      "missing": "",
+      "version": "22.1.8"
+    }
+  },
+  "source_branch": "HEAD",
+  "source_commit": "bf7a404c65694a18d83635c4f6f56105b005fb59",
+  "tracked_changes": ""
+}

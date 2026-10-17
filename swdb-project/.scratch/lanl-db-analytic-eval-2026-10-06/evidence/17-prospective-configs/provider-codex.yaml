@@ -1,0 +1,12 @@
+# Source-only scaffold; parent verifies installed identities before population freeze.
+# No credentials, model/effort overrides or campaign execution in this file.
+kind: codex
+command:
+  - /data1/yanruj/.npm-global/bin/codex
+timeout_s: 1200
+max_repairs: 2
+total_seconds: 3600
+budget_usd: 5
+output_format: json
+edit_format: patch
+workspace: true

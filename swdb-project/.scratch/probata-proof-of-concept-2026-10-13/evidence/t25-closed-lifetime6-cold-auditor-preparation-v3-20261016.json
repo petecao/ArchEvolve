@@ -1,0 +1,32 @@
+{
+  "acceptance": false,
+  "auditor": {
+    "bytes": 43255,
+    "path": "prototype/25-closed-lifetime-glue-20261016/cold-auditor-v3.py",
+    "sha256": "22694c7e41f64f1cf173b07fdad49b1e20954dda04c52e42df38a304f0e073f3"
+  },
+  "author_remote_execution": false,
+  "classification": "INERT_PASSIVE_OPEN_MUTATION_FLAG_CLOSURE",
+  "controls_external_processes_executed": 0,
+  "created": "2026-10-16 ET",
+  "exact_inverse_to_v2": true,
+  "previous_auditor_sha256": "348033757aeb332b50f3efcf0b65d58364206eae76e5c56aa20a1aa660cbdeb5",
+  "previous_version_executed": false,
+  "scope": "Only add O_CREAT/O_TRUNC/O_APPEND mutation flags to the open refusal; no scientific accounting changes. V1 refusal and V2 unexecuted preserved.",
+  "scripted_boundary_controls": [
+    "inactive_fifo_write_refused",
+    "active_git_fifo_write_allowed",
+    "active_git_regular_fd_write_refused",
+    "active_git_path_write_refused",
+    "outside_path_write_refused",
+    "integer_flags_write_refused",
+    "ordinary_read_allowed",
+    "descriptor_failure_preserved",
+    "readonly_create_refused",
+    "readonly_truncate_refused",
+    "readonly_append_refused",
+    "unused_git_stdin_not_opened",
+    "required_git_stdin_only_scoped",
+    "git_scope_reset_preserves_exception"
+  ]
+}

@@ -1,0 +1,33 @@
+test_01_inventory_and_all_instances (__main__.Controls) ... ok
+test_02_defaults_overloads_and_exact_type_identity (__main__.Controls) ... ok
+test_03_binding_refusals (__main__.Controls) ... ok
+test_04_literal_roles_and_all_66_dtype_maps (__main__.Controls) ... ok
+test_05_width_counted_and_refused_domains (__main__.Controls) ... ok
+test_06_emitted_wrapper_routes_and_pinned_backend (__main__.Controls) ... ok
+test_07_complete_scoped_source_preserves_calls_writes_assertion_and_cleanup (__main__.Controls) ... ok
+test_08_assertion_predicate_diagnostics_and_failure_effect_mutations_refuse (__main__.Controls) ... ok
+test_09_missing_call_unknown_effect_and_source_change_do_not_succeed (__main__.Controls) ... ERROR
+test_10_copied_descriptor_cannot_outlive_its_exact_object_scope (__main__.Controls) ... ok
+test_11_pointer_assignment_is_refused_before_it_can_escape (__main__.Controls) ... ok
+test_12_scalar_if_while_and_loop_exits_preserve_explicit_control (__main__.Controls) ... ok
+test_13_assertion_lexical_inventory_ignores_comment_tokens_and_rejects_quoted_predicates (__main__.Controls) ... ok
+
+======================================================================
+ERROR: test_09_missing_call_unknown_effect_and_source_change_do_not_succeed (__main__.Controls)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/test_source_statements_v1.py", line 144, in test_09_missing_call_unknown_effect_and_source_change_do_not_succeed
+    lower,_=self.make(lambda tu,i:i['nodes'].remove(next(n for n in i['nodes'] if n.get('kind')=='DeclStmt' and n['inner'][0]['id']=='tile')))
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/test_source_statements_v1.py", line 105, in make
+    binding=API['bind_call'](tu,**kwargs)
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v4.py", line 222, in bind_call
+    _need(len(calls) == 1, "source call does not resolve uniquely in its actual TU/caller")
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v4.py", line 48, in _need
+    raise Refused(message)
+inert_statement_fixture.Refused: source call does not resolve uniquely in its actual TU/caller
+
+----------------------------------------------------------------------
+Ran 13 tests in 1.777s
+
+FAILED (errors=1)
+{"actual_compiler_or_project_child": false, "date": "2026-10-16 ET", "errors": 1, "failures": 0, "skips": 0, "tests": 13}

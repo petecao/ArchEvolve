@@ -1,0 +1,323 @@
+{
+ "format": "swdb.bfs.simulator-batch-plan.v1",
+ "automatic_retry_allowed": false,
+ "gain_claim": false,
+ "model_build": "bfs-dx100-build-20260925-a2",
+ "target": "dx100-e4fc4af-4c",
+ "verifier": "dx100.bfs.verifier.v2",
+ "threads": 4,
+ "warmups": 0,
+ "verification_ticks": 100000000000000,
+ "profitability": {
+  "minimum_speedup": 1.05,
+  "maximum_relative_spread": 0.1,
+  "confidence": 0.95,
+  "bootstrap_resamples": 2000,
+  "bootstrap_seed": 20260925
+ },
+ "historical_failure": {
+  "id": "bfs-dx100-witness-20260926-a1",
+  "file_sha256": "9a941cdff315e283b13563bf81ef2f45ba0712bbcf6d31b92f6232488efa3b42"
+ },
+ "required_a3": "bfs-dx100-witness-20260926-a3",
+ "required_coverage": "bfs-dx100-coverage-20260926-a2.execute",
+ "historical_coverage_failure": {
+  "id": "bfs-dx100-coverage-20260926-a1.execute",
+  "state": "interrupted_public_marker_retained",
+  "sha256": "f64b604d10bf579c832145b07d6b6cee39d81833d23711375a6625f59fbc57f9",
+  "file_sha256": "dfa28a3bbe8170fe2e3dff6b140a41b4bfc7873c3e903fc39d73cc258acac26e"
+ },
+ "supervision": {
+  "format": "swdb.bfs.simulator-supervision.v1",
+  "cleanup": "shared_atomic_reservations_total_30_seconds",
+  "rss_source": "linux.proc_pid_stat.field24.v1",
+  "hard_memory_quota": false,
+  "outer_helper_preflight_included": true,
+  "required_linux_cases": [
+   "detached_success",
+   "detached_failure",
+   "nested_interruption",
+   "nested_term_resistant",
+   "public_dx100_interruption",
+   "sqlite_journal_unlink"
+  ],
+  "final_kill_and_persistence_reserve_seconds": 10
+ },
+ "trace_transport": "gem5-gzip.v1",
+ "raw_root": "/data/yanruj/EvolveSWDB_runs",
+ "created": "2026-09-28",
+ "updated": "2026-09-28",
+ "id": "bfs-t17-t20-routes-simulator-batch-20260928-a3",
+ "role": "candidate_route_collection",
+ "roi": "bfs.complete_call.v1",
+ "repetitions": 1,
+ "lane": {
+  "node": 0,
+  "assigned_by": "root 2026-09-28"
+ },
+ "clock": "Fresh allocation: absolute end = admission preparation + 172,800 s; latest start = preparation + 3,600 s.",
+ "budget_authority": "User-approved autonomous T17/T20 route collection (root 2026-09-28): eight frozen series in one node0 lane job with one gem5 slot, plus each candidate AC10 companion case.",
+ "allocation": {
+  "policy": "routes_incremental_allocation.a3",
+  "total_seconds": 86400,
+  "partition_seconds": {
+   "preparation": 3600,
+   "series": 79200,
+   "finalization_and_companions": 3570,
+   "scientific_cleanup": 30
+  },
+  "storage_gib": 30,
+  "overhead_reserve_gib": 4,
+  "shared_series_gib": 26,
+  "per_series_cap_gib": 10,
+  "free_space_required_at_admission_gib": 60,
+  "notes": [
+   "Four drivers (route x family) each run baseline then candidate; per_series_cap_gib caps each driver root.",
+   "Basis: T15 b3 retained 27.49 GB for 24 executions (about 1.15 GB each); 48 executions need about 51 GiB."
+  ]
+ },
+ "concurrency": {
+  "mode": "family_drivers_in_one_lane_job.v1",
+  "drivers": 4,
+  "gem5_slots": 1,
+  "basis": "One gem5 (16-GB guest) holds 29.5-34.2 GiB sampled RSS; the 52-GiB lane-tree cap admits one.",
+  "lane_tree_sampled_rss_gib": 52
+ },
+ "bounds": {
+  "batch_seconds": 86400,
+  "series_seconds": 43200,
+  "cleanup_seconds": 30,
+  "checkpoint_seconds": 3600,
+  "run_seconds": 7200,
+  "diagnostic_seconds": 10800,
+  "profile_seconds": 2400,
+  "package_seconds": 2400,
+  "aggregate_seconds": 7200,
+  "memory_gib": 48,
+  "storage_gib": 10,
+  "batch_storage_gib": 30,
+  "raw_reserve_gib": 30,
+  "build_reserve_gib": 10,
+  "monitor_interval_seconds": 5,
+  "sampled_tree_memory_gib": 52,
+  "maximum_telemetry_gap_seconds": 30
+ },
+ "bound_basis": "Scalar complete-call pairs measured in routes a1: primary ~2,060 s, diagnostic ~3,240 s of gem5 slot time; author MAA pairs ~4,700 s. Eight pairs serialize to ~12 h on one slot; 43,200 s per series and 86,400 s overall.",
+ "accounting": {
+  "preparation": [],
+  "preparation_reservation": {
+   "id": "bfs-t17-t20-routes-preparation-20260928-a3",
+   "elapsed_seconds": 3600,
+   "raw_bytes": 4294967296
+  },
+  "excluded": "T15 pilot attempts, T17/T20 builds and earlier failures remain charged in their own records."
+ },
+ "protocol_requests": {
+  "t17": {
+   "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t17-controlled-simulator-freeze-20260928-a2.json",
+   "sha256": "3f7df7f3b51ca2b10bebc2b34c438c89623321f2a89962a55d76b64aaf9cbbc4"
+  },
+  "t20": {
+   "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t20-controlled-simulator-freeze-20260928-a2.json",
+   "sha256": "9f671a02097e8cf0d94b55011b13e37e53664a660d110f7422e11f73c286b408"
+  }
+ },
+ "series": [
+  {
+   "id": "bfs-t17-routes-20260928-a3.baseline.kronecker18",
+   "group": "t17.kronecker18",
+   "candidate": "bfs-dx100-compile-20260925-a1.candidate",
+   "primary_build": "bfs-scalar-v2-preparation-20260926-a1.dx100.primary.build",
+   "diagnostic_build": "bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build",
+   "workload": "bfs-20260928-kronecker18-s0.cf4283236c5cb50c",
+   "sources": [
+    0
+   ],
+   "configuration": {
+    "mode": "BASE",
+    "l3_size_mb": 8,
+    "l3_assoc": 16,
+    "tile_elements": 16384
+   },
+   "accelerated": false,
+   "protocol_key": "t17",
+   "protocol_role": "baseline"
+  },
+  {
+   "id": "bfs-t17-routes-20260928-a3.candidate.kronecker18",
+   "group": "t17.kronecker18",
+   "candidate": "bfs-campaign-preparation-20260925-a1.dx100-instructions.candidate-1",
+   "primary_build": "bfs-t17-build-only-20260926-a1",
+   "diagnostic_build": "bfs-t17-diagnostic-build-only-20260927-a2",
+   "workload": "bfs-20260928-kronecker18-s0.cf4283236c5cb50c",
+   "sources": [
+    0
+   ],
+   "configuration": {
+    "mode": "MAA",
+    "l3_size_mb": 8,
+    "l3_assoc": 16,
+    "tile_elements": 16384
+   },
+   "accelerated": true,
+   "protocol_key": "t17",
+   "protocol_role": "candidate"
+  },
+  {
+   "id": "bfs-t17-routes-20260928-a3.baseline.uniform18",
+   "group": "t17.uniform18",
+   "candidate": "bfs-dx100-compile-20260925-a1.candidate",
+   "primary_build": "bfs-scalar-v2-preparation-20260926-a1.dx100.primary.build",
+   "diagnostic_build": "bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build",
+   "workload": "bfs-20260928-uniform18-s0.8c7e69dfa516e53c",
+   "sources": [
+    0
+   ],
+   "configuration": {
+    "mode": "BASE",
+    "l3_size_mb": 8,
+    "l3_assoc": 16,
+    "tile_elements": 16384
+   },
+   "accelerated": false,
+   "protocol_key": "t17",
+   "protocol_role": "baseline"
+  },
+  {
+   "id": "bfs-t17-routes-20260928-a3.candidate.uniform18",
+   "group": "t17.uniform18",
+   "candidate": "bfs-campaign-preparation-20260925-a1.dx100-instructions.candidate-1",
+   "primary_build": "bfs-t17-build-only-20260926-a1",
+   "diagnostic_build": "bfs-t17-diagnostic-build-only-20260927-a2",
+   "workload": "bfs-20260928-uniform18-s0.8c7e69dfa516e53c",
+   "sources": [
+    0
+   ],
+   "configuration": {
+    "mode": "MAA",
+    "l3_size_mb": 8,
+    "l3_assoc": 16,
+    "tile_elements": 16384
+   },
+   "accelerated": true,
+   "protocol_key": "t17",
+   "protocol_role": "candidate"
+  },
+  {
+   "id": "bfs-t20-routes-20260928-a3.baseline.kronecker18",
+   "group": "t20.kronecker18",
+   "candidate": "bfs-upstream-compile-20260925-a1.candidate",
+   "primary_build": "bfs-scalar-v2-preparation-20260926-a1.upstream.primary.build",
+   "diagnostic_build": "bfs-scalar-v2-preparation-20260926-a1.upstream.diagnostic.build",
+   "workload": "bfs-20260928-kronecker18-s0.cf4283236c5cb50c",
+   "sources": [
+    0
+   ],
+   "configuration": {
+    "mode": "BASE",
+    "l3_size_mb": 8,
+    "l3_assoc": 16,
+    "tile_elements": 16384
+   },
+   "accelerated": false,
+   "protocol_key": "t20",
+   "protocol_role": "baseline"
+  },
+  {
+   "id": "bfs-t20-routes-20260928-a3.candidate.kronecker18",
+   "group": "t20.kronecker18",
+   "candidate": "bfs-campaign-preparation-20260925-a1.upstream-annotated-context6.candidate-1",
+   "primary_build": "bfs-t20-context6-primary-build-20260927-c3",
+   "diagnostic_build": "bfs-t20-context6-diagnostic-build-20260927-c3",
+   "workload": "bfs-20260928-kronecker18-s0.cf4283236c5cb50c",
+   "sources": [
+    0
+   ],
+   "configuration": {
+    "mode": "MAA",
+    "l3_size_mb": 8,
+    "l3_assoc": 16,
+    "tile_elements": 16384
+   },
+   "accelerated": true,
+   "protocol_key": "t20",
+   "protocol_role": "candidate"
+  },
+  {
+   "id": "bfs-t20-routes-20260928-a3.baseline.uniform18",
+   "group": "t20.uniform18",
+   "candidate": "bfs-upstream-compile-20260925-a1.candidate",
+   "primary_build": "bfs-scalar-v2-preparation-20260926-a1.upstream.primary.build",
+   "diagnostic_build": "bfs-scalar-v2-preparation-20260926-a1.upstream.diagnostic.build",
+   "workload": "bfs-20260928-uniform18-s0.8c7e69dfa516e53c",
+   "sources": [
+    0
+   ],
+   "configuration": {
+    "mode": "BASE",
+    "l3_size_mb": 8,
+    "l3_assoc": 16,
+    "tile_elements": 16384
+   },
+   "accelerated": false,
+   "protocol_key": "t20",
+   "protocol_role": "baseline"
+  },
+  {
+   "id": "bfs-t20-routes-20260928-a3.candidate.uniform18",
+   "group": "t20.uniform18",
+   "candidate": "bfs-campaign-preparation-20260925-a1.upstream-annotated-context6.candidate-1",
+   "primary_build": "bfs-t20-context6-primary-build-20260927-c3",
+   "diagnostic_build": "bfs-t20-context6-diagnostic-build-20260927-c3",
+   "workload": "bfs-20260928-uniform18-s0.8c7e69dfa516e53c",
+   "sources": [
+    0
+   ],
+   "configuration": {
+    "mode": "MAA",
+    "l3_size_mb": 8,
+    "l3_assoc": 16,
+    "tile_elements": 16384
+   },
+   "accelerated": true,
+   "protocol_key": "t20",
+   "protocol_role": "candidate"
+  }
+ ],
+ "scope_change": "2026-09-28 option A (user-approved): v2 protocols with source [0] per family; routes a1 retained as interrupted (observations/t17-t20-routes-a1-closure-20260928.json).",
+ "relaunch": "a3 replaces routes a2, stopped 2026-09-28 after one driver self-terminated on a transient procfs reparenting race in lane-tree telemetry; the batch now retries that race (race_tolerant). a2 retained.",
+ "record_sha256": {
+  "bfs-20260925-kronecker18.48de8267ac2098d5": "38ecdcb6ed58c15b9dbd3ed1449f18e4ffc69ddc2f2ab6a8192b144c25030199",
+  "bfs-20260925-uniform18.cd2169a5c421baf7": "e345524d8c91f4363292c47e81510c3fe34e3f80284ed9945ce4fa0e4e63afdd",
+  "bfs-20260928-kronecker18-s0.cf4283236c5cb50c": "75f288a1137d90b9b3ea0738bff33ce1a3dd0cd950d2ddf3ad9c9495a3c7dbac",
+  "bfs-20260928-uniform18-s0.8c7e69dfa516e53c": "3ab40135e2bdcc14fd36354a5490749243be597fec21a9fae2c049694a834da9",
+  "bfs-author-maa-compile-20260925-a1.candidate": "1018e9002c86a2e0ef7850be0bc66dbec9849d388cced45542c61a18cd619fff",
+  "bfs-author-maa-compile-20260925-a1.diagnostic.build": "de0c71b6f0fe54a88be05ca5fb93bb5980d44fc787294964a63568c70d785beb",
+  "bfs-author-maa-compile-20260925-a1.source": "f1b53e83398c74871f0cf46dc8f98b728254992a8ee63aaf7419732680b42fb6",
+  "bfs-campaign-preparation-20260925-a1.dx100-instructions.candidate-1": "e31ff21a5676c29c653d0c443f13faaf32cad7e8cdf41754404422dc9a94ac11",
+  "bfs-campaign-preparation-20260925-a1.upstream-annotated-context6.candidate-1": "99ef7da274756b4e70026203f267ee67c81d733e9482f71120b21e4ac6d0575a",
+  "bfs-dx100-build-20260925-a2": "13d277a961e44fe0ee254b4685126572fb06394fea455e3e1d450626cc535cea",
+  "bfs-dx100-compile-20260925-a1.candidate": "965a13a8617a0be03838a0d41701a4bb8b6e2cfdc12c5893e0b686af874eaf35",
+  "bfs-dx100-compile-20260925-a1.source": "ea9df8f1958a2e09550f8b82d4fb486f5dc805e6dec069e46d578cfebe5c0412",
+  "bfs-dx100-witness-20260926-a1": "c5ec9b7ca044728d61fb01be67616ea66e6364bd1c160569ab5dad9382570b8e",
+  "bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.source": "c579930c7b04e98868966fab10c9c5d30c506ed3c515d1b3681beb0b8f975443",
+  "bfs-native-pilot-20260925-upstream18-a2.uniform-random.package.v1.source": "65868ec15d51117f6fb2c2d760c0cd88f4f8e098ee5694d912b11a287dd47f2c",
+  "bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build": "d5f619274d39e4b519c722e2dc81326c931928e354ad61165016e55c746155a6",
+  "bfs-scalar-v2-preparation-20260926-a1.dx100.primary.build": "aad128ed1a276e66cee6b9ab1bd7d8035a20f477068fb9cd0db168c202a184aa",
+  "bfs-scalar-v2-preparation-20260926-a1.upstream.diagnostic.build": "23ee7e212f40fa1d60ebf5bb23430b26e3bffb1491da55d4504c99e7d8d88799",
+  "bfs-scalar-v2-preparation-20260926-a1.upstream.primary.build": "9f96e78f271a373c1c81a06d05096a4e9477bc839a82fa437a4a8e4cefcb7a00",
+  "bfs-t17-build-only-20260926-a1": "3cf348c46fa9e017173fc4c79debf6e3ecdc2b0821be9cb5c81ef4e82fc45630",
+  "bfs-t17-controlled-simulator-20260928.952dead4468b86d7": "df02a08e4b9451c7944bb783a6496026cc607f60602b10e97d0b93649f696d43",
+  "bfs-t17-diagnostic-build-only-20260927-a2": "32f2087f61c1f8d75c235a661963eff8287f1a0c9f6123103ba83a2632747cc7",
+  "bfs-t20-context6-diagnostic-build-20260927-c3": "c9cb4b859b99add1e2fb8ca0f731ab245e1a3ba9228b4610e8a06df4fce31518",
+  "bfs-t20-context6-primary-build-20260927-c3": "db256d852e59bd6c5f098be370bb7072f098318a5d523acdf00c1576c102e405",
+  "bfs-t20-controlled-simulator-20260928.35ade0da7e50e931": "1b99614672681ea568255f4d83012a64523fbbda49dd87d144c5859564df19ed",
+  "bfs-upstream-compile-20260925-a1.candidate": "ccd0df5c59924a0968b6c860fb28a6ce19974790feb380919cf0ba81d5aa0f57",
+  "bfs-upstream-compile-20260925-a1.source": "bdb4c224ac90326e424c24e810737cb7de1556b72fd527ca0821bda5f3d1bec6",
+  "dx100-bfs-maa-reference": "3f8646f57df66f2db9f8236240c82fcdf2d610f47d28b7814e749333bceb9ae0",
+  "dx100-bfs-scalar": "81ffac2bdf90e50f2350675edd53c16162c0251e8bb23fc17d4cfe421cd32e61",
+  "dx100-e4fc4af-4c": "94cf9373c255c1c36d4b6f622124aec90e8bd485d66fa2af996d6e46c91e04e1",
+  "gapbs-bfs-do": "9bf61bf51ce76a09a7b4a8aaf163d28b1ce7284f8a708aaeecb8129550e10190",
+  "mbit10": "fcb0123f0bdb9bc004348eb8c6444f03304b6612e0cb2e26a82e621b07d82a79"
+ }
+}

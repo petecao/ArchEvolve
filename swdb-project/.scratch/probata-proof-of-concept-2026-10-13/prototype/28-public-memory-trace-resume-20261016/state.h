@@ -1,0 +1,35 @@
+/* 2026-10-16 ET. Closed scalar event state; no caller pointers. */
+/* Canonical independent harness draws supply four fresh choice cells. */
+int dx_tile_data[DX_NT][DX_TS];
+static int tr_count = 0;
+static int tr_picks = 0;
+static int tr_owner0 = -1;
+static int tr_owner1 = -1;
+static int tr_owner2 = -1;
+static int tr_owner3 = -1;
+static int tr_mem0 = 0;
+static int tr_mem1 = 0;
+static int tr_c0_pending = 0;
+static int tr_c0_thread = 0;
+static int tr_c0_access = 0;
+static int tr_c0_region = 0;
+static int tr_c0_cell = 0;
+static int tr_c0_tile = 0;
+static int tr_c0_mask = 0;
+static int tr_c0_value = 0;
+static int tr_c0_issue = 0;
+static int tr_c0_later = 0;
+static int tr_c0_writes = 0;
+static int tr_c0_result = 0;
+static int tr_c1_pending = 0;
+static int tr_c1_thread = 0;
+static int tr_c1_access = 0;
+static int tr_c1_region = 0;
+static int tr_c1_cell = 0;
+static int tr_c1_tile = 0;
+static int tr_c1_mask = 0;
+static int tr_c1_value = 0;
+static int tr_c1_issue = 0;
+static int tr_c1_later = 0;
+static int tr_c1_writes = 0;
+static int tr_c1_result = 0;

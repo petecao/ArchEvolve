@@ -1,0 +1,115 @@
+--- /private/tmp/lanl14_read_completed_metadata_pins_20261008_a1.py
++++ /private/tmp/lanl14_read_completed_metadata_pins_20261008_a1_r1.py
+@@ -19,6 +19,8 @@
+ 
+ UID = 114316761
+ PRIMARY = Path('/data1/yanruj/ArchEvolve')
++MEMACC = Path('/data1/yanruj/Memacc-repro-20260925')
++WRAPPER_REL = 'AgenticRefiner/scripts/host/socket_lane.sh'
+ RAW = Path('/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1')
+ SOURCE = Path('/data1/yanruj/ArchEvolve-lanl-generality-final-20261007-a1')
+ RELATIVE_HELPER = 'swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-completed-report-transfer-mode-controls-20261008-a1/lanl14_correct_completed_report_transfer_modes_20261008_a1.py'
+@@ -146,21 +148,27 @@
+     head = primary_git('rev-parse', 'HEAD', budget=budget).decode().strip()
+     require(head == expected and re.fullmatch('[0-9a-f]{40}', head), 'expected delivered primary HEAD differs')
+     upstream = primary_git('rev-parse', 'refs/remotes/origin/yanrujhou_main', budget=budget).decode().strip()
+-    integration = primary_git('rev-parse', 'refs/remotes/origin/codex/lanl-analytic-eval', budget=budget).decode().strip()
+-    require(upstream == integration == expected, 'delivered primary upstream refs differ')
++    branch = primary_git('branch', '--show-current', budget=budget).decode().strip()
++    require(upstream == expected and branch == 'yanrujhou_main', 'delivered primary YANMAIN/branch differs')
++    integration = primary_git('for-each-ref', '--format=%(objectname)',
++                              'refs/remotes/origin/codex/lanl-analytic-eval', budget=budget).decode().strip()
++    require(not integration or re.fullmatch('[0-9a-f]{40}', integration), 'observed integration ref shape differs')
+     entry = primary_git('ls-files', '--stage', '--', RELATIVE_HELPER, budget=budget).decode().strip().split()
+     oid = hashlib.sha1(b'blob ' + str(len(helper_raw)).encode() + b'\0' + helper_raw).hexdigest()
+     require(entry == ['100644', oid, '0', RELATIVE_HELPER]
+             and primary_git('rev-parse', 'HEAD:' + RELATIVE_HELPER, budget=budget).decode().strip() == oid,
+             'reviewed helper committed/index Git mode/blob differs')
+-    return {'HEAD': head, 'origin_yanrujhou_main': upstream, 'origin_integration': integration,
++    return {'HEAD': head, 'branch': branch, 'origin_yanrujhou_main': upstream,
++            'observed_origin_integration': integration or None,
++            'integration_ref_scope': 'Observation only; primary delivery fetches YANMAIN, not an integration freshness claim.',
+             'helper_Git_mode': '100644', 'helper_Git_blob': oid}
+ 
+ 
+ def load_reviewed_helper(budget, expected_primary):
+     require(sys.platform == 'linux' and socket.gethostname().split('.')[0] == 'mbit10'
+             and os.getuid() == os.geteuid() == UID, 'native own Linux mbit10 required before import')
+-    require(sys.flags.dont_write_bytecode == 1 and Path(sys.executable).resolve(strict=True) == Path('/usr/bin/python3.12'),
++    require(sys.flags.dont_write_bytecode == 1 and sys.flags.optimize == 0
++            and Path(sys.executable).resolve(strict=True) == Path('/usr/bin/python3.12'),
+             'pinned native Python -B required before import')
+     roots = privacy_roots()
+     native = {}
+@@ -186,6 +194,43 @@
+             and module.MAX_REPORT == 1024 * 1024 * 1024 and module.MAX_OTHER == 100 * 1024 * 1024
+             and module.NATIVE == NATIVE, 'exact original helper contract differs')
+     return module, helper_pin, returned, roots, native, primary
++
++
++def wrapper_git(*tail, budget):
++    budget.check()
++    checked(MEMACC, owner=UID, directory=True)
++    env = {'PATH': '/usr/bin:/bin', 'LANG': 'C', 'LC_ALL': 'C',
++           'GIT_OPTIONAL_LOCKS': '0', 'GIT_NO_LAZY_FETCH': '1', 'GIT_TERMINAL_PROMPT': '0',
++           'GIT_PAGER': 'cat', 'GIT_CONFIG_NOSYSTEM': '1', 'GIT_CONFIG_GLOBAL': '/dev/null'}
++    child = subprocess.run(['/usr/bin/git', '-c', 'core.fsmonitor=false', '-C', str(MEMACC), *tail],
++                           stdout=subprocess.PIPE, stderr=subprocess.PIPE,
++                           timeout=min(25, budget.deadline - time.monotonic()), env=env)
++    require(child.returncode == 0 and not child.stderr and len(child.stdout) <= 8 * 1024 * 1024,
++            'fixed readonly wrapper Git refused; prose omitted')
++    return child.stdout
++
++
++def wrapper_binding(h, manifest, budget):
++    wrapper = MEMACC / WRAPPER_REL
++    require(manifest['wrapper']['path'] == str(wrapper), 'original manifest wrapper route differs')
++    expected = h.sha_syntax(manifest['wrapper']['sha256'])
++    observed = wrapper_git('rev-parse', 'refs/remotes/origin/yanrujhou_main', budget=budget).decode().strip()
++    require(re.fullmatch('[0-9a-f]{40}', observed), 'actual wrapper upstream40 required')
++    pin, returned = h.read_file(wrapper, h.MAX_JSON, budget, expected, True)
++    committed = wrapper_git('show', observed + ':' + WRAPPER_REL, budget=budget)
++    require(returned == committed, 'manifest wrapper bytes differ from observed upstream blob')
++    entry = wrapper_git('ls-tree', '-z', observed, '--', WRAPPER_REL, budget=budget).split(b'\0')
++    require(len(entry) == 2 and not entry[1], 'exact wrapper Git entry required')
++    meta, path = entry[0].split(b'\t', 1)
++    mode, kind, oid = meta.decode().split()
++    actual_oid = hashlib.sha1(b'blob ' + str(len(returned)).encode() + b'\0' + returned).hexdigest()
++    require(path.decode() == WRAPPER_REL and kind == 'blob' and mode in ('100644', '100755')
++            and oid == actual_oid, 'actual wrapper Git blob/mode differs')
++    require(h.stamp(wrapper.lstat()) == pin['stat'], 'actual wrapper stat changed')
++    return {'upstream_commit': observed, 'file': pin,
++            'mode_octal': oct(stat.S_IMODE(pin['stat']['st_mode'])),
++            'Git_mode': mode, 'Git_blob': oid,
++            'scope': 'Actual local origin/YANMAIN40 observed and original manifest byte-bound; no fetch or remote/latest freshness claim.'}
+ 
+ 
+ def selected_stats(h, rows, budget):
+@@ -246,6 +291,7 @@
+     original_manifest, original_accept, original_request, original_protected, inputs = h.completion(derived, budget)
+     require((original_manifest, original_accept, original_request, original_protected) ==
+             (manifest, accept, request, protected), 'original returned metadata changed')
++    wrapper_before = wrapper_binding(h, original_manifest, budget)
+     rows = h.subjects(derived, original_accept, original_request, original_protected)
+     observed_before = selected_stats(h, rows, budget)
+     require(len(rows) == 21 and len([r for r in rows if r['kind'] in ('protocol', 'estimate')]) == 18,
+@@ -259,6 +305,8 @@
+             and h.released(budget) == leases_before, 'final original completion/source/leases differ')
+     require(selected_stats(h, rows, budget) == observed_before, 'original21 stat/mode set changed')
+     require(h.native(budget) == native_pins, 'native pins changed')
++    require(wrapper_binding(h, original_manifest, budget) == wrapper_before,
++            'observed wrapper upstream/bytes/stat changed during metadata read')
+     final_helper, final_returned = boot_read(HELPER, HELPER_BYTES, budget, expected=HELPER_SHA, retain=True)
+     require(final_helper == helper_pin and final_returned == helper_raw
+             and primary_binding(args.expected_primary, final_returned, budget) == primary_before,
+@@ -286,7 +334,9 @@
+         'original21_current_modes_and_stats': observed_before, 'raw_report_directories': actual_raw,
+         'source': source_before, 'C': C, 'R14': R14, 'F6': F6,
+         'native': native_pins, 'released_authoritative_leases': leases_before,
+-        'primary_fixed_native_Git_observed40': primary_before, 'own_source': own_pin,
++        'primary_fixed_native_Git_observed40': primary_before,
++        'wrapper_upstream_commit': wrapper_before['upstream_commit'],
++        'wrapper_fixed_native_Git_observation': wrapper_before, 'own_source': own_pin,
+         'imported_original_helper': helper_pin, 'import_scope': 'Exact returned ee12a bytes, __main__ false; only readonly native/source/completion/subjects/released/read primitives called.',
+         'literal_private_roots_before': roots, 'literal_private_roots_after': root_after,
+         'inherited_completion': {'wrapper_runner': '0 verified by unchanged completion',

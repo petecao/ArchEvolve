@@ -1,0 +1,19 @@
+test_exact_frozen_leafs_shared_bases_and_model_boundary (__main__.BoundsSeamControls.test_exact_frozen_leafs_shared_bases_and_model_boundary) ... ok
+test_fixed_call_all25_pass_unchanged_real_bound_gate (__main__.BoundsSeamControls.test_fixed_call_all25_pass_unchanged_real_bound_gate) ... FAIL
+test_old_call_reproduces_all25_input_size_refusals_before_harness (__main__.BoundsSeamControls.test_old_call_reproduces_all25_input_size_refusals_before_harness) ... ok
+test_optional_default_byte_identity_and_explicit_empty_not_coerced (__main__.BoundsSeamControls.test_optional_default_byte_identity_and_explicit_empty_not_coerced) ... ok
+test_proposed_helper_old_caller_still_refuses_unknown_dimension (__main__.BoundsSeamControls.test_proposed_helper_old_caller_still_refuses_unknown_dimension) ... ok
+
+======================================================================
+FAIL: test_fixed_call_all25_pass_unchanged_real_bound_gate (__main__.BoundsSeamControls.test_fixed_call_all25_pass_unchanged_real_bound_gate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/bounds-repair-proposal-v1/test_fixture_bounds_seam.py", line 149, in test_fixed_call_all25_pass_unchanged_real_bound_gate
+    self.assertEqual((TRACE / 'cases' / (row['name'] + '.cc')).read_text(), generated)
+AssertionError: '/* 2[133 chars]_cpu_write(int thread, int cell, int value);\n[697 chars]n}\n' != '/* 2[133 chars]_cpu_cas(int thread, int cell, int expected, i[697 chars]n}\n'
+Diff is 1189 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.121s
+
+FAILED (failures=1)

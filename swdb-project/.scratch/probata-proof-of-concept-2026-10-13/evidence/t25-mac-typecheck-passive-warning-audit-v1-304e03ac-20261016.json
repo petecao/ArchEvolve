@@ -1,0 +1,55 @@
+{
+  "actual_exit_code": 0,
+  "actual_guard": {
+    "path": "/private/tmp/probata-t25-mac-typecheck-v2-304e03ac-20261016/guard.log.summary.json",
+    "sha256": "09ba40b3e13c92f4a63065f711289f945330d75878acec9383771e7cf711466a"
+  },
+  "actual_output_pins": [
+    {
+      "path": "/private/tmp/probata-t25-mac-typecheck-v2-304e03ac-20261016/typecheck/stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/probata-t25-mac-typecheck-v2-304e03ac-20261016/typecheck/stderr.txt",
+      "sha256": "f51c98d9785eb7623eaa2b0bff60a0b0c981922845e5a30fca7cb7e280cd65eb"
+    }
+  ],
+  "actual_receipt": {
+    "path": "/private/tmp/probata-t25-mac-typecheck-v2-304e03ac-20261016/typecheck/receipt.json",
+    "sha256": "f458c60a83e184ab015b6ac7f4ab81ceac1d12356a5183fa3832129e708c00e8"
+  },
+  "actual_rerun": false,
+  "actual_v2_reader_warning_inventory": [],
+  "corrected_passive_warning_inventory": [
+    "Warning, file \"/private/tmp/probata-t25-mac-typecheck-v2-304e03ac-20261016/typecheck/heap_reallocation.mlw\", line 25, characters 18-23: unused variable dummy"
+  ],
+  "created": "2026-10-16 ET",
+  "future_parser_entry_not_executed": {
+    "path": "/private/tmp/probata-t25-mac-typecheck-entry-v3-304e03ac-20261016.py",
+    "sha256": "80a8839eb92a3cc5ea304f1f70c5f5fc9097e93aabf7be91df4adb5456e6e663"
+  },
+  "guard_resources": {
+    "no_timeout_oom_or_inspection_failure": true,
+    "peak_rss_mib": 50.53125,
+    "wall_seconds": 0.3772708749747835
+  },
+  "native_runtime_limit": "producer pre/post file pins checked; OS dyld shared cache remains explicitly trusted",
+  "reader": {
+    "path": "/private/tmp/probata-t25-mac-typecheck-passive-warning-audit-v1-304e03ac-20261016.py",
+    "sha256": "509c6b8df43f058bd3f063ad184971e1812fd8d2f9eb58c311036461678ff4b8"
+  },
+  "runtime_metadata": {
+    "path": "/private/tmp/probata-t25-mac-why3-type-runtime-v1-20261016.json",
+    "sha256": "cd29ea964b4b50c6ead2090a265ee30c6e147a2728152d885edcffec85767028"
+  },
+  "scope": "Passive output classification only. Original v2/raw/receipt remain unchanged. Syntax/types do not certify WP import/task closure, models, typed-source image or caller composition.",
+  "source_commit": "304e03ac097352e78c3d3a637e13e951bef51dd0",
+  "status": "PASS syntax/types with exactly the known unused dummy warning",
+  "theory": {
+    "path": "/private/tmp/probata-t25-mac-typecheck-v2-304e03ac-20261016/typecheck/heap_reallocation.mlw",
+    "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+  },
+  "theory_git_blob": "af3f31aefa824f6f407a5124b9acf5a21e4d0b09",
+  "unexpected_warnings": [],
+  "warning_reader_limit": "v2 colon-only regex silently omitted the actual comma-form warning; this separate pinned parser closes the retained actual output classification only"
+}

@@ -1,0 +1,229 @@
+{
+  "format": "swdb.bfs.t17-prospective-acceptance.v1",
+  "created": "2026-09-27",
+  "state": "prospective_dependencies_unresolved",
+  "dispatch_allowed": false,
+  "automatic_retry_allowed": false,
+  "acceptance_claim": false,
+  "gain_claim": false,
+  "historical_diagnostic": {
+    "id": "bfs-t17-diagnostic-build-only-20260926-a1",
+    "state": "failed_before_compile",
+    "original_started": "2026-09-27T00:47:10.605637-04:00",
+    "original_deadline": "2026-09-27T00:57:10.605637-04:00",
+    "original_window_seconds": 600,
+    "window_policy": "No extension or reuse; insufficient for full240second API plus30cleanup by first repair review. New prerequisite must be charged to a separate prospective route allocation.",
+    "driver": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t17-diagnostic-build-only-20260926-a1/bfs-t17-diagnostic-build-only-20260926-a1.driver/driver.json",
+      "sha256": "605cd6461f773d163dd89932c77691cac2e0cbc57f2d182adefbfd9dbede468b"
+    },
+    "launch": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t17-diagnostic-build-only-20260926-a1.dispatch/launch.json",
+      "sha256": "689a3bcbfbdc3a85b9e6134a9627f481c584e730329166f1966d21dd2b4402e9"
+    },
+    "independent_terminal": {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/observations/t17-diagnostic-failed-terminal-20260927.json",
+      "sha256": "1b7cd306884f8f424a8350ae175c3e9dda3406fcb24c5c0a43037bb8d4533cd9"
+    },
+    "closed_elapsed_seconds": 593,
+    "closed_retained_bytes": 18321408,
+    "cost_refund": false,
+    "window_state": "expired",
+    "window_expiration_confirmed_at": "2026-09-27T00:58:49-04:00",
+    "repair_commit": "3c09f3c2bd1958bdf0285b50a50260a30a6566df",
+    "original_prepared_packet_commit": "3db2ae3c4f201a9c8bf60d2494d7e02508639bb3",
+    "repair_scope": "Record view includes exactly both referenced implementation .cc attachments with pinned runtime hashes; failed original view remains unchanged.",
+    "closed_elapsed_basis": {
+      "method": "Conservative ceiling of original outer start through independent final two-pass observation; includes idle readback delay, not CPU time.",
+      "exact_seconds": 592.764382,
+      "observed_at": "2026-09-27T00:57:03.370019-04:00"
+    },
+    "cleanup_ledger": {
+      "spent_seconds": 0.2261140875518322,
+      "events": 4,
+      "settled": true
+    },
+    "lease_generation": 438,
+    "current_closure": "Two retained process passes: four absent identities plus exact pane zombie with zero RSS; no live owned work"
+  },
+  "scientific_scope": {
+    "mode": "controlled_simulator",
+    "kernel": "gapbs-bfs",
+    "function": "DOBFS",
+    "roi": "bfs.complete_call.v1",
+    "primary_adapter": "dx100.complete_call.v2",
+    "guest_threads": 4,
+    "model_build": {
+      "id": "bfs-dx100-build-20260925-a2",
+      "canonical_sha256": "13d277a961e44fe0ee254b4685126572fb06394fea455e3e1d450626cc535cea",
+      "host_artifacts_reverified": false
+    },
+    "target": "dx100-e4fc4af-4c",
+    "repetitions": 2,
+    "warmups": 0,
+    "sources_per_family": 3,
+    "trace_transport": "gem5-gzip.v1",
+    "author_binary": false,
+    "comparison_baseline": "dx100-bfs-scalar",
+    "configuration_requirement": "Matched model/CPU/cache/memory/clock; BASE for baseline and MAA for candidate; actual T15 treatment and region correspondence must be frozen before candidate timing."
+  },
+  "remaining_diagnostic_prerequisite": {
+    "request_file": "diagnostic-request-prospective.json",
+    "request_sha256": "863cc3d67466e50db2d7cd42a6a248de6d8bc1672c8c85bd4474a06a45a69796",
+    "state": "not_dispatched_no_allocation",
+    "primary_recompile": false,
+    "provider_calls": 0,
+    "guest_executions": 0,
+    "public_compile_max_seconds": 240,
+    "compiler_max_seconds": 180,
+    "rss_bytes": 17179869184,
+    "build_subset_max_bytes": 1073741824,
+    "stage_max_retained_bytes": 2147483648,
+    "aggregate_charged_wall_seconds": null,
+    "aggregate_charged_bytes": null,
+    "record_view_rule": "Exact canonical Git records plus the two pinned implementation source attachments; empty writer lock allowed. New output ID only."
+  },
+  "expected_outputs": {
+    "series": 4,
+    "primary_executions": 24,
+    "diagnostic_executions": 24,
+    "profile_packages": 24,
+    "primary_aggregates": 4,
+    "family_comparisons": 2
+  },
+  "series": [
+    {
+      "id": "bfs-t17-controlled-uniform_random-baseline-20260927-a1",
+      "family": "uniform_random",
+      "role": "baseline",
+      "candidate": {
+        "id": "bfs-dx100-compile-20260925-a1.candidate",
+        "canonical_sha256": "965a13a8617a0be03838a0d41701a4bb8b6e2cfdc12c5893e0b686af874eaf35",
+        "host_artifacts_reverified": false
+      },
+      "primary_build": {
+        "id": "bfs-scalar-v2-preparation-20260926-a1.dx100.primary.build",
+        "canonical_sha256": null,
+        "host_artifacts_reverified": false
+      },
+      "diagnostic_build": {
+        "id": "bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build",
+        "canonical_sha256": null,
+        "host_artifacts_reverified": false
+      },
+      "accelerated": false,
+      "workload": null,
+      "ordered_sources": null,
+      "protocol_id": null,
+      "configuration_sha256": null,
+      "series_wall_seconds": null,
+      "series_retained_bytes": null
+    },
+    {
+      "id": "bfs-t17-controlled-uniform_random-candidate-20260927-a1",
+      "family": "uniform_random",
+      "role": "candidate",
+      "candidate": {
+        "id": "bfs-campaign-preparation-20260925-a1.dx100-instructions.candidate-1",
+        "canonical_sha256": "e31ff21a5676c29c653d0c443f13faaf32cad7e8cdf41754404422dc9a94ac11",
+        "host_artifacts_reverified": false
+      },
+      "primary_build": {
+        "id": "bfs-t17-build-only-20260926-a1",
+        "canonical_sha256": "3cf348c46fa9e017173fc4c79debf6e3ecdc2b0821be9cb5c81ef4e82fc45630",
+        "host_artifacts_reverified": false
+      },
+      "diagnostic_build": {
+        "id": "bfs-t17-diagnostic-build-only-20260927-a2",
+        "canonical_sha256": null,
+        "host_artifacts_reverified": false
+      },
+      "accelerated": true,
+      "workload": null,
+      "ordered_sources": null,
+      "protocol_id": null,
+      "configuration_sha256": null,
+      "series_wall_seconds": null,
+      "series_retained_bytes": null
+    },
+    {
+      "id": "bfs-t17-controlled-kronecker-baseline-20260927-a1",
+      "family": "kronecker",
+      "role": "baseline",
+      "candidate": {
+        "id": "bfs-dx100-compile-20260925-a1.candidate",
+        "canonical_sha256": "965a13a8617a0be03838a0d41701a4bb8b6e2cfdc12c5893e0b686af874eaf35",
+        "host_artifacts_reverified": false
+      },
+      "primary_build": {
+        "id": "bfs-scalar-v2-preparation-20260926-a1.dx100.primary.build",
+        "canonical_sha256": null,
+        "host_artifacts_reverified": false
+      },
+      "diagnostic_build": {
+        "id": "bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build",
+        "canonical_sha256": null,
+        "host_artifacts_reverified": false
+      },
+      "accelerated": false,
+      "workload": null,
+      "ordered_sources": null,
+      "protocol_id": null,
+      "configuration_sha256": null,
+      "series_wall_seconds": null,
+      "series_retained_bytes": null
+    },
+    {
+      "id": "bfs-t17-controlled-kronecker-candidate-20260927-a1",
+      "family": "kronecker",
+      "role": "candidate",
+      "candidate": {
+        "id": "bfs-campaign-preparation-20260925-a1.dx100-instructions.candidate-1",
+        "canonical_sha256": "e31ff21a5676c29c653d0c443f13faaf32cad7e8cdf41754404422dc9a94ac11",
+        "host_artifacts_reverified": false
+      },
+      "primary_build": {
+        "id": "bfs-t17-build-only-20260926-a1",
+        "canonical_sha256": "3cf348c46fa9e017173fc4c79debf6e3ecdc2b0821be9cb5c81ef4e82fc45630",
+        "host_artifacts_reverified": false
+      },
+      "diagnostic_build": {
+        "id": "bfs-t17-diagnostic-build-only-20260927-a2",
+        "canonical_sha256": null,
+        "host_artifacts_reverified": false
+      },
+      "accelerated": true,
+      "workload": null,
+      "ordered_sources": null,
+      "protocol_id": null,
+      "configuration_sha256": null,
+      "series_wall_seconds": null,
+      "series_retained_bytes": null
+    }
+  ],
+  "budget_derivation": {
+    "state": "awaiting_actual_T15_cost_and_selection",
+    "t15_selection_evidence": null,
+    "t15_cost_evidence": null,
+    "source_specific_adjustment_evidence": null,
+    "diagnostic_preparation_and_readback_seconds": null,
+    "freeze_and_manifest_seconds": null,
+    "profiling_comparison_retrieval_seconds": null,
+    "outer_preflight_seconds": null,
+    "shared_cleanup_seconds": 30,
+    "aggregate_seconds": null,
+    "aggregate_retained_bytes": null,
+    "original_outer_started": null,
+    "original_outer_deadline": null,
+    "wall_formula": "diagnostic prerequisite including preparation/readback + freeze/manifest + sum(four complete series bounds from qualified T15 host-cost evidence and justified source-specific margin) + profiling/comparison/retrieval + outer preflight + one shared cleanup reserve",
+    "storage_formula": "new diagnostic/raw/build/view/cache plus four series retained outputs/sidecars + freeze/comparison/retrieval/dispatch; retain all historical closed costs separately with no refund",
+    "policy": "No numeric aggregate or per-series bound selected before qualified T15 evidence. CLI maxima do not create an allowance. Existing failed600second diagnostic window is not renewed."
+  },
+  "remaining_bindings": [
+    "Qualified T15 graph/source selection and actual complete primary/diagnostic host costs",
+    "Fresh diagnostic allocation inside prospective aggregate, exact runtime/proof/record view and successful new build",
+    "Controlled protocol complete target/build/instrumentation maps and actual content-addressed freeze",
+    "Per-role diagnostic region correspondence from actual build outputs",
+    "Exact Git runtime/Python proof, free lane, raw/build capacity and original aggregate clock"
+  ]
+}

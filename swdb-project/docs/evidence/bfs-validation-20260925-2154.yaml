@@ -1,0 +1,44 @@
+date: '2026-09-25'
+scope: Local software regression suite, not BFS performance or simulator acceptance.
+command: python3 -m pytest -q
+started_eastern: '2026-09-25 21:54 ET'
+duration_seconds: 1429.45
+result:
+  passed: 653
+  failed: 12
+  skipped: 3
+  exit_code: 1
+source_scope: >-
+  The test command did not capture a clean checkout identity. Source and tests
+  were edited while it ran; pytest retained the earlier collected test bodies.
+  This result is a diagnostic run, not successful verification of a fixed commit.
+retained_log:
+  path: /Users/yanrujhou/CLionProjects/EvolveSWDB_runs/bfs-validation/bfs-full-suite-20260925-2154.log
+  bytes: 38286
+  sha256: da80d286a83e03106bbf3ac550eead82b1f592ef9be0b1ba8fa28c9508ba839d
+failure_groups:
+  - tests: tests/test_bfs_coverage.py::test_exit_zero_failure_requires_the_actual_verdict_producing_execution
+    cases: 2
+    cause: Synthetic stage rows omitted schema-required started timestamps.
+    fix_commit: 75de5bf
+    corrected_focused_result:
+      passed: 2
+      duration_seconds: 12.20
+  - tests:
+      - tests/test_bfs_protocol.py::test_registration_rejects_non_equivalent_or_invalid_files
+      - tests/test_bfs_sg_stream.py::test_stream_parser_rejects_corrupt_loaded_adjacency
+      - tests/test_bfs_sg_stream.py::test_stream_parser_wall_budget_fails_without_registering
+    cases: 10
+    cause: >-
+      Tests copied the current catalog but assumed no workloads existed. Real
+      scale-14 and scale-18 workloads now exist. The negative public requests
+      were rejected correctly; the postcondition was stale.
+    fix: Assert that all preexisting workload filenames and bytes remain unchanged.
+    fix_commit: 7bf4d26
+    corrected_focused_result:
+      passed: 10
+      duration_seconds: 11.35
+remaining_requirement: >-
+  Run the complete suite again against stable final code and synchronized records
+  after the current integration fixes. Focused successes do not change this
+  retained full-suite failure into a passing result.

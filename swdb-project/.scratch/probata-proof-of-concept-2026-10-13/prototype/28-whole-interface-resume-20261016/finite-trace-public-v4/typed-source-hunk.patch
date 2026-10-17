@@ -1,0 +1,52 @@
+--- a/swdb/dx100_checked_source.py
++++ b/swdb/dx100_checked_source.py
+@@ -15,6 +15,7 @@
+ 
+ from swdb import dx100_whole_checked as contracts
+ from swdb import dx100_checked_registry as registry_consumer
++from swdb._dx100_finite import context_rule_scope_v1 as context_scope
+ from swdb._dx100_whole import unit_policy_registry_v2 as unit_registry
+ from swdb._dx100_whole import receiver_memory_v1 as memory_receiver
+ from swdb._dx100_whole import source_memory_selection_v1 as memory_selection
+@@ -178,7 +179,7 @@
+     from swdb._dx100_whole import normalized_capture_ingress_v2, memory_normalized_capture_ingress_v1
+     from swdb._dx100_whole import memory_normalized_compiler_adapter_v1, memory_source_preparation_v1
+     from swdb._dx100_whole import abi_role_transport_v1, strict_minify_v2
+-    modules = (compiler, codec, model, receiver, memory_receiver, staging, dispatch,
++    modules = (compiler, codec, model, receiver, memory_receiver, staging, dispatch, context_scope,
+         globals_observer, statements, binder, unit_registry, memory_selection, memory_runtime, resources,
+         ingress, normalized_capture_ingress_v2, memory_normalized_capture_ingress_v1,
+         memory_normalized_compiler_adapter_v1, memory_source_preparation_v1,
+@@ -192,6 +193,7 @@
+         'memory_capture_facts_v1.json': Path(__file__).parent / '_dx100_whole/memory_capture_facts_v1.json',
+         'package/__init__.py': Path(__file__).with_name('__init__.py'),
+         '_dx100_whole/__init__.py': Path(__file__).parent / '_dx100_whole/__init__.py',
++        '_dx100_finite/__init__.py': Path(context_scope.__file__).with_name('__init__.py'),
+         'runtime_projection_v2.py': Path(__file__).parent / '_dx100_whole/runtime_projection_v2.py',
+         'receiver-state-draws-v2/receiver_state_draws_v2.py':
+             Path(__file__).parent / '_dx100_whole/receiver-state-draws-v2/receiver_state_draws_v2.py',
+@@ -486,7 +488,10 @@
+         for match in re.finditer(r'/\* swdb-anchor (\S+) \*/', text))
+     draws = json.loads(prepared_receiver.draw_plan_json)['producer_plan_rows']
+     draws = [{**row, 'c_lvalue': 'dws_choice_table[%d]' % index} for index, row in enumerate(draws)]
+-    certificate = {'kind': KIND, 'entry': selection.entry_id, 'source_policy': normalized['source_policy'],
++    from swdb import proof_semantics
++    normal_records=proof_semantics.record_assumptions(selection.library,selection.entry_id,semantics_pin['sha256'])
++    _selected_records,rule_scope=context_scope.source(entry,normal_records,selection.entry_id,semantics_pin['sha256'])
++    certificate = {'kind': KIND, 'entry': selection.entry_id, 'source_policy': normalized['source_policy'],'rule_scope':rule_scope,
+         'semantics_entry_file':semantics_pin,
+         'semantics_entry_content_sha256':selection.library.content_sha256(selection.entry_id),
+         'source_sha256': source_sha, 'captured_source_path': str(captured_path), 'proof_source_path': str(Path(source)),
+@@ -635,8 +640,10 @@
+     cert=unit.certificate
+     bind_context_rules(unit.selection.library.get(unit.selection.entry_id),cert['recorded_context_assumptions'])
+     from swdb import proof_semantics
+-    return proof_semantics.record_assumptions(unit.selection.library,unit.selection.entry_id,
+-        cert['semantics_entry_file']['sha256'])
++    normal=proof_semantics.record_assumptions(unit.selection.library,unit.selection.entry_id,cert['semantics_entry_file']['sha256'])
++    selected,scope=context_scope.source(unit.selection.library.get(unit.selection.entry_id),normal,unit.selection.entry_id,cert['semantics_entry_file']['sha256'])
++    need(canonical(scope)==canonical(cert['rule_scope']),'typed source rule scope changed after preparation')
++    return selected
+ 
+ 
+ WHOLE_NATIVE_FAILURE = r'''/* Checked source: one fresh native process, no recovery across C++ lifetimes. */

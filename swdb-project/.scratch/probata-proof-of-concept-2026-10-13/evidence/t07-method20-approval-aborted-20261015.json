@@ -1,0 +1,225 @@
+{
+  "created": "2026-10-15 ET",
+  "outcome": "harness-aborted: mandatory method20 design tool refused by frozen CLI approval routing",
+  "source_commit": "7408be92957e1c5b12399d2d77541d999b024874",
+  "source_file_checks_before_new_edits": 27,
+  "source_artifact_errors_at_stop": [],
+  "provider_called": true,
+  "mandatory_design_tool_executed": false,
+  "promoted_agent_hints": false,
+  "best_open": 39,
+  "best_origin": "seeds",
+  "baseline": {
+    "round0_outcome": "not proven; complete checked baseline",
+    "ordinary_open": 103,
+    "failure_verdicts": {
+      "timeout": 103
+    },
+    "smoke_goals": 139,
+    "n_inventory": 393,
+    "runner": {
+      "cmd": [
+        "/private/tmp/probata-resume-t07/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/wp_run.sh",
+        "wp-smoke",
+        "/private/tmp/probata-t07-20261015-run21/counted-21/round-0",
+        "tdstep_standin.c"
+      ],
+      "exit_code": 0,
+      "wall_s": 894.4745777916978,
+      "peak_rss_mb": 3771.921875,
+      "cap_gb": 8,
+      "killed_by_watchdog": false,
+      "timed_out": false,
+      "queue_timed_out": false,
+      "timeout_s": 3118.93668241665,
+      "queue_timeout_s": 7200,
+      "lock_wait_s": 0.00033683329820632935,
+      "runner_pid": 28855,
+      "clock": "continuous_monotonic",
+      "clock_info": {
+        "kind": "continuous_monotonic",
+        "implementation": "mach_continuous_time",
+        "includes_sleep": true,
+        "numer": 125,
+        "denom": 3
+      },
+      "log": "/private/tmp/probata-t07-20261015-run21/counted-21/round-0/wp-smoke.log",
+      "log_sha256": "69b6db2582f67f2d0e9112188cc10eb79df8592b370ec60704f2fc117140871d",
+      "unconfirmed_children": [],
+      "error": null,
+      "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment",
+      "rss_scope": "live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches; sampled, not a kernel quota",
+      "finished": "2026-10-15 15:38:46 EDT"
+    },
+    "smoke_passed": 139,
+    "smoke_failures": []
+  },
+  "abort": {
+    "created_unix": 1792093594.795058,
+    "source_commit": "7408be92957e1c5b12399d2d77541d999b024874",
+    "reason": "CLI approval policy refuses new record_design MCP tool; no frozen runtime/argv changes allowed",
+    "driver": {
+      "pid": 28786,
+      "born": 1792092230.867691
+    },
+    "owned_snapshot": [
+      {
+        "pid": 33537,
+        "born": 1792093458.389018,
+        "name": "codex"
+      },
+      {
+        "pid": 33685,
+        "born": 1792093459.170055,
+        "name": "python3.12"
+      },
+      {
+        "pid": 33770,
+        "born": 1792093478.045227,
+        "name": "codex-code-mode-host"
+      },
+      {
+        "pid": 33871,
+        "born": 1792093573.554219,
+        "name": "python3.12"
+      },
+      {
+        "pid": 33872,
+        "born": 1792093573.599782,
+        "name": "frama-c"
+      }
+    ],
+    "runner_pids": [
+      33871
+    ],
+    "provider_pids": [
+      33537
+    ],
+    "provider_started": true,
+    "mcp_design_executed": false,
+    "status": "harness-aborted; owned processes stopped; no design tool execution",
+    "stop_signals_unix": 1792093630.277363,
+    "remaining_owned_pids_killed": [],
+    "checked_unix": 1792093706.5909839,
+    "remaining_owned_processes": [],
+    "tool_call_statuses": [
+      {
+        "tool": "record_design",
+        "status": "failed",
+        "error": {
+          "message": "MCP tool call requires approval, but approval policy is never"
+        }
+      },
+      {
+        "tool": "record_design",
+        "status": "failed",
+        "error": {
+          "message": "MCP tool call requires approval, but approval policy is never"
+        }
+      },
+      {
+        "tool": "record_design",
+        "status": "failed",
+        "error": {
+          "message": "MCP tool call requires approval, but approval policy is never"
+        }
+      },
+      {
+        "tool": "list_mcp_resources",
+        "status": "failed",
+        "error": {
+          "message": "resources/list failed: resources/list failed for `probata`: Mcp error: -32601: method not supported: resources/list"
+        }
+      },
+      {
+        "tool": "check_edit",
+        "status": "completed",
+        "error": null
+      },
+      {
+        "tool": "show_goal",
+        "status": "completed",
+        "error": null
+      },
+      {
+        "tool": "show_goal",
+        "status": "completed",
+        "error": null
+      },
+      {
+        "tool": "show_goal",
+        "status": "completed",
+        "error": null
+      }
+    ]
+  },
+  "summary": null,
+  "scientific_result": "No qualifying hint experiment, fresh final proof/smoke or covering-wait negative. This is a CLI integration failure, not refutation.",
+  "preseed_compiler_assumption": "Actual live driver PATH resolved AppleClang21.0.0, pinned before first frame seed use. Syntactic AST parser only; generated frames remain independently proven WP obligations. No production LLVM22 agreement claim; no PATH mutation.",
+  "artifacts": [
+    {
+      "path": "/private/tmp/probata-t07-20261015-run21/source-manifest.json",
+      "sha256": "9b2ea54bd234e4decceaf1277661f2a9866fd52e61d3fbe64f50da19e13c802e",
+      "bytes": 11472
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run21/launch.json",
+      "sha256": "dd476588d18c2c07c80a97982bb3c2e0b34708de51cac26d87d92cbcb0878492",
+      "bytes": 655
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run21/counted-21/meta.json",
+      "sha256": "3a2890805e2852ea6f5f312d07eb90d2f76e5e41ccb9c39c22d932084087eb2d",
+      "bytes": 5274
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run21/counted-21/history.json",
+      "sha256": "b54245a207e4cea40bf04d73b84048cabd93764680184f08206634f2ccb79ae1",
+      "bytes": 25571
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run21/counted-21/best.json",
+      "sha256": "cd8763cf8fa6a6249fa47027628af967bf5c93f968cc96b394491f4acdf27b8b",
+      "bytes": 16397
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run21/counted-21/seeds/tdstep_standin.c",
+      "sha256": "d5267205fbdeb764e4a65c906ac2983210fe08e19eea309567cef448ee62f5a1",
+      "bytes": 14345
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run21/counted-21/seeds/goals.json",
+      "sha256": "ec3850bfddf8793ba4b7bbcf783f66e6362b85d56777bd6c2326f0be368c2d28",
+      "bytes": 83338
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run21/counted-21/seeds/lemmas.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "bytes": 3
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run21/abort.json",
+      "sha256": "5518aee18387687a603cfd87ba9957abd3d0fcb4d7efbae3d312704ecc60f5ba"
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run21/audit.json",
+      "sha256": "a1977c7dac7c32bf07bca280e1d6bbbbebd7ad32ad446b67e72a2eaf80c7ea01"
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run21/baseline-checkpoint.json",
+      "sha256": "ce99382714eb412b46e529abedc05eefc3e254ab519b1a4de051ca0a44b20427"
+    },
+    {
+      "path": "/private/tmp/probata-t07-20261015-run21/preseed-compiler-receipt.json",
+      "sha256": "3534d1f872eb183efbfce88cd41fc1da053f16f87e7ce954e791d39fa0ab2b6c"
+    },
+    {
+      "path": "/private/tmp/probata-t07-run21-provider-audit.md",
+      "sha256": "b590b0cdac04620ff26698be648cef915f81f357a06b93dda939495247aa0eb4"
+    },
+    {
+      "path": "/private/tmp/probata-t07-run21-provider-audit.json",
+      "sha256": "5841a936d9dc32b028910fab60c4cbb626b3206830b793dc057f4485f2e8cac6"
+    }
+  ]
+}

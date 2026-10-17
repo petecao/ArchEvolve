@@ -1,0 +1,106 @@
+{
+  "created": "2026-09-27",
+  "state": "pushed_runtime_pending_linux_proof",
+  "sole_parent": "6a493a0d489d8d1c76eba8c3431538d6412fd45a",
+  "overlay_count": 11,
+  "overlay_bytes": 358685,
+  "base_tree_files": 802,
+  "expected_result_tree_files": 806,
+  "files": [
+    {
+      "path": "scripts/bfs_simulator_batch.py",
+      "mode": "100644",
+      "bytes": 71324,
+      "sha256": "ea7a120e0cb055694ee5fab6651ecbaa881cfb7f8cabe10cd54231220f7e2b12",
+      "base_blob": "a6d89bcba96566427d7e0efba863457b44e77ab1",
+      "base_sha256": "0ffcc7ef83b0be924d8f3c793110e112c9c5e8e6515547f2e233909b5e425183"
+    },
+    {
+      "path": "scripts/bfs_simulator_recovery.py",
+      "mode": "100644",
+      "bytes": 35290,
+      "sha256": "74d35a1418c78fd44b9719224cf8d3470ad726460cb8f8b9239cb0608495b029",
+      "base_blob": "40308daa4a4841ee81eecdfd18212df5848d5f33",
+      "base_sha256": "bea576ee47e69b56cd33d9d048a041a03613d48f34b59dc78e2603e0347ec64c"
+    },
+    {
+      "path": "scripts/bfs_linux_fixture.py",
+      "mode": "100644",
+      "bytes": 15977,
+      "sha256": "392aa8256042e5780d5c0c219f2251ee3c739b8f5a48071d4633efa3f904b836",
+      "base_blob": "978ed1edefead24291baa71b44c36a8dd7b5b8f9",
+      "base_sha256": "277e0827a079eed032cc8f7cdedcbc2867f8880e247ea20b9e5dbe7096f48c3a"
+    },
+    {
+      "path": "scripts/bfs_supervision_supplement.py",
+      "mode": "100644",
+      "bytes": 10013,
+      "sha256": "81490a89b1af2fa4c7b6d89da261f028da8bdcd73f80935df446011f8e3a300d",
+      "base_blob": "8924b9a6c30e85538ef71581b01adece177fa551",
+      "base_sha256": "e2ddf39589b8db49cbf1c89d1dd106dbbd2d54637f3e41582d78a5ad0defaef6"
+    },
+    {
+      "path": "tests/test_bfs_simulator_batch.py",
+      "mode": "100644",
+      "bytes": 45935,
+      "sha256": "f12aca2a4eb15cbb565cd8a961f4ae249ca91a858e58cdd096366187b03b2ab7",
+      "base_blob": "5bc22172d79eb893e6ef4d7281eb636f707d8ae4",
+      "base_sha256": "72fc34819f71895028be234c3db415efad6c24abeda229554816650813d03f10"
+    },
+    {
+      "path": "tests/test_bfs_simulator_recovery.py",
+      "mode": "100644",
+      "bytes": 33033,
+      "sha256": "44c0470a090076186a844947c719bbd73df64dff53b91688337b762f30080b65",
+      "base_blob": "b7805f21ba740d8f3aff65be56c50a7952833f93",
+      "base_sha256": "9f19ee93d39776b929e4865a0cf0c768a7acc90d9254052526eb3f5b9c0c71b3"
+    },
+    {
+      "path": "tests/test_bfs_linux_fixture.py",
+      "mode": "100644",
+      "bytes": 14135,
+      "sha256": "ff4d43276acf59512cf6688de353ffb4bb67d700c40d91e01f941ecb21bbfff9",
+      "base_blob": "19af6db837751660f51e4e76de714f0e5f822a06",
+      "base_sha256": "95221714be8b97a2fb9288a86adedc3d3688b838e01fd56a8975612f2da13da6"
+    },
+    {
+      "path": "tests/fixtures/bfs_proof_runtime_8cbfee6.json",
+      "mode": "100644",
+      "bytes": 16409,
+      "sha256": "ec7fb2aa61be0748d575b3ccb68259f340dccb54ae772bdb870b90fadf6d1c60",
+      "base_blob": null,
+      "base_sha256": null
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t15-lease-recovery-simulator-batch-20260927-a1.json",
+      "mode": "100644",
+      "bytes": 17799,
+      "sha256": "3557397a81a402f7b083d5aa72a466d956f9c8ca744facf86be35a1ec39214df",
+      "base_blob": null,
+      "base_sha256": null
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t16-lease-recovery-simulator-batch-20260927-a1.json",
+      "mode": "100644",
+      "bytes": 19531,
+      "sha256": "3ba5398da115612be0b248f54d5d0d5a64c22149a1865cfa23277afca14d139f",
+      "base_blob": null,
+      "base_sha256": null
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/observations/failed-t15-supervision-closure-20260927.json",
+      "mode": "100644",
+      "bytes": 79239,
+      "sha256": "a25089de346964984c97c0a390443e13cd2cfa1d8ec46c51bb745c4e2214043f",
+      "base_blob": null,
+      "base_sha256": null
+    }
+  ],
+  "exclude": "all other main changes, T17 diagnostic repair, active provider and raw outputs; separate Git-delivered operator packet follows after runtime commit",
+  "commit": "07baead5fe5cf3718e18e1d2313db6899f2638c8",
+  "branch": "codex/bfs-lease-recovery-runtime-20260927-a1",
+  "source_commit": "4743d526c3425c2be0dde9946a006ee7733864f0",
+  "manifest_sha256": "4f3b76a4d0d947afacc1985d9d3a7f126857163599aee26c02eece62fd87b781",
+  "date_et": "2026-09-27",
+  "source_review": "lease-integrated-review-20260927.json"
+}

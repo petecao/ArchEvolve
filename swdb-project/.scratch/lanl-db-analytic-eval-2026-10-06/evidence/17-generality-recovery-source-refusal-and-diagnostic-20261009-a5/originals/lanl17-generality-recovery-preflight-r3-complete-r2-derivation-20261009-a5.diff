@@ -1,0 +1,37 @@
+--- /private/tmp/lanl17_generality_recovery_candidate_preflight_20261009_a5_r2.py
++++ /private/tmp/lanl17_generality_recovery_candidate_preflight_20261009_a5_r3.py
+@@ -256,7 +256,7 @@
+     # Git metadata only; c4 and its parent export must remain in protected common Git.
+     git('merge-base','--is-ancestor',CANDIDATE_HEAD,R)
+     need(git('rev-parse',GENERALITY_EXPORT+'^{commit}')==GENERALITY_EXPORT and git('rev-list','--parents','-n','1',GENERALITY_EXPORT).split()==[GENERALITY_EXPORT,CANDIDATE_HEAD],'original_generality_export_object_sole_c4_parent')
+-    staged=git('ls-files','--stage','-z');need(not any(x.startswith('160000 ') for x in staged.split('\0')),'submodules_refused')
++    modes=git('ls-files','--format=%(objectmode)','-z');need(all(x in ('100644','100755','120000') for x in modes.split('\0') if x),'submodule_or_unknown_tracked_mode_refused')
+     return {'candidate':str(CANDIDATE),'head':CANDIDATE_HEAD,'detached':True,'clean_including_untracked':True,'common_git':str(common),'git_directory':str(gitdir),'pointer':pin,'backlink':bpin,'registration_HEAD':hpin,'merged_into_R':True,'original_export_commit':GENERALITY_EXPORT,'original_export_sole_c4_parent':True,'registration_metadata_not_restore_instruction':True}
+ 
+ def protected_reference(p):
+@@ -265,7 +265,8 @@
+ def inventory_tree():
+     rows=[];total=0;allocated=0;metadata_size=2;references=[];inodes=set()
+     todo=[CANDIDATE]
+-    needles=[os.fsencode(p) for p in PROTECTED];overlap=max(map(len,needles))-1
++    needles=[os.fsencode(p) for p in PROTECTED];overlap=max(map(len,needles))+1
++    patterns=[re.compile(re.escape(x)+rb'(?=[^A-Za-z0-9_.-])') for x in needles]
+     while todo:
+         tick();p=todo.pop();s=p.lstat();relative=p.relative_to(CANDIDATE).as_posix()
+         need(len(rows)<ENTRY_CAP and len(os.fsencode(relative))<=4096 and s.st_uid==UID and not s.st_mode&0o7000,'tree_entry_bounds_owner_or_special_bits')
+@@ -284,11 +285,13 @@
+                 need(stamp(os.fstat(f.fileno()))==stamp(s),'tree_file_open_race')
+                 while True:
+                     tick();b=f.read(1024*1024)
+-                    if not b:break
++                    if not b:
++                        if p!=CANDIDATE/'.git':refs.update(i for i,x in enumerate(patterns) if x.search(tail+b'\0'))
++                        break
+                     n+=len(b);need(n<=s.st_size,'tree_file_read_cap');h.update(b)
+                     window=tail+b
+                     if p!=CANDIDATE/'.git':
+-                        refs.update(i for i,x in enumerate(needles) if x in window)
++                        refs.update(i for i,x in enumerate(patterns) if x.search(window))
+                     tail=window[-overlap:]
+                 need(n==s.st_size and stamp(os.fstat(f.fileno()))==stamp(s)==stamp(p.lstat()),'tree_file_nine_stat_or_size_race')
+             row.update(kind='regular',bytes=n,sha256=h.hexdigest(),allocated_bytes=s.st_blocks*512)

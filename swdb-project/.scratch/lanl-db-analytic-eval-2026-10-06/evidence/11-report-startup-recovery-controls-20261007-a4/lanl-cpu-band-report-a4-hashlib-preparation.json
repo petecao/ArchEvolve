@@ -1,0 +1,119 @@
+{
+  "format": "swdb.cpu-band-report-hashlib-a4-preparation.v1",
+  "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "controls": {
+    "dispatcher": {
+      "original_path": "/private/tmp/lanl-dispatch-cpu-band-report-a3-metadata2400-cleanup60.py",
+      "original_sha256": "dd74dbbe238c1d0c8222d894acd94ef1d344049da257d2a0d744afefb3d2b120",
+      "path": "/private/tmp/lanl-dispatch-cpu-band-report-a4-metadata2400-cleanup60-hashlib.py",
+      "bytes": 17772,
+      "sha256": "543b79ea40a54537ee23b37ec1f44afbc8b135cad3fff25fb82d35db7b5130c7",
+      "allowed_exact_replacements": [
+        {
+          "before": "import copy,datetime,json,math,os,shutil,signal,subprocess,time",
+          "after": "import copy,datetime,hashlib,json,math,os,shutil,signal,subprocess,time",
+          "occurrences": 1
+        },
+        {
+          "before": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261006-a3",
+          "after": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4",
+          "occurrences": 1
+        },
+        {
+          "before": "swdb-lanl-cpu-band-report-20261006-a3",
+          "after": "swdb-lanl-cpu-band-report-20261007-a4",
+          "occurrences": 2
+        }
+      ],
+      "exact_reversal_byte_equal": true
+    },
+    "exporter": {
+      "original_path": "/private/tmp/lanl-export-cpu-band-report-a3.py",
+      "original_sha256": "788c5cfd72433916daac544420de5251eb6d549c56afaeba455a82416f11dbb1",
+      "path": "/private/tmp/lanl-export-cpu-band-report-a4.py",
+      "bytes": 12921,
+      "sha256": "1d1251baeba12c65c40a7a616060e5ff236197ce73f77335534d4a4d83fe32a6",
+      "allowed_exact_replacements": [
+        {
+          "before": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261006-a3",
+          "after": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4",
+          "occurrences": 1
+        }
+      ],
+      "exact_reversal_byte_equal": true
+    },
+    "dispatch_guard": {
+      "original_path": "/private/tmp/lanl-admit-cpu-future-phase-cleanup60-20261007.py",
+      "original_sha256": "b406d3d06b3bddb2cd433cf8f3c47fa80f03314b23795a4b40c045a9120a1e93",
+      "path": "/private/tmp/lanl-admit-cpu-future-phase-cleanup60-report-a4-20261007.py",
+      "bytes": 4378,
+      "sha256": "bfc76a462c551c1358f935038ad4f41374af9ec9fb19ba2488b207bbf4e06ae2",
+      "allowed_exact_replacements": [
+        {
+          "before": "lanl-dispatch-cpu-band-report-a3-metadata2400-cleanup60.py",
+          "after": "lanl-dispatch-cpu-band-report-a4-metadata2400-cleanup60-hashlib.py",
+          "occurrences": 1
+        },
+        {
+          "before": "dd74dbbe238c1d0c8222d894acd94ef1d344049da257d2a0d744afefb3d2b120",
+          "after": "543b79ea40a54537ee23b37ec1f44afbc8b135cad3fff25fb82d35db7b5130c7",
+          "occurrences": 1
+        }
+      ],
+      "exact_reversal_byte_equal": true
+    },
+    "export_guard": {
+      "original_path": "/private/tmp/lanl-export-completed-cpu-phase-guard-20261007.py",
+      "original_sha256": "e8fb700fa438ad1580167593f047c632c1e354b00ad405bd67e4b330c8fd85f0",
+      "path": "/private/tmp/lanl-export-completed-cpu-phase-guard-report-a4-20261007.py",
+      "bytes": 2157,
+      "sha256": "26f6b83acced22cf94797dc8066f335f393cfbd63502580b461186bc92485eaf",
+      "allowed_exact_replacements": [
+        {
+          "before": "raw=P('/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-'+('band-report' if phase=='report' else phase)+'-20261006-a3')",
+          "after": "raw=P('/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-'+('band-report' if phase=='report' else phase)+('-20261007-a4' if phase=='report' else '-20261006-a3'))",
+          "occurrences": 1
+        },
+        {
+          "before": "lanl-export-cpu-band-report-a3.py",
+          "after": "lanl-export-cpu-band-report-a4.py",
+          "occurrences": 1
+        },
+        {
+          "before": "788c5cfd72433916daac544420de5251eb6d549c56afaeba455a82416f11dbb1",
+          "after": "1d1251baeba12c65c40a7a616060e5ff236197ce73f77335534d4a4d83fe32a6",
+          "occurrences": 1
+        }
+      ],
+      "exact_reversal_byte_equal": true
+    }
+  },
+  "decoded_runner": {
+    "path": "/private/tmp/lanl-cpu-band-report-a4-metadata2400-cleanup60-hashlib-runner.py",
+    "sha256": "0e84c1b2be4bcd8f2aabd107172fac4c1daa49527d389138ebd1338d00fa9c2f",
+    "only_AST_change": "add hashlib to actual runner standard import",
+    "all_other_decoded_runner_bytes_equal_after_exact_import_reversal": true
+  },
+  "decoded_diff": {
+    "path": "/private/tmp/lanl-cpu-band-report-a4-hashlib-exact-diff.txt",
+    "sha256": "fb6673568798a81248aa9e14115e5a4b9f6ba8d76578cd535e26a0ba73cc8db9"
+  },
+  "holdout_export_guard_raw_path_unchanged": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3",
+  "report_raw_path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4",
+  "fresh_report_job_and_tmux_session": "swdb-lanl-cpu-band-report-20261007-a4",
+  "pure_export_branch_checkout_and_canonical_receipt_names": "unchanged logical study a3",
+  "development_holdout_controls": "unchanged originals; REPORT binding only",
+  "scientific_report_body_caps_KILL_costs_widths_IDs_C_F6": "byte unchanged after allowed exact reversals",
+  "old_report_attempt": {
+    "raw": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261006-a3",
+    "generation": 508,
+    "wrapper_exit": 1,
+    "reported_failure": "NameError hashlib at decoded runner line 105 before started.txt, records or Store initialization",
+    "authority": "parent actual failure handoff; failed raw/controls retained, not replayed"
+  },
+  "new_control_execution": "NOT RUN; parent review/stage/retry/export only",
+  "integration_edits": false,
+  "Store_native_provider_lease_cleanup_fixture_execution": false,
+  "identity_sha256": "dd160dce6b42271ed5fc524444673eb5a75288c8cdcdcd4a95567dbf6e0423f9"
+}

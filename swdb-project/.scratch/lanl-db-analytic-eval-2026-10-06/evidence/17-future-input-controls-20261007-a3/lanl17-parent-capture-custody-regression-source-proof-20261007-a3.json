@@ -1,0 +1,87 @@
+{
+  "format": "swdb.lanl17-parent-capture-isolated-regression-source-preparation.v1",
+  "updated": "2026-10-07 ET",
+  "state": "NOT_RUN_PENDING_PARENT_SOURCE_REVIEW",
+  "regression_source": {
+    "path": "/private/tmp/lanl17_parent_capture_custody_isolated_regression_a3_20261007.py",
+    "bytes": 14003,
+    "sha256": "e1fbd54de38492f1706002f6755b8d5d09c5ad5fb21a7f2a3b3ca3ca132048f7"
+  },
+  "exact_producer_source": {
+    "path": "/private/tmp/lanl17_parent_capture_projection_producer_a3_20261007.py",
+    "bytes": 46165,
+    "sha256": "32bead204337aa66d0a732b6f143216946abafc5d2eb752577b0d90f7190b7b6"
+  },
+  "cases": [
+    "test_01_exact_returned_read",
+    "test_02_same_size_different_returned_hash_refuses",
+    "test_03_inode_replacement_with_identical_bytes_refuses",
+    "test_04_exact_M2_roots_exclude_source_raw_and_four_campaigns",
+    "test_05_output_outside_exact_roots_is_admitted",
+    "test_06_missing_M2_refuses",
+    "test_07_wrong_M2_helper_writer_or_body_refuses",
+    "test_08_wrong_M2_source_refuses",
+    "test_09_wrong_M2_policy_refuses",
+    "test_10_own_source_mutation_refuses_both_publication_and_success",
+    "test_11_yaml_parser_context_is_only_hashed",
+    "test_12_existing_failure_message_is_only_hashed"
+  ],
+  "case_count": 12,
+  "exact_AST_fragment_sha256": {
+    "guard_output": "9adc197e89a505fe4f324ef6130a781fa0fe179d48a411937a934d27221417b2",
+    "guard_publication": "11dd9c26a912b978d2154ce2bbe4fa840a67b6d368d84278b39856284a1c1201",
+    "guard_success": "9bbaa6139ae9c32bee825dd3e36bf24c58f2c909b11c5dbad606b0bbd9abea95",
+    "Refused": "61ffda5d5f7957d3d8c9b57d0f0cb5e03030fa1af0d61e8c24abe1ffc69efb29",
+    "require": "484735aad0120bae30ec5b2ad6ca915ea9c2bafcd125d33a00b8511410954a6a",
+    "need": "1b02374f88aefb8b3cc19af8c37ee099b9e242310a0b23206c342ecc889ee947",
+    "sha": "5d2f17cf600e426b5b233fbac6acbf635ebc09f06bca0fad37d5385c1d852ed6",
+    "hex64": "1c88433a5918dfe1b9e9402af55868c7ddf606658cd425d664170981add946c0",
+    "regular": "b01252ea464b37c6e11e8bf4c769cd0e20cae74ded57acce40a44382d1abfd09",
+    "hash_file": "e62c22b9e53970c31b30816b33ade9962908a627e6454ef922e45243de1b2fab",
+    "returned_bytes": "677d7a281fb7219dbcc0733eeaa448f3671db9df4072e07753010ca1e578d75c",
+    "manifest_output_roots": "f269ca423dff3f223748a1829386625a5a16d10271049d8ac69bb5a37a37c739",
+    "safe_diagnostic_except_type_and_body": "ec25c5edb2d75b942a0c9a91ee222544feef08a590c2fe8417ba3555a2dec692"
+  },
+  "future_fixture_boundary": {
+    "own_temporary_synthetic_files_only": true,
+    "logical_data_path_facade_maps_only_to_synthetic_temp_directory": true,
+    "M2_validated_loader_stub_not_an_original_seal_test": true,
+    "inode_window_injection_uses_only_synthetic_temp_files": true,
+    "source_module_main_never_lifted_imported_or_invoked": true,
+    "only_isolated_helper_guard_and_except_AST_will_execute_after_parent_approval": true
+  },
+  "checks": {
+    "syntax_compiled_without_execution": true,
+    "twelve_case_source_inventory": true,
+    "lift_source_and_guard_expressions_exist_at_exact_selected_SHA": true,
+    "import_modules": [
+      "ast",
+      "contextlib",
+      "copy",
+      "hashlib",
+      "io",
+      "json",
+      "os",
+      "pathlib",
+      "re",
+      "stat",
+      "sys",
+      "tempfile",
+      "types",
+      "unittest",
+      "yaml"
+    ],
+    "no_original_producer_auditor_collector_control_module_import": true
+  },
+  "execution": {
+    "tests_run": false,
+    "AST_lift_run": false,
+    "fixtures_constructed": false,
+    "actual_inputs_read_or_constructed": false,
+    "SWDB_Store_auditor_collector_Git_SSH_native_provider_run": false,
+    "prior_47_or_18_tests_repeated": false,
+    "tracked_edits": false
+  },
+  "claim": "Source preparation and static syntax/inventory/fragment pinning only; no runtime result or fixture acceptance claimed.",
+  "identity_sha256": "7ac9e87f563311422760d91439ad3731a8eb5ac1a5858aa7da93a9be28a830c5"
+}

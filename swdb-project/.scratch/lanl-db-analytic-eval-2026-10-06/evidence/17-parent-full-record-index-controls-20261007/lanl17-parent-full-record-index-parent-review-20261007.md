@@ -1,0 +1,17 @@
+# Parent review of the distinct full-record-index writer
+
+Reviewed 2026-10-07 11:44 ET. Parent read the complete writer7a67d46f, eight-case test source02395edf, handoff1ad58ed9 and original preparation9be4d961. Independent agent02 read the same complete packet and found no concrete blocker. Agent04 separately read the full writer and handoff against unchanged6a/28d interfaces, without execution.
+
+The source is approved for future explicitly reviewed actual inputs. Its real-input main is **NOT RUN**. No actual request, inventory, index, template, source R, campaign, metadata preparation, producer, assembler, collector or auditor main was constructed or executed by this review. Original source/preparation NOTRUN descriptions remain chronological preparation facts.
+
+The bare unsealed index is exactly id -> {kind, sha256, record_sha256}. Returned bytes supply the file SHA and parsed original whole-record canonical-true digest. The timestamp resolver AST matches selected6a exactly. Duplicate keys, IDs, nonfinite values and unsupported identities refuse; full inventory and file/inode/source rechecks precede publication and success. Output must be fresh and external to M2.source, the entire M2.raw and all four campaign directories.
+
+Original28d supplies per-campaign validation argv, exit, stdout and stderr. This distinct index writer supplies parent-generated metadata. Validation and a quiescent unchanged snapshot are explicitly inherited parent-reviewed facts; byte/index checks do not independently validate schemas/references, observe process ownership or establish a normal substantive trajectory. No original28d index output is claimed. Real snapshot continuity and exclusive ownership still require actual parent observations.
+
+The distinct128MiB/body and2GiB unique-inventory source-read bounds leave existing32MiB compact-input and8MiB root/spec limits, original scientific sourceC/F6, selected controls and evaluation budgets unchanged. New index/request/custody each have an8MiB bound. A future explicit60–3600s metadata deadline is finite policy, not a runtime promise.
+
+Parent verified all twelve original packet pins and preparation9be4d961, compared the exact timestamp resolver AST, and read the complete bounded test driver6c91bb2e before execution. One local synthetic eight-case batch ran15:44:16.039–.189Z; all eight actual methods reported ok, return0, no timeout. Original sealed test receipt ea39a791dfc7abe475a6f85035c1b7864cdef4536a72ad22358320bf17b0ae4b has file SHA e8e4255a3348551c1a329bf3353c9d2d02e989b22828a2e269d05614d8de235f. Its original unsealed start/stdout/stderr are separately retained. No successful test replay is needed.
+
+The cases independently verify whole-record/file hashes and original date/Unicode identity, duplicate IDs and nested keys, same-length changed returned bytes, inode replacement during an open read, added/deleted inventory files, source-change refusal before publication and refusal after preserved partial publication. The closed original helper AST lift excludes writer main, Git/source verification and validation commands. Synthetic success establishes these helper behaviors only; scientific admission remains false.
+
+Actual14 export/admission/closure and fully delivered finalR still precede17 metadata preparation. Four real normal substantive trajectories, honest counter/refusal/interrupted selection custody and D30/no-switch evidence remain required. This review and synthetic receipt do not resolve ticket17.

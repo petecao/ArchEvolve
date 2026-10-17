@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "2026-10-16 ET. Root-selected exact normal CLI plan. Root guard/environment admission remains separate; ownership tokens are never serialized.",
+  "properties": {
+    "environment": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "type": "object"
+    },
+    "jobs": {
+      "items": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "argv": {
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "case_id": {
+            "type": "string"
+          },
+          "cwd": {
+            "pattern": "^/",
+            "type": "string"
+          }
+        },
+        "required": [
+          "case_id",
+          "argv",
+          "cwd"
+        ],
+        "type": "object"
+      },
+      "maxItems": 35,
+      "minItems": 35,
+      "type": "array"
+    },
+    "per_case_timeout_seconds": {
+      "maximum": 1800,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "producer_project": {
+      "pattern": "^/",
+      "type": "string"
+    },
+    "python": {
+      "pattern": "^/",
+      "type": "string"
+    },
+    "required_count": {
+      "const": 35
+    },
+    "required_skips": {
+      "const": 0
+    },
+    "sequential_workers": {
+      "const": 1
+    }
+  },
+  "required": [
+    "python",
+    "producer_project",
+    "environment",
+    "required_skips",
+    "sequential_workers",
+    "required_count",
+    "per_case_timeout_seconds",
+    "jobs"
+  ],
+  "type": "object"
+}

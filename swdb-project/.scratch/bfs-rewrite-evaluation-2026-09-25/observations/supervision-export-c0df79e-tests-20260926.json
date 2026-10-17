@@ -1,0 +1,65 @@
+{
+  "created": "2026-09-26T17:27:26.423068-04:00",
+  "commit": "c0df79eaa1575d4b4cb9d84f4c2a90d802721698",
+  "cwd": "/Users/yanrujhou/.codex/worktrees/bfs-dx100-acceptance/EvolveSWDB",
+  "command": [
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+    "-m",
+    "pytest",
+    "tests/test_bfs_a2_linux_fixture.py",
+    "tests/test_bfs_linux_fixture_audit.py",
+    "tests/test_dx100_smoke_cleanup.py",
+    "tests/test_dx100_compile_smoke.py",
+    "tests/test_dx100_witness_continuation.py",
+    "tests/test_bfs_linux_fixture.py",
+    "tests/test_bfs_owned_execution.py",
+    "tests/test_bfs_native_execution.py",
+    "tests/test_bfs_campaign_cleanup.py",
+    "tests/test_owned_process_cleanup.py",
+    "tests/test_bfs_native_reassessment.py",
+    "tests/test_bfs_one_thread_freeze.py",
+    "tests/test_bfs_simulator_batch.py",
+    "tests/test_bfs_simulator_series.py",
+    "tests/test_bfs_simulator_batch_admission.py",
+    "tests/test_profile_package_identity.py",
+    "tests/test_bfs_paired_coverage.py",
+    "tests/test_profile_packages.py",
+    "tests/test_profile_package_freshness.py",
+    "tests/test_bfs_coverage.py",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp",
+    "/private/tmp/bfs-supervision-export-tests-20260926"
+  ],
+  "state": "finished",
+  "timeout_seconds": 1800,
+  "python": {
+    "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+    "bytes": 33816,
+    "sha256": "08fa4dbadc420090dfee2acf433b827ae05541f728d1478d96879122f53b4328"
+  },
+  "classification": "local_contract_regression_not_linux_or_empirical_acceptance",
+  "pid": 24846,
+  "finished": "2026-09-26T17:34:17.370943-04:00",
+  "elapsed_seconds": 410.94573049992323,
+  "returncode": 1,
+  "log": {
+    "path": "/private/tmp/bfs-supervision-export-tests-20260926.log",
+    "bytes": 6862,
+    "sha256": "79176aa9f3a4e28e98fbb70061545a67c75ddb6cf6d75e98b181a3f3cd865bd7"
+  },
+  "final_commit": "c0df79eaa1575d4b4cb9d84f4c2a90d802721698",
+  "tracked_diff": "",
+  "export_files_unchanged": true,
+  "counts": {
+    "passed": 558,
+    "skipped": 9,
+    "failed": 2
+  },
+  "failures": [
+    "tests/test_bfs_native_reassessment.py::test_explicit_transition_keeps_unknown_origin_inputs_unknown_and_does_not_mutate_records",
+    "tests/test_bfs_native_reassessment.py::test_build_failure_in_reassessment_does_not_submit_repair_or_reset_origin_budget"
+  ],
+  "interpretation": "Failed original unpublished export check; two test fixtures do not retain the now-required package seal. Production guards are unchanged; corrected fixtures/export require separate checks."
+}

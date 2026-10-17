@@ -1,0 +1,125 @@
+{
+  "format": "swdb.local-source-only-custody-archiver-preparation.v1",
+  "sealed": false,
+  "scope": "SOURCE PREPARATION ONLY / NOT RUN; no actual removal pins or final inventory supplied",
+  "sources": {
+    "selected": {
+      "path": "/private/tmp/lanl_archive_corrected_E_default_and_removal_custody_20261008_a2.py",
+      "bytes": 28120,
+      "sha256": "c3c2d77e12ff558c46df96f63acb0950cdd293b537613a601fe8346a628c5b91"
+    },
+    "foundation": {
+      "path": "/private/tmp/lanl_archive_failed_detached_E_and_reviewed_source_custody_20261008_a1_r1.py",
+      "bytes": 27623,
+      "sha256": "688fce08a5a3e12c86d6b8ab0706b863175ea53e51d422bf781e38d5821dd427"
+    },
+    "complete_diff": {
+      "path": "/private/tmp/lanl-corrected-E-default-removal-custody-archiver-complete-foundation-derivation-20261008-a2.diff",
+      "bytes": 44057,
+      "sha256": "969ac3d91abb8a8e5a3998b795b8db4ab74f5f19e1d896fd795df79258e01a39"
+    },
+    "handoff": {
+      "path": "/private/tmp/lanl-corrected-E-default-removal-custody-archiver-source-handoff-20261008-a2.md",
+      "bytes": 7181,
+      "sha256": "5eead7b16d15eab4e00163f00cb5b1a0b64dbff6f215e4117fc33cc0889ec222"
+    }
+  },
+  "source_review": {
+    "AST_parse_only": true,
+    "full_diff_exact_against_foundation": true,
+    "unchanged_primitive_AST": [
+      "require",
+      "sha",
+      "canonical",
+      "stamp",
+      "route",
+      "read",
+      "validate_pin",
+      "git",
+      "write_original"
+    ],
+    "strict_JSON_addition": "finite parse_float refuses exponent overflow; existing duplicate/nonfinite constant checks remain",
+    "default_original_byte_pins_checked": [
+      {
+        "original_path": "/private/tmp/lanl-detached-E-default-originals-20261008-a2/status.json",
+        "relative_path": "default-originals/status.json",
+        "bytes": 5309,
+        "sha256": "0d5c2652ca982d053cffe44294490d6eda8a59ee4ebcd4d989e2407e0a0ac081",
+        "original_policy": "original_unsealed_json"
+      },
+      {
+        "original_path": "/private/tmp/lanl-detached-E-default-originals-20261008-a2/configuration.json",
+        "relative_path": "default-originals/configuration.json",
+        "bytes": 4684,
+        "sha256": "46c5b18e0c71d3fc7886335989f904688974d1586d78e49ae974f77af27e5f7c",
+        "original_policy": "original_unsealed_json"
+      },
+      {
+        "original_path": "/private/tmp/lanl-detached-E-default-originals-20261008-a2/tmux.conf",
+        "relative_path": "default-originals/tmux.conf",
+        "bytes": 106,
+        "sha256": "a6b69cdfa58f10a0f62697e88a619fffa06b5956bb515ba5200fa2e77c7c31df",
+        "original_policy": "opaque_original_bytes"
+      },
+      {
+        "original_path": "/private/tmp/lanl-detached-E-default-originals-20261008-a2/launch-status.json",
+        "relative_path": "default-originals/launch-status.json",
+        "bytes": 2097,
+        "sha256": "b920ac82935add2d9fe1592a683bd0754cc97a699236488a7df9c2140476f8db",
+        "original_policy": "original_unsealed_json"
+      },
+      {
+        "original_path": "/private/tmp/lanl-detached-E-default-originals-20261008-a2/launch.stdout",
+        "relative_path": "default-originals/launch.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "original_policy": "opaque_original_bytes"
+      },
+      {
+        "original_path": "/private/tmp/lanl-detached-E-default-originals-20261008-a2/launch.stderr",
+        "relative_path": "default-originals/launch.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "original_policy": "opaque_original_bytes"
+      },
+      {
+        "original_path": "/private/tmp/lanl-detached-E-default-originals-20261008-a2/guard.stdout",
+        "relative_path": "default-originals/guard.stdout",
+        "bytes": 10434,
+        "sha256": "5f17f45a303dcb7475800f136e0c8b70c558f6e9ea846869eb5e85a685d29e9e",
+        "original_policy": "original_unsealed_json"
+      },
+      {
+        "original_path": "/private/tmp/lanl-detached-E-default-originals-20261008-a2/guard.stderr",
+        "relative_path": "default-originals/guard.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "original_policy": "opaque_original_bytes"
+      },
+      {
+        "original_path": "/private/tmp/lanl-detached-E-default-originals-20261008-a2/local-custody.json",
+        "relative_path": "default-originals/local-custody.json",
+        "bytes": 5087,
+        "sha256": "94aeeaebb8397a92f86e8c441654179ad66b53299442c2236e52c14f7ca0f8ee",
+        "original_policy": "original_unsealed_json"
+      }
+    ],
+    "default_original_bytes": 27717,
+    "original_policy_preserved": "UNSEALED observation JSON + opaque streams",
+    "future_removal_file_pins_provided": false,
+    "actual_final_inventory_created": false,
+    "future_worktree_HEAD_supplied": false,
+    "selected_import_lift_compile_or_call": false,
+    "archiver_main_or_tests_executed": false,
+    "SSH_or_Git_mutation_or_project_write": false
+  },
+  "future_output_scope": "14-consumed-E-administration-actual-20261008-a2 only",
+  "bounds": {
+    "originals_max": 32,
+    "original_file_bytes_max": 2097152,
+    "original_total_bytes_max": 8388608,
+    "inventory_bytes_max": 262144,
+    "archiver_seconds": 180
+  },
+  "manifest_policy": "New explicit True BYTE-CUSTODY seal only after actual final originals and local parent HEAD supplied; no original reseal or new admission"
+}

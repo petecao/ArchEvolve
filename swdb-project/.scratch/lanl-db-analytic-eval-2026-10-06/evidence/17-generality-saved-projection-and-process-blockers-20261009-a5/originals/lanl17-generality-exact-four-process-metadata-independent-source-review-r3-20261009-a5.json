@@ -1,0 +1,309 @@
+{
+  "check_count": 33,
+  "checks": [
+    {
+      "check": "source exact published pin",
+      "pass": true
+    },
+    {
+      "check": "action exact published pin",
+      "pass": true
+    },
+    {
+      "check": "diff exact published pin",
+      "pass": true
+    },
+    {
+      "check": "static exact published pin",
+      "pass": true
+    },
+    {
+      "check": "narrow replacement 0 exactly once",
+      "pass": true
+    },
+    {
+      "check": "narrow replacement 1 exactly once",
+      "pass": true
+    },
+    {
+      "check": "narrow replacement 2 exactly once",
+      "pass": true
+    },
+    {
+      "check": "narrow replacement 3 exactly once",
+      "pass": true
+    },
+    {
+      "check": "Four inverse substitutions restore byte exact R2",
+      "pass": true
+    },
+    {
+      "check": "Full exact R2-to-R3 diff matches retained original",
+      "pass": true
+    },
+    {
+      "check": "21 inherited native/current-source/control safety functions/classes AST exact",
+      "pass": true
+    },
+    {
+      "check": "Native strict owner kernel_bytes unchanged",
+      "pass": true
+    },
+    {
+      "check": "Process/native/locks/daemon unchanged",
+      "pass": true
+    },
+    {
+      "check": "Source-only draft closed explicit approval boundary",
+      "pass": true
+    },
+    {
+      "check": "Action inline exact source/hash",
+      "pass": true
+    },
+    {
+      "check": "Action remote60/local180 no staging or collection",
+      "pass": true
+    },
+    {
+      "check": "Public CODEX_HOME explicit and no auth read",
+      "pass": true
+    },
+    {
+      "check": "Source controls original H/M2 only",
+      "pass": true
+    },
+    {
+      "check": "Account UID guard precedes every selected diagnostic read",
+      "pass": true
+    },
+    {
+      "check": "selected_file owner root/account guard before body or link read",
+      "pass": true
+    },
+    {
+      "check": "argv0_metadata owner root/account guard before body or link read",
+      "pass": true
+    },
+    {
+      "check": "alias_metadata owner root/account guard before body or link read",
+      "pass": true
+    },
+    {
+      "check": "Argv0 one byte first NUL without args",
+      "pass": true
+    },
+    {
+      "check": "Selected stat/status finite caps and field-only output",
+      "pass": true
+    },
+    {
+      "check": "Alias only hash/classification, no target stat or bodies",
+      "pass": true
+    },
+    {
+      "check": "Directory all9 stat identity repeated",
+      "pass": true
+    },
+    {
+      "check": "PID/start/UID GID tuple repeated unknown on mismatch",
+      "pass": true
+    },
+    {
+      "check": "No quiescence/owner waiver",
+      "pass": true
+    },
+    {
+      "check": "No backup/removal/index/science admission",
+      "pass": true
+    },
+    {
+      "check": "Alarm45 and GNU60K60 provenance",
+      "pass": true
+    },
+    {
+      "check": "Compact return 65536 cap",
+      "pass": true
+    },
+    {
+      "check": "Native/source/H/M2/current transport before-after",
+      "pass": true
+    },
+    {
+      "check": "Only four exact selected PID/inodes accountUID",
+      "pass": true
+    }
+  ],
+  "findings": [],
+  "format": "swdb.independent-source-review.v1",
+  "inherited_exact_names": [
+    "need",
+    "tick",
+    "digest",
+    "stamp",
+    "strict",
+    "original",
+    "kernel_bytes",
+    "locks",
+    "daemon",
+    "process_identity",
+    "native_projection",
+    "selected_lease_identity",
+    "daemon_ready",
+    "Parser",
+    "hex64",
+    "run",
+    "current_sources",
+    "root_tool_pin",
+    "native_snapshot",
+    "native_continuity",
+    "metadata_bytes"
+  ],
+  "limits": [
+    "Source inspection only; no target imports/main/tests/SSH/network",
+    "Root-owned leaves permitted only in separate diagnostic under exact account-owned selected directory",
+    "No changes to native/no-use strict-owner guards; no UID exemption for admission",
+    "Observation complete does not imply terminal state, inactivity, readiness or successful original preflight",
+    "Missing permissions/reuse/UID/race remain unknown",
+    "No actual process states or causes observed by this review"
+  ],
+  "pins": {
+    "action": {
+      "bytes": 27266,
+      "path": "/private/tmp/lanl17-generality-exact-four-process-metadata-action-SOURCE-ONLY-draft-r3-20261009-a5.json",
+      "sha256": "428753730907027678f020157cd940a4982a601fdf650de669503da34704df73",
+      "stat": {
+        "ctime_ns": 1791523042676486602,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350682724,
+        "mode": 33152,
+        "mtime_ns": 1791523042676486602,
+        "nlink": 1,
+        "size": 27266,
+        "uid": 501
+      }
+    },
+    "diff": {
+      "bytes": 3426,
+      "path": "/private/tmp/lanl17-generality-exact-four-process-metadata-r3-complete-r2-derivation-20261009-a5.diff",
+      "sha256": "01cb61f5f5d95b10aeeed29d453e071d022801aceb3e41c0a2b1ea647b9e3016",
+      "stat": {
+        "ctime_ns": 1791523042676271893,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350682723,
+        "mode": 33152,
+        "mtime_ns": 1791523042676271893,
+        "nlink": 1,
+        "size": 3426,
+        "uid": 501
+      }
+    },
+    "handoff": {
+      "bytes": 1807,
+      "path": "/private/tmp/lanl17-generality-exact-four-process-metadata-source-handoff-r3-20261009-a5.md",
+      "sha256": "c75ef7aecc62332814a723695006ac0aa123cb5b5f6c6998e0d9775d0d8eeb88",
+      "stat": {
+        "ctime_ns": 1791523042935566524,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350682726,
+        "mode": 33152,
+        "mtime_ns": 1791523042935566524,
+        "nlink": 1,
+        "size": 1807,
+        "uid": 501
+      }
+    },
+    "inherited_source": {
+      "bytes": 43567,
+      "path": "/private/tmp/lanl17_generality_recovery_candidate_preflight_20261009_a5_r6.py",
+      "sha256": "65bd9a90f477381ba99e9b1894496162da59166b157bf77b084dfce74dcaad6c",
+      "stat": {
+        "ctime_ns": 1791521566370898600,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350678148,
+        "mode": 33152,
+        "mtime_ns": 1791521566370898600,
+        "nlink": 1,
+        "size": 43567,
+        "uid": 501
+      }
+    },
+    "previous_findings": {
+      "bytes": 4022,
+      "path": "/private/tmp/lanl17-generality-exact-four-process-metadata-independent-source-review-r2-findings-20261009-a5.json",
+      "sha256": "b43a021e4e7287fd8c146242541fe0c9bfc64ee9b64667a5cd110ccc44c3f0df",
+      "stat": {
+        "ctime_ns": 1791522991738527975,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350682640,
+        "mode": 33152,
+        "mtime_ns": 1791522991738527975,
+        "nlink": 1,
+        "size": 4022,
+        "uid": 501
+      }
+    },
+    "previous_source": {
+      "bytes": 25517,
+      "path": "/private/tmp/lanl17_diagnose_exact_generality_unknown_process_metadata_SOURCE_ONLY_20261009_a5_r2.py",
+      "sha256": "a188020e9899f31a960e3dfb01c4597214114293fdedc36b57822af8bd526c63",
+      "stat": {
+        "ctime_ns": 1791522892401047719,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350682523,
+        "mode": 33152,
+        "mtime_ns": 1791522892401047719,
+        "nlink": 1,
+        "size": 25517,
+        "uid": 501
+      }
+    },
+    "source": {
+      "bytes": 25714,
+      "path": "/private/tmp/lanl17_diagnose_exact_generality_unknown_process_metadata_SOURCE_ONLY_20261009_a5_r3.py",
+      "sha256": "68d8500e9cb8cc254b400571a3af4ad4d21bdb0a0848c70bf1f7409e988977ea",
+      "stat": {
+        "ctime_ns": 1791523042675956725,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350682722,
+        "mode": 33152,
+        "mtime_ns": 1791523042675956725,
+        "nlink": 1,
+        "size": 25714,
+        "uid": 501
+      }
+    },
+    "static": {
+      "bytes": 4002,
+      "path": "/private/tmp/lanl17-generality-exact-four-process-metadata-static-source-review-r3-20261009-a5.json",
+      "sha256": "543d122ccd1696bcb66779bf68c58cba2e192b588c76088eca9ddfc702655335",
+      "stat": {
+        "ctime_ns": 1791523042935436857,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350682725,
+        "mode": 33152,
+        "mtime_ns": 1791523042935436857,
+        "nlink": 1,
+        "size": 4002,
+        "uid": 501
+      }
+    }
+  },
+  "prepared_ET": "2026-10-09T01:18:42.365271-04:00",
+  "prepared_utc": "2026-10-09T05:18:42.365271+00:00",
+  "prior_findings_resolved_additively": {
+    "R2_preserved_NOTRUN": true,
+    "directory_owner_before_reads": true,
+    "extra_cmdline_alias_owner_allowlist": true,
+    "observational_stat_status_owner_allowlist": true
+  },
+  "verdict": "PASS_SOURCE_ONLY_R3_EXACT_FOUR_PID_OBSERVATION"
+}

@@ -1,0 +1,12 @@
+--- /private/tmp/lanl17-generality-recovery-preflight-action-SOURCE-ONLY-draft-r5-20261009-a5.json
++++ /private/tmp/lanl17-generality-recovery-preflight-action-SOURCE-ONLY-draft-r6-20261009-a5.json
+@@ -12,6 +12,9 @@
+       "/data/yanruj/EvolveSWDB_runs/lanl17-generality-worktree-recovery-20261009-a1"
+     ],
+     "collect": [],
++    "environment": {
++      "CODEX_HOME": "/data1/yanruj/.codex"
++    },
+     "local_seconds": 360,
+     "remote_seconds": 240,
+     "source_pins": [

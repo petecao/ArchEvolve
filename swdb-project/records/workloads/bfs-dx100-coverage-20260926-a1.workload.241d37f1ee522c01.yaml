@@ -1,0 +1,59 @@
+kind: workload
+schema_version: '0.4'
+id: bfs-dx100-coverage-20260926-a1.workload.241d37f1ee522c01
+status: draft
+created: '2026-09-26'
+updated: '2026-09-26'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+requested_id: bfs-dx100-coverage-20260926-a1.workload
+version: 1
+supersedes: null
+invalidated_comparisons: []
+definition:
+  kernel: gapbs-bfs
+  family: fixed_dx100_correctness_coverage
+  generator:
+    name: bfs_dx100_coverage_graph.v1
+    revision: c4527c65266284f594709bfc7be1d829d40111f339198bd866d7a3348dfadb5f
+    parameters:
+      vertices: 8212
+      directed_arcs: 147492
+      frontier: 4097
+      shared: 16
+  normalization:
+    remove_self_loops: true
+    deduplicate: true
+    sort_neighbors: true
+    symmetrize_undirected: true
+  sources: [0]
+  representations:
+  - id: bfs-dx100-coverage-20260926-a1.sg32
+    path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926/bfs-dx100-coverage-20260926-a1/graph/coverage.sg
+    sha256: d4697713f585b9670e1c44d26df94c72889f4c82fbd68b72e15627e6a0b39a56
+    format: gapbs_sg32le
+    application: dx100-gapbs
+    canonical_sha256: e03a3905f9105b898b730387092d92a68b854cdd44280adb39b1bd9423a4a968
+    bytes: 622829
+    loader: swdb.gapbs-representation.v1
+    adjacency_verified: true
+  canonical_sha256: e03a3905f9105b898b730387092d92a68b854cdd44280adb39b1bd9423a4a968
+  canonical_format: swdb.bfs.adjacency.v1
+  realized:
+    num_vertices: 8212
+    num_directed_edges: 147492
+    directed: false
+    isolated_vertices: 1
+    minimum_out_degree: 0
+    maximum_out_degree: 4097
+  metadata_basis: operator_declared
+  adjacency_basis: parsed_representation
+identity_sha256: 241d37f1ee522c01f14468ec54c7d70985c482674b6a8969c621eb19439b88f8

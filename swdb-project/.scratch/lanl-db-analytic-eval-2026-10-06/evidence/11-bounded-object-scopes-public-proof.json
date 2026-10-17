@@ -1,0 +1,63 @@
+{
+  "format": "swdb.object-scopes.public-proof.v1",
+  "updated": "2026-10-06 20:17 ET",
+  "state": "portable_public_contract_passed_real_application_counts_pending",
+  "source_commit": "8bbb89076b767aae8aa8e894498eff38da140194",
+  "foundation_commit": "813d204",
+  "integration_commit": "3995f998008ee147d1879d31aefe48dc15ce8084",
+  "source_sha256": {
+    "Characterize.cpp": "2afd7291539dcd942708442b154f15d5137bdb03b33377c5eeb7d6b6e507b73f",
+    "CountingRuntime.cpp": "43762b5079564a7f2fbc930befbdde85a5498ca82b635e82f5cc0476ffa9099e",
+    "LiveObjects.hpp": "5f634c904a2659b75bec4f6fb1bfe5d85917999908ff5916798114b57bcf4e41",
+    "ObjectScopes.hpp": "5c81304e2ef3714b7da07c947cbec750342d1886e92d50defa920d9a9e9ab794",
+    "ObjectScopeRuntime.hpp": "39d52fea4be446d80c1c9adbdfcc4b06d2c7ab69ce69d1f667454ec9b5651373",
+    "SemanticCommands.hpp": "9ad207ea369f24f1ffe02ebdfbd328b0262f38d1b4b42fd0ef5bc7fe392c7912",
+    "LogicalCommands.hpp": "d84117bf200571b1314992673f7f903043f484fa5df3c24632cf4e5c490a6ab9"
+  },
+  "counting_pipeline": "source-normalized-v2 unchanged",
+  "public_gates": [
+    {
+      "scope": "source and callback protocol plus C++11, reentrancy, command-unwind, registered-functional compatibility",
+      "passed": 27,
+      "seconds": 126.21,
+      "source_commit": "c977e59feb14a7a6837b0f1e651d0323576924e1"
+    },
+    {
+      "scope": "final owner-budget fix: all callback protocol cases plus actual OpenMP source view",
+      "passed": 16,
+      "seconds": 5.07,
+      "source_commit": "8bbb89076b767aae8aa8e894498eff38da140194"
+    },
+    {
+      "scope": "object-scope opt-in plus functional command normal/offload-only and exceptional host-recovery paths",
+      "passed": 2,
+      "seconds": 7.63,
+      "implementation_commit": "8bbb89076b767aae8aa8e894498eff38da140194"
+    }
+  ],
+  "canonical_validation": {
+    "records": 589,
+    "status": "passed",
+    "source_commit": "c977e59feb14a7a6837b0f1e651d0323576924e1",
+    "later_change": "view-registration rejection ordering and public fixtures only; validator/records unchanged"
+  },
+  "immutable_boundary": {
+    "records_git_tree_sha256": "ffd6777a0a4873459285ad8e8288fa6e6e0ecea09c06cc65876610b71726bd6e",
+    "records_equal_foundation": true,
+    "issues_and_map_equal_foundation": true,
+    "outside_swdb_paths_changed": false
+  },
+  "claims": {
+    "source_site_ids_preserved": true,
+    "normalization_recipe_preserved": true,
+    "address_streams_serialized": false,
+    "physical_residency_known": false,
+    "real_bfs_bc_counts": "pending new opt-in execution and IDs",
+    "application_timings_used": false
+  },
+  "public_runbook_parser": {
+    "commands": 2,
+    "status": "passed",
+    "execution": "help-only; no remote workload or artifact writes"
+  }
+}

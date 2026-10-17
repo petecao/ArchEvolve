@@ -1,0 +1,58 @@
+{
+  "date_et": "2026-10-15",
+  "ticket": "24",
+  "status": "claimed",
+  "scope": "Closeout of active pure original IfStmt access placement only; no std conditional-return, template/member-array, allocator or other new frontier work.",
+  "baseline_audit": "c6636b0db5e5d861c243721f3eeef41a3d00051b",
+  "runtime_commits": [
+    "081c67fd61b7b5479a4e46d3c706e3f33d285f02",
+    "ef41e5f8"
+  ],
+  "frozen_checked_source": "c00665c83e69bd909a0827f5fe5e621bfd1500b4",
+  "independent_agent_review": "Main session reviewed c006 runtime versus a49 GREEN; no personal human source review claimed.",
+  "public_tdd": {
+    "original_omp": "RED at pure if access placement ->GREEN; same C++ source/clauses/hints. Only explicit typed a:n input metadata added to original OMP/floats range interface.",
+    "atomic_side_effect": "Clang AtomicExpr was admitted by previous call/mutation blacklist; compiler RED ->GREEN after explicit effect refusal. No actual false-proof claim.",
+    "compiler_controls": 9,
+    "public_fake_controls_new": 1,
+    "retained_refusals": [
+      "If init/condition bindings",
+      "constexpr condition",
+      "short circuit and conditional evaluation",
+      "calls",
+      "volatile reads",
+      "mutating indices",
+      "AtomicExpr effects"
+    ],
+    "binding_rule": "Exact target AST ID must occur in ordinary IfStmt first condition, with no hasInit/hasVar/isConstexpr; inspect condition purity only because branch effects happen after its checked read.",
+    "new_validity_or_init_requires": false,
+    "origin_or_generic_call_waiver_added": false
+  },
+  "focused_validation": {
+    "passed": 72,
+    "pytest_seconds": 26.31,
+    "resource_result": {
+      "exit_code": 0,
+      "peak_rss_bytes": 304939008,
+      "out_of_memory": false,
+      "timed_out": false,
+      "wall_seconds": 26.726215999980923,
+      "cpu_seconds": 25.299218
+    },
+    "source_unchanged": true,
+    "source_pins_against_git": 203,
+    "public_fake_records": 3,
+    "report_hashes_checked": 22,
+    "actual_solver_jobs": 0,
+    "remote_jobs": 0
+  },
+  "remaining_gaps": "Original Ring.items typed subobject origins; std combined conditional-return path check; current full safe/seeded group and dependency replays, general allocator/lifetime and final method acceptance. No criteria silently closed.",
+  "artifacts": {
+    "/private/tmp/probata-t24-condition-closeout-20261015/run.py": "24c6df0fb9f9cb0588d399aceec0783cec5bb2707cad40f8e9d086eff86ec6a0",
+    "/private/tmp/probata-t24-condition-closeout-20261015/source-manifest.json": "87c12020abed031fcf76c4af9b5218f0dba6fd581fc596f3cde21359fed423ea",
+    "/private/tmp/probata-t24-condition-closeout-20261015/result.json": "1dcd838689e1fd5ee8ff8f83ba4486f4141d42e57bb072ab854e6b3acf558170",
+    "/private/tmp/probata-t24-condition-closeout-20261015/audit.json": "14e597ba75dbac00b6fb5c637efe4aadc6c3b1224eec69e1030b5f31991a4afc",
+    "/private/tmp/probata-t24-condition-closeout-20261015/closeout.log": "ef2923ad2f0faf664882ba62180e98f8c814d3985631f17182efd7e1d402fb23",
+    "/private/tmp/probata-t24-condition-closeout-20261015/closeout.xml": "c822889a0b359a5e5c42999736c9febe5ff397be8c1f23e2e1d9df66ac69d8e2"
+  }
+}

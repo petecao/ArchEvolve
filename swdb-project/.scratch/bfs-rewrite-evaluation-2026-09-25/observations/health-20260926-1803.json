@@ -1,0 +1,84 @@
+{
+  "created": "2026-09-26",
+  "observed_at": "2026-09-26T18:03:21-04:00",
+  "host": "mbit10",
+  "receipt": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926.dispatch/health-20260926-1803.json",
+    "bytes": 137176,
+    "sha256": "8f6ba1adce1a5127e0cf04455b53807b6de536df0bf9cd890b9b72a9764992aa"
+  },
+  "leases": {
+    "node0": {
+      "state": "released",
+      "generation": 325
+    },
+    "node1": {
+      "state": "released",
+      "generation": 402
+    },
+    "legacy": {
+      "state": "released",
+      "generation": 77
+    },
+    "kernel_locks": "all empty; owners absent"
+  },
+  "native": {
+    "commit": "319645eab0a25c815fa03fe1c372d32b4ba45d10",
+    "state": "complete",
+    "primary_checked": 240,
+    "primary_planned": 240,
+    "fixed_controls_passed": 4,
+    "diagnostic_packages_complete": 4,
+    "outer_exit": 0,
+    "stderr_bytes": 0,
+    "owned_pid_start_identities": 131,
+    "all_identities_absent": true,
+    "terminal_observation": "native-one-thread-terminal-20260926.json"
+  },
+  "owned_processes": "No retained run remains; only the bounded audit process appeared. All historical terminal identity unions absent.",
+  "load_average": [
+    0.0,
+    0.3,
+    0.7
+  ],
+  "free_bytes": {
+    "/data1": 17556602880,
+    "/data": 194456555520
+  },
+  "estimated_available_kib": {
+    "node0": 60092356,
+    "node1": 61362940,
+    "global": 123446700
+  },
+  "historical_pins": "all retained receipt hashes and code pins unchanged",
+  "supervisor": {
+    "commit": "3f38a2bf9cde4fb23edebd787a9d4d8ab9549e07",
+    "state": "pristine"
+  },
+  "helper_commit": "42ce8dce1ecfb949d6e5d4ee3c98c078bc7ddc65",
+  "helper_sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8",
+  "helper_upstream_check_et": "2026-09-26 18:00 ET",
+  "expired_witness_a2": "unused",
+  "workers": {
+    "host_dx100": "running",
+    "spec_postfix": "running",
+    "standards_postfix": "running"
+  },
+  "counts": {
+    "resolved_tickets": 13,
+    "claimed_tickets": 8,
+    "final_acceptance_cells": 0,
+    "required_cells": 8
+  },
+  "next_full_check_et": "2026-09-26 18:33 ET",
+  "local_verification": {
+    "retained_suite_commit": "7fe4c348046d829cbbdad455eb2323f93ad00175",
+    "retained_suite_state": "running_with25identified_fixture_failures",
+    "corrected_suite_commit": "e4c401585a2cec8319ecc06ff2f7662bcd352730",
+    "corrected_suite_started": "2026-09-26T17:59:51.880298-04:00",
+    "corrected_suite_state": "running",
+    "known_repairs": "16campaign,2reassessment,7T17 failures repaired and independently checked; no full-suite pass claimed"
+  },
+  "next_action": "Single bounded native readback after final recipe review, then actual Linux A2 admission fixtures. None dispatched at this audit.",
+  "observation_source": "Typed metadata from host_dx100 full read-only audit; raw audit stays on mbit10."
+}

@@ -1,0 +1,23 @@
+{
+  "argv": [
+    "ssh",
+    "mbit10",
+    "/usr/bin/env -i PATH=/usr/bin:/bin LANG=C LC_ALL=C PYTHONDONTWRITEBYTECODE=1 /usr/bin/timeout --signal=TERM --kill-after=5s 45s /usr/bin/python3 -I -B -"
+  ],
+  "local_refusal": null,
+  "local_wall_seconds": 1.6990363330114633,
+  "returncode": 0,
+  "stderr": {
+    "bytes": 0,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-retained-replay-v1-actual/staging-stderr.json",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdin_bytes": 771193,
+  "stdin_sha256": "b53ff090e3593080fd3b4fe4cd81c78f1cfe4feab3289608b4938810932483ec",
+  "stdout": {
+    "bytes": 3674,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/abi-retained-replay-v1-actual/staging-stdout.json",
+    "sha256": "e97fd0a3bcade785558be09d556b738dad59ad24edfd502f9486bbf67dcdd4ab"
+  },
+  "writer_errors": []
+}

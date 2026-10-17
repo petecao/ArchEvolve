@@ -1,0 +1,4 @@
+2026-10-13T07:16:35-04:00 manual INT: setup-error tests leak tmp_path past the reaper (funcargs unset); restarting remaining ids with fixed reaper
+2026-10-13T10:34:36-04:00 manual INT round 2: reaper v2 deleted tmp_path folders, so pytest reused numbered names and source-snapshot namespaces collided (FileExistsError); restarting with reaper v3 (empties, keeps folder)
+2026-10-13T14:40:10-04:00 manual INT round 3: xdist load tail left the remaining ~35/~23 ids queued on one worker per side; rerunning the rest with --dist worksteal
+2026-10-13T15:19:42-04:00 all done

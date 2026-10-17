@@ -1,0 +1,49 @@
+{
+  "actual_run_by_review": false,
+  "bounds": {
+    "disk_floor_bytes": 53687091200,
+    "external_timeout_seconds": 300,
+    "per_file_limit_bytes": 134217728,
+    "raw_budget_bytes": 268435456,
+    "rss_cap_bytes": 4294967296,
+    "whole_tree_seconds": 180,
+    "workers": 1
+  },
+  "conditions": [
+    "Fresh both socket+legacy leases/process/load/disk and current Memaccwrapper/hostlock pins. Use existing clean2baf checkout, no newclone.",
+    "Exact V9 launcher with4GiB execute/watch hashes and LIBRARY_PATH unset; exact13controls plus8argument entry recipe.",
+    "One whole180s/entry165s; callerphase120s/other45s clipped to remaining;128MiBphysical/256MiBaggregate+1MiBreserve/50GiBrawfree floor remain.",
+    "Capture all four compiler returncodes/wiregzip/dependency/runtime/source/control/finalization artifacts and finite post-run settlement.",
+    "No JSON/ABI interpretation, source/call/body/semantics/public proof acceptance; only complete original compiler observations."
+  ],
+  "date": "2026-10-16 ET",
+  "independent_spec": {
+    "bytes": 4059,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-memory-capture-v1-independent-review/independent-memory-capture-source-review-v1.json",
+    "sha256": "2b1c0e6d5ae79074880be10766596667fde4dcbabb9f4d54b698ea931048ca54"
+  },
+  "node": 1,
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1",
+  "review": {
+    "compiler_runtime_dependency_prepost_and_settled_limits_unchanged": true,
+    "exact13staged_controls_896371B_verified": true,
+    "full_entry_JSON_inverse_and12guard_helper_AST_checks_pass": true,
+    "original_four_phases_unfiltered_caller_separateABI_ID_scope_preserved": true,
+    "physical_input_and_lineage_pins_verified": 18,
+    "pure_no_child_controls_passed": 10,
+    "read_complete_main_and_entry_delta_success_boundary": true
+  },
+  "root_controls": {
+    "bytes": 1733,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t28-memory-capture-v1-root-controls-20261016.txt",
+    "sha256": "37162cada0433f515c4d7985eb41741edaef6221aa435ed4211425e341a919fb"
+  },
+  "source_API_ABI_public_or_ticket_acceptance": false,
+  "source_commit": "2baf722fdaa6cba24b859eae3172a6f597417d72",
+  "source_packet": {
+    "bytes": 7734,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-memory-capture-v1/memory-capture-source-packet-v1.json",
+    "sha256": "74b8bbc1b5276c5c84916073675a09dcc663e7548c5983a853fcc04c75fccd69"
+  },
+  "verdict": "PASS_STANDARDS_ADMIT_ONCE_NODE1_COMPILER_OBSERVATION_AFTER_FRESH_PREFLIGHT"
+}

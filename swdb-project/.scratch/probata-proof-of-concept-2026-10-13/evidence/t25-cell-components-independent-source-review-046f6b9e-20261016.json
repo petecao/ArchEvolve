@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-16 ET",
+  "verdict": "PASS source/preparation; native controls/entry admission pending",
+  "candidate": "25338c2e92615deac050d374994e98ac4097bd43",
+  "composed_source": "046f6b9e64d45777a8032951ced04f942fc9c3c2",
+  "production_delta": [
+    "swdb-project/swdb/vector_reallocation_vcs.py"
+  ],
+  "source_sha256": "ea7c743519cef009637b3aee8691233cfd316d86088402cd6a889ca1f29fa4ca",
+  "theory_sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5",
+  "equivalence": "Exact int32_at definition expansion; forall distributes over four full-A implications; unchanged representation duty required",
+  "new_premises": [],
+  "new_axioms": [],
+  "sibling_dependencies": [],
+  "target_count": 24,
+  "old_unchanged_targets": 20,
+  "reference_only_tasks": 2,
+  "definition_spans": 3,
+  "pins": {
+    "path": "/private/tmp/probata-t25-cell-components-static-pinchecks-046f6b9e-20261016.json",
+    "sha256": "49f17b239d682a12ecea1f0d52dc0862256c831258021ca0b2a4e321610bfea7"
+  },
+  "reviewer_executed_project_code_or_tools": false,
+  "blockers": [],
+  "actual_proof_or_model_acceptance": false,
+  "native_controls_pending": true,
+  "md_sha256": "9b8c0fb68cb496a177f60239c6abe85e9e30c55738e14dd393be99f83a75a88d",
+  "merged_profile_retained_passed": 51,
+  "merged_profile_refs": [
+    {
+      "path": "/private/tmp/probata-t25-projection-cell-components-merged-green-20261016/resources.json",
+      "sha256": "93d0741fe8e1d644e0d37b9b5d96bebbc0ee31e2984c96de64e4f5fb885ac11c",
+      "bytes": 174
+    },
+    {
+      "path": "/private/tmp/probata-t25-projection-cell-components-merged-green-20261016/controls.log",
+      "sha256": "fe9753a1a9d81f55f1738f82c935f964d17b2748ede0765f4c367d71c3aa8abf",
+      "bytes": 100
+    },
+    {
+      "path": "/private/tmp/probata-t25-projection-cell-components-merged-green-20261016/command.json",
+      "sha256": "e13e969dd83f0e476590204e215330fbd421b3ab52043b49e027c6e94ea79694",
+      "bytes": 316
+    }
+  ]
+}

@@ -1,0 +1,337 @@
+--- a/swdb-project/swdb/certification_common.py
++++ b/swdb-project/swdb/certification_common.py
+@@ -15,8 +15,38 @@
+ from pathlib import Path
+ 
+ from swdb import artifacts
++from swdb.cli import Failure, UsageError
+ 
+ CHANNEL_ENV, PLAN_ENV = 'SWDB_CERT_RECORD_FD', 'SWDB_CERT_PLAN_FD'
++
++
++# 2026-10-08 ET: candidate-invalid checks must not hide certification infrastructure failures.
++class CandidateRefusal(Exception):
++    """An expected candidate validation refusal, carrying its public check name."""
++
++    def __init__(self, message, check='certification_aborted'):
++        super().__init__(message)
++        self.check = check
++
++
++class CandidateFailure(CandidateRefusal, Failure):
++    """Candidate refusal that retains the standalone command's failure exit code."""
++
++
++class CandidateUsageError(CandidateRefusal, UsageError):
++    """Candidate refusal that retains the standalone command's usage exit code."""
++
++
++def candidate_check(check, *args, **kwargs):
++    """Mark a pure authored-source check; never wrap a build, input pin or configuration check."""
++    try:
++        return check(*args, **kwargs)
++    except CandidateRefusal:
++        raise
++    except Failure as exc:
++        raise CandidateFailure(str(exc)) from exc
++    except UsageError as exc:
++        raise CandidateUsageError(str(exc)) from exc
+ 
+ 
+ # --- builds ------------------------------------------------------------------------------------------------
+--- a/swdb-project/swdb/campaign_targets.py
++++ b/swdb-project/swdb/campaign_targets.py
+@@ -46,7 +46,7 @@
+ import time
+ from pathlib import Path
+ 
+-from swdb import artifacts, certification_feedback, kernels, paths, workflow
++from swdb import artifacts, certification_common, certification_feedback, kernels, paths, workflow
+ from swdb.cli import Failure, UsageError
+ from swdb.cpp_lexical import body_spans, code_only, enclosing_function, function_span  # noqa: F401
+ from swdb.extensa_boundary import MODE
+@@ -561,16 +561,13 @@
+             try:
+                 record = certify(Store(self.store_dir), contract, runs_dir=self.folder / "certification",
+                                  library=self.library_root, candidate=candidate["id"])
+-            except (Failure, UsageError) as exc:   # an aborted certification (e.g. scope, control site)
+-                text = str(exc)
+-                site = re.search(r"negative-control mutation site: (\w+)", text)
+-                # Ticket 70 (2026-10-04 ET): the certification evaluator's scan refuses candidate text naming
+-                # its symbols (failed check `harness_scan`, a persisted name).
+-                failed_checks.append(f"negative_control_site:{site[1]}" if site
+-                                     else "harness_scan" if "refused by the harness scan" in text
+-                                     else "certification_aborted")
++            except certification_common.CandidateRefusal as exc:
++                failed_checks.append(exc.check)
+                 records.append(None)
+                 continue
++            except (Failure, UsageError) as exc:
++                # 2026-10-08 ET: keep the interrupted iteration; never repair or plateau on infrastructure.
++                raise _stop("infrastructure_failure", f"Certification {type(exc).__name__}: {exc}"[:2000]) from exc
+             records.append(record["id"])
+             if record["verdict"] != "certified":
+                 # Ticket 64: a strict-layer failure names the strict check it hit
+--- a/swdb-project/swdb/certification.py
++++ b/swdb-project/swdb/certification.py
+@@ -744,7 +744,7 @@
+     matrix, controls = [], []
+     for size in tile_sizes:
+         build = isolation.CandidateBuild(folder / f'{stem}-{size}.objects', library, tree, source_path, size, threads)
+-        instrumented = plugin.certification_instrument(source) + driver
++        instrumented = common.candidate_check(plugin.certification_instrument, source) + driver
+         static = legality_of(instrumented, f'{stem}-{size}', size)
+         static_failed, static_invalid = _legality_failures(static)
+         legality_field = {'legality_checks': static} if legal else {}
+@@ -956,7 +956,7 @@
+     current = {item['path']: item for item in artifacts.manifest(tree)}
+     changed = {path for path in set(original) | set(current) if original.get(path) != current.get(path)}
+     if changed - {rewritten, HEADER} or rewritten not in changed:
+-        raise UsageError(f'{plugin.name} contract permits only the {plugin.name} rewrite and canonical lowering header; '
++        raise common.CandidateUsageError(f'{plugin.name} contract permits only the {plugin.name} rewrite and canonical lowering header; '
+                          'changed files: ' + ', '.join(sorted(changed)))
+     return sorted(changed)
+ 
+@@ -1099,7 +1099,7 @@
+         profile = native.load_profile(catalog, entry)
+         tree, original_snapshot, snapshot_id, snapshot_text = _materialize_candidate(
+             store, folder, candidate=candidate, snapshot=snapshot, patch=patch, rewritten=profile['scope']['file'])
+-        artifacts.check_protections(tree, original_snapshot['protections'])
++        common.candidate_check(artifacts.check_protections, tree, original_snapshot['protections'])
+         changed_files = native.check_scope(profile, tree, original_snapshot, snapshot_text)
+         from swdb.certification_isolation import refuse_scan_findings, scan
+         candidate_text = (tree / profile['scope']['file']).read_text()
+@@ -1126,11 +1126,11 @@
+     elif family == procedures.CANDIDATE:
+         tree, original_snapshot, snapshot_id, snapshot_text = _materialize_candidate(
+             store, folder, candidate=candidate, snapshot=snapshot, patch=patch, rewritten=plugin.certification_source)
+-        artifacts.check_protections(tree, original_snapshot['protections'])
++        common.candidate_check(artifacts.check_protections, tree, original_snapshot['protections'])
+         changed_files = check_candidate_scope(tree, original_snapshot, plugin)
+         header = tree / HEADER
+         if not header.is_file() or artifacts.file_hash(header) != artifacts.file_hash(library_root / 'dx100/dxc_lowering.hpp'):
+-            raise Failure('candidate must ship the byte-identical canonical lowering header')
++            raise common.CandidateFailure('candidate must ship the byte-identical canonical lowering header')
+         # Ticket 70 (certify 1.3): candidate-authored text may not name evaluator symbols. Ticket 76:
+         # 1.4 also refuses descriptor reads, temporary files and frame introspection.
+         from swdb.certification_isolation import refuse_scan_findings
+--- a/swdb-project/swdb/certification_blinding.py
++++ b/swdb-project/swdb/certification_blinding.py
+@@ -448,7 +448,7 @@
+     claims_address_result = bool(getattr(plugin, 'certification_claims_address_result', False))
+     adjacency = {}
+     strict_names = set(STRICT_MESSAGES)
+-    instrument = lambda text: plugin.certification_instrument(text, frontier_hook=False) + driver
++    instrument = lambda text: common.candidate_check(plugin.certification_instrument, text, frontier_hook=False) + driver
+ 
+     def graph_rows(graph):
+         if graph not in adjacency:
+--- a/swdb-project/swdb/certification_faults.py
++++ b/swdb-project/swdb/certification_faults.py
+@@ -34,6 +34,7 @@
+ import re
+ 
+ from swdb.cli import Failure
++from swdb.certification_common import CandidateFailure
+ 
+ SEAM_FILE = 'dx100/certification/seams.cc'  # relative to the library root (certify 1.3)
+ LIBRARY_FAULTS = {
+@@ -91,6 +92,7 @@
+     width = len(pattern)
+     hits = [i for i in range(len(words) - width + 1) if words[i:i + width] == pattern]
+     if len(hits) != 1:
+-        raise Failure('candidate source lacks a unique negative-control mutation site: ' + name)
++        raise CandidateFailure('candidate source lacks a unique negative-control mutation site: ' + name,
++                               check='negative_control_site:' + name)
+     start, end = stream[hits[0]][1], stream[hits[0] + width - 1][2]
+     return source[:start] + after + source[end:]
+--- a/swdb-project/swdb/certification_isolation.py
++++ b/swdb-project/swdb/certification_isolation.py
+@@ -306,9 +306,10 @@
+ 
+ 
+ def refuse_scan_findings(original, candidate, version='1.3', *, directives=False, primitives=None):
+-    # The refusal keeps the legacy words "harness scan": campaign code classifies aborts by them.
++    # 2026-10-08 ET: retain the public text and mark this authored-source refusal explicitly.
+     findings = scan(original, candidate, version, directives=directives, primitives=primitives)
+     if findings:
+         shown = '; '.join(f'line {line} {token!r} ({why})' for line, token, why in findings[:5])
+         more = f' and {len(findings) - 5} more' if len(findings) > 5 else ''
+-        raise UsageError(f'candidate source refused by the harness scan (certify {version}): ' + shown + more)
++        raise common.CandidateUsageError(f'candidate source refused by the harness scan (certify {version}): '
++                                         + shown + more, check='harness_scan')
+--- a/swdb-project/swdb/certification_process.py
++++ b/swdb-project/swdb/certification_process.py
+@@ -293,11 +293,10 @@
+ 
+ 
+ def refuse_directives(original, candidate, contract, version='1.5'):
+-    from swdb.cli import UsageError
+     findings = directive_findings(original, candidate, contract)
+     if findings:
+         shown = '; '.join(f'line {line} {token!r} ({why})' for line, token, why in findings[:5])
+         more = f' and {len(findings) - 5} more' if len(findings) > 5 else ''
+-        # "harness scan": the legacy words campaign code classifies aborted certifications by.
+-        raise UsageError(f'candidate source refused by the harness scan (certify {version} directives): '
+-                         + shown + more)
++        # 2026-10-08 ET: preserve the public check without classifying arbitrary exception text.
++        raise common.CandidateUsageError(f'candidate source refused by the harness scan (certify {version} directives): '
++                                         + shown + more, check='harness_scan')
+--- a/swdb-project/swdb/certification_native.py
++++ b/swdb-project/swdb/certification_native.py
+@@ -190,27 +190,30 @@
+     scope = profile['scope']
+     changed = changed_files(tree, snapshot)
+     if changed != [scope['file']]:
+-        raise UsageError('native contract permits only a rewrite of ' + scope['file'] + '; changed files: '
++        raise common.CandidateUsageError('native contract permits only a rewrite of ' + scope['file'] + '; changed files: '
+                          + ', '.join(changed))
+     candidate = (Path(tree) / scope['file']).read_text()
+ 
+-    def outside(text):
++    def outside(text, *, authored=False):
+         start = text.find(scope['begin'])
+         end = text.find(scope['end'], start + 1) if start >= 0 else -1
+         if start < 0 or end < 0 or text.count(scope['begin']) != 1:
+-            raise UsageError('native rewrite scope markers are missing or ambiguous')
++            error = common.CandidateUsageError if authored else UsageError
++            raise error('native rewrite scope markers are missing or ambiguous')
+         return text[:start], text[end:]
+ 
+-    if outside(snapshot_text) != outside(candidate):
+-        before, after = outside(snapshot_text), outside(candidate)
++    if outside(snapshot_text) != outside(candidate, authored=True):
++        before, after = outside(snapshot_text), outside(candidate, authored=True)
+         lines = list(difflib.unified_diff((before[0] + before[1]).splitlines(), (after[0] + after[1]).splitlines(),
+                                           lineterm='', n=0))[2:6]
+-        raise UsageError('native candidate changes code outside ' + scope['begin'].strip('( ') + ': '
++        raise common.CandidateUsageError('native candidate changes code outside ' + scope['begin'].strip('( ') + ': '
+                          + ' | '.join(lines))
+     # Ticket 75 review: the region between the markers must stay exactly one function definition with
+     # the snapshot's signature (no added top-level functions, globals or macros after its body).
+-    if _definition(snapshot_text, scope)[0] != _definition(candidate, scope)[0]:
+-        raise UsageError('native candidate changes the signature of ' + scope['begin'].strip('( '))
++    original_signature = _definition(snapshot_text, scope)[0]
++    authored_signature = common.candidate_check(_definition, candidate, scope)[0]
++    if original_signature != authored_signature:
++        raise common.CandidateUsageError('native candidate changes the signature of ' + scope['begin'].strip('( '))
+     return changed
+ 
+ 
+@@ -320,7 +323,7 @@
+     source_path = Path(tree) / data['rewrite_scope']['file']
+     source = source_path.read_text()
+     driver = procedure.driver_path(library, profile=profile).read_text()
+-    instrumented = instrument(profile, source) + driver
++    instrumented = common.candidate_check(instrument, profile, source) + driver
+     adjacency = {}
+     evidence = common.evidence
+ 
+--- a/swdb-project/tests/test_extensa_targets.py
++++ b/swdb-project/tests/test_extensa_targets.py
+@@ -507,3 +507,85 @@
+                  and c["request"]["protocol_role"] == "baseline"]
+     assert len(baselines) == 2 and summary["stop_reason"] == "max_iterations"
+     assert summary["iterations"][0]["candidates"][0]["id"].startswith("extensa-gem5-bfs-20261004-f1.it1.")
++
++
++# 2026-10-08 ET: certification infrastructure failures preserve interrupted rows, not plateau.
++@pytest.mark.parametrize("failure", ["compiler", "trusted_build", "configuration"])
++def test_certification_infrastructure_stops_without_repair_or_plateau(repo_team, base_source, monkeypatch, failure):
++    from swdb import certification, certification_process
++    from swdb.cli import UsageError
++
++    def broken_certificate(store, contract, **kwargs):
++        if failure == "compiler":
++            monkeypatch.setenv("SWDB_CERTIFY_CXX", str(repo_team["root"] / "missing-certification-compiler"))
++            certification.compiler()
++        elif failure == "trusted_build":
++            # Exercise the trusted evaluator helper without compiling anything.
++            build = certification_process.Build.__new__(certification_process.Build)
++            build._evaluator = None
++            build.library = build.folder = Path("/fixture")
++            build.flags = []
++            build.compile = lambda *a, **kw: {"returncode": 1, "log": "/fixture/trusted-build.json"}
++            build.evaluator()
++        else:
++            raise UsageError("typed library is invalid: fixture")
++        raise AssertionError("infrastructure helper must refuse")
++
++    monkeypatch.setattr("testkit.extensa_targets.fake_certify", broken_certificate)
++    config = provider(repo_team, {"rewriting": [{"patch": inside_patch(base_source), "contracts": [CONTRACT],
++                                             "knobs": [], "unresolved": []}]})
++    runner, host = FakeRunner({"kronecker": 1.4, "uniform_random": 1.4}), FakeHost()
++    loop, summary = run(repo_team, gem5_campaign(repo_team, max_iterations=1), config, runner, host)
++    assert summary["stop_reason"] == "infrastructure_failure"
++    assert summary["iterations"] == []
++    ledger = loop.ledger.to_state()
++    assert ledger["iterations_completed"] == 0 and ledger["plateau"] == 0
++    interrupted = loop.state["interrupted_iteration"]
++    assert interrupted["index"] == 1 and interrupted["provider_calls"]
++    assert all(call["role"] != "repair" for call in ledger["calls"])
++    assert not [call for call in runner.calls if call["command"] == "dx100-execute"]
++
++
++@pytest.mark.parametrize("kind,check", [("scope", "certification_aborted"),
++                                        ("harness", "harness_scan"),
++                                        ("site", "negative_control_site:stale_depth_hint")])
++def test_expected_candidate_certificate_refusals_remain_failed_candidates(tmp_path, kind, check):
++    from swdb import certification_common as common
++    from swdb.cli import Failure, UsageError
++
++    def refused(store, contract, **kwargs):
++        if kind == "site":
++            raise common.CandidateFailure("candidate source lacks a unique negative-control mutation site: "
++                                          "stale_depth_hint", check=check)
++        raise common.CandidateUsageError("fixture authored-source refusal", check=check)
++
++    adapter = campaign_targets.TargetAdapter.__new__(campaign_targets.TargetAdapter)
++    adapter._certify = refused
++    adapter.store_dir = adapter.folder = adapter.library_root = tmp_path
++    outcome = adapter.certify({"id": "candidate.fixture"}, [CONTRACT], 1, "kronecker", 0)
++    assert outcome == {"record": None, "outcome": "failed", "failed_checks": [check]}
++    assert issubclass(common.CandidateFailure, Failure)
++    assert issubclass(common.CandidateUsageError, UsageError)
++
++
++def test_authored_source_refusals_keep_check_names_and_cli_categories():
++    from swdb import certification_common as common, certification_faults, certification_isolation, certification_legality
++    from swdb.cli import Failure, UsageError
++
++    with pytest.raises(common.CandidateFailure) as site:
++        certification_faults.replace_tokens("void f() {}", "missing();", "changed();", "stale_depth_hint")
++    assert site.value.check == "negative_control_site:stale_depth_hint"
++    with pytest.raises(common.CandidateUsageError) as harness:
++        certification_isolation.refuse_scan_findings("", "void f() { swdb_certification_frontier(); }")
++    assert harness.value.check == "harness_scan"
++    with pytest.raises(common.CandidateFailure) as schedule:
++        certification_legality.schedule_control("void f() {}")
++    assert schedule.value.check == "negative_control_site:schedule_out_of_range"
++    # A missing normative knob declaration is configuration, despite its legacy site message.
++    with pytest.raises(Failure) as configuration:
++        certification_legality.knob_control("void f() {}", {})
++    assert not isinstance(configuration.value, common.CandidateRefusal)
++    with pytest.raises(common.CandidateUsageError):
++        common.candidate_check(lambda: (_ for _ in ()).throw(UsageError("authored scope mismatch")))
++    # CLI categories remain unchanged for each candidate refusal subtype.
++    assert isinstance(site.value, Failure) and isinstance(harness.value, UsageError)
+--- a/swdb-project/swdb/certification_legality.py
++++ b/swdb-project/swdb/certification_legality.py
+@@ -62,6 +62,7 @@
+ import re
+ 
+ from swdb.cli import Failure
++from swdb.certification_common import CandidateFailure
+ 
+ KNOB_RANGE = 'knob_range'
+ SCHEDULE_RANGE = 'schedule_range'
+@@ -481,7 +482,8 @@
+     if rules != 'v1':
+         mutated = _PRAGMA_OPERATOR.sub(operator, mutated)
+     if not count[0]:
+-        raise Failure('candidate source lacks a unique negative-control mutation site: schedule_out_of_range')
++        raise CandidateFailure('candidate source lacks a unique negative-control mutation site: schedule_out_of_range',
++                               check='negative_control_site:schedule_out_of_range')
+     return mutated
+ 
+ 

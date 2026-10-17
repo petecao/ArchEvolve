@@ -1,0 +1,2014 @@
+kind: proposal
+schema_version: '0.4'
+id: bfs-campaign-preparation-20260925-a1.upstream-annotated-context6
+status: draft
+created: '2026-09-27'
+updated: '2026-09-27'
+message_version: '1.0'
+producer:
+  name: swdb-representative-upstream-annotated
+  role: hw
+  test_client: true
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: bfs-campaign-preparation-20260925-a1.upstream-annotated-context6
+  producer:
+    name: swdb-representative-upstream-annotated
+    role: hw
+    test_client: true
+  profile_package: bfs-native-pilot-20260925-upstream18-a2.uniform-random.package.v1.ac70410e93d0c3a6
+  source_snapshot: bfs-native-pilot-20260925-upstream18-a2.uniform-random.package.v1.source
+  implementation: gapbs-bfs-do
+  source_sha256: d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056
+  regions:
+  - function:bfs.cc:2004:ffc8e4d681ba23b5
+  - function:bfs.cc:3477:2152911a89faaaf1
+  constraints:
+    editable_files: [src/bfs.cc]
+    preserve_correctness: true
+    preserve_roi: true
+  parameters:
+    supporting_profile_packages:
+    - bfs-native-pilot-20260925-upstream18-a2.uniform-random.package.v1.ac70410e93d0c3a6
+    - bfs-native-pilot-20260925-upstream18-a2.kronecker.package.v1.6a34b061dcca355b
+    selection: operator_selected_before_candidate_assessment
+    predecessor_proposal: bfs-campaign-preparation-20260925-a1.upstream-annotated-context5
+    prompt_projection: selected_regions_focused_context.v1
+    provider_allocation:
+      decision: root allocation for the attempt after context5, 2026-09-27 13:20 ET (Stream C3 brief)
+      pool_provider_seconds: 1800
+      per_call_seconds: 900
+      per_call_usd: 10
+      maximum_repairs: 2
+      policy: Fresh bounded allocation for context6 defined by root after context5 completed (505.39 s,
+        USD 1.15) but its hand-written diff failed application (corrupt patch at line 174). Contexts 1-5
+        remain failed and charged; nothing is refunded. Unresolved or failed outcomes are retained. One
+        submission, no retry. No strategy change.
+    read_only_context:
+      scope: Read-only source and public target context for the unchanged submitted strategy. These headers
+        are not editable_files and do not authorize a different optimization.
+      evidence_limit: The native profile package's hardware observations describe that CPU execution,
+        not the declared DX100 target's capabilities. Public operation contracts describe source/model
+        support and the target's retained executable build evidence; they do not prove candidate correctness,
+        accelerator execution, measured profitability, or any undeclared capability.
+      target:
+        kind: hardware_target
+        schema_version: '0.4'
+        id: dx100-e4fc4af-4c
+        status: draft
+        created: '2026-09-25'
+        updated: '2026-09-25'
+        provenance:
+        - id: dx100-pinned-source
+          kind: source_code
+          description: API declaration and model implementation inspected at pinned DX100 revision; no
+            executable or performance claim.
+          uri: https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/benchmarks/API/MAA_gem5.hpp
+        name: DX100 pinned four-core simulated target
+        model:
+          id: dx100-gem5
+          revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        interface:
+          id: dx100-mmio
+          version: 1.0-e4fc4af
+        backend:
+          id: dx100-gem5-se
+          readiness: built
+          build_evidence:
+          - uri: ssh://mbit10/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-build-20260925-a2/build/build-receipt.json
+            sha256: c465447ddc5cc37faa7cb3127a7f9f00b6b557c326e8319e5d694ee9933f8d6c
+        execution_host: null
+        configuration:
+          guest_isa: x86
+          guest_cores: 4
+          guest_memory: 16GB
+          tile_elements: 16384
+          tiles: 32
+          scalar_registers: 32
+          cpu_model: X86O3CPU
+          cpu_clock: 3.2GHz
+          memory_model: Ramulator2
+          memory_channels: 2
+          comparison_settings: LLC and acceleration enablement must be selected and identified by an evaluation
+            protocol.
+        operations:
+        - dx100.mmio.v1.const.i32
+        - dx100.mmio.v1.stream-load.i32
+        - dx100.mmio.v1.indirect-load.i32
+        - dx100.mmio.v1.range-loop.i32
+        - dx100.mmio.v1.alu-scalar-lt.i32
+        - dx100.mmio.v1.indirect-store-vector.i32
+        - dx100.mmio.v1.wait-ready
+        source_evidence:
+        - uri: https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/benchmarks/API/MAA_gem5.hpp#L12-L25
+          path: benchmarks/API/MAA_gem5.hpp
+          sha256: 5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174
+          lines: [12, 25]
+        - uri: https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/scripts/sim.py#L90-L115
+          path: scripts/sim.py
+          sha256: 82c8d78e4339f1be9249c0e92db8a8d5f9654310f1fe4dc91680da6a9e0f7681
+          lines: [90, 115]
+        notes:
+        - The pinned model and BFS artifacts were built in evaluation bfs-dx100-build-20260925-a2. The
+          retained receipt establishes build readiness only; it does not establish timed-binary correctness,
+          actual accelerator execution, or a gain.
+        - Physical execution host is intentionally null until an execution result identifies it.
+      headers:
+      - source_snapshot: bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.source
+        source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+        path: benchmarks/API/MAA_gem5.hpp
+        sha256: 5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174
+        bytes: 27473
+        read_only: true
+        content: |-
+          #pragma once
+          #include "MAA.hpp"
+          #include <gem5/m5ops.h>
+          #include <atomic>
+
+          /*******************************************************************************/
+          /*******************************************************************************/
+          /*                            FUNCTIONAL SIMULATION                            */
+          /*******************************************************************************/
+          /*******************************************************************************/
+
+          #define BASE_ADDR 0x000000000
+          #if NUM_CORES == 4
+          #define MEM_SIZE 0x400000000 // 16GB
+          #elif NUM_CORES == 8
+          #define MEM_SIZE 0x800000000 // 32GB
+          #elif NUM_CORES == 16
+          #define MEM_SIZE 0x1000000000 // 64GB
+          #else
+          #error "NUM_CORES not supported"
+          #endif
+          #define SPD_DATA_SIZE (NUM_TILES * TILE_SIZE * sizeof(uint32_t)) // 128KB = 32 tiles x 1K elements x 4B each element (uint32_t, int32_t, float)
+          #define SPD_SIZE_SIZE (NUM_TILES * sizeof(uint16_t))             // 64B = 32 tiles x 2B each tile (uint16_t)
+          #define SPD_READY_SIZE (NUM_TILES * sizeof(uint16_t))            // 64B = 32 tiles x 2B each tile (uint16_t)
+          #define REG_SIZE (NUM_SCALAR_REGS * sizeof(uint32_t))            // 128B = 32 registers x 4B each register (uint32_t, int32_t, float)
+
+          enum OpcodeType : uint8_t {
+              STREAM_LD = 0,
+              STREAM_ST = 1,
+              INDIR_LD = 2,
+              INDIR_ST_SCALAR = 3,
+              INDIR_ST_VECTOR = 4,
+              INDIR_RMW_SCALAR = 5,
+              INDIR_RMW_VECTOR = 6,
+              RANGE_LOOP = 7,
+              ALU_SCALAR = 8,
+              ALU_VECTOR = 9,
+              ALU_REDUCE = 10
+          };
+          enum class DataType : uint8_t {
+              UINT32_TYPE = 0,
+              INT32_TYPE = 1,
+              FLOAT32_TYPE = 2,
+              UINT64_TYPE = 3,
+              INT64_TYPE = 4,
+              FLOAT64_TYPE = 5,
+              MAX
+          };
+
+          volatile uint64_t *INSTR_opcode_datatype_optype_tdst1_tdst2;
+          volatile uint64_t *INSTR_tsrc1_tsrc2_rdst1_rdst2_rsrc1_rsrc2_rsrc3_csrc;
+          volatile uint64_t *INSTR_baseaddr;
+          uint64_t MAA_end_addr;
+          int8_t region_count;
+
+          void add_mem_region(void *start, void *end) {
+              m5_add_mem_region(start, end, region_count++);
+          }
+
+          void clear_mem_region() {
+              m5_clear_mem_region();
+              m5_add_mem_region((void *)SPD_data_cacheable, (void *)SPD_data_noncacheable, 0);
+              m5_add_mem_region((void *)SPD_data_noncacheable, (void *)SPD_size_noncacheable, 1);
+              m5_add_mem_region((void *)SPD_size_noncacheable, (void *)SPD_ready_noncacheable, 2);
+              m5_add_mem_region((void *)SPD_ready_noncacheable, (void *)REG_noncacheable, 3);
+              m5_add_mem_region((void *)REG_noncacheable, (void *)INSTR_opcode_datatype_optype_tdst1_tdst2, 4);
+              m5_add_mem_region((void *)INSTR_opcode_datatype_optype_tdst1_tdst2, (void *)MAA_end_addr, 5);
+              region_count = 6;
+          }
+
+          void alloc_MAA() {
+              uint64_t current_addr = BASE_ADDR + MEM_SIZE;
+              SPD_data_cacheable = (void *)(current_addr);
+              current_addr += SPD_DATA_SIZE;
+              SPD_data_noncacheable = (volatile void *)(current_addr);
+              current_addr += SPD_DATA_SIZE;
+              SPD_size_noncacheable = (volatile uint16_t *)(current_addr);
+              current_addr += SPD_SIZE_SIZE;
+              SPD_ready_noncacheable = (volatile uint16_t *)(current_addr);
+              current_addr += SPD_READY_SIZE;
+              REG_noncacheable = (volatile void *)(current_addr);
+              current_addr += REG_SIZE;
+              INSTR_opcode_datatype_optype_tdst1_tdst2 = (volatile uint64_t *)(current_addr);
+              current_addr += 8;
+              INSTR_tsrc1_tsrc2_rdst1_rdst2_rsrc1_rsrc2_rsrc3_csrc = (volatile uint64_t *)(current_addr);
+              current_addr += 8;
+              INSTR_baseaddr = (volatile uint64_t *)(current_addr);
+              current_addr += 8;
+              MAA_end_addr = current_addr;
+              clear_mem_region();
+          }
+
+          inline void init_MAA() {
+              REG_count = 0;
+              SPD_count = 0;
+              region_count = 6;
+          }
+          void wait_ready(int SPD_id) {
+              volatile uint16_t ready __attribute__((unused)) = SPD_ready_noncacheable[SPD_id];
+              __asm__ __volatile__("mfence;");
+          }
+          inline volatile uint16_t get_tile_size(int SPD_id) {
+              volatile uint16_t sz = SPD_size_noncacheable[SPD_id];
+              __asm__ __volatile__("mfence;");
+              return sz;
+          }
+          template <class T1>
+          inline volatile T1 get_reg(int reg_id) {
+              volatile T1 data = *((T1 *)(&(((volatile uint32_t *)REG_noncacheable)[reg_id])));
+              __asm__ __volatile__("mfence;");
+              return data;
+          }
+          template <class T1>
+          inline void set_reg(int reg_id, T1 data) {
+              *((T1 *)(&(((volatile uint32_t *)REG_noncacheable)[reg_id]))) = data;
+              __asm__ __volatile__("mfence;");
+          }
+          template <class T1>
+          inline int get_new_reg(T1 data) {
+              int num_regs_needed = sizeof(T1) / sizeof(uint32_t);
+              assert(num_regs_needed == 1 || num_regs_needed == 2);
+              int reg_id = REG_count;
+              REG_count += num_regs_needed;
+              set_reg<T1>(reg_id, data);
+              assert(REG_count <= NUM_SCALAR_REGS);
+              return reg_id;
+          }
+          template <class T1>
+          inline int get_new_reg() {
+              int num_regs_needed = sizeof(T1) / sizeof(uint32_t);
+              assert(num_regs_needed == 1 || num_regs_needed == 2);
+              int reg_id = REG_count;
+              REG_count += num_regs_needed;
+              assert(REG_count <= NUM_SCALAR_REGS);
+              return reg_id;
+          }
+          template <class T1>
+          inline int get_new_tile() {
+              int num_tiles_needed = sizeof(T1) / sizeof(uint32_t);
+              assert(num_tiles_needed == 1 || num_tiles_needed == 2);
+              int tile_id = SPD_count;
+              SPD_count += num_tiles_needed;
+              assert(SPD_count <= NUM_TILES);
+              return tile_id;
+          }
+          template <class T1>
+          void maa_const(T1 data, int dst_reg) {
+              *((T1 *)(&(((volatile uint32_t *)REG_noncacheable)[dst_reg]))) = data;
+          }
+
+          template <class T1>
+          void print_tile(int SPD_id) {
+              std::cout << "Printing tile " << SPD_id << std::endl;
+              T1 *data = get_cacheable_tile_pointer<T1>(SPD_id);
+              uint16_t size = get_tile_size(SPD_id);
+              for (int i = 0; i < size; i++) {
+                  std::cout << "[" << i << "]=" << data[i] << std::endl;
+              }
+          }
+
+          #define NA_UINT8 0xFF
+          #define NA_UINT64 0xFFFFFFFFFFFFFFFF
+
+          template <class T1>
+          DataType get_data_type() {
+              return std::is_same<T1, uint32_t>::value   ? DataType::UINT32_TYPE
+                     : std::is_same<T1, int32_t>::value  ? DataType::INT32_TYPE
+                     : std::is_same<T1, float>::value    ? DataType::FLOAT32_TYPE
+                     : std::is_same<T1, uint64_t>::value ? DataType::UINT64_TYPE
+                     : std::is_same<T1, int64_t>::value  ? DataType::INT64_TYPE
+                     : std::is_same<T1, double>::value   ? DataType::FLOAT64_TYPE
+                                                         : DataType::MAX;
+          }
+          template <class T1>
+          inline void maa_alu_scalar(int src1_tile, int src2_reg, int dst_tile, Operation_t op, int cond_tile = -1) {
+              DataType data_type = get_data_type<T1>();
+              *INSTR_opcode_datatype_optype_tdst1_tdst2 = ((uint64_t)OpcodeType::ALU_SCALAR << 32) |                      // opcode
+                                                          ((uint64_t)data_type << 24) |                                   // datatype
+                                                          ((uint64_t)op << 16) |                                          // optype
+                                                          ((uint64_t)dst_tile << 8) |                                     // tdst1
+                                                          (uint64_t)NA_UINT8;                                             // tdst2
+              *INSTR_tsrc1_tsrc2_rdst1_rdst2_rsrc1_rsrc2_rsrc3_csrc = ((uint64_t)src1_tile << 56) |                       // tsrc1
+                                                                      ((uint64_t)NA_UINT8 << 48) |                        // tsrc2
+                                                                      ((uint64_t)NA_UINT8 << 40) |                        // rdst1
+                                                                      ((uint64_t)NA_UINT8 << 32) |                        // rdst2
+                                                                      ((uint64_t)src2_reg << 24) |                        // rsrc1
+                                                                      ((uint64_t)NA_UINT8 << 16) |                        // rsrc2
+                                                                      ((uint64_t)NA_UINT8 << 8) |                         // rsrc3
+                                                                      (uint64_t)(cond_tile == -1 ? NA_UINT8 : cond_tile); // cond
+              *INSTR_baseaddr = NA_UINT64;                                                                                // baseaddr
+              __asm__ __volatile__("mfence;");
+          }
+          template <class T1>
+          inline void maa_alu_vector(int src1_tile, int src2_tile, int dst_tile, Operation_t op, int cond_tile = -1) {
+              DataType data_type = get_data_type<T1>();
+              *INSTR_opcode_datatype_optype_tdst1_tdst2 = ((uint64_t)OpcodeType::ALU_VECTOR << 32) |                      // opcode
+                                                          ((uint64_t)data_type << 24) |                                   // datatype
+                                                          ((uint64_t)op << 16) |                                          // optype
+                                                          ((uint64_t)dst_tile << 8) |                                     // tdst1
+                                                          (uint64_t)NA_UINT8;                                             // tdst2
+              *INSTR_tsrc1_tsrc2_rdst1_rdst2_rsrc1_rsrc2_rsrc3_csrc = ((uint64_t)src1_tile << 56) |                       // tsrc1
+                                                                      ((uint64_t)src2_tile << 48) |                       // tsrc2
+                                                                      ((uint64_t)NA_UINT8 << 40) |                        // rdst1
+                                                                      ((uint64_t)NA_UINT8 << 32) |                        // rdst2
+                                                                      ((uint64_t)NA_UINT8 << 24) |                        // rsrc1
+                                                                      ((uint64_t)NA_UINT8 << 16) |                        // rsrc2
+                                                                      ((uint64_t)NA_UINT8 << 8) |                         // rsrc3
+                                                                      (uint64_t)(cond_tile == -1 ? NA_UINT8 : cond_tile); // cond
+              *INSTR_baseaddr = NA_UINT64;                                                                                // baseaddr
+              __asm__ __volatile__("mfence;");
+          }
+          template <class T1>
+          inline void maa_alu_reduce(int src1_tile, int dst_reg, Operation_t op, int cond_tile = -1) {
+              DataType data_type = get_data_type<T1>();
+              *INSTR_opcode_datatype_optype_tdst1_tdst2 = ((uint64_t)OpcodeType::ALU_REDUCE << 32) |                      // opcode
+                                                          ((uint64_t)data_type << 24) |                                   // datatype
+                                                          ((uint64_t)op << 16) |                                          // optype
+                                                          ((uint64_t)NA_UINT8 << 8) |                                     // tdst1
+                                                          (uint64_t)NA_UINT8;                                             // tdst2
+              *INSTR_tsrc1_tsrc2_rdst1_rdst2_rsrc1_rsrc2_rsrc3_csrc = ((uint64_t)src1_tile << 56) |                       // tsrc1
+                                                                      ((uint64_t)NA_UINT8 << 48) |                        // tsrc2
+                                                                      ((uint64_t)dst_reg << 40) |                         // rdst1
+                                                                      ((uint64_t)NA_UINT8 << 32) |                        // rdst2
+                                                                      ((uint64_t)NA_UINT8 << 24) |                        // rsrc1
+                                                                      ((uint64_t)NA_UINT8 << 16) |                        // rsrc2
+                                                                      ((uint64_t)NA_UINT8 << 8) |                         // rsrc3
+                                                                      (uint64_t)(cond_tile == -1 ? NA_UINT8 : cond_tile); // cond
+              *INSTR_baseaddr = NA_UINT64;                                                                                // baseaddr
+              __asm__ __volatile__("mfence;");
+          }
+          template <class T1>
+          inline void maa_stream_load(T1 *data, int min_reg, int max_reg, int stride_reg, int dst_tile, int cond_tile = -1) {
+              DataType data_type = get_data_type<T1>();
+              *INSTR_opcode_datatype_optype_tdst1_tdst2 = ((uint64_t)OpcodeType::STREAM_LD << 32) |                       // opcode
+                                                          ((uint64_t)data_type << 24) |                                   // datatype
+                                                          ((uint64_t)NA_UINT8 << 16) |                                    // optype
+                                                          ((uint64_t)dst_tile << 8) |                                     // tdst1
+                                                          (uint64_t)NA_UINT8;                                             // tdst2
+              *INSTR_tsrc1_tsrc2_rdst1_rdst2_rsrc1_rsrc2_rsrc3_csrc = ((uint64_t)NA_UINT8 << 56) |                        // tsrc1
+                                                                      ((uint64_t)NA_UINT8 << 48) |                        // tsrc2
+                                                                      ((uint64_t)NA_UINT8 << 40) |                        // rdst1
+                                                                      ((uint64_t)NA_UINT8 << 32) |                        // rdst2
+                                                                      ((uint64_t)min_reg << 24) |                         // rsrc1
+                                                                      ((uint64_t)max_reg << 16) |                         // rsrc2
+                                                                      ((uint64_t)stride_reg << 8) |                       // rsrc3
+                                                                      (uint64_t)(cond_tile == -1 ? NA_UINT8 : cond_tile); // cond
+              *INSTR_baseaddr = (uint64_t)data;                                                                           // baseaddr
+              __asm__ __volatile__("mfence;");
+          }
+          template <class T1>
+          inline void maa_stream_store(T1 *data, int min_reg, int max_reg, int stride_reg, int src_tile, int cond_tile = -1) {
+              DataType data_type = get_data_type<T1>();
+              *INSTR_opcode_datatype_optype_tdst1_tdst2 = ((uint64_t)OpcodeType::STREAM_ST << 32) |                       // opcode
+                                                          ((uint64_t)data_type << 24) |                                   // datatype
+                                                          ((uint64_t)NA_UINT8 << 16) |                                    // optype
+                                                          ((uint64_t)NA_UINT8 << 8) |                                     // tdst1
+                                                          (uint64_t)NA_UINT8;                                             // tdst2
+              *INSTR_tsrc1_tsrc2_rdst1_rdst2_rsrc1_rsrc2_rsrc3_csrc = ((uint64_t)src_tile << 56) |                        // tsrc1
+                                                                      ((uint64_t)NA_UINT8 << 48) |                        // tsrc2
+                                                                      ((uint64_t)NA_UINT8 << 40) |                        // rdst1
+                                                                      ((uint64_t)NA_UINT8 << 32) |                        // rdst2
+                                                                      ((uint64_t)min_reg << 24) |                         // rsrc1
+                                                                      ((uint64_t)max_reg << 16) |                         // rsrc2
+                                                                      ((uint64_t)stride_reg << 8) |                       // rsrc3
+                                                                      (uint64_t)(cond_tile == -1 ? NA_UINT8 : cond_tile); // cond
+              *INSTR_baseaddr = (uint64_t)data;                                                                           // baseaddr
+              __asm__ __volatile__("mfence;");
+          }
+          template <class T1>
+          inline void maa_indirect_load(T1 *data, int idx_tile, int dst_tile, int cond_tile = -1) {
+              DataType data_type = get_data_type<T1>();
+              *INSTR_opcode_datatype_optype_tdst1_tdst2 = ((uint64_t)OpcodeType::INDIR_LD << 32) |                        // opcode
+                                                          ((uint64_t)data_type << 24) |                                   // datatype
+                                                          ((uint64_t)NA_UINT8 << 16) |                                    // optype
+                                                          ((uint64_t)dst_tile << 8) |                                     // tdst1
+                                                          (uint64_t)NA_UINT8;                                             // tdst2
+              *INSTR_tsrc1_tsrc2_rdst1_rdst2_rsrc1_rsrc2_rsrc3_csrc = ((uint64_t)idx_tile << 56) |                        // tsrc1
+                                                                      ((uint64_t)NA_UINT8 << 48) |                        // tsrc2
+                                                                      ((uint64_t)NA_UINT8 << 40) |                        // rdst1
+                                                                      ((uint64_t)NA_UINT8 << 32) |                        // rdst2
+                                                                      ((uint64_t)NA_UINT8 << 24) |                        // rsrc1
+                                                                      ((uint64_t)NA_UINT8 << 16) |                        // rsrc2
+                                                                      ((uint64_t)NA_UINT8 << 8) |                         // rsrc3
+                                                                      (uint64_t)(cond_tile == -1 ? NA_UINT8 : cond_tile); // cond
+              *INSTR_baseaddr = (uint64_t)data;                                                                           // baseaddr
+              __asm__ __volatile__("mfence;");
+          }
+          template <class T1>
+          inline void maa_indirect_store_vector(T1 *data, int idx_tile, int src_tile, int cond_tile = -1, int dst_tile = -1) {
+              DataType data_type = get_data_type<T1>();
+              *INSTR_opcode_datatype_optype_tdst1_tdst2 = ((uint64_t)OpcodeType::INDIR_ST_VECTOR << 32) |                 // opcode
+                                                          ((uint64_t)data_type << 24) |                                   // datatype
+                                                          ((uint64_t)NA_UINT8 << 16) |                                    // optype
+                                                          ((uint64_t)(dst_tile == -1 ? NA_UINT8 : dst_tile) << 8) |       // tdst1
+                                                          (uint64_t)NA_UINT8;                                             // tdst2
+              *INSTR_tsrc1_tsrc2_rdst1_rdst2_rsrc1_rsrc2_rsrc3_csrc = ((uint64_t)idx_tile << 56) |                        // tsrc1
+                                                                      ((uint64_t)src_tile << 48) |                        // tsrc2
+                                                                      ((uint64_t)NA_UINT8 << 40) |                        // rdst1
+                                                                      ((uint64_t)NA_UINT8 << 32) |                        // rdst2
+                                                                      ((uint64_t)NA_UINT8 << 24) |                        // rsrc1
+                                                                      ((uint64_t)NA_UINT8 << 16) |                        // rsrc2
+                                                                      ((uint64_t)NA_UINT8 << 8) |                         // rsrc3
+                                                                      (uint64_t)(cond_tile == -1 ? NA_UINT8 : cond_tile); // cond
+              *INSTR_baseaddr = (uint64_t)data;                                                                           // baseaddr
+              __asm__ __volatile__("mfence;");
+          }
+          template <class T1>
+          inline void maa_indirect_store_scalar(T1 *data, int idx_tile, int src_reg, int cond_tile = -1, int dst_tile = -1) {
+              DataType data_type = get_data_type<T1>();
+              *INSTR_opcode_datatype_optype_tdst1_tdst2 = ((uint64_t)OpcodeType::INDIR_ST_SCALAR << 32) |                 // opcode
+                                                          ((uint64_t)data_type << 24) |                                   // datatype
+                                                          ((uint64_t)NA_UINT8 << 16) |                                    // optype
+                                                          ((uint64_t)(dst_tile == -1 ? NA_UINT8 : dst_tile) << 8) |       // tdst1
+                                                          (uint64_t)NA_UINT8;                                             // tdst2
+              *INSTR_tsrc1_tsrc2_rdst1_rdst2_rsrc1_rsrc2_rsrc3_csrc = ((uint64_t)idx_tile << 56) |                        // tsrc1
+                                                                      ((uint64_t)NA_UINT8 << 48) |                        // tsrc2
+                                                                      ((uint64_t)NA_UINT8 << 40) |                        // rdst1
+                                                                      ((uint64_t)NA_UINT8 << 32) |                        // rdst2
+                                                                      ((uint64_t)src_reg << 24) |                         // rsrc1
+                                                                      ((uint64_t)NA_UINT8 << 16) |                        // rsrc2
+                                                                      ((uint64_t)NA_UINT8 << 8) |                         // rsrc3
+                                                                      (uint64_t)(cond_tile == -1 ? NA_UINT8 : cond_tile); // cond
+              *INSTR_baseaddr = (uint64_t)data;                                                                           // baseaddr
+              __asm__ __volatile__("mfence;");
+          }
+          template <class T1>
+          inline void maa_indirect_rmw_vector(T1 *data, int idx_tile, int src_tile, Operation_t o_type, int cond_tile = -1, int dst_tile = -1) {
+              DataType data_type = get_data_type<T1>();
+              *INSTR_opcode_datatype_optype_tdst1_tdst2 = ((uint64_t)OpcodeType::INDIR_RMW_VECTOR << 32) |                // opcode
+                                                          ((uint64_t)data_type << 24) |                                   // datatype
+                                                          ((uint64_t)o_type << 16) |                                      // optype
+                                                          ((uint64_t)(dst_tile == -1 ? NA_UINT8 : dst_tile) << 8) |       // tdst1
+                                                          (uint64_t)NA_UINT8;                                             // tdst2
+              *INSTR_tsrc1_tsrc2_rdst1_rdst2_rsrc1_rsrc2_rsrc3_csrc = ((uint64_t)idx_tile << 56) |                        // tsrc1
+                                                                      ((uint64_t)src_tile << 48) |                        // tsrc2
+                                                                      ((uint64_t)NA_UINT8 << 40) |                        // rdst1
+                                                                      ((uint64_t)NA_UINT8 << 32) |                        // rdst2
+                                                                      ((uint64_t)NA_UINT8 << 24) |                        // rsrc1
+                                                                      ((uint64_t)NA_UINT8 << 16) |                        // rsrc2
+                                                                      ((uint64_t)NA_UINT8 << 8) |                         // rsrc3
+                                                                      (uint64_t)(cond_tile == -1 ? NA_UINT8 : cond_tile); // cond
+              *INSTR_baseaddr = (uint64_t)data;                                                                           // baseaddr
+              __asm__ __volatile__("mfence;");
+          }
+          template <class T1>
+          inline void maa_indirect_rmw_scalar(T1 *data, int idx_tile, int src_reg, Operation_t o_type, int cond_tile = -1, int dst_tile = -1) {
+              DataType data_type = get_data_type<T1>();
+              *INSTR_opcode_datatype_optype_tdst1_tdst2 = ((uint64_t)OpcodeType::INDIR_RMW_SCALAR << 32) |                // opcode
+                                                          ((uint64_t)data_type << 24) |                                   // datatype
+                                                          ((uint64_t)o_type << 16) |                                      // optype
+                                                          ((uint64_t)(dst_tile == -1 ? NA_UINT8 : dst_tile) << 8) |       // tdst1
+                                                          (uint64_t)NA_UINT8;                                             // tdst2
+              *INSTR_tsrc1_tsrc2_rdst1_rdst2_rsrc1_rsrc2_rsrc3_csrc = ((uint64_t)idx_tile << 56) |                        // tsrc1
+                                                                      ((uint64_t)NA_UINT8 << 48) |                        // tsrc2
+                                                                      ((uint64_t)NA_UINT8 << 40) |                        // rdst1
+                                                                      ((uint64_t)NA_UINT8 << 32) |                        // rdst2
+                                                                      ((uint64_t)src_reg << 24) |                         // rsrc1
+                                                                      ((uint64_t)NA_UINT8 << 16) |                        // rsrc2
+                                                                      ((uint64_t)NA_UINT8 << 8) |                         // rsrc3
+                                                                      (uint64_t)(cond_tile == -1 ? NA_UINT8 : cond_tile); // cond
+              *INSTR_baseaddr = (uint64_t)data;                                                                           // baseaddr
+              __asm__ __volatile__("mfence;");
+          }
+          // for each tile of i, set last_i_reg to 0 and last_j_reg to -1
+          template <class T1>
+          inline void maa_range_loop(int last_i_reg, int last_j_reg, int min_tile, int max_tile, int stride_reg, int dst_i_tile, int dst_j_tile, int cond_tile = -1) {
+              DataType data_type = DataType::INT32_TYPE;
+              *INSTR_opcode_datatype_optype_tdst1_tdst2 = ((uint64_t)OpcodeType::RANGE_LOOP << 32) |                      // opcode
+                                                          ((uint64_t)data_type << 24) |                                   // datatype
+                                                          ((uint64_t)NA_UINT8 << 16) |                                    // optype
+                                                          ((uint64_t)dst_i_tile << 8) |                                   // tdst1
+                                                          (uint64_t)dst_j_tile;                                           // tdst2
+              *INSTR_tsrc1_tsrc2_rdst1_rdst2_rsrc1_rsrc2_rsrc3_csrc = ((uint64_t)min_tile << 56) |                        // tsrc1
+                                                                      ((uint64_t)max_tile << 48) |                        // tsrc2
+                                                                      ((uint64_t)last_i_reg << 40) |                      // rdst1
+                                                                      ((uint64_t)last_j_reg << 32) |                      // rdst2
+                                                                      ((uint64_t)stride_reg << 24) |                      // rsrc1
+                                                                      ((uint64_t)NA_UINT8 << 16) |                        // rsrc2
+                                                                      ((uint64_t)NA_UINT8 << 8) |                         // rsrc3
+                                                                      (uint64_t)(cond_tile == -1 ? NA_UINT8 : cond_tile); // cond
+              *INSTR_baseaddr = NA_UINT64;                                                                                // baseaddr
+              __asm__ __volatile__("mfence;");
+          }
+      - source_snapshot: bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.source
+        source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+        path: benchmarks/API/MAA.hpp
+        sha256: 4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd
+        bytes: 1323
+        read_only: true
+        content: |
+          #pragma once
+          #include <cassert>
+          #include <chrono>
+          #include <csignal>
+          #include <cstdint>
+          #include <cstdio>
+          #include <cstdlib>
+          #include <iostream>
+          #include <random>
+          #include <set>
+
+          #define DELTA 0.001
+
+          #ifndef TILE_SIZE
+          #define TILE_SIZE 16384
+          #endif
+          #ifndef NUM_CORES
+          #define NUM_CORES 4
+          #endif
+          #define NUM_TILES_PER_CORE 8
+          #define NUM_REGS_PER_CORE 8
+          #define NUM_TILES (NUM_CORES * NUM_TILES_PER_CORE)
+          #define NUM_SCALAR_REGS (NUM_CORES * NUM_REGS_PER_CORE)
+          #define NUM_REGIONS 256
+
+          int REG_count;
+          int SPD_count;
+
+          enum class Operation_t {
+              ADD_OP = 0,
+              SUB_OP = 1,
+              MUL_OP = 2,
+              DIV_OP = 3,
+              MIN_OP = 4,
+              MAX_OP = 5,
+              AND_OP = 6,
+              OR_OP = 7,
+              XOR_OP = 8,
+              SHL_OP = 9,
+              SHR_OP = 10,
+              GT_OP = 11,
+              GTE_OP = 12,
+              LT_OP = 13,
+              LTE_OP = 14,
+              EQ_OP = 15,
+              NE_OP = 16,
+              MAX
+          };
+
+          void *SPD_data_cacheable;
+          volatile void *SPD_data_noncacheable;
+          volatile uint16_t *SPD_size_noncacheable;
+          volatile uint16_t *SPD_ready_noncacheable;
+          volatile void *REG_noncacheable;
+
+          template <class T1>
+          inline T1 *get_cacheable_tile_pointer(int SPD_id) {
+              return (T1 *)(&(((uint32_t *)SPD_data_cacheable)[SPD_id * TILE_SIZE]));
+          }
+          template <class T1>
+          inline volatile T1 *get_noncacheable_tile_pointer(int SPD_id) {
+              return (T1 *)(&(((uint32_t *)SPD_data_noncacheable)[SPD_id * TILE_SIZE]));
+          }
+      - source_snapshot: bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.source
+        source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+        path: benchmarks/API/MAA_utility.hpp
+        sha256: 3fb818fff3a37e14d77ea009a2246788213c1e938a05515b361aceb010a2b10e
+        bytes: 786
+        read_only: true
+        content: |-
+          #pragma once
+
+          #if !defined(FUNC) && !defined(GEM5) && !defined(GEM5_MAGIC)
+          #define FUNC
+          #endif
+
+          #if defined(FUNC)
+          #include <MAA_functional.hpp>
+          #elif defined(GEM5)
+          #include <MAA_gem5.hpp>
+          #include <gem5/m5ops.h>
+          #elif defined(GEM5_MAGIC)
+          #include "MAA_gem5_magic.hpp"
+          #endif
+
+          #include <pthread.h>
+          #define MAA_CRITICAL_INIT pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+          #define MAA_CRITICAL_START pthread_mutex_lock(&mutex);
+          #define MAA_CRITICAL_END pthread_mutex_unlock(&mutex);
+          // template <int NUM>
+          // inline int get_const_tile(){
+          //     int SPD_id = get_new_tile<int>();
+          //     int *tile = get_cacheable_tile_pointer<int>(SPD_id);
+          //     for (int i = 0; i < TILE_SIZE; i++) {
+          //         tile[i] = NUM;
+          //     }
+          //     set_tile_size(SPD_id, TILE_SIZE);
+          //     return SPD_id;
+          // }
+      - source_snapshot: bfs-native-pilot-20260925-upstream18-a2.uniform-random.package.v1.source
+        source_artifact_sha256: d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056
+        path: src/sliding_queue.h
+        sha256: f8389900181f1a63c0354e274561336191bbc0e4cfb5f34f70da3abc07e4d443
+        bytes: 2077
+        read_only: true
+        content: |
+          // Copyright (c) 2015, The Regents of the University of California (Regents)
+          // See LICENSE.txt for license details
+
+          #ifndef SLIDING_QUEUE_H_
+          #define SLIDING_QUEUE_H_
+
+          #include <algorithm>
+
+          #include "platform_atomics.h"
+
+
+          /*
+          GAP Benchmark Suite
+          Class:  SlidingQueue
+          Author: Scott Beamer
+
+          Double-buffered queue so appends aren't seen until SlideWindow() called
+           - Use QueueBuffer when used in parallel to avoid false sharing by doing
+             bulk appends from thread-local storage
+          */
+
+
+          template <typename T>
+          class QueueBuffer;
+
+          template <typename T>
+          class SlidingQueue {
+            T *shared;
+            size_t shared_in;
+            size_t shared_out_start;
+            size_t shared_out_end;
+            friend class QueueBuffer<T>;
+
+           public:
+            explicit SlidingQueue(size_t shared_size) {
+              shared = new T[shared_size];
+              reset();
+            }
+
+            ~SlidingQueue() {
+              delete[] shared;
+            }
+
+            void push_back(T to_add) {
+              shared[shared_in++] = to_add;
+            }
+
+            bool empty() const {
+              return shared_out_start == shared_out_end;
+            }
+
+            void reset() {
+              shared_out_start = 0;
+              shared_out_end = 0;
+              shared_in = 0;
+            }
+
+            void slide_window() {
+              shared_out_start = shared_out_end;
+              shared_out_end = shared_in;
+            }
+
+            typedef T* iterator;
+
+            iterator begin() const {
+              return shared + shared_out_start;
+            }
+
+            iterator end() const {
+              return shared + shared_out_end;
+            }
+
+            size_t size() const {
+              return end() - begin();
+            }
+          };
+
+
+          template <typename T>
+          class QueueBuffer {
+            size_t in;
+            T *local_queue;
+            SlidingQueue<T> &sq;
+            const size_t local_size;
+
+           public:
+            explicit QueueBuffer(SlidingQueue<T> &master, size_t given_size = 16384)
+                : sq(master), local_size(given_size) {
+              in = 0;
+              local_queue = new T[local_size];
+            }
+
+            ~QueueBuffer() {
+              delete[] local_queue;
+            }
+
+            void push_back(T to_add) {
+              if (in == local_size)
+                flush();
+              local_queue[in++] = to_add;
+            }
+
+            void flush() {
+              T *shared_queue = sq.shared;
+              size_t copy_start = fetch_and_add(sq.shared_in, in);
+              std::copy(local_queue, local_queue+in, shared_queue+copy_start);
+              in = 0;
+            }
+          };
+
+          #endif  // SLIDING_QUEUE_H_
+      - source_snapshot: bfs-native-pilot-20260925-upstream18-a2.uniform-random.package.v1.source
+        source_artifact_sha256: d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056
+        path: src/pvector.h
+        sha256: d72027605ae123653c09b1eb8d5b7a26cffe4945b22cbe002d910847893628d7
+        bytes: 3788
+        read_only: true
+        content: |
+          // Copyright (c) 2015, The Regents of the University of California (Regents)
+          // See LICENSE.txt for license details
+
+          #ifndef PVECTOR_H_
+          #define PVECTOR_H_
+
+          #include <algorithm>
+
+
+          /*
+          GAP Benchmark Suite
+          Class:  pvector
+          Author: Scott Beamer
+
+          Vector class with ability to not initialize or do initialization in parallel
+           - std::vector (when resizing) will always initialize, and does so serially
+           - When pvector is resized, new elements are uninitialized
+           - Resizing is not thread-safe
+          */
+
+
+          template <typename T_>
+          class pvector {
+           public:
+            typedef T_* iterator;
+
+            pvector() : start_(nullptr), end_size_(nullptr), end_capacity_(nullptr) {}
+
+            explicit pvector(size_t num_elements) {
+              start_ = new T_[num_elements];
+              end_size_ = start_ + num_elements;
+              end_capacity_ = end_size_;
+            }
+
+            pvector(size_t num_elements, T_ init_val) : pvector(num_elements) {
+              fill(init_val);
+            }
+
+            pvector(iterator copy_begin, iterator copy_end)
+                : pvector(copy_end - copy_begin) {
+              #pragma omp parallel for
+              for (size_t i=0; i < capacity(); i++)
+                start_[i] = copy_begin[i];
+            }
+
+            // don't want this to be copied, too much data to move
+            pvector(const pvector &other) = delete;
+
+            // prefer move because too much data to copy
+            pvector(pvector &&other)
+                : start_(other.start_), end_size_(other.end_size_),
+                  end_capacity_(other.end_capacity_) {
+              other.start_ = nullptr;
+              other.end_size_ = nullptr;
+              other.end_capacity_ = nullptr;
+            }
+
+            // want move assignment
+            pvector& operator= (pvector &&other) {
+              if (this != &other) {
+                ReleaseResources();
+                start_ = other.start_;
+                end_size_ = other.end_size_;
+                end_capacity_ = other.end_capacity_;
+                other.start_ = nullptr;
+                other.end_size_ = nullptr;
+                other.end_capacity_ = nullptr;
+              }
+              return *this;
+            }
+
+            void ReleaseResources(){
+              if (start_ != nullptr) {
+                delete[] start_;
+              }
+            }
+
+            ~pvector() {
+              ReleaseResources();
+            }
+
+            // not thread-safe
+            void reserve(size_t num_elements) {
+              if (num_elements > capacity()) {
+                T_ *new_range = new T_[num_elements];
+                #pragma omp parallel for
+                for (size_t i=0; i < size(); i++)
+                  new_range[i] = start_[i];
+                end_size_ = new_range + size();
+                delete[] start_;
+                start_ = new_range;
+                end_capacity_ = start_ + num_elements;
+              }
+            }
+
+            // prevents internal storage from being freed when this pvector is desctructed
+            // - used by Builder to reuse an EdgeList's space for in-place graph building
+            void leak() {
+              start_ = nullptr;
+            }
+
+            bool empty() {
+              return end_size_ == start_;
+            }
+
+            void clear() {
+              end_size_ = start_;
+            }
+
+            void resize(size_t num_elements) {
+              reserve(num_elements);
+              end_size_ = start_ + num_elements;
+            }
+
+            T_& operator[](size_t n) {
+              return start_[n];
+            }
+
+            const T_& operator[](size_t n) const {
+              return start_[n];
+            }
+
+            void push_back(T_ val) {
+              if (size() == capacity()) {
+                size_t new_size = capacity() == 0 ? 1 : capacity() * growth_factor;
+                reserve(new_size);
+              }
+              *end_size_ = val;
+              end_size_++;
+            }
+
+            void fill(T_ init_val) {
+              #pragma omp parallel for
+              for (T_* ptr=start_; ptr < end_size_; ptr++)
+                *ptr = init_val;
+            }
+
+            size_t capacity() const {
+              return end_capacity_ - start_;
+            }
+
+            size_t size() const {
+              return end_size_ - start_;
+            }
+
+            iterator begin() const {
+              return start_;
+            }
+
+            iterator end() const {
+              return end_size_;
+            }
+
+            T_* data() const {
+              return start_;
+            }
+
+            void swap(pvector &other) {
+              std::swap(start_, other.start_);
+              std::swap(end_size_, other.end_size_);
+              std::swap(end_capacity_, other.end_capacity_);
+            }
+
+
+           private:
+            T_* start_;
+            T_* end_size_;
+            T_* end_capacity_;
+            static const size_t growth_factor = 2;
+          };
+
+          #endif  // PVECTOR_H_
+      - source_snapshot: bfs-native-pilot-20260925-upstream18-a2.uniform-random.package.v1.source
+        source_artifact_sha256: d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056
+        path: src/graph.h
+        sha256: 49d5d25bb7db8b724590aa3df43f0cf4a62c848c06aa319907b3fb335e7482bb
+        bytes: 7381
+        read_only: true
+        content: |
+          // Copyright (c) 2015, The Regents of the University of California (Regents)
+          // See LICENSE.txt for license details
+
+          #ifndef GRAPH_H_
+          #define GRAPH_H_
+
+          #include <algorithm>
+          #include <cinttypes>
+          #include <cstddef>
+          #include <iostream>
+          #include <type_traits>
+
+          #include "pvector.h"
+          #include "util.h"
+
+
+          /*
+          GAP Benchmark Suite
+          Class:  CSRGraph
+          Author: Scott Beamer
+
+          Simple container for graph in CSR format
+           - Intended to be constructed by a Builder
+           - To make weighted, set DestID_ template type to NodeWeight
+           - MakeInverse parameter controls whether graph stores incoming edges
+          */
+
+
+          // Used to hold node & weight, with another node it makes a weighted edge
+          template <typename NodeID_, typename WeightT_>
+          struct NodeWeight {
+            NodeID_ v;
+            WeightT_ w;
+            NodeWeight() {}
+            NodeWeight(NodeID_ v) : v(v), w(1) {}
+            NodeWeight(NodeID_ v, WeightT_ w) : v(v), w(w) {}
+
+            bool operator< (const NodeWeight& rhs) const {
+              return v == rhs.v ? w < rhs.w : v < rhs.v;
+            }
+
+            // doesn't check WeightT_s, needed to remove duplicate edges
+            bool operator== (const NodeWeight& rhs) const {
+              return v == rhs.v;
+            }
+
+            // doesn't check WeightT_s, needed to remove self edges
+            bool operator== (const NodeID_& rhs) const {
+              return v == rhs;
+            }
+
+            operator NodeID_() {
+              return v;
+            }
+          };
+
+          template <typename NodeID_, typename WeightT_>
+          std::ostream& operator<<(std::ostream& os,
+                                   const NodeWeight<NodeID_, WeightT_>& nw) {
+            os << nw.v << " " << nw.w;
+            return os;
+          }
+
+          template <typename NodeID_, typename WeightT_>
+          std::istream& operator>>(std::istream& is, NodeWeight<NodeID_, WeightT_>& nw) {
+            is >> nw.v >> nw.w;
+            return is;
+          }
+
+
+
+          // Syntactic sugar for an edge
+          template <typename SrcT, typename DstT = SrcT>
+          struct EdgePair {
+            SrcT u;
+            DstT v;
+
+            EdgePair() {}
+
+            EdgePair(SrcT u, DstT v) : u(u), v(v) {}
+
+            bool operator< (const EdgePair& rhs) const {
+              return u == rhs.u ? v < rhs.v : u < rhs.u;
+            }
+
+            bool operator== (const EdgePair& rhs) const {
+              return (u == rhs.u) && (v == rhs.v);
+            }
+          };
+
+          // SG = serialized graph, these types are for writing graph to file
+          typedef int32_t SGID;
+          typedef EdgePair<SGID> SGEdge;
+          typedef int64_t SGOffset;
+
+
+
+          template <class NodeID_, class DestID_ = NodeID_, bool MakeInverse = true>
+          class CSRGraph {
+            // Used for *non-negative* offsets within a neighborhood
+            typedef std::make_unsigned<std::ptrdiff_t>::type OffsetT;
+
+            // Used to access neighbors of vertex, basically sugar for iterators
+            class Neighborhood {
+              NodeID_ n_;
+              DestID_** g_index_;
+              OffsetT start_offset_;
+             public:
+              Neighborhood(NodeID_ n, DestID_** g_index, OffsetT start_offset) :
+                  n_(n), g_index_(g_index), start_offset_(0) {
+                OffsetT max_offset = end() - begin();
+                start_offset_ = std::min(start_offset, max_offset);
+              }
+              typedef DestID_* iterator;
+              iterator begin() { return g_index_[n_] + start_offset_; }
+              iterator end()   { return g_index_[n_+1]; }
+            };
+
+            void ReleaseResources() {
+              if (out_index_ != nullptr)
+                delete[] out_index_;
+              if (out_neighbors_ != nullptr)
+                delete[] out_neighbors_;
+              if (directed_) {
+                if (in_index_ != nullptr)
+                  delete[] in_index_;
+                if (in_neighbors_ != nullptr)
+                  delete[] in_neighbors_;
+              }
+            }
+
+
+           public:
+            CSRGraph() : directed_(false), num_nodes_(-1), num_edges_(-1),
+              out_index_(nullptr), out_neighbors_(nullptr),
+              in_index_(nullptr), in_neighbors_(nullptr) {}
+
+            CSRGraph(int64_t num_nodes, DestID_** index, DestID_* neighs) :
+              directed_(false), num_nodes_(num_nodes),
+              out_index_(index), out_neighbors_(neighs),
+              in_index_(index), in_neighbors_(neighs) {
+                num_edges_ = (out_index_[num_nodes_] - out_index_[0]) / 2;
+              }
+
+            CSRGraph(int64_t num_nodes, DestID_** out_index, DestID_* out_neighs,
+                  DestID_** in_index, DestID_* in_neighs) :
+              directed_(true), num_nodes_(num_nodes),
+              out_index_(out_index), out_neighbors_(out_neighs),
+              in_index_(in_index), in_neighbors_(in_neighs) {
+                num_edges_ = out_index_[num_nodes_] - out_index_[0];
+              }
+
+            CSRGraph(CSRGraph&& other) : directed_(other.directed_),
+              num_nodes_(other.num_nodes_), num_edges_(other.num_edges_),
+              out_index_(other.out_index_), out_neighbors_(other.out_neighbors_),
+              in_index_(other.in_index_), in_neighbors_(other.in_neighbors_) {
+                other.num_edges_ = -1;
+                other.num_nodes_ = -1;
+                other.out_index_ = nullptr;
+                other.out_neighbors_ = nullptr;
+                other.in_index_ = nullptr;
+                other.in_neighbors_ = nullptr;
+            }
+
+            ~CSRGraph() {
+              ReleaseResources();
+            }
+
+            CSRGraph& operator=(CSRGraph&& other) {
+              if (this != &other) {
+                ReleaseResources();
+                directed_ = other.directed_;
+                num_edges_ = other.num_edges_;
+                num_nodes_ = other.num_nodes_;
+                out_index_ = other.out_index_;
+                out_neighbors_ = other.out_neighbors_;
+                in_index_ = other.in_index_;
+                in_neighbors_ = other.in_neighbors_;
+                other.num_edges_ = -1;
+                other.num_nodes_ = -1;
+                other.out_index_ = nullptr;
+                other.out_neighbors_ = nullptr;
+                other.in_index_ = nullptr;
+                other.in_neighbors_ = nullptr;
+              }
+              return *this;
+            }
+
+            bool directed() const {
+              return directed_;
+            }
+
+            int64_t num_nodes() const {
+              return num_nodes_;
+            }
+
+            int64_t num_edges() const {
+              return num_edges_;
+            }
+
+            int64_t num_edges_directed() const {
+              return directed_ ? num_edges_ : 2*num_edges_;
+            }
+
+            int64_t out_degree(NodeID_ v) const {
+              return out_index_[v+1] - out_index_[v];
+            }
+
+            int64_t in_degree(NodeID_ v) const {
+              static_assert(MakeInverse, "Graph inversion disabled but reading inverse");
+              return in_index_[v+1] - in_index_[v];
+            }
+
+            Neighborhood out_neigh(NodeID_ n, OffsetT start_offset = 0) const {
+              return Neighborhood(n, out_index_, start_offset);
+            }
+
+            Neighborhood in_neigh(NodeID_ n, OffsetT start_offset = 0) const {
+              static_assert(MakeInverse, "Graph inversion disabled but reading inverse");
+              return Neighborhood(n, in_index_, start_offset);
+            }
+
+            void PrintStats() const {
+              std::cout << "Graph has " << num_nodes_ << " nodes and "
+                        << num_edges_ << " ";
+              if (!directed_)
+                std::cout << "un";
+              std::cout << "directed edges for degree: ";
+              std::cout << num_edges_/num_nodes_ << std::endl;
+            }
+
+            void PrintTopology() const {
+              for (NodeID_ i=0; i < num_nodes_; i++) {
+                std::cout << i << ": ";
+                for (DestID_ j : out_neigh(i)) {
+                  std::cout << j << " ";
+                }
+                std::cout << std::endl;
+              }
+            }
+
+            static DestID_** GenIndex(const pvector<SGOffset> &offsets, DestID_* neighs) {
+              NodeID_ length = offsets.size();
+              DestID_** index = new DestID_*[length];
+              #pragma omp parallel for
+              for (NodeID_ n=0; n < length; n++)
+                index[n] = neighs + offsets[n];
+              return index;
+            }
+
+            pvector<SGOffset> VertexOffsets(bool in_graph = false) const {
+              pvector<SGOffset> offsets(num_nodes_+1);
+              for (NodeID_ n=0; n < num_nodes_+1; n++)
+                if (in_graph)
+                  offsets[n] = in_index_[n] - in_index_[0];
+                else
+                  offsets[n] = out_index_[n] - out_index_[0];
+              return offsets;
+            }
+
+            Range<NodeID_> vertices() const {
+              return Range<NodeID_>(num_nodes());
+            }
+
+           private:
+            bool directed_;
+            int64_t num_nodes_;
+            int64_t num_edges_;
+            DestID_** out_index_;
+            DestID_*  out_neighbors_;
+            DestID_** in_index_;
+            DestID_*  in_neighbors_;
+          };
+
+          #endif  // GRAPH_H_
+      omitted_from_worker:
+        operations: 8ff865499cd1b91624a58f68b8bbc53c9059d9d7f396b5b1ce0e978ec35670eb
+        headers:
+          benchmarks/API/MAA_gem5_magic.hpp: e3353661cce76167a2f986385e448c2a6aef471fc8424762183bae11ba769c32
+          benchmarks/API/MAA_atomics.hpp: 896459489ded4a790a2b52da62b337f00b7310a4bafc6d3ceaa9d8c4f1eb026a
+      required_operations_note: The proposal required_operations list names the supported operations.
+    target_execution_clarification:
+      scope: Read-only clarification of the unchanged submitted strategy, target and source mapping. It
+        adds no editable file, operation, optimization, or execution permission to the worker. The trusted
+        evaluator handles later build and execution.
+      requested_target:
+        id: dx100-e4fc4af-4c
+        require_executable_backend: true
+        backend:
+          id: dx100-gem5-se
+          readiness: built
+          build_evidence:
+          - uri: ssh://mbit10/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-build-20260925-a2/build/build-receipt.json
+            sha256: c465447ddc5cc37faa7cb3127a7f9f00b6b557c326e8319e5d694ee9933f8d6c
+      profile_vs_target: The supplied native profile package records the historical CPU baseline build
+        and measurements. Its native compiler command does not select the target for this proposal. The
+        proposal explicitly requests dx100-e4fc4af-4c with require_executable_backend=true; the public
+        target declares dx100-gem5-se readiness built.
+      read_only_scope_clarification: The retained read_only_context.scope says these headers are not editable_files
+        and do not authorize a different optimization. That protects the submitted edit/strategy scope;
+        it does not declare the requested DX100 backend unavailable or forbid the trusted evaluator from
+        later executing a candidate on it.
+      planned_evaluation: After a candidate is produced, the trusted evaluator plans a source-identified
+        DX100 complete-call build and bounded simulation under the existing protocol and budget. The existing
+        T17 primary build demonstrates the build route with GEM5, MAA, NUM_CORES=4, TILE_SIZE=16384, the
+        pinned DX100 API include directory, and m5 ABI source. That is a different candidate and proves
+        only that retained build; it is not correctness, execution, profitability, or acceptance evidence
+        for this proposal.
+      retained_build_only_evidence:
+        id: bfs-t17-build-only-20260926-a1
+        record_path: records/evaluations/bfs-t17-build-only-20260926-a1.yaml
+        record_file_sha256: d5ed1ec5b43665379a2b8d59cc2b4cbc582502beb62f5184041079e606229215
+        candidate: bfs-campaign-preparation-20260925-a1.dx100-instructions.candidate-1
+        compiler_command:
+        - /usr/bin/g++-13
+        - -std=c++11
+        - -O3
+        - -Wall
+        - -g
+        - -fopenmp
+        - -DGEM5
+        - -DNUM_CORES=4
+        - -DTILE_SIZE=16384
+        - -DMAA
+        - -I/data1/yanruj/DX100-bfs-e4fc4af/include
+        - -I/data1/yanruj/DX100-bfs-e4fc4af/util/m5/src
+        - -I/data1/yanruj/DX100-bfs-e4fc4af/benchmarks/API
+        - -I/data1/yanruj/EvolveSWDB_sources/bfs-campaign-preparation-20260925-a1.dx100-instructions/source/benchmarks/gapbs/src
+        - /data1/yanruj/EvolveSWDB_builds/bfs-t17-build-only-20260926-a1/complete_call.cc
+        - /data1/yanruj/DX100-bfs-e4fc4af/util/m5/src/abi/x86/m5op.S
+        - -o
+        - /data1/yanruj/EvolveSWDB_builds/bfs-t17-build-only-20260926-a1/bfs
+        returncode: 0
+        binary_sha256: 852e62314b7114079975fe25d70da4e77596490bcfa89fb4f7c64af585485527
+        evidence_limit: Other candidate build only; no new candidate test or simulated result.
+      slot_mapping: The pinned bfs.cc declarations use tiles0 through tiles5 plus tilesi and tilesj, and
+        regs0 through regs5 plus last_i_regs and last_j_regs. There are no declared tiles6/tiles7 arrays
+        in this allocation block. DOBFSMAA serializes get_new_tile<int>() and get_new_reg<int>() allocations
+        inside an omp critical section within its parallel region, indexed by omp_get_thread_num(). The
+        exact excerpts below are reference context for the already submitted strategy, not permission
+        to change it.
+      roi_requirement: Preserve the submitted computation and all trusted correctness/ROI protections.
+        Any candidate allocation, initialization, slot setup, and required work must remain inside the
+        requested DOBFS complete-call ROI. Do not move required setup outside DOBFS or outside timed scope.
+      reference_source_excerpts:
+      - path: apps/dx100/benchmarks/gapbs/src/bfs.cc
+        source_snapshot: bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.source
+        file_sha256: 6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465
+        lines: [63, 64]
+        text: |
+          int tiles0[NUM_CORES], tiles1[NUM_CORES], tiles2[NUM_CORES], tiles3[NUM_CORES], tiles4[NUM_CORES], tiles5[NUM_CORES], tilesi[NUM_CORES], tilesj[NUM_CORES];
+          int regs0[NUM_CORES], regs1[NUM_CORES], regs2[NUM_CORES], regs3[NUM_CORES], regs4[NUM_CORES], regs5[NUM_CORES], last_i_regs[NUM_CORES], last_j_regs[NUM_CORES];
+      - path: apps/dx100/benchmarks/gapbs/src/bfs.cc
+        source_snapshot: bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.source
+        file_sha256: 6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465
+        lines: [366, 403]
+        text: |
+          pvector<NodeID> DOBFSMAA(const Graph &g, NodeID source, bool logging_enabled = false,
+                                   int alpha = 1, int beta = 18) {
+              int num_nodes = g.num_nodes();
+              int num_edges = g.num_edges_directed();
+              if (logging_enabled)
+                  PrintStep("Source", static_cast<int64_t>(source));
+              pvector<SGOffset> VertexOffsetsOut = g.VertexOffsets();
+              Timer t;
+              alloc_MAA();
+              init_MAA();
+              t.Start();
+          #pragma omp parallel
+              {
+          #pragma omp critical
+                  {
+                      int tid = omp_get_thread_num();
+                      tiles0[tid] = get_new_tile<int>();
+                      tiles1[tid] = get_new_tile<int>();
+                      tiles2[tid] = get_new_tile<int>();
+                      tiles3[tid] = get_new_tile<int>();
+                      tiles4[tid] = get_new_tile<int>();
+                      tiles5[tid] = get_new_tile<int>();
+                      tilesi[tid] = get_new_tile<int>();
+                      tilesj[tid] = get_new_tile<int>();
+                      regs0[tid] = get_new_reg<int>();
+                      regs1[tid] = get_new_reg<int>();
+                      regs2[tid] = get_new_reg<int>();
+                      regs3[tid] = get_new_reg<int>();
+                      regs4[tid] = get_new_reg<int>();
+                      regs5[tid] = get_new_reg<int>();
+                      last_i_regs[tid] = get_new_reg<int>();
+                      last_j_regs[tid] = get_new_reg<int>();
+                  }
+              }
+              pvector<NodeID> parent = InitParent(g);
+              t.Stop();
+              if (logging_enabled)
+                  PrintStep("i", t.Seconds());
+    annotation_revision:
+      from: bfs-campaign-preparation-20260925-a1.upstream-annotated-context4
+      change: concrete helper and dispatch code blocks with insertion anchors; author reference cited
+        by identity instead of inlined
+      author_reference:
+        path: apps/dx100/benchmarks/gapbs/src/bfs.cc
+        function: TDStepMAA
+        lines: [66, 225]
+        file_sha256: 6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465
+        host_copy: mbit10:/data1/yanruj/DX100-bfs-e4fc4af/benchmarks/gapbs/src/bfs.cc (same SHA-256)
+      reference_source_sha256: eaab2a688cbe4635441816f8c5674803c208fd233ccb5be1119e2915e7d26c09
+      producer_check: producer-check/functional-check.sh on the pinned DX100 functional model; test-client
+        coherence check only, not candidate or DX100 evidence
+    edit_format_revision:
+      from: bfs-campaign-preparation-20260925-a1.upstream-annotated-context5
+      change: 'provider edit_format full_files: the worker returns complete changed files; SWDB computes
+        the unified diff (git diff --no-index) and applies the unchanged patch and protection checks'
+      reason: 'context5 provider output failed git apply: wrong hunk counts and context lines absent from
+        the source (corrupt patch at line 174)'
+      annotation: byte-identical to context5; the full_files prompt states that its output format overrides
+        the annotation request for a unified diff
+  required_operations:
+  - operation: dx100.mmio.v1.alu-scalar-lt.i32
+    interface: dx100-mmio
+    interface_version: 1.0-e4fc4af
+    model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  - operation: dx100.mmio.v1.const.i32
+    interface: dx100-mmio
+    interface_version: 1.0-e4fc4af
+    model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  - operation: dx100.mmio.v1.indirect-load.i32
+    interface: dx100-mmio
+    interface_version: 1.0-e4fc4af
+    model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  - operation: dx100.mmio.v1.indirect-store-vector.i32
+    interface: dx100-mmio
+    interface_version: 1.0-e4fc4af
+    model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  - operation: dx100.mmio.v1.range-loop.i32
+    interface: dx100-mmio
+    interface_version: 1.0-e4fc4af
+    model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  - operation: dx100.mmio.v1.stream-load.i32
+    interface: dx100-mmio
+    interface_version: 1.0-e4fc4af
+    model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  - operation: dx100.mmio.v1.wait-ready
+    interface: dx100-mmio
+    interface_version: 1.0-e4fc4af
+    model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  hardware_target: dx100-e4fc4af-4c
+  require_executable_backend: true
+  strategy: upstream-hybrid-dx100-top-down-offload
+  intent: Implement the annotated DX100 top-down helper and explicit frontier-size dispatch within upstream
+    direction-optimizing BFS, preserving checked representation conversion, scout counts, parent-update
+    synchronization, and complete-call ROI.
+  payload:
+    kind: annotated_source
+    content:
+      files:
+        src/bfs.cc: |
+          /*
+          SWDB HW ENSEMBLE ANNOTATION (context5) - SELECTED STRATEGY, NOT EXECUTED CODE
+          Producer: representative HW-producer test client (not a live collaborator agent).
+
+          Strategy (unchanged): add a DX100 top-down helper to this upstream direction-optimizing
+          BFS and prefer it for frontiers larger than four 1,024-vertex blocks
+          (queue.size() > NUM_CORES*1024); keep the original CPU direction policy (TDStep/BUStep)
+          for smaller frontiers. Checked 32-bit CSR offset conversion, MAA initialization and slot
+          allocation happen inside DOBFS, so the complete-call ROI charges them. Build: GCC 13,
+          -DGEM5 -DMAA -DNUM_CORES=4 -DTILE_SIZE=16384, pinned DX100 API include directory.
+
+          The four code blocks below ARE the intended executable edits; all are pure insertions
+          (no original line is removed or changed). Realize them as a unified diff against the
+          ORIGINAL src/bfs.cc (which does not contain this comment):
+            EDIT 1 inserts after the line  #include "timer.h"
+            EDIT 2 inserts between TDStep and QueueToBitmap (after the first blank line that
+                   follows TDStep's closing brace)
+            EDIT 3 inserts in DOBFS after  front.reset();
+            EDIT 4 inserts in DOBFS as the first statements inside  while (!queue.empty()) {
+          Output only those four hunks with at most three lines of context each; do not restate
+          unchanged code, and keep the interpretation short. Correct only what fails to build
+          against the supplied headers; do not redesign, rename, reorder MAA calls, or add work.
+          If an edit cannot be realized against the supplied source and headers, report it in
+          unresolved with an empty patch.
+
+          What each part realizes (adapted from the pinned author TDStepMAA, apps/dx100/benchmarks/gapbs/src/bfs.cc lines 66-225, sha256 6835fc42dfadcb60):
+          - Headers: <MAA_utility.hpp> includes <MAA_gem5.hpp> and <gem5/m5ops.h> because the build
+            defines GEM5; add_mem_region/clear_mem_region, tiles and registers come from MAA_gem5.hpp
+            and MAA.hpp (NUM_TILES_PER_CORE = NUM_REGS_PER_CORE = 8). The DX100 code is under MAA.
+          - Public accessors only: queue.begin()/size(), parent.data(), g.out_neigh(0).begin()
+            (the neighbor array base), g.VertexOffsets(). Author queue.shared/start_/out_neighbors_
+            are private upstream; indices are relative to the current frontier window.
+          - Checked conversion: 64-bit SGOffset offsets become int32 only if every count and offset
+            fits INT_MAX; otherwise DX100Prepare returns false and DOBFS keeps the CPU policy.
+            Offsets are never truncated.
+          - Slots: eight distinct 32-bit tiles and eight scalar registers per guest thread (exactly
+            32 each), allocated serially under omp critical after alloc_MAA()/init_MAA(), inside DOBFS.
+            No allocation in a global constructor; the slot tables are plain zero-initialized arrays.
+          - Tile sequence per thread: stream-load frontier u, gather offsets[u] and offsets[u+1],
+            range-loop (i, j), gather v = neighbors[j] and u = frontier[min + i], wait on tile7 and
+            use its ACTUAL returned length. Tile length is the largest power of two <= TILE_SIZE with
+            remaining > NUM_CORES * length (>= 1024), exactly the author's TILE_SIZE ladder.
+          - Parent update: gather parent[v], mask parent[v] < 0, masked vector store parent[v] = u
+            returning the OLD parent values in tile5, all inside one omp critical, then wait on
+            tile5 (the store's old-value destination) before leaving the critical section. The
+            author waited on tile3; tile5 is the destination actually consumed. The masked store is
+            not a CPU compare-and-swap; the returned old value suppresses duplicate targets.
+          - Enqueue only lanes with mask true and old parent < 0; scout count sums -old_parent in
+            int64_t. Scalar tail (remaining <= NUM_CORES*1024) keeps the compare-and-swap loop and
+            the same scout count. Memory regions: the actual frontier window, converted offsets,
+            neighbor array and parent array, cleared after the step.
+          - DOBFS: after an offloaded step, edges_to_check, scout_count and queue.slide_window()
+            follow the original top-down bookkeeping. No m5 ROI calls, no verifier change, no PASS
+            printing; bottom-up, bitmap handling, parent encoding and final normalization unchanged.
+
+          ----- EDIT 1 (insert after: #include "timer.h") -----
+
+          #ifdef MAA
+          #include <climits>
+          #include <cstdlib>
+          #include <omp.h>
+          #include <MAA_utility.hpp>
+          #endif
+
+          ----- EDIT 2 (insert after: the blank line after TDStep) -----
+          #ifdef MAA
+          static_assert(TILE_SIZE >= 1024 && (TILE_SIZE & (TILE_SIZE - 1)) == 0,
+                        "DX100 top-down step expects a power-of-two tile of at least 1024");
+
+          // Per-guest-thread DX100 scratchpad tiles and scalar registers. They are
+          // allocated by DX100Prepare inside the timed DOBFS call, never at startup.
+          static int dx100_tiles[NUM_CORES][NUM_TILES_PER_CORE];
+          static int dx100_regs[NUM_CORES][NUM_REGS_PER_CORE];
+
+          // Complete-call DX100 setup: checked 32-bit CSR offsets, MAA initialization,
+          // and serialized slot allocation. Returns false (CPU policy only) when any
+          // precondition fails; offsets are never truncated.
+          static bool DX100Prepare(const Graph &g, pvector<int32_t> &offsets32) {
+            if (omp_get_max_threads() != NUM_CORES)
+              return false;
+            const int64_t n = g.num_nodes();
+            if (n <= 0 || n >= INT_MAX || g.num_edges_directed() > INT_MAX)
+              return false;
+            pvector<SGOffset> offsets = g.VertexOffsets();
+            if (offsets[0] != 0 || offsets[n] < 0 || offsets[n] > INT_MAX)
+              return false;
+            offsets32.resize(n + 1);
+            #pragma omp parallel for
+            for (int64_t i = 0; i <= n; i++)
+              offsets32[i] = static_cast<int32_t>(offsets[i]);
+            alloc_MAA();
+            init_MAA();
+            int allocated = 0;
+            #pragma omp parallel num_threads(NUM_CORES)
+            {
+              #pragma omp critical
+              {
+                const int tid = omp_get_thread_num();
+                for (int k = 0; k < NUM_TILES_PER_CORE; k++)
+                  dx100_tiles[tid][k] = get_new_tile<int>();
+                for (int k = 0; k < NUM_REGS_PER_CORE; k++)
+                  dx100_regs[tid][k] = get_new_reg<int>();
+                allocated++;
+              }
+            }
+            return allocated == NUM_CORES;
+          }
+
+          // DX100 top-down step adapted from the pinned author TDStepMAA to upstream
+          // GAPBS: public accessors, frontier-relative indices, checked 32-bit offsets.
+          static int64_t TDStepDX100(const Graph &g, int32_t *offsets, NodeID *neighbors,
+                                     pvector<NodeID> &parent, SlidingQueue<NodeID> &queue) {
+            NodeID *frontier = queue.begin();
+            const int len = static_cast<int>(queue.size());
+            NodeID *parents = parent.data();
+            const int64_t n = g.num_nodes();
+            int64_t scout_count = 0;
+            clear_mem_region();
+            add_mem_region(frontier, frontier + len);
+            add_mem_region(offsets, offsets + n + 1);
+            add_mem_region(neighbors, neighbors + offsets[n]);
+            add_mem_region(parents, parents + n);
+            #pragma omp parallel num_threads(NUM_CORES) reduction(+ : scout_count)
+            {
+              if (omp_get_num_threads() != NUM_CORES)
+                std::abort();
+              const int tid = omp_get_thread_num();
+              const int tile0 = dx100_tiles[tid][0], tile1 = dx100_tiles[tid][1];
+              const int tile2 = dx100_tiles[tid][2], tile3 = dx100_tiles[tid][3];
+              const int tile4 = dx100_tiles[tid][4], tile5 = dx100_tiles[tid][5];
+              const int tile6 = dx100_tiles[tid][6], tile7 = dx100_tiles[tid][7];
+              const int reg0 = dx100_regs[tid][0], reg1 = dx100_regs[tid][1];
+              const int regOne = dx100_regs[tid][2], regZero = dx100_regs[tid][3];
+              const int last_i_reg = dx100_regs[tid][6], last_j_reg = dx100_regs[tid][7];
+              QueueBuffer<NodeID> lqueue(queue);
+              maa_const<int>(1, regOne);
+              maa_const<int>(0, regZero);
+              uint32_t *tile0Ptr = get_cacheable_tile_pointer<uint32_t>(tile0);
+              uint32_t *tile4Ptr = get_cacheable_tile_pointer<uint32_t>(tile4);
+              int *tile5Ptr = get_cacheable_tile_pointer<int>(tile5);
+              int idx = 0;
+              while (idx < len) {
+                const int remaining = len - idx;
+                int tile_size = -1;
+                for (int size = TILE_SIZE; size >= 1024; size /= 2) {
+                  if (remaining > NUM_CORES * size) {
+                    tile_size = size;
+                    break;
+                  }
+                }
+                if (tile_size != -1) {
+                  const int min = idx + tid * tile_size;
+                  const int max = min + tile_size;
+                  maa_const<int>(min, reg0);
+                  maa_const<int>(max, reg1);
+                  // tile0 = u = frontier[min..max)
+                  maa_stream_load<int>(frontier, reg0, reg1, regOne, tile0);
+                  // tile1 = offsets[u], tile2 = offsets[u + 1]
+                  maa_indirect_load<int>(offsets, tile0, tile1);
+                  maa_indirect_load<int>(offsets + 1, tile0, tile2);
+                  maa_const<int>(0, last_i_reg);
+                  maa_const<int>(-1, last_j_reg);
+                  int produced = 0;
+                  do {
+                    // tile6 = i (position within this tile), tile7 = j (edge index)
+                    maa_range_loop<int>(last_i_reg, last_j_reg, tile1, tile2, regOne, tile6, tile7);
+                    // tile0 = v = neighbors[j]; tile3 = u = frontier[min + i]
+                    maa_indirect_load<int>(neighbors, tile7, tile0);
+                    maa_indirect_load<int>(frontier + min, tile6, tile3);
+                    wait_ready(tile7);
+                    produced = get_tile_size(tile7);
+                    if (produced == 0)
+                      break;
+                    #pragma omp critical
+                    {
+                      // tile7 = parent[v]; tile4 = parent[v] < 0
+                      maa_indirect_load<int>(parents, tile0, tile7);
+                      maa_alu_scalar<int>(tile7, regZero, tile4, Operation_t::LT_OP);
+                      // where tile4: tile5 = old parent[v]; parent[v] = u
+                      maa_indirect_store_vector<int>(parents, tile0, tile3, tile4, tile5);
+                      wait_ready(tile5);
+                    }
+                    for (int k = 0; k < produced; k++) {
+                      if (tile4Ptr[k] && tile5Ptr[k] < 0) {
+                        lqueue.push_back(static_cast<NodeID>(tile0Ptr[k]));
+                        scout_count += -static_cast<int64_t>(tile5Ptr[k]);
+                      }
+                    }
+                  } while (produced > 0);
+                  idx += NUM_CORES * tile_size;
+                } else {
+                  // Scalar tail: at most NUM_CORES * 1024 frontier entries.
+                  #pragma omp barrier
+                  #pragma omp for schedule(dynamic, 64)
+                  for (int i = idx; i < len; i++) {
+                    const NodeID u = frontier[i];
+                    for (int32_t j = offsets[u]; j < offsets[u + 1]; j++) {
+                      const NodeID v = neighbors[j];
+                      const NodeID curr_val = parents[v];
+                      if (curr_val < 0 && compare_and_swap(parents[v], curr_val, u)) {
+                        lqueue.push_back(v);
+                        scout_count += -curr_val;
+                      }
+                    }
+                  }
+                  idx = len;
+                }
+              }
+              lqueue.flush();
+            }
+            clear_mem_region();
+            return scout_count;
+          }
+          #endif
+
+
+
+          ----- EDIT 3 (insert after: front.reset();) -----
+          #ifdef MAA
+            pvector<int32_t> offsets32;
+            const bool dx100 = DX100Prepare(g, offsets32);
+            NodeID *neighbors = dx100 ? g.out_neigh(0).begin() : nullptr;
+          #endif
+
+          ----- EDIT 4 (insert after: while (!queue.empty()) {) -----
+          #ifdef MAA
+              if (dx100 && queue.size() > static_cast<size_t>(NUM_CORES) * 1024) {
+                t.Start();
+                edges_to_check -= scout_count;
+                scout_count = TDStepDX100(g, offsets32.data(), neighbors, parent, queue);
+                queue.slide_window();
+                t.Stop();
+                if (logging_enabled)
+                  PrintStep("td-dx100", t.Seconds(), queue.size());
+                continue;
+              }
+          #endif
+          ----- END SWDB HW ANNOTATION -----
+          */
+          // Copyright (c) 2015, The Regents of the University of California (Regents)
+          // See LICENSE.txt for license details
+
+          #include <iostream>
+          #include <vector>
+
+          #include "benchmark.h"
+          #include "bitmap.h"
+          #include "builder.h"
+          #include "command_line.h"
+          #include "graph.h"
+          #include "platform_atomics.h"
+          #include "pvector.h"
+          #include "sliding_queue.h"
+          #include "timer.h"
+
+
+          /*
+          GAP Benchmark Suite
+          Kernel: Breadth-First Search (BFS)
+          Author: Scott Beamer
+
+          Will return parent array for a BFS traversal from a source vertex
+
+          This BFS implementation makes use of the Direction-Optimizing approach [1].
+          It uses the alpha and beta parameters to determine whether to switch search
+          directions. For representing the frontier, it uses a SlidingQueue for the
+          top-down approach and a Bitmap for the bottom-up approach. To reduce
+          false-sharing for the top-down approach, thread-local QueueBuffer's are used.
+
+          To save time computing the number of edges exiting the frontier, this
+          implementation precomputes the degrees in bulk at the beginning by storing
+          them in the parent array as negative numbers. Thus, the encoding of parent is:
+            parent[x] < 0 implies x is unvisited and parent[x] = -out_degree(x)
+            parent[x] >= 0 implies x been visited
+
+          [1] Scott Beamer, Krste Asanović, and David Patterson. "Direction-Optimizing
+              Breadth-First Search." International Conference on High Performance
+              Computing, Networking, Storage and Analysis (SC), Salt Lake City, Utah,
+              November 2012.
+          */
+
+
+          using namespace std;
+
+          int64_t BUStep(const Graph &g, pvector<NodeID> &parent, Bitmap &front,
+                         Bitmap &next) {
+            int64_t awake_count = 0;
+            next.reset();
+            #pragma omp parallel for reduction(+ : awake_count) schedule(dynamic, 1024)
+            for (NodeID u=0; u < g.num_nodes(); u++) {
+              if (parent[u] < 0) {
+                for (NodeID v : g.in_neigh(u)) {
+                  if (front.get_bit(v)) {
+                    parent[u] = v;
+                    awake_count++;
+                    next.set_bit(u);
+                    break;
+                  }
+                }
+              }
+            }
+            return awake_count;
+          }
+
+
+          int64_t TDStep(const Graph &g, pvector<NodeID> &parent,
+                         SlidingQueue<NodeID> &queue) {
+            int64_t scout_count = 0;
+            #pragma omp parallel
+            {
+              QueueBuffer<NodeID> lqueue(queue);
+              #pragma omp for reduction(+ : scout_count) nowait
+              for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+                NodeID u = *q_iter;
+                for (NodeID v : g.out_neigh(u)) {
+                  NodeID curr_val = parent[v];
+                  if (curr_val < 0) {
+                    if (compare_and_swap(parent[v], curr_val, u)) {
+                      lqueue.push_back(v);
+                      scout_count += -curr_val;
+                    }
+                  }
+                }
+              }
+              lqueue.flush();
+            }
+            return scout_count;
+          }
+
+
+          void QueueToBitmap(const SlidingQueue<NodeID> &queue, Bitmap &bm) {
+            #pragma omp parallel for
+            for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+              NodeID u = *q_iter;
+              bm.set_bit_atomic(u);
+            }
+          }
+
+          void BitmapToQueue(const Graph &g, const Bitmap &bm,
+                             SlidingQueue<NodeID> &queue) {
+            #pragma omp parallel
+            {
+              QueueBuffer<NodeID> lqueue(queue);
+              #pragma omp for nowait
+              for (NodeID n=0; n < g.num_nodes(); n++)
+                if (bm.get_bit(n))
+                  lqueue.push_back(n);
+              lqueue.flush();
+            }
+            queue.slide_window();
+          }
+
+          pvector<NodeID> InitParent(const Graph &g) {
+            pvector<NodeID> parent(g.num_nodes());
+            #pragma omp parallel for
+            for (NodeID n=0; n < g.num_nodes(); n++)
+              parent[n] = g.out_degree(n) != 0 ? -g.out_degree(n) : -1;
+            return parent;
+          }
+
+          pvector<NodeID> DOBFS(const Graph &g, NodeID source, bool logging_enabled = false,
+                                int alpha = 15, int beta = 18) {
+            if (logging_enabled)
+              PrintStep("Source", static_cast<int64_t>(source));
+            Timer t;
+            t.Start();
+            pvector<NodeID> parent = InitParent(g);
+            t.Stop();
+            if (logging_enabled)
+              PrintStep("i", t.Seconds());
+            parent[source] = source;
+            SlidingQueue<NodeID> queue(g.num_nodes());
+            queue.push_back(source);
+            queue.slide_window();
+            Bitmap curr(g.num_nodes());
+            curr.reset();
+            Bitmap front(g.num_nodes());
+            front.reset();
+            int64_t edges_to_check = g.num_edges_directed();
+            int64_t scout_count = g.out_degree(source);
+            while (!queue.empty()) {
+              if (scout_count > edges_to_check / alpha) {
+                int64_t awake_count, old_awake_count;
+                TIME_OP(t, QueueToBitmap(queue, front));
+                if (logging_enabled)
+                  PrintStep("e", t.Seconds());
+                awake_count = queue.size();
+                queue.slide_window();
+                do {
+                  t.Start();
+                  old_awake_count = awake_count;
+                  awake_count = BUStep(g, parent, front, curr);
+                  front.swap(curr);
+                  t.Stop();
+                  if (logging_enabled)
+                    PrintStep("bu", t.Seconds(), awake_count);
+                } while ((awake_count >= old_awake_count) ||
+                         (awake_count > g.num_nodes() / beta));
+                TIME_OP(t, BitmapToQueue(g, front, queue));
+                if (logging_enabled)
+                  PrintStep("c", t.Seconds());
+                scout_count = 1;
+              } else {
+                t.Start();
+                edges_to_check -= scout_count;
+                scout_count = TDStep(g, parent, queue);
+                queue.slide_window();
+                t.Stop();
+                if (logging_enabled)
+                  PrintStep("td", t.Seconds(), queue.size());
+              }
+            }
+            #pragma omp parallel for
+            for (NodeID n = 0; n < g.num_nodes(); n++)
+              if (parent[n] < -1)
+                parent[n] = -1;
+            return parent;
+          }
+
+
+          void PrintBFSStats(const Graph &g, const pvector<NodeID> &bfs_tree) {
+            int64_t tree_size = 0;
+            int64_t n_edges = 0;
+            for (NodeID n : g.vertices()) {
+              if (bfs_tree[n] >= 0) {
+                n_edges += g.out_degree(n);
+                tree_size++;
+              }
+            }
+            cout << "BFS Tree has " << tree_size << " nodes and ";
+            cout << n_edges << " edges" << endl;
+          }
+
+
+          // BFS verifier does a serial BFS from same source and asserts:
+          // - parent[source] = source
+          // - parent[v] = u  =>  depth[v] = depth[u] + 1 (except for source)
+          // - parent[v] = u  => there is edge from u to v
+          // - all vertices reachable from source have a parent
+          bool BFSVerifier(const Graph &g, NodeID source,
+                           const pvector<NodeID> &parent) {
+            pvector<int> depth(g.num_nodes(), -1);
+            depth[source] = 0;
+            vector<NodeID> to_visit;
+            to_visit.reserve(g.num_nodes());
+            to_visit.push_back(source);
+            for (auto it = to_visit.begin(); it != to_visit.end(); it++) {
+              NodeID u = *it;
+              for (NodeID v : g.out_neigh(u)) {
+                if (depth[v] == -1) {
+                  depth[v] = depth[u] + 1;
+                  to_visit.push_back(v);
+                }
+              }
+            }
+            for (NodeID u : g.vertices()) {
+              if ((depth[u] != -1) && (parent[u] != -1)) {
+                if (u == source) {
+                  if (!((parent[u] == u) && (depth[u] == 0))) {
+                    cout << "Source wrong" << endl;
+                    return false;
+                  }
+                  continue;
+                }
+                bool parent_found = false;
+                for (NodeID v : g.in_neigh(u)) {
+                  if (v == parent[u]) {
+                    if (depth[v] != depth[u] - 1) {
+                      cout << "Wrong depths for " << u << " & " << v << endl;
+                      return false;
+                    }
+                    parent_found = true;
+                    break;
+                  }
+                }
+                if (!parent_found) {
+                  cout << "Couldn't find edge from " << parent[u] << " to " << u << endl;
+                  return false;
+                }
+              } else if (depth[u] != parent[u]) {
+                cout << "Reachability mismatch" << endl;
+                return false;
+              }
+            }
+            return true;
+          }
+
+
+          int main(int argc, char* argv[]) {
+            CLApp cli(argc, argv, "breadth-first search");
+            if (!cli.ParseArgs())
+              return -1;
+            Builder b(cli);
+            Graph g = b.MakeGraph();
+            SourcePicker<Graph> sp(g, cli.start_vertex());
+            auto BFSBound = [&sp,&cli] (const Graph &g) {
+              return DOBFS(g, sp.PickNext(), cli.logging_en());
+            };
+            SourcePicker<Graph> vsp(g, cli.start_vertex());
+            auto VerifierBound = [&vsp] (const Graph &g, const pvector<NodeID> &parent) {
+              return BFSVerifier(g, vsp.PickNext(), parent);
+            };
+            BenchmarkKernel(cli, g, BFSBound, PrintBFSStats, VerifierBound);
+            return 0;
+          }
+payload_sha256: 4b49c99a19b23270ac79156bdb0b2adc5f8b5f7ab381d985cc7ea4170cf6b46a
+outcome:
+  state: candidate_created
+  stage: rewriting
+  reason: null
+attempts:
+- number: 1
+  stage: rewriting
+  state: completed
+  provider:
+    provider:
+      kind: claude
+      command:
+      - /data1/yanruj/.npm-global/bin/claude
+      timeout_s: 900
+      max_repairs: 2
+      total_seconds: 1800
+      budget_usd: 10
+      output_format: stream-json
+      edit_format: full_files
+    command:
+    - /data1/yanruj/.npm-global/bin/claude
+    - -p
+    - --safe-mode
+    - --tools
+    - ''
+    - --strict-mcp-config
+    - --mcp-config
+    - '{"mcpServers":{}}'
+    - --no-session-persistence
+    - --output-format
+    - stream-json
+    - --verbose
+    - --include-partial-messages
+    - --json-schema
+    - '{"type": "object", "additionalProperties": false, "required": ["interpretation", "files", "unresolved"],
+      "properties": {"interpretation": {"type": "string"}, "files": {"type": "object", "additionalProperties":
+      {"type": "string"}}, "unresolved": {"type": "array", "items": {"type": "string"}}}}'
+    - --max-budget-usd
+    - '10'
+    timeout_s: 900
+    classification: rewrite_provider
+    prompt_sha256: 41115f1ca9f4fb0af20795ab50939a525c8f1064f1df45f5ddc3b96c16f4d977
+    state: completed
+    executable_sha256: 5c4735937844e84f8a93306e841a5b0e12252909b07870f789b190468da147ab
+    version: 2.1.278 (Claude Code)
+    returncode: 0
+    host_wall_s: 167.36080428492278
+    stream:
+      first_output_s: 0.6025949576869607
+      last_output_s: 167.15973478928208
+      events: 1302
+      unparsed_lines: 0
+      event_types:
+        system.init: 1
+        system.status: 1
+        stream_event: 1199
+        system.thinking_tokens: 95
+        assistant: 3
+        user: 1
+        rate_limit_event: 1
+        result.success: 1
+      delta_counts:
+        thinking_delta: 96
+        signature_delta: 1
+        text_delta: 20
+        input_json_delta: 1073
+      delta_chars:
+        text_delta: 270
+        input_json_delta: 16862
+      estimated_thinking_tokens: 14750
+      model: claude-sonnet-5
+      result:
+        subtype: success
+        is_error: false
+        stop_reason: tool_use
+        num_turns: 2
+        duration_ms: 166549
+        duration_api_ms: 166479
+        total_cost_usd: 0.46743999999999997
+        terminal_reason: completed
+        output_tokens: 22962
+      partial_output:
+        path: /data/yanruj/EvolveSWDB_runs/stream-c-20260927/raw/bfs-campaign-preparation-20260925-a1.upstream-annotated-context6/provider-1/partial_output.txt
+        sha256: 1c1916a97917b1da6437fc5b4ef22f8044208810c9fcf2b903ad5c9f01038fa6
+  candidate: bfs-campaign-preparation-20260925-a1.upstream-annotated-context6.candidate-1
+raw_artifacts:
+- path: /data/yanruj/EvolveSWDB_runs/stream-c-20260927/raw/bfs-campaign-preparation-20260925-a1.upstream-annotated-context6
+  stage: rewriting
+source_snapshot: bfs-native-pilot-20260925-upstream18-a2.uniform-random.package.v1.source
+profile_package: bfs-native-pilot-20260925-upstream18-a2.uniform-random.package.v1.ac70410e93d0c3a6
+provider:
+  kind: claude
+  command:
+  - /data1/yanruj/.npm-global/bin/claude
+  timeout_s: 900
+  max_repairs: 2
+  total_seconds: 1800
+  budget_usd: 10
+  output_format: stream-json
+  edit_format: full_files
+repair_budget:
+  max_repairs: 2
+  total_seconds: 1800
+  used_seconds: 167.36080428492278
+  repairs: 0
+interpretation:
+  interpretation: 'Applied the submitted strategy "upstream-hybrid-dx100-top-down-offload" to src/bfs.cc
+    by realizing the four literal insertion blocks given in the annotation, verbatim, at their specified
+    anchors, and omitting the annotation comment itself: (1) after `#include "timer.h"`, added the `#ifdef
+    MAA` header block pulling in <climits>, <cstdlib>, <omp.h>, and <MAA_utility.hpp>; (2) after the first
+    blank line following TDStep''s closing brace, inserted the `#ifdef MAA` block defining the per-thread
+    dx100_tiles/dx100_regs slot tables, DX100Prepare (checked 32-bit CSR-offset conversion, alloc_MAA/init_MAA,
+    and the per-thread serialized tile/register allocation under omp critical), and TDStepDX100 (the DX100
+    top-down step using public Graph/SlidingQueue/pvector accessors, stream-load/indirect-load/range-loop/indirect-store-vector
+    MAA ops, a scalar CPU tail for small remainders, and a CPU-identical enqueue/scout-count rule); (3)
+    after `front.reset();` in DOBFS, inserted the `#ifdef MAA` block that calls DX100Prepare and captures
+    the neighbor array base, still inside the timed DOBFS call; (4) as the first statements inside `while
+    (!queue.empty()) {`, inserted the `#ifdef MAA` dispatch that runs TDStepDX100 (timed with the same
+    Timer/PrintStep pattern as the existing ''td'' step, labeled ''td-dx100'') whenever dx100 setup succeeded
+    and the frontier exceeds NUM_CORES*1024, then `continue`s; otherwise the original alpha/beta-driven
+    TDStep/BUStep direction-optimizing policy is unchanged. No other lines were added, removed, or reordered;
+    BFSVerifier, PrintBFSStats, benchmark/build wiring, and all MAA calls are exactly as specified in
+    the annotation''s EDIT blocks, and all setup/allocation stays inside the DOBFS complete-call ROI as
+    required.'
+  unresolved: []
+  edit_format: full_files
+  files:
+    src/bfs.cc:
+      bytes: 14550
+      sha256: 6c225fc229052d6cc43fcadd0c1f9548553ac487d7a25532950ade5c7132a18e
+candidate: bfs-campaign-preparation-20260925-a1.upstream-annotated-context6.candidate-1

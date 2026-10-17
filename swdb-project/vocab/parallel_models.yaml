@@ -1,0 +1,13 @@
+name: parallel_models
+description: How an application runs in parallel.
+values:
+  - value: serial
+    meaning: One thread, no parallel runtime.
+  - value: openmp
+    meaning: Shared-memory threads through OpenMP.
+  - value: mpi
+    meaning: Distributed processes through MPI.
+  - value: mpi_openmp
+    meaning: MPI processes, each using OpenMP threads.
+  - value: cuda
+    meaning: NVIDIA GPU kernels through CUDA.

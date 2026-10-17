@@ -1,0 +1,207 @@
+{
+  "format": "swdb.lanl14-generality-count-evidence-integrated-merger.v1",
+  "integration_base": "33ebea15b22959ba974c560a652ad53aced22212",
+  "incoming_tip": "84b53a4372d2fdbd70d7e18127530e09cbe4ca07",
+  "merged_tip": "3b7334498bc32aff627e067f73557ddf7292d032",
+  "integration_method": "ordinary_three_way_merge_after_exact_prospective_tree_preservation_check",
+  "incoming_origin_branch_retained": true,
+  "incoming_commit_is_integration_ancestor": true,
+  "prospective_tree": "843aa33182b4e16dc93d45161528288a1c30bf01",
+  "actual_merge_tree_matches_prospective": true,
+  "scope": "Six actual registered outcome-free count routes; final nine estimates and generic CPU target admission remain pending.",
+  "all_changes_inside_swdb_project": true,
+  "only_ten_canonical_additions_and_one_compact_receipt": true,
+  "all_current_prior_blobs_preserved": true,
+  "prior_blob_count": 3275,
+  "prior_tree_manifest_sha256": "b2b60e8b1adfb7f8abf208853e3a4dc040877e470f9b9371b90226c9ab668b11",
+  "protected_blob_count": 1077,
+  "protected_manifest_sha256": "bb8344948e1de39134182b4ca10ec71e9831affc42f0378f38e2eb6a534ff023",
+  "prior_canonical_yaml_count": 633,
+  "new_canonical_record_count": 10,
+  "canonical_record_count": 643,
+  "new_records": [
+    {
+      "path": "source_snapshots/dx100-bc-scalar-generality-20261006.t4.a1.source.yaml",
+      "kind": "source_snapshot",
+      "id": "dx100-bc-scalar-generality-20261006.t4.a1.source",
+      "sha256": "1818a702c00aa3ec9f9e56dad3abffd1f8649c66887a4b2cfa463987dd1b91cc",
+      "file_sha256": "766e19cd6871985f7d9f03128e9e931376c3ec122e79a4bd2386c303cf9f431b",
+      "bytes": 60488
+    },
+    {
+      "path": "source_snapshots/pagerank-jacobi-20261006.cpu.t1.a1.source.yaml",
+      "kind": "source_snapshot",
+      "id": "pagerank-jacobi-20261006.cpu.t1.a1.source",
+      "sha256": "55253a7e61e0c1d847d9cce2205d15ab68e3d1fff8caae80ae8b5d3952830039",
+      "file_sha256": "9fc04485809285532e38c38df3acd779e6c1433dfeef271fad68e53d4a9a08ef",
+      "bytes": 13511
+    },
+    {
+      "path": "source_snapshots/pagerank-jacobi-20261006.dx100.t4.a1.source.yaml",
+      "kind": "source_snapshot",
+      "id": "pagerank-jacobi-20261006.dx100.t4.a1.source",
+      "sha256": "b73fc97c98cede2340570a24bef77de75e6dfd3cbb7b70d244864155f51347f3",
+      "file_sha256": "6e1b1e02e048cfdf59c9f6804810177882349473a1507fb17a74867d839c9e92",
+      "bytes": 13515
+    },
+    {
+      "path": "source_snapshots/pagerank-jacobi-20261006.maple.t2.a1.source.yaml",
+      "kind": "source_snapshot",
+      "id": "pagerank-jacobi-20261006.maple.t2.a1.source",
+      "sha256": "2ca934b5d40c64181c95f37d4738437b9c7bab1b425db6c32ea2cb1a042e8143",
+      "file_sha256": "61f6a1b06d31ba1e0f0cb5e69635d6b3109208eb829287f2f48a5f00cfd3200f",
+      "bytes": 13515
+    },
+    {
+      "path": "workload_characterizations/bc.kron-g16.bc-dx100.t4.characterization.generality.a1.yaml",
+      "kind": "workload_characterization",
+      "id": "bc.kron-g16.bc-dx100.t4.characterization.generality.a1",
+      "sha256": "a7c8c1632675edff3a4091922f2464ab2d0e1c388a271fdc3bb43289cf9cdd6b",
+      "file_sha256": "246cb8cb6cfa35bab88cee46edf2b0d0f555b2c17b878edb0e49a561a7d1d7eb",
+      "bytes": 21936369
+    },
+    {
+      "path": "workload_characterizations/bc.kron-g16.bc-maple.t2.characterization.generality.a1.yaml",
+      "kind": "workload_characterization",
+      "id": "bc.kron-g16.bc-maple.t2.characterization.generality.a1",
+      "sha256": "260bce0e30ca710ead6af88a0f4df8566bfedd67a6986917a0bc42c823d4be14",
+      "file_sha256": "201d779d3249273188efe548438313b5467f5d5164deb934e82043943a5838b3",
+      "bytes": 17366889
+    },
+    {
+      "path": "workload_characterizations/bfs.kron-g16.bfs-maple.t2.characterization.generality.a1.yaml",
+      "kind": "workload_characterization",
+      "id": "bfs.kron-g16.bfs-maple.t2.characterization.generality.a1",
+      "sha256": "4cb670966a7e20713542a75b404aa034eba273e2513ac63b7b5c8a4b097454a7",
+      "file_sha256": "e09e835f1e132834eaec3b1720fa4f4887fdce7d0602764b1433adfd2fce7c61",
+      "bytes": 14557797
+    },
+    {
+      "path": "workload_characterizations/pagerank.jacobi.kron-g16.cpu.t1.characterization.generality.a1.yaml",
+      "kind": "workload_characterization",
+      "id": "pagerank.jacobi.kron-g16.cpu.t1.characterization.generality.a1",
+      "sha256": "73b9bd54b5e3a89f431325b4d6ac211c18a925aecafaba5fdd994cf9c2c70e18",
+      "file_sha256": "168204cc10fb9b0956add8a974ff702da41f9acbc9a74c90320701f8d1b05c76",
+      "bytes": 11934485
+    },
+    {
+      "path": "workload_characterizations/pagerank.jacobi.kron-g16.dx100.t4.characterization.generality.a1.yaml",
+      "kind": "workload_characterization",
+      "id": "pagerank.jacobi.kron-g16.dx100.t4.characterization.generality.a1",
+      "sha256": "afffad835e125f7439af05cf49f610edfb308791929985b8818a8e552a69422f",
+      "file_sha256": "5e778e45ec60a274f39ebe86d3cb40f0cea1688dd47284a3286cd0b082cc24ef",
+      "bytes": 11945942
+    },
+    {
+      "path": "workload_characterizations/pagerank.jacobi.kron-g16.maple.t2.characterization.generality.a1.yaml",
+      "kind": "workload_characterization",
+      "id": "pagerank.jacobi.kron-g16.maple.t2.characterization.generality.a1",
+      "sha256": "d1528de0047c030604b440b651e539c0ed8ea5048efe295bd3784659e87816ef",
+      "file_sha256": "dff0188da068723a81cc7503240f1e4ee6124bcb8efe8a7f0a77eaf7c798ee17",
+      "bytes": 11946266
+    }
+  ],
+  "all_ten_file_sizes_and_sha256_verified": true,
+  "estimator_sha256": "b062619b14901a42d23349802a5f5b1eb35e5a12e1a5e954214675c6b51936f3",
+  "generic_python_observer_runtime_processes_config_bytes_unchanged": true,
+  "maps_issues_parent_progress_and_single_linux_cleanup_receipt_unchanged": true,
+  "receipt": {
+    "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-generality-counts-mbit10-20261006-a1.json",
+    "file_sha256": "3679c37e531aea944e0e7efb227f460c72e63bdd6f5577251db9ac972660c3e1",
+    "identity_sha256": "a1f32091c52141d83cf7acd9515562d827cd2020bd2694577a1abb3528ab904a",
+    "count_source_commit": "821023a86e6c3bb3bf9b2e4fca3722b0edddb4e2",
+    "count_source_clean": true,
+    "dispatcher_sha256": "b797a19f0d80a1a91b852a360c19e59beba4fa082ce88c38cbec029670e7deda",
+    "exporter_sha256": "7d77776f7b2582ae24c6be8254f34ea9fff632d777a8297c7d2fe8437f71ec09",
+    "manifest_sha256": "131979bade43c96bcedd36591b288742c613ef2a82f2efc192e9cf5b9f333247",
+    "export_revision": "bytes-accessed-per-trial-v2"
+  },
+  "reused_remote_validation": "OK: 643 record(s) valid",
+  "remote_validation_reused_for_exact_imported_bytes": true,
+  "cases": [
+    {
+      "case": "pr-cpu",
+      "threads": 1,
+      "trial_count": 5,
+      "roi": "gapbs.functional_trial_lambda.v1",
+      "input": "kron-g16-k16",
+      "lane_exit_code": 0,
+      "access_observations_checked": 1080,
+      "trial_elements_and_bytes_scope": "per_trial",
+      "characterization_sha256": "73b9bd54b5e3a89f431325b4d6ac211c18a925aecafaba5fdd994cf9c2c70e18",
+      "acceptance_sha256": "cbdc6b7c2aa16da9e1df085f05e87caeb9d550b2281f4a4fac350913cba17121"
+    },
+    {
+      "case": "pr-dx100",
+      "threads": 4,
+      "trial_count": 5,
+      "roi": "gapbs.functional_trial_lambda.v1",
+      "input": "kron-g16-k16",
+      "lane_exit_code": 0,
+      "access_observations_checked": 1080,
+      "trial_elements_and_bytes_scope": "per_trial",
+      "characterization_sha256": "afffad835e125f7439af05cf49f610edfb308791929985b8818a8e552a69422f",
+      "acceptance_sha256": "b58d3ce24dd1b6f45aa6133d485bd03660f85fb056b5e2c7728f470c6066208d"
+    },
+    {
+      "case": "pr-maple",
+      "threads": 2,
+      "trial_count": 5,
+      "roi": "gapbs.functional_trial_lambda.v1",
+      "input": "kron-g16-k16",
+      "lane_exit_code": 0,
+      "access_observations_checked": 1080,
+      "trial_elements_and_bytes_scope": "per_trial",
+      "characterization_sha256": "d1528de0047c030604b440b651e539c0ed8ea5048efe295bd3784659e87816ef",
+      "acceptance_sha256": "4aada0aac8d25b6697a9c5c35055c6fdef88db452cd5db9954ec62d0d9888e9c"
+    },
+    {
+      "case": "bfs-maple",
+      "threads": 2,
+      "trial_count": 5,
+      "roi": "gapbs.trial_lambda.v1",
+      "input": "kron-g16-k16",
+      "lane_exit_code": 0,
+      "access_observations_checked": 3258,
+      "trial_elements_and_bytes_scope": "per_trial",
+      "characterization_sha256": "4cb670966a7e20713542a75b404aa034eba273e2513ac63b7b5c8a4b097454a7",
+      "acceptance_sha256": "271b2241f2f1a5dda9e0810e8bab80db7cb447b8b4d09810c5d6f3a18a6af728"
+    },
+    {
+      "case": "bc-maple",
+      "threads": 2,
+      "trial_count": 5,
+      "roi": "gapbs.trial_lambda.v1",
+      "input": "kron-g16-k16",
+      "lane_exit_code": 0,
+      "access_observations_checked": 3638,
+      "trial_elements_and_bytes_scope": "per_trial",
+      "characterization_sha256": "260bce0e30ca710ead6af88a0f4df8566bfedd67a6986917a0bc42c823d4be14",
+      "acceptance_sha256": "22d2770d449856a752e4504e3ce7227c2e0ae81ed8ae9e4f57b50eb163a85d28"
+    },
+    {
+      "case": "bc-dx100",
+      "threads": 4,
+      "trial_count": 5,
+      "roi": "gapbs.functional_trial_lambda.v1",
+      "input": "dx100-functional-kron-g16-k16",
+      "lane_exit_code": 0,
+      "access_observations_checked": 3648,
+      "trial_elements_and_bytes_scope": "per_trial",
+      "characterization_sha256": "a7c8c1632675edff3a4091922f2464ab2d0e1c388a271fdc3bb43289cf9cdd6b",
+      "acceptance_sha256": "62a3f663ed9dcc4e472cfac6659450a2c966c8eeb35be57c831e47f4c2615bea"
+    }
+  ],
+  "redundant_broad_tests_run": 0,
+  "provider_calls": 0,
+  "application_timings": 0,
+  "raw_transferred": false,
+  "count_recovery_or_reruns": 0,
+  "ticket14_state": "claimed",
+  "ticket17_state": "claimed",
+  "all_nine_final_reports_complete": false,
+  "no_ssh_actions": true,
+  "no_main_push": true,
+  "automatic_review_initial_rejection": "Older branch endpoint diff interpreted as deletions; exact prospective tree proved preservation of all current blobs before authorized merge retry succeeded.",
+  "identity_sha256": "e5d760754dcd4208ff10fa23b7e213af159bd8baad82af3d8b84e9afdbb86674"
+}

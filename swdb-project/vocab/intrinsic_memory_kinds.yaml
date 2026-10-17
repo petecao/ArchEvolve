@@ -1,0 +1,21 @@
+name: intrinsic_memory_kinds
+description: What memory access an intrinsic performs.
+values:
+  - value: gather
+    meaning: Loads several elements, each from an address formed from a vector of indices.
+  - value: scatter
+    meaning: Stores several elements, each to an address formed from a vector of indices.
+  - value: masked_load
+    meaning: Loads contiguous elements, only in the lanes a mask enables.
+  - value: masked_store
+    meaning: Stores contiguous elements, only in the lanes a mask enables.
+  - value: prefetch
+    meaning: A non-binding early access that brings a cache line closer and returns no data.
+  - value: non_temporal_store
+    meaning: Stores contiguous elements with a hint to bypass the caches.
+  - value: load
+    meaning: Loads contiguous elements (all lanes).
+  - value: store
+    meaning: Stores contiguous elements (all lanes).
+  - value: none
+    meaning: Touches no memory (arithmetic, shuffles, compares).

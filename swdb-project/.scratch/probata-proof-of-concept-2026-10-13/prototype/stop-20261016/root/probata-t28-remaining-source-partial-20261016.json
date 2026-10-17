@@ -1,0 +1,170 @@
+{
+  "date": "2026-10-16T11:37:19.735992-04:00",
+  "status": "PARTIAL_READONLY_CHECKPOINT_USER_STOP",
+  "stop_reason": "Parent relayed USER STOPNOW; save already completed findings only. No further exploration, implementation, evaluation, or acceptance.",
+  "inspected_integration_commit": "3b1e8277eadebc63f17827c1efd3b1cab6b305c4",
+  "candidate_read_only": "e99d09b1699b32525cd4c44cead21ed2fc6f4917",
+  "upstream_commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+  "pins": [
+    {
+      "path": "/private/tmp/probata-ticket28-interface-upstream-20261015/MAA.hpp",
+      "bytes": 1323,
+      "sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd"
+    },
+    {
+      "path": "/private/tmp/probata-ticket28-interface-upstream-20261015/MAA_gem5.hpp",
+      "bytes": 27473,
+      "sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/dx100_interface.py",
+      "bytes": 8098,
+      "sha256": "6e88200412cada2678d3f65f442d0cf11e39fecdb744fa490e6397e0e0d37cdf"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/dx100_initialized_register_model.py",
+      "bytes": 2351,
+      "sha256": "a568c08f6e8d928ecb46212b7120b29740d719c65ae7ae818b540bcf6790961f"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/dx100_initialized_register_source.py",
+      "bytes": 47822,
+      "sha256": "c023a4a6298fab7a34f4213f888b6c0fb4fe5c405e5a53741942e3e2accb81cb"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/dx100_allocation_source.py",
+      "bytes": 21991,
+      "sha256": "229a47016d1c239927fca0420c0d2be7cf8cd8a37e30b3d5f0d3ecbed8c53681"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/dx100_register_source.py",
+      "bytes": 15021,
+      "sha256": "8ab73239527717eb5b904ef42ed98ca95819be646f4c2b4016bb19dc2e0d925a"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/dx100_register_model.py",
+      "bytes": 2662,
+      "sha256": "1ca71b6f3661ce5544277bec1bb8f20c8db72461cd40b99f11a2a08e7381fb76"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/dx100_source_selector.py",
+      "bytes": 13018,
+      "sha256": "4c788c11a80c1478323229bba12997995dcad30699dc78d7085b52a14fc09190"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/dx100_stream_source.py",
+      "bytes": 25359,
+      "sha256": "28715eb5b7171244ca18027412db4e119d858812638ad32ce06dfe213c229e62"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/fixtures/proof/dx100/interface-declarations-e4fc4af.json",
+      "bytes": 5481,
+      "sha256": "d48a3971f2e9421e736d72ff160074f22e9cbbb7c9c756ef52457a5c4314b3b6"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/deferred-state-design.md",
+      "bytes": 19980,
+      "sha256": "0907881c13122106dc85b320523a40b2eb0738814509fee732db065dc12031a7"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-proof-semantics/checks/rf-source-excerpt.hpp",
+      "bytes": 1304,
+      "sha256": "c98ff061d6f87b72d9cf83e2cc00efcb9ed332685a1275cd1df1774a75a69f88"
+    }
+  ],
+  "completed_findings": [
+    {
+      "claim": "Immutable header declaration surface is 26 names / 27 declarations; initialized and uninitialized get_new_reg are separate declarations.",
+      "spans": [
+        "MAA.hpp:57-62",
+        "MAA_gem5.hpp:56-383",
+        "swdb/dx100_interface.py:9-13"
+      ]
+    },
+    {
+      "claim": "Counter-only zero-arity unsigned int and unsigned long long get_new_reg/get_new_tile are already admitted by the closed software allocation source policy; do not describe these arithmetic cases as missing. RF initialization/value/compositional applicability and other exact type identities remain distinct.",
+      "spans": [
+        "swdb/dx100_allocation_source.py:15-34",
+        "swdb/dx100_allocation_source.py:63-79",
+        "MAA_gem5.hpp:129-144"
+      ]
+    },
+    {
+      "claim": "Current initialized source policy admits only init_MAA, arity1 unsigned int get_new_reg and unsigned int get_reg. Its args0 variant deliberately remains unreachable in this separate profile. e99 model read matched the inspected u32 model content; no actual formal result was inspected or accepted.",
+      "spans": [
+        "swdb/dx100_initialized_register_source.py:97-129",
+        "swdb/dx100_initialized_register_model.py:3-20"
+      ]
+    },
+    {
+      "claim": "Initialized source order is width assertion, save REG_count, increment REG_count, typed MMIO store via set_reg, mfence, post-store capacity assertion/reload, saved-ID return. u32 unsigned-int MMIO can alias corresponding signed-int counter storage under language type rules; counter/MMIO disjointness must stay explicit, not inferred from signed versus unsigned types.",
+      "spans": [
+        "MAA_gem5.hpp:114-126",
+        "swdb/dx100_initialized_register_model.py:3-8"
+      ]
+    },
+    {
+      "claim": "Register IDs use four-byte stride regardless of T. A u64 access covers two words; zero-arity allocation does not impose even start IDs. Source typed dereference alignment/lifetime/alias applicability is separate from arithmetic allocation capacity.",
+      "spans": [
+        "MAA_gem5.hpp:108-144",
+        "checks/rf-source-excerpt.hpp:11-29",
+        "prototype/28-proof-semantics/deferred-state-design.md:185-208"
+      ]
+    },
+    {
+      "claim": "Pure selector route certifies only unsigned int. get_data_type uses exact uint32_t/int32_t/float/uint64_t/int64_t/double identity, not merely width; same-size unsigned long long may be a valid register storage template yet select MAX on an ABI where uint64_t is unsigned long.",
+      "spans": [
+        "MAA_gem5.hpp:164-172",
+        "swdb/dx100_source_selector.py:70-105"
+      ]
+    },
+    {
+      "claim": "get_reg/set_reg cast away volatile on typed MMIO dereferences; mfence lacks a memory clobber. maa_const has the analogous typed store without mfence. Do not transfer the set_reg source certificate to maa_const by name or effect alone.",
+      "spans": [
+        "MAA_gem5.hpp:108-117",
+        "MAA_gem5.hpp:146-149",
+        "swdb/dx100_register_model.py:8-13"
+      ]
+    },
+    {
+      "claim": "One-u32-stream source admission is isolated metadata observation with exact initialized RF 0/1/1, one registered coherent input line, no condition/interference, normal-return/event-compression TCB. It does not admit all command families or widths.",
+      "spans": [
+        "swdb/dx100_stream_source.py:16-31"
+      ]
+    },
+    {
+      "claim": "Remaining source families include both tile pointer helpers; general add/clear/alloc mapping; maa_const; print_tile I/O; non-u32 selectors; broader wait/size applicability; other scalar types; all typed/stateful command family generalization beyond the isolated stream profile. Retained 0.1 contracts and native state prototypes are not new whole-interface source qualification.",
+      "spans": [
+        "MAA.hpp:56-62",
+        "MAA_gem5.hpp:56-105",
+        "MAA_gem5.hpp:146-383"
+      ]
+    },
+    {
+      "claim": "get_tile_ready is absent from pinned public headers. Retained dxc_get_tile_ready is a logical prototype query; ready-range source MMIO read is blocking. No new nonblocking header query or liveness theorem may be inferred.",
+      "spans": [
+        "prototype/28-proof-semantics/deferred-state-design.md:277-305"
+      ]
+    }
+  ],
+  "next_frontier_recommendation_partial": {
+    "priority": "After current initialized-u32 pair is independently settled, compose source-bound u32 args0 allocation -> explicit set_reg -> get_reg with existing initialized overload in a distinct fixed synthetic profile; then extend exact unsigned-long-long paired register accesses with source ABI checks.",
+    "constraints": [
+      "Preserve every existing caller contract and original partial-normal-return policy; no strengthened caller requires/ensures or axioms supplying desired results.",
+      "Keep prewrite signed-capacity obligations ordinary: width1 counter 0..31; width2 0..30. Do not relocate post-store assertion before the source store.",
+      "For args0, allocation must not initialize RF bytes. A read before an explicit write must retain an initializedness obligation.",
+      "For u64, retain four-byte IDs and two-word frame; allow odd arithmetic allocation, separately refuse or expose typed access alignment failure under the checked ABI.",
+      "Do not silently equate unsigned long long with uint64_t device datatype selection.",
+      "Keep counter/MMIO disjointness, no interference, raw-byte typed lifetime and source/model correspondence as explicit owned TCB where not proved.",
+      "Retain original final counter reload after MMIO store; source compiler observation must justify the selected emitted path.",
+      "No author/compiler/native/formal execution without coordinator admission; not part of this readonly task."
+    ]
+  },
+  "remaining_unfinished": [
+    "No complete 26-family status table or exhaustive source-span expansion was finished.",
+    "No new implementation profile was finalized or independently reviewed.",
+    "No source/compiler/formal/applicability theorem was checked.",
+    "No held-out BC/PR/SSSP function was read."
+  ],
+  "operations_performed": "Readonly shell/source inspection and this checkpoint save only; no source edits, tests, compiler/native/formal/SSH jobs, or Git mutations."
+}

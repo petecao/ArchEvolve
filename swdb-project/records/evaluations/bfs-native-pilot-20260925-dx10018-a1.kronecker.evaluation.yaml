@@ -1,0 +1,954 @@
+kind: evaluation
+schema_version: '0.4'
+id: bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation
+status: draft
+created: '2026-09-25'
+updated: '2026-09-25'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation
+  candidate: bfs-native-pilot-20260925-dx10018-a1.baseline
+  machine: mbit10
+  threads: 4
+  repetitions: 5
+  sources: [0, 1234, 7777]
+  roi: bfs.complete_call.v1
+  target_configuration:
+    lane: mbit10-evaluation-node1
+  workload:
+    id: bfs-20260925-kronecker18.48de8267ac2098d5
+  comparison_baseline: dx100-bfs-scalar
+  budget:
+    build_seconds: 180
+    run_seconds: 60
+    total_seconds: 1200
+outcome:
+  state: complete
+  stage: evaluation
+  reason: null
+stages:
+- stage: source_resolution
+  state: complete
+  started: '2026-09-26T03:02:43.469729+00:00'
+  finished: '2026-09-26T03:02:50.703577+00:00'
+- stage: workload_resolution
+  state: complete
+  started: '2026-09-26T03:02:57.201394+00:00'
+  finished: '2026-09-26T03:03:26.743699+00:00'
+- stage: compiler_identity
+  state: complete
+  started: '2026-09-26T03:03:35.738759+00:00'
+  command: [/usr/bin/g++, --version]
+  timeout_s: 30
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/002-compiler_identity.log
+  finished: '2026-09-26T03:03:45.398203+00:00'
+  returncode: 0
+  host_wall_s: 0.004181305877864361
+  log_sha256: 59d1cbef41d4ae78d5063d525b7aa13d18dc0493ea00537efc19b2ee398cb5a8
+- stage: build
+  state: complete
+  started: '2026-09-26T03:03:54.292631+00:00'
+  command:
+  - /usr/bin/g++
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -fopenmp
+  - -pthread
+  - -DFUNC
+  - -I/data1/yanruj/EvolveSWDB_sources/bfs-native-pilot-20260925-dx10018-a1.baseline/source/benchmarks/gapbs/src
+  - -I/data1/yanruj/EvolveSWDB_sources/bfs-native-pilot-20260925-dx10018-a1.baseline/source/benchmarks/API
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/native_driver.cc
+  - -o
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/bfs-native
+  timeout_s: 180.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/003-build.log
+  finished: '2026-09-26T03:04:06.758541+00:00'
+  returncode: 0
+  host_wall_s: 3.3264837618917227
+  log_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- stage: execution
+  state: complete
+  started: '2026-09-26T03:04:23.930396+00:00'
+  command:
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/bfs-native
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/graph.swdb
+  - '0'
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/trial-0-0.json
+  timeout_s: 60.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/004-execution.log
+  repetition: 0
+  source_position: 0
+  source: 0
+  finished: '2026-09-26T03:04:35.865009+00:00'
+  returncode: 0
+  host_wall_s: 2.424153033643961
+  log_sha256: 2e6713ea99e462b9cb6ee1941c1ea80685ab72762fa5c93285c4360f10df351d
+- stage: correctness
+  state: complete
+  started: '2026-09-26T03:04:45.009437+00:00'
+  repetition: 0
+  source_position: 0
+  source: 0
+  finished: '2026-09-26T03:04:54.697388+00:00'
+  reason: null
+- stage: execution
+  state: complete
+  started: '2026-09-26T03:05:04.535598+00:00'
+  command:
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/bfs-native
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/graph.swdb
+  - '1234'
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/trial-0-1.json
+  timeout_s: 60.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/006-execution.log
+  repetition: 0
+  source_position: 1
+  source: 1234
+  finished: '2026-09-26T03:05:14.922382+00:00'
+  returncode: 0
+  host_wall_s: 1.7194400485605001
+  log_sha256: 26e4c7e85e9029950c0a240452a2239c929dd574c5b4ecb5e7fd15759db23d92
+- stage: correctness
+  state: complete
+  started: '2026-09-26T03:05:23.720903+00:00'
+  repetition: 0
+  source_position: 1
+  source: 1234
+  finished: '2026-09-26T03:05:33.513595+00:00'
+  reason: null
+- stage: execution
+  state: complete
+  started: '2026-09-26T03:05:42.067267+00:00'
+  command:
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/bfs-native
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/graph.swdb
+  - '7777'
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/trial-0-2.json
+  timeout_s: 60.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/008-execution.log
+  repetition: 0
+  source_position: 2
+  source: 7777
+  finished: '2026-09-26T03:05:52.212489+00:00'
+  returncode: 0
+  host_wall_s: 1.86993089877069
+  log_sha256: 38844c801b02afe66363afabf13df096e046e9f966ee5f011bd27d62f01ffd3e
+- stage: correctness
+  state: complete
+  started: '2026-09-26T03:06:00.907967+00:00'
+  repetition: 0
+  source_position: 2
+  source: 7777
+  finished: '2026-09-26T03:06:10.781920+00:00'
+  reason: null
+- stage: execution
+  state: complete
+  started: '2026-09-26T03:06:20.859016+00:00'
+  command:
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/bfs-native
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/graph.swdb
+  - '0'
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/trial-1-0.json
+  timeout_s: 60.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/010-execution.log
+  repetition: 1
+  source_position: 0
+  source: 0
+  finished: '2026-09-26T03:06:32.783237+00:00'
+  returncode: 0
+  host_wall_s: 2.121692456305027
+  log_sha256: 2e6713ea99e462b9cb6ee1941c1ea80685ab72762fa5c93285c4360f10df351d
+- stage: correctness
+  state: complete
+  started: '2026-09-26T03:06:41.296440+00:00'
+  repetition: 1
+  source_position: 0
+  source: 0
+  finished: '2026-09-26T03:06:50.514691+00:00'
+  reason: null
+- stage: execution
+  state: complete
+  started: '2026-09-26T03:06:58.756424+00:00'
+  command:
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/bfs-native
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/graph.swdb
+  - '1234'
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/trial-1-1.json
+  timeout_s: 60.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/012-execution.log
+  repetition: 1
+  source_position: 1
+  source: 1234
+  finished: '2026-09-26T03:07:08.664642+00:00'
+  returncode: 0
+  host_wall_s: 1.3673917781561613
+  log_sha256: 26e4c7e85e9029950c0a240452a2239c929dd574c5b4ecb5e7fd15759db23d92
+- stage: correctness
+  state: complete
+  started: '2026-09-26T03:07:17.006740+00:00'
+  repetition: 1
+  source_position: 1
+  source: 1234
+  finished: '2026-09-26T03:07:26.656281+00:00'
+  reason: null
+- stage: execution
+  state: complete
+  started: '2026-09-26T03:07:36.029131+00:00'
+  command:
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/bfs-native
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/graph.swdb
+  - '7777'
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/trial-1-2.json
+  timeout_s: 60.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/014-execution.log
+  repetition: 1
+  source_position: 2
+  source: 7777
+  finished: '2026-09-26T03:07:46.575924+00:00'
+  returncode: 0
+  host_wall_s: 1.8247141456231475
+  log_sha256: 38844c801b02afe66363afabf13df096e046e9f966ee5f011bd27d62f01ffd3e
+- stage: correctness
+  state: complete
+  started: '2026-09-26T03:07:55.025245+00:00'
+  repetition: 1
+  source_position: 2
+  source: 7777
+  finished: '2026-09-26T03:08:04.080937+00:00'
+  reason: null
+- stage: execution
+  state: complete
+  started: '2026-09-26T03:08:12.670288+00:00'
+  command:
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/bfs-native
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/graph.swdb
+  - '0'
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/trial-2-0.json
+  timeout_s: 60.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/016-execution.log
+  repetition: 2
+  source_position: 0
+  source: 0
+  finished: '2026-09-26T03:08:23.470182+00:00'
+  returncode: 0
+  host_wall_s: 1.7696756506338716
+  log_sha256: 2e6713ea99e462b9cb6ee1941c1ea80685ab72762fa5c93285c4360f10df351d
+- stage: correctness
+  state: complete
+  started: '2026-09-26T03:08:31.601116+00:00'
+  repetition: 2
+  source_position: 0
+  source: 0
+  finished: '2026-09-26T03:08:42.334572+00:00'
+  reason: null
+- stage: execution
+  state: complete
+  started: '2026-09-26T03:08:52.526413+00:00'
+  command:
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/bfs-native
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/graph.swdb
+  - '1234'
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/trial-2-1.json
+  timeout_s: 60.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/018-execution.log
+  repetition: 2
+  source_position: 1
+  source: 1234
+  finished: '2026-09-26T03:09:04.638612+00:00'
+  returncode: 0
+  host_wall_s: 2.3219285430386662
+  log_sha256: 26e4c7e85e9029950c0a240452a2239c929dd574c5b4ecb5e7fd15759db23d92
+- stage: correctness
+  state: complete
+  started: '2026-09-26T03:09:14.579082+00:00'
+  repetition: 2
+  source_position: 1
+  source: 1234
+  finished: '2026-09-26T03:09:25.724853+00:00'
+  reason: null
+- stage: execution
+  state: complete
+  started: '2026-09-26T03:09:35.725045+00:00'
+  command:
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/bfs-native
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/graph.swdb
+  - '7777'
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/trial-2-2.json
+  timeout_s: 60.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/020-execution.log
+  repetition: 2
+  source_position: 2
+  source: 7777
+  finished: '2026-09-26T03:09:45.701875+00:00'
+  returncode: 0
+  host_wall_s: 1.718853397294879
+  log_sha256: 38844c801b02afe66363afabf13df096e046e9f966ee5f011bd27d62f01ffd3e
+- stage: correctness
+  state: complete
+  started: '2026-09-26T03:09:55.253828+00:00'
+  repetition: 2
+  source_position: 2
+  source: 7777
+  finished: '2026-09-26T03:10:05.027243+00:00'
+  reason: null
+- stage: execution
+  state: complete
+  started: '2026-09-26T03:10:15.260184+00:00'
+  command:
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/bfs-native
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/graph.swdb
+  - '0'
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/trial-3-0.json
+  timeout_s: 60.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/022-execution.log
+  repetition: 3
+  source_position: 0
+  source: 0
+  finished: '2026-09-26T03:10:26.210208+00:00'
+  returncode: 0
+  host_wall_s: 2.121289606206119
+  log_sha256: 2e6713ea99e462b9cb6ee1941c1ea80685ab72762fa5c93285c4360f10df351d
+- stage: correctness
+  state: complete
+  started: '2026-09-26T03:10:35.767207+00:00'
+  repetition: 3
+  source_position: 0
+  source: 0
+  finished: '2026-09-26T03:10:47.240079+00:00'
+  reason: null
+- stage: execution
+  state: complete
+  started: '2026-09-26T03:10:57.068231+00:00'
+  command:
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/bfs-native
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/graph.swdb
+  - '1234'
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/trial-3-1.json
+  timeout_s: 60.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/024-execution.log
+  repetition: 3
+  source_position: 1
+  source: 1234
+  finished: '2026-09-26T03:11:08.171189+00:00'
+  returncode: 0
+  host_wall_s: 2.32124350592494
+  log_sha256: 26e4c7e85e9029950c0a240452a2239c929dd574c5b4ecb5e7fd15759db23d92
+- stage: correctness
+  state: complete
+  started: '2026-09-26T03:11:16.739142+00:00'
+  repetition: 3
+  source_position: 1
+  source: 1234
+  finished: '2026-09-26T03:11:26.012759+00:00'
+  reason: null
+- stage: execution
+  state: complete
+  started: '2026-09-26T03:11:34.279161+00:00'
+  command:
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/bfs-native
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/graph.swdb
+  - '7777'
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/trial-3-2.json
+  timeout_s: 60.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/026-execution.log
+  repetition: 3
+  source_position: 2
+  source: 7777
+  finished: '2026-09-26T03:11:45.230911+00:00'
+  returncode: 0
+  host_wall_s: 1.7694696690887213
+  log_sha256: 38844c801b02afe66363afabf13df096e046e9f966ee5f011bd27d62f01ffd3e
+- stage: correctness
+  state: complete
+  started: '2026-09-26T03:11:53.892207+00:00'
+  repetition: 3
+  source_position: 2
+  source: 7777
+  finished: '2026-09-26T03:12:04.644773+00:00'
+  reason: null
+- stage: execution
+  state: complete
+  started: '2026-09-26T03:12:14.780261+00:00'
+  command:
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/bfs-native
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/graph.swdb
+  - '0'
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/trial-4-0.json
+  timeout_s: 60.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/028-execution.log
+  repetition: 4
+  source_position: 0
+  source: 0
+  finished: '2026-09-26T03:12:26.385606+00:00'
+  returncode: 0
+  host_wall_s: 1.9710941640660167
+  log_sha256: 2e6713ea99e462b9cb6ee1941c1ea80685ab72762fa5c93285c4360f10df351d
+- stage: correctness
+  state: complete
+  started: '2026-09-26T03:12:35.436870+00:00'
+  repetition: 4
+  source_position: 0
+  source: 0
+  finished: '2026-09-26T03:12:45.324816+00:00'
+  reason: null
+- stage: execution
+  state: complete
+  started: '2026-09-26T03:12:54.992607+00:00'
+  command:
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/bfs-native
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/graph.swdb
+  - '1234'
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/trial-4-1.json
+  timeout_s: 60.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/030-execution.log
+  repetition: 4
+  source_position: 1
+  source: 1234
+  finished: '2026-09-26T03:13:06.517699+00:00'
+  returncode: 0
+  host_wall_s: 1.9216529000550508
+  log_sha256: 26e4c7e85e9029950c0a240452a2239c929dd574c5b4ecb5e7fd15759db23d92
+- stage: correctness
+  state: complete
+  started: '2026-09-26T03:13:15.278256+00:00'
+  repetition: 4
+  source_position: 1
+  source: 1234
+  finished: '2026-09-26T03:13:24.634031+00:00'
+  reason: null
+- stage: execution
+  state: complete
+  started: '2026-09-26T03:13:32.683107+00:00'
+  command:
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/bfs-native
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/graph.swdb
+  - '7777'
+  - /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/trial-4-2.json
+  timeout_s: 60.0
+  log: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/032-execution.log
+  repetition: 4
+  source_position: 2
+  source: 7777
+  finished: '2026-09-26T03:13:43.571332+00:00'
+  returncode: 0
+  host_wall_s: 1.8198673501610756
+  log_sha256: 38844c801b02afe66363afabf13df096e046e9f966ee5f011bd27d62f01ffd3e
+- stage: correctness
+  state: complete
+  started: '2026-09-26T03:13:53.178384+00:00'
+  repetition: 4
+  source_position: 2
+  source: 7777
+  finished: '2026-09-26T03:14:04.175882+00:00'
+  reason: null
+- stage: aggregation
+  state: complete
+  started: '2026-09-26T03:14:13.059706+00:00'
+  finished: '2026-09-26T03:14:21.706594+00:00'
+timing:
+- source: 0
+  source_position: 0
+  repetition: 0
+  duration_s: 0.020383814
+  roi: bfs.complete_call.v1
+  basis: measured
+  quantity: native_roi_wall_seconds
+  binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+  output: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/trial-0-0.json
+  output_sha256: 405ae75577c7abb93abf9e6dc1578a0d3481d96bca61f5e2fc5902be137adeba
+  verified: true
+  evidence_kind: execution
+- source: 1234
+  source_position: 1
+  repetition: 0
+  duration_s: 0.015601714
+  roi: bfs.complete_call.v1
+  basis: measured
+  quantity: native_roi_wall_seconds
+  binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+  output: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/trial-0-1.json
+  output_sha256: 8252b8eeb204cb999c5f9f34617e4df7c857ba4170156599b1d539d1ba05b52e
+  verified: true
+  evidence_kind: execution
+- source: 7777
+  source_position: 2
+  repetition: 0
+  duration_s: 0.021165393
+  roi: bfs.complete_call.v1
+  basis: measured
+  quantity: native_roi_wall_seconds
+  binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+  output: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/trial-0-2.json
+  output_sha256: 0572e4b1f4e0300fcdb1e86db18ee50919137fbb63b8a524dc37f664fc2249e0
+  verified: true
+  evidence_kind: execution
+- source: 0
+  source_position: 0
+  repetition: 1
+  duration_s: 0.023016542
+  roi: bfs.complete_call.v1
+  basis: measured
+  quantity: native_roi_wall_seconds
+  binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+  output: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/trial-1-0.json
+  output_sha256: b6a0487677dbbf7ffd5002fcaf0e89ba2e2c6c8d79655608d61a7cabb4df4d04
+  verified: true
+  evidence_kind: execution
+- source: 1234
+  source_position: 1
+  repetition: 1
+  duration_s: 0.016254953
+  roi: bfs.complete_call.v1
+  basis: measured
+  quantity: native_roi_wall_seconds
+  binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+  output: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/trial-1-1.json
+  output_sha256: ea244a3e9d9217b753c2efa0afc8601952f43ac08ace567681d4c47c044b8645
+  verified: true
+  evidence_kind: execution
+- source: 7777
+  source_position: 2
+  repetition: 1
+  duration_s: 0.018452187
+  roi: bfs.complete_call.v1
+  basis: measured
+  quantity: native_roi_wall_seconds
+  binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+  output: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/trial-1-2.json
+  output_sha256: 5fc81024577e1ad527e1689c7b3888b88d694f9a6ee0b5a5e41aab6ad0a7a975
+  verified: true
+  evidence_kind: execution
+- source: 0
+  source_position: 0
+  repetition: 2
+  duration_s: 0.024892328
+  roi: bfs.complete_call.v1
+  basis: measured
+  quantity: native_roi_wall_seconds
+  binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+  output: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/trial-2-0.json
+  output_sha256: ba601e107419ce63e57f925e57049b985e7642cc207ad2996de88811c4661bcc
+  verified: true
+  evidence_kind: execution
+- source: 1234
+  source_position: 1
+  repetition: 2
+  duration_s: 0.019607609
+  roi: bfs.complete_call.v1
+  basis: measured
+  quantity: native_roi_wall_seconds
+  binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+  output: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/trial-2-1.json
+  output_sha256: ae8b436ca1c5700d5e1e02b114d38c6d84d561157f7b8439a85b99faa762bfa7
+  verified: true
+  evidence_kind: execution
+- source: 7777
+  source_position: 2
+  repetition: 2
+  duration_s: 0.026276676
+  roi: bfs.complete_call.v1
+  basis: measured
+  quantity: native_roi_wall_seconds
+  binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+  output: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/trial-2-2.json
+  output_sha256: 27c4e6fa740fca02ff104a05d213badfd3fead2dd7e63e6e232e057f58d21cca
+  verified: true
+  evidence_kind: execution
+- source: 0
+  source_position: 0
+  repetition: 3
+  duration_s: 0.018639852
+  roi: bfs.complete_call.v1
+  basis: measured
+  quantity: native_roi_wall_seconds
+  binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+  output: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/trial-3-0.json
+  output_sha256: 940aa3eccf4fc67b6bb3f3932aa0b1a843489cea6b2f81091900ac4bb1ee8928
+  verified: true
+  evidence_kind: execution
+- source: 1234
+  source_position: 1
+  repetition: 3
+  duration_s: 0.024922672
+  roi: bfs.complete_call.v1
+  basis: measured
+  quantity: native_roi_wall_seconds
+  binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+  output: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/trial-3-1.json
+  output_sha256: b9f1af4f15f14442a3fc418f0d70432c126e3e5376d09780aa7876e7e77372a2
+  verified: true
+  evidence_kind: execution
+- source: 7777
+  source_position: 2
+  repetition: 3
+  duration_s: 0.017459517
+  roi: bfs.complete_call.v1
+  basis: measured
+  quantity: native_roi_wall_seconds
+  binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+  output: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/trial-3-2.json
+  output_sha256: 4aaf5a11da9c664c21f4c4905039601738dc773c90308d9e96ce90a868af2f8c
+  verified: true
+  evidence_kind: execution
+- source: 0
+  source_position: 0
+  repetition: 4
+  duration_s: 0.020373133
+  roi: bfs.complete_call.v1
+  basis: measured
+  quantity: native_roi_wall_seconds
+  binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+  output: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/trial-4-0.json
+  output_sha256: c63c2d7e231de9fdfff1456c2ba11aabd638efb34b6bba46f9f54c90b42037e1
+  verified: true
+  evidence_kind: execution
+- source: 1234
+  source_position: 1
+  repetition: 4
+  duration_s: 0.02375507
+  roi: bfs.complete_call.v1
+  basis: measured
+  quantity: native_roi_wall_seconds
+  binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+  output: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/trial-4-1.json
+  output_sha256: 23f74df967512736a129ca282617891ef995fe0c94502cfb55b46715299d6649
+  verified: true
+  evidence_kind: execution
+- source: 7777
+  source_position: 2
+  repetition: 4
+  duration_s: 0.016659581
+  roi: bfs.complete_call.v1
+  basis: measured
+  quantity: native_roi_wall_seconds
+  binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+  output: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/trial-4-2.json
+  output_sha256: 9ed654ee810783eda1f4aad9455d09d4cef9705ff8ada0d4f47c3183a753413b
+  verified: true
+  evidence_kind: execution
+correctness:
+  state: passed
+  checks:
+  - passed: true
+    reason: null
+    reachable_vertices: 173900
+    source: 0
+    source_position: 0
+    repetition: 0
+    trial: 0
+    output_sha256: 405ae75577c7abb93abf9e6dc1578a0d3481d96bca61f5e2fc5902be137adeba
+    binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+    graph_sha256: cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7
+    verifier: swdb.bfs.structural.v1
+  - passed: true
+    reason: null
+    reachable_vertices: 173900
+    source: 1234
+    source_position: 1
+    repetition: 0
+    trial: 1
+    output_sha256: 8252b8eeb204cb999c5f9f34617e4df7c857ba4170156599b1d539d1ba05b52e
+    binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+    graph_sha256: cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7
+    verifier: swdb.bfs.structural.v1
+  - passed: true
+    reason: null
+    reachable_vertices: 173900
+    source: 7777
+    source_position: 2
+    repetition: 0
+    trial: 2
+    output_sha256: 0572e4b1f4e0300fcdb1e86db18ee50919137fbb63b8a524dc37f664fc2249e0
+    binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+    graph_sha256: cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7
+    verifier: swdb.bfs.structural.v1
+  - passed: true
+    reason: null
+    reachable_vertices: 173900
+    source: 0
+    source_position: 0
+    repetition: 1
+    trial: 3
+    output_sha256: b6a0487677dbbf7ffd5002fcaf0e89ba2e2c6c8d79655608d61a7cabb4df4d04
+    binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+    graph_sha256: cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7
+    verifier: swdb.bfs.structural.v1
+  - passed: true
+    reason: null
+    reachable_vertices: 173900
+    source: 1234
+    source_position: 1
+    repetition: 1
+    trial: 4
+    output_sha256: ea244a3e9d9217b753c2efa0afc8601952f43ac08ace567681d4c47c044b8645
+    binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+    graph_sha256: cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7
+    verifier: swdb.bfs.structural.v1
+  - passed: true
+    reason: null
+    reachable_vertices: 173900
+    source: 7777
+    source_position: 2
+    repetition: 1
+    trial: 5
+    output_sha256: 5fc81024577e1ad527e1689c7b3888b88d694f9a6ee0b5a5e41aab6ad0a7a975
+    binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+    graph_sha256: cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7
+    verifier: swdb.bfs.structural.v1
+  - passed: true
+    reason: null
+    reachable_vertices: 173900
+    source: 0
+    source_position: 0
+    repetition: 2
+    trial: 6
+    output_sha256: ba601e107419ce63e57f925e57049b985e7642cc207ad2996de88811c4661bcc
+    binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+    graph_sha256: cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7
+    verifier: swdb.bfs.structural.v1
+  - passed: true
+    reason: null
+    reachable_vertices: 173900
+    source: 1234
+    source_position: 1
+    repetition: 2
+    trial: 7
+    output_sha256: ae8b436ca1c5700d5e1e02b114d38c6d84d561157f7b8439a85b99faa762bfa7
+    binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+    graph_sha256: cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7
+    verifier: swdb.bfs.structural.v1
+  - passed: true
+    reason: null
+    reachable_vertices: 173900
+    source: 7777
+    source_position: 2
+    repetition: 2
+    trial: 8
+    output_sha256: 27c4e6fa740fca02ff104a05d213badfd3fead2dd7e63e6e232e057f58d21cca
+    binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+    graph_sha256: cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7
+    verifier: swdb.bfs.structural.v1
+  - passed: true
+    reason: null
+    reachable_vertices: 173900
+    source: 0
+    source_position: 0
+    repetition: 3
+    trial: 9
+    output_sha256: 940aa3eccf4fc67b6bb3f3932aa0b1a843489cea6b2f81091900ac4bb1ee8928
+    binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+    graph_sha256: cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7
+    verifier: swdb.bfs.structural.v1
+  - passed: true
+    reason: null
+    reachable_vertices: 173900
+    source: 1234
+    source_position: 1
+    repetition: 3
+    trial: 10
+    output_sha256: b9f1af4f15f14442a3fc418f0d70432c126e3e5376d09780aa7876e7e77372a2
+    binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+    graph_sha256: cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7
+    verifier: swdb.bfs.structural.v1
+  - passed: true
+    reason: null
+    reachable_vertices: 173900
+    source: 7777
+    source_position: 2
+    repetition: 3
+    trial: 11
+    output_sha256: 4aaf5a11da9c664c21f4c4905039601738dc773c90308d9e96ce90a868af2f8c
+    binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+    graph_sha256: cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7
+    verifier: swdb.bfs.structural.v1
+  - passed: true
+    reason: null
+    reachable_vertices: 173900
+    source: 0
+    source_position: 0
+    repetition: 4
+    trial: 12
+    output_sha256: c63c2d7e231de9fdfff1456c2ba11aabd638efb34b6bba46f9f54c90b42037e1
+    binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+    graph_sha256: cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7
+    verifier: swdb.bfs.structural.v1
+  - passed: true
+    reason: null
+    reachable_vertices: 173900
+    source: 1234
+    source_position: 1
+    repetition: 4
+    trial: 13
+    output_sha256: 23f74df967512736a129ca282617891ef995fe0c94502cfb55b46715299d6649
+    binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+    graph_sha256: cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7
+    verifier: swdb.bfs.structural.v1
+  - passed: true
+    reason: null
+    reachable_vertices: 173900
+    source: 7777
+    source_position: 2
+    repetition: 4
+    trial: 14
+    output_sha256: 9ed654ee810783eda1f4aad9455d09d4cef9705ff8ada0d4f47c3183a753413b
+    binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+    graph_sha256: cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7
+    verifier: swdb.bfs.structural.v1
+profiling:
+  state: unavailable
+  reasons:
+  - automatic function attribution not collected
+  - automatic loop attribution not collected
+  - dynamic memory observations not collected
+raw_artifacts:
+- host: mbit10
+  path: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation
+  kind: evaluation_run
+- host: mbit10
+  path: /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation
+  kind: evaluation_build
+- host: mbit10
+  kind: host_observation
+  path: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/host-observation.json
+  sha256: 84b1b235e169165fb4ba779385ffaa93d0cd698c6ae7d7811637870d8bf06911
+  host_wall_s: 0.09387462586164474
+  evidence_kind: execution
+  unavailable_commands: 2
+gain_claim: false
+evidence_kind: execution
+candidate: bfs-native-pilot-20260925-dx10018-a1.baseline
+source_snapshot: bfs-native-pilot-20260925-dx10018-a1.source
+implementation: dx100-bfs-scalar
+machine: mbit10
+comparison_baseline: dx100-bfs-scalar
+context:
+  candidate_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  function: DOBFS
+  source_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  application: dx100-gapbs
+  adapter: dx100_scalar_func
+  target: mbit10
+  machine_sha256: fcb0123f0bdb9bc004348eb8c6444f03304b6612e0cb2e26a82e621b07d82a79
+  threads: 4
+  sources: [0, 1234, 7777]
+  repetitions: 5
+  roi: bfs.complete_call.v1
+  protocol: null
+  basis: measured
+  process_policy: one fresh process per source and repetition; graph construction before ROI
+  verifier: swdb.bfs.structural.v1
+  verifier_sha256: 807d685a889a30741a9d06215314c44cbb333676d4be03663a22821d3a543730
+  backend_configuration:
+    lane: mbit10-evaluation-node1
+  instrumentation:
+    template_sha256: 99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95
+    treatment: included
+  host: mbit10
+  architecture: x86_64
+  lane: 'mbit10-evaluation-node1 (verified: affinity, bind:1, lease held, generation 394)'
+  load_average: [23.0888671875, 16.9599609375, 16.15673828125]
+  budget:
+    build_seconds: 180.0
+    run_seconds: 60.0
+    total_seconds: 1200.0
+  host_observation:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/host-observation.json
+    sha256: 84b1b235e169165fb4ba779385ffaa93d0cd698c6ae7d7811637870d8bf06911
+    host_wall_s: 0.09387462586164474
+    evidence_kind: execution
+    unavailable_commands: 2
+  workload:
+    id: bfs-20260925-kronecker18.48de8267ac2098d5
+    family: kronecker
+    generator:
+      name: DX100 GAPBS converter
+      revision: e4fc4afdf894f295442cef3604667a469fab8e62
+      parameters:
+        scale: 18
+        edge_factor: 16
+        seed: 27491095
+        symmetrize: true
+        binary_sha256: a6cd0fd88a8de97decd087e9f1e43117ace95230f710b0bd7745f7bd33b492e6
+        source_sha256: 9b15a2ad58d672d534a14c808320a5d666af62cbe017f14703d955bea2279cc1
+        explicit_symmetrize_flag: false
+      command:
+      - /data1/yanruj/EvolveSWDB_builds/bfs-workloads-20260925/bfs-20260925-kronecker18/converter
+      - -g
+      - '18'
+      - -k
+      - '16'
+      - -b
+      - /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-kronecker18/graph.sg32
+    representation:
+      id: bfs-20260925-kronecker18.dx100
+      path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-kronecker18/graph.sg32
+      sha256: 9cec454bd8d3f175181a7e3906404ad8a812330c5e5bf1de62d63fad5e0f1143
+      format: gapbs_sg32le
+      application: dx100-gapbs
+      canonical_sha256: cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7
+      bytes: 31492177
+      loader: swdb.gapbs-representation.v1
+      adjacency_verified: true
+    normalization: 'simple graph: remove self loops and duplicates; symmetrize if undirected; sort neighbors'
+    canonical_sha256: cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7
+    adjacency_order_sha256: cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7
+    num_vertices: 262143
+    num_directed_edges: 7610898
+    directed: false
+    sources: [0, 1234, 7777]
+    canonical_path: /data/yanruj/EvolveSWDB_runs/bfs-native-pilot-20260925/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/graph.swdb
+    canonical_file_sha256: 167cde96d3528a030f842d63b4cf3c142040ea56dbfb1ee2e94552c39ccd9c0e
+build:
+  directory: /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation
+  compiler: /usr/bin/g++
+  flags: [-std=c++11, -O3, -Wall, -fopenmp, -pthread, -DFUNC]
+  command:
+  - /usr/bin/g++
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -fopenmp
+  - -pthread
+  - -DFUNC
+  - -I/data1/yanruj/EvolveSWDB_sources/bfs-native-pilot-20260925-dx10018-a1.baseline/source/benchmarks/gapbs/src
+  - -I/data1/yanruj/EvolveSWDB_sources/bfs-native-pilot-20260925-dx10018-a1.baseline/source/benchmarks/API
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/native_driver.cc
+  - -o
+  - /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/bfs-native
+  wrapper_sha256: 0a094cc6183c17c71c5eb6f39fbf043442bd4b88899b6ca5be27ac702fa5b2c1
+  template_sha256: 99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95
+  compiler_version:
+  - g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+  - Copyright (C) 2023 Free Software Foundation, Inc.
+  binary: /data1/yanruj/EvolveSWDB_builds/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation/bfs-native
+  binary_sha256: 42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424
+  execution_environment:
+    OMP_NUM_THREADS: '4'
+    OMP_DYNAMIC: 'FALSE'
+    OMP_PROC_BIND: close
+    OMP_PLACES: cores
+summary:
+  trials: 15
+  median_roi_seconds: 0.020373133
+  by_source_position:
+  - source_position: 0
+    source: 0
+    median_roi_seconds: 0.020383814
+  - source_position: 1
+    source: 1234
+    median_roi_seconds: 0.019607609
+  - source_position: 2
+    source: 7777
+    median_roi_seconds: 0.018452187
+  gain_claim: false

@@ -1,0 +1,249 @@
+--- lanl14-readonly-nine-export-admission-20261007-a1.py
++++ lanl14_readonly_nine_export_admission_lossless_gzip_20261007_a1.py
+@@ -5,7 +5,7 @@
+ This read-only disclosure check never replaces its full Store/team/schema gates.
+ No Store construction, validation/estimate/compiler/provider/native command,
+ network, raw IR/count/log stream, filesystem write or catalogue narrowing.
+-The compact receipt inherits runner/wrapper zero from the exact bf5 exporter
++The compact receipt inherits runner/wrapper zero from the reviewed lossless exporter derived from bf5
+ preconditions; it does not serialize those raw exit-code files directly.
+ """
+ import argparse
+@@ -17,11 +17,183 @@
+ import re
+ import subprocess
+ import sys
++import gzip,stat,time,zlib
++
++# Lossless report-transfer codec; source-only prospective administration.
++MAX_GIT_REPORT_BYTES = 100 * 1024 * 1024
++MAX_ORIGINAL_REPORT_BYTES = 1024 * 1024 * 1024
++REPORT_CODEC_SECONDS = 3600
++REPORT_TRANSFER_POLICY = 'swdb.lanl14-lossless-report-transfer.v1'
++REPORT_STAT_KEYS = ('st_dev','st_ino','st_uid','st_mode','st_size','st_mtime_ns','st_ctime_ns')
++
++def _report_require(condition, reason):
++ if not condition: raise ValueError(reason)
++
++def _report_deadline():
++ return time.monotonic() + REPORT_CODEC_SECONDS
++
++def _report_remaining(deadline):
++ _report_require(time.monotonic() < deadline, 'Report codec administrative deadline exceeded')
++
++def _report_stamp(path):
++ path=Path(path)
++ _report_require(path.is_absolute() and '..' not in path.parts, 'Report path must be absolute')
++ _report_require(not any(p.is_symlink() for p in (path,*path.parents)), 'Report symlink refused')
++ _report_require(path.resolve(strict=True)==path, 'Report path resolution differs')
++ current=path.stat()
++ _report_require(stat.S_ISREG(current.st_mode) and current.st_uid==os.getuid(), 'Report regular owned file required')
++ _report_require(current.st_nlink==1 and not current.st_mode&0o022, 'Report link or writable file refused')
++ return {k:getattr(current,k) for k in REPORT_STAT_KEYS}
++
++def _report_chunks(path, maximum, deadline, expected=None):
++ _report_remaining(deadline);path=Path(path);before=_report_stamp(path)
++ _report_require(0<before['st_size']<=maximum, 'Report file byte bound exceeded')
++ if expected is not None:
++  _report_require(before['st_size']==expected['bytes'], 'Report pinned byte size differs')
++  if 'stat' in expected: _report_require(before==expected['stat'], 'Report pinned stat differs')
++ fd=os.open(path,os.O_RDONLY|os.O_NOFOLLOW)
++ count=0;hasher=hashlib.sha256()
++ with os.fdopen(fd,'rb') as stream:
++  opened_stat=os.fstat(stream.fileno());opened={k:getattr(opened_stat,k) for k in REPORT_STAT_KEYS}
++  _report_require(opened==before, 'Report opened stat differs')
++  while True:
++   _report_remaining(deadline);block=stream.read(min(1024*1024,maximum-count+1))
++   if not block: break
++   count+=len(block);_report_require(count<=maximum, 'Report read byte bound exceeded')
++   hasher.update(block);yield block
++  closed_stat=os.fstat(stream.fileno());closed={k:getattr(closed_stat,k) for k in REPORT_STAT_KEYS}
++ _report_require(closed==before==_report_stamp(path), 'Report source changed during read')
++ _report_require(count==before['st_size'], 'Report returned bytes differ from stat')
++ if expected is not None:
++  _report_require(hasher.hexdigest()==expected['sha256'], 'Report pinned returned-byte hash differs')
++
++def _report_file_pin(path, maximum, deadline=None, expected=None):
++ deadline=_report_deadline() if deadline is None else deadline
++ before=_report_stamp(path);hasher=hashlib.sha256();count=0
++ for block in _report_chunks(path,maximum,deadline,expected):hasher.update(block);count+=len(block)
++ _report_require(before==_report_stamp(path), 'Report source changed while pinned')
++ return {'bytes':count,'sha256':hasher.hexdigest(),'stat':before}
++
++class _ReportCappedWriter:
++ def __init__(self, stream, maximum, deadline):
++  self.stream=stream;self.maximum=maximum;self.deadline=deadline;self.total=0
++ def write(self, value):
++  _report_remaining(self.deadline)
++  _report_require(self.total+len(value)<=self.maximum, 'Compressed report exceeds Git blob bound')
++  written=self.stream.write(value)
++  _report_require(written==len(value), 'Compressed report short write')
++  self.total+=written;return written
++ def flush(self):
++  _report_remaining(self.deadline);self.stream.flush()
++
++def _report_transfer_contract(transfer):
++ expected={'format','encoding','original','exported','report_identity_sha256','Git_blob_max_bytes',
++           'original_report_max_bytes','gzip','original_remote_report_unchanged',
++           'decoded_original_bytes_equal','JSON_reserialized'}
++ _report_require(set(transfer)==expected, 'Report transfer fields differ')
++ _report_require(transfer['format']==REPORT_TRANSFER_POLICY, 'Report transfer policy differs')
++ _report_require(transfer['Git_blob_max_bytes']==MAX_GIT_REPORT_BYTES and transfer['original_report_max_bytes']==MAX_ORIGINAL_REPORT_BYTES, 'Report transfer administrative bounds differ')
++ for name in ('original','exported'):
++  pin=transfer[name]
++  _report_require(set(pin)==({'bytes','sha256','path'} if name=='exported' else {'bytes','sha256'}), 'Report transfer pin fields differ')
++  _report_require(type(pin['bytes']) is int and 0<pin['bytes']<=(MAX_GIT_REPORT_BYTES if name=='exported' else MAX_ORIGINAL_REPORT_BYTES), 'Report transfer size refused')
++  _report_require(type(pin['sha256']) is str and re.fullmatch('[a-f0-9]{64}',pin['sha256']) is not None, 'Report transfer SHA refused')
++ _report_require(type(transfer['report_identity_sha256']) is str and re.fullmatch('[a-f0-9]{64}',transfer['report_identity_sha256']) is not None, 'Report semantic identity refused')
++ _report_require(transfer['original_remote_report_unchanged'] is True and transfer['decoded_original_bytes_equal'] is True and transfer['JSON_reserialized'] is False, 'Lossless report custody differs')
++ if transfer['original']['bytes']>MAX_GIT_REPORT_BYTES:
++  _report_require(transfer['encoding']=='gzip' and transfer['gzip']=={'filename':'','mtime':0,'compresslevel':9,'members':1}, 'Conditional deterministic gzip policy differs')
++ else:
++  _report_require(transfer['encoding']=='identity' and transfer['gzip'] is None, 'Small report must retain original representation')
++  _report_require({k:v for k,v in transfer['exported'].items() if k!='path'}==transfer['original'], 'Original uncompressed report pin differs')
++ _report_require(type(transfer['exported']['path']) is str, 'Report transfer pathname refused')
++
++
++def _report_decoded_chunks(path, transfer, deadline):
++ _report_transfer_contract(transfer)
++ original=transfer['original'];expected=transfer['exported'];total=0;hasher=hashlib.sha256()
++ if transfer['encoding']=='identity':
++  pieces=_report_chunks(path,MAX_GIT_REPORT_BYTES,deadline,expected)
++  for block in pieces:
++   total+=len(block);_report_require(total<=original['bytes'], 'Decoded original byte bound exceeded')
++   hasher.update(block);yield block
++ else:
++  decoder=zlib.decompressobj(31);first=True
++  for block in _report_chunks(path,MAX_GIT_REPORT_BYTES,deadline,expected):
++   _report_require(not decoder.eof, 'Trailing or concatenated gzip report refused')
++   if first:
++    _report_require(block[:10]==b'\x1f\x8b\x08\x00\x00\x00\x00\x00\x02\xff', 'Deterministic gzip header differs')
++    first=False
++   pending=block
++   while pending:
++    _report_remaining(deadline);previous=len(pending)
++    output=decoder.decompress(pending,min(1024*1024,original['bytes']-total+1))
++    total+=len(output);_report_require(total<=original['bytes'], 'Decoded original byte bound exceeded')
++    hasher.update(output)
++    if output:yield output
++    pending=decoder.unconsumed_tail
++    _report_require(not decoder.unused_data, 'Trailing or concatenated gzip report refused')
++    _report_require(not pending or len(pending)<previous or output, 'Gzip decoder made no progress')
++  _report_require(not first and decoder.eof and not decoder.unconsumed_tail and not decoder.unused_data, 'Incomplete gzip report refused')
++ _report_require(total==original['bytes'] and hasher.hexdigest()==original['sha256'], 'Decoded original report bytes/hash differ')
++
++
++def read_report_transfer(path, transfer):
++ """Read one exact pinned original byte sequence; no JSON interpretation."""
++ return b''.join(_report_decoded_chunks(Path(path),transfer,_report_deadline()))
++
++
++def _report_compare_original(source, transfer_path, transfer, original_pin, deadline):
++ decoded=iter(_report_decoded_chunks(transfer_path,transfer,deadline));buffer=bytearray()
++ for original in _report_chunks(source,MAX_ORIGINAL_REPORT_BYTES,deadline,original_pin):
++  while len(buffer)<len(original):
++   try:buffer.extend(next(decoded))
++   except StopIteration:raise ValueError('Decoded report omitted original bytes') from None
++  _report_require(bytes(buffer[:len(original)])==original, 'Decoded report differs byte-for-byte')
++  del buffer[:len(original)]
++ _report_require(not buffer, 'Decoded report contains extra bytes')
++ for extra in decoded:_report_require(not extra, 'Decoded report contains extra bytes')
++
++
++def prepare_report_transfer(source, gzip_path, report_identity_sha256):
++ """Prepare conditional lossless transfer before any mutable Git operation."""
++ source=Path(source);gzip_path=Path(gzip_path);deadline=_report_deadline()
++ original=_report_file_pin(source,MAX_ORIGINAL_REPORT_BYTES,deadline)
++ _report_require(type(report_identity_sha256) is str and re.fullmatch('[a-f0-9]{64}',report_identity_sha256) is not None, 'Report semantic identity refused')
++ compressed=original['bytes']>MAX_GIT_REPORT_BYTES
++ selected=source
++ if compressed:
++  _report_require(gzip_path.is_absolute() and '..' not in gzip_path.parts and not any(p.is_symlink() for p in (gzip_path,*gzip_path.parents)), 'Fresh gzip path refused')
++  parent=gzip_path.parent;parent_stat=parent.stat()
++  _report_require(parent.resolve(strict=True)==parent and stat.S_ISDIR(parent_stat.st_mode) and parent_stat.st_uid==os.getuid() and not parent_stat.st_mode&0o022, 'Gzip parent custody refused')
++  _report_require(not gzip_path.exists(), 'Existing gzip report preserved; replay refused')
++  fd=os.open(gzip_path,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
++  with os.fdopen(fd,'wb') as stream:
++   writer=_ReportCappedWriter(stream,MAX_GIT_REPORT_BYTES,deadline)
++   with gzip.GzipFile(filename='',mode='wb',compresslevel=9,fileobj=writer,mtime=0) as archive:
++    for block in _report_chunks(source,MAX_ORIGINAL_REPORT_BYTES,deadline,original):archive.write(block)
++   stream.flush();os.fsync(stream.fileno())
++  directory_fd=os.open(parent,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)
++  try:os.fsync(directory_fd)
++  finally:os.close(directory_fd)
++  selected=gzip_path
++ exported=_report_file_pin(selected,MAX_GIT_REPORT_BYTES,deadline)
++ transfer={'format':REPORT_TRANSFER_POLICY,'encoding':'gzip' if compressed else 'identity',
++           'original':{k:original[k] for k in ('bytes','sha256')},
++           'exported':{'path':selected.name,**{k:exported[k] for k in ('bytes','sha256')}},
++           'report_identity_sha256':report_identity_sha256,'Git_blob_max_bytes':MAX_GIT_REPORT_BYTES,
++           'original_report_max_bytes':MAX_ORIGINAL_REPORT_BYTES,
++           'gzip':{'filename':'','mtime':0,'compresslevel':9,'members':1} if compressed else None,
++           'original_remote_report_unchanged':True,'decoded_original_bytes_equal':True,'JSON_reserialized':False}
++ _report_compare_original(source,selected,transfer,original,deadline)
++ _report_require(_report_file_pin(source,MAX_ORIGINAL_REPORT_BYTES,deadline)==original and _report_file_pin(selected,MAX_GIT_REPORT_BYTES,deadline)==exported, 'Report transfer changed after exact comparison')
++ return selected,transfer,original,exported
++
+ 
+ F6='f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3'
+ C='f893fed400347ed23d92e917d8bde21b75e5375d'
+ HELPER='e79e4b2e295f07967a1f4f67e7501c35d9d402101330ac9347f98cfb282bf63a'
+-EXPORTER='bf5add9eb35daa5402a0359f6ace5c542a289f9b60b14cbd00aa763097a9645d'
++EXPORTER='928af82facd9f36dfdbca6595d2c2e9d1091dd0064c9fe53fc41c163879e026e'
++BASE_EXPORTER='bf5add9eb35daa5402a0359f6ace5c542a289f9b60b14cbd00aa763097a9645d'
+ REPORTER='26f6d803d17381a70241e77bed5a28a3340f03549135100e475f550c4e252303'
+ CHARS={('bfs','dx100'):'bfs.functional.kron-g16.t4.characterization.objects.a2',
+  ('bfs','cpu'):'bfs.kron-g16.t1.characterization.objects.a1',('bc','cpu'):'bc.kron-g16.t1.characterization.objects.a1',
+@@ -59,6 +231,7 @@
+   require(a.get('inputs_scope')==scope and {k:v for k,v in a.items() if k!='inputs_scope'}==b,'Exact region formula/count/missing inputs differ')
+ 
+ def main():
++ own_source_pin=_report_file_pin(Path(__file__).absolute(),MAX_GIT_REPORT_BYTES)
+  p=argparse.ArgumentParser(description=__doc__)
+  p.add_argument('--checkout',type=Path,required=True)
+  for name in ('export-commit','source-commit','manifest-sha256','receipt-sha256','receipt-identity-sha256','count-receipt-sha256','tag','target-pins'):
+@@ -86,10 +259,17 @@
+  require(artifacts.digest(modules)==F6,'Public digest differs')
+  def checked(path):
+   d=json.loads((cwd/path).read_text());require(d['identity_sha256']==artifacts.digest({k:v for k,v in d.items() if k!='identity_sha256'}),'Metadata self-seal differs: '+str(path));return d
+- receipt=checked(a.receipt);report=checked(a.report);request=checked(a.request);count=checked(a.count_receipt)
++ receipt=checked(a.receipt)
++ require(sha(cwd/a.receipt)==a.receipt_sha256 and receipt['identity_sha256']==a.receipt_identity_sha256,'Actual receipt must be pinned before report decoding')
++ transfer=receipt['report_transfer'];require(transfer['exported']['path']==str(a.report),'Actual report representation path differs')
++ expected_suffix='-report.json.gz' if transfer['encoding']=='gzip' else '-report.json'
++ require(a.report.name=='14-generality-final-'+a.tag+expected_suffix,'Conditional report filename differs')
++ report=json.loads(read_report_transfer(cwd/a.report,transfer))
++ require(report['identity_sha256']==transfer['report_identity_sha256']==artifacts.digest({k:v for k,v in report.items() if k!='identity_sha256'}),'Original lossless report semantic seal differs')
++ request=checked(a.request);count=checked(a.count_receipt)
+  require(sha(cwd/a.receipt)==a.receipt_sha256 and receipt['identity_sha256']==a.receipt_identity_sha256,'Actual export receipt file/semantic identity differs')
+  require(receipt['format']=='swdb.lanl14-final-report-export.v1' and receipt['source_commit']==a.source_commit and receipt['source_clean'] is True,'Final clean source receipt differs')
+- require(receipt['helper_sha256']==HELPER and receipt['exporter_sha256']==EXPORTER and receipt['manifest_sha256']==a.manifest_sha256,'Selected exact a5/bf5/manifest custody differs')
++ require(receipt['helper_sha256']==HELPER and receipt['exporter_sha256']==EXPORTER and receipt['layout_exporter_base_sha256']==BASE_EXPORTER and receipt['manifest_sha256']==a.manifest_sha256,'Selected exact a5/lossless-exporter/manifest custody differs')
+  require(receipt['provider_calls']==receipt['application_timings']==0 and receipt['raw_transferred'] is False and receipt['cleanup_survivors']=={},'Exporter transfer/execution/cleanup scope differs')
+  require(receipt['prior_record_library_app_bytes_preserved'] is True and str(receipt['validation']).startswith('OK: '),'Full exported catalogue validation/preservation missing')
+  accept=receipt['acceptance'];require(accept['identity_sha256']==artifacts.digest({k:v for k,v in accept.items() if k!='identity_sha256'}),'Runner acceptance seal differs')
+@@ -193,15 +373,19 @@
+    'configuration_pins':{'characterization_sha256':pair['characterization']['sha256'],'counted_payload_sha256':receipt_count['counted_payload_sha256'],'source_ir_sha256':receipt_count['source_ir_sha256'],'observation_contract_sha256':artifacts.digest(obs),'build_flags_sha256':artifacts.digest(char['source']['build_flags']),'source_identity_sha256':artifacts.digest(char['binding']['subject_source_identity']),'target_description_sha256':td_sha,'observation_policy_sha256':obs.get('target_observation_policy_sha256'),'roi':roi,'run_arguments_sha256':char['binding']['run_arguments_sha256']}})
+   del char,protocol,estimate;gc.collect()
+  require(git('rev-parse','HEAD')==a.export_commit and not git('status','--porcelain') and {v.relative_to(cwd/'swdb').as_posix():sha(v) for v in sorted((cwd/'swdb').rglob('*.py'))}==modules,'Input checkout/source changed during read-only admission')
+- result={'format':'swdb.lanl14-selected-nine-export-admission.v1','updated':'2026-10-07 ET','scope':'Selected-record disclosure/custody check only; original exact pinned bf5 complete-catalogue public validation and team/schema/default-selection admission are inherited, never replaced.',
++ require(_report_file_pin(Path(__file__).absolute(),MAX_GIT_REPORT_BYTES)==own_source_pin,'Selected reader source changed')
++ result={'format':'swdb.lanl14-selected-nine-export-admission.v1','updated':'2026-10-07 ET','scope':'Selected-record disclosure/custody check only; Full catalogue public validation and team/schema/default-selection admission are inherited from the reviewed lossless exporter preserving bf5 gates, never replaced.',
+   'export_commit':a.export_commit,'final_source_commit':a.source_commit,'estimator_sha256':F6,'receipt_file_sha256':a.receipt_sha256,'receipt_identity_sha256':receipt['identity_sha256'],'report_identity_sha256':report['identity_sha256'],
+   'new_canonical_records':18,'prior_tracked_blobs_unchanged':True,'source_clean':True,'pairs':summaries,'selected_dependency_records_read':len(catalog.read_ids),'full_catalogue_validation':receipt['validation'],
+   'direct_observations':{'lane_exit_code':0,'cleanup_survivors':{},'runner_acceptance_identity_sha256':accept['identity_sha256']},
+-  'inherited_pinned_export_preconditions':{'runner_exit_code':0,'wrapper_exit_code':0,'source':'Exact bf5 success() checks immutable raw exit files before sealed export commit; raw files are not serialized here.','new_native_or_compiler_execution':0,'basis':'Exact a5 dispatch/run source invokes only public metadata validation/freeze/estimate/report commands; no new process audit is invented.'},
+-  'provider_calls':0,'application_timings':0,'reader_native_compiler_provider_remote_actions':0,'reporter_sha256':REPORTER,'reader_sha256':sha(Path(__file__))}
+- result['identity_sha256']=artifacts.digest(result);print(json.dumps(result,indent=2,allow_nan=False))
++  'inherited_pinned_export_preconditions':{'runner_exit_code':0,'wrapper_exit_code':0,'source':'Exact reviewed lossless exporter preserves bf5 success() checks immutable raw exit files before sealed export commit; raw files are not serialized here.','new_native_or_compiler_execution':0,'basis':'Exact a5 dispatch/run source invokes only public metadata validation/freeze/estimate/report commands; no new process audit is invented.'},
++  'provider_calls':0,'application_timings':0,'reader_native_compiler_provider_remote_actions':0,'reporter_sha256':REPORTER,'reader_sha256':own_source_pin['sha256']}
++ result['report_transfer']=transfer
++ result['identity_sha256']=artifacts.digest(result)
++ require(_report_file_pin(Path(__file__).absolute(),MAX_GIT_REPORT_BYTES)==own_source_pin,'Selected reader source changed before success')
++ print(json.dumps(result,indent=2,allow_nan=False))
+ 
+ if __name__=='__main__':
+  try:main()
+- except (ValueError,KeyError,OSError,TypeError,subprocess.SubprocessError) as exc:
++ except (ValueError,KeyError,OSError,TypeError,subprocess.SubprocessError,zlib.error,EOFError) as exc:
+   print(str(exc),file=sys.stderr);raise SystemExit(2)

@@ -1,0 +1,18 @@
+test_concatenated_second_gzip_member_is_refused (__main__.CodecTests.test_concatenated_second_gzip_member_is_refused) ... ok
+test_conditional_gzip_is_deterministic_and_preserves_every_original_byte (__main__.CodecTests.test_conditional_gzip_is_deterministic_and_preserves_every_original_byte) ... ok
+test_crc_corruption_is_refused_with_explicit_matching_transfer_pin (__main__.CodecTests.test_crc_corruption_is_refused_with_explicit_matching_transfer_pin) ... ok
+test_decoded_size_overflow_is_refused_before_accepting_output (__main__.CodecTests.test_decoded_size_overflow_is_refused_before_accepting_output) ... ok
+test_incompressible_git_overflow_retains_original_and_bounded_partial (__main__.CodecTests.test_incompressible_git_overflow_retains_original_and_bounded_partial) ... ok
+test_malformed_header_is_refused (__main__.CodecTests.test_malformed_header_is_refused) ... ok
+test_original_administrative_overflow_refuses_before_open_or_gzip_creation (__main__.CodecTests.test_original_administrative_overflow_refuses_before_open_or_gzip_creation) ... ok
+test_same_size_inode_swap_during_read_is_refused (__main__.CodecTests.test_same_size_inode_swap_during_read_is_refused) ... ok
+test_small_report_keeps_exact_original_bytes_and_no_gzip_output (__main__.CodecTests.test_small_report_keeps_exact_original_bytes_and_no_gzip_output) ... ok
+test_symlink_input_and_existing_partial_output_are_not_replayed (__main__.CodecTests.test_symlink_input_and_existing_partial_output_are_not_replayed) ... ok
+test_trailing_bytes_are_refused (__main__.CodecTests.test_trailing_bytes_are_refused) ... ok
+test_truncated_footer_is_refused (__main__.CodecTests.test_truncated_footer_is_refused) ... ok
+test_wrong_original_hash_is_refused_after_lossless_decode (__main__.CodecTests.test_wrong_original_hash_is_refused_after_lossless_decode) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.160s
+
+OK

@@ -1,0 +1,31 @@
+test_actual_call_names_and_both_overloads_required (__main__.Controls.test_actual_call_names_and_both_overloads_required) ... ok
+test_closed_derived_stub_bytes_links_and_membership (__main__.Controls.test_closed_derived_stub_bytes_links_and_membership) ... ok
+test_exact_preprocess_ast_dependency_membership (__main__.Controls.test_exact_preprocess_ast_dependency_membership) ... ok
+test_exact_runtime_helpers_and_no_entry_main_execution (__main__.Controls.test_exact_runtime_helpers_and_no_entry_main_execution) ... ok
+test_pin_requires_physical_regular_stable_bytes (__main__.Controls.test_pin_requires_physical_regular_stable_bytes) ... ok
+test_policy_actual_root_shape_and_frozen_recipe_before_any_child (__main__.Controls.test_policy_actual_root_shape_and_frozen_recipe_before_any_child) ... ok
+test_v4_entry_deadline_and_postpublication_invalidation (__main__.Controls.test_v4_entry_deadline_and_postpublication_invalidation) ... ok
+test_v4_projected_final_extent_prevents_false_success (__main__.Controls.test_v4_projected_final_extent_prevents_false_success) ... ok
+test_v4_success_manifest_complete_and_depfile_final_pin (__main__.Controls.test_v4_success_manifest_complete_and_depfile_final_pin) ... ok
+test_v7_all_staged_inputs_policy_command_and_runtime_inverse_agree (__main__.Controls.test_v7_all_staged_inputs_policy_command_and_runtime_inverse_agree) ... ok
+test_v7_atime_only_read_update_passes_without_weakening_content_hash (__main__.Controls.test_v7_atime_only_read_update_passes_without_weakening_content_hash) ... ok
+test_v7_each_retained_identity_or_content_stat_change_refuses (__main__.Controls.test_v7_each_retained_identity_or_content_stat_change_refuses) ... ok
+test_v7_exact_ast_inverse_preserves_all_other_runtime_functions (__main__.Controls.test_v7_exact_ast_inverse_preserves_all_other_runtime_functions) ... ok
+test_v7_exact_inverse_restores_frozen_v6 (__main__.Controls.test_v7_exact_inverse_restores_frozen_v6) ... ok
+test_v7_lane_only_changes_two_policy_fields_and_preserves_guard (__main__.Controls.test_v7_lane_only_changes_two_policy_fields_and_preserves_guard) ... FAIL
+test_v7_same_stat_different_bytes_still_refuse_expected_hash_recheck (__main__.Controls.test_v7_same_stat_different_bytes_still_refuse_expected_hash_recheck) ... ok
+
+======================================================================
+FAIL: test_v7_lane_only_changes_two_policy_fields_and_preserves_guard (__main__.Controls.test_v7_lane_only_changes_two_policy_fields_and_preserves_guard)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-capture-v7/test_capture_v7.py", line 288, in test_v7_lane_only_changes_two_policy_fields_and_preserves_guard
+    self.assertEqual(command["root_required_environment"],prior["root_required_environment"])
+AssertionError: {'PRO[85 chars]22f-v7', 'SWDB_VERIFIER_LOCK': '/data/yanruj/E[118 chars]296'} != {'PRO[85 chars]22f-v6', 'SWDB_VERIFIER_LOCK': '/data/yanruj/E[118 chars]296'}
+Diff is 896 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.050s
+
+FAILED (failures=1)
+{"child_events": [], "command_sha256": "13420d90b51d7e746a30f167179fcfb46afd5f91a8ef526ae19ba0bb7105b4b7", "controller_sha256": "1dac57837a079b54d58b58cf2cf01c2b406099cff3ab9fdbc3f311463ee5a781", "controls_sha256": "14db9feb3957bf34ecf4bd3bc51c1e35053d8a9ed6ea0a31e2cb955224ce5384", "errors": 0, "failures": 1, "policy_sha256": "c62c9f6c2e69cc6da79e6a9068eff271a0213fbe3257cf75acc7524d7f877117", "skips": 0, "tests": 16}

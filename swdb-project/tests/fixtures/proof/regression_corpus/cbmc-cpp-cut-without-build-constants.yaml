@@ -1,0 +1,16 @@
+# Created: 2026-10-14 ET (Probata PoC 22). Regression corpus case through `swdb prove --adapter cbmc`: a
+# diagnosed adapter defect, fixed; the case pins the fixed outcome (the seeded bug is refuted, so no class).
+id: cbmc-cpp-cut-without-build-constants
+adapter: cbmc
+input:
+  function: smoke_main
+  contract: contract.fixture_cbmc_smoke
+  bounds: {threads: 1}
+  defines: [BUGGY]
+failure_class: null
+cause: >-
+  First run of map 07's seeded smoke bug (-DBUGGY): CBMC refuted the C lowering at x = 41, but the replay on the
+  C++ did not fail, so the job read spurious_counterexample. Cause: the C++ cut is raw source with its #ifdef
+  lines, and the adapter compiled it without the build constants (the C lowering is preprocessed with them). The
+  same defect made the differential run disagree on the compared-knob bug (SWDB_SEEDED_KNOB_BUG). Fixed: the C++
+  side is compiled with every build constant; the case must now be refuted (no failure class).

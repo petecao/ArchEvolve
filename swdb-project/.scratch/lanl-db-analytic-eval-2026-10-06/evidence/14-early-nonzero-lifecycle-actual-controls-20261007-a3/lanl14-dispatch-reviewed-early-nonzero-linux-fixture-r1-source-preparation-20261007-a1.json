@@ -1,0 +1,59 @@
+{
+  "SSH_executed": false,
+  "canonical_ensure_ascii": false,
+  "complete_derivation": {
+    "bytes": 2041,
+    "path": "/private/tmp/lanl14-dispatch-reviewed-early-nonzero-linux-fixture-r1-complete-derivation-20261007-a1.diff",
+    "sha256": "6adedd149ab7c9a322516346fbcebf2ae9ad7d68d3c8b7a682d947f993a921b8"
+  },
+  "decoded_remote_program": {
+    "bytes": 21880,
+    "sha256": "f943be466d92b9afa5bdd1c06e6c98859c3100e6e2fce538ea60f57a582586e6"
+  },
+  "format": "swdb.lanl14-one-fixture-dispatch-r1-source-preparation.v1",
+  "handoff": {
+    "bytes": 2670,
+    "path": "/private/tmp/lanl14-dispatch-reviewed-early-nonzero-linux-fixture-r1-source-handoff-20261007-a1.md",
+    "sha256": "58346730fa26e2806177fb668c76d4543357d7348ece2dfd71b1b3948962b81e"
+  },
+  "identity_sha256": "44bbeac25f3820ce7f25265f8cbcba704daf909b5e3fa9c929c625a8345f52a9",
+  "main_executed": false,
+  "native_probe_executed": false,
+  "originals_preserved": [
+    {
+      "bytes": 27376,
+      "path": "/private/tmp/lanl14-dispatch-reviewed-early-nonzero-linux-fixture-20261007-a1.py",
+      "sha256": "dc4c1f1111a7339414e83cd8faaa4f4922439ab502258e6baecc17e59642ee53"
+    },
+    {
+      "bytes": 8972,
+      "path": "/private/tmp/lanl14-dispatch-reviewed-early-nonzero-linux-fixture-source-handoff-20261007-a1.md",
+      "sha256": "1118682f29f624c9f14faea7c86e6d4a1b5886474ecb3cb418d3353295ce9093"
+    },
+    {
+      "bytes": 3880,
+      "path": "/private/tmp/lanl14-dispatch-reviewed-early-nonzero-linux-fixture-source-preparation-20261007-a1.json",
+      "sha256": "ac808c8fa5cb99616e900a00fdf67508cb5df5a078cce43639bcc90a10a42ca2"
+    }
+  ],
+  "prepared_utc": "2026-10-07T23:34:09.426316+00:00",
+  "scientific_admission": false,
+  "scope": "Minimal NOT RUN source-state correction for the parent-observed retained empty primary .retention.lock; original chronology retained.",
+  "source": {
+    "bytes": 28246,
+    "path": "/private/tmp/lanl14-dispatch-reviewed-early-nonzero-linux-fixture-20261007-a1-r1.py",
+    "sha256": "4eee5b64037081ef844c6f9efbb0d7d6ac923b5b533dec531f621fe9d228d86f"
+  },
+  "source_program_imported": false,
+  "source_staged": false,
+  "static_scope": {
+    "all_other_local_AST_exact": true,
+    "all_other_remote_AST_exact": true,
+    "changed_remote_AST_symbols": [
+      "source_state"
+    ],
+    "full_original_byte_reversal": true,
+    "limits_argv_env_native_pins_unchanged": true
+  },
+  "tests_executed": false
+}

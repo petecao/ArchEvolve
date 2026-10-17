@@ -1,0 +1,234 @@
+{
+  "date": "2026-10-16 ET",
+  "scope": "PASSIVE_SOURCE_TO_MODEL_ALIGNMENT_CALLER_DOMAIN_NOTE",
+  "source_commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+  "model_source_commit": "7930f3a1f8d59cb7b338f54844dea7728bc8864c",
+  "full_C_RTE_or_CPP_or_TD_proof_accepted": false,
+  "source_or_run_input_edited": false,
+  "actual_compiler_prover_native_probe": false,
+  "producer_paths": [
+    {
+      "object": "pvector<NodeID>/pvector<SGOffset>",
+      "typed_source": "pvector.h27\u201334 new T_[n]; reserve81\u201390 new T_[capacity]; endpoints152\u2013161",
+      "caller": "bfs.cc306\u2013311 InitParent;320 VertexOffsetsOut from graph.VertexOffsets;graph.h242\u2013248 new pvector<SGOffset>",
+      "alignment": "source-backed on successful normal construction and preserved live typed-array pointers; does not imply initialized new payload or arbitrary public start_ values"
+    },
+    {
+      "object": "SlidingQueue<NodeID>",
+      "typed_source": "sliding_queue.h34\u201337 new T[shared_size]; beginp/endp73\u201378 full allocated storage",
+      "caller": "bfs.cc330 queue(g.num_nodes); typed automatic queue object",
+      "alignment": "source-backed for queue object/members and all in-bounds NodeID element addresses; pointer formation/capacity/lifetime separately required"
+    },
+    {
+      "object": "QueueBuffer<NodeID>",
+      "typed_source": "sliding_queue.h98\u2013102 typed new T[local_size] plus SlidingQueue<T>&;114\u2013118 stdcopy",
+      "caller": "bfs.cc237 typed automatic per-thread buffer",
+      "alignment": "source-backed for normal typed object+new array; model single-thread one-live-buffer static array is a separate representation/lifetime abstraction"
+    },
+    {
+      "object": "Graph/non-inplace CSR",
+      "typed_source": "builder.h296\u2013311 new DestID_[offsets[num_nodes]];graph.h233\u2013239 new DestID_*[length] and typed element-pointer offsets;SquishCSR156 typed new DestID_[]",
+      "caller": "bfs.cc516 Graph g=b.MakeGraph; builder339\u2013361 ordinary path unless cli.in_place; command_line.h39 false by default/103 -m true",
+      "alignment": "typed arrays support physical alignment; offsets/input bounds/initialization and public pointer mutation remain caller proof obligations"
+    },
+    {
+      "object": "Graph/serialized path",
+      "typed_source": "reader.h286\u2013297 typed pvector offsets/new DestID[] followed by char-view file reads and GenIndex",
+      "alignment": "byte-view IO does not realign/reallocate typed objects; file format/full reads/counts/offset ranges and valid initialized values remain unproved"
+    },
+    {
+      "object": "Graph/arbitrary constructors",
+      "typed_source": "graph.h131\u2013142 directly accept pointer arrays/neighbors and immediately subtract index endpoints; public fields256\u2013263",
+      "alignment": "not established merely by Graph type; external pointers require source provenance/array/lifetime/alignment; no constructor validation repairs arbitrary incoming values"
+    }
+  ],
+  "concrete_source_boundary": {
+    "path": "builder.h193\u2013286 MakeCSRInPlace enabled by CLI -m",
+    "facts": [
+      "new EdgePair<NodeID,NodeID>[] via pvector<Edge> is reinterpreted as DestID* at206",
+      "std::realloc applied at216/252; graph destructor uses delete[] as DestID[]",
+      "EdgePair alignment can suffice for contained NodeID members, but is not a proof of a NodeID array object or allocator/lifetime compatibility"
+    ],
+    "classification": "nonportable/unsupported C++11 array-object/lifetime/allocation-family source path; not evidence the current helper proof input used it; separate from3open logical goals"
+  },
+  "model_boundary": {
+    "alignment": "Typed valid_rd/valid_rw encode allocated logical range, not physical modulo alignment; wpRTE128\u2013140 explicitly disables alignment guards",
+    "source_backed_discharge": "a closed typed-object/array provenance relation, preserved through calls/moves/bounds/lifetimes, can discharge alignment per access outside the unsupported WP class; does not discharge arbitrary abstract pointer states",
+    "remaining": [
+      "exact caller constructor/default option and no public pointer corruption history",
+      "Graph/layout/reference-to-pointer correspondence is semantic mapping, not binary C++/C layout equivalence",
+      "fixed static buffer/global initialization must not be used to infer source new-array payload initializedness",
+      "OpenMP/device/atomic stronger ABI or hardware constraints and all source RTE remain unproved"
+    ]
+  },
+  "minimal_next_gate": [
+    "retain the global warning and full-C-RTE=false",
+    "for each actual accessed object, prove it originates from a successful typed construction/new array and remains live/in range; prove caller relation at the actual entry rather than add an arbitrary alignment premise",
+    "if admitting standard typed graph-build path, establish CLI/domain selection and input/builder validity; keep -m and arbitrary constructor paths explicitly unsupported until separately repaired/verified",
+    "do not substitute numeric alignment claims or typed valid predicates for physical/source correspondence; no source edit or new run in this note"
+  ],
+  "primary_references": [
+    {
+      "url": "https://timsong-cpp.github.io/cppwp/n3337/basic.align",
+      "clause": "C++11-era N3337 3.11 object alignment requirements"
+    },
+    {
+      "url": "https://timsong-cpp.github.io/cppwp/n3337/basic.stc.dynamic.allocation",
+      "clause": "N3337 3.7.4.1 allocation alignment"
+    },
+    {
+      "url": "https://timsong-cpp.github.io/cppwp/n3337/expr.new",
+      "clause": "N3337 5.3.4 typed array construction and returned first element"
+    },
+    {
+      "url": "https://timsong-cpp.github.io/cppwp/n3337/expr.add",
+      "clause": "N3337 5.7 same-array arithmetic/representability"
+    },
+    {
+      "url": "https://timsong-cpp.github.io/cppwp/n3337/c.malloc",
+      "clause": "N3337 C allocation library boundary"
+    },
+    {
+      "url": "https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf",
+      "clause": "C11 draft 6.2.8,6.3.2.3p7,7.22.3.5"
+    }
+  ],
+  "new_immutable_source_pins": {
+    "commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+    "repository": "arkhadem/DX100",
+    "date": "2026-10-16 ET",
+    "files": [
+      {
+        "path": "benchmarks/gapbs/src/graph.h",
+        "local": "/private/tmp/probata-t07-alignment-source-20261016/graph.h",
+        "source_url": "https://raw.githubusercontent.com/arkhadem/DX100/e4fc4afdf894f295442cef3604667a469fab8e62/benchmarks/gapbs/src/graph.h",
+        "git_blob_sha1": "14f2826064efabbdfaa2c810c7317b1fe6627df0",
+        "sha256": "79a271a3e3b01d6f02750b2b828ad94b3696eff080eb068bc3fcf80bc81139e0",
+        "bytes": 8276
+      },
+      {
+        "path": "benchmarks/gapbs/src/builder.h",
+        "local": "/private/tmp/probata-t07-alignment-source-20261016/builder.h",
+        "source_url": "https://raw.githubusercontent.com/arkhadem/DX100/e4fc4afdf894f295442cef3604667a469fab8e62/benchmarks/gapbs/src/builder.h",
+        "git_blob_sha1": "90412983584287bacc52d8039667cfe7ee8cc4ac",
+        "sha256": "2d3646e12dc2ae9776cfa429aaec699d031b4826c79a356983cf109753f1eb01",
+        "bytes": 16778
+      },
+      {
+        "path": "benchmarks/gapbs/src/benchmark.h",
+        "local": "/private/tmp/probata-t07-alignment-source-20261016/benchmark.h",
+        "source_url": "https://raw.githubusercontent.com/arkhadem/DX100/e4fc4afdf894f295442cef3604667a469fab8e62/benchmarks/gapbs/src/benchmark.h",
+        "git_blob_sha1": "1e305e5e7a6297ae5d96f5a50dc72fe8e3e1c651",
+        "sha256": "87c20752c8437dd5152d00e7c995bedfab15b8929219f85846f47e0f9a4b339f",
+        "bytes": 3565
+      },
+      {
+        "path": "benchmarks/gapbs/src/reader.h",
+        "local": "/private/tmp/probata-t07-alignment-source-20261016/reader.h",
+        "source_url": "https://raw.githubusercontent.com/arkhadem/DX100/e4fc4afdf894f295442cef3604667a469fab8e62/benchmarks/gapbs/src/reader.h",
+        "git_blob_sha1": "4544ba3f58955c3fbca1f64cc2f4750b13e8d675",
+        "sha256": "951fb6e82df079389b953f35363e8a502d79da4f3c56b8ce6eab7faac38800e1",
+        "bytes": 9268
+      },
+      {
+        "path": "benchmarks/gapbs/src/command_line.h",
+        "local": "/private/tmp/probata-t07-alignment-source-20261016/command_line.h",
+        "source_url": "https://raw.githubusercontent.com/arkhadem/DX100/e4fc4afdf894f295442cef3604667a469fab8e62/benchmarks/gapbs/src/command_line.h",
+        "git_blob_sha1": "fa8b58c596108b165d296d5143b8bb11b244665d",
+        "sha256": "de1415dfe29eb6ba436d57523b2dee8fa3268a0785ae690bde9e94e9444172b2",
+        "bytes": 8511
+      },
+      {
+        "path": "benchmarks/gapbs/src/bfs.cc",
+        "local": "/private/tmp/probata-t07-alignment-source-20261016/bfs.cc",
+        "source_url": "https://raw.githubusercontent.com/arkhadem/DX100/e4fc4afdf894f295442cef3604667a469fab8e62/benchmarks/gapbs/src/bfs.cc",
+        "git_blob_sha1": "3f6d91b29dca5c2a42e918795f3f59e0f1bc630f",
+        "sha256": "6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465",
+        "bytes": 20517
+      }
+    ],
+    "tree_count": 14408,
+    "truncated": false
+  },
+  "existing_header_pins": {
+    "date_et": "2026-10-16",
+    "repository": "arkhadem/DX100",
+    "commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+    "pins": [
+      {
+        "path": "benchmarks/gapbs/Makefile",
+        "source_url": "https://raw.githubusercontent.com/arkhadem/DX100/e4fc4afdf894f295442cef3604667a469fab8e62/benchmarks/gapbs/Makefile",
+        "git_blob_sha1": "c7cf1e6c4b3a0304fcc6ef2f1993dbdc115caf3a",
+        "sha256": "cc5a39f4950dc8bdfbbc32834043e379b13d9db79e4f96158d7960ac561f9daa",
+        "bytes": 3375
+      },
+      {
+        "path": "benchmarks/gapbs/README.md",
+        "source_url": "https://raw.githubusercontent.com/arkhadem/DX100/e4fc4afdf894f295442cef3604667a469fab8e62/benchmarks/gapbs/README.md",
+        "git_blob_sha1": "8fb9c60f39b094efccae757c2acb12b6f77ae51f",
+        "sha256": "a90ecc2ed70d20e23a53b5a0edfbf32f38cb9e75142ddaedd23aa04f45d2a56d",
+        "bytes": 4513
+      },
+      {
+        "path": "benchmarks/gapbs/src/bitmap.h",
+        "source_url": "https://raw.githubusercontent.com/arkhadem/DX100/e4fc4afdf894f295442cef3604667a469fab8e62/benchmarks/gapbs/src/bitmap.h",
+        "git_blob_sha1": "0529b57c98d23b27c6b7e445a6a06d644b921509",
+        "sha256": "6f6e444c82b0e7d797cc9218ba85be7f5f702e95d4c134715c90e6a5b1288465",
+        "bytes": 1706
+      },
+      {
+        "path": "benchmarks/gapbs/src/platform_atomics.h",
+        "source_url": "https://raw.githubusercontent.com/arkhadem/DX100/e4fc4afdf894f295442cef3604667a469fab8e62/benchmarks/gapbs/src/platform_atomics.h",
+        "git_blob_sha1": "96ffaf90201ea312a5dea511aa053444132cfa12",
+        "sha256": "9c8dbe6419b34d850af33ef14ea724c1c64de369d052a8f3c6e20038dcabe9cd",
+        "bytes": 4198
+      },
+      {
+        "path": "benchmarks/gapbs/src/pvector.h",
+        "source_url": "https://raw.githubusercontent.com/arkhadem/DX100/e4fc4afdf894f295442cef3604667a469fab8e62/benchmarks/gapbs/src/pvector.h",
+        "git_blob_sha1": "7db31ea3fb910f15ab4c1c3a6898438303f40391",
+        "sha256": "b3280b03eb774fdd27bbc1967c4f274e46d42179f149275e1b2c394986ebe03d",
+        "bytes": 4265
+      },
+      {
+        "path": "benchmarks/gapbs/src/sliding_queue.h",
+        "source_url": "https://raw.githubusercontent.com/arkhadem/DX100/e4fc4afdf894f295442cef3604667a469fab8e62/benchmarks/gapbs/src/sliding_queue.h",
+        "git_blob_sha1": "fed319ea556423c55db8d995a97ea21a0f950da8",
+        "sha256": "3d5a1d3cff924737c2fc7c6b4fcbb859270f1fcc626c25aac4c780b7b6f4c02c",
+        "bytes": 2502
+      }
+    ]
+  },
+  "local_model_API_pins": [
+    {
+      "path": "/private/tmp/probata-resume-t07-supported-domains/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/gapbs_models.h",
+      "sha256": "eccc1c111f32698043682509be8effad02e8cec82957a889f7a4fb6c54ff490c",
+      "bytes": 15802
+    },
+    {
+      "path": "/private/tmp/probata-resume-t07-supported-domains/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/07-wp-hints/standin/tdstep_standin.c",
+      "sha256": "f24d4fbac9646f3eb28637c591c8cef83a529d96907b1d3071bfadccc3a24de7",
+      "bytes": 14479
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/wpRTE.ml",
+      "sha256": "965ef16094a23b6ce6efd849820ee818843d94d079bbe9e00c02374084d4c030",
+      "bytes": 6538
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/MemTyped.ml",
+      "sha256": "ad0d3c4e8e568a09d47bb658767e5ba476cc9e957f16b14981370642c5e235b5",
+      "bytes": 40201
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/lib/frama-c-wp/core/MemAddr.ml",
+      "sha256": "49ea01babc875c9a35f6c42506551bde0e8094f3e40e21325813986da81975e3",
+      "bytes": 15171
+    },
+    {
+      "path": "/Users/yanrujhou/.opam/framac-33/share/frama-c/share/wp/why3/frama_c_wp/memaddr.mlw",
+      "sha256": "7b33b2217ca99aefc239ad0ccafcc7f7bac271ba7082e1ae354cee956f676d4f",
+      "bytes": 5187
+    }
+  ]
+}

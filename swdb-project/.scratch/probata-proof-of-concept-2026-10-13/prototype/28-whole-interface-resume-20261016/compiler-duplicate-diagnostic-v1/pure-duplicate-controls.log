@@ -1,0 +1,17 @@
+test_all_chunk_splits_preserve_first_duplicate (__main__.Controls.test_all_chunk_splits_preserve_first_duplicate) ... ok
+test_composite_second_value_stays_unaccepted_not_repaired (__main__.Controls.test_composite_second_value_stays_unaccepted_not_repaired) ... ok
+test_deadline_and_compact_context_bounds (__main__.Controls.test_deadline_and_compact_context_bounds) ... ok
+test_duplicate_context_first_and_second_exact_offsets_and_tokens (__main__.Controls.test_duplicate_context_first_and_second_exact_offsets_and_tokens) ... ok
+test_first_nested_duplicate_wins (__main__.Controls.test_first_nested_duplicate_wins) ... ok
+test_gzip_after_duplicate_drains_and_verifies_entire_original (__main__.Controls.test_gzip_after_duplicate_drains_and_verifies_entire_original) ... ok
+test_late_corruption_after_duplicate_still_refuses (__main__.Controls.test_late_corruption_after_duplicate_still_refuses) ... ok
+test_malformed_prefix_still_refuses_before_duplicate (__main__.Controls.test_malformed_prefix_still_refuses_before_duplicate) ... ok
+test_no_actual_reader_or_project_imports (__main__.Controls.test_no_actual_reader_or_project_imports) ... ok
+test_original_strict_parser_remains_unchanged_and_refuses (__main__.Controls.test_original_strict_parser_remains_unchanged_and_refuses) ... ok
+test_valid_no_duplicate_refuses_diagnostic_claim (__main__.Controls.test_valid_no_duplicate_refuses_diagnostic_claim) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.005s
+
+OK
+{"tests": 11, "failures": 0, "errors": 0, "skips": 0, "child_events": [], "source_sha256": "fc301fccbc15d345ed34add46a8c1b9072c619b1a23b61efbfdaa1602b0cf179", "scope": "synthetic prefix/decoded-key/context/gzip controls; no actual V10 reader or compiler"}

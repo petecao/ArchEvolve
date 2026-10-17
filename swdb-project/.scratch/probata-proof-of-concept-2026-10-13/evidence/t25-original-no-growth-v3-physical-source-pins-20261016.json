@@ -1,0 +1,64 @@
+{
+  "created": "2026-10-16 ET",
+  "kind": "read-only physical installed runtime/generation source SHA-256",
+  "host": "mbit10",
+  "command": "sha256sum explicit 10 selected installed source paths",
+  "source_path_repairs": {
+    "Ctypes.ml": "ctypes.ml",
+    "Wp_parameters.ml": "wp_parameters.ml"
+  },
+  "sources": [
+    {
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/MemTyped.ml",
+      "name": "MemTyped.ml",
+      "sha256": "ad0d3c4e8e568a09d47bb658767e5ba476cc9e957f16b14981370642c5e235b5"
+    },
+    {
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/Cint.ml",
+      "name": "Cint.ml",
+      "sha256": "3b2a00bb65f4c785265c2295c323459e3dce66bb6c82e3d70ff3a659a3660156"
+    },
+    {
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/Factory.ml",
+      "name": "Factory.ml",
+      "sha256": "d2f4da6cb7b2f4a674880f4760680e84fe0a1c58ece95d0f2ff889b7902efcc5"
+    },
+    {
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/MemVar.ml",
+      "name": "MemVar.ml",
+      "sha256": "43b8979a169ccfb7c6e7183970a8d3022d27d410487f139b397073f06a7476f6"
+    },
+    {
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/MemLoader.ml",
+      "name": "MemLoader.ml",
+      "sha256": "b59407d1220f7c0871bc556aaebf4748e9229053463881467ca6a3da851c9fe8"
+    },
+    {
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/ctypes.ml",
+      "name": "ctypes.ml",
+      "sha256": "a9f2a2f05e9e4e7ecabfd1324bff52ebd74f382e0db0989dba246a5ebfee8bec"
+    },
+    {
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/wp_parameters.ml",
+      "name": "wp_parameters.ml",
+      "sha256": "a4ace79d1262461ea14f73275db17eb332f76b265059fc238a6bc9538a81df2b"
+    },
+    {
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/ProverWhy3.ml",
+      "name": "ProverWhy3.ml",
+      "sha256": "18413bff579ac1557c0b5060a679d80d55cfce49099b9557a85ea8c66fe88526"
+    },
+    {
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/register.ml",
+      "name": "register.ml",
+      "sha256": "e4e0b524e4364f475f33fd618c542d4ddc86c2c35f8b6ba223ea704896bc019e"
+    },
+    {
+      "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/Why3Provers.ml",
+      "name": "Why3Provers.ml",
+      "sha256": "39da8a23d9f1fe8743579f9a15e9421ebcc8c1b699cce0a1a3443dde3bbf3746"
+    }
+  ],
+  "raw_stdout": "ad0d3c4e8e568a09d47bb658767e5ba476cc9e957f16b14981370642c5e235b5  /data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/MemTyped.ml\n3b2a00bb65f4c785265c2295c323459e3dce66bb6c82e3d70ff3a659a3660156  /data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/Cint.ml\nd2f4da6cb7b2f4a674880f4760680e84fe0a1c58ece95d0f2ff889b7902efcc5  /data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/Factory.ml\n43b8979a169ccfb7c6e7183970a8d3022d27d410487f139b397073f06a7476f6  /data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/MemVar.ml\nb59407d1220f7c0871bc556aaebf4748e9229053463881467ca6a3da851c9fe8  /data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/MemLoader.ml\na9f2a2f05e9e4e7ecabfd1324bff52ebd74f382e0db0989dba246a5ebfee8bec  /data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/ctypes.ml\na4ace79d1262461ea14f73275db17eb332f76b265059fc238a6bc9538a81df2b  /data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/wp_parameters.ml\n18413bff579ac1557c0b5060a679d80d55cfce49099b9557a85ea8c66fe88526  /data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/ProverWhy3.ml\ne4e0b524e4364f475f33fd618c542d4ddc86c2c35f8b6ba223ea704896bc019e  /data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/register.ml\n39da8a23d9f1fe8743579f9a15e9421ebcc8c1b699cce0a1a3443dde3bbf3746  /data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/Why3Provers.ml\n",
+  "no_compiler_native_verifier_execution": true
+}

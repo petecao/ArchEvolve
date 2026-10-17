@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-16 ET",
+  "reviewer": "/root/ticket28",
+  "author": "/root/ticket28/memory_public_trace",
+  "decision": "PASS_SOURCE_HELPERS_ONLY",
+  "source_pins": {
+    "closed_python_surface.py": "748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af",
+    "cbmc_release_gate.py": "681ad7be43312e224529a03d42b939305010795becd2fc203724a59c63db3dfc",
+    "test_closed_python_surface.py": "95fcf42bfc26c61bbf95c0c0dd76006317e20a8037d4c94a0927560399aa7732"
+  },
+  "validation": {
+    "command": ["python3", "test_closed_python_surface.py"],
+    "environment": {"PYTHONDONTWRITEBYTECODE": "1"},
+    "exit_code": 0,
+    "tests": 14,
+    "audit_hook": "No subprocess, exec, spawn, fork, system or ctypes.dlopen allowed",
+    "project_imports": false,
+    "compiler_native_verifier_or_ssh": false
+  },
+  "findings": [
+    "Canonical inventory order matches the lane producer's Path component ordering, including directories and explicit known links.",
+    "Known symlinks require literal target, complete component-resolution chain and pinned physical file or closed directory-target content; unknown links refuse before target traversal.",
+    "Two complete content/membership passes agree; stable no-follow file hashing and explicit missing startup paths preserve the physical-input boundary.",
+    "Interpreter, pyvenv, executable .pth census, source hashes and line hashes are explicit; the helper executes no target startup code.",
+    "Guarded isolated startup requires a separate pinned receipt and exact static-policy digest; unknown paths, ZIP inputs, executable, prefix and namespace changes refuse.",
+    "The CBMC gate preserves the unchanged 6.11 method family and compares the full numeric observed version, including patch, exactly. Its output hashes record raw text; the helper does not itself compare that text to prior raw output."
+  ],
+  "successor_requirements": [
+    "This review does not admit an entry or runtime policy; old initialized V3 and trace V1 remain unexecuted.",
+    "Keep the raw observer provenance pin separate from any normalized two-key startup receipt derived from it.",
+    "Bind actual child-role startup independently with no user site, safe path, exact selected-project PYTHONPATH and separate initial/post-import observations.",
+    "The seventh actual path is a descendant already covered by the stdlib inventory; no package-import mutation timing was measured by root observer V2.",
+    "Any changed helper role/API, successor entry, actual selected source or raw full-version equality claim requires an updated source review before execution."
+  ],
+  "limits": "Filesystem/startup policy helpers and pure controls only; no actual proof, public verdict, source-call implementation, physical values-at-issue or hardware theorem is established."
+}

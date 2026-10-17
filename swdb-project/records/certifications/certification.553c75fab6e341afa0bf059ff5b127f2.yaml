@@ -1,0 +1,185 @@
+kind: certification
+schema_version: '0.4'
+id: certification.553c75fab6e341afa0bf059ff5b127f2
+status: draft
+created: '2026-10-03'
+updated: '2026-10-03'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+entry:
+  id: lowering.dxc_session_begin.dx100-mmio.1.0-e4fc4af
+  content_sha256: df80a22d573e4b11ebc81e48c6f359bb90390b1176f5b9698155eb6c6d5b04d7
+command:
+  version: '1.0'
+  sources_sha256: baab26e788f1f527cdcf78618973a2aa65774a67ce390498e46d5641dd098081
+host:
+  hostname: YanRus-Mac-Studio.local
+  system: Darwin
+  architecture: arm64
+  compiler: /opt/homebrew/bin/g++-16
+matrix:
+- operation: session_begin
+  tile_size: 16384
+  threads: 4
+  status: passed
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-342f216a81604cfe8447d157156c4998/session_begin-16384
+    - session_begin
+    returncode: 0
+    stdout: |
+      SWDB_DIFFERENTIAL_PASS:session_begin
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-342f216a81604cfe8447d157156c4998/session_begin-16384.positive.json
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=16384
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/drivers/differential.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-342f216a81604cfe8447d157156c4998/session_begin-16384
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-342f216a81604cfe8447d157156c4998/session_begin-16384.build.json
+- operation: session_begin
+  tile_size: 1024
+  threads: 4
+  status: passed
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-342f216a81604cfe8447d157156c4998/session_begin-1024
+    - session_begin
+    returncode: 0
+    stdout: |
+      SWDB_DIFFERENTIAL_PASS:session_begin
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-342f216a81604cfe8447d157156c4998/session_begin-1024.positive.json
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=1024
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/drivers/differential.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-342f216a81604cfe8447d157156c4998/session_begin-1024
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-342f216a81604cfe8447d157156c4998/session_begin-1024.build.json
+negative_controls:
+- id: second_session_begin
+  tile_size: 16384
+  status: rejected
+  reason: session_begin_twice
+  expected_check: session_begin_twice
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=16384
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/drivers/differential.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-342f216a81604cfe8447d157156c4998/session_begin-16384-second_session_begin
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-342f216a81604cfe8447d157156c4998/session_begin-16384-second_session_begin.build.json
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-342f216a81604cfe8447d157156c4998/session_begin-16384-second_session_begin
+    - session_begin
+    - second_session_begin
+    returncode: 86
+    stdout: ''
+    stderr: |
+      SWDB_STRICT_ASSERT:session_begin_twice
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-342f216a81604cfe8447d157156c4998/session_begin-16384-second_session_begin.run.json
+- id: second_session_begin
+  tile_size: 1024
+  status: rejected
+  reason: session_begin_twice
+  expected_check: session_begin_twice
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=1024
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/drivers/differential.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-342f216a81604cfe8447d157156c4998/session_begin-1024-second_session_begin
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-342f216a81604cfe8447d157156c4998/session_begin-1024-second_session_begin.build.json
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-342f216a81604cfe8447d157156c4998/session_begin-1024-second_session_begin
+    - session_begin
+    - second_session_begin
+    returncode: 86
+    stdout: ''
+    stderr: |
+      SWDB_STRICT_ASSERT:session_begin_twice
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-342f216a81604cfe8447d157156c4998/session_begin-1024-second_session_begin.run.json
+verdict: certified
+evidence_basis: simulated
+evidence_kind: execution
+created_at: '2026-10-03T06:45:17.595051+00:00'

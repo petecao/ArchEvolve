@@ -1,0 +1,97 @@
+{
+  "created": "2026-09-27",
+  "evaluation": "bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar.s0.r0.primary.evaluation",
+  "outcome": {
+    "state": "failed",
+    "stage": "execution_identity",
+    "reason": "actual simulator instrumentation differs from frozen treatment"
+  },
+  "correctness": {
+    "state": "unverified",
+    "checks": []
+  },
+  "instrumentation": {
+    "treatment": "primary",
+    "roi": "bfs.dx100.traversal.v1",
+    "suppressed_internal_events": [],
+    "verification": "same_guest_post_roi",
+    "debug_flags": "MAATrace",
+    "verifier_runtime": {
+      "driver_sha256": "476874619644d1256dcc5ca1e853c47b7be2e1dc56f538aaa2dd783842e7ad10",
+      "parser_sha256": "c9d3e14b70a3689799314556fab2922b1723c00960902109af2922a958cd3498",
+      "observer_sha256": "655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd"
+    },
+    "post_roi_trace": {
+      "flag": "SyscallBase",
+      "scope": "post-seal verifier continuation only",
+      "output": "separate_simulator_trace",
+      "format_flags": [
+        "FmtFlag"
+      ],
+      "disabled_format_flags": [
+        "FmtTicksOff",
+        "FmtStackTrace"
+      ],
+      "disabled_roi_flags": [
+        "MAATrace",
+        "MAARangeFuser",
+        "MAAIndirect"
+      ],
+      "chunk_ticks": 1000000000
+    }
+  },
+  "request": {
+    "message_version": "1.0",
+    "id": "bfs-t16-seal-recovery-simulator-batch-20260927-a1.artifact.scalar.s0.r0.primary.evaluation",
+    "machine": "mbit10",
+    "hardware_target": "dx100-e4fc4af-4c",
+    "model_root": "/data1/yanruj/DX100-bfs-e4fc4af",
+    "build_evaluation": "bfs-dx100-build-20260925-a2",
+    "candidate": "bfs-author-scalar-compile-20260925-a1.candidate",
+    "binary": {
+      "path": "/data1/yanruj/DX100-bfs-e4fc4af/benchmarks/gapbs/bfs",
+      "sha256": "70301ad2e587c2dd55a730da5e0135337cb6b46ddd72999a843f86fd4b070dd1"
+    },
+    "simulator": {
+      "path": "/data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt",
+      "sha256": "f4038c88318ee09085b6c07f163094a07a31a256f21b652d4f3cfa046feb1f6b"
+    },
+    "workload": {
+      "id": "bfs-20260925-uniform22.f23b09bb0c0601b5",
+      "source": 2796003,
+      "representation": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-uniform22/graph-dx100.sg",
+        "sha256": "79da7fa78a5c873e28eb0794c4b262499d643efaedbfe0375ea1f8a55ae2ddd0"
+      }
+    },
+    "protocol_trial": {
+      "source_position": 0,
+      "repetition": 0
+    },
+    "configuration": {
+      "mode": "BASE",
+      "l3_size_mb": 10,
+      "l3_assoc": 20,
+      "tile_elements": 16384
+    },
+    "verification": {
+      "checker": "dx100.bfs.verifier.v2",
+      "max_ticks": 100000000000000,
+      "coverage": false,
+      "post_roi_trace": "SyscallBase",
+      "trace_transport": "gem5-gzip.v1"
+    },
+    "budget": {
+      "total_seconds": 18000,
+      "checkpoint_seconds": 3600,
+      "run_seconds": 14400,
+      "memory_gib": 48,
+      "storage_gib": 15
+    },
+    "protocol": "bfs-author-reference-20260925.b4cbd3924b40e7df",
+    "protocol_role": "baseline"
+  },
+  "timing": [],
+  "gain_claim": false,
+  "interpretation": "Failure before simulation at execution identity validation; no accepted samples; no retry or artifact mutation."
+}

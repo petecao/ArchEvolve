@@ -1,0 +1,454 @@
+{
+  "actual_execution": false,
+  "changed_functions": [
+    "canonical_check",
+    "main"
+  ],
+  "changes": [
+    "Ten source-owned registry duties and 21 canonical files",
+    "One tiny ordinary source-pinned method workspace; no test-module seed or catalog copy",
+    "Fresh package/server/dependency ELF candidate physical checks alongside inherited tool/WP/import/config scope",
+    "Exact active leaf metadata-only Why3 IPC, strict no-follow output accounting and settled zero specials",
+    "Bounded fsync metadata/postcheck, first-error retention and post-finalization deadline check"
+  ],
+  "child": {
+    "bytes": 21937,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-transfer-20261016/public10-v1/entry_template.py",
+    "sha256": "f43e938185315f4748b56ebdbd0b5629722d24c7c3f1556be5f3e6dc9b8c9647"
+  },
+  "date": "2026-10-16 ET",
+  "line_edits": [
+    {
+      "new_lines": [
+        "\"\"\"2026-10-16 ET. Inert standalone ten-duty ownership-registry normal-WP profile.\n"
+      ],
+      "new_range": [
+        0,
+        1
+      ],
+      "old_lines": [
+        "\"\"\"2026-10-16 ET. Inert standalone nine-duty private-frame normal-WP profile.\n"
+      ],
+      "old_range": [
+        0,
+        1
+      ]
+    },
+    {
+      "new_lines": [
+        "# __OWNED10_RUNTIME_AND_QUOTA__\n",
+        "\n"
+      ],
+      "new_range": [
+        25,
+        27
+      ],
+      "old_lines": [],
+      "old_range": [
+        25,
+        25
+      ]
+    },
+    {
+      "new_lines": [
+        "    manifest = packets.check(directory, elements=tuple(expected['elements']))\n"
+      ],
+      "new_range": [
+        29,
+        30
+      ],
+      "old_lines": [
+        "    manifest = packets.check(directory)\n"
+      ],
+      "old_range": [
+        27,
+        28
+      ]
+    },
+    {
+      "new_lines": [
+        "        raise ValueError('fresh complete owned-transfer canonical packet differs')\n"
+      ],
+      "new_range": [
+        33,
+        34
+      ],
+      "old_lines": [
+        "        raise ValueError('fresh complete private-frame canonical packet differs')\n"
+      ],
+      "old_range": [
+        31,
+        32
+      ]
+    },
+    {
+      "new_lines": [
+        "    if len(rows) != 10 or [r['id'] for r in rows] != expected['target_ids'] or any(\n"
+      ],
+      "new_range": [
+        35,
+        36
+      ],
+      "old_lines": [
+        "    if len(rows) != 9 or [r['id'] for r in rows] != expected['target_ids'] or any(\n"
+      ],
+      "old_range": [
+        33,
+        34
+      ]
+    },
+    {
+      "new_lines": [
+        "        raise ValueError('all ten independent pending check lemmas are required')\n"
+      ],
+      "new_range": [
+        37,
+        38
+      ],
+      "old_lines": [
+        "        raise ValueError('all nine independent pending check lemmas are required')\n"
+      ],
+      "old_range": [
+        35,
+        36
+      ]
+    },
+    {
+      "new_lines": [
+        "            manifest['current_model_records_admitted'] or manifest['caller_premises_added']:\n",
+        "        raise ValueError('owned-transfer packet falsely broadens admission')\n"
+      ],
+      "new_range": [
+        39,
+        41
+      ],
+      "old_lines": [
+        "            manifest['current_proof_records_admitted'] or manifest['caller_premises_added']:\n",
+        "        raise ValueError('private-frame packet falsely broadens admission')\n"
+      ],
+      "old_range": [
+        37,
+        39
+      ]
+    },
+    {
+      "new_lines": [
+        "        raise ValueError('reviewed ten-duty expectation bytes differ')\n"
+      ],
+      "new_range": [
+        135,
+        136
+      ],
+      "old_lines": [
+        "        raise ValueError('reviewed nine-duty expectation bytes differ')\n"
+      ],
+      "old_range": [
+        133,
+        134
+      ]
+    },
+    {
+      "new_lines": [
+        "              'all_ten_producer_proven': False, 'proof_acceptance': False,\n"
+      ],
+      "new_range": [
+        145,
+        146
+      ],
+      "old_lines": [
+        "              'all_nine_producer_proven': False, 'proof_acceptance': False,\n"
+      ],
+      "old_range": [
+        143,
+        144
+      ]
+    },
+    {
+      "new_lines": [
+        "        selected['why3_packages'] = why3_runtime_check(expected)\n",
+        "        selected['why3_elf_candidates'] = why3_dependency_check(expected)\n"
+      ],
+      "new_range": [
+        190,
+        192
+      ],
+      "old_lines": [],
+      "old_range": [
+        188,
+        188
+      ]
+    },
+    {
+      "new_lines": [
+        "        from swdb import vector_owned_transfer as packets\n"
+      ],
+      "new_range": [
+        204,
+        205
+      ],
+      "old_lines": [
+        "        from swdb import vector_reallocation_private_frame as packets\n"
+      ],
+      "old_range": [
+        200,
+        201
+      ]
+    },
+    {
+      "new_lines": [
+        "        inputs = out/'canonical-inputs'; manifest = packets.prepare(inputs, elements=tuple(expected['elements']))\n"
+      ],
+      "new_range": [
+        207,
+        208
+      ],
+      "old_lines": [
+        "        inputs = out/'canonical-inputs'; manifest = packets.prepare(inputs)\n"
+      ],
+      "old_range": [
+        203,
+        204
+      ]
+    },
+    {
+      "new_lines": [],
+      "new_range": [
+        219,
+        219
+      ],
+      "old_lines": [
+        "        from test_standard_member_contracts import _member_seed\n",
+        "        seed = initialize_workspace(out, _member_seed)\n"
+      ],
+      "old_range": [
+        215,
+        217
+      ]
+    },
+    {
+      "new_lines": [
+        "        from swdb import std_models\n",
+        "        seed_root = out/'workspace'; seed_root.mkdir(exist_ok=False)\n",
+        "        records = seed_root/'records'; (records/'proofs').mkdir(parents=True)\n",
+        "        library = seed_root/'library'; methods = library/'methods'; methods.mkdir(parents=True)\n",
+        "        inherited = project/'tests/fixtures/proof/methods/contract-fixture-1.yaml'\n",
+        "        lineup_path = project/'library/methods/probata-draft-1.yaml'\n",
+        "        # Only ordinary fixture method metadata is copied. No test module,\n",
+        "        # test builder, catalog proof, contract or candidate is imported.\n"
+      ],
+      "new_range": [
+        220,
+        228
+      ],
+      "old_lines": [
+        "        inherited = seed.root/'library/methods/wp-tracer-fixture.yaml'\n"
+      ],
+      "old_range": [
+        218,
+        219
+      ]
+    },
+    {
+      "new_lines": [
+        "        method_data['lineup'] = yaml.safe_load(lineup_path.read_bytes())['lineup']\n",
+        "        wp_rows = [row for row in method_data['lineup'] if row['tool']=='frama-c-wp']\n",
+        "        if len(wp_rows) != 1:\n",
+        "            raise ValueError('one normal source-pinned WP lineup required')\n",
+        "        wp_rows[0]['flags'] += ['-rte-initialized', '@all', '-wp-no-filter-init']\n",
+        "        method_data['c_lowering']['translators'] = [lowering['c_lowering']]\n",
+        "        method_data['models'].update(std_vector=std_models.identity(), std_pair=std_models.identity())\n"
+      ],
+      "new_range": [
+        229,
+        236
+      ],
+      "old_lines": [
+        "        if method_data['c_lowering']['translators'] != [lowering['c_lowering']]:\n",
+        "            raise ValueError('unchanged seed compiler context differs')\n"
+      ],
+      "old_range": [
+        220,
+        222
+      ]
+    },
+    {
+      "new_lines": [
+        "            description='Standalone conditional ownership-registry ten-duty native mathematical profile. No body/caller/model admission. '+json.dumps(expected['explicit_method_binding'], sort_keys=True))\n",
+        "        method_path = methods/'wp-owned-transfer10-v1.yaml'\n"
+      ],
+      "new_range": [
+        237,
+        239
+      ],
+      "old_lines": [
+        "            description='Standalone conditional private-frame nine-duty native mathematical profile. No body/caller/model admission. '+json.dumps(expected['explicit_method_binding'], sort_keys=True))\n",
+        "        method_path = seed.root/'library/methods/wp-private-frame9-v1.yaml'\n"
+      ],
+      "old_range": [
+        223,
+        225
+      ]
+    },
+    {
+      "new_lines": [
+        "        seed = SimpleNamespace(root=seed_root, records=records)\n"
+      ],
+      "new_range": [
+        240,
+        241
+      ],
+      "old_lines": [],
+      "old_range": [
+        226,
+        226
+      ]
+    },
+    {
+      "new_lines": [
+        "        adapter = wp_adapter.WpAdapter(Library(seed.root/'library'), 'standalone-owned-transfer', method, records=seed.records)\n"
+      ],
+      "new_range": [
+        242,
+        243
+      ],
+      "old_lines": [
+        "        adapter = wp_adapter.WpAdapter(Library(seed.root/'library'), 'standalone-private-frame', method, records=seed.records)\n"
+      ],
+      "old_range": [
+        227,
+        228
+      ]
+    },
+    {
+      "new_lines": [
+        "            'inherited': pin(inherited), 'lineup_source': pin(lineup_path), 'flags': flags, 'tools': tools,\n"
+      ],
+      "new_range": [
+        249,
+        250
+      ],
+      "old_lines": [
+        "            'inherited': pin(inherited), 'flags': flags, 'tools': tools,\n"
+      ],
+      "old_range": [
+        234,
+        235
+      ]
+    },
+    {
+      "new_lines": [
+        "            ACTIVE_LEAF.update(directory=directory, target=row['id'], input_sha256=row['sha256'])\n",
+        "            try:\n",
+        "                resource_result = guarded_generation(invocation, directory, environment, policy, timeout, rss_watchdog, out)\n",
+        "            finally:\n",
+        "                ACTIVE_LEAF.clear()\n",
+        "            raw_bytes(out)  # strict after the guarded process tree has settled\n",
+        "\n"
+      ],
+      "new_range": [
+        268,
+        275
+      ],
+      "old_lines": [
+        "            resource_result = guarded_generation(invocation, directory, environment, policy, timeout, rss_watchdog, out)\n"
+      ],
+      "old_range": [
+        253,
+        254
+      ]
+    },
+    {
+      "new_lines": [
+        "        result.update(producer_complete=True, all_ten_producer_proven=all(r['outcome']['verdict']=='proven' for r in result['runs']),\n"
+      ],
+      "new_range": [
+        295,
+        296
+      ],
+      "old_lines": [
+        "        result.update(producer_complete=True, all_nine_producer_proven=all(r['outcome']['verdict']=='proven' for r in result['runs']),\n"
+      ],
+      "old_range": [
+        274,
+        275
+      ]
+    },
+    {
+      "new_lines": [
+        "            classification='Ten fresh producer outcomes retained. Independent complete source/runtime/resource/task/hypothesis review required; no proof/source/Typed/body/caller/public-record acceptance.')\n"
+      ],
+      "new_range": [
+        297,
+        298
+      ],
+      "old_lines": [
+        "            classification='Nine fresh producer outcomes retained. Independent complete source/runtime/resource/task/hypothesis review required; no proof/source/Typed/body/caller/public-record acceptance.')\n"
+      ],
+      "old_range": [
+        276,
+        277
+      ]
+    },
+    {
+      "new_lines": [
+        "        result['primary_error'] = preserve_primary_error(out, exc, policy)\n"
+      ],
+      "new_range": [
+        300,
+        301
+      ],
+      "old_lines": [],
+      "old_range": [
+        279,
+        279
+      ]
+    },
+    {
+      "new_lines": [
+        "        result['within_profile_budget'] = time.monotonic() < deadline-1\n",
+        "        if not result['within_profile_budget']:\n",
+        "            result['producer_complete'] = False\n",
+        "        # The result and manifest retain independent cold-review requirements.\n",
+        "        # Reserve is checked before each write and exact final size is checked\n",
+        "        # after fsync; profile completion also requires a strict settled walk.\n"
+      ],
+      "new_range": [
+        303,
+        309
+      ],
+      "old_lines": [
+        "        result['within_profile_budget'] = time.monotonic() <= deadline\n"
+      ],
+      "old_range": [
+        281,
+        282
+      ]
+    },
+    {
+      "new_lines": [
+        "        settled = raw_bytes(out)\n",
+        "        if settled > policy['output_budget_bytes'] or time.monotonic() >= deadline:\n",
+        "            raise ValueError('final settled raw budget or post-fsync profile deadline exceeded')\n"
+      ],
+      "new_range": [
+        312,
+        315
+      ],
+      "old_lines": [],
+      "old_range": [
+        285,
+        285
+      ]
+    }
+  ],
+  "normal_command_flags_readers": "Source engine.command, engine.flags, WpAdapter._tools/read_outcome and proof_setup._wp_flags/_lineup retained; no property selectors or generated-only mode",
+  "parent": {
+    "bytes": 19958,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-private-lifetime-frame-20261016/entry-template-public-v1.py",
+    "sha256": "6951fcc1ad127395db67c52c7956725e1cd020af030b687d6c1f7cd5522e3bd6"
+  },
+  "source_lifetime_and_member_admission": false,
+  "unchanged_functions": [
+    "normal_task_census"
+  ]
+}

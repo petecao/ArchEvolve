@@ -1,0 +1,62 @@
+{
+  "actual_administration_object_counts_or_births_observed": false,
+  "actual_receipt_pin": null,
+  "added_functions": [
+    "query_anchors"
+  ],
+  "anchors": 6,
+  "changed_functions": [
+    "query_row",
+    "main"
+  ],
+  "complete_source_derivation": {
+    "bytes": 26146,
+    "path": "/private/tmp/lanl17-worktree-administration-inode-birth-query-complete-checkout-query-derivation-20261008-a1.diff",
+    "sha256": "fb8fac9c5aad3cd06e4fa0ec907346797d85dca50a85b3185fbc1df49c319686"
+  },
+  "execution": {
+    "Git_operation": false,
+    "SSH": false,
+    "cleanup": false,
+    "libc_or_statx_call": false,
+    "main": false,
+    "project_mutation": false,
+    "staging": false,
+    "target_function_call": false,
+    "target_import": false,
+    "tests": false
+  },
+  "fixed_administration_rows": 18,
+  "format": "swdb.worktree-administration-inode-birth-query.source-preparation.v1",
+  "foundation_source": {
+    "bytes": 37716,
+    "path": "/private/tmp/lanl17_exact_checkout_inode_birth_readonly_query_20261008_a1.py",
+    "sha256": "ca96e027ff1f2dcf8bf903541b44f805048969550b782b41059411c1f023435d"
+  },
+  "genuine_original_checkout_receipt": {
+    "bytes": 14762700,
+    "path": "/private/tmp/lanl17-exact-checkout-inode-birth-query-original-20261008-a1.json",
+    "sha256": "e228811f4b119a7e0c97b666b7da249374f3637cef8b17c0b10b54c4ff422fb7"
+  },
+  "handoff": {
+    "bytes": 9149,
+    "path": "/private/tmp/lanl17-worktree-administration-inode-birth-query-source-handoff-20261008-a1.md",
+    "sha256": "6b6c752ff0e21d22f629c7b19f34f94243e0409ef902a0998d81cbb9e1efb683"
+  },
+  "original_pointer_associations_checked": 18,
+  "policy": "Original UNSEALED source-only preparation, not an actual query or semantic review",
+  "prepared_date_et": "2026-10-08",
+  "removed_functions": [
+    "git_pointer"
+  ],
+  "same_statx_ABI_masks_clock_public_role_encoding_and_limits": true,
+  "selected_source": {
+    "bytes": 52031,
+    "path": "/private/tmp/lanl17_exact_worktree_administration_inode_birth_readonly_query_20261008_a1.py",
+    "sha256": "b2b08374ea997679df9e08894fc14d139cce9f9c90ab3dabd324db36d6f661a3"
+  },
+  "source_derived_complete_unified_diff_verified": true,
+  "syntax_AST_only": true,
+  "unchanged_definition_class_AST_count": 20,
+  "unchanged_foundation_assignment_AST_count": 21
+}

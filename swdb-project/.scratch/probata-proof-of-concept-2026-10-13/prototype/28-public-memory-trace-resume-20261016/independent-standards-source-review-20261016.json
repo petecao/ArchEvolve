@@ -1,0 +1,130 @@
+{
+  "actual_proof_acceptance": false,
+  "base_reconstruction": {
+    "method": "Pure stdlib inverse unified diff from frozen proposals; every hunk matched and complete restored source hashes equal declared old bases; forward difflib reproduction equals patch byte-for-byte.",
+    "sha256": {
+      "bounded_initialization.py": "12885e27dc1cb62b6c89ed4c2b5728c350dc6b0a5781b09ab70ff058e83b287d",
+      "cbmc_adapter.py": "a685bf063ce991372f68d115b7921da3b0afccea908e907bbf892f9094d191c0"
+    }
+  },
+  "compiler_native_verifier_SSH_or_project_import": false,
+  "date": "2026-10-16 ET",
+  "full_ticket28": false,
+  "primary_source_context": [
+    {
+      "bytes": 63133,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/wp_pointer_bounds.py",
+      "sha256": "7033e8e8338d0fc39a5359fd5ceff304842d9df7c8223cffef967246c5f530a0"
+    },
+    {
+      "bytes": 34602,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/proof_semantics.py",
+      "sha256": "9c3fd649fecd2162a7d8f0b416ea1e5543991bf40cc8f8a0eb115a0e24b66436"
+    },
+    {
+      "bytes": 48874,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/proof_setup.py",
+      "sha256": "069dbc55b6ca8b12ea8b524027e2ca2b0922eb9e7be449c6f5725dbddbfe733f"
+    },
+    {
+      "bytes": 170578,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/c_lowering.py",
+      "sha256": "37201a198250021e3d9912a7fbaafa2b8dd9377db8d87027e51045897a246243"
+    },
+    {
+      "bytes": 5127,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/cpu_memory_admission.py",
+      "sha256": "2d8939807edd361b9962fda45dc75eb05680a2b99a87dbc97af4871b2b0d2656"
+    }
+  ],
+  "production_observation": {
+    "files_equal_frozen_proposals_at_review": true,
+    "git_commit_or_publication_status_verified": false,
+    "pins": [
+      {
+        "bytes": 22867,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/bounded_initialization.py",
+        "sha256": "d6586a771548f46423595eb971a63bffb00f23e559cfe576adee5a2abeb6b3cc"
+      },
+      {
+        "bytes": 73392,
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/cbmc_adapter.py",
+        "sha256": "2ef59469412c287b174f085e2c08c8a969435ccf1bc129fe34ea89bbb78cac4a"
+      }
+    ],
+    "production_mutations_by_reviewer": false
+  },
+  "pure_controls": {
+    "errors": 0,
+    "failures": 0,
+    "log": {
+      "bytes": 1179,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/independent-standards-controls-20261016.log",
+      "sha256": "5aa6cdbc302a7c008654e926ea363c46de360e1bed8d4bc4911e022399068286"
+    },
+    "scope": "Proposed policy AST plus explicit source/model/library doubles only. Frozen old production reads were supplied by an in-memory Path.read_text adapter after production became equal to proposals. No project or native module was imported.",
+    "skips": 0,
+    "unittest_cases": 10
+  },
+  "remaining_gates": [
+    "Root must bind the integrated committed source consumer closure and refreshed method/checker/lowerer identities; this review verified physical bytes only.",
+    "Root compiler/runtime/guard/lane admission and25-case public actual suite plus strict JUnit/property/native/replay/cold evidence review remain required.",
+    "Synthetic fixed-order scalar traces do not establish real interface/body/typed-memory/address/hardware refinement, schedule completeness, current0.2 or full ticket28 acceptance.",
+    "Compiler/parser/model correspondence and owned MMIO/other explicit assumptions remain TCB; source-only tests are not experimental acceptance."
+  ],
+  "reviewed": [
+    {
+      "bytes": 13669,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/integration.patch",
+      "sha256": "69c4c39fb96c01cb3f587579b62e664c08b838cd29e5ad8e7d5f6ec9c37a82f7"
+    },
+    {
+      "bytes": 793,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/integration-base.json",
+      "sha256": "7f15290f574ac799f5ca662401e2f535b4361e31aa1a9b045290d0401752e4c3"
+    },
+    {
+      "bytes": 2616,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/integration-policy.json",
+      "sha256": "28ebcf39e376f9954c62f4fd6cdd8015070519e414c8bca71ceba49e78278a1a"
+    },
+    {
+      "bytes": 22867,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/bounded_initialization.py.proposed",
+      "sha256": "d6586a771548f46423595eb971a63bffb00f23e559cfe576adee5a2abeb6b3cc"
+    },
+    {
+      "bytes": 73392,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/cbmc_adapter.py.proposed",
+      "sha256": "2ef59469412c287b174f085e2c08c8a969435ccf1bc129fe34ea89bbb78cac4a"
+    },
+    {
+      "bytes": 19253,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace_fixture.py",
+      "sha256": "ec1320ae62ca3a97bdd766cdeb968cf2544eb6c377a2c2ddefd18c8171f2a6cf"
+    },
+    {
+      "bytes": 10925,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/test_policy_proposal.py",
+      "sha256": "2de31c0c5cd01680dbf0259beea0cc1d795450cbbbff6dc991d3dade5a546458"
+    },
+    {
+      "bytes": 1179,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/independent-standards-controls-20261016.log",
+      "sha256": "5aa6cdbc302a7c008654e926ea363c46de360e1bed8d4bc4911e022399068286"
+    }
+  ],
+  "reviewer": "/root/ticket28/public_review",
+  "standards_findings": [
+    "Scope limited to two existing seams, with dated exact synthetic entry gate and explicit conservative refusal.",
+    "Removing new TRACE constants/helper and undoing the sole fallback restores the complete original bounded_initialization module AST.",
+    "Only CbmcAdapter.run/check_entry_windows/_verdict preexisting functions change. Inverting declared trace insertions restores their original AST; nontrace settings/checks/control flow and verdict assumptions remain exact.",
+    "DX100_CONTENT, ordinary initialization/capacity checks, pointer-domain policy, existing source certificates, CBMC verdict reader and frozen verifier flags are unchanged.",
+    "The entire canonical entry, four physical components, fixed integral geometry, query set, fresh entry digest and regenerated Model equality gate the exception.",
+    "All26 real interface calls remain unsupported; the ten admitted names are bodyless scalar ghost queries with unusable requires-false WP contracts.",
+    "Imports reuse full-TU call-range/declaration identity, global/nonstatic/no-body/no-template/no-attribute/linkage/signature/source-pin checks. No real-header or pointer-domain exemption was introduced.",
+    "Exact trace source/semantic plans recheck independently of the generic no-array early return. Existing proof_setup.check_generated invokes check_entry_windows again at final CBMC boundary and checks model inputs/state draws.",
+    "Only exact trace records replace inapplicable at-issue/pointer ABI/Rocq assertions with explicit abstract-model scope. Default record assumptions are unchanged."
+  ],
+  "status": "PASS_INDEPENDENT_STANDARDS_AND_NONTRACE_SOURCE_REVIEW"
+}

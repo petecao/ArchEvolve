@@ -1,0 +1,96 @@
+kind: proposal
+schema_version: '0.4'
+id: bfs-package-smoke-20260925-a1.proposal
+status: draft
+created: '2026-09-25'
+updated: '2026-09-25'
+message_version: '1.0'
+producer:
+  name: swdb-real-package-handoff-client
+  role: sw
+  test_client: true
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: bfs-package-smoke-20260925-a1.proposal
+  producer:
+    name: swdb-real-package-handoff-client
+    role: sw
+    test_client: true
+  implementation: dx100-bfs-scalar
+  profile_package: bfs-package-smoke-20260925-a1.before.package.v1.1187f3a8ca4968d0
+  source_snapshot: bfs-package-smoke-20260925-a1.before.package.v1.source
+  source_sha256: 4284d7dc1a5b26ef8d9cd9d419cac18e98a86e8a66aac163843f07cab3fbfd2b
+  regions:
+  - function:bfs.cc:2157:ba2f8e639d5daef5
+  - loop:bfs.cc:3718:555ee7236ddd1e7f
+  - loop:bfs.cc:7062:a164130f692c4691
+  - loop:bfs.cc:9557:d3183c577229b91e
+  - loop:bfs.cc:9659:781ab83e6d1b28c0
+  - function:bfs.cc:10396:5f899b3d7f257e63
+  - loop:bfs.cc:10980:2f219774fd6e0e7d
+  - loop:bfs.cc:11105:896b649457fb9e83
+  - function:bfs.cc:11655:cd1ef9d28c8c62ca
+  - loop:bfs.cc:11900:ee8a2407c2e768df
+  - loop:bfs.cc:12012:d3f90fae3543181f
+  - function:bfs.cc:12411:3e560c996879193b
+  - loop:bfs.cc:12508:6fce0a8bf1585475
+  - function:bfs.cc:12643:9ca128eb96d3fcc8
+  - loop:bfs.cc:12847:ec35536f223b52f4
+  - function:bfs.cc:13017:a64d92c2d52fcfe5
+  - loop:bfs.cc:13134:7429be52f28ee4f6
+  - function:bfs.cc:13265:76a956649bfe9705
+  - loop:bfs.cc:14200:db5227d6bf4ba808
+  - loop:bfs.cc:14570:01da7bd21c1235d7
+  - function:bfs.cc:14818:094895302872aee0
+  - loop:bfs.cc:16625:d6668c43308db1a5
+  - loop:bfs.cc:17122:01da7bd21c1235d7
+  - function:bfs.cc:17370:660ca89daefffcee
+  - loop:bfs.cc:17496:a8105cce278141c3
+  - function:bfs.cc:18008:546ec83dfdeaf3fe
+  - loop:bfs.cc:18274:859f5c781239d2af
+  - loop:bfs.cc:18369:696dcb82ce1ee80d
+  - loop:bfs.cc:18551:5688108067948590
+  - loop:bfs.cc:18924:61928faa9fc30778
+  - function:bfs.cc:19611:7a7b5f224b2acf8f
+  intent: Introduce actual new helper/loop work solely to demonstrate automatic changed-source rediscovery;
+    no performance gain intended.
+  constraints:
+    editable_files: [benchmarks/gapbs/src/bfs.cc]
+    preserve_correctness: true
+    preserve_roi: true
+  parameters:
+    reference_proposal: bfs-profile-smoke-20260925-a3.proposal
+    reference_candidate: bfs-profile-smoke-20260925-a3.proposal.candidate-1
+    purpose: rebase the existing demonstrated delta onto the measured package source
+  required_operations: []
+  payload:
+    kind: patch
+    content: "--- a/benchmarks/gapbs/src/bfs.cc\n+++ b/benchmarks/gapbs/src/bfs.cc\n@@ -310,8 +310,19\
+      \ @@\n     return parent;\n }\n \n+uint64_t SWDBDiscoveredHelper(const Graph &g) {\n+  volatile\
+      \ uint64_t checksum = 0;\n+  for (int repeat = 0; repeat < 2000; ++repeat)\n+    for (NodeID vertex\
+      \ = 0; vertex < g.num_nodes(); ++vertex)\n+      checksum += static_cast<uint64_t>(g.out_degree(vertex))\
+      \ + repeat;\n+  return checksum;\n+}\n+\n pvector<NodeID> DOBFS(const Graph &g, NodeID source, bool\
+      \ logging_enabled = false,\n                       int alpha = 1, int beta = 18) {\n+  volatile\
+      \ uint64_t diagnostic_checksum = SWDBDiscoveredHelper(g);\n+  (void)diagnostic_checksum;\n+\n  \
+      \   int num_nodes = g.num_nodes();\n     int num_edges = g.num_edges_directed();\n     if (logging_enabled)\n"
+payload_sha256: 09a7b11aa62c0c5a4eb6ee021c6f3330b1f50728d97a62edfbb3d2b036ca0853
+outcome:
+  state: candidate_created
+  stage: rewriting
+  reason: null
+attempts:
+- number: 1
+  stage: rewriting
+  state: completed
+  candidate: bfs-package-smoke-20260925-a1.proposal.candidate-1
+raw_artifacts:
+- path: /data/yanruj/EvolveSWDB_runs/bfs-package-smoke-20260925/bfs-package-smoke-20260925-a1.proposal
+  stage: rewriting
+source_snapshot: bfs-package-smoke-20260925-a1.before.package.v1.source
+profile_package: bfs-package-smoke-20260925-a1.before.package.v1.1187f3a8ca4968d0
+candidate: bfs-package-smoke-20260925-a1.proposal.candidate-1

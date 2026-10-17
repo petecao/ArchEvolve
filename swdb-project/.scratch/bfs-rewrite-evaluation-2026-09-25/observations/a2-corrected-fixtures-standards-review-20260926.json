@@ -1,0 +1,238 @@
+{
+  "created": "2026-09-26T18:59:57.543127-04:00",
+  "review_axis": "Standards/correctness interim actual contract-proof admission",
+  "result": "no actionable finding; both fresh fixture prerequisites met under the retained typed evidence",
+  "basis": "Independent local consistency audit of Host-provided source-free metadata and exact local Git blobs; no second remote audit, test, or artifact copy. Host exact auditor provided remote hash/process/kernel observations.",
+  "input_refs": [
+    {
+      "path": "/private/tmp/bfs-a2-corrected-fixtures-actual-20260926.json",
+      "sha256": "ed14605e03eb96aa9b3ce935b3d8bd406d37132257081c72f192df810410876f",
+      "bytes": 11555
+    },
+    {
+      "path": "/private/tmp/bfs-a2-corrected-fixtures-supplement-20260926.json",
+      "sha256": "01944355a2d512f601ebb5d427bdbb110f74dcf80db060eefd3b17e5564f0c91",
+      "bytes": 18687
+    }
+  ],
+  "supervisor_commit": "4c109430d4c7b80df220c4064e4e2c9ddbc66005",
+  "tested_commit": "5a0b15fe666b2d094a2b2b9847ff5a30ef16fb4f",
+  "pins": [
+    {
+      "commit": "4c109430d4c7b80df220c4064e4e2c9ddbc66005",
+      "path": "scripts/bfs_a2_linux_fixture.py",
+      "bytes": 15972,
+      "sha256": "0642c530d3b620691692e95708b99fc8204eb90ba0501f6c07abd94df73cfae6"
+    },
+    {
+      "commit": "4c109430d4c7b80df220c4064e4e2c9ddbc66005",
+      "path": "scripts/bfs_linux_fixture_audit.py",
+      "bytes": 22656,
+      "sha256": "c2fb516cf83152f23875da8782cb4701972cc47b87555d317179bd6d403afca6"
+    },
+    {
+      "commit": "5a0b15fe666b2d094a2b2b9847ff5a30ef16fb4f",
+      "path": "scripts/bfs_dx100_coverage_a2.py",
+      "bytes": 46202,
+      "sha256": "e9bbbf81733c3b24afa03a516b4c81b18b8e192f214d7f0471ec2424013767f0"
+    },
+    {
+      "commit": "5a0b15fe666b2d094a2b2b9847ff5a30ef16fb4f",
+      "path": "tests/test_dx100_interruption.py",
+      "bytes": 7467,
+      "sha256": "abfec3c0aa58f3c52506df4f463d1573cef118e8e14547a4298e064d4941aa46"
+    },
+    {
+      "commit": "5a0b15fe666b2d094a2b2b9847ff5a30ef16fb4f",
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/dx100-coverage-a2-20260926.json",
+      "bytes": 5778,
+      "sha256": "ffede85845f651322d1149fc04fb1d4d3cd604224d7b10e560b342ff23c4e08d"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "bfs-a2-owned-linux-20260926-a2",
+      "kind": "owned_cleanup",
+      "proof": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-a2-owned-linux-20260926-a2/proof.json",
+        "sha256": "0011d3a010e46be3e2cc015d4a6811ce42f85c43df20ce4e874b2077c6178350",
+        "bytes": 89558
+      },
+      "terminal_audit": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-a2-owned-linux-20260926-a2/terminal-audit.json",
+        "sha256": "daf4083d4df2b93ec8770c8c8d08969f0ec67f01423668089a5910cbf2a55c48",
+        "bytes": 11574
+      },
+      "pending": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-a2-owned-linux-20260926-a2/proof.pending.json",
+        "sha256": "db26adcdbf2b21ddc6519d6b94c464d823eaea1341241ab61a3c7a99fe914c3f",
+        "bytes": 89134
+      },
+      "ledger": {
+        "ledger": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-a2-owned-linux-20260926-a2/cleanup-ledger.json",
+          "sha256": "b665d7cae2ed56a0a737ef4db4c3977548105aada8cd84372798fc5305dcf476"
+        },
+        "binding": "4006170b7f0912e0839a9bd629c92bc26f35f177bcb18bf9d046d6f665793590",
+        "spent_seconds": 0.5066871054470539,
+        "events": 9
+      },
+      "union": [
+        {
+          "pid": 3080229,
+          "start_ticks": 496491939
+        },
+        {
+          "pid": 3080232,
+          "start_ticks": 496491944
+        },
+        {
+          "pid": 3080233,
+          "start_ticks": 496491944
+        },
+        {
+          "pid": 3080302,
+          "start_ticks": 496491967
+        },
+        {
+          "pid": 3080326,
+          "start_ticks": 496492227
+        },
+        {
+          "pid": 3080334,
+          "start_ticks": 496492280
+        },
+        {
+          "pid": 3080341,
+          "start_ticks": 496492483
+        }
+      ],
+      "terminal_exception": [
+        {
+          "pid": 3080229,
+          "parent_pid": 359742,
+          "start_ticks": 496491939,
+          "state": "Z",
+          "rss_bytes": 0,
+          "role": "tmux_launcher"
+        }
+      ],
+      "lease_generation": 405,
+      "fixture_elapsed_from_stamps": 6.066144,
+      "audit_seconds": 0.9958791639655828,
+      "junit": "2 passed; 0 failed/errors/skipped",
+      "checked": true
+    },
+    {
+      "id": "bfs-a2-interruption-linux-20260926-a2",
+      "kind": "dx100_interruption",
+      "proof": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-a2-interruption-linux-20260926-a2/proof.json",
+        "sha256": "b4b91938989edc68998207e3be47bb18b486a13597ab586642d9db716dd6b29a",
+        "bytes": 89642
+      },
+      "terminal_audit": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-a2-interruption-linux-20260926-a2/terminal-audit.json",
+        "sha256": "49e123ef11092a2247d4efe71332c88451827ac8860c644756322e31b3588c43",
+        "bytes": 12128
+      },
+      "pending": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-a2-interruption-linux-20260926-a2/proof.pending.json",
+        "sha256": "210d13f3a6785a0283ea986aa9afd054e9472756ff1bb3726d4296b537aec4cd",
+        "bytes": 89204
+      },
+      "ledger": {
+        "ledger": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-a2-interruption-linux-20260926-a2/cleanup-ledger.json",
+          "sha256": "f829a3b6faa2d472dcab6135ceeb7fe2383b68658027204bf460a63f6dc7a1ce"
+        },
+        "binding": "54008ffd3629b33b464129a45bcb7417d745763e1e50d7f5d5d21e0a0163cc5c",
+        "spent_seconds": 0.510652314685285,
+        "events": 9
+      },
+      "union": [
+        {
+          "pid": 3080593,
+          "start_ticks": 496497838
+        },
+        {
+          "pid": 3080596,
+          "start_ticks": 496497843
+        },
+        {
+          "pid": 3080597,
+          "start_ticks": 496497843
+        },
+        {
+          "pid": 3080666,
+          "start_ticks": 496497868
+        },
+        {
+          "pid": 3080690,
+          "start_ticks": 496498111
+        },
+        {
+          "pid": 3080698,
+          "start_ticks": 496498160
+        },
+        {
+          "pid": 3080699,
+          "start_ticks": 496498207
+        },
+        {
+          "pid": 3080711,
+          "start_ticks": 496498708
+        }
+      ],
+      "terminal_exception": [
+        {
+          "pid": 3080593,
+          "parent_pid": 359742,
+          "start_ticks": 496497838,
+          "state": "Z",
+          "rss_bytes": 0,
+          "role": "tmux_launcher"
+        }
+      ],
+      "lease_generation": 406,
+      "fixture_elapsed_from_stamps": 9.339726,
+      "audit_seconds": 0.9930811189115047,
+      "junit": "2 passed; 0 failed/errors/skipped",
+      "checked": true
+    }
+  ],
+  "operational_conclusion": "Ready for Host to seal new A2 prospective admission after native readback terminal/current cleanup and fresh host gates. These fixtures do not establish A2 correctness or empirical gain.",
+  "measurement_invariants": {
+    "id": "bfs-dx100-coverage-20260926-a2",
+    "plan_canonical_sha256": "d78c09751d9b56abddcce0a7217983fc1652ef6dc83c09fc55ecf8a9a4d4be5a",
+    "latest_start": "2026-09-26T21:00:00-04:00",
+    "absolute_end": "2026-09-26T22:00:00-04:00",
+    "outer_seconds": 3600,
+    "work_seconds": 3570,
+    "shared_cleanup_seconds": 30,
+    "lane": "mbit10-evaluation-node0",
+    "require_node1_and_legacy_idle": true,
+    "node_available_gib": 52,
+    "global_available_gib": 64,
+    "sampled_rss_gib": 48,
+    "artifact_gib": 4,
+    "raw_free_reserve_gib": 30,
+    "build_free_reserve_gib": 10,
+    "no_retry": true
+  },
+  "remaining_actual_admission": [
+    "Fresh pristine tested5a0 runtime exact-equality and full required hash map; before/after fixture runtime hash857a0c2f must match current runtime.",
+    "Both proof hashes in a fresh path/hash admission; prepared_at after audits and before outer start.",
+    "Unchanged source/candidate/graph/template/fixed historical terminal references plus original319 native whole-client terminal audit.",
+    "Native readback on node0 must finish and current own-process/lease/kernel cleanup be verified; node1/legacy idle; normal helper alignment/load/capacity/storage checks.",
+    "Fresh run/build/public IDs absent; original outer timestamp before timeout/helper with full3600 ending<=22:00, entry within5s, no clock reset or borrowed cleanup.",
+    "After actual run require exact six-stage requests/outputs/current-record grid, final accounting/runtime rehash, full ancestry/samples/stage-cleanup/final-cleanup PID/start union, matching external helper/outer exits and released node0 generation. Use tested5a0 validate_completed only for passed actual evidence; retain any failure without promotion."
+  ],
+  "limitations": [
+    "Contract fixtures only; no new A2 simulation has been inferred or executed.",
+    "Sampled RSS/output limits are not hard kernel quotas or true peaks.",
+    "Retained sampled/direct/adopted identity union cannot reconstruct unobserved short-lived processes.",
+    "Each proof truthfully permits only its exact zero-RSS tmux-pane zombie; all other retained identities absent. Shared tmux is untouched.",
+    "Historical673 and failed original interruption proof attempt remain unchanged; no reuse as new5a0 proof."
+  ]
+}

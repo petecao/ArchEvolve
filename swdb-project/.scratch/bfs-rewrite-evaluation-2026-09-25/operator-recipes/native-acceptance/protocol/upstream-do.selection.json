@@ -1,0 +1,75 @@
+{
+  "mode": "native",
+  "id": "bfs-native-one-thread-upstream-do-20260927",
+  "version": 1,
+  "packages": [
+    "bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline.package.v1.ffd9925db46a63a9",
+    "bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline.package.v1.f613a3b01a24e380"
+  ],
+  "maximum_relative_spread": 0.1,
+  "spread_justification": "Fixed prospective 0.10 ceiling from the one-thread plan; the completed one-thread study bfs-native-one-thread-pilot-20260926-a1 passed all 24 role/source spread groups and all four A/A controls under it. Not relaxed or tuned after observation.",
+  "size_selection": {
+    "scale": 18,
+    "accelerator_packages": [],
+    "justification": "Planned scale 18, used by every retained native pilot and the one-thread study; no smaller cost-qualified size is requested."
+  },
+  "repeatability": {
+    "evaluations": {
+      "bfs-native-pilot-20260925-dx10018-a1.uniform-random.evaluation": "bfs-native-repeatability-20260926-a1.dx100.uniform-random.evaluation",
+      "bfs-native-pilot-20260925-upstream18-a2.uniform-random.evaluation": "bfs-native-repeatability-20260926-a1.upstream.uniform-random.evaluation",
+      "bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation": "bfs-native-repeatability-20260926-a1.dx100.kronecker.evaluation",
+      "bfs-native-pilot-20260925-upstream18-a2.kronecker.evaluation": "bfs-native-repeatability-20260926-a1.upstream.kronecker.evaluation"
+    },
+    "driver_receipt": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-repeatability-20260926/bfs-native-repeatability-20260926-a1.driver/driver.json",
+      "sha256": "26ea5d69db8a7b06f48e35876fa2308aa849a654c0cab351c6f70ae4777f4583"
+    }
+  },
+  "accelerator_size_gate": {
+    "state": "native_only_not_required",
+    "decision": "R7",
+    "plan": {
+      "path": "/data1/yanruj/EvolveSWDB_native_routes_runtime_20260927_b1/.scratch/bfs-rewrite-evaluation-2026-09-25/resume-plan-20260927.md",
+      "sha256": "20fb1bb968600fba3436ad8c19946f75b7aa45bbbf04a0665edab138abb819fb"
+    },
+    "justification": "R7 (2026-09-27): T18/T19 need only the native protocol; controlled-simulator freezes for T16/T17/T20 keep the shared accelerator size gate."
+  },
+  "one_thread_calibration": {
+    "run_id": "bfs-native-one-thread-pilot-20260926-a1",
+    "code_commit": "319645eab0a25c815fa03fe1c372d32b4ba45d10",
+    "collector_checkout": "/data1/yanruj/EvolveSWDB_native_one_thread_20260926_a1",
+    "driver_receipt": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-one-thread-pilot-20260926-a1/bfs-native-one-thread-pilot-20260926-a1.driver/driver.json",
+      "sha256": "81596a440b9114c5f4a6b2edb1d8a799b748ae01c144bc82a218902755115092",
+      "bytes": 486592
+    },
+    "terminal_receipt": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-one-thread-pilot-20260926-a1.dispatch/terminal-validation.json",
+      "sha256": "9fe880825baefb4179e14f30310916054aacf2af86b050ec2ad9c05fb37ed0d4"
+    },
+    "packages": [
+      "bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.baseline.package.v1.b8f33855cc6c657e",
+      "bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline.package.v1.ffd9925db46a63a9",
+      "bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline.package.v1.122d39652ae0c326",
+      "bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline.package.v1.f613a3b01a24e380"
+    ],
+    "historical_paired_calibration": {
+      "pairs": [
+        "bfs-native-paired-pilot-20260926-a1.dx100.uniform-random.pair",
+        "bfs-native-paired-pilot-20260926-a1.upstream.uniform-random.pair",
+        "bfs-native-paired-pilot-20260926-a1.dx100.kronecker.pair",
+        "bfs-native-paired-pilot-20260926-a1.upstream.kronecker.pair"
+      ],
+      "driver_receipt": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-paired-pilot-20260926-a1/bfs-native-paired-pilot-20260926-a1.driver/driver.json",
+        "sha256": "a59d271e6f1407408dd7f8e16b6df0435772d5b12b61f46bf4e388e8edaec632"
+      },
+      "historical_packages": [
+        "bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.5828ff2030b22718",
+        "bfs-native-pilot-20260925-upstream18-a2.uniform-random.package.v1.ac70410e93d0c3a6",
+        "bfs-native-pilot-20260925-dx10018-a1.kronecker.package.v1.1d44ec6b44f05000",
+        "bfs-native-pilot-20260925-upstream18-a2.kronecker.package.v1.6a34b061dcca355b"
+      ]
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "admission_only": {
+    "errors": 0,
+    "module_checks": 214,
+    "path": "reviewed-t25-cell4-diagnostic-v2-launch-046f6b9e-20261016.json",
+    "sha256": "0eaa1bc288fc4cce9367f010f66c3119a99b5964ce6b2751025db840be12976d"
+  },
+  "caller_acceptance": false,
+  "diagnostic_entry_sha256": "9d395bd15aac3f9a81e18ce3e87b62fd4a18e03b8862f5229401453d5968f0ee",
+  "formal_rerun_by_integration_reviewer": false,
+  "full24_model_acceptance": false,
+  "generation": 595,
+  "native_goal_counts_and_solver_portfolio_classification": "pending retained actual metadata/cold review; no inference from wall time",
+  "original_v2_acceptance": false,
+  "root_reported": {
+    "diagnostic_leaves": 4,
+    "failed_leaves": 0,
+    "other_model_targets_unexecuted": 20,
+    "outer": {
+      "exit_code": 0,
+      "peak_rss_bytes": 519577600,
+      "wall_seconds": 64.724800311
+    },
+    "producer_proven": 4,
+    "public_model_record": false,
+    "resources": {
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 466624512,
+      "timed_out": false,
+      "wall_seconds": 62.6082321675
+    }
+  },
+  "scope": "Root-reported G595 producer checkpoint; complete independent four-leaf cold/task/hypothesis audit pending",
+  "source_commit": "046f6b9e64d45777a8032951ced04f942fc9c3c2",
+  "ticket25_resolved": false,
+  "whole24_model_attempted": false
+}

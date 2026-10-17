@@ -1,0 +1,825 @@
+{
+  "audit_directory": "/data/yanruj/EvolveSWDB_runs/probata-root-stream-current-cold-v6-20261016",
+  "manifest": {
+    "audit.json": {
+      "bytes": 31063,
+      "sha256": "8533fb8dee023ce38f81f46108cc0396564b58bc0d4ab63d698a85e125592e77"
+    },
+    "command.json": {
+      "bytes": 964,
+      "sha256": "279f926505b8cb9cca84d1ae826f77957009e40f6cde0d53189cfe082367a5d6"
+    },
+    "policy.json": {
+      "bytes": 1972466,
+      "sha256": "1649856fd197077a6cd2b6d402b94a268e2d40e3ade60dc531ba88ab35db5c74"
+    },
+    "preflight.json": {
+      "bytes": 2524,
+      "sha256": "fd2d72db5267593d5895b841ff38fa4d66603422a2d6b844702a256e1b1c0fad"
+    },
+    "reader.py": {
+      "bytes": 60767,
+      "sha256": "a52351e0930c794b228756936d2c759dc96f23d1754e0c510ba4fcb9c3b35af7"
+    },
+    "resources.json": {
+      "bytes": 299,
+      "sha256": "2e0309b1ef740ddf7b4940a9978fdde3738ab29ac4e47ad2a3a2850baa29aa1c"
+    },
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "resources": {
+    "address_space_cap_bytes": 8589934592,
+    "exit_code": 0,
+    "inspection_denials": [],
+    "out_of_memory": false,
+    "peak_rss_bytes": 131162112,
+    "scope": "passive reader only; no formal tools",
+    "timed_out": false,
+    "timeout_seconds": 60,
+    "wall_seconds": 13.605995154939592,
+    "workers": 1
+  },
+  "result": {
+    "checks": 9970,
+    "classification": "PASS_SCOPED_PARTIAL_STREAM_PAIR",
+    "consumer_bytes": 1339045737,
+    "consumer_files": 1542,
+    "full28_or_current02": false,
+    "hardware_liveness": false,
+    "indexed_physical_files": 2972,
+    "integrity_errors": [],
+    "lane": {
+      "aligned_cell_age_s": "",
+      "aligned_to": "no_gapbs_batch_running",
+      "command": [
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=60",
+        "1320",
+        "bash",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/run.sh"
+      ],
+      "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+      "ended_utc": "2026-10-16T10:06:35Z",
+      "exit_code": 0,
+      "host": "mbit10",
+      "job": "probata-reviewed-c241c547-t28-stream-current-v2",
+      "lease_generation": 592,
+      "lease_name": "mbit10-evaluation-node0",
+      "load1_at_start": 2.9,
+      "load1_max": 32,
+      "node": 0,
+      "numa_memory_policy": "bind:0",
+      "numactl": "--cpunodebind=0 --membind=0",
+      "preregistration_sha256": null,
+      "started_utc": "2026-10-16T10:02:30Z"
+    },
+    "launch_attribution": {
+      "compact_metadata_equivalent": true,
+      "entry_code_sha256": "f16bbbf9ae16eed5b7c05f688b8f2f44bc0301d92097f4d365e1450f93da1c68",
+      "entry_code_utf8_bytes": 86046,
+      "physical": {
+        "bytes": 87396,
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/launch.json",
+        "sha256": "e9f937e75a34c6a03fc322b5c6f00c58d941f62e0dc21ea456a90008c40db1aa"
+      }
+    },
+    "model_contract_body_refinement": false,
+    "module_files": 214,
+    "original_resources": {
+      "outer-resources.json": {
+        "cpu_seconds": 313.514686,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 1900154880,
+        "timed_out": false,
+        "wall_seconds": 245.11427228339016
+      },
+      "resources.json": {
+        "cpu_seconds": 263.461685,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 1847201792,
+        "timed_out": false,
+        "wall_seconds": 242.94971469976008
+      }
+    },
+    "payload_CPU_read": false,
+    "policy_sha256": "1649856fd197077a6cd2b6d402b94a268e2d40e3ade60dc531ba88ab35db5c74",
+    "primary_source_attribution": {
+      "current_project_reporters": 1,
+      "historical_local_references": [
+        {
+          "path": "/private/tmp/probata-t28-selector-frozen-review-21edecf2-20261016/swdb/proof_report.ml",
+          "reference_index": 11,
+          "role": "historical_local_reporter_reference_only",
+          "sha256": "0c00ed3567f3803f16735dbf95daa0f997c2f6bddefcf6fb2133fff7a862cc0d"
+        }
+      ],
+      "reference_occurrences": 17,
+      "runtime_sources": [
+        {
+          "linux_path": "/data1/yanruj/probata-reviewed-c241c547/swdb-project/swdb/proof_report.ml",
+          "reference_indices": [],
+          "role": "current_project_reporter",
+          "sha256": "8b84bec6a12669d877205ec60d46d149f41fa921d08b6640161b4896b9c4df16"
+        },
+        {
+          "linux_path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-report/core/csv.ml",
+          "reference_indices": [
+            15
+          ],
+          "role": "selected_native_primary_source",
+          "sha256": "3ac71b35403ac50ed40951bdb974edc59a42ce362e9c75a2b80c2a29788dc21d"
+        },
+        {
+          "linux_path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/ProofEngine.ml",
+          "reference_indices": [
+            13
+          ],
+          "role": "selected_native_primary_source",
+          "sha256": "9bfc9ccaf58cd1ca5b5ff1d5f764c34bf93a798bf0aea7a97825ade5dd2edd75"
+        },
+        {
+          "linux_path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/ProverTask.ml",
+          "reference_indices": [
+            0
+          ],
+          "role": "selected_native_primary_source",
+          "sha256": "0ae5556785d03a00c3b0caec20da1db43738002fb40fb5d3f15a5eac692730c4"
+        },
+        {
+          "linux_path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/ProverWhy3.ml",
+          "reference_indices": [
+            1
+          ],
+          "role": "selected_native_primary_source",
+          "sha256": "18413bff579ac1557c0b5060a679d80d55cfce49099b9557a85ea8c66fe88526"
+        },
+        {
+          "linux_path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/Stats.ml",
+          "reference_indices": [
+            12
+          ],
+          "role": "selected_native_primary_source",
+          "sha256": "fe212d872116b22b01cb70a4852854b9268a49099abc3fbda95e28cb16d73186"
+        },
+        {
+          "linux_path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/VCS.ml",
+          "reference_indices": [
+            2,
+            14
+          ],
+          "role": "selected_native_primary_source",
+          "sha256": "95688db279e59b61f7e5068beb07b460778d91c5adf72be06a8e1e19e520b821"
+        },
+        {
+          "linux_path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/cfgAnnot.ml",
+          "reference_indices": [
+            8
+          ],
+          "role": "selected_native_primary_source",
+          "sha256": "b28d95a0f032d23b6bb56908fc30c19fecf8a265d6d0536ebfe9703d68e55602"
+        },
+        {
+          "linux_path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/cfgWP.ml",
+          "reference_indices": [
+            10
+          ],
+          "role": "selected_native_primary_source",
+          "sha256": "490ab8a263f85e50e304d6cd4ee9ff7a5137f1c7f00e4ec7cd7555b68483256c"
+        },
+        {
+          "linux_path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/register.ml",
+          "reference_indices": [
+            4
+          ],
+          "role": "selected_native_primary_source",
+          "sha256": "e4e0b524e4364f475f33fd618c542d4ddc86c2c35f8b6ba223ea704896bc019e"
+        },
+        {
+          "linux_path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/wpPropId.ml",
+          "reference_indices": [
+            9
+          ],
+          "role": "selected_native_primary_source",
+          "sha256": "eb637a45864b07030a826d3a5657634fad3db07304bd5eb2a9d30f7dd3fcb0b5"
+        },
+        {
+          "linux_path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/wp_parameters.ml",
+          "reference_indices": [
+            5
+          ],
+          "role": "selected_native_primary_source",
+          "sha256": "a4ace79d1262461ea14f73275db17eb332f76b265059fc238a6bc9538a81df2b"
+        },
+        {
+          "linux_path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/wpo.ml",
+          "reference_indices": [
+            3
+          ],
+          "role": "selected_native_primary_source",
+          "sha256": "37f3cdbe80caeca6de7dae787e4eb06e3b548a8c6191d81ceda5420c923869d3"
+        },
+        {
+          "linux_path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c/kernel/kernel_services/ast_printing/description.ml",
+          "reference_indices": [
+            16
+          ],
+          "role": "selected_native_primary_source",
+          "sha256": "b6d14101aa358ee74b64b85db43bd8bb31e9577dc8852629bee2160b3ac8c8b9"
+        },
+        {
+          "linux_path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c/kernel/kernel_services/plugin_entry_points/plugin.ml",
+          "reference_indices": [
+            6
+          ],
+          "role": "selected_native_primary_source",
+          "sha256": "aeca428ddcadb0b0db7f2b411ff7d67e43de640dd4ad94df6ee93fd5fc778812"
+        },
+        {
+          "linux_path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c/kernel/libraries/utils/log.ml",
+          "reference_indices": [
+            7
+          ],
+          "role": "selected_native_primary_source",
+          "sha256": "c7ec27edef34cf66ed1c3698d8097e08dc60ea1f85d2838de006d6a9d79c2697"
+        }
+      ],
+      "unique_native_sources": 15
+    },
+    "reader_sha256": "a52351e0930c794b228756936d2c759dc96f23d1754e0c510ba4fcb9c3b35af7",
+    "record_audit": {
+      "full28_or_current02": false,
+      "hardware_liveness": false,
+      "model_contract_body_refinement": false,
+      "negative_refuted": false,
+      "pair_scoped_partial_acceptance": true,
+      "records": [
+        {
+          "conditional_normal_return_only": true,
+          "failure_class": null,
+          "goal_audit": {
+            "CSV_crosswalk": {
+              "CSV_rows": 42,
+              "Extern_contract_properties": [
+                "get_tile_size_terminates",
+                "get_tile_size_ensures",
+                "get_tile_size_assigns",
+                "maa_stream_load_unsigned_int_terminates",
+                "maa_stream_load_unsigned_int_assigns",
+                "maa_stream_load_unsigned_int_ensures_4",
+                "maa_stream_load_unsigned_int_ensures_3",
+                "maa_stream_load_unsigned_int_ensures_2",
+                "maa_stream_load_unsigned_int_ensures",
+                "wait_ready_terminates",
+                "wait_ready_assigns",
+                "wait_ready_ensures_3",
+                "wait_ready_ensures_2",
+                "wait_ready_ensures"
+              ],
+              "implicit_helper_exits_unknown": [
+                "get_tile_size_exits",
+                "maa_stream_load_unsigned_int_exits",
+                "wait_ready_exits"
+              ],
+              "implicit_implementation_verified": false,
+              "mapped_properties": 42
+            },
+            "Extern": 14,
+            "failed_ordinary": [],
+            "goals": 23,
+            "healthy_negative": false,
+            "helper_context_bridges": [
+              "typed_real_get_tile_size_wp_smoke_dead_call_s6",
+              "typed_real_maa_stream_load_unsigned_int_wp_smoke_dead_call_s4",
+              "typed_real_wait_ready_wp_smoke_dead_call_s5"
+            ],
+            "ordinary": 17,
+            "properties": 52,
+            "refuted": false,
+            "smoke": 6,
+            "smoke_display_stats": [
+              {
+                "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+                "goal": "typed_real_get_tile_size_wp_smoke_dead_call_s6",
+                "native_display_provers": [
+                  {
+                    "prover": "qed",
+                    "success": 0,
+                    "time": 0.00589
+                  },
+                  {
+                    "prover": "Alt-Ergo:2.6.4",
+                    "success": 1,
+                    "time": 0
+                  }
+                ],
+                "normalized_smoke_proved": 1,
+                "raw_best_verdict": "timeout"
+              },
+              {
+                "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+                "goal": "typed_real_maa_stream_load_unsigned_int_wp_smoke_dead_call_s4",
+                "native_display_provers": [
+                  {
+                    "prover": "qed",
+                    "success": 0,
+                    "time": 0.0124
+                  },
+                  {
+                    "prover": "Alt-Ergo:2.6.4",
+                    "success": 1,
+                    "time": 0
+                  }
+                ],
+                "normalized_smoke_proved": 1,
+                "raw_best_verdict": "timeout"
+              },
+              {
+                "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+                "goal": "typed_real_wait_ready_wp_smoke_dead_call_s5",
+                "native_display_provers": [
+                  {
+                    "prover": "qed",
+                    "success": 0,
+                    "time": 0.0135
+                  },
+                  {
+                    "prover": "Alt-Ergo:2.6.4",
+                    "success": 1,
+                    "time": 0
+                  }
+                ],
+                "normalized_smoke_proved": 1,
+                "raw_best_verdict": "timeout"
+              },
+              {
+                "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+                "goal": "typed_real_trust_fixture_wp_smoke_dead_code_s5",
+                "native_display_provers": [
+                  {
+                    "prover": "qed",
+                    "success": 0,
+                    "time": 0.0112
+                  },
+                  {
+                    "prover": "Alt-Ergo:2.6.4",
+                    "success": 1,
+                    "time": 0
+                  }
+                ],
+                "normalized_smoke_proved": 1,
+                "raw_best_verdict": "timeout"
+              },
+              {
+                "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+                "goal": "typed_real_trust_fixture_wp_smoke_dead_code_s6",
+                "native_display_provers": [
+                  {
+                    "prover": "qed",
+                    "success": 0,
+                    "time": 0.0127
+                  },
+                  {
+                    "prover": "Alt-Ergo:2.6.4",
+                    "success": 1,
+                    "time": 0
+                  }
+                ],
+                "normalized_smoke_proved": 1,
+                "raw_best_verdict": "timeout"
+              },
+              {
+                "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+                "goal": "typed_real_trust_fixture_wp_smoke_dead_code_s9",
+                "native_display_provers": [
+                  {
+                    "prover": "qed",
+                    "success": 0,
+                    "time": 0.018
+                  },
+                  {
+                    "prover": "Alt-Ergo:2.6.4",
+                    "success": 1,
+                    "time": 0
+                  }
+                ],
+                "normalized_smoke_proved": 1,
+                "raw_best_verdict": "timeout"
+              }
+            ]
+          },
+          "id": "proof.contract.dx100_stream_partial_fixture.v1.20261016t100311z.728432ae",
+          "native_input_attribution": {
+            "Frama_scratch": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/stream-profile/pytest/test_actual_wp_source_partial_0/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100311z.728432ae/scratch/wp_input.c",
+            "attribution": "exact command/native context plus pinned source and passed prelaunch checker; scratch removed by proof.py finally",
+            "compiled_module_physical_retained": false,
+            "exported": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/stream-profile/pytest/test_actual_wp_source_partial_0/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100311z.728432ae/wp/wp_input.c",
+            "exported_and_prelaunch_input_sha256": "e849a01e2ca42241fbcf71799c3df9fae9142eca916cc285d6a2a4b58647987a",
+            "project_reporter_sha256": "8b84bec6a12669d877205ec60d46d149f41fa921d08b6640161b4896b9c4df16",
+            "report_module_context": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/stream-profile/pytest/test_actual_wp_source_partial_0/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100311z.728432ae/scratch/proof_report.cmxs",
+            "scratch_physical_retained": false
+          },
+          "owned_rule_assumptions": 8,
+          "source_certificate_sha256": "c425fd7121f8fc575a7bda7e6ba480101ee5208b6cd30bfb1aed135564c6210c",
+          "source_certificates_rechecked": 3,
+          "verdict": "proven"
+        },
+        {
+          "conditional_normal_return_only": true,
+          "failure_class": "timeout",
+          "goal_audit": {
+            "CSV_crosswalk": {
+              "CSV_rows": 42,
+              "Extern_contract_properties": [
+                "get_tile_size_terminates",
+                "get_tile_size_ensures",
+                "get_tile_size_assigns",
+                "maa_stream_load_unsigned_int_terminates",
+                "maa_stream_load_unsigned_int_assigns",
+                "maa_stream_load_unsigned_int_ensures_4",
+                "maa_stream_load_unsigned_int_ensures_3",
+                "maa_stream_load_unsigned_int_ensures_2",
+                "maa_stream_load_unsigned_int_ensures",
+                "wait_ready_terminates",
+                "wait_ready_assigns",
+                "wait_ready_ensures_3",
+                "wait_ready_ensures_2",
+                "wait_ready_ensures"
+              ],
+              "implicit_helper_exits_unknown": [
+                "get_tile_size_exits",
+                "maa_stream_load_unsigned_int_exits",
+                "wait_ready_exits"
+              ],
+              "implicit_implementation_verified": false,
+              "mapped_properties": 42
+            },
+            "Extern": 14,
+            "failed_ordinary": [
+              "typed_real_trust_fixture_ensures"
+            ],
+            "goals": 23,
+            "healthy_negative": true,
+            "helper_context_bridges": [
+              "typed_real_get_tile_size_wp_smoke_dead_call_s6",
+              "typed_real_maa_stream_load_unsigned_int_wp_smoke_dead_call_s4",
+              "typed_real_wait_ready_wp_smoke_dead_call_s5"
+            ],
+            "ordinary": 17,
+            "properties": 52,
+            "refuted": false,
+            "smoke": 6,
+            "smoke_display_stats": [
+              {
+                "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+                "goal": "typed_real_get_tile_size_wp_smoke_dead_call_s6",
+                "native_display_provers": [
+                  {
+                    "prover": "qed",
+                    "success": 0,
+                    "time": 0.00585
+                  },
+                  {
+                    "prover": "Alt-Ergo:2.6.4",
+                    "success": 1,
+                    "time": 0
+                  }
+                ],
+                "normalized_smoke_proved": 1,
+                "raw_best_verdict": "timeout"
+              },
+              {
+                "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+                "goal": "typed_real_maa_stream_load_unsigned_int_wp_smoke_dead_call_s4",
+                "native_display_provers": [
+                  {
+                    "prover": "qed",
+                    "success": 0,
+                    "time": 0.0107
+                  },
+                  {
+                    "prover": "Alt-Ergo:2.6.4",
+                    "success": 1,
+                    "time": 0
+                  }
+                ],
+                "normalized_smoke_proved": 1,
+                "raw_best_verdict": "timeout"
+              },
+              {
+                "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+                "goal": "typed_real_wait_ready_wp_smoke_dead_call_s5",
+                "native_display_provers": [
+                  {
+                    "prover": "qed",
+                    "success": 0,
+                    "time": 0.0131
+                  },
+                  {
+                    "prover": "Alt-Ergo:2.6.4",
+                    "success": 1,
+                    "time": 0
+                  }
+                ],
+                "normalized_smoke_proved": 1,
+                "raw_best_verdict": "timeout"
+              },
+              {
+                "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+                "goal": "typed_real_trust_fixture_wp_smoke_dead_code_s5",
+                "native_display_provers": [
+                  {
+                    "prover": "qed",
+                    "success": 0,
+                    "time": 0.0116
+                  },
+                  {
+                    "prover": "Alt-Ergo:2.6.4",
+                    "success": 1,
+                    "time": 0
+                  }
+                ],
+                "normalized_smoke_proved": 1,
+                "raw_best_verdict": "timeout"
+              },
+              {
+                "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+                "goal": "typed_real_trust_fixture_wp_smoke_dead_code_s6",
+                "native_display_provers": [
+                  {
+                    "prover": "qed",
+                    "success": 0,
+                    "time": 0.0127
+                  },
+                  {
+                    "prover": "Alt-Ergo:2.6.4",
+                    "success": 1,
+                    "time": 0
+                  }
+                ],
+                "normalized_smoke_proved": 1,
+                "raw_best_verdict": "timeout"
+              },
+              {
+                "display_boundary": "Native success/proved and record solver/seconds are smoke-normalized display fields, not a direct Valid proof or external prover runtime.",
+                "goal": "typed_real_trust_fixture_wp_smoke_dead_code_s9",
+                "native_display_provers": [
+                  {
+                    "prover": "qed",
+                    "success": 0,
+                    "time": 0.0172
+                  },
+                  {
+                    "prover": "Alt-Ergo:2.6.4",
+                    "success": 1,
+                    "time": 0
+                  }
+                ],
+                "normalized_smoke_proved": 1,
+                "raw_best_verdict": "timeout"
+              }
+            ]
+          },
+          "id": "proof.contract.dx100_stream_partial_fixture.v1.20261016t100432z.cd656299",
+          "native_input_attribution": {
+            "Frama_scratch": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/stream-profile/pytest/test_actual_wp_source_partial_1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100432z.cd656299/scratch/wp_input.c",
+            "attribution": "exact command/native context plus pinned source and passed prelaunch checker; scratch removed by proof.py finally",
+            "compiled_module_physical_retained": false,
+            "exported": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/stream-profile/pytest/test_actual_wp_source_partial_1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100432z.cd656299/wp/wp_input.c",
+            "exported_and_prelaunch_input_sha256": "bad552c2a4ee7af438b5474fe5f76e24edd70efcf27540244724ec192ce7b763",
+            "project_reporter_sha256": "8b84bec6a12669d877205ec60d46d149f41fa921d08b6640161b4896b9c4df16",
+            "report_module_context": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-c241c547-t28-stream-current-v2/stream-profile/pytest/test_actual_wp_source_partial_1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t100432z.cd656299/scratch/proof_report.cmxs",
+            "scratch_physical_retained": false
+          },
+          "owned_rule_assumptions": 8,
+          "source_certificate_sha256": "7ab05e171599e525ac72bfcc0562ed459ff2487b2be6657204d4f0c443deebdf",
+          "source_certificates_rechecked": 3,
+          "verdict": "not_proven"
+        }
+      ],
+      "source_event_refinement": false
+    },
+    "reporter_sha256": "8b84bec6a12669d877205ec60d46d149f41fa921d08b6640161b4896b9c4df16",
+    "root_owns_process_lease_settlement": true,
+    "runtime_contexts": {
+      "runtime-provenance.json": {
+        "compiler": {
+          "check": {
+            "id": "swdb-stdlib-provenance-1",
+            "sha256": "4a7ca7d9b05a992e8172125fcbbfd175bb7ade2aec47cfb349126c9739b6e8e4"
+          },
+          "command": [
+            "clang++"
+          ],
+          "command_executable": {
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+            "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+          },
+          "driver": {
+            "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang-22",
+            "sha256": "31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113"
+          },
+          "frontend": [
+            "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang-22",
+            "-cc1",
+            "-triple",
+            "x86_64-unknown-linux-gnu",
+            "-fsyntax-only",
+            "-disable-free",
+            "-clear-ast-before-backend",
+            "-disable-llvm-verifier",
+            "-discard-value-names",
+            "-main-file-name",
+            "-",
+            "-mrelocation-model",
+            "pic",
+            "-pic-level",
+            "2",
+            "-pic-is-pie",
+            "-mframe-pointer=all",
+            "-fmath-errno",
+            "-ffp-contract=on",
+            "-fno-rounding-math",
+            "-mconstructor-aliases",
+            "-funwind-tables=2",
+            "-target-cpu",
+            "x86-64",
+            "-tune-cpu",
+            "generic",
+            "-debugger-tuning=gdb",
+            "-fdebug-compilation-dir=/data1/yanruj/probata-reviewed-c241c547",
+            "-fcoverage-compilation-dir=/data1/yanruj/probata-reviewed-c241c547",
+            "-resource-dir",
+            "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22",
+            "-internal-isystem",
+            "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/../include/x86_64-unknown-linux-gnu/c++/v1",
+            "-internal-isystem",
+            "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/../include/c++/v1",
+            "-internal-isystem",
+            "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/include",
+            "-internal-isystem",
+            "/usr/local/include",
+            "-internal-isystem",
+            "/usr/lib/gcc/x86_64-linux-gnu/13/../../../../x86_64-linux-gnu/include",
+            "-internal-externc-isystem",
+            "/usr/include/x86_64-linux-gnu",
+            "-internal-externc-isystem",
+            "/include",
+            "-internal-externc-isystem",
+            "/usr/include",
+            "-fdeprecated-macro",
+            "-ferror-limit",
+            "19",
+            "-fgnuc-version=4.2.1",
+            "-fskip-odr-check-in-gmf",
+            "-fcxx-exceptions",
+            "-fexceptions",
+            "-faddrsig",
+            "-fdwarf2-cfi-asm",
+            "-x",
+            "c++",
+            "-"
+          ],
+          "headers": {
+            "files": 1983,
+            "id": "llvm-standard-resource-headers",
+            "sha256": "d37aec646b1e6e1748d40690c60436f905f55852ee578e79c43a3199c4a16e23"
+          },
+          "parser": {
+            "id": "libclang-22.1.8",
+            "sha256": "8b03ee2c60f0699651869fea5135cb5a144777a10c6e4b9b7835283ac9ca3f7d"
+          }
+        },
+        "independent_lowerer_recomputed": true,
+        "lowering_identity": {
+          "c_lowering": {
+            "id": "swdb-c-lowering-9",
+            "sha256": "0517b3707c506ba24f6b90bf6855c3ad941b23eb59cc0d4df1691f41423d7bd7"
+          },
+          "clang": {
+            "id": "clang-22.1.8",
+            "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+          },
+          "naming_rules": {
+            "id": "kept-names.3",
+            "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+          }
+        }
+      },
+      "stream-project-runtime-provenance.json": {
+        "compiler": {
+          "check": {
+            "id": "swdb-stdlib-provenance-1",
+            "sha256": "4a7ca7d9b05a992e8172125fcbbfd175bb7ade2aec47cfb349126c9739b6e8e4"
+          },
+          "command": [
+            "clang++"
+          ],
+          "command_executable": {
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+            "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+          },
+          "driver": {
+            "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang-22",
+            "sha256": "31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113"
+          },
+          "frontend": [
+            "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang-22",
+            "-cc1",
+            "-triple",
+            "x86_64-unknown-linux-gnu",
+            "-fsyntax-only",
+            "-disable-free",
+            "-clear-ast-before-backend",
+            "-disable-llvm-verifier",
+            "-discard-value-names",
+            "-main-file-name",
+            "-",
+            "-mrelocation-model",
+            "pic",
+            "-pic-level",
+            "2",
+            "-pic-is-pie",
+            "-mframe-pointer=all",
+            "-fmath-errno",
+            "-ffp-contract=on",
+            "-fno-rounding-math",
+            "-mconstructor-aliases",
+            "-funwind-tables=2",
+            "-target-cpu",
+            "x86-64",
+            "-tune-cpu",
+            "generic",
+            "-debugger-tuning=gdb",
+            "-fdebug-compilation-dir=/data1/yanruj/probata-reviewed-c241c547/swdb-project",
+            "-fcoverage-compilation-dir=/data1/yanruj/probata-reviewed-c241c547/swdb-project",
+            "-resource-dir",
+            "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22",
+            "-internal-isystem",
+            "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/../include/x86_64-unknown-linux-gnu/c++/v1",
+            "-internal-isystem",
+            "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/../include/c++/v1",
+            "-internal-isystem",
+            "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22/include",
+            "-internal-isystem",
+            "/usr/local/include",
+            "-internal-isystem",
+            "/usr/lib/gcc/x86_64-linux-gnu/13/../../../../x86_64-linux-gnu/include",
+            "-internal-externc-isystem",
+            "/usr/include/x86_64-linux-gnu",
+            "-internal-externc-isystem",
+            "/include",
+            "-internal-externc-isystem",
+            "/usr/include",
+            "-fdeprecated-macro",
+            "-ferror-limit",
+            "19",
+            "-fgnuc-version=4.2.1",
+            "-fskip-odr-check-in-gmf",
+            "-fcxx-exceptions",
+            "-fexceptions",
+            "-faddrsig",
+            "-fdwarf2-cfi-asm",
+            "-x",
+            "c++",
+            "-"
+          ],
+          "headers": {
+            "files": 1983,
+            "id": "llvm-standard-resource-headers",
+            "sha256": "d37aec646b1e6e1748d40690c60436f905f55852ee578e79c43a3199c4a16e23"
+          },
+          "parser": {
+            "id": "libclang-22.1.8",
+            "sha256": "8b03ee2c60f0699651869fea5135cb5a144777a10c6e4b9b7835283ac9ca3f7d"
+          }
+        },
+        "independent_lowerer_recomputed": true,
+        "lowering_identity": {
+          "c_lowering": {
+            "id": "swdb-c-lowering-9",
+            "sha256": "54dfd90ba7ce0b4584828ac3826c779eab16bdf8b0c9f9a4a2720f749c0604ce"
+          },
+          "clang": {
+            "id": "clang-22.1.8",
+            "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+          },
+          "naming_rules": {
+            "id": "kept-names.3",
+            "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+          }
+        }
+      }
+    },
+    "selected_source_files": 465,
+    "source_commit": "c241c5477b5afee1c02e789b141ea596bdfed1e7",
+    "source_refinement": false,
+    "whole_raw_regular_bytes": 52096231,
+    "whole_raw_regular_files": 176
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "provider": {
+    "kind": "claude",
+    "command": [
+      "/data1/yanruj/.npm-global/bin/claude"
+    ],
+    "timeout_s": 600,
+    "max_repairs": 2,
+    "total_seconds": 1031,
+    "budget_usd": 10
+  },
+  "command": [
+    "/data1/yanruj/.npm-global/bin/claude",
+    "-p",
+    "--safe-mode",
+    "--tools",
+    "",
+    "--strict-mcp-config",
+    "--mcp-config",
+    "{\"mcpServers\":{}}",
+    "--no-session-persistence",
+    "--output-format",
+    "json",
+    "--json-schema",
+    "{\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"interpretation\", \"patch\", \"unresolved\"], \"properties\": {\"interpretation\": {\"type\": \"string\"}, \"patch\": {\"type\": \"string\"}, \"unresolved\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}}}",
+    "--max-budget-usd",
+    "10"
+  ],
+  "timeout_s": 600,
+  "classification": "rewrite_provider",
+  "prompt_sha256": "d3649b124305743ae82ed62532d9d4e1e1a369037ecbab8f812d80c58a71c7d4",
+  "state": "interrupted_or_timeout",
+  "executable_sha256": "5c4735937844e84f8a93306e841a5b0e12252909b07870f789b190468da147ab",
+  "version": "2.1.278 (Claude Code)",
+  "host_wall_s": 600.3210216322914
+}

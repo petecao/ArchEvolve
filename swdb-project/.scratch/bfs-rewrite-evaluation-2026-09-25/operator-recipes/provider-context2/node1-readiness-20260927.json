@@ -1,0 +1,290 @@
+{
+  "observed_at": "2026-09-27T02:16:43.628001-04:00",
+  "state": "readonly_ready_for_root_dispatch_after_T15_closure",
+  "operator_commit": "ec4d8da5c31903e92d2d49b784371d1edd3667f7",
+  "recipe": {
+    "path": "/data1/yanruj/EvolveSWDB_provider_context2_operator_20260927_a1/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context2/bfs-provider-context2-20260927.py",
+    "sha256": "138607417033af618cb0634fbbabc3acdb4b7fae0e7453127254dfb33582f2f1"
+  },
+  "wrapper": {
+    "path": "/data1/yanruj/EvolveSWDB_provider_context2_operator_20260927_a1/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context2/bfs-provider-context2-launch-20260927.sh",
+    "sha256": "669b303e620050360e2e6cf86a1ffd57ca4ac7b8ab85ff91a10ca3a0db94050f",
+    "bytes": 2740
+  },
+  "runtime_commit": "8cbfee600f23416a8e9578fa8d3ce3f0e19fced8",
+  "context": {
+    "state": "exact_context_verified",
+    "request_sha256": "c49d02c3f562d4eab4f97c56482889c8e3c2936aafc7ae94773bcfcaf4b486cd",
+    "prompt_sha256": "3a42edd717c1ea13bdd28a935459cb0209709375d077b06504ff0f623ae5e992",
+    "prompt_bytes": 523066,
+    "source_sha256": "65868ec15d51117f6fb2c2d760c0cd88f4f8e098ee5694d912b11a287dd47f2c",
+    "package_sha256": "96145ba710974bbcbafcaf18557db0e5a9307dbba205db07e4c659b9accff0ec",
+    "predecessor_sha256": "894725db6e9d2a3a38bed9438f3170a1cf1b0c259266bc4b4b4e8f3bc4eda181",
+    "provider_calls": 0,
+    "lane": "not_checked_by_readonly_context_subset"
+  },
+  "record_view_inspection": "original5f records plus exact1b context1 Git blob in memory; no data roots written",
+  "capacity": {
+    "node": 1,
+    "page_size_bytes": 4096,
+    "node_fields_kib": {
+      "MemTotal": 66044412,
+      "MemFree": 34087108,
+      "MemUsed": 31957304,
+      "SwapCached": 0,
+      "Active": 1782548,
+      "Inactive": 3504788,
+      "Active(anon)": 278364,
+      "Inactive(anon)": 69808,
+      "Active(file)": 1504184,
+      "Inactive(file)": 3434980,
+      "Unevictable": 184,
+      "Mlocked": 184,
+      "Dirty": 296,
+      "Writeback": 0,
+      "FilePages": 4940768,
+      "Mapped": 132932,
+      "AnonPages": 347064,
+      "Shmem": 1400,
+      "KernelStack": 11208,
+      "PageTables": 8856,
+      "SecPageTables": 0,
+      "NFS_Unstable": 0,
+      "Bounce": 0,
+      "WritebackTmp": 0,
+      "KReclaimable": 23859440,
+      "Slab": 25369844,
+      "SReclaimable": 23835752,
+      "SUnreclaim": 1534092,
+      "AnonHugePages": 0,
+      "ShmemHugePages": 0,
+      "ShmemPmdMapped": 0,
+      "FileHugePages": 0,
+      "FilePmdMapped": 0,
+      "Unaccepted": 0
+    },
+    "zones": [
+      {
+        "name": "DMA",
+        "low": 0,
+        "high": 0,
+        "managed": 0,
+        "protection": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "reserved_pages": 0
+      },
+      {
+        "name": "DMA32",
+        "low": 0,
+        "high": 0,
+        "managed": 0,
+        "protection": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "reserved_pages": 0
+      },
+      {
+        "name": "Normal",
+        "low": 31935,
+        "high": 48446,
+        "managed": 16511103,
+        "protection": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "reserved_pages": 48446
+      },
+      {
+        "name": "Movable",
+        "low": 32,
+        "high": 32,
+        "managed": 0,
+        "protection": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "reserved_pages": 0
+      },
+      {
+        "name": "Device",
+        "low": 0,
+        "high": 0,
+        "managed": 0,
+        "protection": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "reserved_pages": 0
+      }
+    ],
+    "low_watermarks_kib": 127868,
+    "reserved_kib": 193784,
+    "clean_file_lru_kib": 4938868,
+    "reclaimable_slab_kib": 23835752,
+    "before_uncertainty_discount_kib": 62412208,
+    "uncertainty_discount_kib": 1048576,
+    "estimated_available_kib": 61363632,
+    "global_available_kib": 122185448,
+    "required_node_kib": 54525952,
+    "required_global_kib": 67108864,
+    "eligible": true,
+    "definition": "Linux v6.8 MemAvailable node analogue; subtract dirty/writeback; exclude miscellaneous reclaimable memory; extra 1 GiB discount",
+    "estimate_is_guarantee": false
+  },
+  "capacity_gate_bytes": {
+    "node": 21474836480,
+    "global": 25769803776
+  },
+  "disks": {
+    "/data": {
+      "available_bytes": 171066163200
+    },
+    "/data1": {
+      "available_bytes": 17057886208
+    }
+  },
+  "leases": {
+    "mbit10-evaluation-node0": {
+      "metadata": {
+        "active_session": null,
+        "heartbeat_at": "2026-09-27T06:13:12Z",
+        "lease": {
+          "acquired_at": "2026-09-27T06:13:12Z",
+          "daemon_pid": 3318070,
+          "daemon_start_token": "sh3318070-1790489591",
+          "generation": 345,
+          "host": "mbit10",
+          "lease_name": "mbit10-evaluation-node0",
+          "mode": "measure",
+          "session_id": null
+        },
+        "attempt_pid": null,
+        "attempt_start_token": null,
+        "recovered_from_generation": null,
+        "released_at": null,
+        "session_note": null,
+        "session_state": "none",
+        "state": "held",
+        "writer": "hostlock.sh"
+      },
+      "kernel_free": false
+    },
+    "mbit10-evaluation-node1": {
+      "metadata": {
+        "active_session": null,
+        "heartbeat_at": "2026-09-27T05:55:45Z",
+        "lease": {
+          "acquired_at": "2026-09-27T04:58:52Z",
+          "daemon_pid": 3284699,
+          "daemon_start_token": "sh3284699-1790485131",
+          "generation": 439,
+          "host": "mbit10",
+          "lease_name": "mbit10-evaluation-node1",
+          "mode": "measure",
+          "session_id": null
+        },
+        "attempt_pid": null,
+        "attempt_start_token": null,
+        "recovered_from_generation": null,
+        "released_at": "2026-09-27T05:55:45Z",
+        "session_note": null,
+        "session_state": "none",
+        "state": "released",
+        "writer": "hostlock.sh"
+      },
+      "kernel_free": true
+    },
+    "mbit10-evaluation": {
+      "metadata": {
+        "active_session": null,
+        "heartbeat_at": "2026-09-12T04:49:11Z",
+        "lease": {
+          "acquired_at": "2026-09-12T01:35:42Z",
+          "daemon_pid": 209457,
+          "daemon_start_token": "sh209457-1789176942",
+          "generation": 77,
+          "host": "mbit10",
+          "lease_name": "mbit10-evaluation",
+          "mode": "measure",
+          "session_id": null
+        },
+        "attempt_pid": null,
+        "attempt_start_token": null,
+        "recovered_from_generation": null,
+        "released_at": "2026-09-12T04:49:11Z",
+        "session_note": null,
+        "session_state": "none",
+        "state": "released",
+        "writer": "hostlock.sh"
+      },
+      "kernel_free": true
+    }
+  },
+  "helper": {
+    "installed_commit": "42ce8dce1ecfb949d6e5d4ee3c98c078bc7ddc65",
+    "upstream_commit": "2ffb83aeb98cb6a3e57314a2308ef7c1bba99ef8",
+    "full_host_subtree_equal": true,
+    "clean": true,
+    "socket": {
+      "path": "/data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh",
+      "sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8",
+      "bytes": 10510
+    },
+    "hostlock": {
+      "path": "/data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/hostlock.sh",
+      "sha256": "50745f827bac2a3db4fc56fdedc95f6fb57fb4b39cf9b269796c77c0274dc996",
+      "bytes": 15662
+    }
+  },
+  "provider_calls": 0,
+  "lane_claims": 0,
+  "output_roots_created": false,
+  "runtime_preimport_guard_passed_before_and_after": true,
+  "limits": {
+    "outer_seconds": 750,
+    "work_seconds": 720,
+    "cleanup_seconds": 30,
+    "provider_seconds": 600,
+    "remaining_provider_seconds": 1632,
+    "public_submit_seconds": 660,
+    "sampled_rss_bytes": 17179869184,
+    "retained_bytes": 1073741824,
+    "raw_reserve_bytes": 32212254720,
+    "source_reserve_bytes": 10737418240
+  },
+  "preparation_failure": "Initial inspector used5f record view without1b context1 overlay; canonical predecessor check failed. Corrected read-only inspector overlay; no dispatch attempt.",
+  "independent_T15_closure": {
+    "path": "/private/tmp/bfs-t15-failed-terminal-independent-20260927.json",
+    "sha256": "7a7220a81aafeb96e47dcdb31294e77727e0d3009c26ae6c4e9bc24b31fb70e5",
+    "observed_at": "2026-09-27T02:14:41-04:00",
+    "union_count": 280,
+    "non_live_pane_exception": {
+      "pid": 3284685,
+      "start_ticks": 498706415,
+      "state": "Z",
+      "rss": 0
+    },
+    "node1_released_generation": 439,
+    "cleanup_events": 86,
+    "cleanup_seconds": 14.311253179,
+    "verdict": "no surviving owned worker; independently communicated by review_recovery"
+  }
+}

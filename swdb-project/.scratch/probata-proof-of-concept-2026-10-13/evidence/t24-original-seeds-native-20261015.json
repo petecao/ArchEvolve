@@ -1,0 +1,386 @@
+{
+  "allocation_negative": "Not executed natively because the original overrun is undefined behavior; actual RTE acceptance remains required.",
+  "compiler_version": "22.1.8",
+  "created": "2026-10-15 ET",
+  "openmp_native_policy": "Compiled without -fopenmp, matching the original one-thread fixture semantics.",
+  "platform": "macOS Apple Silicon ARM; compiler/native diagnostic only",
+  "rows": [
+    {
+      "artifacts": [
+        {
+          "binary_sha256": "5ce9d5330642d6b1055fb6e186f0721c42e0260118769f75f596f8876b302e87",
+          "label": "safe",
+          "language": "cxx",
+          "path": "/private/tmp/probata-t24-original-seeds-native/classes-safe.cc",
+          "source_sha256": "579079cfba94d1c6b7aea864da330a2499bc7ce60bf32aa94702fa77799c65c7",
+          "stdout": "3"
+        },
+        {
+          "binary_sha256": "6f271337d2843da5d09d2d6408862de3f0065bd41d3a2b358d2077d3d464005f",
+          "label": "safe",
+          "language": "c",
+          "path": "/private/tmp/probata-t24-original-seeds-native/classes-safe.c",
+          "source_sha256": "27f2ee4e25defcd6e7ea846dc80ae1c0e29280de1427bf9561fca908a0f3f090",
+          "stdout": "3"
+        },
+        {
+          "binary_sha256": "68be4dc7cb8d708974887ade9daef57a2f400c291fb923968639c31bc5fac940",
+          "label": "seeded",
+          "language": "cxx",
+          "path": "/private/tmp/probata-t24-original-seeds-native/classes-seeded.cc",
+          "source_sha256": "1a4cef11a001e96c41ac94d14cbbf7ddb873440b0cc0883f946df4fba5be55bb",
+          "stdout": "4"
+        },
+        {
+          "binary_sha256": "5b8c887eb58fc16c5b44cd88173bbf4250566af67bd10c64746e655188570f6a",
+          "label": "seeded",
+          "language": "c",
+          "path": "/private/tmp/probata-t24-original-seeds-native/classes-seeded.c",
+          "source_sha256": "2110b74b291d9b48c84eb2453853f802548b1507232efedcaedfe915da1b7728",
+          "stdout": "4"
+        }
+      ],
+      "group": "classes",
+      "input": {
+        "a": [
+          1
+        ],
+        "mode": 2,
+        "n": 1
+      },
+      "original_postcondition_safe": true,
+      "original_postcondition_seeded": false,
+      "safe": 3.0,
+      "seeded": 4.0
+    },
+    {
+      "artifacts": [
+        {
+          "binary_sha256": "fc2721d2f94ecee64e94c4f45da3188cedd7230b80016fd288885579cf9c8d6c",
+          "label": "safe",
+          "language": "cxx",
+          "path": "/private/tmp/probata-t24-original-seeds-native/templates-safe.cc",
+          "source_sha256": "e67766eda9784e1d874d85b205d41e6e14f0747ed13be120ab73164b520053ba",
+          "stdout": "2"
+        },
+        {
+          "binary_sha256": "49380878f0c6930e6f132f53a073077293bbc58ce3b2155344eb00876a439e28",
+          "label": "safe",
+          "language": "c",
+          "path": "/private/tmp/probata-t24-original-seeds-native/templates-safe.c",
+          "source_sha256": "7f7f2d9e04c622697ba2c5c78e611ea5d274a5d6b899599f8adad70be1d65a2b",
+          "stdout": "2"
+        },
+        {
+          "binary_sha256": "b99baf2324b7085a91180fdd9d7c411bfa4d5ecc1e666bc5b9cf78342c28ecf2",
+          "label": "seeded",
+          "language": "cxx",
+          "path": "/private/tmp/probata-t24-original-seeds-native/templates-seeded.cc",
+          "source_sha256": "a238670ac6a9655c80d533cc17ab6d99480b33b1e259fb9ca3474dc4d551cf96",
+          "stdout": "0"
+        },
+        {
+          "binary_sha256": "b8b30db2fba4eda7bc19e52a91fd475acea52c1c99be2224f840925ebfb78b84",
+          "label": "seeded",
+          "language": "c",
+          "path": "/private/tmp/probata-t24-original-seeds-native/templates-seeded.c",
+          "source_sha256": "6d9db3deb9040cc855fbe4d2ccd1ad74f78016877ae1ae97a891f0a33c011808",
+          "stdout": "0"
+        }
+      ],
+      "group": "templates",
+      "input": {
+        "a": 0,
+        "b": 0
+      },
+      "original_postcondition_safe": true,
+      "original_postcondition_seeded": false,
+      "safe": 2.0,
+      "seeded": 0.0
+    },
+    {
+      "artifacts": [
+        {
+          "binary_sha256": "58e4709f646fe38823d6ff619511f3ffbad6132c44ae6de194a99d5c6167d8b0",
+          "label": "safe",
+          "language": "cxx",
+          "path": "/private/tmp/probata-t24-original-seeds-native/std_models-safe.cc",
+          "source_sha256": "d20ae1a1d3f7f7ff18d8ebb9fcc5fe78a5c90e4aa9e82eb7a855351c875f1737",
+          "stdout": "7"
+        },
+        {
+          "binary_sha256": "fef4d066109173f8b160b662b9a5f6305bb85770b07671897edb1054af28770b",
+          "label": "safe",
+          "language": "c",
+          "path": "/private/tmp/probata-t24-original-seeds-native/std_models-safe.c",
+          "source_sha256": "738b1d1376e08f77138c30f23f2041fd576504e468aabc4358997e4febfef8ed",
+          "stdout": "7"
+        },
+        {
+          "binary_sha256": "2626613b30c9902836885b8383597906b1406238eadf486eb81b2246ff8a2d96",
+          "label": "seeded",
+          "language": "cxx",
+          "path": "/private/tmp/probata-t24-original-seeds-native/std_models-seeded.cc",
+          "source_sha256": "a62b1c808420e861ac3cb55453f3b43859ed0cdebb90bdd758df899af019da67",
+          "stdout": "0"
+        },
+        {
+          "binary_sha256": "889d8602f09c7e2ca137234b5dc22af8412bf9fe57b0e8e5d3b9458eea4842c0",
+          "label": "seeded",
+          "language": "c",
+          "path": "/private/tmp/probata-t24-original-seeds-native/std_models-seeded.c",
+          "source_sha256": "7583ddd74ffea044041845a0397adf9188b0e49f1113803520761388020aa4e1",
+          "stdout": "0"
+        }
+      ],
+      "group": "std_models",
+      "input": {
+        "a": [
+          7
+        ],
+        "b": [
+          0
+        ],
+        "n": 1,
+        "x": 0,
+        "y": 0
+      },
+      "original_postcondition_safe": true,
+      "original_postcondition_seeded": false,
+      "safe": 7.0,
+      "seeded": 0.0
+    },
+    {
+      "artifacts": [
+        {
+          "binary_sha256": "40cac55a966b02594d580248cb347c2ff0de7e93a981e1726cfd261d2d79fbf1",
+          "label": "safe",
+          "language": "cxx",
+          "path": "/private/tmp/probata-t24-original-seeds-native/omp-safe.cc",
+          "source_sha256": "ed276542cede0f86cfaee99e0ee0afe8fd346adc549747925151cc12dd13f5c3",
+          "stdout": "0"
+        },
+        {
+          "binary_sha256": "842ddfdfe4d042421145b57730565f6f31289092dcbc8ada3d214e9227c8b861",
+          "label": "safe",
+          "language": "c",
+          "path": "/private/tmp/probata-t24-original-seeds-native/omp-safe.c",
+          "source_sha256": "dc08f8d77869e03abc8e9cff1c85e6dc6bad58749f526b6927bb20bbdaac326c",
+          "stdout": "0"
+        },
+        {
+          "binary_sha256": "e6486cd020544bb12d35c75383dde4aba0c2b1fcd06a1597090da72599e09099",
+          "label": "seeded",
+          "language": "cxx",
+          "path": "/private/tmp/probata-t24-original-seeds-native/omp-seeded.cc",
+          "source_sha256": "20fc5631662d2bf6b0f095d8392d67b1a9d5db6e644f6a2e154c56312b8b206b",
+          "stdout": "1"
+        },
+        {
+          "binary_sha256": "1fc8bc57965185febbf99ea4a0da6405aca690485d34843246231076fc6c6994",
+          "label": "seeded",
+          "language": "c",
+          "path": "/private/tmp/probata-t24-original-seeds-native/omp-seeded.c",
+          "source_sha256": "f414d2e90c72b6afd8d0c34144186037eb9a942ca95c347b832d677179f5c4fe",
+          "stdout": "1"
+        }
+      ],
+      "group": "omp",
+      "input": {
+        "a": [
+          0
+        ],
+        "n": 0
+      },
+      "original_postcondition_safe": true,
+      "original_postcondition_seeded": false,
+      "safe": 0.0,
+      "seeded": 1.0
+    },
+    {
+      "artifacts": [
+        {
+          "binary_sha256": "129c798398a0c3d45d48e957536baf6c3f514428114d71e28f426c9f7d201b5f",
+          "label": "safe",
+          "language": "cxx",
+          "path": "/private/tmp/probata-t24-original-seeds-native/atomics-safe.cc",
+          "source_sha256": "e53d0c70038670c1eea9522a8adf3a05043f5e2c789c36a635322853f6de2e9f",
+          "stdout": "10"
+        },
+        {
+          "binary_sha256": "0153cfc4b60b6975c024980d7cfcf2490af83456ede0c39d9227ba65a10aa43f",
+          "label": "safe",
+          "language": "c",
+          "path": "/private/tmp/probata-t24-original-seeds-native/atomics-safe.c",
+          "source_sha256": "b4bf3298a75a72169e0ec2567f37af5f0a1546ac54f5f6f4bbaeb037b162b03e",
+          "stdout": "10"
+        },
+        {
+          "binary_sha256": "3b84cb861c3601583adbc269f287d4f9f31bf64283d6ce7c9d2539a7767e570b",
+          "label": "seeded",
+          "language": "cxx",
+          "path": "/private/tmp/probata-t24-original-seeds-native/atomics-seeded.cc",
+          "source_sha256": "3c00713e29b60e455db84eb4319a63020945c7539a3c61aab40732b08a4e3be6",
+          "stdout": "11"
+        },
+        {
+          "binary_sha256": "d89451b7e7a1901ad21bdaf287622472ccb33c51e53f8e5326975e2b58aff990",
+          "label": "seeded",
+          "language": "c",
+          "path": "/private/tmp/probata-t24-original-seeds-native/atomics-seeded.c",
+          "source_sha256": "a750415b58d070e1f8e4d26dd9bfd442c9634e049c7032510d15c85ad6e5014b",
+          "stdout": "11"
+        }
+      ],
+      "group": "atomics",
+      "input": {
+        "e": 0,
+        "p": 0,
+        "v": 0
+      },
+      "original_postcondition_safe": true,
+      "original_postcondition_seeded": false,
+      "safe": 10.0,
+      "seeded": 11.0
+    },
+    {
+      "artifacts": [
+        {
+          "binary_sha256": "a74ba7607c544319f1d24ba6f6e859fed5626f70e3b2db9b48c9f39480bd7826",
+          "label": "safe",
+          "language": "cxx",
+          "path": "/private/tmp/probata-t24-original-seeds-native/floats-safe.cc",
+          "source_sha256": "08face6df7d37d47572b90a00199c8c822b0a01e57a8ccb83adea3fd7251902b",
+          "stdout": "0"
+        },
+        {
+          "binary_sha256": "622d083c70393436da52e18c72b86f599f0b74ea3a5a37481fcc5c8588750c6d",
+          "label": "safe",
+          "language": "c",
+          "path": "/private/tmp/probata-t24-original-seeds-native/floats-safe.c",
+          "source_sha256": "b382013a2ac98f3813e4dd5492ee9898cc262a27cc74aeaa488c651803d68861",
+          "stdout": "0"
+        },
+        {
+          "binary_sha256": "3fa34f0a7228bdc251417465537cc0ee628912169a14dcc1350f60a5c1e2dd13",
+          "label": "seeded",
+          "language": "cxx",
+          "path": "/private/tmp/probata-t24-original-seeds-native/floats-seeded.cc",
+          "source_sha256": "5cc06a15a57bde998351deebed0b8f7b7681013f25ad3a9f261eafc4e148792f",
+          "stdout": "3.333333333333333"
+        },
+        {
+          "binary_sha256": "0a629f40e3bdbcd2b902ebec1dae05a5af3b787502099fc0424ca8675f69a181",
+          "label": "seeded",
+          "language": "c",
+          "path": "/private/tmp/probata-t24-original-seeds-native/floats-seeded.c",
+          "source_sha256": "1c163225a29d3f0d7de05944351f69e9b1b6b470b26b953032fd61f8dccfa892",
+          "stdout": "3.333333333333333"
+        }
+      ],
+      "group": "floats",
+      "input": {
+        "a": [
+          0.0
+        ],
+        "n": 0,
+        "scale": 0.0
+      },
+      "original_postcondition_safe": true,
+      "original_postcondition_seeded": false,
+      "safe": 0.0,
+      "seeded": 3.333333333333333
+    },
+    {
+      "artifacts": [
+        {
+          "binary_sha256": "9d93ef47e1f76111812193f6085d48ca7014e4d960e89586b0ff6dd374001ba1",
+          "label": "safe",
+          "language": "cxx",
+          "path": "/private/tmp/probata-t24-original-seeds-native/dxc_summary-safe.cc",
+          "source_sha256": "31156d72737304824c353683a498e7be0ef9f4382c434dc57f6177dd6445fe8c",
+          "stdout": "1"
+        },
+        {
+          "binary_sha256": "48f0628a6b8291ab8c6ca0eb903db1bdd707cf8268f31117a2b4a35d0a94fd81",
+          "label": "safe",
+          "language": "c",
+          "path": "/private/tmp/probata-t24-original-seeds-native/dxc_summary-safe.c",
+          "source_sha256": "c700098545068c379754badf53a27052a1bff7c444058455b64c748d541d6e60",
+          "stdout": "1"
+        },
+        {
+          "binary_sha256": "e9176c1992751a971cf2a8bbc455e82c225374bdc1b7fb3500bd380d13771266",
+          "label": "seeded",
+          "language": "cxx",
+          "path": "/private/tmp/probata-t24-original-seeds-native/dxc_summary-seeded.cc",
+          "source_sha256": "d4bdbc11dd91e30098d736bd84a8eb39afb85bde27de258ab9d93bb0a620bb81",
+          "stdout": "4"
+        },
+        {
+          "binary_sha256": "5cfc987424de4742034eb3f2df4444c68e677014a2c246526c58370e78aedd36",
+          "label": "seeded",
+          "language": "c",
+          "path": "/private/tmp/probata-t24-original-seeds-native/dxc_summary-seeded.c",
+          "source_sha256": "dd88c4e37f61eac2f9e2002750830b89225b4f02103105f7cb33f1200116927c",
+          "stdout": "4"
+        }
+      ],
+      "group": "dxc_summary",
+      "input": {
+        "tile": 0
+      },
+      "original_postcondition_safe": true,
+      "original_postcondition_seeded": false,
+      "safe": 1.0,
+      "seeded": 4.0
+    },
+    {
+      "artifacts": [
+        {
+          "binary_sha256": "5fd5189dbf503cc7b9f4ba8d3280da477792cad7ff9aaa8960bcd29fe128adc3",
+          "label": "safe",
+          "language": "cxx",
+          "path": "/private/tmp/probata-t24-original-seeds-native/maa_summary-safe.cc",
+          "source_sha256": "a807114bd9ca8406215b48401887c943d2739c0e7a8abb83fd5264d3587f3ee7",
+          "stdout": "1"
+        },
+        {
+          "binary_sha256": "2947e20ff972deab71aa3d4a9f04c8377decc3589037d3b77042cb2913e5a59e",
+          "label": "safe",
+          "language": "c",
+          "path": "/private/tmp/probata-t24-original-seeds-native/maa_summary-safe.c",
+          "source_sha256": "0b5da4f465e9c4d8c1dc1e050f4534eb5ca6f414380d13bb719404d04bde94bf",
+          "stdout": "1"
+        },
+        {
+          "binary_sha256": "585f8a69718e48b765f190935cfa2ec08b56930e782361f79eee18d4ac7ecae3",
+          "label": "seeded",
+          "language": "cxx",
+          "path": "/private/tmp/probata-t24-original-seeds-native/maa_summary-seeded.cc",
+          "source_sha256": "66be35f00e7b7c929486c2ca3a760f5c739414a4b79006ae542724ccc2ce164a",
+          "stdout": "2"
+        },
+        {
+          "binary_sha256": "41f5fac9f0d91aa7d0ed9720c83cbe288014d17d693f5b2ac9f10317dd50ce36",
+          "label": "seeded",
+          "language": "c",
+          "path": "/private/tmp/probata-t24-original-seeds-native/maa_summary-seeded.c",
+          "source_sha256": "ea539682b5384602ed4950b1ed9fb94a42a1776619a2e8594dffa387313f4c36",
+          "stdout": "2"
+        }
+      ],
+      "group": "maa_summary",
+      "input": {
+        "base": 0,
+        "n": 1
+      },
+      "original_postcondition_safe": true,
+      "original_postcondition_seeded": false,
+      "safe": 1.0,
+      "seeded": 2.0
+    }
+  ],
+  "scope": "One concrete in-domain input per non-allocation original fixture; C++ and lowered C outputs agree; not universal source agreement or solver refutation. dxc uses corrected +4 seed; all safe sources/contracts/stub bodies unchanged.",
+  "wall_seconds": 26.083126374986023
+}

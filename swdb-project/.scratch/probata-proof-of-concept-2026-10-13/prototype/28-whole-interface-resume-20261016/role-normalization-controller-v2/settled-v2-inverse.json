@@ -1,0 +1,24 @@
+{
+  "V1_unchanged": true,
+  "actual_executed": false,
+  "edits": [
+    {
+      "after": "t28-role-gzip-2baf722f-v2",
+      "before": "t28-role-gzip-2baf722f-v1"
+    },
+    {
+      "after": "def settled_success(result_pin):\n    need(pin(OUT/'result.json')==result_pin,'final result identity changed after close/publication')\n    extent()\n    need(time.monotonic()-START<900,'settled passive publication deadline reached')\n\ndef main():",
+      "before": "def main():"
+    },
+    {
+      "after": "'schema':'passive-paired-type-gzip-transform-result-2','completion_requires_controller_zero_exit_and_settled_publication':True,'normalization_complete':True",
+      "before": "'schema':'passive-paired-type-gzip-transform-result-1','normalization_complete':True"
+    },
+    {
+      "after": "    result_pin=pin(OUT/'result.json')\n    settled_success(result_pin)\n    print(json.dumps({'normalization_complete':True,'result':result_pin,'source_call_ABI_or_public_admission':False},sort_keys=True),flush=True)\n    settled_success(result_pin)",
+      "before": "    print(json.dumps({'normalization_complete':True,'result':pin(OUT/'result.json'),'source_call_ABI_or_public_admission':False},sort_keys=True))"
+    }
+  ],
+  "exact_template_inverse": true,
+  "late_failure_retained_complete_result_requires_nonzero_exit_refusal": true
+}

@@ -1,0 +1,85 @@
+{
+  "created": "2026-09-26",
+  "observed_at": "2026-09-26T20:03:31.687761-04:00",
+  "receipt": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926.dispatch/health-20260926-2003.json",
+    "bytes": 179199,
+    "sha256": "50cfc302640aff4de8ae35e72132be62ad63d488c8202827493280472f2391f2"
+  },
+  "leases": {
+    "node0": {
+      "state": "released",
+      "generation": 331,
+      "kernel_held": false,
+      "owner": null
+    },
+    "node1": {
+      "state": "released",
+      "generation": 408,
+      "kernel_held": false,
+      "owner": null
+    },
+    "legacy": {
+      "state": "released",
+      "generation": 77,
+      "kernel_held": false,
+      "owner": null
+    }
+  },
+  "disk_free_bytes": {
+    "/data1": 17433550848,
+    "/data": 194145558528
+  },
+  "load": [
+    0.08,
+    0.16,
+    0.17
+  ],
+  "capacity": {
+    "node0_available_kib": 60070052,
+    "node1_available_kib": 61358628,
+    "global_available_kib": 123417988,
+    "both_eligible": true
+  },
+  "historical_hashes_unchanged": true,
+  "retained_owned_identities_live": [],
+  "helper": {
+    "head": "42ce8dce1ecfb949d6e5d4ee3c98c078bc7ddc65",
+    "upstream": "42ce8dce1ecfb949d6e5d4ee3c98c078bc7ddc65",
+    "script_sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8"
+  },
+  "campaign": {
+    "head": "d11dc04449997734a93b982646977b04008afeff",
+    "pristine": true,
+    "t15_raw_root_exists": false,
+    "t16_raw_root_exists": false,
+    "guest_attempts": 0,
+    "held_for": "sibling dispatch storage accounting correction with fresh exact-pin proofs",
+    "original_latest_start": "2026-09-26T20:30:00-04:00"
+  },
+  "standard_proofs": {
+    "owned_cleanup": {
+      "proof_sha256": "55de0c2858c9109c6963b74458bfe0862beae151b5c4c6cda4cd994b0dc5c645",
+      "audit_started": "2026-09-26T19:46:35.775581-04:00",
+      "audit_finished": "2026-09-26T19:46:36.314854-04:00",
+      "audit_elapsed_seconds": 0.5392980147153139,
+      "audit_returncode": 0,
+      "terminal_observed_at": "2026-09-26T19:46:36.266589-04:00",
+      "tests": 4,
+      "skipped": 0,
+      "union": 8
+    },
+    "dx100_interruption": {
+      "proof_sha256": "42d983a8369a4588f89cef288023ed68f48f2efe34172af5a223521c981fbd92",
+      "audit_started": "2026-09-26T19:47:36.595652-04:00",
+      "audit_finished": "2026-09-26T19:47:37.151505-04:00",
+      "audit_elapsed_seconds": 0.555877129547298,
+      "audit_returncode": 0,
+      "terminal_observed_at": "2026-09-26T19:47:37.101253-04:00",
+      "tests": 2,
+      "skipped": 0,
+      "union": 6
+    }
+  },
+  "next_full_health": "2026-09-26T20:33:00-04:00"
+}

@@ -1,0 +1,22 @@
+--- /private/tmp/lanl_decode_detached_R4_original_custody_20261008_a1.py
++++ /private/tmp/lanl_decode_detached_R4_original_custody_20261008_a1_r2.py
+@@ -2,8 +2,8 @@
+ import argparse,pathlib,os,stat,json,hashlib,base64,re
+ P=pathlib.Path
+ PACKET_CAP=64*1024*1024
+-WRAPPER_SHA='3f5cc9397c9be47232f0c070ca70def25c55a3c69af404af257da992ad105e01'
+-GUARD_SHA='96e033426d492fab3be2a07757ab1e89665a7a67d0f06d3941f274b1214dd294'
++WRAPPER_SHA='52f379d99721c51677ba44a1e9f3d55138527e26be1073c6267fbe09c8a93853'
++GUARD_SHA='a84dc9ca7ccd20e6485cc8e9a2007b3b982fad9c5ae19dacbb1f164d664748cb'
+ CONTROL_ROUTES=('/data1/yanruj/lanl17-detached-r4-inspection-a1','/data1/yanruj/lanl17-detached-r4-removal-a1')
+ TERMINAL_STATES=('guard_completed','guard_refused_or_failed','preflight_refused_no_guard_launch','administrative_postflight_failed','guard_launch_started','guard_running','GNU_supervision_not_returned_within_wrapper_wait')
+ FILES=[('status.json',16384),('configuration.json',16384),('tmux.conf',16384),('launch-status.json',16384),('launch.stdout',16384),('launch.stderr',16384),('guard.stdout',256*1024),('guard.stderr',256*1024)]
+@@ -43,7 +43,7 @@
+   if status.get('format')=='swdb.lanl17-detached-exact-R4-administration-status.v1' and status.get('sealed') is False and type(inputs) is dict:
+    wrapper=inputs.get('wrapper');guard=inputs.get('guard')
+    if type(wrapper) is dict and type(guard) is dict and all(k in wrapper and k in guard for k in ('sha256','bytes')):
+-    assert wrapper['sha256']==WRAPPER_SHA and wrapper['bytes']==24000 and guard['sha256']==GUARD_SHA and guard['bytes']==88521
++    assert wrapper['sha256']==WRAPPER_SHA and wrapper['bytes']==24000 and guard['sha256']==GUARD_SHA and guard['bytes']==88872
+     result['selected_source_pins_bound']=True
+     attempt=status.get('guard_attempt')
+     if type(attempt) is str and re.fullmatch('a[1-9][0-9]*',attempt):

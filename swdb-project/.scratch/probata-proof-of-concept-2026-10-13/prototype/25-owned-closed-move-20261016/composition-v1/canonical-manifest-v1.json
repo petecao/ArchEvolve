@@ -1,0 +1,417 @@
+{
+  "actual_G641_lowering_replayed": false,
+  "bytes": 548427,
+  "date": "2026-10-16 ET",
+  "directories": [
+    "cases",
+    "source-rule",
+    "source-rule/dependencies",
+    "source-rule/dependencies/constructor",
+    "source-rule/dependencies/destructor",
+    "source-rule/dependencies/move_source",
+    "source-rule/dependencies/move_source/obligations",
+    "source-rule/dependencies/private_frame",
+    "source-rule/dependencies/private_frame/obligations",
+    "source-rule/sources",
+    "source-rule/theory",
+    "source-rule/views"
+  ],
+  "directory_count": 12,
+  "file_count": 78,
+  "files": [
+    {
+      "bytes": 38485,
+      "relative": "cases/positive.json",
+      "sha256": "1f45a621b315c051a8784861ed8f741f07b5b4c69bb56c8884129cd676f49f38"
+    },
+    {
+      "bytes": 28827,
+      "relative": "cases/zero.json",
+      "sha256": "97ea850e7b1ca250c9034311b967c5067566362a09b0d0089c23aac95e81e42a"
+    },
+    {
+      "bytes": 5849,
+      "relative": "derivation.md",
+      "sha256": "c59c9e05b058d2d552d5289dfc826bf434903c0b37ae79a1e23488bdc3f76b37"
+    },
+    {
+      "bytes": 119264,
+      "relative": "manifest.json",
+      "sha256": "0dd79c9ec58eea456ce31cfc896a47896747b24c01f11d0c637d7cb706579d7f"
+    },
+    {
+      "bytes": 4797,
+      "relative": "source-rule/dependencies/constructor/000-t25v3_control_ctor_premises_feasible.c",
+      "sha256": "b5e411200cea2b718f6d7464d67b16c9704f13da40fb4b5c3d15f8ccc424dad5"
+    },
+    {
+      "bytes": 4712,
+      "relative": "source-rule/dependencies/constructor/001-t25v3_ctor_rte_zero_data.c",
+      "sha256": "3a64ef32dc04c28baf29bf0432e000405db7e5923e5ee7c40d15a3afd162edee"
+    },
+    {
+      "bytes": 4741,
+      "relative": "source-rule/dependencies/constructor/002-t25v3_ctor_rte_zero_size.c",
+      "sha256": "524665df08d6df290bc3fa479ba7de698c4929ecb9307065e909c815cea8e651"
+    },
+    {
+      "bytes": 4773,
+      "relative": "source-rule/dependencies/constructor/003-t25v3_ctor_rte_zero_capacity.c",
+      "sha256": "1b503dcb3e5d9ad0c02e7f05c4b961c4e344d05b027d2c922445495b030dd44e"
+    },
+    {
+      "bytes": 4730,
+      "relative": "source-rule/dependencies/constructor/004-t25v3_ctor_fields_initialized.c",
+      "sha256": "7457a3fb08737a445abd553c0b18ecf41782b92e468bbd8a6fc641c64b412080"
+    },
+    {
+      "bytes": 4719,
+      "relative": "source-rule/dependencies/constructor/005-t25v3_ctor_zero_post.c",
+      "sha256": "67a767b853c35aa675dc2a038b8ce511f72c3b5d283c4b456ed3b9b537504cc0"
+    },
+    {
+      "bytes": 4680,
+      "relative": "source-rule/dependencies/constructor/006-t25v3_ctor_zero_frame.c",
+      "sha256": "246cb3285d23c64743a49e27ea7fddca8b0370800f447852782eb09f1dc8490a"
+    },
+    {
+      "bytes": 4827,
+      "relative": "source-rule/dependencies/constructor/007-t25v3_ctor_alloc_identity.c",
+      "sha256": "2c4039918468f64d6186788d62229926ec3de5ed7733deb3f1a37d626e1d3e7f"
+    },
+    {
+      "bytes": 4743,
+      "relative": "source-rule/dependencies/constructor/008-t25v3_ctor_alloc_well_formed.c",
+      "sha256": "37fb36cddfa7c04a94b82a42170d5c2e5ca38e32c79bb164d24cdc9de7e37f55"
+    },
+    {
+      "bytes": 4781,
+      "relative": "source-rule/dependencies/constructor/009-t25v3_ctor_alloc_separation.c",
+      "sha256": "15b3e29c013f359fd41166886cf8c87349871c4d6be2f3acf2a42fa2faeef5d7"
+    },
+    {
+      "bytes": 4837,
+      "relative": "source-rule/dependencies/constructor/010-t25v3_ctor_alloc_extent.c",
+      "sha256": "19ba37f46cad8d3c1fb1540232498f75f033e3462e8bd333ef29f6ef5b0d6ebb"
+    },
+    {
+      "bytes": 4720,
+      "relative": "source-rule/dependencies/constructor/011-t25v3_ctor_alloc_uninitialized.c",
+      "sha256": "7e829d37db0bd00afc9da274a2bb64f670f95d8877a85cca91e9968f956b6797"
+    },
+    {
+      "bytes": 4874,
+      "relative": "source-rule/dependencies/constructor/012-t25v3_ctor_capacity_entry.c",
+      "sha256": "7a0e99453d6cbc09801fce66d2387a93175e593cf4152c99f36d21cd50adba42"
+    },
+    {
+      "bytes": 4782,
+      "relative": "source-rule/dependencies/constructor/013-t25v3_ctor_rte_allocated_data.c",
+      "sha256": "02ba89b283c54cc344aad9897d86365fc227c0c2b2bc0efcb67f6e49ad0bb96a"
+    },
+    {
+      "bytes": 4832,
+      "relative": "source-rule/dependencies/constructor/014-t25v3_ctor_rte_allocated_capacity.c",
+      "sha256": "0991127933d1a77bd56ec6c71aa78a2c00754d88fadba9dd91c109a4fa4bf2ec"
+    },
+    {
+      "bytes": 4679,
+      "relative": "source-rule/dependencies/constructor/015-t25v3_ctor_prefix_establish.c",
+      "sha256": "50fb5df4e141d3263dc802457dbd7935be3b0286b17ec43c21bac0e37fc97218"
+    },
+    {
+      "bytes": 4792,
+      "relative": "source-rule/dependencies/constructor/016-t25v3_ctor_store_access.c",
+      "sha256": "83c4d2ad7c3351e04007cfc3a8b4b9ace11774feab2e0eb678e7cb7a663af2ad"
+    },
+    {
+      "bytes": 4755,
+      "relative": "source-rule/dependencies/constructor/017-t25v3_ctor_prefix_step.c",
+      "sha256": "aa084a3b18ca0a7abd158071d20b91efb631d797ea0789f8e24c4fb35ccba598"
+    },
+    {
+      "bytes": 4738,
+      "relative": "source-rule/dependencies/constructor/018-t25v3_ctor_prefix_exit.c",
+      "sha256": "63e1d91b2abddf2959a3ed8d35fbccd0f3c4c1679a17e61d5f364e0b9135d123"
+    },
+    {
+      "bytes": 4794,
+      "relative": "source-rule/dependencies/constructor/019-t25v3_ctor_final_post.c",
+      "sha256": "7bdbb392a07ba3d6cf4e6a38d8cb84253a7ffc2f801a29c456a4039c4859f42e"
+    },
+    {
+      "bytes": 4720,
+      "relative": "source-rule/dependencies/constructor/020-t25v3_ctor_rte_final_size.c",
+      "sha256": "2f55d2e1f387cc1e191db7169b89969582c6684a320930868d364d2bd8ddfd3e"
+    },
+    {
+      "bytes": 4722,
+      "relative": "source-rule/dependencies/constructor/021-t25v3_ctor_frame_preexisting.c",
+      "sha256": "f944af412b583f4a9a60871dd616b8188e64a27fb7cd75eb94a372c4454c2835"
+    },
+    {
+      "bytes": 4754,
+      "relative": "source-rule/dependencies/constructor/022-t25v3_ctor_frame_loop_step.c",
+      "sha256": "b73c3d72d71d00b1a3db42157634a66fcc2caa20a5a803f12189ee864a0ef98a"
+    },
+    {
+      "bytes": 4724,
+      "relative": "source-rule/dependencies/constructor/023-t25v3_ctor_frame_final.c",
+      "sha256": "524a1813b0938ef54b0f013c015bf74448488031a6398d934f5ea84f632bcf28"
+    },
+    {
+      "bytes": 1559,
+      "relative": "source-rule/dependencies/constructor/024-t25v3_ctor_numeric.c",
+      "sha256": "95efe1cba1bbc55c5f08d538cd4424ff93a4d3adf6bd5d169ad17664377d5600"
+    },
+    {
+      "bytes": 4902,
+      "relative": "source-rule/dependencies/constructor/025-t25v3_control_zero_size_formation.c",
+      "sha256": "20e39f968e9d59dc0d4fd901a6758e976969a3824c3509d3ad5cd21e482cb1dc"
+    },
+    {
+      "bytes": 4757,
+      "relative": "source-rule/dependencies/constructor/026-t25v3_control_live_zero_base_not_fresh.c",
+      "sha256": "986b457661e64986482e9959757025ca082a0826018dbd372529d0722656b112"
+    },
+    {
+      "bytes": 4704,
+      "relative": "source-rule/dependencies/constructor/027-t25v3_control_ctor_qualified_feasible.c",
+      "sha256": "a60560cd42ab38003711f2bc0815fb0f39a4757888d19bb038bc4c4b4525770d"
+    },
+    {
+      "bytes": 4735,
+      "relative": "source-rule/dependencies/constructor/028-t25v3_ctor_qualified_zero_post.c",
+      "sha256": "efbc464b79789d41ce4c4cbbc507e6bd66440c7455291412f6cbe6a2bb3d4871"
+    },
+    {
+      "bytes": 4753,
+      "relative": "source-rule/dependencies/constructor/029p1-t25v3_ctor_qualified_positive_post_repr.c",
+      "sha256": "a2f0879c57876cd1c0a655d514723f028939794f07faf50f3b0559fdd669500d"
+    },
+    {
+      "bytes": 4805,
+      "relative": "source-rule/dependencies/constructor/029p2-t25v3_ctor_qualified_positive_post_cells_access.c",
+      "sha256": "2281cad8ea18001a5e5397b71f48d74ee6a7f5f447a7581ebf15c36d042f7d1c"
+    },
+    {
+      "bytes": 4812,
+      "relative": "source-rule/dependencies/constructor/029p3-t25v3_ctor_qualified_positive_post_cells_initialization.c",
+      "sha256": "c84a63dc42bb61eee15381e5c265a743e4e95acfe630019303cfd6f1e933bebe"
+    },
+    {
+      "bytes": 4856,
+      "relative": "source-rule/dependencies/constructor/029p4-t25v3_ctor_qualified_positive_post_cells_integer.c",
+      "sha256": "c61359f03125569a6d84b788c010664bde01021446716d7dc7525359a0e8714a"
+    },
+    {
+      "bytes": 4827,
+      "relative": "source-rule/dependencies/constructor/029p5-t25v3_ctor_qualified_positive_post_cells_bounds.c",
+      "sha256": "867a0e3070efe2c84395fd0dda1c438306169583e8e71b8abdd4b267c6694cdc"
+    },
+    {
+      "bytes": 4782,
+      "relative": "source-rule/dependencies/constructor/029p6-t25v3_ctor_qualified_positive_post_eligibility.c",
+      "sha256": "91a7d5520173fb81907e40a5d4b6e187dffdebddd4373b291b7a0c0c923220bf"
+    },
+    {
+      "bytes": 2724,
+      "relative": "source-rule/dependencies/constructor/original.c",
+      "sha256": "57cf2a6f3f9049f8edf41633f9ef60d0bb7c804e5ee937af796217a2a018c594"
+    },
+    {
+      "bytes": 3631,
+      "relative": "source-rule/dependencies/constructor/qualified.c",
+      "sha256": "a20cb8431cc975b034954666967398d8466745cd0bab9a92f45f60c19a837a1a"
+    },
+    {
+      "bytes": 4725,
+      "relative": "source-rule/dependencies/destructor/000-t25v3_control_dtor_premises_feasible.c",
+      "sha256": "0563754418f4a12a41995478c6a829c73114b4c967df221220a3b08fba410c4f"
+    },
+    {
+      "bytes": 4773,
+      "relative": "source-rule/dependencies/destructor/001-t25v3_dtor_data_read.c",
+      "sha256": "004833d8949bb5d4400a219ef2b9368ae7ca4914d15fc69062f761c63b29827b"
+    },
+    {
+      "bytes": 4769,
+      "relative": "source-rule/dependencies/destructor/002-t25v3_dtor_free_argument.c",
+      "sha256": "462a7744e8f7a5137bdca30bbd498f6a38e2272e93a5922cfca31bfb5e05e949"
+    },
+    {
+      "bytes": 4647,
+      "relative": "source-rule/dependencies/destructor/003-t25v3_dtor_null_no_op.c",
+      "sha256": "96b0e5c9536694714afec32d21cf52517e871f2225ff074cc043746c5a15a9b4"
+    },
+    {
+      "bytes": 4777,
+      "relative": "source-rule/dependencies/destructor/004-t25v3_dtor_alias_invalidated.c",
+      "sha256": "40bed47f0ae13d768e077e6ea7789dcd190194e1522810310250ad1278a698a1"
+    },
+    {
+      "bytes": 4802,
+      "relative": "source-rule/dependencies/destructor/005-t25v3_dtor_post_old_invalid.c",
+      "sha256": "5062df7f6ed1315b67e6e1a0d323dcff7cb53a6b6df4639034cbd45ca415034f"
+    },
+    {
+      "bytes": 4840,
+      "relative": "source-rule/dependencies/destructor/006-t25v3_dtor_frame_surviving.c",
+      "sha256": "3012485de6f563339f99f6c8b38d270fb6d04429367c20836d8e8a6465b5aa67"
+    },
+    {
+      "bytes": 4712,
+      "relative": "source-rule/dependencies/destructor/007-t25v3_dtor_frame_other_live.c",
+      "sha256": "e0fb664a9c258708be364a9017d9806ae01ec81eb905f4a572943f29abaedc1a"
+    },
+    {
+      "bytes": 4704,
+      "relative": "source-rule/dependencies/destructor/008-t25v3_dtor_receiver_overlap.c",
+      "sha256": "8c53c08ddc54ebb60d69fce168fff27c4c0dd52c8d80741d99eabd5475202096"
+    },
+    {
+      "bytes": 5183,
+      "relative": "source-rule/dependencies/destructor/009-t25v3_control_reused_address_stale.c",
+      "sha256": "59f1c15f17ed5a1cddb2658e07f6af4f9e0877ed902d84c444ff93d2a824c0d8"
+    },
+    {
+      "bytes": 4731,
+      "relative": "source-rule/dependencies/destructor/010-t25v3_control_before_release_read.c",
+      "sha256": "5f2c091c9d006b7aca4fa6143450b0b38a480f9380771bb9a0bf6399e6d1702f"
+    },
+    {
+      "bytes": 2124,
+      "relative": "source-rule/dependencies/destructor/original.c",
+      "sha256": "1056f4f83c59a30941ec9417c36aada8eab4b62160087ae10315cd2ac9778317"
+    },
+    {
+      "bytes": 2987,
+      "relative": "source-rule/dependencies/destructor/qualified.c",
+      "sha256": "9ca9409923f9d39b4e35a0690c70256af56bfd1c37f1e389e406f615b0164e7f"
+    },
+    {
+      "bytes": 586,
+      "relative": "source-rule/dependencies/move_source/obligations/000-t25_owned_effect_move_destination_header.c",
+      "sha256": "60240fa742a147d78bc54c512420d9a85e4e6ecd790711562db8bc985d9da689"
+    },
+    {
+      "bytes": 580,
+      "relative": "source-rule/dependencies/move_source/obligations/001-t25_owned_effect_move_source_empty.c",
+      "sha256": "9b1806c057f87725d1978aef31a8d25e0dd37bd9d14d3b9a2d924032629bc941"
+    },
+    {
+      "bytes": 588,
+      "relative": "source-rule/dependencies/move_source/obligations/002-t25_owned_effect_move_incoming_frame.c",
+      "sha256": "55331d638d52fd11561b52cb9d88dfa8f6f3e20890462c10e7a462ed6bc0b2ad"
+    },
+    {
+      "bytes": 642,
+      "relative": "source-rule/dependencies/move_source/obligations/003-t25_owned_effect_move_owner_correspondence.c",
+      "sha256": "3340e52d4ed852b8c8a69d14be4692d6d6245b093f8bb31c5bf4a292bcf90d9d"
+    },
+    {
+      "bytes": 955,
+      "relative": "source-rule/dependencies/private_frame/obligations/000-t25_private_entry_reflexive.c",
+      "sha256": "5998b73632c81c97aeaa2cf383315be526a94570f248dca029fb79447e871f78"
+    },
+    {
+      "bytes": 1072,
+      "relative": "source-rule/dependencies/private_frame/obligations/001-t25_private_automatic_frame.c",
+      "sha256": "6324aed8153be9f5a7dda9b66a5d72a78c53b0228a9ed40a68327acdef8b0571"
+    },
+    {
+      "bytes": 1112,
+      "relative": "source-rule/dependencies/private_frame/obligations/002-t25_private_allocation_frame.c",
+      "sha256": "dadf3cf983f34461dcb084c0bf88de22cb7bf3409ba7e0cbb8b50febcdc7e489"
+    },
+    {
+      "bytes": 1078,
+      "relative": "source-rule/dependencies/private_frame/obligations/003-t25_private_integer_store_frame.c",
+      "sha256": "8b22188dcff983758ad4a738bd95638623454e5c9cf777babaa3f931fcc558e0"
+    },
+    {
+      "bytes": 1102,
+      "relative": "source-rule/dependencies/private_frame/obligations/004-t25_private_pointer_store_frame.c",
+      "sha256": "be07d38896958af227b41eda58cf677fa4da599aab3b7a7c13de423be98b481a"
+    },
+    {
+      "bytes": 1060,
+      "relative": "source-rule/dependencies/private_frame/obligations/005-t25_private_release_frame.c",
+      "sha256": "dd64ff3d4f99544ed3e206e48a426a468757239f5c8a44d1800cdc642652e810"
+    },
+    {
+      "bytes": 1072,
+      "relative": "source-rule/dependencies/private_frame/obligations/006-t25_private_automatic_end_frame.c",
+      "sha256": "aede762faf9c388a1525d9bfef95a69814908ca5ce2e81101a34c6922d29e703"
+    },
+    {
+      "bytes": 1146,
+      "relative": "source-rule/dependencies/private_frame/obligations/007-t25_private_cleanup_observation.c",
+      "sha256": "8b0041e29c2a2cff5cfccea2c0ff47d9c705f6d6a21801f5c7e2c1ffcf45bdb6"
+    },
+    {
+      "bytes": 1463,
+      "relative": "source-rule/dependencies/private_frame/obligations/008-t25_private_cleanup_exists_scalar.c",
+      "sha256": "3862ad897bdaa760a0a78e97cf2752daaba13e747d134c5cd8aad4395fa5bebb"
+    },
+    {
+      "bytes": 82260,
+      "relative": "source-rule/manifest.json",
+      "sha256": "2af7b0ae538c35bbe1d3aba3b474f655d73017727b94a89965bb1a444237ddc7"
+    },
+    {
+      "bytes": 5642,
+      "relative": "source-rule/sources/original-caller.c",
+      "sha256": "5c33a1a1843045d0b9d2ba43eb8d590c9e6106c794982286b28505c64e896e34"
+    },
+    {
+      "bytes": 2724,
+      "relative": "source-rule/sources/original-ctor_count_value.c",
+      "sha256": "57cf2a6f3f9049f8edf41633f9ef60d0bb7c804e5ee937af796217a2a018c594"
+    },
+    {
+      "bytes": 1354,
+      "relative": "source-rule/sources/original-data.c",
+      "sha256": "ee4f867911135688f5b76932243b38aaff73a56d85ffeb24229725c7d4ec6f3f"
+    },
+    {
+      "bytes": 2124,
+      "relative": "source-rule/sources/original-dtor.c",
+      "sha256": "1056f4f83c59a30941ec9417c36aada8eab4b62160087ae10315cd2ac9778317"
+    },
+    {
+      "bytes": 1634,
+      "relative": "source-rule/sources/original-move_ctor.c",
+      "sha256": "2275b2a0533c16643f1ea7ae324aae852c9e2509e4e05085107636e172e3e676"
+    },
+    {
+      "bytes": 327,
+      "relative": "source-rule/sources/original.cc",
+      "sha256": "a0dc043284f96a5b7c052963b51188318ae4abc6a85ee347fea78b6ab392d3a2"
+    },
+    {
+      "bytes": 8386,
+      "relative": "source-rule/theory/heap_reallocation.mlw",
+      "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+    },
+    {
+      "bytes": 3128,
+      "relative": "source-rule/theory/vector_owned_effects.mlw",
+      "sha256": "6bfc13341d2faceb5a3fb64bd2d5bff22dd03c52a1fa3d5c4cb39b6e9c83f7f5"
+    },
+    {
+      "bytes": 2389,
+      "relative": "source-rule/theory/vector_owned_state.mlw",
+      "sha256": "a2c295d2c6720a9c8c522f05e19723c2d2d2a32b63f9b198aab03f195269e4b6"
+    },
+    {
+      "bytes": 5731,
+      "relative": "source-rule/views/unreachable-fallback-eliminated.c",
+      "sha256": "9865b670b08806d5027074137955413d88a80d8c9cc32200a9019cf8a77fcc03"
+    }
+  ],
+  "original_lowered_C_reference": "5c33a1a1843045d0b9d2ba43eb8d590c9e6106c794982286b28505c64e896e34",
+  "root": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-owned-closed-move-20261016/composition-v1/inert-v1",
+  "scientific_or_source_admission": false,
+  "synthetic_library_provenance": true
+}

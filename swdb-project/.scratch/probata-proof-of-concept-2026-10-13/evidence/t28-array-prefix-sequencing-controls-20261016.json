@@ -1,0 +1,2264 @@
+{
+  "admitted": "Literal scalar leaves, parenthesis/constant/scalar cast wrappers and unary +,-,!,~; existing rendering/type checks still apply. Empty prefix remains Czero-fill.",
+  "created": "2026-10-16 ET",
+  "frozen_predecessor": "901b635e30801150ae823ee07ecf33b43f092c5b",
+  "green": "7controlGREENthen stationary composed9GREEN with2defined native C/C++ ASan+UBSan comparisons; no actual verifier. Newconstant7closedstream remains admitted.",
+  "not_claimed": [
+    "actual proof",
+    "general initializer sequencing theorem",
+    "whole28 or production0.2 acceptance"
+  ],
+  "patch_commit": "bfa68c8a",
+  "producer": {
+    "bytes": 4556,
+    "path": "/private/tmp/probata-t28-array-order-receipt-20261016.py",
+    "sha256": "50b33a87b263c9617b9503308e01778d3588dbc6bf3c6d67aef1ba30ecead675"
+  },
+  "profiles": [
+    {
+      "files": [
+        {
+          "bytes": 388,
+          "path": "/private/tmp/probata-t28-array-order-red-guarded/command.json",
+          "sha256": "9f6c1aae7085a7a34ee88d463014593120cc215f236cd897af2f33e9fcbbc770"
+        },
+        {
+          "bytes": 19319,
+          "path": "/private/tmp/probata-t28-array-order-red-guarded/control.log",
+          "sha256": "873b6ec5d6b4ffdec0653f9776797f19e12d39750b56a4e81217bfcbe392b336"
+        },
+        {
+          "bytes": 36926,
+          "path": "/private/tmp/probata-t28-array-order-red-guarded/junit.xml",
+          "sha256": "398912cd43e25ec691074445332958f87a699aca99cde0ea4e92fe32da323c39"
+        },
+        {
+          "bytes": 102,
+          "path": "/private/tmp/probata-t28-array-order-red-guarded/pytest/test_lower_refuses_nonconstant0/input.cc",
+          "sha256": "5b5dcea8e1c337b92172ac04b4fc799bbf5118fea29fdc921e05f2ece444c6fe"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-red-guarded/pytest/test_lower_refuses_nonconstant0/lower.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 3785,
+          "path": "/private/tmp/probata-t28-array-order-red-guarded/pytest/test_lower_refuses_nonconstant0/lower.stdout",
+          "sha256": "7677ef981cf15196ec9dffdbd2a32c7768f6cb5ba3cf22466688b7e5e921a149"
+        },
+        {
+          "bytes": 4089,
+          "path": "/private/tmp/probata-t28-array-order-red-guarded/pytest/test_lower_refuses_nonconstant0/out/observe_input.anchors.json",
+          "sha256": "a95c0dc35c3b6326847a6492e0c65b2599fad1be134b728c1f6bc78c1ad07476"
+        },
+        {
+          "bytes": 752,
+          "path": "/private/tmp/probata-t28-array-order-red-guarded/pytest/test_lower_refuses_nonconstant0/out/observe_input.c",
+          "sha256": "8496f1ce0125c0d7f19f0a3bbf773bd35084e16d5a3f87f73bbdf0df03a2564d"
+        },
+        {
+          "bytes": 84,
+          "path": "/private/tmp/probata-t28-array-order-red-guarded/pytest/test_lower_refuses_nonconstant1/input.cc",
+          "sha256": "6bf428b916977609d1b47f9cac9fe4d2e402608ccf89f981acd9e6382e7432f7"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-red-guarded/pytest/test_lower_refuses_nonconstant1/lower.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 3332,
+          "path": "/private/tmp/probata-t28-array-order-red-guarded/pytest/test_lower_refuses_nonconstant1/lower.stdout",
+          "sha256": "819e6b908a808213ab64da3d0df2685158fbc828d20a0bdb388229f54299688d"
+        },
+        {
+          "bytes": 3494,
+          "path": "/private/tmp/probata-t28-array-order-red-guarded/pytest/test_lower_refuses_nonconstant1/out/observe_input.anchors.json",
+          "sha256": "5f750bffad803905f754f88a353d07c645b720df6c73b3e1ff3bfcf7c8c65f71"
+        },
+        {
+          "bytes": 637,
+          "path": "/private/tmp/probata-t28-array-order-red-guarded/pytest/test_lower_refuses_nonconstant1/out/observe_input.c",
+          "sha256": "73d99b85599acb75b3a75355e89a72894751af32842361283617289466f6b39b"
+        },
+        {
+          "bytes": 102,
+          "path": "/private/tmp/probata-t28-array-order-red-guarded/pytest/test_lower_refuses_nonconstant2/input.cc",
+          "sha256": "527eadf30d472ce3f66b3ef877e940fa0a1d3c3a4efece0f235db8bab9421cb8"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-red-guarded/pytest/test_lower_refuses_nonconstant2/lower.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 3919,
+          "path": "/private/tmp/probata-t28-array-order-red-guarded/pytest/test_lower_refuses_nonconstant2/lower.stdout",
+          "sha256": "eb5e8f8e04bfd0fd820f1bc4632952c209f3a77112bc762a108381fe67688bd9"
+        },
+        {
+          "bytes": 4370,
+          "path": "/private/tmp/probata-t28-array-order-red-guarded/pytest/test_lower_refuses_nonconstant2/out/observe_input.anchors.json",
+          "sha256": "92fba9ca3f026f186404cde2892fb1ac5d3dfdb832bfcd9bcb477f97415b0e52"
+        },
+        {
+          "bytes": 854,
+          "path": "/private/tmp/probata-t28-array-order-red-guarded/pytest/test_lower_refuses_nonconstant2/out/observe_input.c",
+          "sha256": "4048b72bc09da3a9e9900d03ffa09d13b955869e24832ed8d36cc05dc546b2c5"
+        },
+        {
+          "bytes": 164,
+          "path": "/private/tmp/probata-t28-array-order-red-guarded/resources.json",
+          "sha256": "a15d9999de03910c06a6aa1460b3ad3516fab3232edd793dcd6770f07e7bbac0"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 1.841664,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 147980288,
+        "timed_out": false,
+        "wall_seconds": 2.156896375003271
+      },
+      "root": "/private/tmp/probata-t28-array-order-red-guarded",
+      "scope": "Original901 source accepts all3 unsupported sequencing-sensitive prefix forms;3RED failures."
+    },
+    {
+      "files": [
+        {
+          "bytes": 306,
+          "path": "/private/tmp/probata-t28-array-order-green/command.json",
+          "sha256": "cc3d5e554b5c0c22719b478e239d39c546b75e42aca44976f1c5b760570eb7b7"
+        },
+        {
+          "bytes": 98,
+          "path": "/private/tmp/probata-t28-array-order-green/control.log",
+          "sha256": "47aa39d2bc51d3b6ded21238f2108854d13569e202c5e14d3ec00fa7db429a93"
+        },
+        {
+          "bytes": 1472,
+          "path": "/private/tmp/probata-t28-array-order-green/junit.xml",
+          "sha256": "e370cd0e434fbfc1e55e8fb04b5f0a2b3e8738bd56352356dd40a0ffc0d2f92d"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex0/c++.compile.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 4271,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex0/c++.d",
+          "sha256": "ae861dd33502fe7607f861d5f3ef1929d6c2c267c7c6524e989b883a6468cf07"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex0/c++.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 4,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex0/c++.stdout",
+          "sha256": "74c3cc29c8e42455948aca1dcc545d258f9d33c51dfd5e90d6cfa6ed5c9da357"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex0/c.compile.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 4895,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex0/c.d",
+          "sha256": "dac875fbd926c18ddcacf9e21beda1be5c0196a893a6c6df471cabd75c4f8692"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex0/c.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 4,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex0/c.stdout",
+          "sha256": "74c3cc29c8e42455948aca1dcc545d258f9d33c51dfd5e90d6cfa6ed5c9da357"
+        },
+        {
+          "bytes": 950,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex0/commands.json",
+          "sha256": "024a609b49ad7097bc7c1e8a293ce0d2da6dbf7cc2de6e100882e96e18c67034"
+        },
+        {
+          "bytes": 135,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex0/input.cc",
+          "sha256": "0c41407ebf29a2605938c00d81a294e6295972824ad2b2402b187c28cb07d5eb"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex0/lower.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 4107,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex0/lower.stdout",
+          "sha256": "46b72c10bb93856413fb07808f65c2fa665a9045298fd58487abf3adf08fa834"
+        },
+        {
+          "bytes": 3924,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex0/lowered/observe_input.anchors.json",
+          "sha256": "9307c8a8e277921b648f171749ce1dc127a8d4a59d888586ebe25ba53da36007"
+        },
+        {
+          "bytes": 628,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex0/lowered/observe_input.c",
+          "sha256": "e008c80f98b7f25eec67dd4afd823d9babe4a8a60cbb7a2beac14eb651fc1439"
+        },
+        {
+          "bytes": 51160,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex0/run-c",
+          "sha256": "9d8313cacd7625ba036172143701158807048b08ca549c415c1bf57e833061ea"
+        },
+        {
+          "bytes": 51000,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex0/run-cxx",
+          "sha256": "0b6995db8cef234a0499636dc42b7b281b71da37b4ce7e773f5fa25c5fea95f4"
+        },
+        {
+          "bytes": 709,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex0/run.c",
+          "sha256": "b3abc206a0a08bf40d2a149003fcdf4a11d5eb01836ff7c3cb9e61883aa1960b"
+        },
+        {
+          "bytes": 216,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex0/run.cc",
+          "sha256": "9c34ff4fa318c09bc35ccd5919b45a466211bc0d57df22f375766e6cb560851d"
+        },
+        {
+          "bytes": 4264,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex0/runtime.json",
+          "sha256": "e94fcef10797de8a08c0943e54e17a179402f00efce04c0a12116effcc096f9b"
+        },
+        {
+          "bytes": 272,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex0/source-array-ast-command.json",
+          "sha256": "f503cbd8bddedfbe1b0dc10d0fc052c1e4d38d89897236d3ad34bcae92869926"
+        },
+        {
+          "bytes": 3739,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex0/source-array-ast.json",
+          "sha256": "695f9c0abb13d79712c72b7665f9700eb440be8285ce54eddf57338ec73c0b3f"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex1/c++.compile.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 4271,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex1/c++.d",
+          "sha256": "c5f4415e4059c75b3b33632710c2458c3eeb7ad6a391651222b5bcf6a74b3c44"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex1/c++.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 4,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex1/c++.stdout",
+          "sha256": "140154083d726867f5e43282aeaf021f9300ec6287d4d2c874493ee655a766e7"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex1/c.compile.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 4895,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex1/c.d",
+          "sha256": "ca0100e3b4af0872eb814fb281942ccd4e3eba81539ba8f44854019b42da0b69"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex1/c.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 4,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex1/c.stdout",
+          "sha256": "140154083d726867f5e43282aeaf021f9300ec6287d4d2c874493ee655a766e7"
+        },
+        {
+          "bytes": 950,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex1/commands.json",
+          "sha256": "c41b4b6edaf8163be07f71919b2b926ffee669071eb20f6d9d8bd6509ad392f8"
+        },
+        {
+          "bytes": 137,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex1/input.cc",
+          "sha256": "c6b153fdb749e13f257afb18a2f52eca9b3606dd5e293a273041ff4040ca7c2d"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex1/lower.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 4107,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex1/lower.stdout",
+          "sha256": "5bd7a047a1fc7e7877f9716ea409249ff4523e05e6dd366a207d3d09e8662333"
+        },
+        {
+          "bytes": 3924,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex1/lowered/observe_input.anchors.json",
+          "sha256": "94bd6941b35819700b1f519e73614285737c6b52f3607777c307d9a14acf5d40"
+        },
+        {
+          "bytes": 631,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex1/lowered/observe_input.c",
+          "sha256": "cdbfda966918a57ad6ab579923cb3b5b0a98d5b98c06bfe6b7e4cd01506e6c14"
+        },
+        {
+          "bytes": 51160,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex1/run-c",
+          "sha256": "6e004750be772f860292e7ac3f8f856e9d681ad1f966861ef74122f7b6a810f2"
+        },
+        {
+          "bytes": 51000,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex1/run-cxx",
+          "sha256": "aa15473be869154c00b09d34e545bdc8a6d0c6d0bd6cfb85142d96c55df205e3"
+        },
+        {
+          "bytes": 712,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex1/run.c",
+          "sha256": "b2fcc55b0915d210ac66b2269915a483e8973ab4b4231d3cb6b6668d16841d48"
+        },
+        {
+          "bytes": 218,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex1/run.cc",
+          "sha256": "14479fa6ba6d1aab029badff8b572cbabb9c0b033e533500faeadb1d02965a19"
+        },
+        {
+          "bytes": 4264,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex1/runtime.json",
+          "sha256": "e94fcef10797de8a08c0943e54e17a179402f00efce04c0a12116effcc096f9b"
+        },
+        {
+          "bytes": 272,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex1/source-array-ast-command.json",
+          "sha256": "6f9bbd47c033eec60242b204b2bdc720c4f5318bcc4aebbc0692a8deffc272f3"
+        },
+        {
+          "bytes": 4837,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_native_preserves_ex1/source-array-ast.json",
+          "sha256": "2f7e7edf80e927af7d9e9fa8bf57f619c8c738a05c31e2a71aa126d470490916"
+        },
+        {
+          "bytes": 87,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_refuses_array_fille0/input.cc",
+          "sha256": "511d5878c2914c962ec47cbbc147e0b71fd64676541d0dd9b035723dc8663534"
+        },
+        {
+          "bytes": 89,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_refuses_array_fille0/lower.stderr",
+          "sha256": "ae0f2a4a0293f5669796ad21f932cacc5da71eb728ef7f64698b4db8d3830bbf"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_refuses_array_fille0/lower.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 90,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_refuses_array_fille1/input.cc",
+          "sha256": "ae4dd7b7415cc9c3cde2ec186216aa1e7a1b7d8935d59e24cc5b53424621df64"
+        },
+        {
+          "bytes": 109,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_refuses_array_fille1/lower.stderr",
+          "sha256": "8628786a4794766e262212b6709d35875e5ef40c17223347c6bdfa9102ade415"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_refuses_array_fille1/lower.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 102,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_refuses_nonconstant0/input.cc",
+          "sha256": "5b5dcea8e1c337b92172ac04b4fc799bbf5118fea29fdc921e05f2ece444c6fe"
+        },
+        {
+          "bytes": 143,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_refuses_nonconstant0/lower.stderr",
+          "sha256": "6cefc3d6775b895504486c48c56fbfd93c7c3f2a50e905666f7bca5d1c24df5d"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_refuses_nonconstant0/lower.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 84,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_refuses_nonconstant1/input.cc",
+          "sha256": "6bf428b916977609d1b47f9cac9fe4d2e402608ccf89f981acd9e6382e7432f7"
+        },
+        {
+          "bytes": 143,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_refuses_nonconstant1/lower.stderr",
+          "sha256": "6cefc3d6775b895504486c48c56fbfd93c7c3f2a50e905666f7bca5d1c24df5d"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_refuses_nonconstant1/lower.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 102,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_refuses_nonconstant2/input.cc",
+          "sha256": "527eadf30d472ce3f66b3ef877e940fa0a1d3c3a4efece0f235db8bab9421cb8"
+        },
+        {
+          "bytes": 143,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_refuses_nonconstant2/lower.stderr",
+          "sha256": "6cefc3d6775b895504486c48c56fbfd93c7c3f2a50e905666f7bca5d1c24df5d"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-green/pytest/test_lower_refuses_nonconstant2/lower.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 164,
+          "path": "/private/tmp/probata-t28-array-order-green/resources.json",
+          "sha256": "2f45dd449fb0ab7e849af67967f21b331ce57f1a4de24c7159898d4c1e2a8715"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 4.682626,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 192086016,
+        "timed_out": false,
+        "wall_seconds": 5.402154000010341
+      },
+      "root": "/private/tmp/probata-t28-array-order-green",
+      "scope": "Newconstant-prefixgate:7GREENincluding2nativeprefixcomparisons."
+    },
+    {
+      "files": [
+        {
+          "bytes": 398,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/command.json",
+          "sha256": "bc53b47a7ee18bbcc31d8a68f88846d33af4d779c30bd3ece9e770ccb1f2674e"
+        },
+        {
+          "bytes": 1852,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/control.log",
+          "sha256": "1f94c7addecf7482f81e812a239ee41fc8b6d95e3fe33ed874a765a31952d2cc"
+        },
+        {
+          "bytes": 2659,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/junit.xml",
+          "sha256": "7da1e91cf25992614d61ae0bf718e107f6cdd83e4128f3505e79010449dd312d"
+        },
+        {
+          "bytes": 10915,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/dx100/bc-forward-pass.patch",
+          "sha256": "253739930fea295f6bb8754fe8b5df7f87515c5353b098f50389fcd7cebba07a"
+        },
+        {
+          "bytes": 4260,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/dx100/bc_read_offload.inc",
+          "sha256": "3898b439b0121954474b5012ff2a6fff65bf90ba4166d20d8eb276a96d013b5c"
+        },
+        {
+          "bytes": 3157,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/dx100/bfs_read_offload.inc",
+          "sha256": "3c5867a2b8919806f681603836bd0cff448f21634485abf84e49ed71f25515ef"
+        },
+        {
+          "bytes": 3798,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/README.md",
+          "sha256": "b0df07ee337ff8c1a83dcdb2f91038dcab2ac88b05a61c793f84bfe14d743e40"
+        },
+        {
+          "bytes": 1528,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/bc_driver.inc",
+          "sha256": "95f92ebc2943e713783d90ffe703982266239524380343a8035b89b425b6e3df"
+        },
+        {
+          "bytes": 1383,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/bfs_driver.inc",
+          "sha256": "ad9a5a647614000a0716075e0a4d661df9453b5ff9365db9d239bd1b06416d3a"
+        },
+        {
+          "bytes": 5432,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/candidate_prelude.hpp",
+          "sha256": "87da9d08f1d13ec5961a5999c377bca94d10fa86b0a7ed3b540a4ab9832d37ff"
+        },
+        {
+          "bytes": 3852,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/record.cc",
+          "sha256": "5095bcbac7e5f7b3e9b33533fc7c74dc664d8bb655c3dfbe92ffd2afed5d85b0"
+        },
+        {
+          "bytes": 6003,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/seams.cc",
+          "sha256": "483a6978acd86a3aa6e9e4c6a0b07eee728eabad85e2e60a9660fdbf2a9d89c3"
+        },
+        {
+          "bytes": 1713,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/v1_4/bc_driver.inc",
+          "sha256": "9034e2ad715fbabcd9fc0c842ad9c06543447eb9b476a9f3dc9014231043b1f4"
+        },
+        {
+          "bytes": 1806,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/v1_4/bfs_driver.inc",
+          "sha256": "6c104ea0227283599920c97d388026594434ceb74516d0fe82187e8f7e98ea8f"
+        },
+        {
+          "bytes": 6496,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/v1_4/prelude.hpp",
+          "sha256": "dd5d2917aa093b91c2abecd0ecb7221289d9e3b8e9469c506f2392ec6db7f079"
+        },
+        {
+          "bytes": 6239,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/v1_4/record.cc",
+          "sha256": "c0b0221c2080117761f82566c7801a457aa31d3dedd21ec2600670e61bdd4fa6"
+        },
+        {
+          "bytes": 12876,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/v1_4/seams.cc",
+          "sha256": "1a1deb79cff58ccae5ee5d9cc08bdae123c1c821b0a675e62d80c2033ec23eef"
+        },
+        {
+          "bytes": 4479,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/v1_5/arena.hpp",
+          "sha256": "0a85a60e9f514b755ee05e0daba683c32682c97b67a31f22c911c2591f33ce42"
+        },
+        {
+          "bytes": 1614,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/v1_5/bc_driver.inc",
+          "sha256": "b8dd9d52400551247a8daf2818e86ad49022bac30f51ac2b39cf30a42a36ef4b"
+        },
+        {
+          "bytes": 1563,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/v1_5/bfs_driver.inc",
+          "sha256": "8bb2ba0ab100fda0b73e39e667635f747378ce1b2a527228365a42a8d164eb3e"
+        },
+        {
+          "bytes": 5797,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/v1_5/client/MAA_functional.hpp",
+          "sha256": "cce4deff6692bbc1175ac61eca1b03a532f620915e999fc0c5e0f08e6d624ec0"
+        },
+        {
+          "bytes": 5261,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/v1_5/client.cc",
+          "sha256": "f7917a984afd6b547c696f23300e1609400f4c045aefdb463a3987e8ae7a378c"
+        },
+        {
+          "bytes": 7569,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/v1_5/client_core.inc",
+          "sha256": "b21188bb1067f3018ea2a0fa0bc2153b2177511800dbb211993c512369a352e8"
+        },
+        {
+          "bytes": 9296,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/v1_5/evaluator.cc",
+          "sha256": "89a025c0869bbebd155d7c207bed62dca669b35eb793a95d6c29950e482b695e"
+        },
+        {
+          "bytes": 1658,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/v1_5/evaluator_context.hpp",
+          "sha256": "3ff8432841d29f80aeec22df7be4a9330d7c6f2ab1f3578f3870e95516564fe0"
+        },
+        {
+          "bytes": 7717,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/v1_5/evaluator_core.inc",
+          "sha256": "d8a77bdb2b309e04c3acb27de7b8cb3547c45f53a09b2411d9997ee9eadd7ece"
+        },
+        {
+          "bytes": 1050,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/v1_5/prelude.hpp",
+          "sha256": "d77698926a5fb528e666def15b5220749ac4c11e9b421ba654d3294d334dc1cf"
+        },
+        {
+          "bytes": 4707,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/dx100/drivers/differential.cc",
+          "sha256": "5a30fd75e7a23db709eb7e112d9202f46037cadc8b8c9d667ac472fd77f5e976"
+        },
+        {
+          "bytes": 3153,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/dx100/dxc_lowering.hpp",
+          "sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c"
+        },
+        {
+          "bytes": 8699,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/dx100/peter-section5.patch",
+          "sha256": "cc99ca4d024983ab02c17f5db74db5210a7450968787ccad25562da4d9873cff"
+        },
+        {
+          "bytes": 1398,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/dx100/reference.hpp",
+          "sha256": "75b80bc3d0027b1700e2fc1f075683e617d059ca4bbef761bfeb31839d9fa897"
+        },
+        {
+          "bytes": 19587,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/dx100/strict/MAA_functional.hpp",
+          "sha256": "a24a81631c9365b114395bab65c73048269765a2862a98f4ccb4609eb80fbfa5"
+        },
+        {
+          "bytes": 356,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/dx100/strict/gem5/m5ops.h",
+          "sha256": "b1eb7d074231782a943faa9cc249f6027152b6c727c5f70b71808e122e97867f"
+        },
+        {
+          "bytes": 3775,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/methods/dx100-stream-partial-fixture-v1.yaml",
+          "sha256": "4192f4120e9f8f7473e81d7f213587c1acbbfa7ffa72a5a4d134043f3bc6b403"
+        },
+        {
+          "bytes": 2740,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/dx100_bfs/ghost.acsl",
+          "sha256": "5fa3f12850eba75ccb254b1c1e8ab5c143488046949fbe0e4c965b55ecdb48e9"
+        },
+        {
+          "bytes": 14346,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/dx100_bfs/logic.acsl",
+          "sha256": "34c9971965b53e04cf5ef2dd66abeaecd4d8772660f47def86158bc47624351d"
+        },
+        {
+          "bytes": 20089,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/dx100_bfs/model.h",
+          "sha256": "88298dbb9176640fd8ec2d0c6e31386dd51849411b08df7cebf7f12eab1d22ce"
+        },
+        {
+          "bytes": 949,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/dx100_bfs/state.h",
+          "sha256": "b371131b4a3a7ef21ad654b0eaffac94b4c63252d63397ee8b67a6b017610701"
+        },
+        {
+          "bytes": 31989,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/dx100_bfs_0_1.yaml",
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        {
+          "bytes": 21412,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "ad07e5bb20e8eec6aae2979bb7ef7c66c161be876eb2c98821121f1d1451d302"
+        },
+        {
+          "bytes": 22141,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/one-u32-stream/CpuSidePort.cc",
+          "sha256": "886a0c1bbd437916d2fac62a2aa194e01f6996fae65dc56241fad601c5f0103b"
+        },
+        {
+          "bytes": 23772,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/one-u32-stream/IF.cc",
+          "sha256": "fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561"
+        },
+        {
+          "bytes": 5988,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/one-u32-stream/IF.hh",
+          "sha256": "9dee4c4803a1780a41fb30b760775169000785019e6f5848689fc3f3034a1795"
+        },
+        {
+          "bytes": 72419,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/one-u32-stream/MAA.cc",
+          "sha256": "058395cbd171ccf3746fb524967d2d205cb8d622d4aa06e8eef530b00dc21299"
+        },
+        {
+          "bytes": 10059,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/one-u32-stream/SPD.cc",
+          "sha256": "9e6bb3672be95954e8816c054b4032f95811a3085ca6df418aed90ad1e852b4a"
+        },
+        {
+          "bytes": 5117,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/one-u32-stream/SPD.hh",
+          "sha256": "70e02b0fea7693585fd9b8f318381c09e352df2fff58bb3f84021f4ea02e9737"
+        },
+        {
+          "bytes": 26166,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/one-u32-stream/StreamAccess.cc",
+          "sha256": "5fe78a94f0d690396cdfbcdd9b0082e57cbdb4a6b445a7282b2533a33852d47b"
+        },
+        {
+          "bytes": 4396,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/one-u32-stream/StreamAccess.hh",
+          "sha256": "9ac9feb68adb525ca2d5c7d6e9046b5b0e399ad4c63a718fcca8f78cd521a3ec"
+        },
+        {
+          "bytes": 18963,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/one-u32-stream/Tables.cc",
+          "sha256": "9bd8aa4103fb6e7617fdd4c514a917329b8e7b8345738ed6e5d82f818df7dfa6"
+        },
+        {
+          "bytes": 4632,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/one-u32-stream/Tables.hh",
+          "sha256": "5ea6a7caff7ca690aa9ce19096c0e686dfa52716e4dbf19d17348c9235011b43"
+        },
+        {
+          "bytes": 49,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/one-u32-stream/ghost.acsl",
+          "sha256": "cef6352ffe5ce76236ec837ef2f3015f98070c41b37a9455ef3c53c363e408fc"
+        },
+        {
+          "bytes": 23,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/one-u32-stream/logic.acsl",
+          "sha256": "b7f8c7f0b5a70cdcdf6ee864199c6d7b07bc2fed87e2fdeaafd6f0e770b0ceb8"
+        },
+        {
+          "bytes": 2417,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/one-u32-stream/model.h",
+          "sha256": "4a12723f504cab4b485e25d59e2ea2afbcc2bd0bd1af95281949351aefaf325b"
+        },
+        {
+          "bytes": 225,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/one-u32-stream/state.h",
+          "sha256": "ac91330aa6805bcb27f97b2460da48f702f43dca7a17c6dca0dc6083f567c45c"
+        },
+        {
+          "bytes": 37,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/pure-selector/ghost.acsl",
+          "sha256": "0dffdc2cb273e85b2675258948535f3ec0f8b46f8080dd1481967f3a61f78db9"
+        },
+        {
+          "bytes": 23,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/pure-selector/logic.acsl",
+          "sha256": "b7f8c7f0b5a70cdcdf6ee864199c6d7b07bc2fed87e2fdeaafd6f0e770b0ceb8"
+        },
+        {
+          "bytes": 61,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/pure-selector/model.h",
+          "sha256": "9d6474eeb40d96ddca0090b6e1375a9bd46e2e6aafd4f740cbe302f949338166"
+        },
+        {
+          "bytes": 38,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/pure-selector/state.h",
+          "sha256": "a57ee157e0975b44f2d3829b80ee82694f1d8ed66605fa811fc83999d3303a29"
+        },
+        {
+          "bytes": 133,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/proof_units/gem5/m5ops.h",
+          "sha256": "4caae6752583fd058e911da16305fe5bebec0fa08d3242242af85494b2b90d7a"
+        },
+        {
+          "bytes": 291,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/proof_units/trust.cc",
+          "sha256": "13708db1fdd556a31e3b23bcdd5162ae89a3434c1f53c0e5a684a401767ba8fa"
+        },
+        {
+          "bytes": 1463,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/library/rewrite_contracts/trust.yaml",
+          "sha256": "1afdd3f53321e58f0305ddf4b9cb445869ad1407a1cde133bf254507a137bcf7"
+        },
+        {
+          "bytes": 88,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t084715z.22e397a8/adapter.log",
+          "sha256": "2977ae11e61da5598dddd93d025323d1b155d6e224f5bcad6cbdcb77249ecbbe"
+        },
+        {
+          "bytes": 207,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/scripted-why3.conf",
+          "sha256": "cebe53bfe99870cd9642321268f75fdaae553e81d6c0070034044d0f1f8a01d9"
+        },
+        {
+          "bytes": 289,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/t28-scripted-typechecker.py",
+          "sha256": "4416d3c6572fcdeebe429085ac336f5419b5e8e83d40053d5bedd06debf449b1"
+        },
+        {
+          "bytes": 255,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc0/t28-version-only-adapter.py",
+          "sha256": "98b73fb85f1973a05a276eb2c4ecfd0f50ff0f9290c28bf2adb2c082733f3af0"
+        },
+        {
+          "bytes": 10915,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/dx100/bc-forward-pass.patch",
+          "sha256": "253739930fea295f6bb8754fe8b5df7f87515c5353b098f50389fcd7cebba07a"
+        },
+        {
+          "bytes": 4260,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/dx100/bc_read_offload.inc",
+          "sha256": "3898b439b0121954474b5012ff2a6fff65bf90ba4166d20d8eb276a96d013b5c"
+        },
+        {
+          "bytes": 3157,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/dx100/bfs_read_offload.inc",
+          "sha256": "3c5867a2b8919806f681603836bd0cff448f21634485abf84e49ed71f25515ef"
+        },
+        {
+          "bytes": 3798,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/README.md",
+          "sha256": "b0df07ee337ff8c1a83dcdb2f91038dcab2ac88b05a61c793f84bfe14d743e40"
+        },
+        {
+          "bytes": 1528,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/bc_driver.inc",
+          "sha256": "95f92ebc2943e713783d90ffe703982266239524380343a8035b89b425b6e3df"
+        },
+        {
+          "bytes": 1383,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/bfs_driver.inc",
+          "sha256": "ad9a5a647614000a0716075e0a4d661df9453b5ff9365db9d239bd1b06416d3a"
+        },
+        {
+          "bytes": 5432,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/candidate_prelude.hpp",
+          "sha256": "87da9d08f1d13ec5961a5999c377bca94d10fa86b0a7ed3b540a4ab9832d37ff"
+        },
+        {
+          "bytes": 3852,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/record.cc",
+          "sha256": "5095bcbac7e5f7b3e9b33533fc7c74dc664d8bb655c3dfbe92ffd2afed5d85b0"
+        },
+        {
+          "bytes": 6003,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/seams.cc",
+          "sha256": "483a6978acd86a3aa6e9e4c6a0b07eee728eabad85e2e60a9660fdbf2a9d89c3"
+        },
+        {
+          "bytes": 1713,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/v1_4/bc_driver.inc",
+          "sha256": "9034e2ad715fbabcd9fc0c842ad9c06543447eb9b476a9f3dc9014231043b1f4"
+        },
+        {
+          "bytes": 1806,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/v1_4/bfs_driver.inc",
+          "sha256": "6c104ea0227283599920c97d388026594434ceb74516d0fe82187e8f7e98ea8f"
+        },
+        {
+          "bytes": 6496,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/v1_4/prelude.hpp",
+          "sha256": "dd5d2917aa093b91c2abecd0ecb7221289d9e3b8e9469c506f2392ec6db7f079"
+        },
+        {
+          "bytes": 6239,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/v1_4/record.cc",
+          "sha256": "c0b0221c2080117761f82566c7801a457aa31d3dedd21ec2600670e61bdd4fa6"
+        },
+        {
+          "bytes": 12876,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/v1_4/seams.cc",
+          "sha256": "1a1deb79cff58ccae5ee5d9cc08bdae123c1c821b0a675e62d80c2033ec23eef"
+        },
+        {
+          "bytes": 4479,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/v1_5/arena.hpp",
+          "sha256": "0a85a60e9f514b755ee05e0daba683c32682c97b67a31f22c911c2591f33ce42"
+        },
+        {
+          "bytes": 1614,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/v1_5/bc_driver.inc",
+          "sha256": "b8dd9d52400551247a8daf2818e86ad49022bac30f51ac2b39cf30a42a36ef4b"
+        },
+        {
+          "bytes": 1563,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/v1_5/bfs_driver.inc",
+          "sha256": "8bb2ba0ab100fda0b73e39e667635f747378ce1b2a527228365a42a8d164eb3e"
+        },
+        {
+          "bytes": 5797,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/v1_5/client/MAA_functional.hpp",
+          "sha256": "cce4deff6692bbc1175ac61eca1b03a532f620915e999fc0c5e0f08e6d624ec0"
+        },
+        {
+          "bytes": 5261,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/v1_5/client.cc",
+          "sha256": "f7917a984afd6b547c696f23300e1609400f4c045aefdb463a3987e8ae7a378c"
+        },
+        {
+          "bytes": 7569,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/v1_5/client_core.inc",
+          "sha256": "b21188bb1067f3018ea2a0fa0bc2153b2177511800dbb211993c512369a352e8"
+        },
+        {
+          "bytes": 9296,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/v1_5/evaluator.cc",
+          "sha256": "89a025c0869bbebd155d7c207bed62dca669b35eb793a95d6c29950e482b695e"
+        },
+        {
+          "bytes": 1658,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/v1_5/evaluator_context.hpp",
+          "sha256": "3ff8432841d29f80aeec22df7be4a9330d7c6f2ab1f3578f3870e95516564fe0"
+        },
+        {
+          "bytes": 7717,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/v1_5/evaluator_core.inc",
+          "sha256": "d8a77bdb2b309e04c3acb27de7b8cb3547c45f53a09b2411d9997ee9eadd7ece"
+        },
+        {
+          "bytes": 1050,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/v1_5/prelude.hpp",
+          "sha256": "d77698926a5fb528e666def15b5220749ac4c11e9b421ba654d3294d334dc1cf"
+        },
+        {
+          "bytes": 4707,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/dx100/drivers/differential.cc",
+          "sha256": "5a30fd75e7a23db709eb7e112d9202f46037cadc8b8c9d667ac472fd77f5e976"
+        },
+        {
+          "bytes": 3153,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/dx100/dxc_lowering.hpp",
+          "sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c"
+        },
+        {
+          "bytes": 8699,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/dx100/peter-section5.patch",
+          "sha256": "cc99ca4d024983ab02c17f5db74db5210a7450968787ccad25562da4d9873cff"
+        },
+        {
+          "bytes": 1398,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/dx100/reference.hpp",
+          "sha256": "75b80bc3d0027b1700e2fc1f075683e617d059ca4bbef761bfeb31839d9fa897"
+        },
+        {
+          "bytes": 19587,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/dx100/strict/MAA_functional.hpp",
+          "sha256": "a24a81631c9365b114395bab65c73048269765a2862a98f4ccb4609eb80fbfa5"
+        },
+        {
+          "bytes": 356,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/dx100/strict/gem5/m5ops.h",
+          "sha256": "b1eb7d074231782a943faa9cc249f6027152b6c727c5f70b71808e122e97867f"
+        },
+        {
+          "bytes": 3775,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/methods/dx100-stream-partial-fixture-v1.yaml",
+          "sha256": "d4d4e65560ed928e1c47f28821aaaeb62afdf5d5aa9c1c8ff18fedd996f37735"
+        },
+        {
+          "bytes": 2740,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/dx100_bfs/ghost.acsl",
+          "sha256": "5fa3f12850eba75ccb254b1c1e8ab5c143488046949fbe0e4c965b55ecdb48e9"
+        },
+        {
+          "bytes": 14346,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/dx100_bfs/logic.acsl",
+          "sha256": "34c9971965b53e04cf5ef2dd66abeaecd4d8772660f47def86158bc47624351d"
+        },
+        {
+          "bytes": 20089,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/dx100_bfs/model.h",
+          "sha256": "88298dbb9176640fd8ec2d0c6e31386dd51849411b08df7cebf7f12eab1d22ce"
+        },
+        {
+          "bytes": 949,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/dx100_bfs/state.h",
+          "sha256": "b371131b4a3a7ef21ad654b0eaffac94b4c63252d63397ee8b67a6b017610701"
+        },
+        {
+          "bytes": 31989,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/dx100_bfs_0_1.yaml",
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        {
+          "bytes": 21412,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "ad07e5bb20e8eec6aae2979bb7ef7c66c161be876eb2c98821121f1d1451d302"
+        },
+        {
+          "bytes": 22141,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/one-u32-stream/CpuSidePort.cc",
+          "sha256": "886a0c1bbd437916d2fac62a2aa194e01f6996fae65dc56241fad601c5f0103b"
+        },
+        {
+          "bytes": 23772,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/one-u32-stream/IF.cc",
+          "sha256": "fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561"
+        },
+        {
+          "bytes": 5988,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/one-u32-stream/IF.hh",
+          "sha256": "9dee4c4803a1780a41fb30b760775169000785019e6f5848689fc3f3034a1795"
+        },
+        {
+          "bytes": 72419,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/one-u32-stream/MAA.cc",
+          "sha256": "058395cbd171ccf3746fb524967d2d205cb8d622d4aa06e8eef530b00dc21299"
+        },
+        {
+          "bytes": 10059,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/one-u32-stream/SPD.cc",
+          "sha256": "9e6bb3672be95954e8816c054b4032f95811a3085ca6df418aed90ad1e852b4a"
+        },
+        {
+          "bytes": 5117,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/one-u32-stream/SPD.hh",
+          "sha256": "70e02b0fea7693585fd9b8f318381c09e352df2fff58bb3f84021f4ea02e9737"
+        },
+        {
+          "bytes": 26166,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/one-u32-stream/StreamAccess.cc",
+          "sha256": "5fe78a94f0d690396cdfbcdd9b0082e57cbdb4a6b445a7282b2533a33852d47b"
+        },
+        {
+          "bytes": 4396,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/one-u32-stream/StreamAccess.hh",
+          "sha256": "9ac9feb68adb525ca2d5c7d6e9046b5b0e399ad4c63a718fcca8f78cd521a3ec"
+        },
+        {
+          "bytes": 18963,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/one-u32-stream/Tables.cc",
+          "sha256": "9bd8aa4103fb6e7617fdd4c514a917329b8e7b8345738ed6e5d82f818df7dfa6"
+        },
+        {
+          "bytes": 4632,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/one-u32-stream/Tables.hh",
+          "sha256": "5ea6a7caff7ca690aa9ce19096c0e686dfa52716e4dbf19d17348c9235011b43"
+        },
+        {
+          "bytes": 49,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/one-u32-stream/ghost.acsl",
+          "sha256": "cef6352ffe5ce76236ec837ef2f3015f98070c41b37a9455ef3c53c363e408fc"
+        },
+        {
+          "bytes": 23,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/one-u32-stream/logic.acsl",
+          "sha256": "b7f8c7f0b5a70cdcdf6ee864199c6d7b07bc2fed87e2fdeaafd6f0e770b0ceb8"
+        },
+        {
+          "bytes": 2417,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/one-u32-stream/model.h",
+          "sha256": "4a12723f504cab4b485e25d59e2ea2afbcc2bd0bd1af95281949351aefaf325b"
+        },
+        {
+          "bytes": 225,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/one-u32-stream/state.h",
+          "sha256": "ac91330aa6805bcb27f97b2460da48f702f43dca7a17c6dca0dc6083f567c45c"
+        },
+        {
+          "bytes": 37,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/pure-selector/ghost.acsl",
+          "sha256": "0dffdc2cb273e85b2675258948535f3ec0f8b46f8080dd1481967f3a61f78db9"
+        },
+        {
+          "bytes": 23,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/pure-selector/logic.acsl",
+          "sha256": "b7f8c7f0b5a70cdcdf6ee864199c6d7b07bc2fed87e2fdeaafd6f0e770b0ceb8"
+        },
+        {
+          "bytes": 61,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/pure-selector/model.h",
+          "sha256": "9d6474eeb40d96ddca0090b6e1375a9bd46e2e6aafd4f740cbe302f949338166"
+        },
+        {
+          "bytes": 38,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/pure-selector/state.h",
+          "sha256": "a57ee157e0975b44f2d3829b80ee82694f1d8ed66605fa811fc83999d3303a29"
+        },
+        {
+          "bytes": 133,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/proof_units/gem5/m5ops.h",
+          "sha256": "4caae6752583fd058e911da16305fe5bebec0fa08d3242242af85494b2b90d7a"
+        },
+        {
+          "bytes": 291,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/proof_units/trust.cc",
+          "sha256": "13708db1fdd556a31e3b23bcdd5162ae89a3434c1f53c0e5a684a401767ba8fa"
+        },
+        {
+          "bytes": 1463,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/library/rewrite_contracts/trust.yaml",
+          "sha256": "65491f6e387b765d17fa6ec5a231ae08bbcdab0a2053d4dd5e9a2834e7993c43"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/must-not-launch-solver",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/records/.swdb.lock",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 12459340,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/records/proofs/proof.contract.dx100_stream_partial_fixture.v1.20261016t084724z.b0c51837.yaml",
+          "sha256": "3da388bca366cdd88e2a025c796b984ead648af07c180b013a3b888b5ebff08d"
+        },
+        {
+          "bytes": 1400,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t084724z.b0c51837/adapter.log",
+          "sha256": "8923db5380cd906d2fd85052bbb2befc783226aa9914281a0de30b9822e2e139"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t084724z.b0c51837/wp/frama-c.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 362,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t084724z.b0c51837/wp/handler.json",
+          "sha256": "3bf0b3c1186ff8489840700d8d72ebcbe30ecfbfbfbc2793c0b65bd8513adc53"
+        },
+        {
+          "bytes": 218,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t084724z.b0c51837/wp/reproduction/command.txt",
+          "sha256": "122cd38bbbcb6b9dbb5f8fb65176423a46f781a8d3618435059c5b41992ee1b0"
+        },
+        {
+          "bytes": 1159,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t084724z.b0c51837/wp/reproduction/trust_fixture.c",
+          "sha256": "61e1b7a0595399f88d57b1b216e466bf8f6ad2ab3cb1966f03d5c14d8d429bb7"
+        },
+        {
+          "bytes": 4219,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t084724z.b0c51837/wp/reproduction/wp_input.c",
+          "sha256": "427ffe4a2861704b063f0ae1e51551100dd647875931328673ab1743b12c2c14"
+        },
+        {
+          "bytes": 11472114,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t084724z.b0c51837/wp/trust_fixture.anchors.json",
+          "sha256": "e5d331c65bf27765c69ddc1f37837bac3e38db9c52f646e4d196ec2e27da6ec1"
+        },
+        {
+          "bytes": 1159,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t084724z.b0c51837/wp/trust_fixture.c",
+          "sha256": "61e1b7a0595399f88d57b1b216e466bf8f6ad2ab3cb1966f03d5c14d8d429bb7"
+        },
+        {
+          "bytes": 4219,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t084724z.b0c51837/wp/wp_input.c",
+          "sha256": "427ffe4a2861704b063f0ae1e51551100dd647875931328673ab1743b12c2c14"
+        },
+        {
+          "bytes": 207,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/scripted-why3.conf",
+          "sha256": "cebe53bfe99870cd9642321268f75fdaae553e81d6c0070034044d0f1f8a01d9"
+        },
+        {
+          "bytes": 289,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/t28-scripted-typechecker.py",
+          "sha256": "3b11f55c1ad4ab91c1d7bb00290aa02e442631cf15dc1985e728631d6dd090fc"
+        },
+        {
+          "bytes": 255,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/t28-version-only-adapter.py",
+          "sha256": "569507a172e9072dd3601e8899618d10ea714c13e01cf44faecdc51f089b64c0"
+        },
+        {
+          "bytes": 282,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/wp-c-syntax-command.json",
+          "sha256": "98db0d1e451af4a6bb404c8cf92e8613aa284775554c02344f9dd9ab085e2fc1"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/wp-c-syntax.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/pytest/test_public_stream_binds_sourc1/wp-c-syntax.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 176,
+          "path": "/private/tmp/probata-t28-array-order-stream-regression/resources.json",
+          "sha256": "e861ad9486f81dfbdabc29e9f8f855e32b99a0c929563f86a95427712780255d"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 31.586192999999998,
+        "exit_code": 1,
+        "out_of_memory": false,
+        "peak_rss_bytes": 2368487424,
+        "timed_out": false,
+        "wall_seconds": 31.141368542041164
+      },
+      "root": "/private/tmp/probata-t28-array-order-stream-regression",
+      "scope": "Invalidated transitional preparation: integration sync changed identity during test;1pinrefusal+1standin; not final acceptance."
+    },
+    {
+      "files": [
+        {
+          "bytes": 455,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/command.json",
+          "sha256": "113148c721c7ae0887399be79c11233683934d9f287f546092ec17d54d8e17c9"
+        },
+        {
+          "bytes": 99,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/control.log",
+          "sha256": "33a73bbe6d712a7f39274092833453e85c158515bfb74455447f4805a6563d8c"
+        },
+        {
+          "bytes": 1813,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/junit.xml",
+          "sha256": "fd94d5f99aee807785714eb23bf0827376603f213bf7d0ce2d924c28165a9061"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex0/c++.compile.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 4299,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex0/c++.d",
+          "sha256": "3cb738cf8eea95672b1173b0fdb8e199e0357e8c209928ee469c8a5117df8ab4"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex0/c++.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 4,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex0/c++.stdout",
+          "sha256": "74c3cc29c8e42455948aca1dcc545d258f9d33c51dfd5e90d6cfa6ed5c9da357"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex0/c.compile.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 4923,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex0/c.d",
+          "sha256": "7230733d3853e8e96a3507f83b45c7d4aa47e7ff27dbb9f9bced8571b1ad0f9c"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex0/c.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 4,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex0/c.stdout",
+          "sha256": "74c3cc29c8e42455948aca1dcc545d258f9d33c51dfd5e90d6cfa6ed5c9da357"
+        },
+        {
+          "bytes": 1034,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex0/commands.json",
+          "sha256": "741ce649acfaf63d2f8f2e6b9c1c6162e620ef39e8bcdaec37a382c81299e753"
+        },
+        {
+          "bytes": 135,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex0/input.cc",
+          "sha256": "0c41407ebf29a2605938c00d81a294e6295972824ad2b2402b187c28cb07d5eb"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex0/lower.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 4135,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex0/lower.stdout",
+          "sha256": "a5a17719ea3914acc320d1db8b02076b62e55b79e182ed856c63f2645b3e65a0"
+        },
+        {
+          "bytes": 3924,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex0/lowered/observe_input.anchors.json",
+          "sha256": "9307c8a8e277921b648f171749ce1dc127a8d4a59d888586ebe25ba53da36007"
+        },
+        {
+          "bytes": 628,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex0/lowered/observe_input.c",
+          "sha256": "e008c80f98b7f25eec67dd4afd823d9babe4a8a60cbb7a2beac14eb651fc1439"
+        },
+        {
+          "bytes": 51160,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex0/run-c",
+          "sha256": "8c96edcf491cb3f882912924730669567670851a563f07595a4a97ef37a2621e"
+        },
+        {
+          "bytes": 51000,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex0/run-cxx",
+          "sha256": "4f62c81fb5dec7306fea10ba598731b12a36c66c6c705dfec617eb11cc111bb9"
+        },
+        {
+          "bytes": 709,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex0/run.c",
+          "sha256": "b3abc206a0a08bf40d2a149003fcdf4a11d5eb01836ff7c3cb9e61883aa1960b"
+        },
+        {
+          "bytes": 216,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex0/run.cc",
+          "sha256": "9c34ff4fa318c09bc35ccd5919b45a466211bc0d57df22f375766e6cb560851d"
+        },
+        {
+          "bytes": 4264,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex0/runtime.json",
+          "sha256": "e94fcef10797de8a08c0943e54e17a179402f00efce04c0a12116effcc096f9b"
+        },
+        {
+          "bytes": 286,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex0/source-array-ast-command.json",
+          "sha256": "3d01a0da724906c6c4873a44b2a3073c7e3cbb1d0af200816a9e98a39f0834ec"
+        },
+        {
+          "bytes": 3753,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex0/source-array-ast.json",
+          "sha256": "db1f13ff1ee05ebfc0e1a9e857f578e93b345e7dd97f4d4d8f7104442f2b3133"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex1/c++.compile.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 4299,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex1/c++.d",
+          "sha256": "ba3e5bd0eb065977c8e12ade86fbcd597696a0aeb1631c1757b8437d52cecc22"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex1/c++.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 4,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex1/c++.stdout",
+          "sha256": "140154083d726867f5e43282aeaf021f9300ec6287d4d2c874493ee655a766e7"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex1/c.compile.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 4923,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex1/c.d",
+          "sha256": "36433d321178accfcef01a85ae0a5198b09474edf886cb22f376cedddf856dc4"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex1/c.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 4,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex1/c.stdout",
+          "sha256": "140154083d726867f5e43282aeaf021f9300ec6287d4d2c874493ee655a766e7"
+        },
+        {
+          "bytes": 1034,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex1/commands.json",
+          "sha256": "d7cfe09cc834d0f923de4d67990a49484a2adb1a5881ce850e22e4babd041ac3"
+        },
+        {
+          "bytes": 137,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex1/input.cc",
+          "sha256": "c6b153fdb749e13f257afb18a2f52eca9b3606dd5e293a273041ff4040ca7c2d"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex1/lower.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 4135,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex1/lower.stdout",
+          "sha256": "d6057235bae442dc0198454b5c1225772a74cc39a5c314762fc28cfed6927033"
+        },
+        {
+          "bytes": 3924,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex1/lowered/observe_input.anchors.json",
+          "sha256": "94bd6941b35819700b1f519e73614285737c6b52f3607777c307d9a14acf5d40"
+        },
+        {
+          "bytes": 631,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex1/lowered/observe_input.c",
+          "sha256": "cdbfda966918a57ad6ab579923cb3b5b0a98d5b98c06bfe6b7e4cd01506e6c14"
+        },
+        {
+          "bytes": 51160,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex1/run-c",
+          "sha256": "a622c4c0f3c77d7417bee1db223d601a2874f586ba56a0c878816bdaac565406"
+        },
+        {
+          "bytes": 51000,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex1/run-cxx",
+          "sha256": "44513b0a9d02ef81074e0bc1610ee3bdc77f4137147c3fec30d352cb4ea7456d"
+        },
+        {
+          "bytes": 712,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex1/run.c",
+          "sha256": "b2fcc55b0915d210ac66b2269915a483e8973ab4b4231d3cb6b6668d16841d48"
+        },
+        {
+          "bytes": 218,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex1/run.cc",
+          "sha256": "14479fa6ba6d1aab029badff8b572cbabb9c0b033e533500faeadb1d02965a19"
+        },
+        {
+          "bytes": 4264,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex1/runtime.json",
+          "sha256": "e94fcef10797de8a08c0943e54e17a179402f00efce04c0a12116effcc096f9b"
+        },
+        {
+          "bytes": 286,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex1/source-array-ast-command.json",
+          "sha256": "5f950051019e7b5ff3b5c07a426f0c03441de398bbae72c88b672a2518b45aab"
+        },
+        {
+          "bytes": 4851,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_native_preserves_ex1/source-array-ast.json",
+          "sha256": "26b4818cb0d6f5c6b6a5e785b4828b351089da0efdb4f55c2dbe9cc74a87a2db"
+        },
+        {
+          "bytes": 87,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_refuses_array_fille0/input.cc",
+          "sha256": "511d5878c2914c962ec47cbbc147e0b71fd64676541d0dd9b035723dc8663534"
+        },
+        {
+          "bytes": 89,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_refuses_array_fille0/lower.stderr",
+          "sha256": "ae0f2a4a0293f5669796ad21f932cacc5da71eb728ef7f64698b4db8d3830bbf"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_refuses_array_fille0/lower.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 90,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_refuses_array_fille1/input.cc",
+          "sha256": "ae4dd7b7415cc9c3cde2ec186216aa1e7a1b7d8935d59e24cc5b53424621df64"
+        },
+        {
+          "bytes": 109,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_refuses_array_fille1/lower.stderr",
+          "sha256": "8628786a4794766e262212b6709d35875e5ef40c17223347c6bdfa9102ade415"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_refuses_array_fille1/lower.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 102,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_refuses_nonconstant0/input.cc",
+          "sha256": "5b5dcea8e1c337b92172ac04b4fc799bbf5118fea29fdc921e05f2ece444c6fe"
+        },
+        {
+          "bytes": 143,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_refuses_nonconstant0/lower.stderr",
+          "sha256": "6cefc3d6775b895504486c48c56fbfd93c7c3f2a50e905666f7bca5d1c24df5d"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_refuses_nonconstant0/lower.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 84,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_refuses_nonconstant1/input.cc",
+          "sha256": "6bf428b916977609d1b47f9cac9fe4d2e402608ccf89f981acd9e6382e7432f7"
+        },
+        {
+          "bytes": 143,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_refuses_nonconstant1/lower.stderr",
+          "sha256": "6cefc3d6775b895504486c48c56fbfd93c7c3f2a50e905666f7bca5d1c24df5d"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_refuses_nonconstant1/lower.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 102,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_refuses_nonconstant2/input.cc",
+          "sha256": "527eadf30d472ce3f66b3ef877e940fa0a1d3c3a4efece0f235db8bab9421cb8"
+        },
+        {
+          "bytes": 143,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_refuses_nonconstant2/lower.stderr",
+          "sha256": "6cefc3d6775b895504486c48c56fbfd93c7c3f2a50e905666f7bca5d1c24df5d"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_lower_refuses_nonconstant2/lower.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 10915,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/dx100/bc-forward-pass.patch",
+          "sha256": "253739930fea295f6bb8754fe8b5df7f87515c5353b098f50389fcd7cebba07a"
+        },
+        {
+          "bytes": 4260,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/dx100/bc_read_offload.inc",
+          "sha256": "3898b439b0121954474b5012ff2a6fff65bf90ba4166d20d8eb276a96d013b5c"
+        },
+        {
+          "bytes": 3157,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/dx100/bfs_read_offload.inc",
+          "sha256": "3c5867a2b8919806f681603836bd0cff448f21634485abf84e49ed71f25515ef"
+        },
+        {
+          "bytes": 3798,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/README.md",
+          "sha256": "b0df07ee337ff8c1a83dcdb2f91038dcab2ac88b05a61c793f84bfe14d743e40"
+        },
+        {
+          "bytes": 1528,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/bc_driver.inc",
+          "sha256": "95f92ebc2943e713783d90ffe703982266239524380343a8035b89b425b6e3df"
+        },
+        {
+          "bytes": 1383,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/bfs_driver.inc",
+          "sha256": "ad9a5a647614000a0716075e0a4d661df9453b5ff9365db9d239bd1b06416d3a"
+        },
+        {
+          "bytes": 5432,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/candidate_prelude.hpp",
+          "sha256": "87da9d08f1d13ec5961a5999c377bca94d10fa86b0a7ed3b540a4ab9832d37ff"
+        },
+        {
+          "bytes": 3852,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/record.cc",
+          "sha256": "5095bcbac7e5f7b3e9b33533fc7c74dc664d8bb655c3dfbe92ffd2afed5d85b0"
+        },
+        {
+          "bytes": 6003,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/seams.cc",
+          "sha256": "483a6978acd86a3aa6e9e4c6a0b07eee728eabad85e2e60a9660fdbf2a9d89c3"
+        },
+        {
+          "bytes": 1713,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/v1_4/bc_driver.inc",
+          "sha256": "9034e2ad715fbabcd9fc0c842ad9c06543447eb9b476a9f3dc9014231043b1f4"
+        },
+        {
+          "bytes": 1806,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/v1_4/bfs_driver.inc",
+          "sha256": "6c104ea0227283599920c97d388026594434ceb74516d0fe82187e8f7e98ea8f"
+        },
+        {
+          "bytes": 6496,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/v1_4/prelude.hpp",
+          "sha256": "dd5d2917aa093b91c2abecd0ecb7221289d9e3b8e9469c506f2392ec6db7f079"
+        },
+        {
+          "bytes": 6239,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/v1_4/record.cc",
+          "sha256": "c0b0221c2080117761f82566c7801a457aa31d3dedd21ec2600670e61bdd4fa6"
+        },
+        {
+          "bytes": 12876,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/v1_4/seams.cc",
+          "sha256": "1a1deb79cff58ccae5ee5d9cc08bdae123c1c821b0a675e62d80c2033ec23eef"
+        },
+        {
+          "bytes": 4479,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/v1_5/arena.hpp",
+          "sha256": "0a85a60e9f514b755ee05e0daba683c32682c97b67a31f22c911c2591f33ce42"
+        },
+        {
+          "bytes": 1614,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/v1_5/bc_driver.inc",
+          "sha256": "b8dd9d52400551247a8daf2818e86ad49022bac30f51ac2b39cf30a42a36ef4b"
+        },
+        {
+          "bytes": 1563,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/v1_5/bfs_driver.inc",
+          "sha256": "8bb2ba0ab100fda0b73e39e667635f747378ce1b2a527228365a42a8d164eb3e"
+        },
+        {
+          "bytes": 5797,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/v1_5/client/MAA_functional.hpp",
+          "sha256": "cce4deff6692bbc1175ac61eca1b03a532f620915e999fc0c5e0f08e6d624ec0"
+        },
+        {
+          "bytes": 5261,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/v1_5/client.cc",
+          "sha256": "f7917a984afd6b547c696f23300e1609400f4c045aefdb463a3987e8ae7a378c"
+        },
+        {
+          "bytes": 7569,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/v1_5/client_core.inc",
+          "sha256": "b21188bb1067f3018ea2a0fa0bc2153b2177511800dbb211993c512369a352e8"
+        },
+        {
+          "bytes": 9296,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/v1_5/evaluator.cc",
+          "sha256": "89a025c0869bbebd155d7c207bed62dca669b35eb793a95d6c29950e482b695e"
+        },
+        {
+          "bytes": 1658,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/v1_5/evaluator_context.hpp",
+          "sha256": "3ff8432841d29f80aeec22df7be4a9330d7c6f2ab1f3578f3870e95516564fe0"
+        },
+        {
+          "bytes": 7717,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/v1_5/evaluator_core.inc",
+          "sha256": "d8a77bdb2b309e04c3acb27de7b8cb3547c45f53a09b2411d9997ee9eadd7ece"
+        },
+        {
+          "bytes": 1050,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/dx100/certification/v1_5/prelude.hpp",
+          "sha256": "d77698926a5fb528e666def15b5220749ac4c11e9b421ba654d3294d334dc1cf"
+        },
+        {
+          "bytes": 4707,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/dx100/drivers/differential.cc",
+          "sha256": "5a30fd75e7a23db709eb7e112d9202f46037cadc8b8c9d667ac472fd77f5e976"
+        },
+        {
+          "bytes": 3153,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/dx100/dxc_lowering.hpp",
+          "sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c"
+        },
+        {
+          "bytes": 8699,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/dx100/peter-section5.patch",
+          "sha256": "cc99ca4d024983ab02c17f5db74db5210a7450968787ccad25562da4d9873cff"
+        },
+        {
+          "bytes": 1398,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/dx100/reference.hpp",
+          "sha256": "75b80bc3d0027b1700e2fc1f075683e617d059ca4bbef761bfeb31839d9fa897"
+        },
+        {
+          "bytes": 19587,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/dx100/strict/MAA_functional.hpp",
+          "sha256": "a24a81631c9365b114395bab65c73048269765a2862a98f4ccb4609eb80fbfa5"
+        },
+        {
+          "bytes": 356,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/dx100/strict/gem5/m5ops.h",
+          "sha256": "b1eb7d074231782a943faa9cc249f6027152b6c727c5f70b71808e122e97867f"
+        },
+        {
+          "bytes": 3775,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/methods/dx100-stream-partial-fixture-v1.yaml",
+          "sha256": "d4d4e65560ed928e1c47f28821aaaeb62afdf5d5aa9c1c8ff18fedd996f37735"
+        },
+        {
+          "bytes": 2740,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/dx100_bfs/ghost.acsl",
+          "sha256": "5fa3f12850eba75ccb254b1c1e8ab5c143488046949fbe0e4c965b55ecdb48e9"
+        },
+        {
+          "bytes": 14346,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/dx100_bfs/logic.acsl",
+          "sha256": "34c9971965b53e04cf5ef2dd66abeaecd4d8772660f47def86158bc47624351d"
+        },
+        {
+          "bytes": 20089,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/dx100_bfs/model.h",
+          "sha256": "88298dbb9176640fd8ec2d0c6e31386dd51849411b08df7cebf7f12eab1d22ce"
+        },
+        {
+          "bytes": 949,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/dx100_bfs/state.h",
+          "sha256": "b371131b4a3a7ef21ad654b0eaffac94b4c63252d63397ee8b67a6b017610701"
+        },
+        {
+          "bytes": 31989,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/dx100_bfs_0_1.yaml",
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        {
+          "bytes": 21412,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "ad07e5bb20e8eec6aae2979bb7ef7c66c161be876eb2c98821121f1d1451d302"
+        },
+        {
+          "bytes": 22141,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/one-u32-stream/CpuSidePort.cc",
+          "sha256": "886a0c1bbd437916d2fac62a2aa194e01f6996fae65dc56241fad601c5f0103b"
+        },
+        {
+          "bytes": 23772,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/one-u32-stream/IF.cc",
+          "sha256": "fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561"
+        },
+        {
+          "bytes": 5988,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/one-u32-stream/IF.hh",
+          "sha256": "9dee4c4803a1780a41fb30b760775169000785019e6f5848689fc3f3034a1795"
+        },
+        {
+          "bytes": 72419,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/one-u32-stream/MAA.cc",
+          "sha256": "058395cbd171ccf3746fb524967d2d205cb8d622d4aa06e8eef530b00dc21299"
+        },
+        {
+          "bytes": 10059,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/one-u32-stream/SPD.cc",
+          "sha256": "9e6bb3672be95954e8816c054b4032f95811a3085ca6df418aed90ad1e852b4a"
+        },
+        {
+          "bytes": 5117,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/one-u32-stream/SPD.hh",
+          "sha256": "70e02b0fea7693585fd9b8f318381c09e352df2fff58bb3f84021f4ea02e9737"
+        },
+        {
+          "bytes": 26166,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/one-u32-stream/StreamAccess.cc",
+          "sha256": "5fe78a94f0d690396cdfbcdd9b0082e57cbdb4a6b445a7282b2533a33852d47b"
+        },
+        {
+          "bytes": 4396,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/one-u32-stream/StreamAccess.hh",
+          "sha256": "9ac9feb68adb525ca2d5c7d6e9046b5b0e399ad4c63a718fcca8f78cd521a3ec"
+        },
+        {
+          "bytes": 18963,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/one-u32-stream/Tables.cc",
+          "sha256": "9bd8aa4103fb6e7617fdd4c514a917329b8e7b8345738ed6e5d82f818df7dfa6"
+        },
+        {
+          "bytes": 4632,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/one-u32-stream/Tables.hh",
+          "sha256": "5ea6a7caff7ca690aa9ce19096c0e686dfa52716e4dbf19d17348c9235011b43"
+        },
+        {
+          "bytes": 49,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/one-u32-stream/ghost.acsl",
+          "sha256": "cef6352ffe5ce76236ec837ef2f3015f98070c41b37a9455ef3c53c363e408fc"
+        },
+        {
+          "bytes": 23,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/one-u32-stream/logic.acsl",
+          "sha256": "b7f8c7f0b5a70cdcdf6ee864199c6d7b07bc2fed87e2fdeaafd6f0e770b0ceb8"
+        },
+        {
+          "bytes": 2417,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/one-u32-stream/model.h",
+          "sha256": "4a12723f504cab4b485e25d59e2ea2afbcc2bd0bd1af95281949351aefaf325b"
+        },
+        {
+          "bytes": 225,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/one-u32-stream/state.h",
+          "sha256": "ac91330aa6805bcb27f97b2460da48f702f43dca7a17c6dca0dc6083f567c45c"
+        },
+        {
+          "bytes": 37,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/pure-selector/ghost.acsl",
+          "sha256": "0dffdc2cb273e85b2675258948535f3ec0f8b46f8080dd1481967f3a61f78db9"
+        },
+        {
+          "bytes": 23,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/pure-selector/logic.acsl",
+          "sha256": "b7f8c7f0b5a70cdcdf6ee864199c6d7b07bc2fed87e2fdeaafd6f0e770b0ceb8"
+        },
+        {
+          "bytes": 61,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/pure-selector/model.h",
+          "sha256": "9d6474eeb40d96ddca0090b6e1375a9bd46e2e6aafd4f740cbe302f949338166"
+        },
+        {
+          "bytes": 38,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/proof_semantics/pure-selector/state.h",
+          "sha256": "a57ee157e0975b44f2d3829b80ee82694f1d8ed66605fa811fc83999d3303a29"
+        },
+        {
+          "bytes": 133,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/proof_units/gem5/m5ops.h",
+          "sha256": "4caae6752583fd058e911da16305fe5bebec0fa08d3242242af85494b2b90d7a"
+        },
+        {
+          "bytes": 291,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/proof_units/trust.cc",
+          "sha256": "13708db1fdd556a31e3b23bcdd5162ae89a3434c1f53c0e5a684a401767ba8fa"
+        },
+        {
+          "bytes": 1463,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/library/rewrite_contracts/trust.yaml",
+          "sha256": "1afdd3f53321e58f0305ddf4b9cb445869ad1407a1cde133bf254507a137bcf7"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/must-not-launch-solver",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/records/.swdb.lock",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 12459478,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/records/proofs/proof.contract.dx100_stream_partial_fixture.v1.20261016t084852z.20154e46.yaml",
+          "sha256": "743548dfd9921a822d3e9e4fdd207b31813d83f56c415d9e76ee88d1dff6ead6"
+        },
+        {
+          "bytes": 1404,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t084852z.20154e46/adapter.log",
+          "sha256": "57813395922d16dc3436f5b35de73cedcc7fb21af95599043759e132b2d506d9"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t084852z.20154e46/wp/frama-c.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 362,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t084852z.20154e46/wp/handler.json",
+          "sha256": "3bf0b3c1186ff8489840700d8d72ebcbe30ecfbfbfbc2793c0b65bd8513adc53"
+        },
+        {
+          "bytes": 218,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t084852z.20154e46/wp/reproduction/command.txt",
+          "sha256": "122cd38bbbcb6b9dbb5f8fb65176423a46f781a8d3618435059c5b41992ee1b0"
+        },
+        {
+          "bytes": 1159,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t084852z.20154e46/wp/reproduction/trust_fixture.c",
+          "sha256": "61e1b7a0595399f88d57b1b216e466bf8f6ad2ab3cb1966f03d5c14d8d429bb7"
+        },
+        {
+          "bytes": 4219,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t084852z.20154e46/wp/reproduction/wp_input.c",
+          "sha256": "4a5f68b56449211e3e61b5280f89ea1ccbc353c947b4c5aa069355cbfd43cbf2"
+        },
+        {
+          "bytes": 11472240,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t084852z.20154e46/wp/trust_fixture.anchors.json",
+          "sha256": "7f68136dc3140219821a9d2852524799419c38300c06cdafe2c41b5d84a10816"
+        },
+        {
+          "bytes": 1159,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t084852z.20154e46/wp/trust_fixture.c",
+          "sha256": "61e1b7a0595399f88d57b1b216e466bf8f6ad2ab3cb1966f03d5c14d8d429bb7"
+        },
+        {
+          "bytes": 4219,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t084852z.20154e46/wp/wp_input.c",
+          "sha256": "4a5f68b56449211e3e61b5280f89ea1ccbc353c947b4c5aa069355cbfd43cbf2"
+        },
+        {
+          "bytes": 207,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/scripted-why3.conf",
+          "sha256": "cebe53bfe99870cd9642321268f75fdaae553e81d6c0070034044d0f1f8a01d9"
+        },
+        {
+          "bytes": 291,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/t28-scripted-typechecker.py",
+          "sha256": "26b526b5f34913f06ef8927b73d0c5c2a03521527dcb6ba396df9b57b891faed"
+        },
+        {
+          "bytes": 257,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/t28-version-only-adapter.py",
+          "sha256": "9e88ffb64214764bc7d6f3e18a5e80e4020ea127055bf7e2ad7238cea98ed522"
+        },
+        {
+          "bytes": 284,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/wp-c-syntax-command.json",
+          "sha256": "edcdf8fbc9489bddf7dc9587d63d29988e35b17fedb167f6f1a21e07cab71384"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/wp-c-syntax.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc0/wp-c-syntax.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 10915,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/dx100/bc-forward-pass.patch",
+          "sha256": "253739930fea295f6bb8754fe8b5df7f87515c5353b098f50389fcd7cebba07a"
+        },
+        {
+          "bytes": 4260,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/dx100/bc_read_offload.inc",
+          "sha256": "3898b439b0121954474b5012ff2a6fff65bf90ba4166d20d8eb276a96d013b5c"
+        },
+        {
+          "bytes": 3157,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/dx100/bfs_read_offload.inc",
+          "sha256": "3c5867a2b8919806f681603836bd0cff448f21634485abf84e49ed71f25515ef"
+        },
+        {
+          "bytes": 3798,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/README.md",
+          "sha256": "b0df07ee337ff8c1a83dcdb2f91038dcab2ac88b05a61c793f84bfe14d743e40"
+        },
+        {
+          "bytes": 1528,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/bc_driver.inc",
+          "sha256": "95f92ebc2943e713783d90ffe703982266239524380343a8035b89b425b6e3df"
+        },
+        {
+          "bytes": 1383,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/bfs_driver.inc",
+          "sha256": "ad9a5a647614000a0716075e0a4d661df9453b5ff9365db9d239bd1b06416d3a"
+        },
+        {
+          "bytes": 5432,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/candidate_prelude.hpp",
+          "sha256": "87da9d08f1d13ec5961a5999c377bca94d10fa86b0a7ed3b540a4ab9832d37ff"
+        },
+        {
+          "bytes": 3852,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/record.cc",
+          "sha256": "5095bcbac7e5f7b3e9b33533fc7c74dc664d8bb655c3dfbe92ffd2afed5d85b0"
+        },
+        {
+          "bytes": 6003,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/seams.cc",
+          "sha256": "483a6978acd86a3aa6e9e4c6a0b07eee728eabad85e2e60a9660fdbf2a9d89c3"
+        },
+        {
+          "bytes": 1713,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/v1_4/bc_driver.inc",
+          "sha256": "9034e2ad715fbabcd9fc0c842ad9c06543447eb9b476a9f3dc9014231043b1f4"
+        },
+        {
+          "bytes": 1806,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/v1_4/bfs_driver.inc",
+          "sha256": "6c104ea0227283599920c97d388026594434ceb74516d0fe82187e8f7e98ea8f"
+        },
+        {
+          "bytes": 6496,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/v1_4/prelude.hpp",
+          "sha256": "dd5d2917aa093b91c2abecd0ecb7221289d9e3b8e9469c506f2392ec6db7f079"
+        },
+        {
+          "bytes": 6239,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/v1_4/record.cc",
+          "sha256": "c0b0221c2080117761f82566c7801a457aa31d3dedd21ec2600670e61bdd4fa6"
+        },
+        {
+          "bytes": 12876,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/v1_4/seams.cc",
+          "sha256": "1a1deb79cff58ccae5ee5d9cc08bdae123c1c821b0a675e62d80c2033ec23eef"
+        },
+        {
+          "bytes": 4479,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/v1_5/arena.hpp",
+          "sha256": "0a85a60e9f514b755ee05e0daba683c32682c97b67a31f22c911c2591f33ce42"
+        },
+        {
+          "bytes": 1614,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/v1_5/bc_driver.inc",
+          "sha256": "b8dd9d52400551247a8daf2818e86ad49022bac30f51ac2b39cf30a42a36ef4b"
+        },
+        {
+          "bytes": 1563,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/v1_5/bfs_driver.inc",
+          "sha256": "8bb2ba0ab100fda0b73e39e667635f747378ce1b2a527228365a42a8d164eb3e"
+        },
+        {
+          "bytes": 5797,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/v1_5/client/MAA_functional.hpp",
+          "sha256": "cce4deff6692bbc1175ac61eca1b03a532f620915e999fc0c5e0f08e6d624ec0"
+        },
+        {
+          "bytes": 5261,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/v1_5/client.cc",
+          "sha256": "f7917a984afd6b547c696f23300e1609400f4c045aefdb463a3987e8ae7a378c"
+        },
+        {
+          "bytes": 7569,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/v1_5/client_core.inc",
+          "sha256": "b21188bb1067f3018ea2a0fa0bc2153b2177511800dbb211993c512369a352e8"
+        },
+        {
+          "bytes": 9296,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/v1_5/evaluator.cc",
+          "sha256": "89a025c0869bbebd155d7c207bed62dca669b35eb793a95d6c29950e482b695e"
+        },
+        {
+          "bytes": 1658,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/v1_5/evaluator_context.hpp",
+          "sha256": "3ff8432841d29f80aeec22df7be4a9330d7c6f2ab1f3578f3870e95516564fe0"
+        },
+        {
+          "bytes": 7717,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/v1_5/evaluator_core.inc",
+          "sha256": "d8a77bdb2b309e04c3acb27de7b8cb3547c45f53a09b2411d9997ee9eadd7ece"
+        },
+        {
+          "bytes": 1050,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/dx100/certification/v1_5/prelude.hpp",
+          "sha256": "d77698926a5fb528e666def15b5220749ac4c11e9b421ba654d3294d334dc1cf"
+        },
+        {
+          "bytes": 4707,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/dx100/drivers/differential.cc",
+          "sha256": "5a30fd75e7a23db709eb7e112d9202f46037cadc8b8c9d667ac472fd77f5e976"
+        },
+        {
+          "bytes": 3153,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/dx100/dxc_lowering.hpp",
+          "sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c"
+        },
+        {
+          "bytes": 8699,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/dx100/peter-section5.patch",
+          "sha256": "cc99ca4d024983ab02c17f5db74db5210a7450968787ccad25562da4d9873cff"
+        },
+        {
+          "bytes": 1398,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/dx100/reference.hpp",
+          "sha256": "75b80bc3d0027b1700e2fc1f075683e617d059ca4bbef761bfeb31839d9fa897"
+        },
+        {
+          "bytes": 19587,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/dx100/strict/MAA_functional.hpp",
+          "sha256": "a24a81631c9365b114395bab65c73048269765a2862a98f4ccb4609eb80fbfa5"
+        },
+        {
+          "bytes": 356,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/dx100/strict/gem5/m5ops.h",
+          "sha256": "b1eb7d074231782a943faa9cc249f6027152b6c727c5f70b71808e122e97867f"
+        },
+        {
+          "bytes": 3775,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/methods/dx100-stream-partial-fixture-v1.yaml",
+          "sha256": "d4d4e65560ed928e1c47f28821aaaeb62afdf5d5aa9c1c8ff18fedd996f37735"
+        },
+        {
+          "bytes": 2740,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/dx100_bfs/ghost.acsl",
+          "sha256": "5fa3f12850eba75ccb254b1c1e8ab5c143488046949fbe0e4c965b55ecdb48e9"
+        },
+        {
+          "bytes": 14346,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/dx100_bfs/logic.acsl",
+          "sha256": "34c9971965b53e04cf5ef2dd66abeaecd4d8772660f47def86158bc47624351d"
+        },
+        {
+          "bytes": 20089,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/dx100_bfs/model.h",
+          "sha256": "88298dbb9176640fd8ec2d0c6e31386dd51849411b08df7cebf7f12eab1d22ce"
+        },
+        {
+          "bytes": 949,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/dx100_bfs/state.h",
+          "sha256": "b371131b4a3a7ef21ad654b0eaffac94b4c63252d63397ee8b67a6b017610701"
+        },
+        {
+          "bytes": 31989,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/dx100_bfs_0_1.yaml",
+          "sha256": "844da0f557adae447fbafd2617c86aa3f5a7fa475597ca9860c7e33b2f3cc84f"
+        },
+        {
+          "bytes": 21412,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/dx100_trust_fixture.yaml",
+          "sha256": "ad07e5bb20e8eec6aae2979bb7ef7c66c161be876eb2c98821121f1d1451d302"
+        },
+        {
+          "bytes": 22141,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/one-u32-stream/CpuSidePort.cc",
+          "sha256": "886a0c1bbd437916d2fac62a2aa194e01f6996fae65dc56241fad601c5f0103b"
+        },
+        {
+          "bytes": 23772,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/one-u32-stream/IF.cc",
+          "sha256": "fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561"
+        },
+        {
+          "bytes": 5988,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/one-u32-stream/IF.hh",
+          "sha256": "9dee4c4803a1780a41fb30b760775169000785019e6f5848689fc3f3034a1795"
+        },
+        {
+          "bytes": 72419,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/one-u32-stream/MAA.cc",
+          "sha256": "058395cbd171ccf3746fb524967d2d205cb8d622d4aa06e8eef530b00dc21299"
+        },
+        {
+          "bytes": 10059,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/one-u32-stream/SPD.cc",
+          "sha256": "9e6bb3672be95954e8816c054b4032f95811a3085ca6df418aed90ad1e852b4a"
+        },
+        {
+          "bytes": 5117,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/one-u32-stream/SPD.hh",
+          "sha256": "70e02b0fea7693585fd9b8f318381c09e352df2fff58bb3f84021f4ea02e9737"
+        },
+        {
+          "bytes": 26166,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/one-u32-stream/StreamAccess.cc",
+          "sha256": "5fe78a94f0d690396cdfbcdd9b0082e57cbdb4a6b445a7282b2533a33852d47b"
+        },
+        {
+          "bytes": 4396,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/one-u32-stream/StreamAccess.hh",
+          "sha256": "9ac9feb68adb525ca2d5c7d6e9046b5b0e399ad4c63a718fcca8f78cd521a3ec"
+        },
+        {
+          "bytes": 18963,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/one-u32-stream/Tables.cc",
+          "sha256": "9bd8aa4103fb6e7617fdd4c514a917329b8e7b8345738ed6e5d82f818df7dfa6"
+        },
+        {
+          "bytes": 4632,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/one-u32-stream/Tables.hh",
+          "sha256": "5ea6a7caff7ca690aa9ce19096c0e686dfa52716e4dbf19d17348c9235011b43"
+        },
+        {
+          "bytes": 49,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/one-u32-stream/ghost.acsl",
+          "sha256": "cef6352ffe5ce76236ec837ef2f3015f98070c41b37a9455ef3c53c363e408fc"
+        },
+        {
+          "bytes": 23,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/one-u32-stream/logic.acsl",
+          "sha256": "b7f8c7f0b5a70cdcdf6ee864199c6d7b07bc2fed87e2fdeaafd6f0e770b0ceb8"
+        },
+        {
+          "bytes": 2417,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/one-u32-stream/model.h",
+          "sha256": "4a12723f504cab4b485e25d59e2ea2afbcc2bd0bd1af95281949351aefaf325b"
+        },
+        {
+          "bytes": 225,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/one-u32-stream/state.h",
+          "sha256": "ac91330aa6805bcb27f97b2460da48f702f43dca7a17c6dca0dc6083f567c45c"
+        },
+        {
+          "bytes": 37,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/pure-selector/ghost.acsl",
+          "sha256": "0dffdc2cb273e85b2675258948535f3ec0f8b46f8080dd1481967f3a61f78db9"
+        },
+        {
+          "bytes": 23,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/pure-selector/logic.acsl",
+          "sha256": "b7f8c7f0b5a70cdcdf6ee864199c6d7b07bc2fed87e2fdeaafd6f0e770b0ceb8"
+        },
+        {
+          "bytes": 61,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/pure-selector/model.h",
+          "sha256": "9d6474eeb40d96ddca0090b6e1375a9bd46e2e6aafd4f740cbe302f949338166"
+        },
+        {
+          "bytes": 38,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/proof_semantics/pure-selector/state.h",
+          "sha256": "a57ee157e0975b44f2d3829b80ee82694f1d8ed66605fa811fc83999d3303a29"
+        },
+        {
+          "bytes": 133,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/proof_units/gem5/m5ops.h",
+          "sha256": "4caae6752583fd058e911da16305fe5bebec0fa08d3242242af85494b2b90d7a"
+        },
+        {
+          "bytes": 291,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/proof_units/trust.cc",
+          "sha256": "13708db1fdd556a31e3b23bcdd5162ae89a3434c1f53c0e5a684a401767ba8fa"
+        },
+        {
+          "bytes": 1463,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/library/rewrite_contracts/trust.yaml",
+          "sha256": "65491f6e387b765d17fa6ec5a231ae08bbcdab0a2053d4dd5e9a2834e7993c43"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/must-not-launch-solver",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/records/.swdb.lock",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 12459478,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/records/proofs/proof.contract.dx100_stream_partial_fixture.v1.20261016t084914z.c4051caa.yaml",
+          "sha256": "6c4bb73101d1132709da4d61c45471125ad7d070a8e7c7f5e35986df8979d42e"
+        },
+        {
+          "bytes": 1404,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t084914z.c4051caa/adapter.log",
+          "sha256": "8b5509bc644f1da67e2942f0a0e6e2eb0a081280f43bba243476a6f6888a1bd8"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t084914z.c4051caa/wp/frama-c.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 362,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t084914z.c4051caa/wp/handler.json",
+          "sha256": "3bf0b3c1186ff8489840700d8d72ebcbe30ecfbfbfbc2793c0b65bd8513adc53"
+        },
+        {
+          "bytes": 218,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t084914z.c4051caa/wp/reproduction/command.txt",
+          "sha256": "122cd38bbbcb6b9dbb5f8fb65176423a46f781a8d3618435059c5b41992ee1b0"
+        },
+        {
+          "bytes": 1159,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t084914z.c4051caa/wp/reproduction/trust_fixture.c",
+          "sha256": "61e1b7a0595399f88d57b1b216e466bf8f6ad2ab3cb1966f03d5c14d8d429bb7"
+        },
+        {
+          "bytes": 4219,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t084914z.c4051caa/wp/reproduction/wp_input.c",
+          "sha256": "427ffe4a2861704b063f0ae1e51551100dd647875931328673ab1743b12c2c14"
+        },
+        {
+          "bytes": 11472240,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t084914z.c4051caa/wp/trust_fixture.anchors.json",
+          "sha256": "4df6929b319efd5c3bce1ad08ed691c39fb59bdb42c2eb78ed1ff5306428e877"
+        },
+        {
+          "bytes": 1159,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t084914z.c4051caa/wp/trust_fixture.c",
+          "sha256": "61e1b7a0595399f88d57b1b216e466bf8f6ad2ab3cb1966f03d5c14d8d429bb7"
+        },
+        {
+          "bytes": 4219,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/runs/proof.contract.dx100_stream_partial_fixture.v1.20261016t084914z.c4051caa/wp/wp_input.c",
+          "sha256": "427ffe4a2861704b063f0ae1e51551100dd647875931328673ab1743b12c2c14"
+        },
+        {
+          "bytes": 207,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/scripted-why3.conf",
+          "sha256": "cebe53bfe99870cd9642321268f75fdaae553e81d6c0070034044d0f1f8a01d9"
+        },
+        {
+          "bytes": 291,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/t28-scripted-typechecker.py",
+          "sha256": "a19f7fb63195da924c9fef2dbf51af4d2efbe3093a747550e9143070e952849e"
+        },
+        {
+          "bytes": 257,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/t28-version-only-adapter.py",
+          "sha256": "d3659200ef160c985681af757ba3cb66ba301a61abe5c282365c247e134582a2"
+        },
+        {
+          "bytes": 284,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/wp-c-syntax-command.json",
+          "sha256": "721441651aca01f9d15c5bf5d31aac2242dc4464c9de5b01c6fce763a100c864"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/wp-c-syntax.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/pytest/test_public_stream_binds_sourc1/wp-c-syntax.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 163,
+          "path": "/private/tmp/probata-t28-array-order-composed-regression/resources.json",
+          "sha256": "1771ffe178f2183eb81e800991fa7bfb51fb662519573b2903aa1c33362c6c30"
+        }
+      ],
+      "resources": {
+        "cpu_seconds": 49.163,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 2451685376,
+        "timed_out": false,
+        "wall_seconds": 48.64218129101209
+      },
+      "root": "/private/tmp/probata-t28-array-order-composed-regression",
+      "scope": "Stationary e4cd source:9GREEN;two stream standins intentionalexit99, not actual proofs."
+    }
+  ],
+  "red": "All3 public lower requests accepted before repair: x++/x++, same-array a[0], calls. These are admission REDs; no observed divergent native order is claimed.",
+  "refused": "Calls, modifications, all declaration/array/member/volatile reads, binary/conditional expressions and unsupported forms; explicit inner initializer path predates this extension and is unchanged.",
+  "scope": "Only new scalar array_filler explicit-prefix path restricted. Source C++ list sequencing is not silently translated to differently ordered C initializer evaluation.",
+  "source_commit": "e4cd1a6ed78e61394275af297c25557e14a2d228",
+  "source_pins": [
+    {
+      "path": "swdb-project/swdb/c_lowering.py",
+      "sha256": "e0f080dc2887ffcc9a2b57b3dc804ff64e56a5df82e545c047bac7aa7761d0dc"
+    },
+    {
+      "path": "swdb-project/tests/test_dx100_stream_array_initialization.py",
+      "sha256": "19b40d77182431ec1b011265bc1594e260562cfe0e26857859d07e702d87f9d9"
+    }
+  ]
+}

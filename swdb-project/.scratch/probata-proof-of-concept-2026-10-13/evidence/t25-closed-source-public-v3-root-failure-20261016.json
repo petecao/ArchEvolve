@@ -1,0 +1,93 @@
+{
+  "created": "2026-10-16 ET",
+  "classification": "ACTIVE_QUOTA_SCAN_TRANSIENT_OWNED_LOCK_LIFECYCLE_REFUSAL",
+  "source_commit": "1433b8f58baa63538d1e8aa8a33d9ce566826407",
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-1433b8f5-t25-closed-source-public-v3",
+  "lane": {
+    "aligned_cell_age_s": "",
+    "aligned_to": "no_gapbs_batch_running",
+    "command": [
+      "timeout",
+      "--signal=TERM",
+      "--kill-after=60",
+      "1320",
+      "bash",
+      "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-1433b8f5-t25-closed-source-public-v3/run.sh"
+    ],
+    "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+    "ended_utc": "2026-10-16T21:13:49Z",
+    "exit_code": 1,
+    "host": "mbit10",
+    "job": "probata-resume-20261016-1433b8f5-t25-closed-source-public-v3",
+    "lease_generation": 618,
+    "lease_name": "mbit10-evaluation-node0",
+    "load1_at_start": 0.09,
+    "load1_max": 32,
+    "node": 0,
+    "numa_memory_policy": "bind:0",
+    "numactl": "--cpunodebind=0 --membind=0",
+    "preregistration_sha256": null,
+    "started_utc": "2026-10-16T21:10:10Z"
+  },
+  "outer": {
+    "exit_code": 1,
+    "peak_rss_bytes": 572977152,
+    "out_of_memory": false,
+    "timed_out": false,
+    "wall_seconds": 218.5038399854675,
+    "cpu_seconds": 253.05706700000002
+  },
+  "guard": {
+    "cpu_seconds": 208.85194900000002,
+    "exit_code": 1,
+    "out_of_memory": false,
+    "peak_rss_bytes": 519499776,
+    "timed_out": false,
+    "wall_seconds": 216.27436241135
+  },
+  "failure": {
+    "error": "FileNotFoundError",
+    "finalization": {
+      "before": {
+        "aliases": [
+          {
+            "literal_target": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-1433b8f5-t25-closed-source-public-v3/closed-source-profile/pytest/test_public_closed_source_proo3",
+            "relative": "closed-source-profile/pytest/test_public_closed_source_proocurrent",
+            "target_relative": "closed-source-profile/pytest/test_public_closed_source_proo3"
+          }
+        ],
+        "bytes": 37799325,
+        "regular_files": 367
+      },
+      "controller_exit_zero_requires_post_fsync_extent_and_time_checks": true,
+      "elapsed_seconds_before": 216.151225,
+      "margin_seconds": 1.0,
+      "projected_total_bytes": 37800562,
+      "remaining_reserve_covers_bounded_stdout_and_root_guard_metadata": true,
+      "reserve_bytes": 65536,
+      "result_byte_cap": 16384,
+      "result_bytes": 1237,
+      "whole_seconds": 1200
+    },
+    "independent_cold_acceptance": false,
+    "reason": "[Errno 2] No such file or directory: '/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-1433b8f5-t25-closed-source-public-v3/closed-source-profile/verifier.lock'",
+    "source_commit": "1433b8f58baa63538d1e8aa8a33d9ce566826407",
+    "status": "REFUSED_OR_FAILED"
+  },
+  "partial_pytest_progress": {
+    "bytes": 3,
+    "tail": "..."
+  },
+  "partial_completed_records": {
+    "safe": "proven",
+    "missing_bundle": "not_proven",
+    "stale_method": "not_proven"
+  },
+  "complete_JUnit_or_five_case_success": false,
+  "root_progress_observation": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-closed-source-public-v3-root-progress-20261016t2114z.json",
+    "sha256": "ded59328c071846bc5a0fd56107fe69d157a27544d001b8925017ed782eaaf73"
+  },
+  "scope": "Partial source-rule records and3pytest dots only; original controller exit1 retained. Exact ephemeral lock race must be repaired/reviewed before complete workflow rerun. No final independent source acceptance or fullticket inferred.",
+  "raw_payload_transferred": false
+}

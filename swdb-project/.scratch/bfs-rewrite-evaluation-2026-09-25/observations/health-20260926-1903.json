@@ -1,0 +1,78 @@
+{
+  "created": "2026-09-26",
+  "observed_at": "2026-09-26T19:03:08-04:00",
+  "host": "mbit10",
+  "receipt": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926.dispatch/health-20260926-1903.json",
+    "bytes": 157707,
+    "sha256": "dfa20456a4860d22cffb55e299b3f6867a3d3dda97c0ffd8cc07106c4a838b53"
+  },
+  "leases": {
+    "node0": {
+      "state": "released",
+      "generation": 328
+    },
+    "node1": {
+      "state": "released",
+      "generation": 406
+    },
+    "legacy": {
+      "state": "released",
+      "generation": 77
+    },
+    "kernel_locks": "empty; owners absent"
+  },
+  "owned_processes": "No live owned jobs; readback a2 independently closed with its retained sampling-history limitation.",
+  "load_average": [
+    0.05,
+    0.05,
+    0.06
+  ],
+  "free_bytes": {
+    "/data1": 17483530240,
+    "/data": 194451947520
+  },
+  "estimated_available_kib": {
+    "node0": 60093808,
+    "node1": 61369492,
+    "global": 123455132
+  },
+  "historical_pins": "retained receipt hashes and HEADs unchanged; reader5e8 has preserved untracked pytest cache from manual fixture",
+  "helper_commit": "42ce8dce1ecfb949d6e5d4ee3c98c078bc7ddc65",
+  "helper_sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8",
+  "helper_upstream": "verified current",
+  "native": {
+    "primary_checked": 240,
+    "packages_complete": 4,
+    "qualification": "pending",
+    "standalone_readback_a1": "failed before validation",
+    "standalone_readback_a2": "failed before reader spawn: untracked pytest cache",
+    "next": "No third standalone invocation; full validation remains mandatory in separately bounded prepare/publish after T15 evidence."
+  },
+  "a2": {
+    "tested_commit": "5a0b15fe666b2d094a2b2b9847ff5a30ef16fb4f",
+    "both_corrected_linux_proofs": "passed and independently reviewed",
+    "empirical_execution": "not launched at audit",
+    "next": "Fresh admission checks then same unused fixed attempt;21:00 cutoff unchanged."
+  },
+  "local_regression": {
+    "commit": "e4c401585a2cec8319ecc06ff2f7662bcd352730",
+    "passed": 2075,
+    "skipped": 19,
+    "failed": 0,
+    "limits": "Later reader/fixture edits have separately retained checks."
+  },
+  "workers": {
+    "host_dx100": "running",
+    "spec_postfix": "running",
+    "standards_postfix": "running"
+  },
+  "counts": {
+    "resolved_tickets": 13,
+    "claimed_tickets": 8,
+    "final_acceptance_cells": 0,
+    "required_cells": 8
+  },
+  "next_full_check_et": "2026-09-26 19:33 ET",
+  "observation_source": "Typed host-worker audit metadata and live root worker/test checks; raw host audit remains on mbit10."
+}

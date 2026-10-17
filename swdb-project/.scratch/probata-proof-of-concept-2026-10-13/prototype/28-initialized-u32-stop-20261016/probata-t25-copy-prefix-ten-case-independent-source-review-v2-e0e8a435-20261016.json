@@ -1,0 +1,183 @@
+{
+  "core_initial_freeze": "9936e7ac",
+  "date_ET": "2026-10-16",
+  "decision": "PASS_SCOPED_SOURCE_PREPARATION",
+  "delta_Git_pins": [
+    {
+      "bytes": 5406,
+      "git_path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-copy-prefix-caller-count-correction-20261016.json",
+      "sha256": "5eb50d66fa85abba0a9b68e02c3df5c8fde59aa011c30268744855f6ee09ac6b"
+    },
+    {
+      "bytes": 126971,
+      "git_path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/issues/25-vector-and-pair-models.md",
+      "sha256": "826f14dd2d87b33dd59915949bf31df08b37d8f9a8931dc688186178d816905b"
+    },
+    {
+      "bytes": 15758,
+      "git_path": "swdb-project/tests/test_vector_reallocation_caller_packets.py",
+      "sha256": "a3229cba29d8008733a33cfd89daf7140881df00f6d57b7628c6fae87ce681a0"
+    },
+    {
+      "bytes": 7912,
+      "git_path": "swdb-project/tests/test_vector_reallocation_copy_prefix_cases.py",
+      "sha256": "da9fc663be465f6ce8c031110c7de1809a2d072e1baab8809d627f4b045b51d8"
+    }
+  ],
+  "evidence": {
+    "bytes": 5406,
+    "path": "/private/tmp/probata-resume-t25/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-copy-prefix-caller-count-correction-20261016.json",
+    "sha256": "5eb50d66fa85abba0a9b68e02c3df5c8fde59aa011c30268744855f6ee09ac6b"
+  },
+  "evidence_pin_ledger": [
+    {
+      "bytes": 2803,
+      "path": "/private/tmp/probata-t25-copy-prefix-count-red-v1-20261016/control/result.json",
+      "sha256": "145f0fb48d9609eaa5c1a77d2f7e3393d2292a19bea96fd3728bb316d01db1dd"
+    },
+    {
+      "bytes": 563,
+      "path": "/private/tmp/probata-t25-copy-prefix-count-red-v1-20261016/control/controls.log",
+      "sha256": "1f1997a8504742f8ade7602f688b26062727d7fd2d85984272572d898a86e9b9"
+    },
+    {
+      "bytes": 112,
+      "path": "/private/tmp/probata-t25-copy-prefix-count-red-v1-20261016/guard.log",
+      "sha256": "8a123031ca354563325dc349df3c23b5fae45a5b6aec4da9deed460de02c1a3a"
+    },
+    {
+      "bytes": 1984,
+      "path": "/private/tmp/probata-t25-copy-prefix-count-red-v1-20261016/guard.log.summary.json",
+      "sha256": "d2a81d5491457451ada8ed08931ae5faa543dd3f7f746cf962abc65161b701bb"
+    },
+    {
+      "bytes": 2747,
+      "path": "/private/tmp/probata-t25-copy-prefix-count-green-v1-20261016/control/result.json",
+      "sha256": "671c7b710d59ffa5b3b13a422b9c70a83862fa0489f5ac9bef8d22c2cd926b88"
+    },
+    {
+      "bytes": 549,
+      "path": "/private/tmp/probata-t25-copy-prefix-count-green-v1-20261016/control/controls.log",
+      "sha256": "dd7812156d2251116e6d56f3cf19e426da961ef11657401cf69f8c6e3e2a52f5"
+    },
+    {
+      "bytes": 114,
+      "path": "/private/tmp/probata-t25-copy-prefix-count-green-v1-20261016/guard.log",
+      "sha256": "eee2c1617560b911967c27a1a8739b8223f22204638ba3e07f26412a05a1d395"
+    },
+    {
+      "bytes": 1990,
+      "path": "/private/tmp/probata-t25-copy-prefix-count-green-v1-20261016/guard.log.summary.json",
+      "sha256": "d76e36d5086f890db83b1cc6e1cb22aa90fc92d6dc0e7d24e3c6fc6eef599be6"
+    },
+    {
+      "bytes": 9945,
+      "path": "/private/tmp/probata-t25-copy-prefix-regression-v2-20261016/control/result.json",
+      "sha256": "d4387c36ee988daac158494950587a20fdea52bc1d030af281eefe2caaa05998"
+    },
+    {
+      "bytes": 4489,
+      "path": "/private/tmp/probata-t25-copy-prefix-regression-v2-20261016/control/controls.log",
+      "sha256": "2949fafe9d3f6ddf8344e01061fc14b4ea775b548292bb9b9e4d6f5790779ba3"
+    },
+    {
+      "bytes": 114,
+      "path": "/private/tmp/probata-t25-copy-prefix-regression-v2-20261016/guard.log",
+      "sha256": "c45897aec8576c39cfa881b0560da88c94bdd7d6b3d9347583e512a843210165"
+    },
+    {
+      "bytes": 1988,
+      "path": "/private/tmp/probata-t25-copy-prefix-regression-v2-20261016/guard.log.summary.json",
+      "sha256": "09a2274b1043ea8234ed0515c55478e2529fe3eaf1d57d964343c5914d6fe5cd"
+    },
+    {
+      "bytes": 4486,
+      "path": "/private/tmp/probata-t25-copy-prefix-pure-controls-v2-20261016.py",
+      "sha256": "b0771e441a2ab473542656149f673b118dae6db726df5a344797b833a434f00a"
+    },
+    {
+      "bytes": 5605,
+      "path": "/private/tmp/probata-t25-copy-prefix-pure-regression-v2-20261016.py",
+      "sha256": "678aff17b2dbbc828d9b7d963c80f1644742701650a3aba27573be2f3ff1b2a1"
+    }
+  ],
+  "pin_mismatches": 0,
+  "previous_production_source_review": "PASS for exact fullA/range/allfive\u00d7bothcases/freshj/source defs/original1839reference/51unchangedbody C/theory/contracts/nested24eventownership, preserved unchanged by this successor.",
+  "prior_request_changes": {
+    "bytes": 7595,
+    "path": "/private/tmp/probata-t25-copy-prefix-ten-case-independent-source-review-v1-f46607ce-20261016.json",
+    "sha256": "e2603e0a1c482e07b103be8ccb860461194bc61cfc4b1cad583c8b4f044d3397"
+  },
+  "production_and_library_byte_equal_prior_review": true,
+  "resolved_finding": {
+    "change": "Reserve expectation and adjacent explanation corrected, no production change. AST-only dedicated test binds exact actual caller-test literals to current canonical body declarations and total arithmetic.",
+    "id": "T1",
+    "literal_expected_counts": {
+      "ctor_count_value": 35,
+      "dtor": 11,
+      "reserve": 67
+    },
+    "old_finding_retained": true,
+    "pending_total": 127
+  },
+  "retained_controls": [
+    {
+      "failed": 1,
+      "passed": 5,
+      "receipt": {
+        "bytes": 2803,
+        "path": "/private/tmp/probata-t25-copy-prefix-count-red-v1-20261016/control/result.json",
+        "sha256": "145f0fb48d9609eaa5c1a77d2f7e3393d2292a19bea96fd3728bb316d01db1dd"
+      },
+      "scope": "Pure direct preparation controls, no pytest fixtures/framework hooks/project-native/compiler/formal/prover/SSH; preparer-only type literals do not overlay an actual proof runtime.",
+      "source_pins_match_final_Git": false,
+      "summary": {
+        "bytes": 1984,
+        "path": "/private/tmp/probata-t25-copy-prefix-count-red-v1-20261016/guard.log.summary.json",
+        "sha256": "d2a81d5491457451ada8ed08931ae5faa543dd3f7f746cf962abc65161b701bb"
+      }
+    },
+    {
+      "failed": 0,
+      "passed": 6,
+      "receipt": {
+        "bytes": 2747,
+        "path": "/private/tmp/probata-t25-copy-prefix-count-green-v1-20261016/control/result.json",
+        "sha256": "671c7b710d59ffa5b3b13a422b9c70a83862fa0489f5ac9bef8d22c2cd926b88"
+      },
+      "scope": "Pure direct preparation controls, no pytest fixtures/framework hooks/project-native/compiler/formal/prover/SSH; preparer-only type literals do not overlay an actual proof runtime.",
+      "source_pins_match_final_Git": true,
+      "summary": {
+        "bytes": 1990,
+        "path": "/private/tmp/probata-t25-copy-prefix-count-green-v1-20261016/guard.log.summary.json",
+        "sha256": "d76e36d5086f890db83b1cc6e1cb22aa90fc92d6dc0e7d24e3c6fc6eef599be6"
+      }
+    },
+    {
+      "failed": 0,
+      "passed": 35,
+      "receipt": {
+        "bytes": 9945,
+        "path": "/private/tmp/probata-t25-copy-prefix-regression-v2-20261016/control/result.json",
+        "sha256": "d4387c36ee988daac158494950587a20fdea52bc1d030af281eefe2caaa05998"
+      },
+      "scope": "Pure direct preparation controls, no pytest fixtures/framework hooks/project-native/compiler/formal/prover/SSH; preparer-only type literals do not overlay an actual proof runtime.",
+      "source_pins_match_final_Git": true,
+      "summary": {
+        "bytes": 1988,
+        "path": "/private/tmp/probata-t25-copy-prefix-regression-v2-20261016/guard.log.summary.json",
+        "sha256": "09a2274b1043ea8234ed0515c55478e2529fe3eaf1d57d964343c5914d6fe5cd"
+      }
+    }
+  ],
+  "reviewed_production_source_commit": "f46607cedf2dcce5db5d8fc7aedfdd947a2eb900",
+  "scope_boundaries": [
+    "Six dedicated pure controls and35affected pure controls are preparation checks, not actual public model/caller/native or formal proofs.",
+    "Full canonical caller127 routine invokes Clang and remains unexecuted; the new count control reads only its AST and canonical body packet inventories.",
+    "No reviewer project function/test import or execution, compiler, native program, formal tool, collector or SSH. Git/file/metadata reads only.",
+    "Complete61grow/67reserve/publiccaller127, numeric/RTE/init/smoke/taskclosure and source-derived caller admission remain pending root evaluation.",
+    "Original actual advancedprefix nativeTimeout/Unknown/Timeout remains open historical evidence; no old result upgrade or fullmodel/current0.2/ticketclosure."
+  ],
+  "source_commit": "e0e8a43562eeb413d876ebc0ab0a0a2bc1b7873f",
+  "verified_evidence_pin_instances": 14
+}

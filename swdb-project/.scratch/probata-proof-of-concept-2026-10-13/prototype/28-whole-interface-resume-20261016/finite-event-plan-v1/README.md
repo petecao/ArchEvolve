@@ -1,0 +1,29 @@
+# Finite event Plan preparation, 2026-10-16 ET
+
+This is an inert precursor to a distinct `TraceUnit` under the new checked-body 0.2 entry. `event_plan_v1.py::prepare(OwnedSelection)` assembles concrete model calls from a pinned finite Plan and returns model C, an input certificate, a resource profile, ordered full-u32 draw rows and source-event anchors. It does not claim an original C++ TU, concurrency, native correspondence, public proof or executable corpus acceptance.
+
+The 18 corpus labels are **conditional predictions**, with `actual_verdict=null`. No compiler, model/native execution, verifier, solver, SSH or project import was used. The 13 controls execute only this source preparer and standard-library fixture utilities.
+
+The returned C is a component requiring a separately reviewed receiver composition. It intentionally emits no reset, owner assignment, allocation grant or arbitrary initialization callback. Ordinary C static initialization does **not** satisfy its entry checks: in particular, `dxz_sizes` starts at zero while the required fresh payload image has `UINT_MAX` sizes. A future public TraceUnit consumer must resolve the six same-entry owned premises and bind the exact checked receiver prefix, including its node/event/draw closure, before invoking `dwe_trace_program` once. The `receiver.json` fixture is an identity receipt, not executable initialization or authority. The included entry is a prospective snapshot and is not a published-library lookup. This missing composition is a concrete remaining prerequisite, not an optional hardware-refinement demand.
+
+The trusted input closure is explicit: source Plan, context, receiver receipt, entry snapshot, this producer, the exact four existing model headers and the exact model-entry-v3 choice-hook producer. Every input must be canonical, regular, bounded by 8 MiB, equal its advertised extent before opening, and match its full hash and stable nine-field metadata after a bounded read; the complete readset is rehashed before return. Atime is excluded. JSON duplicate keys and nonfinite atoms refuse. The preparation packet pins all emitted source artifacts separately.
+
+The finite domain uses literal thread0/1 tags, u32/u64 two-element ordinary objects, typed tile views, int32 stream registers, exact source MMIO geometry (32 tiles/registers, two modeled lanes, six initial MMIO regions), and at most eight stream commands. Fixed event forms are ordinary read/write/CAS, tile read/write, register write, stream load/store, explicit tile wait, finite equality/set/pending assertions, lifetime end and critical markers. Unsupported types/families, arbitrary C/callbacks, ownership grants, ready queries, reset and assumptions refuse. Root owns unbounded ready-until-one work separately.
+
+A source Plan binds ordinary guest and physical spans, cell IDs, types, extents, region first-ID/F2 envelopes and live object IDs. Guest/physical aliases, capacity overflow, MMIO overlap and physical full-line/MMIO overlap refuse. The exact backend retains full 64-byte store envelopes, source width checks, pair masks, command ownership, deferred initializedness and CPU history behavior. Ordinary object lifetime and tile/register ownership are separate. Lifetime end checks every pending read/write footprint, and all later fixed events through the ended object refuse during preparation; this straight-line domain has no escaping descriptor or hidden alias form.
+
+Critical-begin stores the current `dxc_count`; critical-end checks pending stores **issued between those literal markers**, from either explicitly scheduled thread. It excludes preexisting commands, and its marker thread must match the begin marker. It inserts no wait and proves no mutex implementation, mutual exclusion or actual scheduling rule. A dedicated outside-block pending-store case preserves that scope. The finite schedule and owned premises are part of the method identity, not inferred concurrency.
+
+The first pair checks latest-before-issue visibility and other-thread CAS history, then contrasts the allowed `{2,3}` history with an invalid exact-at-issue `2` claim. Other pairs cover CPU read versus pending store, same-region writing cover versus read/read or different-region noncover, owned/disjoint/wrong-owner tile use, 8-byte second-half conflict versus 4-byte disjointness, prior CPU store visibility, the next thread's load after covered store, critical-end with/without wait, and pending-read lifetime exit. Invalid properties and guard violations are emitted unchanged as checked failures; predictions are never inputs to `prepare`.
+
+The draw table has independently supplied full `uint32_t` rows, with a fatal capacity property and no chosen expected value. The current preparer does not supply those draws. A future method must bind every row and its anchor before trace execution; replay and public native-process policy remain unimplemented here.
+
+Resource derivation is in `resource-derivation.md`. The first two-load history case requires at most 129 new nodes; the root-selected smallest power of two strictly above that upper bound selects 256. Capacity checks remain ordinary checked properties. This is not an RSS, compiler-size or runtime measurement.
+
+Run the source controls with the selected Python and bytecode disabled:
+
+```
+/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -I -B test_event_plan_v1.py
+```
+
+`build_corpus_v1.py` only assembles source files into a fresh directory. It never evaluates C or obtains a scientific verdict. Required next gates are independent source review, exact public TraceUnit registry/premise resolution, checked receiver composition and independent draw/replay binding, then root-admitted compiler/native/formal profiles and actual paired verdict reconciliation. The original-C++ source route is a separate unit kind and cannot consume this Plan as an original TU.

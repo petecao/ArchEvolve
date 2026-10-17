@@ -1,0 +1,59 @@
+{
+  "source_commit": "f6972ebbf9c842c1a7091716505577d06c637231",
+  "attempts": [
+    {
+      "attempt": 1,
+      "state": "failed",
+      "reason": "annotate returned 1; see /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.driver-annotate-a1/annotate.stderr.txt",
+      "runtime_commit": "f6972ebbf9c842c1a7091716505577d06c637231",
+      "started": "2026-10-03T12:48:56.099672+00:00",
+      "finished": "2026-10-03T12:49:07.619758+00:00",
+      "driver_receipt": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.driver-annotate-a1/driver.json",
+        "sha256": "490537c71d24c304b9b0be9484e468f0da60a7dc9744edb2c689a1c80ec89983"
+      },
+      "claims_written": false,
+      "score_exists": false
+    },
+    {
+      "attempt": 2,
+      "state": "failed",
+      "reason": "annotate returned 1; see /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.driver-annotate-a2/annotate.stderr.txt",
+      "runtime_commit": "f6972ebbf9c842c1a7091716505577d06c637231",
+      "started": "2026-10-03T12:51:31.837445+00:00",
+      "finished": "2026-10-03T12:51:47.136501+00:00",
+      "driver_receipt": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.driver-annotate-a2/driver.json",
+        "sha256": "e57a279ffefc6925601386950f234cfd54508cd4cacfdf9d48f5cf5f5804a03f"
+      },
+      "claims_written": false,
+      "score_exists": false,
+      "provider": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.annotation-a2/provider.json",
+        "sha256": "18a7dc04981c5f49c2f6d1ba430cf7248ff503add297b9eb6350d60c2008eb22",
+        "classification": "rewrite_provider",
+        "state": "failed",
+        "returncode": 1,
+        "model": "gpt-5.6-sol",
+        "effort": "xhigh",
+        "audit": {
+          "format": "swdb.provider-audit.v1",
+          "state": "passed",
+          "passed": true,
+          "events": 4,
+          "commands": 0,
+          "file_accesses": 0,
+          "reasons": [],
+          "violations": [],
+          "raw_log": {
+            "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.annotation-a2/stdout.txt",
+            "sha256": "a5b58ceec2cf7eb432763e85b04a890408613422fd5d9df67a83c3c3f51aa71e",
+            "bytes": 951
+          }
+        }
+      }
+    }
+  ],
+  "actual_final_provider_error": "invalid_json_schema: uniqueItems is not permitted for index_provenance",
+  "scope": "Both failed attempts preserved; no actual annotation claims or score. Attempt1 failed before provider launch; attempt2 reached the real pinned provider with guard/audit pass and private login copy cleanup."
+}

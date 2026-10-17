@@ -1,0 +1,102 @@
+kind: implementation
+schema_version: '0.4'
+status: draft
+deprecated_by: null
+extensions: {}
+id: dx100-bfs-maa-reference
+created: '2026-09-25'
+updated: '2026-09-25'
+provenance:
+- id: src-dx100-author-maa
+  kind: source_code
+  description: Pinned bfs.cc main selects DOBFSMAA under MAA; Makefile builds bfs_maa with four cores and 16384-element tiles. Read 2026-09-25; source identity only.
+  uri: https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/benchmarks/gapbs/src/bfs.cc
+name: DX100 authors' fixed accelerated BFS reference
+kernel: gapbs-bfs
+application: dx100-gapbs
+source_baseline: dx100-bfs-maa-reference
+comparison_baseline: dx100-bfs-scalar
+function: DOBFSMAA
+origin:
+  kind: application_source
+  description: Unmodified accelerated reference function in the pinned DX100 artifact, distinct from its scalar DOBFS function.
+  derived_from: null
+code:
+- root: application
+  path: benchmarks/gapbs/src/bfs.cc
+  sha256: 6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465
+build:
+  compiler: g++-13
+  flags: -std=c++11 -O3 -Wall -g3 -fopenmp -DGEM5 -DMAA -DNUM_CORES=4 -DTILE_SIZE=16384
+  command: '{cxx} {flags} -I{app}/benchmarks/API -I{app}/include -I{app}/util/m5/src -L{app}/util/m5/build/x86/out {app}/benchmarks/gapbs/m5op.o {source} -o {binary}'
+run:
+  command: '{binary} {input_args} -n 1 -v -l'
+  timer: gem5_roi_ticks
+  threads_env: OMP_NUM_THREADS
+  kernel_symbols: [DOBFSMAA, TDStepMAA, InitParent]
+  index_stream: null
+evaluator:
+  backend: dx100.author_artifact.v1
+  command: '{binary} {input_args} -n 1 -v -l'
+  pass_regex: Verification:\s+PASS
+  verifier:
+    description: DX100 BFSVerifier checks parent edges, depths and reachability in the timed guest continuation. Acceptance additionally requires exact binary/workload and sealed traversal ROI binding through dx100.bfs.verifier.v1; a native or separate functional execution cannot certify this reference.
+    code:
+      root: application
+      path: benchmarks/gapbs/src/bfs.cc
+      sha256: 6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465
+      lines: [458, 509]
+verification:
+  status: unchecked
+  evidence: []
+  scope: Fixed author source identity only. This record establishes neither successful simulator correctness nor accelerated execution nor a performance result.
+loops:
+- id: maa-frontier-tiles
+  description: TDStepMAA assigns full frontier tiles to each thread and retains the pinned scalar tail path.
+  parent: null
+  trip_count:
+    value: null
+    formula: null
+    scope: per_sweep
+    basis: unknown
+    evidence_refs: [src-dx100-author-maa]
+  parallel:
+    construct: nested_serial
+    schedule: null
+    reduction: null
+access_patterns:
+- id: maa-frontier-stream
+  expression: maa_stream_load(queue.shared, reg0, reg1, regOne, tile0)
+  loop: maa-frontier-tiles
+  condition: Only when the pinned adaptive frontier policy selects a full accelerator tile.
+  steps:
+  - array:
+      name: queue.shared
+      role: target
+      element_type: NodeID (int32_t), SlidingQueue<NodeID> storage
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices: {value: null, basis: unknown, evidence_refs: [src-dx100-author-maa]}
+    index_modified_during_loop: {value: null, basis: unknown, evidence_refs: [src-dx100-author-maa]}
+    loop_carried_dependencies: {value: null, basis: unknown, evidence_refs: [src-dx100-author-maa]}
+    shared_target_between_threads: {value: null, basis: unknown, evidence_refs: [src-dx100-author-maa]}
+    atomic_updates_required: {value: null, basis: unknown, evidence_refs: [src-dx100-author-maa]}
+    ordering: {value: level_synchronous, basis: code_reading, evidence_refs: [src-dx100-author-maa]}
+    numerical_requirement: {value: exact, basis: code_reading, evidence_refs: [src-dx100-author-maa]}
+  evidence_refs: [src-dx100-author-maa]
+  note: One source-declared stream only; this catalog does not establish dynamic coverage, concurrency correctness, or observed accelerator execution.
+notes:
+- This is the unchanged author reference for the artifact and controlled reference pairs, not a generated candidate from either required proposal route.
+- The original bfs_maa binary selects DOBFSMAA through -DMAA. A trusted complete-call wrapper must explicitly select DOBFSMAA and disclose its different wrapper, flags, and ROI.
+- The author artifact ROI is bfs.dx100.traversal.v1; its duration is sealed simulated ROI time, not the guest Trial Time line or simulator host runtime.
+- The application uses signed 32-bit SG offsets. Equivalent upstream SG64 adjacency requires registered representation validation.
+- The original source waits on tile3 after its masked indirect store. This reference preserves that source; the evaluator must establish actual correctness independently rather than silently repairing the author baseline.
+- Guest build and m5op.o require the complete pinned model checkout. The imported local source subset alone is not an executable simulator build.

@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-16 ET",
+  "reviewer": "/root/ticket28",
+  "author": "/root/ticket28/memory_public_trace",
+  "decision": "PASS_SOURCE_ROLE_HELPERS_ONLY",
+  "source_pins": {
+    "python_startup_roles_v2.py": "5e9d2e6dfa2aaa7999f4670a979d3cc32736b852a612f77d4e2f7c71bc229618",
+    "python_role_observer_v2.py": "9b100cbe2fdef3e7d429ccdf05d6489d44855a84328e2dd8532eb547beeaf43b",
+    "test_python_startup_roles_v2.py": "37b68bf16be733aca44d78cc170c06deddc009da911291da3a1d223e90ce0c18",
+    "unchanged_closed_python_surface.py": "748423c27ac8c1f9810c08d3f0ffc71548da703b4b4f95cedc31d4f8bc0418af"
+  },
+  "validation": {
+    "command": ["python3", "test_python_startup_roles_v2.py"],
+    "environment": {"PYTHONDONTWRITEBYTECODE": "1"},
+    "exit_code": 0,
+    "new_controls": 7,
+    "audit_hook": "No subprocess, exec, spawn, fork, system or ctypes.dlopen allowed",
+    "project_imports": false,
+    "observer_executed": false,
+    "compiler_native_verifier_or_ssh": false
+  },
+  "findings": [
+    "The raw root observer bytes and selection are independently pinned; no normalized receipt substitutes for that raw provenance.",
+    "The exact seven observed paths are retained in order. The two literal descendants are crosschecked against their one closed physical root, and the source project is a separately bound canonical path.",
+    "Four selected package origins and three startup origins match the raw observation and remain covered by exact physical inventories or explicit external startup pins.",
+    "Entry-isolated and pytest-child are the only roles. The child requires exact selected-project PYTHONPATH, disabled user site and safe path. Unbound Python environment selectors refuse.",
+    "Initial and post-package path lists are independently checked. The observer rejects initial path, flags, environment and user-site differences before importing the four selected packages.",
+    "Old observation V2 measured post-package state only. Future initial-path equality is a prerequisite checked in the admitted run, not a retroactive measurement of V2.",
+    "The old physical helper and Why3 import helper are unchanged. Interpreter and frozen startup behavior remain explicitly trusted."
+  ],
+  "successor_requirements": [
+    "The entry and its actual child must invoke exactly the reviewed observer source with the same closed environment used by the real test child.",
+    "For an isolated observer, supply the literal cache prefix with -X because -I ignores the PYTHONPYCACHEPREFIX environment variable.",
+    "Complete physical content and membership must be checked before and after observations and the actual suite, together with exact source and controller pins.",
+    "This review does not admit either successor controller, launch a probe or establish a formal/public verdict."
+  ],
+  "limits": "Source helpers and seven pure controls only; actual role observations, complete controller review, source/runtime closure, resource admission and scientific acceptance remain separate."
+}

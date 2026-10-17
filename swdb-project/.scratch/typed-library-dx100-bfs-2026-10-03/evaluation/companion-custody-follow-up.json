@@ -1,0 +1,66 @@
+{
+  "format": "swdb.companion-custody-follow-up.v1",
+  "observed_at": "2026-10-03T15:14:44.465158+00:00",
+  "observed_at_et": "2026-10-03 11:14 ET",
+  "metadata_commit": "fb6cde03e48120ba6d2ba0471d8440853473a369",
+  "basis": "Root Git readback of four exact automatic checkpoint-custody records; no raw copied. Remote worker separately verified retained manifests, every removed SHA/byte count and all retained witness artifacts at2026-10-03T15:13:04UTC.",
+  "policy": "Authorized new successful-execution automatic checkpoint pruning under spec.md669\u2013671, separate from retroactive historical cleanup.",
+  "rows": [
+    {
+      "retention": {
+        "id": "retention-558c1db3d70d4d6f91182f96668cc587",
+        "sha256": "73e3c18875d8c907ceef966943f7afe91169b9f7c92867ae713790db85986621"
+      },
+      "intent": {
+        "id": "prune-intent-5abdbeb4ae2c4c74be88946e19a4b627",
+        "sha256": "12dd591e31de5e63128921257d3f5ad6656ddb2af9abf1e80aa56fc11ec2342f"
+      },
+      "evaluation": {
+        "id": "typed-library-bfs-gem5-20261003-a1.companion.timed.evaluation",
+        "sha256": "1fddaf2f5b7f3d41f0212edc8dfedd409e484aff4cf043b9a06dd13afe8e5c7b"
+      },
+      "deleted": [
+        {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.companion.timed.evaluation/checkpoint/cpt.5604615000/system.physmem.store0.pmem",
+          "sha256": "4a8194aad6ab873bfd1aab3ed35e76fe521dcc0fd6e0df4bdb3f4ccd320465b8",
+          "bytes": 17785251
+        },
+        {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.companion.timed.evaluation/checkpoint/cpt.5604615000/m5.cpt",
+          "sha256": "cf254cd7a5a4c11ac381b8a93a4cf4cd70d7f906865d294630155136761bd227",
+          "bytes": 459250
+        }
+      ]
+    },
+    {
+      "retention": {
+        "id": "retention-5855aa3440404c189585cb46b6b4f020",
+        "sha256": "14743ff436c43f7626ed428e4994ed052d686b14ab8e2e4eea9366e309e68508"
+      },
+      "intent": {
+        "id": "prune-intent-168072baedd94a62ac1c9d625e90723d",
+        "sha256": "6fdf7ecaa4265188e7a2736ad93ddb15f986fe9fe6cd2ab47ddd6411a058bcd9"
+      },
+      "evaluation": {
+        "id": "typed-library-bfs-gem5-20261003-a1.companion.diagnostic.evaluation",
+        "sha256": "2b33a68ef26c5174c16a6a455812688d9826efafc03aefcfcd11d86bafa70dbc"
+      },
+      "deleted": [
+        {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.companion.diagnostic.evaluation/checkpoint/cpt.5604867500/system.physmem.store0.pmem",
+          "sha256": "892d3a55cfb66e07187071096d962af5fe1515a38d6b4038d28e41a933d54be7",
+          "bytes": 17785717
+        },
+        {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.companion.diagnostic.evaluation/checkpoint/cpt.5604867500/m5.cpt",
+          "sha256": "30b416e1501c87987913477285b459f511cd28646ff5586af5e8848d1e665143",
+          "bytes": 459488
+        }
+      ]
+    }
+  ],
+  "removed_files": 4,
+  "removed_bytes": 36489706,
+  "raw_witness_availability_on_mbit10": "verified; all9 artifacts per companion",
+  "local_validation_count": 449
+}

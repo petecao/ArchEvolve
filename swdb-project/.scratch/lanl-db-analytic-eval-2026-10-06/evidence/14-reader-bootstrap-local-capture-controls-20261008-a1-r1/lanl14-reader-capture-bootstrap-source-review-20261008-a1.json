@@ -1,0 +1,91 @@
+{
+  "Git_or_W_mutations_performed": false,
+  "argv_AST": {
+    "explicit_env": "FunctionDef(name='explicit_env', args=arguments(posonlyargs=[], args=[], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Return(value=Dict(keys=[Constant(value='PATH'), Constant(value='LC_ALL'), Constant(value='PYTHONDONTWRITEBYTECODE'), Constant(value='PYTHONPATH'), Constant(value='OMP_NUM_THREADS'), Constant(value='OMP_THREAD_LIMIT'), Constant(value='OMP_DYNAMIC'), Constant(value='OPENBLAS_NUM_THREADS'), Constant(value='MKL_NUM_THREADS'), Constant(value='NUMEXPR_NUM_THREADS'), Constant(value='VECLIB_MAXIMUM_THREADS'), Constant(value='GIT_OPTIONAL_LOCKS'), Constant(value='GIT_TERMINAL_PROMPT')], values=[Constant(value='/usr/bin:/bin'), Constant(value='C'), Constant(value='1'), Call(func=Name(id='str', ctx=Load()), args=[BinOp(left=Name(id='EXPORT', ctx=Load()), op=Div(), right=Constant(value='swdb-project'))], keywords=[]), Constant(value='1'), Constant(value='1'), Constant(value='FALSE'), Constant(value='1'), Constant(value='1'), Constant(value='1'), Constant(value='1'), Constant(value='0'), Constant(value='0')]))], decorator_list=[], type_params=[])",
+    "full_argv": "FunctionDef(name='full_argv', args=arguments(posonlyargs=[], args=[arg(arg='a')], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Return(value=List(elts=[Call(func=Name(id='str', ctx=Load()), args=[Name(id='GNU', ctx=Load())], keywords=[]), Constant(value='--signal=TERM'), Constant(value='--kill-after=60s'), Constant(value='14520s'), Call(func=Name(id='str', ctx=Load()), args=[Name(id='PY', ctx=Load())], keywords=[]), Constant(value='-B'), Call(func=Name(id='str', ctx=Load()), args=[Name(id='SUP', ctx=Load())], keywords=[]), Constant(value='--cleanup-helper'), Call(func=Name(id='str', ctx=Load()), args=[Name(id='CLEANUP', ctx=Load())], keywords=[]), Constant(value='--project'), Call(func=Name(id='str', ctx=Load()), args=[Name(id='PROJECT', ctx=Load())], keywords=[]), Constant(value='--selected-source'), Call(func=Name(id='str', ctx=Load()), args=[Name(id='READER', ctx=Load())], keywords=[]), Constant(value='--action'), Constant(value='reader'), Constant(value='--timeout-s'), Constant(value='14400'), Constant(value='--python'), Call(func=Name(id='str', ctx=Load()), args=[Name(id='PY', ctx=Load())], keywords=[]), Constant(value='--python-sha256'), Name(id='PYSH', ctx=Load()), Constant(value='--supervisor-sha256'), Name(id='SUPSHA', ctx=Load()), Constant(value='--cwd'), Call(func=Name(id='str', ctx=Load()), args=[BinOp(left=Name(id='EXPORT', ctx=Load()), op=Div(), right=Constant(value='swdb-project'))], keywords=[]), Constant(value='--control-directory'), Call(func=Name(id='str', ctx=Load()), args=[Name(id='CONTROL', ctx=Load())], keywords=[]), Constant(value='--'), Starred(value=Call(func=Name(id='reader_tail', ctx=Load()), args=[Name(id='a', ctx=Load())], keywords=[]), ctx=Load())], ctx=Load()))], decorator_list=[], type_params=[])",
+    "reader_tail": "FunctionDef(name='reader_tail', args=arguments(posonlyargs=[], args=[arg(arg='a')], kwonlyargs=[], kw_defaults=[], defaults=[]), body=[Return(value=List(elts=[Constant(value='--checkout'), Call(func=Name(id='str', ctx=Load()), args=[Name(id='EXPORT', ctx=Load())], keywords=[]), Constant(value='--export-commit'), Attribute(value=Name(id='a', ctx=Load()), attr='export_commit', ctx=Load()), Constant(value='--source-commit'), Name(id='R', ctx=Load()), Constant(value='--manifest-sha256'), Name(id='M', ctx=Load()), Constant(value='--receipt-sha256'), Attribute(value=Name(id='a', ctx=Load()), attr='receipt_sha256', ctx=Load()), Constant(value='--receipt-identity-sha256'), Attribute(value=Name(id='a', ctx=Load()), attr='receipt_identity_sha256', ctx=Load()), Constant(value='--tag'), Constant(value='final-20261007-a1'), Constant(value='--receipt'), Call(func=Name(id='str', ctx=Load()), args=[BinOp(left=Name(id='EVIDENCE', ctx=Load()), op=Div(), right=Constant(value='14-generality-final-final-20261007-a1-export.json'))], keywords=[]), Constant(value='--report'), Attribute(value=Name(id='a', ctx=Load()), attr='report_relative', ctx=Load()), Constant(value='--request'), Call(func=Name(id='str', ctx=Load()), args=[BinOp(left=Name(id='EVIDENCE', ctx=Load()), op=Div(), right=Constant(value='14-generality-final-final-20261007-a1-request.json'))], keywords=[]), Constant(value='--markdown'), Call(func=Name(id='str', ctx=Load()), args=[BinOp(left=Name(id='EVIDENCE', ctx=Load()), op=Div(), right=Constant(value='14-generality-final-final-20261007-a1-report.md'))], keywords=[]), Constant(value='--count-receipt'), Call(func=Name(id='str', ctx=Load()), args=[Name(id='COUNT', ctx=Load())], keywords=[]), Constant(value='--count-receipt-sha256'), Name(id='COUNTSH', ctx=Load()), Constant(value='--target-pins'), Call(func=Attribute(value=Name(id='json', ctx=Load()), attr='dumps', ctx=Load()), args=[Name(id='TARGETS', ctx=Load())], keywords=[keyword(arg='sort_keys', value=Constant(value=True)), keyword(arg='separators', value=Tuple(elts=[Constant(value=','), Constant(value=':')], ctx=Load()))])], ctx=Load()))], decorator_list=[], type_params=[])"
+  },
+  "future_inputs_required": [
+    "actual independently accepted pure E40",
+    "actual export receipt file SHA and original True seal",
+    "receipt-selected report relative path",
+    "actually delivered expected primary40",
+    "actual local SSH file bytes and SHA",
+    "exact physical0644 selected code and native fact rechecks",
+    "fresh private local capture directory and absent remote reader CONTROL/preregistration",
+    "parent full source/argv/pre-and-postflight review and explicit finite budget"
+  ],
+  "future_remote_execution_performed": false,
+  "preparation_only": true,
+  "scientific_controls_changed": false,
+  "sealed": false,
+  "selected_sources": [
+    {
+      "bytes": 17929,
+      "path": "/private/tmp/lanl14_reader_remote_stdin_bootstrap_20261008_a1.py",
+      "sha256": "582dda1878722ba56a8fdd44e21e60bc1d077399fbbc47aa1ac9b87cae1ea909"
+    },
+    {
+      "bytes": 10092,
+      "path": "/private/tmp/lanl14_capture_reviewed_reader_ssh_20261008_a1.py",
+      "sha256": "31cbb058c354da6dc218603457c2c077afa23b4e26fe89ab928503e3c51e8d8f"
+    }
+  ],
+  "source_contract": {
+    "direct_remote_replacement": "one os.execve; no remote descendant-cleanup function or additional child-wait wrapper",
+    "local_cleanup_reuse": "one future exact912/bcc9 source in non-main module; original stop_group(grace_seconds=15) used only for owned local SSH group",
+    "new_parent_local_definitions": [
+      "Refusal",
+      "Parser",
+      "require",
+      "sha",
+      "stamp",
+      "read_exact",
+      "private_file",
+      "original_json",
+      "stream_pin",
+      "ssh_file_limit",
+      "main"
+    ],
+    "new_remote_policy_definitions": [
+      "Refusal",
+      "Parser",
+      "require",
+      "sha",
+      "stamp",
+      "boot_read",
+      "reader_tail",
+      "full_argv",
+      "explicit_env",
+      "main"
+    ],
+    "original_controls_derivation": "none; exact original503f/690/ee12/31e/bcc9 bytes preserved",
+    "readonly_primitive_reuse": "one future returned-byte/stat/SHA verified ee12 module, __name__ not __main__; no correction.main/fchmod; exact original functions used without copied bodies"
+  },
+  "source_review_is_not_scientific_admission": true,
+  "static_method": "stdlib exact byte/hash and ast.parse only; no AST lift/evaluation, module import, compile or target invocation",
+  "status": "SOURCE ONLY / NOT RUN",
+  "tests_or_synthetic_repeats_performed": false,
+  "unchanged_originals": [
+    {
+      "bytes": 19842,
+      "path": "/private/tmp/lanl14-supervised-export-reader-future-invocation-review-20261007-a1.md",
+      "sha256": "468766d3f5597ae2bebf6765d861c6c785d9058f1f533ab1a4a82c232b68bb0f"
+    },
+    {
+      "bytes": 14547,
+      "path": "/private/tmp/lanl14_export_reader_administrative_supervisor_20261007_a1_r1.py",
+      "sha256": "503fc5defcf96a5177599185a9895c00ae64b3e1b0058128b9e283ef3bd39f3f"
+    },
+    {
+      "bytes": 37647,
+      "path": "/private/tmp/lanl14_readonly_nine_export_admission_lossless_gzip_20261007_a1.py",
+      "sha256": "6909c422990a071b1a8d08c634c1c086f0218c5851d38996b6f4798759499570"
+    },
+    {
+      "bytes": 29985,
+      "path": "/private/tmp/lanl14_correct_completed_report_transfer_modes_20261008_a1.py",
+      "sha256": "ee12a535ea2c3e6976c920f483c72e8367cd36ec311bf26585137023a2d29ec7"
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "canonical_ensure_ascii": false,
+  "cleanup_errors": [],
+  "completed_node1_lane_bound": false,
+  "delivered_revision": "c97d03175fd70e28397e7aa7ba43c5a9969ca7f4",
+  "dispatcher_cleanup_original": {
+    "bytes": 363,
+    "identity_sha256": null,
+    "path": "/data/yanruj/EvolveSWDB_runs/lanl14-lifecycle-administration-20261007-a2/dispatch/dispatcher-cleanup.json",
+    "sha256": "50f55da7bb35fe495ffbbb5b263c7dbd2b182b80dd3e5a7b20e7cb479adddaf4"
+  },
+  "dispatcher_sha256": "b2f92ea9a119dd5a0ce16d79a5ba36559df255fea55e5631830dacdceef95dd9",
+  "ended_utc": "2026-10-07T23:40:51.259613+00:00",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "failure_type": null,
+  "fixture_only": true,
+  "fixture_original": null,
+  "format": "swdb.lanl14-parent-early-nonzero-dispatch-result.v1",
+  "identity_sha256": "cf3cf08326bef1bdb0c7ca03ff9b23e2e1d6bdc469655a746e5e444572cd5c41",
+  "leases_after": {
+    "legacy": "released",
+    "node0": {
+      "generation": 510,
+      "job": "swdb-lanl14-reports-final-20261007-a1",
+      "lane_original": {
+        "bytes": 812,
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1/control/lane.json",
+        "sha256": "89e0f90292083c616a13d3738fe4631d9365bbc1398d7ba7e5bcbbf4bb651286"
+      },
+      "pid": 2128960,
+      "start_time": "588421769",
+      "state": "held"
+    },
+    "node1": "released"
+  },
+  "one_attempt": true,
+  "originals": {
+    "lane.json": {
+      "bytes": 2125,
+      "sha256": "d5f6f5c084cdfb9e081c9ff0a847ca6f12f71c62a82f567d32e8e30e427c8384"
+    },
+    "wrapper-exit-code.txt": {
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    "wrapper.stderr": {
+      "bytes": 7019,
+      "sha256": "5443fda5fabe6d340d6882fdc2bd47c1f22a32d2d06f0363c96021c9b212f13e"
+    },
+    "wrapper.stdout": {
+      "bytes": 264,
+      "sha256": "ba9a057fcea8f2ce42950f93c40a87e293c770c5ca5702f612fc9ed8d307683b"
+    }
+  },
+  "passed": false,
+  "preregistration": {
+    "bytes": 7028,
+    "identity_sha256": "b761376e8bc0dc85d0384deae80b8ca272c64e14b63d1e27a69086fe327f4bca",
+    "path": "/data/yanruj/EvolveSWDB_runs/lanl14-lifecycle-administration-20261007-a2/dispatch/preregistration.json",
+    "sha256": "9cf95ca6a3a9de9f1d4a687b883ff6311af405360da6dece565e32235a475c43"
+  },
+  "remote_program_sha256": "fb311d6bd2dc4252d356902c3f921299c1373d4d40266d58fbfe1e67dc895be1",
+  "scientific_admission": false,
+  "scientific_source_revision": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "scope": "Actual administrative fixture result only when this future main is selected. No scientific/native application result or production control admission.",
+  "selected_control_main_invoked": false,
+  "started_utc": "2026-10-07T23:40:49.283532+00:00",
+  "wrapper_exit": 1
+}

@@ -1,0 +1,119 @@
+{
+  "created": "2026-09-26T19:34:28.289594-04:00",
+  "scope": "Prospective simulator-series and native-publisher public SQLite cache location. Local contract tests only; no empirical qualification or host changes.",
+  "parent_checkout": "/Users/yanrujhou/CLionProjects/EvolveSWDB",
+  "head_at_receipt": "d532adcd72ea7770e339edd785c23032ae9ce47b",
+  "findings": [
+    {
+      "priority": "P2",
+      "path": "scripts/bfs_simulator_series.py",
+      "reason": "Public calls defaulted to ROOT/build/swdb.sqlite, outside dedicated charged runs tree. Batch runtime inventory ignored it; later standard clean-root validation rejects it.",
+      "reproduction_cache_bytes": 180224
+    },
+    {
+      "priority": "P2",
+      "path": "scripts/bfs_freeze_pilot.py",
+      "reason": "Initial public get created ROOT/build before output preparation. Explicit cache ownership was missing for initial get, freeze and fresh get.",
+      "reproduction_cache_bytes": 180224
+    }
+  ],
+  "changes": [
+    "Series owns folder/swdb.sqlite, retains receipt.database and passes it to every shared public call; existing recursive raw accounting includes cache/sidecars.",
+    "Publisher requires explicit --db outside code/records/input/new output; rejects relative/noncanonical/symlink/directory paths before public calls. All three calls share the selected cache.",
+    "Publisher qualification/review hashes and failed-prepare output ordering remain unchanged. Existing semantic test receives explicit raw cache; command examples are updated."
+  ],
+  "files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_simulator_series.py",
+      "bytes": 30014,
+      "sha256": "cc8f514127ab509c4ea16fdd4a06c6c45d704e4fdb718c53ad9fcd9dfaf6edb6"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_freeze_pilot.py",
+      "bytes": 54812,
+      "sha256": "5b7722c46afdd19f483516963ddd11764bb2e54aaa8ff3d1a061f598eb6b3552"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_client_databases.py",
+      "bytes": 7326,
+      "sha256": "8e7ada1c355f667da171037c8a7caab33dfb7484c630d0d608acb00f32e88fa0"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_freeze_pilot.py",
+      "bytes": 33294,
+      "sha256": "23f09c0239549ed5b8ad328a6e8ecf5fe0a1ccf9a2a8249ba781ce0ac89667ae"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-one-thread-freeze-20260926.md",
+      "bytes": 8437,
+      "sha256": "0216b06cc93a141939b7e64d5268948a59dc0df7bca12fa010ce2e1b6d565054"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-pilot-freeze.md",
+      "bytes": 10245,
+      "sha256": "96e632220d7f49d413371e23deb28592a32f9487a86788c037cff4aa538a0a24"
+    }
+  ],
+  "original_probe": {
+    "path": "/private/tmp/test_bfs_public_database_standards_20260926.py",
+    "bytes": 4191,
+    "sha256": "a6f1da5ea8cd329092046dac492b925a8656c11643fd3282652d5244a96d11c0"
+  },
+  "adapted_recheck": {
+    "path": "/private/tmp/test_bfs_public_database_standards_recheck_20260926.py",
+    "bytes": 4236,
+    "sha256": "14c0cf5612601599fb7aa543449e8bae0ab8a32a03bd84c4b20c8c5f60a8149c"
+  },
+  "validation": [
+    {
+      "result": "2 failed in 1.11s; real initial public get writes code/build in both clients",
+      "artifact": {
+        "path": "/private/tmp/bfs-public-db-standards-red-20260926.log",
+        "bytes": 5751,
+        "sha256": "3bbc5b9de872bd6328115aa0691399a6d2d9ff5e2f915b1a6a95f1fb2e0ec059"
+      }
+    },
+    {
+      "result": "10 passed, 1 fixture setup failure in 40.28s; disposable checkout omitted tracked apps; repaired fixture copy only",
+      "artifact": {
+        "path": "/private/tmp/bfs-client-db-green-20260926.log",
+        "bytes": 7328,
+        "sha256": "ddc6f2b02943c29805442e39ab1030f9eef44672341edb63ed3a59e5dedcbbe2"
+      }
+    },
+    {
+      "result": "197 passed, 2 Linux-only skipped in 59.50s",
+      "artifact": {
+        "path": "/private/tmp/bfs-client-db-focused-20260926.log",
+        "bytes": 272,
+        "sha256": "8bce7deb4284c1cfd293bb3beb8c8abf1b2446d200aafd1c07ba0dd7ffcd374b"
+      }
+    },
+    {
+      "result": "2 passed in 1.06s; only adaptation is publisher now supplies required explicit --db",
+      "artifact": {
+        "path": "/private/tmp/bfs-public-db-standards-recheck-20260926.log",
+        "bytes": 850,
+        "sha256": "3ea781194c0bd93a29313d88056382a9d0f6f92aa1fa36f25ed68d37619bb3b1"
+      }
+    }
+  ],
+  "command": "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest tests/test_bfs_client_databases.py tests/test_bfs_simulator_series.py tests/test_bfs_simulator_batch.py tests/test_bfs_freeze_pilot.py -q -p no:cacheprovider --basetemp /private/tmp/bfs-client-db-focused-20260926",
+  "diff_check": "passed",
+  "independent_review": {
+    "state": "clean",
+    "actual_get_and_path_tests": "10 passed in 1.24s",
+    "actual_fixture_publication": "1 passed in 39.39s",
+    "receipt": {
+      "path": "/private/tmp/bfs-client-database-spec-review-20260926.json",
+      "bytes": 3937,
+      "sha256": "5723bff8df75807ebd4a907db686e106ff93d847de9fa6f424101bbb2156b455"
+    }
+  },
+  "limitations": [
+    "No host execution/export, no simulator/provider invocation or protocol/policy change. Fixture protocol freeze tests CLI/cache behavior only.",
+    "Publisher database and sidecar storage/time remain charged by its caller-supplied future finite wrapper; no extra clock allowance is introduced.",
+    "This is an interim narrow readiness repair, not the final all-ticket Standards review."
+  ],
+  "sealed_at": "2026-09-26T19:35:00.638275-04:00"
+}

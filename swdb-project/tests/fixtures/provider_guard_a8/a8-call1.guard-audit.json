@@ -1,0 +1,66 @@
+{
+  "passed": false,
+  "reasons": [
+    "provider resource limit exceeded: threads=17, resident_bytes=83968000"
+  ],
+  "trace": "/data/yanruj/EvolveSWDB_runs/extensa/extensa-native-bfs-20261005-a8/provider/extensa-native-bfs-20261005-a8.call1/network.trace",
+  "process_cleanup": {
+    "passed": true,
+    "tracer_pid": 1866131,
+    "processes_observed": [
+      {
+        "pid": 1866131,
+        "start_time_ticks": 569379279,
+        "pidfd": true
+      },
+      {
+        "pid": 1866134,
+        "start_time_ticks": 569379284,
+        "pidfd": false
+      }
+    ],
+    "survivors": [],
+    "errors": [],
+    "wall_s": 0.1505508180707693
+  },
+  "supervisor_protection": {
+    "architecture": "x86_64",
+    "supervisors": [
+      {
+        "pid": 1851904,
+        "start_time_ticks": 568667410,
+        "tids": [
+          1851904
+        ],
+        "process_group": 1851813,
+        "session": 1851790
+      },
+      {
+        "pid": 1866131,
+        "start_time_ticks": 569379279,
+        "tids": [
+          1866131
+        ],
+        "process_group": 1866131,
+        "session": 1866131
+      }
+    ],
+    "provider_session": 1866134,
+    "filtered_syscalls": [
+      "kill",
+      "tkill",
+      "tgkill",
+      "rt_sigqueueinfo",
+      "rt_tgsigqueueinfo",
+      "pidfd_open"
+    ],
+    "compat_abi_allowed": false,
+    "kill_all_allowed": false,
+    "untraced_network_filter": true,
+    "enforced": true
+  },
+  "original_provider": {
+    "pid": 1866134,
+    "start_time_ticks": 569379284
+  }
+}

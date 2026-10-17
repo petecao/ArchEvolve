@@ -1,0 +1,120 @@
+{
+  "format": "swdb.lanl17-queued-source-derivation-review.v1",
+  "source_only": true,
+  "executed": false,
+  "scientific_admission": false,
+  "campaign": "extensa-gem5-bfs-20261006-p4",
+  "attempt": 1,
+  "node": 0,
+  "generation_inferred_or_bound": false,
+  "source_checks": [
+    {
+      "scope": "host",
+      "original": {
+        "path": "/private/tmp/lanl17-p3-parent-pre-dispatch-readonly-20261008-a5-r1.py",
+        "bytes": 2516,
+        "sha256": "d9627351d63ff93eeebacebcb56e9784ab31ab91c4f07ad162e804d249c68274"
+      },
+      "selected_output": {
+        "path": "/private/tmp/lanl17-p4-parent-pre-dispatch-readonly-20261008-a5-r1.py",
+        "bytes": 2516,
+        "sha256": "e23ac7d5af2d3f7b996b0b30ea51b96df09689edeb4fb1297afacf6296d743ca"
+      },
+      "narrow_inverse_exact": true
+    },
+    {
+      "scope": "host",
+      "original": {
+        "path": "/private/tmp/lanl17-p3-parent-pre-dispatch-readonly-config-20261008-a5-r1.json",
+        "bytes": 2830,
+        "sha256": "e697ff7767f27a394017082a648cec22e8c67dc651f61f06fba5e3d57bb7804f"
+      },
+      "selected_output": {
+        "path": "/private/tmp/lanl17-p4-parent-pre-dispatch-readonly-config-20261008-a5-r1.json",
+        "bytes": 2830,
+        "sha256": "f673f4771f2d6695770c23c0a4e5dfe4daf0054f613b56317192d31bd90f7bd2"
+      },
+      "narrow_inverse_exact": true
+    },
+    {
+      "scope": "startup",
+      "original": {
+        "path": "/private/tmp/lanl17_p3_startup_metadata_query_20261008_a5.py",
+        "bytes": 7793,
+        "sha256": "c2a5d3f3b9e4e7a9227ce5c5838127363b579d04d916903eaab315ea379eef11"
+      },
+      "selected_output": {
+        "path": "/private/tmp/lanl17_p4_startup_metadata_query_20261008_a5.py",
+        "bytes": 7793,
+        "sha256": "e518663c5e4d6370b1969409e1f1b4107d613bcc3f3af844636a71203bb5c7e1"
+      },
+      "narrow_inverse_exact": true
+    },
+    {
+      "scope": "startup",
+      "original": {
+        "path": "/private/tmp/lanl17-p3-startup-metadata-query-config-20261008-a5.json",
+        "bytes": 8487,
+        "sha256": "49cbf3ac83ea70895746c33c18588f72b8e7a620b1859aa3203f929f8799ae60"
+      },
+      "selected_output": {
+        "path": "/private/tmp/lanl17-p4-startup-metadata-query-config-20261008-a5.json",
+        "bytes": 8487,
+        "sha256": "d535878e25b44ff05339c7efaad38967a5d5b2548219b738152943190447ea08"
+      },
+      "narrow_inverse_exact": true
+    },
+    {
+      "scope": "startup",
+      "original": {
+        "path": "/private/tmp/lanl17-p3-pre-dispatch-helper-health-query-config-20261008-a5.json",
+        "bytes": 8257,
+        "sha256": "f9034c8fca6e7f326da9b0c2e0bfff0b6738615aacb55c784151d24e9ea6bc1d"
+      },
+      "selected_output": {
+        "path": "/private/tmp/lanl17-p4-pre-dispatch-helper-health-query-config-20261008-a5.json",
+        "bytes": 8257,
+        "sha256": "022e12c4738da12ee1599ab900131245697c5229308fb42adfff4554a749c08b"
+      },
+      "narrow_inverse_exact": true
+    },
+    {
+      "scope": "generation",
+      "original": {
+        "path": "/private/tmp/lanl17_read_p3_acquired_generation_originals_20261008_a5_r1.py",
+        "bytes": 3502,
+        "sha256": "8747653ea59b592ace282176d64557c998b0ed7eef60a2713999d0062c3ce42d"
+      },
+      "selected_output": {
+        "path": "/private/tmp/lanl17_read_p4_acquired_generation_originals_20261008_a5_r1.py",
+        "bytes": 3502,
+        "sha256": "8de60e7ca8a0492cbab89450c08246d42345a3baa0cf3110f51408a24dfdce22"
+      },
+      "narrow_inverse_exact": true
+    },
+    {
+      "scope": "generation",
+      "original": {
+        "path": "/private/tmp/lanl17-p3-acquired-generation-originals-action-config-r1-20261008-a5.json",
+        "bytes": 3842,
+        "sha256": "79e776a5416c7447ee49d928277b37e7c87308ac06f3ef31b46ffe7044fdd01b"
+      },
+      "selected_output": {
+        "path": "/private/tmp/lanl17-p4-acquired-generation-originals-action-config-r1-20261008-a5.json",
+        "bytes": 3842,
+        "sha256": "d485f1d2a6d0a68a51679735d85fb1b58a0ed7d463b137541ec2533d6f23daeb"
+      },
+      "narrow_inverse_exact": true
+    }
+  ],
+  "exact_config_source_embeddings": true,
+  "top35_and_legacylabels_retained": true,
+  "phase_flatH_vs_copiedhelper_retained": true,
+  "original_caps_privacy_floors_sourceR_envelopes_retained": true,
+  "diff": {
+    "path": "/private/tmp/lanl17-p4-queued-host-startup-acquired-complete-derivation-20261008-a5.diff",
+    "bytes": 53942,
+    "sha256": "4a0b27821fff31ab8b02e60b94442cdb31f29d4ad4835a7772b5dd047f2cfbdf"
+  },
+  "requires_actual_p3_normal_custody_then_fresh_p4_admission": true
+}

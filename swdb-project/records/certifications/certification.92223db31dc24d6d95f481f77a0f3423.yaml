@@ -1,0 +1,185 @@
+kind: certification
+schema_version: '0.4'
+id: certification.92223db31dc24d6d95f481f77a0f3423
+status: draft
+created: '2026-10-03'
+updated: '2026-10-03'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+entry:
+  id: lowering.dxc_tile_size.dx100-mmio.1.0-e4fc4af
+  content_sha256: 59b213f5dbdfb10b7f2b23f22179b2eeca7d6af046fa1132dbb36fb6990497f4
+command:
+  version: '1.0'
+  sources_sha256: 8b36bf787813456d10fea33924a38da1ca4a82830d7f8bc29ffa12be8260a0b1
+host:
+  hostname: YanRus-Mac-Studio.local
+  system: Darwin
+  architecture: arm64
+  compiler: /opt/homebrew/bin/g++-16
+matrix:
+- operation: tile_size
+  tile_size: 16384
+  threads: 4
+  status: passed
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-1dad411221794ed5aee52b6074a65bb6/tile_size-16384
+    - tile_size
+    returncode: 0
+    stdout: |
+      SWDB_DIFFERENTIAL_PASS:tile_size
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-1dad411221794ed5aee52b6074a65bb6/tile_size-16384.positive.json
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=16384
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/drivers/differential.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-1dad411221794ed5aee52b6074a65bb6/tile_size-16384
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-1dad411221794ed5aee52b6074a65bb6/tile_size-16384.build.json
+- operation: tile_size
+  tile_size: 1024
+  threads: 4
+  status: passed
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-1dad411221794ed5aee52b6074a65bb6/tile_size-1024
+    - tile_size
+    returncode: 0
+    stdout: |
+      SWDB_DIFFERENTIAL_PASS:tile_size
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-1dad411221794ed5aee52b6074a65bb6/tile_size-1024.positive.json
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=1024
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/drivers/differential.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-1dad411221794ed5aee52b6074a65bb6/tile_size-1024
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-1dad411221794ed5aee52b6074a65bb6/tile_size-1024.build.json
+negative_controls:
+- id: dropped_wait
+  tile_size: 16384
+  status: rejected
+  reason: read_before_wait
+  expected_check: read_before_wait
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=16384
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/drivers/differential.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-1dad411221794ed5aee52b6074a65bb6/tile_size-16384-dropped_wait
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-1dad411221794ed5aee52b6074a65bb6/tile_size-16384-dropped_wait.build.json
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-1dad411221794ed5aee52b6074a65bb6/tile_size-16384-dropped_wait
+    - tile_size
+    - dropped_wait
+    returncode: 87
+    stdout: ''
+    stderr: |
+      SWDB_DIFFERENTIAL_MISMATCH:read_before_wait
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-1dad411221794ed5aee52b6074a65bb6/tile_size-16384-dropped_wait.run.json
+- id: dropped_wait
+  tile_size: 1024
+  status: rejected
+  reason: read_before_wait
+  expected_check: read_before_wait
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=1024
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/benchmarks/API
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/apps/dx100/include
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/drivers/differential.cc
+    - -o
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-1dad411221794ed5aee52b6074a65bb6/tile_size-1024-dropped_wait
+    returncode: 0
+    stdout: ''
+    stderr: ''
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-1dad411221794ed5aee52b6074a65bb6/tile_size-1024-dropped_wait.build.json
+  run:
+    command:
+    - /private/tmp/swdb-typed-library-certification-20261003/certify-1dad411221794ed5aee52b6074a65bb6/tile_size-1024-dropped_wait
+    - tile_size
+    - dropped_wait
+    returncode: 87
+    stdout: ''
+    stderr: |
+      SWDB_DIFFERENTIAL_MISMATCH:read_before_wait
+    timeout: false
+    log: /private/tmp/swdb-typed-library-certification-20261003/certify-1dad411221794ed5aee52b6074a65bb6/tile_size-1024-dropped_wait.run.json
+verdict: certified
+evidence_basis: simulated
+evidence_kind: execution
+created_at: '2026-10-03T06:47:19.465183+00:00'

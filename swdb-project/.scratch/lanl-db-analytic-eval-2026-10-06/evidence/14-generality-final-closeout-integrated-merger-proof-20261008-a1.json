@@ -1,0 +1,756 @@
+{
+  "format": "swdb.lanl14-final-closeout-integrated-merger-proof.v1",
+  "updated": "2026-10-07 22:05 ET",
+  "canonical_ensure_ascii": true,
+  "scope": "Parent-authorized local archival integration, exact pure-E union, two-file ticket14 closure, and preservation proof only.",
+  "worktree": "/Users/yanrujhou/.codex/worktrees/lanl-analytic-eval/ArchEvolve",
+  "branch": "codex/lanl-analytic-eval",
+  "graph": {
+    "B": {
+      "commit": "a9c02e918374070ff2654e3f9696bd550230cbbb",
+      "tree": "77e2c24c8f649298105d4b1d2ae1bd0d8d4bb340",
+      "ordered_parents": [
+        "d5385a6d862c870e814e1f3368656af1c58f9005"
+      ]
+    },
+    "I1": {
+      "commit": "04ba18e9a8ec85daea881552df32c93402cf5430",
+      "tree": "6ce3796bd574b6a1d86b9f7dcc31ac7f9cc1d6ed",
+      "ordered_parents": [
+        "a9c02e918374070ff2654e3f9696bd550230cbbb"
+      ]
+    },
+    "I2": {
+      "commit": "c0b78122e7e3761ac6d3acd4aa135acd0dae17f9",
+      "tree": "4956959aa9ba157dffdae1e0607af7d041157d02",
+      "ordered_parents": [
+        "04ba18e9a8ec85daea881552df32c93402cf5430"
+      ]
+    },
+    "I3": {
+      "commit": "e71a52c3982b28631471ca5f83c09ba713fee681",
+      "tree": "2af7da6c395b880466ce11d7f8393b075ea34dc3",
+      "ordered_parents": [
+        "c0b78122e7e3761ac6d3acd4aa135acd0dae17f9"
+      ]
+    },
+    "M1": {
+      "commit": "5b0e9146934b348b77ad877ee5868557a533da9e",
+      "tree": "2af7da6c395b880466ce11d7f8393b075ea34dc3",
+      "ordered_parents": [
+        "a9c02e918374070ff2654e3f9696bd550230cbbb",
+        "e71a52c3982b28631471ca5f83c09ba713fee681"
+      ]
+    },
+    "R14": {
+      "commit": "c4ab2fdbb0b0c57ee9f515522835897f24466d6b",
+      "tree": "e655ab97965b58b9d1ccaa7b3a4a065594cbec0b",
+      "ordered_parents": [
+        "d78617bf64c32f49fb8110fd59849a5b94b0cc73"
+      ]
+    },
+    "E": {
+      "commit": "43256ee0300a59a03919833075fbb13fb3ba9ab3",
+      "tree": "cad056989c9c0ebde67e26e9e37cd967c79a6716",
+      "ordered_parents": [
+        "c4ab2fdbb0b0c57ee9f515522835897f24466d6b"
+      ]
+    },
+    "M2": {
+      "commit": "5f9cfd2e09c10d6bceb384be400a11f190cdaea4",
+      "tree": "ccd16cf0a2fad0e0f12ab2c62a30b67ffff294cf",
+      "ordered_parents": [
+        "5b0e9146934b348b77ad877ee5868557a533da9e",
+        "43256ee0300a59a03919833075fbb13fb3ba9ab3"
+      ]
+    },
+    "L": {
+      "commit": "c0153122cd73f7c34a1d198481e71b01d2bf1401",
+      "tree": "cb3429c810afefda068a03849456078fbf2c64a9",
+      "ordered_parents": [
+        "5f9cfd2e09c10d6bceb384be400a11f190cdaea4"
+      ]
+    }
+  },
+  "proof_commit_contract": {
+    "sole_parent": "c0153122cd73f7c34a1d198481e71b01d2bf1401",
+    "only_addition": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-generality-final-closeout-integrated-merger-proof-20261008-a1.json",
+    "proof_commit_hash_reported_externally_after_commit": true,
+    "no_self_referential_commit_or_tree_hash": true
+  },
+  "incoming_metadata": {
+    "first_two_stage_combined_report": {
+      "path": "/private/tmp/lanl14-r5-reader-two-step-archive-incoming-check-20261008-a1.json",
+      "bytes": 44688,
+      "sha256": "f6b7a3368b22641c6e6f231192152f6cae02743420308c2c93e15414a9aecb34",
+      "identity_sha256": "8a510c18e4a0d76732d5bbfcfbe301627423618fb1104290f0d3460dc73676ae",
+      "canonical_ensure_ascii": true
+    },
+    "third_stage_report": {
+      "path": "/private/tmp/lanl14-original-reader-actual-custody-incoming-check-20261008-a1.json",
+      "bytes": 28294,
+      "sha256": "b76b6f5d91013f05295520144a7e86e3c2fc2a9f5d8f399aa62534dafbc4d1bc",
+      "identity_sha256": "f2d5ec070928e9a9ac968c2bd436e04406b923ee19b73aab75e60043c18f8dc6",
+      "canonical_ensure_ascii": true
+    },
+    "three_packet_bindings": [
+      {
+        "incoming": "04ba18e9a8ec85daea881552df32c93402cf5430",
+        "parent": "a9c02e918374070ff2654e3f9696bd550230cbbb",
+        "tree": "6ce3796bd574b6a1d86b9f7dcc31ac7f9cc1d6ed",
+        "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-supervised-r5-export-actual-custody-20261008-a1",
+        "manifest": {
+          "bytes": 10884,
+          "canonical_ensure_ascii": true,
+          "identity_sha256": "950a26b6a4eba2a8c9b61ab29039fb283048f88c9b526215c83a21fe37c5c141",
+          "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-supervised-r5-export-actual-custody-20261008-a1/manifest.json",
+          "sha256": "4b50d1b085bef91b983d107d8b8cc77b9624967b1cbedfdab176c7d054374eca"
+        },
+        "README": {
+          "bytes": 3392,
+          "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-supervised-r5-export-actual-custody-20261008-a1/README.md",
+          "sha256": "58f4f3120c78b20108ca835c730e8df35b5af93050b5df969274f1b1a0c21332"
+        },
+        "original_count": 15,
+        "original_bytes": 210790,
+        "exact_original_inventory_sha256": "045d7fc6a9920811a6e08140b4b988bd6d8a10cdc9ea1ba4f29781d73c670480",
+        "originals_equal_origin_and_incoming_and_L": true,
+        "all_original_modes_and_blobs_preserved": true
+      },
+      {
+        "incoming": "c0b78122e7e3761ac6d3acd4aa135acd0dae17f9",
+        "parent": "04ba18e9a8ec85daea881552df32c93402cf5430",
+        "tree": "4956959aa9ba157dffdae1e0607af7d041157d02",
+        "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-reader-bootstrap-local-capture-controls-20261008-a1-r1",
+        "manifest": {
+          "bytes": 6200,
+          "canonical_ensure_ascii": true,
+          "identity_sha256": "aa2649837d87e00393ca4bd275240d5054655937561771712f3e0fd5ba110c30",
+          "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-reader-bootstrap-local-capture-controls-20261008-a1-r1/manifest.json",
+          "sha256": "b7f98f7724e71626de1f3108ec19a2da7a36b5814b91f613d293ef3f8885d70f"
+        },
+        "README": {
+          "bytes": 2387,
+          "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-reader-bootstrap-local-capture-controls-20261008-a1-r1/README.md",
+          "sha256": "a4504c014195296391c49d5b077c6dd49efbf76970bc8455654265f9e3f5f5e3"
+        },
+        "original_count": 8,
+        "original_bytes": 71780,
+        "exact_original_inventory_sha256": "362588e93e5d7d4098111b89257732377743d3eda1e7c19dde8d0ab2587ec644",
+        "originals_equal_origin_and_incoming_and_L": true,
+        "all_original_modes_and_blobs_preserved": true
+      },
+      {
+        "incoming": "e71a52c3982b28631471ca5f83c09ba713fee681",
+        "parent": "c0b78122e7e3761ac6d3acd4aa135acd0dae17f9",
+        "tree": "2af7da6c395b880466ce11d7f8393b075ea34dc3",
+        "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-original-reader-actual-custody-20261008-a1",
+        "manifest": {
+          "bytes": 11535,
+          "canonical_ensure_ascii": true,
+          "identity_sha256": "fb16ac44211983e67ea0a2cf588597af28d7c60e62ac17461baa6eb93b7cb4b3",
+          "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-original-reader-actual-custody-20261008-a1/manifest.json",
+          "sha256": "7d0c5f0f6ba457f6acd736c1639cbe074892946266c46dc99f534b53b7d7ded9"
+        },
+        "README": {
+          "bytes": 3841,
+          "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-original-reader-actual-custody-20261008-a1/README.md",
+          "sha256": "dae0247fe9ab160d0048b1365f280a0326ad12ba6c1e929bdc17dea7ea025b70"
+        },
+        "original_count": 14,
+        "original_bytes": 127905,
+        "exact_original_inventory_sha256": "8b37565e3aba168036cd9cad35a13b881019feb2e3342474a12e0b16043d633d",
+        "originals_equal_origin_and_incoming_and_L": true,
+        "all_original_modes_and_blobs_preserved": true
+      }
+    ],
+    "full_report_bodies_read_and_pinned_not_duplicated": true
+  },
+  "union": {
+    "M1_tree_exact_I3": true,
+    "M2_tree_exact_I3_plus_disjoint_E_additions": true,
+    "E_sole_source_parent": "c4ab2fdbb0b0c57ee9f515522835897f24466d6b",
+    "all_3796_E_parent_entries_modes_preserved": true,
+    "B_entries": 4238,
+    "I3_entries": 4281,
+    "M2_entries": 4303,
+    "L_entries": 4303,
+    "archive_additions": 43,
+    "E_additions": 22,
+    "total_additions_before_proof": 65,
+    "archive_addition_mode_blob_inventory_sha256": "da91eafa9b6ac74f16ab3382af6b7e56aa2c9b650dbae10a96d61d2d42e28547",
+    "E_addition_mode_blob_inventory_sha256": "d28ca132b3899cfa7eac856cf4b2deea7edb037bec3de36233770e99be7cc729",
+    "all_additions_within_SWDB": true,
+    "no_conflicts_manual_resolution_cherry_pick_reset_or_history_rewrite": true
+  },
+  "closure": {
+    "only_changed_existing_paths": [
+      "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/issues/14-generality-maple-pagerank.md",
+      "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/map.md"
+    ],
+    "exact_proposals": [
+      {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/issues/14-generality-maple-pagerank.md",
+        "proposal": {
+          "path": "/private/tmp/lanl14-closeout-issue-proposed-against-i3-20261008-a1.md",
+          "bytes": 24789,
+          "sha256": "38eafe87dfeca66076820a14ed913f8bf0c6e3c70fa1f9ab4cfd483184925b8a"
+        },
+        "before": {
+          "bytes": 19669,
+          "sha256": "e050627a063e9595245631ba1c026675447806be1bf21a77ffaf2504562b69b4",
+          "mode": "100644",
+          "type": "blob",
+          "oid": "043d19df78491367aef07d1b5c2cc883cef39d04"
+        },
+        "after": {
+          "bytes": 24789,
+          "sha256": "38eafe87dfeca66076820a14ed913f8bf0c6e3c70fa1f9ab4cfd483184925b8a",
+          "mode": "100644",
+          "type": "blob",
+          "oid": "85c1dcd9c33a9d4f3f0e7ffc802b5c0bc13f36ed"
+        }
+      },
+      {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/map.md",
+        "proposal": {
+          "path": "/private/tmp/lanl14-closeout-map-proposed-against-i3-20261008-a1.md",
+          "bytes": 13121,
+          "sha256": "c6b4e4f29d296222d6675a1e4c8fb047f29fc8165a312d0171eeab65860d720c"
+        },
+        "before": {
+          "bytes": 12190,
+          "sha256": "412523f67f4fdc2481039d3d6f55047608bd2edba4c66d46c302c6e850d2bd6a",
+          "mode": "100644",
+          "type": "blob",
+          "oid": "308d0720ec0c2620954bda9add10c3fdf170228b"
+        },
+        "after": {
+          "bytes": 13121,
+          "sha256": "c6b4e4f29d296222d6675a1e4c8fb047f29fc8165a312d0171eeab65860d720c",
+          "mode": "100644",
+          "type": "blob",
+          "oid": "ac53442676d622d4c7365aad2903fefaffb2d7c0"
+        }
+      }
+    ],
+    "complete_approved_I3_derivation": {
+      "path": "/private/tmp/lanl14-closeout-complete-i3-derivation-20261008-a1.diff",
+      "bytes": 9868,
+      "sha256": "1262d3d05e3c66014d23ba5f473e5e3b2efee50842f5937a88698715d2591baf"
+    },
+    "full_handoff": {
+      "path": "/private/tmp/lanl14-closeout-complete-i3-derivation-handoff-20261008-a1.md",
+      "bytes": 2678,
+      "sha256": "a1ddee5e981f7715d5d605afc8e65f6504d4fb8dce5e23edc9f9ad6ae587dfa3"
+    },
+    "regenerated_two_file_diff_exact_approved_diff": true,
+    "status14_resolved_three_acceptance_boxes_Answer_and_map14_only": true,
+    "ticket17_claimed_and_other_ticket_history_exact": true,
+    "historical_NOTRUN_statements_not_rewritten": true,
+    "L_sole_M2_changes_exactly_two_reviewed_files": true
+  },
+  "preservation": {
+    "all_other_B_entries_modes_exact": 4236,
+    "full_B_mode_type_blob_inventory_sha256": "c52fbeaa0cc5604807368f5085f17425b12025b93f085103a8db82239da8792a",
+    "protected_B_inventory_except_two_closure_paths_sha256": "ffa75d3b17ba2cdae41730f5f02cdba6c02f5e55b7004bf8b692fa897b5e899f",
+    "all_B_paths_retained": true,
+    "all_I3_archive_entries_exact": true,
+    "all_E_additions_exact": true,
+    "all_686_prior_canonical_modes_blobs_exact": true,
+    "durable_canonical_yaml_count": 704,
+    "new_canonical_count": 18,
+    "no_canonical_yaml_parse_or_validator_repeat": true,
+    "C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+    "C_source_entries_exact": 223,
+    "C_python_modules_exact": 185,
+    "C_source_mode_type_blob_inventory_sha256": "198d8d65b3e0c656a2b32dc9717efedd2635846fc237fba9529c9debadc26902",
+    "F6": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+    "F6_public_digest_recomputed_from_exact_185_module_bytes_without_import": true,
+    "C_ref_retained_exact": "refs/heads/codex/lanl-ticket11-source-c",
+    "progress_mode_blob_exact_B": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "52d7cae2d0137cd61318689929cb86d4e9a26873"
+    },
+    "progress_bytes_sha256": "c383b3b155447bfde17029c80a8255885427fbece74f8c3b598f92d0246c35c5",
+    "root_docs_library_application_other_issues_maps_except_reviewed14_change_and_prior_archives_exact": true,
+    "local_root_Human_rule_readonly_pin": {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/.claude/rules/miscellaneous.md",
+      "bytes": 478,
+      "sha256": "1487ca3164420584b08b8217e0a4ab2c9fd9ec8fe72d22578ddde9ef72987045"
+    },
+    "remote_E3_C_native_lease_continuity_authority": "Original separately accepted parent postflight, not a new remote observation here"
+  },
+  "original_custody": {
+    "original_files": 37,
+    "original_bytes": 410475,
+    "byte_exact_origin_incoming_and_L": true,
+    "original_policies": {
+      "original unsealed JSON": 14,
+      "source/text/stream without JSON seal": 18,
+      "sealed explicit False": 2,
+      "sealed default True": 3
+    },
+    "five_original_seal_bindings": [
+      {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-supervised-r5-export-actual-custody-20261008-a1/actual/remote-export-receipt.json",
+        "bytes": 2063,
+        "file_sha256": "87f5cf207fb8ccfcc6c5eb0e9b074a95c3f843c64767440dc6d8c5538f1e0652",
+        "identity_present": true,
+        "canonical_policy_present": true,
+        "identity_sha256": "5bef382377c1be27dea5d50f107d942a546936046b408e553691d8b4c483b5da",
+        "canonical_ensure_ascii": false,
+        "policy_source": "explicit"
+      },
+      {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-supervised-r5-export-actual-custody-20261008-a1/actual/remote-pure-E-receipt.json",
+        "bytes": 32840,
+        "file_sha256": "02b369f0624964fa4293f563a7b51e142dc369101147ac7fe848503c4b50eb5d",
+        "identity_present": true,
+        "canonical_policy_present": false,
+        "identity_sha256": "ad656b14b958d9ee1b775c22906b0ee30e2d63e395aa165197be0ff4b8e4118a",
+        "canonical_ensure_ascii": true,
+        "policy_source": "original default True"
+      },
+      {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-original-reader-actual-custody-20261008-a1/remote/remote-reader-receipt.json",
+        "bytes": 2058,
+        "file_sha256": "7d9f500c2966b611f064b6418b2ca4fcfbb51a271733dcc046a6f9fc55852bc2",
+        "identity_present": true,
+        "canonical_policy_present": true,
+        "identity_sha256": "a8231230f780ed715c9104dce8b16e24c19985272d2e7cb5708b717d10c3cf82",
+        "canonical_ensure_ascii": false,
+        "policy_source": "explicit"
+      },
+      {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-original-reader-actual-custody-20261008-a1/remote/remote-reader-stdout.json",
+        "bytes": 14421,
+        "file_sha256": "bbcbf34ac330da9f2e92173cf7385c9e2d2bc4b4aa7ed982c006bd39937f7bbc",
+        "identity_present": true,
+        "canonical_policy_present": false,
+        "identity_sha256": "720bdb6655036b6226947656ee6440bb9ce6c972f9f045ec3cedec86a5a1ab3e",
+        "canonical_ensure_ascii": true,
+        "policy_source": "original default True"
+      },
+      {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-original-reader-actual-custody-20261008-a1/lanl14-reader-original-actual-parent-assessment-20261008-a1.json",
+        "bytes": 1490,
+        "file_sha256": "b3f9237b360610af118d367770b20d438edcaa77d56a42b8c4bdfa519dbeb9f7",
+        "identity_present": true,
+        "canonical_policy_present": false,
+        "identity_sha256": "97c8bff5a9133b255e474d4b6f99f544e0677d05fe8dfee41e5a3156f63e53f9",
+        "canonical_ensure_ascii": true,
+        "policy_source": "original default True"
+      }
+    ],
+    "three_new_retention_manifests_preserved_explicit_True": true,
+    "original_source_creation_NOTRUN_and_later_actual_chronology_preserved_separately": true,
+    "unsealed_originals_not_resealed": true
+  },
+  "pure_E": {
+    "receipt": {
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-generality-final-final-20261007-a1-export.json",
+      "bytes": 32840,
+      "sha256": "02b369f0624964fa4293f563a7b51e142dc369101147ac7fe848503c4b50eb5d",
+      "identity_present": true,
+      "canonical_policy_present": false,
+      "identity_sha256": "ad656b14b958d9ee1b775c22906b0ee30e2d63e395aa165197be0ff4b8e4118a",
+      "canonical_ensure_ascii": true,
+      "policy_source": "original default True"
+    },
+    "validation": "OK: 704 record(s) valid",
+    "validation_authority": "Original accepted public complete-catalogue export receipt; no validation rerun by merger",
+    "new_record_file_SHA_and_semantic_ID_authority": "Original accepted export receipt; merger checks exact E blob/mode/size and disjoint union",
+    "additions": [
+      {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-generality-final-final-20261007-a1-export.json",
+        "bytes": 32840,
+        "mode": "100644",
+        "type": "blob",
+        "oid": "66290a2b1f31312fca6404281e2ba727b372bb55",
+        "exact_E_mode_and_blob_preserved": true
+      },
+      {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-generality-final-final-20261007-a1-report.json",
+        "bytes": 68324111,
+        "mode": "100644",
+        "type": "blob",
+        "oid": "a7d2a251af8c9dbf91d90a1e137693a0d70f5108",
+        "exact_E_mode_and_blob_preserved": true
+      },
+      {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-generality-final-final-20261007-a1-report.md",
+        "bytes": 1475,
+        "mode": "100644",
+        "type": "blob",
+        "oid": "99f7ffcffc1cdac9021eb560a1f027f97a8f29ee",
+        "exact_E_mode_and_blob_preserved": true
+      },
+      {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-generality-final-final-20261007-a1-request.json",
+        "bytes": 18698,
+        "mode": "100644",
+        "type": "blob",
+        "oid": "aca2685a2f624b44e639d547394bbed9d7255b75",
+        "exact_E_mode_and_blob_preserved": true
+      },
+      {
+        "path": "swdb-project/records/estimates/generality.bc.cpu.kron-g16.t1.estimate.final-20261007-a1.yaml",
+        "bytes": 70540205,
+        "mode": "100644",
+        "type": "blob",
+        "oid": "188a14e34bda2c01c3d2ddde7ed2b90d50fcbb15",
+        "exact_E_mode_and_blob_preserved": true,
+        "accepted_export_record_pin": {
+          "path": "estimates/generality.bc.cpu.kron-g16.t1.estimate.final-20261007-a1.yaml",
+          "id": "generality.bc.cpu.kron-g16.t1.estimate.final-20261007-a1",
+          "kind": "estimate",
+          "sha256": "59f7a287b5bb709927f4a7c7ca64b3ce15309ee398ea1fb7aa6703275157f7a6",
+          "file_sha256": "a93f431beae805949cb423e4f8497229dd0813134eb95bbd9e29f3f7fb23e3d8",
+          "bytes": 70540205
+        },
+        "file_SHA_authority": "original accepted export receipt; exact E Git blob equality independently checked here"
+      },
+      {
+        "path": "swdb-project/records/estimates/generality.bc.dx100.kron-g16.t4.estimate.final-20261007-a1.yaml",
+        "bytes": 10504695,
+        "mode": "100644",
+        "type": "blob",
+        "oid": "246c7dd711885a2107b61806c11af505005930cb",
+        "exact_E_mode_and_blob_preserved": true,
+        "accepted_export_record_pin": {
+          "path": "estimates/generality.bc.dx100.kron-g16.t4.estimate.final-20261007-a1.yaml",
+          "id": "generality.bc.dx100.kron-g16.t4.estimate.final-20261007-a1",
+          "kind": "estimate",
+          "sha256": "9b8366f447ae29853b2d7cbb2e3ba30ac6195ec953ca04cd34d7200a0051456a",
+          "file_sha256": "48e76f9ac816aa8cd7a09cab375c31905171a5b24b6d80ca1e1d5875fce7895b",
+          "bytes": 10504695
+        },
+        "file_SHA_authority": "original accepted export receipt; exact E Git blob equality independently checked here"
+      },
+      {
+        "path": "swdb-project/records/estimates/generality.bc.maple.kron-g16.t2.estimate.final-20261007-a1.yaml",
+        "bytes": 5439583,
+        "mode": "100644",
+        "type": "blob",
+        "oid": "47722ca2403e86622c3d3a4218319d6a47c655e2",
+        "exact_E_mode_and_blob_preserved": true,
+        "accepted_export_record_pin": {
+          "path": "estimates/generality.bc.maple.kron-g16.t2.estimate.final-20261007-a1.yaml",
+          "id": "generality.bc.maple.kron-g16.t2.estimate.final-20261007-a1",
+          "kind": "estimate",
+          "sha256": "22451420e4bf908ee62fec0f426176f85092d1ec4c9f2167adee1aeca6e1ffb5",
+          "file_sha256": "802163ca7a8a23b4b9091445a199e282718b19bd7b9218fe38c80f50d21cbb53",
+          "bytes": 5439583
+        },
+        "file_SHA_authority": "original accepted export receipt; exact E Git blob equality independently checked here"
+      },
+      {
+        "path": "swdb-project/records/estimates/generality.bfs.cpu.kron-g16.t1.estimate.final-20261007-a1.yaml",
+        "bytes": 53583493,
+        "mode": "100644",
+        "type": "blob",
+        "oid": "9089bf52bc53bafb3427526ed81996524f05263e",
+        "exact_E_mode_and_blob_preserved": true,
+        "accepted_export_record_pin": {
+          "path": "estimates/generality.bfs.cpu.kron-g16.t1.estimate.final-20261007-a1.yaml",
+          "id": "generality.bfs.cpu.kron-g16.t1.estimate.final-20261007-a1",
+          "kind": "estimate",
+          "sha256": "0ae53541e61715ff4f8cb003b2b6ac4ee031e7bd35ca129010163b14e862b130",
+          "file_sha256": "41b68583d97570372776da3037db2cc895fee7107b271a2a35976508e31027f0",
+          "bytes": 53583493
+        },
+        "file_SHA_authority": "original accepted export receipt; exact E Git blob equality independently checked here"
+      },
+      {
+        "path": "swdb-project/records/estimates/generality.bfs.dx100.kron-g16.t4.estimate.final-20261007-a1.yaml",
+        "bytes": 9259119,
+        "mode": "100644",
+        "type": "blob",
+        "oid": "a37f1a1b249135b7214b26e68c035dfa7b32534e",
+        "exact_E_mode_and_blob_preserved": true,
+        "accepted_export_record_pin": {
+          "path": "estimates/generality.bfs.dx100.kron-g16.t4.estimate.final-20261007-a1.yaml",
+          "id": "generality.bfs.dx100.kron-g16.t4.estimate.final-20261007-a1",
+          "kind": "estimate",
+          "sha256": "4534ea6cb4e427503b2288546fb45100b439d620796973ef509ef2b3509ac38e",
+          "file_sha256": "8f76ca8949b8461b5e95c9eff5c419dfdbd6f089bf6441133f654c6dd3f06873",
+          "bytes": 9259119
+        },
+        "file_SHA_authority": "original accepted export receipt; exact E Git blob equality independently checked here"
+      },
+      {
+        "path": "swdb-project/records/estimates/generality.bfs.maple.kron-g16.t2.estimate.final-20261007-a1.yaml",
+        "bytes": 4498137,
+        "mode": "100644",
+        "type": "blob",
+        "oid": "b0e67e523bc9f0d2aab72cff609f1dcdf986b2aa",
+        "exact_E_mode_and_blob_preserved": true,
+        "accepted_export_record_pin": {
+          "path": "estimates/generality.bfs.maple.kron-g16.t2.estimate.final-20261007-a1.yaml",
+          "id": "generality.bfs.maple.kron-g16.t2.estimate.final-20261007-a1",
+          "kind": "estimate",
+          "sha256": "40a2079739d71ffe09134e460e0fbf5423940f798ee8c4412020f1640bdf01a7",
+          "file_sha256": "45466017119539b60ed58a9ef5e363cd8cc91eed10dd1ba294925e429610763b",
+          "bytes": 4498137
+        },
+        "file_SHA_authority": "original accepted export receipt; exact E Git blob equality independently checked here"
+      },
+      {
+        "path": "swdb-project/records/estimates/generality.pagerank.cpu.kron-g16.t1.estimate.final-20261007-a1.yaml",
+        "bytes": 64833237,
+        "mode": "100644",
+        "type": "blob",
+        "oid": "eb54fdc3b849a1656fcc58da57a632233af41074",
+        "exact_E_mode_and_blob_preserved": true,
+        "accepted_export_record_pin": {
+          "path": "estimates/generality.pagerank.cpu.kron-g16.t1.estimate.final-20261007-a1.yaml",
+          "id": "generality.pagerank.cpu.kron-g16.t1.estimate.final-20261007-a1",
+          "kind": "estimate",
+          "sha256": "e37dd1ee013b0555b734d77dd61137da469e5d6a4d5417fd62f1301bec7de269",
+          "file_sha256": "f67e0d27cf96650e06844fb299924e40cf7d2f378c7fb953519b2ea59c499ec4",
+          "bytes": 64833237
+        },
+        "file_SHA_authority": "original accepted export receipt; exact E Git blob equality independently checked here"
+      },
+      {
+        "path": "swdb-project/records/estimates/generality.pagerank.dx100.kron-g16.t4.estimate.final-20261007-a1.yaml",
+        "bytes": 6799766,
+        "mode": "100644",
+        "type": "blob",
+        "oid": "285c20297fb8cb7953e068abfd0bc86441122e0a",
+        "exact_E_mode_and_blob_preserved": true,
+        "accepted_export_record_pin": {
+          "path": "estimates/generality.pagerank.dx100.kron-g16.t4.estimate.final-20261007-a1.yaml",
+          "id": "generality.pagerank.dx100.kron-g16.t4.estimate.final-20261007-a1",
+          "kind": "estimate",
+          "sha256": "f244e1a6020c83acc44196bb2fd7b95ce700349eb54f43e3add10ccc037ffdf7",
+          "file_sha256": "a2e35ca50d60db2178437f7d415936c5b5e90dfb5ecd18f2bd706bbaf0be900b",
+          "bytes": 6799766
+        },
+        "file_SHA_authority": "original accepted export receipt; exact E Git blob equality independently checked here"
+      },
+      {
+        "path": "swdb-project/records/estimates/generality.pagerank.maple.kron-g16.t2.estimate.final-20261007-a1.yaml",
+        "bytes": 3643475,
+        "mode": "100644",
+        "type": "blob",
+        "oid": "10a99760765c6b5e3711e4dd3ea0d4a62e8bdea9",
+        "exact_E_mode_and_blob_preserved": true,
+        "accepted_export_record_pin": {
+          "path": "estimates/generality.pagerank.maple.kron-g16.t2.estimate.final-20261007-a1.yaml",
+          "id": "generality.pagerank.maple.kron-g16.t2.estimate.final-20261007-a1",
+          "kind": "estimate",
+          "sha256": "2295bfb3c5ba9678da1859f845b65bfbdaeb499b93f6dbefc5e512ad0dac49a2",
+          "file_sha256": "149867d31a34491c7f5768a7178bc3d63df14bba4b3865b8d691a842a4522314",
+          "bytes": 3643475
+        },
+        "file_SHA_authority": "original accepted export receipt; exact E Git blob equality independently checked here"
+      },
+      {
+        "path": "swdb-project/records/protocols/generality.bc.cpu.kron-g16.t1.protocol.final-20261007-a1.d69a3f63a21ec882.yaml",
+        "bytes": 692110,
+        "mode": "100644",
+        "type": "blob",
+        "oid": "fa092fb84b0904fa0ab368b1b61fca99a37185cb",
+        "exact_E_mode_and_blob_preserved": true,
+        "accepted_export_record_pin": {
+          "path": "protocols/generality.bc.cpu.kron-g16.t1.protocol.final-20261007-a1.d69a3f63a21ec882.yaml",
+          "id": "generality.bc.cpu.kron-g16.t1.protocol.final-20261007-a1.d69a3f63a21ec882",
+          "kind": "protocol",
+          "sha256": "d43184c3ab821dd7c3196e83c89ce8905ba7f4329a7c762e6a5fcac67d64d7d9",
+          "file_sha256": "b53765ee55c739a922358f94d88e006237bad295ab3a502430f75f7994c2d343",
+          "bytes": 692110
+        },
+        "file_SHA_authority": "original accepted export receipt; exact E Git blob equality independently checked here"
+      },
+      {
+        "path": "swdb-project/records/protocols/generality.bc.dx100.kron-g16.t4.protocol.final-20261007-a1.a9db91ca386a566b.yaml",
+        "bytes": 227648,
+        "mode": "100644",
+        "type": "blob",
+        "oid": "a0a9ba87b1ab9c631129c6fdbbad42fac4803f82",
+        "exact_E_mode_and_blob_preserved": true,
+        "accepted_export_record_pin": {
+          "path": "protocols/generality.bc.dx100.kron-g16.t4.protocol.final-20261007-a1.a9db91ca386a566b.yaml",
+          "id": "generality.bc.dx100.kron-g16.t4.protocol.final-20261007-a1.a9db91ca386a566b",
+          "kind": "protocol",
+          "sha256": "8cac833a7cf0f4ff6574afb24a0537186a1887b55791bc4f48673219ce9ba66e",
+          "file_sha256": "c8c375a5dbdd0028aaa975bdbce845590e9b92d78f3eb19fdbf07a413b2969ac",
+          "bytes": 227648
+        },
+        "file_SHA_authority": "original accepted export receipt; exact E Git blob equality independently checked here"
+      },
+      {
+        "path": "swdb-project/records/protocols/generality.bc.maple.kron-g16.t2.protocol.final-20261007-a1.3a5a92be01adff67.yaml",
+        "bytes": 12571,
+        "mode": "100644",
+        "type": "blob",
+        "oid": "5d45aa65067f868910bd67fc0049bfa17bb52477",
+        "exact_E_mode_and_blob_preserved": true,
+        "accepted_export_record_pin": {
+          "path": "protocols/generality.bc.maple.kron-g16.t2.protocol.final-20261007-a1.3a5a92be01adff67.yaml",
+          "id": "generality.bc.maple.kron-g16.t2.protocol.final-20261007-a1.3a5a92be01adff67",
+          "kind": "protocol",
+          "sha256": "30ebc403a2641aefd26a823341a095e4de50d81a3262a20ce07304d4a43e19b4",
+          "file_sha256": "f6ed84eaca1710aadd265c1cb9a940607a10abf138ddd8ee86034fbeef6fc93c",
+          "bytes": 12571
+        },
+        "file_SHA_authority": "original accepted export receipt; exact E Git blob equality independently checked here"
+      },
+      {
+        "path": "swdb-project/records/protocols/generality.bfs.cpu.kron-g16.t1.protocol.final-20261007-a1.6bafb63ffddb2984.yaml",
+        "bytes": 692056,
+        "mode": "100644",
+        "type": "blob",
+        "oid": "83dee8cd2fc9fe85cca364ef137870fab4de8de4",
+        "exact_E_mode_and_blob_preserved": true,
+        "accepted_export_record_pin": {
+          "path": "protocols/generality.bfs.cpu.kron-g16.t1.protocol.final-20261007-a1.6bafb63ffddb2984.yaml",
+          "id": "generality.bfs.cpu.kron-g16.t1.protocol.final-20261007-a1.6bafb63ffddb2984",
+          "kind": "protocol",
+          "sha256": "c339de50e7be948418d166354b75338a8673476a3e97f41f867edc31d2c3bb42",
+          "file_sha256": "3de2c55caff706a138de66219f67a3df5844b2b852ba6900970102e14cbff8fd",
+          "bytes": 692056
+        },
+        "file_SHA_authority": "original accepted export receipt; exact E Git blob equality independently checked here"
+      },
+      {
+        "path": "swdb-project/records/protocols/generality.bfs.dx100.kron-g16.t4.protocol.final-20261007-a1.52dfffe9a9104dd6.yaml",
+        "bytes": 227736,
+        "mode": "100644",
+        "type": "blob",
+        "oid": "4a435365d2539ab80594a9d5052c1a4548784c9a",
+        "exact_E_mode_and_blob_preserved": true,
+        "accepted_export_record_pin": {
+          "path": "protocols/generality.bfs.dx100.kron-g16.t4.protocol.final-20261007-a1.52dfffe9a9104dd6.yaml",
+          "id": "generality.bfs.dx100.kron-g16.t4.protocol.final-20261007-a1.52dfffe9a9104dd6",
+          "kind": "protocol",
+          "sha256": "6b0c67711c258cd3ec2dda26617abb142fb2803baa97e4fd56c9e02878e00252",
+          "file_sha256": "fe19253e60e943f1e338fc22f0c17a285b1a317fa195115e7d60b60f474c7c1e",
+          "bytes": 227736
+        },
+        "file_SHA_authority": "original accepted export receipt; exact E Git blob equality independently checked here"
+      },
+      {
+        "path": "swdb-project/records/protocols/generality.bfs.maple.kron-g16.t2.protocol.final-20261007-a1.f8a5a1dc25ff2a2c.yaml",
+        "bytes": 12517,
+        "mode": "100644",
+        "type": "blob",
+        "oid": "0362b4c560a7d12e067cdc53604117861a3b97b3",
+        "exact_E_mode_and_blob_preserved": true,
+        "accepted_export_record_pin": {
+          "path": "protocols/generality.bfs.maple.kron-g16.t2.protocol.final-20261007-a1.f8a5a1dc25ff2a2c.yaml",
+          "id": "generality.bfs.maple.kron-g16.t2.protocol.final-20261007-a1.f8a5a1dc25ff2a2c",
+          "kind": "protocol",
+          "sha256": "fdd1d0c76992625cc14f502b083cc2320286fe6f18fa84e553b445360e4e30c7",
+          "file_sha256": "da354d9f088c640c71cc822907c684dbecee2a878b752b35d59d36a857de9d07",
+          "bytes": 12517
+        },
+        "file_SHA_authority": "original accepted export receipt; exact E Git blob equality independently checked here"
+      },
+      {
+        "path": "swdb-project/records/protocols/generality.pagerank.cpu.kron-g16.t1.protocol.final-20261007-a1.0e004982f7de2cb1.yaml",
+        "bytes": 692265,
+        "mode": "100644",
+        "type": "blob",
+        "oid": "1ee48bb669031e794f4cfb553420dbbbc7eb6806",
+        "exact_E_mode_and_blob_preserved": true,
+        "accepted_export_record_pin": {
+          "path": "protocols/generality.pagerank.cpu.kron-g16.t1.protocol.final-20261007-a1.0e004982f7de2cb1.yaml",
+          "id": "generality.pagerank.cpu.kron-g16.t1.protocol.final-20261007-a1.0e004982f7de2cb1",
+          "kind": "protocol",
+          "sha256": "8597cfb616ec7685f44c260b88e8bf0c5e61aa581d84d969698dfc8419572a47",
+          "file_sha256": "41672cf77a91e831e0e0880d2f3064bde35f233efd44718cf0f5e4890585ba75",
+          "bytes": 692265
+        },
+        "file_SHA_authority": "original accepted export receipt; exact E Git blob equality independently checked here"
+      },
+      {
+        "path": "swdb-project/records/protocols/generality.pagerank.dx100.kron-g16.t4.protocol.final-20261007-a1.e73f8ab682b7c779.yaml",
+        "bytes": 227623,
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d0f11521a1a113d7597f4e5d2cf918ab46b78a12",
+        "exact_E_mode_and_blob_preserved": true,
+        "accepted_export_record_pin": {
+          "path": "protocols/generality.pagerank.dx100.kron-g16.t4.protocol.final-20261007-a1.e73f8ab682b7c779.yaml",
+          "id": "generality.pagerank.dx100.kron-g16.t4.protocol.final-20261007-a1.e73f8ab682b7c779",
+          "kind": "protocol",
+          "sha256": "738347eb479c5a2000d3fb446875cb5d1aea24592390962f664a98f218f07a59",
+          "file_sha256": "21650afd13cec2116b177f54f2ade6b25837a3dc050f2233fda436d42b1c7403",
+          "bytes": 227623
+        },
+        "file_SHA_authority": "original accepted export receipt; exact E Git blob equality independently checked here"
+      },
+      {
+        "path": "swdb-project/records/protocols/generality.pagerank.maple.kron-g16.t2.protocol.final-20261007-a1.cf35b54d65d924d9.yaml",
+        "bytes": 12730,
+        "mode": "100644",
+        "type": "blob",
+        "oid": "d24ad7c95aca730fe44637d49ae9700ffa5e8bc6",
+        "exact_E_mode_and_blob_preserved": true,
+        "accepted_export_record_pin": {
+          "path": "protocols/generality.pagerank.maple.kron-g16.t2.protocol.final-20261007-a1.cf35b54d65d924d9.yaml",
+          "id": "generality.pagerank.maple.kron-g16.t2.protocol.final-20261007-a1.cf35b54d65d924d9",
+          "kind": "protocol",
+          "sha256": "8c447c746fe04080cf38e4d434a684b809ff316f646d9b19ae3a8e4046e90f9a",
+          "file_sha256": "698754443318797aea8ba2ed566adea14eadcb82d1696102a7b62945d82707c4",
+          "bytes": 12730
+        },
+        "file_SHA_authority": "original accepted export receipt; exact E Git blob equality independently checked here"
+      }
+    ],
+    "report_transfer": {
+      "format": "swdb.lanl14-lossless-report-transfer.v1",
+      "encoding": "identity",
+      "original": {
+        "bytes": 68324111,
+        "sha256": "c340d66bce2d968aa5ef70b2bc0b4042484af2a7fc711a639e9d4af9b32f04e2"
+      },
+      "exported": {
+        "path": ".scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-generality-final-final-20261007-a1-report.json",
+        "bytes": 68324111,
+        "sha256": "c340d66bce2d968aa5ef70b2bc0b4042484af2a7fc711a639e9d4af9b32f04e2"
+      },
+      "report_identity_sha256": "e8f63e16562c7e6926b8ec689a4733010b42edec735076e2ce868ce5f30e4068",
+      "Git_blob_max_bytes": 104857600,
+      "original_report_max_bytes": 1073741824,
+      "gzip": null,
+      "original_remote_report_unchanged": true,
+      "decoded_original_bytes_equal": true,
+      "JSON_reserialized": false
+    },
+    "estimator_and_mechanism_diff": [],
+    "same_module_hash_map_verified": true
+  },
+  "actual_acceptance_boundary": {
+    "original_reader_format": "swdb.lanl14-selected-nine-export-admission.v1",
+    "original_reader_identity_sha256": "720bdb6655036b6226947656ee6440bb9ce6c972f9f045ec3cedec86a5a1ab3e",
+    "original_reader_policy": "original default True; no admitted or canonical-policy field added",
+    "original_supervisor_identity_sha256": "a8231230f780ed715c9104dce8b16e24c19985272d2e7cb5708b717d10c3cf82",
+    "original_supervisor_policy": "explicit False; scientific_admission=false retained",
+    "separate_parent_assessment_identity_sha256": "97c8bff5a9133b255e474d4b6f99f544e0677d05fe8dfee41e5a3156f63e53f9",
+    "independent_reconciliation_file_sha256": "63b1e1ccc86128b84e533ae3e4bed5c2115f3799f3b1091bcf9007e7519936db",
+    "nine_pairs_five_trials_each_inherited_accepted_original": true,
+    "estimated_whole_call_seconds": {
+      "BFS_CPU": 0.08459283293734217,
+      "BC_CPU": 0.64771215194357
+    },
+    "seven_other_whole_call_totals_null": true,
+    "all_ratios_and_error_bands_null": true,
+    "three_MAPLE_rows_estimate_only": true,
+    "no_new_accuracy_envelope_measured_speedup_or_numerical_unknown_padding": true,
+    "administrative_elapsed_times_not_application_timings": true,
+    "FinalR_equals_proof_tip_only_after_parent_acceptance_and_all_four_delivery_steps": true,
+    "actual17_input_population_prepare_campaigns_and_D30_completion_not_claimed": true
+  },
+  "actions": {
+    "local_Git_two_ordinary_merges_exact_two_file_closure_and_proof": true,
+    "push_root_main_remote_delivery_SSH_selected_import_main_tests_Store_native_provider_application_or_cleanup": false,
+    "scientific_or_selected_reader_reexecution": false
+  },
+  "pre_proof_tracked_and_index_clean": true,
+  "identity_sha256": "e91e4c6ed5dd94723e252124b7ac0fb1010199581cfb32c485a6cc196e08f9d6"
+}

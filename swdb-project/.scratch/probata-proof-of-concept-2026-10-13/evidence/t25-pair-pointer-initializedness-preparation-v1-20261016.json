@@ -1,0 +1,75 @@
+{
+  "created": "2026-10-16 ET",
+  "classification": "PREPARED_INITIALIZED_POINTER_VALUES_PENDING_INDEPENDENT_REVIEW",
+  "source": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/bounded_std_initialization.py",
+      "sha256": "7f4417d4d8ea8bcd8ef795259212e55052e333aa8ae320b4b7d06511cbab40ea",
+      "bytes": 19366
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_pair_pointer_initialization.py",
+      "sha256": "2b0da40f71a56f892c5344b0defb45f8a312c080b0a8eef2383f11fb0129b06c",
+      "bytes": 5181
+    }
+  ],
+  "baseline_source_commit": "18f04e569b949f465d6732db9505e3a264805040",
+  "frozen_files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-pair-pointer-resume-20261016/initializedness-repair-v1/bounded_std_initialization.py",
+      "sha256": "7f4417d4d8ea8bcd8ef795259212e55052e333aa8ae320b4b7d06511cbab40ea",
+      "bytes": 19366
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-pair-pointer-resume-20261016/initializedness-repair-v1/original-bounded_std_initialization.py",
+      "sha256": "480bf38b3333639c62d8f89aff129208abccdc63351d63cfa6b23d7cb3d84607",
+      "bytes": 14506
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-pair-pointer-resume-20261016/initializedness-repair-v1/probata-pair-pointer-initialization-green-v1.log",
+      "sha256": "edea1fe2e925f38d64cba1ee0f8ba3f25b2723ff28e7e65063c9b7b3e2414e63",
+      "bytes": 98
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-pair-pointer-resume-20261016/initializedness-repair-v1/probata-pair-pointer-initialization-green-v2.log",
+      "sha256": "6a840c9afb8c0e0e613d2f47dddba1dbba0efc79f3d678114250febb27d74362",
+      "bytes": 99
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-pair-pointer-resume-20261016/initializedness-repair-v1/probata-pair-pointer-initialization-red-v1.log",
+      "sha256": "573da29467d1b7411b1f787fe411dd08257fe29a5829f383f6881dccdc002cfd",
+      "bytes": 102
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-pair-pointer-resume-20261016/initializedness-repair-v1/probata-pair-pointer-initialization-red-v2.log",
+      "sha256": "7e52e04e3a8b7397c5a166eefb436a931310ba1d7e2701ab20ae1be6d268efef",
+      "bytes": 6577
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-pair-pointer-resume-20261016/initializedness-repair-v1/probata-pair-pointer-initialization-red-v3.log",
+      "sha256": "490395673934a6478469822682554ead837d3d23cdcd5e537c94d96dcdc6d19b",
+      "bytes": 1453
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-pair-pointer-resume-20261016/initializedness-repair-v1/test_pair_pointer_initialization.py",
+      "sha256": "2b0da40f71a56f892c5344b0defb45f8a312c080b0a8eef2383f11fb0129b06c",
+      "bytes": 5181
+    }
+  ],
+  "genuine_red": "red-v3: first positive failed at unknown mixed-pair aggregate; 8 negative cases passed before repair",
+  "green": "green-v2: 11 passed; 7 negative operations plus default null dereference and vector-prefix double-visit guard",
+  "mechanical_refusals": [
+    "red-v1: wrong cwd, no tests",
+    "red-v2: broad conftest imports attempted ctypes.dlopen, audit hook refused before policy cases"
+  ],
+  "execution": "Tool selectors none, plugins disabled, --noconftest, no cacheprovider, Python -I -B, 60 second alarm and audit hook rejects subprocess/exec/fork/dlopen; no compiler/native/verifier/SSH in pure controls",
+  "retained_actual_failure": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-pair-pointer-controls-v1-root-execution-20261016.json",
+    "sha256": "ee5ed8137d89691b7a6bceca65e9e520e807b36c72bca81544300284f0dbdc70",
+    "bytes": 7833
+  },
+  "semantics": "Exact audited model pointer pair constructor/copy/assignment/member initialized values. Address of a bound initialized primitive local, typed initialized harness pointer, or null supplies only identity_pointer; no pointee/live-prefix/escape grant. Generic unknown storage remains refused. Equality visits operands once.",
+  "actual_formal_admitted": false,
+  "real_compiler_native_successor_required": true,
+  "scope": "Mixed pair caller extension only; not full ticket25 completion."
+}

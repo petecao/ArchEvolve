@@ -1,0 +1,101 @@
+{
+  "artifacts": [
+    {
+      "bytes": 9898,
+      "path": "/private/tmp/lanl17_finalize_parent_host_readonly_20261008_a5_r1.py",
+      "sha256": "f10ad6818b3352d673eaad14eff3d51ee00c1386ec116683a5cc6df94b25cf58"
+    },
+    {
+      "bytes": 10973,
+      "path": "/private/tmp/lanl17-finalize-parent-host-readonly-action-SOURCE-ONLY-draft-20261008-a5-r1.json",
+      "sha256": "6ab9b1e47c6384df23386d528e9e020454f91be46f5f4a18dced73dc52d773d0"
+    },
+    {
+      "bytes": 17420,
+      "path": "/private/tmp/lanl17-p4-parent-pre-dispatch-readonly-capture-20261008-a5-r1/host-original.json",
+      "sha256": "e4603dc6a86f985398c4bda41665162117e0ef8ea2f926b83c29fb3581f0fc4a"
+    },
+    {
+      "bytes": 7268,
+      "path": "/private/tmp/lanl17_capture_metadata_action_20261008.py",
+      "sha256": "64fd8a4358bfbc5c172b50e02ae3782b286f2302f2beb8907d4abd35b3449c2a"
+    }
+  ],
+  "boundary": "Prospective reader readiness only; no current host clearance. Existing parent semantic custody review and original FINALIZE bootstrap source/control/F6 checks remain required.",
+  "confirmed_checks": [
+    "AST parses",
+    "config exact source embedding and declared pin",
+    "native nested lease.daemon_pid schema agrees retained node0/node1/legacy originals",
+    "owned native0666 reader retains O_NOFOLLOW cap and full-stat stability without chmod",
+    "original R/M2/routes/floors and future parent four-custody gate declared",
+    "45-second signal deadline and60remote/180local transport",
+    "no stage writes or original collect in config",
+    "failure output host_metadata_ready false and diagnostic hash only"
+  ],
+  "findings": [
+    {
+      "evidence": "Generic64fd runs /usr/bin/timeout --signal=TERM --kill-after=60s 60s python3.12 -I -B -c <this source>; only own PID is excluded. The timeout cmdline necessarily contains SOURCE/RAW/H28 literals embedded in this source, triggering the substring consumer test.",
+      "fix": "Exclude only the exact verified immediate timeout parent of this PID: owned UID, pinned bounded cmdline vector, PPID/start identity/continuity. Do not exempt arbitrary timeout or Python processes.",
+      "lines": [
+        70,
+        76,
+        78
+      ],
+      "priority": 1,
+      "title": "Own exact timeout parent is falsely classified as live scientific consumer"
+    },
+    {
+      "evidence": "read_bytes() consumes entire /proc/locks before cap; string-token lookup accepts malformed/unrecognized rows and relies on exact hexadecimal rendering. The key uses a later lstat rather than the already-pinned lease stat.",
+      "fix": "Reuse reviewed bounded numeric major/minor/inode normal-row/waiter parser and root-owned O_NOFOLLOW kernel reader. Build exact key from pinned lease dev/ino. Readability/parse/race failure must yield unknown/not-ready, never zero holders.",
+      "lines": [
+        48,
+        51,
+        52,
+        87,
+        90,
+        91
+      ],
+      "priority": 2,
+      "title": "Kernel lock proof does not parse fail-closed or bound read before allocation"
+    },
+    {
+      "evidence": "Only state released and positive daemon_pid are validated; arbitrary metadata dict is emitted. FD9 follows a target without bounded route proof and daemon start/inode continuity, unlike existing reviewed observer.",
+      "fix": "Require hostlock writer/name/host and known scalar/null schema, project only bounded release/generation/daemon scalars plus original pins. Reuse observer daemon PID-start/inode and exact route checks for each selected lease; foreign/deleted route or identity race stays unknown. Preserve0666 originals.",
+      "lines": [
+        50,
+        54,
+        55,
+        58,
+        92,
+        94
+      ],
+      "priority": 2,
+      "title": "Native/daemon schema and identity are not pinned tightly enough for release proof"
+    }
+  ],
+  "format": "swdb.lanl17-finalize-parent-host-reader-independent-source-review.v1",
+  "prior_schema_observation_only": {
+    "mbit10-evaluation": {
+      "daemon_pid": 209457,
+      "generation": 77,
+      "state": "released"
+    },
+    "mbit10-evaluation-node0": {
+      "daemon_pid": 2289368,
+      "generation": 513,
+      "state": "released"
+    },
+    "mbit10-evaluation-node1": {
+      "daemon_pid": 2174789,
+      "generation": 550,
+      "state": "released"
+    }
+  },
+  "remote_access": false,
+  "reviewed_at_et": "2026-10-08 20:25 ET",
+  "scientific_admission": false,
+  "source_edits": false,
+  "target_imports_or_execution": false,
+  "tests_run": false,
+  "verdict": "CHANGES_REQUESTED_SOURCE_ONLY"
+}

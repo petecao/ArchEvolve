@@ -1,0 +1,595 @@
+kind: campaign_summary
+schema_version: '0.4'
+id: extensa-gem5-bfs-20261004-a4.summary
+status: draft
+created: '2026-10-04'
+updated: '2026-10-04'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+mode: extensa
+campaign: extensa-gem5-bfs-20261004-a4
+campaign_file:
+  path: campaigns/extensa/extensa-gem5-bfs-20261004-a4.yaml
+  sha256: 6a0219d26821f4ec4330aefaf8614327be362e366fe70ea9cf9e16321f3b9463
+swdb_commit: fddade52983588d5ee163c3c2e62db6d6b5e9d3c
+extensa_source:
+  repository: MaizeHPC/MemAcc
+  commit: af3d6d7f7a69a72facdc3b95b42e78c952f44a76
+target: dx100_gem5
+evidence_basis: simulated
+evidence_kind: execution
+protocol:
+  id: extensa-gem5-bfs-20261004-a4.protocol.4dfda2f3ce2d9b58
+  identity_sha256: 4dfda2f3ce2d9b58d1f15eaae3f49febdb8b0bc230745913081e79da1fdead21
+  settings:
+    target: dx100_gem5
+    roi: bfs.complete_call.v1
+    threads: 4
+    repetitions: 1
+    sources: [0]
+    region_pairs: []
+    differences: 'Extensa campaign extensa-gem5-bfs-20261004-a4: provider rewrites of the fork''s scalar
+      TDStep under contract.bfs_read_offload (scalar-only snapshot plus patch, canonical lowering header)
+      versus the unchanged full-source dx100-bfs-scalar DOBFS; MAA enabled only for the candidate role.'
+    evidence_basis: simulated
+    profitability:
+      minimum_speedup: 1.05
+      maximum_relative_spread: 0.1
+      rule: lower bound strictly above the minimum; every spread at most the maximum
+    workloads:
+      kronecker: bfs-20260928-kronecker18-s0.cf4283236c5cb50c
+      uniform_random: bfs-20260928-uniform18-s0.8c7e69dfa516e53c
+baselines:
+- role: fork_scalar_tdstep
+  candidate: typed-library-bfs-gem5-20261003-a2.baseline
+  evaluation_ids_by_class: {}
+workload_classes:
+- class: kronecker
+  workload: bfs-20260928-kronecker18-s0.cf4283236c5cb50c
+  sources: [0]
+- class: uniform_random
+  workload: bfs-20260928-uniform18-s0.8c7e69dfa516e53c
+  sources: [0]
+label: single graph per class
+provider:
+  name: codex
+  model: gpt-5.6-sol
+  effort: xhigh
+pilot: null
+setup:
+  provider_calls:
+  - role: profiling
+    invocation: extensa-gem5-bfs-20261004-a4.call1
+    outcome: completed
+    counted: true
+    model: gpt-5.6-sol
+    effort: xhigh
+    classification: rewrite_provider
+iterations:
+- index: 1
+  started: '2026-10-04T08:17:04.343358+00:00'
+  ended: '2026-10-04T08:19:10.071499+00:00'
+  regions:
+  - id: dx100-bfs-scalar/TDStep:240-243
+    reason: 'contract.bfs_read_offload (rewrite_contract): pattern key 4/4 matched by td-frontier-read,
+      td-row-bounds-read, td-neighbor-read, td-parent-read on statements bfs-td-frontier, bfs-td-row-bounds,
+      bfs-td-neighbor, bfs-td-parent-read; all 8 legality clause(s) hold on recorded facts'
+    why:
+      query_sha256: 9a3a2f0d7fd80dccdfd808cc09e29e78a48030014a9e984dcba2aa4402677ec9
+      statements: [bfs-td-frontier, bfs-td-row-bounds, bfs-td-neighbor, bfs-td-parent-read]
+      source:
+        path: benchmarks/gapbs/src/bfs.cc
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        lines: [240, 243]
+      applications:
+      - entry: contract.bfs_read_offload
+        contract: contract.bfs_read_offload
+        kind: rewrite_contract
+        content_sha256: 867fac18c28938268242e7d4b60049f3c3e97113512a761cc8a763735a77db51
+        pattern_key:
+        - key_position: 0
+          key: 'target:stream : read'
+          patterns: [td-frontier-read]
+          assigned: td-frontier-read
+        - key_position: 1
+          key: 'index:stream > target:single_valued_indirect : read'
+          patterns: [td-row-bounds-read, td-row-end-read]
+          assigned: td-row-bounds-read
+        - key_position: 2
+          key: 'index:stream > offsets:single_valued_indirect > target:ranged_indirect : read'
+          patterns: [td-neighbor-read]
+          assigned: td-neighbor-read
+        - key_position: 3
+          key: 'index:stream > offsets:single_valued_indirect > index:ranged_indirect > target:single_valued_indirect
+            : read'
+          patterns: [td-parent-read]
+          assigned: td-parent-read
+        statements: [bfs-td-frontier, bfs-td-row-bounds, bfs-td-neighbor, bfs-td-parent-read]
+        legality:
+        - clause: L1
+          holds: true
+          reason: 'holds by recorded fact: bfs-td-row-bounds (simulated)'
+        - clause: L2
+          holds: true
+          reason: 'holds by recorded fact: bfs-td-parent-read (simulated)'
+        - clause: L3
+          holds: true
+          reason: 'holds by recorded fact: bfs-td-parent-read (simulated)'
+        - clause: L4
+          holds: true
+          reason: 'holds by recorded fact: bfs-td-parent-read (simulated)'
+        - clause: L5
+          holds: true
+          reason: 'holds by recorded fact: bfs-td-frontier (reported)'
+        - clause: chunk_size
+          holds: true
+          reason: 'holds by recorded fact: bfs-td-frontier (simulated)'
+        - clause: frontier_threshold
+          holds: true
+          reason: 'holds by recorded fact: bfs-td-frontier (reported)'
+        - clause: schedule
+          holds: true
+          reason: 'holds by recorded fact: bfs-td-frontier (simulated)'
+  provider_calls:
+  - role: rewriting
+    invocation: extensa-gem5-bfs-20261004-a4.call2
+    outcome: completed
+    counted: true
+    model: gpt-5.6-sol
+    effort: xhigh
+    classification: rewrite_provider
+  candidates:
+  - id: extensa-gem5-bfs-20261004-a4.it1.kronecker.a0
+    class: kronecker
+    patch_sha256: 43bfe6fa745abf256191817e96f554108c091defdca33c44c80628e40f350204
+    knobs:
+      schedule: dynamic
+    contracts: [contract.bfs_read_offload]
+    certification: null
+    comparisons: []
+    level: rejected
+    selection: null
+    artifact_sha256: ed1870a757a0d283953ad39be3e1d249cde0a59f106abc74d699c9e05e21cadc
+    rejection: the candidate never begins a DX100 session
+  - id: extensa-gem5-bfs-20261004-a4.it1.uniform_random.a0
+    class: uniform_random
+    patch_sha256: 43bfe6fa745abf256191817e96f554108c091defdca33c44c80628e40f350204
+    knobs:
+      schedule: static
+    contracts: [contract.bfs_read_offload]
+    certification: null
+    comparisons: []
+    level: rejected
+    selection: null
+    artifact_sha256: d5ecd87ccc8df6d8de80d789d38ae154c37355d4608af4d9d0c46fa3fcd8c0da
+    rejection: the candidate never begins a DX100 session
+  feedback_reasons: [correctness_failed]
+  improved_classes: []
+  site_finder:
+    format: swdb.site-finder.v1
+    query_sha256: 9a3a2f0d7fd80dccdfd808cc09e29e78a48030014a9e984dcba2aa4402677ec9
+    parameters:
+      kernel: gapbs-bfs
+      target: dx100_gem5
+      interfaces: [dx100-mmio]
+      tiers: [experimental, shared]
+      contracts: [contract.bfs_read_offload]
+    database:
+      fingerprint: afacf922edd75985a7aee72721d77685ceb9eca95147a2b65f28b19b911146b1
+      builder: 7daaa140589b35463da7e628c22161e2de464089049986ed77f06b6256076a39
+    rejected: []
+- index: 2
+  started: '2026-10-04T08:19:10.072067+00:00'
+  ended: '2026-10-04T08:25:33.933099+00:00'
+  regions:
+  - id: dx100-bfs-scalar/TDStep:240-243
+    reason: 'contract.bfs_read_offload (rewrite_contract): pattern key 4/4 matched by td-frontier-read,
+      td-row-bounds-read, td-neighbor-read, td-parent-read on statements bfs-td-frontier, bfs-td-row-bounds,
+      bfs-td-neighbor, bfs-td-parent-read; all 8 legality clause(s) hold on recorded facts'
+    why:
+      query_sha256: 9a3a2f0d7fd80dccdfd808cc09e29e78a48030014a9e984dcba2aa4402677ec9
+      statements: [bfs-td-frontier, bfs-td-row-bounds, bfs-td-neighbor, bfs-td-parent-read]
+      source:
+        path: benchmarks/gapbs/src/bfs.cc
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        lines: [240, 243]
+      applications:
+      - entry: contract.bfs_read_offload
+        contract: contract.bfs_read_offload
+        kind: rewrite_contract
+        content_sha256: 867fac18c28938268242e7d4b60049f3c3e97113512a761cc8a763735a77db51
+        pattern_key:
+        - key_position: 0
+          key: 'target:stream : read'
+          patterns: [td-frontier-read]
+          assigned: td-frontier-read
+        - key_position: 1
+          key: 'index:stream > target:single_valued_indirect : read'
+          patterns: [td-row-bounds-read, td-row-end-read]
+          assigned: td-row-bounds-read
+        - key_position: 2
+          key: 'index:stream > offsets:single_valued_indirect > target:ranged_indirect : read'
+          patterns: [td-neighbor-read]
+          assigned: td-neighbor-read
+        - key_position: 3
+          key: 'index:stream > offsets:single_valued_indirect > index:ranged_indirect > target:single_valued_indirect
+            : read'
+          patterns: [td-parent-read]
+          assigned: td-parent-read
+        statements: [bfs-td-frontier, bfs-td-row-bounds, bfs-td-neighbor, bfs-td-parent-read]
+        legality:
+        - clause: L1
+          holds: true
+          reason: 'holds by recorded fact: bfs-td-row-bounds (simulated)'
+        - clause: L2
+          holds: true
+          reason: 'holds by recorded fact: bfs-td-parent-read (simulated)'
+        - clause: L3
+          holds: true
+          reason: 'holds by recorded fact: bfs-td-parent-read (simulated)'
+        - clause: L4
+          holds: true
+          reason: 'holds by recorded fact: bfs-td-parent-read (simulated)'
+        - clause: L5
+          holds: true
+          reason: 'holds by recorded fact: bfs-td-frontier (reported)'
+        - clause: chunk_size
+          holds: true
+          reason: 'holds by recorded fact: bfs-td-frontier (simulated)'
+        - clause: frontier_threshold
+          holds: true
+          reason: 'holds by recorded fact: bfs-td-frontier (reported)'
+        - clause: schedule
+          holds: true
+          reason: 'holds by recorded fact: bfs-td-frontier (simulated)'
+  provider_calls:
+  - role: rewriting
+    invocation: extensa-gem5-bfs-20261004-a4.call3
+    outcome: completed
+    counted: true
+    model: gpt-5.6-sol
+    effort: xhigh
+    classification: rewrite_provider
+  candidates:
+  - id: extensa-gem5-bfs-20261004-a4.it2.kronecker.a0
+    class: kronecker
+    patch_sha256: 62ea7ebc960d39cde67191277ffb6d0a275162a18c3f40e754b6e2db7985b477
+    knobs:
+      frontier_threshold: 64
+    contracts: [contract.bfs_read_offload]
+    certification: null
+    comparisons: []
+    level: rejected
+    selection: null
+    artifact_sha256: 3ca47b03bf3500854b879f6e092a592e7b61eb3f1e5b0fdc9ca4f077b29e8d5e
+    rejection: the candidate never begins a DX100 session
+  - id: extensa-gem5-bfs-20261004-a4.it2.uniform_random.a0
+    class: uniform_random
+    patch_sha256: 62ea7ebc960d39cde67191277ffb6d0a275162a18c3f40e754b6e2db7985b477
+    knobs:
+      frontier_threshold: 64
+    contracts: [contract.bfs_read_offload]
+    certification: null
+    comparisons: []
+    level: rejected
+    selection: null
+    artifact_sha256: ebc5611597bdcd7ae5627527c82d2b9c35f9a9439385e44ca94e7598a2744732
+    rejection: the candidate never begins a DX100 session
+  feedback_reasons: [correctness_failed]
+  improved_classes: []
+  site_finder:
+    format: swdb.site-finder.v1
+    query_sha256: 9a3a2f0d7fd80dccdfd808cc09e29e78a48030014a9e984dcba2aa4402677ec9
+    parameters:
+      kernel: gapbs-bfs
+      target: dx100_gem5
+      interfaces: [dx100-mmio]
+      tiers: [experimental, shared]
+      contracts: [contract.bfs_read_offload]
+    database:
+      fingerprint: afacf922edd75985a7aee72721d77685ceb9eca95147a2b65f28b19b911146b1
+      builder: 7daaa140589b35463da7e628c22161e2de464089049986ed77f06b6256076a39
+    rejected: []
+- index: 3
+  started: '2026-10-04T08:25:33.933914+00:00'
+  ended: '2026-10-04T08:31:17.269633+00:00'
+  regions:
+  - id: dx100-bfs-scalar/TDStep:240-243
+    reason: 'contract.bfs_read_offload (rewrite_contract): pattern key 4/4 matched by td-frontier-read,
+      td-row-bounds-read, td-neighbor-read, td-parent-read on statements bfs-td-frontier, bfs-td-row-bounds,
+      bfs-td-neighbor, bfs-td-parent-read; all 8 legality clause(s) hold on recorded facts'
+    why:
+      query_sha256: 9a3a2f0d7fd80dccdfd808cc09e29e78a48030014a9e984dcba2aa4402677ec9
+      statements: [bfs-td-frontier, bfs-td-row-bounds, bfs-td-neighbor, bfs-td-parent-read]
+      source:
+        path: benchmarks/gapbs/src/bfs.cc
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        lines: [240, 243]
+      applications:
+      - entry: contract.bfs_read_offload
+        contract: contract.bfs_read_offload
+        kind: rewrite_contract
+        content_sha256: 867fac18c28938268242e7d4b60049f3c3e97113512a761cc8a763735a77db51
+        pattern_key:
+        - key_position: 0
+          key: 'target:stream : read'
+          patterns: [td-frontier-read]
+          assigned: td-frontier-read
+        - key_position: 1
+          key: 'index:stream > target:single_valued_indirect : read'
+          patterns: [td-row-bounds-read, td-row-end-read]
+          assigned: td-row-bounds-read
+        - key_position: 2
+          key: 'index:stream > offsets:single_valued_indirect > target:ranged_indirect : read'
+          patterns: [td-neighbor-read]
+          assigned: td-neighbor-read
+        - key_position: 3
+          key: 'index:stream > offsets:single_valued_indirect > index:ranged_indirect > target:single_valued_indirect
+            : read'
+          patterns: [td-parent-read]
+          assigned: td-parent-read
+        statements: [bfs-td-frontier, bfs-td-row-bounds, bfs-td-neighbor, bfs-td-parent-read]
+        legality:
+        - clause: L1
+          holds: true
+          reason: 'holds by recorded fact: bfs-td-row-bounds (simulated)'
+        - clause: L2
+          holds: true
+          reason: 'holds by recorded fact: bfs-td-parent-read (simulated)'
+        - clause: L3
+          holds: true
+          reason: 'holds by recorded fact: bfs-td-parent-read (simulated)'
+        - clause: L4
+          holds: true
+          reason: 'holds by recorded fact: bfs-td-parent-read (simulated)'
+        - clause: L5
+          holds: true
+          reason: 'holds by recorded fact: bfs-td-frontier (reported)'
+        - clause: chunk_size
+          holds: true
+          reason: 'holds by recorded fact: bfs-td-frontier (simulated)'
+        - clause: frontier_threshold
+          holds: true
+          reason: 'holds by recorded fact: bfs-td-frontier (reported)'
+        - clause: schedule
+          holds: true
+          reason: 'holds by recorded fact: bfs-td-frontier (simulated)'
+  provider_calls:
+  - role: rewriting
+    invocation: extensa-gem5-bfs-20261004-a4.call4
+    outcome: completed
+    counted: true
+    model: gpt-5.6-sol
+    effort: xhigh
+    classification: rewrite_provider
+  candidates:
+  - id: extensa-gem5-bfs-20261004-a4.it3.kronecker.a0
+    class: kronecker
+    patch_sha256: b5877ef42b5989277291413f87b183285ddcfd2f9ec00b9caf2c27f6185e6e8c
+    knobs:
+      chunk_size: 1
+    contracts: [contract.bfs_read_offload]
+    certification: null
+    comparisons: []
+    level: rejected
+    selection: null
+    artifact_sha256: 0284dfd1a30512a832053efd73bfcdc31d3fb2d0d9c3ca751fd259f8149809a6
+    rejection: the candidate never begins a DX100 session
+  - id: extensa-gem5-bfs-20261004-a4.it3.uniform_random.a0
+    class: uniform_random
+    patch_sha256: b5877ef42b5989277291413f87b183285ddcfd2f9ec00b9caf2c27f6185e6e8c
+    knobs:
+      chunk_size: 1
+    contracts: [contract.bfs_read_offload]
+    certification: null
+    comparisons: []
+    level: rejected
+    selection: null
+    artifact_sha256: f461fe78d2f814329f4e6f5f4adbd9d78554af5482420c39fb75646f1d4762a6
+    rejection: the candidate never begins a DX100 session
+  feedback_reasons: [correctness_failed]
+  improved_classes: []
+  site_finder:
+    format: swdb.site-finder.v1
+    query_sha256: 9a3a2f0d7fd80dccdfd808cc09e29e78a48030014a9e984dcba2aa4402677ec9
+    parameters:
+      kernel: gapbs-bfs
+      target: dx100_gem5
+      interfaces: [dx100-mmio]
+      tiers: [experimental, shared]
+      contracts: [contract.bfs_read_offload]
+    database:
+      fingerprint: afacf922edd75985a7aee72721d77685ceb9eca95147a2b65f28b19b911146b1
+      builder: 7daaa140589b35463da7e628c22161e2de464089049986ed77f06b6256076a39
+    rejected: []
+- index: 4
+  started: '2026-10-04T08:31:17.270459+00:00'
+  ended: '2026-10-04T08:36:50.871116+00:00'
+  regions:
+  - id: dx100-bfs-scalar/TDStep:240-243
+    reason: 'contract.bfs_read_offload (rewrite_contract): pattern key 4/4 matched by td-frontier-read,
+      td-row-bounds-read, td-neighbor-read, td-parent-read on statements bfs-td-frontier, bfs-td-row-bounds,
+      bfs-td-neighbor, bfs-td-parent-read; all 8 legality clause(s) hold on recorded facts'
+    why:
+      query_sha256: 9a3a2f0d7fd80dccdfd808cc09e29e78a48030014a9e984dcba2aa4402677ec9
+      statements: [bfs-td-frontier, bfs-td-row-bounds, bfs-td-neighbor, bfs-td-parent-read]
+      source:
+        path: benchmarks/gapbs/src/bfs.cc
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        lines: [240, 243]
+      applications:
+      - entry: contract.bfs_read_offload
+        contract: contract.bfs_read_offload
+        kind: rewrite_contract
+        content_sha256: 867fac18c28938268242e7d4b60049f3c3e97113512a761cc8a763735a77db51
+        pattern_key:
+        - key_position: 0
+          key: 'target:stream : read'
+          patterns: [td-frontier-read]
+          assigned: td-frontier-read
+        - key_position: 1
+          key: 'index:stream > target:single_valued_indirect : read'
+          patterns: [td-row-bounds-read, td-row-end-read]
+          assigned: td-row-bounds-read
+        - key_position: 2
+          key: 'index:stream > offsets:single_valued_indirect > target:ranged_indirect : read'
+          patterns: [td-neighbor-read]
+          assigned: td-neighbor-read
+        - key_position: 3
+          key: 'index:stream > offsets:single_valued_indirect > index:ranged_indirect > target:single_valued_indirect
+            : read'
+          patterns: [td-parent-read]
+          assigned: td-parent-read
+        statements: [bfs-td-frontier, bfs-td-row-bounds, bfs-td-neighbor, bfs-td-parent-read]
+        legality:
+        - clause: L1
+          holds: true
+          reason: 'holds by recorded fact: bfs-td-row-bounds (simulated)'
+        - clause: L2
+          holds: true
+          reason: 'holds by recorded fact: bfs-td-parent-read (simulated)'
+        - clause: L3
+          holds: true
+          reason: 'holds by recorded fact: bfs-td-parent-read (simulated)'
+        - clause: L4
+          holds: true
+          reason: 'holds by recorded fact: bfs-td-parent-read (simulated)'
+        - clause: L5
+          holds: true
+          reason: 'holds by recorded fact: bfs-td-frontier (reported)'
+        - clause: chunk_size
+          holds: true
+          reason: 'holds by recorded fact: bfs-td-frontier (simulated)'
+        - clause: frontier_threshold
+          holds: true
+          reason: 'holds by recorded fact: bfs-td-frontier (reported)'
+        - clause: schedule
+          holds: true
+          reason: 'holds by recorded fact: bfs-td-frontier (simulated)'
+  provider_calls:
+  - role: rewriting
+    invocation: extensa-gem5-bfs-20261004-a4.call5
+    outcome: completed
+    counted: true
+    model: gpt-5.6-sol
+    effort: xhigh
+    classification: rewrite_provider
+  candidates:
+  - id: extensa-gem5-bfs-20261004-a4.it4.kronecker.a0
+    class: kronecker
+    patch_sha256: b15a7746157cb17f254f692f41322a747aae312e284bcd3964006a2546f0bd99
+    knobs:
+      frontier_threshold: 1
+    contracts: [contract.bfs_read_offload]
+    certification: null
+    comparisons: []
+    level: rejected
+    selection: null
+    artifact_sha256: 1cd94402f583e23b0b2afb205bae856dc71d070b233da1c2cd4fddc2afff2940
+    rejection: the candidate never begins a DX100 session
+  - id: extensa-gem5-bfs-20261004-a4.it4.uniform_random.a0
+    class: uniform_random
+    patch_sha256: b15a7746157cb17f254f692f41322a747aae312e284bcd3964006a2546f0bd99
+    knobs:
+      frontier_threshold: 1
+    contracts: [contract.bfs_read_offload]
+    certification: null
+    comparisons: []
+    level: rejected
+    selection: null
+    artifact_sha256: a60904d74e6b609c93f2a609146307381f5b25e8fec42872ee31d6e13359e2ae
+    rejection: the candidate never begins a DX100 session
+  feedback_reasons: [correctness_failed]
+  improved_classes: []
+  site_finder:
+    format: swdb.site-finder.v1
+    query_sha256: 9a3a2f0d7fd80dccdfd808cc09e29e78a48030014a9e984dcba2aa4402677ec9
+    parameters:
+      kernel: gapbs-bfs
+      target: dx100_gem5
+      interfaces: [dx100-mmio]
+      tiers: [experimental, shared]
+      contracts: [contract.bfs_read_offload]
+    database:
+      fingerprint: afacf922edd75985a7aee72721d77685ceb9eca95147a2b65f28b19b911146b1
+      builder: 7daaa140589b35463da7e628c22161e2de464089049986ed77f06b6256076a39
+    rejected: []
+per_class:
+- class: kronecker
+  verdict: no_gain
+  best: null
+  best_level: null
+  best_selection_baseline: null
+  best_other_baseline: null
+  faster_uncertified: []
+  label: single graph per class
+- class: uniform_random
+  verdict: no_gain
+  best: null
+  best_level: null
+  best_selection_baseline: null
+  best_other_baseline: null
+  faster_uncertified: []
+  label: single graph per class
+budgets:
+  limits:
+    max_iterations: 8
+    plateau_iterations: 4
+    lane_hours: 24
+    provider_calls_per_iteration: 3
+    provider_calls_setup: 1
+    disk_gb: 20
+    lanes: 1
+  used:
+    iterations: 4
+    lane_hours: 0.341048
+    provider_calls_counted: 5
+    provider_calls_uncounted: 0
+    disk_gb_peak: 0.051751
+pauses: []
+stop_reason: plateau
+stop_detail: null
+artifacts:
+- path: records/candidates/extensa-gem5-bfs-20261004-a4.it1.kronecker.a0.yaml
+  sha256: ed1870a757a0d283953ad39be3e1d249cde0a59f106abc74d699c9e05e21cadc
+  retained: true
+- path: records/candidates/extensa-gem5-bfs-20261004-a4.it1.uniform_random.a0.yaml
+  sha256: d5ecd87ccc8df6d8de80d789d38ae154c37355d4608af4d9d0c46fa3fcd8c0da
+  retained: true
+- path: records/candidates/extensa-gem5-bfs-20261004-a4.it2.kronecker.a0.yaml
+  sha256: 3ca47b03bf3500854b879f6e092a592e7b61eb3f1e5b0fdc9ca4f077b29e8d5e
+  retained: true
+- path: records/candidates/extensa-gem5-bfs-20261004-a4.it2.uniform_random.a0.yaml
+  sha256: ebc5611597bdcd7ae5627527c82d2b9c35f9a9439385e44ca94e7598a2744732
+  retained: true
+- path: records/candidates/extensa-gem5-bfs-20261004-a4.it3.kronecker.a0.yaml
+  sha256: 0284dfd1a30512a832053efd73bfcdc31d3fb2d0d9c3ca751fd259f8149809a6
+  retained: true
+- path: records/candidates/extensa-gem5-bfs-20261004-a4.it3.uniform_random.a0.yaml
+  sha256: f461fe78d2f814329f4e6f5f4adbd9d78554af5482420c39fb75646f1d4762a6
+  retained: true
+- path: records/candidates/extensa-gem5-bfs-20261004-a4.it4.kronecker.a0.yaml
+  sha256: 1cd94402f583e23b0b2afb205bae856dc71d070b233da1c2cd4fddc2afff2940
+  retained: true
+- path: records/candidates/extensa-gem5-bfs-20261004-a4.it4.uniform_random.a0.yaml
+  sha256: a60904d74e6b609c93f2a609146307381f5b25e8fec42872ee31d6e13359e2ae
+  retained: true
+retentions: []
+library_entries: []
+site_finder:
+  format: swdb.site-finder.v1
+  query_sha256: 9a3a2f0d7fd80dccdfd808cc09e29e78a48030014a9e984dcba2aa4402677ec9
+  parameters:
+    kernel: gapbs-bfs
+    target: dx100_gem5
+    interfaces: [dx100-mmio]
+    tiers: [experimental, shared]
+    contracts: [contract.bfs_read_offload]

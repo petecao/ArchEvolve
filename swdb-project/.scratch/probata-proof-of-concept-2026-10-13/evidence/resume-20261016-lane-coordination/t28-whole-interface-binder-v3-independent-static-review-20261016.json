@@ -1,0 +1,142 @@
+{
+  "author_receipt": {
+    "bytes": 3602,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole-interface-v3-source-repair-receipt.json",
+    "sha256": "60cbd6b6ba5710171974553b9f24ea1b18629d2d69d15a1357f4388c6d8ddafd"
+  },
+  "caller_acceptance": false,
+  "created": "2026-10-16 ET",
+  "decision": "PASS_NARROW_CLOSED_EXPRESSION_GRAMMAR_REPAIR_FOR_FUTURE_SOURCE_INTEGRATION",
+  "exact_pins": [
+    {
+      "bytes": 33171,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface.py",
+      "sha256": "b859035b88dd267a7515e208c5a524ea7bd2cacde147e43b6723e2067303b44c"
+    },
+    {
+      "bytes": 34661,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v2.py",
+      "sha256": "dbcb5d35c6a575884265f0e6c0e49e5603a71f6d392cff1915d6aeda61e1159b"
+    },
+    {
+      "bytes": 34697,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v3.py",
+      "sha256": "074b974f4a4dd1074247a90d2a727d1cb0ee37b576055d738dd746fd6d4cc1db"
+    },
+    {
+      "bytes": 2322,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/prepare_whole_interface_v3.py",
+      "sha256": "78fc40efe53c0758da96dd6f45819e5b39e464a1f7f6166d0453426800d81818"
+    },
+    {
+      "bytes": 3223,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/test_whole_interface_v3.py",
+      "sha256": "a564971d73b6a8560d895950368d4240b4f29a5a11d4ca3be23ef8fa7b89f11e"
+    },
+    {
+      "bytes": 5257,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole-interface-v3-inverse-delta.json",
+      "sha256": "81e34f1408db4ff2da7d13fe7b72599d6285e15e197c924ac137dc188016657d"
+    },
+    {
+      "bytes": 1130,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/pure-whole-interface-v3.log",
+      "sha256": "e6193685e0d15e23310d146d4b53f5c628876e99b4dd6a85c96da870e7e8d034"
+    },
+    {
+      "bytes": 14503,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/value-source-preparation-v1.json",
+      "sha256": "4d5177fd68f7acce3fcba4266b046909bcaca0a48ec9addae204877827ed9cd9"
+    },
+    {
+      "bytes": 6119,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/linux-native86-source-packet-v1.json",
+      "sha256": "97a1a6cfdd8d677c351815db0e67de1254e472950f33289149d98f9361dfeb05"
+    }
+  ],
+  "findings": [],
+  "native86_admission_or_result_claimed": false,
+  "preserved": "Complete V1/V2 source outside the one local predicate remains byte-identical: exact global same-TU callee/source definition and source range, template canonical dtype, formal/default arity, ABI/type sizes, source-body/header hashes, no macro/attribute/static/namespace bypass, complete source/TU/ABI replay, packet roles and refusal boundaries. All values/source packets remain frozen.",
+  "private_native86_affected": false,
+  "public_admission": false,
+  "public_controls": "New11-case synthetic/no-child suite inherits original132binding and66role-map controls; exact inverse, original new[] gap reproduction, unknown/effectful kinds/operators/casts/arities, all9 type-trait/type-shaped combinations and6 direct/typedef/reference/malformed volatility mutations are retained. Author log records132bindings/94refusals/0failures/0errors/0skips; this review did not rerun it.",
+  "remaining_integration": "This is a consumer grammar repair, not actual Clang evidence. A separately admitted producer must supply complete normalized full-TU AST and canonical type/provenance/ABI, with complete source replay and original argument-definedness/CPU-object/pointer instrumentation. Metadata omission/forgery is not independently certified by this scratch consumer. Public source-definition/closed route/value/runtime and synthetic verdict integration remain pending under owned source/MMIO/visibility TCB.",
+  "resolved_findings": [
+    {
+      "id": "ORIGINAL_EFFECT_DENYLIST",
+      "resolution": "Only explicit expression kinds/arities, built-in unary/binary operators and cast kinds are admitted. Calls, new/delete, statement/asm, throw/lambda, user conversion/construction, cleanup/temporaries, atomics/varargs, unknown nodes and malformed child arities refuse recursively."
+    },
+    {
+      "id": "TYPE_TRAIT_DOMAIN",
+      "resolution": "All UnaryExprOrTypeTraitExpr nodes refuse. There is no sizeof/alignof/VLA/type-argument exception or uninspected argType path in the admitted expression grammar."
+    },
+    {
+      "id": "TYPEDEF_VOLATILE",
+      "resolution": "Every admitted node type object must be a dict; both provided qualType and desugaredQualType values must be strings without volatile. Recursive child traversal catches qualifiers hidden by aliases or references on the actual lvalue; malformed provided type metadata refuses."
+    }
+  ],
+  "reviewed_expression_grammar": {
+    "ArraySubscriptExpr": [
+      2
+    ],
+    "BinaryOperator": [
+      2
+    ],
+    "CStyleCastExpr": [
+      1
+    ],
+    "CXXBoolLiteralExpr": [
+      0
+    ],
+    "CXXDefaultArgExpr": [
+      0
+    ],
+    "CXXFunctionalCastExpr": [
+      1
+    ],
+    "CXXNullPtrLiteralExpr": [
+      0
+    ],
+    "CXXReinterpretCastExpr": [
+      1
+    ],
+    "CXXStaticCastExpr": [
+      1
+    ],
+    "CharacterLiteral": [
+      0
+    ],
+    "ConstantExpr": [
+      1
+    ],
+    "DeclRefExpr": [
+      0
+    ],
+    "FloatingLiteral": [
+      0
+    ],
+    "GNUNullExpr": [
+      0
+    ],
+    "ImplicitCastExpr": [
+      1
+    ],
+    "IntegerLiteral": [
+      0
+    ],
+    "MemberExpr": [
+      1
+    ],
+    "ParenExpr": [
+      1
+    ],
+    "UnaryOperator": [
+      1
+    ]
+  },
+  "reviewer": "/root/lane_coordination",
+  "scope": "Source/AST/hash only. No helper/project import, test, compiler, native, verifier, solver or SSH execution. Native86 controller/runtime review is separately owned.",
+  "v2_to_v1_exact_single_predicate_inverse": true,
+  "v3_to_v2_exact_single_predicate_inverse": true,
+  "value_packet_all49_pins_unchanged": true
+}

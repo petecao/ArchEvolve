@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-16 ET",
+  "external_attempts": [],
+  "first_import_attempt_refusal": "Audit denied ordinary ctypes.PyDLL(None) initialization; no project native tool had run. Replayed after explicit ordinary ctypes interpreter setup.",
+  "loaded": [
+    "swdb.dx100_whole_checked",
+    "swdb.dx100_checked_source",
+    "swdb.dx100_checked_registry",
+    "swdb.dx100_checked_native",
+    "swdb.dx100_checked_adapter",
+    "swdb.c_lowering",
+    "swdb.cbmc_adapter",
+    "swdb.cbmc_translator",
+    "swdb.formal_frame",
+    "swdb.proof_semantics",
+    "swdb.proof_setup"
+  ],
+  "scientific_execution": false,
+  "standard_ctypes_interpreter_API_loaded_before_child_denying_audit": true
+}

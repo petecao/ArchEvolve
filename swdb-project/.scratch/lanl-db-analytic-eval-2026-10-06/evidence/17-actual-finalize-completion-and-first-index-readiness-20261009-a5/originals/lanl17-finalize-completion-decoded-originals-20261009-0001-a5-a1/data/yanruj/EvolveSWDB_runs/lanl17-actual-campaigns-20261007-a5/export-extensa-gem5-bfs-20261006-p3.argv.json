@@ -1,0 +1,17 @@
+[
+  "python3",
+  "-m",
+  "swdb",
+  "campaign-export",
+  "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/configs/extensa-gem5-bfs-20261006-p3.yaml",
+  "--records",
+  "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/base/records",
+  "--runs-root",
+  "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs",
+  "--format",
+  "json",
+  "--candidate",
+  "extensa-gem5-bfs-20261006-p3.it3.kronecker.a0",
+  "--candidate",
+  "extensa-gem5-bfs-20261006-p3.it3.uniform_random.a0"
+]

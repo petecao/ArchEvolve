@@ -1,0 +1,209 @@
+{
+  "checks": {
+    "R_F6_M2_policy_source_floor_custody_history_unchanged": true,
+    "Z_X_only_start_ticks_positive_stable": true,
+    "all_four_status_UIDs_account_required": true,
+    "caps_and_original_deadline_preserved": true,
+    "descriptor_relative_nofollow_leaves": true,
+    "directory_descriptor_finally": true,
+    "full_leaf_bytes_all9_continuity": true,
+    "leaf_descriptor_constructor_read_context_close_finally": true,
+    "native_matching_consumers_original_kernel_bytes_unchanged": true,
+    "no_name_PID_state_S_exception": true,
+    "no_raw_leaf_bytes_new_output": true,
+    "owned_process_directory_all9_stable": true,
+    "permission_parse_race_unknown": true,
+    "recovery_R6_PAM_not_waived": true,
+    "root_or_account_leaf_owner_context_only": true,
+    "stat_status_PID_Tgid_PPid_state_match": true,
+    "truly_empty_cmdline_only": true,
+    "unchanged_caller_unknown_propagation": true
+  },
+  "format": "swdb.lanl17-independent-interim-spec-source-review.v1",
+  "independent_static_reconstruction": {
+    "all_other_top_level_AST_nodes_exact": true,
+    "bytes": 38694,
+    "changed_top_level_nodes": [
+      "inactive_owned_identity"
+    ],
+    "sha256": "3698d1a2a34bc6be2585a8e5a9c0029882101268dbf9df5a9a0007823d4ece00",
+    "target_imported_or_executed": false,
+    "unchanged_functions_classes": 34
+  },
+  "inputs": [
+    {
+      "bytes": 36052,
+      "path": "/private/tmp/lanl17_pre_full_index_host_observation_20261008_a5_r5.py",
+      "sha256": "be2f68c21a72b4de5deee05f17f48a8cd09342cf3a6e7e17280ff72414dc3fd4",
+      "stat": {
+        "ctime_ns": 1791513620426637826,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350629091,
+        "mode": 33152,
+        "mtime_ns": 1791513620426637826,
+        "nlink": 1,
+        "size": 36052,
+        "uid": 501
+      }
+    },
+    {
+      "bytes": 4553,
+      "path": "/private/tmp/lanl17-pre-index-inactive-zombie-proof-prospective-r2-20261009-a5.patch",
+      "sha256": "d12a9db7715b24c042f3b4edd28301dff756c4d50376fa417d152e50bb9c5cbf",
+      "stat": {
+        "ctime_ns": 1791526070255452878,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350696625,
+        "mode": 33152,
+        "mtime_ns": 1791526070255452878,
+        "nlink": 1,
+        "size": 4553,
+        "uid": 501
+      }
+    },
+    {
+      "bytes": 2141,
+      "path": "/private/tmp/lanl17-pre-index-inactive-zombie-proof-r2-rationale-tests-20261009-a5.md",
+      "sha256": "4dadfa09467922aa5edf043be04752638678579eb8ba6f49c66e778674c1c2f0",
+      "stat": {
+        "ctime_ns": 1791526070255636171,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350696627,
+        "mode": 33152,
+        "mtime_ns": 1791526070255636171,
+        "nlink": 1,
+        "size": 2141,
+        "uid": 501
+      }
+    },
+    {
+      "bytes": 12331,
+      "path": "/private/tmp/lanl17-test-prospective-inactive-proof-isolated-r2-20261009-a5.py",
+      "sha256": "d7c984f06fd9e275642ced6989ca5b949c4a226575b3911a2437e7e79b3502f7",
+      "stat": {
+        "ctime_ns": 1791526070255722755,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350696628,
+        "mode": 33152,
+        "mtime_ns": 1791526070255722755,
+        "nlink": 1,
+        "size": 12331,
+        "uid": 501
+      }
+    },
+    {
+      "bytes": 5365,
+      "path": "/private/tmp/lanl17-prospective-inactive-proof-isolated-results-r2-20261009-a5.json",
+      "sha256": "e9dab8d237721d6a6581681f0cfe94efffd2c8038935ee59d270c9230d2ff262",
+      "stat": {
+        "ctime_ns": 1791526070339112588,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350696629,
+        "mode": 33152,
+        "mtime_ns": 1791526070339112588,
+        "nlink": 1,
+        "size": 5365,
+        "uid": 501
+      }
+    },
+    {
+      "bytes": 1292,
+      "path": "/private/tmp/lanl17-pre-index-inactive-zombie-proof-r2-descriptor-ownership-20261009-a5.diff",
+      "sha256": "d43dc1c919bc86ddb3e709dac5a5dab0f925a0c6526a60cd6f0d5798512406ca",
+      "stat": {
+        "ctime_ns": 1791526070255558420,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350696626,
+        "mode": 33152,
+        "mtime_ns": 1791526070255558420,
+        "nlink": 1,
+        "size": 1292,
+        "uid": 501
+      }
+    },
+    {
+      "bytes": 4460,
+      "path": "/private/tmp/lanl17-pre-index-inactive-zombie-proof-prospective-20261009-a5.patch",
+      "sha256": "70c287dd7e599682f4a444ccba933048f6dea6eda2eb6985ef5009ec16487d95",
+      "stat": {
+        "ctime_ns": 1791525790288448592,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350695564,
+        "mode": 33152,
+        "mtime_ns": 1791525790288448592,
+        "nlink": 1,
+        "size": 4460,
+        "uid": 501
+      }
+    },
+    {
+      "bytes": 5002,
+      "path": "/private/tmp/lanl17-prospective-inactive-proof-isolated-results-20261009-a5.json",
+      "sha256": "fd3e941750d9ab4fc9f095e739b0d8bec288fc230d56d3bad3d770e45f16ba24",
+      "stat": {
+        "ctime_ns": 1791525961814184916,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350696004,
+        "mode": 33152,
+        "mtime_ns": 1791525961814184916,
+        "nlink": 1,
+        "size": 5002,
+        "uid": 501
+      }
+    }
+  ],
+  "mandatory_remaining_boundary": [
+    "Explicit override of prior immutable-guard/UID-state restriction before observer selection; broad approval is insufficient.",
+    "Fresh actual original input/config/source/native/ownership/process/floor/history/custody checks after separate selection; no stale approval reuse.",
+    "No recovery/index/scientific/ticket acceptance admitted."
+  ],
+  "material_findings": [],
+  "observer_status": "UNSELECTED_NOTRUN",
+  "prepared_ET": "2026-10-09 02:09:28 ET",
+  "report": {
+    "bytes": 2159,
+    "path": "/private/tmp/lanl17-pre-index-inactive-zombie-proof-spec-source-review-r2-20261009-a5.md",
+    "sha256": "6d9341aeb21f4c4525339c870e50099d60817b8cb622e8958bbe0e1f61cd9396",
+    "stat": {
+      "ctime_ns": 1791526168916059077,
+      "dev": 16777229,
+      "gid": 0,
+      "ino": 350696965,
+      "mode": 33152,
+      "mtime_ns": 1791526168916059077,
+      "nlink": 1,
+      "size": 2159,
+      "uid": 501
+    }
+  },
+  "retained_results_scope": {
+    "R1_recorded_cases": 88,
+    "R1_recorded_passed": 87,
+    "R2_recorded_cases": 96,
+    "R2_recorded_passed": 96,
+    "independently_rerun": false,
+    "mock_not_current_host_no_use": true
+  },
+  "scope": "Prospective R2 inactive identity proof only; administrative source review, not selection/remote/current no-use/scientific acceptance.",
+  "spec_refs": [
+    {
+      "line": 243,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/spec.md",
+      "quote": "Extensa estimates are blind: made before the timing exists, from inputs without timings, with the order recorded."
+    },
+    {
+      "line": 247,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/spec.md",
+      "quote": "at least 20 DX100 pairs"
+    }
+  ],
+  "status": "PASS_SOURCE_ONLY"
+}

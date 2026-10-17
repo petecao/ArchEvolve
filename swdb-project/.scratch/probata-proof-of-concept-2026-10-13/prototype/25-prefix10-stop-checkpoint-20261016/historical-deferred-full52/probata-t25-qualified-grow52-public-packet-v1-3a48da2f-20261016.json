@@ -1,0 +1,129 @@
+{
+  "actual_goal_count_policy": "Derive normal per-run goals/inventory and aggregate full-signature Counter from all52 current runs; numeric smoke mandatory, no forced synthetic62 count.",
+  "bootstrap_inverse_predecessor_equal": true,
+  "caller_acceptance": false,
+  "canonical_files": 60,
+  "canonical_manifest_sha256": "d7020c750adea99833900f720f693f6d221a10576f76c3e9201104772c250706",
+  "check_lemmas": 51,
+  "cost_estimate": "3600whole/3720outer/3400profile/3300public,8GiB1worker2GiBraw. Historical37prefix27 cost roughly279seconds before the open step; worst simple90s\u00d725 remaining fresh leaves is2250s plus setup/postchecks. This is a scheduling estimate, not reuse, changed per-goal policy or success guarantee. All52 run fresh; actual normalized goal counts derive from every native inventory and normal reader, never synthetic62.",
+  "direct_private_adapter_construction": false,
+  "embedded_payloads_exact_roundtrip": true,
+  "entry": {
+    "bytes": 25918,
+    "path": "/private/tmp/probata-t25-qualified-grow52-public-entry-v1-3a48da2f-20261016.py",
+    "sha256": "ffc2ac16fadfc7a37f77c659b1091bf56c8e3f73738dad4bbb7de899404924d3"
+  },
+  "expected": {
+    "bytes": 149868,
+    "path": "/private/tmp/probata-t25-qualified-grow52-public-expected-v1-3a48da2f-20261016.json",
+    "sha256": "c90d7732a19fb21b87540788bcc3bff925e8316b27c8647be5a7d8ae271fc38b"
+  },
+  "focused15_entry_review": {
+    "bytes": 4259,
+    "path": "/private/tmp/probata-t25-copy-step15-independent-static-review-v3-3a48da2f-20261016.md",
+    "sha256": "a1e830ed13b6fbb618fa800192672db0f4ede7574530ec13597540d926f76728"
+  },
+  "full_fresh_targets": 52,
+  "full_model_acceptance": false,
+  "helper_count": 8,
+  "independent_static_review_pending": true,
+  "normal_public_route": true,
+  "numeric_C_kernels": 1,
+  "old_results_imported": 0,
+  "original_v2_acceptance": false,
+  "per_solver_seconds": 30,
+  "predecessor_public_ctor35_packet": {
+    "bytes": 2562,
+    "path": "/private/tmp/probata-t25-qualified-ctor35-public-packet-v2-6216fc94-20261016.json",
+    "sha256": "9581053615fb8e91d23ba8f75b5939eb19c7d81f9a97b5f92104a60b4999be1f"
+  },
+  "proof_acceptance": false,
+  "reference_C_files": [
+    {
+      "bytes": 4855,
+      "path": "references/002-t25v3_grow_entry_int_projection.c",
+      "sha256": "b5dbe9939b460efa5503b1cbba8a891f5cdb940a8d44835f3fd04da307a74b3f"
+    },
+    {
+      "bytes": 4894,
+      "path": "references/002b-t25v3_grow_entry_int_projection_cells.c",
+      "sha256": "47e26763183659b00923090094d8a0ae658972e9f64c17c30f2c772309dfdb35"
+    },
+    {
+      "bytes": 4891,
+      "path": "references/006-t25v3_grow_copy_establish.c",
+      "sha256": "cac2722ab4199a0862b64192b5e91e43fd3a6260593cb32f7cc2312e06e5e435"
+    },
+    {
+      "bytes": 4802,
+      "path": "references/009-t25v3_grow_copy_step.c",
+      "sha256": "5e46d1eee055960726f99ab13a172f1f4963270617255d7797c5ae5c79920a0e"
+    }
+  ],
+  "remote_project": "/data1/yanruj/probata-reviewed-3a48da2f/swdb-project",
+  "resource_policy": {
+    "cap_bytes": 8589934592,
+    "output_budget_bytes": 2147483648,
+    "profile_seconds": 3400,
+    "public_timeout_seconds": 3300,
+    "root_outer_seconds": 3720,
+    "root_whole_seconds": 3600,
+    "workers": 1
+  },
+  "reuse_existing_immutable_remote_checkout": true,
+  "root_command": {
+    "bytes": 76619,
+    "path": "/private/tmp/probata-t25-qualified-grow52-public-root-command-v1-3a48da2f-20261016.json",
+    "sha256": "e1cb08e313d9ce18e96ef1c05a8da616c3c44ff323b66a2041ca36d7515183a7"
+  },
+  "root_kind": "t25-qualified-grow52-public-v1",
+  "root_scripted_public52_result": {
+    "bytes": 1680,
+    "path": "/private/tmp/probata-t25-root-grow52-public-controls-v1-20261016/result.json",
+    "sha256": "54ed6cce65d7096a0494a621b7a4f677227fe722eda01165a9cf9d76872b4f9a"
+  },
+  "runtime_overlays": false,
+  "solver_policy": "Canonical existing AE/Z3/CVC5 portfolio, cache-none, complete RTE/initializedness/smoke flags; no goal filtering or changed order.",
+  "source_change_allowlist": {
+    "bytes": 13951,
+    "path": "/private/tmp/probata-t25-copy-step15-root-source-change-review-v2-3a48da2f-20261016.json",
+    "sha256": "5cfbdb45346a8b48bef436db0a9daefec53276fcf94b48b0a7a7238084b675ff"
+  },
+  "source_commit": "3a48da2f44dd2066c2ac0bf42c4d873490044a99",
+  "source_consumer_roots": {
+    "library": {
+      "kind": "tree",
+      "oid": "2a499122a756b457333d6619d28f8893a38e839d"
+    },
+    "pyproject.toml": {
+      "kind": "blob",
+      "oid": "b8cacc5b150c2364224e0168e149cd0bc1791f99"
+    },
+    "records": {
+      "kind": "tree",
+      "oid": "f2158ba461f694c93f39b782b76981b52de08471"
+    },
+    "schemas": {
+      "kind": "tree",
+      "oid": "ae703dc49a3cb939fbe493b1b991b7bc0d52a731"
+    },
+    "tests": {
+      "kind": "tree",
+      "oid": "afdedc2cf461c3cb5b63539d0d9a86b2d63b6ba5"
+    },
+    "vocab": {
+      "kind": "tree",
+      "oid": "4534a8a7d09e9b500caad1e6a13a3fe17823ce41"
+    }
+  },
+  "source_equivalence_review": {
+    "bytes": 3519,
+    "path": "/private/tmp/probata-t25-copy-step-and15-independent-source-review-e2326954-20261016.md",
+    "sha256": "5f49e317e148a995283b3bd8f32fcfc15c043849de1856eca3db493963a84cc6"
+  },
+  "source_model_scope": "Explicit qualifiedv3 unary reallocation eligibility, not exclusive ownership or originalv2 proof. Escaped raw aliases remain legal before release and stale afterward; no generic caller closure.",
+  "source_package_count": 320,
+  "status": "INERT prospective full52 public proof; root-only review/admission/execution",
+  "ticket_closure": false,
+  "unmodified_nonmain_helpers_ast_equal": true
+}

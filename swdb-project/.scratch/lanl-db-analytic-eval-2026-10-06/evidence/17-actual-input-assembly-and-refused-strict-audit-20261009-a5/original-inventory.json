@@ -1,0 +1,1120 @@
+{
+  "actual_auditor_result": {
+    "actual_campaign_admission": false,
+    "exit_code": 3,
+    "reason": "Actual ordered outcome metadata missing",
+    "state": "refused"
+  },
+  "created_et": "2026-10-09 16:33 ET",
+  "evidence_boundary": "Selected compact metadata originals and three narrow administrative patches. Input/template/specification/accepted metadata bodies remain needed by selected final readers. No full project source/config/capture stream/catalog YAML duplication. Local original_stat is nine-stat at physical copy time; capture success is not audit admission.",
+  "format": "swdb.lanl17-actual-assembly-refused-audit-original-inventory.v1",
+  "future_selected_readers": [
+    "final scientific Standards and Spec review",
+    "exact failure diagnosis and prospective recovery planning",
+    "custody and tracker closeout"
+  ],
+  "originals": [
+    {
+      "archive_path": "originals/01-administrative-stage-R2-preserve-human-untracked-patch.patch",
+      "bytes": 3451,
+      "original_path": "/private/tmp/lanl17-template-author-git-stage-primary-untracked-preservation-r2-20261009-a5.patch",
+      "original_stat": {
+        "ctime_ns": 1791576214253376896,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351056662,
+        "mode": 33152,
+        "mtime_ns": 1791576214253376896,
+        "nlink": 1,
+        "size": 3451,
+        "uid": 501
+      },
+      "role": "administrative-stage-R2-preserve-human-untracked-patch",
+      "sha256": "b1b6cd4db3a17332ba244e6fc4aa84e9094e60c091f94af9d7acbdfce360d57f"
+    },
+    {
+      "archive_path": "originals/02-readiness-R8-route-only-patch.patch",
+      "bytes": 2803,
+      "original_path": "/private/tmp/lanl17-pre-actual-template-host-readiness-route-adaptation-r8-20261009-a5.patch",
+      "original_stat": {
+        "ctime_ns": 1791576758196694274,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351075129,
+        "mode": 33152,
+        "mtime_ns": 1791576758196670899,
+        "nlink": 1,
+        "size": 2803,
+        "uid": 501
+      },
+      "role": "readiness-R8-route-only-patch",
+      "sha256": "1ed6e0f3a0d875caea0183748b59c875438aa9d576ad709d5ab7e38ba0990769"
+    },
+    {
+      "archive_path": "originals/03-administrative-audit-R2-stream-and-native-Git-patch.patch",
+      "bytes": 7219,
+      "original_path": "/private/tmp/lanl17-strict-audit-capture-stream-bound-native-git-r2-20261009-a5.patch",
+      "original_stat": {
+        "ctime_ns": 1791577727317352889,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351098463,
+        "mode": 33152,
+        "mtime_ns": 1791577727317352889,
+        "nlink": 1,
+        "size": 7219,
+        "uid": 501
+      },
+      "role": "administrative-audit-R2-stream-and-native-Git-patch",
+      "sha256": "a2a1615cbb2a875696f650b2cbc4b821a501e0602656d7bc8a914bdf2d04ee90"
+    },
+    {
+      "archive_path": "originals/04-stage-a1-original-failure-stderr.stderr",
+      "bytes": 90,
+      "original_path": "/private/tmp/lanl17-template-author-git-stage-capture-20261009-a5-a1/stage-failure-original.stderr",
+      "original_stat": {
+        "ctime_ns": 1791577926923899880,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351098749,
+        "mode": 33152,
+        "mtime_ns": 1791577926923899880,
+        "nlink": 1,
+        "size": 90,
+        "uid": 501
+      },
+      "role": "stage-a1-original-failure-stderr",
+      "sha256": "f8954269983ebd518686cac7e5654c0078ce74dc3276fd933c152c8dee6d4192"
+    },
+    {
+      "archive_path": "originals/05-stage-a1-original-transport.json",
+      "bytes": 418,
+      "original_path": "/private/tmp/lanl17-template-author-git-stage-capture-20261009-a5-a1/transport.json",
+      "original_stat": {
+        "ctime_ns": 1791576137593433782,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351056462,
+        "mode": 33152,
+        "mtime_ns": 1791576137593433782,
+        "nlink": 1,
+        "size": 418,
+        "uid": 501
+      },
+      "role": "stage-a1-original-transport",
+      "sha256": "4e3e3ba0c154f9a495fdf95b4f7040b54afd88ba6fda3d1ca0adcdcb12b8351d"
+    },
+    {
+      "archive_path": "originals/06-stage-a1-parent-review.json",
+      "bytes": 731,
+      "original_path": "/private/tmp/lanl17-template-author-git-stage-parent-review-actual-20261009-a5-a1.json",
+      "original_stat": {
+        "ctime_ns": 1791576132715313188,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351056451,
+        "mode": 33152,
+        "mtime_ns": 1791576132715313188,
+        "nlink": 1,
+        "size": 731,
+        "uid": 501
+      },
+      "role": "stage-a1-parent-review",
+      "sha256": "bfc17277ae6af6eb8cf6a3e9ff8ad4aa2a9b12dba57a45decf2fdfd112537b39"
+    },
+    {
+      "archive_path": "originals/07-stage-original-cleanliness-observation.json",
+      "bytes": 1498,
+      "original_path": "/private/tmp/lanl17-template-stage-cleanliness-observation-capture-20261009-a5-a1/cleanliness-original.json",
+      "original_stat": {
+        "ctime_ns": 1791576190484567962,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351056609,
+        "mode": 33152,
+        "mtime_ns": 1791576190484567962,
+        "nlink": 1,
+        "size": 1498,
+        "uid": 501
+      },
+      "role": "stage-original-cleanliness-observation",
+      "sha256": "3ab49809d4f98abf42b62d1718d9852906e17a362b21fe4994b26a8a6028a866"
+    },
+    {
+      "archive_path": "originals/08-stage-R2-original.json",
+      "bytes": 9390,
+      "original_path": "/private/tmp/lanl17-template-author-git-stage-capture-20261009-a5-a2/stage-original.json",
+      "original_stat": {
+        "ctime_ns": 1791576302450261086,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351059317,
+        "mode": 33152,
+        "mtime_ns": 1791576302450261086,
+        "nlink": 1,
+        "size": 9390,
+        "uid": 501
+      },
+      "role": "stage-R2-original",
+      "sha256": "eccad8f66a00dcebfbf8e075d214cb757891f3230059e2aa8ce0cf4cafc58e08"
+    },
+    {
+      "archive_path": "originals/09-stage-R2-original-transport.json",
+      "bytes": 419,
+      "original_path": "/private/tmp/lanl17-template-author-git-stage-capture-20261009-a5-a2/transport.json",
+      "original_stat": {
+        "ctime_ns": 1791576266573061039,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351058644,
+        "mode": 33152,
+        "mtime_ns": 1791576266573061039,
+        "nlink": 1,
+        "size": 419,
+        "uid": 501
+      },
+      "role": "stage-R2-original-transport",
+      "sha256": "76e30ad4c5e31d597a05b34aff51d82ff09a75d43ac812c40117f69b1bb2693f"
+    },
+    {
+      "archive_path": "originals/10-stage-R2-parent-review.json",
+      "bytes": 912,
+      "original_path": "/private/tmp/lanl17-template-author-git-stage-parent-review-actual-20261009-a5-a2.json",
+      "original_stat": {
+        "ctime_ns": 1791576262801004371,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351058585,
+        "mode": 33152,
+        "mtime_ns": 1791576262801004371,
+        "nlink": 1,
+        "size": 912,
+        "uid": 501
+      },
+      "role": "stage-R2-parent-review",
+      "sha256": "2166d3a6f0518ed4a75c6414d0d9f5a1a5587d0d08e854dc22b470ee748c470a"
+    },
+    {
+      "archive_path": "originals/11-original-report-delegated-source-descriptors.json",
+      "bytes": 2806,
+      "original_path": "/private/tmp/lanl17-original-report-delegated-source-descriptor-capture-20261009-a5-a1/descriptors-original.json",
+      "original_stat": {
+        "ctime_ns": 1791576305524876508,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351059380,
+        "mode": 33152,
+        "mtime_ns": 1791576305524876508,
+        "nlink": 1,
+        "size": 2806,
+        "uid": 501
+      },
+      "role": "original-report-delegated-source-descriptors",
+      "sha256": "2554aed9032816c36d9fe45340b3cfc59fcc680cd754c6e14105caa7186b2c32"
+    },
+    {
+      "archive_path": "originals/12-actual-author-input.json",
+      "bytes": 175869,
+      "original_path": "/private/tmp/lanl17-remote-actual-template-author-input-actual-20261009-a5-a1.json",
+      "original_stat": {
+        "ctime_ns": 1791576742328205351,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351074169,
+        "mode": 33152,
+        "mtime_ns": 1791576742328205351,
+        "nlink": 1,
+        "size": 175869,
+        "uid": 501
+      },
+      "role": "actual-author-input",
+      "sha256": "72a35f7a580dcdacd5393e4cc24c636e773c1e3e11cef0d1c3669ff56c812ebd"
+    },
+    {
+      "archive_path": "originals/13-actual-input-original-descriptor-binding.json",
+      "bytes": 19687,
+      "original_path": "/private/tmp/lanl17-actual-template-input-local-original-descriptor-binding-20261009-a5-a1.json",
+      "original_stat": {
+        "ctime_ns": 1791576742328777229,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351074170,
+        "mode": 33152,
+        "mtime_ns": 1791576742328777229,
+        "nlink": 1,
+        "size": 19687,
+        "uid": 501
+      },
+      "role": "actual-input-original-descriptor-binding",
+      "sha256": "54558916eebe999c06b658b82fa59544ea9d5c59474ea9c2f3466df8e5bfe465"
+    },
+    {
+      "archive_path": "originals/14-R8-a1-actual-input.json",
+      "bytes": 17224,
+      "original_path": "/private/tmp/lanl17-pre-actual-template-host-input-actual-20261009-a5-a1.json",
+      "original_stat": {
+        "ctime_ns": 1791576799528656287,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351077935,
+        "mode": 33152,
+        "mtime_ns": 1791576799528656287,
+        "nlink": 1,
+        "size": 17224,
+        "uid": 501
+      },
+      "role": "R8-a1-actual-input",
+      "sha256": "a3d823be995d81248c98435d8c386b0ae1cd9bb14a7fc819d40f9d262d06dbfb"
+    },
+    {
+      "archive_path": "originals/15-R8-a1-actual-readiness.json",
+      "bytes": 26771,
+      "original_path": "/private/tmp/lanl17-pre-actual-template-host-capture-20261009-a5-a1/host-original.json",
+      "original_stat": {
+        "ctime_ns": 1791576849040946620,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351081825,
+        "mode": 33152,
+        "mtime_ns": 1791576849040946620,
+        "nlink": 1,
+        "size": 26771,
+        "uid": 501
+      },
+      "role": "R8-a1-actual-readiness",
+      "sha256": "0a89e5f51ce672069e2146d87bced727a02cd4e29bba7ec009d81081a227eef5"
+    },
+    {
+      "archive_path": "originals/16-R8-a2-actual-input.json",
+      "bytes": 16967,
+      "original_path": "/private/tmp/lanl17-pre-actual-template-host-input-actual-20261009-a5-a2.json",
+      "original_stat": {
+        "ctime_ns": 1791576994136747725,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351089847,
+        "mode": 33152,
+        "mtime_ns": 1791576994136747725,
+        "nlink": 1,
+        "size": 16967,
+        "uid": 501
+      },
+      "role": "R8-a2-actual-input",
+      "sha256": "f13e35ed503be6ef1ac0d482519ad34cf93583064b95d6737f1a32f6be5ae6c9"
+    },
+    {
+      "archive_path": "originals/17-R8-a2-actual-readiness.json",
+      "bytes": 26060,
+      "original_path": "/private/tmp/lanl17-pre-actual-template-host-capture-20261009-a5-a2/host-original.json",
+      "original_stat": {
+        "ctime_ns": 1791577034007353597,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351089918,
+        "mode": 33152,
+        "mtime_ns": 1791577034007353597,
+        "nlink": 1,
+        "size": 26060,
+        "uid": 501
+      },
+      "role": "R8-a2-actual-readiness",
+      "sha256": "0d0db1787e7eb780e88239a054aa62fab786406db8651fc474596b872fc2a57b"
+    },
+    {
+      "archive_path": "originals/18-R8-a3-actual-input.json",
+      "bytes": 16846,
+      "original_path": "/private/tmp/lanl17-pre-actual-template-host-input-actual-20261009-a5-a3.json",
+      "original_stat": {
+        "ctime_ns": 1791577191584077907,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351090274,
+        "mode": 33152,
+        "mtime_ns": 1791577191584077907,
+        "nlink": 1,
+        "size": 16846,
+        "uid": 501
+      },
+      "role": "R8-a3-actual-input",
+      "sha256": "29dbd418c6a1b860c7745c23acf748f838890ff360913bf97b6a844d5b9edb9a"
+    },
+    {
+      "archive_path": "originals/19-R8-a3-actual-readiness.json",
+      "bytes": 25712,
+      "original_path": "/private/tmp/lanl17-pre-actual-template-host-capture-20261009-a5-a3/host-original.json",
+      "original_stat": {
+        "ctime_ns": 1791577244703942621,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351090521,
+        "mode": 33152,
+        "mtime_ns": 1791577244703942621,
+        "nlink": 1,
+        "size": 25712,
+        "uid": 501
+      },
+      "role": "R8-a3-actual-readiness",
+      "sha256": "c1185dc5831b72c6569c50feecab501ed9b4181b002176b2ada0c8f36c467099"
+    },
+    {
+      "archive_path": "originals/20-R8-a4-actual-input.json",
+      "bytes": 16851,
+      "original_path": "/private/tmp/lanl17-pre-actual-template-host-input-actual-20261009-a5-a4.json",
+      "original_stat": {
+        "ctime_ns": 1791577651145515487,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351098301,
+        "mode": 33152,
+        "mtime_ns": 1791577651145515487,
+        "nlink": 1,
+        "size": 16851,
+        "uid": 501
+      },
+      "role": "R8-a4-actual-input",
+      "sha256": "822cc9e0a2e246e0961ee0070321a766a7751d688df76f4d5f797d12b214c446"
+    },
+    {
+      "archive_path": "originals/21-R8-a4-actual-readiness.json",
+      "bytes": 25717,
+      "original_path": "/private/tmp/lanl17-pre-actual-template-host-capture-20261009-a5-a4/host-original.json",
+      "original_stat": {
+        "ctime_ns": 1791577753047188834,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351098496,
+        "mode": 33152,
+        "mtime_ns": 1791577753047188834,
+        "nlink": 1,
+        "size": 25717,
+        "uid": 501
+      },
+      "role": "R8-a4-actual-readiness",
+      "sha256": "cf41bef2253601325174f3cc3f763fce28e4fa1558c8391b0b389c13797a9777"
+    },
+    {
+      "archive_path": "originals/22-ec1fc-author-author-return-original-json.json",
+      "bytes": 798,
+      "original_path": "/private/tmp/lanl17-actual-template-author-capture-20261009-a5-a1/author-return-original.json",
+      "original_stat": {
+        "ctime_ns": 1791576982939580412,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351085283,
+        "mode": 33152,
+        "mtime_ns": 1791576982939580412,
+        "nlink": 1,
+        "size": 798,
+        "uid": 501
+      },
+      "role": "ec1fc-author-author-return-original-json",
+      "sha256": "356cd77b13eee3dcb21eb367c504912f55972bb68b508702ae2f726a48db3685"
+    },
+    {
+      "archive_path": "originals/23-ec1fc-author-parent-template-json.json",
+      "bytes": 166784,
+      "original_path": "/private/tmp/lanl17-actual-template-author-capture-20261009-a5-a1/parent-template.json",
+      "original_stat": {
+        "ctime_ns": 1791576982940358249,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351085285,
+        "mode": 33152,
+        "mtime_ns": 1791576982940358249,
+        "nlink": 1,
+        "size": 166784,
+        "uid": 501
+      },
+      "role": "ec1fc-author-parent-template-json",
+      "sha256": "ffd54634c5e8ae4a02d6f152a966a5efa8caa5bfe79d4c5dbaa59d082bde584b"
+    },
+    {
+      "archive_path": "originals/24-ec1fc-author-author-custody-json.json",
+      "bytes": 2285,
+      "original_path": "/private/tmp/lanl17-actual-template-author-capture-20261009-a5-a1/author-custody.json",
+      "original_stat": {
+        "ctime_ns": 1791576982939810330,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351085284,
+        "mode": 33152,
+        "mtime_ns": 1791576982939810330,
+        "nlink": 1,
+        "size": 2285,
+        "uid": 501
+      },
+      "role": "ec1fc-author-author-custody-json",
+      "sha256": "d3064802b0c2ca00810952f4782f70888a3cd3ecc16fbfd52a8143427fab7edb"
+    },
+    {
+      "archive_path": "originals/25-ec1fc-author-start-json.json",
+      "bytes": 534,
+      "original_path": "/private/tmp/lanl17-actual-template-author-capture-20261009-a5-a1/start.json",
+      "original_stat": {
+        "ctime_ns": 1791576975439497181,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351085271,
+        "mode": 33152,
+        "mtime_ns": 1791576975439497181,
+        "nlink": 1,
+        "size": 534,
+        "uid": 501
+      },
+      "role": "ec1fc-author-start-json",
+      "sha256": "7a5fc2af39352c685e9e75668928b3635682ce9d3268ae3d84fcfa031ecdce0e"
+    },
+    {
+      "archive_path": "originals/26-ec1fc-author-transport-json.json",
+      "bytes": 420,
+      "original_path": "/private/tmp/lanl17-actual-template-author-capture-20261009-a5-a1/transport.json",
+      "original_stat": {
+        "ctime_ns": 1791576976225091841,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351085274,
+        "mode": 33152,
+        "mtime_ns": 1791576976225091841,
+        "nlink": 1,
+        "size": 420,
+        "uid": 501
+      },
+      "role": "ec1fc-author-transport-json",
+      "sha256": "2dab1501bf68414101b38c9ff31dae75a6cef86e1083699d8ee2b5c40e250c23"
+    },
+    {
+      "archive_path": "originals/27-ec1fc-author-parent-review.json",
+      "bytes": 1006,
+      "original_path": "/private/tmp/lanl17-actual-template-author-parent-review-actual-20261009-a5-a1.json",
+      "original_stat": {
+        "ctime_ns": 1791576853701459496,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351082202,
+        "mode": 33152,
+        "mtime_ns": 1791576853701459496,
+        "nlink": 1,
+        "size": 1006,
+        "uid": 501
+      },
+      "role": "ec1fc-author-parent-review",
+      "sha256": "4f7b3861e8526df45d99f41184fa7a534068ec0ec3662c85884aa7ccf8809361"
+    },
+    {
+      "archive_path": "originals/28-SPEC339-writer-specification-return-original-json.json",
+      "bytes": 580,
+      "original_path": "/private/tmp/lanl17-actual-input-specification-capture-20261009-a5-a1/specification-return-original.json",
+      "original_stat": {
+        "ctime_ns": 1791577116585691357,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351090136,
+        "mode": 33152,
+        "mtime_ns": 1791577116585691357,
+        "nlink": 1,
+        "size": 580,
+        "uid": 501
+      },
+      "role": "SPEC339-writer-specification-return-original-json",
+      "sha256": "2cc94b3326aaad85f5568f05d9966efe6cb0db58e4ca3f1bde260c05bc42d1f9"
+    },
+    {
+      "archive_path": "originals/29-SPEC339-writer-input-specification-json.json",
+      "bytes": 166873,
+      "original_path": "/private/tmp/lanl17-actual-input-specification-capture-20261009-a5-a1/input-specification.json",
+      "original_stat": {
+        "ctime_ns": 1791577116586104943,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351090137,
+        "mode": 33152,
+        "mtime_ns": 1791577116586104943,
+        "nlink": 1,
+        "size": 166873,
+        "uid": 501
+      },
+      "role": "SPEC339-writer-input-specification-json",
+      "sha256": "ae525738d6333aec54e20c5be9a33bb91cc93ded4c3372920c80b0e64a1feacc"
+    },
+    {
+      "archive_path": "originals/30-SPEC339-writer-writer-custody-json.json",
+      "bytes": 2199,
+      "original_path": "/private/tmp/lanl17-actual-input-specification-capture-20261009-a5-a1/writer-custody.json",
+      "original_stat": {
+        "ctime_ns": 1791577116586321194,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351090138,
+        "mode": 33152,
+        "mtime_ns": 1791577116586321194,
+        "nlink": 1,
+        "size": 2199,
+        "uid": 501
+      },
+      "role": "SPEC339-writer-writer-custody-json",
+      "sha256": "f45746bd21800aea682ae42eeb150f0820c8c8f062d54e38ee743b4c32ff7e8f"
+    },
+    {
+      "archive_path": "originals/31-SPEC339-writer-start-json.json",
+      "bytes": 534,
+      "original_path": "/private/tmp/lanl17-actual-input-specification-capture-20261009-a5-a1/start.json",
+      "original_stat": {
+        "ctime_ns": 1791577103367018909,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351090100,
+        "mode": 33152,
+        "mtime_ns": 1791577103367018909,
+        "nlink": 1,
+        "size": 534,
+        "uid": 501
+      },
+      "role": "SPEC339-writer-start-json",
+      "sha256": "db5af73a4849d05dd9c73d0e30afcd5f31fc91aebb60a684b65e689c1b60cfdf"
+    },
+    {
+      "archive_path": "originals/32-SPEC339-writer-transport-json.json",
+      "bytes": 420,
+      "original_path": "/private/tmp/lanl17-actual-input-specification-capture-20261009-a5-a1/transport.json",
+      "original_stat": {
+        "ctime_ns": 1791577104185872210,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351090103,
+        "mode": 33152,
+        "mtime_ns": 1791577104185872210,
+        "nlink": 1,
+        "size": 420,
+        "uid": 501
+      },
+      "role": "SPEC339-writer-transport-json",
+      "sha256": "6bddb7b1634d4c18529bc69cce45ccc4fe97c8944a805085544e9a85b1accb0f"
+    },
+    {
+      "archive_path": "originals/33-SPEC339-writer-parent-review.json",
+      "bytes": 919,
+      "original_path": "/private/tmp/lanl17-actual-input-specification-parent-review-actual-20261009-a5-a1.json",
+      "original_stat": {
+        "ctime_ns": 1791577034125473682,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351089921,
+        "mode": 33152,
+        "mtime_ns": 1791577034125473682,
+        "nlink": 1,
+        "size": 919,
+        "uid": 501
+      },
+      "role": "SPEC339-writer-parent-review",
+      "sha256": "f984d31cd1dcc64002f6643ef6a271f93c6716032e5265aad73ca8b3054f38d4"
+    },
+    {
+      "archive_path": "originals/34-de-assembler-assembler-return-original-json.json",
+      "bytes": 572,
+      "original_path": "/private/tmp/lanl17-actual-accepted-pins-assembler-capture-20261009-a5-a2/assembler-return-original.json",
+      "original_stat": {
+        "ctime_ns": 1791577309180613237,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351090642,
+        "mode": 33152,
+        "mtime_ns": 1791577309180613237,
+        "nlink": 1,
+        "size": 572,
+        "uid": 501
+      },
+      "role": "de-assembler-assembler-return-original-json",
+      "sha256": "7591a561a52194a2c397508ce6982d618432e52926e91e9c20544c423e9a31fb"
+    },
+    {
+      "archive_path": "originals/35-de-assembler-accepted-pins-json.json",
+      "bytes": 115510,
+      "original_path": "/private/tmp/lanl17-actual-accepted-pins-assembler-capture-20261009-a5-a2/accepted-pins.json",
+      "original_stat": {
+        "ctime_ns": 1791577309180966697,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351090643,
+        "mode": 33152,
+        "mtime_ns": 1791577309180966697,
+        "nlink": 1,
+        "size": 115510,
+        "uid": 501
+      },
+      "role": "de-assembler-accepted-pins-json",
+      "sha256": "c808f38d20a1a607df17d5d04c0dce4d31ac87a564fcae1a2fab9653f098d240"
+    },
+    {
+      "archive_path": "originals/36-de-assembler-construction-custody-json.json",
+      "bytes": 107208,
+      "original_path": "/private/tmp/lanl17-actual-accepted-pins-assembler-capture-20261009-a5-a2/construction-custody.json",
+      "original_stat": {
+        "ctime_ns": 1791577309181311532,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351090644,
+        "mode": 33152,
+        "mtime_ns": 1791577309181311532,
+        "nlink": 1,
+        "size": 107208,
+        "uid": 501
+      },
+      "role": "de-assembler-construction-custody-json",
+      "sha256": "aacb71f147c21c10639a8c93f915a3139ff49afc1f732ce37b186287b8bb5949"
+    },
+    {
+      "archive_path": "originals/37-de-assembler-start-json.json",
+      "bytes": 534,
+      "original_path": "/private/tmp/lanl17-actual-accepted-pins-assembler-capture-20261009-a5-a2/start.json",
+      "original_stat": {
+        "ctime_ns": 1791577289296270806,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351090622,
+        "mode": 33152,
+        "mtime_ns": 1791577289296270806,
+        "nlink": 1,
+        "size": 534,
+        "uid": 501
+      },
+      "role": "de-assembler-start-json",
+      "sha256": "bda1354e5b7a6c5533969cb782509118aa1591da4d4116bfb7ff2fb13f64323f"
+    },
+    {
+      "archive_path": "originals/38-de-assembler-transport-json.json",
+      "bytes": 420,
+      "original_path": "/private/tmp/lanl17-actual-accepted-pins-assembler-capture-20261009-a5-a2/transport.json",
+      "original_stat": {
+        "ctime_ns": 1791577292697816930,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351090629,
+        "mode": 33152,
+        "mtime_ns": 1791577292697816930,
+        "nlink": 1,
+        "size": 420,
+        "uid": 501
+      },
+      "role": "de-assembler-transport-json",
+      "sha256": "46512a22ab816efb5ee8f6ebfca1384a413eba0018f01abc6756ba94d7054789"
+    },
+    {
+      "archive_path": "originals/39-de-assembler-parent-review.json",
+      "bytes": 918,
+      "original_path": "/private/tmp/lanl17-actual-accepted-pins-assembler-parent-review-actual-20261009-a5-a2.json",
+      "original_stat": {
+        "ctime_ns": 1791577244805265539,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351090524,
+        "mode": 33152,
+        "mtime_ns": 1791577244805265539,
+        "nlink": 1,
+        "size": 918,
+        "uid": 501
+      },
+      "role": "de-assembler-parent-review",
+      "sha256": "21308898dfa3a67d0be36ede261a1e26cb567fd6bef498f84d95b2333230d497"
+    },
+    {
+      "archive_path": "originals/40-original6a-refused-audit-audit-capture-return-original-json.json",
+      "bytes": 960,
+      "original_path": "/private/tmp/lanl17-original-strict-audit-capture-capture-20261009-a5-a1/audit-capture-return-original.json",
+      "original_stat": {
+        "ctime_ns": 1791577852785273625,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351098657,
+        "mode": 33152,
+        "mtime_ns": 1791577852785273625,
+        "nlink": 1,
+        "size": 960,
+        "uid": 501
+      },
+      "role": "original6a-refused-audit-audit-capture-return-original-json",
+      "sha256": "d231f36982a1555bd056b9f668cf00c6804cc5552975803456700ea8cae25a0a"
+    },
+    {
+      "archive_path": "originals/41-original6a-refused-audit-audit-original-json.json",
+      "bytes": 110,
+      "original_path": "/private/tmp/lanl17-original-strict-audit-capture-capture-20261009-a5-a1/audit-original.json",
+      "original_stat": {
+        "ctime_ns": 1791577852785595418,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351098659,
+        "mode": 33152,
+        "mtime_ns": 1791577852785595418,
+        "nlink": 1,
+        "size": 110,
+        "uid": 501
+      },
+      "role": "original6a-refused-audit-audit-original-json",
+      "sha256": "55f422a431174bd566d62b41da9eb0915f51d727f8a8fd3b1e8ed65d0cefa0f7"
+    },
+    {
+      "archive_path": "originals/42-original6a-refused-audit-audit-original-stderr.stderr",
+      "bytes": 0,
+      "original_path": "/private/tmp/lanl17-original-strict-audit-capture-capture-20261009-a5-a1/audit-original.stderr",
+      "original_stat": {
+        "ctime_ns": 1791577852785690877,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351098660,
+        "mode": 33152,
+        "mtime_ns": 1791577852785679460,
+        "nlink": 1,
+        "size": 0,
+        "uid": 501
+      },
+      "role": "original6a-refused-audit-audit-original-stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_path": "originals/43-original6a-refused-audit-audit-execution-json.json",
+      "bytes": 3361,
+      "original_path": "/private/tmp/lanl17-original-strict-audit-capture-capture-20261009-a5-a1/audit-execution.json",
+      "original_stat": {
+        "ctime_ns": 1791577852785458792,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351098658,
+        "mode": 33152,
+        "mtime_ns": 1791577852785458792,
+        "nlink": 1,
+        "size": 3361,
+        "uid": 501
+      },
+      "role": "original6a-refused-audit-audit-execution-json",
+      "sha256": "01b992773ed91f378ccc882f12117d466e3b6dfa3892eff8f690f1e1c44fbab6"
+    },
+    {
+      "archive_path": "originals/44-original6a-refused-audit-start-json.json",
+      "bytes": 534,
+      "original_path": "/private/tmp/lanl17-original-strict-audit-capture-capture-20261009-a5-a1/start.json",
+      "original_stat": {
+        "ctime_ns": 1791577825890013757,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351098610,
+        "mode": 33152,
+        "mtime_ns": 1791577825890013757,
+        "nlink": 1,
+        "size": 534,
+        "uid": 501
+      },
+      "role": "original6a-refused-audit-start-json",
+      "sha256": "3c5a1c6f66174ca6541d72e607a11c4faf76b3fafc871bc76137bd1647752d83"
+    },
+    {
+      "archive_path": "originals/45-original6a-refused-audit-transport-json.json",
+      "bytes": 419,
+      "original_path": "/private/tmp/lanl17-original-strict-audit-capture-capture-20261009-a5-a1/transport.json",
+      "original_stat": {
+        "ctime_ns": 1791577847155888019,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351098650,
+        "mode": 33152,
+        "mtime_ns": 1791577847155888019,
+        "nlink": 1,
+        "size": 419,
+        "uid": 501
+      },
+      "role": "original6a-refused-audit-transport-json",
+      "sha256": "8a0494805c789743db745cc2561f114a1be45e00b4a4246c0a969782ebf63b6a"
+    },
+    {
+      "archive_path": "originals/46-original6a-refused-audit-parent-review.json",
+      "bytes": 1227,
+      "original_path": "/private/tmp/lanl17-original-strict-audit-capture-parent-review-actual-20261009-a5-a1.json",
+      "original_stat": {
+        "ctime_ns": 1791577783152233457,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351098548,
+        "mode": 33152,
+        "mtime_ns": 1791577783152233457,
+        "nlink": 1,
+        "size": 1227,
+        "uid": 501
+      },
+      "role": "original6a-refused-audit-parent-review",
+      "sha256": "d571cdb019aff614d3795ad6ae79a74a8855b7e795d8c55b7824e48f6f17764b"
+    },
+    {
+      "archive_path": "originals/47-de-a1-note-expired-host-binding-never-executed.json",
+      "bytes": 918,
+      "original_path": "/private/tmp/lanl17-actual-accepted-pins-assembler-parent-review-actual-20261009-a5-a1.json",
+      "original_stat": {
+        "ctime_ns": 1791577116691574715,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351090141,
+        "mode": 33152,
+        "mtime_ns": 1791577116691574715,
+        "nlink": 1,
+        "size": 918,
+        "uid": 501
+      },
+      "role": "de-a1-note-expired-host-binding-never-executed",
+      "sha256": "1ef42f2643059d7b83088ced878f6b33174c53187ea7f4a4281d8f7c4771b8bd"
+    }
+  ],
+  "private_source_action_history_pins": [
+    {
+      "bytes": 63124,
+      "full_body_published": false,
+      "original_path": "/private/tmp/lanl17-pre-actual-template-host-action-actual-20261009-a5-a1.json",
+      "original_stat": {
+        "ctime_ns": 1791576799529293665,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351077936,
+        "mode": 33152,
+        "mtime_ns": 1791576799529293665,
+        "nlink": 1,
+        "size": 63124,
+        "uid": 501
+      },
+      "role": "R8-a1-completed-once-not-reusable",
+      "sha256": "fb885850afb30897bd22d38f5c271471db4d5f3040a7e65a99f4d260b5178c7d"
+    },
+    {
+      "bytes": 62780,
+      "full_body_published": false,
+      "original_path": "/private/tmp/lanl17-pre-actual-template-host-action-actual-20261009-a5-a2.json",
+      "original_stat": {
+        "ctime_ns": 1791576994137507187,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351089848,
+        "mode": 33152,
+        "mtime_ns": 1791576994137507187,
+        "nlink": 1,
+        "size": 62780,
+        "uid": 501
+      },
+      "role": "R8-a2-completed-once-not-reusable",
+      "sha256": "03b30e9524a1f4e1884b8bdc0eb9b97a1621f4d326b3a38c370716dc842c6fce"
+    },
+    {
+      "bytes": 62620,
+      "full_body_published": false,
+      "original_path": "/private/tmp/lanl17-pre-actual-template-host-action-actual-20261009-a5-a3.json",
+      "original_stat": {
+        "ctime_ns": 1791577191584966870,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351090275,
+        "mode": 33152,
+        "mtime_ns": 1791577191584966870,
+        "nlink": 1,
+        "size": 62620,
+        "uid": 501
+      },
+      "role": "R8-a3-completed-once-not-reusable",
+      "sha256": "b7b9bd4f6530c1c34f252297d166f0f9b07f4698704c1e368ea9a6deae12ee8d"
+    },
+    {
+      "bytes": 62624,
+      "full_body_published": false,
+      "original_path": "/private/tmp/lanl17-pre-actual-template-host-action-actual-20261009-a5-a4.json",
+      "original_stat": {
+        "ctime_ns": 1791577651146305866,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351098302,
+        "mode": 33152,
+        "mtime_ns": 1791577651146305866,
+        "nlink": 1,
+        "size": 62624,
+        "uid": 501
+      },
+      "role": "R8-a4-completed-once-not-reusable",
+      "sha256": "2c1b8b00867f9f6532216616a61883251f3cc720ddd10e22470fcb057ffb8387"
+    },
+    {
+      "bytes": 236077,
+      "full_body_published": false,
+      "original_path": "/private/tmp/lanl17-actual-template-author-action-actual-20261009-a5-a1.json",
+      "original_stat": {
+        "ctime_ns": 1791576853700994035,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351082201,
+        "mode": 33152,
+        "mtime_ns": 1791576853700994035,
+        "nlink": 1,
+        "size": 236077,
+        "uid": 501
+      },
+      "role": "ec1fc-author-completed-once-not-reusable",
+      "sha256": "780c074815ae589a485372c91d0ccce76f7e742e508f0570f31435a578403d61"
+    },
+    {
+      "bytes": 2746,
+      "full_body_published": false,
+      "original_path": "/private/tmp/lanl17-actual-input-specification-action-actual-20261009-a5-a1.json",
+      "original_stat": {
+        "ctime_ns": 1791577034125187680,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351089920,
+        "mode": 33152,
+        "mtime_ns": 1791577034125187680,
+        "nlink": 1,
+        "size": 2746,
+        "uid": 501
+      },
+      "role": "SPEC339-writer-completed-once-not-reusable",
+      "sha256": "941d6c75ce0306db530c8691ed0b8ba6a32991851ab4622ba169e855c80355e7"
+    },
+    {
+      "bytes": 2922,
+      "full_body_published": false,
+      "original_path": "/private/tmp/lanl17-actual-accepted-pins-assembler-action-actual-20261009-a5-a2.json",
+      "original_stat": {
+        "ctime_ns": 1791577244805018205,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351090523,
+        "mode": 33152,
+        "mtime_ns": 1791577244805018205,
+        "nlink": 1,
+        "size": 2922,
+        "uid": 501
+      },
+      "role": "de-assembler-completed-once-not-reusable",
+      "sha256": "817ead3cb5b569bc9df930f04f6aa5da55b34ca9e055b46a4f6e04bef731a2b6"
+    },
+    {
+      "bytes": 6886,
+      "full_body_published": false,
+      "original_path": "/private/tmp/lanl17-original-strict-audit-capture-action-actual-20261009-a5-a1.json",
+      "original_stat": {
+        "ctime_ns": 1791577783152004956,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351098547,
+        "mode": 33152,
+        "mtime_ns": 1791577783152004956,
+        "nlink": 1,
+        "size": 6886,
+        "uid": 501
+      },
+      "role": "original6a-refused-audit-completed-once-not-reusable",
+      "sha256": "7ea26d31c26da8fa883987e3ae63f882ea95bd7fab0f342d527f45934b54e1f4"
+    },
+    {
+      "bytes": 2922,
+      "full_body_published": false,
+      "original_path": "/private/tmp/lanl17-actual-accepted-pins-assembler-action-actual-20261009-a5-a1.json",
+      "original_stat": {
+        "ctime_ns": 1791577116691276796,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351090140,
+        "mode": 33152,
+        "mtime_ns": 1791577116691276796,
+        "nlink": 1,
+        "size": 2922,
+        "uid": 501
+      },
+      "role": "de-a1-config-never-executed",
+      "sha256": "817ead3cb5b569bc9df930f04f6aa5da55b34ca9e055b46a4f6e04bef731a2b6"
+    },
+    {
+      "bytes": 5009,
+      "full_body_published": false,
+      "original_path": "/private/tmp/lanl17-template-author-git-stage-action-20261009-a5-a1.json",
+      "original_stat": {
+        "ctime_ns": 1791576064837711174,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351055964,
+        "mode": 33152,
+        "mtime_ns": 1791576064837711174,
+        "nlink": 1,
+        "size": 5009,
+        "uid": 501
+      },
+      "role": "stage-a1-failed-before-fetch",
+      "sha256": "8277ad5f8ec8e74334f4c31adb83fe09310ab967f28771aaa8706e0e25883dd4"
+    },
+    {
+      "bytes": 5468,
+      "full_body_published": false,
+      "original_path": "/private/tmp/lanl17-template-author-git-stage-action-20261009-a5-a2.json",
+      "original_stat": {
+        "ctime_ns": 1791576214253510521,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351056663,
+        "mode": 33152,
+        "mtime_ns": 1791576214253510521,
+        "nlink": 1,
+        "size": 5468,
+        "uid": 501
+      },
+      "role": "stage-R2-completed-once",
+      "sha256": "151ea11fe434486485330bae20ab186c6145c58bad21beef536575f69ce17692"
+    },
+    {
+      "bytes": 5046,
+      "full_body_published": false,
+      "original_path": "/private/tmp/lanl17_capture_original_strict_audit_metadata_20261009_a1.py",
+      "original_stat": {
+        "ctime_ns": 1791577412669406168,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351090889,
+        "mode": 33152,
+        "mtime_ns": 1791577412571544684,
+        "nlink": 1,
+        "size": 5046,
+        "uid": 501
+      },
+      "role": "admin-audit-a1-source-unselected-never-run",
+      "sha256": "c4097495550cc80bff46670422d65535ae48494c5ba3d910334a19795a1a38d3"
+    },
+    {
+      "bytes": 5781,
+      "full_body_published": false,
+      "original_path": "/private/tmp/lanl17_capture_original_strict_audit_metadata_20261009_a2.py",
+      "original_stat": {
+        "ctime_ns": 1791577727317138680,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 351098462,
+        "mode": 33152,
+        "mtime_ns": 1791577727317138680,
+        "nlink": 1,
+        "size": 5781,
+        "uid": 501
+      },
+      "role": "admin-audit-R2-selected-completed-once",
+      "sha256": "93fec15519f89f03ff6d23f5a1a807311fb83cd64065868f3b43c045ab3c0a3b"
+    },
+    {
+      "bytes": 115130,
+      "full_body_published": false,
+      "original_path": "/private/tmp/lanl17_selected_record_trajectory_auditor_a2r1s1_20261007.py",
+      "original_stat": {
+        "ctime_ns": 1791375892582872743,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 349585152,
+        "mode": 33188,
+        "mtime_ns": 1791375892582872743,
+        "nlink": 1,
+        "size": 115130,
+        "uid": 501
+      },
+      "role": "original-immutable6a-source",
+      "sha256": "6a91ed1015bcc1caa771348e8bd1f591254ba130e55570ed18bc8121d67a06da"
+    }
+  ],
+  "unique_original_bytes": 973484,
+  "unique_original_count": 47
+}

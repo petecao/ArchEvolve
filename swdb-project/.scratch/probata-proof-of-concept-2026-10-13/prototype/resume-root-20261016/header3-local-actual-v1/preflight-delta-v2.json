@@ -1,0 +1,37 @@
+{
+  "actual_attempt1_created": false,
+  "actual_successor_executed": false,
+  "classification": "INERT_HEADER3_PREFLIGHT_OBSERVED_HEAD_REBIND",
+  "date": "2026-10-16 ET",
+  "inverse": {
+    "new": "script=control/'AgenticRefiner/scripts/host/socket_lane.sh'\nhostlock=control/'AgenticRefiner/scripts/host/hostlock.sh'\nwrapper_commit=git(control,'rev-parse','HEAD')\nif wrapper_commit!='76cca359136794afa5ede975cfac8293cfa2ab9a':raise ValueError('exact observed lane checkout commit differs')\nwrapper_fetched_commit=git(control,'rev-parse','FETCH_HEAD')\nif wrapper_fetched_commit!='41f22f0ba765adcd4f4188aca91009ea0fe5a22b':raise ValueError('exact reviewed fetched lane commit differs')\ndef wrapper_blob(revision,relative):return subprocess.check_output(['/usr/bin/git','--no-optional-locks','--no-replace-objects','-c','core.fsmonitor=false','-c','core.preloadIndex=false','-c','index.threads=1','-C',str(control),'show',revision+':'+relative],env=env,timeout=10)\nfor wrapper_path,expected_hash in ((script,'00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8'),(hostlock,'50745f827bac2a3db4fc56fdedc95f6fb57fb4b39cf9b269796c77c0274dc996')):\n physical=read(wrapper_path)\n if hashlib.sha256(physical).hexdigest()!=expected_hash:raise ValueError('exact reviewed lane or hostlock script differs')\n relative=str(wrapper_path.relative_to(control))\n if wrapper_blob('HEAD',relative)!=physical or wrapper_blob('FETCH_HEAD',relative)!=physical:raise ValueError('physical lane/hostlock must match both exact Git trees')\nif git(control,'status','--porcelain','--','AgenticRefiner/scripts/host/socket_lane.sh','AgenticRefiner/scripts/host/hostlock.sh'):raise ValueError('selected reviewed wrapper checkout must be clean')\n",
+    "old": "script=control/'AgenticRefiner/scripts/host/socket_lane.sh'\nif hashlib.sha256(read(script)).hexdigest()!='00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8':raise ValueError('reviewed lane script differs')\nwrapper_commit=git(control,'rev-parse','HEAD')\nif wrapper_commit!='41f22f0ba765adcd4f4188aca91009ea0fe5a22b':raise ValueError('reviewed lane checkout commit differs')\n"
+  },
+  "original_preflight": {
+    "bytes": 10669,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/header3-local-actual-v1/scoped-preflight-v1.py",
+    "sha256": "ddeb9d08496816889e7fa6604e9fa6550ca72b1f447429faa9c7dcde6113f54c"
+  },
+  "original_runner": {
+    "bytes": 5269,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/header3-local-actual-v1/dispatch_once.py",
+    "sha256": "a0b5a8fccdbe0e489939c3187cb11d0582ac0f1f64f1d4c4b63af354deadf6a4"
+  },
+  "retained_refusal": "t25-owned-swap-header3-public-v1-preflight-refusal-20261016.json",
+  "runner_only_delta": [
+    "local receipt prefix attempt2",
+    "preflight v2 path",
+    "preflight v2 SHA"
+  ],
+  "same_actual_science_argv": true,
+  "successor_preflight": {
+    "bytes": 11805,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/header3-local-actual-v1/scoped-preflight-v2.py",
+    "sha256": "9fb029b042a4f25dc1d1c0194c9c2a85fcb3e0308b1ceced386459b8d236da65"
+  },
+  "successor_runner": {
+    "bytes": 5278,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/resume-root-20261016/header3-local-actual-v1/dispatch_once_v2.py",
+    "sha256": "432fbe355b9694e16355596a959c9a8b728f18bceaa4439e209a80f7449f2304"
+  }
+}

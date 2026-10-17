@@ -1,0 +1,61 @@
+[Crux]           GlobalAlloc 8 0x0:[64] Immutable 1-byte-aligned [external function] free
+[Crux]           GlobalAlloc 7 0x0:[64] Immutable 1-byte-aligned [external function] malloc
+[Crux]           GlobalAlloc 6 0x0:[64] Immutable 1-byte-aligned [external function] llvm.is.constant.i1
+[Crux]           GlobalAlloc 5 0x0:[64] Immutable 1-byte-aligned [external function] llvm.memmove.p0.p0.i64
+[Crux]           GlobalAlloc 4 0x0:[64] Immutable 1-byte-aligned [external function] llvm.memset.p0.i64
+[Crux]           GlobalAlloc 3 0x0:[64] Immutable 1-byte-aligned [external function] llvm.memcpy.p0.p0.i64
+[Crux]           GlobalAlloc 2 0x0:[64] Immutable 1-byte-aligned [external function] llvm.assume
+[Crux]           GlobalAlloc 1 0x0:[64] Immutable 1-byte-aligned [external function] crucible_assert
+[Crux]         Writes:
+[Crux]           Indexed chunk:
+[Crux]             803 |->   *(803, 0x0:[64]) := [0x5:[32],0x6:[32],0x7:[32],0x8:[32]]
+[Crux]             804 |->   *(804, 0x0:[64]) := "accept_crux.cpp\NUL"
+[Crux]             805 |->   *(805, 0x0:[64]) := 0
+[Crux]             806 |->   *(806, 0x0:[64]) := 0
+[Crux]             808 |->   *(808, 0x0:[64]) := "vector\NUL"
+[Crux]             809 |->
+[Crux]               *(809, 0x0:[64]) := "length_error was thrown in -fno-exceptions mode with message \"%s\"\NUL"
+[Crux]             810 |->
+[Crux]               *(810, 0x0:[64]) := "bad_array_new_length was thrown in -fno-exceptions mode\NUL"
+[Crux]             811 |->   *(811, 0x0:[64]) := "memory_region_registration\NUL"
+[Crux]             813 |->   *(813, 0x0:[64]) := "SWDB_STRICT_ASSERT:%s\n\NUL"
+[Crux]             814 |->   *(814, 0x0:[64]) := "tile_handle\NUL"
+[Crux]             815 |->   *(815, 0x0:[64]) := "thread_ownership_tile\NUL"
+[Crux]             816 |->   *(816, 0x0:[64]) := "tile_budget\NUL"
+[Crux]             817 |->   *(817, 0x0:[64]) := "register_budget\NUL"
+[Crux]             818 |->   *(818, 0x0:[64]) := "constant_uncovered_register\NUL"
+[Crux]             819 |->   *(819, 0x0:[64]) := "register_handle\NUL"
+[Crux]             820 |->   *(820, 0x0:[64]) := "thread_ownership_register\NUL"
+[Crux]             821 |->   *(821, 0x0:[64]) := "stream_bounds\NUL"
+[Crux]             822 |->   *(822, 0x0:[64]) := "tile_truncation\NUL"
+[Crux]             823 |->   *(823, 0x0:[64]) := "byte_offset_overflow\NUL"
+[Crux]             824 |->   *(824, 0x0:[64]) := "memory_region\NUL"
+[Crux]             825 |->   *(825, 0x0:[64]) := "stub/crux_shims.cpp\NUL"
+[Crux]     in context:
+[Crux]       _ZNSt3__116__if_likely_elseB9nqn220108IZNS_6vectorIN11swdb_strict6RegionENS_9allocatorIS3_EEE12emplace_backIJS3_EEERS3_DpOT_EUlvE_ZNS7_IJS3_EEES8_SB_EUlvE0_EEvbT_T0_
+[Crux]       _ZNSt3__16vectorIN11swdb_strict6RegionENS_9allocatorIS2_EEE12emplace_backIJS2_EEERS2_DpOT_
+[Crux]       _ZNSt3__16vectorIN11swdb_strict6RegionENS_9allocatorIS2_EEE9push_backB9nqn220108EOS2_
+[Crux]       _Z14add_mem_regionPvS_
+[Crux]       main
+[Crux] Overall status: Invalid.
+ break on line: 227
+[Crux] *** debug executable: /Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/formal-verification-2026-10-09/prototype/08-wrong-tile/crux-out/accept/debug-227
+[Crux] *** break on line: 227
+[Crux] *** debug executable: /Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/formal-verification-2026-10-09/prototype/08-wrong-tile/crux-out/accept/debug-227
+[Crux] *** break on line: 227
+[Crux] *** debug executable: /Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/formal-verification-2026-10-09/prototype/08-wrong-tile/crux-out/accept/debug-227
+[Crux] *** break on line: 227
+[Crux] *** debug executable: /Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/formal-verification-2026-10-09/prototype/08-wrong-tile/crux-out/accept/debug-227
+[Crux] *** break on line: 227
+[Crux] *** debug executable: /Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/formal-verification-2026-10-09/prototype/08-wrong-tile/crux-out/accept/debug-227
+[Crux] *** break on line: 227
+[Crux] *** debug executable: /Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/formal-verification-2026-10-09/prototype/08-wrong-tile/crux-out/accept/debug-1134
+[Crux] *** break on line: 1134
+[Crux] Goal status:
+[Crux]   Total: 45
+[Crux]   Proved: 0
+[Crux]   Disproved: 45
+[Crux]   Incomplete: 0
+[Crux]   Unknown: 0
+tag=accept rc=1 seconds=107.05081987380981
+[trimmed 2026-10-11: kept the last 60 lines (memory-state dump removed); 33 MB original]

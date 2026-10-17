@@ -1,0 +1,22 @@
+--- /private/tmp/lanl_read_detached_passive_observer_administration_originals_20261008_a5.py
++++ /private/tmp/lanl_read_detached_passive_observer_administration_originals_20261008_a5_r1.py
+@@ -9,8 +9,8 @@
+   b=f.read(cap+1);assert len(b)==s.st_size and stamp(s)==stamp(os.fstat(f.fileno()))==stamp(p.lstat())
+  return b,{'path':str(p),'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest(),'stat':stamp(s)}
+ PACKET_CAP=64*1024*1024
+-WRAPPER_SHA='7d38ff4063666f7918de9fac19f8c366d2d9bf20c7fbd0a09e48a07e8ccc4ed4'
+-OBSERVER_SHA='f5ab095a9734e2a0251d1dabbf3c61b4ae9001d1848c756194cd443e7acbad14'
++WRAPPER_SHA='ee885d56e99c591b2f1298153a97f43ab78687bdc7fecbc2e830349abae26669'
++OBSERVER_SHA='83e3d4dbac5d2215d591e09c8dd01aa441c1b6b0151ff18ee8a494ed9826c524'
+ TERMINAL_STATES=('observer_completed','observer_refused_or_failed','preflight_refused_no_observer_launch','administrative_postflight_failed','observer_launch_started','observer_running','GNU_supervision_not_returned_within_wrapper_wait')
+ FILES=[('status.json',16384),('configuration.json',16384),('tmux.conf',16384),('launch-status.json',16384),('launch.stdout',16384),('launch.stderr',16384),('observer.stdout',32*1024*1024),('observer.stderr',256*1024)]
+ def strict(b):
+@@ -27,7 +27,7 @@
+ folder_identity=(s.st_dev,s.st_ino,s.st_uid,s.st_gid,s.st_mode)
+ status,pin=read(folder/'status.json',16384);d=strict(status)
+ assert d['format']=='swdb.lanl17-detached-passive-observer-administration-status.v1' and d['sealed'] is False and d['state'] in TERMINAL_STATES and type(d['ended_utc']) is str
+-assert d['inputs']['wrapper']['sha256']==WRAPPER_SHA and d['inputs']['wrapper']['bytes']==16091 and d['inputs']['observer']['sha256']==OBSERVER_SHA and d['inputs']['observer']['bytes']==87826
++assert d['inputs']['wrapper']['sha256']==WRAPPER_SHA and d['inputs']['wrapper']['bytes']==16091 and d['inputs']['observer']['sha256']==OBSERVER_SHA and d['inputs']['observer']['bytes']==87833
+ assert d['scientific_admission'] is False and d['capacity_admission'] is False
+ if d['state'] in ('observer_completed','observer_refused_or_failed','administrative_postflight_failed'):assert type(d.get('observer_exit_code')) is int
+ originals=[];retained={};missing=[];read_total=len(status)

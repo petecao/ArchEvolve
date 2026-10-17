@@ -1,0 +1,220 @@
+{
+  "actual_result_or_scientific_admission": false,
+  "classification": "EXACT_ONCE_DISPATCHED_PENDING_PRODUCER_RESULT",
+  "date": "2026-10-16 ET",
+  "dispatch_execution": {
+    "bytes": 1472,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-swap-header3-public-v1-attempt2-dispatch-execution-20261016.json",
+    "sha256": "da7bfffdab406de63dde642945c7160cb42feb9350d874b27a92a0ceb86d5545"
+  },
+  "launch": {
+    "created_utc": "2026-10-17T01:18:40.862485+00:00",
+    "node": 1,
+    "planned_raw_budget_bytes": 2147483648,
+    "reviewed_wrapper_reuse": {
+      "execute.py": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612",
+      "watch.py": "4485ae66aa50c65f2b579f84836576aa67b54431978da71cac6eea6a68ecd07c"
+    },
+    "rss_cap_bytes": 8589934592,
+    "source": "/data1/yanruj/probata-resume-20261016-abb598a4",
+    "source_commit": "abb598a485cca67c77798e690382b44beb48c9e3",
+    "timeout_seconds": 2800,
+    "workers": 1
+  },
+  "original_v1_preflight_refusal": {
+    "bytes": 2195,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/resume-20261016-lane-coordination/t25-owned-swap-header3-v1-preflight-refusal-decision-20261016.json",
+    "sha256": "5cfb9110bf1ed3d03093d3242633278171b5b6b91f2ec8faf5c1a97a4645536e"
+  },
+  "preflight": {
+    "free_bytes": {
+      "/data": 71925985280,
+      "/data1": 12375072768
+    },
+    "fresh_source_and_raw_absent": true,
+    "load_average": "0.00 0.00 0.00 2/1368 3958392",
+    "memory": {
+      "MemAvailable_bytes": 126879354880,
+      "MemTotal_bytes": 134580494336
+    },
+    "pass": true,
+    "retained_old_sources": {
+      "/data1/yanruj/probata-resume-20261016-032e1851": {
+        "branch": "HEAD",
+        "commit": "032e1851eec7b195c7a3737997d5f5ea1d1343a5"
+      },
+      "/data1/yanruj/probata-resume-20261016-1433b8f5": {
+        "branch": "HEAD",
+        "commit": "1433b8f58baa63538d1e8aa8a33d9ce566826407"
+      },
+      "/data1/yanruj/probata-resume-20261016-2baf722f": {
+        "branch": "HEAD",
+        "commit": "2baf722fdaa6cba24b859eae3172a6f597417d72"
+      },
+      "/data1/yanruj/probata-resume-20261016-36266e10": {
+        "branch": "HEAD",
+        "commit": "36266e101e0484f3c2cf5f3fae4322d5de648d85"
+      },
+      "/data1/yanruj/probata-resume-20261016-a102e275": {
+        "branch": "HEAD",
+        "commit": "a102e275cd23352aea8c268be3761d8a330b9be0"
+      },
+      "/data1/yanruj/probata-resume-20261016-d7f685c6": {
+        "branch": "HEAD",
+        "commit": "d7f685c6fdbd7ff776eb1eaccc40099a2c48dc08"
+      }
+    },
+    "selected_scan_rounds": [
+      {
+        "descriptor_links_checked": 203,
+        "exact_inherited_OS_PAM_helpers": [
+          {
+            "identity_sha256": "49b3da308dc7a28b226ab532a2e76297c202f0f2098a3f06a030b747639cf457",
+            "parent": 3261266,
+            "permission_protected_exe_cwd_fds_inherited_OS_PAM_TCB": true,
+            "pid": 3261267
+          },
+          {
+            "current_query_transport": {
+              "allowed_unreadable_current_transport_pid": 3958371,
+              "chain": [
+                {
+                  "argv": [
+                    "/usr/bin/python3",
+                    "-I",
+                    "-B",
+                    "-"
+                  ],
+                  "comm": "python3",
+                  "parent": 3958372,
+                  "pid": 3958373,
+                  "start_ticks": "670185020",
+                  "uids": [
+                    "114316761",
+                    "114316761",
+                    "114316761",
+                    "114316761"
+                  ]
+                },
+                {
+                  "argv": [
+                    "/usr/bin/timeout",
+                    "--signal=TERM",
+                    "--kill-after=5s",
+                    "35s",
+                    "/usr/bin/python3",
+                    "-I",
+                    "-B",
+                    "-"
+                  ],
+                  "comm": "timeout",
+                  "parent": 3958371,
+                  "pid": 3958372,
+                  "start_ticks": "670185019",
+                  "uids": [
+                    "114316761",
+                    "114316761",
+                    "114316761",
+                    "114316761"
+                  ]
+                },
+                {
+                  "argv": [
+                    "sshd: yanruj@notty",
+                    "",
+                    ""
+                  ],
+                  "comm": "sshd",
+                  "parent": 3958323,
+                  "pid": 3958371,
+                  "start_ticks": "670185009",
+                  "uids": [
+                    "114316761",
+                    "114316761",
+                    "114316761",
+                    "114316761"
+                  ]
+                },
+                {
+                  "argv": [
+                    "sshd: yanruj [priv]",
+                    ""
+                  ],
+                  "comm": "sshd",
+                  "parent": 3855973,
+                  "pid": 3958323,
+                  "start_ticks": "670184937",
+                  "uids": [
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ]
+                },
+                {
+                  "argv": [
+                    "sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups"
+                  ],
+                  "comm": "sshd",
+                  "parent": 1,
+                  "pid": 3855973,
+                  "start_ticks": "664833076",
+                  "uids": [
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ]
+                },
+                {
+                  "argv": [
+                    "/usr/lib/systemd/systemd",
+                    "--system",
+                    "--deserialize=120",
+                    "splash"
+                  ],
+                  "comm": "systemd",
+                  "parent": 0,
+                  "pid": 1,
+                  "start_ticks": "70",
+                  "uids": [
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ]
+                }
+              ],
+              "daemon_binary": {
+                "bytes": 925512,
+                "path": "/usr/sbin/sshd",
+                "sha256": "95b291d957f87dd200796c4986c97b6f4d970e26ad620ec9174e69c13ec5c137"
+              }
+            }
+          }
+        ],
+        "own_processes_checked": 12,
+        "selected_original_readers": [],
+        "unreadable_own_processes": [],
+        "vanished_process_or_descriptor_observations": 0
+      }
+    ],
+    "wrapper_commit": "76cca359136794afa5ede975cfac8293cfa2ab9a"
+  },
+  "raw_root": "/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-abb598a4-t25-owned-swap-header3-public-v1",
+  "root_preflight_v2_review": {
+    "bytes": 1730,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-swap-header3-preflight-v2-root-review-20261016.json",
+    "sha256": "b48f2f0b58c9e5d30d129f75903fc439ba946e4e1a06d129f78c7bc426820752"
+  },
+  "root_science_admission": {
+    "bytes": 5184,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-swap-header3-public-root-once-admission-v1-20261016.json",
+    "sha256": "f7ec9de7ea2436e42c197d020695e76c9d57abfa55cdc51b5ce9518242b19905"
+  },
+  "session": "probata-resume-20261016-abb598a4-t25-owned-swap-header3-public-v1",
+  "wrapper": {
+    "fetched_commit": "41f22f0ba765adcd4f4188aca91009ea0fe5a22b",
+    "sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8"
+  }
+}

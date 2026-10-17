@@ -1,0 +1,34 @@
+{
+  "created": "2026-09-27",
+  "state": "local_ready_for_independent_review",
+  "tests": {
+    "passed": 8,
+    "seconds": 158.92
+  },
+  "command": "PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 /Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest -q -p no:cacheprovider tests/test_bfs_prompt_projection.py > /private/tmp/bfs-prompt-projection-green-20260927.log 2>&1",
+  "historical_red_log": "/private/tmp/bfs-prompt-projection-red-20260927.log",
+  "red_caveat": "Initial public missing-projection failure reproduced; source was changed while later subprocess tests were still running, so whole initial result is mixed and not claimed as clean prechange regression evidence.",
+  "provider_calls": "only explicit local external_fixture test subprocesses; no Anthropic calls",
+  "files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/swdb/rewrite.py",
+      "bytes": 12254,
+      "sha256": "5f44f6b9cd06eb4102c1e3f9aebe333124ccea3c17579f8cec586fd2935b64ae"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_prompt_projection.py",
+      "bytes": 4544,
+      "sha256": "f0bc49cd517b52aa9688daf5a13755e033c5b14424e7387d15bff4bc52efd11e"
+    },
+    {
+      "path": "/private/tmp/bfs-prompt-projection-green-20260927.log",
+      "bytes": 110,
+      "sha256": "b7cc56bbb9fc1072284327e7f095955669310e08315f64a2064a49aa9a19344c"
+    },
+    {
+      "path": "/private/tmp/bfs-prompt-projection-render-20260927.json",
+      "bytes": 491,
+      "sha256": "097484bb8dcd593ca0bb990eae10b929d6e6378211a1e2485ea803efc34d6cdd"
+    }
+  ]
+}

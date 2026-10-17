@@ -1,0 +1,27 @@
+--- a/swdb-project/tests/testkit/dx100_trust.py
++++ b/swdb-project/tests/testkit/dx100_trust.py
+@@ -18,7 +18,7 @@
+ 
+ 
+ def run_semantics_fixture(tmp_path, adapter, mark=True, mutate=False, *, source=None, extra_calls=(), source_files=None,
+-                          postcondition=None, semantics_transform=None, contract_transform=None, tool_environment=None, method_transform=None):
++                          postcondition=None, semantics_transform=None, contract_transform=None, tool_environment=None, method_transform=None, bounds=None):
+     """Public fixture; default tools are explicit stand-ins. Root-admitted actual tests supply their environment."""
+     from swdb import c_lowering, cbmc_adapter, cbmc_translator
+     library = tmp_path / 'library'
+@@ -113,6 +113,6 @@
+     if tool_environment is not None:
+         environment = dict(tool_environment)
+     result = run_swdb('prove', '--records', records.path, '--summary', contract['id'], '--adapter', adapter,
+-                      '--bounds', '{"threads": 1, "input_size": 1}', '--runs-dir', tmp_path / 'runs',
++                      '--bounds', json.dumps({'threads': 1, 'input_size': 1} if bounds is None else bounds), '--runs-dir', tmp_path / 'runs',
+                       '--format', 'json', env=environment, timeout=1200)
+     return result, records, semantics, marker
+--- a/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace_cases.py
++++ b/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-public-memory-trace-resume-20261016/trace_cases.py
+@@ -148,4 +148,4 @@
+     return run_semantics_fixture(tmp_path, 'cbmc', source=source(row), semantics_transform=transform,
+                                  contract_transform=contract_transform,
+                                  postcondition=r'assigns \nothing; ensures \result == 1;',
+-                                 tool_environment=actual_environment)
++                                 tool_environment=actual_environment, bounds={'threads': 1})

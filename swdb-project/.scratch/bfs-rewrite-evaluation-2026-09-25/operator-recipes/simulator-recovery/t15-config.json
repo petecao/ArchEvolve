@@ -1,0 +1,43 @@
+{
+  "created": "2026-09-27",
+  "runtime": "/data1/yanruj/EvolveSWDB_t15_supervision_recovery_runtime_20260927_a1",
+  "commit": "6a493a0d489d8d1c76eba8c3431538d6412fd45a",
+  "python": "/usr/bin/python3.12",
+  "python_sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+  "pytest_version": "9.1.1",
+  "pytest_sha256": "ee37885c9583f843390684dfb496907f87a0905128e7a3cf4ad227f49ff34c2d",
+  "manifest": "/data1/yanruj/EvolveSWDB_simulator_operator_20260927_a1/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/simulator-recovery/runtime-manifest.json",
+  "manifest_sha256": "01bc110d7600489d51e3c2488e1defaabe88654eaf904b0ef29a096f453856ed",
+  "helper": "/data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh",
+  "helper_sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8",
+  "hostlock": "/data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/hostlock.sh",
+  "hostlock_sha256": "50745f827bac2a3db4fc56fdedc95f6fb57fb4b39cf9b269796c77c0274dc996",
+  "helper_upstream_comparison": {
+    "created": "2026-09-27",
+    "observed_at": "2026-09-27T00:52:46.101391-04:00",
+    "reviewed": true,
+    "host_subtree_equal": true,
+    "tracked_untracked_clean": true,
+    "installed_commit": "42ce8dce1ecfb949d6e5d4ee3c98c078bc7ddc65",
+    "upstream_commit": "67980a7016358858a5f8c77f9aca1213ddf90210",
+    "tracked_remote": "origin",
+    "tracked_ref": "refs/heads/yanrujhou_main",
+    "host_subtree": "AgenticRefiner/scripts/host",
+    "files": {
+      "socket_lane.sh": {
+        "path": "/data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh",
+        "bytes": 10510,
+        "sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8"
+      },
+      "hostlock.sh": {
+        "path": "/data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/hostlock.sh",
+        "bytes": 15662,
+        "sha256": "50745f827bac2a3db4fc56fdedc95f6fb57fb4b39cf9b269796c77c0274dc996"
+      }
+    },
+    "checkout_updated": false,
+    "prior_comparison_error": "The first probe incorrectly selected origin HEAD instead of tracked yanrujhou_main and rejected the missing subtree; no helper files were modified."
+  },
+  "operator_sha256": "58be86993f09a70b330bb214eb75e02a8af43584de66a48e53fb87396655797c",
+  "node": 1
+}

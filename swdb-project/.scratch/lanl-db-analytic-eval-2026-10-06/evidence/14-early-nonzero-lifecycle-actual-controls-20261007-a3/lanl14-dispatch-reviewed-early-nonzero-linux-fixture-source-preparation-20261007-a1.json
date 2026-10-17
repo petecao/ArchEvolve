@@ -1,0 +1,90 @@
+{
+  "SSH_executed": false,
+  "Store_imported": false,
+  "canonical_ensure_ascii": false,
+  "decoded_remote_program": {
+    "bytes": 21010,
+    "sha256": "65c948a81ce397651a092b0e20f771b9a820a6f130b94256f18d983c9c54047f"
+  },
+  "dispatcher_main_executed": false,
+  "environment_overrides": {
+    "LC_ALL": "C",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "OMP_DYNAMIC": "FALSE",
+    "OMP_NUM_THREADS": "1",
+    "OMP_THREAD_LIMIT": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/data1/yanruj/ArchEvolve-lanl-cpu-model-validation-20261006-a1/swdb-project",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "fixture_argv": [
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=60s",
+    "360s",
+    "/usr/bin/bash",
+    "/data1/yanruj/Memacc-repro-20260925/AgenticRefiner/scripts/host/socket_lane.sh",
+    "1",
+    "swdb-lanl14-lifecycle-early-nonzero-20261007-a1",
+    "--record",
+    "/data/yanruj/EvolveSWDB_runs/lanl14-lifecycle-administration-20261007-a1/dispatch/lane.json",
+    "--lease-timeout-s",
+    "30",
+    "--",
+    "/usr/bin/python3.12",
+    "-B",
+    "/data1/yanruj/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-export-reader-lifecycle-supervisor-controls-20261007-a1/lanl14_export_reader_early_nonzero_linux_fixture_20261007_a1.py",
+    "--fixture-sha",
+    "388b9b1be3ce29c3d677ab2796c049793bf763504d4be7ad8e9f399c94354624",
+    "--supervisor",
+    "/data1/yanruj/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-export-reader-lifecycle-supervisor-controls-20261007-a1/lanl14_export_reader_administrative_supervisor_20261007_a1_r1.py",
+    "--supervisor-sha",
+    "503fc5defcf96a5177599185a9895c00ae64b3e1b0058128b9e283ef3bd39f3f",
+    "--helper",
+    "/data1/yanruj/lanl17-control-20261006.py",
+    "--project",
+    "/data1/yanruj/ArchEvolve-lanl-cpu-model-validation-20261006-a1/swdb-project",
+    "--selected-source",
+    "/data1/yanruj/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-lossless-report-export-controls-20261007-a1/lanl14_final_export_lossless_gzip_20261007_a1.py",
+    "--python",
+    "/usr/bin/python3.12",
+    "--python-sha",
+    "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+    "--cwd",
+    "/data1/yanruj/ArchEvolve-lanl-cpu-model-validation-20261006-a1/swdb-project",
+    "--output",
+    "/data/yanruj/EvolveSWDB_runs/lanl14-lifecycle-administration-20261007-a1/lanl14-export-reader-control-early-nonzero-a1"
+  ],
+  "fixture_or_supervisor_imported": false,
+  "format": "swdb.lanl14-parent-one-fixture-dispatch-source-preparation.v1",
+  "handoff": {
+    "bytes": 8972,
+    "path": "/private/tmp/lanl14-dispatch-reviewed-early-nonzero-linux-fixture-source-handoff-20261007-a1.md",
+    "sha256": "1118682f29f624c9f14faea7c86e6d4a1b5886474ecb3cb418d3353295ce9093"
+  },
+  "identity_sha256": "d9ba3d57b4fac8de1366f80d6166ff12671ccf880991b3e2c4f851d56f4f328d",
+  "native_probe_executed": false,
+  "original_native_facts": {
+    "bytes": 2587,
+    "path": "/private/tmp/lanl14-readonly-native-tool-facts-observed-20261007-a1.json",
+    "sha256": "8479cc174a7c05148336d8e9f5ac2637ba6029502a38377ecd149441dcbbcaf3"
+  },
+  "prepared_utc": "2026-10-07T23:31:57.365219+00:00",
+  "scientific_admission": false,
+  "scope": "Unexecuted parent-reviewed one-fixture dispatcher preparation; future native/lease/capacity/output readiness is not inferred.",
+  "source": {
+    "bytes": 27376,
+    "path": "/private/tmp/lanl14-dispatch-reviewed-early-nonzero-linux-fixture-20261007-a1.py",
+    "sha256": "dc4c1f1111a7339414e83cd8faaa4f4922439ab502258e6baecc17e59642ee53"
+  },
+  "source_program_imported": false,
+  "source_staged": false,
+  "syntax_AST_only": {
+    "decoded_remote_program": true,
+    "dispatcher": true
+  },
+  "tests_executed": false
+}

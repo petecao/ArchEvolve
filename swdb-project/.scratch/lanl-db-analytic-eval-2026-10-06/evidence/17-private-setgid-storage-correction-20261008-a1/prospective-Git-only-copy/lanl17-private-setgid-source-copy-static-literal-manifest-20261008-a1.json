@@ -1,0 +1,73 @@
+{
+  "sealed": false,
+  "status": "SOURCE_ONLY_NOT_RUN",
+  "original_copy_driver": {
+    "path": "/private/tmp/lanl_copy_reviewed_passive_receipt_scope_sources_from_git_20261008_a1.py",
+    "bytes": 6387,
+    "sha256": "ebc34d4100a6d089e0d187010aaba978762f4fd03499941216ea04258ad2dcf5"
+  },
+  "selected_copy_driver": {
+    "path": "/private/tmp/lanl_copy_reviewed_private_setgid_storage_sources_from_git_20261008_a1.py",
+    "bytes": 6664,
+    "sha256": "6de29630735b67cbbd71e5443141af25bdf5dacebd9b968afdbaa1f5f3a36c79"
+  },
+  "complete_unified_diff": {
+    "path": "/private/tmp/lanl17-private-setgid-source-copy-complete-original-derivation-20261008-a1.diff",
+    "bytes": 1830,
+    "sha256": "992714bf404b8f980c91e7f7ae2af8de595dc7141c72a878842318bb7927b853"
+  },
+  "changed_assignments": [
+    "REL",
+    "DEST",
+    "EXPECTED"
+  ],
+  "archive_route": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-private-setgid-storage-correction-20261008-a1",
+  "archive_subdirectory": "corrected-source-package",
+  "fresh_destination": "/data1/yanruj/lanl-storage-admin-selected-source-20261008-a4",
+  "expected_sources": [
+    {
+      "name": "lanl_consumed_detached_source_guard_r5_20261008_a1.py",
+      "local_original": "/private/tmp/lanl_consumed_detached_source_guard_r5_20261008_a1.py",
+      "bytes": 88872,
+      "sha256": "a84dc9ca7ccd20e6485cc8e9a2007b3b982fad9c5ae19dacbb1f164d664748cb"
+    },
+    {
+      "name": "lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r6.py",
+      "local_original": "/private/tmp/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r6.py",
+      "bytes": 58750,
+      "sha256": "488fb42df44d338204b5cff58b10e7f0ff9c7feaee6490b33ba94201ba4f7665"
+    },
+    {
+      "name": "lanl17_detach_exact_R4_storage_administration_20261008_a1_r4.py",
+      "local_original": "/private/tmp/lanl17_detach_exact_R4_storage_administration_20261008_a1_r4.py",
+      "bytes": 24000,
+      "sha256": "52f379d99721c51677ba44a1e9f3d55138527e26be1073c6267fbe09c8a93853"
+    },
+    {
+      "name": "lanl17_detach_passive_observer_administration_20261008_a1_r5.py",
+      "local_original": "/private/tmp/lanl17_detach_passive_observer_administration_20261008_a1_r5.py",
+      "bytes": 15359,
+      "sha256": "fb0a7cf1e6b6a2dbfeb8a91d5d2651a15044d7da51631d42d891d236b8de9da0"
+    }
+  ],
+  "static_comparison": {
+    "whole_byte_reversal_exact": true,
+    "only_three_assignment_AST_nodes_changed": true,
+    "unchanged_function_names": [
+      "sha",
+      "stamp",
+      "private",
+      "checkout_identity",
+      "bound_checkouts",
+      "read",
+      "git"
+    ],
+    "all_function_ASTs_unchanged": true,
+    "all_other_top_level_ASTs_unchanged": true,
+    "expected_literal_cardinality": 4,
+    "no_dynamic_actual_HEAD_or_manifest_pins_filled": true
+  },
+  "source_driver_imported_or_invoked": false,
+  "selected_mains_or_tests_run": false,
+  "SSH_Git_copy_archive_project_actions": false
+}

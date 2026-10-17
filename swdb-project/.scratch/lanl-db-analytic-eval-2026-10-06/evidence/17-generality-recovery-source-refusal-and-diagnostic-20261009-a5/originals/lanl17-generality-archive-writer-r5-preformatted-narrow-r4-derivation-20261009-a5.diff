@@ -1,0 +1,96 @@
+--- /private/tmp/lanl17_write_verified_generality_recovery_archive_SOURCE_ONLY_20261009_a5_r4.py
++++ /private/tmp/lanl17_write_verified_generality_recovery_archive_SOURCE_ONLY_20261009_a5_r5_preformatted.py
+@@ -20,7 +20,7 @@
+ GENERALITY_EXPORT='43256ee0300a59a03919833075fbb13fb3ba9ab3'
+ EXPECTED_ER='f5014746da61005be2d75cee16f8a834afa19321'
+ INPUT={'expected_ER_commit':EXPECTED_ER}
+-OUTPUT=Path('/data/yanruj/EvolveSWDB_runs/lanl17-generality-worktree-recovery-20261009-a1')
++OUTPUT=Path('/data/yanruj/EvolveSWDB_runs/lanl17-generality-worktree-recovery-20261009-a2')
+ FIELDS=('dev','ino','mode','uid','gid','nlink','size','mtime_ns','ctime_ns')
+ END=time.monotonic()+180
+ FILE_CAP=1024**3
+@@ -30,6 +30,12 @@
+ PROTECTED=(PRIMARY,SOURCE,RAW,ER,BASE/'ArchEvolve-lanl17-freeze-evidence-20261007-a5',BASE/'ArchEvolve-lanl-cpu-model-validation-20261006-a1',Path('/data/yanruj/EvolveSWDB_runs/lanl17-metadata-prepare-20261007-a5'),Path('/data/yanruj/EvolveSWDB_runs/lanl17-metadata-finalize-20261007-a5'),H,G,SUP,BASE/'lanl17-dx100-hooks-20261008-a2',BASE/'lanl17-dx100-deployment-20261008-a2')
+ OBSERVED={}
+ ARGS=None
++
++REVIEWED_RECEIPT_RELATIVE='swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/annotation-a3/provider.json'
++REVIEWED_RECEIPT_STAT={'ctime_ns': 1791381880551391511, 'dev': 2097, 'gid': 114316761, 'ino': 55610029, 'mode': 33204, 'mtime_ns': 1791381880551391511, 'nlink': 1, 'size': 16916, 'uid': 114316761}
++REVIEWED_RECEIPT_SHA='e706199fe28531573974e2e63675a97a550f6b030f7c7b3569de90bd08c0b5d9'
++REVIEWED_RECEIPT_GIT_BLOB='4c83fa85d1e8a6544fe2a757cf83d7168c86cf86'
++REVIEWED_DIAGNOSTIC_SHA='d12c8faa3930a523c3382e38947f6f3a3cb7287d919eb50c47b89a8637572af9'
+ NATIVE={
+  '/usr/bin/bash':(1446024,'bc5945feb8bd26203ebfafea5ce1878bb2e32cb8fb50ab7ae395cfb1e1aaaef1'),
+  '/usr/bin/python3.12':(8020928,'e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f'),
+@@ -232,11 +238,6 @@
+     need(pexe=='/usr/bin/timeout' and pargv==[b'/usr/bin/timeout',b'--signal=TERM',b'--kill-after=60s',b'240s',*argv],'exact_immediate_GNU240_K60_parent')
+     return {'self':own,'parent':parent,'source_sha256':ARGS.source_sha256,'only_exact_immediate_timeout_parent_excluded':True}
+ 
+-def output_route():
+-    need(ARGS.output_directory==str(OUTPUT),'exact_recovery_metadata_output_route')
+-    need(not os.path.lexists(OUTPUT) and OUTPUT.parent.resolve(strict=True)==OUTPUT.parent and not any(p.is_symlink() for p in OUTPUT.parents) and OUTPUT.parent.stat().st_uid==UID,'fresh_owned_metadata_output')
+-    for p in (*PROTECTED,CANDIDATE):need(not OUTPUT.is_relative_to(p) and not p.is_relative_to(OUTPUT),'metadata_output_disjoint_protected_and_candidate')
+-    return {'path':str(OUTPUT),'initially_absent':True,'parent_stat':stamp(OUTPUT.parent.stat())}
+ 
+ def candidate_registration():
+     need(CANDIDATE.resolve(strict=True)==CANDIDATE and not any(p.is_symlink() for p in (CANDIDATE,*CANDIDATE.parents)) and CANDIDATE.is_dir() and CANDIDATE.stat().st_uid==UID,'candidate_root_canonical_owned')
+@@ -295,6 +296,16 @@
+     route=CANDIDATE.joinpath(*base);need(not protected_reference(route),'symlink_final_target_protected')
+     return {'state':'resolved_internal_metadata_only','relative_path':relative,'kind':entry['kind'],'target_stat':entry['stat'],'symlinks_followed_in_metadata':links,'components_checked':steps,'external_target_stat_or_body_read':False}
+ 
++def reviewed_receipt_provenance():
++    # Only the one immutable, parent-reviewed tracked historical CLI receipt.
++    gitpin=root_tool_pin('/usr/bin/git',4019024,'06b2aa74919b1993f9fd7e47060ea98d98c27206f16ccc2d35f51ced7e7877eb')
++    prefix=['/usr/bin/git','--no-replace-objects','-c','core.fsmonitor=false','-C',str(CANDIDATE)]
++    need(run([*prefix,'--version']).strip()=='git version 2.48.1','reviewed_receipt_native_Git_version')
++    tree=run([*prefix,'ls-tree','-z',CANDIDATE_HEAD,'--',REVIEWED_RECEIPT_RELATIVE])
++    index=run([*prefix,'ls-files','--stage','-z','--',':(literal)'+REVIEWED_RECEIPT_RELATIVE])
++    need(tree=='100644 blob '+REVIEWED_RECEIPT_GIT_BLOB+'\t'+REVIEWED_RECEIPT_RELATIVE+'\0' and index=='100644 '+REVIEWED_RECEIPT_GIT_BLOB+' 0\t'+REVIEWED_RECEIPT_RELATIVE+'\0','exact_reviewed_receipt_c4_tree_index_blob_mode')
++    return {'relative_path':REVIEWED_RECEIPT_RELATIVE,'HEAD':CANDIDATE_HEAD,'Git_blob':REVIEWED_RECEIPT_GIT_BLOB,'Git_mode':'100644','native_Git':gitpin,'source_sha256':REVIEWED_RECEIPT_SHA,'dated_name_stat_diagnostic_sha256':REVIEWED_DIAGNOSTIC_SHA,'auth_or_credential_configuration_exception':False,'raw_body_returned':False}
++
+ def inventory_tree():
+     rows=[];total=0;allocated=0;metadata_size=2;references=[];inodes=set()
+     todo=[CANDIDATE]
+@@ -303,7 +314,12 @@
+     while todo:
+         tick();p=todo.pop();s=p.lstat();relative=p.relative_to(CANDIDATE).as_posix()
+         need(len(rows)<ENTRY_CAP and len(os.fsencode(relative))<=4096 and s.st_uid==UID and not s.st_mode&0o7000,'tree_entry_bounds_owner_or_special_bits')
+-        need(not any(x in p.parts for x in ('.codex','.ssh','.aws')) and p.name not in ('auth.json','provider.json','prompt.txt','feedback.txt'),'sensitive_candidate_entry_refused')
++        sensitive=any(x in p.parts for x in ('.codex','.ssh','.aws')) or p.name in ('auth.json','provider.json','prompt.txt','feedback.txt')
++        reviewed=relative==REVIEWED_RECEIPT_RELATIVE
++        if reviewed:
++            need(sensitive and stat.S_ISREG(s.st_mode) and stamp(s)==REVIEWED_RECEIPT_STAT and s.st_size==16916,'reviewed_historical_receipt_nine_stat_before_hash')
++            receipt_proof=reviewed_receipt_provenance()
++        else:need(not sensitive,'sensitive_candidate_entry_refused')
+         row={'relative_path':relative,'stat':stamp(s)};inodes.add((s.st_dev,s.st_ino))
+         if stat.S_ISDIR(s.st_mode):
+             need(p.resolve(strict=True)==p and not any(q.is_symlink() for q in (p,*p.parents)),'canonical_tree_directory')
+@@ -328,6 +344,9 @@
+                     tail=window[-overlap:]
+                 need(n==s.st_size and stamp(os.fstat(f.fileno()))==stamp(s)==stamp(p.lstat()),'tree_file_nine_stat_or_size_race')
+             row.update(kind='regular',bytes=n,sha256=h.hexdigest(),allocated_bytes=s.st_blocks*512)
++            if reviewed:
++                need(n==16916 and h.hexdigest()==REVIEWED_RECEIPT_SHA and stamp(p.lstat())==REVIEWED_RECEIPT_STAT and reviewed_receipt_provenance()==receipt_proof,'reviewed_historical_receipt_source_SHA_stat_Git_after_hash')
++                row['reviewed_historical_source_receipt']=receipt_proof
+             if refs:references.append({'relative_path':relative,'kind':'regular_literal_mentions','protected_indices':sorted(refs),'sha256':h.hexdigest(),'historical_literal_does_not_itself_prove_physical_dependency':True})
+         elif stat.S_ISLNK(s.st_mode):
+             target=os.readlink(p);raw=os.fsencode(target);need(len(raw)<=4096 and stamp(p.lstat())==stamp(s),'symlink_metadata_cap_or_race')
+@@ -425,8 +444,7 @@
+     free={p:shutil.disk_usage(p).free for p in ('/data1','/data')}
+     return {'MemAvailable':available,'free_bytes':free,'memory_80GiB_floor_met':available>=80*1024**3,'original_data1_21GiB_floor_met':free['/data1']>=21*1024**3,'data_after_2GiB_archive_reserve_24GiB_floor_met':free['/data']-TREE_CAP>=24*1024**3,'backup_reserve_bytes':TREE_CAP,'original_index_floors_unchanged':True,'data1_shortfall_does_not_itself_block_backup_preflight':True}
+ 
+-
+-PREFLIGHT_SOURCE_SHA='508b61d0ccad42a1fe52d4c82367f4f98d360b9df5edec6f4825acacbbc160fa'
++PREFLIGHT_SOURCE_SHA='65bd9a90f477381ba99e9b1894496162da59166b157bf77b084dfce74dcaad6c'
+ ARCHIVE=OUTPUT/'checkout.tar'
+ RECEIPT=OUTPUT/'archive-receipt.json'
+ RECEIPT_CAP=65536
+@@ -461,7 +479,7 @@
+     b,pin=original(Path(ARGS.input),METADATA_CAP);need(digest(b)==ARGS.input_sha256,'actual_input_SHA')
+     v=strict(b);closed(v,('format','writer_source_sha256','preflight_source','preflight_result','preflight_manifest','native_git','approval','reviews'),'closed_archive_author_input')
+     need(v['format']=='swdb.lanl17-generality-archive-actual-input.v1' and v['writer_source_sha256']==ARGS.source_sha256,'actual_archive_format_and_writer_source')
+-    source=pin_read(v['preflight_source'],65536);need(len(source)==41183 and digest(source)==PREFLIGHT_SOURCE_SHA,'exact_selected_preflight_R5_source')
++    source=pin_read(v['preflight_source'],65536);need(len(source)==43567 and digest(source)==PREFLIGHT_SOURCE_SHA,'exact_selected_preflight_R6_source')
+     manifest_raw=pin_read(v['preflight_manifest'],METADATA_CAP);manifest=strict(manifest_raw)
+     need(v['preflight_manifest']['path']==str(OUTPUT/'preflight-inventory.json'),'exact_preflight_manifest_route')
+     result=strict(pin_read(v['preflight_result'],65536))

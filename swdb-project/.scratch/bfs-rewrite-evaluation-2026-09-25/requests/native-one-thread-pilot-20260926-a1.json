@@ -1,0 +1,217 @@
+{
+  "message_version": "1.0",
+  "id": "bfs-native-one-thread-pilot-20260926-a1",
+  "created": "2026-09-26",
+  "role": "requested_one_thread_unchanged_native_calibration",
+  "lane": "mbit10-evaluation-node1",
+  "sources": [
+    0,
+    1234,
+    7777
+  ],
+  "collection": {
+    "method": "native_paired.v1",
+    "order_seed": 20260926
+  },
+  "analysis": "paired_repetition_block_bootstrap.v1",
+  "profitability": {
+    "minimum_speedup": 1.05,
+    "confidence": 0.95,
+    "bootstrap_resamples": 2000,
+    "bootstrap_seed": 20260925,
+    "maximum_relative_spread": 0.1
+  },
+  "native_runtime": {
+    "version": 1,
+    "environment": {
+      "OMP_NUM_THREADS": "1",
+      "OMP_DYNAMIC": "FALSE",
+      "OMP_PROC_BIND": "close",
+      "OMP_PLACES": "cores",
+      "OMP_THREAD_LIMIT": null,
+      "OMP_WAIT_POLICY": null,
+      "GOMP_SPINCOUNT": null,
+      "GOMP_CPU_AFFINITY": null
+    }
+  },
+  "window": {
+    "not_before": "2026-09-26T14:00:00-04:00",
+    "latest_start": "2026-09-26T16:56:00-04:00",
+    "absolute_end": "2026-09-26T22:00:00-04:00"
+  },
+  "bounds": {
+    "shared_seconds": 18240,
+    "primary_seconds": 10800,
+    "primary_outer_seconds": 10920,
+    "diagnostic_seconds": 7200,
+    "diagnostic_outer_seconds": 7320,
+    "phase_raw_bytes": 8589934592,
+    "total_raw_bytes": 17179869184,
+    "sampled_rss_bytes": 17179869184,
+    "sample_gap_seconds": 30,
+    "cleanup_seconds": 120,
+    "stage_cleanup_seconds": 30,
+    "pair_seconds": 2400,
+    "pair_cli_seconds": 2460,
+    "build_seconds": 180,
+    "run_seconds": 60,
+    "profile_seconds": 1200,
+    "profile_cli_seconds": 1260,
+    "package_cli_seconds": 180,
+    "get_cli_seconds": 180,
+    "discovery_seconds": 120,
+    "diagnostic_run_seconds": 600,
+    "node_available_bytes": 21474836480,
+    "global_available_bytes": 25769803776,
+    "raw_reserve_bytes": 32212254720,
+    "build_reserve_bytes": 10737418240,
+    "build_subset_bytes": 4294967296
+  },
+  "threads": 1,
+  "repetitions": 10,
+  "warmups": 0,
+  "trials": 240,
+  "diagnostic_repetitions": 1,
+  "diagnostic_trials": 24,
+  "diagnostic_condition": "all_four_primary_controls_qualified",
+  "retries": 0,
+  "candidate_assessment": false,
+  "protocol_freeze": false,
+  "provider_calls": false,
+  "historical_plan": {
+    "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/native-paired-pilot-20260926-a1.json",
+    "sha256": "f0be176dc9ad29843aadc17afac07439ebc79d89b2c2a6b204843d615d47cc00"
+  },
+  "historical_records": {
+    "bfs-native-paired-pilot-20260926-a1.dx100.uniform-random.pair": "11ea8bdf4bce1372112dd774286bd062652aafedefadef051d3ea6119091bad2",
+    "bfs-native-paired-pilot-20260926-a1.dx100.uniform-random.baseline": "7dac5677d642a4676e6c94bcb10005fb1ea103fe8306efede5419e2dd8eb7d34",
+    "bfs-native-paired-pilot-20260926-a1.dx100.uniform-random.candidate": "d3795b43b851c0d4f0e845867be7674b874466cb1f1020040682fdee7f652dca",
+    "bfs-native-paired-pilot-20260926-a1.upstream.uniform-random.pair": "89a673ac8ce6421be2ec015c5949368fe9061d17f5a45d3d61980ed7a70701d1",
+    "bfs-native-paired-pilot-20260926-a1.upstream.uniform-random.baseline": "4f12aa03e69125f21ea67786608965b1456d4f549b80eb2c2aecfbec82aae30d",
+    "bfs-native-paired-pilot-20260926-a1.upstream.uniform-random.candidate": "2bfba9e7c673a1714240a637c9884fdbe73235fad63d9743a071ac161d15176d",
+    "bfs-native-paired-pilot-20260926-a1.dx100.kronecker.pair": "61743a077ab217611e721b5c6cd80f1c89d66078cab2b01ace2d8455e890829d",
+    "bfs-native-paired-pilot-20260926-a1.dx100.kronecker.baseline": "9c5a9d3c07d4900d3ad1cee4628ebc972ed6abe97ad802498cfc23aaffb26078",
+    "bfs-native-paired-pilot-20260926-a1.dx100.kronecker.candidate": "4208efaf9ed1e286d6f630f5f68f99dedd5caa78337c6de189980781ab4f4c6b",
+    "bfs-native-paired-pilot-20260926-a1.upstream.kronecker.pair": "8cc00f26ef4e558031184667dabd82adfc3d9f0b5ddfd4a2c3648616840881eb",
+    "bfs-native-paired-pilot-20260926-a1.upstream.kronecker.baseline": "ae16b7ee3efdeffd499c065c412edd3065290c34aad327d1a181513086ff6c7f",
+    "bfs-native-paired-pilot-20260926-a1.upstream.kronecker.candidate": "a41d019bd3252f45d0b51358266767d52a7921d22e774057e15d0198ff28ddab"
+  },
+  "fixed_prerequisites": {
+    "paired": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-paired-pilot-20260926-a1.dispatch/terminal-validation.json",
+      "sha256": "d9979ec1a493de0184f9e4b93fb9fbe2c20d8a6bb029ce28ef43d7c4b66551db"
+    },
+    "provider": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-provider-initial-20260926-a1/terminal-validation.json",
+      "sha256": "1f455257e4542f67555389195be532de3a131d677083f4e5372c6afcdf02ad1c"
+    },
+    "a3": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/witness-a3-dispatch1/terminal-validation.json",
+      "sha256": "21ee990e45c9da567579aedbcab2e0554ab457fdcabd69f40c478d78e2d4c3e9"
+    },
+    "coverage": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926.dispatch/terminal-validation.json",
+      "sha256": "65969e8cae4ce113c289ba79c9b3aafd852f36724dcd8c060d8f37837c5c971a"
+    }
+  },
+  "cells": [
+    {
+      "id": "bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.pair",
+      "first_evaluation": "bfs-native-pilot-20260925-dx10018-a1.uniform-random.evaluation",
+      "first_evaluation_sha256": "fb1887b0117c875eb483065cb5ad6f1faa106d0026fb32aca292295e3e03522e",
+      "implementation": "dx100-bfs-scalar",
+      "candidate": "bfs-native-pilot-20260925-dx10018-a1.baseline",
+      "workload": "bfs-20260925-uniform18.cd2169a5c421baf7",
+      "source_sha256": "d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d",
+      "canonical_graph_sha256": "7d7dd24c2397071f4ad8fb3125079a4e42ecdbaa853745d84161bcd410d0164b",
+      "primary_binary_sha256": "42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424",
+      "compiler": "/usr/bin/g++",
+      "flags": [
+        "-std=c++11",
+        "-O3",
+        "-Wall",
+        "-fopenmp",
+        "-pthread",
+        "-DFUNC"
+      ],
+      "driver_template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95",
+      "baseline_evaluation": "bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.baseline",
+      "candidate_evaluation": "bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.candidate",
+      "profile": "bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.baseline.profile",
+      "package_requested_id": "bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.baseline.package"
+    },
+    {
+      "id": "bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.pair",
+      "first_evaluation": "bfs-native-pilot-20260925-upstream18-a2.uniform-random.evaluation",
+      "first_evaluation_sha256": "a9f8516c6a38ecf743b338e6351c6bf73cd4adccc5bb8c1483b717adc4d770f1",
+      "implementation": "gapbs-bfs-do",
+      "candidate": "bfs-native-pilot-20260925-upstream18-a2.baseline",
+      "workload": "bfs-20260925-uniform18.cd2169a5c421baf7",
+      "source_sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056",
+      "canonical_graph_sha256": "7d7dd24c2397071f4ad8fb3125079a4e42ecdbaa853745d84161bcd410d0164b",
+      "primary_binary_sha256": "741493a212d925d2a382dacabb7cd171895db2384ed799387e9631d842cb56b3",
+      "compiler": "/usr/bin/g++",
+      "flags": [
+        "-std=c++11",
+        "-O3",
+        "-Wall",
+        "-fopenmp"
+      ],
+      "driver_template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95",
+      "baseline_evaluation": "bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline",
+      "candidate_evaluation": "bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.candidate",
+      "profile": "bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline.profile",
+      "package_requested_id": "bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline.package"
+    },
+    {
+      "id": "bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.pair",
+      "first_evaluation": "bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation",
+      "first_evaluation_sha256": "8566de7181de7c8fa042c683392f959d788a7f02cfbe2d0d166f5d2f8182149c",
+      "implementation": "dx100-bfs-scalar",
+      "candidate": "bfs-native-pilot-20260925-dx10018-a1.baseline",
+      "workload": "bfs-20260925-kronecker18.48de8267ac2098d5",
+      "source_sha256": "d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d",
+      "canonical_graph_sha256": "cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7",
+      "primary_binary_sha256": "42546a5ae3d9269f7d3b903a1c56b81336bc348a036dd1b89f12ed8fe9f88424",
+      "compiler": "/usr/bin/g++",
+      "flags": [
+        "-std=c++11",
+        "-O3",
+        "-Wall",
+        "-fopenmp",
+        "-pthread",
+        "-DFUNC"
+      ],
+      "driver_template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95",
+      "baseline_evaluation": "bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline",
+      "candidate_evaluation": "bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.candidate",
+      "profile": "bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline.profile",
+      "package_requested_id": "bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline.package"
+    },
+    {
+      "id": "bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.pair",
+      "first_evaluation": "bfs-native-pilot-20260925-upstream18-a2.kronecker.evaluation",
+      "first_evaluation_sha256": "923b409064c9665d882eb5673faee9fcc594b23b3f36d3dfad0bfee8022fc9ff",
+      "implementation": "gapbs-bfs-do",
+      "candidate": "bfs-native-pilot-20260925-upstream18-a2.baseline",
+      "workload": "bfs-20260925-kronecker18.48de8267ac2098d5",
+      "source_sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056",
+      "canonical_graph_sha256": "cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7",
+      "primary_binary_sha256": "741493a212d925d2a382dacabb7cd171895db2384ed799387e9631d842cb56b3",
+      "compiler": "/usr/bin/g++",
+      "flags": [
+        "-std=c++11",
+        "-O3",
+        "-Wall",
+        "-fopenmp"
+      ],
+      "driver_template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95",
+      "baseline_evaluation": "bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline",
+      "candidate_evaluation": "bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.candidate",
+      "profile": "bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline.profile",
+      "package_requested_id": "bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline.package"
+    }
+  ],
+  "coverage_commit": "53f2e7686a41d3472c9e0824a0a9b09117884e0b",
+  "rss_source": "linux.proc_pid_stat.field24.v1"
+}

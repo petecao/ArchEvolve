@@ -1,0 +1,1267 @@
+{
+  "documents": {
+    "FIRST": {
+      "bytes": 7701,
+      "canonical_ensure_ascii": true,
+      "expected_format": "swdb.lanl17-freeze-publication-custody.v1",
+      "identity_sha256": "8ec6987cc6d8c8e9d74df60cfa3e40e5bafbbdfdb0dd87747af645bf82436220",
+      "origin": {
+        "path": "/private/tmp/lanl17-first-producer-capture-20261008-a5/publication-custody.json"
+      },
+      "role": "freeze_publication",
+      "sha256": "e1fa63af665bea9937375b4be17fe3de7f013a1da0e1106e36817c828fc3d5e1",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "capture32"
+        ],
+        "family": "parent_capture",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "capture32"
+      }
+    },
+    "M2": {
+      "bytes": 292401,
+      "canonical_ensure_ascii": true,
+      "expected_format": "swdb.lanl17-parent-population.v1",
+      "identity_sha256": "66194a7e99716f5b59ddf081dfec752c34b51f1805470a4514171c53323b06c7",
+      "origin": {
+        "path": "/private/tmp/lanl17-prepare-completion-decoded-originals-20261008-a1/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/manifest.json"
+      },
+      "role": "manifest_M2",
+      "sha256": "b86d78bac1d0a09e176114d1c23491ede098c4fcf5af5ab96f318ceabc29b8d1",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "helper28"
+        ],
+        "family": "helper28d",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "helper28"
+      }
+    },
+    "capture32": {
+      "bytes": 46165,
+      "origin": {
+        "path": "/private/tmp/lanl17_parent_capture_projection_producer_a3_20261007.py"
+      },
+      "role": "control_source",
+      "sha256": "32bead204337aa66d0a732b6f143216946abafc5d2eb752577b0d90f7190b7b6"
+    },
+    "collectorB08": {
+      "bytes": 24818,
+      "origin": {
+        "path": "/private/tmp/lanl17_compact_attempt_custody_a2r1_20261007.py"
+      },
+      "role": "control_source",
+      "sha256": "b08db809b80cbebc6ce98dd8df8fdd4f327b170cdd7a545af0876ad68a832a5c"
+    },
+    "cpuExporter1d": {
+      "bytes": 12921,
+      "origin": {
+        "path": "/private/tmp/lanl-export-cpu-band-report-a4.py"
+      },
+      "role": "control_source",
+      "sha256": "1d1251baeba12c65c40a7a616060e5ff236197ce73f77335534d4a4d83fe32a6"
+    },
+    "cpuReader8b": {
+      "bytes": 24241,
+      "origin": {
+        "path": "/private/tmp/lanl-readonly-cpu-future-phase-admission-20261007.py"
+      },
+      "role": "control_source",
+      "sha256": "8b85e34287a4dc67e5ff0c9a535aefd46a6c2ecf6051a934607f853074f90016"
+    },
+    "final11Admission": {
+      "bytes": 12030,
+      "canonical_ensure_ascii": true,
+      "expected_format": "swdb.cpu-future-phase-local-readonly-admission.v1",
+      "identity_sha256": "ab5c80d246fe8c7419a48b82eafb395c37e850c11c10fbd509de545fa62ae578",
+      "origin": {
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-report-admission-closeout-20261007-a4/lanl-cpu-band-report-a4-local-admission-20261007.json"
+      },
+      "role": "ticket11_admission",
+      "sha256": "6e1a9bc81196b286f82e2403d350e5cf16c125bb7c15f22f6a89f5ce9e3fd5b3",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "cpuReader8b"
+        ],
+        "family": "cpu_reader8b",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "cpuReader8b"
+      }
+    },
+    "final11Export": {
+      "bytes": 12410,
+      "canonical_ensure_ascii": true,
+      "expected_format": "swdb.cpu-band-report-compact-receipt.v1",
+      "identity_sha256": "f11ba2b40361b489169f48e6160a4dc9b927b1802f987264acab6354285f8db1",
+      "origin": {
+        "commit": "8969d567599cb9f0d071f77936ab283fcb97c137",
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-cpu-band-report-mbit10-20261006-a3.json"
+      },
+      "role": "ticket11_export_receipt",
+      "sha256": "58cd556e4ce0b289e16458ea1683347828ecc591ee831479de344336522e8b0e",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "cpuExporter1d"
+        ],
+        "family": "cpu_export1d1251",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "cpuExporter1d"
+      }
+    },
+    "final14Admission": {
+      "bytes": 14421,
+      "canonical_ensure_ascii": true,
+      "expected_format": "swdb.lanl14-selected-nine-export-admission.v1",
+      "identity_sha256": "720bdb6655036b6226947656ee6440bb9ce6c972f9f045ec3cedec86a5a1ab3e",
+      "origin": {
+        "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-original-reader-actual-custody-20261008-a1/remote/remote-reader-stdout.json"
+      },
+      "role": "ticket14_admission",
+      "sha256": "bbcbf34ac330da9f2e92173cf7385c9e2d2bc4b4aa7ed982c006bd39937f7bbc",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "generalityReader6909"
+        ],
+        "family": "generality_reader",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "generalityReader6909"
+      }
+    },
+    "final14Export": {
+      "bytes": 32840,
+      "canonical_ensure_ascii": true,
+      "expected_format": "swdb.lanl14-final-report-export.v1",
+      "identity_sha256": "ad656b14b958d9ee1b775c22906b0ee30e2d63e395aa165197be0ff4b8e4118a",
+      "origin": {
+        "path": "/private/tmp/lanl14-reviewed-export-r5-actual-20261008-a1/remote-pure-E-receipt.json"
+      },
+      "role": "ticket14_export_receipt",
+      "sha256": "02b369f0624964fa4293f563a7b51e142dc369101147ac7fe848503c4b50eb5d",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "generalityExporter928",
+          "generalityDigestB797"
+        ],
+        "family": "generality_export",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "generalityExporter928"
+      }
+    },
+    "finalizePrereg": {
+      "bytes": "ACTUAL_ORIGINAL_BYTES_finalizePrereg",
+      "canonical_ensure_ascii": "ACTUAL_ORIGINAL_POLICY_BOOLEAN_finalizePrereg",
+      "expected_format": "swdb.lanl17-metadata-dispatch-preregistration.v1",
+      "identity_sha256": "ACTUAL_ORIGINAL_TRUE_OR_FALSE_SEAL_finalizePrereg",
+      "origin": {
+        "path": "ACTUAL_RETAINED_ORIGINAL_ABSOLUTE_PATH_finalizePrereg"
+      },
+      "role": "finalize_preregistration",
+      "sha256": "ACTUAL_ORIGINAL_FILE_SHA_finalizePrereg",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "guard9c"
+        ],
+        "family": "guard9c5d",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "guard9c"
+      }
+    },
+    "finalizeSupervisor": {
+      "bytes": "ACTUAL_ORIGINAL_BYTES_finalizeSupervisor",
+      "canonical_ensure_ascii": "ACTUAL_ORIGINAL_POLICY_BOOLEAN_finalizeSupervisor",
+      "expected_format": "swdb.lanl17-metadata-supervisor.v1",
+      "identity_sha256": "ACTUAL_ORIGINAL_TRUE_OR_FALSE_SEAL_finalizeSupervisor",
+      "origin": {
+        "path": "ACTUAL_RETAINED_ORIGINAL_ABSOLUTE_PATH_finalizeSupervisor"
+      },
+      "role": "finalize_supervisor",
+      "sha256": "ACTUAL_ORIGINAL_FILE_SHA_finalizeSupervisor",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "supervisorFa"
+        ],
+        "family": "supervisorfa703",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "supervisorFa"
+      }
+    },
+    "freezeReceipt": {
+      "bytes": "ACTUAL_ORIGINAL_BYTES_freezeReceipt",
+      "canonical_ensure_ascii": "ACTUAL_ORIGINAL_POLICY_BOOLEAN_freezeReceipt",
+      "expected_format": "swdb.lanl17-freeze-receipt.v1",
+      "identity_sha256": "ACTUAL_ORIGINAL_TRUE_OR_FALSE_SEAL_freezeReceipt",
+      "origin": {
+        "path": "ACTUAL_RETAINED_ORIGINAL_ABSOLUTE_PATH_freezeReceipt"
+      },
+      "role": "freeze_receipt",
+      "sha256": "ACTUAL_ORIGINAL_FILE_SHA_freezeReceipt",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "helper28"
+        ],
+        "family": "helper28d",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "helper28"
+      }
+    },
+    "generalityDigestB797": {
+      "bytes": 19622,
+      "origin": {
+        "path": "/private/tmp/lanl14_count_dispatch.py"
+      },
+      "role": "control_source",
+      "sha256": "b797a19f0d80a1a91b852a360c19e59beba4fa082ce88c38cbec029670e7deda"
+    },
+    "generalityExporter928": {
+      "bytes": 22967,
+      "origin": {
+        "path": "/private/tmp/lanl14_final_export_lossless_gzip_20261007_a1.py"
+      },
+      "role": "control_source",
+      "sha256": "928af82facd9f36dfdbca6595d2c2e9d1091dd0064c9fe53fc41c163879e026e"
+    },
+    "generalityReader6909": {
+      "bytes": 37647,
+      "origin": {
+        "path": "/private/tmp/lanl14_readonly_nine_export_admission_lossless_gzip_20261007_a1.py"
+      },
+      "role": "control_source",
+      "sha256": "6909c422990a071b1a8d08c634c1c086f0218c5851d38996b6f4798759499570"
+    },
+    "guard9c": {
+      "bytes": "ACTUAL_ORIGINAL_SOURCE_BYTES_guard9c",
+      "origin": {
+        "path": "ACTUAL_LOCAL_OR_ALLOWED_GIT_CONTROL_SOURCE_PATH_guard9c"
+      },
+      "role": "control_source",
+      "sha256": "9c5d9658b524db94805a6b51453dc9edef7096a27312677896d595d39b94f6c6"
+    },
+    "helper28": {
+      "bytes": 38195,
+      "origin": {
+        "path": "/private/tmp/lanl17_parent_helpers_cleanup60_a4.py"
+      },
+      "role": "control_source",
+      "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+    },
+    "p1After": {
+      "bytes": 35637,
+      "canonical_ensure_ascii": true,
+      "expected_format": "swdb.lanl17-attempt-control-custody.v2",
+      "identity_sha256": "9474bc202e09d8a0e9a7593589a87e295a5906c7ec33b873a68c296a2490621f",
+      "origin": {
+        "path": "/private/tmp/lanl17-p1-after-capture-20261008-a5/custody.json"
+      },
+      "role": "attempt_after",
+      "sha256": "aed96b7d00fed15d9f69a7eb609cc194cafd62964c95c95a401840708963a47a",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "collectorB08"
+        ],
+        "family": "collectorb08",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "collectorB08"
+      }
+    },
+    "p1Before": {
+      "bytes": 3148,
+      "canonical_ensure_ascii": true,
+      "expected_format": "swdb.lanl17-attempt-control-custody.v2",
+      "identity_sha256": "98125bfca17206e16cb24d828e01036f43b8dc87a0cb8eea8fe1501885fc8765",
+      "origin": {
+        "path": "/private/tmp/lanl17-p1-before-capture-20261008-a5/custody.json"
+      },
+      "role": "attempt_before",
+      "sha256": "e9beba6d829d41c1df9076c7b916eed0772c095de84a44c266ca88eee8a9b821",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "collectorB08"
+        ],
+        "family": "collectorb08",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "collectorB08"
+      }
+    },
+    "p1Dispatch": {
+      "bytes": "ACTUAL_ORIGINAL_BYTES_p1Dispatch",
+      "canonical_ensure_ascii": "ACTUAL_ORIGINAL_POLICY_BOOLEAN_p1Dispatch",
+      "expected_format": "swdb.lanl17-campaign-dispatch.v1",
+      "identity_sha256": "ACTUAL_ORIGINAL_TRUE_OR_FALSE_SEAL_p1Dispatch",
+      "origin": {
+        "path": "ACTUAL_RETAINED_ORIGINAL_ABSOLUTE_PATH_p1Dispatch"
+      },
+      "role": "attempt_dispatch",
+      "sha256": "ACTUAL_ORIGINAL_FILE_SHA_p1Dispatch",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "helper28"
+        ],
+        "family": "helper28d",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "helper28"
+      }
+    },
+    "p1DispatchState": {
+      "bytes": "ACTUAL_ORIGINAL_BYTES_p1DispatchState",
+      "canonical_ensure_ascii": "ACTUAL_ORIGINAL_POLICY_BOOLEAN_p1DispatchState",
+      "expected_format": "swdb.lanl17-dispatch-state-corroboration.v1",
+      "identity_sha256": "ACTUAL_ORIGINAL_TRUE_OR_FALSE_SEAL_p1DispatchState",
+      "origin": {
+        "path": "ACTUAL_RETAINED_ORIGINAL_ABSOLUTE_PATH_p1DispatchState"
+      },
+      "role": "dispatch_state_corroboration",
+      "sha256": "ACTUAL_ORIGINAL_FILE_SHA_p1DispatchState",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "capture32"
+        ],
+        "family": "parent_capture",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "capture32"
+      }
+    },
+    "p1Release": {
+      "bytes": 9431,
+      "canonical_ensure_ascii": true,
+      "expected_format": "swdb.lanl17-attempt-release-custody.v1",
+      "identity_sha256": "91184f340dc61670ee99749a740c8db9df00efc72cd3769c2809d71205b74dfb",
+      "origin": {
+        "path": "/private/tmp/lanl17-p1-release32-capture-20261008-a5/lanl17-p1-release-custody-20261008-a5.json"
+      },
+      "role": "attempt_release",
+      "sha256": "c6ed81b5c820637a2ae4284a5d3b116a28c36c054f3ef71eacc803b06c1f04be",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "capture32"
+        ],
+        "family": "parent_capture",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "capture32"
+      }
+    },
+    "p1Selection": {
+      "bytes": "ACTUAL_ORIGINAL_BYTES_p1Selection",
+      "canonical_ensure_ascii": "ACTUAL_ORIGINAL_POLICY_BOOLEAN_p1Selection",
+      "expected_format": "swdb.lanl17-original-public-candidate-selection-custody.v1",
+      "identity_sha256": "ACTUAL_ORIGINAL_TRUE_OR_FALSE_SEAL_p1Selection",
+      "origin": {
+        "path": "ACTUAL_RETAINED_ORIGINAL_ABSOLUTE_PATH_p1Selection"
+      },
+      "role": "public_candidate_selection",
+      "sha256": "ACTUAL_ORIGINAL_FILE_SHA_p1Selection",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "capture32"
+        ],
+        "family": "parent_capture",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "capture32"
+      }
+    },
+    "p1Stopped": {
+      "bytes": "ACTUAL_ORIGINAL_BYTES_p1Stopped",
+      "canonical_ensure_ascii": "ACTUAL_ORIGINAL_POLICY_BOOLEAN_p1Stopped",
+      "expected_format": "swdb.lanl17-stopped-attempt.v1",
+      "identity_sha256": "ACTUAL_ORIGINAL_TRUE_OR_FALSE_SEAL_p1Stopped",
+      "origin": {
+        "path": "ACTUAL_RETAINED_ORIGINAL_ABSOLUTE_PATH_p1Stopped"
+      },
+      "role": "attempt_stopped",
+      "sha256": "ACTUAL_ORIGINAL_FILE_SHA_p1Stopped",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "helper28"
+        ],
+        "family": "helper28d",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "helper28"
+      }
+    },
+    "p1Trajectory": {
+      "bytes": "ACTUAL_ORIGINAL_BYTES_p1Trajectory",
+      "canonical_ensure_ascii": "ACTUAL_ORIGINAL_POLICY_BOOLEAN_p1Trajectory",
+      "expected_format": "swdb.lanl17-trajectory-audit-projection.v2",
+      "identity_sha256": "ACTUAL_ORIGINAL_TRUE_OR_FALSE_SEAL_p1Trajectory",
+      "origin": {
+        "path": "ACTUAL_RETAINED_ORIGINAL_ABSOLUTE_PATH_p1Trajectory"
+      },
+      "role": "trajectory_projection",
+      "sha256": "ACTUAL_ORIGINAL_FILE_SHA_p1Trajectory",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "capture32"
+        ],
+        "family": "parent_capture",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "capture32"
+      }
+    },
+    "p2After": {
+      "bytes": 32770,
+      "canonical_ensure_ascii": true,
+      "expected_format": "swdb.lanl17-attempt-control-custody.v2",
+      "identity_sha256": "446dffff826ad6da1bc652d50e15d93ae910e0b59f8e9ce84f0317ae5b61f936",
+      "origin": {
+        "path": "/private/tmp/lanl17-p2-after-capture-20261008-a5/custody.json"
+      },
+      "role": "attempt_after",
+      "sha256": "975b7ba8242eafd4d52f219626d04eb149e13f2c90620f9fbb6e3bc5d5d73710",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "collectorB08"
+        ],
+        "family": "collectorb08",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "collectorB08"
+      }
+    },
+    "p2Before": {
+      "bytes": 3148,
+      "canonical_ensure_ascii": true,
+      "expected_format": "swdb.lanl17-attempt-control-custody.v2",
+      "identity_sha256": "c85f935c786063a5827a034a8f292966ea56436858219cff380c611fff883db0",
+      "origin": {
+        "path": "/private/tmp/lanl17-p2-before-capture-20261008-a5/custody.json"
+      },
+      "role": "attempt_before",
+      "sha256": "766efc494edb201820d503b58c4666a16d88e96d525256698cc6d21da9bdb4f7",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "collectorB08"
+        ],
+        "family": "collectorb08",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "collectorB08"
+      }
+    },
+    "p2Dispatch": {
+      "bytes": "ACTUAL_ORIGINAL_BYTES_p2Dispatch",
+      "canonical_ensure_ascii": "ACTUAL_ORIGINAL_POLICY_BOOLEAN_p2Dispatch",
+      "expected_format": "swdb.lanl17-campaign-dispatch.v1",
+      "identity_sha256": "ACTUAL_ORIGINAL_TRUE_OR_FALSE_SEAL_p2Dispatch",
+      "origin": {
+        "path": "ACTUAL_RETAINED_ORIGINAL_ABSOLUTE_PATH_p2Dispatch"
+      },
+      "role": "attempt_dispatch",
+      "sha256": "ACTUAL_ORIGINAL_FILE_SHA_p2Dispatch",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "helper28"
+        ],
+        "family": "helper28d",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "helper28"
+      }
+    },
+    "p2DispatchState": {
+      "bytes": "ACTUAL_ORIGINAL_BYTES_p2DispatchState",
+      "canonical_ensure_ascii": "ACTUAL_ORIGINAL_POLICY_BOOLEAN_p2DispatchState",
+      "expected_format": "swdb.lanl17-dispatch-state-corroboration.v1",
+      "identity_sha256": "ACTUAL_ORIGINAL_TRUE_OR_FALSE_SEAL_p2DispatchState",
+      "origin": {
+        "path": "ACTUAL_RETAINED_ORIGINAL_ABSOLUTE_PATH_p2DispatchState"
+      },
+      "role": "dispatch_state_corroboration",
+      "sha256": "ACTUAL_ORIGINAL_FILE_SHA_p2DispatchState",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "capture32"
+        ],
+        "family": "parent_capture",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "capture32"
+      }
+    },
+    "p2Release": {
+      "bytes": 9431,
+      "canonical_ensure_ascii": true,
+      "expected_format": "swdb.lanl17-attempt-release-custody.v1",
+      "identity_sha256": "31b35052c632e0eb0eb3e7303d2663b19271fbc1afb70c0b4a3b4ef2bd573d70",
+      "origin": {
+        "path": "/private/tmp/lanl17-p2-release32-capture-20261008-a5/lanl17-p2-release-custody-20261008-a5.json"
+      },
+      "role": "attempt_release",
+      "sha256": "59d2b2059cf433f658ebef50251762e6e93de80fe3be20147b2dedf262cda3ad",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "capture32"
+        ],
+        "family": "parent_capture",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "capture32"
+      }
+    },
+    "p2Selection": {
+      "bytes": "ACTUAL_ORIGINAL_BYTES_p2Selection",
+      "canonical_ensure_ascii": "ACTUAL_ORIGINAL_POLICY_BOOLEAN_p2Selection",
+      "expected_format": "swdb.lanl17-original-public-candidate-selection-custody.v1",
+      "identity_sha256": "ACTUAL_ORIGINAL_TRUE_OR_FALSE_SEAL_p2Selection",
+      "origin": {
+        "path": "ACTUAL_RETAINED_ORIGINAL_ABSOLUTE_PATH_p2Selection"
+      },
+      "role": "public_candidate_selection",
+      "sha256": "ACTUAL_ORIGINAL_FILE_SHA_p2Selection",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "capture32"
+        ],
+        "family": "parent_capture",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "capture32"
+      }
+    },
+    "p2Stopped": {
+      "bytes": "ACTUAL_ORIGINAL_BYTES_p2Stopped",
+      "canonical_ensure_ascii": "ACTUAL_ORIGINAL_POLICY_BOOLEAN_p2Stopped",
+      "expected_format": "swdb.lanl17-stopped-attempt.v1",
+      "identity_sha256": "ACTUAL_ORIGINAL_TRUE_OR_FALSE_SEAL_p2Stopped",
+      "origin": {
+        "path": "ACTUAL_RETAINED_ORIGINAL_ABSOLUTE_PATH_p2Stopped"
+      },
+      "role": "attempt_stopped",
+      "sha256": "ACTUAL_ORIGINAL_FILE_SHA_p2Stopped",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "helper28"
+        ],
+        "family": "helper28d",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "helper28"
+      }
+    },
+    "p2Trajectory": {
+      "bytes": "ACTUAL_ORIGINAL_BYTES_p2Trajectory",
+      "canonical_ensure_ascii": "ACTUAL_ORIGINAL_POLICY_BOOLEAN_p2Trajectory",
+      "expected_format": "swdb.lanl17-trajectory-audit-projection.v2",
+      "identity_sha256": "ACTUAL_ORIGINAL_TRUE_OR_FALSE_SEAL_p2Trajectory",
+      "origin": {
+        "path": "ACTUAL_RETAINED_ORIGINAL_ABSOLUTE_PATH_p2Trajectory"
+      },
+      "role": "trajectory_projection",
+      "sha256": "ACTUAL_ORIGINAL_FILE_SHA_p2Trajectory",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "capture32"
+        ],
+        "family": "parent_capture",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "capture32"
+      }
+    },
+    "p3After": {
+      "bytes": 28810,
+      "canonical_ensure_ascii": true,
+      "expected_format": "swdb.lanl17-attempt-control-custody.v2",
+      "identity_sha256": "e1bd904486cbe4db154a3d9d217e39cec5eca65c10ccf4a12ec56337e2816785",
+      "origin": {
+        "path": "/private/tmp/lanl17-p3-after-capture-20261008-a5/custody.json"
+      },
+      "role": "attempt_after",
+      "sha256": "7ad57fbdfd2324fe5feee1ebb1e51321659c128a6127797540273326cb39958d",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "collectorB08"
+        ],
+        "family": "collectorb08",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "collectorB08"
+      }
+    },
+    "p3Before": {
+      "bytes": 3148,
+      "canonical_ensure_ascii": true,
+      "expected_format": "swdb.lanl17-attempt-control-custody.v2",
+      "identity_sha256": "b06e4ec30f4491c67f20b5b8a9e3dd5e7053441584e692e4d808e24479c2c0a5",
+      "origin": {
+        "path": "/private/tmp/lanl17-p3-before-capture-20261008-a5/custody.json"
+      },
+      "role": "attempt_before",
+      "sha256": "85e2c9f6262a627e0f6007699e1762e6806420bd8ae870d6dd102823e9ee6f8b",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "collectorB08"
+        ],
+        "family": "collectorb08",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "collectorB08"
+      }
+    },
+    "p3Dispatch": {
+      "bytes": "ACTUAL_ORIGINAL_BYTES_p3Dispatch",
+      "canonical_ensure_ascii": "ACTUAL_ORIGINAL_POLICY_BOOLEAN_p3Dispatch",
+      "expected_format": "swdb.lanl17-campaign-dispatch.v1",
+      "identity_sha256": "ACTUAL_ORIGINAL_TRUE_OR_FALSE_SEAL_p3Dispatch",
+      "origin": {
+        "path": "ACTUAL_RETAINED_ORIGINAL_ABSOLUTE_PATH_p3Dispatch"
+      },
+      "role": "attempt_dispatch",
+      "sha256": "ACTUAL_ORIGINAL_FILE_SHA_p3Dispatch",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "helper28"
+        ],
+        "family": "helper28d",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "helper28"
+      }
+    },
+    "p3DispatchState": {
+      "bytes": "ACTUAL_ORIGINAL_BYTES_p3DispatchState",
+      "canonical_ensure_ascii": "ACTUAL_ORIGINAL_POLICY_BOOLEAN_p3DispatchState",
+      "expected_format": "swdb.lanl17-dispatch-state-corroboration.v1",
+      "identity_sha256": "ACTUAL_ORIGINAL_TRUE_OR_FALSE_SEAL_p3DispatchState",
+      "origin": {
+        "path": "ACTUAL_RETAINED_ORIGINAL_ABSOLUTE_PATH_p3DispatchState"
+      },
+      "role": "dispatch_state_corroboration",
+      "sha256": "ACTUAL_ORIGINAL_FILE_SHA_p3DispatchState",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "capture32"
+        ],
+        "family": "parent_capture",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "capture32"
+      }
+    },
+    "p3Release": {
+      "bytes": 9431,
+      "canonical_ensure_ascii": true,
+      "expected_format": "swdb.lanl17-attempt-release-custody.v1",
+      "identity_sha256": "f84cb6344f0ea0bbdef7cf799f95297a07a47ba04b71a55506d635c471f51753",
+      "origin": {
+        "path": "/private/tmp/lanl17-p3-release32-capture-20261008-a5/lanl17-p3-release-custody-20261008-a5.json"
+      },
+      "role": "attempt_release",
+      "sha256": "5e99a2b7bd2437656559751f44e63ebdfb5ee654b28e2f2514d00f94e2142811",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "capture32"
+        ],
+        "family": "parent_capture",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "capture32"
+      }
+    },
+    "p3Selection": {
+      "bytes": "ACTUAL_ORIGINAL_BYTES_p3Selection",
+      "canonical_ensure_ascii": "ACTUAL_ORIGINAL_POLICY_BOOLEAN_p3Selection",
+      "expected_format": "swdb.lanl17-original-public-candidate-selection-custody.v1",
+      "identity_sha256": "ACTUAL_ORIGINAL_TRUE_OR_FALSE_SEAL_p3Selection",
+      "origin": {
+        "path": "ACTUAL_RETAINED_ORIGINAL_ABSOLUTE_PATH_p3Selection"
+      },
+      "role": "public_candidate_selection",
+      "sha256": "ACTUAL_ORIGINAL_FILE_SHA_p3Selection",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "capture32"
+        ],
+        "family": "parent_capture",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "capture32"
+      }
+    },
+    "p3Stopped": {
+      "bytes": "ACTUAL_ORIGINAL_BYTES_p3Stopped",
+      "canonical_ensure_ascii": "ACTUAL_ORIGINAL_POLICY_BOOLEAN_p3Stopped",
+      "expected_format": "swdb.lanl17-stopped-attempt.v1",
+      "identity_sha256": "ACTUAL_ORIGINAL_TRUE_OR_FALSE_SEAL_p3Stopped",
+      "origin": {
+        "path": "ACTUAL_RETAINED_ORIGINAL_ABSOLUTE_PATH_p3Stopped"
+      },
+      "role": "attempt_stopped",
+      "sha256": "ACTUAL_ORIGINAL_FILE_SHA_p3Stopped",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "helper28"
+        ],
+        "family": "helper28d",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "helper28"
+      }
+    },
+    "p3Trajectory": {
+      "bytes": "ACTUAL_ORIGINAL_BYTES_p3Trajectory",
+      "canonical_ensure_ascii": "ACTUAL_ORIGINAL_POLICY_BOOLEAN_p3Trajectory",
+      "expected_format": "swdb.lanl17-trajectory-audit-projection.v2",
+      "identity_sha256": "ACTUAL_ORIGINAL_TRUE_OR_FALSE_SEAL_p3Trajectory",
+      "origin": {
+        "path": "ACTUAL_RETAINED_ORIGINAL_ABSOLUTE_PATH_p3Trajectory"
+      },
+      "role": "trajectory_projection",
+      "sha256": "ACTUAL_ORIGINAL_FILE_SHA_p3Trajectory",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "capture32"
+        ],
+        "family": "parent_capture",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "capture32"
+      }
+    },
+    "p4After": {
+      "bytes": "ACTUAL_ORIGINAL_BYTES_p4After",
+      "canonical_ensure_ascii": "ACTUAL_ORIGINAL_POLICY_BOOLEAN_p4After",
+      "expected_format": "swdb.lanl17-attempt-control-custody.v2",
+      "identity_sha256": "ACTUAL_ORIGINAL_TRUE_OR_FALSE_SEAL_p4After",
+      "origin": {
+        "path": "ACTUAL_RETAINED_ORIGINAL_ABSOLUTE_PATH_p4After"
+      },
+      "role": "attempt_after",
+      "sha256": "ACTUAL_ORIGINAL_FILE_SHA_p4After",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "collectorB08"
+        ],
+        "family": "collectorb08",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "collectorB08"
+      }
+    },
+    "p4Before": {
+      "bytes": "ACTUAL_ORIGINAL_BYTES_p4Before",
+      "canonical_ensure_ascii": "ACTUAL_ORIGINAL_POLICY_BOOLEAN_p4Before",
+      "expected_format": "swdb.lanl17-attempt-control-custody.v2",
+      "identity_sha256": "ACTUAL_ORIGINAL_TRUE_OR_FALSE_SEAL_p4Before",
+      "origin": {
+        "path": "ACTUAL_RETAINED_ORIGINAL_ABSOLUTE_PATH_p4Before"
+      },
+      "role": "attempt_before",
+      "sha256": "ACTUAL_ORIGINAL_FILE_SHA_p4Before",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "collectorB08"
+        ],
+        "family": "collectorb08",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "collectorB08"
+      }
+    },
+    "p4Dispatch": {
+      "bytes": "ACTUAL_ORIGINAL_BYTES_p4Dispatch",
+      "canonical_ensure_ascii": "ACTUAL_ORIGINAL_POLICY_BOOLEAN_p4Dispatch",
+      "expected_format": "swdb.lanl17-campaign-dispatch.v1",
+      "identity_sha256": "ACTUAL_ORIGINAL_TRUE_OR_FALSE_SEAL_p4Dispatch",
+      "origin": {
+        "path": "ACTUAL_RETAINED_ORIGINAL_ABSOLUTE_PATH_p4Dispatch"
+      },
+      "role": "attempt_dispatch",
+      "sha256": "ACTUAL_ORIGINAL_FILE_SHA_p4Dispatch",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "helper28"
+        ],
+        "family": "helper28d",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "helper28"
+      }
+    },
+    "p4DispatchState": {
+      "bytes": "ACTUAL_ORIGINAL_BYTES_p4DispatchState",
+      "canonical_ensure_ascii": "ACTUAL_ORIGINAL_POLICY_BOOLEAN_p4DispatchState",
+      "expected_format": "swdb.lanl17-dispatch-state-corroboration.v1",
+      "identity_sha256": "ACTUAL_ORIGINAL_TRUE_OR_FALSE_SEAL_p4DispatchState",
+      "origin": {
+        "path": "ACTUAL_RETAINED_ORIGINAL_ABSOLUTE_PATH_p4DispatchState"
+      },
+      "role": "dispatch_state_corroboration",
+      "sha256": "ACTUAL_ORIGINAL_FILE_SHA_p4DispatchState",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "capture32"
+        ],
+        "family": "parent_capture",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "capture32"
+      }
+    },
+    "p4Release": {
+      "bytes": "ACTUAL_ORIGINAL_BYTES_p4Release",
+      "canonical_ensure_ascii": "ACTUAL_ORIGINAL_POLICY_BOOLEAN_p4Release",
+      "expected_format": "swdb.lanl17-attempt-release-custody.v1",
+      "identity_sha256": "ACTUAL_ORIGINAL_TRUE_OR_FALSE_SEAL_p4Release",
+      "origin": {
+        "path": "ACTUAL_RETAINED_ORIGINAL_ABSOLUTE_PATH_p4Release"
+      },
+      "role": "attempt_release",
+      "sha256": "ACTUAL_ORIGINAL_FILE_SHA_p4Release",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "capture32"
+        ],
+        "family": "parent_capture",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "capture32"
+      }
+    },
+    "p4Selection": {
+      "bytes": "ACTUAL_ORIGINAL_BYTES_p4Selection",
+      "canonical_ensure_ascii": "ACTUAL_ORIGINAL_POLICY_BOOLEAN_p4Selection",
+      "expected_format": "swdb.lanl17-original-public-candidate-selection-custody.v1",
+      "identity_sha256": "ACTUAL_ORIGINAL_TRUE_OR_FALSE_SEAL_p4Selection",
+      "origin": {
+        "path": "ACTUAL_RETAINED_ORIGINAL_ABSOLUTE_PATH_p4Selection"
+      },
+      "role": "public_candidate_selection",
+      "sha256": "ACTUAL_ORIGINAL_FILE_SHA_p4Selection",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "capture32"
+        ],
+        "family": "parent_capture",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "capture32"
+      }
+    },
+    "p4Stopped": {
+      "bytes": "ACTUAL_ORIGINAL_BYTES_p4Stopped",
+      "canonical_ensure_ascii": "ACTUAL_ORIGINAL_POLICY_BOOLEAN_p4Stopped",
+      "expected_format": "swdb.lanl17-stopped-attempt.v1",
+      "identity_sha256": "ACTUAL_ORIGINAL_TRUE_OR_FALSE_SEAL_p4Stopped",
+      "origin": {
+        "path": "ACTUAL_RETAINED_ORIGINAL_ABSOLUTE_PATH_p4Stopped"
+      },
+      "role": "attempt_stopped",
+      "sha256": "ACTUAL_ORIGINAL_FILE_SHA_p4Stopped",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "helper28"
+        ],
+        "family": "helper28d",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "helper28"
+      }
+    },
+    "p4Trajectory": {
+      "bytes": "ACTUAL_ORIGINAL_BYTES_p4Trajectory",
+      "canonical_ensure_ascii": "ACTUAL_ORIGINAL_POLICY_BOOLEAN_p4Trajectory",
+      "expected_format": "swdb.lanl17-trajectory-audit-projection.v2",
+      "identity_sha256": "ACTUAL_ORIGINAL_TRUE_OR_FALSE_SEAL_p4Trajectory",
+      "origin": {
+        "path": "ACTUAL_RETAINED_ORIGINAL_ABSOLUTE_PATH_p4Trajectory"
+      },
+      "role": "trajectory_projection",
+      "sha256": "ACTUAL_ORIGINAL_FILE_SHA_p4Trajectory",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "capture32"
+        ],
+        "family": "parent_capture",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "capture32"
+      }
+    },
+    "preparePrereg": {
+      "bytes": "ACTUAL_ORIGINAL_BYTES_preparePrereg",
+      "canonical_ensure_ascii": "ACTUAL_ORIGINAL_POLICY_BOOLEAN_preparePrereg",
+      "expected_format": "swdb.lanl17-metadata-dispatch-preregistration.v1",
+      "identity_sha256": "ACTUAL_ORIGINAL_TRUE_OR_FALSE_SEAL_preparePrereg",
+      "origin": {
+        "path": "ACTUAL_RETAINED_ORIGINAL_ABSOLUTE_PATH_preparePrereg"
+      },
+      "role": "prepare_preregistration",
+      "sha256": "ACTUAL_ORIGINAL_FILE_SHA_preparePrereg",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "guard9c"
+        ],
+        "family": "guard9c5d",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "guard9c"
+      }
+    },
+    "prepareSupervisor": {
+      "bytes": "ACTUAL_ORIGINAL_BYTES_prepareSupervisor",
+      "canonical_ensure_ascii": "ACTUAL_ORIGINAL_POLICY_BOOLEAN_prepareSupervisor",
+      "expected_format": "swdb.lanl17-metadata-supervisor.v1",
+      "identity_sha256": "ACTUAL_ORIGINAL_TRUE_OR_FALSE_SEAL_prepareSupervisor",
+      "origin": {
+        "path": "ACTUAL_RETAINED_ORIGINAL_ABSOLUTE_PATH_prepareSupervisor"
+      },
+      "role": "prepare_supervisor",
+      "sha256": "ACTUAL_ORIGINAL_FILE_SHA_prepareSupervisor",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "supervisorFa"
+        ],
+        "family": "supervisorfa703",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "supervisorFa"
+      }
+    },
+    "reportReceipt": {
+      "bytes": "ACTUAL_ORIGINAL_BYTES_reportReceipt",
+      "canonical_ensure_ascii": "ACTUAL_ORIGINAL_POLICY_BOOLEAN_reportReceipt",
+      "expected_format": "swdb.lanl17-actual-agreement-compact.v1",
+      "identity_sha256": "ACTUAL_ORIGINAL_TRUE_OR_FALSE_SEAL_reportReceipt",
+      "origin": {
+        "path": "ACTUAL_RETAINED_ORIGINAL_ABSOLUTE_PATH_reportReceipt"
+      },
+      "role": "agreement_receipt",
+      "sha256": "ACTUAL_ORIGINAL_FILE_SHA_reportReceipt",
+      "writer": {
+        "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          "helper28"
+        ],
+        "family": "helper28d",
+        "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+        "source": "helper28"
+      }
+    },
+    "spec339": {
+      "bytes": 11868,
+      "origin": {
+        "path": "/private/tmp/lanl17_write_parent_input_specification_20261007.py"
+      },
+      "role": "control_source",
+      "sha256": "339ea0dc1abb6778f0f016e9c03f2b29c5f1916154b668f5416747b2768a9231"
+    },
+    "supervisorFa": {
+      "bytes": "ACTUAL_ORIGINAL_SOURCE_BYTES_supervisorFa",
+      "origin": {
+        "path": "ACTUAL_LOCAL_OR_ALLOWED_GIT_CONTROL_SOURCE_PATH_supervisorFa"
+      },
+      "role": "control_source",
+      "sha256": "fa703bbd4c71bb4bcf56f47d1e224449f627d5921295e00b9cc105f21e95bde0"
+    }
+  },
+  "forbidden_output_roots": [
+    "ACTUAL_CLEAN_R_CHECKOUT_ABSOLUTE_PATH",
+    "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5",
+    "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5",
+    "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p1",
+    "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p2",
+    "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p3",
+    "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p4"
+  ],
+  "format": "swdb.lanl17-actual-input-construction-spec.v1",
+  "parent_review": {
+    "assembler_sha256": "de669e4c0928876f9d033f6d9c1fc820ab3a1eb915aba20c5b6755b9866d7e6a",
+    "auditor_sha256": "6a91ed1015bcc1caa771348e8bd1f591254ba130e55570ed18bc8121d67a06da",
+    "basis": "explicit_parent_review_of_actual_original_inputs_and_selected_public_body_transfer",
+    "collector_sha256": "b08db809b80cbebc6ce98dd8df8fdd4f327b170cdd7a545af0876ad68a832a5c",
+    "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+    "final_R": {
+      "commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+      "tree": "1ab2c8ab147251391a4af75e637114bdd5b0ff27"
+    },
+    "fixtures_or_replays_allowed": false,
+    "parent_approved_actual_inputs": "ACTUAL_PARENT_REVIEW_TRUE",
+    "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d"
+  },
+  "root": {
+    "campaigns": [
+      {
+        "attempts": [
+          {
+            "after_custody": {
+              "$original_document": "p1After"
+            },
+            "before_custody": {
+              "$original_document": "p1Before"
+            },
+            "dispatch": {
+              "$original_document": "p1Dispatch"
+            },
+            "dispatch_state_corroboration": {
+              "$original_document": "p1DispatchState"
+            },
+            "release_custody": {
+              "$original_document": "p1Release"
+            },
+            "stopped": {
+              "$original_document": "p1Stopped"
+            }
+          }
+        ],
+        "campaign": "extensa-gem5-bfs-20261006-p1",
+        "projection": {
+          "$original_document": "p1Trajectory"
+        },
+        "public_candidate_export_selection_custody": {
+          "$original_document": "p1Selection"
+        },
+        "public_candidate_exports": "ACTUAL_LIST_OF_UNSEALED_ORIGINAL_DOCUMENT_REFERENCES_OR_EMPTY_IF_ORIGINAL28D_SELECTED_NONE"
+      },
+      {
+        "attempts": [
+          {
+            "after_custody": {
+              "$original_document": "p2After"
+            },
+            "before_custody": {
+              "$original_document": "p2Before"
+            },
+            "dispatch": {
+              "$original_document": "p2Dispatch"
+            },
+            "dispatch_state_corroboration": {
+              "$original_document": "p2DispatchState"
+            },
+            "release_custody": {
+              "$original_document": "p2Release"
+            },
+            "stopped": {
+              "$original_document": "p2Stopped"
+            }
+          }
+        ],
+        "campaign": "extensa-gem5-bfs-20261006-p2",
+        "projection": {
+          "$original_document": "p2Trajectory"
+        },
+        "public_candidate_export_selection_custody": {
+          "$original_document": "p2Selection"
+        },
+        "public_candidate_exports": "ACTUAL_LIST_OF_UNSEALED_ORIGINAL_DOCUMENT_REFERENCES_OR_EMPTY_IF_ORIGINAL28D_SELECTED_NONE"
+      },
+      {
+        "attempts": [
+          {
+            "after_custody": {
+              "$original_document": "p3After"
+            },
+            "before_custody": {
+              "$original_document": "p3Before"
+            },
+            "dispatch": {
+              "$original_document": "p3Dispatch"
+            },
+            "dispatch_state_corroboration": {
+              "$original_document": "p3DispatchState"
+            },
+            "release_custody": {
+              "$original_document": "p3Release"
+            },
+            "stopped": {
+              "$original_document": "p3Stopped"
+            }
+          }
+        ],
+        "campaign": "extensa-gem5-bfs-20261006-p3",
+        "projection": {
+          "$original_document": "p3Trajectory"
+        },
+        "public_candidate_export_selection_custody": {
+          "$original_document": "p3Selection"
+        },
+        "public_candidate_exports": "ACTUAL_LIST_OF_UNSEALED_ORIGINAL_DOCUMENT_REFERENCES_OR_EMPTY_IF_ORIGINAL28D_SELECTED_NONE"
+      },
+      {
+        "attempts": [
+          {
+            "after_custody": {
+              "$original_document": "p4After"
+            },
+            "before_custody": {
+              "$original_document": "p4Before"
+            },
+            "dispatch": {
+              "$original_document": "p4Dispatch"
+            },
+            "dispatch_state_corroboration": {
+              "$original_document": "p4DispatchState"
+            },
+            "release_custody": {
+              "$original_document": "p4Release"
+            },
+            "stopped": {
+              "$original_document": "p4Stopped"
+            }
+          }
+        ],
+        "campaign": "extensa-gem5-bfs-20261006-p4",
+        "projection": {
+          "$original_document": "p4Trajectory"
+        },
+        "public_candidate_export_selection_custody": {
+          "$original_document": "p4Selection"
+        },
+        "public_candidate_exports": "ACTUAL_LIST_OF_UNSEALED_ORIGINAL_DOCUMENT_REFERENCES_OR_EMPTY_IF_ORIGINAL28D_SELECTED_NONE"
+      }
+    ],
+    "collector_account": {
+      "host": "mbit10",
+      "uid": 114316761,
+      "user": "yanruj"
+    },
+    "collector_source_pin": {
+      "$original_document": "collectorB08"
+    },
+    "final_ticket11_acceptance": {
+      "accepted": "ACTUAL_ROOT_DEPENDENCY_ADMISSION_TRUE",
+      "actual_export_commit": "8969d567599cb9f0d071f77936ab283fcb97c137",
+      "actual_export_receipt_identity": "f11ba2b40361b489169f48e6160a4dc9b927b1802f987264acab6354285f8db1",
+      "actual_export_receipt_pin": {
+        "$original_document": "final11Export"
+      },
+      "reader_source_pin": {
+        "$original_document": "cpuReader8b"
+      },
+      "receipt_identity": "ab5c80d246fe8c7419a48b82eafb395c37e850c11c10fbd509de545fa62ae578",
+      "receipt_pin": {
+        "$original_document": "final11Admission"
+      },
+      "selected_reader_source_sha256": "8b85e34287a4dc67e5ff0c9a535aefd46a6c2ecf6051a934607f853074f90016"
+    },
+    "final_ticket14_acceptance": {
+      "accepted": "ACTUAL_ROOT_DEPENDENCY_ADMISSION_TRUE",
+      "actual_export_commit": "43256ee0300a59a03919833075fbb13fb3ba9ab3",
+      "actual_export_receipt_identity": "ad656b14b958d9ee1b775c22906b0ee30e2d63e395aa165197be0ff4b8e4118a",
+      "actual_export_receipt_pin": {
+        "$original_document": "final14Export"
+      },
+      "final_source_commit": "c4ab2fdbb0b0c57ee9f515522835897f24466d6b",
+      "reader_source_pin": {
+        "$original_document": "generalityReader6909"
+      },
+      "receipt_identity": "720bdb6655036b6226947656ee6440bb9ce6c972f9f045ec3cedec86a5a1ab3e",
+      "receipt_pin": {
+        "$original_document": "final14Admission"
+      },
+      "selected_reader_source_sha256": "6909c422990a071b1a8d08c634c1c086f0218c5851d38996b6f4798759499570"
+    },
+    "finalize_preregistration": {
+      "$original_document": "finalizePrereg"
+    },
+    "finalize_supervisor": {
+      "$original_document": "finalizeSupervisor"
+    },
+    "freeze_export": {
+      "allowed_additions": "ACTUAL_EXACT_EF_ADDITIONS",
+      "campaign_configuration_paths": "ACTUAL_EF_CID_TO_CONFIG_PATH_MAPPING",
+      "commit": "44652dd359e352480065f0c6281730dd61523ea6",
+      "configuration_paths": "ACTUAL_EF_CONFIGURATION_PATHS",
+      "provider_configuration_path": "ACTUAL_EF_PROVIDER_PATH",
+      "receipt": {
+        "$original_document": "freezeReceipt"
+      },
+      "record_paths": "ACTUAL_EF_RECORD_PATHS",
+      "tree": "ACTUAL_EF_TREE"
+    },
+    "freeze_publication_custody": {
+      "$original_document": "FIRST"
+    },
+    "manifest_M2": {
+      "$original_document": "M2"
+    },
+    "policy_id": "extensa-gem5-bfs-20261006-p1.agreement.5bae2f42d9078864",
+    "prepare_preregistration": {
+      "$original_document": "preparePrereg"
+    },
+    "prepare_supervisor": {
+      "$original_document": "prepareSupervisor"
+    },
+    "report_export": {
+      "allowed_additions": "ACTUAL_EXACT_ER_ADDITIONS",
+      "commit": "ACTUAL_ER_COMMIT",
+      "receipt": {
+        "$original_document": "reportReceipt"
+      },
+      "record_paths": "ACTUAL_ER_RECORD_PATHS",
+      "tree": "ACTUAL_ER_TREE"
+    },
+    "report_id": "ACTUAL_PUBLIC_REPORT_ID",
+    "selected_records": "ACTUAL_COMPLETE_SELECTED_PUBLIC_BODY_REFERENCE_LIST"
+  },
+  "writer": {
+    "basis": "explicit_parent_source_review_of_original_canonical_hashing",
+    "canonical_ensure_ascii": true,
+    "canonical_policy_sources": [
+      "spec339"
+    ],
+    "family": "parent_input_specification",
+    "parent_reviewed": "ACTUAL_PARENT_SOURCE_POLICY_REVIEW_TRUE",
+    "source": "spec339"
+  }
+}

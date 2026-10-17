@@ -1,0 +1,7 @@
+# Parent review of the two-source copy driver R1 — 2026-10-07
+
+The parent and independent ticket04 read the complete selected e217 source, full diff, unsealed comparison, final corrected handoff and final preparation. No concrete source blocker was found. Independent whole-byte forward/reverse seven-hunk checks, 22 helper ASTs including four nested JSON helpers, six constant Assign ASTs, four delivered Git pins and original b471/00b2 True closures passed. All original and preliminary source/pin history remains unchanged; the unselected0be driver is not approved or run.
+
+The final handoff corrects only the original one-row-to-two-row wording. Final preparation71ca/filef2a12 remains NOTRUN history. Prospective source-copy behavior preserves the original path/ownership/Git-mode/FD/stat/fsync/prepost controls, C185/F6, 60-second remote and 120-second SSH bounds, 16KiB receipt, fresh0700 destination and exactly two0600 files. No research catalog or older stage is opened; no copied source import/main/test/Store/provider/compiler/science follows.
+
+The exact one-copy argv reviewed is native local Python3.12.6, selected e217 R1 and delivered7398fc4e0ddf4013dabbe87a506941ce1d910ce3. All approved destinations are synced and the four CONFIG source/review/manifest pins are exact. This review clears that one source-copy action within existing user authorization. Actual copy success must be recorded separately. It does not clear any copied outer/bootstrap/envelope/index main: actual inputs, native runtime, real routes, full56argv and supervision remain pending.

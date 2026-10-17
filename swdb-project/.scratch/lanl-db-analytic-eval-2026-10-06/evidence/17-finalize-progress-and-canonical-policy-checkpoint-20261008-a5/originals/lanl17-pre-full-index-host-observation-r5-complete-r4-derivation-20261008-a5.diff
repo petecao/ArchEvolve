@@ -1,0 +1,20 @@
+--- /private/tmp/lanl17_pre_full_index_host_observation_20261008_a5_r4.py
++++ /private/tmp/lanl17_pre_full_index_host_observation_20261008_a5_r5.py
+@@ -201,7 +201,7 @@
+     for role,(route,n,h) in FIXED_SOURCE.items():need(pins[role]['bytes']==n and pins[role]['sha256']==h,'fixed_control_source_pin')
+     need(pins['manifest_M2']['bytes']==292401 and pins['manifest_M2']['sha256']==M2_SHA,'exact_original_M2')
+     def seal(role,fmt,ascii):
+-        d=strict(bodies[role]);need(d.get('format')==fmt and d.get('identity_sha256')==digest(json.dumps({k:x for k,x in d.items() if k!='identity_sha256'},sort_keys=True,separators=(',',':'),ensure_ascii=ascii,allow_nan=False).encode()),'original_source_policy_seal');return d
++        d=strict(bodies[role]);need(type(d) is dict,'original_control_JSON_object');need(d.get('format')==fmt and d.get('identity_sha256')==digest(json.dumps({k:x for k,x in d.items() if k!='identity_sha256'},sort_keys=True,separators=(',',':'),ensure_ascii=ascii,allow_nan=False).encode()),'original_source_policy_seal');return d
+     m=seal('manifest_M2','swdb.lanl17-parent-population.v1',True)
+     need(m['identity_sha256']==M2_ID and m['source']==str(SOURCE) and m['raw']==str(RAW) and m['source_commit']==R and m['estimator_sha256']==F6 and m['helper_sha256']==FIXED_SOURCE['helper_source'][2],'original_M2_context')
+     pre=seal('guard_preregistration','swdb.lanl17-metadata-dispatch-preregistration.v1',False)
+@@ -209,7 +209,7 @@
+     sup=seal('supervisor_receipt','swdb.lanl17-metadata-supervisor.v1',False)
+     need(sup['action']=='finalize' and sup['state']=='child_returned' and type(sup['child_exit']) is int and type(sup['supervisor_exit']) is int and sup['child_exit']==sup['supervisor_exit']==0 and sup['timed_out'] is False and sup['signal_received'] is None and sup['error_type'] is None and sup['cleanup_errors']==[] and sup['fixture'] is False and sup['cleanup']['subreaper'] is True and sup['cleanup']['survivors']=={},'original_normal_FINALIZE_cleanup')
+     need(sup['helper_sha256']==sup['cleanup_implementation_sha256']==FIXED_SOURCE['helper_source'][2] and sup['supervisor_sha256']==FIXED_SOURCE['supervisor_source'][2] and sup['processes_py_sha256']=='bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289' and sup['estimator_sha256']==F6 and sup['uid']==UID,'original_FINALIZE_source_lineage')
+-    result=strict(bodies['final_export']);helper=strict(bodies['helper_stdout'])
++    result=strict(bodies['final_export']);helper=strict(bodies['helper_stdout']);need(type(result) is dict and type(helper) is dict,'original_export_helper_JSON_objects')
+     need(result==helper and set(result)=={'branch','commit','paths','raw_transferred'} and result['branch']=='codex/lanl17-actual-report-evidence-20261007-a5' and result['commit']==INPUT['expected_ER_commit'] and result['raw_transferred'] is False,'actual_original_ER_commit_binding')
+     receipt=seal('agreement_receipt','swdb.lanl17-actual-agreement-compact.v1',True)
+     need(receipt['manifest']==m and receipt['source_clean'] is True and receipt['raw_transferred'] is False,'actual_original_ER_receipt_binding')

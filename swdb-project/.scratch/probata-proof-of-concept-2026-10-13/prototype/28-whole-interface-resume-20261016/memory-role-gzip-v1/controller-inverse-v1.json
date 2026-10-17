@@ -1,0 +1,133 @@
+{
+  "actual_memory_source_observation": {
+    "bytes": 7501,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-memory-capture-v1-actual/actual-observation-reconciliation-v2.json",
+    "sha256": "d2a30efc347b0a84174fe641e2436b308e33f896e269d6136fdda0cd4190a8b4"
+  },
+  "actual_metadata": {
+    "bytes": 366422,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-memory-capture-v1-actual/closure-stdout-v1.json",
+    "sha256": "6e2c6f561885625904cd525ea481244c929539fe1e9855a94a091f4cb243efa2"
+  },
+  "actual_transform": false,
+  "date": "2026-10-16 ET",
+  "edits": [
+    {
+      "new": "BASE_B64='__BASE_B64__'",
+      "offset": 430,
+      "old": "CENSUS_B64='__CENSUS_B64__'"
+    },
+    {
+      "new": "RAW=Path('/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-tu-2baf722f-v1')",
+      "offset": 454,
+      "old": "RAW=Path('/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-full-tu-2baf722f-v10')"
+    },
+    {
+      "new": "OUT=Path('/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-memory-role-gzip-2baf722f-v1')",
+      "offset": 545,
+      "old": "OUT=Path('/data/yanruj/EvolveSWDB_runs/probata-resume-20261016-t28-role-gzip-2baf722f-v2')"
+    },
+    {
+      "new": "'control/controller.py','control/normalizer.py','control/strict_minify_v2.py','control/policy.json',\n    'component/census.json','component/runtime-before.json','component/runtime-after.json',",
+      "offset": 762,
+      "old": "'control/controller.py','control/normalizer.py','control/census.json','control/policy.json',"
+    },
+    {
+      "new": "def check_original_observation(result,observation,commands,policy,original_policy):\n    need(original_policy.get('schema')=='t28-three-memory-TU-compiler-observation-1' and original_policy.get('observation_only') is True\n        and original_policy.get('source_commit')=='2baf722fdaa6cba24b859eae3172a6f597417d72',\n        'exact original memory observation policy profile required')\n    need(result.get('accepted') is True and result.get('error') is None and result.get('after_input_errors')==[]\n        and result.get('bytecode_cache_present') is False and 'finalization_refusal' not in result\n        and result.get('compiler_observation_complete') is True and result.get('source_call_admitted') is False\n        and result.get('source_names')==[] and result.get('source_call_count')==0 and result.get('ABI_interpreted') is False\n        and result.get('strict_complete_TU_consumer_passed') is False and result.get('native_or_solver_executed') is False\n        and result.get('public_proof') is False and result.get('current_0_2') is False and result.get('full_ticket28') is False\n        and result.get('scope')==policy['original_result_scope'],'exact successful observation-only memory capture required')\n    need(commands==policy['original_commands']==observation.get('commands') and len(commands)==4\n        and [row['phase'] for row in commands]==['caller-preprocess','caller-ast','abi-preprocess','abi-ast']\n        and all(type(row['returncode']) is int and row['returncode']==0 for row in commands)\n        and observation.get('source_commit')=='2baf722fdaa6cba24b859eae3172a6f597417d72'\n        and observation.get('original_source_coordinates') is True,'exact four complete memory compiler observations required')\n\ndef check_derived_transport(transport,wire):\n    value=transport['normalization']\n    need(all(type(value[key]) is int and value[key]>=0 for key in ('raw_bytes','duplicate_events','prospective_role_renames',\n        'inverse_manifest_rows','unknown_or_mismatched_duplicate_events','normalized_bytes'))\n        and (value['raw_bytes'],value['raw_sha256'])==(wire['expanded_bytes'],wire['expanded_sha256'])\n        and value['unknown_or_mismatched_duplicate_events']==0 and value['duplicate_events']<=100000\n        and value['duplicate_events']==value['prospective_role_renames']==value['inverse_manifest_rows']\n        and value['role_normalization_and_expanded_cap_eligible'] is True and value['expanded_role_transport_refused'] is False\n        and value['normalized_AST_admitted'] is False and value['normalized_uncompressed_file_written'] is False\n        and 0<value['normalized_bytes']<=201326592,'complete derived census/role/extent identity required')\n    return value\n\ndef check_dependencies(observation,original_policy,helpers):\n    need([group['label'] for group in observation['groups']]==['caller','abi'],'complete original group census required')\n    for index,group in enumerate(observation['groups']):\n        label=group['label'];names=[row['path'] for row in group['dependencies']]\n        source='same_thread_memory_v1.cpp' if label=='caller' else 'compiler_abi_probe_v1.cpp'\n        required={str(RAW/'control'/source),str(RAW/'control/include/gem5/m5ops.h'),\n            original_policy['source_project']+'/apps/dx100/benchmarks/API/MAA.hpp',original_policy['source_project']+'/apps/dx100/benchmarks/API/MAA_gem5.hpp'}\n        need(len(names)==len(set(names)) and required<=set(names),'complete source/probe/two-header/stub dependencies required')\n        for role,target in (('preprocess_dependency',label),('ast_dependency',label+'-ast')):\n            need(helpers['make_dependencies'](Path(group[role]['path']).read_text(),target,RAW/'component')==names,\n                'retained AST/preprocessing dependency memberships differ')\n        need(group['ast']==observation['commands'][index*2+1]['stdout'],'same original AST/compiler stdout differs')\n\ndef main():",
+      "offset": 7140,
+      "old": "def main():"
+    },
+    {
+      "new": "normalizer_raw=base64.b64decode(NORMALIZER_B64,validate=True);base_raw=base64.b64decode(BASE_B64,validate=True)",
+      "offset": 11620,
+      "old": "normalizer_raw=base64.b64decode(NORMALIZER_B64,validate=True);census_raw=base64.b64decode(CENSUS_B64,validate=True)"
+    },
+    {
+      "new": "(len(base_raw),sha(base_raw))==(policy['strict_base']['bytes'],policy['strict_base']['sha256'])",
+      "offset": 11860,
+      "old": "(len(census_raw),sha(census_raw))==(policy['census']['bytes'],policy['census']['sha256'])"
+    },
+    {
+      "new": "    before=input_check(policy)\n    old_result=document(read_input(RAW/'component/result.json',policy))\n    observation=document(read_input(RAW/'component/compiler-observation.json',policy))\n    commands=document(read_input(RAW/'component/commands.json',policy))\n    original_policy=document(read_input(RAW/'control/linux_memory_capture_policy_v1.json',policy))\n    check_original_observation(old_result,observation,commands,policy,original_policy)\n",
+      "offset": 12128,
+      "old": "    before=input_check(policy);census=document(census_raw);old_result=document(read_input(RAW/'component/result.json',policy))\n    need(old_result['accepted'] is False and old_result['error']=={'type':'Refused','message':'duplicate compiler JSON key'} and old_result['after_input_errors']==[],\n        'original V10 refusal must remain exact')\n    commands=document(read_input(RAW/'component/commands.json',policy));need(commands==policy['original_commands'] and len(commands)==4\n        and all(type(row['returncode']) is int and row['returncode']==0 for row in commands),'exact original four zero-exit compiler phases required')\n    need(census['complete_decoder_identity_verified'] is True and census['census']['unknown_or_mismatched_duplicate_events']==0\n        and census['census']['duplicate_events']==census['census']['prospective_role_renames']==116,'exact complete known-role census required')\n"
+    },
+    {
+      "new": "stage('control/controller.py',SOURCE_BYTES);stage('control/normalizer.py',normalizer_raw);stage('control/strict_minify_v2.py',base_raw);stage('control/policy.json',policy_raw)",
+      "offset": 12682,
+      "old": "stage('control/controller.py',SOURCE_BYTES);stage('control/normalizer.py',normalizer_raw);stage('control/census.json',census_raw);stage('control/policy.json',policy_raw)"
+    },
+    {
+      "new": "entry_path=RAW/'control/linux_memory_capture_v1.py'",
+      "offset": 12910,
+      "old": "entry_path=RAW/'control/linux_compiler_capture_v10.py'"
+    },
+    {
+      "new": "original_policy=document(read_input(RAW/'control/linux_memory_capture_policy_v1.json',policy));zlib,zbefore=entry['bind_zlib'](original_policy)\n    helpers=entry['original_helpers'](RAW/'control/linux_native86_entry_v4.py')\n    closed_path=RAW/'control/closed_python_surface.py';closed_ns=load(read_input(closed_path,policy),str(closed_path),policy['physical_inputs'][str(closed_path)])\n    import types\n    closed=types.SimpleNamespace(**closed_ns)\n    runtime_before=helpers['physical_runtime'](original_policy,closed)\n    need(runtime_before==document(read_input(RAW/'capture-runtime-before.json',policy)),'current full physical runtime differs from original observation')\n    check_dependencies(observation,original_policy,helpers);save('component/runtime-before.json',runtime_before)",
+      "offset": 13071,
+      "old": "original_policy=document(read_input(RAW/'control/linux_compiler_capture_policy_v10.json',policy));zlib,zbefore=entry['bind_zlib'](original_policy)"
+    },
+    {
+      "new": "base_path=OUT/'control/strict_minify_v2.py';codec_path=RAW/'control/lossless_gzip_v2.py'\n    base=load(base_raw,str(base_path),policy['strict_base'])",
+      "offset": 13864,
+      "old": "base_path=RAW/'control/strict_minify_v2.py';codec_path=RAW/'control/lossless_gzip_v2.py'\n    base=load(read_input(base_path,policy),str(base_path),policy['physical_inputs'][str(base_path)])"
+    },
+    {
+      "new": "    transformed=check_derived_transport(transport,gzip_receipt)\n",
+      "offset": 14849,
+      "old": "    transformed=transport['normalization'];observed=census['census']\n    renamed={'prospective_role_normalization_eligible','prospective_normalization_refused','prospective_normalized_file_cap_fit','normalized_AST_retained_or_admitted','schema'}\n    need(all(transformed[key]==value for key,value in observed.items() if key not in renamed),'normalizer original census identities differ')\n    need(transformed['plain_normalized_file_cap_fit'] is False and transformed['normalized_bytes']==178924116\n        and transformed['role_normalization_and_expanded_cap_eligible'] is True,'separate measured expanded/plain extent gates differ')\n"
+    },
+    {
+      "new": "    runtime_after=helpers['physical_runtime'](original_policy,closed)\n    need(runtime_after==runtime_before,'full physical runtime membership changed')\n    check_dependencies(observation,original_policy,helpers);save('component/runtime-after.json',runtime_after)\n    after=input_check(policy);need(after==before,'selected original/source/runtime inputs changed')",
+      "offset": 15254,
+      "old": "    after=input_check(policy);need(after==before,'selected original/source/runtime inputs changed')"
+    },
+    {
+      "new": "pin(OUT/'control/strict_minify_v2.py')['sha256']==policy['strict_base']['sha256']",
+      "offset": 15706,
+      "old": "pin(OUT/'control/census.json')['sha256']==policy['census']['sha256']"
+    },
+    {
+      "new": "save('component/census.json',transformed);save('component/transport.json',transport);save('component/inverse.json',inverse);save('component/inputs-after.json',after)",
+      "offset": 15955,
+      "old": "save('component/transport.json',transport);save('component/inverse.json',inverse);save('component/inputs-after.json',after)"
+    },
+    {
+      "new": "'schema':'passive-memory-paired-type-gzip-transform-result-1'",
+      "offset": 16222,
+      "old": "'schema':'passive-paired-type-gzip-transform-result-2'"
+    },
+    {
+      "new": "'original_compiler_observation_accepted':True,'original_AST_ABI_source_call_admitted':False,\n        'source_fixture_sha256':policy['original_source_fixture']['sha256'],'original_observation':pin(RAW/'component/compiler-observation.json'),",
+      "offset": 16386,
+      "old": "'original_capture_accepted':False,\n        'original_capture_refusal':old_result['error'],"
+    },
+    {
+      "new": "'original_compiler_observation_accepted':True,'source_call_ABI_public_or_full28_admission':False,'wall_seconds':time.monotonic()-START}",
+      "offset": 17657,
+      "old": "'original_capture_accepted':False,'source_call_ABI_public_or_full28_admission':False,'wall_seconds':time.monotonic()-START}"
+    }
+  ],
+  "exact_predecessor_reconstructed": true,
+  "expected_derived_hashes_and_duplicate_count": null,
+  "normalizer_bytes_unchanged": {
+    "bytes": 27967,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/role-normalized-gzip-v2/role_normalized_gzip_v2.py",
+    "sha256": "6301baede48b9b0f1d3beaef2873e59026f5e9e26135bc2f7ba0a3f76825f941"
+  },
+  "predecessor_template": {
+    "bytes": 13780,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/role-normalization-controller-v2/controller_template.py",
+    "sha256": "5366bd548808898e9315c70e830ba37107d8f8bf2b9b1285c0cf6ab79c517778"
+  },
+  "strict_base_new_staged_input": {
+    "bytes": 7959,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/streaming-minify-v1/strict_minify_v2.py",
+    "sha256": "b866e14fe3ca210de178aab71f5c8a662e15f818a5ca485095487b005ae51897"
+  },
+  "successor_template": {
+    "bytes": 17853,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/memory-role-gzip-v1/controller_template_v1.py",
+    "sha256": "6ab2aabfe34d095700edeca6d5dbc6162a55f7170518572913821bccb9d8f924"
+  }
+}

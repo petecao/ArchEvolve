@@ -1,0 +1,48 @@
+{
+  "actual_executed": false,
+  "bootstrap_edits": [
+    {
+      "after": "resource.RLIMIT_CPU, (650, 650)",
+      "before": "resource.RLIMIT_CPU, (100, 100)"
+    },
+    {
+      "after": "read(22967)",
+      "before": "read(22966)"
+    },
+    {
+      "after": "len(payload) != 22966",
+      "before": "len(payload) != 22965"
+    },
+    {
+      "after": "7517108384e877d6e67322a3b291662b95fa305a3bc5bab169414b6f06b0f54b",
+      "before": "d265c49485057cbd43cfd913cfc905683090866174b45d863f22121331d997b3"
+    }
+  ],
+  "bootstrap_exact_inverse": true,
+  "source_edits": [
+    {
+      "after": "time.monotonic()-started<600,'bounded metadata diagnostic deadline exceeded'",
+      "before": "time.monotonic()-started<90,'bounded metadata diagnostic deadline exceeded'"
+    }
+  ],
+  "source_predecessor": {
+    "bytes": 22965,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-duplicate-census-v2/complete_duplicate_census_v2.py",
+    "sha256": "d265c49485057cbd43cfd913cfc905683090866174b45d863f22121331d997b3"
+  },
+  "source_successor": {
+    "bytes": 22966,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/compiler-duplicate-census-v3/complete_duplicate_census_v3.py",
+    "sha256": "7517108384e877d6e67322a3b291662b95fa305a3bc5bab169414b6f06b0f54b"
+  },
+  "unchanged": {
+    "address_space_bytes": 536870912,
+    "capture_entry_seconds": 165,
+    "capture_outer_seconds": 180,
+    "capture_per_file_bytes": 134217728,
+    "capture_total_bytes": 268435456,
+    "capture_tree_bytes": 4294967296,
+    "stdout_bytes_including_newline": 32768
+  },
+  "whole_module_AST_inverse": true
+}

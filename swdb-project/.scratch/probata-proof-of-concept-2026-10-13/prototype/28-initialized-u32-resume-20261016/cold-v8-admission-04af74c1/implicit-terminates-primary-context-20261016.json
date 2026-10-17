@@ -1,0 +1,193 @@
+{
+  "bytes": 20093,
+  "classification": "PASSIVE_PRIMARY_SOURCE_ONLY",
+  "excerpt": [
+    {
+      "line": 341,
+      "text": "  and call env s r kf es wr : W.t_prop ="
+    },
+    {
+      "line": 342,
+      "text": "    let smoking ="
+    },
+    {
+      "line": 343,
+      "text": "      if is_default_bhv env.mode &&"
+    },
+    {
+      "line": 344,
+      "text": "         WpLog.SmokeTests.get () &&"
+    },
+    {
+      "line": 345,
+      "text": "         WpLog.SmokeDeadcall.get ()"
+    },
+    {
+      "line": 346,
+      "text": "      then Some s else None in"
+    },
+    {
+      "line": 347,
+      "text": "    let c = CfgAnnot.get_call_contract ?smoking kf s in"
+    },
+    {
+      "line": 348,
+      "text": "    let p_post = List.fold_right (prove_property env) c.contract_smoke wr in"
+    },
+    {
+      "line": 349,
+      "text": "    let p_exit = List.fold_right (prove_property env) c.contract_smoke env.wk in"
+    },
+    {
+      "line": 350,
+      "text": "    let w_call = W.call env.we s r kf es"
+    },
+    {
+      "line": 351,
+      "text": "        ~pre:c.contract_hpre"
+    },
+    {
+      "line": 352,
+      "text": "        ~post:c.contract_post"
+    },
+    {
+      "line": 353,
+      "text": "        ~pexit:c.contract_exit"
+    },
+    {
+      "line": 354,
+      "text": "        ~assigns:c.contract_assigns"
+    },
+    {
+      "line": 355,
+      "text": "        ~p_post ~p_exit in"
+    },
+    {
+      "line": 356,
+      "text": "    let w_pre = if is_default_bhv env.mode then"
+    },
+    {
+      "line": 357,
+      "text": "        let pre = List.filter (is_selected_callpre env) c.contract_cond in"
+    },
+    {
+      "line": 358,
+      "text": "        W.call_goal_precond env.we s kf es ~pre w_call"
+    },
+    {
+      "line": 359,
+      "text": "      else w_call"
+    },
+    {
+      "line": 360,
+      "text": "    in"
+    },
+    {
+      "line": 361,
+      "text": "    call_decreases env s ~kf es @@"
+    },
+    {
+      "line": 362,
+      "text": "    call_terminates env s ~kf es w_pre"
+    },
+    {
+      "line": 363,
+      "text": ""
+    },
+    {
+      "line": 364,
+      "text": "  and call_terminates env s ?kf es w : W.t_prop ="
+    },
+    {
+      "line": 365,
+      "text": "    match env.terminates with"
+    },
+    {
+      "line": 366,
+      "text": "    | Some t when is_selected ~goal:true env t && is_default_bhv env.mode ->"
+    },
+    {
+      "line": 367,
+      "text": "      let callee_t, kind ="
+    },
+    {
+      "line": 368,
+      "text": "        match kf with"
+    },
+    {
+      "line": 369,
+      "text": "        | None ->"
+    },
+    {
+      "line": 370,
+      "text": "          Wp_parameters.warning"
+    },
+    {
+      "line": 371,
+      "text": "            \"Unknown callee, considering non-terminating call\" ;"
+    },
+    {
+      "line": 372,
+      "text": "          Logic_const.pfalse, Mcfg.MissingTerminates"
+    },
+    {
+      "line": 373,
+      "text": "        | Some callee ->"
+    },
+    {
+      "line": 374,
+      "text": "          let generated, callee_t ="
+    },
+    {
+      "line": 375,
+      "text": "            (CfgAnnot.get_call_contract callee s).contract_terminates"
+    },
+    {
+      "line": 376,
+      "text": "          in"
+    },
+    {
+      "line": 377,
+      "text": "          if generated then"
+    },
+    {
+      "line": 378,
+      "text": "            Wp_parameters.warning ~once:true"
+    },
+    {
+      "line": 379,
+      "text": "              \"Missing terminates clause on call to %a, defaults to %a\""
+    },
+    {
+      "line": 380,
+      "text": "              Kernel_function.pretty callee Cil_printer.pp_predicate callee_t ;"
+    },
+    {
+      "line": 381,
+      "text": "          callee_t, Mcfg.Terminates"
+    },
+    {
+      "line": 382,
+      "text": "      in"
+    },
+    {
+      "line": 383,
+      "text": "      let wt = W.call_terminates env.we s ~kind ?kf es t ~callee_t w in"
+    },
+    {
+      "line": 384,
+      "text": "      let is_recursive_call = match kf with"
+    },
+    {
+      "line": 385,
+      "text": "        | None -> true"
+    },
+    {
+      "line": 386,
+      "text": "        | Some callee -> CfgInfos.in_cluster ~caller:env.mode.kf callee"
+    }
+  ],
+  "native_execution": false,
+  "path": "/data1/yanruj/probata-verifiers/opam/framac-33/lib/frama-c-wp/core/cfgCalculus.ml",
+  "sha256": "03524cc3990c9e3bffc5625e37ed13160aed616e4143b2429f2fe0a6fcaed240"
+}

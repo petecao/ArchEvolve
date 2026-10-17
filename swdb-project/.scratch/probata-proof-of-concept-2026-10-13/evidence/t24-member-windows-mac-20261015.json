@@ -1,0 +1,313 @@
+{
+  "created": "2026-10-15 ET",
+  "ticket": "24",
+  "status": "claimed; scoped member-window checkpoint only",
+  "frozen_runtime_commit": "1e93b9cb8a3186b19d74aea33b6f7bf5679266dd",
+  "branch": "codex/probata-t24-acceptance-current",
+  "scope": "Selected entry with one exact trivial automatic int-pointer/int-count record, immediately dominated captures from an explicit entry window, immutable fields, exact original-TU closed direct call bindings, no receiver copy/escape/rebinding, no nonreceiver pointer/reference formals, longest source call path at most two. Ordinary field/read validity, initializedness, numeric/RTE and smoke obligations are preserved; no candidate requires clauses are added.",
+  "remaining": "Original Bag plus Counter constructor/destructor/reference-effect fixture, fixed member arrays/templates and remaining original construct/lifetime/model acceptance remain open. No arbitrary-this theorem or standalone receiver summary is admitted.",
+  "source_pins": {
+    "count": 206,
+    "manifest": "/private/tmp/probata-member-window-actual-v2-20261015/launch-manifest.json",
+    "manifest_sha256": "8e8187011dbc501f115467382b7f1ccad3984c2c899911122c75b3ad6e931cf4",
+    "frozen_snapshot": "/private/tmp/probata-member-window-actual-v2-20261015/frozen-source",
+    "unchanged_at_actual_completion": true,
+    "selected": {
+      "swdb/c_lowering.py": "0bd2950a4aa5f0080e54bef53cb8137c6bb2dd9b340e5775126d99a901fbabeb",
+      "swdb/member_windows.py": "a72c71ec24be7fe9b7d490cfd2d3a664000cc1399f99f327fbb8064dcfbb75b9",
+      "swdb/proof_setup.py": "e9d1702a44dc328d63a8e220cb0aef9565a7668572be0cb4b591ea683b4975d6",
+      "swdb/wp_adapter.py": "f946cc9a531e229c81185593fc29e7b96c26848c9201a58f43ff8b6520d12230",
+      "swdb/wp_pointer_bounds.py": "24fac1eb9f1302feb829d41df3477634b27bb175cbbf4eb91bfabec5f873a9d8",
+      "tests/test_member_windows.py": "a25b369518bd478673cdc28c5137621f72e712f945c9ccd64989f5c2231ae1dc",
+      "tests/test_member_windows_wp.py": "147137aefc2b9e5c16bbed8332e98a5a56004920e26e41f498f8eec01911b0cb"
+    }
+  },
+  "reviews": {
+    "reviewer": "independent main-session agent under delegated approval; no personal human source review claimed",
+    "fixed_compiler_admissions": [
+      "Nonreceiver pointer-reference redirect suppressed old entry-pointer invalidation: regression RED to GREEN; member checked-call exemptions removed entirely.",
+      "Shared callee first visited on a shorter path hid later depth-three path: regression RED to GREEN; independent complete-graph longest path now checked."
+    ],
+    "paths": [
+      "/private/tmp/probata-member-pointer-rebind-review/separated-result.json",
+      "/private/tmp/probata-member-depth-review/result.json",
+      "/private/tmp/probata-member-depth-review/fixed-result.json",
+      "/private/tmp/probata-member-source-review.md"
+    ]
+  },
+  "parser_context": {
+    "one_level": "/private/tmp/probata-member-window-inline-probe/result.json",
+    "two_level": "/private/tmp/probata-member-window-dag-probe/result.json",
+    "two_level_result": "Installed Frama-C33 removes both direct calls from normalized entry AST and retains numeric/field-initialization guards; recursive and indirect calls remain and are refused. First grammar is limited to independently checked depth two.",
+    "launch_binding": "Exact selected entry and inline set are generated inputs/settings, checked independently in parse and WP stages; conflicting/missing/tampered settings, source, certificate and generated policy file refuse before execution."
+  },
+  "controls": {
+    "frozen1e93_standins": "26 passed in15.83s; compiler/policy and public stand-in admission only",
+    "postmerge0b1_union": "58 passed in24.83s; member/helper/nested controls before longest-path repair",
+    "actual_pytest_raw": "1 failed,1 passed: positive verdict and all goals already passed; only initialized vs initialization goal spelling assertion failed",
+    "corrected_assertions_offline": "2 immutable actual records passed all corrected assertions; no verifier rerun",
+    "test_only_correction": "positive test looked for initialized; actual four RTE goal names contain rte_initialization. No runtime, premise or obligation was changed. Original failed test/log/XML are retained.",
+    "corrected_test_sha256": "963671adbe12a062cbd5523a7e33cb4d1ae255d807c0df5ced815aff1debe69b",
+    "final_composition": {
+      "source_commit": "6cc5147ecb89dc1f59777c3c0899baab9bfa48c4",
+      "result": "29 passed in55.92s",
+      "scope": "member compiler/policy/publicstandins plus three canonical integer-header baseline/shadow compiler controls after integrating feb92b5b; no actual solver replay or historical proof eligibility upgrade"
+    }
+  },
+  "resources": [
+    {
+      "label": "standin",
+      "command": [
+        "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_member_windows.py",
+        "--basetemp=/private/tmp/probata-member-window-actual-v2-20261015/standin-pytest",
+        "--junitxml=/private/tmp/probata-member-window-actual-v2-20261015/standin.xml"
+      ],
+      "result": {
+        "exit_code": 0,
+        "peak_rss_bytes": 279101440,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 15.833455541054718,
+        "cpu_seconds": 15.293178
+      }
+    },
+    {
+      "label": "actual",
+      "command": [
+        "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_member_windows_wp.py",
+        "--basetemp=/private/tmp/probata-member-window-actual-v2-20261015/actual-pytest",
+        "--junitxml=/private/tmp/probata-member-window-actual-v2-20261015/actual.xml"
+      ],
+      "result": {
+        "exit_code": 1,
+        "peak_rss_bytes": 837943296,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 43.38067433401011,
+        "cpu_seconds": 45.123114
+      }
+    }
+  ],
+  "records": [
+    {
+      "id": "proof.contract.fixture_member.20261015t164410z.1701267d",
+      "record": "/private/tmp/probata-member-window-actual-v2-20261015/actual-pytest/test_original_member_read_requ0/records/proofs/proof.contract.fixture_member.20261015t164410z.1701267d.yaml",
+      "record_sha256": "17a5bd4c974293fb0abbc61fb587b8e38138ff97b5503af4b67c8486d1119ee8",
+      "verdict": "proven",
+      "failure_class": null,
+      "ordinary": 15,
+      "ordinary_valid": 15,
+      "smoke": 1,
+      "smoke_valid": 1,
+      "reports": [
+        {
+          "name": "c_lowering",
+          "path": "/private/tmp/probata-member-window-actual-v2-20261015/actual-pytest/test_original_member_read_requ0/runs/proof.contract.fixture_member.20261015t164410z.1701267d/wp/unit.c",
+          "sha256": "b3fba47fc917a6ba52dfd77457e00d6965ec8b4c99c0440536e205865619d6cd"
+        },
+        {
+          "name": "anchors",
+          "path": "/private/tmp/probata-member-window-actual-v2-20261015/actual-pytest/test_original_member_read_requ0/runs/proof.contract.fixture_member.20261015t164410z.1701267d/wp/unit.anchors.json",
+          "sha256": "b646421eb2b2f4a22647c74d885095b594d804024d83ed4049439aee6906fc98"
+        },
+        {
+          "name": "wp_input",
+          "path": "/private/tmp/probata-member-window-actual-v2-20261015/actual-pytest/test_original_member_read_requ0/runs/proof.contract.fixture_member.20261015t164410z.1701267d/wp/wp_input.c",
+          "sha256": "df2ce29d380cfe35264e58a280211eaf14b8b7bc3679806fa4f8c891f9b76858"
+        },
+        {
+          "name": "wp_log",
+          "path": "/private/tmp/probata-member-window-actual-v2-20261015/actual-pytest/test_original_member_read_requ0/runs/proof.contract.fixture_member.20261015t164410z.1701267d/wp/frama-c.log",
+          "sha256": "b888f4b058e5bdd272f9cec4e24acd4dff36ee312baf0e7ffcb9d50cedce2284"
+        },
+        {
+          "name": "wp_goals",
+          "path": "/private/tmp/probata-member-window-actual-v2-20261015/actual-pytest/test_original_member_read_requ0/runs/proof.contract.fixture_member.20261015t164410z.1701267d/wp/wp-goals.json",
+          "sha256": "ecb8e8f58fed2a2686314054270f36b2456e500df3a18cf9dbb34ab5b5cce627"
+        },
+        {
+          "name": "wp_properties",
+          "path": "/private/tmp/probata-member-window-actual-v2-20261015/actual-pytest/test_original_member_read_requ0/runs/proof.contract.fixture_member.20261015t164410z.1701267d/wp/wp-properties.csv",
+          "sha256": "1c9e7813d3705ea4be8e50dba2f4c7ced3b89bee5fd4abd27b6762f1a4ca627d"
+        },
+        {
+          "name": "wp_inventory",
+          "path": "/private/tmp/probata-member-window-actual-v2-20261015/actual-pytest/test_original_member_read_requ0/runs/proof.contract.fixture_member.20261015t164410z.1701267d/wp/wp-inventory.json",
+          "sha256": "981fa0ab3d6dfd00c7fe938b421b52fac1d050ad5c376c6b88b3eb512ffabd53"
+        },
+        {
+          "name": "wp_normalized",
+          "path": "/private/tmp/probata-member-window-actual-v2-20261015/actual-pytest/test_original_member_read_requ0/runs/proof.contract.fixture_member.20261015t164410z.1701267d/wp/wp-normalized.c",
+          "sha256": "f11c5a4cc2f95524750b0d17c2b203b637ebfb68abfedee1ff3aaba5a7e2db80"
+        }
+      ],
+      "rte_initialization_goals_valid": 4,
+      "context_certificate_sha256": "ac6377e4ed0620ebada2be6e101eb4c72b25bf8f28e53a96bce188d948646c8b",
+      "context_check": {
+        "id": "swdb-member-windows-1",
+        "sha256": "a72c71ec24be7fe9b7d490cfd2d3a664000cc1399f99f327fbb8064dcfbb75b9"
+      },
+      "entry": "unit",
+      "inline_functions": [
+        "Buffer_get"
+      ],
+      "maximum_call_depth": 1,
+      "allowed_call_depth": 2,
+      "input_premises_added": [],
+      "unproved_goal_names": []
+    },
+    {
+      "id": "proof.contract.fixture_member.20261015t164417z.b65c8ca9",
+      "record": "/private/tmp/probata-member-window-actual-v2-20261015/actual-pytest/test_original_member_read_requ1/records/proofs/proof.contract.fixture_member.20261015t164417z.b65c8ca9.yaml",
+      "record_sha256": "e7b2dd382a31e038607d12faafa7d1d1f95f285e561417335134f09ef44c76ca",
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "ordinary": 15,
+      "ordinary_valid": 14,
+      "smoke": 1,
+      "smoke_valid": 1,
+      "reports": [
+        {
+          "name": "c_lowering",
+          "path": "/private/tmp/probata-member-window-actual-v2-20261015/actual-pytest/test_original_member_read_requ1/runs/proof.contract.fixture_member.20261015t164417z.b65c8ca9/wp/unit.c",
+          "sha256": "787cbc1c160e25b5ac848f68350d78e2ecc5b6fd8eddee91d0247bcb9cb58cec"
+        },
+        {
+          "name": "anchors",
+          "path": "/private/tmp/probata-member-window-actual-v2-20261015/actual-pytest/test_original_member_read_requ1/runs/proof.contract.fixture_member.20261015t164417z.b65c8ca9/wp/unit.anchors.json",
+          "sha256": "0efdb2d048c8aed06f976082737300491b1a519ccbc2eb262dc3271c2978594f"
+        },
+        {
+          "name": "wp_input",
+          "path": "/private/tmp/probata-member-window-actual-v2-20261015/actual-pytest/test_original_member_read_requ1/runs/proof.contract.fixture_member.20261015t164417z.b65c8ca9/wp/wp_input.c",
+          "sha256": "f463a8fb1fc970a0fe07e3ec6fcdf15d611280fda43a8d43558a47ab62cb423b"
+        },
+        {
+          "name": "wp_log",
+          "path": "/private/tmp/probata-member-window-actual-v2-20261015/actual-pytest/test_original_member_read_requ1/runs/proof.contract.fixture_member.20261015t164417z.b65c8ca9/wp/frama-c.log",
+          "sha256": "6455b7116c47a501faee7ae7e67977977018b125ed4ea73c7b0b51660696e507"
+        },
+        {
+          "name": "wp_goals",
+          "path": "/private/tmp/probata-member-window-actual-v2-20261015/actual-pytest/test_original_member_read_requ1/runs/proof.contract.fixture_member.20261015t164417z.b65c8ca9/wp/wp-goals.json",
+          "sha256": "3ade499eaacb5e1f4a53104e273fa3c1a93004fb72c03d88c11f04ae4c3029e7"
+        },
+        {
+          "name": "wp_properties",
+          "path": "/private/tmp/probata-member-window-actual-v2-20261015/actual-pytest/test_original_member_read_requ1/runs/proof.contract.fixture_member.20261015t164417z.b65c8ca9/wp/wp-properties.csv",
+          "sha256": "d658238be4bbc281878826e83dd5be1c395bc72fb494fe4afb71f0545a5e057a"
+        },
+        {
+          "name": "wp_inventory",
+          "path": "/private/tmp/probata-member-window-actual-v2-20261015/actual-pytest/test_original_member_read_requ1/runs/proof.contract.fixture_member.20261015t164417z.b65c8ca9/wp/wp-inventory.json",
+          "sha256": "52d41e39fde8e411468a70f67aac3dc02e2376b73cb70580202f610ce604c92f"
+        },
+        {
+          "name": "wp_normalized",
+          "path": "/private/tmp/probata-member-window-actual-v2-20261015/actual-pytest/test_original_member_read_requ1/runs/proof.contract.fixture_member.20261015t164417z.b65c8ca9/wp/wp-normalized.c",
+          "sha256": "0a3d949d8a191290a8c5808215334dd871105054cdda1e80703fab75b2d481ce"
+        },
+        {
+          "name": "handler",
+          "path": "/private/tmp/probata-member-window-actual-v2-20261015/actual-pytest/test_original_member_read_requ1/runs/proof.contract.fixture_member.20261015t164417z.b65c8ca9/wp/handler.json",
+          "sha256": "feab8a4f39baf506e5f793d79f7c376037faef9952ac736df20e564bde0f6ae3"
+        }
+      ],
+      "rte_initialization_goals_valid": 4,
+      "context_certificate_sha256": "61121974cce41078378c86b4a81bbb0a66507fc265e256b59b57a223d7a85545",
+      "context_check": {
+        "id": "swdb-member-windows-1",
+        "sha256": "a72c71ec24be7fe9b7d490cfd2d3a664000cc1399f99f327fbb8064dcfbb75b9"
+      },
+      "entry": "unit",
+      "inline_functions": [
+        "Buffer_get"
+      ],
+      "maximum_call_depth": 1,
+      "allowed_call_depth": 2,
+      "input_premises_added": [],
+      "unproved_goal_names": [
+        "typed_real_unit_assert_swdb_window_access_1"
+      ]
+    }
+  ],
+  "report_hashes_checked": 17,
+  "numeric_finite_case": {
+    "n": 1,
+    "i": 1,
+    "predicate": "0 <= i < n",
+    "holds": false,
+    "boundary": "demonstrates missing guaranteed-window bound; solver timeout is not itself a mathematical disproof"
+  },
+  "negative_boundary": "The numeric control stays not_proven on its member-window assertion. Its solver timeout is not a universal mathematical disproof; n=1,i=1 is an explicit finite missing-guaranteed-window case. Later goals dependent on the unproved assertion do not establish acceptance.",
+  "artifacts": [
+    {
+      "path": "/private/tmp/probata-member-window-actual-v2-20261015/launch-manifest.json",
+      "sha256": "8e8187011dbc501f115467382b7f1ccad3984c2c899911122c75b3ad6e931cf4"
+    },
+    {
+      "path": "/private/tmp/probata-member-window-actual-v2-20261015/source-recheck.json",
+      "sha256": "536ae45ad4e4e29db18a489d73c2dc7dd2541afe50c032ed466acc3408cbeb10"
+    },
+    {
+      "path": "/private/tmp/probata-member-window-actual-v2-20261015/results.json",
+      "sha256": "9c724a5ba577eb1b0fbef7c48536879e0554abc394b17a6c10625f49818df6dc"
+    },
+    {
+      "path": "/private/tmp/probata-member-window-actual-v2-20261015/standin.log",
+      "sha256": "a78091113776c47fba08a8b2d0a870e3de4d427046f6f7296a0a2b5b4f656210"
+    },
+    {
+      "path": "/private/tmp/probata-member-window-actual-v2-20261015/standin.xml",
+      "sha256": "f3d8349ecee05b1618cda73c3a2b4e081bdee81da1ab5444902d96513413c6b0"
+    },
+    {
+      "path": "/private/tmp/probata-member-window-actual-v2-20261015/actual.log",
+      "sha256": "0797fd8bb0889aee1b05e56d1b45682ffc84f10e1f3ed61d89d21727b81718e0"
+    },
+    {
+      "path": "/private/tmp/probata-member-window-actual-v2-20261015/actual.xml",
+      "sha256": "7a189be1b971b2ea5fd214dcab77cfaef5639a892f5f41caff11cfaed9fd8217"
+    },
+    {
+      "path": "/private/tmp/probata-member-window-actual-v2-20261015/audit.py",
+      "sha256": "b12f89358af517b142bf9c343921e6d0a7488f38b614b95ce28e9848582f47c6"
+    },
+    {
+      "path": "/private/tmp/probata-member-window-actual-v2-20261015/audit.json",
+      "sha256": "15836d9404c43c39f524f47539e5c66896e102159bdd1cc3b9f41905f38f5443"
+    },
+    {
+      "path": "/private/tmp/probata-member-window-actual-v2-20261015/run.py",
+      "sha256": "e17c9af28ec60d6df5e4a4d5b8bb4dc56bc607791a96df26b659419317a1fdeb"
+    },
+    {
+      "path": "/private/tmp/probata-member-window-actual-v2-20261015/test_member_windows_wp-original.py",
+      "sha256": "147137aefc2b9e5c16bbed8332e98a5a56004920e26e41f498f8eec01911b0cb"
+    },
+    {
+      "path": "/private/tmp/probata-member-window-actual-v2-20261015/safe-member-context.json",
+      "sha256": "2d3c91a303febba8189c8d72954e8fb3135a2f24d15fdf0009819f73a5f3fdc9"
+    },
+    {
+      "path": "/private/tmp/probata-member-window-actual-v2-20261015/negative-member-context.json",
+      "sha256": "dc43c34711a472f9b4c3d535ebfa7399c6827c13309b7c56fa278ccc60280d25"
+    },
+    {
+      "path": "/private/tmp/probata-member-window-actual-v2-20261015/final-composition.log",
+      "sha256": "41d3634f54bc4181bc1ef9c81cd3064b77f39af96d79c7b3bb30815a4de2099c"
+    },
+    {
+      "path": "/private/tmp/probata-member-window-actual-v2-20261015/final-composition.xml",
+      "sha256": "7f99c3c7ed93f41c6186ac31b10e23176571188fe46a368ef05afc20b152e5be"
+    }
+  ]
+}

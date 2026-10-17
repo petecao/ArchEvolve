@@ -1,0 +1,61 @@
+{
+  "format": "swdb.lanl17-finalize-progress-observer-independent-source-review.v1",
+  "checked_utc": "2026-10-09T02:07:15.039722+00:00",
+  "verdict": "PASS_SELECTED_R3_SOURCE_ONLY",
+  "reviewed_pins": [
+    {
+      "path": "/private/tmp/lanl17_observe_finalize_progress_metadata_20261008_a5_r3.py",
+      "bytes": 18212,
+      "sha256": "a59121983fbea8589a020b860c948665909c577929052e95b845a87dca00a90c"
+    },
+    {
+      "path": "/private/tmp/lanl17-finalize-progress-observer-action-draft-r3-20261008-a5.json",
+      "bytes": 19985,
+      "sha256": "47d3005d4aa5bfc252cc04e3eb51882fc1eaf89f925521fb587c25ff484ea0f8"
+    },
+    {
+      "path": "/private/tmp/lanl17_observe_finalize_progress_metadata_20261008_a5_r2.py",
+      "bytes": 17446,
+      "sha256": "6fe336e3939fdcc3d2f5b2d2ddb3f4891d962679fed2e47f0bd1927a1fc4a7c0"
+    },
+    {
+      "path": "/private/tmp/lanl17-finalize-progress-observer-action-draft-r2-20261008-a5.json",
+      "bytes": 19211,
+      "sha256": "8e9852c341b84442559eb41cf6dcbf5295e34198a90cce59c6dc42dd2935657a"
+    },
+    {
+      "path": "/private/tmp/lanl17-finalize-progress-observer-r3-nested-process-cause-derivation-20261008-a5.diff",
+      "bytes": 7709,
+      "sha256": "c76172d7f4524ce52621fd811770059808ead0397ad2a96a47290f4475b6f5b2"
+    },
+    {
+      "path": "/private/tmp/lanl17-finalize-progress-capture-20261008-2205-a5/progress-original.json",
+      "bytes": 308,
+      "sha256": "ed136b469bf626b79aa495ff81fc29119bb07d742285d49bbb4951fa8b1d7b96"
+    }
+  ],
+  "prior_native_schema_and_actual_original_review": {
+    "path": "/private/tmp/lanl17-finalize-progress-observer-independent-source-review-20261008-a5-r2.json",
+    "bytes": 4041,
+    "sha256": "7662cba144b1c5993f75a6bba5b37f499cf41c464d4e03059e8f8efbf2164046"
+  },
+  "checks": [
+    "Full source text/AST and complete R2-to-R3 diff inspected. Only process_rows and observe function AST changed; remaining functions/class/constants/imports/top-level guards exact.",
+    "All six bounded reader ASTs, closed actual native lease schema/generation514, kernel/FD9 continuity, phase facts, sourceR/pin double recheck, caps/privacy/deadlines unchanged.",
+    "Actual prior R2 original explicitly unknown Refused with reason8f6cea5e3a4e840f77d2d5265d107c739bd68d17833bb24d5a7630af4bbe4509; no completion/science failure inferred and original preserved.",
+    "Per-process operations are hardcoded finite tokens; diagnostics contain only preliminarily observed ownedPID/UID/proc inode and positive parsed start ticks when available, plus exception class and SHA256 of original nested reason. No raw message/path/cmdline/comm/environment/provider/auth body projected.",
+    "Per-process unreadability/parse/race/refusal is retained as unknown; previously owned process disappearance now unknown. FileNotFound before any owner proof skips vanished inventory entry, never claims idle/completion.",
+    "Anchor/public sets populated only after second stat start/inode identity check; failed process cannot become an anchor absent from proc table or cause missing-index lookup.",
+    "Unknown list bounded128. Any per-process error sets processes.state and outer state unknown while preserving independently collected phase/source/native facts and successful owned rows marked partial inventory.",
+    "Fatal deadline/overall bounds/source or native global races still return explicit outer unknown, not false completion. Presence/zero exit/anchor absence never supplies success admission.",
+    "Exact18212 source bytes inline; config19985/SHA47d3005d isolated native Python, unchanged source pins/empty collect/no stage/60remote180local;45alarm/output262144/processbounds retained."
+  ],
+  "findings": [],
+  "limits": [
+    "Source-only, no target main/import/copied function evaluation/tests/SSH/control execution.",
+    "Unknown row PID/inode/start fields are preliminary read observations, not proof that identity remained stable through the failed operation; consumers must retain unknown state.",
+    "Observed top state only means no process inventory error; per-file/native unknowns remain explicit and must not be interpreted as current clearance.",
+    "No FINALIZE completion or scientific admission; genuine completion originals, fresh continuity and parent review remain required."
+  ],
+  "scientific_admission": false
+}

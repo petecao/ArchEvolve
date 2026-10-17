@@ -1,0 +1,31 @@
+{
+  "format": "swdb.cpu-allocator-gross-public-proof.v1",
+  "updated": "2026-10-06 ET",
+  "implementation_commit": "ce38e9b",
+  "integrated_agreement_prerequisite": "208a0a45a27f5ea2f1ac019002202a9d06a6fe30",
+  "source_bundle_sha256": "2753e5adcd5ccf12d5d023542d91f880bed58e8558342bc65d4265c5a5115198",
+  "tdd": {
+    "initial_missing_module_red": true,
+    "wrong_abi_red": true,
+    "resealed_native_work_source_red": true,
+    "precollection_freeze_red": true,
+    "gross_resource_max_public_fixture_green": true
+  },
+  "focused_compatibility": {
+    "passed": 27,
+    "seconds": 38.76
+  },
+  "final_public_cross_receipt_partition_cases": {
+    "passed": 6,
+    "seconds": 12.01,
+    "combined_unique_bin_coverage": true,
+    "overlapping_paired_gross_abi_refused": true
+  },
+  "canonical_validation": "OK: 651 record(s) valid",
+  "prior_tracked_record_blobs_preserved": 651,
+  "native_timing_rerun": false,
+  "scope_precheck": "11-allocator-resource-scope-precheck-20261006.json",
+  "full_trial_model_admission": false,
+  "remaining": "Exact archived per_trial call-shape versus per_run source-call labels require tested producer/context reconciliation before final model freeze. Actual values/records stay immutable.",
+  "identity_sha256": "d743fc565cc34f7401a19cca5311ecb7a1176403c212bb14c7273e6f40595dc7"
+}

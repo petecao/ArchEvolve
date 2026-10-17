@@ -1,0 +1,112 @@
+{
+  "created": "2026-10-15",
+  "scope": "tickets22/24 conservative initializedness fix; not full C++/standard-model acceptance",
+  "source_commit": "c0870263e53e658c278102c1c1e04944530c2799",
+  "check": {
+    "id": "swdb-bounded-initialization-1",
+    "sha256": "b1392b00a5fcd2aabe443a45e808737f9bf1a0207c2434c4c0849da7194c5a3c"
+  },
+  "lowering": {
+    "c_lowering": {
+      "id": "swdb-c-lowering-6",
+      "sha256": "fcea0d12b13e3c4cbc9d124d5e23915194196d388c849f6e9709f7b67871c520"
+    },
+    "naming_rules": {
+      "id": "kept-names.3",
+      "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+    },
+    "clang": {
+      "id": "clang-22.1.8",
+      "sha256": "305697d3868243dca6e4aabf4f628df7de135d701eb4fd78f6a5d7528fef4395"
+    }
+  },
+  "red": {
+    "adapter_commit": "04c2b265",
+    "unused_local": "old public record was proven",
+    "expanded": "uninitialized alias/heap/partial-array and both sides/routes of equivalence were proven; a safe initialized-alias case was also proven and is deliberately refused by the coarse policy",
+    "expanded_test_result": "8 expected assertion failures (7 uninitialized-read route cases and 1 deliberate safe-alias narrowing control)"
+  },
+  "validation": [
+    {
+      "checkpoint": "d7d6918f",
+      "tests": "bounded initializedness, CBMC adapter/equivalence, C lowering, actual DX100 safe/size controls",
+      "result": "153 passed, 1 stale zero-cap CLI-error assertion failed; assertion corrected in final source",
+      "wall_seconds": 611.36,
+      "runner_peak_rss_mib": 312.2
+    },
+    {
+      "tests": "final initialization controls, corrected zero-cap assertion, standard-model restrictions, actual DX100 safe/domain/exit and dependency checks",
+      "result": "43 passed, 4 strict xfailed, 18 deselected",
+      "wall_seconds": 457.68,
+      "runner_peak_rss_mib": 259.1,
+      "xfail_boundary": "four test cases preserve five std vector jobs; precise initialized object/range policy pending ticket25"
+    }
+  ],
+  "execution_boundary": "Local functional tests ran under the configured shared two-slot verifier runner and 8 GiB RSS watchdog. The runtime lock documentation records prior user approval for two slots; parent preserves that policy during counted work. These checks are not a serial timing/feasibility study. No remote jobs. Future pytest batches use watchdog-only wrappers and leave verifier-slot acquisition to adapters.",
+  "input_domain": "Initialized scalar values, distinct nonnull fully initialized primitive pointer buffers of exactly the largest size bound. Logical sizes do not shorten buffers. Null/short/aliased/uninitialized caller objects excluded from this generated domain.",
+  "unsupported": "Automatic arrays/aggregates/classes/references/address escapes, heap, late initialization, unknown pointer origins/effects and unaudited models. These include safe programs and are unsupported, not UB refutations.",
+  "dx100_policy": {
+    "components": {
+      "ghost": "5fa3f12850eba75ccb254b1c1e8ab5c143488046949fbe0e4c965b55ecdb48e9",
+      "state": "b371131b4a3a7ef21ad654b0eaffac94b4c63252d63397ee8b67a6b017610701",
+      "c": "ad17837f8dc8aa61de019144f69d6aa6a68b49632caab8a9e48dabd73b6d7b34"
+    },
+    "external_calls": [
+      "add_mem_region",
+      "clear_mem_region",
+      "get_cacheable_tile_pointer",
+      "get_new_reg",
+      "get_new_tile",
+      "get_tile_size",
+      "maa_alu_scalar",
+      "maa_const",
+      "maa_indirect_load",
+      "maa_indirect_store_vector",
+      "maa_range_loop",
+      "maa_stream_load",
+      "swdb_dx_in_footprint",
+      "wait_ready"
+    ],
+    "boundary": "Exact reviewed model content plus fresh complete generation; all scalar call arguments checked, model state initialized/drawn, only audited tile pointer origin allowed. Manual source audit, not a general initializedness proof for arbitrary models."
+  },
+  "raw_research": {
+    "report": "/private/tmp/probata-cbmc-initializedness/REPORT.md",
+    "admission": "/private/tmp/probata-cbmc-initializedness/ADMISSION.md",
+    "results": "/private/tmp/probata-cbmc-initializedness/results.json"
+  },
+  "logs": {
+    "public-red-frozen-real.log": {
+      "path": "/private/tmp/probata-cbmc-initializedness/public-red-frozen-real.log",
+      "sha256": "1ecc34454947f724684a194e5ecf38844f2c62edbc553f54db3822030995058b"
+    },
+    "public-red-expanded.log": {
+      "path": "/private/tmp/probata-cbmc-initializedness/public-red-expanded.log",
+      "sha256": "a80a0a6eeef4b8763d7771f59e215c2a96282268fef83154ac3b6f20841d5622"
+    },
+    "public-red-controls.py": {
+      "path": "/private/tmp/probata-cbmc-initializedness/public-red-controls.py",
+      "sha256": "00fd771f5f3c5491c89b2d004c6636e023512be6db3974a738d911d73eef2374"
+    },
+    "public-controls.log": {
+      "path": "/private/tmp/probata-cbmc-initializedness/public-controls.log",
+      "sha256": "bdf4fd5a3e55a8ea89f7dd0aa307c53927465c474a051b9021a65d74ca62247e"
+    },
+    "final2.log": {
+      "path": "/private/tmp/probata-cbmc-initializedness/final2.log",
+      "sha256": "51c5bde26f4daffc320ee0460d5a8f27c0b738bdcb1a10664998e867fa7769d1"
+    },
+    "final2.jsonl": {
+      "path": "/private/tmp/probata-cbmc-initializedness/final2.jsonl",
+      "sha256": "cff3130ac4601742f777f5b73204e07e3c6586a08428b18631801f437136fc35"
+    },
+    "recheck.log": {
+      "path": "/private/tmp/probata-cbmc-initializedness/recheck.log",
+      "sha256": "192b1799bc03183ff0573cf16b25bb2137532d321fa1897bef06cc7b1daa1bfd"
+    },
+    "recheck.jsonl": {
+      "path": "/private/tmp/probata-cbmc-initializedness/recheck.jsonl",
+      "sha256": "8e2d287a8a93343225640e92367fb498a74d5cfbbc16670dfa48493b74f08632"
+    }
+  },
+  "followup": "The next t27 native pointer-arithmetic repair changes model.h. Its new bytes require a fresh audit and DX100_CONTENT refresh; the existing allowlist fails closed until then. Ticket25 precise std object/range initializedness remains pending."
+}

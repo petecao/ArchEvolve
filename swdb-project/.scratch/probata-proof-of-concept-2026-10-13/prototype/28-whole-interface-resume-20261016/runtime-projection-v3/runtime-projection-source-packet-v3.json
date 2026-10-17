@@ -1,0 +1,108 @@
+{
+  "binder": {
+    "bytes": 34803,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/whole_interface_v4.py",
+    "sha256": "217cdda6ca8eaea99526010f2c379dad963ca81c18c79322ce02ab8cc9296ed8"
+  },
+  "controls": {
+    "actual_compiler_TU": false,
+    "actual_full_projection": false,
+    "child_native_network_events": [],
+    "date": "2026-10-16 ET",
+    "errors": 0,
+    "failures": 0,
+    "project_imports": false,
+    "scope": "actual source binder/rechecker functions with synthetic diagnostic TU nodes over pinned original source/header spans; all six fixed pointer-getter sites",
+    "skips": 0,
+    "tests": 7
+  },
+  "copied_node_provenance": [
+    {
+      "bytes": 4419,
+      "function": "inventory",
+      "sha256": "510b958aee476be27c2cb89ff92fd6dc23d8a40b5957f9108a79c3edb17990c3"
+    },
+    {
+      "bytes": 1321,
+      "function": "validate_abi",
+      "sha256": "42682e4301eca5f3a3297a1cf03254297d45cd51a2fa40962877698ff81912a3"
+    },
+    {
+      "bytes": 231,
+      "function": "signature",
+      "sha256": "317ff28dad0ce714cb8e6f3b024c2a760f751373f938ca9636ed70c80ad0df9c"
+    },
+    {
+      "bytes": 490,
+      "function": "_span",
+      "sha256": "b49f788dce16cf4daa35d275b10511f00b0fd274b50df5dd658fe85eee4c5bd2"
+    },
+    {
+      "bytes": 9011,
+      "function": "bind_call",
+      "sha256": "b7d37b4cfb348e1c47e01b846f9e85a05d033dce69a2adbd30765fb9ab30fa88"
+    },
+    {
+      "bytes": 198,
+      "function": "recheck_binding",
+      "sha256": "9d0d24e0e7e72476f26b61560d264e41c5e55966d765630c0cd6142b9b2f5e30"
+    }
+  ],
+  "date": "2026-10-16 ET",
+  "declarator_edits": 9,
+  "files": [
+    {
+      "bytes": 2350,
+      "relative": "PLAN.md",
+      "sha256": "b1399997ad25b9eddfb52f0a24b63fe276b2aaa97a62296dc22fe216478150ba"
+    },
+    {
+      "bytes": 388,
+      "relative": "pure-controls-v3.json",
+      "sha256": "105a3002203e09dc22d53e6e7c9a5ef9733f550da8b6146881baf22a775e22cf"
+    },
+    {
+      "bytes": 882,
+      "relative": "pure-controls-v3.log",
+      "sha256": "97af05dcb12d4297de36162edc2ba55197117a7f0c2f798dad2316ce28efff64"
+    },
+    {
+      "bytes": 1177,
+      "relative": "runtime-projection-v3-inverse.json",
+      "sha256": "13a8e5e6afb50085e751a406af1a4edc02c3336db3180b606841ffc3c74d8f5f"
+    },
+    {
+      "bytes": 988,
+      "relative": "runtime-projection-v3-only.patch",
+      "sha256": "73d5fb187694edd94051669f115a0287c1d2e3b9e3290af8cfae074796234ca6"
+    },
+    {
+      "bytes": 23244,
+      "relative": "runtime_projection_v3.py",
+      "sha256": "e60e1ed82a0bbc4983bb4acd9ca0204fd4238ef8ed555c9dc4a2ab8800a07284"
+    },
+    {
+      "bytes": 9673,
+      "relative": "test_runtime_projection_v3.py",
+      "sha256": "d6b1127f9dd13b16855a30f208e0eb16eaeb71681f441ea52c99485459bb4008"
+    }
+  ],
+  "fixed_source_changed": false,
+  "full_ticket28": false,
+  "native_module_or_builder_rebound": false,
+  "original_source": {
+    "bytes": 4524,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/source_call_fixture_v2.cpp",
+    "sha256": "3148b662b2fbeaa7a8733569d5ea750bce8a598d4e883f9bc64cb1e27dae67cd"
+  },
+  "predecessor": {
+    "bytes": 6803,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/runtime-projection-v2/runtime-projection-source-packet-v2.json",
+    "sha256": "b52aee9f472356519cc3edb1fe23bc8e5c1e333dcbb969ebdb23c4d9c51c0c49"
+  },
+  "production_changes_applied": false,
+  "public_proof": false,
+  "runtime_and_receiver_and_complete_body_gates_unchanged": true,
+  "schema": "runtime-projection-source-packet-3",
+  "state": "FROZEN SOURCE-ONLY; independent review and coherent native/builder rebind pending"
+}

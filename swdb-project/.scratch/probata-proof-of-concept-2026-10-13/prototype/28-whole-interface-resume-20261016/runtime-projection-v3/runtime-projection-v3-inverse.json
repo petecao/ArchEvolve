@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-16 ET",
+  "predecessor": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/runtime-projection-v2/runtime_projection_v2.py",
+    "bytes": 23198,
+    "sha256": "645b34878191a695fb61bd6dbf2dd3bcb0f984199482c9611a19b9f9a3a4e69b"
+  },
+  "successor": {
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-whole-interface-resume-20261016/runtime-projection-v3/runtime_projection_v3.py",
+    "bytes": 23244,
+    "sha256": "e60e1ed82a0bbc4983bb4acd9ca0204fd4238ef8ed555c9dc4a2ab8800a07284"
+  },
+  "edits": [
+    {
+      "old": "fresh=api['recheck_binding'](record,normalized_tu,source_path=source_path,source_text=source,declarations=declarations,abi=abi)",
+      "new": "fresh=api['recheck_binding'](record,normalized_tu,caller=caller,call_range=record['call_range'],source_path=source_path,source_text=source,declarations=declarations,abi=abi)"
+    }
+  ],
+  "scope": "one exact callsite supplies mandatory caller/call_range; no other source/body/receiver/runtime/edit changes"
+}

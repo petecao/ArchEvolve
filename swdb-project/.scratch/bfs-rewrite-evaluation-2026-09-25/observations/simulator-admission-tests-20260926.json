@@ -1,0 +1,48 @@
+{
+  "created": "2026-09-26",
+  "evidence_kind": "local_test_results",
+  "scope": "Owned observer, fixed coverage driver and reader, witness continuation, fixed graph, simulator batch and series",
+  "root_commits": ["fd7fd31", "aeb399b"],
+  "isolated_export_commit": "01e5fc13cf25b56549cdd285c6a2e197e2190bbf",
+  "export_parent": "1018432fdb3800522d723afb874f3bffa41dd0e5",
+  "export": {
+    "verified_at_et": "2026-09-26 12:27 ET",
+    "repository": "ruchou/EvolveSWDB",
+    "branch": "codex/bfs-simulator-admission-20260926",
+    "remote_tip": "01e5fc13cf25b56549cdd285c6a2e197e2190bbf",
+    "boundary": "Code, tests, prospective plans and documentation only; excludes held provider records and raw artifacts; original two approved branches unchanged"
+  },
+  "files_changed": 13,
+  "runtime": "Python 3.12.6, macOS Apple Silicon",
+  "root_result": {
+    "passed": 183,
+    "skipped": 2,
+    "failed": 0,
+    "seconds": 26.32,
+    "exit_code": 0,
+    "log": "/private/tmp/bfs-simulator-admission-focused-20260926.log",
+    "sha256": "ca4b72ff797a0f47e786865313910359675ff1f58b77f0c8a9cbd04b3a279386"
+  },
+  "isolated_result": {
+    "passed": 183,
+    "skipped": 2,
+    "failed": 0,
+    "seconds": 24.90,
+    "exit_code": 0,
+    "log": "/private/tmp/bfs-simulator-export-01e5fc1-20260926-python312.log",
+    "sha256": "65e5f680454e17bb940022bccfb3453d25e6438ca4ee585c04faa2fe2ace2617"
+  },
+  "retained_failed_launcher": {
+    "reason": "Isolated worktree selected Python 3.14, which has no pytest; failed before test collection",
+    "log": "/private/tmp/bfs-simulator-export-01e5fc1-20260926.log",
+    "sha256": "c99d342a1664b93a03868ad56a22451965948da811503ce3b0d29ae5123b9dbb",
+    "exit_code": 1,
+    "correction": "Explicit Python 3.12.6 executable and PATH"
+  },
+  "limitations": [
+    "The two skipped tests require real Linux subreaper/pidfd behavior and remain mandatory before batch dispatch",
+    "Contract fixtures do not establish simulator correctness, coverage, timing, protocol qualification or a gain",
+    "This test result does not cover the subsequent separate witness launch helper",
+    "Remote checkout preparation is authorized; no actual witness, coverage or simulator batch has been launched from this code"
+  ]
+}

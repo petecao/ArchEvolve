@@ -1,0 +1,57 @@
+{
+  "created": "2026-09-26",
+  "observed_at_et": "2026-09-26T15:46:50-04:00",
+  "kind": "one_completed_cell_in_running_native_calibration",
+  "host": "mbit10",
+  "lane": "mbit10-evaluation-node1",
+  "generation": 402,
+  "collector_commit": "319645eab0a25c815fa03fe1c372d32b4ba45d10",
+  "analysis": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-one-thread-pilot-20260926-a1.dispatch/first-cell-fixed-policy-analysis.json",
+    "bytes": 8535,
+    "sha256": "da79da50a5fb0d6a66f46ac84810533bd3be02c504034aec7fcd70a53511edeb"
+  },
+  "pair": {
+    "path": "/data1/yanruj/EvolveSWDB_native_one_thread_20260926_a1/records/evaluation_pairs/bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.pair.yaml",
+    "bytes": 55401,
+    "sha256": "3eb3cd10ee8a45ef0a3274b77e138dbd4f4d79c548de8b7ebfb3313745aed842",
+    "canonical_sha256": "12e876e468f8bf0b3b1b1f464ae0ac66c0af8d4e8840ad7cf74f3d55d6e62a8f"
+  },
+  "cell": {
+    "implementation": "dx100-bfs-scalar",
+    "family": "uniform_random",
+    "baseline_checks": 30,
+    "candidate_checks": 30,
+    "maximum_relative_spread": 0.05084535,
+    "maximum_spread_role": "baseline",
+    "maximum_spread_source": 1234,
+    "spread_ceiling": 0.1,
+    "baseline_over_candidate": {
+      "ratio": 1.0014557894,
+      "confidence_interval": [
+        0.9973626956,
+        1.0051191835
+      ]
+    },
+    "candidate_over_baseline": {
+      "ratio": 0.9985463268,
+      "confidence_interval": [
+        0.9948955307,
+        1.0026400552
+      ]
+    },
+    "numerical_gain_legs": false,
+    "unmet_gates": []
+  },
+  "next_cell": {
+    "family": "upstream.uniform-random",
+    "started_et": "2026-09-26T15:44:03-04:00",
+    "pid": 3062933,
+    "start_ticks": 495377590
+  },
+  "whole_pilot_qualified": false,
+  "protocol_frozen": false,
+  "candidate_gain_claim": false,
+  "limitation": "Fixed A/A control for one completed cell only. All remaining primary cells and diagnostics, terminal cleanup and shared simulator gates still required. No canonical running-study records imported locally.",
+  "metadata_assembly_failure": "Initial metadata-only script named nonexistent bfs_paired.py; it failed before output creation, then used actual bfs_native_pair.py. No measurement repeated."
+}

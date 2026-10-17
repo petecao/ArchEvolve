@@ -1,0 +1,186 @@
+{
+  "format": "swdb.post-roi-budget-decision.v1",
+  "updated_at_et": "2026-10-03 12:13 ET",
+  "basis": "Actual a1 failure plus retained complete T17 v2 metadata; no point ratio or candidate gain used to choose the bound.",
+  "failed_attempt": {
+    "id": "typed-library-bfs-gem5-20261003-a1",
+    "evaluation_pin": {
+      "id": "typed-library-bfs-gem5-20261003-a1.timed.w0.baseline.evaluation",
+      "sha256": "013e7c5a5d0520022902f231ed1294b096fe63d4017c5dd26482f31c645f9743"
+    },
+    "workload": "uniform18",
+    "outcome": "missing_observation",
+    "correctness": "unverified",
+    "post_roi_ticks": 10000000000,
+    "stop_reason": "tick_limit",
+    "protected_verdicts": [],
+    "parent_results": [],
+    "point_ratio": null,
+    "peak_simulator_rss_kib": 32084980,
+    "checkpoint_files": 10,
+    "checkpoint_bytes": 73279622,
+    "publication": "8b68b2f0c8a7419dddb22d78989e11c826f21d66"
+  },
+  "historical_metadata": [
+    {
+      "id": "bfs-t17-routes-20260928-a3.baseline.uniform18.s0.r0.primary.evaluation",
+      "role": "baseline",
+      "workload": "uniform18",
+      "mode": "primary",
+      "requested_max_ticks": 100000000000000,
+      "observed_post_roi_ticks": 84000000000,
+      "outcome": "complete",
+      "availability": "remote_unverified on Mac; validated retained v2 metadata"
+    },
+    {
+      "id": "bfs-t17-routes-20260928-a3.baseline.uniform18.s0.r0.diagnostic.evaluation",
+      "role": "baseline",
+      "workload": "uniform18",
+      "mode": "diagnostic",
+      "requested_max_ticks": 100000000000000,
+      "observed_post_roi_ticks": 84000000000,
+      "outcome": "complete",
+      "availability": "remote_unverified on Mac; validated retained v2 metadata"
+    },
+    {
+      "id": "bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.primary.evaluation",
+      "role": "baseline",
+      "workload": "kronecker18",
+      "mode": "primary",
+      "requested_max_ticks": 100000000000000,
+      "observed_post_roi_ticks": 57000000000,
+      "outcome": "complete",
+      "availability": "remote_unverified on Mac; validated retained v2 metadata"
+    },
+    {
+      "id": "bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation",
+      "role": "baseline",
+      "workload": "kronecker18",
+      "mode": "diagnostic",
+      "requested_max_ticks": 100000000000000,
+      "observed_post_roi_ticks": 58000000000,
+      "outcome": "complete",
+      "availability": "remote_unverified on Mac; validated retained v2 metadata"
+    },
+    {
+      "id": "bfs-t17-routes-20260928-a3.candidate.uniform18.s0.r0.primary.evaluation",
+      "role": "candidate",
+      "workload": "uniform18",
+      "mode": "primary",
+      "requested_max_ticks": 100000000000000,
+      "observed_post_roi_ticks": 86000000000,
+      "outcome": "complete",
+      "availability": "remote_unverified on Mac; validated retained v2 metadata"
+    },
+    {
+      "id": "bfs-t17-routes-20260928-a3.candidate.uniform18.s0.r0.diagnostic.evaluation",
+      "role": "candidate",
+      "workload": "uniform18",
+      "mode": "diagnostic",
+      "requested_max_ticks": 100000000000000,
+      "observed_post_roi_ticks": 86000000000,
+      "outcome": "complete",
+      "availability": "remote_unverified on Mac; validated retained v2 metadata"
+    },
+    {
+      "id": "bfs-t17-routes-20260928-a3.candidate.kronecker18.s0.r0.primary.evaluation",
+      "role": "candidate",
+      "workload": "kronecker18",
+      "mode": "primary",
+      "requested_max_ticks": 100000000000000,
+      "observed_post_roi_ticks": 59000000000,
+      "outcome": "complete",
+      "availability": "remote_unverified on Mac; validated retained v2 metadata"
+    },
+    {
+      "id": "bfs-t17-routes-20260928-a3.candidate.kronecker18.s0.r0.diagnostic.evaluation",
+      "role": "candidate",
+      "workload": "kronecker18",
+      "mode": "diagnostic",
+      "requested_max_ticks": 100000000000000,
+      "observed_post_roi_ticks": 59000000000,
+      "outcome": "complete",
+      "availability": "remote_unverified on Mac; validated retained v2 metadata"
+    }
+  ],
+  "baseline_alone_max_observed_ticks": 84000000000,
+  "all_roles_max_observed_ticks": 86000000000,
+  "new_common_max_ticks": 100000000000000,
+  "verification": {
+    "review_base": "982d19b23eb0303ecacc938c5334e6479b861197",
+    "cause": "Actual first uniform18 baseline exhausted 10**10 post-seal ticks before protected verdict, parent result and exit witness.",
+    "old_max_ticks": 10000000000,
+    "new_max_ticks": 100000000000000,
+    "passed": 168,
+    "added_cases": 4,
+    "seconds": 6.39,
+    "red_loop": {
+      "failed": 4,
+      "passed": 6,
+      "receipt": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/post-roi-budget-red-junit-20261003.xml",
+      "sha256": "0acd5585b356918c6e31f04b68d80aadec6e45d68ddb6ff8801c1785a1566250"
+    },
+    "receipt": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/post-roi-budget-final-junit-20261003.xml",
+    "sha256": "d65d3974726478f0a633824b89cc145407168c79a5817ae32a488b57c3111128",
+    "standards_review": "passed",
+    "spec_review": "passed",
+    "preserved_constraints": [
+      "sealed ROI",
+      "strict v2 checker and witness",
+      "9000s total/7140s run/1800s checkpoint timed bounds",
+      "3600s total/2940s run/600s checkpoint companion bounds",
+      "36GiB memory/8GiB storage",
+      "16GB guest/MMIO",
+      "source/model/compiler/flags",
+      "no post-ROI CPU change"
+    ],
+    "fresh_attempt": "typed-library-bfs-gem5-20261003-a2; new prepare/protocol/binary pins required; not yet dispatched",
+    "failed_attempt_publication": "8b68b2f0c8a7419dddb22d78989e11c826f21d66",
+    "scope": "Local planner regression and historical validated public metadata; fresh actual successful execution is still required."
+  },
+  "independent_root_stop_audit": {
+    "observed_utc": "2026-10-03T16:10:48.799802+00:00",
+    "observed_et": "2026-10-03 12:10 ET",
+    "source_commit": "8b68b2f0c8a7419dddb22d78989e11c826f21d66",
+    "branch": "yanrujhou_main",
+    "both_socket_and_legacy_leases": "metadata released at12:10 ET; helper checked .lock instead of actual .lease, superseded by12:15/12:16 actual .lease checks",
+    "owned_driver_simulator_wrapper_processes": "none observed",
+    "raw_copy": "none",
+    "correction": "12:10 ET helper checked .lock instead of dispatcher .lease. Correct actual checks completed12:15 ET before synchronization; final readback12:16 ET rechecks actual locks. Three exactly listed empty auxiliary .lock files created by that helper were verified owned/empty/inode/mtime and removed; actual .lease files and raw evidence were untouched."
+  },
+  "fresh_attempt": "a2 pending source publication and sync, new prepare/protocol/actual binary pins, companions then timing",
+  "independent_root_sync_readback": {
+    "format": "swdb.post-roi-budget-sync-readback.v1",
+    "observed_utc": "2026-10-03T16:16:35.854711+00:00",
+    "observed_et": "2026-10-03 12:16 ET",
+    "source_commit": "b4c90216d8e18b507aa3193a9cefeb1bd947c3d6",
+    "branch": "yanrujhou_main",
+    "actual_lease_suffix": ".lease",
+    "leases": {
+      "node0": "kernel free/metadata released",
+      "node1": "kernel free/metadata released",
+      "legacy": "kernel free/metadata released"
+    },
+    "source_sync": "Git FF only after actual .lease checks and no owned measurement processes at16:15:28UTC",
+    "validated_records": 450,
+    "library_states": {
+      "shared_evaluated_on_target": 19,
+      "shared_certified": 2
+    },
+    "verification_max_ticks": 100000000000000,
+    "actual_reproduction": "fresh a2 not yet dispatched",
+    "operator_helper_correction": "12:10 ET helper checked .lock instead of dispatcher .lease. Correct actual checks completed12:15 ET before synchronization; final readback12:16 ET rechecks actual locks. Three exactly listed empty auxiliary .lock files created by that helper were verified owned/empty/inode/mtime and removed; actual .lease files and raw evidence were untouched.",
+    "auxiliary_cleanup": {
+      "exact_paths": [
+        "/data1/yanruj/lact-host-lease/mbit10-evaluation-node0.lock",
+        "/data1/yanruj/lact-host-lease/mbit10-evaluation-node1.lock",
+        "/data1/yanruj/lact-host-lease/mbit10-evaluation.lock"
+      ],
+      "files": 3,
+      "bytes": 0,
+      "creation_utc": "2026-10-03T16:10:48.799567+00:00",
+      "basis": "New empty files created by this turn; not historical raw/checkpoints or dispatcher leases"
+    },
+    "evidence_origin": "Live root SSH tool outputs; no raw copied, no source execution claimed from tests"
+  }
+}

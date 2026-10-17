@@ -1,0 +1,883 @@
+{
+ "created": "2026-10-04 21:25 ET",
+ "ticket": 68,
+ "purpose": "Re-certify the shared BFS (ticket 20) and BC (ticket 42) contract entries, and the two a7 best trees, with the knob_range and schedule_range checks (certify command 1.2). Mac strict functional certification; scratch records copy, not committed.",
+ "decision": "agent-decided under Yan-Ru's 2026-10-04 delegation; revisable",
+ "host": {
+  "system": "Darwin",
+  "architecture": "arm64",
+  "compiler": "/opt/homebrew/bin/g++-16"
+ },
+ "inputs": {
+  "t20": "library/dx100/peter-section5.patch on bfs-dx100-scalar-only-20260929-a1.source",
+  "bc": "library/dx100/bc-forward-pass.patch on bc-dx100-scalar-only-20261003-a1.source",
+  "best-kron": "extensa-gem5-bfs-20261004-a7.it4.kronecker.a2 (rebuilt tree, threshold 1)",
+  "best-uni": "extensa-gem5-bfs-20261004-a7.it8.uniform_random.a1 (rebuilt tree, threshold 1)"
+ },
+ "results": [
+  {
+   "which": "t20",
+   "certification": "certification.028d19d09b9a4b509c816fefebbedd9e",
+   "verdict": "certified",
+   "command_version": "1.2",
+   "command_sources_sha256": "0460500380b78491a978e21090751d18685bf4e52ed82c09518c65de5daa518f",
+   "contract": {
+    "id": "contract.bfs_read_offload",
+    "content_sha256": "867fac18c28938268242e7d4b60049f3c3e97113512a761cc8a763735a77db51"
+   },
+   "tree_sha256": "991de65287fe1fae3a20412704cccb6140a93f84cc11200032b20214f5174ff1",
+   "matrix": "10/10",
+   "controls_rejected": "20/20",
+   "not_rejected": [],
+   "legality_controls": [
+    [
+     "knob_out_of_range",
+     16384,
+     "rejected",
+     "knob_range",
+     [
+      "knob_range"
+     ]
+    ],
+    [
+     "schedule_out_of_range",
+     16384,
+     "rejected",
+     "schedule_range",
+     [
+      "schedule_range"
+     ]
+    ],
+    [
+     "knob_out_of_range",
+     1024,
+     "rejected",
+     "knob_range",
+     [
+      "knob_range"
+     ]
+    ],
+    [
+     "schedule_out_of_range",
+     1024,
+     "rejected",
+     "schedule_range",
+     [
+      "schedule_range"
+     ]
+    ]
+   ],
+   "matrix_legality_example": [
+    {
+     "check": "knob_range",
+     "status": "passed",
+     "problems": [],
+     "knobs": [
+      {
+       "name": "frontier_threshold",
+       "macro": "SWDB_KNOB_FRONTIER_THRESHOLD",
+       "value": 64,
+       "source": "contract_default"
+      },
+      {
+       "name": "chunk_size",
+       "macro": "SWDB_KNOB_CHUNK_SIZE",
+       "value": 16384,
+       "source": "contract_default"
+      },
+      {
+       "name": "schedule",
+       "macro": "SWDB_KNOB_SCHEDULE",
+       "value": "dynamic",
+       "source": "contract_default"
+      },
+      {
+       "name": "schedule_granularity",
+       "macro": "SWDB_KNOB_SCHEDULE_GRANULARITY",
+       "value": 1,
+       "source": "contract_default"
+      }
+     ]
+    },
+    {
+     "check": "schedule_range",
+     "status": "passed",
+     "problems": [],
+     "schedules": [
+      {
+       "line": 104,
+       "pragma": "#pragma omp for schedule(dynamic,1)",
+       "kind": "dynamic",
+       "chunk": 1
+      },
+      {
+       "line": 136,
+       "pragma": "#pragma omp for nowait",
+       "kind": "default",
+       "chunk": null
+      },
+      {
+       "line": 157,
+       "pragma": "#pragma omp for reduction(+ : scout_count) nowait",
+       "kind": "default",
+       "chunk": null
+      },
+      {
+       "line": 176,
+       "pragma": "#pragma omp parallel for",
+       "kind": "default",
+       "chunk": null
+      },
+      {
+       "line": 188,
+       "pragma": "#pragma omp for nowait",
+       "kind": "default",
+       "chunk": null
+      },
+      {
+       "line": 199,
+       "pragma": "#pragma omp parallel for",
+       "kind": "default",
+       "chunk": null
+      },
+      {
+       "line": 254,
+       "pragma": "#pragma omp parallel for",
+       "kind": "default",
+       "chunk": null
+      }
+     ]
+    }
+   ],
+   "clause_controls": [
+    {
+     "clause": "L1",
+     "control": "dropped_continuation",
+     "check": "frontier_size_equality",
+     "source": "contract",
+     "matched": true,
+     "enforceable": true
+    },
+    {
+     "clause": "L2",
+     "control": "skipped_cas_recheck",
+     "check": "duplicate_frontier",
+     "source": "contract",
+     "matched": true,
+     "enforceable": true
+    },
+    {
+     "clause": "L4",
+     "control": "skipped_cas_recheck",
+     "check": "duplicate_frontier",
+     "source": "contract",
+     "matched": true,
+     "enforceable": true
+    },
+    {
+     "clause": "frontier_threshold",
+     "control": "chunk_off_by_one",
+     "check": "knob_range",
+     "source": "contract",
+     "matched": false,
+     "enforceable": false,
+     "reason": "control_cannot_exercise_check"
+    },
+    {
+     "clause": "frontier_threshold",
+     "control": "knob_out_of_range",
+     "check": "knob_range",
+     "source": "certifier",
+     "matched": true,
+     "enforceable": true
+    },
+    {
+     "clause": "chunk_size",
+     "control": "chunk_off_by_one",
+     "check": "tile_truncation",
+     "source": "contract",
+     "matched": true,
+     "enforceable": true
+    },
+    {
+     "clause": "schedule",
+     "control": "shared_context",
+     "check": "schedule_range",
+     "source": "contract",
+     "matched": false,
+     "enforceable": false,
+     "reason": "control_cannot_exercise_check"
+    },
+    {
+     "clause": "schedule",
+     "control": "schedule_out_of_range",
+     "check": "schedule_range",
+     "source": "certifier",
+     "matched": true,
+     "enforceable": true
+    },
+    {
+     "clause": "once_enqueue",
+     "control": "forged_frontier",
+     "check": "duplicate_frontier",
+     "source": "contract",
+     "matched": true,
+     "enforceable": true
+    }
+   ]
+  },
+  {
+   "which": "bc",
+   "certification": "certification.032979943b5640d7a99e2caca3e9b489",
+   "verdict": "certified",
+   "command_version": "1.2",
+   "command_sources_sha256": "0460500380b78491a978e21090751d18685bf4e52ed82c09518c65de5daa518f",
+   "contract": {
+    "id": "contract.bc_read_offload",
+    "content_sha256": "969276431d9169701a5ff5862fc422e7578e54bf27419fb1d1d1ece63f90dc9a"
+   },
+   "tree_sha256": "d6f86eb6f33798ca43afa1b6cfdc462ebc6a5ffdebd3b2a7601082257dceb3b9",
+   "matrix": "10/10",
+   "controls_rejected": "28/28",
+   "not_rejected": [],
+   "legality_controls": [
+    [
+     "knob_out_of_range",
+     16384,
+     "rejected",
+     "knob_range",
+     [
+      "knob_range"
+     ]
+    ],
+    [
+     "schedule_out_of_range",
+     16384,
+     "rejected",
+     "schedule_range",
+     [
+      "schedule_range"
+     ]
+    ],
+    [
+     "knob_out_of_range",
+     1024,
+     "rejected",
+     "knob_range",
+     [
+      "knob_range"
+     ]
+    ],
+    [
+     "schedule_out_of_range",
+     1024,
+     "rejected",
+     "schedule_range",
+     [
+      "schedule_range"
+     ]
+    ]
+   ],
+   "matrix_legality_example": [
+    {
+     "check": "knob_range",
+     "status": "passed",
+     "problems": [],
+     "knobs": [
+      {
+       "name": "frontier_threshold",
+       "macro": "SWDB_KNOB_FRONTIER_THRESHOLD",
+       "value": 64,
+       "source": "contract_default"
+      },
+      {
+       "name": "chunk_size",
+       "macro": "SWDB_KNOB_CHUNK_SIZE",
+       "value": 16384,
+       "source": "contract_default"
+      },
+      {
+       "name": "schedule",
+       "macro": "SWDB_KNOB_SCHEDULE",
+       "value": "dynamic",
+       "source": "contract_default"
+      },
+      {
+       "name": "schedule_granularity",
+       "macro": "SWDB_KNOB_SCHEDULE_GRANULARITY",
+       "value": 1,
+       "source": "contract_default"
+      }
+     ]
+    },
+    {
+     "check": "schedule_range",
+     "status": "passed",
+     "problems": [],
+     "schedules": [
+      {
+       "line": 125,
+       "pragma": "#pragma omp for schedule(dynamic,1)",
+       "kind": "dynamic",
+       "chunk": 1
+      },
+      {
+       "line": 158,
+       "pragma": "#pragma omp for schedule(dynamic, 64) nowait",
+       "kind": "dynamic",
+       "chunk": 64
+      },
+      {
+       "line": 247,
+       "pragma": "#pragma omp parallel for schedule(dynamic, 64)",
+       "kind": "dynamic",
+       "chunk": 64
+      },
+      {
+       "line": 267,
+       "pragma": "#pragma omp parallel for reduction(max : biggest_score)",
+       "kind": "default",
+       "chunk": null
+      },
+      {
+       "line": 270,
+       "pragma": "#pragma omp parallel for",
+       "kind": "default",
+       "chunk": null
+      }
+     ]
+    }
+   ],
+   "clause_controls": [
+    {
+     "clause": "L1",
+     "control": "dropped_continuation",
+     "check": "frontier_size_equality",
+     "source": "contract",
+     "matched": true,
+     "enforceable": true
+    },
+    {
+     "clause": "L2",
+     "control": "skipped_cas_recheck",
+     "check": "duplicate_frontier",
+     "source": "contract",
+     "matched": true,
+     "enforceable": true
+    },
+    {
+     "clause": "L4",
+     "control": "skipped_cas_recheck",
+     "check": "duplicate_frontier",
+     "source": "contract",
+     "matched": true,
+     "enforceable": true
+    },
+    {
+     "clause": "L4",
+     "control": "dropped_successor_bit",
+     "check": "verifier",
+     "source": "plugin",
+     "matched": true,
+     "enforceable": true
+    },
+    {
+     "clause": "L4",
+     "control": "shifted_edge_index",
+     "check": "verifier",
+     "source": "plugin",
+     "matched": true,
+     "enforceable": true
+    },
+    {
+     "clause": "L4",
+     "control": "shifted_path_count_source",
+     "check": "verifier",
+     "source": "plugin",
+     "matched": true,
+     "enforceable": true
+    },
+    {
+     "clause": "BC-L1",
+     "control": "stale_depth_hint",
+     "check": "verifier",
+     "source": "contract",
+     "matched": true,
+     "enforceable": true
+    },
+    {
+     "clause": "frontier_threshold",
+     "control": "chunk_off_by_one",
+     "check": "knob_range",
+     "source": "contract",
+     "matched": false,
+     "enforceable": false,
+     "reason": "control_cannot_exercise_check"
+    },
+    {
+     "clause": "frontier_threshold",
+     "control": "knob_out_of_range",
+     "check": "knob_range",
+     "source": "certifier",
+     "matched": true,
+     "enforceable": true
+    },
+    {
+     "clause": "chunk_size",
+     "control": "chunk_off_by_one",
+     "check": "tile_truncation",
+     "source": "contract",
+     "matched": true,
+     "enforceable": true
+    },
+    {
+     "clause": "schedule",
+     "control": "shared_context",
+     "check": "schedule_range",
+     "source": "contract",
+     "matched": false,
+     "enforceable": false,
+     "reason": "control_cannot_exercise_check"
+    },
+    {
+     "clause": "schedule",
+     "control": "schedule_out_of_range",
+     "check": "schedule_range",
+     "source": "certifier",
+     "matched": true,
+     "enforceable": true
+    },
+    {
+     "clause": "once_enqueue",
+     "control": "forged_frontier",
+     "check": "duplicate_frontier",
+     "source": "contract",
+     "matched": true,
+     "enforceable": true
+    }
+   ]
+  },
+  {
+   "which": "best-kron",
+   "certification": "certification.e45ee7ed74ce43cd9e2e0ccd17c9d996",
+   "verdict": "certified",
+   "command_version": "1.2",
+   "command_sources_sha256": "0460500380b78491a978e21090751d18685bf4e52ed82c09518c65de5daa518f",
+   "contract": {
+    "id": "contract.bfs_read_offload",
+    "content_sha256": "867fac18c28938268242e7d4b60049f3c3e97113512a761cc8a763735a77db51"
+   },
+   "tree_sha256": "c8f4bf16b26ddf5ce243170ebebcfbe0cd4afa11be38c5de970461a955e3414c",
+   "matrix": "10/10",
+   "controls_rejected": "20/20",
+   "not_rejected": [],
+   "legality_controls": [
+    [
+     "knob_out_of_range",
+     16384,
+     "rejected",
+     "knob_range",
+     [
+      "knob_range"
+     ]
+    ],
+    [
+     "schedule_out_of_range",
+     16384,
+     "rejected",
+     "schedule_range",
+     [
+      "schedule_range"
+     ]
+    ],
+    [
+     "knob_out_of_range",
+     1024,
+     "rejected",
+     "knob_range",
+     [
+      "knob_range"
+     ]
+    ],
+    [
+     "schedule_out_of_range",
+     1024,
+     "rejected",
+     "schedule_range",
+     [
+      "schedule_range"
+     ]
+    ]
+   ],
+   "matrix_legality_example": [
+    {
+     "check": "knob_range",
+     "status": "passed",
+     "problems": [],
+     "knobs": [
+      {
+       "name": "frontier_threshold",
+       "macro": "SWDB_KNOB_FRONTIER_THRESHOLD",
+       "value": 1,
+       "source": "assignment"
+      },
+      {
+       "name": "chunk_size",
+       "macro": "SWDB_KNOB_CHUNK_SIZE",
+       "value": 16384,
+       "source": "assignment"
+      },
+      {
+       "name": "schedule",
+       "macro": "SWDB_KNOB_SCHEDULE",
+       "value": "dynamic",
+       "source": "contract_default"
+      },
+      {
+       "name": "schedule_granularity",
+       "macro": "SWDB_KNOB_SCHEDULE_GRANULARITY",
+       "value": 1,
+       "source": "contract_default"
+      }
+     ]
+    },
+    {
+     "check": "schedule_range",
+     "status": "passed",
+     "problems": [],
+     "schedules": [
+      {
+       "line": 119,
+       "pragma": "#pragma omp for schedule(dynamic, 1) nowait",
+       "kind": "dynamic",
+       "chunk": 1
+      },
+      {
+       "line": 200,
+       "pragma": "#pragma omp for nowait",
+       "kind": "default",
+       "chunk": null
+      },
+      {
+       "line": 230,
+       "pragma": "#pragma omp for reduction(+ : scout_count) nowait",
+       "kind": "default",
+       "chunk": null
+      },
+      {
+       "line": 249,
+       "pragma": "#pragma omp parallel for",
+       "kind": "default",
+       "chunk": null
+      },
+      {
+       "line": 261,
+       "pragma": "#pragma omp for nowait",
+       "kind": "default",
+       "chunk": null
+      },
+      {
+       "line": 272,
+       "pragma": "#pragma omp parallel for",
+       "kind": "default",
+       "chunk": null
+      },
+      {
+       "line": 329,
+       "pragma": "#pragma omp parallel for",
+       "kind": "default",
+       "chunk": null
+      }
+     ]
+    }
+   ],
+   "clause_controls": [
+    {
+     "clause": "L1",
+     "control": "dropped_continuation",
+     "check": "frontier_size_equality",
+     "source": "contract",
+     "matched": true,
+     "enforceable": true
+    },
+    {
+     "clause": "L2",
+     "control": "skipped_cas_recheck",
+     "check": "duplicate_frontier",
+     "source": "contract",
+     "matched": true,
+     "enforceable": true
+    },
+    {
+     "clause": "L4",
+     "control": "skipped_cas_recheck",
+     "check": "duplicate_frontier",
+     "source": "contract",
+     "matched": true,
+     "enforceable": true
+    },
+    {
+     "clause": "frontier_threshold",
+     "control": "chunk_off_by_one",
+     "check": "knob_range",
+     "source": "contract",
+     "matched": false,
+     "enforceable": false,
+     "reason": "control_cannot_exercise_check"
+    },
+    {
+     "clause": "frontier_threshold",
+     "control": "knob_out_of_range",
+     "check": "knob_range",
+     "source": "certifier",
+     "matched": true,
+     "enforceable": true
+    },
+    {
+     "clause": "chunk_size",
+     "control": "chunk_off_by_one",
+     "check": "tile_truncation",
+     "source": "contract",
+     "matched": true,
+     "enforceable": true
+    },
+    {
+     "clause": "schedule",
+     "control": "shared_context",
+     "check": "schedule_range",
+     "source": "contract",
+     "matched": false,
+     "enforceable": false,
+     "reason": "control_cannot_exercise_check"
+    },
+    {
+     "clause": "schedule",
+     "control": "schedule_out_of_range",
+     "check": "schedule_range",
+     "source": "certifier",
+     "matched": true,
+     "enforceable": true
+    },
+    {
+     "clause": "once_enqueue",
+     "control": "forged_frontier",
+     "check": "duplicate_frontier",
+     "source": "contract",
+     "matched": true,
+     "enforceable": true
+    }
+   ]
+  },
+  {
+   "which": "best-uni",
+   "certification": "certification.fb19e082ea3a4fdbbf1a4dda63a76fbb",
+   "verdict": "certified",
+   "command_version": "1.2",
+   "command_sources_sha256": "0460500380b78491a978e21090751d18685bf4e52ed82c09518c65de5daa518f",
+   "contract": {
+    "id": "contract.bfs_read_offload",
+    "content_sha256": "867fac18c28938268242e7d4b60049f3c3e97113512a761cc8a763735a77db51"
+   },
+   "tree_sha256": "d63c714aacf820cfa8aceadbd802f3d8dd8833666bd3921c0b320b7be37f3e89",
+   "matrix": "10/10",
+   "controls_rejected": "20/20",
+   "not_rejected": [],
+   "legality_controls": [
+    [
+     "knob_out_of_range",
+     16384,
+     "rejected",
+     "knob_range",
+     [
+      "knob_range"
+     ]
+    ],
+    [
+     "schedule_out_of_range",
+     16384,
+     "rejected",
+     "schedule_range",
+     [
+      "schedule_range"
+     ]
+    ],
+    [
+     "knob_out_of_range",
+     1024,
+     "rejected",
+     "knob_range",
+     [
+      "knob_range"
+     ]
+    ],
+    [
+     "schedule_out_of_range",
+     1024,
+     "rejected",
+     "schedule_range",
+     [
+      "schedule_range"
+     ]
+    ]
+   ],
+   "matrix_legality_example": [
+    {
+     "check": "knob_range",
+     "status": "passed",
+     "problems": [],
+     "knobs": [
+      {
+       "name": "frontier_threshold",
+       "macro": "SWDB_KNOB_FRONTIER_THRESHOLD",
+       "value": 1,
+       "source": "assignment"
+      },
+      {
+       "name": "chunk_size",
+       "macro": "SWDB_KNOB_CHUNK_SIZE",
+       "value": 16384,
+       "source": "assignment"
+      },
+      {
+       "name": "schedule",
+       "macro": "SWDB_KNOB_SCHEDULE",
+       "value": "dynamic",
+       "source": "contract_default"
+      },
+      {
+       "name": "schedule_granularity",
+       "macro": "SWDB_KNOB_SCHEDULE_GRANULARITY",
+       "value": 1,
+       "source": "contract_default"
+      }
+     ]
+    },
+    {
+     "check": "schedule_range",
+     "status": "passed",
+     "problems": [],
+     "schedules": [
+      {
+       "line": 119,
+       "pragma": "#pragma omp for schedule(dynamic, 1) nowait",
+       "kind": "dynamic",
+       "chunk": 1
+      },
+      {
+       "line": 200,
+       "pragma": "#pragma omp for nowait",
+       "kind": "default",
+       "chunk": null
+      },
+      {
+       "line": 230,
+       "pragma": "#pragma omp for reduction(+ : scout_count) nowait",
+       "kind": "default",
+       "chunk": null
+      },
+      {
+       "line": 249,
+       "pragma": "#pragma omp parallel for",
+       "kind": "default",
+       "chunk": null
+      },
+      {
+       "line": 261,
+       "pragma": "#pragma omp for nowait",
+       "kind": "default",
+       "chunk": null
+      },
+      {
+       "line": 272,
+       "pragma": "#pragma omp parallel for",
+       "kind": "default",
+       "chunk": null
+      },
+      {
+       "line": 329,
+       "pragma": "#pragma omp parallel for",
+       "kind": "default",
+       "chunk": null
+      }
+     ]
+    }
+   ],
+   "clause_controls": [
+    {
+     "clause": "L1",
+     "control": "dropped_continuation",
+     "check": "frontier_size_equality",
+     "source": "contract",
+     "matched": true,
+     "enforceable": true
+    },
+    {
+     "clause": "L2",
+     "control": "skipped_cas_recheck",
+     "check": "duplicate_frontier",
+     "source": "contract",
+     "matched": true,
+     "enforceable": true
+    },
+    {
+     "clause": "L4",
+     "control": "skipped_cas_recheck",
+     "check": "duplicate_frontier",
+     "source": "contract",
+     "matched": true,
+     "enforceable": true
+    },
+    {
+     "clause": "frontier_threshold",
+     "control": "chunk_off_by_one",
+     "check": "knob_range",
+     "source": "contract",
+     "matched": false,
+     "enforceable": false,
+     "reason": "control_cannot_exercise_check"
+    },
+    {
+     "clause": "frontier_threshold",
+     "control": "knob_out_of_range",
+     "check": "knob_range",
+     "source": "certifier",
+     "matched": true,
+     "enforceable": true
+    },
+    {
+     "clause": "chunk_size",
+     "control": "chunk_off_by_one",
+     "check": "tile_truncation",
+     "source": "contract",
+     "matched": true,
+     "enforceable": true
+    },
+    {
+     "clause": "schedule",
+     "control": "shared_context",
+     "check": "schedule_range",
+     "source": "contract",
+     "matched": false,
+     "enforceable": false,
+     "reason": "control_cannot_exercise_check"
+    },
+    {
+     "clause": "schedule",
+     "control": "schedule_out_of_range",
+     "check": "schedule_range",
+     "source": "certifier",
+     "matched": true,
+     "enforceable": true
+    },
+    {
+     "clause": "once_enqueue",
+     "control": "forged_frontier",
+     "check": "duplicate_frontier",
+     "source": "contract",
+     "matched": true,
+     "enforceable": true
+    }
+   ]
+  }
+ ]
+}

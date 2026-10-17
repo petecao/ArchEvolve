@@ -1,0 +1,22 @@
+# Prepared: 2026-10-06 ET. Not frozen; run only after exact counts and final 11/17 bundle.
+message_version: '1.0'
+id: generality.bfs.maple.kron-g16.t2.protocol.final.a1
+version: 1
+settings:
+  mode: estimated
+  estimator_version: swdb.analytic.v1
+  target_description: maple-isca2022.fpga-reference.t2
+  threads: 2
+  inputs:
+  - kron-g16-k16
+  input_run_arguments:
+    kron-g16-k16:
+    - -g
+    - '16'
+    - -k
+    - '16'
+    - -n
+    - '5'
+  roi: gapbs.trial_lambda.v1
+  sources:
+  - gapbs-bfs-do

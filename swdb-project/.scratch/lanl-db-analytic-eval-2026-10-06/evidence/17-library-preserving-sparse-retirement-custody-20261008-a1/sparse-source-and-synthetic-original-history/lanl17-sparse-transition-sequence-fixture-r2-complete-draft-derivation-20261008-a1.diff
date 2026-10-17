@@ -1,0 +1,138 @@
+--- /private/tmp/lanl17_sparse_retirement_transition_sequence_virtual_regression_source_20261008_a1.py
++++ /private/tmp/lanl17_sparse_retirement_transition_sequence_virtual_regression_source_20261008_a1_r2.py
+@@ -9,6 +9,7 @@
+ import copy
+ import hashlib
+ import json
++import os
+ from pathlib import Path, PurePosixPath
+ import stat
+ from types import SimpleNamespace
+@@ -61,7 +62,7 @@
+     for name in ('LIMITS','RETIREMENT_STAT_FIELDS','RETIREMENT_PATTERN'):
+         assignments.append(copy.deepcopy(next(n for n in module.body if isinstance(n, ast.Assign)
+             and any(isinstance(t, ast.Name) and t.id == name for t in n.targets))))
+-    selected = [copy.deepcopy(methods[n]) for n in ('library_snapshot','retained_poststate','completed_names','git')]
++    selected = [copy.deepcopy(methods[n]) for n in ('library_snapshot','retained_poststate','completed_names','git','gate')]
+     original_perform = methods['perform']
+     first = next(i for i,n in enumerate(original_perform.body) if isinstance(n,ast.Assign)
+                  and any(isinstance(t,ast.Name) and t.id == 'first' for t in n.targets))
+@@ -80,7 +81,8 @@
+         raise AssertionError('no_target_imports')
+     context = {'__name__':'SYNTHETIC_closed_slice','hashlib':hashlib,'json':json,'stat':stat,
+         'P':VirtualPath,'BASE':VirtualPath(BASE_TEXT),'PRIMARY':VirtualPath(PRIMARY_TEXT),
+-        'ROWS':{ROW:{'head':HEAD}},'UID':SYNTHETIC_UID,'now':lambda:'SYNTHETIC_TIME',
++        'ROWS':{ROW:{'head':HEAD},'row-b':{'head':'b'*40}},'UID':SYNTHETIC_UID,'os':SimpleNamespace(fsencode=os.fsencode),
++        'now':lambda:'SYNTHETIC_TIME',
+         '__file__':'/SYNTHETIC/source.py'}
+     ast.fix_missing_locations(closed)
+     # This definition lift happens ONLY in the later explicitly reviewed batch.
+@@ -196,10 +198,11 @@
+ 
+ 
+ class OperationWorld:
+-    def __init__(self,context,fail=None):
++    def __init__(self,context,fail=None,fail_row='row-a'):
+         self.context = context
+         self.args = SimpleNamespace(select=['row-a','row-b'],retire=True,
+             plan='/SYNTHETIC/plan.json',plan_sha256=PIN_SHA)
++        self.selected = [VirtualPath(BASE_TEXT)/name for name in self.args.select]
+         self.facts = {'completed_retirements':[]}
+         self.current_retirement = None
+         self.retirement_transition_witnesses = {}
+@@ -210,11 +213,17 @@
+         self.raw_before = {'SYNTHETIC_RAW':'same'}
+         self.events = []
+         self.fail = fail
++        self.fail_row = fail_row
++        self.raw_calls = 0
+ 
+     def completed_names(self): return self.context['ExactMethods'].completed_names(self)
+     def gate(self):
+         self.events.append(('initial_metadata',tuple(self.completed_names())))
+-        return {'trees':{'row-a':{},'row-b':{}},'processes':{'performed':False}}
++        return self.context['ExactMethods'].gate(self)
++    def privacy_gate(self): self.events.append(('privacy',)); return {}
++    def tree(self,path,head,hash_regular_bytes=True):
++        self.events.append(('initial_tree',path.name,hash_regular_bytes))
++        return {'SYNTHETIC_regular_bytes_verified':hash_regular_bytes}
+     def left(self): return 1000
+     def pre_retire_gate(self,name): self.events.append(('full_byte_precheck',name))
+     def read(self,path,cap=None): return PIN_BYTES,{}
+@@ -234,16 +243,17 @@
+                 or name not in self.retirement_transition_witnesses:
+             raise AssertionError('one_exact_marked_native_operation')
+         self.events.append(('native_read_tree',name))
+-        if self.fail == 'native': raise self.context['Refused']('SYNTHETIC_native_failure')
++        if self.fail == 'native' and name == self.fail_row: raise self.context['Refused']('SYNTHETIC_native_failure')
+     def close_retirement(self,name):
+         self.events.append(('poststate_proof_and_private_original',name))
+-        if self.fail == 'poststate': raise self.context['Refused']('SYNTHETIC_poststate_failure')
++        if self.fail == 'poststate' and name == self.fail_row: raise self.context['Refused']('SYNTHETIC_poststate_failure')
+         self.retirement_poststates[name] = {'SYNTHETIC_poststate':name}
+         return {'row':name,'private_original_poststate_pin':{'SYNTHETIC_pin':name}}
+     def retain_git(self): self.events.append(('retained_Git',))
+     def protect(self): self.events.append(('protected',))
+     def stable_inventory(self): self.events.append(('stable',tuple(self.completed_names())))
+-    def receipts_and_raw(self): self.events.append(('final_full_RAW',)); return self.raw_before
++    def receipts_and_raw(self):
++        self.raw_calls += 1; self.events.append(('full_RAW',self.raw_calls)); return self.raw_before
+     def aliases_and_sources(self): self.events.append(('final_aliases',))
+     def pinned(self,pin,cap=None): self.events.append(('private_original_bytes',)); return b'SYNTHETIC'
+     def library_snapshot(self,name,full_bytes=False): self.events.append(('library_full',name,full_bytes))
+@@ -280,9 +290,13 @@
+     def test_transition_permissions_refuse_even_with_same_bytes(self):
+         for relative,mode in (('info',stat.S_IFDIR|0o775),('info/sparse-checkout',stat.S_IFREG|0o666)):
+             with self.subTest(relative=relative):
+-                self.poststate('original',lambda m:m.mutate_inode(relative,mode))
++                def mode_only(m):
++                    path=str(VirtualPath(PRIMARY_TEXT)/'.git/worktrees'/ROW/relative)
++                    m.statistics[path].st_mode=mode
++                    m.witnesses[path][0][2]=mode
++                self.poststate('original',mode_only)
+                 with self.assertRaisesRegex(Exception,'retirement_private_pattern_transition_inode_or_mode_changed'):
+-                    self.poststate('corrected',lambda m:m.mutate_inode(relative,mode))
++                    self.poststate('corrected',mode_only)
+ 
+     def test_library_actual_bytes_and_extra_admin_entry_refuse(self):
+         def changed_library(m): m.bodies[str(VirtualPath(BASE_TEXT)/ROW/'swdb-project/library/item.txt')]=b'CHANGED_same_length____\n'
+@@ -298,13 +312,17 @@
+         self.assertEqual(model.completed_names(),['row-a','row-b'])
+         self.assertIsNone(model.current_retirement)
+         self.assertFalse(model.facts['initial_checks']['processes']['performed'])
++        self.assertFalse(model.facts['initial_checks']['processes']['initial_reference_clearance_claimed'])
++        first_reference=next(i for i,event in enumerate(model.events) if event[0]=='fresh_references')
++        self.assertIn(('initial_tree','row-a',False),model.events[:first_reference])
++        self.assertIn(('initial_tree','row-b',False),model.events[:first_reference])
+         for name in ('row-a','row-b'):
+             begin=model.events.index(('private_pattern',name))
+             self.assertIn(('full_byte_precheck',name),model.events[:begin])
+             self.assertEqual(model.events[begin-1][0:2],('fresh_references',(name,)))
+             self.assertEqual(model.events[begin:begin+4], [('private_pattern',name),('transition',name),
+                 ('native_read_tree',name),('poststate_proof_and_private_original',name)])
+-        final=model.events.index(('final_full_RAW',))
++        final=model.events.index(('full_RAW',2))
+         self.assertIn(('stable',('row-a','row-b')),model.events[:final])
+         self.assertEqual([r for r in model.events if r[0]=='fresh_references'][-1],
+             ('fresh_references',None,('row-a','row-b')))
+@@ -320,6 +338,20 @@
+                 self.assertIn(model.current_retirement['stage'],
+                     ('native_read_tree_started','native_returned_poststate_pending'))
+                 self.assertIn('row-a',model.retirement_transition_witnesses)
++
++    def test_second_row_failure_keeps_completed_first_and_uncertain_second(self):
++        for stage in ('native','poststate'):
++            with self.subTest(stage=stage):
++                context,unused=environment('corrected'); model=OperationWorld(context,stage,'row-b')
++                with self.assertRaisesRegex(Exception,'SYNTHETIC_'+stage+'_failure'):
++                    context['ExactMethods'].exact_operation_slice(model)
++                self.assertEqual(model.completed_names(),['row-a'])
++                self.assertEqual(model.facts['completed_retirements'][0]['private_original_poststate_pin'],
++                                 {'SYNTHETIC_pin':'row-a'})
++                self.assertEqual(model.current_retirement['row'],'row-b')
++                self.assertIn(model.current_retirement['stage'],
++                    ('native_read_tree_started','native_returned_poststate_pending'))
++                self.assertEqual(set(model.retirement_transition_witnesses),{'row-a','row-b'})
+ 
+     def test_native_Git_uses_original_objects_at_both_entry_points(self):
+         context,methods=environment('corrected'); seen=[]

@@ -1,0 +1,84 @@
+{
+  "created": "2026-10-15 ET",
+  "scope": "One public production-adapter generated-input mutation acceptance control, compiler/external report stand-ins only; parent SWDB_FRAMA_C=none, no actual Frama/WP/solver. Root explicitly classified/admitted exact selection under workerB/RSS180s/8GiB.",
+  "source_base": "5128dffcbb455e57b439c58abe3b582987aa4bfe",
+  "final_test_file_sha256": "f54cdb21c41ea56265ed58b4b4f29101faeb96d9278f5572359a75d42188923b",
+  "result": "1passed2.80s",
+  "meaning": "Existing check_generated rejects external report-compiler mutation of copied wp_input.c after planning/generation, with input_hash, compiled+retained changed-text markers, no WP marker and no proof record. Coverage gap closed; no production vulnerability/fix.",
+  "history": "Initial sandbox watchdog could not read process tree and reported PermissionError after child exit; not counted as acceptance. First guarded run reached required refusal but test attempted removed scratch path; changed-text marker now retains bytes before normal cleanup. Production code unchanged.",
+  "runs": [
+    {
+      "label": "sandbox-watchdog-refusal",
+      "path": "/private/tmp/probata-t36-generated-input-control-20261015",
+      "files_sha256": {
+        "/private/tmp/probata-t36-generated-input-control-20261015/controls.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "/private/tmp/probata-t36-generated-input-control-20261015/command.json": "dff77b8df65d583405fd170b96b21a4c307706cf43294311915ec500930ec8a4"
+      },
+      "command": [
+        "/usr/bin/env",
+        "SWDB_FRAMA_C=none",
+        "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+        "-m",
+        "pytest",
+        "tests/test_proof_setup.py::test_production_wp_refuses_changed_generated_input_at_the_final_prelaunch_check",
+        "-q",
+        "--tb=short"
+      ],
+      "resources": null
+    },
+    {
+      "label": "test-evidence-path-failure",
+      "path": "/private/tmp/probata-t36-generated-input-control-admitted-20261015",
+      "files_sha256": {
+        "/private/tmp/probata-t36-generated-input-control-admitted-20261015/controls.log": "82b352f45f7494beffa00a4a7c49c9a20d7ab7cc3ff2c46cca08a0ae883c27a5",
+        "/private/tmp/probata-t36-generated-input-control-admitted-20261015/resources.json": "071eb7a4ef56b5acbca79e933a8837c34bce3151692cd9d76c342507b28207fc",
+        "/private/tmp/probata-t36-generated-input-control-admitted-20261015/command.json": "dff77b8df65d583405fd170b96b21a4c307706cf43294311915ec500930ec8a4"
+      },
+      "command": [
+        "/usr/bin/env",
+        "SWDB_FRAMA_C=none",
+        "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+        "-m",
+        "pytest",
+        "tests/test_proof_setup.py::test_production_wp_refuses_changed_generated_input_at_the_final_prelaunch_check",
+        "-q",
+        "--tb=short"
+      ],
+      "resources": {
+        "exit_code": 1,
+        "peak_rss_bytes": 198787072,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 3.5613664999837056,
+        "cpu_seconds": 3.241619
+      }
+    },
+    {
+      "label": "green",
+      "path": "/private/tmp/probata-t36-generated-input-control-green-20261015",
+      "files_sha256": {
+        "/private/tmp/probata-t36-generated-input-control-green-20261015/controls.log": "e02723e582d6fd1e9e052b5f1c9ac4683c27236b02a035a5fb640e5b0ba8a4c6",
+        "/private/tmp/probata-t36-generated-input-control-green-20261015/resources.json": "76383ddeba90f4351438ce5e7b2f453c2d9db74917549803236cd92d1d573a30",
+        "/private/tmp/probata-t36-generated-input-control-green-20261015/command.json": "dff77b8df65d583405fd170b96b21a4c307706cf43294311915ec500930ec8a4"
+      },
+      "command": [
+        "/usr/bin/env",
+        "SWDB_FRAMA_C=none",
+        "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+        "-m",
+        "pytest",
+        "tests/test_proof_setup.py::test_production_wp_refuses_changed_generated_input_at_the_final_prelaunch_check",
+        "-q",
+        "--tb=short"
+      ],
+      "resources": {
+        "exit_code": 0,
+        "peak_rss_bytes": 198541312,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 3.4276964160380885,
+        "cpu_seconds": 3.149957
+      }
+    }
+  ]
+}

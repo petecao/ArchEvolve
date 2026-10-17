@@ -1,0 +1,117 @@
+{
+  "date_ET": "2026-10-16",
+  "scope": "Capture integrity only; complete query/source-hypothesis acceptance pending",
+  "full_capture": {
+    "path": "/private/tmp/probata-root-copy-step15-metadata-execution-v2-20261016.json",
+    "bytes": 4233355,
+    "sha256": "f897424b2a2e48112446843bceec34cef337fd96f39e08de79933d47ec8ae324"
+  },
+  "settlement": {
+    "caller_acceptance": false,
+    "extractor": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-3a48da2f-t25-copy-step15-diagnostic-v1-passive-metadata-v2/extractor.py",
+      "sha256": "f44b9746e70ff177caf5031ac6eb08682ea029cad81965d06e3791d36fe5b751"
+    },
+    "model_acceptance": false,
+    "original_producer_exit_upgraded": false,
+    "proof_acceptance": false,
+    "resources": {
+      "cpu_seconds": 5.7191730000000005,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 54980608,
+      "timed_out": false,
+      "wall_seconds": 5.722512029111385
+    },
+    "scope": "Passive metadata capture only; no complete scientific acceptance",
+    "source_after": {
+      "commit": "3a48da2f44dd2066c2ac0bf42c4d873490044a99",
+      "status": ""
+    }
+  },
+  "frontier": {
+    "attempted": [
+      "grow.copy.step.entry_well_formed",
+      "grow.copy.step.updated_well_formed",
+      "grow.copy.step.entry_eligible",
+      "grow.copy.step.updated_eligible",
+      "grow.copy.step.advanced_index_size_capacity_bounds",
+      "grow.copy.step.fresh_identity",
+      "grow.copy.step.unissued_identity",
+      "grow.copy.step.receiver_distinct",
+      "grow.copy.step.old_buffer_distinct",
+      "grow.copy.step.destination_write_domain",
+      "grow.copy.step.destination_freeability",
+      "grow.copy.step.destination_extent",
+      "grow.copy.step.allocation_frame",
+      "grow.copy.step.advanced_copied_prefix",
+      "grow.copy.step.uninitialized_tail"
+    ],
+    "complete_model_verdict": "not_attempted",
+    "model_acceptance": false,
+    "open": [
+      "grow.copy.step.advanced_copied_prefix"
+    ],
+    "proven": [
+      "grow.copy.step.entry_well_formed",
+      "grow.copy.step.updated_well_formed",
+      "grow.copy.step.entry_eligible",
+      "grow.copy.step.updated_eligible",
+      "grow.copy.step.advanced_index_size_capacity_bounds",
+      "grow.copy.step.fresh_identity",
+      "grow.copy.step.unissued_identity",
+      "grow.copy.step.receiver_distinct",
+      "grow.copy.step.old_buffer_distinct",
+      "grow.copy.step.destination_write_domain",
+      "grow.copy.step.destination_freeability",
+      "grow.copy.step.destination_extent",
+      "grow.copy.step.allocation_frame",
+      "grow.copy.step.uninitialized_tail"
+    ],
+    "unexecuted_model_targets": [
+      "control.grow.premises_feasible",
+      "grow.entry.reads",
+      "grow.entry.int_projection.repr",
+      "grow.entry.int_projection.cells.access",
+      "grow.entry.int_projection.cells.initialization",
+      "grow.entry.int_projection.cells.integer",
+      "grow.entry.int_projection.cells.bounds",
+      "grow.alloc.identity",
+      "grow.alloc.output",
+      "grow.alloc.frame",
+      "grow.copy.establish.entry_well_formed",
+      "grow.copy.establish.allocated_well_formed",
+      "grow.copy.establish.entry_eligible",
+      "grow.copy.establish.allocated_eligible",
+      "grow.copy.establish.index_size_capacity_bounds",
+      "grow.copy.establish.fresh_identity",
+      "grow.copy.establish.unissued_identity",
+      "grow.copy.establish.receiver_distinct",
+      "grow.copy.establish.old_buffer_distinct",
+      "grow.copy.establish.destination_write_domain",
+      "grow.copy.establish.destination_freeability",
+      "grow.copy.establish.destination_extent",
+      "grow.copy.establish.allocation_frame",
+      "grow.copy.establish.empty_copied_prefix",
+      "grow.copy.establish.uninitialized_tail",
+      "grow.copy.read",
+      "grow.copy.write",
+      "grow.copy.exit",
+      "grow.free.argument",
+      "grow.free.survival",
+      "grow.free.aliases",
+      "grow.store.capacity",
+      "grow.post.eligibility",
+      "grow.post.values",
+      "grow.post.old_invalid",
+      "grow.post.frame",
+      "grow.numeric"
+    ],
+    "unexecuted_selected": []
+  },
+  "actual_submission_count": null,
+  "submitted_byte_identity_attested": false,
+  "proof_acceptance": false,
+  "model_acceptance": false,
+  "caller_acceptance": false
+}

@@ -1,0 +1,11 @@
+# Detached exact E administration R2 — independent source acceptance
+
+2026-10-08, source review only. Full selected R2 source, complete R1 derivation and handoff read. Exact pins, complete unified diff regeneration, closed three-replacement byte reversal and whole-module AST comparison verified with standard-library metadata tooling. No target import/compile/lift/call, test, SSH, tmux, Git/worktree mutation, copy, guard main, inspection or removal occurred.
+
+- Selected R2: `/private/tmp/lanl14_detach_exact_E_cleanup_administration_20261008_a1_r2.py`, 18218 bytes/SHA `0783d6a26275abcc185608303c442ca3b17d0dfbca52a484746923ba089c2401`.
+- Full derivation: `/private/tmp/lanl14-detached-exact-E-administration-r2-complete-r1-derivation-20261008.diff`, 1403 bytes/SHA `ee540803b485e9c0c51b6ba3858318d42b1b0b08710103f9873ac40d15c97663`.
+- Full handoff: `/private/tmp/lanl14-detached-exact-E-administration-source-handoff-20261008-a1-r2.md`, 4592 bytes/SHA `0590868361e05b5b5940356f5e7dc2e5c50b80ca08caaed79338e5b99f3e1eed`.
+
+The sole earlier boundedness finding is closed. Each context-managed read in `process(pid)` now requests no more than its explicit cap+1: initial stat 16385, status 32769, closing stat 16385. Existing <=16384/32768/16384 refusals precede parsing/decoding. The stat/status/stat identity checks, exceptions and original caps remain exact. Full byte reversal restores preserved R1 SHA `252c9735c034b3a305235dbcf95dd461a837e5d70dd031c7198ec7ac95cfeb24`; only `process` AST differs. Every other definition, import, assignment, constant, CLI, native/source pin, wait, prior-inspection gate, guard argv and administrative allowance remains exact.
+
+No concrete blocker remains in this source review. This accepts the narrow source correction, not a runtime result, inspection clearance, permission repair, consumer exemption, removal decision, capacity or scientific admission. The original R1 independent finding note (5757 bytes/SHA `b7b28716857091969325e11cd702e68d231440e8d2f59e6f8b668ee0bdff2606`) and all draft/R1 originals remain unchanged and NOTRUN. Parent still supplies concrete delivered primary/source aliases and owns future administrative invocation and separate successful-default/removal custody.

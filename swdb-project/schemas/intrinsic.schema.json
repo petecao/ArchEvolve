@@ -1,0 +1,206 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "intrinsic",
+  "title": "Intrinsic: callable ISA or accelerator capability",
+  "description": "The ID is the C name without its leading underscores (the ID rule allows no leading underscore); `name` keeps the exact C name.",
+  "type": "object",
+  "properties": {
+    "kind": {
+      "const": "intrinsic"
+    },
+    "name": {
+      "type": "string",
+      "pattern": "^_*[A-Za-z][A-Za-z0-9_]*$",
+      "description": "The exact C name, e.g. _mm512_i32gather_ps."
+    },
+    "isa_family": {
+      "type": "string",
+      "x-vocab": "isa_families"
+    },
+    "isa_extensions": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "x-vocab": "isa_extensions"
+      },
+      "description": "Every extension the intrinsic needs, as lscpu flag names; a machine can run it when its cpu.flags include all of them."
+    },
+    "header": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The header that declares it, e.g. immintrin.h."
+    },
+    "memory_kind": {
+      "type": "string",
+      "x-vocab": "intrinsic_memory_kinds"
+    },
+    "address_shape": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "x-vocab": "address_shapes",
+      "description": "The address shape the instruction itself forms (a gather's per-lane indices are single_valued_indirect); null when it takes one address the caller computed, or touches no memory."
+    },
+    "element_bits": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1,
+      "description": "Width of one element in bits; null when the intrinsic has no elements (a prefetch moves a cache line)."
+    },
+    "lanes": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1,
+      "description": "Elements per call; null when the intrinsic has no elements."
+    },
+    "interface": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "version"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "hardware_operations": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "x-ref": "operation"
+      }
+    },
+    "library_entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "path",
+        "content_sha256"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "content_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "source_view": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "format",
+        "variant",
+        "source",
+        "backend",
+        "compile_defines",
+        "evidence_scope"
+      ],
+      "properties": {
+        "format": {
+          "const": "swdb.intrinsic-source-view.v1"
+        },
+        "variant": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9_-]*$"
+        },
+        "source": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "root",
+            "path",
+            "sha256"
+          ],
+          "properties": {
+            "root": {
+              "const": "library"
+            },
+            "path": {
+              "type": "string",
+              "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          }
+        },
+        "backend": {
+          "const": "functional_source"
+        },
+        "evidence_scope": {
+          "const": "functional_source_semantics"
+        },
+        "compile_defines": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+          }
+        },
+        "compile_undefines": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "name",
+    "memory_kind",
+    "address_shape",
+    "element_bits",
+    "lanes"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "required": [
+          "interface"
+        ]
+      },
+      "then": {
+        "required": [
+          "hardware_operations",
+          "library_entry"
+        ]
+      },
+      "else": {
+        "required": [
+          "isa_family",
+          "isa_extensions",
+          "header"
+        ]
+      }
+    }
+  ]
+}

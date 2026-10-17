@@ -1,0 +1,957 @@
+{
+ "created": "2026-10-05T14:18:10.887513-04:00",
+ "code_commit": "9490d579b5aa3fd05d2cb69c84097d34abcaa8be",
+ "code_tree_clean": true,
+ "host": {
+  "system": "Darwin",
+  "machine": "arm64"
+ },
+ "recertification_1_1": {
+  "operation.pack_executor": {
+   "certification": "certification.c7b599e6118d4cb1bf8c7f096f2e4f2b",
+   "verdict": "certified",
+   "command_version": "1.1",
+   "sources_sha256": "d9cb73db2f708b685a961a394b19d477f5d6caabba88d713ce2605bff2ef3ac5",
+   "seed": 1958363263,
+   "seconds": 12.2,
+   "matrix": {
+    "sanitized/differential": [
+     "passed",
+     null
+    ],
+    "openmp/differential": [
+     "passed",
+     null
+    ],
+    "probe/contract": [
+     "passed",
+     "contract_probe"
+    ]
+   },
+   "controls": {
+    "driver.input_write": {
+     "status": "rejected",
+     "reason": "frame_violation",
+     "kind": "driver_fault",
+     "attributed_runs": [
+      12,
+      12
+     ],
+     "runs": [
+      12,
+      12
+     ]
+    },
+    "driver.output_perturb": {
+     "status": "rejected",
+     "reason": "differential_mismatch",
+     "kind": "driver_fault",
+     "attributed_runs": [
+      12,
+      12
+     ],
+     "runs": [
+      12,
+      12
+     ]
+    },
+    "aliasing_write": {
+     "status": "rejected",
+     "reason": "frame_violation",
+     "kind": "aliasing",
+     "attributed_runs": [
+      12,
+      12
+     ],
+     "runs": [
+      12,
+      12
+     ]
+    },
+    "off_by_one_index": {
+     "status": "rejected",
+     "reason": "differential_mismatch",
+     "kind": "index_bounds",
+     "attributed_runs": [
+      6,
+      6
+     ],
+     "runs": [
+      12,
+      12
+     ]
+    },
+    "dropped_chain_level": {
+     "status": "rejected",
+     "reason": "differential_mismatch",
+     "kind": "dropped_operand",
+     "attributed_runs": [
+      9,
+      9
+     ],
+     "runs": [
+      12,
+      12
+     ]
+    }
+   },
+   "isolation": {
+    "reference": {
+     "binary_sha256": "9aeb93b6e6e281f0f90986bad6a1ddcb0cfdcbbb17afa731becc0d7d4409a60d",
+     "compiler": "/opt/homebrew/opt/llvm/bin/clang++",
+     "outputs_sha256": "246f38fecf17074447292062cc4450e296c889a2d77d0ebc0a36a0be5c311ff8",
+     "deleted_before_candidate_build": true
+    },
+    "runs": 144,
+    "delivery": {
+     "positive_and_driver_faults": "one_binary_blinded_plan",
+     "mutation_controls": "separate_binary_without_candidate"
+    }
+   }
+  },
+  "operation.update_binning_executor": {
+   "certification": "certification.438d272cfab344349f734ef165441776",
+   "verdict": "certified",
+   "command_version": "1.1",
+   "sources_sha256": "d9cb73db2f708b685a961a394b19d477f5d6caabba88d713ce2605bff2ef3ac5",
+   "seed": 1492378648,
+   "seconds": 10.1,
+   "matrix": {
+    "sanitized/differential": [
+     "passed",
+     null
+    ],
+    "openmp/differential": [
+     "passed",
+     null
+    ]
+   },
+   "controls": {
+    "driver.input_write": {
+     "status": "rejected",
+     "reason": "frame_violation",
+     "kind": "driver_fault",
+     "attributed_runs": [
+      8,
+      8
+     ],
+     "runs": [
+      8,
+      8
+     ]
+    },
+    "driver.output_perturb": {
+     "status": "rejected",
+     "reason": "differential_mismatch",
+     "kind": "driver_fault",
+     "attributed_runs": [
+      8,
+      8
+     ],
+     "runs": [
+      8,
+      8
+     ]
+    },
+    "dropped_last_record": {
+     "status": "rejected",
+     "reason": "differential_mismatch",
+     "kind": "dropped_operand",
+     "attributed_runs": [
+      8,
+      8
+     ],
+     "runs": [
+      8,
+      8
+     ]
+    },
+    "double_drain": {
+     "status": "rejected",
+     "reason": "differential_mismatch",
+     "kind": "double_claim",
+     "attributed_runs": [
+      8,
+      8
+     ],
+     "runs": [
+      8,
+      8
+     ]
+    },
+    "aliasing_write": {
+     "status": "rejected",
+     "reason": "frame_violation",
+     "kind": "aliasing",
+     "attributed_runs": [
+      8,
+      8
+     ],
+     "runs": [
+      8,
+      8
+     ]
+    }
+   },
+   "isolation": {
+    "reference": {
+     "binary_sha256": "e047cc7c94cb08c58e3362b2be8796ba90245a5af62620126a39f39089b3d7e1",
+     "compiler": "/opt/homebrew/opt/llvm/bin/clang++",
+     "outputs_sha256": "f1281e441184548c99b0e192b814774d186b32c0c968b4a2fdff1fbdfcd45290",
+     "deleted_before_candidate_build": true
+    },
+    "runs": 96,
+    "delivery": {
+     "positive_and_driver_faults": "one_binary_blinded_plan",
+     "mutation_controls": "separate_binary_without_candidate"
+    }
+   }
+  },
+  "operation.vertex_relabel_executor": {
+   "certification": "certification.e39e01687ea44504a9d5483365b7ac60",
+   "verdict": "certified",
+   "command_version": "1.1",
+   "sources_sha256": "d9cb73db2f708b685a961a394b19d477f5d6caabba88d713ce2605bff2ef3ac5",
+   "seed": 2707823686,
+   "seconds": 9.6,
+   "matrix": {
+    "sanitized/differential": [
+     "passed",
+     null
+    ],
+    "openmp/differential": [
+     "passed",
+     null
+    ]
+   },
+   "controls": {
+    "driver.input_write": {
+     "status": "rejected",
+     "reason": "frame_violation",
+     "kind": "driver_fault",
+     "attributed_runs": [
+      8,
+      8
+     ],
+     "runs": [
+      8,
+      8
+     ]
+    },
+    "driver.output_perturb": {
+     "status": "rejected",
+     "reason": "differential_mismatch",
+     "kind": "driver_fault",
+     "attributed_runs": [
+      8,
+      8
+     ],
+     "runs": [
+      8,
+      8
+     ]
+    },
+    "inverse_direction": {
+     "status": "rejected",
+     "reason": "differential_mismatch",
+     "kind": "ordering",
+     "attributed_runs": [
+      4,
+      4
+     ],
+     "runs": [
+      8,
+      8
+     ]
+    },
+    "skip_last_vertex": {
+     "status": "rejected",
+     "reason": "differential_mismatch",
+     "kind": "dropped_operand",
+     "attributed_runs": [
+      8,
+      8
+     ],
+     "runs": [
+      8,
+      8
+     ]
+    },
+    "aliasing_write": {
+     "status": "rejected",
+     "reason": "frame_violation",
+     "kind": "aliasing",
+     "attributed_runs": [
+      8,
+      8
+     ],
+     "runs": [
+      8,
+      8
+     ]
+    }
+   },
+   "isolation": {
+    "reference": {
+     "binary_sha256": "d7e32799731533128d0e4e400bdc05891852a736bf20475a0b1824d010c75d72",
+     "compiler": "/opt/homebrew/opt/llvm/bin/clang++",
+     "outputs_sha256": "6921aa72fb8b818deb2fa144d6c7111b098d9de21bb8140f939e3de9fbe057dc",
+     "deleted_before_candidate_build": true
+    },
+    "runs": 96,
+    "delivery": {
+     "positive_and_driver_faults": "one_binary_blinded_plan",
+     "mutation_controls": "separate_binary_without_candidate"
+    }
+   }
+  },
+  "operation.regroup_executor": {
+   "certification": "certification.4f8600252dd44243aad96cbc5ba73508",
+   "verdict": "certified",
+   "command_version": "1.1",
+   "sources_sha256": "d9cb73db2f708b685a961a394b19d477f5d6caabba88d713ce2605bff2ef3ac5",
+   "seed": 3372577306,
+   "seconds": 10.3,
+   "matrix": {
+    "sanitized/differential": [
+     "passed",
+     null
+    ],
+    "openmp/differential": [
+     "passed",
+     null
+    ]
+   },
+   "controls": {
+    "driver.input_write": {
+     "status": "rejected",
+     "reason": "frame_violation",
+     "kind": "driver_fault",
+     "attributed_runs": [
+      8,
+      8
+     ],
+     "runs": [
+      8,
+      8
+     ]
+    },
+    "driver.output_perturb": {
+     "status": "rejected",
+     "reason": "differential_mismatch",
+     "kind": "driver_fault",
+     "attributed_runs": [
+      8,
+      8
+     ],
+     "runs": [
+      8,
+      8
+     ]
+    },
+    "transposed_layout": {
+     "status": "rejected",
+     "reason": "differential_mismatch",
+     "kind": "ordering",
+     "attributed_runs": [
+      5,
+      5
+     ],
+     "runs": [
+      8,
+      8
+     ]
+    },
+    "dropped_last_array": {
+     "status": "rejected",
+     "reason": "differential_mismatch",
+     "kind": "dropped_operand",
+     "attributed_runs": [
+      5,
+      5
+     ],
+     "runs": [
+      8,
+      8
+     ]
+    },
+    "aliasing_write": {
+     "status": "rejected",
+     "reason": "frame_violation",
+     "kind": "aliasing",
+     "attributed_runs": [
+      8,
+      8
+     ],
+     "runs": [
+      8,
+      8
+     ]
+    }
+   },
+   "isolation": {
+    "reference": {
+     "binary_sha256": "ee436589384fd0d4643a5d3ad26f085fe021248379700b9292c82e79dc099cdf",
+     "compiler": "/opt/homebrew/opt/llvm/bin/clang++",
+     "outputs_sha256": "4562fc6d77cdcbc53551bd2b48b89e328170585cb45e9f8609a0c1ac61049f9c",
+     "deleted_before_candidate_build": true
+    },
+    "runs": 96,
+    "delivery": {
+     "positive_and_driver_faults": "one_binary_blinded_plan",
+     "mutation_controls": "separate_binary_without_candidate"
+    }
+   }
+  },
+  "operation.gather_staging_executor": {
+   "certification": "certification.07bf697c7d2f4bf5a5e22d78f6728506",
+   "verdict": "certified",
+   "command_version": "1.1",
+   "sources_sha256": "d9cb73db2f708b685a961a394b19d477f5d6caabba88d713ce2605bff2ef3ac5",
+   "seed": 3054604801,
+   "seconds": 8.9,
+   "matrix": {
+    "sanitized/differential": [
+     "passed",
+     null
+    ],
+    "openmp/differential": [
+     "passed",
+     null
+    ]
+   },
+   "controls": {
+    "driver.input_write": {
+     "status": "rejected",
+     "reason": "frame_violation",
+     "kind": "driver_fault",
+     "attributed_runs": [
+      8,
+      8
+     ],
+     "runs": [
+      8,
+      8
+     ]
+    },
+    "driver.output_perturb": {
+     "status": "rejected",
+     "reason": "differential_mismatch",
+     "kind": "driver_fault",
+     "attributed_runs": [
+      8,
+      8
+     ],
+     "runs": [
+      8,
+      8
+     ]
+    },
+    "partial_drain": {
+     "status": "rejected",
+     "reason": "differential_mismatch",
+     "kind": "dropped_operand",
+     "attributed_runs": [
+      8,
+      8
+     ],
+     "runs": [
+      8,
+      8
+     ]
+    },
+    "index_shift": {
+     "status": "rejected",
+     "reason": "differential_mismatch",
+     "kind": "index_bounds",
+     "attributed_runs": [
+      4,
+      4
+     ],
+     "runs": [
+      8,
+      8
+     ]
+    },
+    "aliasing_write": {
+     "status": "rejected",
+     "reason": "frame_violation",
+     "kind": "aliasing",
+     "attributed_runs": [
+      8,
+      8
+     ],
+     "runs": [
+      8,
+      8
+     ]
+    }
+   },
+   "isolation": {
+    "reference": {
+     "binary_sha256": "b730cbda359e3922e8eb78c4e1ab54fa1fa81d3e8156e1807372e447fc214ce5",
+     "compiler": "/opt/homebrew/opt/llvm/bin/clang++",
+     "outputs_sha256": "00d6b20ed5bc19b8c217d7f05c3c31d1916ec865923d7e66381d508191e46aa5",
+     "deleted_before_candidate_build": true
+    },
+    "runs": 96,
+    "delivery": {
+     "positive_and_driver_faults": "one_binary_blinded_plan",
+     "mutation_controls": "separate_binary_without_candidate"
+    }
+   }
+  }
+ },
+ "attacks": {
+  "fake_print_control": {
+   "1.0": {
+    "certification": "certification.7f62101cdf0c4ccb9bc8312251c4e93e",
+    "verdict": "certified",
+    "command_version": "1.0",
+    "sources_sha256": "554b680c38a9fd1ddf59fb0838afcaf51eabedf071c9a0ba4eaa124ac6c1993a",
+    "seed": 4187790815,
+    "seconds": 9.4,
+    "matrix": {
+     "sanitized/differential": [
+      "passed",
+      null
+     ],
+     "openmp/differential": [
+      "passed",
+      null
+     ]
+    },
+    "controls": {
+     "inverse_direction": {
+      "status": "rejected",
+      "reason": "differential_mismatch",
+      "kind": "ordering",
+      "attributed_runs": [
+       null,
+       null
+      ],
+      "runs": [
+       null,
+       null
+      ]
+     },
+     "skip_last_vertex": {
+      "status": "rejected",
+      "reason": "differential_mismatch",
+      "kind": "dropped_operand",
+      "attributed_runs": [
+       null,
+       null
+      ],
+      "runs": [
+       null,
+       null
+      ]
+     },
+     "aliasing_write": {
+      "status": "rejected",
+      "reason": "frame_violation",
+      "kind": "aliasing",
+      "attributed_runs": [
+       null,
+       null
+      ],
+      "runs": [
+       null,
+       null
+      ]
+     }
+    },
+    "isolation": null
+   },
+   "1.1": {
+    "certification": "certification.3a5886fce6034dd6bc9881e613f0a624",
+    "verdict": "failed",
+    "command_version": "1.1",
+    "sources_sha256": "d9cb73db2f708b685a961a394b19d477f5d6caabba88d713ce2605bff2ef3ac5",
+    "seed": 1730326303,
+    "seconds": 0.1,
+    "matrix": {
+     "scan/harness": [
+      "failed",
+      "harness_scan"
+     ]
+    },
+    "controls": {},
+    "isolation": {
+     "reference": null,
+     "runs": null,
+     "delivery": null
+    },
+    "scan_findings": {
+     "control:aliasing_write": [
+      {
+       "line": 139,
+       "token": "SWDB_PRESERVATION_FAIL",
+       "why": "string imitates an evaluator line or path"
+      },
+      {
+       "line": 139,
+       "token": "fprintf",
+       "why": "initializer, exit, printing or process primitive"
+      },
+      {
+       "line": 139,
+       "token": "stderr",
+       "why": "initializer, exit, printing or process primitive"
+      },
+      {
+       "line": 140,
+       "token": "exit",
+       "why": "initializer, exit, printing or process primitive"
+      }
+     ]
+    }
+   },
+   "1.1_scan_disabled": {
+    "certification": "certification.145f3b6dc25540a4ac727e5da4312acd",
+    "verdict": "failed",
+    "command_version": "1.1",
+    "sources_sha256": "d9cb73db2f708b685a961a394b19d477f5d6caabba88d713ce2605bff2ef3ac5",
+    "seed": 1801017213,
+    "seconds": 10.1,
+    "matrix": {
+     "sanitized/differential": [
+      "passed",
+      null
+     ],
+     "openmp/differential": [
+      "passed",
+      null
+     ]
+    },
+    "controls": {
+     "driver.input_write": {
+      "status": "rejected",
+      "reason": "frame_violation",
+      "kind": "driver_fault",
+      "attributed_runs": [
+       8,
+       8
+      ],
+      "runs": [
+       8,
+       8
+      ]
+     },
+     "driver.output_perturb": {
+      "status": "rejected",
+      "reason": "differential_mismatch",
+      "kind": "driver_fault",
+      "attributed_runs": [
+       8,
+       8
+      ],
+      "runs": [
+       8,
+       8
+      ]
+     },
+     "inverse_direction": {
+      "status": "rejected",
+      "reason": "differential_mismatch",
+      "kind": "ordering",
+      "attributed_runs": [
+       4,
+       4
+      ],
+      "runs": [
+       8,
+       8
+      ]
+     },
+     "skip_last_vertex": {
+      "status": "rejected",
+      "reason": "differential_mismatch",
+      "kind": "dropped_operand",
+      "attributed_runs": [
+       8,
+       8
+      ],
+      "runs": [
+       8,
+       8
+      ]
+     },
+     "aliasing_write": {
+      "status": "invalid",
+      "reason": "check_not_recorded: not rejected by frame_violation from trusted records",
+      "kind": "aliasing",
+      "attributed_runs": [
+       0,
+       0
+      ],
+      "runs": [
+       8,
+       8
+      ]
+     }
+    },
+    "isolation": {
+     "reference": {
+      "binary_sha256": "ea3dacd97dcc8570d1c631673e75cc0a47e783c2aa069e2467678ee57ed37143",
+      "compiler": "/opt/homebrew/opt/llvm/bin/clang++",
+      "outputs_sha256": "3c54d0855c4e0aeba79171354e447cb26d1b920c21ae67accc9aa807c6836a23",
+      "deleted_before_candidate_build": true
+     },
+     "runs": 96,
+     "delivery": {
+      "positive_and_driver_faults": "one_binary_blinded_plan",
+      "mutation_controls": "separate_binary_without_candidate"
+     }
+    },
+    "scan_findings": {}
+   }
+  },
+  "plan_detecting_bypass": {
+   "1.0": {
+    "certification": "certification.dfd78a26f7e146b095bea34330a12071",
+    "verdict": "certified",
+    "command_version": "1.0",
+    "sources_sha256": "554b680c38a9fd1ddf59fb0838afcaf51eabedf071c9a0ba4eaa124ac6c1993a",
+    "seed": 409469804,
+    "seconds": 9.4,
+    "matrix": {
+     "sanitized/differential": [
+      "passed",
+      null
+     ],
+     "openmp/differential": [
+      "passed",
+      null
+     ]
+    },
+    "controls": {
+     "inverse_direction": {
+      "status": "rejected",
+      "reason": "differential_mismatch",
+      "kind": "ordering",
+      "attributed_runs": [
+       null,
+       null
+      ],
+      "runs": [
+       null,
+       null
+      ]
+     },
+     "skip_last_vertex": {
+      "status": "rejected",
+      "reason": "differential_mismatch",
+      "kind": "dropped_operand",
+      "attributed_runs": [
+       null,
+       null
+      ],
+      "runs": [
+       null,
+       null
+      ]
+     },
+     "aliasing_write": {
+      "status": "rejected",
+      "reason": "frame_violation",
+      "kind": "aliasing",
+      "attributed_runs": [
+       null,
+       null
+      ],
+      "runs": [
+       null,
+       null
+      ]
+     }
+    },
+    "isolation": null,
+    "detector_saw": [
+     "none"
+    ],
+    "detector_runs": 16
+   },
+   "1.1": {
+    "certification": "certification.2c7b0fc8a9f8434cb9eb7d8277abd551",
+    "verdict": "failed",
+    "command_version": "1.1",
+    "sources_sha256": "d9cb73db2f708b685a961a394b19d477f5d6caabba88d713ce2605bff2ef3ac5",
+    "seed": 3082767951,
+    "seconds": 0.1,
+    "matrix": {
+     "scan/harness": [
+      "failed",
+      "harness_scan"
+     ]
+    },
+    "controls": {},
+    "isolation": {
+     "reference": null,
+     "runs": null,
+     "delivery": null
+    },
+    "scan_findings": {
+     "body": [
+      {
+       "line": 21,
+       "token": "fcntl",
+       "why": "descriptor, environment, loader or process primitive"
+      },
+      {
+       "line": 24,
+       "token": "constructor",
+       "why": "initializer, exit, printing or process primitive"
+      },
+      {
+       "line": 28,
+       "token": "fcntl",
+       "why": "descriptor, environment, loader or process primitive"
+      },
+      {
+       "line": 30,
+       "token": "fcntl",
+       "why": "descriptor, environment, loader or process primitive"
+      },
+      {
+       "line": 32,
+       "token": "read",
+       "why": "descriptor, environment, loader or process primitive"
+      },
+      {
+       "line": 35,
+       "token": "SWDB_CERT",
+       "why": "string imitates an evaluator line or path"
+      },
+      {
+       "line": 36,
+       "token": "getenv",
+       "why": "descriptor, environment, loader or process primitive"
+      },
+      {
+       "line": 161,
+       "token": "fopen",
+       "why": "descriptor, environment, loader or process primitive"
+      },
+      {
+       "line": 162,
+       "token": "fputs",
+       "why": "initializer, exit, printing or process primitive"
+      },
+      {
+       "line": 164,
+       "token": "fopen",
+       "why": "descriptor, environment, loader or process primitive"
+      }
+     ]
+    },
+    "detector_saw": [],
+    "detector_runs": 0
+   },
+   "1.1_scan_disabled": {
+    "certification": "certification.2bd4d90011fb4a38a8ebc81714329cfe",
+    "verdict": "failed",
+    "command_version": "1.1",
+    "sources_sha256": "d9cb73db2f708b685a961a394b19d477f5d6caabba88d713ce2605bff2ef3ac5",
+    "seed": 625965979,
+    "seconds": 10.1,
+    "matrix": {
+     "sanitized/differential": [
+      "failed",
+      "record_invalid"
+     ],
+     "openmp/differential": [
+      "failed",
+      "record_invalid"
+     ]
+    },
+    "controls": {
+     "driver.input_write": {
+      "status": "invalid",
+      "reason": "check_not_attributed_to_fault",
+      "kind": "driver_fault",
+      "attributed_runs": [
+       0,
+       0
+      ],
+      "runs": [
+       8,
+       8
+      ]
+     },
+     "driver.output_perturb": {
+      "status": "invalid",
+      "reason": "check_not_attributed_to_fault",
+      "kind": "driver_fault",
+      "attributed_runs": [
+       0,
+       0
+      ],
+      "runs": [
+       8,
+       8
+      ]
+     },
+     "inverse_direction": {
+      "status": "invalid",
+      "reason": "check_not_recorded: not rejected by differential_mismatch from trusted records",
+      "kind": "ordering",
+      "attributed_runs": [
+       0,
+       0
+      ],
+      "runs": [
+       8,
+       8
+      ]
+     },
+     "skip_last_vertex": {
+      "status": "invalid",
+      "reason": "check_not_recorded: not rejected by differential_mismatch from trusted records",
+      "kind": "dropped_operand",
+      "attributed_runs": [
+       0,
+       0
+      ],
+      "runs": [
+       8,
+       8
+      ]
+     },
+     "aliasing_write": {
+      "status": "invalid",
+      "reason": "check_not_recorded: not rejected by frame_violation from trusted records",
+      "kind": "aliasing",
+      "attributed_runs": [
+       0,
+       0
+      ],
+      "runs": [
+       8,
+       8
+      ]
+     }
+    },
+    "isolation": {
+     "reference": {
+      "binary_sha256": "c63bd9bd742ae87493928f65615e088c9432670119c64e53ff3f462a63bd194d",
+      "compiler": "/opt/homebrew/opt/llvm/bin/clang++",
+      "outputs_sha256": "a9a0eaa246699003c126093c4aeb8c222d580fe0ab103251948891139cebd684",
+      "deleted_before_candidate_build": true
+     },
+     "runs": 96,
+     "delivery": {
+      "positive_and_driver_faults": "one_binary_blinded_plan",
+      "mutation_controls": "separate_binary_without_candidate"
+     }
+    },
+    "scan_findings": {},
+    "detector_saw": [
+     "none"
+    ],
+    "detector_runs": 48
+   }
+  }
+ }
+}

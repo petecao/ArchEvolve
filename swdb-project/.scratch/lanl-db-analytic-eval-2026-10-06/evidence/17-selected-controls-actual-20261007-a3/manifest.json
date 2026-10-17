@@ -1,0 +1,143 @@
+{
+  "format": "swdb.lanl17-selected-controls-actual-archive.v1",
+  "updated": "2026-10-07 ET",
+  "base_commit": "a52d228389785f902cf62a0b589735534306eef2",
+  "snapshots": {
+    "lanl17-linux-cleanup-caps-actual-20261007-a3.json": {
+      "sha256": "ecfa74265201acd53fa250cbb4252719096bdaf277715f1affef59391806c2ad",
+      "size_bytes": 6453,
+      "origin": "/private/tmp/lanl17-linux-cleanup-caps-actual-20261007-a3.json"
+    },
+    "lanl17-metadata-supervisor-linux-actual-20261007-a3.json": {
+      "sha256": "82666f4e76b064d745b6e510ac56b9926362ed838cc324566570c82779d1fab7",
+      "size_bytes": 14305,
+      "origin": "/private/tmp/lanl17-metadata-supervisor-linux-actual-20261007-a3.json"
+    },
+    "lanl17-dispatch-cleanup-caps-smoke-20261007-a3.py": {
+      "sha256": "6d2ab3656ce2db6ff4bdd3149dc4d93b42f335fb9afd88ee6af49d21b6eb144b",
+      "size_bytes": 3774,
+      "origin": "/private/tmp/lanl17-dispatch-cleanup-caps-smoke-20261007-a3.py"
+    },
+    "lanl17-verify-cleanup-caps-smoke-20261007-a3.py": {
+      "sha256": "bdccdca1ee1588642de3106135ca3eaac56c56f3e7ff112edf95d56f40c79eb5",
+      "size_bytes": 2812,
+      "origin": "/private/tmp/lanl17-verify-cleanup-caps-smoke-20261007-a3.py"
+    },
+    "lanl17-dispatch-metadata-supervisor-fixture-20261007-a3.py": {
+      "sha256": "f2003fadb0c76cc141a11368131fef9615d48736f128be97ccf0b7c87e18cb20",
+      "size_bytes": 4470,
+      "origin": "/private/tmp/lanl17-dispatch-metadata-supervisor-fixture-20261007-a3.py"
+    },
+    "lanl17-verify-metadata-supervisor-fixture-20261007-a3.py": {
+      "sha256": "4776fc6c77a0a571fb36f5425d647efcfe630f41eadb11a745e011a6bd240a7d",
+      "size_bytes": 4871,
+      "origin": "/private/tmp/lanl17-verify-metadata-supervisor-fixture-20261007-a3.py"
+    }
+  },
+  "nested_seals": {
+    "lanl17-linux-cleanup-caps-actual-20261007-a3.json": [
+      {
+        "json_pointer": "/",
+        "identity_sha256": "9b9367d8169b02c63d4ef8b9f89d233a743c6fd034c61aedeab2d2534b925106"
+      },
+      {
+        "json_pointer": "/receipt",
+        "identity_sha256": "27024d06c22cb37995033a8db3010541a933b8e400e0ea2a06aba8a1449589b3"
+      },
+      {
+        "json_pointer": "/dispatch_preregistration",
+        "identity_sha256": "4211ccb087923ab1d2ebe84c09d176ecb9f6a118a9fede2e91589bb73454a8ad"
+      }
+    ],
+    "lanl17-metadata-supervisor-linux-actual-20261007-a3.json": [
+      {
+        "json_pointer": "/",
+        "identity_sha256": "4da6d0847d356f7bc13358ab42e3c2cec04154a3a0d249e4100f4ff0cf5d1ce2"
+      },
+      {
+        "json_pointer": "/receipt",
+        "identity_sha256": "6949a57ab0e12df785356a7fb3aea4f98bd5a23ef4de14871ff82fde71f9a0c6"
+      },
+      {
+        "json_pointer": "/case_receipts/0/receipt",
+        "identity_sha256": "55884233d063ef9939ff7ee3ef118a87391d5effefd15507ca7ced4808317c3b"
+      },
+      {
+        "json_pointer": "/case_receipts/1/receipt",
+        "identity_sha256": "8c9ab08fd036afad8cd26560849bbbda5798f8c4d9da35534d731f4af52dd6e0"
+      },
+      {
+        "json_pointer": "/case_receipts/2/receipt",
+        "identity_sha256": "a9110a7a27d5946250bc064fa5d949919a3b5cd5f5bb6f88a427d202af3100be"
+      },
+      {
+        "json_pointer": "/dispatch_preregistration",
+        "identity_sha256": "9cbee64cbd2a4bc05fb091f2a38f198e81c67497a28eef0ef00ca95bce4bf1f6"
+      }
+    ]
+  },
+  "readme": {
+    "sha256": "d6af18442aaff4a627e97165f3c181058a48780671c0238a75edcd02ac799b40",
+    "size_bytes": 2412
+  },
+  "preparation_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-selected-metadata-controls-20261007-a3/manifest.json",
+  "preparation_identity_sha256": "79953bd38931581d0b11c7cb1d249f8d4ef1bae6a53e9d233d5de8ad1b38c91c",
+  "preparation_creation_NOTRUN_bytes_preserved": true,
+  "helper_sha256": "69dcfe546d3042228ccca4fb29e8409da88443ba15680f30bfdc929ea12ae2b9",
+  "supervisor_sha256": "16661d7a9347e328a5263b06d807f3632c5abcfcf41a0bd97655a6bba302176b",
+  "original_smoke_sha256": "4d0bdf1d4c8d2ce96d948085a785cde15c389a4c50413962bc7db14df57cf9d6",
+  "fixture_sha256": "a848ef2d5c6dba58e6814bf80d8bdf24edeb33812bda343ecf25ff6f28745b0f",
+  "processes_sha256": "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289",
+  "actual_cleanup_proof_path": "/data/yanruj/EvolveSWDB_runs/lanl17-cleanup-smoke-20261007-a3/receipt.json",
+  "actual_smoke": {
+    "state": "passed_once",
+    "generation": 545,
+    "receipt_identity_sha256": "27024d06c22cb37995033a8db3010541a933b8e400e0ea2a06aba8a1449589b3",
+    "wrapper_identity_sha256": "9b9367d8169b02c63d4ef8b9f89d233a743c6fd034c61aedeab2d2534b925106",
+    "lane": {
+      "node": 1,
+      "started_utc": "2026-10-07T08:00:59Z",
+      "ended_utc": "2026-10-07T08:01:15Z",
+      "exit_code": 0
+    }
+  },
+  "actual_supervisor_fixture": {
+    "state": "passed_once",
+    "generation": 546,
+    "cases": [
+      "returned",
+      "timeout",
+      "term"
+    ],
+    "receipt_identity_sha256": "6949a57ab0e12df785356a7fb3aea4f98bd5a23ef4de14871ff82fde71f9a0c6",
+    "wrapper_identity_sha256": "4da6d0847d356f7bc13358ab42e3c2cec04154a3a0d249e4100f4ff0cf5d1ce2",
+    "lane": {
+      "node": 1,
+      "started_utc": "2026-10-07T08:02:36Z",
+      "ended_utc": "2026-10-07T08:03:27Z",
+      "exit_code": 0
+    }
+  },
+  "parent_verified_all_released_and_PID_start_disappearance": true,
+  "raw_transferred": false,
+  "prior_tracked_blobs": 3603,
+  "prior_unchanged_except_append": 3602,
+  "only_allowed_prior_change": {
+    "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/issues/17-agreement-report.md",
+    "operation": "append_only",
+    "status": "claimed",
+    "before_sha256": "1563411c1158c1886c1bbf1c3a38a81adfd28aeb0df62ea3fa367243fde1ae68",
+    "result_sha256": "49fd44ed8298d351d4f5dcc34407efcc9e53beaf25efd4ca3b0a4b470d88be80"
+  },
+  "canonical_yaml": 672,
+  "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "python_modules": 185,
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "no_source_control_budget_catalog_root_progress_or_map_change": true,
+  "no_metadata_action_scientific_function_ssh_provider_or_application_outcome": true,
+  "population_frozen": false,
+  "actual17campaigns": 0,
+  "ticket17_status": "claimed",
+  "scope": "Actual bounded cleanup evidence only; preparation history preserved; catalogue/population/campaign/D30 admission remains pending.",
+  "identity_sha256": "41129e463ee08f762dbce92e751f1424282950102724d0c13e4d429cd56d1f66"
+}

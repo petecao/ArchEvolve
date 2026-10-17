@@ -1,0 +1,99 @@
+{
+  "format": "swdb.ticket12.integrated-merger-proof.v1",
+  "created_utc": "2026-10-07T02:39:17.710848+00:00",
+  "base": "9a5057f45c7a1c3b8756cfccd39f000d72f95253",
+  "ticket12_done_tip": "d8800bd537ef811fcfc04c3fa8a5ec9884017499",
+  "integration_merge_tip": "d8800bd537ef811fcfc04c3fa8a5ec9884017499",
+  "merge": "clean fast-forward; no conflicts or production source edits",
+  "scope": "swdb-project only; parent owns main synchronization and all remote dispatch",
+  "preservation": {
+    "base": "9a5057f45c7a1c3b8756cfccd39f000d72f95253",
+    "integration_merge_tip": "d8800bd537ef811fcfc04c3fa8a5ec9884017499",
+    "prior_protected_blobs": 888,
+    "prior_yaml_records": 625,
+    "all_prior_blobs_equal": true,
+    "other_issue_blobs_equal": true,
+    "only_ticket12_map_row_changed": true,
+    "ticket12_history_note_appended": true,
+    "validators_preserved": [
+      "evaluation",
+      "campaign_summary",
+      "paired_estimate"
+    ],
+    "scope_only_swdb_project": true,
+    "base_2c50e5f_ancestor": true,
+    "root_idea_resurrected": false,
+    "manifest_sha256": "e6c03b6bd2e3eb8192fa34ae81b5e565ca193906923037813985a4d17e795f23",
+    "changed_paths": [
+      "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/12-final-public-coexistence-proof-20261006.json",
+      "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/12-functional-evaluation-mbit10-20261006-a1.json",
+      "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/12-functional-evaluation-runbook.md",
+      "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/12-functional-handoff-mbit10-20261006-a1.json",
+      "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/12-public-functional-evaluation-proof.json",
+      "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/issues/12-archevolve-dx100-evaluation.md",
+      "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/map.md",
+      "swdb-project/docs/bfs-handoff-contract-v1.1.md",
+      "swdb-project/docs/reference/README.md",
+      "swdb-project/docs/reference/bfs-functional-estimates.md",
+      "swdb-project/records/estimates/bfs.functional.evaluation.20261006.a1.estimate.yaml",
+      "swdb-project/records/evaluations/bfs.functional.evaluation.20261006.a1.yaml",
+      "swdb-project/records/protocols/bfs.functional.evaluation.protocol.20261006.a1.04ea188992780bf8.yaml",
+      "swdb-project/scripts/bfs_handoff_examples.py",
+      "swdb-project/swdb/archevolve.py",
+      "swdb-project/swdb/cli.py",
+      "swdb-project/swdb/functional_evaluation.py",
+      "swdb-project/swdb/handoff.py",
+      "swdb-project/swdb/rules.py",
+      "swdb-project/tests/test_bfs_acceptance_report.py",
+      "swdb-project/tests/test_functional_evaluation.py"
+    ],
+    "protected_prefixes": [
+      "swdb-project/records/",
+      "swdb-project/library/",
+      "swdb-project/apps/",
+      "swdb-project/campaigns/"
+    ]
+  },
+  "canonical_validation": {
+    "command": "python3 -m swdb validate --records records",
+    "exit_code": 0,
+    "result": "OK: 628 record(s) valid"
+  },
+  "narrow_public_integration_check": {
+    "command": "python3 -m swdb handoff-message evaluation_result bfs.functional.evaluation.20261006.a1 --records records --db <external disposable SQLite> --format json",
+    "exit_code": 0,
+    "archived_complete_message_equal": true,
+    "archived_message_sha256": "00a541c781665e3bfb8ed6083b9b25f0c8e5c4e64cff9dddb78e97f42eabd00b",
+    "format_version": "1.1",
+    "functional_correctness": "passed",
+    "hardware_correctness_claim": false,
+    "seconds": null,
+    "ratio": null,
+    "error_band": null,
+    "verdict": "within_error",
+    "performance_claim": "none",
+    "first_attempt": "Default cache creation denied by managed-checkout sandbox; explicit /private/tmp cache replay passed without source change."
+  },
+  "inherited_public_coexistence": {
+    "receipt": "12-final-public-coexistence-proof-20261006.json",
+    "receipt_identity": "464e818aaa5de6e8ccdb403e1b2a3a8d760a679ebc8357d8f3b19638f3a4aed9",
+    "functional_cases_passed": 2,
+    "functional_elapsed_s": 90.74,
+    "paired_case_prior_passed": 1,
+    "paired_elapsed_s": 197.77,
+    "rerun_here": false,
+    "reason": "Merged exact tested source by fast-forward; no new compiler concern."
+  },
+  "actual_remote_acceptance": {
+    "receipt": "12-functional-evaluation-mbit10-20261006-a1.json",
+    "identity": "d9f3942b414c0ea702ff47e438e3477ed571ac93c6c618bada200da0825da8a5",
+    "no_child_evaluation_and_handoff": true,
+    "raw_transferred": false
+  },
+  "own_ticket11_untouched": {
+    "tip": "68667b7a6330d50ec0c8e391c3779d676ba66ec8",
+    "source_worktree": "separate managed ticket11 checkout"
+  },
+  "boundary": "Functional-target correctness and estimated handoff only; no hardware correctness, native timing, performance, agreement or gain claim.",
+  "identity_sha256": "0bbe2452beb011f7866af268628d39a6cbb95cbd8a435f737c5990937084f36a"
+}

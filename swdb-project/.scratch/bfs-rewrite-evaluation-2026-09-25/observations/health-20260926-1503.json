@@ -1,0 +1,56 @@
+{
+  "created": "2026-09-26",
+  "observed_at": "2026-09-26T15:03:52-04:00",
+  "host": "mbit10",
+  "receipt": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926.dispatch/health-20260926-1503.json",
+    "bytes": 49497,
+    "sha256": "efc4488e3abf52edfe61099dcd2b44446b92ccca32bfb20a18def89de56b80a4"
+  },
+  "leases": {
+    "node0": {
+      "state": "released",
+      "generation": 325
+    },
+    "node1": {
+      "state": "released",
+      "generation": 401
+    },
+    "legacy": {
+      "state": "released",
+      "generation": 77
+    },
+    "kernel_locks": "all empty",
+    "owners": "all absent"
+  },
+  "owned_processes": "All retained native/provider/a3/coverage/T17/Linux PID-start unions absent, including prior coverage pane zombie.",
+  "load_average": [
+    0.03,
+    0.03,
+    0.03
+  ],
+  "free_bytes": {
+    "/data1": 17598263296,
+    "/data": 195728039936
+  },
+  "estimated_available_gib": {
+    "node0": 57.29,
+    "node1": 58.54,
+    "global": 117.73
+  },
+  "new_native_pin": "319645eab0a25c815fa03fe1c372d32b4ba45d10",
+  "historical_pins": "unchanged",
+  "receipt_hashes_verified": 15,
+  "workers": {
+    "host_dx100": "running",
+    "spec_postfix": "running",
+    "standards_postfix": "running"
+  },
+  "counts": {
+    "resolved_tickets": 13,
+    "claimed_tickets": 8,
+    "final_acceptance_cells": 0,
+    "required_cells": 8
+  },
+  "next_full_check_et": "2026-09-26 15:33 ET"
+}

@@ -1,0 +1,42 @@
+kind: proposal
+schema_version: '0.4'
+id: extensa-native-bfs-20261005-a8.it1.kronecker.a0.proposal
+status: draft
+created: '2026-10-05'
+updated: '2026-10-05'
+message_version: '1.0'
+producer:
+  name: codex:gpt-5.6-sol
+  role: worker
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+mode: extensa
+campaign: extensa-native-bfs-20261005-a8
+request:
+  campaign: extensa-native-bfs-20261005-a8
+  iteration: 1
+  attempt: 0
+  class: kronecker
+  contracts: []
+  knobs: {}
+  source_snapshot: bfs-dx100-scalar-only-20260929-a1.source
+  payload:
+    kind: patch
+    sha256: 7fbe8c99f0fb130869102187754be4c2714b4a6e58bc53dbfb4d922bc689fec2
+payload_sha256: 7fbe8c99f0fb130869102187754be4c2714b4a6e58bc53dbfb4d922bc689fec2
+outcome:
+  state: candidate_created
+  stage: campaign_materialization
+  reason: null
+source_snapshot: bfs-dx100-scalar-only-20260929-a1.source
+candidate: extensa-native-bfs-20261005-a8.it1.kronecker.a0
+attempts:
+- candidate: extensa-native-bfs-20261005-a8.it1.kronecker.a0
+raw_artifacts:
+- kind: provider_patch
+  path: /data/yanruj/EvolveSWDB_runs/extensa/extensa-native-bfs-20261005-a8/sources/extensa-native-bfs-20261005-a8.it1.kronecker.a0/provider.patch
+  sha256: be754a79d466c57df20b08d870d1bfc3cfe98b36b34d3e0c000be57731e61562

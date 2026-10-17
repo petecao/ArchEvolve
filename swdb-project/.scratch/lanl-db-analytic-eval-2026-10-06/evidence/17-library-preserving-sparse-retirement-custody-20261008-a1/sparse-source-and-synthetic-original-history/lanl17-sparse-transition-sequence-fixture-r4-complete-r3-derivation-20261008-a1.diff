@@ -1,0 +1,14 @@
+--- /private/tmp/lanl17_sparse_retirement_transition_sequence_virtual_regression_source_20261008_a1_r3.py
++++ /private/tmp/lanl17_sparse_retirement_transition_sequence_virtual_regression_source_20261008_a1_r4.py
+@@ -38,6 +38,11 @@
+ 
+     def lstat(self):
+         return self.model.statistics[str(self)]
++
++    def absolute(self):
++        if not self.is_absolute():
++            raise AssertionError('synthetic_absolute_path_required')
++        return self
+ 
+ 
+ def source_ast(which):

@@ -1,0 +1,61 @@
+{
+  "created": "2026-09-26T23:33:13.211211-04:00",
+  "scope": "Independent read-only recovery-accounting advice; no new plan, budget, ledger mutation, retry or execution",
+  "input": {
+    "path": "/private/tmp/bfs-t16-failed-terminal-20260926.json",
+    "bytes": 5471,
+    "sha256": "db16dde1c1a04cccffab482330555d13649efe9b660ac4df8195076dd44aae44"
+  },
+  "exact_history": {
+    "id": "bfs-t16-simulator-batch-20260926-a1",
+    "state": "failed",
+    "public_evaluation_state": "running/unverified, interrupted; zero completed samples",
+    "ledger": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1/bfs-t16-simulator-batch-20260926-a1.driver/cleanup-ledger.json",
+      "sha256": "38454147b9df88fadb63c46f5c7036ad72ed74639fd71be47b7e2e81a14e95a7",
+      "bytes": 26553
+    },
+    "cleanup_budget_admitted": false,
+    "storage_admitted": false,
+    "reservation_ids": [
+      "b3aac8d5d3bc45ca83bf59b152ce8b3b"
+    ],
+    "settled_seconds": 20.94487111307685,
+    "full_unsettled_grant_debit": 5,
+    "historical_nominal_cleanup_debit": 25.94487111307685,
+    "interpretation": "Conservative reservation debit only. It neither settles the old ledger nor proves actual cleanup duration stayed within30s."
+  },
+  "flat_task_accounting": {
+    "original_seconds": 86400,
+    "original_bytes": 64424509440,
+    "original_preparation_seconds": 253,
+    "failed_outer_through_closed_recount_seconds": 11121,
+    "total_elapsed_charge_before_fresh_prep": 11374,
+    "remaining_seconds_before_fresh_prep": 75026,
+    "original_preparation_bytes": 1130987520,
+    "failed_exact_raw_and_dispatch_bytes": 658644992,
+    "total_bytes_before_fresh_prep": 1789632512,
+    "remaining_bytes_before_fresh_prep": 62634876928,
+    "fixed_original_hard_end": "2026-09-27T20:16:17.225985-04:00",
+    "no_double_charge": "The5s reservation is inside the11121s closed wall envelope; do not add it again to elapsed time. Never refund it or reuse a purported4.055s remainder."
+  },
+  "future_narrow_reader_requirements": [
+    "Pin this one failed run, original admission/plan, driver, helper/outer exits, unchanged ledger and terminal hashes; do not relax the generic settled-ledger reader.",
+    "Verify immutable ledger binding/creator/original clocks and all117 settled events; preserve the one exact outstanding reservation as outstanding, with strict finite5s grant and in-window start.",
+    "Bind its PID3089858 to retained actual PID/start evidence, never invent a start time; independently require all944 retained identities checked twice, with only the exact captured zero-RSS pane zombie exception.",
+    "Require helper/outer1 and exact generation332 release evidence, or separately reviewed trustworthy historical successor evidence; no outstanding-ledger token is evidence of live work.",
+    "Recount the exact immutable raw+.dispatch roots and flat preparation addends after last writes. Their count is a cost even though old admission flags remainfalse; do not rename that old verdict to passed.",
+    "Any fresh finite corrective plan uses unused IDs, corrected reviewed runtime and separately bounded proof/preparation; subtract all actual or fixed reserved newcosts and clamp usable time to the originalhardend. Each next series still needs the unchanged fullallowance.",
+    "No completed scalarseries exists to reuse; source/binary/protocol/graph/checkpoint reuse requires exact existing public identity checks, not the incomplete execution outcome."
+  ],
+  "code_pointers": [
+    "scripts/bfs_simulator_batch_terminal.py:validate_cleanup_ledger deliberately rejects outstanding reservations",
+    "scripts/bfs_simulator_batch.py:failed_batch_charge currently delegates that strict reader, so this failed-cleanup case needs an explicitly selected cost-only path rather than a silent exception",
+    "docs/bfs-simulator-batches-20260926.md:19 retains86400s/60GiB and fullseries admission"
+  ],
+  "limits": [
+    "Typed host observation inspected locally; no additional host scan or full raw reopen was performed",
+    "Future implementation must preserve the failed cleanup-budget verdict even if operational absence is independently established",
+    "This note neither authorizes a new attempt nor changes task bounds"
+  ]
+}

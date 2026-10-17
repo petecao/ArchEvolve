@@ -1,0 +1,47 @@
+{
+  "bounds": {
+    "AS_bytes": 536870912,
+    "CPU_seconds": 40,
+    "alarm_seconds": 45,
+    "local_transport_seconds": 70,
+    "outer_seconds": 55,
+    "stdout_bytes": 4194304
+  },
+  "conditions": [
+    "Fresh original G619 raw-reader/source-process scan with retained finite OS/PAM TCB; no other unreadable process exemption.",
+    "Exact command and stdin hashes; closed environment; no children, project/native imports or writes.",
+    "Capture complete stdout/stderr and final raw/pin equality; any output/cap/refusal remains explicit."
+  ],
+  "date": "2026-10-16 ET",
+  "execution_by_this_review": false,
+  "external_runtime_and_source_rehash_performed": false,
+  "independent_spec": {
+    "bytes": 3372,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-complete-record-probe-v2-parent-static-review-20261016.json",
+    "sha256": "06559c527545f4820b8dfd621c70d3c87c1a27be05f7cb3bc535bbf42dbef79a"
+  },
+  "preparation": {
+    "bytes": 9177,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-complete-record-metadata-probe-preparation-v2-20261016.json",
+    "sha256": "c095b6b4ead80c82d00d588359fc163f9c7f5cb3e7327178557209c4a231e31b"
+  },
+  "root_controls": {
+    "bytes": 1208,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-public-v4-complete-record-probe-v2-root-controls-20261016.txt",
+    "sha256": "a6c2d3f9696a74bbdbde26ca464466b051407e2312610eddbca24820e8a50ca3"
+  },
+  "root_review": {
+    "command_argv_and_stdin_exact_checked": true,
+    "frozen_git_blob_pins_verified": 3,
+    "hard_readonly_path_pin_raw_and_final_stat_gates_preserved": true,
+    "physical_file_pins_verified": 13,
+    "pure_controls_passed": 10,
+    "read_complete_operational_functions": true,
+    "read_full_lineage_and_pure_controls": true,
+    "semantic_failures_collect_without_adoption": true,
+    "source_float300_0_full_plan_compared_separately_from_preserved_int300": true,
+    "strict_type_audit_preserves_original_short_circuit": true
+  },
+  "scientific_source_caller_or_ticket_acceptance": false,
+  "verdict": "ADMIT_ONCE_PASSIVE_DIAGNOSTIC_ONLY_AFTER_FRESH_SCOPED_PREFLIGHT"
+}

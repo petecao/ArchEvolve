@@ -1,0 +1,146 @@
+{
+  "created": "2026-10-16 ET",
+  "exit_code": 0,
+  "whole_seconds": 0.765078500029631,
+  "guard": {
+    "cmd": [
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+      "-B",
+      "/private/tmp/probata-t28-register-parser-entry-v1-20261016.py",
+      "--root-execute"
+    ],
+    "exit_code": 0,
+    "wall_s": 0.7039783750078641,
+    "peak_rss_mb": 78.46875,
+    "cap_gb": 8.0,
+    "killed_by_watchdog": false,
+    "timed_out": false,
+    "queue_timed_out": false,
+    "timeout_s": 15.0,
+    "queue_timeout_s": 30.0,
+    "lock_wait_s": 0.00047045835526660085,
+    "runner_pid": 72485,
+    "clock": "continuous_monotonic",
+    "clock_info": {
+      "kind": "continuous_monotonic",
+      "implementation": "mach_continuous_time",
+      "includes_sleep": true,
+      "numer": 125,
+      "denom": 3
+    },
+    "log": "/private/tmp/probata-t28-register-parser-root-v1.guard.log",
+    "inspection_events": [],
+    "inspection_failure": null,
+    "primary_inspection_failure": null,
+    "cleanup_inspection_failure": null,
+    "cleanup_inspection_failures": [],
+    "inspection_retry_boundary": "AccessDenied uses a 200 ms environ retry admission window and 21-attempt cap, or three attempts for other operations; only the exact proc_environ SystemError raised by the requested environ operation shares that policy; individual OS calls are not forcibly timed; all pauses count and RSS/deadline checks remain mandatory after inspection; only independently confirmed gone/zombie or changed birth is skipped; persistent live or unknown failure fails closed",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "unconfirmed_children": [],
+    "error": null,
+    "cleanup_boundary": "owned group, observed descendants, and inherited marker with three empty sweeps spanning50ms; trusted toolchain must preserve marker; polling is not atomic or hostile-process containment",
+    "rss_scope": "live union of current ancestry, retained PID/birth identities and periodic inherited-marker matches; sampled, not a kernel quota",
+    "finished": "2026-10-16 07:34:20 EDT"
+  },
+  "result": {
+    "accepted": true,
+    "autoload_plugins": false,
+    "headers_unchanged": true,
+    "input_bytes": 5738,
+    "inputs_checked": 4,
+    "prover_requested": false,
+    "runs": [
+      {
+        "Ignoring": false,
+        "argv": [
+          "/Users/yanrujhou/.opam/framac-33/bin/frama-c",
+          "-no-autoload-plugins",
+          "-machdep",
+          "x86_64",
+          "-kernel-warn-key",
+          "annot-error=abort",
+          "/private/tmp/probata-t28-register-parser-four-v1-20261016/inputs/wp-correct.c"
+        ],
+        "elapsed_seconds": 0.07234491599956527,
+        "exit_code": 0,
+        "input": {
+          "bytes": 1562,
+          "git_blob": "ee4ce111a35b78e3dd58f32ebad119a8b001f3f0",
+          "name": "wp-correct.c",
+          "repository_path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-register-parser/inputs/wp-correct.c",
+          "sha256": "a926d67cc1b153c610879935cac1d3c99c89f99970424e087d9e8c9ea8b0c74e"
+        }
+      },
+      {
+        "Ignoring": false,
+        "argv": [
+          "/Users/yanrujhou/.opam/framac-33/bin/frama-c",
+          "-no-autoload-plugins",
+          "-machdep",
+          "x86_64",
+          "-kernel-warn-key",
+          "annot-error=abort",
+          "/private/tmp/probata-t28-register-parser-four-v1-20261016/inputs/wp-wrong.c"
+        ],
+        "elapsed_seconds": 0.0648216669796966,
+        "exit_code": 0,
+        "input": {
+          "bytes": 1563,
+          "git_blob": "69f6984e0cf7550331dcedba5d47d9b93f6bb356",
+          "name": "wp-wrong.c",
+          "repository_path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-register-parser/inputs/wp-wrong.c",
+          "sha256": "0c81fbda127aa0edd380036e54d6d2485a23d9864079e9f48c37c615be9c34a6"
+        }
+      },
+      {
+        "Ignoring": false,
+        "argv": [
+          "/Users/yanrujhou/.opam/framac-33/bin/frama-c",
+          "-no-autoload-plugins",
+          "-machdep",
+          "x86_64",
+          "-kernel-warn-key",
+          "annot-error=abort",
+          "/private/tmp/probata-t28-register-parser-four-v1-20261016/inputs/all-contracts.c"
+        ],
+        "elapsed_seconds": 0.06399850000161678,
+        "exit_code": 0,
+        "input": {
+          "bytes": 2205,
+          "git_blob": "eb828e26f5b85346e0fbc7ea03920684129c82dd",
+          "name": "all-contracts.c",
+          "repository_path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-register-parser/inputs/all-contracts.c",
+          "sha256": "1e58b182d36e771ec394ba7a880964d7a6ccb35a811ead874ab32c0278acde68"
+        }
+      },
+      {
+        "Ignoring": false,
+        "argv": [
+          "/Users/yanrujhou/.opam/framac-33/bin/frama-c",
+          "-no-autoload-plugins",
+          "-machdep",
+          "x86_64",
+          "-kernel-warn-key",
+          "annot-error=abort",
+          "/private/tmp/probata-t28-register-parser-four-v1-20261016/inputs/ordinary-model.c"
+        ],
+        "elapsed_seconds": 0.04631095798686147,
+        "exit_code": 0,
+        "input": {
+          "bytes": 408,
+          "git_blob": "00d8d0fea6d25531cb4d21be92bc4e75bdb529f1",
+          "name": "ordinary-model.c",
+          "repository_path": "swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/28-register-parser/inputs/ordinary-model.c",
+          "sha256": "44dcd31b69c616256a9dbe72713079a2c769d41254e893db1c9c8b5237967eb9"
+        }
+      }
+    ],
+    "scope": "Parser/type syntax only; no WP/plugin/solver/model execution/source-body refinement/termination/hardware or whole28 acceptance",
+    "source_commit": "fcfc6135f3c2822bfd7bef8f3675f42554cb2e55",
+    "source_tree": "475f68c4d70cf37d1d12ed4e61ace5aa6076630f",
+    "wp_requested": false
+  },
+  "leases_after": [],
+  "scope": "Parser/type syntax only; no WP/plugin/solver/model execution/source-body refinement/termination/hardware or whole28 acceptance",
+  "proof_acceptance": false
+}

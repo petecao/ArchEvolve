@@ -1,0 +1,100 @@
+kind: evaluation
+schema_version: '0.4'
+id: bfs-contract-20260925-a3.budget
+status: draft
+created: '2026-09-25'
+updated: '2026-09-25'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  candidate: bfs-contract-20260925-a3.candidate-proposal.candidate-1
+  machine: bfs-contract-20260925-a3.local-host
+  threads: 1
+  sources: [0]
+  repetitions: 1
+  roi: bfs.complete_call.v1
+  fixture: true
+  comparison_baseline: bfs-contract-20260925-a3.independent-reference
+  build:
+    compiler: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/explicit-fixture-compiler
+    flags: [-std=c++11, -O2]
+  workload:
+    id: bfs-contract-20260925-a3.workload.584a833b37d4d8a1
+  budget:
+    build_seconds: 10
+    run_seconds: 2
+    total_seconds: 0.001
+  id: bfs-contract-20260925-a3.budget
+outcome:
+  state: budget_exhausted
+  stage: source_resolution
+  reason: total evaluation execution budget exhausted
+stages:
+- stage: source_resolution
+  state: complete
+  started: '2026-09-26T02:01:22.609674+00:00'
+  finished: '2026-09-26T02:01:24.522063+00:00'
+timing: []
+correctness:
+  state: unverified
+  checks: []
+profiling:
+  state: unavailable
+  reasons:
+  - automatic function attribution not collected
+  - automatic loop attribution not collected
+  - dynamic memory observations not collected
+raw_artifacts:
+- host: YanRus-Mac-Studio
+  path: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.budget
+  kind: evaluation_run
+- host: YanRus-Mac-Studio
+  path: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/bfs-contract-20260925-a3.budget/build
+  kind: evaluation_build
+gain_claim: false
+evidence_kind: contract_fixture
+candidate: bfs-contract-20260925-a3.candidate-proposal.candidate-1
+source_snapshot: bfs-contract-20260925-a3.source
+implementation: gapbs-bfs-do
+proposal: bfs-contract-20260925-a3.candidate-proposal
+profile_package: bfs-contract-20260925-a3.fixture-package
+machine: bfs-contract-20260925-a3.local-host
+comparison_baseline: bfs-contract-20260925-a3.independent-reference
+context:
+  candidate_sha256: b1caf5ac833838d2533ae74c281d0fe155e1eda589b9af16ddbba0a4210c9f8e
+  function: DOBFS
+  source_revision: 2972aeb2703165bafd921222f4ed7196f542d3a8
+  application: gapbs
+  adapter: gapbs_native
+  target: bfs-contract-20260925-a3.local-host
+  machine_sha256: b8e9059c7989f1bac8a02f7a1301d4760b080a36eb646a4f06993cc75593e0f3
+  threads: 1
+  sources: [0]
+  repetitions: 1
+  roi: bfs.complete_call.v1
+  protocol: null
+  basis: measured
+  process_policy: one fresh process per source and repetition; graph construction before ROI
+  verifier: swdb.bfs.structural.v1
+  verifier_sha256: d826f9d4f8ea8c03cce120ecbd1f863623afa149f1f16e68c2767b2f0fa0ee3b
+  backend_configuration: {}
+  instrumentation:
+    template_sha256: 99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95
+    treatment: included
+  host: YanRus-Mac-Studio
+  architecture: arm64
+  lane: null
+  load_average: [16.6806640625, 9.275390625, 7.359375]
+  budget:
+    build_seconds: 10.0
+    run_seconds: 2.0
+    total_seconds: 0.001

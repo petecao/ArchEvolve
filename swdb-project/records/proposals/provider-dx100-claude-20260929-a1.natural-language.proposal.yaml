@@ -1,0 +1,504 @@
+kind: proposal
+schema_version: '0.4'
+id: provider-dx100-claude-20260929-a1.natural-language.proposal
+status: draft
+created: '2026-09-29'
+updated: '2026-09-29'
+message_version: '1.0'
+producer:
+  name: swdb-bounded-instruction-diagnostic-client
+  role: sw
+  test_client: true
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: provider-dx100-claude-20260929-a1.natural-language.proposal
+  producer:
+    name: swdb-bounded-instruction-diagnostic-client
+    role: sw
+    test_client: true
+  implementation: dx100-bfs-scalar
+  source_snapshot: bfs-dx100-scalar-only-20260929-a1.source
+  profile_package: provider-dx100-claude-20260929-a1.natural-language.package
+  source_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  regions:
+  - benchmarks/gapbs/src/bfs.cc:1-291:e2fd2653fd1adcfd
+  intent: Remove the redundant parent[v] = u store immediately following successful compare_and_swap(parent[v],
+    curr_val, u) in the scalar TDStep. The successful CAS already performs that write. Preserve the CAS,
+    queue insertion, scout count, and every other algorithmic step. The registered scalar-only snapshot
+    excludes the authors' accelerator BFS functions; do not introduce an accelerator branch.
+  parameters:
+    remove_redundant_post_cas_store: true
+  constraints:
+    editable_files: [benchmarks/gapbs/src/bfs.cc]
+    preserve_correctness: true
+    preserve_roi: true
+  payload:
+    kind: natural_language
+    content: Remove the redundant parent[v] = u store immediately following successful compare_and_swap(parent[v],
+      curr_val, u) in the scalar TDStep. The successful CAS already performs that write. Preserve the
+      CAS, queue insertion, scout count, and every other algorithmic step. The registered scalar-only
+      snapshot excludes the authors' accelerator BFS functions; do not introduce an accelerator branch.
+  required_operations: []
+payload_sha256: ba608c83b9f5aca60ab76113c6d7f0b4a6c1e2889d670bbcab3707f5e4044785
+outcome:
+  state: failed
+  stage: rewriting
+  reason: rewrite provider exited 1; retained /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1
+attempts:
+- number: 1
+  stage: interpretation
+  state: failed
+  reason: rewrite provider exited 1; retained /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1
+  provider:
+    provider:
+      kind: claude
+      command:
+      - /data1/yanruj/.npm-global/bin/claude
+      timeout_s: 1200
+      max_repairs: 1
+      total_seconds: 3600
+      budget_usd: 5
+      workspace: true
+      resolved_kind: claude
+      model: claude-sonnet-5-5
+      effort: high
+      budget_usd_enforced: true
+      cli_version: 2.1.278 (Claude Code)
+      guard_policy:
+        enforced: true
+        landlock_abi: 4
+        lane: 'mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 422)'
+        read_roots:
+        - /data1/yanruj/.npm-global/lib/node_modules
+        - /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/guard
+        - /dev/null
+        - /dev/random
+        - /dev/urandom
+        - /dev/zero
+        - /etc/hosts
+        - /etc/ld.so.cache
+        - /etc/nsswitch.conf
+        - /etc/passwd
+        - /etc/ssl/certs
+        - /etc/ssl/openssl.cnf
+        - /proc/sys/vm/mmap_min_addr
+        - /run/systemd/resolve/stub-resolv.conf
+        - /usr
+        - /usr/bin
+        - /usr/lib
+        - /usr/lib64
+        - /usr/share/zoneinfo/America/Detroit
+        runtime_self_reads: [maps, cgroup, stat, statm, status]
+        device_write_roots: [/dev/null]
+        execution_cpus: [0]
+        resource_scope: provider process tree including its external strace launcher
+        write_roots:
+        - /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/workspace
+        - /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/provider-home
+        tcp_connect_ports: [443]
+        inner_tcp_connect_ports: []
+        tcp_bind_ports: []
+        model_api:
+          hosts: [api.anthropic.com, claude.ai]
+          addresses: [160.79.104.10, '2607:6bc0::10']
+        login_path: /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/provider-home/.credentials.json
+        limits:
+          threads: 16
+          memory_bytes: 34359738368
+          command_seconds: 120
+          workspace_bytes: 5368709120
+        residual_risks:
+        - Landlock ABI 4 does not restrict UDP
+        - login copy readable during session
+        command_network_wrapper: true
+        command_shell: /bin/bash
+      audit:
+        format: swdb.provider-audit.v1
+        state: passed
+        passed: true
+        events: 4
+        commands: 0
+        file_accesses: 0
+        reasons: []
+        violations: []
+        raw_log:
+          path: /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/stdout.txt
+          sha256: 07f6bfcdf0d41d39eb02c1f5cd7f31aec8bd5822a3b607e7b39d6d7aa222d8fa
+          bytes: 3165
+    command:
+    - /data1/yanruj/.npm-global/bin/claude
+    - -p
+    - --safe-mode
+    - --tools
+    - Read,Glob,Grep,Edit,Write,Bash
+    - --strict-mcp-config
+    - --mcp-config
+    - '{"mcpServers":{}}'
+    - --no-session-persistence
+    - --output-format
+    - stream-json
+    - --verbose
+    - --include-partial-messages
+    - --json-schema
+    - '{"type": "object", "additionalProperties": false, "required": ["interpretation", "unresolved"],
+      "properties": {"interpretation": {"type": "string"}, "unresolved": {"type": "array", "items": {"type":
+      "string"}}}}'
+    - --max-budget-usd
+    - '5'
+    - --model
+    - claude-sonnet-5-5
+    - --effort
+    - high
+    - --permission-mode
+    - bypassPermissions
+    - --disable-slash-commands
+    - --setting-sources
+    - ''
+    timeout_s: 1200
+    classification: rewrite_provider
+    prompt_sha256: b57536e962f563d8fa92dcfd7d368b267bcd992f0a30c80d1ed4b500dbce735d
+    state: failed
+    executable_sha256: 5c4735937844e84f8a93306e841a5b0e12252909b07870f789b190468da147ab
+    resolved_kind: claude
+    model: claude-sonnet-5-5
+    effort: high
+    workspace: true
+    budget_usd_enforced: true
+    guard_policy:
+      enforced: true
+      landlock_abi: 4
+      lane: 'mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 422)'
+      read_roots:
+      - /data1/yanruj/.npm-global/lib/node_modules
+      - /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/guard
+      - /dev/null
+      - /dev/random
+      - /dev/urandom
+      - /dev/zero
+      - /etc/hosts
+      - /etc/ld.so.cache
+      - /etc/nsswitch.conf
+      - /etc/passwd
+      - /etc/ssl/certs
+      - /etc/ssl/openssl.cnf
+      - /proc/sys/vm/mmap_min_addr
+      - /run/systemd/resolve/stub-resolv.conf
+      - /usr
+      - /usr/bin
+      - /usr/lib
+      - /usr/lib64
+      - /usr/share/zoneinfo/America/Detroit
+      runtime_self_reads: [maps, cgroup, stat, statm, status]
+      device_write_roots: [/dev/null]
+      execution_cpus: [0]
+      resource_scope: provider process tree including its external strace launcher
+      write_roots:
+      - /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/workspace
+      - /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/provider-home
+      tcp_connect_ports: [443]
+      inner_tcp_connect_ports: []
+      tcp_bind_ports: []
+      model_api:
+        hosts: [api.anthropic.com, claude.ai]
+        addresses: [160.79.104.10, '2607:6bc0::10']
+      login_path: /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/provider-home/.credentials.json
+      limits:
+        threads: 16
+        memory_bytes: 34359738368
+        command_seconds: 120
+        workspace_bytes: 5368709120
+      residual_risks:
+      - Landlock ABI 4 does not restrict UDP
+      - login copy readable during session
+      command_network_wrapper: true
+      command_shell: /bin/bash
+    version: 2.1.278 (Claude Code)
+    cli_version: 2.1.278 (Claude Code)
+    guard_command:
+    - /usr/bin/strace
+    - -f
+    - -qq
+    - -yy
+    - -e
+    - trace=connect
+    - -o
+    - /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/network.trace
+    - /usr/bin/python3
+    - /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/guard/launch.py
+    - /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/guard/policy.json
+    - --
+    - /data1/yanruj/.npm-global/bin/claude
+    - -p
+    - --safe-mode
+    - --tools
+    - Read,Glob,Grep,Edit,Write,Bash
+    - --strict-mcp-config
+    - --mcp-config
+    - '{"mcpServers":{}}'
+    - --no-session-persistence
+    - --output-format
+    - stream-json
+    - --verbose
+    - --include-partial-messages
+    - --json-schema
+    - '{"type": "object", "additionalProperties": false, "required": ["interpretation", "unresolved"],
+      "properties": {"interpretation": {"type": "string"}, "unresolved": {"type": "array", "items": {"type":
+      "string"}}}}'
+    - --max-budget-usd
+    - '5'
+    - --model
+    - claude-sonnet-5-5
+    - --effort
+    - high
+    - --permission-mode
+    - bypassPermissions
+    - --disable-slash-commands
+    - --setting-sources
+    - ''
+    returncode: 1
+    host_wall_s: 0.5755291050300002
+    stream:
+      first_output_s: 0.5753400325775146
+      last_output_s: 0.5753400325775146
+      events: 4
+      unparsed_lines: 0
+      event_types:
+        system.init: 1
+        system.status: 1
+        assistant: 1
+        result.success: 1
+      delta_counts: {}
+      delta_chars: {}
+      estimated_thinking_tokens: null
+      model: claude-sonnet-5-5
+      result:
+        subtype: success
+        is_error: true
+        stop_reason: stop_sequence
+        num_turns: 1
+        duration_ms: 66
+        duration_api_ms: 0
+        total_cost_usd: 0
+        terminal_reason: api_error
+        output_tokens: 0
+      partial_output:
+        path: /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/partial_output.txt
+        sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    guard_result:
+      passed: true
+      reasons: []
+      trace: /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/network.trace
+    workspace_manifest:
+      format: swdb.provider-workspace.v1
+      root: /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/workspace
+      home: /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/provider-home
+      source_files:
+      - LICENSE
+      - PROVENANCE.md
+      - benchmarks/API/MAA.hpp
+      - benchmarks/API/MAA_atomics.hpp
+      - benchmarks/API/MAA_functional.hpp
+      - benchmarks/API/MAA_gem5.hpp
+      - benchmarks/API/MAA_gem5_magic.hpp
+      - benchmarks/API/MAA_utility.hpp
+      - benchmarks/gapbs/LICENSE
+      - benchmarks/gapbs/src/benchmark.h
+      - benchmarks/gapbs/src/bfs.cc
+      - benchmarks/gapbs/src/bitmap.h
+      - benchmarks/gapbs/src/builder.h
+      - benchmarks/gapbs/src/command_line.h
+      - benchmarks/gapbs/src/generator.h
+      - benchmarks/gapbs/src/graph.h
+      - benchmarks/gapbs/src/platform_atomics.h
+      - benchmarks/gapbs/src/pvector.h
+      - benchmarks/gapbs/src/reader.h
+      - benchmarks/gapbs/src/sliding_queue.h
+      - benchmarks/gapbs/src/timer.h
+      - benchmarks/gapbs/src/util.h
+      - benchmarks/gapbs/src/writer.h
+      - include/gem5/asm/generic/m5ops.h
+      - include/gem5/m5ops.h
+      visible_files:
+      - .swdb-context/profile-package.json
+      - .swdb-context/proposal.json
+      - .swdb-context/workspace-map.json
+      - LICENSE
+      - PROVENANCE.md
+      - benchmarks/API/MAA.hpp
+      - benchmarks/API/MAA_atomics.hpp
+      - benchmarks/API/MAA_functional.hpp
+      - benchmarks/API/MAA_gem5.hpp
+      - benchmarks/API/MAA_gem5_magic.hpp
+      - benchmarks/API/MAA_utility.hpp
+      - benchmarks/gapbs/LICENSE
+      - benchmarks/gapbs/src/benchmark.h
+      - benchmarks/gapbs/src/bfs.cc
+      - benchmarks/gapbs/src/bitmap.h
+      - benchmarks/gapbs/src/builder.h
+      - benchmarks/gapbs/src/command_line.h
+      - benchmarks/gapbs/src/generator.h
+      - benchmarks/gapbs/src/graph.h
+      - benchmarks/gapbs/src/platform_atomics.h
+      - benchmarks/gapbs/src/pvector.h
+      - benchmarks/gapbs/src/reader.h
+      - benchmarks/gapbs/src/sliding_queue.h
+      - benchmarks/gapbs/src/timer.h
+      - benchmarks/gapbs/src/util.h
+      - benchmarks/gapbs/src/writer.h
+      - include/gem5/asm/generic/m5ops.h
+      - include/gem5/m5ops.h
+      extra_files: []
+      immutable_files:
+      - .swdb-context/profile-package.json
+      - .swdb-context/proposal.json
+      - .swdb-context/workspace-map.json
+      - LICENSE
+      - PROVENANCE.md
+      - benchmarks/API/MAA.hpp
+      - benchmarks/API/MAA_atomics.hpp
+      - benchmarks/API/MAA_functional.hpp
+      - benchmarks/API/MAA_gem5.hpp
+      - benchmarks/API/MAA_gem5_magic.hpp
+      - benchmarks/API/MAA_utility.hpp
+      - benchmarks/gapbs/LICENSE
+      - benchmarks/gapbs/src/benchmark.h
+      - benchmarks/gapbs/src/bitmap.h
+      - benchmarks/gapbs/src/builder.h
+      - benchmarks/gapbs/src/command_line.h
+      - benchmarks/gapbs/src/generator.h
+      - benchmarks/gapbs/src/graph.h
+      - benchmarks/gapbs/src/platform_atomics.h
+      - benchmarks/gapbs/src/pvector.h
+      - benchmarks/gapbs/src/reader.h
+      - benchmarks/gapbs/src/sliding_queue.h
+      - benchmarks/gapbs/src/timer.h
+      - benchmarks/gapbs/src/util.h
+      - benchmarks/gapbs/src/writer.h
+      - include/gem5/asm/generic/m5ops.h
+      - include/gem5/m5ops.h
+      hidden_files: []
+      hidden_fragments:
+      - path: benchmarks/gapbs/src/bfs.cc
+        count: 1
+      login_copy_deleted: true
+      profile_package_projection:
+        format: swdb.provider-profile-view.v1
+        source_id: provider-dx100-claude-20260929-a1.natural-language.package
+        source_identity_sha256: null
+        source_record_sha256: 2443044a129ff08b19df1a498600264e84f7d1ca3cbf9c9d51333d8541bfe21f
+        omitted_field_names: [protections, evaluator, verification, correctness_check]
+        protected_fragments_redacted: true
+        notice: Provider-visible context projection; the authoritative sealed package is retained unchanged.
+      starting_files_sha256: f8fd3a5d86724cd4cdbf2ce633d9d4a60a8bf0faee3f244f565c1654a90357e6
+      dropped_build_outputs: []
+      context_manifest:
+        path: .swdb-context/workspace-map.json
+        sha256: 700220fce48f4927ac43dfc99a93f2d186b2b54512bb523cd038d8a35c60c8f6
+        bytes: 3827
+    network_audit:
+      passed: true
+      reasons: []
+      trace: /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/network.trace
+    audit:
+      format: swdb.provider-audit.v1
+      state: passed
+      passed: true
+      events: 4
+      commands: 0
+      file_accesses: 0
+      reasons: []
+      violations: []
+      raw_log:
+        path: /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/stdout.txt
+        sha256: 07f6bfcdf0d41d39eb02c1f5cd7f31aec8bd5822a3b607e7b39d6d7aa222d8fa
+        bytes: 3165
+raw_artifacts:
+- path: /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal
+  stage: rewriting
+source_snapshot: bfs-dx100-scalar-only-20260929-a1.source
+profile_package: provider-dx100-claude-20260929-a1.natural-language.package
+provider:
+  kind: claude
+  command:
+  - /data1/yanruj/.npm-global/bin/claude
+  timeout_s: 1200
+  max_repairs: 1
+  total_seconds: 3600
+  budget_usd: 5
+  workspace: true
+  resolved_kind: claude
+  model: claude-sonnet-5-5
+  effort: high
+  budget_usd_enforced: true
+  cli_version: 2.1.278 (Claude Code)
+  guard_policy:
+    enforced: true
+    landlock_abi: 4
+    lane: 'mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 422)'
+    read_roots:
+    - /data1/yanruj/.npm-global/lib/node_modules
+    - /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/guard
+    - /dev/null
+    - /dev/random
+    - /dev/urandom
+    - /dev/zero
+    - /etc/hosts
+    - /etc/ld.so.cache
+    - /etc/nsswitch.conf
+    - /etc/passwd
+    - /etc/ssl/certs
+    - /etc/ssl/openssl.cnf
+    - /proc/sys/vm/mmap_min_addr
+    - /run/systemd/resolve/stub-resolv.conf
+    - /usr
+    - /usr/bin
+    - /usr/lib
+    - /usr/lib64
+    - /usr/share/zoneinfo/America/Detroit
+    runtime_self_reads: [maps, cgroup, stat, statm, status]
+    device_write_roots: [/dev/null]
+    execution_cpus: [0]
+    resource_scope: provider process tree including its external strace launcher
+    write_roots:
+    - /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/workspace
+    - /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/provider-home
+    tcp_connect_ports: [443]
+    inner_tcp_connect_ports: []
+    tcp_bind_ports: []
+    model_api:
+      hosts: [api.anthropic.com, claude.ai]
+      addresses: [160.79.104.10, '2607:6bc0::10']
+    login_path: /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/provider-home/.credentials.json
+    limits:
+      threads: 16
+      memory_bytes: 34359738368
+      command_seconds: 120
+      workspace_bytes: 5368709120
+    residual_risks:
+    - Landlock ABI 4 does not restrict UDP
+    - login copy readable during session
+    command_network_wrapper: true
+    command_shell: /bin/bash
+  audit:
+    format: swdb.provider-audit.v1
+    state: passed
+    passed: true
+    events: 4
+    commands: 0
+    file_accesses: 0
+    reasons: []
+    violations: []
+    raw_log:
+      path: /data1/yanruj/EvolveSWDB_runs/provider-dx100-smoke-20260929-a1/claude/provider-dx100-claude-20260929-a1.natural-language.proposal/provider-1/stdout.txt
+      sha256: 07f6bfcdf0d41d39eb02c1f5cd7f31aec8bd5822a3b607e7b39d6d7aa222d8fa
+      bytes: 3165
+repair_budget:
+  max_repairs: 1
+  total_seconds: 3600
+  used_seconds: 0.5755291050300002
+  repairs: 0

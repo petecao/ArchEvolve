@@ -1,0 +1,295 @@
+{
+  "format": "swdb.lanl17-consumed-source-guard-r2-correction-archival-custody.v1",
+  "canonical_ensure_ascii": true,
+  "archived_utc": "2026-10-07T22:25:18.457867+00:00",
+  "checkpoint_base": "c94c631edf402c350a084dfcdb42e2e0d1a4d341",
+  "sole_parent_for_correction": "bf77b42012070082085c96e3fbc350ced9a36b10",
+  "prior_tree": "638818a2711bcfdebd5d0dac7fe3fc4538f780a6",
+  "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-consumed-detached-source-guard-correction-20261007-r2/",
+  "exact_original_snapshots": 14,
+  "exact_original_snapshot_bytes": 117006,
+  "entries": [
+    {
+      "role": "selected_R2_NOTRUN_guard_source",
+      "origin": "/private/tmp/lanl_consumed_detached_source_guard_r2_20261007.py",
+      "snapshot": "lanl_consumed_detached_source_guard_r2_20261007.py",
+      "bytes": 65830,
+      "sha256": "3ff7bde67947adf524d0c4f556047fcf1377bc6ddb1e64c9ac58409c3e0acfeb",
+      "byte_exact": true
+    },
+    {
+      "role": "selected_R2_complete_unsealed_derivation_diff",
+      "origin": "/private/tmp/lanl-consumed-detached-source-guard-r2-complete-derivation-20261007.diff",
+      "snapshot": "lanl-consumed-detached-source-guard-r2-complete-derivation-20261007.diff",
+      "bytes": 2412,
+      "sha256": "fa845c11ea99ef6ffd0d2afab18679011216c749569c3bfbdbe0325f8bb9dbcf",
+      "byte_exact": true,
+      "original_policy": "Original unsealed complete diff with context/EOF bytes preserved."
+    },
+    {
+      "role": "selected_R2_NOTRUN_handoff",
+      "origin": "/private/tmp/lanl-consumed-detached-source-guard-r2-source-handoff-20261007.md",
+      "snapshot": "lanl-consumed-detached-source-guard-r2-source-handoff-20261007.md",
+      "bytes": 5581,
+      "sha256": "c93d971e950e7c5632677500c07e8710a40139f466a453d0940294b4bd83d820",
+      "byte_exact": true
+    },
+    {
+      "role": "selected_R2_True_NOTRUN_preparation",
+      "origin": "/private/tmp/lanl-consumed-detached-source-guard-r2-source-preparation-20261007.json",
+      "snapshot": "lanl-consumed-detached-source-guard-r2-source-preparation-20261007.json",
+      "bytes": 1911,
+      "sha256": "514ed04b5028b313a3814fb86a78577f011a4ab3d6cac4c55e72cc4d7ecd352c",
+      "byte_exact": true,
+      "original_format": "swdb.consumed-detached-source-guard-r2-source-preparation.v1",
+      "original_canonical_ensure_ascii": true,
+      "original_identity_sha256": "61133f7867ee13ac30ab0175853ae8cbb8d61adc019beba5bdb7e1b29e33f046"
+    },
+    {
+      "role": "original_independent_R1_blocking_findings",
+      "origin": "/private/tmp/lanl-consumed-detached-source-guard-r1-independent-review-20261007.md",
+      "snapshot": "lanl-consumed-detached-source-guard-r1-independent-review-20261007.md",
+      "bytes": 4253,
+      "sha256": "95ff76f6c293f42092259841ec27e7f2174750d638014fb844158f89016ddcc5",
+      "byte_exact": true
+    },
+    {
+      "role": "independent_R2_and_harness_source_review",
+      "origin": "/private/tmp/lanl-consumed-source-guard-r2-and-harness-independent-review-20261007.md",
+      "snapshot": "lanl-consumed-source-guard-r2-and-harness-independent-review-20261007.md",
+      "bytes": 5616,
+      "sha256": "b0fdb9f14e25323479fff61ee9909fed7a2c23d85371ba1dbc4e1c31b338e056",
+      "byte_exact": true
+    },
+    {
+      "role": "original_NOTRUN_synthetic_harness_source",
+      "origin": "/private/tmp/lanl_consumed_source_guard_binding_journal_isolated_test_source_20261007_r2.py",
+      "snapshot": "lanl_consumed_source_guard_binding_journal_isolated_test_source_20261007_r2.py",
+      "bytes": 14456,
+      "sha256": "9376fd62312916d67fddd6f84b7398480c5efa9922e53ea907fa3aa996b768bf",
+      "byte_exact": true
+    },
+    {
+      "role": "original_NOTRUN_synthetic_harness_handoff",
+      "origin": "/private/tmp/lanl-consumed-source-guard-binding-journal-isolated-test-source-handoff-20261007-r2.md",
+      "snapshot": "lanl-consumed-source-guard-binding-journal-isolated-test-source-handoff-20261007-r2.md",
+      "bytes": 5100,
+      "sha256": "974cbf90c90244833e08320d361b6cf3980af776f093932318ad413756245797",
+      "byte_exact": true
+    },
+    {
+      "role": "original_True_NOTRUN_synthetic_harness_preparation",
+      "origin": "/private/tmp/lanl-consumed-source-guard-binding-journal-isolated-test-source-preparation-20261007-r2.json",
+      "snapshot": "lanl-consumed-source-guard-binding-journal-isolated-test-source-preparation-20261007-r2.json",
+      "bytes": 2421,
+      "sha256": "f95dcedecc990431343a95e140186e14cb26ce9244f44535b8f1695dd7b1a6f1",
+      "byte_exact": true,
+      "original_format": "swdb.consumed-detached-source-guard-r2-isolated-harness-source-preparation.v1",
+      "original_canonical_ensure_ascii": true,
+      "original_identity_sha256": "9a7b3e8413c4af1cc7ae748ec0bb55c8e4a7eeb07e8b60e94e6af63d95248d17"
+    },
+    {
+      "role": "exact_parent_single_synthetic_batch_runner",
+      "origin": "/private/tmp/lanl_consumed_source_guard_binding_journal_isolated_test_runner_20261007_r2.py",
+      "snapshot": "lanl_consumed_source_guard_binding_journal_isolated_test_runner_20261007_r2.py",
+      "bytes": 3966,
+      "sha256": "5564c6a5986f837bc9890692f61712202c7d3ad322e9eedab9acaa9f3ad295c0",
+      "byte_exact": true
+    },
+    {
+      "role": "later_original_True_single_synthetic_batch_receipt",
+      "origin": "/private/tmp/lanl-consumed-source-guard-binding-journal-isolated-tests-actual-20261007-r2.json",
+      "snapshot": "lanl-consumed-source-guard-binding-journal-isolated-tests-actual-20261007-r2.json",
+      "bytes": 2526,
+      "sha256": "a3313cff26822003a4db2f211cbe89e91e7a3f7506fe6957f6d19cce122d0a6a",
+      "byte_exact": true,
+      "original_format": "swdb.consumed-source-guard-isolated-synthetic-tests.v1",
+      "original_canonical_ensure_ascii": true,
+      "original_identity_sha256": "4af33429c3e3c4e8d2b2a77b7e1247a2473af91029dde0a8646b8ca3db614504"
+    },
+    {
+      "role": "original_UNSEALED_local_synthetic_stdout",
+      "origin": "/private/tmp/lanl-consumed-source-guard-binding-journal-isolated-tests-20261007-r2/stdout.txt",
+      "snapshot": "stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_exact": true,
+      "original_policy": "Original unsealed local SYNTHETIC test stream; exact bytes, no retroactive seal or remote/scientific log claim."
+    },
+    {
+      "role": "original_UNSEALED_local_synthetic_stderr",
+      "origin": "/private/tmp/lanl-consumed-source-guard-binding-journal-isolated-tests-20261007-r2/stderr.txt",
+      "snapshot": "stderr.txt",
+      "bytes": 1110,
+      "sha256": "c492a7cc7da7f723f0a3cbcdc5645b21127e38bedc61e3dc0b915000dc235de4",
+      "byte_exact": true,
+      "original_policy": "Original unsealed local SYNTHETIC test stream; exact bytes, no retroactive seal or remote/scientific log claim."
+    },
+    {
+      "role": "independent_actual_single_SYNTHETIC_batch_recorded_result_review",
+      "origin": "/private/tmp/lanl-consumed-source-guard-r2-actual-isolated-batch-independent-review-20261007.md",
+      "snapshot": "lanl-consumed-source-guard-r2-actual-isolated-batch-independent-review-20261007.md",
+      "bytes": 1824,
+      "sha256": "c6ef0e65a948fbb6a6e51def86f773fdf08230be8d6a98edb1b42a3fae68bdf9",
+      "byte_exact": true
+    }
+  ],
+  "readme": {
+    "snapshot": "README.md",
+    "bytes": 5035,
+    "sha256": "00b404f9655dda2de3152f30f95b23280fef9eef8b6c6a0a18089a7092d74f08"
+  },
+  "new_archive_files": 16,
+  "original_explicit_True_JSONs": 3,
+  "two_original_UNSEALED_local_synthetic_streams_preserved": true,
+  "earlier_sixteen_file_unexecuted_draft_archive_unchanged_references": {
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-consumed-detached-source-guard-controls-20261007-a1/README.md": {
+      "bytes": 4524,
+      "sha256": "f9101cc238074870e6eaacf7d4403744cee0b7a353b0e9f6ea4998c3920a7d89",
+      "Git_entry": "100644 blob 68b982aa3b948b71c18f0fab0429ccd5fff1140f",
+      "reference_only_not_copied": true
+    },
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-consumed-detached-source-guard-controls-20261007-a1/lanl-clean-consumed-old-exports-20261007.py": {
+      "bytes": 5361,
+      "sha256": "0946444ab815d312b84afbf4b76084a7df07cd71e7c4ffc5d5907a29ce233701",
+      "Git_entry": "100644 blob 1fc3cdea3e99d58c75c35b318e10ff870072003e",
+      "reference_only_not_copied": true
+    },
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-consumed-detached-source-guard-controls-20261007-a1/lanl-consumed-detached-source-guard-complete-derivation-20261007.diff": {
+      "bytes": 63469,
+      "sha256": "47936dd0e0fea7ccbcfd900bbadffd42654918dc3f2dba7859b8f8d03c04336e",
+      "Git_entry": "100644 blob 8d354110d24aacac24277c290eaa9c5a1e34bf32",
+      "reference_only_not_copied": true
+    },
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-consumed-detached-source-guard-controls-20261007-a1/lanl-consumed-detached-source-guard-r1-complete-derivation-20261007.diff": {
+      "bytes": 20004,
+      "sha256": "1c08b9a811816598d007aa4b01d8ed949b77547174ac024d4cf39792b63b7d7a",
+      "Git_entry": "100644 blob 214d4320677a6f16e5c369a358c345de0a36f4b5",
+      "reference_only_not_copied": true
+    },
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-consumed-detached-source-guard-controls-20261007-a1/lanl-consumed-detached-source-guard-r1-source-handoff-20261007.md": {
+      "bytes": 8657,
+      "sha256": "709714a9deab4120544d2579d3de451e5dbf6ad96b427b6a299d4c3ee9331976",
+      "Git_entry": "100644 blob 286e6dbfd8c7c2b5f43b183619c844c43ce5e0fb",
+      "reference_only_not_copied": true
+    },
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-consumed-detached-source-guard-controls-20261007-a1/lanl-consumed-detached-source-guard-r1-source-preparation-20261007.json": {
+      "bytes": 2331,
+      "sha256": "3c3962084b2516231a0fdd4a298d1cbc9d26e667199c95bf827812352df172d4",
+      "Git_entry": "100644 blob 17f71389fe8657af5a270cb1a68b6dd04d5682b2",
+      "reference_only_not_copied": true
+    },
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-consumed-detached-source-guard-controls-20261007-a1/lanl-consumed-detached-source-guard-source-handoff-20261007.md": {
+      "bytes": 13437,
+      "sha256": "54edbe93f81d615c0215e983a657fcfb31074f2fdb9f5d1d1707de160f103f41",
+      "Git_entry": "100644 blob 75a5f54617abd4c97cab4420a50ce912cc6edaf3",
+      "reference_only_not_copied": true
+    },
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-consumed-detached-source-guard-controls-20261007-a1/lanl-consumed-detached-source-guard-source-preparation-20261007.json": {
+      "bytes": 1888,
+      "sha256": "1983a870f7dd29b37db8528d65e99e7099765fef3e3a98eee2f206d11e691820",
+      "Git_entry": "100644 blob 661636ad9523d8549332f2c722e27ffe7e2265e8",
+      "reference_only_not_copied": true
+    },
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-consumed-detached-source-guard-controls-20261007-a1/lanl-readonly-remote-checkout-storage-20261007.py": {
+      "bytes": 1726,
+      "sha256": "726dbef28bd7cb4ae835cfe72f5bce0e1a31ab7ab33400c399698a90171a260a",
+      "Git_entry": "100644 blob 82980135b4c5bb5a05d297b0fffa18c0975f85ff",
+      "reference_only_not_copied": true
+    },
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-consumed-detached-source-guard-controls-20261007-a1/lanl-remote-checkout-storage-observed-20261007-2121.json": {
+      "bytes": 8482,
+      "sha256": "a3db41ff00a5f26e2ce7aed196bd624721ca1cc7483ac12147634731e6f676f8",
+      "Git_entry": "100644 blob cf215e0fc86976459d695097ec19ec8e03687d85",
+      "reference_only_not_copied": true
+    },
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-consumed-detached-source-guard-controls-20261007-a1/lanl17-consumed-detached-source-reference-audit-20261007-r1.md": {
+      "bytes": 19094,
+      "sha256": "1c95063ca5364d5bafa98f87fe745c1450811ffaae11c3b7673459f639e9d8d3",
+      "Git_entry": "100644 blob b97d65eb5d58fb8ba317bb933b950360add7f656",
+      "reference_only_not_copied": true
+    },
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-consumed-detached-source-guard-controls-20261007-a1/lanl17-prepare-finalize-command-facts-20261007.md": {
+      "bytes": 13425,
+      "sha256": "c623757b97d9456f43efbb26140165dfa94e4f3647ad074eed5df54515b6e8f8",
+      "Git_entry": "100644 blob 17d3d1db1a23e0d5e06c267acd43d7fbf395f5f2",
+      "reference_only_not_copied": true
+    },
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-consumed-detached-source-guard-controls-20261007-a1/lanl17-storage-planning-source-note-20261007-r1.md": {
+      "bytes": 13212,
+      "sha256": "c4f6b466d711fee54050109261a6ff43a5b73e0bc7bb2444c8b3d29c3ac281f2",
+      "Git_entry": "100644 blob 00770082e1455a84c1af331f45628cf0442d1f33",
+      "reference_only_not_copied": true
+    },
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-consumed-detached-source-guard-controls-20261007-a1/lanl_consumed_detached_source_guard_20261007.py": {
+      "bytes": 57079,
+      "sha256": "23f0357c11706fd533cd32423820b1f32078d78e9441abffa8651b06a4d4250b",
+      "Git_entry": "100644 blob e77def796b72dd9f4e76bab8e1098e6f2e4423cd",
+      "reference_only_not_copied": true
+    },
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-consumed-detached-source-guard-controls-20261007-a1/lanl_consumed_detached_source_guard_r1_20261007.py": {
+      "bytes": 64859,
+      "sha256": "66944bb04d05a690dc1c81ced7c203c0494cc028c6c9c1531e1fcb9cecd110e1",
+      "Git_entry": "100644 blob e00e47e103e9497458e608c641d2b17448b01ba0",
+      "reference_only_not_copied": true
+    },
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-consumed-detached-source-guard-controls-20261007-a1/manifest.json": {
+      "bytes": 27906,
+      "sha256": "347a49af1a640591195cc2f27b8f825a0f09f3655f4a8301998e0577b869d800",
+      "Git_entry": "100644 blob 8f77b8a98122e3610eef67eea00ae6929ac51c2f",
+      "reference_only_not_copied": true
+    }
+  },
+  "earlier_original14_bodies_README_manifest_modified": false,
+  "source_review_correction_scope": "Only exact review-backlink projection/verified link equality and completed-journal-before-marker-clear in Guard.perform; earlier constant/limit/source/raw retention scope unchanged.",
+  "chronology": {
+    "original23f_R1_and_original_preparations_NOTRUN": true,
+    "bf77_draft_committed_before_later_blocking_independent_review": true,
+    "bf77_was_not_pushed_or_integrated_before_correction": true,
+    "independent_findings_note": "95ff76f6c293f42092259841ec27e7f2174750d638014fb844158f89016ddcc5",
+    "independent_R2_harness_review": "b0fdb9f14e25323479fff61ee9909fed7a2c23d85371ba1dbc4e1c31b338e056",
+    "original_harness_preparation_NOTRUN_preserved": true,
+    "one_later_parent_local_SYNTHETIC_batch": {
+      "receipt_identity_sha256": "4af33429c3e3c4e8d2b2a77b7e1247a2473af91029dde0a8646b8ca3db614504",
+      "started_at": "2026-10-07T22:23:17.867897+00:00",
+      "finished_at": "2026-10-07T22:23:17.958132+00:00",
+      "returncode": 0,
+      "timed_out": false,
+      "test_method_count": 6,
+      "passed": true,
+      "elapsed_seconds": 0.09018362499773502,
+      "stderr_reported_seconds": 0.035
+    },
+    "guard_main_or_actual_assessment_plan_subset_clearance_removal_scientific_admission": false,
+    "independent_actual_single_SYNTHETIC_result_review_sha256": "c6ef0e65a948fbb6a6e51def86f773fdf08230be8d6a98edb1b42a3fae68bdf9"
+  },
+  "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "retained_source_C_ref": "codex/lanl-ticket11-source-c",
+  "estimator_F6": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "production_Git_entries_equal_C": 223,
+  "Python_modules_Git_equal_C": 185,
+  "canonical_YAML_unchanged": 686,
+  "prior_tracked_blobs": 4033,
+  "all_prior_blobs_modes_except_issue17_append_preserved": true,
+  "only_previous_file_change": {
+    "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/issues/17-agreement-report.md",
+    "operation": "append_only",
+    "status_before": "claimed",
+    "status_after": "claimed",
+    "before_bytes": 16646,
+    "before_sha256": "25dec0c90ae2ee3b8c85fedce3dbb1affb70afc3a8c3f42320b478d15d40e983",
+    "append_bytes": 1055,
+    "append_sha256": "37b3451005077357f8e4b7561710acc35ff82ee4d33756ac2ee68ab67bfd196d",
+    "after_bytes": 17701,
+    "after_sha256": "d19119f5a12fc9f279ddb752953abc2fef39e120cf10191f7494139dd4d67a62"
+  },
+  "archival_actions": {
+    "byte_seal_and_Git_preservation_metadata_checks_only": true,
+    "test_body_or_guard_execution_repeated": false,
+    "target_import_main_actual_plan_assessment_subset_Store_SSH_stage_removal_science": false,
+    "map_progress_root_status_other_ticket_changes": false,
+    "push_or_integration_merge": false
+  },
+  "identity_semantics": "Whole canonicalTrue archival metadata excluding identity_sha256. Original source-only chronology, local synthetic execution custody and original receipt policies remain distinct; no actual guard/scientific admission.",
+  "identity_sha256": "dceb322f8b4641daacb7bda2374e2745f339dccca821522d08ecfd8822c9d188"
+}

@@ -1,0 +1,68 @@
+--- /private/tmp/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r7_r1.py
++++ /private/tmp/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r8.py
+@@ -27,9 +27,9 @@
+ PRIMARY = BASE/'ArchEvolve'
+ RAW = P('/data/yanruj/EvolveSWDB_runs')
+ EV = PRIMARY/'swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence'
+-R3 = BASE/'lanl-storage-admin-selected-source-20261008-a5/lanl_consumed_detached_source_guard_r6_20261008_a1.py'
+-R3_BYTES = 116443
+-R3_SHA = '6118592610fbff77a7da3ea8196c772331066d3188ded29627218486c106b326'
++R3 = BASE/'lanl-storage-admin-selected-source-20261008-a5/lanl_consumed_detached_source_guard_r7_20261008_a1.py'
++R3_BYTES = 117232
++R3_SHA = '97219cdb326edf76e6d341aab4a2a8d58a4750e3da8d2e24a5f9e1097f4a69be'
+ GIT = P('/usr/bin/git')
+ GIT_BYTES = 4019024
+ GIT_SHA = '06b2aa74919b1993f9fd7e47060ea98d98c27206f16ccc2d35f51ced7e7877eb'
+@@ -262,7 +262,7 @@
+             'signal_blocked_mask_zero_or_nonzero_is_not_predicated':True}
+ 
+ 
+-PORTAL_HELPER_SHA = '36fc3b3fdede68b15fca931c199b649303cda4db559f1226ea13474ab5c0e44c'
++PORTAL_HELPER_SHA = 'c195eccf8f728f7752dd89e0588af4fe6f0c05f50c7aa6cb47e5bd95f9ecb46b'
+ 
+ def portal_inode_birth_rows(document, row_definitions, admin=False, check_deadline=None):
+     """Pure metadata validation. No path reads; symlink targets are not covered."""
+@@ -375,7 +375,7 @@
+ 
+ def exact_portal_autounmount_identification(review_pin, row_definitions, selected_rows, removed_rows,
+                                             enclosing_review_identity, helper_sha256,
+-                                            check_deadline, charge_bytes, charge_metadata):
++                                            check_deadline, charge_bytes, charge_metadata, continuity_rows=None):
+     """One exact protected helper under explicit OS-image/clock assumptions.
+ 
+     Caller ordinary reference, alias, Git retention and selection gates remain
+@@ -489,11 +489,20 @@
+             'portal_original_identity_policy_changed')
+     checkout=portal_inode_birth_rows(documents['checkout_birth'],row_definitions,check_deadline=check_deadline)
+     admin=portal_inode_birth_rows(documents['git_admin_birth'],row_definitions,True,check_deadline)
+-    require(isinstance(selected_rows,list) and len(set(selected_rows))==len(selected_rows)
+-            and set(selected_rows)<=set(row_definitions)
+-            and isinstance(removed_rows,list) and len(set(removed_rows))==len(removed_rows)
+-            and set(removed_rows)<=set(selected_rows), 'portal_removed_journal_scope_changed')
+-    remaining=sorted(set(selected_rows)-set(removed_rows)); evidence_stats={x['path']:x['stat'] for x in original_facts+[review_fact]}
++    def continuity_scope(selected_rows,removed_rows,continuity_rows):
++        require(isinstance(selected_rows,list) and len(set(selected_rows))==len(selected_rows)
++                and set(selected_rows)<=set(row_definitions)
++                and isinstance(removed_rows,list) and len(set(removed_rows))==len(removed_rows)
++                and set(removed_rows)<=set(selected_rows), 'portal_removed_journal_scope_changed')
++        remaining_rows=set(selected_rows)-set(removed_rows)
++        require(continuity_rows is None or (isinstance(continuity_rows,list)
++                and len(set(continuity_rows))==len(continuity_rows)
++                and bool(continuity_rows) and set(continuity_rows)<=remaining_rows),
++                'portal_continuity_scope_outside_actual_remaining')
++        return sorted(remaining_rows if continuity_rows is None else continuity_rows)
++
++    remaining=continuity_scope(selected_rows,removed_rows,continuity_rows)
++    evidence_stats={x['path']:x['stat'] for x in original_facts+[review_fact]}
+ 
+     def proc_read(path,cap):
+         check_deadline(); fd=os.open(path,os.O_RDONLY|os.O_NOFOLLOW|os.O_CLOEXEC)
+@@ -638,6 +647,8 @@
+         'remaining_checkout_inode_scopes':second_checkout,'remaining_git_admin_inode_scopes':second_admin,
+         'selected_rows_from_unchanged_caller_scope':list(selected_rows),
+         'already_removed_rows_only_from_completed_journal':list(removed_rows),
++        'fresh_inode_continuity_rows':remaining,
++        'all_eighteen_original_checkout_and_admin_metadata_rows_validated':True,
+         'strict_helper_birth_upper_bound_rational':{'numerator':179108888346,'denominator':100},
+         'protected_child_fields':review['protected_child_fields'],
+         'explicit_assumptions':review['explicit_assumptions'],

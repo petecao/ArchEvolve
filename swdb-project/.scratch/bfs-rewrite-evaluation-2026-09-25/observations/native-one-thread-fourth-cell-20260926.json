@@ -1,0 +1,58 @@
+{
+  "created": "2026-09-26",
+  "observed_at": "2026-09-26T17:38:55.418954-04:00",
+  "host": "mbit10",
+  "run_id": "bfs-native-one-thread-pilot-20260926-a1",
+  "commit": "319645eab0a25c815fa03fe1c372d32b4ba45d10",
+  "cell": "upstream.kronecker",
+  "checked_trials": 60,
+  "planned_trials": 60,
+  "fixed_controls": "passed",
+  "relative_spread_ceiling": 0.1,
+  "maximum_relative_spread": 0.032492731,
+  "maximum_spread_role": "candidate",
+  "maximum_spread_source": 7777,
+  "spread_groups_passed": 6,
+  "roi_speedup": 0.9985417511,
+  "paired_ci95": [
+    0.9965909146,
+    0.9999371582
+  ],
+  "reverse_roi_speedup": 1.0014603785,
+  "reverse_paired_ci95": [
+    1.0000601033,
+    1.003419798
+  ],
+  "numerical_gain": false,
+  "reverse_numerical_gain": false,
+  "gain_threshold": 1.05,
+  "unmet": [],
+  "primary_public_stage_finished": "2026-09-26T17:35:28.737710-04:00",
+  "primary_public_stage_elapsed_seconds": 2219.7518,
+  "primary_stage_exit_code": 0,
+  "diagnostic_started": "2026-09-26T17:36:22.638228-04:00",
+  "first_diagnostic": "dx100.uniform-random",
+  "sealed_analysis": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-native-one-thread-pilot-20260926-a1.dispatch/fourth-cell-fixed-policy-analysis.json",
+    "bytes": 10171,
+    "sha256": "086188636e13764d960c30683eb55866f59e3c181cf71c54355d7bdcb72f7e2d"
+  },
+  "pair": {
+    "path": "/data1/yanruj/EvolveSWDB_native_one_thread_20260926_a1/records/evaluation_pairs/bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.pair.yaml",
+    "bytes": 55107,
+    "sha256": "a509bbbf0f2c4f90985a51e40a1b8199a0510e9f6a6156bd306a41c7d16646ac",
+    "canonical_identity_sha256": "9852d087a9e56d0acf3be09f7b1a7e88c0cadfc119fb6f57f823108ca776bb0b"
+  },
+  "primary_totals": {
+    "checked_trials": 240,
+    "planned_trials": 240,
+    "passed_control_cells": 4,
+    "passed_spread_groups": 24
+  },
+  "limits": [
+    "All controls pass the prospectively fixed policy; no whole-pilot qualification or empirical freeze follows.",
+    "Four fresh diagnostic packages and independent terminal cleanup remain required.",
+    "This typed observation reads the retained driver verdict and sealed analysis; no separate recomputation or extra measurements.",
+    "Raw host artifacts remain on mbit10."
+  ]
+}

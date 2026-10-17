@@ -1,0 +1,61 @@
+kind: workload
+schema_version: '0.4'
+id: bfs-dx100-profile-20260926-a1.uniform64.3904583b5b7c5067
+status: draft
+created: '2026-09-26'
+updated: '2026-09-26'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+requested_id: bfs-dx100-profile-20260926-a1.uniform64
+version: 1
+supersedes: null
+invalidated_comparisons: []
+definition:
+  kernel: gapbs-bfs
+  family: uniform_random
+  generator:
+    name: DX100 GAPBS converter
+    revision: e4fc4afdf894f295442cef3604667a469fab8e62
+    parameters:
+      scale: 6
+      edge_factor: 4
+      seed: 27491095
+      symmetrize: true
+      source_evaluation: bfs-dx100-smoke-20260925-a6
+      purpose: profiling bring-up only
+  normalization:
+    remove_self_loops: true
+    deduplicate: true
+    sort_neighbors: true
+    symmetrize_undirected: true
+  sources: [0]
+  representations:
+  - id: bfs-dx100-profile-20260926-a1.dx100
+    path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-smoke-20260925-a4.driver/uniform64.sg
+    sha256: 00d156b95baa9806c8e7623400e0347770942aee64dbed227309886ee605f78b
+    format: gapbs_sg32le
+    application: dx100-gapbs
+    canonical_sha256: 7ec65549f13836b2dac982b98caf5d98905ecd30b595d5c252f01c29936cd7a3
+    bytes: 2141
+    loader: swdb.gapbs-representation.v1
+    adjacency_verified: true
+  canonical_sha256: 7ec65549f13836b2dac982b98caf5d98905ecd30b595d5c252f01c29936cd7a3
+  canonical_format: swdb.bfs.adjacency.v1
+  realized:
+    num_vertices: 64
+    num_directed_edges: 468
+    directed: false
+    isolated_vertices: 0
+    minimum_out_degree: 3
+    maximum_out_degree: 14
+  metadata_basis: operator_declared
+  adjacency_basis: parsed_representation
+identity_sha256: 3904583b5b7c5067d305f3438c3aedd1f3ec4819cd4ebebc614244011698999b

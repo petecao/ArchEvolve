@@ -1,0 +1,64 @@
+{
+  "all_other_extracted_function_class_AST_exact": true,
+  "date": "2026-10-16 ET",
+  "diagnostic_only_semantic_functions": [
+    {
+      "function": "bundle_check",
+      "semantic_need_sites": 4,
+      "typed_equality_sites": 7
+    },
+    {
+      "function": "source_result_check",
+      "semantic_need_sites": 15,
+      "typed_equality_sites": 24
+    },
+    {
+      "function": "record_check",
+      "semantic_need_sites": 43,
+      "typed_equality_sites": 67
+    },
+    {
+      "function": "root_before",
+      "semantic_need_sites": 12,
+      "typed_equality_sites": 31
+    },
+    {
+      "function": "root_junit",
+      "semantic_need_sites": 3,
+      "typed_equality_sites": 8
+    },
+    {
+      "function": "root_after",
+      "semantic_need_sites": 6,
+      "typed_equality_sites": 7
+    }
+  ],
+  "exact_extracted_names": [
+    "H",
+    "Physical",
+    "bundle_check",
+    "digest",
+    "expected_contract_entry",
+    "need",
+    "plain_tree",
+    "raw_snapshot",
+    "record_check",
+    "source_result_check",
+    "stable",
+    "strict_json",
+    "yaml_load"
+  ],
+  "function_bytes_sha256": "1b2005f8a58aa57d4a16d011099291dc9d2d12b9059a7c7d18497c71d68d2a6d",
+  "hard_literal_reasons": [
+    "adapter log path",
+    "one physical proof YAML per case",
+    "report escapes exact case run",
+    "unregistered historical evidence document"
+  ],
+  "preserved_original_integer_budget_plan": true,
+  "source": {
+    "bytes": 1090100,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/25-closed-source-evidence-20261016/public-cold-v4/full-observer-v3/observer-v3.py",
+    "sha256": "6e51a0f12b9d535d3827d1d717a410203d2bb4554533de65fd1d35024f491666"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "argv": [
+    "ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=10",
+    "mbit10",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=5s",
+    "60s",
+    "/usr/bin/env",
+    "-i",
+    "HOME=/nonexistent",
+    "PATH=/usr/bin:/bin",
+    "LANG=C",
+    "LC_ALL=C",
+    "/usr/bin/python3",
+    "-I",
+    "-B",
+    "-"
+  ],
+  "elapsed_seconds": 0.7390653750044294,
+  "exit_code": 0,
+  "started_utc": "2026-10-17T00:11:23.892926+00:00",
+  "stderr": {
+    "bytes": 0,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-swap13-sparse-v10-node1-fresh-preflight-stderr-20261016.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdin_sha256": "0df60d5af97e413ac4792d32489b1c1ecf28502e79419ef3a402b85d36853c0e",
+  "stdout": {
+    "bytes": 1730,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/evidence/t25-owned-swap13-sparse-v10-node1-fresh-preflight-stdout-20261016.json",
+    "sha256": "161d7557a96ead63ba840a7b32d77ce769a25e9ec36207183f4ce1f0ba5f5308"
+  },
+  "uncertain_transport_result": false,
+  "within_output_cap": true
+}

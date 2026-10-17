@@ -1,0 +1,15 @@
+# Ticket14 transfer-mode preflight — 2026-10-07 ET / 2026-10-08 UTC
+
+SOURCE ONLY; no action/control/producer, imports, main, tests, SSH or archive change. Old recipe468766 stays creation history. Unsealed observation32a21b8f3804a20d52379c35c96db0a31055b4dd6e4c414fe50ec1bad6c27499 at00:03:16Z reports702 raw YAMLs0664/runner umask0002; report/request/MD/acceptance absent. This is a preflight fault, not completion/admission.
+
+Unchanged928 (SHA928af82facd9f36dfdbca6595d2c2e9d1091dd0064c9fe53fc41c163879e026e) `_report_stamp` lines25–33 rejects022; lines192/225–229/240–241/269–279 apply it to originals/new copies/proof. e79 lines205–215 produces request pairs and acceptance paths/seals. All future pins below remain unknown.
+
+After actual all9+validation0, runner/wrapper0, empty cleanup, ended lane and ALL3 leases released, parent may select ONLY21 files under exact raw `/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1`:
+
+*18* `records/<path>` from original defaultTrue-sealed request `report-request.json`, format `swdb.generality-report-request.v1`: nine `pairs`, each `protocol` and `estimate` pin has exactly `{path,id,kind,sha256,file_sha256}` (e79 pin47–49). Require nine protocol/nine estimate, unique IDs/paths, canonical relative paths under respective `protocols/`/`estimates/`, `.yaml`, no traversal; exact set equals actual defaultTrue acceptance `added_record_paths`, length18 (928210–226), and actual protected-inventory difference. `file_sha256` is the expected BYTE hash; `sha256` is semantic, never substitute it.
+
+*3* fixed originals: `report/report.json`, `report/report.md`, `report-request.json`. Pin request original bytes before parsing and verify original True/defaultTrue digest against acceptance `request_sha256`. Acceptance `report_sha256` is original report SEMANTIC seal; inherit its actual checked binding, never numerically reserialize report. Compute report/MD/request BYTE hashes by bounded native streaming before/after, retaining no bodies locally. No invented acceptance or MD hash.
+
+For each, canonical nonsymlink components, owned regular UID114316761, nlink1, exact path/fileSHA/size; open `O_RDONLY|O_NOFOLLOW`, compare fstat with lstat, stream exact bytes, `os.fchmod(fd,0o644)` ONLY if original0664, then full stream/re-stat/path recheck. Preserve dev/inode/UID/gid/size/mtime_ns/nlink/SHA; record intended mode change and changed ctime separately. Explicit finite cumulative deadline; <=21 files, report<=1GiB, each other<=100MiB, per-pass total<=1GiB+20×100MiB. Retain exact before/after metadata and failure/partial custody; no retry/waiver.
+
+Prior686, library/source, controls/streams stay exact; no active file mutation. Future parent invocation must call `os.umask(0o077)` BEFORE launching unchanged503f/GNU/child, so new copies/proof fit original guards. Do not chmod checkout Git files or edit928/503f/690. Permission administration establishes neither science success nor changed costs/caps. Parent reviews actual inputs/action separately after completion.

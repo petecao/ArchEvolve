@@ -1,0 +1,503 @@
+{
+  "allocation_identities": "unbounded mathematical integers; address reuse never revives a dead ID",
+  "caller_premises_added": [],
+  "coverage_complete": false,
+  "incoming_heap": "arbitrary well-formed incoming heap with issued dead identities and escaped aliases",
+  "logical_obligations": [],
+  "member": "std_vector_int_realloc_v3_dtor",
+  "missing": [
+    "complete source/clause/helper binding, frames and feasibility audit",
+    "selected WP Typed/Machine source-image binding and caller discharge",
+    "source-local caller/lifetime and ordinary dependency composition",
+    "independent type/import/task-closure review and fresh normal-reader proof"
+  ],
+  "model": {
+    "id": "vector-reallocation-domain-3",
+    "sha256": "a0ca90f0cd05a1e89b04fc502f078fa253437cfdae4fba35552016d20d7e798c"
+  },
+  "obligations": [
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_control_dtor_premises_feasible",
+      "id": "control.dtor.premises_feasible",
+      "kind": "check_lemma",
+      "path": "000-t25v3_control_dtor_premises_feasible.c",
+      "sha256": "0563754418f4a12a41995478c6a829c73114b4c967df221220a3b08fba410c4f",
+      "source_groups": [
+        "D1",
+        "D2"
+      ],
+      "source_spans": [
+        {
+          "begin": 2963,
+          "end": 2985,
+          "sha256": "103a45520f31820cfdbc8581b3b63e9b14831b70f6d7a564235d1eb3c453015f"
+        }
+      ],
+      "statement": "Heap::well_formed(t25_sample(0)) && t25_repr(t25_sample(0),1,0,2,0,1,1) && Heap::freeable(t25_sample(0),2,0)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_dtor_data_read",
+      "id": "dtor.data.read",
+      "kind": "check_lemma",
+      "path": "001-t25v3_dtor_data_read.c",
+      "sha256": "004833d8949bb5d4400a219ef2b9368ae7ca4914d15fc69062f761c63b29827b",
+      "source_groups": [
+        "D1"
+      ],
+      "source_spans": [
+        {
+          "begin": 2963,
+          "end": 2985,
+          "sha256": "103a45520f31820cfdbc8581b3b63e9b14831b70f6d7a564235d1eb3c453015f"
+        }
+      ],
+      "statement": "\\forall Heap::heap h; \\forall integer r,o,b,bo,s,c; t25_repr(h,r,o,b,bo,s,c) ==> Heap::typed_reads(h,r,o,8,8) && Heap::initialized_at(h,r,o) && Heap::pointer_at(h,r,o,b,bo)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_dtor_free_argument",
+      "id": "dtor.free.argument",
+      "kind": "check_lemma",
+      "path": "002-t25v3_dtor_free_argument.c",
+      "sha256": "462a7744e8f7a5137bdca30bbd498f6a38e2272e93a5922cfca31bfb5e05e949",
+      "source_groups": [
+        "D1",
+        "D2"
+      ],
+      "source_spans": [
+        {
+          "begin": 2734,
+          "end": 2778,
+          "sha256": "d0a6e2b0fcaa3c64b526b8ff6bd0be2c832710754dec1fac3a6516707eb6bdbd"
+        }
+      ],
+      "statement": "\\forall Heap::heap h; \\forall integer r,o,b,bo,s,c; t25_repr(h,r,o,b,bo,s,c) && (c == 0 || Heap::freeable(h,b,bo)) ==> (b == 0 && bo == 0) || Heap::freeable(h,b,bo)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_dtor_null_no_op",
+      "id": "dtor.null.no_op",
+      "kind": "check_lemma",
+      "path": "003-t25v3_dtor_null_no_op.c",
+      "sha256": "96b0e5c9536694714afec32d21cf52517e871f2225ff074cc043746c5a15a9b4",
+      "source_groups": [
+        "D2"
+      ],
+      "source_spans": [
+        {
+          "begin": 2963,
+          "end": 2985,
+          "sha256": "103a45520f31820cfdbc8581b3b63e9b14831b70f6d7a564235d1eb3c453015f"
+        }
+      ],
+      "statement": "\\forall Heap::heap h; Heap::release(h,0) == h",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_dtor_alias_invalidated",
+      "id": "dtor.alias.invalidated",
+      "kind": "check_lemma",
+      "path": "004-t25v3_dtor_alias_invalidated.c",
+      "sha256": "40bed47f0ae13d768e077e6ea7789dcd190194e1522810310250ad1278a698a1",
+      "source_groups": [
+        "D3",
+        "D7"
+      ],
+      "source_spans": [
+        {
+          "begin": 2963,
+          "end": 2985,
+          "sha256": "103a45520f31820cfdbc8581b3b63e9b14831b70f6d7a564235d1eb3c453015f"
+        }
+      ],
+      "statement": "\\forall Heap::heap h; \\forall integer b,alias_offset; b != 0 ==> !Heap::forms(Heap::release(h,b),b,alias_offset) && !Heap::can_read(Heap::release(h,b),b,alias_offset,4)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_dtor_post_old_invalid",
+      "id": "dtor.post.old_invalid",
+      "kind": "check_lemma",
+      "path": "005-t25v3_dtor_post_old_invalid.c",
+      "sha256": "5062df7f6ed1315b67e6e1a0d323dcff7cb53a6b6df4639034cbd45ca415034f",
+      "source_groups": [
+        "D4"
+      ],
+      "source_spans": [
+        {
+          "begin": 2829,
+          "end": 2892,
+          "sha256": "6fa85a2345ef1cdb7941126df831d65e7de19bb24933cab0c9402a2f6ef8a6f4"
+        }
+      ],
+      "statement": "\\forall Heap::heap h; \\forall integer r,o,b,bo,s,c; Heap::well_formed(h) && t25_repr(h,r,o,b,bo,s,c) && (c == 0 || Heap::freeable(h,b,bo)) && c > 0 ==> !Heap::can_read(Heap::release(h,b),b,bo,4)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_dtor_frame_surviving",
+      "id": "dtor.frame.surviving",
+      "kind": "check_lemma",
+      "path": "006-t25v3_dtor_frame_surviving.c",
+      "sha256": "3012485de6f563339f99f6c8b38d270fb6d04429367c20836d8e8a6465b5aa67",
+      "source_groups": [
+        "D5"
+      ],
+      "source_spans": [
+        {
+          "begin": 2086,
+          "end": 2103,
+          "sha256": "3ee15b51b9bf75a5533de567157f94ffb5aafc9a30edf5e54cfbbc440e044f82"
+        }
+      ],
+      "statement": "\\forall Heap::heap h; \\forall integer dead,b,o; Heap::live(h,b) && b != dead ==> Heap::contents(Heap::release(h,dead),b,o) == Heap::contents(h,b,o) && (Heap::initialized_at(Heap::release(h,dead),b,o) <==> Heap::initialized_at(h,b,o))",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_dtor_frame_other_live",
+      "id": "dtor.frame.other_live",
+      "kind": "check_lemma",
+      "path": "007-t25v3_dtor_frame_other_live.c",
+      "sha256": "e0fb664a9c258708be364a9017d9806ae01ec81eb905f4a572943f29abaedc1a",
+      "source_groups": [
+        "D5"
+      ],
+      "source_spans": [
+        {
+          "begin": 2807,
+          "end": 2824,
+          "sha256": "8d9b1c0b218adbb60e7f493dd835af61007f22241526136555c5d5e21c6ca3be"
+        }
+      ],
+      "statement": "\\forall Heap::heap h; \\forall integer dead,b; b != dead ==> Heap::same_object(h,Heap::release(h,dead),b)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_dtor_receiver_overlap",
+      "id": "dtor.receiver.overlap",
+      "kind": "check_lemma",
+      "path": "008-t25v3_dtor_receiver_overlap.c",
+      "sha256": "8c53c08ddc54ebb60d69fce168fff27c4c0dd52c8d80741d99eabd5475202096",
+      "source_groups": [
+        "D6"
+      ],
+      "source_spans": [
+        {
+          "begin": 2963,
+          "end": 2985,
+          "sha256": "103a45520f31820cfdbc8581b3b63e9b14831b70f6d7a564235d1eb3c453015f"
+        }
+      ],
+      "statement": "\\forall Heap::heap h; \\forall integer r,o; r != 0 ==> !Heap::can_read(Heap::release(h,r),r,o,24)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_control_reused_address_stale",
+      "id": "control.reused_address.stale",
+      "kind": "check_lemma",
+      "path": "009-t25v3_control_reused_address_stale.c",
+      "sha256": "59f1c15f17ed5a1cddb2658e07f6af4f9e0877ed902d84c444ff93d2a824c0d8",
+      "source_groups": [
+        "D7"
+      ],
+      "source_spans": [
+        {
+          "begin": 2963,
+          "end": 2985,
+          "sha256": "103a45520f31820cfdbc8581b3b63e9b14831b70f6d7a564235d1eb3c453015f"
+        }
+      ],
+      "statement": "\\forall Heap::heap h; \\forall integer b,n; Heap::well_formed(h) && Heap::freeable(h,b,0) && Heap::aligned(Heap::numerical_address(h,b),4) && 0 < n && 4*n <= Heap::bytes(h,b) ==> Heap::available(Heap::release(h,b),n,Heap::numerical_address(h,b)) && Heap::well_formed(Heap::allocate(Heap::release(h,b),n,Heap::numerical_address(h,b))) && Heap::numerical_address(Heap::allocate(Heap::release(h,b),n,Heap::numerical_address(h,b)),Heap::fresh_id(h)) == Heap::numerical_address(h,b) && !Heap::can_read(Heap::allocate(Heap::release(h,b),n,Heap::numerical_address(h,b)),b,0,4)",
+      "status": "pending"
+    },
+    {
+      "dependencies": [],
+      "expected": "proven",
+      "goal": "t25v3_control_before_release_read",
+      "id": "control.before_release.read",
+      "kind": "check_lemma",
+      "path": "010-t25v3_control_before_release_read.c",
+      "sha256": "5f2c091c9d006b7aca4fa6143450b0b38a480f9380771bb9a0bf6399e6d1702f",
+      "source_groups": [
+        "D7"
+      ],
+      "source_spans": [
+        {
+          "begin": 2963,
+          "end": 2985,
+          "sha256": "103a45520f31820cfdbc8581b3b63e9b14831b70f6d7a564235d1eb3c453015f"
+        }
+      ],
+      "statement": "\\forall Heap::heap h; \\forall integer b,o; Heap::can_read(h,b,o,4) && Heap::initialized_at(h,b,o) ==> Heap::live(h,b)",
+      "status": "pending"
+    }
+  ],
+  "preparation_only": true,
+  "semantics": {
+    "path": "theory/heap_reallocation.mlw",
+    "sha256": "a8f89e41decdbd2890f72e7725590c62134650fde84a18a6ec7fd9d5bd9abbc5"
+  },
+  "source_inventory": {
+    "clauses": [
+      {
+        "function": "swdb_alloc_int",
+        "kind": "requires",
+        "obligations": [],
+        "role": "existing allocator policy",
+        "source": {
+          "begin": 2065,
+          "end": 2081,
+          "sha256": "d2d7f5a5f0355ef088764534d0d6f7dbd226646b2cb1d9e1e44b2b03af8b8046"
+        }
+      },
+      {
+        "function": "swdb_alloc_int",
+        "kind": "assigns",
+        "obligations": [],
+        "role": "existing allocator policy",
+        "source": {
+          "begin": 2086,
+          "end": 2103,
+          "sha256": "3ee15b51b9bf75a5533de567157f94ffb5aafc9a30edf5e54cfbbc440e044f82"
+        }
+      },
+      {
+        "function": "swdb_alloc_int",
+        "kind": "allocates",
+        "obligations": [],
+        "role": "existing allocator policy",
+        "source": {
+          "begin": 2108,
+          "end": 2126,
+          "sha256": "5685d37a8eec781773c21b5d9245f98e4b577aa9b3714ee74fb8e72841315b1b"
+        }
+      },
+      {
+        "function": "swdb_alloc_int",
+        "kind": "ensures",
+        "obligations": [],
+        "role": "existing allocator policy",
+        "source": {
+          "begin": 2131,
+          "end": 2206,
+          "sha256": "4bbb7bc2f005adf6e17a1006a9f9d19f878a0aa3de5a53aef639bade4ce167b5"
+        }
+      },
+      {
+        "function": "swdb_free",
+        "kind": "requires",
+        "obligations": [],
+        "role": "existing allocator policy",
+        "source": {
+          "begin": 2427,
+          "end": 2463,
+          "sha256": "9389d132c9676f76e05073475f54b4bba0278da957de952d8a0eb865a3b5e617"
+        }
+      },
+      {
+        "function": "swdb_free",
+        "kind": "assigns",
+        "obligations": [],
+        "role": "existing allocator policy",
+        "source": {
+          "begin": 2468,
+          "end": 2485,
+          "sha256": "3ee15b51b9bf75a5533de567157f94ffb5aafc9a30edf5e54cfbbc440e044f82"
+        }
+      },
+      {
+        "function": "swdb_free",
+        "kind": "frees",
+        "obligations": [],
+        "role": "existing allocator policy",
+        "source": {
+          "begin": 2490,
+          "end": 2498,
+          "sha256": "b3e48dd08f4a7aae7f0b1af1fb4739953041376ef13ba633730f95278fd2aa71"
+        }
+      },
+      {
+        "function": "std_vector_int_dtor",
+        "kind": "requires",
+        "obligations": [],
+        "role": "entry domain; caller discharge required",
+        "source": {
+          "begin": 2694,
+          "end": 2780,
+          "sha256": "25e5ae8b9b1c7adcbf8298a9fc80c11dce977f7e21a3a9e94b7dc74465a1876f"
+        }
+      },
+      {
+        "function": "std_vector_int_dtor",
+        "kind": "assigns",
+        "obligations": [
+          "dtor.alias.invalidated",
+          "dtor.data.read",
+          "dtor.frame.other_live",
+          "dtor.frame.surviving",
+          "dtor.free.argument",
+          "dtor.null.no_op",
+          "dtor.post.old_invalid",
+          "dtor.receiver.overlap"
+        ],
+        "role": "pending source-mapped body obligation",
+        "source": {
+          "begin": 2785,
+          "end": 2802,
+          "sha256": "3ee15b51b9bf75a5533de567157f94ffb5aafc9a30edf5e54cfbbc440e044f82"
+        }
+      },
+      {
+        "function": "std_vector_int_dtor",
+        "kind": "frees",
+        "obligations": [
+          "dtor.alias.invalidated",
+          "dtor.data.read",
+          "dtor.frame.other_live",
+          "dtor.frame.surviving",
+          "dtor.free.argument",
+          "dtor.null.no_op",
+          "dtor.post.old_invalid",
+          "dtor.receiver.overlap"
+        ],
+        "role": "pending source-mapped body obligation",
+        "source": {
+          "begin": 2807,
+          "end": 2824,
+          "sha256": "8d9b1c0b218adbb60e7f493dd835af61007f22241526136555c5d5e21c6ca3be"
+        }
+      },
+      {
+        "function": "std_vector_int_dtor",
+        "kind": "ensures",
+        "obligations": [
+          "dtor.alias.invalidated",
+          "dtor.data.read",
+          "dtor.frame.other_live",
+          "dtor.frame.surviving",
+          "dtor.free.argument",
+          "dtor.null.no_op",
+          "dtor.post.old_invalid",
+          "dtor.receiver.overlap"
+        ],
+        "role": "pending source-mapped body obligation",
+        "source": {
+          "begin": 2829,
+          "end": 2892,
+          "sha256": "6fa85a2345ef1cdb7941126df831d65e7de19bb24933cab0c9402a2f6ef8a6f4"
+        }
+      }
+    ],
+    "events": [
+      {
+        "function": "std_vector_int_dtor",
+        "id": "dtor.load_and_release",
+        "obligations": [
+          "dtor.data.read",
+          "dtor.free.argument",
+          "dtor.null.no_op",
+          "dtor.alias.invalidated",
+          "dtor.post.old_invalid",
+          "dtor.frame.surviving",
+          "dtor.frame.other_live",
+          "dtor.receiver.overlap"
+        ],
+        "source": {
+          "begin": 2963,
+          "end": 2985,
+          "sha256": "103a45520f31820cfdbc8581b3b63e9b14831b70f6d7a564235d1eb3c453015f"
+        }
+      }
+    ],
+    "pending": [
+      "independent completeness review",
+      "selected typed-source image and caller discharge",
+      "fresh complete ordinary/smoke proofs and import/task closure"
+    ],
+    "role": "closed exact-source map; no proof admission",
+    "source_sha256": "9ca9409923f9d39b4e35a0690c70256af56bfd1c37f1e389e406f615b0164e7f",
+    "trusted_helpers": [
+      {
+        "body_correspondence": {
+          "body_sha256": "86fd9f8970bed2f1ffc305762055e0aeea6f3d3f91623b2bf35ce9506762a292",
+          "inverse_qualified_body_sha256": "86fd9f8970bed2f1ffc305762055e0aeea6f3d3f91623b2bf35ce9506762a292",
+          "original_fragment_sha256": "eb1f5833017762a8d83cc477b6d35e604be6906ebe70b7c0ba56abf032fa03b0",
+          "original_function": "swdb_alloc_int",
+          "qualified_fragment_sha256": "eb1f5833017762a8d83cc477b6d35e604be6906ebe70b7c0ba56abf032fa03b0",
+          "qualified_function": "swdb_alloc_int"
+        },
+        "name": "swdb_alloc_int",
+        "role": "existing allocator policy; not a proved model body",
+        "source": {
+          "begin": 1952,
+          "end": 2340,
+          "sha256": "eb1f5833017762a8d83cc477b6d35e604be6906ebe70b7c0ba56abf032fa03b0"
+        }
+      },
+      {
+        "body_correspondence": {
+          "body_sha256": "90f92e95d590f5c59653ed53a9ec73f7a1561364d39092dcd5911b92afc4cdfc",
+          "inverse_qualified_body_sha256": "90f92e95d590f5c59653ed53a9ec73f7a1561364d39092dcd5911b92afc4cdfc",
+          "original_fragment_sha256": "e301a232920b9439f2db75cccc278276c1e74ba760cbd9ca2ae7958210b401d4",
+          "original_function": "swdb_free",
+          "qualified_fragment_sha256": "e301a232920b9439f2db75cccc278276c1e74ba760cbd9ca2ae7958210b401d4",
+          "qualified_function": "swdb_free"
+        },
+        "name": "swdb_free",
+        "role": "existing allocator policy; not a proved model body",
+        "source": {
+          "begin": 2341,
+          "end": 2590,
+          "sha256": "e301a232920b9439f2db75cccc278276c1e74ba760cbd9ca2ae7958210b401d4"
+        }
+      }
+    ],
+    "unmapped_contract_clauses": [],
+    "unmapped_executable_events": []
+  },
+  "source_parameter_semantics": {
+    "int": "signed32 representation range; part of source typing, not a new requires"
+  },
+  "source_sha256": "9ca9409923f9d39b4e35a0690c70256af56bfd1c37f1e389e406f615b0164e7f",
+  "sources": {
+    "original.c": {
+      "path": "original.c",
+      "sha256": "1056f4f83c59a30941ec9417c36aada8eab4b62160087ae10315cd2ac9778317"
+    },
+    "qualified.c": {
+      "path": "qualified.c",
+      "sha256": "9ca9409923f9d39b4e35a0690c70256af56bfd1c37f1e389e406f615b0164e7f"
+    }
+  },
+  "translation_components": {
+    "heap_model_vcs.py": "f20e0ec130222aeda96b4fbb8e72eef8d922d3f33e84077777203f7e6d159092",
+    "vector_reallocation_inventory.py": "0a0474084a17b84788585a62a9e0b63b88eb43efd858101769db267579af5f07",
+    "vector_reallocation_model.py": "92ad23030531650924a51b0a3bd1abb479afa373a7d1dd2a543b9ae225ab8b89",
+    "vector_reallocation_vcs.py": "f2185ad536bca5e8845ff0b718d81fe1787f1d6fedea7e53907dbe75969861e9"
+  },
+  "typed_memory_role": "explicit typed int source-image domain; source-derived caller discharge required",
+  "typed_source_image": {
+    "applicable": false,
+    "raw_effective_type_safety_proved": false,
+    "role": "no buffer element load; original pointer/free domain retained"
+  }
+}

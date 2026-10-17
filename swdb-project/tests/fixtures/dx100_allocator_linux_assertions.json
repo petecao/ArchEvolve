@@ -1,0 +1,2074 @@
+{
+  "assertions": [
+    {
+      "assertion": "width",
+      "ast": {
+        "inner": [
+          {
+            "inner": [
+              {
+                "castKind": "NoOp",
+                "inner": [
+                  {
+                    "inner": [
+                      {
+                        "inner": [
+                          {
+                            "castKind": "LValueToRValue",
+                            "inner": [
+                              {
+                                "kind": "DeclRefExpr",
+                                "referencedDecl": {
+                                  "kind": "VarDecl",
+                                  "name": "num_tiles_needed",
+                                  "type": {
+                                    "qualType": "int"
+                                  }
+                                },
+                                "type": {
+                                  "qualType": "int"
+                                },
+                                "valueCategory": "lvalue"
+                              }
+                            ],
+                            "kind": "ImplicitCastExpr",
+                            "type": {
+                              "qualType": "int"
+                            },
+                            "valueCategory": "prvalue"
+                          },
+                          {
+                            "kind": "IntegerLiteral",
+                            "type": {
+                              "qualType": "int"
+                            },
+                            "value": "1",
+                            "valueCategory": "prvalue"
+                          }
+                        ],
+                        "kind": "BinaryOperator",
+                        "opcode": "==",
+                        "type": {
+                          "qualType": "bool"
+                        },
+                        "valueCategory": "prvalue"
+                      },
+                      {
+                        "inner": [
+                          {
+                            "castKind": "LValueToRValue",
+                            "inner": [
+                              {
+                                "kind": "DeclRefExpr",
+                                "referencedDecl": {
+                                  "kind": "VarDecl",
+                                  "name": "num_tiles_needed",
+                                  "type": {
+                                    "qualType": "int"
+                                  }
+                                },
+                                "type": {
+                                  "qualType": "int"
+                                },
+                                "valueCategory": "lvalue"
+                              }
+                            ],
+                            "kind": "ImplicitCastExpr",
+                            "type": {
+                              "qualType": "int"
+                            },
+                            "valueCategory": "prvalue"
+                          },
+                          {
+                            "kind": "IntegerLiteral",
+                            "type": {
+                              "qualType": "int"
+                            },
+                            "value": "2",
+                            "valueCategory": "prvalue"
+                          }
+                        ],
+                        "kind": "BinaryOperator",
+                        "opcode": "==",
+                        "type": {
+                          "qualType": "bool"
+                        },
+                        "valueCategory": "prvalue"
+                      }
+                    ],
+                    "kind": "BinaryOperator",
+                    "opcode": "||",
+                    "type": {
+                      "qualType": "bool"
+                    },
+                    "valueCategory": "prvalue"
+                  }
+                ],
+                "kind": "CXXStaticCastExpr",
+                "type": {
+                  "qualType": "bool"
+                },
+                "valueCategory": "prvalue"
+              },
+              {
+                "castKind": "ToVoid",
+                "inner": [
+                  {
+                    "kind": "IntegerLiteral",
+                    "type": {
+                      "qualType": "int"
+                    },
+                    "value": "0",
+                    "valueCategory": "prvalue"
+                  }
+                ],
+                "kind": "CXXFunctionalCastExpr",
+                "type": {
+                  "qualType": "void"
+                },
+                "valueCategory": "prvalue"
+              },
+              {
+                "inner": [
+                  {
+                    "castKind": "FunctionToPointerDecay",
+                    "inner": [
+                      {
+                        "kind": "DeclRefExpr",
+                        "referencedDecl": {
+                          "kind": "FunctionDecl",
+                          "name": "__assert_fail",
+                          "type": {
+                            "qualType": "void (const char *, const char *, unsigned int, const char *) __attribute__((noreturn)) noexcept(true)"
+                          }
+                        },
+                        "type": {
+                          "qualType": "void (const char *, const char *, unsigned int, const char *) __attribute__((noreturn)) noexcept(true)"
+                        },
+                        "valueCategory": "lvalue"
+                      }
+                    ],
+                    "kind": "ImplicitCastExpr",
+                    "type": {
+                      "qualType": "void (*)(const char *, const char *, unsigned int, const char *) __attribute__((noreturn)) noexcept(true)"
+                    },
+                    "valueCategory": "prvalue"
+                  },
+                  {
+                    "castKind": "ArrayToPointerDecay",
+                    "inner": [
+                      {
+                        "kind": "StringLiteral",
+                        "type": {
+                          "qualType": "const char[47]"
+                        },
+                        "value": "\"num_tiles_needed == 1 || num_tiles_needed == 2\"",
+                        "valueCategory": "lvalue"
+                      }
+                    ],
+                    "kind": "ImplicitCastExpr",
+                    "type": {
+                      "qualType": "const char *"
+                    },
+                    "valueCategory": "prvalue"
+                  },
+                  {
+                    "kind": "SourceLocExpr",
+                    "type": {
+                      "qualType": "const char *"
+                    },
+                    "valueCategory": "prvalue"
+                  },
+                  {
+                    "kind": "SourceLocExpr",
+                    "type": {
+                      "qualType": "unsigned int"
+                    },
+                    "valueCategory": "prvalue"
+                  },
+                  {
+                    "castKind": "ArrayToPointerDecay",
+                    "inner": [
+                      {
+                        "canOverflow": false,
+                        "inner": [
+                          {
+                            "inner": [
+                              {
+                                "kind": "StringLiteral",
+                                "type": {
+                                  "qualType": "const char[39]"
+                                },
+                                "value": "\"int get_new_tile() [T1 = unsigned int]\"",
+                                "valueCategory": "lvalue"
+                              }
+                            ],
+                            "kind": "PredefinedExpr",
+                            "name": "__PRETTY_FUNCTION__",
+                            "type": {
+                              "qualType": "const char[39]"
+                            },
+                            "valueCategory": "lvalue"
+                          }
+                        ],
+                        "isPostfix": false,
+                        "kind": "UnaryOperator",
+                        "opcode": "__extension__",
+                        "type": {
+                          "qualType": "const char[39]"
+                        },
+                        "valueCategory": "lvalue"
+                      }
+                    ],
+                    "kind": "ImplicitCastExpr",
+                    "type": {
+                      "qualType": "const char *"
+                    },
+                    "valueCategory": "prvalue"
+                  }
+                ],
+                "kind": "CallExpr",
+                "type": {
+                  "qualType": "void"
+                },
+                "valueCategory": "prvalue"
+              }
+            ],
+            "kind": "ConditionalOperator",
+            "type": {
+              "qualType": "void"
+            },
+            "valueCategory": "prvalue"
+          }
+        ],
+        "kind": "ParenExpr",
+        "type": {
+          "qualType": "void"
+        },
+        "valueCategory": "prvalue"
+      },
+      "callees": [
+        "__assert_fail"
+      ],
+      "family": "get_new_tile",
+      "operators": [
+        {
+          "kind": "BinaryOperator",
+          "opcode": "||"
+        },
+        {
+          "kind": "BinaryOperator",
+          "opcode": "=="
+        },
+        {
+          "kind": "BinaryOperator",
+          "opcode": "=="
+        },
+        {
+          "kind": "UnaryOperator",
+          "opcode": "__extension__"
+        }
+      ],
+      "source": "(static_cast <bool> (num_tiles_needed == 1 || num_tiles_needed == 2) ? void (0) : __assert_fail (\"num_tiles_needed == 1 || num_tiles_needed == 2\", __builtin_FILE (), __builtin_LINE (), __extension__ __PRETTY_FUNCTION__))",
+      "type": "unsigned int"
+    },
+    {
+      "assertion": "bound",
+      "ast": {
+        "inner": [
+          {
+            "inner": [
+              {
+                "castKind": "NoOp",
+                "inner": [
+                  {
+                    "inner": [
+                      {
+                        "castKind": "LValueToRValue",
+                        "inner": [
+                          {
+                            "kind": "DeclRefExpr",
+                            "referencedDecl": {
+                              "kind": "VarDecl",
+                              "name": "SPD_count",
+                              "type": {
+                                "qualType": "int"
+                              }
+                            },
+                            "type": {
+                              "qualType": "int"
+                            },
+                            "valueCategory": "lvalue"
+                          }
+                        ],
+                        "kind": "ImplicitCastExpr",
+                        "type": {
+                          "qualType": "int"
+                        },
+                        "valueCategory": "prvalue"
+                      },
+                      {
+                        "inner": [
+                          {
+                            "inner": [
+                              {
+                                "kind": "IntegerLiteral",
+                                "type": {
+                                  "qualType": "int"
+                                },
+                                "value": "4",
+                                "valueCategory": "prvalue"
+                              },
+                              {
+                                "kind": "IntegerLiteral",
+                                "type": {
+                                  "qualType": "int"
+                                },
+                                "value": "8",
+                                "valueCategory": "prvalue"
+                              }
+                            ],
+                            "kind": "BinaryOperator",
+                            "opcode": "*",
+                            "type": {
+                              "qualType": "int"
+                            },
+                            "valueCategory": "prvalue"
+                          }
+                        ],
+                        "kind": "ParenExpr",
+                        "type": {
+                          "qualType": "int"
+                        },
+                        "valueCategory": "prvalue"
+                      }
+                    ],
+                    "kind": "BinaryOperator",
+                    "opcode": "<=",
+                    "type": {
+                      "qualType": "bool"
+                    },
+                    "valueCategory": "prvalue"
+                  }
+                ],
+                "kind": "CXXStaticCastExpr",
+                "type": {
+                  "qualType": "bool"
+                },
+                "valueCategory": "prvalue"
+              },
+              {
+                "castKind": "ToVoid",
+                "inner": [
+                  {
+                    "kind": "IntegerLiteral",
+                    "type": {
+                      "qualType": "int"
+                    },
+                    "value": "0",
+                    "valueCategory": "prvalue"
+                  }
+                ],
+                "kind": "CXXFunctionalCastExpr",
+                "type": {
+                  "qualType": "void"
+                },
+                "valueCategory": "prvalue"
+              },
+              {
+                "inner": [
+                  {
+                    "castKind": "FunctionToPointerDecay",
+                    "inner": [
+                      {
+                        "kind": "DeclRefExpr",
+                        "referencedDecl": {
+                          "kind": "FunctionDecl",
+                          "name": "__assert_fail",
+                          "type": {
+                            "qualType": "void (const char *, const char *, unsigned int, const char *) __attribute__((noreturn)) noexcept(true)"
+                          }
+                        },
+                        "type": {
+                          "qualType": "void (const char *, const char *, unsigned int, const char *) __attribute__((noreturn)) noexcept(true)"
+                        },
+                        "valueCategory": "lvalue"
+                      }
+                    ],
+                    "kind": "ImplicitCastExpr",
+                    "type": {
+                      "qualType": "void (*)(const char *, const char *, unsigned int, const char *) __attribute__((noreturn)) noexcept(true)"
+                    },
+                    "valueCategory": "prvalue"
+                  },
+                  {
+                    "castKind": "ArrayToPointerDecay",
+                    "inner": [
+                      {
+                        "kind": "StringLiteral",
+                        "type": {
+                          "qualType": "const char[23]"
+                        },
+                        "value": "\"SPD_count <= NUM_TILES\"",
+                        "valueCategory": "lvalue"
+                      }
+                    ],
+                    "kind": "ImplicitCastExpr",
+                    "type": {
+                      "qualType": "const char *"
+                    },
+                    "valueCategory": "prvalue"
+                  },
+                  {
+                    "kind": "SourceLocExpr",
+                    "type": {
+                      "qualType": "const char *"
+                    },
+                    "valueCategory": "prvalue"
+                  },
+                  {
+                    "kind": "SourceLocExpr",
+                    "type": {
+                      "qualType": "unsigned int"
+                    },
+                    "valueCategory": "prvalue"
+                  },
+                  {
+                    "castKind": "ArrayToPointerDecay",
+                    "inner": [
+                      {
+                        "canOverflow": false,
+                        "inner": [
+                          {
+                            "inner": [
+                              {
+                                "kind": "StringLiteral",
+                                "type": {
+                                  "qualType": "const char[39]"
+                                },
+                                "value": "\"int get_new_tile() [T1 = unsigned int]\"",
+                                "valueCategory": "lvalue"
+                              }
+                            ],
+                            "kind": "PredefinedExpr",
+                            "name": "__PRETTY_FUNCTION__",
+                            "type": {
+                              "qualType": "const char[39]"
+                            },
+                            "valueCategory": "lvalue"
+                          }
+                        ],
+                        "isPostfix": false,
+                        "kind": "UnaryOperator",
+                        "opcode": "__extension__",
+                        "type": {
+                          "qualType": "const char[39]"
+                        },
+                        "valueCategory": "lvalue"
+                      }
+                    ],
+                    "kind": "ImplicitCastExpr",
+                    "type": {
+                      "qualType": "const char *"
+                    },
+                    "valueCategory": "prvalue"
+                  }
+                ],
+                "kind": "CallExpr",
+                "type": {
+                  "qualType": "void"
+                },
+                "valueCategory": "prvalue"
+              }
+            ],
+            "kind": "ConditionalOperator",
+            "type": {
+              "qualType": "void"
+            },
+            "valueCategory": "prvalue"
+          }
+        ],
+        "kind": "ParenExpr",
+        "type": {
+          "qualType": "void"
+        },
+        "valueCategory": "prvalue"
+      },
+      "callees": [
+        "__assert_fail"
+      ],
+      "family": "get_new_tile",
+      "operators": [
+        {
+          "kind": "BinaryOperator",
+          "opcode": "<="
+        },
+        {
+          "kind": "BinaryOperator",
+          "opcode": "*"
+        },
+        {
+          "kind": "UnaryOperator",
+          "opcode": "__extension__"
+        }
+      ],
+      "source": "(static_cast <bool> (SPD_count <= (4 * 8)) ? void (0) : __assert_fail (\"SPD_count <= NUM_TILES\", __builtin_FILE (), __builtin_LINE (), __extension__ __PRETTY_FUNCTION__))",
+      "type": "unsigned int"
+    },
+    {
+      "assertion": "width",
+      "ast": {
+        "inner": [
+          {
+            "inner": [
+              {
+                "castKind": "NoOp",
+                "inner": [
+                  {
+                    "inner": [
+                      {
+                        "inner": [
+                          {
+                            "castKind": "LValueToRValue",
+                            "inner": [
+                              {
+                                "kind": "DeclRefExpr",
+                                "referencedDecl": {
+                                  "kind": "VarDecl",
+                                  "name": "num_tiles_needed",
+                                  "type": {
+                                    "qualType": "int"
+                                  }
+                                },
+                                "type": {
+                                  "qualType": "int"
+                                },
+                                "valueCategory": "lvalue"
+                              }
+                            ],
+                            "kind": "ImplicitCastExpr",
+                            "type": {
+                              "qualType": "int"
+                            },
+                            "valueCategory": "prvalue"
+                          },
+                          {
+                            "kind": "IntegerLiteral",
+                            "type": {
+                              "qualType": "int"
+                            },
+                            "value": "1",
+                            "valueCategory": "prvalue"
+                          }
+                        ],
+                        "kind": "BinaryOperator",
+                        "opcode": "==",
+                        "type": {
+                          "qualType": "bool"
+                        },
+                        "valueCategory": "prvalue"
+                      },
+                      {
+                        "inner": [
+                          {
+                            "castKind": "LValueToRValue",
+                            "inner": [
+                              {
+                                "kind": "DeclRefExpr",
+                                "referencedDecl": {
+                                  "kind": "VarDecl",
+                                  "name": "num_tiles_needed",
+                                  "type": {
+                                    "qualType": "int"
+                                  }
+                                },
+                                "type": {
+                                  "qualType": "int"
+                                },
+                                "valueCategory": "lvalue"
+                              }
+                            ],
+                            "kind": "ImplicitCastExpr",
+                            "type": {
+                              "qualType": "int"
+                            },
+                            "valueCategory": "prvalue"
+                          },
+                          {
+                            "kind": "IntegerLiteral",
+                            "type": {
+                              "qualType": "int"
+                            },
+                            "value": "2",
+                            "valueCategory": "prvalue"
+                          }
+                        ],
+                        "kind": "BinaryOperator",
+                        "opcode": "==",
+                        "type": {
+                          "qualType": "bool"
+                        },
+                        "valueCategory": "prvalue"
+                      }
+                    ],
+                    "kind": "BinaryOperator",
+                    "opcode": "||",
+                    "type": {
+                      "qualType": "bool"
+                    },
+                    "valueCategory": "prvalue"
+                  }
+                ],
+                "kind": "CXXStaticCastExpr",
+                "type": {
+                  "qualType": "bool"
+                },
+                "valueCategory": "prvalue"
+              },
+              {
+                "castKind": "ToVoid",
+                "inner": [
+                  {
+                    "kind": "IntegerLiteral",
+                    "type": {
+                      "qualType": "int"
+                    },
+                    "value": "0",
+                    "valueCategory": "prvalue"
+                  }
+                ],
+                "kind": "CXXFunctionalCastExpr",
+                "type": {
+                  "qualType": "void"
+                },
+                "valueCategory": "prvalue"
+              },
+              {
+                "inner": [
+                  {
+                    "castKind": "FunctionToPointerDecay",
+                    "inner": [
+                      {
+                        "kind": "DeclRefExpr",
+                        "referencedDecl": {
+                          "kind": "FunctionDecl",
+                          "name": "__assert_fail",
+                          "type": {
+                            "qualType": "void (const char *, const char *, unsigned int, const char *) __attribute__((noreturn)) noexcept(true)"
+                          }
+                        },
+                        "type": {
+                          "qualType": "void (const char *, const char *, unsigned int, const char *) __attribute__((noreturn)) noexcept(true)"
+                        },
+                        "valueCategory": "lvalue"
+                      }
+                    ],
+                    "kind": "ImplicitCastExpr",
+                    "type": {
+                      "qualType": "void (*)(const char *, const char *, unsigned int, const char *) __attribute__((noreturn)) noexcept(true)"
+                    },
+                    "valueCategory": "prvalue"
+                  },
+                  {
+                    "castKind": "ArrayToPointerDecay",
+                    "inner": [
+                      {
+                        "kind": "StringLiteral",
+                        "type": {
+                          "qualType": "const char[47]"
+                        },
+                        "value": "\"num_tiles_needed == 1 || num_tiles_needed == 2\"",
+                        "valueCategory": "lvalue"
+                      }
+                    ],
+                    "kind": "ImplicitCastExpr",
+                    "type": {
+                      "qualType": "const char *"
+                    },
+                    "valueCategory": "prvalue"
+                  },
+                  {
+                    "kind": "SourceLocExpr",
+                    "type": {
+                      "qualType": "const char *"
+                    },
+                    "valueCategory": "prvalue"
+                  },
+                  {
+                    "kind": "SourceLocExpr",
+                    "type": {
+                      "qualType": "unsigned int"
+                    },
+                    "valueCategory": "prvalue"
+                  },
+                  {
+                    "castKind": "ArrayToPointerDecay",
+                    "inner": [
+                      {
+                        "canOverflow": false,
+                        "inner": [
+                          {
+                            "inner": [
+                              {
+                                "kind": "StringLiteral",
+                                "type": {
+                                  "qualType": "const char[45]"
+                                },
+                                "value": "\"int get_new_tile() [T1 = unsigned long long]\"",
+                                "valueCategory": "lvalue"
+                              }
+                            ],
+                            "kind": "PredefinedExpr",
+                            "name": "__PRETTY_FUNCTION__",
+                            "type": {
+                              "qualType": "const char[45]"
+                            },
+                            "valueCategory": "lvalue"
+                          }
+                        ],
+                        "isPostfix": false,
+                        "kind": "UnaryOperator",
+                        "opcode": "__extension__",
+                        "type": {
+                          "qualType": "const char[45]"
+                        },
+                        "valueCategory": "lvalue"
+                      }
+                    ],
+                    "kind": "ImplicitCastExpr",
+                    "type": {
+                      "qualType": "const char *"
+                    },
+                    "valueCategory": "prvalue"
+                  }
+                ],
+                "kind": "CallExpr",
+                "type": {
+                  "qualType": "void"
+                },
+                "valueCategory": "prvalue"
+              }
+            ],
+            "kind": "ConditionalOperator",
+            "type": {
+              "qualType": "void"
+            },
+            "valueCategory": "prvalue"
+          }
+        ],
+        "kind": "ParenExpr",
+        "type": {
+          "qualType": "void"
+        },
+        "valueCategory": "prvalue"
+      },
+      "callees": [
+        "__assert_fail"
+      ],
+      "family": "get_new_tile",
+      "operators": [
+        {
+          "kind": "BinaryOperator",
+          "opcode": "||"
+        },
+        {
+          "kind": "BinaryOperator",
+          "opcode": "=="
+        },
+        {
+          "kind": "BinaryOperator",
+          "opcode": "=="
+        },
+        {
+          "kind": "UnaryOperator",
+          "opcode": "__extension__"
+        }
+      ],
+      "source": "(static_cast <bool> (num_tiles_needed == 1 || num_tiles_needed == 2) ? void (0) : __assert_fail (\"num_tiles_needed == 1 || num_tiles_needed == 2\", __builtin_FILE (), __builtin_LINE (), __extension__ __PRETTY_FUNCTION__))",
+      "type": "unsigned long long"
+    },
+    {
+      "assertion": "bound",
+      "ast": {
+        "inner": [
+          {
+            "inner": [
+              {
+                "castKind": "NoOp",
+                "inner": [
+                  {
+                    "inner": [
+                      {
+                        "castKind": "LValueToRValue",
+                        "inner": [
+                          {
+                            "kind": "DeclRefExpr",
+                            "referencedDecl": {
+                              "kind": "VarDecl",
+                              "name": "SPD_count",
+                              "type": {
+                                "qualType": "int"
+                              }
+                            },
+                            "type": {
+                              "qualType": "int"
+                            },
+                            "valueCategory": "lvalue"
+                          }
+                        ],
+                        "kind": "ImplicitCastExpr",
+                        "type": {
+                          "qualType": "int"
+                        },
+                        "valueCategory": "prvalue"
+                      },
+                      {
+                        "inner": [
+                          {
+                            "inner": [
+                              {
+                                "kind": "IntegerLiteral",
+                                "type": {
+                                  "qualType": "int"
+                                },
+                                "value": "4",
+                                "valueCategory": "prvalue"
+                              },
+                              {
+                                "kind": "IntegerLiteral",
+                                "type": {
+                                  "qualType": "int"
+                                },
+                                "value": "8",
+                                "valueCategory": "prvalue"
+                              }
+                            ],
+                            "kind": "BinaryOperator",
+                            "opcode": "*",
+                            "type": {
+                              "qualType": "int"
+                            },
+                            "valueCategory": "prvalue"
+                          }
+                        ],
+                        "kind": "ParenExpr",
+                        "type": {
+                          "qualType": "int"
+                        },
+                        "valueCategory": "prvalue"
+                      }
+                    ],
+                    "kind": "BinaryOperator",
+                    "opcode": "<=",
+                    "type": {
+                      "qualType": "bool"
+                    },
+                    "valueCategory": "prvalue"
+                  }
+                ],
+                "kind": "CXXStaticCastExpr",
+                "type": {
+                  "qualType": "bool"
+                },
+                "valueCategory": "prvalue"
+              },
+              {
+                "castKind": "ToVoid",
+                "inner": [
+                  {
+                    "kind": "IntegerLiteral",
+                    "type": {
+                      "qualType": "int"
+                    },
+                    "value": "0",
+                    "valueCategory": "prvalue"
+                  }
+                ],
+                "kind": "CXXFunctionalCastExpr",
+                "type": {
+                  "qualType": "void"
+                },
+                "valueCategory": "prvalue"
+              },
+              {
+                "inner": [
+                  {
+                    "castKind": "FunctionToPointerDecay",
+                    "inner": [
+                      {
+                        "kind": "DeclRefExpr",
+                        "referencedDecl": {
+                          "kind": "FunctionDecl",
+                          "name": "__assert_fail",
+                          "type": {
+                            "qualType": "void (const char *, const char *, unsigned int, const char *) __attribute__((noreturn)) noexcept(true)"
+                          }
+                        },
+                        "type": {
+                          "qualType": "void (const char *, const char *, unsigned int, const char *) __attribute__((noreturn)) noexcept(true)"
+                        },
+                        "valueCategory": "lvalue"
+                      }
+                    ],
+                    "kind": "ImplicitCastExpr",
+                    "type": {
+                      "qualType": "void (*)(const char *, const char *, unsigned int, const char *) __attribute__((noreturn)) noexcept(true)"
+                    },
+                    "valueCategory": "prvalue"
+                  },
+                  {
+                    "castKind": "ArrayToPointerDecay",
+                    "inner": [
+                      {
+                        "kind": "StringLiteral",
+                        "type": {
+                          "qualType": "const char[23]"
+                        },
+                        "value": "\"SPD_count <= NUM_TILES\"",
+                        "valueCategory": "lvalue"
+                      }
+                    ],
+                    "kind": "ImplicitCastExpr",
+                    "type": {
+                      "qualType": "const char *"
+                    },
+                    "valueCategory": "prvalue"
+                  },
+                  {
+                    "kind": "SourceLocExpr",
+                    "type": {
+                      "qualType": "const char *"
+                    },
+                    "valueCategory": "prvalue"
+                  },
+                  {
+                    "kind": "SourceLocExpr",
+                    "type": {
+                      "qualType": "unsigned int"
+                    },
+                    "valueCategory": "prvalue"
+                  },
+                  {
+                    "castKind": "ArrayToPointerDecay",
+                    "inner": [
+                      {
+                        "canOverflow": false,
+                        "inner": [
+                          {
+                            "inner": [
+                              {
+                                "kind": "StringLiteral",
+                                "type": {
+                                  "qualType": "const char[45]"
+                                },
+                                "value": "\"int get_new_tile() [T1 = unsigned long long]\"",
+                                "valueCategory": "lvalue"
+                              }
+                            ],
+                            "kind": "PredefinedExpr",
+                            "name": "__PRETTY_FUNCTION__",
+                            "type": {
+                              "qualType": "const char[45]"
+                            },
+                            "valueCategory": "lvalue"
+                          }
+                        ],
+                        "isPostfix": false,
+                        "kind": "UnaryOperator",
+                        "opcode": "__extension__",
+                        "type": {
+                          "qualType": "const char[45]"
+                        },
+                        "valueCategory": "lvalue"
+                      }
+                    ],
+                    "kind": "ImplicitCastExpr",
+                    "type": {
+                      "qualType": "const char *"
+                    },
+                    "valueCategory": "prvalue"
+                  }
+                ],
+                "kind": "CallExpr",
+                "type": {
+                  "qualType": "void"
+                },
+                "valueCategory": "prvalue"
+              }
+            ],
+            "kind": "ConditionalOperator",
+            "type": {
+              "qualType": "void"
+            },
+            "valueCategory": "prvalue"
+          }
+        ],
+        "kind": "ParenExpr",
+        "type": {
+          "qualType": "void"
+        },
+        "valueCategory": "prvalue"
+      },
+      "callees": [
+        "__assert_fail"
+      ],
+      "family": "get_new_tile",
+      "operators": [
+        {
+          "kind": "BinaryOperator",
+          "opcode": "<="
+        },
+        {
+          "kind": "BinaryOperator",
+          "opcode": "*"
+        },
+        {
+          "kind": "UnaryOperator",
+          "opcode": "__extension__"
+        }
+      ],
+      "source": "(static_cast <bool> (SPD_count <= (4 * 8)) ? void (0) : __assert_fail (\"SPD_count <= NUM_TILES\", __builtin_FILE (), __builtin_LINE (), __extension__ __PRETTY_FUNCTION__))",
+      "type": "unsigned long long"
+    },
+    {
+      "assertion": "width",
+      "ast": {
+        "inner": [
+          {
+            "inner": [
+              {
+                "castKind": "NoOp",
+                "inner": [
+                  {
+                    "inner": [
+                      {
+                        "inner": [
+                          {
+                            "castKind": "LValueToRValue",
+                            "inner": [
+                              {
+                                "kind": "DeclRefExpr",
+                                "referencedDecl": {
+                                  "kind": "VarDecl",
+                                  "name": "num_regs_needed",
+                                  "type": {
+                                    "qualType": "int"
+                                  }
+                                },
+                                "type": {
+                                  "qualType": "int"
+                                },
+                                "valueCategory": "lvalue"
+                              }
+                            ],
+                            "kind": "ImplicitCastExpr",
+                            "type": {
+                              "qualType": "int"
+                            },
+                            "valueCategory": "prvalue"
+                          },
+                          {
+                            "kind": "IntegerLiteral",
+                            "type": {
+                              "qualType": "int"
+                            },
+                            "value": "1",
+                            "valueCategory": "prvalue"
+                          }
+                        ],
+                        "kind": "BinaryOperator",
+                        "opcode": "==",
+                        "type": {
+                          "qualType": "bool"
+                        },
+                        "valueCategory": "prvalue"
+                      },
+                      {
+                        "inner": [
+                          {
+                            "castKind": "LValueToRValue",
+                            "inner": [
+                              {
+                                "kind": "DeclRefExpr",
+                                "referencedDecl": {
+                                  "kind": "VarDecl",
+                                  "name": "num_regs_needed",
+                                  "type": {
+                                    "qualType": "int"
+                                  }
+                                },
+                                "type": {
+                                  "qualType": "int"
+                                },
+                                "valueCategory": "lvalue"
+                              }
+                            ],
+                            "kind": "ImplicitCastExpr",
+                            "type": {
+                              "qualType": "int"
+                            },
+                            "valueCategory": "prvalue"
+                          },
+                          {
+                            "kind": "IntegerLiteral",
+                            "type": {
+                              "qualType": "int"
+                            },
+                            "value": "2",
+                            "valueCategory": "prvalue"
+                          }
+                        ],
+                        "kind": "BinaryOperator",
+                        "opcode": "==",
+                        "type": {
+                          "qualType": "bool"
+                        },
+                        "valueCategory": "prvalue"
+                      }
+                    ],
+                    "kind": "BinaryOperator",
+                    "opcode": "||",
+                    "type": {
+                      "qualType": "bool"
+                    },
+                    "valueCategory": "prvalue"
+                  }
+                ],
+                "kind": "CXXStaticCastExpr",
+                "type": {
+                  "qualType": "bool"
+                },
+                "valueCategory": "prvalue"
+              },
+              {
+                "castKind": "ToVoid",
+                "inner": [
+                  {
+                    "kind": "IntegerLiteral",
+                    "type": {
+                      "qualType": "int"
+                    },
+                    "value": "0",
+                    "valueCategory": "prvalue"
+                  }
+                ],
+                "kind": "CXXFunctionalCastExpr",
+                "type": {
+                  "qualType": "void"
+                },
+                "valueCategory": "prvalue"
+              },
+              {
+                "inner": [
+                  {
+                    "castKind": "FunctionToPointerDecay",
+                    "inner": [
+                      {
+                        "kind": "DeclRefExpr",
+                        "referencedDecl": {
+                          "kind": "FunctionDecl",
+                          "name": "__assert_fail",
+                          "type": {
+                            "qualType": "void (const char *, const char *, unsigned int, const char *) __attribute__((noreturn)) noexcept(true)"
+                          }
+                        },
+                        "type": {
+                          "qualType": "void (const char *, const char *, unsigned int, const char *) __attribute__((noreturn)) noexcept(true)"
+                        },
+                        "valueCategory": "lvalue"
+                      }
+                    ],
+                    "kind": "ImplicitCastExpr",
+                    "type": {
+                      "qualType": "void (*)(const char *, const char *, unsigned int, const char *) __attribute__((noreturn)) noexcept(true)"
+                    },
+                    "valueCategory": "prvalue"
+                  },
+                  {
+                    "castKind": "ArrayToPointerDecay",
+                    "inner": [
+                      {
+                        "kind": "StringLiteral",
+                        "type": {
+                          "qualType": "const char[45]"
+                        },
+                        "value": "\"num_regs_needed == 1 || num_regs_needed == 2\"",
+                        "valueCategory": "lvalue"
+                      }
+                    ],
+                    "kind": "ImplicitCastExpr",
+                    "type": {
+                      "qualType": "const char *"
+                    },
+                    "valueCategory": "prvalue"
+                  },
+                  {
+                    "kind": "SourceLocExpr",
+                    "type": {
+                      "qualType": "const char *"
+                    },
+                    "valueCategory": "prvalue"
+                  },
+                  {
+                    "kind": "SourceLocExpr",
+                    "type": {
+                      "qualType": "unsigned int"
+                    },
+                    "valueCategory": "prvalue"
+                  },
+                  {
+                    "castKind": "ArrayToPointerDecay",
+                    "inner": [
+                      {
+                        "canOverflow": false,
+                        "inner": [
+                          {
+                            "inner": [
+                              {
+                                "kind": "StringLiteral",
+                                "type": {
+                                  "qualType": "const char[44]"
+                                },
+                                "value": "\"int get_new_reg() [T1 = unsigned long long]\"",
+                                "valueCategory": "lvalue"
+                              }
+                            ],
+                            "kind": "PredefinedExpr",
+                            "name": "__PRETTY_FUNCTION__",
+                            "type": {
+                              "qualType": "const char[44]"
+                            },
+                            "valueCategory": "lvalue"
+                          }
+                        ],
+                        "isPostfix": false,
+                        "kind": "UnaryOperator",
+                        "opcode": "__extension__",
+                        "type": {
+                          "qualType": "const char[44]"
+                        },
+                        "valueCategory": "lvalue"
+                      }
+                    ],
+                    "kind": "ImplicitCastExpr",
+                    "type": {
+                      "qualType": "const char *"
+                    },
+                    "valueCategory": "prvalue"
+                  }
+                ],
+                "kind": "CallExpr",
+                "type": {
+                  "qualType": "void"
+                },
+                "valueCategory": "prvalue"
+              }
+            ],
+            "kind": "ConditionalOperator",
+            "type": {
+              "qualType": "void"
+            },
+            "valueCategory": "prvalue"
+          }
+        ],
+        "kind": "ParenExpr",
+        "type": {
+          "qualType": "void"
+        },
+        "valueCategory": "prvalue"
+      },
+      "callees": [
+        "__assert_fail"
+      ],
+      "family": "get_new_reg",
+      "operators": [
+        {
+          "kind": "BinaryOperator",
+          "opcode": "||"
+        },
+        {
+          "kind": "BinaryOperator",
+          "opcode": "=="
+        },
+        {
+          "kind": "BinaryOperator",
+          "opcode": "=="
+        },
+        {
+          "kind": "UnaryOperator",
+          "opcode": "__extension__"
+        }
+      ],
+      "source": "(static_cast <bool> (num_regs_needed == 1 || num_regs_needed == 2) ? void (0) : __assert_fail (\"num_regs_needed == 1 || num_regs_needed == 2\", __builtin_FILE (), __builtin_LINE (), __extension__ __PRETTY_FUNCTION__))",
+      "type": "unsigned long long"
+    },
+    {
+      "assertion": "bound",
+      "ast": {
+        "inner": [
+          {
+            "inner": [
+              {
+                "castKind": "NoOp",
+                "inner": [
+                  {
+                    "inner": [
+                      {
+                        "castKind": "LValueToRValue",
+                        "inner": [
+                          {
+                            "kind": "DeclRefExpr",
+                            "referencedDecl": {
+                              "kind": "VarDecl",
+                              "name": "REG_count",
+                              "type": {
+                                "qualType": "int"
+                              }
+                            },
+                            "type": {
+                              "qualType": "int"
+                            },
+                            "valueCategory": "lvalue"
+                          }
+                        ],
+                        "kind": "ImplicitCastExpr",
+                        "type": {
+                          "qualType": "int"
+                        },
+                        "valueCategory": "prvalue"
+                      },
+                      {
+                        "inner": [
+                          {
+                            "inner": [
+                              {
+                                "kind": "IntegerLiteral",
+                                "type": {
+                                  "qualType": "int"
+                                },
+                                "value": "4",
+                                "valueCategory": "prvalue"
+                              },
+                              {
+                                "kind": "IntegerLiteral",
+                                "type": {
+                                  "qualType": "int"
+                                },
+                                "value": "8",
+                                "valueCategory": "prvalue"
+                              }
+                            ],
+                            "kind": "BinaryOperator",
+                            "opcode": "*",
+                            "type": {
+                              "qualType": "int"
+                            },
+                            "valueCategory": "prvalue"
+                          }
+                        ],
+                        "kind": "ParenExpr",
+                        "type": {
+                          "qualType": "int"
+                        },
+                        "valueCategory": "prvalue"
+                      }
+                    ],
+                    "kind": "BinaryOperator",
+                    "opcode": "<=",
+                    "type": {
+                      "qualType": "bool"
+                    },
+                    "valueCategory": "prvalue"
+                  }
+                ],
+                "kind": "CXXStaticCastExpr",
+                "type": {
+                  "qualType": "bool"
+                },
+                "valueCategory": "prvalue"
+              },
+              {
+                "castKind": "ToVoid",
+                "inner": [
+                  {
+                    "kind": "IntegerLiteral",
+                    "type": {
+                      "qualType": "int"
+                    },
+                    "value": "0",
+                    "valueCategory": "prvalue"
+                  }
+                ],
+                "kind": "CXXFunctionalCastExpr",
+                "type": {
+                  "qualType": "void"
+                },
+                "valueCategory": "prvalue"
+              },
+              {
+                "inner": [
+                  {
+                    "castKind": "FunctionToPointerDecay",
+                    "inner": [
+                      {
+                        "kind": "DeclRefExpr",
+                        "referencedDecl": {
+                          "kind": "FunctionDecl",
+                          "name": "__assert_fail",
+                          "type": {
+                            "qualType": "void (const char *, const char *, unsigned int, const char *) __attribute__((noreturn)) noexcept(true)"
+                          }
+                        },
+                        "type": {
+                          "qualType": "void (const char *, const char *, unsigned int, const char *) __attribute__((noreturn)) noexcept(true)"
+                        },
+                        "valueCategory": "lvalue"
+                      }
+                    ],
+                    "kind": "ImplicitCastExpr",
+                    "type": {
+                      "qualType": "void (*)(const char *, const char *, unsigned int, const char *) __attribute__((noreturn)) noexcept(true)"
+                    },
+                    "valueCategory": "prvalue"
+                  },
+                  {
+                    "castKind": "ArrayToPointerDecay",
+                    "inner": [
+                      {
+                        "kind": "StringLiteral",
+                        "type": {
+                          "qualType": "const char[29]"
+                        },
+                        "value": "\"REG_count <= NUM_SCALAR_REGS\"",
+                        "valueCategory": "lvalue"
+                      }
+                    ],
+                    "kind": "ImplicitCastExpr",
+                    "type": {
+                      "qualType": "const char *"
+                    },
+                    "valueCategory": "prvalue"
+                  },
+                  {
+                    "kind": "SourceLocExpr",
+                    "type": {
+                      "qualType": "const char *"
+                    },
+                    "valueCategory": "prvalue"
+                  },
+                  {
+                    "kind": "SourceLocExpr",
+                    "type": {
+                      "qualType": "unsigned int"
+                    },
+                    "valueCategory": "prvalue"
+                  },
+                  {
+                    "castKind": "ArrayToPointerDecay",
+                    "inner": [
+                      {
+                        "canOverflow": false,
+                        "inner": [
+                          {
+                            "inner": [
+                              {
+                                "kind": "StringLiteral",
+                                "type": {
+                                  "qualType": "const char[44]"
+                                },
+                                "value": "\"int get_new_reg() [T1 = unsigned long long]\"",
+                                "valueCategory": "lvalue"
+                              }
+                            ],
+                            "kind": "PredefinedExpr",
+                            "name": "__PRETTY_FUNCTION__",
+                            "type": {
+                              "qualType": "const char[44]"
+                            },
+                            "valueCategory": "lvalue"
+                          }
+                        ],
+                        "isPostfix": false,
+                        "kind": "UnaryOperator",
+                        "opcode": "__extension__",
+                        "type": {
+                          "qualType": "const char[44]"
+                        },
+                        "valueCategory": "lvalue"
+                      }
+                    ],
+                    "kind": "ImplicitCastExpr",
+                    "type": {
+                      "qualType": "const char *"
+                    },
+                    "valueCategory": "prvalue"
+                  }
+                ],
+                "kind": "CallExpr",
+                "type": {
+                  "qualType": "void"
+                },
+                "valueCategory": "prvalue"
+              }
+            ],
+            "kind": "ConditionalOperator",
+            "type": {
+              "qualType": "void"
+            },
+            "valueCategory": "prvalue"
+          }
+        ],
+        "kind": "ParenExpr",
+        "type": {
+          "qualType": "void"
+        },
+        "valueCategory": "prvalue"
+      },
+      "callees": [
+        "__assert_fail"
+      ],
+      "family": "get_new_reg",
+      "operators": [
+        {
+          "kind": "BinaryOperator",
+          "opcode": "<="
+        },
+        {
+          "kind": "BinaryOperator",
+          "opcode": "*"
+        },
+        {
+          "kind": "UnaryOperator",
+          "opcode": "__extension__"
+        }
+      ],
+      "source": "(static_cast <bool> (REG_count <= (4 * 8)) ? void (0) : __assert_fail (\"REG_count <= NUM_SCALAR_REGS\", __builtin_FILE (), __builtin_LINE (), __extension__ __PRETTY_FUNCTION__))",
+      "type": "unsigned long long"
+    },
+    {
+      "assertion": "width",
+      "ast": {
+        "inner": [
+          {
+            "inner": [
+              {
+                "castKind": "NoOp",
+                "inner": [
+                  {
+                    "inner": [
+                      {
+                        "inner": [
+                          {
+                            "castKind": "LValueToRValue",
+                            "inner": [
+                              {
+                                "kind": "DeclRefExpr",
+                                "referencedDecl": {
+                                  "kind": "VarDecl",
+                                  "name": "num_regs_needed",
+                                  "type": {
+                                    "qualType": "int"
+                                  }
+                                },
+                                "type": {
+                                  "qualType": "int"
+                                },
+                                "valueCategory": "lvalue"
+                              }
+                            ],
+                            "kind": "ImplicitCastExpr",
+                            "type": {
+                              "qualType": "int"
+                            },
+                            "valueCategory": "prvalue"
+                          },
+                          {
+                            "kind": "IntegerLiteral",
+                            "type": {
+                              "qualType": "int"
+                            },
+                            "value": "1",
+                            "valueCategory": "prvalue"
+                          }
+                        ],
+                        "kind": "BinaryOperator",
+                        "opcode": "==",
+                        "type": {
+                          "qualType": "bool"
+                        },
+                        "valueCategory": "prvalue"
+                      },
+                      {
+                        "inner": [
+                          {
+                            "castKind": "LValueToRValue",
+                            "inner": [
+                              {
+                                "kind": "DeclRefExpr",
+                                "referencedDecl": {
+                                  "kind": "VarDecl",
+                                  "name": "num_regs_needed",
+                                  "type": {
+                                    "qualType": "int"
+                                  }
+                                },
+                                "type": {
+                                  "qualType": "int"
+                                },
+                                "valueCategory": "lvalue"
+                              }
+                            ],
+                            "kind": "ImplicitCastExpr",
+                            "type": {
+                              "qualType": "int"
+                            },
+                            "valueCategory": "prvalue"
+                          },
+                          {
+                            "kind": "IntegerLiteral",
+                            "type": {
+                              "qualType": "int"
+                            },
+                            "value": "2",
+                            "valueCategory": "prvalue"
+                          }
+                        ],
+                        "kind": "BinaryOperator",
+                        "opcode": "==",
+                        "type": {
+                          "qualType": "bool"
+                        },
+                        "valueCategory": "prvalue"
+                      }
+                    ],
+                    "kind": "BinaryOperator",
+                    "opcode": "||",
+                    "type": {
+                      "qualType": "bool"
+                    },
+                    "valueCategory": "prvalue"
+                  }
+                ],
+                "kind": "CXXStaticCastExpr",
+                "type": {
+                  "qualType": "bool"
+                },
+                "valueCategory": "prvalue"
+              },
+              {
+                "castKind": "ToVoid",
+                "inner": [
+                  {
+                    "kind": "IntegerLiteral",
+                    "type": {
+                      "qualType": "int"
+                    },
+                    "value": "0",
+                    "valueCategory": "prvalue"
+                  }
+                ],
+                "kind": "CXXFunctionalCastExpr",
+                "type": {
+                  "qualType": "void"
+                },
+                "valueCategory": "prvalue"
+              },
+              {
+                "inner": [
+                  {
+                    "castKind": "FunctionToPointerDecay",
+                    "inner": [
+                      {
+                        "kind": "DeclRefExpr",
+                        "referencedDecl": {
+                          "kind": "FunctionDecl",
+                          "name": "__assert_fail",
+                          "type": {
+                            "qualType": "void (const char *, const char *, unsigned int, const char *) __attribute__((noreturn)) noexcept(true)"
+                          }
+                        },
+                        "type": {
+                          "qualType": "void (const char *, const char *, unsigned int, const char *) __attribute__((noreturn)) noexcept(true)"
+                        },
+                        "valueCategory": "lvalue"
+                      }
+                    ],
+                    "kind": "ImplicitCastExpr",
+                    "type": {
+                      "qualType": "void (*)(const char *, const char *, unsigned int, const char *) __attribute__((noreturn)) noexcept(true)"
+                    },
+                    "valueCategory": "prvalue"
+                  },
+                  {
+                    "castKind": "ArrayToPointerDecay",
+                    "inner": [
+                      {
+                        "kind": "StringLiteral",
+                        "type": {
+                          "qualType": "const char[45]"
+                        },
+                        "value": "\"num_regs_needed == 1 || num_regs_needed == 2\"",
+                        "valueCategory": "lvalue"
+                      }
+                    ],
+                    "kind": "ImplicitCastExpr",
+                    "type": {
+                      "qualType": "const char *"
+                    },
+                    "valueCategory": "prvalue"
+                  },
+                  {
+                    "kind": "SourceLocExpr",
+                    "type": {
+                      "qualType": "const char *"
+                    },
+                    "valueCategory": "prvalue"
+                  },
+                  {
+                    "kind": "SourceLocExpr",
+                    "type": {
+                      "qualType": "unsigned int"
+                    },
+                    "valueCategory": "prvalue"
+                  },
+                  {
+                    "castKind": "ArrayToPointerDecay",
+                    "inner": [
+                      {
+                        "canOverflow": false,
+                        "inner": [
+                          {
+                            "inner": [
+                              {
+                                "kind": "StringLiteral",
+                                "type": {
+                                  "qualType": "const char[38]"
+                                },
+                                "value": "\"int get_new_reg() [T1 = unsigned int]\"",
+                                "valueCategory": "lvalue"
+                              }
+                            ],
+                            "kind": "PredefinedExpr",
+                            "name": "__PRETTY_FUNCTION__",
+                            "type": {
+                              "qualType": "const char[38]"
+                            },
+                            "valueCategory": "lvalue"
+                          }
+                        ],
+                        "isPostfix": false,
+                        "kind": "UnaryOperator",
+                        "opcode": "__extension__",
+                        "type": {
+                          "qualType": "const char[38]"
+                        },
+                        "valueCategory": "lvalue"
+                      }
+                    ],
+                    "kind": "ImplicitCastExpr",
+                    "type": {
+                      "qualType": "const char *"
+                    },
+                    "valueCategory": "prvalue"
+                  }
+                ],
+                "kind": "CallExpr",
+                "type": {
+                  "qualType": "void"
+                },
+                "valueCategory": "prvalue"
+              }
+            ],
+            "kind": "ConditionalOperator",
+            "type": {
+              "qualType": "void"
+            },
+            "valueCategory": "prvalue"
+          }
+        ],
+        "kind": "ParenExpr",
+        "type": {
+          "qualType": "void"
+        },
+        "valueCategory": "prvalue"
+      },
+      "callees": [
+        "__assert_fail"
+      ],
+      "family": "get_new_reg",
+      "operators": [
+        {
+          "kind": "BinaryOperator",
+          "opcode": "||"
+        },
+        {
+          "kind": "BinaryOperator",
+          "opcode": "=="
+        },
+        {
+          "kind": "BinaryOperator",
+          "opcode": "=="
+        },
+        {
+          "kind": "UnaryOperator",
+          "opcode": "__extension__"
+        }
+      ],
+      "source": "(static_cast <bool> (num_regs_needed == 1 || num_regs_needed == 2) ? void (0) : __assert_fail (\"num_regs_needed == 1 || num_regs_needed == 2\", __builtin_FILE (), __builtin_LINE (), __extension__ __PRETTY_FUNCTION__))",
+      "type": "unsigned int"
+    },
+    {
+      "assertion": "bound",
+      "ast": {
+        "inner": [
+          {
+            "inner": [
+              {
+                "castKind": "NoOp",
+                "inner": [
+                  {
+                    "inner": [
+                      {
+                        "castKind": "LValueToRValue",
+                        "inner": [
+                          {
+                            "kind": "DeclRefExpr",
+                            "referencedDecl": {
+                              "kind": "VarDecl",
+                              "name": "REG_count",
+                              "type": {
+                                "qualType": "int"
+                              }
+                            },
+                            "type": {
+                              "qualType": "int"
+                            },
+                            "valueCategory": "lvalue"
+                          }
+                        ],
+                        "kind": "ImplicitCastExpr",
+                        "type": {
+                          "qualType": "int"
+                        },
+                        "valueCategory": "prvalue"
+                      },
+                      {
+                        "inner": [
+                          {
+                            "inner": [
+                              {
+                                "kind": "IntegerLiteral",
+                                "type": {
+                                  "qualType": "int"
+                                },
+                                "value": "4",
+                                "valueCategory": "prvalue"
+                              },
+                              {
+                                "kind": "IntegerLiteral",
+                                "type": {
+                                  "qualType": "int"
+                                },
+                                "value": "8",
+                                "valueCategory": "prvalue"
+                              }
+                            ],
+                            "kind": "BinaryOperator",
+                            "opcode": "*",
+                            "type": {
+                              "qualType": "int"
+                            },
+                            "valueCategory": "prvalue"
+                          }
+                        ],
+                        "kind": "ParenExpr",
+                        "type": {
+                          "qualType": "int"
+                        },
+                        "valueCategory": "prvalue"
+                      }
+                    ],
+                    "kind": "BinaryOperator",
+                    "opcode": "<=",
+                    "type": {
+                      "qualType": "bool"
+                    },
+                    "valueCategory": "prvalue"
+                  }
+                ],
+                "kind": "CXXStaticCastExpr",
+                "type": {
+                  "qualType": "bool"
+                },
+                "valueCategory": "prvalue"
+              },
+              {
+                "castKind": "ToVoid",
+                "inner": [
+                  {
+                    "kind": "IntegerLiteral",
+                    "type": {
+                      "qualType": "int"
+                    },
+                    "value": "0",
+                    "valueCategory": "prvalue"
+                  }
+                ],
+                "kind": "CXXFunctionalCastExpr",
+                "type": {
+                  "qualType": "void"
+                },
+                "valueCategory": "prvalue"
+              },
+              {
+                "inner": [
+                  {
+                    "castKind": "FunctionToPointerDecay",
+                    "inner": [
+                      {
+                        "kind": "DeclRefExpr",
+                        "referencedDecl": {
+                          "kind": "FunctionDecl",
+                          "name": "__assert_fail",
+                          "type": {
+                            "qualType": "void (const char *, const char *, unsigned int, const char *) __attribute__((noreturn)) noexcept(true)"
+                          }
+                        },
+                        "type": {
+                          "qualType": "void (const char *, const char *, unsigned int, const char *) __attribute__((noreturn)) noexcept(true)"
+                        },
+                        "valueCategory": "lvalue"
+                      }
+                    ],
+                    "kind": "ImplicitCastExpr",
+                    "type": {
+                      "qualType": "void (*)(const char *, const char *, unsigned int, const char *) __attribute__((noreturn)) noexcept(true)"
+                    },
+                    "valueCategory": "prvalue"
+                  },
+                  {
+                    "castKind": "ArrayToPointerDecay",
+                    "inner": [
+                      {
+                        "kind": "StringLiteral",
+                        "type": {
+                          "qualType": "const char[29]"
+                        },
+                        "value": "\"REG_count <= NUM_SCALAR_REGS\"",
+                        "valueCategory": "lvalue"
+                      }
+                    ],
+                    "kind": "ImplicitCastExpr",
+                    "type": {
+                      "qualType": "const char *"
+                    },
+                    "valueCategory": "prvalue"
+                  },
+                  {
+                    "kind": "SourceLocExpr",
+                    "type": {
+                      "qualType": "const char *"
+                    },
+                    "valueCategory": "prvalue"
+                  },
+                  {
+                    "kind": "SourceLocExpr",
+                    "type": {
+                      "qualType": "unsigned int"
+                    },
+                    "valueCategory": "prvalue"
+                  },
+                  {
+                    "castKind": "ArrayToPointerDecay",
+                    "inner": [
+                      {
+                        "canOverflow": false,
+                        "inner": [
+                          {
+                            "inner": [
+                              {
+                                "kind": "StringLiteral",
+                                "type": {
+                                  "qualType": "const char[38]"
+                                },
+                                "value": "\"int get_new_reg() [T1 = unsigned int]\"",
+                                "valueCategory": "lvalue"
+                              }
+                            ],
+                            "kind": "PredefinedExpr",
+                            "name": "__PRETTY_FUNCTION__",
+                            "type": {
+                              "qualType": "const char[38]"
+                            },
+                            "valueCategory": "lvalue"
+                          }
+                        ],
+                        "isPostfix": false,
+                        "kind": "UnaryOperator",
+                        "opcode": "__extension__",
+                        "type": {
+                          "qualType": "const char[38]"
+                        },
+                        "valueCategory": "lvalue"
+                      }
+                    ],
+                    "kind": "ImplicitCastExpr",
+                    "type": {
+                      "qualType": "const char *"
+                    },
+                    "valueCategory": "prvalue"
+                  }
+                ],
+                "kind": "CallExpr",
+                "type": {
+                  "qualType": "void"
+                },
+                "valueCategory": "prvalue"
+              }
+            ],
+            "kind": "ConditionalOperator",
+            "type": {
+              "qualType": "void"
+            },
+            "valueCategory": "prvalue"
+          }
+        ],
+        "kind": "ParenExpr",
+        "type": {
+          "qualType": "void"
+        },
+        "valueCategory": "prvalue"
+      },
+      "callees": [
+        "__assert_fail"
+      ],
+      "family": "get_new_reg",
+      "operators": [
+        {
+          "kind": "BinaryOperator",
+          "opcode": "<="
+        },
+        {
+          "kind": "BinaryOperator",
+          "opcode": "*"
+        },
+        {
+          "kind": "UnaryOperator",
+          "opcode": "__extension__"
+        }
+      ],
+      "source": "(static_cast <bool> (REG_count <= (4 * 8)) ? void (0) : __assert_fail (\"REG_count <= NUM_SCALAR_REGS\", __builtin_FILE (), __builtin_LINE (), __extension__ __PRETTY_FUNCTION__))",
+      "type": "unsigned int"
+    }
+  ],
+  "capture": {
+    "path": "/private/tmp/probata-root-t28-allocation-linux-ast-settlement-v2-20261016.json",
+    "sha256": "9494af31a1211b514afd22662521bbabb6e6d18d89914d7ef00191aef3bd8470"
+  },
+  "retained_assertions": {
+    "bytes": 261867,
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-2e2dc451-t28-allocation-ast-v2/ast-capture/selected-assertions.json",
+    "sha256": "2901caa417705df0c607c16711a5b9844ed7429f83f3ddd7d26b472c5bff30a3"
+  },
+  "scope": "Normalized actual Linux Clang22 source-assertion trace; locations and process-local IDs removed, no cross-process identity inferred. Diagnostic replay, not a proof."
+}
